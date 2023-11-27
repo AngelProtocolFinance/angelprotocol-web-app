@@ -3,9 +3,9 @@ import ModalContext from "contexts/ModalContext";
 import Charity from "./Charity";
 import { Context } from "./Context";
 
-export default withAuth(function Admin() {
+export default withAuth(function Admin({ user }) {
   return (
-    <Context>
+    <Context user={user}>
       <ModalContext>
         <Charity />
       </ModalContext>
