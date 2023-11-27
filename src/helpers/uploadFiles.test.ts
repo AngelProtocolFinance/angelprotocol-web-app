@@ -1,4 +1,4 @@
-import { afterAll, beforeEach, describe, expect, test, vi } from "vitest";
+import { beforeEach, describe, expect, test, vi } from "vitest";
 import { APIs } from "constant/urls";
 import { Bucket, bucketURL, uploadFiles } from "./uploadFiles";
 
@@ -7,7 +7,11 @@ const AUTH_TOKEN = "test";
 const bucket: Bucket = "endow-profiles";
 const baseURL = `https://${bucket}.${bucketURL}/${TIME_STAMP}`;
 
-jest.mock("./jwt-token", () => ({ jwtToken: () => AUTH_TOKEN }));
+vi.mock("./jwt-token", () => ({ jwtToken: () => AUTH_TOKEN }));
+
+beforeEach(() => {
+  global.fetch = vi.fn() as any;
+});
 
 describe("uploadFiles tests", () => {
   test("upload multiple files", async () => {

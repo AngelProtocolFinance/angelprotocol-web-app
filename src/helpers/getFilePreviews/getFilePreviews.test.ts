@@ -7,7 +7,7 @@ const file1 = new File([], "file1");
 const file2 = new File([], "file2");
 const file3 = new File([], "file3");
 
-jest.mock("../jwt-token", () => ({ jwtToken: () => "test token" }));
+vi.mock("../jwt-token", () => ({ jwtToken: () => "test token" }));
 
 const preview1: FileObject = { name: "preview1", publicUrl: "preview1Url" };
 const preview2: FileObject = { name: "preview2", publicUrl: "preview2Url" };

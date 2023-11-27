@@ -5,7 +5,7 @@
 ### Requirements
 
 - `Node.js` (v18.x) - https://github.com/nvm-sh/nvm#installing-and-updating
-- `yarn` (v4) - https://yarnpkg.com/getting-started/install/
+- `yarn` (v1.22.x) - https://yarnpkg.com/getting-started/install/
 
 We recommend using a version manager like `nvm`. Assuming you are using nvm, you can install and use Node v18 with the following two commands:
 
