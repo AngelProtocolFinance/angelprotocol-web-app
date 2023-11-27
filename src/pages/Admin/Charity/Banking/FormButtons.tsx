@@ -29,12 +29,17 @@ export default function FormButtons({
       </button>
     </div>
   ) : (
-    <button
-      disabled={disabled || isSubmitting}
-      type="submit"
-      className="px-6 btn-orange gap-1 text-sm w-80"
-    >
-      <LoadText isLoading={isSubmitting}>Submit</LoadText>
-    </button>
+    <div className="grid gap-4 mt-8">
+      <i className="text-xs sm:text-sm">
+        All requirements are met! Please click continue.
+      </i>
+      <button
+        disabled={disabled || isSubmitting}
+        type="submit"
+        className="px-6 btn-orange gap-1 text-sm w-80"
+      >
+        <LoadText isLoading={isSubmitting}>Submit</LoadText>
+      </button>
+    </div>
   );
 }
