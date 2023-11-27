@@ -36,10 +36,10 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         session.tokens.idToken?.payload || {};
 
       const token = session.tokens.accessToken.toString();
+
       const endowments =
-        typeof endows === "string" && endows !== ""
-          ? endows.split(",").map(Number)
-          : [];
+        //either none or correctly formatted string
+        (endows as string | undefined)?.split(",").map(Number) || [];
 
       return {
         token,
