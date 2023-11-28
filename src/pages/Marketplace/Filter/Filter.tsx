@@ -2,7 +2,7 @@ import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { useSetter } from "store/accessors";
-import { clear, reset } from "slices/components/marketFilter";
+import { reset } from "slices/components/marketFilter";
 import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
 import Regions from "./Regions";
@@ -23,22 +23,14 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         </button>
       </div>
       <div className="bg-orange-l6 dark:bg-blue-d7 flex items-center justify-between p-4 border-b border-prim">
-        <h3 className="uppercase">Filter</h3>
-        <button
-          type="button"
-          title="Remove all filter selections."
-          onClick={() => dispatch(clear())}
-          className="text-gray-d1 dark:text-gray-l3 text-sm"
-        >
-          Clear Filters
-        </button>
+        <h3 className="uppercase">Filters</h3>
         <button
           type="button"
           title="Reset all filters to their default values."
           onClick={() => dispatch(reset())}
           className="text-gray-d1 dark:text-gray-l3 text-sm"
         >
-          Reset Filters
+          Clear Filters
         </button>
       </div>
 

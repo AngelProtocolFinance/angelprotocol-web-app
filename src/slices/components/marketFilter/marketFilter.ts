@@ -2,16 +2,12 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RegionType, Sort } from "./types";
 import { EndowDesignation } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
-import { clearedState, initialState } from "./constants";
+import { initialState } from "./constants";
 
 const marketFilter = createSlice({
   name: "marketFilter",
   initialState,
   reducers: {
-    clear: (state) => {
-      // clears everything except isOpen && sortKey
-      return { ...clearedState, isOpen: state.isOpen, sortKey: state.sort };
-    },
     reset: (state) => {
       //reset everything except isOpen && sortKey
       return { ...initialState, isOpen: state.isOpen, sortKey: state.sort };
@@ -54,7 +50,6 @@ const marketFilter = createSlice({
 export const {
   setSdgs,
   setRegions,
-  clear,
   reset,
   toggle,
   setDesignations,
