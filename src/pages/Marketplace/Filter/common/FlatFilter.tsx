@@ -5,7 +5,7 @@ export function FlatFilter<T>(props: GroupProps<T>) {
   return (
     <Listbox
       as="div"
-      className="grid px-2 py-4 border-b border-prim"
+      className="grid px-2 py-4"
       multiple
       value={props.selectedValues}
       onChange={props.onChange}

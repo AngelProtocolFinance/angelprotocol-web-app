@@ -14,7 +14,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
 
   return (
     <Modal
-      className={`${classes} fixed-center z-10 w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-prim bg-gray-l6 dark:bg-blue-d5 dark:text-white content-start rounded`}
+      className={`${classes} fixed-center z-10 w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-prim bg-gray-l6 dark:bg-blue-d5 dark:text-white rounded`}
     >
       <div className="flex justify-between p-3 items-center md:hidden bg-orange-l6 dark:bg-blue-d7 border-b border-prim">
         <h3 className="text-orange text-xl font-black uppercase">Filters</h3>
@@ -34,18 +34,10 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         </button>
       </div>
 
-      <div className="flex w-full px-2">
-        <div className="flex flex-col w-full">
-          <Designations />
-          <KYCFilter />
-          <SDGs />
-          <Regions label="Activity country" type="activities" />
-          <Regions
-            label="Headquarter country"
-            type="headquarters"
-            hideBottomBorder
-          />
-        </div>
+      <div className="px-2 divide-y divide-prim">
+        <Designations />
+        <KYCFilter />
+        <SDGs />
       </div>
     </Modal>
   );
