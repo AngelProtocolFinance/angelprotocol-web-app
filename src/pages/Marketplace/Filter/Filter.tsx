@@ -6,7 +6,7 @@ import { clear, reset } from "slices/components/marketFilter";
 import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
 import Regions from "./Regions";
-import SDGGroups from "./SDGGroups";
+import SDGs from "./SDGs";
 
 export default function Filter({ classes = "" }: { classes?: string }) {
   const { closeModal } = useModalContext();
@@ -46,7 +46,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         <div className="flex flex-col w-full">
           <Designations />
           <KYCFilter />
-          <SDGGroups />
+          <SDGs />
           <Regions label="Activity country" type="activities" />
           <Regions
             label="Headquarter country"

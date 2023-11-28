@@ -4,7 +4,7 @@ import { setSdgs } from "slices/components/marketFilter";
 import { unsdgs } from "constants/unsdgs";
 import { FlatFilter } from "./common";
 
-export default function SDGGroups() {
+export default function SDGs() {
   const sdgs = useGetter((state) => state.component.marketFilter.sdgs);
   const dispatch = useSetter();
 
