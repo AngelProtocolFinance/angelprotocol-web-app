@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import {
   updateAWSQueryData,
   useEndowmentCardsQuery,
@@ -9,52 +8,25 @@ import { isEmpty } from "helpers";
 
 export default function useCards() {
   const dispatch = useSetter();
-  const {
-    sdgs,
-    endow_types,
-    endow_designation,
-    sort,
-    searchText,
-    kyc_only,
-    tiers,
-    region,
-  } = useGetter((state) => state.component.marketFilter);
-
-  const { activities, headquarters } = region;
-  const hqCountries = useMemo(
-    () =>
-      encodeURI(
-        Object.entries(headquarters)
-          .flatMap(([, countries]) => (countries ? countries : []))
-          .join(",")
-      ),
-    [headquarters]
+  const { sort, searchText, isOpen, ...params } = useGetter(
+    (state) => state.component.marketFilter
   );
 
-  const activityCountries = useMemo(
-    () =>
-      encodeURI(
-        Object.entries(activities)
-          .flatMap(([, countries]) => (countries ? countries : []))
-          .join(",")
-      ),
-    [activities]
+  const _params = Object.entries(params).reduce(
+    (prev, [key, val]) => ({
+      ...prev,
+      ...(isEmpty(val) ? {} : { [key]: val.join(",") }),
+    }),
+    {}
   );
-  const designations = endow_designation.join(",");
 
   const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
     query: searchText,
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
-    ...(!isEmpty(endow_types) ? { endow_types: endow_types.join(",") } : {}),
-    ...(!isEmpty(tiers) ? { tiers: tiers.join(",") } : {}),
-    ...(!isEmpty(sdgs) ? { sdgs: sdgs.join(",") } : {}),
-    ...(!isEmpty(kyc_only) ? { kyc_only: kyc_only.join(",") } : {}),
-    ...(designations ? { endow_designation: designations } : {}),
-    ...(hqCountries ? { hq_country: hqCountries } : {}),
-    ...(activityCountries ? { active_in_countries: activityCountries } : {}),
     page: 1, // always starts at page 1
     hits: 15,
     published: "true",
+    ..._params,
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] =

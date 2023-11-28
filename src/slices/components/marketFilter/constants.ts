@@ -2,12 +2,11 @@ import { FilterState } from "./types";
 
 export const initialState: FilterState = {
   sdgs: [],
-  region: { activities: {}, headquarters: {} },
+  countries: [],
   isOpen: false,
   searchText: "",
   endow_types: [],
   endow_designation: [],
   kyc_only: [],
   tiers: [2, 3],
-  published: true,
 };

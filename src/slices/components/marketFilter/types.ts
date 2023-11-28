@@ -3,9 +3,6 @@ import { EndowmentTierNum } from "types/aws";
 import { EndowmentType, UNSDG_NUMS } from "types/lists";
 
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
-type Regions = {
-  [region: string]: string[] | undefined /** countries */;
-};
 
 export type FilterState = {
   isOpen: boolean;
@@ -14,10 +11,7 @@ export type FilterState = {
   endow_designation: EndowDesignation[];
   sort?: Sort;
   sdgs: UNSDG_NUMS[];
-  region: { activities: Regions; headquarters: Regions };
+  countries: string[];
   kyc_only: boolean[];
   tiers: Exclude<EndowmentTierNum, 1>[];
-  published: boolean;
 };
-
-export type RegionType = keyof FilterState["region"];

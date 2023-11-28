@@ -1,5 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RegionType, Sort } from "./types";
+import { Sort } from "./types";
 import { EndowDesignation } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import { initialState } from "./constants";
@@ -14,17 +14,6 @@ const marketFilter = createSlice({
     },
     setSdgs: (state, { payload }: PayloadAction<UNSDG_NUMS[]>) => {
       state.sdgs = payload;
-    },
-    setRegions: (
-      state,
-      {
-        payload: { type, value },
-      }: PayloadAction<{
-        type: RegionType;
-        value: { region: string; countries: string[] };
-      }>
-    ) => {
-      state.region[type][value.region] = value.countries;
     },
     setSearchText: (state, { payload }: PayloadAction<string>) => {
       state.searchText = payload;
@@ -49,7 +38,6 @@ const marketFilter = createSlice({
 
 export const {
   setSdgs,
-  setRegions,
   reset,
   toggle,
   setDesignations,
