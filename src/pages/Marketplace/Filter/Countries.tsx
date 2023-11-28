@@ -41,11 +41,14 @@ export default function Countries() {
             />
           ))}
 
-          <Combobox.Input
-            className="bg-orange-l5 px-2 text-sm focus:outline-none pt-1 pb-[.3rem]"
-            value={searchText}
-            onChange={(e) => setSearchText(e.target.value)}
-          />
+          <div className="inline-flex p-1 items-center gap-2 bg-orange-l5 text-gray-d1 dark:text-gray rounded">
+            <Icon type="Search" size={18} />
+            <Combobox.Input
+              className="appearance-none bg-transparent focus:outline-none"
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
+          </div>
         </div>
       </Combobox.Button>
       <Combobox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">

@@ -8,17 +8,15 @@ import { isEmpty } from "helpers";
 
 export default function useCards() {
   const dispatch = useSetter();
-  const { sort, searchText, isOpen, ...params } = useGetter(
-    (state) => state.component.marketFilter
-  );
-
-  const _params = Object.entries(params).reduce(
-    (prev, [key, val]) => ({
-      ...prev,
-      ...(isEmpty(val) ? {} : { [key]: val.join(",") }),
-    }),
-    {}
-  );
+  const {
+    sort,
+    searchText,
+    endow_types,
+    endow_designation,
+    sdgs,
+    kyc_only,
+    countries,
+  } = useGetter((state) => state.component.marketFilter);
 
   const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
     query: searchText,
@@ -26,7 +24,14 @@ export default function useCards() {
     page: 1, // always starts at page 1
     hits: 15,
     published: "true",
-    ..._params,
+    ...(isEmpty(endow_types) ? {} : { endow_types: endow_types.join(",") }),
+    ...(isEmpty(sdgs) ? {} : { sdgs: sdgs.join(",") }),
+    ...(isEmpty(kyc_only) ? {} : { kyc_only: kyc_only.join(",") }),
+    ...(isEmpty(countries) ? {} : { active_in_countries: countries.join(",") }),
+    ...(isEmpty(countries) ? {} : { hq_country: countries.join(",") }),
+    ...(isEmpty(endow_designation)
+      ? {}
+      : { endow_designation: endow_types.join(",") }),
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] =
