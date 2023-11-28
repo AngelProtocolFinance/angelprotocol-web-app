@@ -1,44 +1,20 @@
 import { InjectedProvider, RequestArguments } from "types/evm";
-import { ProviderId } from "types/lists";
-import { Dwindow } from "types/window";
-import web3Auth from "contexts/WalletContext/useWeb3Auth/web3AuthSetup";
-import { _session, account } from "helpers/wallet-connect";
+import { InjectedProviderID } from "types/wallet";
 
-export async function wcProvider(): Promise<Partial<InjectedProvider>> {
-  //FUTURE: pass peer name in wcProvider call
-  const { session, client } = await _session("MetaMask Wallet");
-  const { chainId } = account(session!.namespaces.eip155);
-  return {
-    async request<T>({ method, params }: RequestArguments): Promise<T> {
-      return client.request<T>({
-        topic: session!.topic,
-        chainId: `eip155:${chainId}`,
-        request: {
-          method,
-          params,
-        },
-      });
-    },
-  };
-}
-export async function getProvider(
-  providerId: ProviderId
+export async function injectedProvider(
+  id: InjectedProviderID
 ): Promise<InjectedProvider | undefined> {
-  const dwindow = window as Dwindow;
-  switch (providerId) {
+  switch (id) {
     case "binance-wallet":
-      return dwindow.BinanceChain;
+      return window.BinanceChain;
     case "metamask":
-      return dwindow.ethereum;
-    case "web3auth-torus":
-      return web3Auth.provider as InjectedProvider;
+      return window.ethereum;
     /** only used in sendTx */
-    case "evm-wc":
-      return wcProvider() as Promise<InjectedProvider>;
     case "xdefi-evm":
-      return dwindow.xfi?.ethereum as InjectedProvider;
+      return window.xfi?.ethereum as InjectedProvider;
     default:
-      return undefined;
+      const x: never = id;
+      throw new Error(`${x} not used`);
   }
 }
 

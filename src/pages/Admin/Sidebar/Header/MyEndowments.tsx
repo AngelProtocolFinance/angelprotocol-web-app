@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { EndowmentBookmark } from "types/aws";
 import Image from "components/Image";
-import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 type Props = { endowments: EndowmentBookmark[]; showEndowments: boolean };
@@ -15,7 +14,7 @@ export default function MyEndowments({ endowments, showEndowments }: Props) {
     >
       <div className="grid py-2 mt-5 gap-3">
         <p className="text-sm text-gray-d1 dark:text-gray font-bold">
-          Other {IS_AST ? "Angel Smart Treasuries" : "Endowments"}
+          Other Organizations
         </p>
         <div className="overflow-y-auto max-h-40 scroller grid gap-3">
           {endowments.map((endowment) => (

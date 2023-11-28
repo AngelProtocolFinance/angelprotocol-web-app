@@ -20,7 +20,7 @@ export default function EndowmentStatus({
   isSubmitting,
   classes = "",
 }: Props) {
-  const { data } = useRegState<4>();
+  const { data } = useRegState<3>();
 
   switch (status) {
     case "Rejected":
@@ -33,7 +33,7 @@ export default function EndowmentStatus({
               size={20}
             />
             <span className="max-sm:text-center">
-              Your endowment application has been rejected.
+              Your non-profit's application has been rejected.
             </span>
           </p>
           <button
@@ -67,7 +67,7 @@ export default function EndowmentStatus({
         <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
           <Link
             aria-disabled={isSubmitting}
-            to={`../${steps.wallet}`}
+            to={`../${steps.banking}`}
             state={data.init}
             className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >

@@ -1,18 +1,16 @@
-import { useParams } from "react-router-dom";
 import { DonationMadeByDonor } from "types/aws";
 import { usePaginatedDonationRecords } from "services/apes";
+import withAuth from "contexts/Auth";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { isEmpty } from "helpers";
-import { PAYMENT_WORDS } from "constants/common";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
 import Table from "./Table";
 
-export default function Donations() {
-  const { address: donorAddress = "" } = useParams<{ address: string }>();
+export default withAuth(function Donations({ user }) {
   const {
     data,
     hasMore,
@@ -23,14 +21,14 @@ export default function Donations() {
     loadNextPage,
     onQueryChange,
     setParams,
-  } = usePaginatedDonationRecords({ donorAddress });
+  } = usePaginatedDonationRecords({ email: user.email });
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
       <h1 className="text-3xl max-lg:font-work max-lg:text-center max-lg:col-span-full max-lg:mb-4">
-        My {PAYMENT_WORDS.noun.plural}
+        My Donations
       </h1>
       <CsvExporter
         aria-disabled={isLoadingOrError || !data?.Items || isEmpty(data.Items)}
@@ -51,7 +49,7 @@ export default function Donations() {
           disabled={isError}
           className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-bluegray-d1"
           type="text"
-          placeholder={`Search ${PAYMENT_WORDS.noun.plural}...`}
+          placeholder={`Search donations...`}
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
         />
@@ -59,7 +57,6 @@ export default function Donations() {
       <Filter
         isDisabled={isLoadingOrError}
         setParams={setParams}
-        donorAddress={donorAddress}
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <QueryLoader
@@ -69,8 +66,8 @@ export default function Donations() {
           isError: isError,
         }}
         messages={{
-          loading: `Loading ${PAYMENT_WORDS.noun.plural}...`,
-          error: `Failed to get ${PAYMENT_WORDS.noun.plural}`,
+          loading: "Loading donations...",
+          error: "Failed to get donations",
           empty: <NoDonations classes="mt-8 place-self-center col-span-full" />,
         }}
       >
@@ -97,7 +94,7 @@ export default function Donations() {
       </QueryLoader>
     </div>
   );
-}
+});
 
 const csvHeaders: { key: keyof DonationMadeByDonor; label: string }[] = [
   { key: "amount", label: "Amount" },

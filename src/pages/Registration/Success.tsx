@@ -20,7 +20,7 @@ export default function Success({ classes = "" }: { classes?: string }) {
     >
       <Icon type="CheckCircle" className="text-green" size={92} />
       <h1 className="text-[2rem] mt-10 text-center">
-        {contact.orgName}’s endowment has been created!
+        {contact.orgName}’s account has been created!
       </h1>
       <Link
         className="mt-6 text-orange hover:text-orange-l2 underline decoration-1 hover:decoration-2 text-center text-lg transition ease-in-out duration-300"

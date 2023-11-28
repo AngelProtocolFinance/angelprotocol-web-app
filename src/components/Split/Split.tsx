@@ -1,39 +1,40 @@
 import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { TokenWithAmount } from "types/slices";
-import { IS_AST } from "constants/env";
+import { Token } from "./types";
 import Portion from "./Portion";
 import Slider from "./Slider";
 
-type Props<FV extends FieldValues, P extends Path<FV>, T extends Path<FV>> = {
+type Props<FV extends FieldValues, P extends Path<FV>> = {
   className?: string;
   liqPctField: FV[P] extends number ? P : never;
-  tokenField?: FV[T] extends TokenWithAmount ? T : never;
+  fixLiquidSplitPct?: number;
+  token?: Token;
 };
 
-export default function Split<
-  FV extends FieldValues,
-  P extends Path<FV>,
-  T extends Path<FV>,
->(props: Props<FV, P, T>) {
+export default function Split<FV extends FieldValues, P extends Path<FV>>(
+  props: Props<FV, P>
+) {
   const { watch } = useFormContext<FV>();
-
   const liquidPercentage = watch(props.liqPctField);
 
   return (
     <div className={`grid grid-cols-2 gap-2 ${props.className || ""}`}>
       <Portion
         percentage={100 - liquidPercentage}
-        title={IS_AST ? "Locked" : "Endowment"}
+        title="Sustainability Fund"
         action="Compounded forever"
-        tokenField={props.tokenField}
+        token={props.token}
       />
       <Portion
+        token={props.token}
         percentage={liquidPercentage}
-        title={IS_AST ? "Liquid" : "Current"}
+        title="Donation"
         action="Instantly available"
-        tokenField={props.tokenField}
       >
-        <Slider className="my-2.5" liqPctField={props.liqPctField} />
+        <Slider
+          className="my-2.5"
+          liqPctField={props.liqPctField}
+          disabled={props.fixLiquidSplitPct !== undefined}
+        />
       </Portion>
     </div>
   );

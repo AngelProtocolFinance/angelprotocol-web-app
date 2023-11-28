@@ -2,7 +2,6 @@ import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { EndowmentCard } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
-import BookmarkBtn from "components/BookmarkBtn";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import Tooltip from "components/Tooltip";
@@ -15,7 +14,7 @@ const PLACEHOLDER_TAGLINE = " ";
 export default function Card({
   active_in_countries = [],
   name,
-  image,
+  logo,
   id,
   endow_designation,
   sdgs,
@@ -30,7 +29,6 @@ export default function Card({
           {endow_designation}
         </p>
         {kyc_donors_only && <KYCIcon className="ml-auto" />}
-        <BookmarkBtn endowId={id} />
       </div>
       <Link
         to={`${appRoutes.marketplace}/${id}`}
@@ -38,12 +36,12 @@ export default function Card({
       >
         <Image
           loading="lazy"
-          src={image}
+          src={logo}
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
-          {/* ENDOWMENT NAME */}
+          {/* NON-PROFIT NAME */}
           <h3 className="text-ellipsis line-clamp-2">{name}</h3>
           {/* TAGLINE */}
           {tagline && tagline !== PLACEHOLDER_TAGLINE ? (

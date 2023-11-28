@@ -8,23 +8,21 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { useAdminContext } from "../../Context";
-import useUpdateEndowmentProfile from "../common/useUpdateEndowmentProfile";
-import { ops } from "./ops";
+import { useUpdateEndowmentProfile } from "../common";
 import { toProfileUpdate } from "./update";
 
 export default function useEditProfile() {
-  const { id, owner } = useAdminContext<"charity">(ops);
+  const { id } = useAdminContext();
   const {
     reset,
     handleSubmit,
-    getValues,
     formState: { isSubmitting },
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
   const updateProfile = useUpdateEndowmentProfile();
 
-  const editProfile: SubmitHandler<FV> = async ({ initial, type, ...fv }) => {
+  const editProfile: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
       /** special case for edit profile: since upload happens prior
        * to tx submission. Other users of useTxSender
@@ -40,22 +38,24 @@ export default function useEditProfile() {
 
       const update = toProfileUpdate({
         type: "final",
-        data: { ...fv, id, owner },
+        data: { ...fv, id },
         urls: { image: bannerUrl, logo: logoUrl },
       });
 
       const diffs = getPayloadDiff(initial, update);
 
-      if (Object.entries(diffs).length <= 0) {
+      if (isEmpty(diffs)) {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
       //only include top level keys that appeared on diff
-      const cleanUpdate: ProfileUpdateMsg = { id, owner };
-      for (const [path] of diffs) {
-        const key = path.split(".")[0] as keyof ProfileUpdateMsg;
-        (cleanUpdate as any)[key] = update[key];
-      }
+      const cleanUpdate = diffs.reduce<ProfileUpdateMsg>(
+        (result, [path]) => {
+          const key = path.split(".")[0] as keyof ProfileUpdateMsg;
+          return { ...result, [key]: update[key] };
+        },
+        { id }
+      );
 
       await updateProfile(cleanUpdate);
     } catch (err) {
@@ -70,7 +70,6 @@ export default function useEditProfile() {
     editProfile: handleSubmit(editProfile),
     isSubmitting,
     id,
-    type: getValues("type"),
   };
 }
 

@@ -20,13 +20,13 @@ export type SimulContractTx = Pick<
 
 export type SimulTx = SimulContractTx | SimulSendNativeTx;
 
-export type LogProcessor = (logs: TxLog[]) => any;
-
 /*** EIP1193 spec https://eips.ethereum.org/EIPS/eip-1193*/
 export interface RequestArguments {
   readonly method: string;
   readonly params?: readonly unknown[] | object;
 }
+
+export type Requester = <T>(args: RequestArguments) => Promise<T>;
 
 type TxLog = {
   address: string;
@@ -44,7 +44,7 @@ export type ChainChangeHandler = (chainId: string) => void;
 
 export type InjectedProvider = {
   chainId?: string;
-  request: <T>(args: RequestArguments) => Promise<T>;
+  request: Requester;
   on(ev: "chainChanged", listener: ChainChangeHandler): any;
   on(ev: "accountsChanged", listener: AccountChangeHandler): any;
   /** some wallets are not compliant to EIP1193 specs

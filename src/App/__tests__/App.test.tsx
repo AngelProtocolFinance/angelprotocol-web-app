@@ -1,9 +1,9 @@
+import { Authenticator } from "@aws-amplify/ui-react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
-import { APP_NAME } from "constants/env";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {
@@ -29,7 +29,7 @@ jest.mock("services/aws/leaderboard", () => ({
 
 //test comment 3
 
-const heroText = /ANGEL GIVING REDEFINES/i;
+const heroText = /BETTER GIVING REDEFINES/i;
 const marketLink = /marketplace/i;
 const regLink = /register/i;
 // const leadLink = /leaderboard/i;
@@ -43,9 +43,11 @@ describe("App.tsx tests", () => {
   test("Visit top level pages", async () => {
     render(
       <MemoryRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
+        <Authenticator.Provider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </Authenticator.Provider>
       </MemoryRouter>
     );
     // footer is immediately rendered
@@ -99,12 +101,8 @@ describe("App.tsx tests", () => {
     );
     //registration is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-    //registration is finally loaded
-    expect(
-      await screen.findByRole("heading", {
-        name: `Register to ${APP_NAME}`,
-      })
-    ).toBeInTheDocument();
+    //registration auth is loading
+    expect(await screen.findByTestId("loader-ring")).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to leaderboard

@@ -14,7 +14,7 @@ import { useSetter } from "store/accessors";
 import useDebouncer from "hooks/useDebouncer";
 import { chainIds } from "constants/chainIds";
 
-type DonorOwner = { donorAddress: string };
+type DonorOwner = { email: string };
 type EndowmentOwner = { endowmentId: string };
 
 type RecordOwner = DonorOwner | EndowmentOwner;
@@ -27,8 +27,7 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
   const [query, setQuery] = useState<string>("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
-  const id: string =
-    "endowmentId" in owner ? owner.endowmentId : owner.donorAddress;
+  const id: string = "endowmentId" in owner ? owner.endowmentId : owner.email;
 
   const [params, setParams] = useState<DonationsQueryParams>({
     id,

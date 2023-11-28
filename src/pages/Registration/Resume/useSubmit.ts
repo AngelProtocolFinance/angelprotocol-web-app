@@ -28,10 +28,10 @@ export default function useSubmit() {
     }
     storeRegistrationReference(reference);
 
-    const state = getRegistrationState(data);
+    const { state, nextStep } = getRegistrationState(data);
     const init = state.data.init;
 
-    navigate(`../${routes.steps}/${state.step}`, { state: init });
+    navigate(`../${routes.steps}/${nextStep}`, { state: init });
   };
 
   return { submit: handleSubmit(onSubmit), isSubmitting };

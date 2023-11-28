@@ -8,11 +8,12 @@ import {
   TxRaw,
 } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
+import { CosmosChainID } from "types/chain";
 import { JSONAccount, SimulateRes } from "types/cosmos";
-import { Estimate } from "types/tx";
-import { WalletState } from "contexts/WalletContext";
+import { EstimateResult } from "types/tx";
 import { condenseToNum } from "helpers/decimal";
 import { base64FromU8a } from "helpers/encoding";
+import { chains } from "constants/chains";
 
 const GAS_PRICE = "0.075";
 
@@ -21,13 +22,13 @@ const GAS_PRICE = "0.075";
 const GAS_ADJUSTMENT = 1.5;
 
 export async function estimateCosmosFee(
-  wallet: WalletState,
-  msgs: Any[],
-  attribute?: string
-): Promise<Estimate> {
-  const { chain_id, lcd_url, native_currency } = wallet.chain;
+  chainID: CosmosChainID,
+  sender: string,
+  msgs: Any[]
+): Promise<EstimateResult> {
+  const chain = chains[chainID];
   const { account } = await fetch(
-    lcd_url + `/cosmos/auth/v1beta1/accounts/${wallet.address}`
+    chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`
   ).then<{ account: JSONAccount }>((res) => res.json());
 
   const pub = PubKey.fromJSON({ key: account.pub_key.key });
@@ -49,7 +50,7 @@ export async function estimateCosmosFee(
       amount: [],
       gasLimit: "0",
       granter: "",
-      payer: wallet.address,
+      payer: sender,
     },
   };
 
@@ -69,7 +70,7 @@ export async function estimateCosmosFee(
     signatures: [new Uint8Array(0)],
   };
 
-  const res = await fetch(lcd_url + "/cosmos/tx/v1beta1/simulate", {
+  const res = await fetch(chain.lcd + "/cosmos/tx/v1beta1/simulate", {
     method: "POST",
     body: JSON.stringify({
       tx_bytes: base64FromU8a(TxRaw.encode(simTx).finish()),
@@ -88,12 +89,10 @@ export async function estimateCosmosFee(
   const authInfoWithFee: AuthInfo = {
     ...authInfo,
     fee: {
-      amount: [
-        { amount: `${atomicFeeAmount}`, denom: native_currency.token_id },
-      ],
+      amount: [{ amount: `${atomicFeeAmount}`, denom: chain.nativeToken.id }],
       gasLimit: `${adjustedGas}`,
       granter: "",
-      payer: wallet.address,
+      payer: sender,
     },
   };
 
@@ -101,18 +100,16 @@ export async function estimateCosmosFee(
   return {
     fee: {
       amount: condensedFeeAmount,
-      symbol: native_currency.symbol,
-      coinGeckoId: native_currency.coingecko_denom,
+      symbol: chain.nativeToken.symbol,
+      coinGeckoId: chain.nativeToken.coinGeckoId,
     },
-    tx: {
-      type: "cosmos",
-      val: {
-        authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
-        bodyBytes,
-        accountNumber: Long.fromString(account.account_number),
-        chainId: chain_id,
-      },
-      attribute,
+
+    chainID,
+    toSend: {
+      authInfoBytes: AuthInfo.encode(authInfoWithFee).finish(),
+      bodyBytes,
+      accountNumber: Long.fromString(account.account_number),
+      chainId: chain.id,
     },
   };
 }

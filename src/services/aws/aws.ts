@@ -1,25 +1,29 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import {
-  Profile,
-  ProfileUpdatePayload,
+  ProfileUpdateMsg,
+  ProgramDeleteMsg,
   VersionSpecificWalletProfile,
   isDeleteMsg,
 } from "../types";
+import { userIsSignedIn } from "types/auth";
 import {
+  Application,
+  ApplicationDetails,
+  ApplicationVerdict,
+  ApplicationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
+  EndowmentOption,
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
-  NewAST,
+  PaginatedAWSQueryRes,
   Program,
-  TStrategy,
   WalletProfile,
 } from "types/aws";
 import { network } from "services/constants";
-import { createAuthToken } from "helpers";
-import { chainIds } from "constants/chainIds";
-import { IS_AST } from "constants/env";
+import { RootState } from "store/store";
+import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
 
@@ -30,11 +34,13 @@ const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
     mode: "cors",
-    prepareHeaders(headers) {
-      // As 'prepareHeaders' is called after builder.query returns the request to be sent,
-      // this check allows for custom 'authorization' headers to be set within the builder.query
-      if (!headers.has("authorization")) {
-        headers.append("authorization", createAuthToken("charity-owner"));
+    prepareHeaders(headers, { getState }) {
+      const {
+        auth: { user },
+      } = getState() as RootState;
+
+      if (headers.get("authorization") === TEMP_JWT) {
+        headers.set("authorization", userIsSignedIn(user) ? user.token : "");
       }
       return headers;
     },
@@ -52,6 +58,8 @@ export const aws = createApi({
     "endowments",
     "strategy",
     "program",
+    "applications",
+    "application",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -68,25 +76,16 @@ export const aws = createApi({
         };
       },
     }),
-    strategyCards: builder.query<TStrategy[], {}>({
-      providesTags: ["strategy"],
-      query: (params) => {
-        return {
-          url: `/v1/strategy/list`,
-          params: { ...params },
-        };
-      },
-    }),
-    endowmentIdNames: builder.query<
-      EndowListPaginatedAWSQueryRes<Pick<EndowmentCard, "id" | "name">[]>,
-      EndowmentsQueryParams
-    >({
+    endowmentOptions: builder.query<EndowmentOption[], EndowmentsQueryParams>({
       providesTags: ["endowments"],
       query: (params) => {
         return {
           url: `/${v(5)}/endowments/${network}`,
-          params: { ...params, return: ENDOW_ID_NAME_FIELDS },
+          params: { ...params, return: endowSelectorOptionFields },
         };
+      },
+      transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
+        return res.Items;
       },
     }),
     walletProfile: builder.query<VersionSpecificWalletProfile, string>({
@@ -109,18 +108,18 @@ export const aws = createApi({
           url: `${getWalletProfileQuery(wallet)}/bookmarks`,
           method: type === "add" ? "POST" : "DELETE",
           body: { endowId },
-          headers: { authorization: createAuthToken("app-user") },
         };
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<Profile, { endowId: number; isLegacy?: boolean }>({
+    profile: builder.query<
+      EndowmentProfile,
+      { endowId: number; isLegacy?: boolean }
+    >({
       providesTags: ["profile"],
       query: ({ endowId, isLegacy = false }) => ({
         params: { legacy: isLegacy },
-        url: IS_AST
-          ? `/${v(1)}/ast/${chainIds.polygon}/${endowId}`
-          : `/${v(2)}/profile/${network}/endowment/${endowId}`,
+        url: `/${v(1)}/profile/endowment/${endowId}`,
       }),
       transformResponse(r: EndowmentProfile) {
         //transform cloudsearch placeholders
@@ -128,8 +127,7 @@ export const aws = createApi({
         return {
           ...r,
           tagline,
-          type: IS_AST ? "ast" : "charity",
-        } as Profile;
+        };
       },
     }),
     program: builder.query<Program, { endowId: number; programId: string }>({
@@ -137,27 +135,50 @@ export const aws = createApi({
       query: ({ endowId, programId }) =>
         `/${v(1)}/profile/${network}/program/${endowId}/${programId}`,
     }),
-    editProfile: builder.mutation<EndowmentProfile, ProfileUpdatePayload>({
-      invalidatesTags: (result, error) =>
+    editProfile: builder.mutation<
+      EndowmentProfile,
+      ProfileUpdateMsg | ProgramDeleteMsg
+    >({
+      invalidatesTags: (_, error) =>
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: (payload) => {
         return {
-          url: `/${v(3)}/profile/${network}/endowment`,
-          method: isDeleteMsg(payload.unsignedMsg) ? "DELETE" : "PUT",
+          url: `/${v(1)}/profile/endowment`,
+          method: isDeleteMsg(payload) ? "DELETE" : "PUT",
+          headers: { authorization: TEMP_JWT },
           body: payload,
         };
       },
     }),
-    saveAST: builder.mutation<unknown, NewAST>({
-      invalidatesTags: (result, error) =>
-        error ? [] : ["endowments", "profile", "walletProfile"],
-      query: (payload) => {
-        const token = createAuthToken("app-user");
+    applications: builder.query<
+      PaginatedAWSQueryRes<Application[]>,
+      ApplicationsQueryParams
+    >({
+      providesTags: ["applications"],
+      query: (params) => {
         return {
-          url: `/${v(1)}/ast`,
-          method: "POST",
-          body: payload,
-          headers: { authorization: token },
+          url: `${v(1)}/applications`,
+          params,
+          headers: { authorization: TEMP_JWT },
+        };
+      },
+    }),
+    application: builder.query<ApplicationDetails, string>({
+      providesTags: ["application"],
+      query: (uuid) => ({
+        url: `${v(1)}/applications`,
+        params: { uuid },
+        headers: { authorization: TEMP_JWT },
+      }),
+    }),
+    reviewApplication: builder.mutation<any, ApplicationVerdict>({
+      invalidatesTags: ["application", "applications"],
+      query: (verdict) => {
+        return {
+          url: `${v(1)}/applications`,
+          method: "PUT",
+          headers: { authorization: TEMP_JWT },
+          body: verdict,
         };
       },
     }),
@@ -167,18 +188,20 @@ export const aws = createApi({
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
-  useSaveASTMutation,
   useEndowmentCardsQuery,
-  useStrategyCardsQuery,
-  useEndowmentIdNamesQuery,
+  useEndowmentOptionsQuery,
   useProfileQuery,
   useProgramQuery,
   useEditProfileMutation,
+  useApplicationsQuery,
+  useApplicationQuery,
+  useReviewApplicationMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
-    endowmentIdNames: { useLazyQuery: useLazyEndowmentIdNamesQuery },
+    endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
     profile: { useLazyQuery: useLazyProfileQuery },
+    applications: { useLazyQuery: useLazyApplicationsQuery },
   },
   util: {
     invalidateTags: invalidateAwsTags,
@@ -199,7 +222,7 @@ const endowCardObj: {
   active_in_countries: "",
   sdgs: "",
   id: "",
-  image: "",
+  logo: "",
   kyc_donors_only: "",
   contributor_verification_required: "",
   name: "",
@@ -210,10 +233,10 @@ const endowCardObj: {
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 
-const ENDOW_ID_NAME_OBJ: {
+const endowSelectorOptionObj: {
   [key in Extract<EndowCardFields, "id" | "name">]: any;
 } = {
   id: "",
   name: "",
 };
-const ENDOW_ID_NAME_FIELDS = Object.keys(ENDOW_ID_NAME_OBJ).join(",");
+const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");
