@@ -1,0 +1,97 @@
+import { Combobox } from "@headlessui/react";
+
+export default function Countries() {
+  return (
+    <Combobox
+      value={selected}
+      by={valueKey}
+      onChange={onSelectedChange}
+      as="div"
+      className={`relative ${container}`}
+      multiple
+    >
+      <FocusableInput ref={ref} />
+      <Combobox.Button
+        aria-invalid={!!get(errors, name)?.message}
+        aria-disabled={isDisabled}
+        as="div"
+        className={`${button} ${styles.selectorButton} p-1 focus-within:border-gray-d1 focus-within:dark:border-blue-l2`}
+      >
+        {({ open }) => (
+          <>
+            <span className="flex flex-wrap gap-2 h-full">
+              {selected.map((opt) => (
+                <SelectedOption
+                  key={opt.value}
+                  option={opt}
+                  selected={selected}
+                  onChange={onSelectedChange}
+                />
+              ))}
+              {searchable ? (
+                <div className="inline-flex items-center gap-2 text-gray-d1 dark:text-gray pl-3 bg-white/5 rounded">
+                  <Icon type="Search" size={20} />
+                  <Combobox.Input
+                    className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
+                    value={searchText}
+                    onChange={(e) => setSearchText(e.target.value)}
+                  />
+                </div>
+              ) : (
+                //this will receive focus if search input is not rendered
+                <input
+                  aria-disabled={true}
+                  className="w-0 h-0 appearance-none"
+                />
+              )}
+            </span>
+            <DrawerIcon
+              isOpen={open}
+              size={25}
+              className="justify-self-end dark:text-gray shrink-0"
+            />
+          </>
+        )}
+      </Combobox.Button>
+      <Combobox.Options className={styles.options}>
+        {optionsAvailable && (
+          <div className="flex justify-between p-4">
+            {isAllSelected ? (
+              <Action onClick={() => onSelectedChange([])}>Deselect All</Action>
+            ) : (
+              <Action onClick={() => onSelectedChange(options)}>
+                Select All
+              </Action>
+            )}
+
+            <Action onClick={() => resetField(name)}>Reset</Action>
+          </div>
+        )}
+
+        {optionsAvailable &&
+          filteredOptions.map((o) => (
+            <Combobox.Option
+              key={o.value}
+              value={o}
+              className={({ active, selected }) =>
+                styles.option(selected, active)
+              }
+            >
+              {o.label}
+            </Combobox.Option>
+          ))}
+        {!optionsAvailable && (
+          <p className="text-gray-d1 dark:text-gray text-sm px-4 py-2">
+            No options found
+          </p>
+        )}
+      </Combobox.Options>
+      <ErrorMessage
+        name={name}
+        errors={errors}
+        as="p"
+        className={styles.error}
+      />
+    </Combobox>
+  );
+}

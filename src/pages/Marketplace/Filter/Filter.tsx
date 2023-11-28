@@ -5,7 +5,6 @@ import { useSetter } from "store/accessors";
 import { reset } from "slices/components/marketFilter";
 import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
-import Regions from "./Regions";
 import SDGs from "./SDGs";
 
 export default function Filter({ classes = "" }: { classes?: string }) {
