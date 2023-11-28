@@ -58,25 +58,31 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
     </Step>,
   ];
 
+  const topStep =
+    isOtherStepsShown || currPath === 1 ? (
+      <Step classes="relative" isDone={step >= 1} isCurr={currPath === 1}>
+        Contact Details
+      </Step>
+    ) : (
+      steps[currPath]
+    );
+
   return (
     <div className={`py-4 pl-6 pr-4 ${classes} dark:text-gray`}>
-      <div className="relative">
-        {isOtherStepsShown || currPath === 1 ? (
-          <Step classes="relative" isDone={step >= 1} isCurr={currPath === 1}>
-            Contact Details
-          </Step>
-        ) : (
-          steps[currPath]
-        )}
-        <button
-          className="absolute top-1/2 -right-5 transform -translate-y-1/2 md:hidden"
-          onClick={() => {
-            setIsOtherStepsShown((prev) => !prev);
-          }}
-        >
-          <DrawerIcon isOpen={false} size={25} />
-        </button>
-      </div>
+      {/* top step toggles the display of other steps on mobile */}
+      <button
+        className="w-full relative md:hidden"
+        onClick={() => setIsOtherStepsShown((prev) => !prev)}
+      >
+        {topStep}
+        <DrawerIcon
+          isOpen={isOtherStepsShown}
+          size={25}
+          className="absolute top-1/2 -right-5 transform -translate-y-1/2"
+        />
+      </button>
+      {/* top step is just another plain step on desktop */}
+      <div className="max-md:hidden">{topStep}</div>
 
       {isOtherStepsShown && steps}
     </div>
