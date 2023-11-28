@@ -94,7 +94,10 @@ export default function Form() {
       <p className="text-sm">
         By submitting this information, you declare that you have read and
         agreed to our{" "}
-        <ExtLink className="underline text-orange" href={TERMS_OF_USE_NPO}>
+        <ExtLink
+          className="underline text-orange hover:text-orange-l2"
+          href={TERMS_OF_USE_NPO}
+        >
           Terms & Conditions
         </ExtLink>
         .

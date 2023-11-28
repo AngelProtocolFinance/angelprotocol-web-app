@@ -97,7 +97,7 @@ export default function Table({
                 <ExtLink
                   //default to ethereum for staging
                   href={getTxUrl(chainId === "staging" ? "1" : chainId, hash)}
-                  className="text-center text-blue cursor-pointer uppercase text-sm"
+                  className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
                 >
                   {maskAddress(hash)}
                 </ExtLink>
