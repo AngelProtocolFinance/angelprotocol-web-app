@@ -1,14 +1,11 @@
 import Icon from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
 import { toggle } from "slices/components/marketFilter";
 import Search from "./Search";
 
 // import Sorter from "./Sorter";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
-  const isFilterOpen = useGetter(
-    (state) => state.component.marketFilter.isOpen
-  );
   const dispatch = useSetter();
   function toggleFilter() {
     dispatch(toggle());
@@ -20,10 +17,10 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
     >
       <button
         onClick={toggleFilter}
-        className="btn-orange rounded-lg w-40 h-10 px-3 py-2 text-sm"
+        className="btn-orange justify-start rounded-lg px-3 py-2 text-sm"
       >
-        <Icon type="Filter" size={24} className="mr-auto" />
-        <span>{isFilterOpen ? "Hide filters" : "Show filters"}</span>
+        <Icon type="FilterMixer" size={24} className="mr-2" />
+        <span>Filters</span>
       </button>
       <Search classes="order-first col-span-2 md:order-none md:col-span-1" />
       {/* <Sorter /> */}
