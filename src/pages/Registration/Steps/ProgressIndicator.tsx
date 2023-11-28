@@ -16,23 +16,25 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   const currPath = idParamToNum(paths.at(-1));
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
+  const [isDesktop, setDesktop] = useState(window.innerWidth >= SCREEN_MD);
 
   useHandleScreenResize(
     (screen, ref) => {
-      const shouldOpen = screen >= SCREEN_MD; /** tailwind md screen size */
-      if (shouldOpen && !ref.isOpen) {
-        setIsOtherStepsShown(shouldOpen);
-        ref.isOpen = shouldOpen;
-      } else if (!shouldOpen && ref.isOpen) {
-        setIsOtherStepsShown(shouldOpen);
-        ref.isOpen = shouldOpen;
+      const isOnDesktop = screen >= SCREEN_MD; /** tailwind md screen size */
+      if ((isOnDesktop && !ref.isOpen) || (!isOnDesktop && ref.isOpen)) {
+        setIsOtherStepsShown(isOnDesktop);
+        ref.isOpen = isOnDesktop;
+      }
+
+      if (ref.isDesktop !== isOnDesktop) {
+        setDesktop(isOnDesktop);
       }
     },
     {
       shouldAttachListener: true,
       shouldCallOnResizeOnLoad: true,
       debounceTime: 150,
-      ref: { isOpen: isOtherStepsShown },
+      ref: { isOpen: isOtherStepsShown, isDesktop },
     }
   );
 
@@ -67,25 +69,32 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
       steps[currPath]
     );
 
-  return (
-    <div className={`py-4 pl-6 pr-4 ${classes} dark:text-gray`}>
-      {/* top step toggles the display of other steps on mobile */}
-      <button
-        className="w-full relative cursor-pointer md:hidden"
-        onClick={() => setIsOtherStepsShown((prev) => !prev)}
-      >
+  const children = (
+    <>
+      <div className="w-full relative">
         {topStep}
         <DrawerIcon
           isOpen={isOtherStepsShown}
           size={25}
-          className="absolute top-1/2 -right-5 transform -translate-y-1/2"
+          className="absolute top-1/2 -right-5 transform -translate-y-1/2 md:hidden"
         />
-      </button>
-      {/* top step is just another plain step on desktop */}
-      <div className="max-md:hidden">{topStep}</div>
+      </div>
 
       {isOtherStepsShown && steps}
-    </div>
+    </>
+  );
+
+  const classNames = `py-4 pl-6 pr-4 ${classes} dark:text-gray `;
+
+  return isDesktop ? (
+    <div className={classNames}>{children}</div>
+  ) : (
+    <button
+      className={`${classNames} cursor-pointer`}
+      onClick={() => setIsOtherStepsShown((prev) => !prev)}
+    >
+      {children}
+    </button>
   );
 }
 
