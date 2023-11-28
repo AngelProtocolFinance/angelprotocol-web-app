@@ -5,12 +5,12 @@ export function FlatFilter<T>(props: GroupProps<T>) {
   return (
     <Listbox
       as="div"
-      className="grid gap-6 px-2 py-4 border-b border-prim"
+      className="grid px-2 py-4 border-b border-prim"
       multiple
       value={props.selectedValues}
       onChange={props.onChange}
     >
-      <span className="font-bold text-xs font-heading uppercase">
+      <span className="font-bold text-xs font-heading uppercase mb-2">
         {props.label}
       </span>
       <Listbox.Options static className="flex flex-wrap gap-x-1 gap-y-2">
@@ -23,7 +23,7 @@ export function FlatFilter<T>(props: GroupProps<T>) {
                 selected
                   ? "border-orange text-orange-d4 bg-orange-l5"
                   : "border-prim"
-              } border select-none rounded-full cursor-pointer capitalize text-sm pt-1 pb-[.3rem] px-4`
+              } border select-none rounded-full cursor-pointer capitalize text-xs pt-1 pb-[.3rem] px-4`
             }
           >
             {option.displayText}

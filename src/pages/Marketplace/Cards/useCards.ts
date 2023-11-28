@@ -9,7 +9,7 @@ import { useGetter, useSetter } from "store/accessors";
 export default function useCards() {
   const dispatch = useSetter();
   const {
-    sdgGroups,
+    sdgs,
     endow_types,
     endow_designation,
     sort,
@@ -18,11 +18,6 @@ export default function useCards() {
     tiers,
     region,
   } = useGetter((state) => state.component.marketFilter);
-
-  const selectedSDGs = useMemo(
-    () => Object.entries(sdgGroups).flatMap(([, members]) => members),
-    [sdgGroups]
-  );
 
   const { activities, headquarters } = region;
   const hqCountries = useMemo(
@@ -51,7 +46,7 @@ export default function useCards() {
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
     endow_types: endow_types.join(",") || null,
     tiers: tiers.join(",") || null,
-    sdgs: selectedSDGs.join(",") || 0,
+    sdgs: sdgs.join(",") || 0,
     kyc_only: kyc_only.join(",") || null,
     ...(designations ? { endow_designation: designations } : {}),
     ...(hqCountries ? { hq_country: hqCountries } : {}),

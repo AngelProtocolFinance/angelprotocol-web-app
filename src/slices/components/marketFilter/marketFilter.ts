@@ -16,13 +16,8 @@ const marketFilter = createSlice({
       //reset everything except isOpen && sortKey
       return { ...initialState, isOpen: state.isOpen, sortKey: state.sort };
     },
-    setSdgs: (
-      state,
-      {
-        payload: { group, sdgs },
-      }: PayloadAction<{ group: number; sdgs: UNSDG_NUMS[] }>
-    ) => {
-      state.sdgGroups[group] = sdgs;
+    setSdgs: (state, { payload }: PayloadAction<UNSDG_NUMS[]>) => {
+      state.sdgs = payload;
     },
     setRegions: (
       state,
