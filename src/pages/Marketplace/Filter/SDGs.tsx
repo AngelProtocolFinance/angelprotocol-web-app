@@ -13,6 +13,7 @@ export default function SDGs() {
       label="SDGs"
       selectedValues={sdgs}
       options={Object.entries(unsdgs).map(([sdgNum, { title }]) => ({
+        key: sdgNum,
         value: +sdgNum as UNSDG_NUMS,
         displayText: `${sdgNum} : ${title}`,
       }))}

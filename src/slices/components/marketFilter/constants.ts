@@ -19,7 +19,7 @@ export const clearedState: FilterState = {
   region: { activities: {}, headquarters: {} },
   isOpen: false,
   searchText: "",
-  endow_types: ["charity"],
+  endow_types: [],
   endow_designation: [],
   kyc_only: [],
   tiers: [2, 3],

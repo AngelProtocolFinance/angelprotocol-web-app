@@ -5,6 +5,7 @@ import {
   useLazyEndowmentCardsQuery,
 } from "services/aws/aws";
 import { useGetter, useSetter } from "store/accessors";
+import { isEmpty } from "helpers";
 
 export default function useCards() {
   const dispatch = useSetter();
@@ -42,12 +43,12 @@ export default function useCards() {
   const designations = endow_designation.join(",");
 
   const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
-    query: searchText || "matchall",
+    query: searchText,
     sort: sort ? `${sort.key}+${sort.direction}` : "default",
-    endow_types: endow_types.join(",") || null,
-    tiers: tiers.join(",") || null,
-    sdgs: sdgs.join(",") || 0,
-    kyc_only: kyc_only.join(",") || null,
+    ...(!isEmpty(endow_types) ? { endow_types: endow_types.join(",") } : {}),
+    ...(!isEmpty(tiers) ? { tiers: tiers.join(",") } : {}),
+    ...(!isEmpty(sdgs) ? { sdgs: sdgs.join(",") } : {}),
+    ...(!isEmpty(kyc_only) ? { kyc_only: kyc_only.join(",") } : {}),
     ...(designations ? { endow_designation: designations } : {}),
     ...(hqCountries ? { hq_country: hqCountries } : {}),
     ...(activityCountries ? { active_in_countries: activityCountries } : {}),
