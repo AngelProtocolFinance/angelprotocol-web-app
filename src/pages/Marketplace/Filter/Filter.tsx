@@ -23,7 +23,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         </button>
       </div>
       <div className="bg-orange-l6 dark:bg-blue-d7 flex items-center justify-between p-4 border-b border-prim">
-        <h3 className="uppercase">Filter by</h3>
+        <h3 className="uppercase">Filter</h3>
         <button
           type="button"
           title="Remove all filter selections."
