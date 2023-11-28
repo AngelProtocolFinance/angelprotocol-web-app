@@ -9,7 +9,7 @@ export default function Marketplace() {
         <Hero classes="grid isolate mt-28 mb-16" />
       </div>
 
-      <div className="grid gap-x-8 grid-rows-[auto_1fr] padded-container min-h-screen">
+      <div className="grid gap-x-8 content-start padded-container min-h-screen">
         <Toolbar classes="my-10" />
         <Cards />
       </div>
