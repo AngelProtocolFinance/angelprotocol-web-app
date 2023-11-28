@@ -1,23 +1,19 @@
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
-import { useSetter } from "store/accessors";
-import { toggle } from "slices/components/marketFilter";
+import Filter from "../Filter";
 import Search from "./Search";
 
 // import Sorter from "./Sorter";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
-  const dispatch = useSetter();
-  function toggleFilter() {
-    dispatch(toggle());
-  }
-
+  const { showModal } = useModalContext();
   return (
     <div
       className={`${classes} grid grid-cols-2 md:grid-cols-[auto_1fr] gap-3`}
     >
       <button
-        onClick={toggleFilter}
-        className="btn-orange justify-start rounded-lg px-3 py-2 text-sm"
+        onClick={() => showModal(Filter, {})}
+        className="btn-orange justify-start justify-self-start rounded-lg px-3 py-2 text-sm"
       >
         <Icon type="FilterMixer" size={24} className="mr-2" />
         <span>Filters</span>

@@ -1,25 +1,24 @@
+import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import Modal from "components/Modal";
 import { useSetter } from "store/accessors";
-import { clear, reset, toggle } from "slices/components/marketFilter";
+import { clear, reset } from "slices/components/marketFilter";
 import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
 import Regions from "./Regions";
 import SDGGroups from "./SDGGroups";
 
 export default function Filter({ classes = "" }: { classes?: string }) {
+  const { closeModal } = useModalContext();
   const dispatch = useSetter();
 
-  function toggleFilter() {
-    dispatch(toggle());
-  }
-
   return (
-    <div
-      className={`border border-prim dark:bg-blue-d5 dark:text-white overflow-y-auto md:overflow-hidden md:rounded-md content-start md:h-fit md:w-80 bg-gray-l6 ${classes}`}
+    <Modal
+      className={`${classes} fixed-center z-10 w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-prim bg-gray-l6 dark:bg-blue-d5 dark:text-white content-start rounded`}
     >
       <div className="flex justify-between p-3 items-center md:hidden bg-orange-l6 dark:bg-blue-d7 border-b border-prim">
         <h3 className="text-orange text-xl font-black uppercase">Filters</h3>
-        <button onClick={toggleFilter} className="active:text-orange">
+        <button onClick={closeModal} className="active:text-orange">
           <Icon type="Close" size={25} />
         </button>
       </div>
@@ -56,6 +55,6 @@ export default function Filter({ classes = "" }: { classes?: string }) {
           />
         </div>
       </div>
-    </div>
+    </Modal>
   );
 }
