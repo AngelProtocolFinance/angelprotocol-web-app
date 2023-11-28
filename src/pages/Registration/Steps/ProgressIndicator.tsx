@@ -60,7 +60,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
 
   const topStep =
     isOtherStepsShown || currPath === 1 ? (
-      <Step classes="relative" isDone={step >= 1} isCurr={currPath === 1}>
+      <Step isDone={step >= 1} isCurr={currPath === 1}>
         Contact Details
       </Step>
     ) : (
@@ -71,7 +71,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
     <div className={`py-4 pl-6 pr-4 ${classes} dark:text-gray`}>
       {/* top step toggles the display of other steps on mobile */}
       <button
-        className="w-full relative md:hidden"
+        className="w-full relative cursor-pointer md:hidden"
         onClick={() => setIsOtherStepsShown((prev) => !prev)}
       >
         {topStep}
