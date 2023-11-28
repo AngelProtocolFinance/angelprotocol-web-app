@@ -70,7 +70,7 @@ export default function BankDetails({
         disabled={disabled}
       />
       <ExpectedFunds
-        classes={{ input: "md:w-80" }}
+        classes={{ input: "w-full md:w-80" }}
         disabled={disabled}
         onChange={(value) => {
           // if new value is empty or 0 (zero), no need to debounce, but

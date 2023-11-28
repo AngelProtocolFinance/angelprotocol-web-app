@@ -45,25 +45,27 @@ export default function ExpectedFunds(props: Props) {
           </>
         </Popover>
       </div>
-      <input
-        id="amount"
-        type="text"
-        value={value}
-        placeholder="10.000"
-        onChange={(event) => {
-          const tvalue = Number(event.target.value);
-          if (isNaN(tvalue)) {
-            return event.preventDefault();
-          }
-          setValue(event.target.value);
-          props.onChange(tvalue);
-        }}
-        className={`field-input text-field ${props.classes.input}`}
-        autoComplete="off"
-        spellCheck={false}
-        disabled={props.disabled}
-        inputMode="numeric"
-      />
+      <div className={props.classes.input}>
+        <input
+          id="amount"
+          type="text"
+          value={value}
+          placeholder="10.000"
+          onChange={(event) => {
+            const tvalue = Number(event.target.value);
+            if (isNaN(tvalue)) {
+              return event.preventDefault();
+            }
+            setValue(event.target.value);
+            props.onChange(tvalue);
+          }}
+          autoComplete="off"
+          className="field-input"
+          spellCheck={false}
+          disabled={props.disabled}
+          inputMode="numeric"
+        />
+      </div>
     </div>
   );
 }
