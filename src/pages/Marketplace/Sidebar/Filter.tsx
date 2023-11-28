@@ -6,7 +6,7 @@ import KYCFilter from "./KYCFilter";
 import Regions from "./Regions";
 import SDGGroups from "./SDGGroups";
 
-export default function Sidebar({ classes = "" }: { classes?: string }) {
+export default function Filter({ classes = "" }: { classes?: string }) {
   const dispatch = useSetter();
 
   function toggleFilter() {
