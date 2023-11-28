@@ -95,7 +95,10 @@ export default function Stripe({
         </div>
         <p className="text-sm italic text-gray-d2 dark:text-gray mt-4">
           By making a donation, you agree to our{" "}
-          <ExtLink className="underline text-orange" href={TERMS_OF_USE_DONOR}>
+          <ExtLink
+            className="underline text-orange hover:text-orange-l2"
+            href={TERMS_OF_USE_DONOR}
+          >
             Terms & Conditions
           </ExtLink>
         </p>

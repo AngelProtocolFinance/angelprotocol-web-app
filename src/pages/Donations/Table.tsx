@@ -122,7 +122,7 @@ export default function Table({
                   row.chainId === "staging" ? "1" : row.chainId,
                   row.hash
                 )}
-                className="text-center text-angel-blue cursor-pointer uppercase text-sm"
+                className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
               >
                 {row.hash}
               </ExtLink>
