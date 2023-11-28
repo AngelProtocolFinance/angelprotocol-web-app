@@ -40,7 +40,11 @@ export default function VerificationStatus({ status }: Props) {
         />
       );
     default:
-      return <></>;
+      return (
+        <span className="flex items-center text-red dark:text-red-l2 text-sm">
+          error, no bank status present
+        </span>
+      );
   }
 }
 
