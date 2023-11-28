@@ -1,3 +1,4 @@
+import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
@@ -11,6 +12,7 @@ export default function Marketplace() {
 
       <div className="grid gap-x-8 content-start padded-container min-h-screen">
         <Toolbar classes="my-10" />
+        <ActiveFilters />
         <Cards />
       </div>
     </div>

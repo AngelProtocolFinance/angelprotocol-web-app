@@ -5,7 +5,6 @@ export const initialState: FilterState = {
   countries: [],
   isOpen: false,
   searchText: "",
-  endow_types: [],
   endow_designation: [],
   kyc_only: [],
 };
