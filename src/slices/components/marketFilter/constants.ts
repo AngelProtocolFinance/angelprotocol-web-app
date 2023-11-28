@@ -8,5 +8,4 @@ export const initialState: FilterState = {
   endow_types: [],
   endow_designation: [],
   kyc_only: [],
-  tiers: [2, 3],
 };

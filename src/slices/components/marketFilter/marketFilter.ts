@@ -9,11 +9,13 @@ const marketFilter = createSlice({
   initialState,
   reducers: {
     reset: (state) => {
-      //reset everything except isOpen && sortKey
-      return { ...initialState, isOpen: state.isOpen, sortKey: state.sort };
+      return { ...initialState, isOpen: state.isOpen };
     },
     setSdgs: (state, { payload }: PayloadAction<UNSDG_NUMS[]>) => {
       state.sdgs = payload;
+    },
+    setCountries: (state, { payload }: PayloadAction<string[]>) => {
+      state.countries = payload;
     },
     setSearchText: (state, { payload }: PayloadAction<string>) => {
       state.searchText = payload;
@@ -41,6 +43,7 @@ export const {
   reset,
   toggle,
   setDesignations,
+  setCountries,
   setSort,
   setKYCOnly,
   setSearchText,

@@ -3,6 +3,7 @@ import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { useSetter } from "store/accessors";
 import { reset } from "slices/components/marketFilter";
+import Countries from "./Countries";
 import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
 import SDGs from "./SDGs";
@@ -31,6 +32,13 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         >
           Clear Filters
         </button>
+      </div>
+
+      <div className="px-4 py-4">
+        <label className="font-bold text-xs font-heading uppercase block mb-2">
+          Country
+        </label>
+        <Countries />
       </div>
 
       <div className="px-2 divide-y divide-prim">

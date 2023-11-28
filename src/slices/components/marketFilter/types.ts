@@ -1,5 +1,4 @@
 import { EndowDesignation, EndowmentsSortKey, SortDirection } from "types/aws";
-import { EndowmentTierNum } from "types/aws";
 import { EndowmentType, UNSDG_NUMS } from "types/lists";
 
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
@@ -13,5 +12,4 @@ export type FilterState = {
   sdgs: UNSDG_NUMS[];
   countries: string[];
   kyc_only: boolean[];
-  tiers: Exclude<EndowmentTierNum, 1>[];
 };
