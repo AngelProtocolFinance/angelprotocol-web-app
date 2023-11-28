@@ -84,7 +84,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
     </>
   );
 
-  const classNames = `py-4 pl-6 pr-4 ${classes} dark:text-gray `;
+  const classNames = `py-4 max-md:pr-10 pl-12 md:pl-14 md:mr-14 ${classes} dark:text-gray`;
 
   return isDesktop ? (
     <div className={classNames}>{children}</div>
