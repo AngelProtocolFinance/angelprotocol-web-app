@@ -3,10 +3,20 @@ import type { ResourcesConfig } from "aws-amplify";
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
 
-const common = IS_TEST ? {} : {};
+const common = IS_TEST
+  ? {
+      OAuthDomain: "gc8hpcg5cpes-dev.auth.us-east-1.amazoncognito.com",
+      clientID: "14qre65ehhsh5f6899ikdhk2qj",
+      userPoolID: "us-east-1_WO32hDPz3",
+    }
+  : {
+      OAuthDomain: "gc8hpcg5cpes-prod.auth.us-east-1.amazoncognito.com",
+      clientID: "405vqjgbmjj9kkghbomvj0vr39",
+      userPoolID: "us-east-1_ukOlQeQIM",
+    };
 
 const oauth: OAuthConfig = {
-  domain: "gc8hpcg5cpes-dev.auth.us-east-1.amazoncognito.com",
+  domain: common.OAuthDomain,
   scopes: [
     "phone",
     "email",
@@ -23,8 +33,8 @@ const oauth: OAuthConfig = {
 export const amplifyConfig: ResourcesConfig = {
   Auth: {
     Cognito: {
-      userPoolClientId: "14qre65ehhsh5f6899ikdhk2qj",
-      userPoolId: "us-east-1_WO32hDPz3",
+      userPoolClientId: common.clientID,
+      userPoolId: common.userPoolID,
       signUpVerificationMethod: "code",
       loginWith: {
         oauth,
