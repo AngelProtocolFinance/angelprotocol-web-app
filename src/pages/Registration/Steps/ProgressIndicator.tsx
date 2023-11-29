@@ -46,16 +46,16 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   const steps = [
     null, // skip 0th element so that currPath corresponds to the steps index position in the array
     null, // skip the 1st element (Contact Details)
-    <Step isDone={step >= 2} isCurr={currPath === 2}>
+    <Step isDone={step >= 2} isCurr={currPath === 2} key={2}>
       Organization
     </Step>,
-    <Step isDone={step >= 3} isCurr={currPath === 3}>
+    <Step isDone={step >= 3} isCurr={currPath === 3} key={3}>
       Non-Profit Status
     </Step>,
-    <Step isDone={step >= 4} isCurr={currPath === 4}>
+    <Step isDone={step >= 4} isCurr={currPath === 4} key={4}>
       Documentation
     </Step>,
-    <Step isDone={step >= 5} isCurr={currPath === 5}>
+    <Step isDone={step >= 5} isCurr={currPath === 5} key={5}>
       Banking
     </Step>,
   ];
@@ -86,9 +86,11 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
 
   const classNames = `py-4 max-md:pr-10 pl-12 md:pl-14 md:mr-14 ${classes} dark:text-gray`;
 
-  return isDesktop ? (
-    <div className={classNames}>{children}</div>
-  ) : (
+  if (isDesktop) {
+    return <div className={classNames}>{children}</div>;
+  }
+
+  return (
     <button
       className={`${classNames} cursor-pointer`}
       onClick={() => setIsOtherStepsShown((prev) => !prev)}

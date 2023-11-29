@@ -112,7 +112,7 @@ export default function BankDetails({
                 key={`${targetCurrency.code}${expectedMontlyDonations}`}
                 targetCurrency={targetCurrency.code}
                 expectedMontlyDonations={expectedMontlyDonations}
-                disabled={isSubmitting}
+                isSubmitting={isSubmitting}
                 onSubmit={onSubmit}
                 FormButtons={FormButtons}
               />

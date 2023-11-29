@@ -10,7 +10,7 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
 
 type Props = {
-  disabled: boolean;
+  isSubmitting: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
   FormButtons: React.ComponentType<FormButtonsProps>;
@@ -22,7 +22,7 @@ type Props = {
 };
 
 export default function RecipientDetails({
-  disabled,
+  isSubmitting,
   targetCurrency,
   expectedMontlyDonations,
   FormButtons,
@@ -81,7 +81,7 @@ export default function RecipientDetails({
           (x) => x.accountRequirements
         )}
         currentIndex={selectedIndex}
-        disabled={disabled}
+        disabled={isSubmitting}
         onChange={setSelectedIndex}
         className="mb-6"
       />
@@ -95,7 +95,7 @@ export default function RecipientDetails({
         key={`form-${requirements.accountRequirements.type}-${requirements.accountRequirements.fields.length}`}
         accountRequirements={requirements.accountRequirements}
         defaultValues={requirements.currentFormValues}
-        disabled={disabled}
+        disabled={isSubmitting}
         refreshRequired={requirements.refreshRequired}
         newRequirementsAdded={requirements.newRequirementsAdded}
         onUpdateValues={updateDefaultValues}
