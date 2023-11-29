@@ -100,7 +100,7 @@ function Submit({
       <i className="text-xs sm:text-sm">
         {newRequirementsAdded
           ? "Please check the form again and fill in all the newly added fields."
-          : "All requirements are met! Please click continue."}
+          : "All requirements are met! Please click submit."}
       </i>
       <div className="grid grid-cols-2 sm:flex gap-2">
         <Link
@@ -117,7 +117,7 @@ function Submit({
           type="submit"
           className="py-3 min-w-[8rem] btn-orange btn-reg"
         >
-          <LoadText isLoading={isSubmitting}>Continue</LoadText>
+          <LoadText isLoading={isSubmitting}>Submit</LoadText>
         </button>
       </div>
     </div>
