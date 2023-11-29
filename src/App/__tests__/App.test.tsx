@@ -101,8 +101,10 @@ describe("App.tsx tests", () => {
     );
     //registration is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-    //registration auth is loading
-    expect(await screen.findByTestId("loader-ring")).toBeInTheDocument();
+    //registration auth is loaded
+    expect(
+      await screen.findByRole("tab", { name: /sign in/i })
+    ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to leaderboard

@@ -2,7 +2,6 @@ import { Link, LinkGroup, SocialMediaLink } from "./types";
 import { BASE_URL, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import {
-  LITEPAPER,
   PRIVACY_POLICY,
   TERMS_OF_USE_DONOR,
   TERMS_OF_USE_NPO,
@@ -23,7 +22,7 @@ export const CHARITY_LINKS: LINKS = {
       end: true,
     },
     {
-      title: "Giving Partners",
+      title: "Giving Partners (CSR)",
       href: `${BASE_URL}/giving-partners-csr/`,
       external: true,
     },
@@ -33,12 +32,10 @@ export const CHARITY_LINKS: LINKS = {
       external: true,
     },
     { title: "Register", href: appRoutes.register },
-    // NOTE: governance will be reenabled when we relaunch the $HALO token
-    // { title: "Governance", href: appRoutes.govern },
   ],
   GROUPS_DATA: [
     {
-      title: "Products",
+      title: "How We Can Help",
       links: [
         {
           text: "Non-profits",
@@ -49,30 +46,14 @@ export const CHARITY_LINKS: LINKS = {
           href: `${BASE_URL}/giving-partners-csr/`,
         },
         { text: "Impact Board", href: `${DAPP_URL}/leaderboard/` },
-        // {
-        //   text: "For Giftcards",
-        //   href: "https://app.angel.giving/gift",
-        // },
       ],
     },
     {
-      title: "About",
+      title: "Resources",
       links: [
         { text: "About us", href: `${BASE_URL}/about-better-giving/` },
-        {
-          text: "Meet the team",
-          href: `${BASE_URL}/about/#:~:text=MEET%20THE%20TEAM-`,
-        },
-        { text: "News", href: `${BASE_URL}/news/` },
-        { text: "Careers", href: `${BASE_URL}/careers/` },
-      ],
-    },
-    {
-      title: "Docs",
-      links: [
-        { text: "Litepaper", href: LITEPAPER },
         { text: "FAQs", href: "https://intercom.help/angel-protocol/en" },
-        { text: "Technical doc (coming soon)" },
+        { text: "News", href: `${BASE_URL}/news/` },
       ],
     },
     {
@@ -83,10 +64,10 @@ export const CHARITY_LINKS: LINKS = {
           href: PRIVACY_POLICY,
         },
         {
-          text: "Terms of Use",
+          text: "Terms of Use (Donors)",
           href: TERMS_OF_USE_DONOR,
         },
-        { text: "Terms for NPO", href: TERMS_OF_USE_NPO },
+        { text: "Terms of Use (Nonprofits)", href: TERMS_OF_USE_NPO },
       ],
     },
   ],
@@ -98,14 +79,6 @@ export const CHARITY_LINKS: LINKS = {
         size: 24,
       },
       href: "https://twitter.com/angelgiving_",
-    },
-    {
-      title: "Telegram",
-      icon: {
-        type: "Telegram",
-        size: 24,
-      },
-      href: "https://t.me/angelprotocoI",
     },
     {
       title: "Discord",
@@ -124,14 +97,6 @@ export const CHARITY_LINKS: LINKS = {
       href: "https://www.youtube.com/@AngelGiving",
     },
     {
-      title: "Medium",
-      icon: {
-        type: "Medium",
-        size: 24,
-      },
-      href: "https://angelprotocol.medium.com",
-    },
-    {
       title: "Facebook",
       icon: {
         type: "FacebookCircle",
@@ -146,14 +111,6 @@ export const CHARITY_LINKS: LINKS = {
         size: 24,
       },
       href: "https://www.linkedin.com/company/angel-giving/",
-    },
-    {
-      title: "Instagram",
-      icon: {
-        type: "Instagram",
-        size: 24,
-      },
-      href: "https://www.instagram.com/angel.giving/",
     },
   ],
 };

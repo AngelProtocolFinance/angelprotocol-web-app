@@ -118,7 +118,6 @@ const registration_api = aws.injectEndpoints({
         }
       },
     }),
-
     submit: builder.mutation<SubmitResult, string>({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: (referenceID) => ({
