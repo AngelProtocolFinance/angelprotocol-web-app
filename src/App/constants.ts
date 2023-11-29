@@ -2,7 +2,6 @@ import { Link, LinkGroup, SocialMediaLink } from "./types";
 import { BASE_URL, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import {
-  LITEPAPER,
   PRIVACY_POLICY,
   TERMS_OF_USE_DONOR,
   TERMS_OF_USE_NPO,
