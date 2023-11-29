@@ -1,3 +1,4 @@
+import { ComponentType } from "react";
 import { FormButtonsProps } from "../types";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
@@ -13,7 +14,7 @@ type Props = {
   isSubmitting: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
-  FormButtons: React.ComponentType<FormButtonsProps>;
+  FormButtons: ComponentType<FormButtonsProps>;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,

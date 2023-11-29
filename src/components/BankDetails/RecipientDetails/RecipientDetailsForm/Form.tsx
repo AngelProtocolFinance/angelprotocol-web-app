@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { ComponentType, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormValues } from "../types";
 import { FormButtonsProps } from "components/BankDetails/types";
@@ -19,7 +19,7 @@ type Props = {
   disabled: boolean;
   newRequirementsAdded: boolean;
   refreshRequired: boolean;
-  FormButtons: React.ComponentType<FormButtonsProps>;
+  FormButtons: ComponentType<FormButtonsProps>;
   onRefresh: (request: CreateRecipientRequest) => Promise<void>;
   onSubmit: (
     request: CreateRecipientRequest,
