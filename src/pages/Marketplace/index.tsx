@@ -10,8 +10,8 @@ export default function Marketplace() {
         <Hero classes="grid isolate mt-28 mb-16" />
       </div>
 
-      <div className="grid gap-x-8 content-start padded-container min-h-screen">
-        <Toolbar classes="my-10" />
+      <div className="grid gap-y-4 content-start padded-container min-h-screen">
+        <Toolbar classes="mt-10" />
         <ActiveFilters />
         <Cards />
       </div>

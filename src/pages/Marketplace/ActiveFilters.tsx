@@ -1,6 +1,8 @@
 import { PropsWithChildren } from "react";
+import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import {
+  reset,
   setCountries,
   setDesignations,
   setKYCOnly,
@@ -35,7 +37,7 @@ export default function ActiveFilters() {
       key={sdgNum}
       onRemove={() => dispatch(setSdgs(sdgs.filter((s) => s !== sdgNum)))}
     >
-      {unsdgs[sdgNum].title}
+      SDG {sdgNum}: {unsdgs[sdgNum].title}
     </Item>
   ));
 
@@ -56,20 +58,36 @@ export default function ActiveFilters() {
     </Item>
   ));
 
+  const filters = endowDesignations
+    .concat(sdgFilters)
+    .concat(countryFilters)
+    .concat(kycFilters);
+
   return (
-    <div className="flex flex-wrap gap-2">
-      {endowDesignations
-        .concat(sdgFilters)
-        .concat(countryFilters)
-        .concat(kycFilters)}
+    <div className="flex flex-wrap gap-1">
+      {filters}
+      {filters.length >= 2 && (
+        <button
+          type="button"
+          onClick={() => dispatch(reset())}
+          className="text-blue hover:text-blue-l1 text-sm ml-1"
+        >
+          Clear all
+        </button>
+      )}
     </div>
   );
 }
 
 function Item({ children, onRemove }: PropsWithChildren<{ onRemove(): void }>) {
   return (
-    <button type="button" onClick={onRemove}>
-      {children}
+    <button
+      type="button"
+      onClick={onRemove}
+      className="flex items-center gap-2 border select-none rounded-full cursor-pointer capitalize text-xs pt-1 pb-[.3rem] pl-3 pr-1.5 texg-gray-d1 dark:text-gray bg-orange-l6 hover:bg-orange-l5"
+    >
+      <span>{children}</span>
+      <Icon type="CloseCircle" size={20} />
     </button>
   );
 }
