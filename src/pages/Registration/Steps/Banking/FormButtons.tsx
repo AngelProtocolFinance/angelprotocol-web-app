@@ -1,17 +1,10 @@
 import { Link } from "react-router-dom";
+import { FormButtonsProps } from "components/BankDetails/types";
 import { LoadText } from "components/registration";
 import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
-type Props = {
-  alreadySubmitted?: boolean;
-  disabled: boolean;
-  isSubmitting: boolean;
-  newRequirementsAdded: boolean;
-  refreshRequired: boolean;
-};
-
-export default function FormButtons(props: Props) {
+export default function FormButtons(props: FormButtonsProps) {
   const { alreadySubmitted, refreshRequired, ...rest } = props;
 
   if (alreadySubmitted) {
@@ -57,7 +50,7 @@ function AlreadySubmitted() {
 function Refresh({
   disabled,
   isSubmitting,
-}: Omit<Props, "alreadySubmitted" | "refreshRequired">) {
+}: Omit<FormButtonsProps, "alreadySubmitted" | "refreshRequired">) {
   const { data } = useRegState<5>();
   return (
     <div className="grid gap-4 mt-16">
@@ -93,7 +86,7 @@ function Refresh({
 function Submit({
   isSubmitting,
   newRequirementsAdded,
-}: Pick<Props, "isSubmitting" | "newRequirementsAdded">) {
+}: Pick<FormButtonsProps, "isSubmitting" | "newRequirementsAdded">) {
   const { data } = useRegState<5>();
   return (
     <div className="grid gap-4 mt-8">
