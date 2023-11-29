@@ -22,7 +22,7 @@ export default function Form(props: Props) {
       </Label>
       <FileDropzone<FV, "ProofOfIdentity">
         name="ProofOfIdentity"
-        tooltip={fileTooltip}
+        specs={{ mbLimit: MB_LIMIT, mimeTypes: VALID_MIME_TYPES }}
       />
 
       <Field<FV>
@@ -38,7 +38,7 @@ export default function Form(props: Props) {
       </Label>
       <FileDropzone<FV, "ProofOfRegistration">
         name="ProofOfRegistration"
-        tooltip={fileTooltip}
+        specs={{ mbLimit: MB_LIMIT, mimeTypes: VALID_MIME_TYPES }}
       />
 
       <Field<FV>
@@ -94,7 +94,3 @@ export default function Form(props: Props) {
     </form>
   );
 }
-
-const fileTooltip = `Valid types are: ${VALID_MIME_TYPES.join(
-  ", "
-)}. File should be less than ${MB_LIMIT}MB.`;
