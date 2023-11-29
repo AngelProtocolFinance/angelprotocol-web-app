@@ -12,7 +12,6 @@ export default function DonateButton({
   return (
     <Link
       to={appRoutes.donate + `/${profile.id}`}
-      aria-disabled={true}
       className={`${className} btn-orange h-12 px-6 text-base lg:text-sm`}
     >
       Donate now
