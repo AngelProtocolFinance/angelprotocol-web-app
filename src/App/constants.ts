@@ -32,8 +32,6 @@ export const CHARITY_LINKS: LINKS = {
       external: true,
     },
     { title: "Register", href: appRoutes.register },
-    // NOTE: governance will be reenabled when we relaunch the $HALO token
-    // { title: "Governance", href: appRoutes.govern },
   ],
   GROUPS_DATA: [
     {
@@ -82,14 +80,6 @@ export const CHARITY_LINKS: LINKS = {
       },
       href: "https://twitter.com/angelgiving_",
     },
-    // {
-    //   title: "Telegram",
-    //   icon: {
-    //     type: "Telegram",
-    //     size: 24,
-    //   },
-    //   href: "https://t.me/angelprotocoI",
-    // },
     {
       title: "Discord",
       icon: {
@@ -106,14 +96,6 @@ export const CHARITY_LINKS: LINKS = {
       },
       href: "https://www.youtube.com/@AngelGiving",
     },
-    // {
-    //   title: "Medium",
-    //   icon: {
-    //     type: "Medium",
-    //     size: 24,
-    //   },
-    //   href: "https://angelprotocol.medium.com",
-    // },
     {
       title: "Facebook",
       icon: {
