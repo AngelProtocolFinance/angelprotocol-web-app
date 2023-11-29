@@ -53,7 +53,10 @@ export default function ActiveFilters() {
   ));
 
   const kycFilters = kyc_only.map((kyc) => (
-    <Item key={`${kyc}`} onRemove={() => dispatch(setKYCOnly([kyc]))}>
+    <Item
+      key={`${kyc}`}
+      onRemove={() => dispatch(setKYCOnly(kyc_only.filter((v) => v !== kyc)))}
+    >
       {kyc ? "KYC" : "No KYC"}
     </Item>
   ));
