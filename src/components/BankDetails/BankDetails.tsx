@@ -55,11 +55,11 @@ export default function BankDetails({
       <div className="flex flex-col h-full justify-between">
         <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />
         <FormButtons
-          disabled={true}
+          disabled
           isSubmitting={false}
           newRequirementsAdded={false}
-          refreshRequired={true}
-          alreadySubmitted={true}
+          refreshRequired
+          alreadySubmitted
         />
       </div>
     );
@@ -89,10 +89,10 @@ export default function BankDetails({
           to be able to show "Back" button during registration */}
       {!expectedMontlyDonations ? (
         <FormButtons
-          disabled={true}
+          disabled
           isSubmitting={false}
           newRequirementsAdded={false}
-          refreshRequired={true}
+          refreshRequired
           alreadySubmitted={false}
         />
       ) : (
