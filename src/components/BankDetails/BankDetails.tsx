@@ -14,7 +14,7 @@ import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
 type Props = {
-  alreadySubmitted?: boolean;
+  alreadySubmitted: boolean;
   isSubmitting: boolean;
   FormButtons: React.ComponentType<FormButtonsProps>;
   onSubmit: (
@@ -25,7 +25,7 @@ type Props = {
 };
 
 export default function BankDetails({
-  alreadySubmitted = false,
+  alreadySubmitted,
   isSubmitting,
   onSubmit,
   FormButtons,
