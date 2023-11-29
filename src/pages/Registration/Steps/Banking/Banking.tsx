@@ -17,8 +17,15 @@ function Banking() {
         isSubmitting={isSubmitting}
         onSubmit={submit}
       >
-        {(disabled, isSubmitting, newRequirementsAdded, refreshRequired) => (
+        {(
+          disabled,
+          isSubmitting,
+          newRequirementsAdded,
+          refreshRequired,
+          alreadySubmitted = false
+        ) => (
           <FormButtons
+            alreadySubmitted={alreadySubmitted}
             disabled={disabled}
             isSubmitting={isSubmitting}
             newRequirementsAdded={newRequirementsAdded}

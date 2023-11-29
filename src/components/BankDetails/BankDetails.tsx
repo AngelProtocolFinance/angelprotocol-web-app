@@ -19,7 +19,8 @@ type Props = {
     disabled: boolean,
     isSubmitting: boolean,
     newRequirementsAdded: boolean,
-    refreshRequired: boolean
+    refreshRequired: boolean,
+    alreadySubmitted?: boolean
   ) => ReactNode;
   onSubmit: (
     request: CreateRecipientRequest,
@@ -55,10 +56,13 @@ export default function BankDetails({
   }
 
   if (!shouldUpdate) {
-    return <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />;
+    return (
+      <div className="flex flex-col h-full justify-between">
+        <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />
+        {formButtons(true, false, false, true, true)}
+      </div>
+    );
   }
-
-  const disabled = !shouldUpdate || isSubmitting;
 
   return (
     <div className="grid gap-6">
@@ -67,11 +71,11 @@ export default function BankDetails({
         currencies={currencies}
         onChange={setTargetCurrency}
         classes={{ combobox: "w-full md:w-80" }}
-        disabled={disabled}
+        disabled={isSubmitting}
       />
       <ExpectedFunds
         classes={{ input: "md:w-80" }}
-        disabled={disabled}
+        disabled={isSubmitting}
         onChange={(value) => {
           // if new value is empty or 0 (zero), no need to debounce, but
           // still call the function itself to cancel the previous debounce call
@@ -83,7 +87,7 @@ export default function BankDetails({
       {/* Display disabled form buttons by default, this is necessary 
           to be able to show "Back" button during registration */}
       {!expectedMontlyDonations ? (
-        formButtons(true, false, false, true)
+        formButtons(true, false, false, true, false)
       ) : (
         <>
           <Divider />
@@ -101,7 +105,7 @@ export default function BankDetails({
                 key={`${targetCurrency.code}${expectedMontlyDonations}`}
                 targetCurrency={targetCurrency.code}
                 expectedMontlyDonations={expectedMontlyDonations}
-                disabled={disabled}
+                disabled={isSubmitting}
                 onSubmit={onSubmit}
                 formButtons={formButtons}
               />

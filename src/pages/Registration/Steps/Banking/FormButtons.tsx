@@ -4,17 +4,51 @@ import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
 type Props = {
+  alreadySubmitted: boolean;
   disabled: boolean;
   isSubmitting: boolean;
   newRequirementsAdded: boolean;
   refreshRequired: boolean;
 };
 
-export default function FormButtons({ refreshRequired, ...rest }: Props) {
-  return refreshRequired ? <Refresh {...rest} /> : <Submit {...rest} />;
+export default function FormButtons(props: Props) {
+  const { alreadySubmitted, refreshRequired, ...rest } = props;
+
+  return alreadySubmitted ? (
+    <AlreadySubmitted />
+  ) : refreshRequired ? (
+    <Refresh {...rest} />
+  ) : (
+    <Submit {...rest} />
+  );
 }
 
-function Refresh({ disabled, isSubmitting }: Omit<Props, "refreshRequired">) {
+function AlreadySubmitted() {
+  const { data } = useRegState<5>();
+  return (
+    <div className="grid grid-cols-2 sm:flex gap-2">
+      <Link
+        to={`../${steps.docs}`}
+        state={data.init}
+        className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+      >
+        Back
+      </Link>
+      <Link
+        to={`../${steps.summary}`}
+        state={data.init}
+        className="py-3 min-w-[8rem] btn-orange btn-reg"
+      >
+        Continue
+      </Link>
+    </div>
+  );
+}
+
+function Refresh({
+  disabled,
+  isSubmitting,
+}: Omit<Props, "alreadySubmitted" | "refreshRequired">) {
   const { data } = useRegState<5>();
   return (
     <div className="grid gap-4 mt-8">
