@@ -52,7 +52,7 @@ export default function BankDetails({
 
   if (!shouldUpdate) {
     return (
-      <div className="flex flex-col w-full h-full justify-between mt-8 max-md:items-center">
+      <div className="flex flex-col w-full justify-between mt-8 max-md:items-center">
         <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />
         <FormButtons
           disabled
