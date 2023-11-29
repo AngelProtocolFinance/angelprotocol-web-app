@@ -16,21 +16,18 @@ export default function Filter({ classes = "" }: { classes?: string }) {
     <Modal
       className={`${classes} fixed-center z-10 w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-prim bg-gray-l6 dark:bg-blue-d5 dark:text-white rounded`}
     >
-      <div className="flex justify-between p-3 items-center md:hidden bg-orange-l6 dark:bg-blue-d7 border-b border-prim">
-        <h3 className="text-orange text-xl font-black uppercase">Filters</h3>
-        <button onClick={closeModal} className="active:text-orange">
-          <Icon type="Close" size={25} />
-        </button>
-      </div>
-      <div className="bg-orange-l6 dark:bg-blue-d7 flex items-center justify-between p-4 border-b border-prim">
-        <h3 className="uppercase">Filters</h3>
+      <div className="bg-orange-l6 dark:bg-blue-d7 flex items-center p-4 border-b border-prim">
+        <h3 className="uppercase mr-auto">Filters</h3>
         <button
           type="button"
           title="Reset all filters to their default values."
           onClick={() => dispatch(reset())}
-          className="text-gray-d1 dark:text-gray-l3 text-sm"
+          className="text-gray-d1 dark:text-gray-l3 text-sm mr-4"
         >
           Clear Filters
+        </button>
+        <button onClick={closeModal} className="active:text-orange">
+          <Icon type="Close" size={22} />
         </button>
       </div>
 
