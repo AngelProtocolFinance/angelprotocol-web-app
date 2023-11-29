@@ -112,13 +112,5 @@ export const CHARITY_LINKS: LINKS = {
       },
       href: "https://www.linkedin.com/company/angel-giving/",
     },
-    {
-      title: "Instagram",
-      icon: {
-        type: "Instagram",
-        size: 24,
-      },
-      href: "https://www.instagram.com/angel.giving/",
-    },
   ],
 };
