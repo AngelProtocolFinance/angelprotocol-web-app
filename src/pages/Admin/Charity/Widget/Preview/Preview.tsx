@@ -1,7 +1,7 @@
 import { DappLogo } from "components/Image";
 import { useGetter } from "store/accessors";
 import { possesiveForm } from "helpers";
-import DonaterSample from "./DonaterSample";
+import DonateMethods from "./DonateMethods";
 
 export default function Preview({ classes = "" }) {
   const widgetConfig = useGetter((state) => state.widget);
@@ -38,10 +38,7 @@ export default function Preview({ classes = "" }) {
           Connect the wallet of your choice to donate crypto. <br />
           Continue below to donate fiat (Dollars, GBP, AUD, Euro)
         </p>
-        <DonaterSample
-          {...widgetConfig}
-          classes="mb-10 px-6 @xl/preview:px-10"
-        />
+        <DonateMethods classes="mb-10 px-6 @xl/preview:px-10" />
 
         <footer className="grid place-items-center h-20 w-full bg-blue mt-auto">
           <DappLogo classes="w-20" />
