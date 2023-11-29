@@ -31,7 +31,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         </button>
       </div>
 
-      <div className="px-2 py-4">
+      <div className="px-4 py-4">
         <label className="font-bold text-xs font-heading uppercase block mb-2">
           Countries
         </label>
