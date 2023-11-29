@@ -133,10 +133,8 @@ export type EndowmentsQueryParams = {
   query: string; //
   sort?: `${EndowmentsSortKey}+${SortDirection}`;
   page?: number; //to load next page, set to Page + 1
-  endow_types?: string; // comma separated EndowmentType values
   endow_designation?: string; // comma separated EndowDesignation values
   sdgs?: string; // comma separated sdg values.
-  tiers?: string; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
   kyc_only?: string; // comma separated boolean values
   countries?: string; //comma separated country names
   hits?: number; // Number of items to be returned per request. If not provided, API defaults to return all
