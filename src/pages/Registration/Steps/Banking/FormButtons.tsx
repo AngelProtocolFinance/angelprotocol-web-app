@@ -28,21 +28,28 @@ export default function FormButtons(props: Props) {
 function AlreadySubmitted() {
   const { data } = useRegState<5>();
   return (
-    <div className="grid grid-cols-2 sm:flex gap-2">
-      <Link
-        to={`../${steps.docs}`}
-        state={data.init}
-        className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
-      >
-        Back
-      </Link>
-      <Link
-        to={`../${steps.summary}`}
-        state={data.init}
-        className="py-3 min-w-[8rem] btn-orange btn-reg"
-      >
-        Continue
-      </Link>
+    <div className="grid gap-4 mt-16">
+      <i className="text-xs sm:text-sm">
+        You have already successfully completed this step. Click "Continue" to
+        go to the next step or click "Update Bank Details" button above to
+        submit different bank details for review.
+      </i>
+      <div className="grid grid-cols-2 sm:flex gap-2 w-full">
+        <Link
+          to={`../${steps.docs}`}
+          state={data.init}
+          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+        >
+          Back
+        </Link>
+        <Link
+          to={`../${steps.summary}`}
+          state={data.init}
+          className="py-3 min-w-[8rem] btn-orange btn-reg"
+        >
+          Continue
+        </Link>
+      </div>
     </div>
   );
 }
@@ -53,7 +60,7 @@ function Refresh({
 }: Omit<Props, "alreadySubmitted" | "refreshRequired">) {
   const { data } = useRegState<5>();
   return (
-    <div className="grid gap-4 mt-8">
+    <div className="grid gap-4 mt-16">
       <i className="text-xs sm:text-sm">
         After you fill the form, we may need additional information to be able
         to submit your bank details for validation. Please fill the form and
