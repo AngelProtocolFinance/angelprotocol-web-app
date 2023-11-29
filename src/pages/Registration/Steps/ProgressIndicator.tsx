@@ -16,59 +16,85 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   const currPath = idParamToNum(paths.at(-1));
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
+  const [isDesktop, setDesktop] = useState(window.innerWidth >= SCREEN_MD);
 
   useHandleScreenResize(
     (screen, ref) => {
-      const shouldOpen = screen >= SCREEN_MD; /** tailwind md screen size */
-      if (shouldOpen && !ref.isOpen) {
-        setIsOtherStepsShown(shouldOpen);
-        ref.isOpen = shouldOpen;
-      } else if (!shouldOpen && ref.isOpen) {
-        setIsOtherStepsShown(shouldOpen);
-        ref.isOpen = shouldOpen;
+      const isOnDesktop = screen >= SCREEN_MD; /** tailwind md screen size */
+      if ((isOnDesktop && !ref.isOpen) || (!isOnDesktop && ref.isOpen)) {
+        setIsOtherStepsShown(isOnDesktop);
+        ref.isOpen = isOnDesktop;
+      }
+
+      if (ref.isDesktop !== isOnDesktop) {
+        setDesktop(isOnDesktop);
       }
     },
     {
       shouldAttachListener: true,
       shouldCallOnResizeOnLoad: true,
       debounceTime: 150,
-      ref: { isOpen: isOtherStepsShown },
+      ref: { isOpen: isOtherStepsShown, isDesktop },
     }
   );
 
-  return (
-    <div className={`py-4 pl-6 pr-4 ${classes} dark:text-gray`}>
-      <div className="relative">
-        <Step classes="relative" isDone={step >= 1} isCurr={currPath === 1}>
-          Contact Details
-        </Step>
-        <button
+  /**
+   * Steps are grouped inside an array to make it more easy to:
+   * 1. access the currently active step (step number corresponds to step index position in the array)
+   * 2. list all steps when the component is expanded
+   */
+  const steps = [
+    null, // skip 0th element so that currPath corresponds to the steps index position in the array
+    null, // skip the 1st element (Contact Details)
+    <Step isDone={step >= 2} isCurr={currPath === 2}>
+      Organization
+    </Step>,
+    <Step isDone={step >= 3} isCurr={currPath === 3}>
+      Non-Profit Status
+    </Step>,
+    <Step isDone={step >= 4} isCurr={currPath === 4}>
+      Documentation
+    </Step>,
+    <Step isDone={step >= 5} isCurr={currPath === 5}>
+      Banking
+    </Step>,
+  ];
+
+  const topStep =
+    isOtherStepsShown || currPath === 1 ? (
+      <Step isDone={step >= 1} isCurr={currPath === 1}>
+        Contact Details
+      </Step>
+    ) : (
+      steps[currPath]
+    );
+
+  const children = (
+    <>
+      <div className="w-full relative">
+        {topStep}
+        <DrawerIcon
+          isOpen={isOtherStepsShown}
+          size={25}
           className="absolute top-1/2 -right-5 transform -translate-y-1/2 md:hidden"
-          onClick={() => {
-            setIsOtherStepsShown((prev) => !prev);
-          }}
-        >
-          <DrawerIcon isOpen={isOtherStepsShown} size={25} />
-        </button>
+        />
       </div>
 
-      {isOtherStepsShown && (
-        <>
-          <Step isDone={step >= 2} isCurr={currPath === 2}>
-            Organization
-          </Step>
-          <Step isDone={step >= 3} isCurr={currPath === 3}>
-            Non-Profit Status
-          </Step>
-          <Step isDone={step >= 4} isCurr={currPath === 4}>
-            Documentation
-          </Step>
-          <Step isDone={step >= 5} isCurr={currPath === 5}>
-            Banking
-          </Step>
-        </>
-      )}
-    </div>
+      {isOtherStepsShown && steps}
+    </>
+  );
+
+  const classNames = `py-4 max-md:pr-10 pl-12 md:pl-14 md:mr-14 ${classes} dark:text-gray`;
+
+  return isDesktop ? (
+    <div className={classNames}>{children}</div>
+  ) : (
+    <button
+      className={`${classNames} cursor-pointer`}
+      onClick={() => setIsOtherStepsShown((prev) => !prev)}
+    >
+      {children}
+    </button>
   );
 }
 
