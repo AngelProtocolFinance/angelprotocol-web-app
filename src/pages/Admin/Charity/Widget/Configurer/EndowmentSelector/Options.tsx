@@ -12,9 +12,6 @@ type Props = {
 export default function Options({ searchText, isDebouncing = false }: Props) {
   const queryState = useEndowmentOptionsQuery({
     query: searchText || "matchall",
-    sort: "default",
-    endow_types: "charity",
-    tiers: "2,3",
     sdgs: Object.keys(unsdgs).join(","),
     kyc_only: "true,false",
     page: 1,

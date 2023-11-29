@@ -8,22 +8,25 @@ import { isEmpty } from "helpers";
 
 export default function useCards() {
   const dispatch = useSetter();
-  const { sort, searchText, endow_designation, sdgs, kyc_only, countries } =
-    useGetter((state) => state.component.marketFilter);
+  const { sort, searchText, ...params } = useGetter(
+    (state) => state.component.marketFilter
+  );
+
+  const _params = Object.entries(params).reduce(
+    (prev, [key, val]) => ({
+      ...prev,
+      ...(isEmpty(val) ? {} : { [key]: val.join(",") }),
+    }),
+    {}
+  );
 
   const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
     query: searchText,
-    sort: sort ? `${sort.key}+${sort.direction}` : "default",
+    sort: sort ? `${sort.key}+${sort.direction}` : undefined,
     page: 1, // always starts at page 1
     hits: 15,
     published: "true",
-    ...(isEmpty(sdgs) ? {} : { sdgs: sdgs.join(",") }),
-    ...(isEmpty(kyc_only) ? {} : { kyc_only: kyc_only.join(",") }),
-    ...(isEmpty(countries) ? {} : { active_in_countries: countries.join(",") }),
-    ...(isEmpty(countries) ? {} : { hq_country: countries.join(",") }),
-    ...(isEmpty(endow_designation)
-      ? {}
-      : { endow_designation: endow_designation.join(",") }),
+    ..._params,
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] =

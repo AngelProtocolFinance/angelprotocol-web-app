@@ -131,15 +131,14 @@ export type EndowmentsSortKey = "name_internal" | "overall";
 
 export type EndowmentsQueryParams = {
   query: string; //
-  sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
+  sort?: `${EndowmentsSortKey}+${SortDirection}`;
   page?: number; //to load next page, set to Page + 1
   endow_types?: string; // comma separated EndowmentType values
   endow_designation?: string; // comma separated EndowDesignation values
   sdgs?: string; // comma separated sdg values.
   tiers?: string; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
   kyc_only?: string; // comma separated boolean values
-  hq_country?: string; //comma separated values
-  active_in_countries?: string; //comma separated values
+  countries?: string; //comma separated country names
   hits?: number; // Number of items to be returned per request. If not provided, API defaults to return all
   published: "true";
 };

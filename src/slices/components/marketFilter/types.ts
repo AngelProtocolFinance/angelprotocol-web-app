@@ -4,7 +4,6 @@ import { UNSDG_NUMS } from "types/lists";
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
 
 export type FilterState = {
-  isOpen: boolean;
   searchText: string;
   endow_designation: EndowDesignation[];
   sort?: Sort;

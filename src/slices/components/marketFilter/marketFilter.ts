@@ -8,8 +8,8 @@ const marketFilter = createSlice({
   name: "marketFilter",
   initialState,
   reducers: {
-    reset: (state) => {
-      return { ...initialState, isOpen: state.isOpen };
+    reset: () => {
+      return initialState;
     },
     setSdgs: (state, { payload }: PayloadAction<UNSDG_NUMS[]>) => {
       state.sdgs = payload;
@@ -32,16 +32,12 @@ const marketFilter = createSlice({
     ) => {
       state.endow_designation = payload;
     },
-    toggle(state) {
-      state.isOpen = !state.isOpen;
-    },
   },
 });
 
 export const {
   setSdgs,
   reset,
-  toggle,
   setDesignations,
   setCountries,
   setSort,
