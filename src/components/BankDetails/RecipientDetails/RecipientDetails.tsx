@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { FormButtonsProps } from "../types";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import LoaderRing from "components/LoaderRing";
@@ -13,12 +13,7 @@ type Props = {
   disabled: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
-  formButtons: (
-    disabled: boolean,
-    isSubmitting: boolean,
-    newRequirementsAdded: boolean,
-    refreshRequired: boolean
-  ) => ReactNode;
+  FormButtons: React.ComponentType<FormButtonsProps>;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,
@@ -30,7 +25,7 @@ export default function RecipientDetails({
   disabled,
   targetCurrency,
   expectedMontlyDonations,
-  formButtons,
+  FormButtons,
   onSubmit,
 }: Props) {
   const {
@@ -106,7 +101,7 @@ export default function RecipientDetails({
         onUpdateValues={updateDefaultValues}
         onSubmit={handleSubmit}
         onRefresh={refreshRequirements}
-        formButtons={formButtons}
+        FormButtons={FormButtons}
       />
     </>
   );

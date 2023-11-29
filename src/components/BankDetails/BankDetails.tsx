@@ -1,4 +1,5 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
+import { FormButtonsProps } from "./types";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import Divider from "components/Divider";
@@ -15,13 +16,7 @@ import useCurrencies from "./useCurrencies";
 type Props = {
   alreadySubmitted?: boolean;
   isSubmitting: boolean;
-  children: (
-    disabled: boolean,
-    isSubmitting: boolean,
-    newRequirementsAdded: boolean,
-    refreshRequired: boolean,
-    alreadySubmitted?: boolean
-  ) => ReactNode;
+  FormButtons: React.ComponentType<FormButtonsProps>;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,
@@ -33,7 +28,7 @@ export default function BankDetails({
   alreadySubmitted = false,
   isSubmitting,
   onSubmit,
-  children: formButtons,
+  FormButtons,
 }: Props) {
   const [shouldUpdate, setShouldUpdate] = useState(!alreadySubmitted);
   const [expectedMontlyDonations, setExpectedMontlyDonations] =
@@ -59,7 +54,13 @@ export default function BankDetails({
     return (
       <div className="flex flex-col h-full justify-between">
         <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />
-        {formButtons(true, false, false, true, true)}
+        <FormButtons
+          disabled={true}
+          isSubmitting={false}
+          newRequirementsAdded={false}
+          refreshRequired={true}
+          alreadySubmitted={true}
+        />
       </div>
     );
   }
@@ -87,7 +88,13 @@ export default function BankDetails({
       {/* Display disabled form buttons by default, this is necessary 
           to be able to show "Back" button during registration */}
       {!expectedMontlyDonations ? (
-        formButtons(true, false, false, true, false)
+        <FormButtons
+          disabled={true}
+          isSubmitting={false}
+          newRequirementsAdded={false}
+          refreshRequired={true}
+          alreadySubmitted={false}
+        />
       ) : (
         <>
           <Divider />
@@ -107,7 +114,7 @@ export default function BankDetails({
                 expectedMontlyDonations={expectedMontlyDonations}
                 disabled={isSubmitting}
                 onSubmit={onSubmit}
-                formButtons={formButtons}
+                FormButtons={FormButtons}
               />
             )}
           </div>

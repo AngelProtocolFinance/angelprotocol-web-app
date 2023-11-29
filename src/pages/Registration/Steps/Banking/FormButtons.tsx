@@ -4,7 +4,7 @@ import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
 type Props = {
-  alreadySubmitted: boolean;
+  alreadySubmitted?: boolean;
   disabled: boolean;
   isSubmitting: boolean;
   newRequirementsAdded: boolean;
@@ -14,13 +14,15 @@ type Props = {
 export default function FormButtons(props: Props) {
   const { alreadySubmitted, refreshRequired, ...rest } = props;
 
-  return alreadySubmitted ? (
-    <AlreadySubmitted />
-  ) : refreshRequired ? (
-    <Refresh {...rest} />
-  ) : (
-    <Submit {...rest} />
-  );
+  if (alreadySubmitted) {
+    return <AlreadySubmitted />;
+  }
+
+  if (refreshRequired) {
+    return <Refresh {...rest} />;
+  }
+
+  return <Submit {...rest} />;
 }
 
 function AlreadySubmitted() {
@@ -84,10 +86,7 @@ function Refresh({
 function Submit({
   isSubmitting,
   newRequirementsAdded,
-}: {
-  isSubmitting: boolean;
-  newRequirementsAdded: boolean;
-}) {
+}: Pick<Props, "isSubmitting" | "newRequirementsAdded">) {
   const { data } = useRegState<5>();
   return (
     <div className="grid gap-4 mt-8">
