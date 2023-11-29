@@ -22,3 +22,11 @@ export type UNSDG_NUMS =
 
 export type TransactionStatus = "open" | "approved" | "expired";
 export type EndowmentType = "charity" | "ast" | "daf";
+
+type ImageSubType = "svg" | "jpeg" | "png" | "webp";
+type ApplicationSubType = "pdf";
+
+export type ImageMIMEType = `image/${ImageSubType}`;
+export type ApplicationMIMEType = `application/${ApplicationSubType}`;
+
+export type MIMEType = ImageMIMEType | ApplicationMIMEType;
