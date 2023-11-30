@@ -25,6 +25,7 @@ type RequirementsData = {
 };
 
 export default function useRecipientDetails(
+  isDebouncing: boolean,
   targetCurrency: string,
   expectedMontlyDonations: number,
   onSubmit: (
@@ -48,7 +49,20 @@ export default function useRecipientDetails(
   const [postAccountRequirements] = usePostAccountRequirementsMutation();
 
   useEffect(() => {
+    if (isDebouncing && !isLoading) {
+      setLoading(true);
+    }
+  }, [isDebouncing, isLoading]);
+
+  useEffect(() => {
     (async () => {
+      if (isError) {
+        setError(false);
+      }
+      if (!isLoading) {
+        setLoading(true);
+      }
+
       try {
         const newQuote = await createQuote({
           sourceAmount: expectedMontlyDonations,
@@ -60,17 +74,24 @@ export default function useRecipientDetails(
         ).unwrap();
 
         if (isEmpty(newRequirements)) {
+          setError(true);
           return handleError(
             "Target currency not supported. Please use a bank account with a different currency."
           );
         }
 
-        setRequirementsDataArray(
+        setRequirementsDataArray((prev) =>
           newRequirements.map((item) => {
+            const { formValues, newRequirementsAdded } = getRefreshedFormValues(
+              prev,
+              item,
+              targetCurrency
+            );
+
             const data: RequirementsData = {
               accountRequirements: item,
-              currentFormValues: getDefaultValues(item, targetCurrency),
-              newRequirementsAdded: false,
+              currentFormValues: formValues,
+              newRequirementsAdded: newRequirementsAdded,
               refreshRequired: item.fields.some((field) =>
                 field.group.some((group) => group.refreshRequirementsOnChange)
               ),
@@ -206,16 +227,16 @@ function getRefreshedFormValues(
   newRequirementsAdded: boolean;
   formValues: FormValues;
 } {
-  // should always be found, but not 100% sure how Wise behaves in all cases
+  // should be undefined when loading for the first time or changing target currency/expected monthly donations
+  // should always be found when refreshing but not 100% sure how Wise behaves in all cases
   const currReqData = currReqDataArray.find(
     (x) => x.accountRequirements.type === newReq.type
   );
 
   if (!currReqData) {
-    // as previously said, very unlikely to ever happen
     return {
       formValues: getDefaultValues(newReq, targetCurrency),
-      newRequirementsAdded: true, // these are technically new requirements
+      newRequirementsAdded: false, // these are technically new requirements
     };
   }
 

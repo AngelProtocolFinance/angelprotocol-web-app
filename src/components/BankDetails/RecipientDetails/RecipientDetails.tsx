@@ -11,6 +11,7 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
 
 type Props = {
+  isLoading: boolean;
   isSubmitting: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
@@ -23,6 +24,7 @@ type Props = {
 };
 
 export default function RecipientDetails({
+  isLoading,
   isSubmitting,
   targetCurrency,
   expectedMontlyDonations,
@@ -32,15 +34,20 @@ export default function RecipientDetails({
   const {
     handleSubmit,
     isError,
-    isLoading,
+    isLoading: isLoadingRequirements,
     refreshRequirements,
     requirementsDataArray,
     selectedIndex,
     setSelectedIndex,
     updateDefaultValues,
-  } = useRecipientDetails(targetCurrency, expectedMontlyDonations, onSubmit);
+  } = useRecipientDetails(
+    isLoading,
+    targetCurrency,
+    expectedMontlyDonations,
+    onSubmit
+  );
 
-  if (isLoading) {
+  if (isLoading || isLoadingRequirements) {
     return (
       <div className="flex items-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...

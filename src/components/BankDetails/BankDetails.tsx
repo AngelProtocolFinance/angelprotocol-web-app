@@ -87,24 +87,16 @@ export default function BankDetails({
         <>
           <Divider />
           <div className="min-h-[20rem]">
-            {isDebouncing ? (
-              <div className="flex items-center gap-2">
-                <LoaderRing thickness={10} classes="w-6" /> Loading...
-              </div>
-            ) : (
-              <RecipientDetails
-                // we need this key to tell React that when any of the fields passed to this component changes,
-                // it needs to reset its state by re-rendering the whole component.
-                // This way the `react-hook-form` reruns the `useForm` initializer function with the new requirements
-                // that will get loaded due to changed target currency and expected montly donation (in Wise terms: source amount).
-                key={`${targetCurrency.code}${expectedMontlyDonations}`}
-                targetCurrency={targetCurrency.code}
-                expectedMontlyDonations={expectedMontlyDonations}
-                isSubmitting={isSubmitting}
-                onSubmit={onSubmit}
-                FormButtons={FormButtons}
-              />
-            )}
+            <RecipientDetails
+              // we need this key to tell React that when currency code changes,
+              // it needs to reset its state by re-rendering the whole component.
+              isLoading={isDebouncing}
+              targetCurrency={targetCurrency.code}
+              expectedMontlyDonations={expectedMontlyDonations}
+              isSubmitting={isSubmitting}
+              onSubmit={onSubmit}
+              FormButtons={FormButtons}
+            />
           </div>
         </>
       )}
