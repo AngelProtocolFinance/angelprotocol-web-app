@@ -8,6 +8,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { FileDropzoneAsset } from "types/components";
+import { MIMEType } from "types/lists";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { isEmpty } from "helpers";
@@ -26,7 +27,7 @@ export default function FileDropzone<
   multiple?: true;
   disabled?: boolean;
   className?: string;
-  tooltip: string;
+  specs: { mbLimit: number; mimeTypes: MIMEType[] };
 }) {
   const filesId: any = `${props.name}.${filesKey}`;
   const previewsId = `${props.name}.${previewsKey}` as Path<T>;
@@ -76,7 +77,11 @@ export default function FileDropzone<
         />
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
-        {props.tooltip}{" "}
+        Valid types are:
+        {props.specs.mimeTypes
+          .map((m) => m.split("/")[1].toUpperCase())
+          .join(", ")}
+        . File should be less than {props.specs.mbLimit} MB{" "}
         <ErrorMessage
           name={filesId as any}
           errors={errors}

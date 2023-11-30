@@ -1,11 +1,17 @@
 import { ObjectSchema, array, date, object, string } from "yup";
 import { FV, FormMilestone } from "./types";
 import { SchemaShape } from "schemas/types";
+import { ImageMIMEType } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
-import { MIMEType, genFileSchema } from "schemas/file";
+import { genFileSchema } from "schemas/file";
 import { requiredString } from "schemas/string";
 
-export const VALID_MIME_TYPES: MIMEType[] = ["JPEG", "PNG", "WEBP", "SVG"];
+export const VALID_MIME_TYPES: ImageMIMEType[] = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/svg",
+];
 
 const MAX_SIZE_IN_BYTES = 1e6;
 export const MAX_CHARS = 500;

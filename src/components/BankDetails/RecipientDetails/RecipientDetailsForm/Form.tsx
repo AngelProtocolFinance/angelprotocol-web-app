@@ -10,10 +10,6 @@ import RequirementField from "./RequirementField";
 import { MB_LIMIT, VALID_MIME_TYPES } from "./constants";
 import formToCreateRecipientRequest from "./formToCreateRecipientRequest";
 
-const fileTooltip = `Valid types are: ${VALID_MIME_TYPES.join(
-  ", "
-)}. File should be less than ${MB_LIMIT}MB.`;
-
 type Props = {
   accountRequirements: AccountRequirements;
   disabled: boolean;
@@ -72,7 +68,7 @@ export default function Form(props: Props) {
         <Label required>Please provide your Bank Statement</Label>
         <FileDropzone<FormValues, "bankStatementFile">
           name="bankStatementFile"
-          tooltip={fileTooltip}
+          specs={{ mbLimit: MB_LIMIT, mimeTypes: VALID_MIME_TYPES }}
         />
       </div>
 
