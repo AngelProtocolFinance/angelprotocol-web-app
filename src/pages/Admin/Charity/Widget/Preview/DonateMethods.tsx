@@ -13,7 +13,7 @@ export default function DonateMethods({ classes = "" }) {
   const widgetConfig = useGetter((state) => state.widget);
 
   return (
-    <Tab.Group as="div" className="grid content-start mt-2">
+    <Tab.Group as="div" className={`${classes} grid content-start mt-2`}>
       <Tab.List className="grid grid-cols-2 sm:grid-cols-4 mb-6">
         <Tab className={({ selected }) => tabClasses(selected)}>
           Credit/Debit
