@@ -1,53 +1,34 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useDropzone } from "react-dropzone";
-import {
-  FieldValues,
-  Path,
-  get,
-  useController,
-  useFormContext,
-} from "react-hook-form";
+import { FieldValues, Path, get, useController } from "react-hook-form";
 import { FileDropzoneAsset } from "types/components";
 import { MIMEType } from "types/lists";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { isEmpty } from "helpers";
 
-type Key = keyof FileDropzoneAsset;
-const filesKey: Key = "files";
-const previewsKey: Key = "previews";
-
-type FilesPath = `${string}.${typeof filesKey}`;
-
 export default function FileDropzone<
   T extends FieldValues,
   K extends Path<T>,
 >(props: {
   name: T[K] extends FileDropzoneAsset ? K : never;
-  multiple?: true;
+  multiple?: boolean;
   disabled?: boolean;
   className?: string;
   specs: { mbLimit: number; mimeTypes: MIMEType[] };
 }) {
-  const filesId: any = `${props.name}.${filesKey}`;
-  const previewsId = `${props.name}.${previewsKey}` as K;
-
   const {
-    getValues,
+    field: { value, onChange: onFilesChange, ref },
     formState: { errors, isSubmitting },
-  } = useFormContext<T>();
-
-  const {
-    field: { value: files, onChange: onFilesChange, ref },
-  } = useController<Record<string, FileDropzoneAsset>, FilesPath>({
-    name: filesId,
+  } = useController<Record<string, FileDropzoneAsset>, K>({
+    name: props.name,
   });
 
   const disabled = props.disabled || isSubmitting;
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (files: File[]) => {
-      onFilesChange(files);
+      onFilesChange({ ...value, files });
     },
     multiple: props.multiple,
     disabled: disabled,
@@ -56,7 +37,7 @@ export default function FileDropzone<
   return (
     <div>
       <div
-        aria-invalid={!!get(errors, filesId)?.message}
+        aria-invalid={!!get(errors, props.name)?.message}
         {...getRootProps({
           className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${
             isDragActive
@@ -70,13 +51,8 @@ export default function FileDropzone<
           ref,
         })}
       >
-        <input {...getInputProps({ id: filesId })} />
-        <DropzoneText
-          files={files}
-          previews={getValues(previewsId)}
-          filesId={filesId}
-          formErrors={errors}
-        />
+        <input {...getInputProps({ id: props.name })} />
+        <DropzoneText {...value} fieldName={props.name} formErrors={errors} />
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         Valid types are:
@@ -85,7 +61,7 @@ export default function FileDropzone<
           .join(", ")}
         . File should be less than {props.specs.mbLimit} MB{" "}
         <ErrorMessage
-          name={filesId}
+          name={props.name}
           errors={errors}
           as="span"
           className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
@@ -97,10 +73,10 @@ export default function FileDropzone<
 
 function DropzoneText({
   formErrors,
-  filesId,
+  fieldName,
   files,
   previews,
-}: FileDropzoneAsset & { filesId: string; formErrors: any }) {
+}: FileDropzoneAsset & { fieldName: string; formErrors: any }) {
   const isFilesEmpty = isEmpty(files);
   const isPreviewsEmpty = isEmpty(previews);
 
@@ -138,7 +114,7 @@ function DropzoneText({
           <label className="text-sm">{name}</label>
           <ErrorMessage
             errors={formErrors}
-            name={`${filesId}.${i}`}
+            name={`${fieldName}.files.${i}`}
             as="span"
             className="text-red dark:text-red-l2 text-xs before:content-['-'] before:mx-1"
           />
