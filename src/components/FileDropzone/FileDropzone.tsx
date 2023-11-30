@@ -30,7 +30,7 @@ export default function FileDropzone<
   specs: { mbLimit: number; mimeTypes: MIMEType[] };
 }) {
   const filesId: any = `${props.name}.${filesKey}`;
-  const previewsId = `${props.name}.${previewsKey}` as Path<T>;
+  const previewsId = `${props.name}.${previewsKey}` as K;
 
   const {
     getValues,
@@ -43,12 +43,14 @@ export default function FileDropzone<
     name: filesId,
   });
 
+  const disabled = props.disabled || isSubmitting;
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: (files: File[]) => {
       onFilesChange(files);
     },
     multiple: props.multiple,
-    disabled: props.disabled,
+    disabled: disabled,
   });
 
   return (
@@ -61,7 +63,7 @@ export default function FileDropzone<
               ? "border-gray-d1 dark:border-gray"
               : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
-            isSubmitting || props.disabled
+            disabled
               ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
               : "bg-gray-l6 dark:bg-blue-d5 cursor-pointer"
           } ${props.className ?? ""} dropzone`,
@@ -83,7 +85,7 @@ export default function FileDropzone<
           .join(", ")}
         . File should be less than {props.specs.mbLimit} MB{" "}
         <ErrorMessage
-          name={filesId as any}
+          name={filesId}
           errors={errors}
           as="span"
           className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
