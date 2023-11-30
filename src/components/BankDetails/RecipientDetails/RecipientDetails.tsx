@@ -1,4 +1,5 @@
-import { ReactNode } from "react";
+import { ComponentType } from "react";
+import { FormButtonsProps } from "../types";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import LoaderRing from "components/LoaderRing";
@@ -10,15 +11,10 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
 
 type Props = {
-  disabled: boolean;
+  isSubmitting: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
-  formButtons: (
-    disabled: boolean,
-    isSubmitting: boolean,
-    newRequirementsAdded: boolean,
-    refreshRequired: boolean
-  ) => ReactNode;
+  FormButtons: ComponentType<FormButtonsProps>;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,
@@ -27,10 +23,10 @@ type Props = {
 };
 
 export default function RecipientDetails({
-  disabled,
+  isSubmitting,
   targetCurrency,
   expectedMontlyDonations,
-  formButtons,
+  FormButtons,
   onSubmit,
 }: Props) {
   const {
@@ -86,7 +82,7 @@ export default function RecipientDetails({
           (x) => x.accountRequirements
         )}
         currentIndex={selectedIndex}
-        disabled={disabled}
+        disabled={isSubmitting}
         onChange={setSelectedIndex}
         className="mb-6"
       />
@@ -100,13 +96,13 @@ export default function RecipientDetails({
         key={`form-${requirements.accountRequirements.type}-${requirements.accountRequirements.fields.length}`}
         accountRequirements={requirements.accountRequirements}
         defaultValues={requirements.currentFormValues}
-        disabled={disabled}
+        disabled={isSubmitting}
         refreshRequired={requirements.refreshRequired}
         newRequirementsAdded={requirements.newRequirementsAdded}
         onUpdateValues={updateDefaultValues}
         onSubmit={handleSubmit}
         onRefresh={refreshRequirements}
-        formButtons={formButtons}
+        FormButtons={FormButtons}
       />
     </>
   );

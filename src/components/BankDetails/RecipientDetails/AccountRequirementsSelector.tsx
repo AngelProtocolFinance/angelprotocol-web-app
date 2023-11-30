@@ -27,7 +27,7 @@ export default function AccountRequirementsSelector({
             onClick={() => onChange(index)}
             className={`${
               index === currentIndex ? "btn-blue" : "btn-outline"
-            } text-xs sm:text-sm w-40 sm:w-48`}
+            } text-xs sm:text-sm w-32 sm:w-48`}
             disabled={disabled}
             aria-disabled={disabled}
           >
