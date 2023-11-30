@@ -304,10 +304,6 @@ html:is(.dark) [data-amplify-authenticator] {
   .field > input[aria-invalid="true"] {
     @apply border-red;
   }
-  /* This css is required to handle filedropzone error UI  */
-  .dropzone[aria-invalid="true"] {
-    @apply border-red !important;
-  }
 
   .field > label {
     @apply mb-2;
