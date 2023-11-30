@@ -2,9 +2,10 @@ import { WidgetConfig } from "types/widget";
 import AdvancedOptions from "./AdvancedOptions";
 
 export default function DonaterSample({
-  advancedOptions,
+  display,
+  liquidSplitPct,
   classes = "",
-}: WidgetConfig & { classes?: string }) {
+}: WidgetConfig["advancedOptions"] & { classes?: string }) {
   return (
     <div className={`${classes} grid rounded-md w-full @container`}>
       <div className="flex flex-col @xl:flex-row items-start @xl:items-center mb-1">
@@ -17,11 +18,11 @@ export default function DonaterSample({
         <span className="text-sm ml-auto">TOKEN</span>
       </div>
       <p className="text-xs mt-1">Minimal amount: Token 0.0000</p>
-      {advancedOptions.display !== "hidden" && (
+      {display !== "hidden" && (
         <AdvancedOptions
           classes="mt-10"
-          liquidPercentage={advancedOptions.liquidSplitPct}
-          expanded={advancedOptions.display === "expanded"}
+          liquidPercentage={liquidSplitPct}
+          expanded={display === "expanded"}
         />
       )}
       <button

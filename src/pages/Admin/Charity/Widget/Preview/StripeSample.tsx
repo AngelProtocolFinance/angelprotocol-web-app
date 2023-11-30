@@ -1,14 +1,17 @@
 import { WidgetConfig } from "types/widget";
 import AdvancedOptions from "./AdvancedOptions";
 
-export default function StripeSample({ advancedOptions }: WidgetConfig) {
+export default function StripeSample({
+  display,
+  liquidSplitPct,
+}: WidgetConfig["advancedOptions"]) {
   return (
     <div>
-      {advancedOptions.display !== "hidden" && (
+      {display !== "hidden" && (
         <AdvancedOptions
           classes="mt-10"
-          liquidPercentage={advancedOptions.liquidSplitPct}
-          expanded={advancedOptions.display === "expanded"}
+          liquidPercentage={liquidSplitPct}
+          expanded={display === "expanded"}
         />
       )}
       <p className="text-sm text-gray-d2 dark:text-gray mt-4">
