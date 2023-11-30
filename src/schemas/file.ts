@@ -1,17 +1,8 @@
 import * as Yup from "yup";
 import { FileObject } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
+import { MIMEType } from "types/lists";
 import { isEmpty } from "helpers";
-
-const MIME_TYPES = {
-  JPEG: "image/jpeg",
-  PNG: "image/png",
-  PDF: "application/pdf",
-  WEBP: "image/webp",
-  SVG: "image/svg",
-};
-
-export type MIMEType = keyof typeof MIME_TYPES;
 
 const previewsKey: keyof FileDropzoneAsset = "previews";
 
@@ -41,8 +32,7 @@ export const genFileSchema = (maxSize: number, mimeTypes: MIMEType[]) =>
     .test({
       name: "must be of correct type",
       message: "invalid file type",
-      test: (file) =>
-        !file || !!mimeTypes.find((type) => MIME_TYPES[type] === file.type),
+      test: (file) => !file || !!mimeTypes.find((type) => type === file.type),
     })
     .test({
       name: "must be less than size limit",

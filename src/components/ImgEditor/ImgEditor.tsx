@@ -106,7 +106,8 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
-          Valid types are: {accept.join(", ")}.{" "}
+          Valid types are:{" "}
+          {accept.map((m) => m.split("/")[1].toUpperCase()).join(", ")}.{" "}
           {maxSize ? (
             <>
               Image should be less than {maxSize / BYTES_IN_MB}MB in size.
