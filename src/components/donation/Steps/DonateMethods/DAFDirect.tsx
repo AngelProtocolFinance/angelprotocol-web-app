@@ -11,7 +11,7 @@ export default function DAFDirect() {
       </p>
       <IFrame
         title="DAFDirect Widget"
-        src="/dafdirect-widget.html"
+        src="https://endow-profiles.s3.amazonaws.com/dafdirect-widget.html"
         // maximum widget dimensions
         // making the value any larger will cause layout issues
         width="180"
