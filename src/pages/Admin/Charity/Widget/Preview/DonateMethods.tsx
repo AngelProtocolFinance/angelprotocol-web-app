@@ -1,6 +1,7 @@
 import { Tab } from "@headlessui/react";
 import { useGetter } from "store/accessors";
 import DonaterSample from "./DonaterSample";
+import StripeSample from "./StripeSample";
 
 const tabClasses = (selected: boolean) =>
   `${
@@ -24,7 +25,7 @@ export default function DonateMethods({ classes = "" }) {
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel>
-          <div>stripe sample</div>
+          <StripeSample {...widgetConfig} />
         </Tab.Panel>
         <Tab.Panel>
           <DonaterSample {...widgetConfig} />
