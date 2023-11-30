@@ -24,10 +24,10 @@ export default function DonateMethods({ classes = "" }) {
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel>
-          <DonaterSample {...widgetConfig} />
+          <div>stripe sample</div>
         </Tab.Panel>
         <Tab.Panel>
-          <div>stripe sample</div>
+          <DonaterSample {...widgetConfig} />
         </Tab.Panel>
         <Tab.Panel>
           <div>stocks sample</div>
