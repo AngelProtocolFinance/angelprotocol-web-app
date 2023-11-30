@@ -1,4 +1,5 @@
 import IFrame from "components/IFrame";
+import { AWS_S3_PUBLIC_BUCKET } from "constants/env";
 
 export default function DAFDirect() {
   return (
@@ -11,7 +12,7 @@ export default function DAFDirect() {
       </p>
       <IFrame
         title="DAFDirect Widget"
-        src="/dafdirect-widget.html"
+        src={`${AWS_S3_PUBLIC_BUCKET}/dafdirect-widget.html`}
         // maximum widget dimensions
         // making the value any larger will cause layout issues
         width="180"
