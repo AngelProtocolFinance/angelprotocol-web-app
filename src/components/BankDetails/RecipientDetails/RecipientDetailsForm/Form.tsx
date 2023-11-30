@@ -69,6 +69,7 @@ export default function Form(props: Props) {
         <FileDropzone<FormValues, "bankStatementFile">
           name="bankStatementFile"
           specs={{ mbLimit: MB_LIMIT, mimeTypes: VALID_MIME_TYPES }}
+          disabled={props.disabled}
         />
       </div>
 
