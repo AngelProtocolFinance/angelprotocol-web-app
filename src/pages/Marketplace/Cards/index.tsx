@@ -23,7 +23,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     >
       {(endowments) => (
         <div
-          className={`${classes} w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 content-start`}
+          className={`${classes} w-full grid min-[600px]:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 content-start`}
         >
           {endowments.map((endow) => (
             <Card {...endow} key={endow.id} />
