@@ -12,7 +12,7 @@ export default function Group({
 }>) {
   return (
     <div
-      className={`grid gap-6 p-6 border border-prim rounded bg-white dark:bg-blue-d6 ${className}`}
+      className={`grid w-full gap-6 p-6 border border-prim rounded bg-white dark:bg-blue-d6 ${className}`}
     >
       {title && <h3 className="text-2xl font-body">{title}</h3>}
       {description && (

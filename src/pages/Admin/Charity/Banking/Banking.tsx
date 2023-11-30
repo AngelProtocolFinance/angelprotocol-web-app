@@ -84,7 +84,7 @@ export default function Banking() {
 
   return (
     <Group
-      className="max-w-4xl justify-self-center"
+      className="max-w-4xl"
       title="Bank account details"
       description="The following information will be used to register your bank account that will be used to withdraw your funds."
     >
@@ -93,16 +93,8 @@ export default function Banking() {
         alreadySubmitted={isSubmitted}
         isSubmitting={isSubmitting}
         onSubmit={submit}
-      >
-        {(disabled, isSubmitting, newRequirementsAdded, refreshRequired) => (
-          <FormButtons
-            disabled={disabled}
-            isSubmitting={isSubmitting}
-            newRequirementsAdded={newRequirementsAdded}
-            refreshRequired={refreshRequired}
-          />
-        )}
-      </BankDetails>
+        FormButtons={FormButtons}
+      />
     </Group>
   );
 }

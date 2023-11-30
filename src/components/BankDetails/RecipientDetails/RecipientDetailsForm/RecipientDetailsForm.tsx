@@ -1,6 +1,7 @@
-import { ReactNode, useEffect } from "react";
+import { ComponentType, useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { FormValues } from "../types";
+import { FormButtonsProps } from "components/BankDetails/types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import Form from "./Form";
@@ -12,12 +13,7 @@ type Props = {
   disabled: boolean;
   newRequirementsAdded: boolean;
   refreshRequired: boolean;
-  formButtons: (
-    disabled: boolean,
-    isSubmitting: boolean,
-    newRequirementsAdded: boolean,
-    refreshRequired: boolean
-  ) => ReactNode;
+  FormButtons: ComponentType<FormButtonsProps>;
   onUpdateValues: (formValues: FormValues) => void;
   onRefresh: (request: CreateRecipientRequest) => Promise<void>;
   onSubmit: (
@@ -57,7 +53,7 @@ export default function RecipientDetailsForm(props: Props) {
           await props.onRefresh(request);
         }}
         onSubmit={props.onSubmit}
-        formButtons={props.formButtons}
+        FormButtons={props.FormButtons}
       />
     </FormProvider>
   );
