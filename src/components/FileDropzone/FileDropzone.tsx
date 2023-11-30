@@ -7,6 +7,8 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { isEmpty } from "helpers";
 
+const filesKey: keyof FileDropzoneAsset = "files";
+
 export default function FileDropzone<
   T extends FieldValues,
   K extends Path<T>,
@@ -19,11 +21,12 @@ export default function FileDropzone<
 }) {
   const {
     field: { value, onChange: onFilesChange, ref },
-    formState: { errors, isSubmitting, isValid },
+    formState: { errors, isSubmitting },
   } = useController<Record<string, FileDropzoneAsset>, K>({
     name: props.name,
   });
 
+  const filesId = `${props.name}.${filesKey}`;
   const disabled = props.disabled || isSubmitting;
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -34,10 +37,12 @@ export default function FileDropzone<
     disabled: disabled,
   });
 
+  const isValid = !get(errors, filesId);
+
   return (
     <div>
       <div
-        aria-invalid={!!get(errors, props.name)?.message}
+        aria-invalid={!isValid}
         {...getRootProps({
           className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${
             isDragActive
@@ -49,7 +54,7 @@ export default function FileDropzone<
             disabled
               ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
               : "bg-gray-l6 dark:bg-blue-d5 cursor-pointer"
-          } ${props.className ?? ""} dropzone`,
+          } ${props.className ?? ""}`,
           ref,
         })}
       >
@@ -63,7 +68,7 @@ export default function FileDropzone<
           .join(", ")}
         . File should be less than {props.specs.mbLimit} MB{" "}
         <ErrorMessage
-          name={props.name}
+          name={filesId}
           errors={errors}
           as="span"
           className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
@@ -116,7 +121,7 @@ function DropzoneText({
           <label className="text-sm">{name}</label>
           <ErrorMessage
             errors={formErrors}
-            name={`${fieldName}.files.${i}`}
+            name={`${fieldName}.${filesKey}.${i}`}
             as="span"
             className="text-red dark:text-red-l2 text-xs before:content-['-'] before:mx-1"
           />
