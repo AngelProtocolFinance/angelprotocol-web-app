@@ -33,7 +33,7 @@ export default function EndowmentSelector() {
     >
       <Combobox.Input
         ref={ref}
-        placeholder="Select an endowment..."
+        placeholder="Select or search an endowment..."
         onChange={(event) => setSearchText(event.target.value)}
         displayValue={(value: EndowmentOption) => value.name}
         className="pl-4 w-full"
