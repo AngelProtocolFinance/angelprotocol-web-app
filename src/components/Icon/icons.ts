@@ -69,6 +69,7 @@ import {
   MdWidgets,
 } from "react-icons/md";
 import { RiMapPin2Line, RiMoneyDollarCircleFill } from "react-icons/ri";
+import { RxMixerHorizontal } from "react-icons/rx";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
@@ -117,6 +118,7 @@ export const icons = {
   MapPin: RiMapPin2Line,
   Medium: AiOutlineMedium,
   Menu: FiMenu,
+  FilterMixer: RxMixerHorizontal,
   Money: FaMoneyBills,
   Moon: FiMoon,
   Picture: ImFilePicture,
