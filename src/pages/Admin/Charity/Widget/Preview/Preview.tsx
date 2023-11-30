@@ -34,10 +34,7 @@ export default function Preview({ classes = "" }) {
             </p>
           </>
         )}
-        <p className="px-6 @xl/preview:px-10 text-center text-sm mb-3">
-          Connect the wallet of your choice to donate crypto. <br />
-          Continue below to donate fiat (Dollars, GBP, AUD, Euro)
-        </p>
+
         <DonateMethods classes="mb-10 px-6 @xl/preview:px-10" />
 
         <footer className="grid place-items-center h-20 w-full bg-blue mt-auto">
