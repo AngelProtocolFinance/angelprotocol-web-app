@@ -37,11 +37,11 @@ export default function RecipientDetails({
   onSubmit,
 }: Props) {
   const {
+    activeRequirements,
     handleSubmit,
     isError,
     isLoading: isLoadingRequirements,
     refreshRequirements,
-    requirementsDataArray,
     selectedIndex,
     setSelectedIndex,
     updateDefaultValues,
@@ -67,7 +67,7 @@ export default function RecipientDetails({
 
   // requirements *can* be empty, check the following example when source currency is USD and target is ALL (Albanian lek):
   // https://api.sandbox.transferwise.tech/v1/account-requirements?source=USD&target=ALL&sourceAmount=1000
-  if (isEmpty(requirementsDataArray)) {
+  if (isEmpty(activeRequirements)) {
     return (
       <span>
         Target currency not supported. Please use a bank account with a
@@ -76,9 +76,9 @@ export default function RecipientDetails({
     );
   }
 
-  const requirements = requirementsDataArray.at(selectedIndex);
+  const requirements = activeRequirements.at(selectedIndex);
 
-  // should never happen as `selectedIndex === 0` by default and can only be set to value smaller than `requirementsDataArray.length`
+  // should never happen as `selectedIndex === 0` by default and can only be set to value smaller than `activeRequirements.length`
   if (!requirements) {
     return (
       <span>
@@ -91,7 +91,7 @@ export default function RecipientDetails({
   return (
     <>
       <AccountRequirementsSelector
-        accountRequirements={requirementsDataArray.map(
+        accountRequirements={activeRequirements.map(
           (x) => x.accountRequirements
         )}
         currentIndex={selectedIndex}

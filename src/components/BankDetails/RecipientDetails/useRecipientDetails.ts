@@ -14,6 +14,7 @@ import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { addRequirementGroup, getDefaultValues } from "./helpers";
 
 type RequirementsData = {
+  active: boolean;
   accountRequirements: AccountRequirements;
   currentFormValues: FormValues;
   refreshedRequirementsAdded: boolean;
@@ -65,33 +66,60 @@ export default function useRecipientDetails(
           targetCurrency: targetCurrency,
         }).unwrap();
 
-        const newRequirements = await getAccountRequirements(
+        const updatedRequirements = await getAccountRequirements(
           newQuote.id
         ).unwrap();
 
-        if (isEmpty(newRequirements)) {
+        if (isEmpty(updatedRequirements)) {
           setError(true);
           return handleError(
             "Target currency not supported. Please use a bank account with a different currency."
           );
         }
 
-        setRequirementsDataArray((prev) =>
-          newRequirements.map((item) => {
-            const { formValues, refreshedRequirementsAdded } =
-              getRefreshedFormValues(prev, item, targetCurrency);
+        setRequirementsDataArray((prev) => {
+          const activeRequirementsDataArray: RequirementsData[] = [];
+          const inactiveRequirementsDataArray: RequirementsData[] = [];
 
-            const data: RequirementsData = {
-              accountRequirements: item,
-              currentFormValues: formValues,
-              refreshedRequirementsAdded,
-              refreshRequired: item.fields.some((field) =>
-                field.group.some((group) => group.refreshRequirementsOnChange)
-              ),
-            };
-            return data;
-          })
-        );
+          prev.forEach((prevReqData) => {
+            const existingReqData = updatedRequirements.find(
+              (x) => x.type === prevReqData.accountRequirements.type
+            );
+            if (!existingReqData) {
+              inactiveRequirementsDataArray.push({
+                ...prevReqData,
+                active: false,
+              });
+            } else {
+              activeRequirementsDataArray.push({
+                ...prevReqData,
+                active: true,
+              });
+            }
+          });
+
+          return inactiveRequirementsDataArray.concat(
+            updatedRequirements.map((item) => {
+              const { formValues, refreshedRequirementsAdded } =
+                getRefreshedFormValues(
+                  activeRequirementsDataArray,
+                  item,
+                  targetCurrency
+                );
+
+              const data: RequirementsData = {
+                active: true,
+                accountRequirements: item,
+                currentFormValues: formValues,
+                refreshedRequirementsAdded,
+                refreshRequired: item.fields.some((field) =>
+                  field.group.some((group) => group.refreshRequirementsOnChange)
+                ),
+              };
+              return data;
+            })
+          );
+        });
         setQuote(newQuote);
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
@@ -114,11 +142,22 @@ export default function useRecipientDetails(
     (formValues: FormValues) => {
       setRequirementsDataArray((prev) => {
         const updated = [...prev];
-        updated[selectedIndex].currentFormValues = formValues;
+        const toUpdate = updated.find(
+          (x) => x.accountRequirements.type === formValues.type
+        );
+        if (!toUpdate) {
+          handleError(
+            new UnexpectedStateError(
+              `Trying to update a non existent requirements type: ${formValues.type}`
+            )
+          );
+        } else {
+          toUpdate.currentFormValues = formValues;
+        }
         return updated;
       });
     },
-    [selectedIndex]
+    [handleError]
   );
 
   // no need to have an `isRefreshing` state, as this is handled by `react-hook-form`
@@ -129,36 +168,27 @@ export default function useRecipientDetails(
         throw new UnexpectedStateError("No 'quote' present.");
       }
 
-      const requirements = requirementsDataArray.at(selectedIndex);
-      if (!requirements) {
-        throw new UnexpectedStateError("Requirements not loaded.");
-      }
-
-      // should never happen, but throw immediately if it does
-      if (!requirements.refreshRequired) {
-        throw new UnexpectedStateError(
-          "Requirements don't need to be refreshed."
-        );
-      }
-
       const newRequirements = await postAccountRequirements({
         quoteId: quote.id,
         request,
       }).unwrap();
 
-      setRequirementsDataArray((prev) => {
+      setRequirementsDataArray((prevDataArray) => {
         const updated: RequirementsData[] = newRequirements.map((newReq) => {
           const { formValues, refreshedRequirementsAdded } =
-            getRefreshedFormValues(prev, newReq, targetCurrency);
+            getRefreshedFormValues(prevDataArray, newReq, targetCurrency);
 
           return {
+            active: true,
             accountRequirements: newReq,
             currentFormValues: formValues,
             refreshedRequirementsAdded,
+            // should always be the case that `newRequirements.length === prevRequirements.length`
             refreshRequired:
-              prev[selectedIndex].accountRequirements.type === newReq.type
+              prevDataArray[selectedIndex].accountRequirements.type ===
+              newReq.type
                 ? false // just finished checking requirements for selected type, so no need to do it again
-                : prev[selectedIndex].refreshRequired, // just copy/paste for other types
+                : prevDataArray[selectedIndex].refreshRequired, // just copy/paste for other types
           };
         });
         return updated;
@@ -192,7 +222,7 @@ export default function useRecipientDetails(
      */
     isLoading,
     refreshRequirements,
-    requirementsDataArray,
+    activeRequirements: requirementsDataArray.filter((x) => x.active),
     selectedIndex,
     setSelectedIndex,
     updateDefaultValues,
