@@ -56,12 +56,8 @@ export default function useRecipientDetails(
 
   useEffect(() => {
     (async () => {
-      if (isError) {
-        setError(false);
-      }
-      if (!isLoading) {
-        setLoading(true);
-      }
+      setError(false);
+      setLoading(true);
 
       try {
         const newQuote = await createQuote({
