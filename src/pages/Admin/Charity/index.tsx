@@ -19,7 +19,7 @@ export default function Charity() {
             linkGroups={[
               { links: [LINKS.dashboard, LINKS.donations] },
               { title: "Profile", links: [LINKS.edit_profile, LINKS.programs] },
-              { title: "Manage", links: [LINKS.banking] },
+              { title: "Manage", links: [LINKS.banking, LINKS.widget_config] },
             ]}
           />
         }
