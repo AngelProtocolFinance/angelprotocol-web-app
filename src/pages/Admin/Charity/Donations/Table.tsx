@@ -48,11 +48,14 @@ export default function Table({
         Save Donor Information to CSV
         <Icon type="FileDownload" className="text-2xl" />
       </CsvExporter>
-      <table className="w-full border-collapse self-start">
-        <TableSection type="thead" rowClass="border-b-2 border-prim">
+      <table className="w-full text-sm rounded border border-separate border-spacing-0 border-prim overflow-x-auto">
+        <TableSection
+          type="thead"
+          rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
+        >
           <Cells
             type="th"
-            cellClass="text-left uppercase font-heading font-semibold text-sm p-2 first:pl-0 last:pr-0"
+            cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
           >
             <HeaderButton
               onClick={handleHeaderClick("amount")}
@@ -84,11 +87,18 @@ export default function Table({
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border-b border-prim hover:bg-blue-l4 hover:dark:bg-blue-d4"
+          rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
+          selectedClass="bg-orange-l5 dark:bg-blue-d4"
         >
           {sorted
             .map(({ hash, amount, symbol, chainId, date, kycData }) => (
-              <Cells key={hash} type="td" cellClass="p-2 first:pl-0 last:pr-0">
+              <Cells
+                key={hash}
+                type="td"
+                cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+                  hasMore ? "" : "first:rounded-bl last:rounded-br"
+                }`}
+              >
                 <>{humanize(amount, 3)}</>
                 <span className="text-sm">{symbol}</span>
                 <span className="text-sm">
@@ -109,7 +119,6 @@ export default function Table({
                     className="text-2xl text-green-400"
                   />
                 )}
-                <></>
               </Cells>
             ))
             .concat(
