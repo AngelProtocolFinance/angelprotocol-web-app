@@ -73,47 +73,57 @@ export default function Table({
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
         {sorted
-          .map(({ hash, amount, symbol, chainId, date, kycData }) => (
-            <Cells
-              key={hash}
-              type="td"
-              cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
-                hasMore ? "" : "first:rounded-bl last:rounded-br"
-              }`}
-            >
-              <span className="text-sm">
-                {new Date(date).toLocaleDateString()}
-              </span>
-              <span className="text-sm">{symbol}</span>
-              <>{humanize(amount, 3)}</>
-              <>{humanize(amount, 3)}</>
-              <>{humanize(amount, 3)}</>
-              <>
-                {chainId === "staging" ? (
-                  <span className="text-gray-d1 dark:text-gray text-sm">
-                    &lt; TX Link &gt;
-                  </span>
+          .map(
+            ({
+              hash,
+              amount,
+              symbol,
+              chainId,
+              date,
+              kycData,
+              splitLiq = "50",
+            }) => (
+              <Cells
+                key={hash}
+                type="td"
+                cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+                  hasMore ? "" : "first:rounded-bl last:rounded-br"
+                }`}
+              >
+                <span className="text-sm">
+                  {new Date(date).toLocaleDateString()}
+                </span>
+                <span className="text-sm">{symbol}</span>
+                <>{humanize(amount, 3)}</>
+                <>{humanize(amount * (+splitLiq / 100), 3)}</>
+                <>{humanize(amount * (+splitLiq / 100), 3)}</>
+                <>
+                  {chainId === "staging" ? (
+                    <span className="text-gray-d1 dark:text-gray text-sm">
+                      &lt; TX Link &gt;
+                    </span>
+                  ) : (
+                    <ExtLink
+                      //default to ethereum for staging
+                      href={getTxUrl(chainId, hash)}
+                      className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
+                    >
+                      {maskAddress(hash)}
+                    </ExtLink>
+                  )}
+                </>
+                {!kycData ? (
+                  <Icon
+                    type="Close"
+                    className="text-red relative left-[-2px]"
+                    size={22}
+                  />
                 ) : (
-                  <ExtLink
-                    //default to ethereum for staging
-                    href={getTxUrl(chainId, hash)}
-                    className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
-                  >
-                    {maskAddress(hash)}
-                  </ExtLink>
+                  <Icon type="CheckCircle" className="text-green" size={20} />
                 )}
-              </>
-              {!kycData ? (
-                <Icon
-                  type="Close"
-                  className="text-red relative left-[-2px]"
-                  size={22}
-                />
-              ) : (
-                <Icon type="CheckCircle" className="text-green" size={20} />
-              )}
-            </Cells>
-          ))
+              </Cells>
+            )
+          )
           .concat(
             hasMore ? (
               <td
