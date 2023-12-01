@@ -16,7 +16,7 @@ import { addRequirementGroup, getDefaultValues } from "./helpers";
 type RequirementsData = {
   accountRequirements: AccountRequirements;
   currentFormValues: FormValues;
-  newRequirementsAdded: boolean;
+  refreshedRequirementsAdded: boolean;
   /**
    * Indicates whether requirements refresh is necessary.
    * See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
@@ -78,16 +78,13 @@ export default function useRecipientDetails(
 
         setRequirementsDataArray((prev) =>
           newRequirements.map((item) => {
-            const { formValues, newRequirementsAdded } = getRefreshedFormValues(
-              prev,
-              item,
-              targetCurrency
-            );
+            const { formValues, refreshedRequirementsAdded } =
+              getRefreshedFormValues(prev, item, targetCurrency);
 
             const data: RequirementsData = {
               accountRequirements: item,
               currentFormValues: formValues,
-              newRequirementsAdded: newRequirementsAdded,
+              refreshedRequirementsAdded,
               refreshRequired: item.fields.some((field) =>
                 field.group.some((group) => group.refreshRequirementsOnChange)
               ),
@@ -151,16 +148,13 @@ export default function useRecipientDetails(
 
       setRequirementsDataArray((prev) => {
         const updated: RequirementsData[] = newRequirements.map((newReq) => {
-          const { formValues, newRequirementsAdded } = getRefreshedFormValues(
-            prev,
-            newReq,
-            targetCurrency
-          );
+          const { formValues, refreshedRequirementsAdded } =
+            getRefreshedFormValues(prev, newReq, targetCurrency);
 
           return {
             accountRequirements: newReq,
             currentFormValues: formValues,
-            newRequirementsAdded,
+            refreshedRequirementsAdded,
             refreshRequired:
               prev[selectedIndex].accountRequirements.type === newReq.type
                 ? false // just finished checking requirements for selected type, so no need to do it again
@@ -220,7 +214,7 @@ function getRefreshedFormValues(
   newReq: AccountRequirements,
   targetCurrency: string
 ): {
-  newRequirementsAdded: boolean;
+  refreshedRequirementsAdded: boolean;
   formValues: FormValues;
 } {
   // should be undefined when loading for the first time or changing target currency/expected monthly donations
@@ -232,7 +226,7 @@ function getRefreshedFormValues(
   if (!currReqData) {
     return {
       formValues: getDefaultValues(newReq, targetCurrency),
-      newRequirementsAdded: false, // these are technically new requirements
+      refreshedRequirementsAdded: false, // these are technically not refreshed requirements
     };
   }
 
@@ -260,6 +254,6 @@ function getRefreshedFormValues(
 
   return {
     formValues: newFormValues,
-    newRequirementsAdded: !isEmpty(newGroups),
+    refreshedRequirementsAdded: !isEmpty(newGroups),
   };
 }
