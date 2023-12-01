@@ -60,6 +60,9 @@ export default function useRecipientDetails(
 
         if (isEmpty(updatedRequirements)) {
           setError(true);
+          setRequirementsDataArray((prev) =>
+            mergeRequirements(prev, [], targetCurrency)
+          );
           return handleError(
             "Target currency not supported. Please use a bank account with a different currency."
           );
