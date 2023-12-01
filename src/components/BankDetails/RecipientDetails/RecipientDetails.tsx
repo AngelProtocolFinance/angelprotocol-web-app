@@ -37,13 +37,13 @@ export default function RecipientDetails({
   onSubmit,
 }: Props) {
   const {
-    activeRequirements,
+    requirementsDataArray,
     handleSubmit,
     isError,
     isLoading: isLoadingRequirements,
     refreshRequirements,
-    selectedIndex,
-    setSelectedIndex,
+    selectedRequirementsData,
+    changeSelectedType,
     updateDefaultValues,
   } = useRecipientDetails(
     isLoading,
@@ -67,7 +67,7 @@ export default function RecipientDetails({
 
   // requirements *can* be empty, check the following example when source currency is USD and target is ALL (Albanian lek):
   // https://api.sandbox.transferwise.tech/v1/account-requirements?source=USD&target=ALL&sourceAmount=1000
-  if (isEmpty(activeRequirements)) {
+  if (isEmpty(requirementsDataArray)) {
     return (
       <span>
         Target currency not supported. Please use a bank account with a
@@ -76,10 +76,8 @@ export default function RecipientDetails({
     );
   }
 
-  const requirements = activeRequirements.at(selectedIndex);
-
   // should never happen as `selectedIndex === 0` by default and can only be set to value smaller than `activeRequirements.length`
-  if (!requirements) {
+  if (!selectedRequirementsData) {
     return (
       <span>
         Non-existent requirements type selected. Please reload the page and try
@@ -91,13 +89,11 @@ export default function RecipientDetails({
   return (
     <>
       <AccountRequirementsSelector
-        accountRequirements={activeRequirements.map(
-          (x) => x.accountRequirements
-        )}
-        currentIndex={selectedIndex}
-        disabled={isSubmitting}
-        onChange={setSelectedIndex}
         className="mb-6"
+        disabled={isSubmitting}
+        onChange={changeSelectedType}
+        requirementsDataArray={requirementsDataArray}
+        selectedType={selectedRequirementsData?.accountRequirements.type}
       />
       <RecipientDetailsForm
         // since all fields need to be rerendered when new requirements type is chosen,
@@ -106,12 +102,14 @@ export default function RecipientDetails({
         //
         // Reason for using `requirements.accountRequirements.fields.length` to set the component key is that upo
         // refreshing the requirements, the number of fields will change, thus causing the whole form to be recreated
-        key={`form-${requirements.accountRequirements.type}-${requirements.accountRequirements.fields.length}`}
-        accountRequirements={requirements.accountRequirements}
-        defaultValues={requirements.currentFormValues}
+        key={`form-${selectedRequirementsData.accountRequirements.type}-${selectedRequirementsData.accountRequirements.fields.length}`}
+        accountRequirements={selectedRequirementsData.accountRequirements}
+        defaultValues={selectedRequirementsData.currentFormValues}
         disabled={isSubmitting}
-        refreshRequired={requirements.refreshRequired}
-        newRequirementsAdded={requirements.refreshedRequirementsAdded}
+        refreshRequired={selectedRequirementsData.refreshRequired}
+        newRequirementsAdded={
+          selectedRequirementsData.refreshedRequirementsAdded
+        }
         onUpdateValues={updateDefaultValues}
         onSubmit={handleSubmit}
         onRefresh={refreshRequirements}

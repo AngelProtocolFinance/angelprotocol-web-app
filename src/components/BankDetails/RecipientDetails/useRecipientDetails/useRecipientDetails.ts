@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { FormValues, RequirementsData } from "./types";
-import { CreateRecipientRequest, Quote } from "types/aws";
+import { FormValues, RequirementsData } from "../types";
+import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import {
   useCreateQuoteMutation,
@@ -11,7 +11,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { mergeRequirements } from "./helpers";
+import useReducer from "./useReducer";
 
 export default function useRecipientDetails(
   isParentLoading: boolean,
@@ -23,11 +23,8 @@ export default function useRecipientDetails(
     isDirty: boolean
   ) => Promise<any>
 ) {
-  const [requirementsDataArray, setRequirementsDataArray] = useState<
-    RequirementsData[]
-  >([]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [quote, setQuote] = useState<Quote>(); // store quote to use to refresh requirements
+  const [state, dispatch] = useReducer();
+
   const [isLoading, setLoading] = useState(true); // starts in loading state, loads only once
   const [isError, setError] = useState(false);
 
@@ -38,40 +35,33 @@ export default function useRecipientDetails(
   const [postAccountRequirements] = usePostAccountRequirementsMutation();
 
   useEffect(() => {
-    if (isParentLoading && !isLoading) {
-      setLoading(true);
-    }
-  }, [isParentLoading, isLoading]);
-
-  useEffect(() => {
     (async () => {
+      setLoading(true);
+
+      if (isParentLoading) {
+        return;
+      }
+
       try {
         setError(false);
-        setLoading(true);
 
-        const newQuote = await createQuote({
+        const quote = await createQuote({
           sourceAmount: expectedMontlyDonations,
           targetCurrency: targetCurrency,
         }).unwrap();
 
-        const updatedRequirements = await getAccountRequirements(
-          newQuote.id
-        ).unwrap();
+        const requirements = await getAccountRequirements(quote.id).unwrap();
 
-        if (isEmpty(updatedRequirements)) {
-          setError(true);
-          setRequirementsDataArray((prev) =>
-            mergeRequirements(prev, [], targetCurrency)
-          );
-          return handleError(
+        if (isEmpty(requirements)) {
+          throw new Error(
             "Target currency not supported. Please use a bank account with a different currency."
           );
         }
 
-        setRequirementsDataArray((prevDataArray) =>
-          mergeRequirements(prevDataArray, updatedRequirements, targetCurrency)
-        );
-        setQuote(newQuote);
+        dispatch({
+          type: "UPDATE_REQUIREMENTS",
+          payload: { quote, requirements, targetCurrency },
+        });
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
         setError(true);
@@ -80,10 +70,9 @@ export default function useRecipientDetails(
       }
     })();
   }, [
-    // despite these parameters being included in the dep. array,
-    // this effect will only ever be run once (see ../BankDetails.tsx)
-    targetCurrency,
+    isParentLoading,
     expectedMontlyDonations,
+    targetCurrency,
     createQuote,
     getAccountRequirements,
     handleError,
@@ -91,27 +80,12 @@ export default function useRecipientDetails(
 
   const updateDefaultValues = useCallback(
     (formValues: FormValues) => {
-      setRequirementsDataArray((prev) => {
-        try {
-          const updated = [...prev];
-          const toUpdate = updated.find(
-            (x) => x.accountRequirements.type === formValues.type
-          );
-
-          if (!!toUpdate) {
-            toUpdate.currentFormValues = formValues;
-            return updated;
-          }
-
-          throw new UnexpectedStateError(
-            `Trying to update a non existent requirements type: ${formValues.type}`
-          );
-        } catch (error) {
-          handleError(error, GENERIC_ERROR_MESSAGE);
-          setError(true);
-          return prev;
-        }
-      });
+      try {
+        dispatch({ type: "UPDATE_FORM_VALUES", payload: formValues });
+      } catch (error) {
+        handleError(error, GENERIC_ERROR_MESSAGE);
+        setError(true);
+      }
     },
     [handleError]
   );
@@ -120,20 +94,21 @@ export default function useRecipientDetails(
   // in ./RecipientDetailsForm/Form.tsx
   const refreshRequirements = async (request: CreateRecipientRequest) => {
     try {
-      if (!quote) {
+      if (!state.quote) {
         throw new UnexpectedStateError("No 'quote' present.");
       }
 
       setError(false);
 
-      const newRequirements = await postAccountRequirements({
-        quoteId: quote.id,
+      const requirements = await postAccountRequirements({
+        quoteId: state.quote.id,
         request,
       }).unwrap();
 
-      setRequirementsDataArray((prevDataArray) =>
-        mergeRequirements(prevDataArray, newRequirements, targetCurrency)
-      );
+      dispatch({
+        type: "UPDATE_REQUIREMENTS",
+        payload: { targetCurrency, requirements, isRefreshing: true },
+      });
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
@@ -154,17 +129,21 @@ export default function useRecipientDetails(
     }
   };
 
+  const changeSelectedType = (data: RequirementsData) => {
+    dispatch({ type: "CHANGE_SELECTED_REQUIREMENTS_DATA", payload: data });
+  };
+
   return {
     handleSubmit,
     isError,
     /**
      * Flag indicating whether currencies are loading
      */
-    isLoading,
+    isLoading: isLoading || isParentLoading,
     refreshRequirements,
-    activeRequirements: requirementsDataArray.filter((x) => x.active),
-    selectedIndex,
-    setSelectedIndex,
+    requirementsDataArray: state.requirementsDataArray.filter((x) => x.active),
+    selectedRequirementsData: state.selectedRequirementsData,
+    changeSelectedType,
     updateDefaultValues,
   };
 }

@@ -1,12 +1,13 @@
 import { FormValues, RequirementsData } from "../types";
 import { AccountRequirements } from "types/aws";
 import { isEmpty } from "helpers";
-import { addRequirementGroup, getDefaultValues } from "./getDefaultValues";
+import { getDefaultValues, populateRequirementGroup } from "./getDefaultValues";
 
-export function mergeRequirements(
+export default function mergeRequirements(
   prev: RequirementsData[],
   updatedRequirements: AccountRequirements[],
-  targetCurrency: string
+  targetCurrency: string,
+  isRefreshing = false
 ): RequirementsData[] {
   const activeRequirementsDataArray: RequirementsData[] = [];
   const inactiveRequirementsDataArray: RequirementsData[] = [];
@@ -48,7 +49,7 @@ export function mergeRequirements(
       }
 
       // requirement type is among the previously loaded requirements, update the form fields
-      return getUpdatedRequirementsData(existingReqData, updReq);
+      return getUpdatedRequirementsData(existingReqData, updReq, isRefreshing);
     })
   );
 }
@@ -64,7 +65,8 @@ export function mergeRequirements(
  */
 function getUpdatedRequirementsData(
   currReqData: RequirementsData,
-  updatedReq: AccountRequirements
+  updatedReq: AccountRequirements,
+  isRefreshing: boolean
 ): RequirementsData {
   // get current requirement groups
   const currGroups = currReqData.accountRequirements.fields.flatMap(
@@ -78,7 +80,7 @@ function getUpdatedRequirementsData(
 
   // add new requirement groups (if any) to the current requirements
   const newRequirements: FormValues["requirements"] = newGroups.reduce(
-    (curr, group) => addRequirementGroup(curr, group),
+    (curr, group) => populateRequirementGroup(curr, group),
     { ...currReqData.currentFormValues.requirements }
   );
 
@@ -93,7 +95,11 @@ function getUpdatedRequirementsData(
     accountRequirements: updatedReq,
     currentFormValues: newFormValues,
     refreshedRequirementsAdded: !isEmpty(newGroups),
-    refreshRequired: isRefreshRequired(updatedReq),
+    refreshRequired: isRefreshing
+      ? currReqData.accountRequirements.type === updatedReq.type
+        ? false // just finished checking requirements for selected type, so no need to do it again
+        : currReqData.refreshRequired // just copy/paste for other types
+      : isRefreshRequired(updatedReq),
   };
   return data;
 }

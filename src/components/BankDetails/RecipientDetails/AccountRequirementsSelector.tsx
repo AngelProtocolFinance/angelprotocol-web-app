@@ -1,37 +1,39 @@
-import { AccountRequirements } from "types/aws";
+import { RequirementsData } from "./types";
 import { Label } from "components/form";
 
 type Props = {
-  accountRequirements: AccountRequirements[];
-  className?: string;
-  currentIndex: number | undefined;
+  requirementsDataArray: RequirementsData[];
+  className: string;
+  selectedType: string | undefined;
   disabled: boolean;
-  onChange: (index: number) => void;
+  onChange: (requirementsType: RequirementsData) => void;
 };
 
 export default function AccountRequirementsSelector({
-  accountRequirements,
   className = "",
-  currentIndex,
   disabled,
   onChange,
+  requirementsDataArray,
+  selectedType,
 }: Props) {
   return (
     <div className={`grid gap-2 ${className}`}>
       <Label>Choose a transfer type:</Label>
       <div className="flex flex-wrap gap-2">
-        {accountRequirements.map((accountRequirements, index) => (
+        {requirementsDataArray.map((x) => (
           <button
-            key={accountRequirements.type}
+            key={x.accountRequirements.type}
             type="button"
-            onClick={() => onChange(index)}
+            onClick={() => onChange(x)}
             className={`${
-              index === currentIndex ? "btn-blue" : "btn-outline"
+              x.accountRequirements.type === selectedType
+                ? "btn-blue"
+                : "btn-outline"
             } text-xs sm:text-sm w-32 sm:w-48`}
             disabled={disabled}
             aria-disabled={disabled}
           >
-            {accountRequirements.title}
+            {x.accountRequirements.title}
           </button>
         ))}
       </div>

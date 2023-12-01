@@ -90,6 +90,7 @@ export default function BankDetails({
             <RecipientDetails
               // we need this key to tell React that when currency code changes,
               // it needs to reset its state by re-rendering the whole component.
+              key={targetCurrency.code}
               isLoading={isDebouncing}
               targetCurrency={targetCurrency.code}
               expectedMontlyDonations={expectedMontlyDonations}
