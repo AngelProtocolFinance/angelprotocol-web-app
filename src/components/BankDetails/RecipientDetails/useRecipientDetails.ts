@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
-import { FormValues } from "./types";
-import { AccountRequirements, CreateRecipientRequest, Quote } from "types/aws";
+import { FormValues, RequirementsData } from "./types";
+import { CreateRecipientRequest, Quote } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import {
   useCreateQuoteMutation,
@@ -11,19 +11,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { addRequirementGroup, getDefaultValues } from "./helpers";
-
-type RequirementsData = {
-  active: boolean;
-  accountRequirements: AccountRequirements;
-  currentFormValues: FormValues;
-  refreshedRequirementsAdded: boolean;
-  /**
-   * Indicates whether requirements refresh is necessary.
-   * See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
-   */
-  refreshRequired: boolean;
-};
+import { mergeRequirements } from "./helpers";
 
 export default function useRecipientDetails(
   isParentLoading: boolean,
@@ -57,10 +45,10 @@ export default function useRecipientDetails(
 
   useEffect(() => {
     (async () => {
-      setError(false);
-      setLoading(true);
-
       try {
+        setError(false);
+        setLoading(true);
+
         const newQuote = await createQuote({
           sourceAmount: expectedMontlyDonations,
           targetCurrency: targetCurrency,
@@ -77,49 +65,9 @@ export default function useRecipientDetails(
           );
         }
 
-        setRequirementsDataArray((prev) => {
-          const activeRequirementsDataArray: RequirementsData[] = [];
-          const inactiveRequirementsDataArray: RequirementsData[] = [];
-
-          prev.forEach((prevReqData) => {
-            const existingReqData = updatedRequirements.find(
-              (x) => x.type === prevReqData.accountRequirements.type
-            );
-            if (!existingReqData) {
-              inactiveRequirementsDataArray.push({
-                ...prevReqData,
-                active: false,
-              });
-            } else {
-              activeRequirementsDataArray.push({
-                ...prevReqData,
-                active: true,
-              });
-            }
-          });
-
-          return inactiveRequirementsDataArray.concat(
-            updatedRequirements.map((item) => {
-              const { formValues, refreshedRequirementsAdded } =
-                getRefreshedFormValues(
-                  activeRequirementsDataArray,
-                  item,
-                  targetCurrency
-                );
-
-              const data: RequirementsData = {
-                active: true,
-                accountRequirements: item,
-                currentFormValues: formValues,
-                refreshedRequirementsAdded,
-                refreshRequired: item.fields.some((field) =>
-                  field.group.some((group) => group.refreshRequirementsOnChange)
-                ),
-              };
-              return data;
-            })
-          );
-        });
+        setRequirementsDataArray((prevDataArray) =>
+          mergeRequirements(prevDataArray, updatedRequirements, targetCurrency)
+        );
         setQuote(newQuote);
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
@@ -141,20 +89,25 @@ export default function useRecipientDetails(
   const updateDefaultValues = useCallback(
     (formValues: FormValues) => {
       setRequirementsDataArray((prev) => {
-        const updated = [...prev];
-        const toUpdate = updated.find(
-          (x) => x.accountRequirements.type === formValues.type
-        );
-        if (!toUpdate) {
-          handleError(
-            new UnexpectedStateError(
-              `Trying to update a non existent requirements type: ${formValues.type}`
-            )
+        try {
+          const updated = [...prev];
+          const toUpdate = updated.find(
+            (x) => x.accountRequirements.type === formValues.type
           );
-        } else {
-          toUpdate.currentFormValues = formValues;
+
+          if (!!toUpdate) {
+            toUpdate.currentFormValues = formValues;
+            return updated;
+          }
+
+          throw new UnexpectedStateError(
+            `Trying to update a non existent requirements type: ${formValues.type}`
+          );
+        } catch (error) {
+          handleError(error, GENERIC_ERROR_MESSAGE);
+          setError(true);
+          return prev;
         }
-        return updated;
       });
     },
     [handleError]
@@ -168,32 +121,16 @@ export default function useRecipientDetails(
         throw new UnexpectedStateError("No 'quote' present.");
       }
 
+      setError(false);
+
       const newRequirements = await postAccountRequirements({
         quoteId: quote.id,
         request,
       }).unwrap();
 
-      setRequirementsDataArray((prevDataArray) => {
-        const updated: RequirementsData[] = newRequirements.map((newReq) => {
-          const { formValues, refreshedRequirementsAdded } =
-            getRefreshedFormValues(prevDataArray, newReq, targetCurrency);
-
-          return {
-            active: true,
-            accountRequirements: newReq,
-            currentFormValues: formValues,
-            refreshedRequirementsAdded,
-            // should always be the case that `newRequirements.length === prevRequirements.length`
-            refreshRequired:
-              prevDataArray[selectedIndex].accountRequirements.type ===
-              newReq.type
-                ? false // just finished checking requirements for selected type, so no need to do it again
-                : prevDataArray[selectedIndex].refreshRequired, // just copy/paste for other types
-          };
-        });
-        return updated;
-      });
-      setError(false);
+      setRequirementsDataArray((prevDataArray) =>
+        mergeRequirements(prevDataArray, newRequirements, targetCurrency)
+      );
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
@@ -206,8 +143,8 @@ export default function useRecipientDetails(
     isDirty: boolean
   ) => {
     try {
-      await onSubmit(request, bankStatementFile, isDirty);
       setError(false);
+      await onSubmit(request, bankStatementFile, isDirty);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
@@ -226,64 +163,5 @@ export default function useRecipientDetails(
     selectedIndex,
     setSelectedIndex,
     updateDefaultValues,
-  };
-}
-
-/**
- * Checks whether there are any new requirements to add to the form and if so, adds them and sets them
- * to the appropriate default value.
- *
- * @param currReqData current requirements data
- * @param newReq new requirements that might include new requirement groups
- * @param targetCurrency target currency
- * @returns object containing previous form values with the new requirements included and set to appropriate default values AND
- * a flag indicating whether any new requirements were added to the form
- */
-function getRefreshedFormValues(
-  currReqDataArray: RequirementsData[],
-  newReq: AccountRequirements,
-  targetCurrency: string
-): {
-  refreshedRequirementsAdded: boolean;
-  formValues: FormValues;
-} {
-  // should be undefined when loading for the first time or changing target currency/expected monthly donations
-  // should always be found when refreshing but not 100% sure how Wise behaves in all cases
-  const currReqData = currReqDataArray.find(
-    (x) => x.accountRequirements.type === newReq.type
-  );
-
-  if (!currReqData) {
-    return {
-      formValues: getDefaultValues(newReq, targetCurrency),
-      refreshedRequirementsAdded: false, // these are technically not refreshed requirements
-    };
-  }
-
-  // get current requirement groups
-  const currGroups = currReqData.accountRequirements.fields.flatMap(
-    (field) => field.group
-  );
-
-  // get only new requirement groups
-  const newGroups = newReq.fields
-    .flatMap((field) => field.group)
-    .filter((ng) => !currGroups.find((cg) => cg.key === ng.key));
-
-  // add new requirement groups (if any) to the current requirements
-  const newRequirements: FormValues["requirements"] = newGroups.reduce(
-    (curr, group) => addRequirementGroup(curr, group),
-    { ...currReqData.currentFormValues.requirements }
-  );
-
-  // update default form values
-  const newFormValues: FormValues = {
-    ...currReqData.currentFormValues,
-    requirements: newRequirements,
-  };
-
-  return {
-    formValues: newFormValues,
-    refreshedRequirementsAdded: !isEmpty(newGroups),
   };
 }
