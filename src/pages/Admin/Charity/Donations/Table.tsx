@@ -96,7 +96,7 @@ export default function Table({
                 <span className="text-sm">{symbol}</span>
                 <>{humanize(amount, 3)}</>
                 <>{humanize(amount * (+splitLiq / 100), 3)}</>
-                <>{humanize(amount * (+splitLiq / 100), 3)}</>
+                <>{humanize(amount * ((100 - +splitLiq) / 100), 3)}</>
                 <>
                   {chainId === "staging" ? (
                     <span className="text-gray-d1 dark:text-gray text-sm">
