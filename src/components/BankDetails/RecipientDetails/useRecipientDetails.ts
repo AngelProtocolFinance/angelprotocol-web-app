@@ -107,6 +107,8 @@ export default function useRecipientDetails(
     [selectedIndex]
   );
 
+  // no need to have an `isRefreshing` state, as this is handled by `react-hook-form`
+  // in ./RecipientDetailsForm/Form.tsx
   const refreshRequirements = async (request: CreateRecipientRequest) => {
     try {
       if (!quote) {
@@ -174,6 +176,9 @@ export default function useRecipientDetails(
   return {
     handleSubmit,
     isError,
+    /**
+     * Flag indicating whether currencies are loading
+     */
     isLoading,
     refreshRequirements,
     requirementsDataArray,

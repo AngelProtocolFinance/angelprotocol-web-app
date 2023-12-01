@@ -16,16 +16,8 @@ function Banking() {
         alreadySubmitted={!!data.banking?.BankStatementFile}
         isSubmitting={isSubmitting}
         onSubmit={submit}
-      >
-        {(disabled, isSubmitting, newRequirementsAdded, refreshRequired) => (
-          <FormButtons
-            disabled={disabled}
-            isSubmitting={isSubmitting}
-            newRequirementsAdded={newRequirementsAdded}
-            refreshRequired={refreshRequired}
-          />
-        )}
-      </BankDetails>
+        FormButtons={FormButtons}
+      />
     </div>
   );
 }

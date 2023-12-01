@@ -1,4 +1,5 @@
-import { ReactNode, useState } from "react";
+import { ComponentType, useState } from "react";
+import { FormButtonsProps } from "./types";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import Divider from "components/Divider";
@@ -13,14 +14,9 @@ import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
 type Props = {
-  alreadySubmitted?: boolean;
+  alreadySubmitted: boolean;
   isSubmitting: boolean;
-  children: (
-    disabled: boolean,
-    isSubmitting: boolean,
-    newRequirementsAdded: boolean,
-    refreshRequired: boolean
-  ) => ReactNode;
+  FormButtons: ComponentType<FormButtonsProps>;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,
@@ -29,10 +25,10 @@ type Props = {
 };
 
 export default function BankDetails({
-  alreadySubmitted = false,
+  alreadySubmitted,
   isSubmitting,
   onSubmit,
-  children: formButtons,
+  FormButtons,
 }: Props) {
   const [shouldUpdate, setShouldUpdate] = useState(!alreadySubmitted);
   const [expectedMontlyDonations, setExpectedMontlyDonations] =
@@ -55,10 +51,13 @@ export default function BankDetails({
   }
 
   if (!shouldUpdate) {
-    return <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />;
+    return (
+      <div className="flex flex-col w-full justify-between mt-8 max-md:items-center">
+        <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />
+        <FormButtons disabled refreshRequired alreadySubmitted />
+      </div>
+    );
   }
-
-  const disabled = !shouldUpdate || isSubmitting;
 
   return (
     <div className="grid gap-6">
@@ -67,11 +66,11 @@ export default function BankDetails({
         currencies={currencies}
         onChange={setTargetCurrency}
         classes={{ combobox: "w-full md:w-80" }}
-        disabled={disabled}
+        disabled={isSubmitting}
       />
       <ExpectedFunds
-        classes={{ input: "w-full md:w-80" }}
-        disabled={disabled}
+        classes={{ input: "md:w-80" }}
+        disabled={isSubmitting}
         onChange={(value) => {
           // if new value is empty or 0 (zero), no need to debounce, but
           // still call the function itself to cancel the previous debounce call
@@ -83,7 +82,7 @@ export default function BankDetails({
       {/* Display disabled form buttons by default, this is necessary 
           to be able to show "Back" button during registration */}
       {!expectedMontlyDonations ? (
-        formButtons(true, false, false, true)
+        <FormButtons disabled refreshRequired />
       ) : (
         <>
           <Divider />
@@ -101,9 +100,9 @@ export default function BankDetails({
                 key={`${targetCurrency.code}${expectedMontlyDonations}`}
                 targetCurrency={targetCurrency.code}
                 expectedMontlyDonations={expectedMontlyDonations}
-                disabled={disabled}
+                isSubmitting={isSubmitting}
                 onSubmit={onSubmit}
-                formButtons={formButtons}
+                FormButtons={FormButtons}
               />
             )}
           </div>
