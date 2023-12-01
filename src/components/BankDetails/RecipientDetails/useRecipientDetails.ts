@@ -25,7 +25,7 @@ type RequirementsData = {
 };
 
 export default function useRecipientDetails(
-  isDebouncing: boolean,
+  isParentLoading: boolean,
   targetCurrency: string,
   expectedMontlyDonations: number,
   onSubmit: (
@@ -49,10 +49,10 @@ export default function useRecipientDetails(
   const [postAccountRequirements] = usePostAccountRequirementsMutation();
 
   useEffect(() => {
-    if (isDebouncing && !isLoading) {
+    if (isParentLoading && !isLoading) {
       setLoading(true);
     }
-  }, [isDebouncing, isLoading]);
+  }, [isParentLoading, isLoading]);
 
   useEffect(() => {
     (async () => {

@@ -11,6 +11,11 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
 
 type Props = {
+  /**
+   * The flag is used to display a loading indicator (e.g. when debouncing `expectedMontlyDonations`) without
+   * having to unmount the component itself - this way the current form state gets stored between form loads
+   * and we are able to prefill the form fields
+   */
   isLoading: boolean;
   isSubmitting: boolean;
   targetCurrency: string;
@@ -47,7 +52,8 @@ export default function RecipientDetails({
     onSubmit
   );
 
-  if (isLoading || isLoadingRequirements) {
+  // no need to check `isLoading` too, as it already affects the value of `isLoadingRequirements`
+  if (isLoadingRequirements) {
     return (
       <div className="flex items-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
