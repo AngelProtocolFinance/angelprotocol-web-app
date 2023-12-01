@@ -38,12 +38,12 @@ export default function Table({
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <HeaderButton
-            onClick={handleHeaderClick("amount")}
+            onClick={handleHeaderClick("date")}
             _activeSortKey={sortKey}
-            _sortKey="amount"
+            _sortKey="date"
             _sortDirection={sortDirection}
           >
-            Amount
+            Date
           </HeaderButton>
           <HeaderButton
             onClick={handleHeaderClick("symbol")}
@@ -54,13 +54,15 @@ export default function Table({
             Currency
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("date")}
+            onClick={handleHeaderClick("amount")}
             _activeSortKey={sortKey}
-            _sortKey="date"
+            _sortKey="amount"
             _sortDirection={sortDirection}
           >
-            Date
+            Total Amount
           </HeaderButton>
+          <>Current Portion</>
+          <>Sustainability Portion</>
           <>Transaction</>
           <>Receipt provided</>
         </Cells>
@@ -79,18 +81,28 @@ export default function Table({
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
-              <>{humanize(amount, 3)}</>
-              <span className="text-sm">{symbol}</span>
               <span className="text-sm">
                 {new Date(date).toLocaleDateString()}
               </span>
-              <ExtLink
-                //default to ethereum for staging
-                href={getTxUrl(chainId === "staging" ? "1" : chainId, hash)}
-                className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
-              >
-                {maskAddress(hash)}
-              </ExtLink>
+              <span className="text-sm">{symbol}</span>
+              <>{humanize(amount, 3)}</>
+              <>{humanize(amount, 3)}</>
+              <>{humanize(amount, 3)}</>
+              <>
+                {chainId === "staging" ? (
+                  <span className="text-gray-d1 dark:text-gray text-sm">
+                    &lt; TX Link &gt;
+                  </span>
+                ) : (
+                  <ExtLink
+                    //default to ethereum for staging
+                    href={getTxUrl(chainId, hash)}
+                    className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
+                  >
+                    {maskAddress(hash)}
+                  </ExtLink>
+                )}
+              </>
               {!kycData ? (
                 <Icon
                   type="Close"
