@@ -112,15 +112,22 @@ export default function Table({
                     </ExtLink>
                   )}
                 </>
-                {!kycData ? (
-                  <Icon
-                    type="Close"
-                    className="text-red relative left-[-2px]"
-                    size={22}
-                  />
-                ) : (
-                  <Icon type="CheckCircle" className="text-green" size={20} />
-                )}
+                <td className="relative">
+                  {!kycData ? (
+                    <Icon
+                      type="Close"
+                      //prevent icon size from affecting row height
+                      className="left-4 absolute top-1/2 -translate-y-1/2 text-red "
+                      size={22}
+                    />
+                  ) : (
+                    <Icon
+                      type="CheckCircle"
+                      className="left-4 absolute top-1/2 -translate-y-1/2  text-green"
+                      size={20}
+                    />
+                  )}
+                </td>
               </Cells>
             )
           )
