@@ -3,7 +3,6 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { GiftCard, TxResult } from "slices/gift";
 import { getTxUrl } from "helpers";
-import { chainIds } from "constants/chainIds";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { routes } from "../../routes";
@@ -44,7 +43,7 @@ function Result(props: { hash: string }) {
         Giftcard balance is credited to the recipient's wallet.
       </p>
       <ExtLink
-        href={getTxUrl(chainIds.juno, props.hash)}
+        href={getTxUrl("juno-1", props.hash)}
         className="btn-gift btn-outline-filled gap-3.5 w-full sm:w-auto mb-3 min-w-[15.6rem]"
       >
         <Icon type="ExternalLink" size={22} />

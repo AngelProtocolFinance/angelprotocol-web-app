@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { RegStep } from "pages/Registration/types";
 import { useRegState } from "../StepGuard";
 
-type TStep = Exclude<RegStep, 4>;
+type TStep = Exclude<RegStep, 6>; // exclude summary step
 type Props = {
   disabled: boolean;
   num: TStep;
@@ -16,7 +16,7 @@ export default function Step({
 }: Props) {
   const {
     data: { init },
-  } = useRegState<4>();
+  } = useRegState<3>();
 
   return (
     <div
@@ -42,6 +42,8 @@ export default function Step({
 
 const title: { [key in TStep]: string } = {
   1: "Contact Details",
-  2: "Documentation",
-  3: "Wallet address",
+  2: "Organization",
+  3: "IRC 501(c)(3)",
+  4: "Documentation",
+  5: "Banking",
 };

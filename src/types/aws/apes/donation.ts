@@ -1,3 +1,5 @@
+import { ChainID } from "../../chain";
+
 export type KYCData = {
   fullName: string; // "John Doe"
   email: string; // "john@doe.email.com"
@@ -12,7 +14,7 @@ export type KYCData = {
 
 type DonationRecordBase = {
   amount: number;
-  chainId: string;
+  chainId: ChainID | "staging";
   date: string;
   hash: string;
   symbol: string;
@@ -24,6 +26,10 @@ type RecipientEndowId = string;
 
 export type DonationReceivedByEndow = DonationRecordBase & {
   id: DonorAddress;
+  //only relevant for now in admin
+  //some record doesn't have this attribute
+  //percent string
+  splitLiq?: string;
 };
 
 export type DonationMadeByDonor = DonationRecordBase & {

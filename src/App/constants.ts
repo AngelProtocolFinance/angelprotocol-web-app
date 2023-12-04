@@ -1,7 +1,11 @@
 import { Link, LinkGroup, SocialMediaLink } from "./types";
-import { BASE_URL, DAPP_URL, SUBDOMAIN_BUILDER } from "constants/env";
+import { BASE_URL, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { LITEPAPER } from "constants/urls";
+import {
+  PRIVACY_POLICY,
+  TERMS_OF_USE_DONOR,
+  TERMS_OF_USE_NPO,
+} from "constants/urls";
 
 type LINKS = {
   HEADER_LINKS: Link[];
@@ -11,63 +15,45 @@ type LINKS = {
 
 export const CHARITY_LINKS: LINKS = {
   HEADER_LINKS: [
-    { title: "For Non-Profits", href: BASE_URL, external: true },
+    { title: "For nonprofits", href: BASE_URL, external: true },
     {
       title: "Marketplace",
       href: appRoutes.marketplace,
       end: true,
     },
     {
-      title: "Giving Partners",
+      title: "Giving Partners (CSR)",
       href: `${BASE_URL}/giving-partners-csr/`,
       external: true,
     },
     {
       title: "About",
-      href: `${BASE_URL}/about-angel-giving/`,
+      href: `${BASE_URL}/about-better-giving/`,
       external: true,
     },
     { title: "Register", href: appRoutes.register },
-    // NOTE: governance will be reenabled when we relaunch the $HALO token
-    // { title: "Governance", href: appRoutes.govern },
   ],
   GROUPS_DATA: [
     {
-      title: "Products",
+      title: "How We Can Help",
       links: [
         {
-          text: "Non-profits",
-          href: `${BASE_URL}`,
+          text: "nonprofits",
+          href: BASE_URL,
         },
         {
           text: "Giving Partners (CSR)",
           href: `${BASE_URL}/giving-partners-csr/`,
         },
         { text: "Impact Board", href: `${DAPP_URL}/leaderboard/` },
-        // {
-        //   text: "For Giftcards",
-        //   href: "https://app.angel.giving/gift",
-        // },
       ],
     },
     {
-      title: "About",
+      title: "Resources",
       links: [
-        { text: "About us", href: `${BASE_URL}/about-angel-giving/` },
-        {
-          text: "Meet the team",
-          href: `${BASE_URL}/about/#:~:text=MEET%20THE%20TEAM-`,
-        },
-        { text: "News", href: `${BASE_URL}/news/` },
-        { text: "Careers", href: `${BASE_URL}/careers/` },
-      ],
-    },
-    {
-      title: "Docs",
-      links: [
-        { text: "Litepaper", href: LITEPAPER },
+        { text: "About us", href: `${BASE_URL}/about-better-giving/` },
         { text: "FAQs", href: "https://intercom.help/angel-protocol/en" },
-        { text: "Technical doc (coming soon)" },
+        { text: "News", href: `${BASE_URL}/news/` },
       ],
     },
     {
@@ -75,13 +61,13 @@ export const CHARITY_LINKS: LINKS = {
       links: [
         {
           text: "Privacy policy",
-          href: `${BASE_URL}/privacy-policy/`,
+          href: PRIVACY_POLICY,
         },
         {
-          text: "Terms of Use",
-          href: `${BASE_URL}/terms-of-use/`,
+          text: "Terms of Use (Donors)",
+          href: TERMS_OF_USE_DONOR,
         },
-        { text: "Terms for NPO", href: `${BASE_URL}/terms-of-use-npo/` },
+        { text: "Terms of Use (Nonprofits)", href: TERMS_OF_USE_NPO },
       ],
     },
   ],
@@ -92,15 +78,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "Twitter",
         size: 24,
       },
-      href: "https://twitter.com/angelgiving_",
-    },
-    {
-      title: "Telegram",
-      icon: {
-        type: "Telegram",
-        size: 24,
-      },
-      href: "https://t.me/angelprotocoI",
+      href: "https://twitter.com/@BetterDotGiving",
     },
     {
       title: "Discord",
@@ -119,14 +97,6 @@ export const CHARITY_LINKS: LINKS = {
       href: "https://www.youtube.com/@AngelGiving",
     },
     {
-      title: "Medium",
-      icon: {
-        type: "Medium",
-        size: 24,
-      },
-      href: "https://angelprotocol.medium.com",
-    },
-    {
       title: "Facebook",
       icon: {
         type: "FacebookCircle",
@@ -142,35 +112,5 @@ export const CHARITY_LINKS: LINKS = {
       },
       href: "https://www.linkedin.com/company/angel-giving/",
     },
-    {
-      title: "Instagram",
-      icon: {
-        type: "Instagram",
-        size: 24,
-      },
-      href: "https://www.instagram.com/angel.giving/",
-    },
   ],
-};
-
-export const AST_LINKS: LINKS = {
-  HEADER_LINKS: [
-    {
-      title: "GitHub",
-      href: "https://github.com/AngelProtocolFinance/angelprotocol-web-app",
-      external: true,
-    },
-    {
-      title: "Read the Docs",
-      href: SUBDOMAIN_BUILDER("docs"),
-      external: true,
-    },
-    {
-      title: "Talk to Us",
-      href: `${BASE_URL}/talk-to-us/`,
-      external: true,
-    },
-  ],
-  GROUPS_DATA: [],
-  SOCIAL_MEDIA_LINKS: [],
 };

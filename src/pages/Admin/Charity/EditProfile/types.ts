@@ -1,19 +1,18 @@
 import { OverrideProperties } from "type-fest";
-import { Profile } from "services/types";
-import { EndowmentProfileUpdate } from "types/aws";
-import { Country } from "types/countries";
+import { EndowDesignation, EndowmentProfileUpdate } from "types/aws";
+import { OptionType } from "types/components";
+import { Country } from "types/components";
 import { UNSDG_NUMS } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
-import { OptionType } from "components/Selector";
 
 export type FV = OverrideProperties<
   EndowmentProfileUpdate,
   {
-    endow_designation: OptionType<string>;
+    endow_designation: OptionType<EndowDesignation | "">;
     logo: ImgLink;
     image: ImgLink;
     hq_country: Country;
     sdgs: OptionType<UNSDG_NUMS>[];
     active_in_countries: OptionType<string>[];
   }
-> & { type: Profile["type"]; initial: EndowmentProfileUpdate };
+> & { initial: EndowmentProfileUpdate };

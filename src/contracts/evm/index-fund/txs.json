@@ -1,7 +1,0 @@
-[
-  "function updateConfig(address,uint256,uint256)",
-  "function createIndexFund(string,string,uint32[],bool,uint256,uint256,uint256) returns (bool)",
-  "function removeIndexFund(uint256) returns (bool)",
-  "function removeMember(uint32) returns (bool)",
-  "function updateFundMembers(uint256,uint32[]) returns (bool)"
-]

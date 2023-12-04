@@ -3,13 +3,15 @@ import { InitReg } from "../types";
 import { useRegQuery } from "services/aws/registration";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { steps } from "../routes";
+import Banking from "./Banking";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
+import FSAInquiry from "./FSAInquiry/";
+import OrgDetails from "./OrgDetails";
 import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
 import { StepGuardProps } from "./StepGuard";
-import Wallet from "./WalletRegistration";
 import { getRegistrationState } from "./getRegistrationState";
 
 export default function Steps({ classes = "" }: { classes?: string }) {
@@ -46,11 +48,10 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     return <Navigate to=".." />;
   }
 
-  const regState = getRegistrationState(data);
+  const { state: regState } = getRegistrationState(data);
   const guardProps: Omit<StepGuardProps, "step"> = {
     init: initReg,
     state: regState,
-    stateId: data.reqId,
   };
 
   return (
@@ -59,7 +60,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     >
       <ProgressIndicator
         step={regState.step}
-        classes="mx-6 md:ml-8 md:min-w-[12rem] lg:min-w-[15.5rem]"
+        classes="md:min-w-[12rem] lg:min-w-[15.5rem]"
       />
 
       <div className="grid z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l3/80 dark:shadow-blue-d7">
@@ -69,16 +70,24 @@ export default function Steps({ classes = "" }: { classes?: string }) {
             element={<Contact {...guardProps} step={1} />}
           />
           <Route
-            path={steps.doc}
-            element={<Documentation {...guardProps} step={2} />}
+            path={steps.orgDetails}
+            element={<OrgDetails {...guardProps} step={2} />}
           />
           <Route
-            path={steps.wallet}
-            element={<Wallet {...guardProps} step={3} />}
+            path={steps.fsaInquiry}
+            element={<FSAInquiry {...guardProps} step={3} />}
+          />
+          <Route
+            path={steps.docs}
+            element={<Documentation {...guardProps} step={4} />}
+          />
+          <Route
+            path={steps.banking}
+            element={<Banking {...guardProps} step={5} />}
           />
           <Route
             path={steps.summary}
-            element={<Dashboard {...guardProps} step={4} />}
+            element={<Dashboard {...guardProps} step={6} />}
           />
         </Routes>
       </div>

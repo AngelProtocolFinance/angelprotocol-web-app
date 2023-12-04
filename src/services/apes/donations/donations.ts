@@ -5,7 +5,6 @@ import {
   ReceiptPayload,
   Token,
 } from "types/aws";
-import { createAuthToken } from "helpers";
 import { IS_TEST } from "constants/env";
 import { version as v } from "../../helpers";
 import { apes } from "../apes";
@@ -15,13 +14,11 @@ export const donations_api = apes.injectEndpoints({
     //post donation receipt
     requestReceipt: builder.mutation<any, ReceiptPayload>({
       query: (receiptPayload) => {
-        const generatedToken = createAuthToken("angelprotocol-web-app");
         const { transactionId, ...restOfPayload } = receiptPayload;
         return {
           url: `${v(3)}/donation`,
           params: { transactionId },
           method: "PUT",
-          headers: { authorization: generatedToken },
           body: restOfPayload,
         };
       },

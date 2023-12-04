@@ -1,5 +1,6 @@
 import { APIs } from "constants/urls";
-import { createAuthToken } from "./createAuthToken";
+import { isEmpty } from "./isEmpty";
+import { jwtToken } from "./jwt-token";
 
 export type Bucket = "endow-profiles" | "endow-reg";
 export const bucketURL = "s3.amazonaws.com";
@@ -9,12 +10,12 @@ export async function uploadFiles(
   files: File[],
   bucket: Bucket
 ): Promise<string | null> {
-  if (files.length <= 0) return null;
+  if (isEmpty(files)) return null;
 
   const dataURLs = await Promise.all(files.map((f) => toDataURL(f)));
-
   const timeStamp = Date.now();
-  const authorization = createAuthToken("charity-owner");
+
+  const token = await jwtToken();
 
   await Promise.all(
     files.map((f, idx) =>
@@ -25,7 +26,7 @@ export async function uploadFiles(
           dataUri: dataURLs[idx],
           fileName: `${timeStamp}-${f.name.replace(SPACES, "_")}`,
         }),
-        headers: { authorization },
+        headers: { authorization: `Bearer ${token}` },
       })
     )
   );

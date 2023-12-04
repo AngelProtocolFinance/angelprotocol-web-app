@@ -15,7 +15,7 @@ const precropFileKey: Key = "precropFile";
 export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
   props: Props<T, K>
 ) {
-  const { name, classes, maxSize } = props;
+  const { name, classes, maxSize, accept } = props;
   const precropFilePath: any = `${String(name)}.${precropFileKey}`;
 
   const {
@@ -106,7 +106,8 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
       </div>
       <p className="text-xs text-gray-d1 dark:text-gray mt-2">
         <span>
-          Valid types are: JPG, JPEG, PNG and WEBP.{" "}
+          Valid types are:{" "}
+          {accept.map((m) => m.split("/")[1].toUpperCase()).join(", ")}.{" "}
           {maxSize ? (
             <>
               Image should be less than {maxSize / BYTES_IN_MB}MB in size.

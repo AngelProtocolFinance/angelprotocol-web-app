@@ -5,7 +5,6 @@ import {
   useWalletProfileQuery,
 } from "services/aws/aws";
 import { useModalContext } from "contexts/ModalContext";
-import { useGetWallet } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
@@ -17,37 +16,27 @@ export default function BookmarkBtn({ endowId, children }: Props) {
   const [isHovered, setHovered] = useState(false);
   const ref = useRef<HTMLButtonElement>(null);
 
-  const { wallet, isLoading: isWalletLoading } = useGetWallet();
   const {
     data,
     isLoading: isProfileLoading,
     isFetching,
-  } = useWalletProfileQuery(wallet?.address!, {
-    skip: !wallet,
+    //FUTURE: wallet is may not be needed to edit bookmarks
+  } = useWalletProfileQuery("", {
+    skip: true,
   });
   const { showModal } = useModalContext();
   const [toggle, { isLoading: isToggling }] = useToggleBookmarkMutation();
 
-  const isLoading =
-    isProfileLoading || isFetching || isToggling || isWalletLoading;
+  const isLoading = isProfileLoading || isFetching || isToggling;
 
   const bookmark = data?.bookmarks?.find((d) => d.endowId === endowId);
   const isBookmarked = bookmark !== undefined;
 
   async function toogleBookmark() {
-    if (!wallet) {
-      return showModal(Prompt, {
-        type: "error",
-        headline: "Bookmark",
-        title: "Wallet Disconnected",
-        children: "Connect wallet to edit bookmark",
-      });
-    }
-
     const res = await toggle({
       endowId,
       type: isBookmarked ? "delete" : "add",
-      wallet: wallet.address,
+      wallet: "", //FUTURE: wallet may not be needed to edit bookmarks
     });
 
     if ("error" in res) {

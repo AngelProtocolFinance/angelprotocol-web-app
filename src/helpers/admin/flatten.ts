@@ -1,5 +1,5 @@
 import { Primitive } from "type-fest";
-import { isEmpty } from "helpers/isEmpty";
+import { isEmpty } from "../isEmpty";
 
 export type Obj = {
   [index: string]: Primitive | Primitive[] | Obj | Obj[] | (Primitive | Obj)[];
@@ -8,7 +8,7 @@ type Flat = Record<string, Primitive>;
 
 export function flatten(obj: Obj, curr: Flat = {}, path = ""): Flat {
   const entries = Object.entries(obj);
-  if (entries.length === 0) return curr;
+  if (isEmpty(entries)) return curr;
 
   return entries.reduce((result, [key, val]) => {
     if (isPrimitive(val)) {

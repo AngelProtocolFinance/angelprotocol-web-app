@@ -4,7 +4,7 @@ type Quotation = {
   };
 };
 
-export const usdValue = async (coinId: string): Promise<number> =>
+export const USD = async (coinId: string): Promise<number> =>
   fetch(
     `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
   )

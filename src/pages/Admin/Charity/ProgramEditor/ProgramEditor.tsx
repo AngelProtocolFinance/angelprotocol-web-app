@@ -5,9 +5,8 @@ import { FV } from "./types";
 import { useProgramQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import { dateToFormFormat } from "components/form";
-import { isTooltip, useAdminContext } from "../../Context";
+import { useAdminContext } from "../../Context";
 import Form from "./Form";
-import { ops } from "./ops";
 import { schema } from "./schema";
 
 const NEW = "new";
@@ -69,17 +68,14 @@ export default function ProgramEditor() {
 }
 
 function Context(props: FV) {
-  const { txResource } = useAdminContext(ops);
   const methods = useForm<FV>({
     defaultValues: props,
     resolver: yupResolver(schema),
   });
 
-  const tooltip = isTooltip(txResource) ? txResource : undefined;
-
   return (
     <FormProvider {...methods}>
-      <Form tooltip={tooltip} />
+      <Form />
     </FormProvider>
   );
 }

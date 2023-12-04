@@ -9,6 +9,7 @@ import {
   useState,
 } from "react";
 import { FC } from "react";
+import { isEmpty } from "helpers";
 
 type ModalOptions = { isDismissible: boolean; onClose(): void };
 type ModalState = {
@@ -107,7 +108,7 @@ const Context = createContext<ContextState>({} as ContextState);
 
 export const useModalContext = () => {
   const val = useContext(Context);
-  if (Object.entries(val).length <= 0) {
+  if (isEmpty(Object.entries(val))) {
     throw new Error("This hook can only be used inside Modalcontext");
   }
   return val;

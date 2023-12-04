@@ -13,9 +13,9 @@ export default function Cards({ classes = "" }: { classes?: string }) {
         isError,
       }}
       messages={{
-        error: "Failed to get endowments",
-        loading: "Getting endowments..",
-        empty: "No endowments found",
+        error: "Failed to get organisations",
+        loading: "Getting organisations..",
+        empty: "No organisations found",
       }}
       classes={{
         container: `${classes} dark:text-white`,
@@ -23,11 +23,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
     >
       {(endowments) => (
         <div
-          className={`${classes} w-full grid ${
-            endowments.length < 3
-              ? "grid-cols-[repeat(auto-fill,minmax(255px,1fr))]"
-              : "grid-cols-[repeat(auto-fit,minmax(245px,1fr))]"
-          } gap-4 content-start`}
+          className={`${classes} w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 content-start`}
         >
           {endowments.map((endow) => (
             <Card {...endow} key={endow.id} />

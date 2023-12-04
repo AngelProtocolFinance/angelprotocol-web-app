@@ -1,14 +1,22 @@
 import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
 import { useEffect, useRef, useState } from "react";
-import { Connection, ProviderInfo } from "../types";
-import { Connected, WalletState } from "./types";
+import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
+import { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes } from "@walletconnect/types";
+import { SignDoc, WCSignDirectRes } from "types/cosmos";
+import {
+  CosmosConnected,
+  CosmosProviderState,
+  Wallet,
+  WalletMeta,
+} from "types/wallet";
 import { _pairing, _session, account } from "helpers/wallet-connect";
-import { WALLET_METADATA } from "../constants";
+
+const keplrIcon = "/icons/wallets/keplr.png";
 
 /** NOTE: only use this wallet in mainnet */
-export function useKeplrWC() {
-  const [state, setState] = useState<WalletState>({
+export function useKeplrWC(): Wallet {
+  const [state, setState] = useState<CosmosProviderState>({
     status: "disconnected",
   });
   const qrModalRef = useRef<KeplrQRCodeModalV2>();
@@ -24,7 +32,7 @@ export function useKeplrWC() {
       const { client, session } = await _session("Keplr");
 
       if (session) {
-        setState(connected(session.namespaces));
+        setState(connected(session, client));
         client.on("session_delete", onSessionDelete);
       } else {
         setState({ status: "disconnected" });
@@ -64,7 +72,7 @@ export function useKeplrWC() {
       }
       const session = await approval();
 
-      setState(connected(session.namespaces));
+      setState(connected(session, client));
 
       client.on("session_delete", onSessionDelete);
       if (uri) {
@@ -90,35 +98,55 @@ export function useKeplrWC() {
     client.off("session_delete", onSessionDelete);
     setState({ status: "disconnected" });
   }
-
-  /** TODO: refactor to just return Meta & WalletState */
-  const providerInfo: ProviderInfo | undefined =
-    state.status === "connected"
-      ? {
-          logo: WALLET_METADATA["keplr-wc"].logo,
-          providerId: "keplr-wc",
-          chainId: state.chainId,
-          address: state.address,
-        }
-      : undefined;
-
-  const connection: Connection = {
-    providerId: "keplr-wc",
+  const meta: WalletMeta = {
+    logo: keplrIcon,
     name: "Keplr mobile",
-    logo: WALLET_METADATA["keplr-wc"].logo,
-    installUrl: WALLET_METADATA["keplr-wc"].logo,
-    connect,
+    supportedChains: ["juno-1"],
   };
 
   return {
-    connection,
-    disconnect,
-    isLoading: state.status === "loading",
-    providerInfo,
+    ...state,
+    ...meta,
+    ...{ connect, disconnect, switchChain: null },
   };
 }
 
-const connected = (namespaces: SessionTypes.Namespaces): Connected => ({
-  status: "connected",
-  ...account(namespaces.cosmos),
-});
+const connected = (
+  session: SessionTypes.Struct,
+  client: SignClient
+): CosmosConnected => {
+  return {
+    ...account(session.namespaces.cosmos),
+    id: "keplr-wc",
+    status: "connected",
+    isSwitching: false,
+    async sign(chainID, signer, doc: SignDoc) {
+      const tx = TxRaw.fromPartial({
+        bodyBytes: doc.bodyBytes,
+        authInfoBytes: doc.authInfoBytes,
+      });
+      const { authInfoBytes, bodyBytes } = TxRaw.toJSON(tx) as any;
+      const { signature } = await client
+        .request<WCSignDirectRes>({
+          topic: session.topic,
+          chainId: `cosmos:${chainID}`,
+          request: {
+            method: "cosmos_signDirect",
+            params: {
+              signerAddress: signer,
+              signDoc: {
+                authInfoBytes,
+                bodyBytes,
+                chainId: doc.chainId,
+                accountNumber: doc.accountNumber?.toString(),
+              },
+            },
+          },
+        })
+        .catch((err) => {
+          throw err;
+        });
+      return { signature, signed: doc };
+    },
+  };
+};

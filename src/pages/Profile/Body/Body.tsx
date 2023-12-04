@@ -3,7 +3,6 @@ import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { IS_AST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
@@ -18,14 +17,10 @@ export default function Body() {
       <div className="padded-container grid gap-8 justify-items-center w-full h-full pt-32 pb-8 lg:grid-rows-[auto_auto_1fr] lg:grid-cols-[1fr_auto] lg:justify-items-start lg:gap-16 lg:pt-6 lg:pb-20">
         <Breadcrumbs
           className="font-body font-normal text-xs sm:text-sm lg:ml-52"
-          items={
-            IS_AST
-              ? []
-              : [
-                  { title: "Marketplace", to: `${appRoutes.marketplace}/` },
-                  { title: p.name, to: `${appRoutes.marketplace}/${p.id}` },
-                ]
-          }
+          items={[
+            { title: "Marketplace", to: `${appRoutes.marketplace}/` },
+            { title: p.name, to: `${appRoutes.marketplace}/${p.id}` },
+          ]}
         />
         <DonateButton className="order-3 lg:order-2 w-full lg:w-48" />
 

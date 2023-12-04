@@ -1,40 +1,21 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { RegionType, Sort } from "./types";
+import { Sort } from "./types";
 import { EndowDesignation } from "types/aws";
-import { EndowmentType } from "types/lists";
 import { UNSDG_NUMS } from "types/lists";
-import { clearedState, initialState } from "./constants";
+import { initialState } from "./constants";
 
 const marketFilter = createSlice({
   name: "marketFilter",
   initialState,
   reducers: {
-    clear: (state) => {
-      // clears everything except isOpen && sortKey
-      return { ...clearedState, isOpen: state.isOpen, sortKey: state.sort };
+    reset: () => {
+      return initialState;
     },
-    reset: (state) => {
-      //reset everything except isOpen && sortKey
-      return { ...initialState, isOpen: state.isOpen, sortKey: state.sort };
+    setSdgs: (state, { payload }: PayloadAction<UNSDG_NUMS[]>) => {
+      state.sdgs = payload;
     },
-    setSdgs: (
-      state,
-      {
-        payload: { group, sdgs },
-      }: PayloadAction<{ group: number; sdgs: UNSDG_NUMS[] }>
-    ) => {
-      state.sdgGroups[group] = sdgs;
-    },
-    setRegions: (
-      state,
-      {
-        payload: { type, value },
-      }: PayloadAction<{
-        type: RegionType;
-        value: { region: string; countries: string[] };
-      }>
-    ) => {
-      state.region[type][value.region] = value.countries;
+    setCountries: (state, { payload }: PayloadAction<string[]>) => {
+      state.countries = payload;
     },
     setSearchText: (state, { payload }: PayloadAction<string>) => {
       state.searchText = payload;
@@ -45,29 +26,20 @@ const marketFilter = createSlice({
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
       state.sort = payload;
     },
-    setTypes: (state, { payload }: PayloadAction<EndowmentType[]>) => {
-      state.endow_types = payload;
-    },
     setDesignations: (
       state,
       { payload }: PayloadAction<EndowDesignation[]>
     ) => {
       state.endow_designation = payload;
     },
-    toggle(state) {
-      state.isOpen = !state.isOpen;
-    },
   },
 });
 
 export const {
   setSdgs,
-  setRegions,
-  clear,
   reset,
-  toggle,
-  setTypes,
   setDesignations,
+  setCountries,
   setSort,
   setKYCOnly,
   setSearchText,

@@ -1,4 +1,4 @@
-import { OptionType } from "components/Selector";
+import { OptionType } from "types/components";
 
 export type FormValues = {
   startDate: string;

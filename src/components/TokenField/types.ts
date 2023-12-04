@@ -1,14 +1,6 @@
-import { FieldValues, Path } from "react-hook-form";
-import { TokenWithAmount } from "types/slices";
-
-export type OnSetAmount = (balance: TokenWithAmount["balance"]) => void;
-
-/** min amount multipliers 
-   e.g if min_amount is $1,
-   with scale of [10, 20, 50, 100, 200]
-   amount options would be 10, 20 50, 100 ( 200 | max)
-  */
-type Scale = [number, number, number, number, number];
+import { FieldValues, Path, PathValue } from "react-hook-form";
+import { ChainID } from "types/chain";
+import { TokenWithAmount } from "types/tx";
 
 type Classes = {
   container?: string;
@@ -17,26 +9,18 @@ type Classes = {
 };
 
 export type Props<T extends FieldValues, K extends Path<T>> = {
-  name: T[K] extends TokenWithAmount ? K : never;
+  name: PathValue<T, K> extends TokenWithAmount ? K : never;
   label: string;
-  tokens: TokenWithAmount[];
-  scale?: Scale;
+  selectedChainId: ChainID;
   classes?: Classes;
+  disabled?: boolean;
 
-  //flags
-  withGiftcard?: true;
   withBalance?: true;
   withMininum?: true;
 };
 
 export type SelectorProps = {
-  token: TokenWithAmount;
-  tokens: TokenWithAmount[];
+  selectedChainId: ChainID;
+  selectedToken: TokenWithAmount;
   onChange(token: TokenWithAmount): void;
-};
-
-export type AmountOptionsProps = {
-  token: TokenWithAmount;
-  scale: Scale;
-  onSetAmount: OnSetAmount;
 };

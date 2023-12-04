@@ -1,64 +1,32 @@
-import { useMemo } from "react";
 import {
   updateAWSQueryData,
   useEndowmentCardsQuery,
   useLazyEndowmentCardsQuery,
 } from "services/aws/aws";
 import { useGetter, useSetter } from "store/accessors";
+import { isEmpty } from "helpers";
 
 export default function useCards() {
   const dispatch = useSetter();
-  const {
-    sdgGroups,
-    endow_types,
-    endow_designation,
-    sort,
-    searchText,
-    kyc_only,
-    tiers,
-    region,
-  } = useGetter((state) => state.component.marketFilter);
-
-  const selectedSDGs = useMemo(
-    () => Object.entries(sdgGroups).flatMap(([, members]) => members),
-    [sdgGroups]
+  const { sort, searchText, ...params } = useGetter(
+    (state) => state.component.marketFilter
   );
 
-  const { activities, headquarters } = region;
-  const hqCountries = useMemo(
-    () =>
-      encodeURI(
-        Object.entries(headquarters)
-          .flatMap(([, countries]) => (countries ? countries : []))
-          .join(",")
-      ),
-    [headquarters]
+  const _params = Object.entries(params).reduce(
+    (prev, [key, val]) => ({
+      ...prev,
+      ...(isEmpty(val) ? {} : { [key]: val.join(",") }),
+    }),
+    {}
   );
-
-  const activityCountries = useMemo(
-    () =>
-      encodeURI(
-        Object.entries(activities)
-          .flatMap(([, countries]) => (countries ? countries : []))
-          .join(",")
-      ),
-    [activities]
-  );
-  const designations = endow_designation.join(",");
 
   const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
-    query: searchText || "matchall",
-    sort: sort ? `${sort.key}+${sort.direction}` : "default",
-    endow_types: endow_types.join(",") || null,
-    tiers: tiers.join(",") || null,
-    sdgs: selectedSDGs.join(",") || 0,
-    kyc_only: kyc_only.join(",") || null,
-    ...(designations ? { endow_designation: designations } : {}),
-    ...(hqCountries ? { hq_country: hqCountries } : {}),
-    ...(activityCountries ? { active_in_countries: activityCountries } : {}),
+    query: searchText,
+    sort: sort ? `${sort.key}+${sort.direction}` : undefined,
     page: 1, // always starts at page 1
     hits: 15,
     published: "true",
+    ..._params,
   });
 
   const [loadMore, { isLoading: isLoadingNextPage }] =

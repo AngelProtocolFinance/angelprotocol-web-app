@@ -1,16 +1,15 @@
-import { EndowmentTierNum } from "../../contracts";
 import { EndowmentType, NetworkType, UNSDG_NUMS } from "../../lists";
 
-type EndowmentBalances = {
-  // represents total cumulative balances
-  total_liq: number;
-  total_lock: number;
-  overall: number;
+export type EndowmentTierNum = 1 | 2 | 3;
 
-  // represents tokens on hand balances (takes into account withdrawn funds)
-  on_hand_liq: number;
-  on_hand_lock: number;
-  on_hand_overall: number;
+type EndowmentBalances = {
+  contributionsCount: number;
+  donationsBal: number;
+  payoutsMade: number;
+  payoutsPending: number;
+  sustainabilityFundBal: number;
+  totalContributions: number;
+  totalEarnings: number;
 };
 
 export type MileStone = {
@@ -41,7 +40,7 @@ type EndowmentBase = {
   active_in_countries?: string[];
   sdgs: UNSDG_NUMS[];
   id: number;
-  image: string;
+  logo: string;
   kyc_donors_only: boolean;
   contributor_verification_required: boolean;
   program: Program[];
@@ -51,9 +50,14 @@ type EndowmentBase = {
 };
 
 export type EndowmentProfile = EndowmentBase & {
+  bank_verification_status:
+    | "Not Submitted"
+    | "Under Review"
+    | "Approved"
+    | "Rejected";
   fiscal_sponsored: boolean;
   contact_email: string;
-  logo: string;
+  image: string;
   overview?: string;
   published: boolean;
   registration_number?: string;
@@ -67,37 +71,20 @@ export type EndowmentProfile = EndowmentBase & {
     tiktok?: string;
   };
   street_address?: string;
-
   url?: string;
+  wise_recipient_id: string;
 } & EndowmentBalances;
-
-const _npo_type: keyof EndowmentBase = "endow_designation";
-//prettier-ignore
-export type ASTProfile = Pick<EndowmentProfile, 
-    "id" 
-  | "name" 
-  | "tagline"
-  | "program"
-  > 
-  & Partial<Omit<EndowmentProfile,
-   "id"
-  |"name"
-  |"tagline"
-  | typeof _npo_type 
-  >>
-  & Partial<EndowmentBalances>
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: EndowmentType;
   published: boolean;
 };
 
-export type EndowmentIdName = Pick<EndowmentBase, "id" | "name">;
+export type EndowmentOption = Pick<EndowmentBase, "id" | "name">;
 
 export type EndowmentProfileUpdate = {
   //required
   id: number;
-  owner: string;
 
   /** optional, though set as required in this type
   to force setting of default values - "", [], etc ..*/
@@ -111,7 +98,7 @@ export type EndowmentProfileUpdate = {
   contact_email: string;
   // categories_sdgs: UNSDG_NUMS[];
   contributor_verification_required: boolean;
-  endow_designation: string;
+  endow_designation: EndowDesignation | "";
   hq_country: string;
   image: string;
   kyc_donors_only: boolean;
@@ -143,18 +130,15 @@ export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
 export type EndowmentsQueryParams = {
-  query: string; //set to "matchAll" if no search query
-  sort: "default" | `${EndowmentsSortKey}+${SortDirection}`;
+  query: string; //
+  sort?: `${EndowmentsSortKey}+${SortDirection}`;
   page?: number; //to load next page, set to Page + 1
-  endow_types: string | null; // comma separated EndowmentType values
   endow_designation?: string; // comma separated EndowDesignation values
-  sdgs: string | 0; // comma separated sdg values. The backend recognizes "0" as "no SDG was selected"
-  tiers: string | null; // comma separated Exclude<EndowmentTier, "Level1"> values ("Level1" excluded for now)
-  kyc_only: string | null; // comma separated boolean values
-  hq_country?: string; //comma separated values
-  active_in_countries?: string; //comma separated values
+  sdgs?: string; // comma separated sdg values.
+  kyc_only?: string; // comma separated boolean values
+  countries?: string; //comma separated country names
   hits?: number; // Number of items to be returned per request. If not provided, API defaults to return all
-  published: string;
+  published: "true";
 };
 
 export interface LeaderboardEntry {
@@ -169,40 +153,10 @@ export interface LeaderboardEntry {
   //charity_owner:string
 }
 
-export type TStrategy = {
-  strategy_key: string;
-  chain_id: string;
-  apy: number; // 5.2
-  contract: string;
-  description: string;
-  icon: string;
-  market_cap: number; // 100,024,000 USD
-  name: string;
-  provider: { name: string; url: string; icon: string };
-  rating: string; // "AAA";
-  type: string; // "Uncollateralized Lending";
-  vaults: { locked: string; liquid: string };
-  website: string;
-};
-
 export interface Update {
   endowments: LeaderboardEntry[];
   last_update: string;
 }
-
-export type Airdrops = Airdrop[];
-export type Airdrop = {
-  stage: number;
-  haloTokens: string; // uhalo amount
-  proof: string[];
-  // chainId: "bombay-12";
-  // stage: 1;
-  // haloTokens: "10000000";
-  // proof: string[];
-  // claimable: true;
-  // address: "terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
-  // pk: "bombay-12:terra1tc2yp07pce93uwnneqr0cptqze6lvke9edal3l";
-};
 
 export type EndowmentBookmark = {
   endowId: number;
@@ -222,13 +176,3 @@ export interface DonationsMetricList {
   donations_daily_amount: number;
   donations_total_amount: number;
 }
-
-export type NewAST = {
-  chainId: string;
-  id: number;
-  registrant: string;
-  tagline: string;
-  /** not in registration steps */
-  // banner
-  // logo
-};

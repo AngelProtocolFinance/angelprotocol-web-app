@@ -8,6 +8,7 @@ export type Link = {
     size: number;
   };
   end?: boolean;
+  disabled?: boolean;
 };
 
 export type LinkGroup = {

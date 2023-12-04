@@ -1,8 +1,8 @@
-import { PropsWithChildren, useEffect, useState } from "react";
+import { PropsWithChildren, useState } from "react";
 import { Link } from "react-router-dom";
 import { EstimateStatus } from "./types";
-import { TokenWithAmount } from "types/slices";
-import { WithWallet } from "contexts/WalletContext";
+import { TokenWithAmount } from "types/tx";
+import { WithWallet } from "types/wallet";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { useSetter } from "store/accessors";
@@ -10,26 +10,16 @@ import { SubmitStep, setStep } from "slices/gift";
 import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import CompleteBtn from "./CompleteBtn";
-import { estimateTx } from "./estimateTx";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
-  const [estimate, setEstimate] = useState<EstimateStatus>("loading");
-
-  useEffect(() => {
-    (async () => {
-      setEstimate("loading");
-      const _estimate = await estimateTx(props);
-      setEstimate(_estimate || "error");
-    })();
-  }, [props]);
+  const [estimate] = useState<EstimateStatus>("loading");
 
   function goBack() {
     dispatch(setStep(props.step - 1));
   }
 
   const { token } = props.details;
-  const { chain } = props.wallet;
 
   return (
     <div className="grid content-start">
@@ -41,7 +31,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
         <span>{token.symbol}</span>
       </Row>
       <Row title="Blockchain:">
-        <span>{chain.chain_name}</span>
+        <span>Chain name</span>
       </Row>
       <Row title="Amount:">
         <span>

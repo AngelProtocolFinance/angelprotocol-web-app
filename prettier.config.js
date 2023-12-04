@@ -24,7 +24,6 @@ const config = {
     "^providers.*",
     "^contexts.*",
     "^components.*",
-    "^test.*",
     "^store.*",
     "^slices.*",
     "^contracts.*",

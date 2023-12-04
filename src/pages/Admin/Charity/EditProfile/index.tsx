@@ -1,23 +1,24 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FV } from "./types";
-import { Profile as TProfile } from "services/types";
-import { EndowDesignation, EndowmentProfileUpdate } from "types/aws";
+import {
+  EndowmentProfileUpdate,
+  EndowmentProfile as TProfile,
+} from "types/aws";
 import { useProfileQuery } from "services/aws/aws";
+import { country } from "components/CountrySelector";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { isTooltip, useAdminContext } from "../../Context";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
-import { getEndowDesignationLabelValuePair } from "./getEndowDesignationLabelValuePair";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import { ops } from "./ops";
 import { schema } from "./schema";
 import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
-  const { id } = useAdminContext(ops);
+  const { id } = useAdminContext();
   const {
     data: profile,
     isLoading,
@@ -42,12 +43,11 @@ export default function EditProfile() {
   );
 }
 
-function FormWithContext(props: TProfile) {
-  const { txResource, id, owner } = useAdminContext<"charity">(ops);
-
+function FormWithContext(props: TProfile & { id: number }) {
+  //
   const init: EndowmentProfileUpdate = toProfileUpdate({
     type: "initial",
-    data: { ...props, id, owner },
+    data: { ...props, id: props.id },
   });
 
   const defaults: FV = {
@@ -59,11 +59,9 @@ function FormWithContext(props: TProfile) {
     },
     logo: { name: "", publicUrl: props.logo ?? "", preview: props.logo ?? "" },
     endow_designation: init.endow_designation
-      ? getEndowDesignationLabelValuePair(
-          init.endow_designation as EndowDesignation
-        )
+      ? { label: init.endow_designation, value: init.endow_designation }
       : { label: "", value: "" },
-    hq_country: { flag: "", name: props.hq_country ?? "", code: "" },
+    hq_country: country(props.hq_country ?? ""),
     sdgs: init.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
     active_in_countries: init.active_in_countries.map((x) => ({
       label: x,
@@ -71,20 +69,17 @@ function FormWithContext(props: TProfile) {
     })),
 
     //meta
-    type: props.type,
     initial: init,
   };
 
   const methods = useForm<FV>({
     defaultValues: defaults,
     resolver: yupResolver(schema),
-    context: { isEndow: props.type === "charity" },
   });
-  const tooltip = isTooltip(txResource) ? txResource : undefined;
 
   return (
     <FormProvider {...methods}>
-      <Form tooltip={tooltip} />
+      <Form />
     </FormProvider>
   );
 }
