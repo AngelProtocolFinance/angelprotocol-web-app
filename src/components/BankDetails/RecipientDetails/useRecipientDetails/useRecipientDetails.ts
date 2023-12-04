@@ -84,6 +84,7 @@ export default function useRecipientDetails(
     expectedMontlyDonations,
     targetCurrency,
     createQuote,
+    dispatch,
     getAccountRequirements,
     handleError,
   ]);
@@ -97,7 +98,7 @@ export default function useRecipientDetails(
         setError(true);
       }
     },
-    [handleError]
+    [dispatch, handleError]
   );
 
   // no need to have an `isRefreshing` state, as this is handled by `react-hook-form`
