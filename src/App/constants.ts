@@ -78,7 +78,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "Twitter",
         size: 24,
       },
-      href: "https://twitter.com/angelgiving_",
+      href: "https://twitter.com/@BetterDotGiving",
     },
     {
       title: "Discord",
