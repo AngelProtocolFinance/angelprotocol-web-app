@@ -2,7 +2,7 @@ import { FormValues } from "../types";
 import { AccountRequirements, Field, Group } from "types/aws";
 import { Country } from "types/components";
 import { asset } from "components/FileDropzone";
-import { isCountry, isTextType, undot } from ".";
+import { isCountry, isTextType, undot } from "../helpers";
 
 /**
  * Creates a FormValues object based on the passed requirements,
@@ -22,7 +22,7 @@ export function getDefaultValues(
     type: accountRequirements.type,
     requirements: accountRequirements.fields.reduce<FormValues["requirements"]>(
       (defaultValues, field) => {
-        const updated = addRequirementField(defaultValues, field);
+        const updated = populateRequirementField(defaultValues, field);
         return updated;
       },
       {}
@@ -37,12 +37,12 @@ export function getDefaultValues(
  * @param field requirement field to add
  * @returns current form requirements with the new req. field added
  */
-function addRequirementField(
+function populateRequirementField(
   currFormValues: FormValues["requirements"],
   field: Field
 ): FormValues["requirements"] {
   const result = field.group.reduce(
-    (curr, group) => addRequirementGroup(curr, group),
+    (curr, group) => populateRequirementGroup(curr, group),
     { ...currFormValues }
   );
 
@@ -56,7 +56,7 @@ function addRequirementField(
  * @param group requirement group to add
  * @returns current form requirements with the new req. group added
  */
-export function addRequirementGroup(
+export function populateRequirementGroup(
   currFormValues: FormValues["requirements"],
   group: Group
 ): FormValues["requirements"] {

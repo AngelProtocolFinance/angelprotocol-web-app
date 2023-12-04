@@ -13,7 +13,7 @@ import formToCreateRecipientRequest from "./formToCreateRecipientRequest";
 type Props = {
   accountRequirements: AccountRequirements;
   disabled: boolean;
-  newRequirementsAdded: boolean;
+  refreshedRequirementsAdded: boolean;
   refreshRequired: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
   onRefresh: (request: CreateRecipientRequest) => Promise<void>;
@@ -47,10 +47,10 @@ export default function Form(props: Props) {
   // and immediately validate all the newly added fields, clearly marking all the
   // invalid ones to make it easier for the user to notice them
   useEffect(() => {
-    if (props.newRequirementsAdded && form.current) {
+    if (props.refreshedRequirementsAdded && form.current) {
       form.current.requestSubmit();
     }
-  }, [props.newRequirementsAdded]);
+  }, [props.refreshedRequirementsAdded]);
 
   return (
     <form onSubmit={handleSubmission} ref={form} className="grid gap-6">
@@ -76,7 +76,7 @@ export default function Form(props: Props) {
       <props.FormButtons
         disabled={props.disabled}
         isSubmitting={isSubmitting}
-        newRequirementsAdded={props.newRequirementsAdded}
+        refreshedRequirementsAdded={props.refreshedRequirementsAdded}
         refreshRequired={props.refreshRequired}
       />
     </form>

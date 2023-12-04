@@ -11,6 +11,12 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
 
 type Props = {
+  /**
+   * The flag is used to display a loading indicator (e.g. when debouncing `expectedMontlyDonations`) without
+   * having to unmount the component itself - this way the current form state gets stored between form loads
+   * even when new form requirements are being loaded (when "expectedMontlyDonations" value changes)
+   */
+  isLoading: boolean;
   isSubmitting: boolean;
   targetCurrency: string;
   expectedMontlyDonations: number;
@@ -23,6 +29,7 @@ type Props = {
 };
 
 export default function RecipientDetails({
+  isLoading,
   isSubmitting,
   targetCurrency,
   expectedMontlyDonations,
@@ -30,17 +37,23 @@ export default function RecipientDetails({
   onSubmit,
 }: Props) {
   const {
+    requirementsDataArray,
     handleSubmit,
     isError,
-    isLoading,
+    isLoading: isLoadingRequirements,
     refreshRequirements,
-    requirementsDataArray,
-    selectedIndex,
-    setSelectedIndex,
+    selectedRequirementsData,
+    changeSelectedType,
     updateDefaultValues,
-  } = useRecipientDetails(targetCurrency, expectedMontlyDonations, onSubmit);
+  } = useRecipientDetails(
+    isLoading,
+    targetCurrency,
+    expectedMontlyDonations,
+    onSubmit
+  );
 
-  if (isLoading) {
+  // no need to check `isLoading` from the parent, as it already affects the value of `isLoadingRequirements`
+  if (isLoadingRequirements) {
     return (
       <div className="flex items-center gap-2">
         <LoaderRing thickness={10} classes="w-6" /> Loading...
@@ -63,14 +76,13 @@ export default function RecipientDetails({
     );
   }
 
-  const requirements = requirementsDataArray.at(selectedIndex);
-
-  // should never happen as `selectedIndex === 0` by default and can only be set to value smaller than `requirementsDataArray.length`
-  if (!requirements) {
+  // should never happen when `requirementsDataArray.length > 0`
+  if (!selectedRequirementsData) {
     return (
       <span>
-        Non-existent requirements type selected. Please reload the page and try
-        again. If the error persists, please contact {EMAIL_SUPPORT}.
+        There was an error selecting the requirements data. Please reload the
+        page and try again. If the error persists, please contact{" "}
+        {EMAIL_SUPPORT}.
       </span>
     );
   }
@@ -78,27 +90,27 @@ export default function RecipientDetails({
   return (
     <>
       <AccountRequirementsSelector
-        accountRequirements={requirementsDataArray.map(
-          (x) => x.accountRequirements
-        )}
-        currentIndex={selectedIndex}
-        disabled={isSubmitting}
-        onChange={setSelectedIndex}
         className="mb-6"
+        disabled={isSubmitting}
+        onChange={changeSelectedType}
+        requirementsDataArray={requirementsDataArray}
+        selectedType={selectedRequirementsData.accountRequirements.type}
       />
       <RecipientDetailsForm
-        // since all fields need to be rerendered when new requirements type is chosen,
-        // we can set this key to tell React that when any of the fields passed to this component changes,
-        // it needs to recreate the form state by rerendering the whole component
-        //
-        // Reason for using `requirements.accountRequirements.fields.length` to set the component key is that upo
-        // refreshing the requirements, the number of fields will change, thus causing the whole form to be recreated
-        key={`form-${requirements.accountRequirements.type}-${requirements.accountRequirements.fields.length}`}
-        accountRequirements={requirements.accountRequirements}
-        defaultValues={requirements.currentFormValues}
+        // since all fields need to be rerendered when new requirements type is chosen, we can set
+        // this key to tell React that when any of the fields passed to this component changes, it
+        // needs to recreate the form state by rerendering the whole component.
+        // The reason for using `requirements.accountRequirements.fields.length` as part of the
+        // component key is that upon refreshing the requirements, the number of fields will change,
+        // thus causing the whole form to be recreated (reinitiating the whole form with `react-hook-form > useForm`)
+        key={`form-${selectedRequirementsData.accountRequirements.type}-${selectedRequirementsData.accountRequirements.fields.length}`}
+        accountRequirements={selectedRequirementsData.accountRequirements}
+        defaultValues={selectedRequirementsData.currentFormValues}
         disabled={isSubmitting}
-        refreshRequired={requirements.refreshRequired}
-        newRequirementsAdded={requirements.newRequirementsAdded}
+        refreshRequired={selectedRequirementsData.refreshRequired}
+        refreshedRequirementsAdded={
+          selectedRequirementsData.refreshedRequirementsAdded
+        }
         onUpdateValues={updateDefaultValues}
         onSubmit={handleSubmit}
         onRefresh={refreshRequirements}
