@@ -36,6 +36,14 @@ export default function useRecipientDetails(
 
   useEffect(() => {
     (async () => {
+      // Need to set this to `true` prior to checking `isParentLoading` to avoid a UI blink:
+      // How the "blink" would happen otherwise would be like:
+      // 1. isLoading = false, isParentLoading = true
+      //    << UI is loading >>
+      // 2. isLoading = false, isParentLoading = false
+      //    << UI is displayed --> BLINK >>
+      // 3. isLoading = true, isParentLoading = false
+      //    << UI is loading >>
       setLoading(true);
 
       if (isParentLoading) {
@@ -52,6 +60,8 @@ export default function useRecipientDetails(
 
         const requirements = await getAccountRequirements(quote.id).unwrap();
 
+        // There are some currencies that Wise does not allow to be used (why they allow selecting those currencies is unclear).
+        // For these currencies, Wise returns no requirement data
         if (isEmpty(requirements)) {
           throw new Error(
             "Target currency not supported. Please use a bank account with a different currency."

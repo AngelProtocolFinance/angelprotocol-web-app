@@ -52,7 +52,7 @@ export default function RecipientDetails({
     onSubmit
   );
 
-  // no need to check `isLoading` too, as it already affects the value of `isLoadingRequirements`
+  // no need to check `isLoading` from the parent, as it already affects the value of `isLoadingRequirements`
   if (isLoadingRequirements) {
     return (
       <div className="flex items-center gap-2">
