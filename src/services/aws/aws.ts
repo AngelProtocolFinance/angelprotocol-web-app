@@ -24,6 +24,7 @@ import {
 } from "types/aws";
 import { network } from "services/constants";
 import { RootState } from "store/store";
+import { logger } from "helpers";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
@@ -184,10 +185,9 @@ export const aws = createApi({
       },
     }),
     updateBankStatement: builder.mutation<
-      unknown,
+      EndowmentProfile,
       { id: number; bank_statement_file: FileObject }
     >({
-      invalidatesTags: (_, error) => (error ? [] : ["profile"]),
       query: (payload) => {
         return {
           url: `/${v(1)}/profile/endowment/bank-statement`,
@@ -195,6 +195,19 @@ export const aws = createApi({
           headers: { authorization: TEMP_JWT },
           body: payload,
         };
+      },
+      /** pessimistic manual cache update so not to GET fresh data */
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          dispatch(
+            updateAWSQueryData("profile", { endowId: args.id }, (draft) => {
+              draft = { ...data };
+            })
+          );
+        } catch (err) {
+          logger.error(err);
+        }
       },
     }),
   }),
