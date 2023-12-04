@@ -27,7 +27,7 @@ type UpdateRequirements = {
     quote?: Quote;
     requirements: AccountRequirements[];
     targetCurrency: string;
-    isRefreshing?: boolean;
+    isRefreshed?: boolean;
   };
 };
 
@@ -62,7 +62,7 @@ function reducer(state: State, action: Action): State {
         [...state.requirementsDataArray],
         action.payload.requirements,
         action.payload.targetCurrency,
-        action.payload.isRefreshing
+        action.payload.isRefreshed
       );
       const activeRequirementsDataArray = requirementsDataArray.filter(
         (x) => x.active

@@ -117,7 +117,7 @@ export default function useRecipientDetails(
 
       dispatch({
         type: "UPDATE_REQUIREMENTS",
-        payload: { targetCurrency, requirements, isRefreshing: true },
+        payload: { targetCurrency, requirements, isRefreshed: true },
       });
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
