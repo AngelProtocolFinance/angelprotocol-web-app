@@ -44,7 +44,7 @@
     "node": "18.16.1"
   },
   "dependencies": {
-    "@cosmjs/encoding": "0.31.1",
+    "@cosmjs/encoding": "0.32.1",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
     "@headlessui/react": "^1.7.4",
