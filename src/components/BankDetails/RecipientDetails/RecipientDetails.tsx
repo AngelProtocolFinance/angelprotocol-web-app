@@ -76,12 +76,13 @@ export default function RecipientDetails({
     );
   }
 
-  // should never happen as `selectedIndex === 0` by default and can only be set to value smaller than `activeRequirements.length`
+  // should never happen when `requirementsDataArray.length > 0`
   if (!selectedRequirementsData) {
     return (
       <span>
-        Non-existent requirements type selected. Please reload the page and try
-        again. If the error persists, please contact {EMAIL_SUPPORT}.
+        There was an error selecting the requirements data. Please reload the
+        page and try again. If the error persists, please contact{" "}
+        {EMAIL_SUPPORT}.
       </span>
     );
   }
