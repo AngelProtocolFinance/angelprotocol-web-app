@@ -148,9 +148,6 @@ export default function useRecipientDetails(
   return {
     handleSubmit,
     isError,
-    /**
-     * Flag indicating whether currencies are loading
-     */
     isLoading: isLoading || isParentLoading,
     refreshRequirements,
     requirementsDataArray: state.requirementsDataArray.filter((x) => x.active),
