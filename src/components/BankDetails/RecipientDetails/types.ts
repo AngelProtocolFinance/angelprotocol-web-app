@@ -17,9 +17,15 @@ export type FormValues = Omit<
 };
 
 export type RequirementsData = {
+  /**
+   * Indicates whether the requirements data should be processed as part of the current `currency + expected monthly donation amount` combination
+   */
   active: boolean;
   accountRequirements: AccountRequirements;
   currentFormValues: FormValues;
+  /**
+   * Indicates whether new fields were added after refreshing requirements
+   */
   refreshedRequirementsAdded: boolean;
   /**
    * Indicates whether requirements refresh is necessary.
