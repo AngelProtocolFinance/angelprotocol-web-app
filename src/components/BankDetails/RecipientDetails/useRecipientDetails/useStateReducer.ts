@@ -91,8 +91,8 @@ function reducer(state: State, action: Action): State {
  */
 export default function useStateReducer() {
   return useReducer(reducer, {
-    quote: undefined,
     activeRequirementsDataArray: [],
+    quote: undefined,
     requirementsDataArray: [],
     selectedRequirementsData: undefined,
   });
