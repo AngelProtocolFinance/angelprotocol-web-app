@@ -125,6 +125,8 @@ export default function useRecipientDetails(
     }
   };
 
+  // no need to have an `isSubmitting` state, as this is handled by `react-hook-form`
+  // in ./RecipientDetailsForm/Form.tsx
   const handleSubmit = async (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,
