@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import { useAdminContext } from "pages/Admin/Context";
-import { useProfileQuery } from "services/aws/aws";
+import {
+  useProfileQuery,
+  useUpdateBankStatementMutation,
+} from "services/aws/aws";
 import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import BankDetails from "components/BankDetails";
@@ -23,6 +26,7 @@ export default function Banking() {
   const [isSubmitting, setSubmitting] = useState(false);
 
   const [createRecipientAccount] = useCreateRecipientAccountMutation();
+  const [updateBankStatement] = useUpdateBankStatementMutation();
 
   // load profile
   const { id } = useAdminContext();
@@ -63,14 +67,16 @@ export default function Banking() {
   ) => {
     try {
       setSubmitting(true);
+
       const bankStatementPreview = await getFilePreviews({
         bankStatementFile,
       });
-      // TODO: logging just to avoid compiler warnings about unused variable,
-      // will be updated to real logic once possible
-      console.log(
-        `TODO: handle bank statement: ${bankStatementPreview.bankStatementFile[0].publicUrl}`
-      );
+
+      await updateBankStatement({
+        id: profile.id,
+        bank_statement_file: bankStatementPreview.bankStatementFile[0],
+      }).unwrap();
+
       await createRecipientAccount({
         endowmentId: endowment_id,
         request,

@@ -17,6 +17,7 @@ import {
   EndowmentProfile,
   EndowmentProfileUpdate,
   EndowmentsQueryParams,
+  FileObject,
   PaginatedAWSQueryRes,
   Program,
   WalletProfile,
@@ -182,6 +183,20 @@ export const aws = createApi({
         };
       },
     }),
+    updateBankStatement: builder.mutation<
+      unknown,
+      { id: number; bank_statement_file: FileObject }
+    >({
+      invalidatesTags: (_, error) => (error ? [] : ["profile"]),
+      query: (payload) => {
+        return {
+          url: `/${v(1)}/profile/endowment/bank-statement`,
+          method: "PUT",
+          headers: { authorization: TEMP_JWT },
+          body: payload,
+        };
+      },
+    }),
   }),
 });
 
@@ -196,6 +211,7 @@ export const {
   useApplicationsQuery,
   useApplicationQuery,
   useReviewApplicationMutation,
+  useUpdateBankStatementMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },

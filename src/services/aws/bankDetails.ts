@@ -41,6 +41,7 @@ export const bank_details_api = aws.injectEndpoints({
           request: CreateRecipientRequest;
         }
     >({
+      invalidatesTags: ["profile"],
       query: ({ PK, endowmentId, request }) => ({
         url: `/${v(1)}/wise`,
         method: "POST",
