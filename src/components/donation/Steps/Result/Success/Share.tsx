@@ -62,7 +62,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         I just donated to <span className="font-bold">{name}</span> on{" "}
         <span className="font-bold">"@angelgiving_</span>!{" "}
         {`Every gift is
-        invested to provide sustainable funding for non-profits: Give once, give
+        invested to provide sustainable funding for nonprofits: Give once, give
         forever. Help join the cause: ${DAPP_URL}`}
       </p>
       <ExtLink

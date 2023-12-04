@@ -11,7 +11,7 @@ export default function Widget() {
   return (
     <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
       <Seo
-        title={`Widget Configuration for Non-profit ${id}`}
+        title={`Widget Configuration for nonprofit ${id}`}
         url={`${adminRoutes.widget_config}`}
       />
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">

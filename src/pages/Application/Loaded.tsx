@@ -47,7 +47,7 @@ export default function Loaded(props: ApplicationDetails) {
         </span>
       </div>
 
-      <Container title="Non-Profit application">
+      <Container title="nonprofit application">
         <div className="grid sm:grid-cols-[auto_auto_1fr]">
           {doc.DocType === "FSA" ? (
             <Row label="Registration No.">{doc.RegistrationNumber}</Row>

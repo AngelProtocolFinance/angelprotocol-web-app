@@ -4,7 +4,7 @@ import { WidgetConfig } from "types/widget";
 type State = WidgetConfig;
 
 const initialState: State = {
-  endowment: { id: 0, name: "Non-profit name" },
+  endowment: { id: 0, name: "nonprofit name" },
   isDescriptionTextShown: true,
   advancedOptions: {
     display: "expanded",
