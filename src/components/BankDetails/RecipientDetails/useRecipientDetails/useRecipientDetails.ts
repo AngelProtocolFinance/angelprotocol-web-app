@@ -100,14 +100,13 @@ export default function useRecipientDetails(
     [handleError]
   );
 
-  // no need to have an `isRefreshing` state, as this is handled by `react-hook-form`
-  // in ./RecipientDetailsForm/Form.tsx
   const refreshRequirements = async (request: CreateRecipientRequest) => {
     try {
       if (!state.quote) {
         throw new UnexpectedStateError("No 'quote' present.");
       }
 
+      setLoading(true);
       setError(false);
 
       const requirements = await postAccountRequirements({
@@ -122,6 +121,8 @@ export default function useRecipientDetails(
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
       setError(true);
+    } finally {
+      setLoading(false);
     }
   };
 
