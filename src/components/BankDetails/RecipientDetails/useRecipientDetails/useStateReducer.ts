@@ -1,4 +1,4 @@
-import { useReducer as useReactReducer } from "react";
+import { useReducer } from "react";
 import { FormValues, RequirementsData } from "../types";
 import { AccountRequirements, Quote } from "types/aws";
 import { UnexpectedStateError } from "errors/errors";
@@ -85,8 +85,12 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-export default function useReducer() {
-  return useReactReducer(reducer, {
+/**
+ * Updating requirements includes updating the requirement data array based on that, updating
+ * the selected requirement data item
+ */
+export default function useStateReducer() {
+  return useReducer(reducer, {
     quote: undefined,
     activeRequirementsDataArray: [],
     requirementsDataArray: [],

@@ -11,7 +11,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import useReducer from "./useReducer";
+import useStateReducer from "./useStateReducer";
 
 export default function useRecipientDetails(
   isParentLoading: boolean,
@@ -23,7 +23,7 @@ export default function useRecipientDetails(
     isDirty: boolean
   ) => Promise<any>
 ) {
-  const [state, dispatch] = useReducer();
+  const [state, dispatch] = useStateReducer();
 
   const [isLoading, setLoading] = useState(true); // starts in loading state, loads only once
   const [isError, setError] = useState(false);
