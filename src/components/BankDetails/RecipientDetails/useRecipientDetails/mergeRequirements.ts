@@ -3,37 +3,39 @@ import { AccountRequirements } from "types/aws";
 import { isEmpty } from "helpers";
 import { getDefaultValues, populateRequirementGroup } from "./getDefaultValues";
 
+/**
+ * Updates current array of requirements data with the updated requirements (newly loaded from Wise).
+ * Includes:
+ * - copying any old requirements form state
+ * - adding any new requirements with their default values
+ *
+ * @param requirementsDataArray current array of requirements data containing all previously input form state
+ * @param updatedRequirements updated requirements based on newly selected currency and expected monthly donation amount
+ * @param targetCurrency target currency for which requirements were loaded
+ * @param isRefreshed flag indicating whether the fields are being processed after refreshing the requirements
+ * @returns updated requirements data array
+ */
 export default function mergeRequirements(
-  prev: RequirementsData[],
+  requirementsDataArray: RequirementsData[],
   updatedRequirements: AccountRequirements[],
   targetCurrency: string,
-  isRefreshing = false
+  isRefreshed = false
 ): RequirementsData[] {
-  const activeRequirementsDataArray: RequirementsData[] = [];
-  const inactiveRequirementsDataArray: RequirementsData[] = [];
+  // separate requirements data array into active and inactive ones based on whether
+  // the account requirements within are a member of the updated requirements array
+  const requirementsDataArrays = separate(
+    requirementsDataArray,
+    updatedRequirements
+  );
 
-  prev.forEach((prevReqData) => {
-    const existingReqData = updatedRequirements.find(
-      (x) => x.type === prevReqData.accountRequirements.type
-    );
-    if (!existingReqData) {
-      inactiveRequirementsDataArray.push({
-        ...prevReqData,
-        active: false,
-      });
-    } else {
-      activeRequirementsDataArray.push({
-        ...prevReqData,
-        active: true,
-      });
-    }
-  });
-
-  return inactiveRequirementsDataArray.concat(
+  // resulting requirements data array should be a set of both:
+  // - inactive requirements: to store previous form values
+  // - active requirements: update currently active form values and add new fiels
+  const result = requirementsDataArrays.inactive.concat(
     updatedRequirements.map((updReq) => {
       // Should be undefined when loading for the first time or changing target currency/expected monthly donations.
       // Should always be found when refreshing << but not 100% sure how Wise behaves in all cases >>.
-      const existingReqData = activeRequirementsDataArray.find(
+      const existingReqData = requirementsDataArrays.active.find(
         (x) => x.accountRequirements.type === updReq.type
       );
 
@@ -49,9 +51,50 @@ export default function mergeRequirements(
       }
 
       // requirement type is among the previously loaded requirements, update the form fields
-      return getUpdatedRequirementsData(existingReqData, updReq, isRefreshing);
+      return getUpdatedRequirementsData(existingReqData, updReq, isRefreshed);
     })
   );
+
+  return result;
+}
+
+/**
+ * Separates requirements data array into active and inactive ones based on whether
+ * the account requirements within are a member of the updated requirements array
+ * @param requirementsDataArray current array of requirements data containing all previously input form state
+ * @param updatedRequirements updated requirements based on newly selected currency and expected monthly donation amount
+ * @returns an object containing 2 requirement data arrays separated based on whether they're active or inactive
+ */
+function separate(
+  requirementsDataArray: RequirementsData[],
+  updatedRequirements: AccountRequirements[]
+): {
+  inactive: RequirementsData[];
+  active: RequirementsData[];
+} {
+  const activeRequirementsDataArray: RequirementsData[] = [];
+  const inactiveRequirementsDataArray: RequirementsData[] = [];
+
+  requirementsDataArray.forEach((prevReqData) => {
+    const existingReqData = updatedRequirements.find(
+      (x) => x.type === prevReqData.accountRequirements.type
+    );
+    if (!existingReqData) {
+      inactiveRequirementsDataArray.push({
+        ...prevReqData,
+        active: false,
+      });
+    } else {
+      activeRequirementsDataArray.push({
+        ...prevReqData,
+        active: true,
+      });
+    }
+  });
+  return {
+    inactive: inactiveRequirementsDataArray,
+    active: activeRequirementsDataArray,
+  };
 }
 
 /**
@@ -60,13 +103,14 @@ export default function mergeRequirements(
  *
  * @param currReqData current requirements data
  * @param updatedReq updated requirements that might include new requirement groups
+ * @param isRefreshed flag indicating whether the fields are being processed after refreshing the requirements
  * @returns object containing previous form values with the new requirements included and set to appropriate default values AND
  * a flag indicating whether any new requirements were added to the form
  */
 function getUpdatedRequirementsData(
   currReqData: RequirementsData,
   updatedReq: AccountRequirements,
-  isRefreshing: boolean
+  isRefreshed: boolean
 ): RequirementsData {
   // get current requirement groups
   const currGroups = currReqData.accountRequirements.fields.flatMap(
@@ -90,16 +134,21 @@ function getUpdatedRequirementsData(
     requirements: newRequirements,
   };
 
+  let refreshRequired = false;
+  if (!isRefreshed) {
+    // first time loading the requirements, check if any of them require a refresh
+    refreshRequired = isRefreshRequired(updatedReq);
+  } else if (currReqData.accountRequirements.type !== updatedReq.type) {
+    // already refreshed, but not for the current account requirement type, just use the old `refreshRequired` value
+    refreshRequired = currReqData.refreshRequired;
+  }
+
   const data: RequirementsData = {
     active: true,
     accountRequirements: updatedReq,
     currentFormValues: newFormValues,
     refreshedRequirementsAdded: !isEmpty(newGroups),
-    refreshRequired: isRefreshing
-      ? currReqData.accountRequirements.type === updatedReq.type
-        ? false // just finished checking requirements for selected type, so no need to do it again
-        : currReqData.refreshRequired // just copy/paste for other types
-      : isRefreshRequired(updatedReq),
+    refreshRequired,
   };
   return data;
 }
