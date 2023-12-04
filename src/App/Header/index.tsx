@@ -30,16 +30,13 @@ export default function Header({ classes, links }: Props) {
 
   const bg =
     !hasBanner(location) || isScrolled ? "bg-white dark:bg-blue-d3" : "";
-
-  const mb = hasBanner(location) ? "-mb-[6.5rem]" : "mb-0";
-
   return (
     <header
-      className={`${classes} ${isScrolled ? "shadow-lg" : ""} ${bg} ${mb}
-    transition-shadow ease-in-out duration-300 w-full h-[90px]`}
+      className={`${classes} ${isScrolled ? "shadow-lg" : ""} ${bg}
+    transition-shadow ease-in-out duration-300 w-full h-[90px] mb-0`}
     >
       <div className="grid items-center gap-4 px-5 grid-cols-[auto_1fr_auto] h-full bg-white">
-        <DappLogo classes="w-32" />
+        <DappLogo />
         <DesktopNav
           classes="hidden lg:flex font-heading font-bold uppercase"
           links={links}
