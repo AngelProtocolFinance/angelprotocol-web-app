@@ -14,7 +14,7 @@ type Props = {
   /**
    * The flag is used to display a loading indicator (e.g. when debouncing `expectedMontlyDonations`) without
    * having to unmount the component itself - this way the current form state gets stored between form loads
-   * and we are able to prefill the form fields
+   * even when new form requirements are being loaded (when "expectedMontlyDonations" value changes)
    */
   isLoading: boolean;
   isSubmitting: boolean;
