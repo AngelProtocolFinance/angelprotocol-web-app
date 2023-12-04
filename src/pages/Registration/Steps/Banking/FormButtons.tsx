@@ -5,9 +5,9 @@ import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
 export default function FormButtons(props: FormButtonsProps) {
-  const { alreadySubmitted, refreshRequired, ...rest } = props;
+  const { isSubmitted, refreshRequired, ...rest } = props;
 
-  if (alreadySubmitted) {
+  if (isSubmitted) {
     return <AlreadySubmitted />;
   }
 
@@ -50,7 +50,7 @@ function AlreadySubmitted() {
 function Refresh({
   disabled,
   isSubmitting,
-}: Omit<FormButtonsProps, "alreadySubmitted" | "refreshRequired">) {
+}: Omit<FormButtonsProps, "isSubmitted" | "refreshRequired">) {
   const { data } = useRegState<5>();
   return (
     <div className="grid gap-4 mt-16">

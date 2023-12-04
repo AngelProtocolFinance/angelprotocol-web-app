@@ -54,7 +54,7 @@ export default function BankDetails({
     return (
       <div className="flex flex-col w-full justify-between mt-8 max-md:items-center">
         <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />
-        <FormButtons disabled refreshRequired alreadySubmitted />
+        <FormButtons disabled refreshRequired isSubmitted />
       </div>
     );
   }
