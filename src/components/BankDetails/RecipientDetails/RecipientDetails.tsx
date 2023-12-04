@@ -94,7 +94,7 @@ export default function RecipientDetails({
         disabled={isSubmitting}
         onChange={changeSelectedType}
         requirementsDataArray={requirementsDataArray}
-        selectedType={selectedRequirementsData?.accountRequirements.type}
+        selectedType={selectedRequirementsData.accountRequirements.type}
       />
       <RecipientDetailsForm
         // since all fields need to be rerendered when new requirements type is chosen,

@@ -4,7 +4,7 @@ import { Label } from "components/form";
 type Props = {
   requirementsDataArray: RequirementsData[];
   className: string;
-  selectedType: string | undefined;
+  selectedType: string;
   disabled: boolean;
   onChange: (requirementsType: RequirementsData) => void;
 };
