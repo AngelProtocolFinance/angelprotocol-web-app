@@ -97,12 +97,12 @@ export default function RecipientDetails({
         selectedType={selectedRequirementsData.accountRequirements.type}
       />
       <RecipientDetailsForm
-        // since all fields need to be rerendered when new requirements type is chosen,
-        // we can set this key to tell React that when any of the fields passed to this component changes,
-        // it needs to recreate the form state by rerendering the whole component
-        //
-        // Reason for using `requirements.accountRequirements.fields.length` to set the component key is that upo
-        // refreshing the requirements, the number of fields will change, thus causing the whole form to be recreated
+        // since all fields need to be rerendered when new requirements type is chosen, we can set
+        // this key to tell React that when any of the fields passed to this component changes, it
+        // needs to recreate the form state by rerendering the whole component.
+        // The reason for using `requirements.accountRequirements.fields.length` as part of the
+        // component key is that upon refreshing the requirements, the number of fields will change,
+        // thus causing the whole form to be recreated (reinitiating the whole form with `react-hook-form > useForm`)
         key={`form-${selectedRequirementsData.accountRequirements.type}-${selectedRequirementsData.accountRequirements.fields.length}`}
         accountRequirements={selectedRequirementsData.accountRequirements}
         defaultValues={selectedRequirementsData.currentFormValues}
