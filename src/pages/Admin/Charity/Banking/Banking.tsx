@@ -96,6 +96,7 @@ export default function Banking() {
     >
       <VerificationStatus status={verif_status} />
       <BankDetails
+        key={verif_status}
         alreadySubmitted={isSubmitted}
         isSubmitting={isSubmitting}
         onSubmit={submit}
