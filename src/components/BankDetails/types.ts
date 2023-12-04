@@ -1,7 +1,7 @@
 export type FormButtonsProps = {
   disabled?: boolean;
   isSubmitting?: boolean;
-  newRequirementsAdded?: boolean;
+  refreshedRequirementsAdded?: boolean;
   refreshRequired?: boolean;
   alreadySubmitted?: boolean;
 };

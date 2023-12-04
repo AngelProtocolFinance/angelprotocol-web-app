@@ -85,13 +85,13 @@ function Refresh({
 
 function Submit({
   isSubmitting,
-  newRequirementsAdded,
-}: Pick<FormButtonsProps, "isSubmitting" | "newRequirementsAdded">) {
+  refreshedRequirementsAdded,
+}: Pick<FormButtonsProps, "isSubmitting" | "refreshedRequirementsAdded">) {
   const { data } = useRegState<5>();
   return (
     <div className="grid gap-4 mt-8">
       <i className="text-xs sm:text-sm">
-        {newRequirementsAdded
+        {refreshedRequirementsAdded
           ? "Please check the form again and fill in all the newly added fields."
           : "All requirements are met! Please click submit."}
       </i>

@@ -108,7 +108,7 @@ export default function RecipientDetails({
         defaultValues={selectedRequirementsData.currentFormValues}
         disabled={isSubmitting}
         refreshRequired={selectedRequirementsData.refreshRequired}
-        newRequirementsAdded={
+        refreshedRequirementsAdded={
           selectedRequirementsData.refreshedRequirementsAdded
         }
         onUpdateValues={updateDefaultValues}

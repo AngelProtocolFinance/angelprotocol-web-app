@@ -11,7 +11,7 @@ type Props = {
   accountRequirements: AccountRequirements;
   defaultValues: FormValues;
   disabled: boolean;
-  newRequirementsAdded: boolean;
+  refreshedRequirementsAdded: boolean;
   refreshRequired: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
   onUpdateValues: (formValues: FormValues) => void;
@@ -45,7 +45,7 @@ export default function RecipientDetailsForm(props: Props) {
       <Form
         accountRequirements={props.accountRequirements}
         disabled={props.disabled}
-        newRequirementsAdded={props.newRequirementsAdded}
+        refreshedRequirementsAdded={props.refreshedRequirementsAdded}
         refreshRequired={props.refreshRequired}
         onRefresh={async (request) => {
           // update current form values prior to refreshing the form (loads new fields)
