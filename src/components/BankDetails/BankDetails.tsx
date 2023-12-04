@@ -14,7 +14,8 @@ import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
 type Props = {
-  alreadySubmitted: boolean;
+  shouldUpdate: boolean;
+  onInitiateUpdate: () => void;
   isSubmitting: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
   onSubmit: (
@@ -25,12 +26,27 @@ type Props = {
 };
 
 export default function BankDetails({
-  alreadySubmitted,
+  shouldUpdate,
+  onInitiateUpdate,
+  ...props
+}: Props) {
+  if (!shouldUpdate) {
+    return (
+      <div className="flex flex-col w-full justify-between mt-8 max-md:items-center">
+        <UpdateDetailsButton onClick={onInitiateUpdate} />
+        <props.FormButtons disabled refreshRequired isSubmitted />
+      </div>
+    );
+  }
+
+  return <Content {...props} />;
+}
+
+function Content({
+  FormButtons,
   isSubmitting,
   onSubmit,
-  FormButtons,
-}: Props) {
-  const [shouldUpdate, setShouldUpdate] = useState(!alreadySubmitted);
+}: Omit<Props, "shouldUpdate" | "onInitiateUpdate">) {
   const [expectedMontlyDonations, setExpectedMontlyDonations] =
     useState<number>();
   const [debounce, isDebouncing] = useDebounce();
@@ -48,15 +64,6 @@ export default function BankDetails({
 
   if (isEmpty(currencies) || !targetCurrency) {
     return <span>{GENERIC_ERROR_MESSAGE}</span>;
-  }
-
-  if (!shouldUpdate) {
-    return (
-      <div className="flex flex-col w-full justify-between mt-8 max-md:items-center">
-        <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />
-        <FormButtons disabled refreshRequired isSubmitted />
-      </div>
-    );
   }
 
   return (

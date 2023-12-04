@@ -24,6 +24,7 @@ export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
   const [isSubmitting, setSubmitting] = useState(false);
+  const [shouldUpdate, setShouldUpdate] = useState(false);
 
   const [createRecipientAccount] = useCreateRecipientAccountMutation();
   const [updateBankStatement] = useUpdateBankStatementMutation();
@@ -81,6 +82,8 @@ export default function Banking() {
         endowmentId: endowment_id,
         request,
       }).unwrap();
+
+      setShouldUpdate(false);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
     } finally {
@@ -94,13 +97,14 @@ export default function Banking() {
       title="Bank account details"
       description="The following information will be used to register your bank account that will be used to withdraw your funds."
     >
-      <VerificationStatus status={verif_status} />
+      {!shouldUpdate && <VerificationStatus status={verif_status} />}
       <BankDetails
         key={verif_status}
-        alreadySubmitted={isSubmitted}
-        isSubmitting={isSubmitting}
-        onSubmit={submit}
         FormButtons={FormButtons}
+        isSubmitting={isSubmitting}
+        onInitiateUpdate={() => setShouldUpdate(true)}
+        onSubmit={submit}
+        shouldUpdate={!isSubmitted || shouldUpdate}
       />
     </Group>
   );
