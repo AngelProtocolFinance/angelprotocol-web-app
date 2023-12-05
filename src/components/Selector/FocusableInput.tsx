@@ -5,7 +5,7 @@ const FocusableInput = forwardRef<HTMLInputElement>(function Input(props, ref) {
     <input
       ref={ref}
       aria-hidden
-      className="peer h-0 w-0 focus:outline-none absolute"
+      className="h-0 w-0 focus:outline-none absolute"
       tabIndex={-1}
     />
   );
