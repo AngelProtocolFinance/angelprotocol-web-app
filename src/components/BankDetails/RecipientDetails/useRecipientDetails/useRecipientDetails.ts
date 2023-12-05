@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { FormValues, RequirementsData } from "../types";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
@@ -26,9 +26,6 @@ export default function useRecipientDetails(
 ) {
   const [state, dispatch] = useStateReducer();
 
-  const [isLoading, setLoading] = useState(true); // starts in loading state, loads only once
-  const [isError, setError] = useState(false);
-
   const { handleError } = useErrorContext();
 
   const [createQuote] = useCreateQuoteMutation();
@@ -45,14 +42,14 @@ export default function useRecipientDetails(
       //    << UI is displayed --> BLINK >>
       // 3. isLoading = true, isParentLoading = false
       //    << UI is loading >>
-      setLoading(true);
+      dispatch({ type: "LOADING", payload: true });
 
       if (isParentLoading) {
         return;
       }
 
       try {
-        setError(false);
+        dispatch({ type: "ERROR", payload: false });
 
         const quote = await createQuote({
           sourceAmount: expectedMontlyDonations,
@@ -75,9 +72,9 @@ export default function useRecipientDetails(
         });
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
-        setError(true);
+        dispatch({ type: "ERROR", payload: true });
       } finally {
-        setLoading(false);
+        dispatch({ type: "LOADING", payload: false });
       }
     })();
   }, [
@@ -96,7 +93,7 @@ export default function useRecipientDetails(
         dispatch({ type: "UPDATE_FORM_VALUES", payload: formValues });
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
-        setError(true);
+        dispatch({ type: "ERROR", payload: true });
       }
     },
     [dispatch, handleError]
@@ -110,7 +107,7 @@ export default function useRecipientDetails(
         throw new UnexpectedStateError("No 'quote' present.");
       }
 
-      setError(false);
+      dispatch({ type: "ERROR", payload: false });
 
       const requirements = await postAccountRequirements({
         quoteId: state.quote.id,
@@ -123,7 +120,7 @@ export default function useRecipientDetails(
       });
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
-      setError(true);
+      dispatch({ type: "ERROR", payload: true });
     }
   };
 
@@ -135,11 +132,11 @@ export default function useRecipientDetails(
     isDirty: boolean
   ) => {
     try {
-      setError(false);
+      dispatch({ type: "ERROR", payload: false });
       await onSubmit(request, bankStatementFile, isDirty);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
-      setError(true);
+      dispatch({ type: "ERROR", payload: true });
     }
   };
 
@@ -149,8 +146,8 @@ export default function useRecipientDetails(
 
   return {
     focusNewRequirements: state.focusNewRequirements,
-    isError,
-    isLoading: isLoading || isParentLoading,
+    isError: state.isError,
+    isLoading: state.isLoading || isParentLoading,
     requirementsDataArray: state.requirementsDataArray.filter((x) => x.active),
     selectedRequirementsData: state.selectedRequirementsData,
     changeSelectedType,

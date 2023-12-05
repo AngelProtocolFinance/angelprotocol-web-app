@@ -8,6 +8,8 @@ import mergeRequirements from "./mergeRequirements";
 type State = {
   activeRequirementsDataArray: RequirementsData[];
   focusNewRequirements: boolean;
+  isError: boolean;
+  isLoading: boolean;
   quote: Quote | undefined; // store quote to use to refresh requirements
   requirementsDataArray: RequirementsData[];
   selectedRequirementsData: RequirementsData | undefined;
@@ -16,6 +18,16 @@ type State = {
 type ChangeSelectedRequirementsData = {
   type: "CHANGE_SELECTED_REQUIREMENTS_DATA";
   payload: RequirementsData;
+};
+
+type SetError = {
+  type: "ERROR";
+  payload: boolean;
+};
+
+type SetLoading = {
+  type: "LOADING";
+  payload: boolean;
 };
 
 type UpdateFormValues = {
@@ -35,6 +47,8 @@ type UpdateRequirements = {
 
 type Action =
   | ChangeSelectedRequirementsData
+  | SetError
+  | SetLoading
   | UpdateFormValues
   | UpdateRequirements;
 
@@ -45,6 +59,18 @@ function reducer(state: State, action: Action): State {
         ...state,
         selectedRequirementsData: action.payload,
         focusNewRequirements: false,
+      };
+    }
+    case "ERROR": {
+      return {
+        ...state,
+        isError: action.payload,
+      };
+    }
+    case "LOADING": {
+      return {
+        ...state,
+        isLoading: action.payload,
       };
     }
     case "UPDATE_FORM_VALUES": {
@@ -106,6 +132,8 @@ export default function useStateReducer() {
   const state: State = {
     activeRequirementsDataArray: [],
     focusNewRequirements: false,
+    isError: false,
+    isLoading: true,
     quote: undefined,
     requirementsDataArray: [],
     selectedRequirementsData: undefined,
