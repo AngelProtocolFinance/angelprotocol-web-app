@@ -1,6 +1,5 @@
 import { DappLogo } from "components/Image";
 import { useGetter } from "store/accessors";
-import { possesiveForm } from "helpers";
 import DonateMethods from "./DonateMethods";
 
 export default function Preview({ classes = "" }) {
@@ -17,10 +16,9 @@ export default function Preview({ classes = "" }) {
         {isDescriptionTextShown && (
           <>
             <p className="px-6 @xl/preview:px-10 font-body text-sm mb-4 text-center @xl/preview:text-left">
-              Donate today to {possesiveForm(endowName)} nonprofit. Your
-              donation will be protected and compounded in perpetuity to provide{" "}
-              {endowName} with a long-term, sustainable runway. Give once, give
-              forever!
+              Donate today to {endowName}. Your donation will be protected and
+              compounded in perpetuity to provide {endowName} with a long-term,
+              sustainable runway. Give once, give forever!
             </p>
             <p className="px-6 @xl/preview:px-10 font-body text-sm mb-10 text-center @xl/preview:text-left">
               Make sure to check out the many crypto and fiat donation options.
