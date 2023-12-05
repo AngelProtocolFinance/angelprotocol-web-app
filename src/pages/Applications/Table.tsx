@@ -39,7 +39,7 @@ export default function Table({
             _sortKey="OrganizationName"
             _sortDirection={sortDirection}
           >
-            Charity Name
+            Nonprofit Name
           </HeaderButton>
           <HeaderButton
             onClick={handleHeaderClick("RegistrationDate")}
