@@ -15,6 +15,7 @@ type Props = {
   accountRequirements: AccountRequirements;
   currency: Currency;
   disabled: boolean;
+  focusNewRequirements: boolean;
   refreshedRequirementsAdded: boolean;
   refreshRequired: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
@@ -49,10 +50,10 @@ export default function Form(props: Props) {
   // and immediately validate all the newly added fields, clearly marking all the
   // invalid ones to make it easier for the user to notice them
   useEffect(() => {
-    if (props.refreshedRequirementsAdded && form.current) {
+    if (props.focusNewRequirements && form.current) {
       form.current.requestSubmit();
     }
-  }, [props.refreshedRequirementsAdded]);
+  }, [props.focusNewRequirements]);
 
   return (
     <form onSubmit={handleSubmission} ref={form} className="grid gap-6">

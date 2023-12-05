@@ -13,6 +13,7 @@ type Props = {
   currency: Currency;
   defaultValues: FormValues;
   disabled: boolean;
+  focusNewRequirements: boolean;
   refreshedRequirementsAdded: boolean;
   refreshRequired: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
@@ -48,6 +49,7 @@ export default function RecipientDetailsForm(props: Props) {
         accountRequirements={props.accountRequirements}
         currency={props.currency}
         disabled={props.disabled}
+        focusNewRequirements={props.focusNewRequirements}
         refreshedRequirementsAdded={props.refreshedRequirementsAdded}
         refreshRequired={props.refreshRequired}
         onRefresh={async (request) => {

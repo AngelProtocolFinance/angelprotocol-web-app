@@ -148,13 +148,14 @@ export default function useRecipientDetails(
   };
 
   return {
-    handleSubmit,
+    focusNewRequirements: state.focusNewRequirements,
     isError,
     isLoading: isLoading || isParentLoading,
-    refreshRequirements,
     requirementsDataArray: state.requirementsDataArray.filter((x) => x.active),
     selectedRequirementsData: state.selectedRequirementsData,
     changeSelectedType,
+    handleSubmit,
+    refreshRequirements,
     updateDefaultValues,
   };
 }

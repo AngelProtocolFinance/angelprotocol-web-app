@@ -38,13 +38,14 @@ export default function RecipientDetails({
   onSubmit,
 }: Props) {
   const {
-    requirementsDataArray,
-    handleSubmit,
+    focusNewRequirements,
     isError,
     isLoading: isLoadingRequirements,
-    refreshRequirements,
+    requirementsDataArray,
     selectedRequirementsData,
     changeSelectedType,
+    handleSubmit,
+    refreshRequirements,
     updateDefaultValues,
   } = useRecipientDetails(
     isLoading,
@@ -109,6 +110,7 @@ export default function RecipientDetails({
         currency={currency}
         defaultValues={selectedRequirementsData.currentFormValues}
         disabled={isSubmitting}
+        focusNewRequirements={focusNewRequirements}
         refreshRequired={selectedRequirementsData.refreshRequired}
         refreshedRequirementsAdded={
           selectedRequirementsData.refreshedRequirementsAdded
