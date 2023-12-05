@@ -249,6 +249,9 @@ html:is(.dark) [data-amplify-authenticator] {
   .checkbox::before {
     @apply text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
   }
+  .checkbox[aria-invalid="true"] {
+    @apply border-red focus:shadow-focus focus:ring-0;
+  }
   .checkbox-orange {
     @apply checkbox focus:ring-orange-l2 disabled:border-gray-l3 disabled:dark:border-gray;
   }
