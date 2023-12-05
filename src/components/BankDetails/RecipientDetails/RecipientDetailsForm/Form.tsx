@@ -12,6 +12,7 @@ import formToCreateRecipientRequest from "./formToCreateRecipientRequest";
 
 type Props = {
   accountRequirements: AccountRequirements;
+  currency: string;
   disabled: boolean;
   refreshedRequirementsAdded: boolean;
   refreshRequired: boolean;
@@ -59,8 +60,10 @@ export default function Form(props: Props) {
         .map((requirements) => (
           <RequirementField
             key={requirements.key}
+            currency={props.currency}
             data={requirements}
             disabled={props.disabled}
+            requirementsType={props.accountRequirements.type}
           />
         ))}
 

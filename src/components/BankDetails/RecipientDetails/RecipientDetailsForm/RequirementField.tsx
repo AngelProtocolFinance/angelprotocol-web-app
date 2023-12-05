@@ -1,6 +1,7 @@
 import { Path } from "react-hook-form";
 import { FormValues } from "../types";
 import { Group } from "types/aws";
+import { Country } from "types/components";
 import countries from "assets/countries/all.json";
 import CountrySelector from "components/CountrySelector";
 import { Selector } from "components/Selector";
@@ -9,11 +10,18 @@ import { isEmpty } from "helpers";
 import { isCountry, undot } from "../helpers";
 
 type Props = {
+  currency: string;
   data: Group;
   disabled?: boolean; // need this only for CountrySelector
+  requirementsType: string;
 };
 
-export default function RequirementField({ data, disabled }: Props) {
+export default function RequirementField({
+  currency,
+  data,
+  disabled,
+  requirementsType,
+}: Props) {
   const requirementsKey = undot(data.key);
 
   const name: Path<FormValues> = `requirements.${requirementsKey}`;
@@ -62,8 +70,10 @@ export default function RequirementField({ data, disabled }: Props) {
         <Label required={data.required}>{label}</Label>
         <CountrySelector<FormValues, any>
           fieldName={name}
-          countries={countries.filter((country) =>
-            data.valuesAllowed!.find((x) => x.key === country.code)
+          countries={countries.filter(
+            (country) =>
+              data.valuesAllowed!.find((x) => x.key === country.code) &&
+              isAllowed(country, requirementsType, currency)
           )}
           placeholder={data.example}
           classes={{
@@ -89,5 +99,18 @@ export default function RequirementField({ data, disabled }: Props) {
         disabled={disabled}
       />
     </div>
+  );
+}
+
+function isAllowed(
+  country: Country,
+  requirementsType: string,
+  currency: string
+): boolean {
+  return (
+    // SWIFT transfers are not allowed inside USA or US territories, see https://wise.com/help/articles/2932150/guide-to-usd-transfers
+    !country.name.includes("United States") ||
+    requirementsType !== "swift_code" ||
+    currency !== "USD"
   );
 }

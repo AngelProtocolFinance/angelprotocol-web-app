@@ -9,6 +9,7 @@ import useRecipientDetailsForm from "./useRecipientDetailsForm";
 
 type Props = {
   accountRequirements: AccountRequirements;
+  currency: string;
   defaultValues: FormValues;
   disabled: boolean;
   refreshedRequirementsAdded: boolean;
@@ -44,6 +45,7 @@ export default function RecipientDetailsForm(props: Props) {
     <FormProvider {...methods}>
       <Form
         accountRequirements={props.accountRequirements}
+        currency={props.currency}
         disabled={props.disabled}
         refreshedRequirementsAdded={props.refreshedRequirementsAdded}
         refreshRequired={props.refreshRequired}

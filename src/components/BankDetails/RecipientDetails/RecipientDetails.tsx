@@ -105,6 +105,7 @@ export default function RecipientDetails({
         // thus causing the whole form to be recreated (reinitiating the whole form with `react-hook-form > useForm`)
         key={`form-${selectedRequirementsData.accountRequirements.type}-${selectedRequirementsData.accountRequirements.fields.length}`}
         accountRequirements={selectedRequirementsData.accountRequirements}
+        currency={targetCurrency}
         defaultValues={selectedRequirementsData.currentFormValues}
         disabled={isSubmitting}
         refreshRequired={selectedRequirementsData.refreshRequired}
