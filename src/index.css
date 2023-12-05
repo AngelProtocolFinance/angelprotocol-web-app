@@ -226,7 +226,7 @@ html:is(.dark) [data-amplify-authenticator] {
   }
 
   .field-input[aria-invalid="true"] {
-    @apply border-red focus:shadow focus:shadow-focus;
+    @apply border-red focus:shadow-focus;
   }
 
   .radio {
@@ -279,7 +279,7 @@ html:is(.dark) [data-amplify-authenticator] {
   }
 
   .field-container[aria-invalid="true"] {
-    @apply border-red focus-within:shadow focus-within:shadow-focus;
+    @apply border-red focus-within:shadow-focus;
   }
 
   .field-container > input {
