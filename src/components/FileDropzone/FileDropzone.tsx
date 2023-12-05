@@ -45,9 +45,9 @@ export default function FileDropzone<
           className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${
             isDragActive
               ? "border-gray-d1 dark:border-gray"
-              : `${
-                  isValid ? "border-prim" : "border-red"
-                } focus:border-orange-l2 focus:dark:border-blue-d1`
+              : isValid
+              ? "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
+              : "border-red focus:shadow-focus"
           } ${
             disabled
               ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
