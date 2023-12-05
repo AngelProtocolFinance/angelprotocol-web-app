@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import React from "react";
 import { useDropzone } from "react-dropzone";
-import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
@@ -39,6 +39,8 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
     onDrop,
   });
 
+  const isValid = !get(errors, name);
+
   const overlay = `before:content-[''] before:absolute before:inset-0 ${
     isDragActive
       ? "before:bg-orange-l5/95 before:dark:bg-blue-d6/95"
@@ -62,6 +64,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
           } ${classes?.dropzone ?? ""}`,
           ref,
         })}
+        aria-invalid={!isValid}
         style={{
           background: preview
             ? `url('${preview}') center/cover no-repeat`
