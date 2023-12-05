@@ -6,8 +6,9 @@ import { Currency } from "../../CurrencySelector";
 import mergeRequirements from "./mergeRequirements";
 
 type State = {
-  quote: Quote | undefined; // store quote to use to refresh requirements
   activeRequirementsDataArray: RequirementsData[];
+  focusNewRequirements: boolean;
+  quote: Quote | undefined; // store quote to use to refresh requirements
   requirementsDataArray: RequirementsData[];
   selectedRequirementsData: RequirementsData | undefined;
 };
@@ -40,7 +41,11 @@ type Action =
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "CHANGE_SELECTED_REQUIREMENTS_DATA": {
-      return { ...state, selectedRequirementsData: action.payload };
+      return {
+        ...state,
+        selectedRequirementsData: action.payload,
+        focusNewRequirements: false,
+      };
     }
     case "UPDATE_FORM_VALUES": {
       const updated = [...state.requirementsDataArray];
@@ -58,12 +63,18 @@ function reducer(state: State, action: Action): State {
       );
     }
     case "UPDATE_REQUIREMENTS": {
-      const quote = action.payload.quote ?? state.quote;
+      const {
+        currency,
+        isRefreshed = false,
+        quote = state.quote,
+        requirements,
+      } = action.payload;
+
       const requirementsDataArray = mergeRequirements(
         [...state.requirementsDataArray],
-        action.payload.requirements,
-        action.payload.currency,
-        action.payload.isRefreshed
+        requirements,
+        currency,
+        isRefreshed
       );
       const activeRequirementsDataArray = requirementsDataArray.filter(
         (x) => x.active
@@ -78,6 +89,7 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         activeRequirementsDataArray,
+        focusNewRequirements: isRefreshed,
         quote,
         requirementsDataArray,
         selectedRequirementsData,
@@ -91,10 +103,12 @@ function reducer(state: State, action: Action): State {
  * the selected requirement data item
  */
 export default function useStateReducer() {
-  return useReducer(reducer, {
+  const state: State = {
     activeRequirementsDataArray: [],
+    focusNewRequirements: false,
     quote: undefined,
     requirementsDataArray: [],
     selectedRequirementsData: undefined,
-  });
+  };
+  return useReducer(reducer, state);
 }
