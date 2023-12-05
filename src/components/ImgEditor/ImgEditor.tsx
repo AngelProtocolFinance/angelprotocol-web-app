@@ -77,6 +77,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
           <button
             type="button"
             className="absolute-center grid justify-items-center text-sm text-gray-d1 dark:text-gray"
+            tabIndex={-1}
           >
             <Icon type="FileUpload" size={24} className="mb-[1.125rem]" />
             <p className="font-semibold mb-1">Upload file</p>
