@@ -53,10 +53,12 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
     <div className={`${classes?.container ?? ""} grid grid-rows-[1fr_auto]`}>
       <div
         {...getRootProps({
-          className: `relative ${overlay} group rounded border border-dashed focus:outline-none ${
+          className: `relative ${overlay} group field-container rounded border border-dashed focus:outline-none ${
             isDragActive
               ? "border-gray-d1 dark:border-gray"
-              : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
+              : isValid
+              ? "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
+              : ""
           } ${
             isSubmitting
               ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
