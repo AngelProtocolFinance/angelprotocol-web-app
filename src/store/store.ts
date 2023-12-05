@@ -8,7 +8,8 @@ import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
 import gift from "slices/gift";
 import widget from "slices/widget";
-import { amplifyConfig } from "./amplify-config";
+import { appRoutes } from "constants/routes";
+import config from "../aws-exports";
 
 export const store = configureStore({
   reducer: {
@@ -24,7 +25,10 @@ export const store = configureStore({
     getDefaultMiddleware().concat([aws.middleware, apes.middleware]),
 });
 
-Amplify.configure(amplifyConfig);
+config.oauth.redirectSignIn =
+  window.location.origin + `${appRoutes.auth_redirector}/`;
+config.oauth.redirectSignOut = window.location.origin + "/";
+Amplify.configure(config);
 
 store.dispatch(loadSession());
 Hub.listen("auth", async ({ payload }) => {
