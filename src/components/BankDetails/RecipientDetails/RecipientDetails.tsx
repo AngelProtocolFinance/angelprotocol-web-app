@@ -106,19 +106,14 @@ export default function RecipientDetails({
         // component key is that upon refreshing the requirements, the number of fields will change,
         // thus causing the whole form to be recreated (reinitiating the whole form with `react-hook-form > useForm`)
         key={`form-${selectedRequirementsData.accountRequirements.type}-${selectedRequirementsData.accountRequirements.fields.length}`}
-        accountRequirements={selectedRequirementsData.accountRequirements}
         currency={currency}
-        defaultValues={selectedRequirementsData.currentFormValues}
         disabled={isSubmitting}
         focusNewRequirements={focusNewRequirements}
-        refreshRequired={selectedRequirementsData.refreshRequired}
-        refreshedRequirementsAdded={
-          selectedRequirementsData.refreshedRequirementsAdded
-        }
-        onUpdateValues={updateDefaultValues}
-        onSubmit={handleSubmit}
-        onRefresh={refreshRequirements}
         FormButtons={FormButtons}
+        requirementsData={selectedRequirementsData}
+        onRefresh={refreshRequirements}
+        onSubmit={handleSubmit}
+        onUpdateValues={updateDefaultValues}
       />
     </>
   );
