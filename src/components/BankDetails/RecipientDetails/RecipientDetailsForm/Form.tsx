@@ -1,7 +1,7 @@
 import { ComponentType, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
+import { FormButtonsProps } from "../../types";
 import { FormValues } from "../types";
-import { FormButtonsProps } from "components/BankDetails/types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import FileDropzone from "components/FileDropzone";

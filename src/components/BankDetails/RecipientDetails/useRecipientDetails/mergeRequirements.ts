@@ -1,7 +1,7 @@
 import { FormValues, RequirementsData } from "../types";
 import { AccountRequirements } from "types/aws";
-import { Currency } from "components/BankDetails/CurrencySelector";
 import { isEmpty } from "helpers";
+import { Currency } from "../../CurrencySelector";
 import { getDefaultValues, populateRequirementGroup } from "./getDefaultValues";
 
 /**

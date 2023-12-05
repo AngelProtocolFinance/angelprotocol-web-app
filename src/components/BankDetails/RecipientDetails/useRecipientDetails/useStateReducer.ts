@@ -1,8 +1,8 @@
 import { useReducer } from "react";
 import { FormValues, RequirementsData } from "../types";
 import { AccountRequirements, Quote } from "types/aws";
-import { Currency } from "components/BankDetails/CurrencySelector";
 import { UnexpectedStateError } from "errors/errors";
+import { Currency } from "../../CurrencySelector";
 import mergeRequirements from "./mergeRequirements";
 
 type State = {
