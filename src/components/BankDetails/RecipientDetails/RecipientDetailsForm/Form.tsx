@@ -6,13 +6,14 @@ import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import FileDropzone from "components/FileDropzone";
 import { Label } from "components/form";
+import { Currency } from "../../CurrencySelector";
 import RequirementField from "./RequirementField";
 import { MB_LIMIT, VALID_MIME_TYPES } from "./constants";
 import formToCreateRecipientRequest from "./formToCreateRecipientRequest";
 
 type Props = {
   accountRequirements: AccountRequirements;
-  currency: string;
+  currency: Currency;
   disabled: boolean;
   refreshedRequirementsAdded: boolean;
   refreshRequired: boolean;

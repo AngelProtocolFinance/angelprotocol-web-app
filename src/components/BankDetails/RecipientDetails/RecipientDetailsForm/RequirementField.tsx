@@ -7,10 +7,11 @@ import CountrySelector from "components/CountrySelector";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";
+import { Currency } from "../../CurrencySelector";
 import { isCountry, undot } from "../helpers";
 
 type Props = {
-  currency: string;
+  currency: Currency;
   data: Group;
   disabled?: boolean; // need this only for CountrySelector
   requirementsType: string;
@@ -105,12 +106,12 @@ export default function RequirementField({
 function isAllowed(
   country: Country,
   requirementsType: string,
-  currency: string
+  currency: Currency
 ): boolean {
   return (
     // SWIFT transfers are not allowed inside USA or US territories, see https://wise.com/help/articles/2932150/guide-to-usd-transfers
     !country.name.includes("United States") ||
     requirementsType !== "swift_code" ||
-    currency !== "USD"
+    currency.code !== "USD"
   );
 }

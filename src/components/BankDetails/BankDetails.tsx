@@ -99,7 +99,7 @@ function Content({
               // it needs to reset its state by re-rendering the whole component.
               key={targetCurrency.code}
               isLoading={isDebouncing}
-              targetCurrency={targetCurrency.code}
+              currency={targetCurrency}
               expectedMontlyDonations={expectedMontlyDonations}
               isSubmitting={isSubmitting}
               onSubmit={onSubmit}

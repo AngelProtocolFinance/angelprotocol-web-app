@@ -11,11 +11,12 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { Currency } from "../../CurrencySelector";
 import useStateReducer from "./useStateReducer";
 
 export default function useRecipientDetails(
   isParentLoading: boolean,
-  targetCurrency: string,
+  currency: Currency,
   expectedMontlyDonations: number,
   onSubmit: (
     request: CreateRecipientRequest,
@@ -55,7 +56,7 @@ export default function useRecipientDetails(
 
         const quote = await createQuote({
           sourceAmount: expectedMontlyDonations,
-          targetCurrency: targetCurrency,
+          targetCurrency: currency.code,
         }).unwrap();
 
         const requirements = await getAccountRequirements(quote.id).unwrap();
@@ -70,7 +71,7 @@ export default function useRecipientDetails(
 
         dispatch({
           type: "UPDATE_REQUIREMENTS",
-          payload: { quote, requirements, targetCurrency },
+          payload: { quote, requirements, currency },
         });
       } catch (error) {
         handleError(error, GENERIC_ERROR_MESSAGE);
@@ -82,7 +83,7 @@ export default function useRecipientDetails(
   }, [
     isParentLoading,
     expectedMontlyDonations,
-    targetCurrency,
+    currency,
     createQuote,
     dispatch,
     getAccountRequirements,
@@ -118,7 +119,7 @@ export default function useRecipientDetails(
 
       dispatch({
         type: "UPDATE_REQUIREMENTS",
-        payload: { targetCurrency, requirements, isRefreshed: true },
+        payload: { currency: currency, requirements, isRefreshed: true },
       });
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
