@@ -226,7 +226,7 @@ html:is(.dark) [data-amplify-authenticator] {
   }
 
   .field-input[aria-invalid="true"] {
-    @apply border-red focus:shadow focus:shadow-[0_0_5px_#F15A21];
+    @apply dark:border-red;
   }
 
   .radio {
