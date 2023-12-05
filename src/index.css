@@ -230,7 +230,7 @@ html:is(.dark) [data-amplify-authenticator] {
   }
 
   .field-input[aria-invalid="true"] {
-    @apply border-red focus:shadow-focus;
+    @apply border-red focus:shadow-focus focus-within:shadow-focus;
   }
 
   .radio {

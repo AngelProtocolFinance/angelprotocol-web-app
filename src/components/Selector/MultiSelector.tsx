@@ -66,7 +66,7 @@ export function MultiSelector<
           aria-invalid={!!get(errors, name)?.message}
           aria-disabled={isDisabled}
           as="div"
-          className={`${button} ${styles.selectorButton} p-1 focus-within:border-gray-d1 focus-within:dark:border-blue-l2`}
+          className={`${button} ${styles.selectorButton} p-1`}
         >
           {({ open }) => (
             <>
