@@ -286,10 +286,6 @@ html:is(.dark) [data-amplify-authenticator] {
     @apply bg-transparent focus:outline-none w-full;
   }
 
-  .field-container > input[aria-invalid="true"] {
-    @apply border-red;
-  }
-
   .field {
     @apply relative;
   }
