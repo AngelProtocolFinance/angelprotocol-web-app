@@ -299,12 +299,6 @@ html:is(.dark) [data-amplify-authenticator] {
     @apply field-input;
   }
 
-  /* This css is required to handle createElement error UI  */
-  .field > textarea[aria-invalid="true"],
-  .field > input[aria-invalid="true"] {
-    @apply border-red;
-  }
-
   .field > label {
     @apply mb-2;
   }
