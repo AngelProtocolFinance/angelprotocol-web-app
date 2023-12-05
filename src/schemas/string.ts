@@ -1,6 +1,5 @@
 import * as Yup from "yup";
 import { ChainID } from "types/chain";
-import { logger } from "helpers";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
 export const terraAddrPattern = /^terra1[a-z0-9]{38}$/i;
@@ -19,42 +18,18 @@ export const walletAddr = (chainId: ChainID) =>
   );
 
 export const url = Yup.string()
-  .nullable()
-  .test({
-    name: "URL with(out) the HTTP(S) schema",
-    message: "invalid url",
-    test: (str: string | null | undefined) => {
-      // URL must be nullable
-      if (!str) {
-        return true;
-      }
-
-      // if the string contains only non-alphanumerical characters, the URL is invalid
-      if (new RegExp("^[^a-zA-Z0-9]+$").test(str)) {
-        return false;
-      }
-
-      // if the string only contains the schema, the URL is invalid
-      if (new RegExp(/^https?:\/\/?$/).test(str)) {
-        return false;
-      }
-
-      let givenURL;
-      try {
-        // first check if this is a valid URL at all using any schema
-        givenURL = new URL(str);
-      } catch (error) {
-        logger.info("Original URL is ", str);
-        try {
-          // check if prepending http would result in a valid URL
-          givenURL = new URL(`http://${str}`);
-        } catch (error) {
-          logger.error("Error is", error);
-          return false;
-        }
-      }
-      return givenURL.protocol === "http:" || givenURL.protocol === "https:";
-    },
+  /** though our validation library also supports http and ftp,
+   * Our use case is fairly limited to user giving us links to their social media or website
+   * which is widespread to be on https.
+   *
+   * Moreover, we are expecting donors to click these links.
+   *  */
+  .transform((str?: string) => (str || "").replace(/^(http|ftp):\/\//, "_")) //send an invalid value to parser
+  .url(({ value }) => {
+    //only check for https as http and ftp are filtered out
+    return /^https:\/\//.test(value)
+      ? "invalid url"
+      : "should start with https://";
   });
 
 export function walletAddrPatten(chainId: ChainID) {
