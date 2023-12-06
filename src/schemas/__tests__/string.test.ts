@@ -4,31 +4,36 @@ import { url } from "../string";
 describe("string schemas tests", () => {
   describe("url", () => {
     const cases = [
-      { input: null, expected: true }, // value is empty
-      { input: undefined, expected: true }, // value is empty
-      { input: "", expected: true }, // value is empty
+      { input: null, expected: true }, // not initially set and not required
+      { input: undefined, expected: true }, // not initially set and not required
+      { input: "", expected: true }, // empty and not required
+
       { input: ".", expected: false },
       { input: ".@%#%&(!", expected: false },
-      { input: "a.", expected: true },
-      { input: ".a", expected: true },
-      { input: ".a.", expected: true },
+      { input: "a.", expected: false },
+      { input: ".a", expected: false },
+      { input: ".a.", expected: false },
       { input: "http:/", expected: false },
       { input: "http://", expected: false },
       { input: "https:/", expected: false },
       { input: "https://", expected: false },
-      { input: "ftp://www.example.com", expected: false },
-      { input: "mailto://www.example.com", expected: false },
-      // special case, domain name can contain only top-level domain
-      // see https://stackoverflow.com/questions/69614892/can-a-domain-consist-of-only-tld-top-level-domain#:~:text=D%20in%20TLD%20means%20domain,so%20yes%20it%20is%20valid.
-      { input: "fdasfasda", expected: true },
-      { input: "1", expected: true },
-      { input: "example.com", expected: true },
-      { input: "example.org", expected: true },
-      { input: "www.example.com", expected: true },
-      { input: "http://www.example.com", expected: true },
+      { input: "ftp://www.example.com", expected: false }, //we enforce https on input links
+      { input: "mailto://www.example.com", expected: false }, //we enforce https on input links
+
+      /** though top level domains are valid, saving them on this format
+       * and later used on link tags `<a/>` could prove problematic:
+       * e.g. `<a href="google.com"/>`. would not magically go to desired `https://google.com`
+       * that is on the assumption that google.com is intended to be of `https`
+       */
+      { input: "fdasfasda", expected: false },
+      { input: "1", expected: false },
+      { input: "example.com", expected: false },
+      { input: "example.org", expected: false },
+      { input: "tiktok.com/@betterme.org", expected: false },
+      { input: "www.example.com", expected: false },
+
+      //sample valid urls
       { input: "https://www.example.com", expected: true },
-      { input: "tiktok.com/@betterme.org", expected: true },
-      { input: "www.tiktok.com/@betterme.org", expected: true },
       { input: "https://www.tiktok.com/@betterme.org", expected: true },
     ];
 
