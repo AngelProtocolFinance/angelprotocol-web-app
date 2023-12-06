@@ -3,21 +3,20 @@
 
 const awsmobile = {
     "aws_project_region": "us-east-1",
-    "aws_cognito_identity_pool_id": "us-east-1:e40c28a0-d7c2-41e4-afd2-2ee7915325f8",
     "aws_cognito_region": "us-east-1",
     "aws_user_pools_id": "us-east-1_ukOlQeQIM",
-    "aws_user_pools_web_client_id": "4lkqi6s5qp6g48tot3em1cabkt",
+    "aws_user_pools_web_client_id": "207sfl8bl2m2cghbr86vg4je2o",
     "oauth": {
-        "domain": "oauth.better.giving",
+        "domain": "bettergiving.auth.us-east-1.amazoncognito.com",
         "scope": [
-            "phone",
+            "aws.cognito.signin.user.admin",
             "email",
             "openid",
-            "profile",
-            "aws.cognito.signin.user.admin"
+            "phone",
+            "profile"
         ],
-        "redirectSignIn": "https://auth-ui.dpspevs7tj1ov.amplifyapp.com/auth-redirector/,https://staging.better.giving/auth-redirector/,http://localhost:4200/auth-redirector/,https://app.better.giving/auth-redirector/",
-        "redirectSignOut": "https://auth-ui.dpspevs7tj1ov.amplifyapp.com/,https://staging.better.giving/,http://localhost:4200/,https://app.better.giving/",
+        "redirectSignIn": "https://app.better.giving/auth-redirector/",
+        "redirectSignOut": "https://app.better.giving/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
@@ -28,9 +27,9 @@ const awsmobile = {
         "GOOGLE"
     ],
     "aws_cognito_signup_attributes": [
-        "EMAIL",
         "GIVEN_NAME",
-        "FAMILY_NAME"
+        "FAMILY_NAME",
+        "EMAIL"
     ],
     "aws_cognito_mfa_configuration": "OPTIONAL",
     "aws_cognito_mfa_types": [
@@ -40,9 +39,9 @@ const awsmobile = {
         "passwordPolicyMinLength": 8,
         "passwordPolicyCharacters": [
             "REQUIRES_LOWERCASE",
+            "REQUIRES_UPPERCASE",
             "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS",
-            "REQUIRES_UPPERCASE"
+            "REQUIRES_SYMBOLS"
         ]
     },
     "aws_cognito_verification_mechanisms": [
