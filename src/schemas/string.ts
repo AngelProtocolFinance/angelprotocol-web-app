@@ -27,9 +27,9 @@ export const url = Yup.string()
   .transform((str?: string) => (str || "").replace(/^(http|ftp):\/\//, "_")) //send an invalid value to parser
   .url(({ value }) => {
     //only check for https as http and ftp are filtered out
-    return /^https:\/\//.test(value)
-      ? "invalid url"
-      : "should start with https://";
+    if (!/^https:\/\//.test(value)) return "should start with https://";
+    if (value === "https://") return "incomplete url";
+    return "invalid url";
   });
 
 export function walletAddrPatten(chainId: ChainID) {
