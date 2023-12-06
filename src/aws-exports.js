@@ -8,16 +8,16 @@ const awsmobile = {
     "aws_user_pools_id": "us-east-1_ukOlQeQIM",
     "aws_user_pools_web_client_id": "4lkqi6s5qp6g48tot3em1cabkt",
     "oauth": {
-        "domain": "oauth.better.giving",
+        "domain": "gc8hpcg5cpes-prod.auth.us-east-1.amazoncognito.com",
         "scope": [
-            "phone",
+            "aws.cognito.signin.user.admin",
             "email",
             "openid",
-            "profile",
-            "aws.cognito.signin.user.admin"
+            "phone",
+            "profile"
         ],
-        "redirectSignIn": "https://auth-ui.dpspevs7tj1ov.amplifyapp.com/auth-redirector/,https://staging.better.giving/auth-redirector/,http://localhost:4200/auth-redirector/,https://app.better.giving/auth-redirector/",
-        "redirectSignOut": "https://auth-ui.dpspevs7tj1ov.amplifyapp.com/,https://staging.better.giving/,http://localhost:4200/,https://app.better.giving/",
+        "redirectSignIn": "http://localhost:4200/auth-redirector/,https://app.better.giving/auth-redirector/,https://auth-ui.dpspevs7tj1ov.amplifyapp.com/auth-redirector/,https://staging.better.giving/auth-redirector/",
+        "redirectSignOut": "http://localhost:4200/,https://app.better.giving/,https://auth-ui.dpspevs7tj1ov.amplifyapp.com/,https://staging.better.giving/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
@@ -28,9 +28,9 @@ const awsmobile = {
         "GOOGLE"
     ],
     "aws_cognito_signup_attributes": [
-        "EMAIL",
         "GIVEN_NAME",
-        "FAMILY_NAME"
+        "FAMILY_NAME",
+        "EMAIL"
     ],
     "aws_cognito_mfa_configuration": "OPTIONAL",
     "aws_cognito_mfa_types": [
@@ -40,9 +40,9 @@ const awsmobile = {
         "passwordPolicyMinLength": 8,
         "passwordPolicyCharacters": [
             "REQUIRES_LOWERCASE",
+            "REQUIRES_UPPERCASE",
             "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS",
-            "REQUIRES_UPPERCASE"
+            "REQUIRES_SYMBOLS"
         ]
     },
     "aws_cognito_verification_mechanisms": [

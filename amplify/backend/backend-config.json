@@ -1,0 +1,101 @@
+{
+  "auth": {
+    "bettergivingwebapp6637e98d": {
+      "customAuth": false,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_allowUnauthenticatedIdentities": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_authRoleArn": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_authRoleName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_identityPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_identityPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_unauthRoleArn": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_unauthRoleName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    },
+    "AMPLIFY_auth_bettergivingwebapp6637e98d_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "bettergivingwebapp6637e98d"
+        }
+      ]
+    }
+  }
+}

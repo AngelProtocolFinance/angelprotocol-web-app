@@ -1,28 +1,75 @@
 {
-  "prod": {
+  "production": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-angelgivingwebapp-prod-15139-authRole",
-      "UnauthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-authRole",
+      "AuthRoleName": "amplify-bettergivingwebapp-production-131913-authRole",
+      "UnauthRoleArn": "arn:aws:iam::571372027840:role/amplify-bettergivingwebapp-production-131913-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::571372027840:role/amplify-bettergivingwebapp-production-131913-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-angelgivingwebapp-prod-15139-deployment",
-      "UnauthRoleName": "amplify-angelgivingwebapp-prod-15139-unauthRole",
-      "StackName": "amplify-angelgivingwebapp-prod-15139",
-      "StackId": "arn:aws:cloudformation:us-east-1:571372027840:stack/amplify-angelgivingwebapp-prod-15139/adcda3c0-88d9-11ee-99db-0eb10c8df66f",
+      "DeploymentBucketName": "amplify-bettergivingwebapp-production-131913-deployment",
+      "UnauthRoleName": "amplify-bettergivingwebapp-production-131913-unauthRole",
+      "StackName": "amplify-bettergivingwebapp-production-131913",
+      "StackId": "arn:aws:cloudformation:us-east-1:571372027840:stack/amplify-bettergivingwebapp-production-131913/007be9b0-93f7-11ee-8898-0a59b5ae9857",
       "AmplifyAppId": "dpspevs7tj1ov"
+    },
+    "categories": {
+      "auth": {
+        "bettergivingwebappec466733": {
+          "userPoolId": "us-east-1_ukOlQeQIM",
+          "userPoolName": "AngelGivingWebApp-prod",
+          "webClientId": "4lkqi6s5qp6g48tot3em1cabkt",
+          "nativeClientId": "4lkqi6s5qp6g48tot3em1cabkt",
+          "identityPoolId": "us-east-1:e40c28a0-d7c2-41e4-afd2-2ee7915325f8",
+          "identityPoolName": "testAuthIdentityPool__prod",
+          "allowUnauthenticatedIdentities": false,
+          "authRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-authRole",
+          "authRoleName": "amplify-angelgivingwebapp-prod-15139-authRole",
+          "unauthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-unauthRole",
+          "unauthRoleName": "amplify-angelgivingwebapp-prod-15139-unauthRole"
+        },
+        "bettergivingwebapp6637e98d": {
+          "userPoolId": "us-east-1_ukOlQeQIM",
+          "userPoolName": "AngelGivingWebApp-prod",
+          "webClientId": "4lkqi6s5qp6g48tot3em1cabkt",
+          "nativeClientId": "4lkqi6s5qp6g48tot3em1cabkt",
+          "identityPoolId": "us-east-1:e40c28a0-d7c2-41e4-afd2-2ee7915325f8",
+          "identityPoolName": "testAuthIdentityPool__prod",
+          "allowUnauthenticatedIdentities": false,
+          "authRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-authRole",
+          "authRoleName": "amplify-angelgivingwebapp-prod-15139-authRole",
+          "unauthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-unauthRole",
+          "unauthRoleName": "amplify-angelgivingwebapp-prod-15139-unauthRole"
+        }
+      }
     }
   },
-  "dev": {
+  "staging": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-angelgivingwebapp-dev-161945-authRole",
-      "UnauthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-dev-161945-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-dev-161945-authRole",
+      "AuthRoleName": "amplify-bettergivingwebapp-staging-133145-authRole",
+      "UnauthRoleArn": "arn:aws:iam::571372027840:role/amplify-bettergivingwebapp-staging-133145-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::571372027840:role/amplify-bettergivingwebapp-staging-133145-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-angelgivingwebapp-dev-161945-deployment",
-      "UnauthRoleName": "amplify-angelgivingwebapp-dev-161945-unauthRole",
-      "StackName": "amplify-angelgivingwebapp-dev-161945",
-      "StackId": "arn:aws:cloudformation:us-east-1:571372027840:stack/amplify-angelgivingwebapp-dev-161945/f1fa2f00-680e-11ee-a142-0ef49d517ab3",
+      "DeploymentBucketName": "amplify-bettergivingwebapp-staging-133145-deployment",
+      "UnauthRoleName": "amplify-bettergivingwebapp-staging-133145-unauthRole",
+      "StackName": "amplify-bettergivingwebapp-staging-133145",
+      "StackId": "arn:aws:cloudformation:us-east-1:571372027840:stack/amplify-bettergivingwebapp-staging-133145/c1b2ff50-93f8-11ee-8012-0aff7d6f71a5",
       "AmplifyAppId": "dpspevs7tj1ov"
+    },
+    "categories": {
+      "auth": {
+        "bettergivingwebapp6637e98d": {
+          "userPoolId": "us-east-1_ukOlQeQIM",
+          "userPoolName": "AngelGivingWebApp-prod",
+          "webClientId": "4lkqi6s5qp6g48tot3em1cabkt",
+          "nativeClientId": "4lkqi6s5qp6g48tot3em1cabkt",
+          "identityPoolId": "us-east-1:e40c28a0-d7c2-41e4-afd2-2ee7915325f8",
+          "identityPoolName": "testAuthIdentityPool__prod",
+          "allowUnauthenticatedIdentities": false,
+          "authRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-authRole",
+          "authRoleName": "amplify-angelgivingwebapp-prod-15139-authRole",
+          "unauthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-unauthRole",
+          "unauthRoleName": "amplify-angelgivingwebapp-prod-15139-unauthRole"
+        }
+      }
     }
   }
 }
