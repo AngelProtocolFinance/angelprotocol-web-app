@@ -15,7 +15,7 @@ type LINKS = {
 
 export const CHARITY_LINKS: LINKS = {
   HEADER_LINKS: [
-    { title: "For nonprofits", href: BASE_URL, external: true },
+    { title: "For Nonprofits", href: BASE_URL, external: true },
     {
       title: "Marketplace",
       href: appRoutes.marketplace,
