@@ -1,6 +1,6 @@
 {
   "auth": {
-    "bettergivingwebapp6637e98d": {
+    "bettergivingwebapp59590dc1": {
       "customAuth": false,
       "dependsOn": [],
       "providerPlugin": "awscloudformation",
@@ -9,91 +9,91 @@
     }
   },
   "parameters": {
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_allowUnauthenticatedIdentities": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_allowUnauthenticatedIdentities": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_authRoleArn": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_authRoleArn": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_authRoleName": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_authRoleName": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_identityPoolId": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_identityPoolId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_identityPoolName": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_identityPoolName": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_nativeClientId": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_nativeClientId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_unauthRoleArn": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_unauthRoleArn": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_unauthRoleName": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_unauthRoleName": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_userPoolId": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_userPoolId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_userPoolName": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_userPoolName": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     },
-    "AMPLIFY_auth_bettergivingwebapp6637e98d_webClientId": {
+    "AMPLIFY_auth_bettergivingwebapp59590dc1_webClientId": {
       "usedBy": [
         {
           "category": "auth",
-          "resourceName": "bettergivingwebapp6637e98d"
+          "resourceName": "bettergivingwebapp59590dc1"
         }
       ]
     }

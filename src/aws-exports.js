@@ -3,12 +3,12 @@
 
 const awsmobile = {
     "aws_project_region": "us-east-1",
-    "aws_cognito_identity_pool_id": "us-east-1:e40c28a0-d7c2-41e4-afd2-2ee7915325f8",
+    "aws_cognito_identity_pool_id": "us-east-1:8574d806-30d5-4de4-8165-96e72b41cd0e",
     "aws_cognito_region": "us-east-1",
-    "aws_user_pools_id": "us-east-1_ukOlQeQIM",
-    "aws_user_pools_web_client_id": "4lkqi6s5qp6g48tot3em1cabkt",
+    "aws_user_pools_id": "us-east-1_WO32hDPz3",
+    "aws_user_pools_web_client_id": "14qre65ehhsh5f6899ikdhk2qj",
     "oauth": {
-        "domain": "gc8hpcg5cpes-prod.auth.us-east-1.amazoncognito.com",
+        "domain": "gc8hpcg5cpes-dev.auth.us-east-1.amazoncognito.com",
         "scope": [
             "aws.cognito.signin.user.admin",
             "email",
@@ -16,8 +16,8 @@ const awsmobile = {
             "phone",
             "profile"
         ],
-        "redirectSignIn": "http://localhost:4200/auth-redirector/,https://app.better.giving/auth-redirector/,https://auth-ui.dpspevs7tj1ov.amplifyapp.com/auth-redirector/,https://staging.better.giving/auth-redirector/",
-        "redirectSignOut": "http://localhost:4200/,https://app.better.giving/,https://auth-ui.dpspevs7tj1ov.amplifyapp.com/,https://staging.better.giving/",
+        "redirectSignIn": "http://localhost:4200/auth-redirector/,https://staging.better.giving/auth-redirector/",
+        "redirectSignOut": "http://localhost:4200/,https://staging.better.giving/",
         "responseType": "code"
     },
     "federationTarget": "COGNITO_USER_POOLS",
