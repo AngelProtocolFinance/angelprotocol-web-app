@@ -38,6 +38,19 @@
           "authRoleName": "amplify-angelgivingwebapp-prod-15139-authRole",
           "unauthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-unauthRole",
           "unauthRoleName": "amplify-angelgivingwebapp-prod-15139-unauthRole"
+        },
+        "bettergivingwebapp59590dc1": {
+          "userPoolId": "us-east-1_ukOlQeQIM",
+          "userPoolName": "AngelGivingWebApp-prod",
+          "webClientId": "4lkqi6s5qp6g48tot3em1cabkt",
+          "nativeClientId": "4lkqi6s5qp6g48tot3em1cabkt",
+          "identityPoolId": "us-east-1:e40c28a0-d7c2-41e4-afd2-2ee7915325f8",
+          "identityPoolName": "testAuthIdentityPool__prod",
+          "allowUnauthenticatedIdentities": false,
+          "authRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-authRole",
+          "authRoleName": "amplify-angelgivingwebapp-prod-15139-authRole",
+          "unauthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-prod-15139-unauthRole",
+          "unauthRoleName": "amplify-angelgivingwebapp-prod-15139-unauthRole"
         }
       }
     }
