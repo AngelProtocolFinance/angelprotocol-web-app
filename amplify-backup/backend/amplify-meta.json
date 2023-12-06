@@ -1,0 +1,45 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-bettergivingwebapp-production-131913-authRole",
+      "UnauthRoleArn": "arn:aws:iam::571372027840:role/amplify-bettergivingwebapp-production-131913-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::571372027840:role/amplify-bettergivingwebapp-production-131913-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-bettergivingwebapp-production-131913-deployment",
+      "UnauthRoleName": "amplify-bettergivingwebapp-production-131913-unauthRole",
+      "StackName": "amplify-bettergivingwebapp-production-131913",
+      "StackId": "arn:aws:cloudformation:us-east-1:571372027840:stack/amplify-bettergivingwebapp-production-131913/007be9b0-93f7-11ee-8898-0a59b5ae9857",
+      "AmplifyAppId": "dpspevs7tj1ov"
+    }
+  },
+  "auth": {
+    "bettergivingwebapp3f5fcfe8": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL",
+          "FAMILY_NAME",
+          "GIVEN_NAME"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    }
+  }
+}

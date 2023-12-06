@@ -1,0 +1,12 @@
+{
+  "production": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "default"
+  },
+  "staging": {
+    "configLevel": "project",
+    "useProfile": true,
+    "profileName": "default"
+  }
+}
