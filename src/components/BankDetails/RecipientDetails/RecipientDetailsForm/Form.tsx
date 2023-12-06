@@ -1,17 +1,19 @@
 import { ComponentType, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
+import { FormButtonsProps } from "../../types";
 import { FormValues } from "../types";
-import { FormButtonsProps } from "components/BankDetails/types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import FileDropzone from "components/FileDropzone";
 import { Label } from "components/form";
+import { Currency } from "../../CurrencySelector";
 import RequirementField from "./RequirementField";
 import { MB_LIMIT, VALID_MIME_TYPES } from "./constants";
 import formToCreateRecipientRequest from "./formToCreateRecipientRequest";
 
 type Props = {
   accountRequirements: AccountRequirements;
+  currency: Currency;
   disabled: boolean;
   refreshedRequirementsAdded: boolean;
   refreshRequired: boolean;
@@ -59,8 +61,10 @@ export default function Form(props: Props) {
         .map((requirements) => (
           <RequirementField
             key={requirements.key}
+            currency={props.currency}
             data={requirements}
             disabled={props.disabled}
+            requirementsType={props.accountRequirements.type}
           />
         ))}
 

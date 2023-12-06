@@ -2,6 +2,7 @@ import { useReducer } from "react";
 import { FormValues, RequirementsData } from "../types";
 import { AccountRequirements, Quote } from "types/aws";
 import { UnexpectedStateError } from "errors/errors";
+import { Currency } from "../../CurrencySelector";
 import mergeRequirements from "./mergeRequirements";
 
 type State = {
@@ -24,10 +25,10 @@ type UpdateFormValues = {
 type UpdateRequirements = {
   type: "UPDATE_REQUIREMENTS";
   payload: {
+    currency: Currency;
+    isRefreshed?: boolean;
     quote?: Quote;
     requirements: AccountRequirements[];
-    targetCurrency: string;
-    isRefreshed?: boolean;
   };
 };
 
@@ -61,7 +62,7 @@ function reducer(state: State, action: Action): State {
       const requirementsDataArray = mergeRequirements(
         [...state.requirementsDataArray],
         action.payload.requirements,
-        action.payload.targetCurrency,
+        action.payload.currency,
         action.payload.isRefreshed
       );
       const activeRequirementsDataArray = requirementsDataArray.filter(

@@ -1,14 +1,16 @@
 import { ComponentType, useEffect } from "react";
 import { FormProvider } from "react-hook-form";
+import { FormButtonsProps } from "../../types";
 import { FormValues } from "../types";
-import { FormButtonsProps } from "components/BankDetails/types";
 import { AccountRequirements, CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
+import { Currency } from "../../CurrencySelector";
 import Form from "./Form";
 import useRecipientDetailsForm from "./useRecipientDetailsForm";
 
 type Props = {
   accountRequirements: AccountRequirements;
+  currency: Currency;
   defaultValues: FormValues;
   disabled: boolean;
   refreshedRequirementsAdded: boolean;
@@ -44,6 +46,7 @@ export default function RecipientDetailsForm(props: Props) {
     <FormProvider {...methods}>
       <Form
         accountRequirements={props.accountRequirements}
+        currency={props.currency}
         disabled={props.disabled}
         refreshedRequirementsAdded={props.refreshedRequirementsAdded}
         refreshRequired={props.refreshRequired}

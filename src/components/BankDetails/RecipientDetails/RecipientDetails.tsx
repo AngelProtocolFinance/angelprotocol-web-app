@@ -6,6 +6,7 @@ import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EMAIL_SUPPORT } from "constants/env";
+import { Currency } from "../CurrencySelector";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";
@@ -18,7 +19,7 @@ type Props = {
    */
   isLoading: boolean;
   isSubmitting: boolean;
-  targetCurrency: string;
+  currency: Currency;
   expectedMontlyDonations: number;
   FormButtons: ComponentType<FormButtonsProps>;
   onSubmit: (
@@ -31,7 +32,7 @@ type Props = {
 export default function RecipientDetails({
   isLoading,
   isSubmitting,
-  targetCurrency,
+  currency,
   expectedMontlyDonations,
   FormButtons,
   onSubmit,
@@ -47,7 +48,7 @@ export default function RecipientDetails({
     updateDefaultValues,
   } = useRecipientDetails(
     isLoading,
-    targetCurrency,
+    currency,
     expectedMontlyDonations,
     onSubmit
   );
@@ -105,6 +106,7 @@ export default function RecipientDetails({
         // thus causing the whole form to be recreated (reinitiating the whole form with `react-hook-form > useForm`)
         key={`form-${selectedRequirementsData.accountRequirements.type}-${selectedRequirementsData.accountRequirements.fields.length}`}
         accountRequirements={selectedRequirementsData.accountRequirements}
+        currency={currency}
         defaultValues={selectedRequirementsData.currentFormValues}
         disabled={isSubmitting}
         refreshRequired={selectedRequirementsData.refreshRequired}

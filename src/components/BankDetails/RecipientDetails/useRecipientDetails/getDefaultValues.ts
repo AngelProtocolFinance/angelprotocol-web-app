@@ -2,6 +2,7 @@ import { FormValues } from "../types";
 import { AccountRequirements, Field, Group } from "types/aws";
 import { Country } from "types/components";
 import { asset } from "components/FileDropzone";
+import { Currency } from "../../CurrencySelector";
 import { isCountry, isTextType, undot } from "../helpers";
 
 /**
@@ -9,16 +10,16 @@ import { isCountry, isTextType, undot } from "../helpers";
  * with all fields set to appropriate default values.
  *
  * @param accountRequirements requirements to process
- * @param targetCurrency target currency
+ * @param currency target currency
  * @returns FormValues object with all fields set to appropriate default values
  */
 export function getDefaultValues(
   accountRequirements: AccountRequirements,
-  targetCurrency: string
+  currency: Currency
 ): FormValues {
   return {
     bankStatementFile: asset([]),
-    currency: targetCurrency,
+    currency: currency.code,
     type: accountRequirements.type,
     requirements: accountRequirements.fields.reduce<FormValues["requirements"]>(
       (defaultValues, field) => {

@@ -1,6 +1,7 @@
 import { FormValues, RequirementsData } from "../types";
 import { AccountRequirements } from "types/aws";
 import { isEmpty } from "helpers";
+import { Currency } from "../../CurrencySelector";
 import { getDefaultValues, populateRequirementGroup } from "./getDefaultValues";
 
 /**
@@ -11,14 +12,14 @@ import { getDefaultValues, populateRequirementGroup } from "./getDefaultValues";
  *
  * @param requirementsDataArray current array of requirements data containing all previously input form state
  * @param updatedRequirements updated requirements based on newly selected currency and expected monthly donation amount
- * @param targetCurrency target currency for which requirements were loaded
+ * @param currency target currency for which requirements were loaded
  * @param isRefreshed flag indicating whether the fields are being processed after refreshing the requirements
  * @returns updated requirements data array
  */
 export default function mergeRequirements(
   requirementsDataArray: RequirementsData[],
   updatedRequirements: AccountRequirements[],
-  targetCurrency: string,
+  currency: Currency,
   isRefreshed = false
 ): RequirementsData[] {
   // separate requirements data array into active and inactive ones based on whether
@@ -44,7 +45,7 @@ export default function mergeRequirements(
         return {
           active: true,
           accountRequirements: updReq,
-          currentFormValues: getDefaultValues(updReq, targetCurrency),
+          currentFormValues: getDefaultValues(updReq, currency),
           refreshedRequirementsAdded: false,
           refreshRequired: isRefreshRequired(updReq),
         };
