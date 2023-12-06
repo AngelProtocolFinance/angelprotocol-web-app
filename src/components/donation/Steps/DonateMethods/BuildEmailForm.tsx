@@ -45,15 +45,12 @@ export default function BuildEmailForm({ charityName, profileUrl }: Props) {
             more you can provide now the less editing will be needed before
             sending.
           </b>
-          <Field<FormValues, "emailTo">
+          <Field<FormValues>
             name="emailTo"
             label="Your broker's email address"
           />
-          <Field<FormValues, "stockSymbol">
-            name="stockSymbol"
-            label="Stock Symbol (Ticker)"
-          />
-          <Field<FormValues, "numberOfShares">
+          <Field<FormValues> name="stockSymbol" label="Stock Symbol (Ticker)" />
+          <Field<FormValues>
             name="numberOfShares"
             label="Number of Shares to donate"
           />
