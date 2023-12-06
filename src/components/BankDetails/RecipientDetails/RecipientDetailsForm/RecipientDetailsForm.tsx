@@ -1,37 +1,35 @@
 import { ComponentType, useEffect } from "react";
 import { FormProvider } from "react-hook-form";
 import { FormButtonsProps } from "../../types";
-import { FormValues } from "../types";
-import { AccountRequirements, CreateRecipientRequest } from "types/aws";
+import { FormValues, RequirementsData } from "../types";
+import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import { Currency } from "../../CurrencySelector";
 import Form from "./Form";
 import useRecipientDetailsForm from "./useRecipientDetailsForm";
 
 type Props = {
-  accountRequirements: AccountRequirements;
   currency: Currency;
-  defaultValues: FormValues;
   disabled: boolean;
-  refreshedRequirementsAdded: boolean;
-  refreshRequired: boolean;
+  focusNewRequirements: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
-  onUpdateValues: (formValues: FormValues) => void;
+  requirementsData: RequirementsData;
   onRefresh: (request: CreateRecipientRequest) => Promise<void>;
   onSubmit: (
     request: CreateRecipientRequest,
     bankStatementFile: FileDropzoneAsset,
     isDirty: boolean
   ) => Promise<void>;
+  onUpdateValues: (formValues: FormValues) => void;
 };
 
 export default function RecipientDetailsForm(props: Props) {
   const methods = useRecipientDetailsForm(
-    props.accountRequirements,
-    props.defaultValues
+    props.requirementsData.accountRequirements,
+    props.requirementsData.currentFormValues
   );
 
-  const { onUpdateValues } = props;
+  const { onUpdateValues, onRefresh, ...rest } = props;
   const { getValues } = methods;
 
   // save current form values so that they can be preloaded
@@ -42,22 +40,13 @@ export default function RecipientDetailsForm(props: Props) {
     };
   }, [getValues, onUpdateValues]);
 
+  const handleRefresh = async (request: CreateRecipientRequest) => {
+    onUpdateValues(getValues()); // update current form values prior to refreshing the form (which loads new fields)
+    await onRefresh(request);
+  };
   return (
     <FormProvider {...methods}>
-      <Form
-        accountRequirements={props.accountRequirements}
-        currency={props.currency}
-        disabled={props.disabled}
-        refreshedRequirementsAdded={props.refreshedRequirementsAdded}
-        refreshRequired={props.refreshRequired}
-        onRefresh={async (request) => {
-          // update current form values prior to refreshing the form (loads new fields)
-          onUpdateValues(getValues());
-          await props.onRefresh(request);
-        }}
-        onSubmit={props.onSubmit}
-        FormButtons={props.FormButtons}
-      />
+      <Form onRefresh={handleRefresh} {...rest} />
     </FormProvider>
   );
 }

@@ -1,8 +1,8 @@
 import { ComponentType, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormButtonsProps } from "../../types";
-import { FormValues } from "../types";
-import { AccountRequirements, CreateRecipientRequest } from "types/aws";
+import { FormValues, RequirementsData } from "../types";
+import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import FileDropzone from "components/FileDropzone";
 import { Label } from "components/form";
@@ -12,12 +12,11 @@ import { MB_LIMIT, VALID_MIME_TYPES } from "./constants";
 import formToCreateRecipientRequest from "./formToCreateRecipientRequest";
 
 type Props = {
-  accountRequirements: AccountRequirements;
   currency: Currency;
   disabled: boolean;
-  refreshedRequirementsAdded: boolean;
-  refreshRequired: boolean;
+  focusNewRequirements: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
+  requirementsData: RequirementsData;
   onRefresh: (request: CreateRecipientRequest) => Promise<void>;
   onSubmit: (
     request: CreateRecipientRequest,
@@ -28,6 +27,16 @@ type Props = {
 
 export default function Form(props: Props) {
   const {
+    currency,
+    disabled,
+    focusNewRequirements,
+    requirementsData,
+    FormButtons,
+    onRefresh,
+    onSubmit,
+  } = props;
+
+  const {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = useFormContext<FormValues>();
@@ -37,10 +46,10 @@ export default function Form(props: Props) {
   const handleSubmission = handleSubmit(async (formValues) => {
     const { bankStatementFile, ...bankDetails } = formValues;
     const request = formToCreateRecipientRequest(bankDetails);
-    if (props.refreshRequired) {
-      await props.onRefresh(request);
+    if (requirementsData.refreshRequired) {
+      await onRefresh(request);
     } else {
-      await props.onSubmit(request, bankStatementFile, isDirty);
+      await onSubmit(request, bankStatementFile, isDirty);
     }
   });
 
@@ -49,22 +58,22 @@ export default function Form(props: Props) {
   // and immediately validate all the newly added fields, clearly marking all the
   // invalid ones to make it easier for the user to notice them
   useEffect(() => {
-    if (props.refreshedRequirementsAdded && form.current) {
+    if (focusNewRequirements && form.current) {
       form.current.requestSubmit();
     }
-  }, [props.refreshedRequirementsAdded]);
+  }, [focusNewRequirements]);
 
   return (
     <form onSubmit={handleSubmission} ref={form} className="grid gap-6">
-      {props.accountRequirements.fields
+      {requirementsData.accountRequirements.fields
         .flatMap((field) => field.group)
         .map((requirements) => (
           <RequirementField
             key={requirements.key}
-            currency={props.currency}
+            currency={currency}
             data={requirements}
-            disabled={props.disabled}
-            requirementsType={props.accountRequirements.type}
+            disabled={disabled}
+            requirementsType={requirementsData.accountRequirements.type}
           />
         ))}
 
@@ -73,15 +82,15 @@ export default function Form(props: Props) {
         <FileDropzone<FormValues, "bankStatementFile">
           name="bankStatementFile"
           specs={{ mbLimit: MB_LIMIT, mimeTypes: VALID_MIME_TYPES }}
-          disabled={props.disabled}
+          disabled={disabled}
         />
       </div>
 
-      <props.FormButtons
-        disabled={props.disabled}
+      <FormButtons
+        disabled={disabled}
         isSubmitting={isSubmitting}
-        refreshedRequirementsAdded={props.refreshedRequirementsAdded}
-        refreshRequired={props.refreshRequired}
+        refreshedRequirementsAdded={requirementsData.refreshedRequirementsAdded}
+        refreshRequired={requirementsData.refreshRequired}
       />
     </form>
   );
