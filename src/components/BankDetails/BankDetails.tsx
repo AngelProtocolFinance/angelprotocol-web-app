@@ -47,8 +47,8 @@ function Content({
   isSubmitting,
   onSubmit,
 }: Omit<Props, "shouldUpdate" | "onInitiateUpdate">) {
-  const [expectedMontlyDonations, setExpectedMontlyDonations] =
-    useState<number>();
+  const [expectedMontlyDonations, setExpectedMontlyDonations] = useState(10000); // in USD
+
   const [debounce, isDebouncing] = useDebounce();
 
   const { currencies, isLoading, targetCurrency, setTargetCurrency } =
