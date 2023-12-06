@@ -52,7 +52,7 @@ export default function CountrySelector<
       value={country}
       onChange={onCountryChange}
       as="div"
-      className={`relative items-center flex w-full field-container ${
+      className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${
         props.classes?.container || ""
       }`}
     >
