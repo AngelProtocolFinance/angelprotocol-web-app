@@ -3,10 +3,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { ObjectSchema, number, object } from "yup";
+import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
-import { Field } from "components/form";
 import { FormStep } from "slices/donation";
 import { APP_NAME, IS_TEST } from "constants/env";
+import DonateField from "./DonateField";
 
 type Props = { state: FormStep };
 
@@ -20,17 +21,19 @@ export default function GooglePay({ state }: Props) {
     resolver: yupResolver(schema),
   });
 
+  const submit = methods.handleSubmit(({ amount }) =>
+    setPaymentRequest((prev) => {
+      prev.transactionInfo.totalPrice = amount!.toString(); // since `amount` is required, it must be defined at this point
+      return prev;
+    })
+  );
+
   return (
     <FormProvider {...methods}>
       <form
         ref={formRef}
         className="flex flex-col gap-5 items-center justify-center min-h-[16rem]"
-        onSubmit={methods.handleSubmit(({ amount }) =>
-          setPaymentRequest((prev) => {
-            prev.transactionInfo.totalPrice = amount.toString();
-            return prev;
-          })
-        )}
+        onSubmit={submit}
       >
         <p className="text-center">
           Google Pay donations are received by {APP_NAME} and then disbursed to
@@ -38,11 +41,9 @@ export default function GooglePay({ state }: Props) {
           {APP_NAME} charges 0 platform fees, however there are third party fees
           that could be accrued
         </p>
-        <Field<FormValues>
-          name="amount"
-          label="Donation amount (USD)"
-          classes={{ label: "font-bold", container: "w-96" }}
-        />
+
+        <DonateField />
+
         <GooglePayButton
           environment={IS_TEST ? "TEST" : "PRODUCTION"}
           buttonType="donate"
@@ -51,9 +52,9 @@ export default function GooglePay({ state }: Props) {
           style={{ width: 240, height: 40 }}
           onClick={(e) => {
             if (!methods.formState.isValid) {
-              e.preventDefault();
+              e.preventDefault(); // stop default Google Pay behavior
             }
-            formRef.current?.requestSubmit();
+            formRef.current?.requestSubmit(); // trigger form submission to show errors
           }}
         />
       </form>
@@ -61,16 +62,13 @@ export default function GooglePay({ state }: Props) {
   );
 }
 
-type FormValues = { amount: number };
-
 const schema = object<any, SchemaShape<FormValues>>({
   // for making a number field optional using `nullable + transform`,
   // see https://github.com/jquense/yup/issues/500#issuecomment-818582829
   amount: number()
     .required("required")
     .positive("must be greater than zero")
-    .typeError("must be a number")
-    .transform((cur, orig) => (orig === "" ? undefined : cur)),
+    .typeError("must be a number"),
 }) as ObjectSchema<FormValues>;
 
 const createPaymentRequest = (
