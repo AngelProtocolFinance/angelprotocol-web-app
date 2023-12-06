@@ -55,7 +55,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <DAFDirect />
         </Tab.Panel>
         <Tab.Panel>
-          <GooglePay />
+          <GooglePay state={state} />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>

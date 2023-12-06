@@ -53,6 +53,7 @@
     "@cosmjs/encoding": "0.31.1",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
+    "@google-pay/button-react": "^3.0.10",
     "@headlessui/react": "^1.7.4",
     "@hookform/error-message": "^2.0.0",
     "@hookform/resolvers": "3.3.1",

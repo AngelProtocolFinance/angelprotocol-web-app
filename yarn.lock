@@ -2982,6 +2982,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@google-pay/button-react@npm:^3.0.10":
+  version: 3.0.10
+  resolution: "@google-pay/button-react@npm:3.0.10"
+  dependencies:
+    "@types/googlepay": ^0.7.0
+  peerDependencies:
+    "@types/react": ">=16.0.0"
+    "@types/react-dom": ">=16.0.0"
+    react: ">=16.3.0"
+    react-dom: ">=16.3.0"
+  checksum: 17ebc3640c156e8c1f27ee961da49ec0c80b1306a5cc2a55f5b5ea3bf373f0efff26afe4f84f0b1889fac44c6126da7fed7be4d97d680f9e3283d04716364570
+  languageName: node
+  linkType: hard
+
 "@headlessui/react@npm:^1.7.4":
   version: 1.7.17
   resolution: "@headlessui/react@npm:1.7.17"
@@ -5734,6 +5748,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/googlepay@npm:^0.7.0":
+  version: 0.7.5
+  resolution: "@types/googlepay@npm:0.7.5"
+  checksum: e7eead4bcf1478902a8afbe73fa775ff437e3e7402bbc4e3da89a98b5454c355c55b1bbe8b37c732f3951e1da579c19531f5c5c99d7b5c88b30c9a7eed661630
+  languageName: node
+  linkType: hard
+
 "@types/graceful-fs@npm:^4.1.2":
   version: 4.1.9
   resolution: "@types/graceful-fs@npm:4.1.9"
@@ -7056,6 +7077,7 @@ __metadata:
     "@cosmjs/encoding": 0.31.1
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/bignumber": ^5.7.0
+    "@google-pay/button-react": ^3.0.10
     "@headlessui/react": ^1.7.4
     "@hookform/error-message": ^2.0.0
     "@hookform/resolvers": 3.3.1
