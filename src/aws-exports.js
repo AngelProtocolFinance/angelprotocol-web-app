@@ -3,47 +3,27 @@
 
 const awsmobile = {
     "aws_project_region": "us-east-1",
-    "aws_cognito_identity_pool_id": "us-east-1:e40c28a0-d7c2-41e4-afd2-2ee7915325f8",
+    "aws_cognito_identity_pool_id": "us-east-1:42f9341f-bd39-43be-a391-deb87a2557e1",
     "aws_cognito_region": "us-east-1",
-    "aws_user_pools_id": "us-east-1_ukOlQeQIM",
-    "aws_user_pools_web_client_id": "4lkqi6s5qp6g48tot3em1cabkt",
-    "oauth": {
-        "domain": "gc8hpcg5cpes-prod.auth.us-east-1.amazoncognito.com",
-        "scope": [
-            "aws.cognito.signin.user.admin",
-            "email",
-            "openid",
-            "phone",
-            "profile"
-        ],
-        "redirectSignIn": "http://localhost:4200/auth-redirector/,https://app.better.giving/auth-redirector/,https://auth-ui.dpspevs7tj1ov.amplifyapp.com/auth-redirector/,https://staging.better.giving/auth-redirector/",
-        "redirectSignOut": "http://localhost:4200/,https://app.better.giving/,https://auth-ui.dpspevs7tj1ov.amplifyapp.com/,https://staging.better.giving/",
-        "responseType": "code"
-    },
-    "federationTarget": "COGNITO_USER_POOLS",
+    "aws_user_pools_id": "us-east-1_wSV9z0cmA",
+    "aws_user_pools_web_client_id": "lr4du1csuva030o477nkoqg2d",
+    "oauth": {},
     "aws_cognito_username_attributes": [
         "EMAIL"
     ],
-    "aws_cognito_social_providers": [
-        "GOOGLE"
-    ],
+    "aws_cognito_social_providers": [],
     "aws_cognito_signup_attributes": [
-        "GIVEN_NAME",
+        "EMAIL",
         "FAMILY_NAME",
-        "EMAIL"
+        "GIVEN_NAME"
     ],
-    "aws_cognito_mfa_configuration": "OPTIONAL",
+    "aws_cognito_mfa_configuration": "OFF",
     "aws_cognito_mfa_types": [
-        "TOTP"
+        "SMS"
     ],
     "aws_cognito_password_protection_settings": {
         "passwordPolicyMinLength": 8,
-        "passwordPolicyCharacters": [
-            "REQUIRES_LOWERCASE",
-            "REQUIRES_UPPERCASE",
-            "REQUIRES_NUMBERS",
-            "REQUIRES_SYMBOLS"
-        ]
+        "passwordPolicyCharacters": []
     },
     "aws_cognito_verification_mechanisms": [
         "EMAIL"

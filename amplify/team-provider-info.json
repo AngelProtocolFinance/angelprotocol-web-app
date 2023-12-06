@@ -69,19 +69,7 @@
     },
     "categories": {
       "auth": {
-        "bettergivingwebapp59590dc1": {
-          "userPoolId": "us-east-1_WO32hDPz3",
-          "userPoolName": "AngelGivingWebApp-dev",
-          "webClientId": "14qre65ehhsh5f6899ikdhk2qj",
-          "nativeClientId": "14qre65ehhsh5f6899ikdhk2qj",
-          "identityPoolId": "us-east-1:8574d806-30d5-4de4-8165-96e72b41cd0e",
-          "identityPoolName": "testAuthIdentityPool__dev",
-          "allowUnauthenticatedIdentities": false,
-          "authRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-dev-161945-authRole",
-          "authRoleName": "amplify-angelgivingwebapp-dev-161945-authRole",
-          "unauthRoleArn": "arn:aws:iam::571372027840:role/amplify-angelgivingwebapp-dev-161945-unauthRole",
-          "unauthRoleName": "amplify-angelgivingwebapp-dev-161945-unauthRole"
-        }
+        "bettergivingwebapp3f5fcfe8": {}
       }
     }
   }
