@@ -6,7 +6,7 @@ import { ObjectSchema, number, object } from "yup";
 import { SchemaShape } from "schemas/types";
 import { Field } from "components/form";
 import { FormStep } from "slices/donation";
-import { IS_TEST } from "constants/env";
+import { APP_NAME, IS_TEST } from "constants/env";
 
 type Props = { state: FormStep };
 
@@ -32,6 +32,12 @@ export default function GooglePay({ state }: Props) {
           })
         )}
       >
+        <p className="text-center">
+          Google Pay donations are received by {APP_NAME} and then disbursed to
+          the organization the donor chose to support.
+          {APP_NAME} charges 0 platform fees, however there are third party fees
+          that could be accrued
+        </p>
         <Field<FormValues>
           name="amount"
           label="Donation amount (USD)"
