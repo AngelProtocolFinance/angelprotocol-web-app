@@ -8,15 +8,12 @@ export default function GooglePay({ state }: Props) {
   const paymentRequest = createPaymentRequest(state);
 
   return (
-    <div>
+    <div className="grid place-content-center h-full">
       <GooglePayButton
         environment={IS_TEST ? "TEST" : "PRODUCTION"}
         buttonType="donate"
         buttonSizeMode="fill"
         paymentRequest={paymentRequest}
-        onLoadPaymentData={(paymentRequest) => {
-          console.log("load payment data", paymentRequest);
-        }}
         style={{ width: 240, height: 40 }}
       />
     </div>
