@@ -28,7 +28,7 @@ export const CHARITY_LINKS: LINKS = {
     },
     {
       title: "About",
-      href: `${BASE_URL}/about-better-giving/`,
+      href: `${BASE_URL}/better-giving-about/`,
       external: true,
     },
     { title: "Register", href: appRoutes.register },
