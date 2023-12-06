@@ -1,6 +1,3 @@
-Ticket(s):
--
-
 ## Explanation of the solution
 
 ## Instructions on making this work
