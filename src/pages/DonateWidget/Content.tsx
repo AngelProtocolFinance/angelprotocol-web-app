@@ -6,7 +6,6 @@ import { ErrorStatus } from "components/Status";
 import { Steps } from "components/donation";
 import { useSetter } from "store/accessors";
 import { DonationRecipient, setRecipient } from "slices/donation";
-import { possesiveForm } from "helpers";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import donaterConfigFn from "./donaterConfig";
 
@@ -50,7 +49,7 @@ export default function Content({
         url={`${DAPP_URL}/donate_widget/${profile.id}`}
       />
       <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg sm:text-3xl">
-        {possesiveForm(profile.name)} endowment
+        Donate to {profile.name}
       </h1>
       {configIsFallback(donaterConfig) && (
         <ErrorStatus classes="mb-4">
@@ -60,10 +59,9 @@ export default function Content({
       {donaterConfig.isDescriptionTextShown && (
         <>
           <p className="font-body text-xs text-center sm:text-base mb-3">
-            Donate today to {possesiveForm(profile.name)} endowment. Your
-            donation will be protected and compounded in perpetuity to provide{" "}
-            {profile.name} with a long-term, sustainable runway. Give once, give
-            forever!
+            Donate today to {profile.name}. Your donation will be protected and
+            compounded in perpetuity to provide {profile.name} with a long-term,
+            sustainable runway. Give once, give forever!
           </p>
           <p className="font-body text-xs text-center sm:text-base">
             Make sure to check out the many crypto and fiat donation options.

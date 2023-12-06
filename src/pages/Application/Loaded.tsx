@@ -66,7 +66,7 @@ export default function Loaded(props: ApplicationDetails) {
               <Row label="Contact national ID">
                 <DocLink url={doc.ProofOfIdentity.publicUrl} />
               </Row>
-              <Row label="Charity registration doc">
+              <Row label="Nonprofit registration doc">
                 <DocLink url={doc.ProofOfRegistration.publicUrl} />
               </Row>
               <Row label="Fiscal sponsorship agreement">

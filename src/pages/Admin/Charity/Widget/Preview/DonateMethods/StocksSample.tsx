@@ -79,7 +79,7 @@ export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
       </p>
       <p>
         You avoid paying both capital gains tax and stock sales commissions.
-        When you give appreciated stocks directly to charity, your gift can be
+        When you give appreciated stocks directly to nonprofit, your gift can be
         up to 20% larger because you avoid the taxes you'd incur from selling
         and donating the cash.
       </p>
