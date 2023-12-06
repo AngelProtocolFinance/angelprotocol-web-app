@@ -35,19 +35,19 @@ export default function FileDropzone<
     disabled: disabled,
   });
 
-  const isValid = !get(errors, filesId);
+  const invalid = !!get(errors, filesId);
 
   return (
     <div>
       <div
-        aria-invalid={!isValid}
+        aria-invalid={invalid}
         {...getRootProps({
           className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${
             isDragActive
               ? "border-gray-d1 dark:border-gray"
-              : `${
-                  isValid ? "border-prim" : "border-red"
-                } focus:border-orange-l2 focus:dark:border-blue-d1`
+              : invalid
+              ? "border-red focus:shadow-focus"
+              : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
             disabled
               ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"

@@ -172,6 +172,10 @@ html:is(.dark) [data-amplify-authenticator] {
     @apply fill-none stroke-gray-d2 dark:stroke-white;
   }
 
+  .rich-text-toolbar[aria-invalid="true"] {
+    @apply border-red focus-within:shadow-focus;
+  }
+
   .date-input::-webkit-calendar-picker-indicator {
     @apply absolute w-full opacity-0 cursor-pointer;
   }
@@ -226,7 +230,7 @@ html:is(.dark) [data-amplify-authenticator] {
   }
 
   .field-input[aria-invalid="true"] {
-    @apply border-red dark:border-red;
+    @apply border-red focus:shadow-focus focus-within:shadow-focus;
   }
 
   .radio {
@@ -244,6 +248,9 @@ html:is(.dark) [data-amplify-authenticator] {
   }
   .checkbox::before {
     @apply text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+  }
+  .checkbox[aria-invalid="true"] {
+    @apply border-red focus:shadow-focus focus:ring-0;
   }
   .checkbox-orange {
     @apply checkbox focus:ring-orange-l2 disabled:border-gray-l3 disabled:dark:border-gray;
@@ -279,15 +286,11 @@ html:is(.dark) [data-amplify-authenticator] {
   }
 
   .field-container[aria-invalid="true"] {
-    @apply border-red dark:border-red;
+    @apply border-red focus-within:shadow-focus;
   }
 
   .field-container > input {
     @apply bg-transparent focus:outline-none w-full;
-  }
-
-  .field-container > input[aria-invalid="true"] {
-    @apply border-red;
   }
 
   .field {
@@ -297,12 +300,6 @@ html:is(.dark) [data-amplify-authenticator] {
   .field > textarea,
   .field > input {
     @apply field-input;
-  }
-
-  /* This css is required to handle createElement error UI  */
-  .field > textarea[aria-invalid="true"],
-  .field > input[aria-invalid="true"] {
-    @apply border-red;
   }
 
   .field > label {

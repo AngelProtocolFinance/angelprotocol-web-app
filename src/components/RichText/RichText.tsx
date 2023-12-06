@@ -63,6 +63,7 @@ export default function RichText(props: Props) {
 
   return (
     <div
+      aria-invalid={props.invalid}
       aria-disabled={props.disabled}
       className={`relative ${props.classes?.container || ""} ${
         props.readOnly ? "toolbar-hidden" : ""
