@@ -7,8 +7,6 @@ export default function DonateField() {
 
   const value = watch("amount") ?? 0;
 
-  console.log(value);
-
   return (
     <div className="flex flex-col gap-5 w-full items-center">
       <Field<FormValues, "number">
