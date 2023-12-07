@@ -1,3 +1,23 @@
+import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
+
 export default function PayoutMethods() {
-  return <div>PayoutMethods</div>;
+  const [newApplication] = useNewBankingApplicationMutation();
+  return (
+    <div>
+      <button
+        type="button"
+        onClick={async () => {
+          await newApplication({
+            wiseRecipientID: window.crypto.randomUUID(),
+            bankAccountNumber: "1234",
+            bankName: "Bitcoin bank LTD",
+            endowmentId: 1,
+            payoutCurrency: "USD",
+          });
+        }}
+      >
+        create new banking record
+      </button>
+    </div>
+  );
 }

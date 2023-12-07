@@ -3,7 +3,7 @@ import { aws } from "./aws";
 
 const bankingApplications = aws.injectEndpoints({
   endpoints: (builder) => ({
-    newBankingApplication: builder.query<unknown, NewBankingApplication>({
+    newBankingApplication: builder.mutation<unknown, NewBankingApplication>({
       query: (payload) => {
         return {
           method: "POST",
@@ -15,4 +15,4 @@ const bankingApplications = aws.injectEndpoints({
   }),
 });
 
-export const { useNewBankingApplicationQuery } = bankingApplications;
+export const { useNewBankingApplicationMutation } = bankingApplications;
