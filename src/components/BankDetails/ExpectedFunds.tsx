@@ -1,6 +1,7 @@
 import { Popover, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import Icon from "components/Icon";
+import NumberInput from "components/NumberInput";
 import { Label } from "components/form";
 import { APP_NAME } from "constants/env";
 
@@ -11,8 +12,6 @@ type Props = {
 };
 
 export default function ExpectedFunds(props: Props) {
-  const [value, setValue] = useState("");
-
   return (
     <div className="field">
       <div className="flex sm:gap-2 items-center mb-1">
@@ -45,25 +44,15 @@ export default function ExpectedFunds(props: Props) {
           </>
         </Popover>
       </div>
-      <input
-        id="amount"
-        type="text"
-        value={value}
-        placeholder="1,000"
-        onChange={(event) => {
-          const tvalue = Number(event.target.value);
-          if (isNaN(tvalue)) {
-            return event.preventDefault();
-          }
-          setValue(event.target.value);
-          props.onChange(tvalue);
-        }}
-        className={`field-input text-field ${props.classes.input}`}
-        autoComplete="off"
-        spellCheck={false}
-        disabled={props.disabled}
-        inputMode="numeric"
-      />
+      <div className={props.classes.input}>
+        <NumberInput
+          id="amount"
+          placeholder="1,000"
+          onChange={props.onChange}
+          className="field-input"
+          disabled={props.disabled}
+        />
+      </div>
     </div>
   );
 }
