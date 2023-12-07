@@ -6,6 +6,7 @@ import Banking from "./Banking";
 import Dashboard from "./Dashboard";
 import Donations from "./Donations";
 import EditProfile from "./EditProfile";
+import PayoutMethods from "./PayoutMethods";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
 import Widget from "./Widget";
@@ -33,6 +34,7 @@ export default function Charity() {
         />
         <Route path={adminRoutes.widget_config} element={<Widget />} />
         <Route path={adminRoutes.banking} element={<Banking />} />
+        <Route path="payout-methods" element={<PayoutMethods />} />
         <Route index element={<Dashboard />} />
         <Route
           path="*"
