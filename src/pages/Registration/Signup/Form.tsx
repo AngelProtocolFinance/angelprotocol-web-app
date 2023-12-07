@@ -21,7 +21,9 @@ export default function Form({ classes = "" }: { classes?: string }) {
       onSubmit={handleSubmit}
       className={`${classes} justify-center gap-8 padded-container w-full max-w-[37.5rem] grid`}
     >
-      <h3 className="text-3xl text-center">{`Register with ${APP_NAME}`}</h3>
+      <h3 className="text-3xl text-center">
+        Register your new {APP_NAME} nonprofit account
+      </h3>
 
       <button
         type="submit"
