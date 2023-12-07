@@ -6,7 +6,7 @@ import { ObjectSchema, number, object } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { FormStep } from "slices/donation";
-import { APP_NAME, IS_TEST } from "constants/env";
+import { APP_NAME, GOOGLE_PAY_MERCHANT_ID, IS_TEST } from "constants/env";
 import DonateField from "./DonateField";
 
 type Props = { state: FormStep };
@@ -92,7 +92,7 @@ const createPaymentRequest = (
     },
   ],
   merchantInfo: {
-    merchantId: "12345678901234567890",
+    merchantId: GOOGLE_PAY_MERCHANT_ID,
     merchantName: state.recipient.name,
   },
   transactionInfo: {

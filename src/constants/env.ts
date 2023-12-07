@@ -19,3 +19,6 @@ export const IS_TEST = ENV === "STAGING";
 export const EXPECTED_NETWORK_TYPE: NetworkType = IS_TEST
   ? "testnet"
   : "mainnet";
+
+export const GOOGLE_PAY_MERCHANT_ID =
+  process.env.REACT_APP_GOOGLE_PAY_MERCHANT_ID ?? "";
