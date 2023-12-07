@@ -8,3 +8,11 @@ export type ApplicationsQueryParams = {
   regDateStart?: string; //ISO string
   regDateEnd?: string; //ISO string
 };
+
+export type NewBankingApplication = {
+  wiseRecipientID: string;
+  bankName: string;
+  bankAccountNumber: string;
+  payoutCurrency: string;
+  endowmentId: number;
+};
