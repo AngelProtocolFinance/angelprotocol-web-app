@@ -37,9 +37,9 @@ export default function GooglePay({ state }: Props) {
       >
         <p className="text-center">
           Google Pay donations are received by {APP_NAME} and then disbursed to
-          the organization the donor chose to support.
-          {APP_NAME} charges 0 platform fees, however there are third party fees
-          that could be accrued
+          the organization the donor chose to support. {APP_NAME} charges 0
+          platform fees, however there are third party fees that could be
+          accrued
         </p>
 
         <DonateField />
