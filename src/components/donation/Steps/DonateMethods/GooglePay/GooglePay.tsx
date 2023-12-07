@@ -23,6 +23,7 @@ export default function GooglePay({ state }: Props) {
     resolver: yupResolver(schema),
   });
 
+  // this should run before GooglePay API triggers, so the amount used should be updated before that
   const submit = methods.handleSubmit(({ amount }) =>
     setPaymentRequest((prev) => {
       prev.transactionInfo.totalPrice = amount!.toString(); // since `amount` is required, it must be defined at this point
