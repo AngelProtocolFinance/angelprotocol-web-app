@@ -17,6 +17,8 @@ export default function GooglePay({ state }: Props) {
   );
   const formRef = useRef<HTMLFormElement>(null);
 
+  // using `react-hook-form` to be able to utilize existing components that have
+  // labels, error handling and other behavior preconfigured
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
