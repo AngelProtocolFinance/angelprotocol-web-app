@@ -49,7 +49,7 @@ export default function GooglePay({ state }: Props) {
           buttonType="donate"
           buttonSizeMode="fill"
           paymentRequest={paymentRequest}
-          style={{ width: 240, height: 40 }}
+          className="w-1/2 h-12"
           onClick={(e) => {
             if (!methods.formState.isValid) {
               e.preventDefault(); // stop default Google Pay behavior
