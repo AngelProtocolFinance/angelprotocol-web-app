@@ -87,7 +87,7 @@ function Content({
         classes={{ input: "md:w-80" }}
         disabled={isSubmitting}
         onChange={(value) => {
-          // if value is empty or 0 (zero), use the default value
+          // if value is empty or 0 (zero), use the default value so that there's some form to show
           const newValue = value || DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT;
           // if new value is the same as the current value, then there's no need to debounce,
           // but still call the function to cancel the previous debounce call
@@ -96,28 +96,19 @@ function Content({
         }}
       />
 
-      {/* Display disabled form buttons by default, this is necessary 
-          to be able to show "Back" button during registration */}
-      {!expectedMontlyDonations ? (
-        <FormButtons disabled refreshRequired />
-      ) : (
-        <>
-          <Divider />
-          <div className="min-h-[20rem]">
-            <RecipientDetails
-              // we need this key to tell React that when currency code changes,
-              // it needs to reset its state by re-rendering the whole component.
-              key={targetCurrency.code}
-              isLoading={isDebouncing}
-              currency={targetCurrency}
-              expectedMontlyDonations={expectedMontlyDonations}
-              isSubmitting={isSubmitting}
-              onSubmit={onSubmit}
-              FormButtons={FormButtons}
-            />
-          </div>
-        </>
-      )}
+      <Divider />
+
+      <RecipientDetails
+        // we need this key to tell React that when currency code changes,
+        // it needs to reset its state by re-rendering the whole component.
+        key={targetCurrency.code}
+        isLoading={isDebouncing}
+        currency={targetCurrency}
+        expectedMontlyDonations={expectedMontlyDonations}
+        isSubmitting={isSubmitting}
+        onSubmit={onSubmit}
+        FormButtons={FormButtons}
+      />
     </div>
   );
 }
