@@ -49,10 +49,10 @@ function Content({
   isSubmitting,
   onSubmit,
 }: Omit<Props, "shouldUpdate" | "onInitiateUpdate">) {
-  // the initial value will not be displayed, as ExpectedFunds displays its own internal value (no value by default)
+  // the initial/default value will never be displayed, as ExpectedFunds displays its own internal value (empty by default)
   const [expectedMontlyDonations, setExpectedMontlyDonations] = useState(
     DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
-  ); // in USD
+  );
 
   const [debounce, isDebouncing] = useDebounce();
 

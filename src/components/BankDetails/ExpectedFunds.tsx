@@ -49,7 +49,7 @@ export default function ExpectedFunds(props: Props) {
         id="amount"
         type="text"
         value={value}
-        placeholder="10.000"
+        placeholder="1,000"
         onChange={(event) => {
           const tvalue = Number(event.target.value);
           if (isNaN(tvalue)) {
