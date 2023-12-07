@@ -8,13 +8,13 @@ export default function DonateField() {
   const value = watch("amount") ?? 0;
 
   return (
-    <div className="grid gap-2">
+    <div className="flex flex-col gap-2 w-full items-center">
       <Field<FormValues, "number">
         type="number"
         placeholder="0"
         name="amount"
         label="Donation amount (USD)"
-        classes={{ label: "font-bold", container: "w-96" }}
+        classes={{ label: "font-bold", container: "w-2/3" }}
       />
       <div className="flex gap-3 justify-center items-center">
         <ButtonAdd
