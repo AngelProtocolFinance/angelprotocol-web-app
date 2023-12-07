@@ -86,9 +86,9 @@ function Content({
         onChange={(value) => {
           // if value is empty or 0 (zero), use the default value
           const newValue = value || DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT;
-          // if new value is empty or 0 (zero), no need to debounce, but
-          // still call the function itself to cancel the previous debounce call
-          const delay = !newValue ? 0 : 1000;
+          // if new value is the same as the current value, then there's no need to debounce,
+          // but still call the function to cancel the previous debounce call
+          const delay = newValue === expectedMontlyDonations ? 0 : 1000;
           debounce(() => setExpectedMontlyDonations(newValue), delay);
         }}
       />
