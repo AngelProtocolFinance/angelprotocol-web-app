@@ -14,7 +14,7 @@ export default function DonateField() {
     <div className="flex flex-col gap-5 w-full items-center">
       <Field<FormValues, "number">
         type="number"
-        placeholder="0"
+        placeholder="100"
         name="amount"
         label="Donation amount (USD)"
         classes={{ label: "font-bold", container: "w-2/3" }}
