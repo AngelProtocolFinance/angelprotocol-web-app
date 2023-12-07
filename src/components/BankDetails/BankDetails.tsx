@@ -13,6 +13,8 @@ import RecipientDetails from "./RecipientDetails";
 import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
+const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = 10000;
+
 type Props = {
   shouldUpdate: boolean;
   onInitiateUpdate: () => void;
@@ -48,7 +50,9 @@ function Content({
   onSubmit,
 }: Omit<Props, "shouldUpdate" | "onInitiateUpdate">) {
   // the initial value will not be displayed, as ExpectedFunds displays its own internal value (no value by default)
-  const [expectedMontlyDonations, setExpectedMontlyDonations] = useState(10000); // in USD
+  const [expectedMontlyDonations, setExpectedMontlyDonations] = useState(
+    DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
+  ); // in USD
 
   const [debounce, isDebouncing] = useDebounce();
 
@@ -80,10 +84,12 @@ function Content({
         classes={{ input: "md:w-80" }}
         disabled={isSubmitting}
         onChange={(value) => {
+          // if value is empty or 0 (zero), use the default value
+          const newValue = value || DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT;
           // if new value is empty or 0 (zero), no need to debounce, but
           // still call the function itself to cancel the previous debounce call
-          const delay = !value ? 0 : 1000;
-          debounce(() => setExpectedMontlyDonations(value), delay);
+          const delay = !newValue ? 0 : 1000;
+          debounce(() => setExpectedMontlyDonations(newValue), delay);
         }}
       />
 
