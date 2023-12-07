@@ -13,7 +13,7 @@ import RecipientDetails from "./RecipientDetails";
 import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
-const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = 10000;
+const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = 1000; // in USD
 
 type Props = {
   shouldUpdate: boolean;
