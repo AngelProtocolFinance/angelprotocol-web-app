@@ -60,7 +60,7 @@ export default function CountrySelector<
           <div
             aria-invalid={invalid}
             aria-disabled={disabled}
-            className={`items-center grid grid-cols-[auto_auto_1fr] field-container ${
+            className={`items-center flex field-container ${
               props.classes?.container || ""
             }`}
           >
