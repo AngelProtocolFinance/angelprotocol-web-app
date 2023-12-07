@@ -1,3 +1,4 @@
+import { FileObject } from "../common";
 import { RegistrationStatus } from "./registration";
 
 export type ApplicationsQueryParams = {
@@ -15,4 +16,5 @@ export type NewBankingApplication = {
   bankAccountNumber: string;
   payoutCurrency: string;
   endowmentId: number;
+  bankStatementFile: FileObject;
 };

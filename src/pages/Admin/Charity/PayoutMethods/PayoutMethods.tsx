@@ -13,6 +13,10 @@ export default function PayoutMethods() {
             bankName: "Bitcoin bank LTD",
             endowmentId: 1,
             payoutCurrency: "USD",
+            bankStatementFile: {
+              name: "Bank statement",
+              publicUrl: "https://google.com",
+            },
           });
         }}
       >
