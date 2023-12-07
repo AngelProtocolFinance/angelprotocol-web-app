@@ -6,8 +6,9 @@ import { ObjectSchema, number, object } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { FormStep } from "slices/donation";
-import { APP_NAME, GOOGLE_PAY_MERCHANT_ID, IS_TEST } from "constants/env";
+import { APP_NAME, IS_TEST } from "constants/env";
 import DonateField from "./DonateField";
+import createPaymentRequest from "./createPaymentRequest";
 
 type Props = { state: FormStep };
 
@@ -73,36 +74,3 @@ const schema = object<any, SchemaShape<FormValues>>({
     .positive("must be greater than zero")
     .typeError("must be a number"),
 }) as ObjectSchema<FormValues>;
-
-const createPaymentRequest = (
-  state: FormStep
-): google.payments.api.PaymentDataRequest => ({
-  apiVersion: 2,
-  apiVersionMinor: 0,
-  allowedPaymentMethods: [
-    {
-      type: "CARD",
-      parameters: {
-        allowedAuthMethods: ["PAN_ONLY", "CRYPTOGRAM_3DS"],
-        allowedCardNetworks: ["AMEX", "MASTERCARD", "VISA"],
-      },
-      tokenizationSpecification: {
-        type: "PAYMENT_GATEWAY",
-        parameters: {
-          gateway: "example",
-        },
-      },
-    },
-  ],
-  merchantInfo: {
-    merchantId: GOOGLE_PAY_MERCHANT_ID,
-    merchantName: state.recipient.name,
-  },
-  transactionInfo: {
-    totalPriceStatus: "FINAL",
-    totalPriceLabel: "Total",
-    totalPrice: "100.00",
-    currencyCode: "USD",
-    countryCode: "US",
-  },
-});
