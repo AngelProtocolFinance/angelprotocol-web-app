@@ -54,7 +54,7 @@ export default function GooglePay({ state }: Props) {
             if (!methods.formState.isValid) {
               e.preventDefault(); // stop default Google Pay behavior
             }
-            formRef.current?.requestSubmit(); // trigger form submission to show errors
+            formRef.current?.requestSubmit(); // trigger form submission to show errors if any
           }}
         />
       </form>
