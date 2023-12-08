@@ -9,7 +9,6 @@ import { donation } from "slices/donation";
 import gift from "slices/gift";
 import widget from "slices/widget";
 import amplifyConfig from "constants/aws";
-import { appRoutes } from "constants/routes";
 
 export const store = configureStore({
   reducer: {
