@@ -3,14 +3,14 @@ import { IS_TEST } from "./env";
 const awsmobile = {
   aws_project_region: "us-east-1",
   aws_cognito_region: "us-east-1",
-  aws_user_pools_id: IS_TEST ? "us-east-1_wSV9z0cmA" : "us-east-1_ukOlQeQIM",
+  aws_user_pools_id: IS_TEST ? "us-east-1_CPBng2GjE" : "us-east-1_ukOlQeQIM",
   aws_user_pools_web_client_id: IS_TEST
-    ? "5mhk1c9fgp08evbu2mht9p9b3s"
+    ? "7bl9gfckbneg0udsmkvsu48ssg"
     : "207sfl8bl2m2cghbr86vg4je2o",
   oauth: {
-    domain: `bettergiving${
-      IS_TEST ? "-staging" : ""
-    }.auth.us-east-1.amazoncognito.com`,
+    domain: IS_TEST
+      ? "j71l2yzyj3cb-dev.auth.us-east-1.amazoncognito.com"
+      : "bettergiving.auth.us-east-1.amazoncognito.com",
     scope: ["aws.cognito.signin.user.admin", "email", "openid", "profile"],
     redirectSignIn: "",
     redirectSignOut: "",
