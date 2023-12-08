@@ -1,4 +1,8 @@
-import { NewBankingApplication } from "types/aws";
+import {
+  BankingApplication,
+  BankingApplicationsQueryParams,
+  NewBankingApplication,
+} from "types/aws";
 import { aws } from "./aws";
 
 const bankingApplications = aws.injectEndpoints({
@@ -12,7 +16,19 @@ const bankingApplications = aws.injectEndpoints({
         };
       },
     }),
+    bankingApplications: builder.query<
+      BankingApplication[],
+      BankingApplicationsQueryParams
+    >({
+      query: (params) => {
+        return {
+          url: "/staging/banking-applications",
+          params,
+        };
+      },
+    }),
   }),
 });
 
-export const { useNewBankingApplicationMutation } = bankingApplications;
+export const { useNewBankingApplicationMutation, useBankingApplicationsQuery } =
+  bankingApplications;

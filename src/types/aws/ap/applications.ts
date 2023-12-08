@@ -10,7 +10,15 @@ export type ApplicationsQueryParams = {
   regDateEnd?: string; //ISO string
 };
 
-export type NewBankingApplication = {
+export type BankingApplicationsQueryParams = {
+  status?: BankingApplicationStatus;
+  endowmentID?: number;
+  requestor: "endowment" | "bg-admin";
+};
+
+type BankingApplicationStatus = "under-review" | "approved" | "rejected";
+
+type BaseBankingApplication = {
   wiseRecipientID: string;
   bankName: string;
   bankAccountNumber: string;
@@ -18,3 +26,11 @@ export type NewBankingApplication = {
   endowmentId: number;
   bankStatementFile: FileObject;
 };
+
+export type NewBankingApplication = BaseBankingApplication;
+
+export type BankingApplication = {
+  defaultPriorityNum: number;
+  priorityNum: number;
+  status: BankingApplicationStatus;
+} & BaseBankingApplication;
