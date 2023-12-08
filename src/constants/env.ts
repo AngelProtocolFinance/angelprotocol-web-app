@@ -22,3 +22,5 @@ export const EXPECTED_NETWORK_TYPE: NetworkType = IS_TEST
 
 export const GOOGLE_PAY_MERCHANT_ID =
   process.env.REACT_APP_GOOGLE_PAY_MERCHANT_ID ?? "";
+
+export const PUBLIC_STRIPE_KEY = process.env.REACT_APP_PUBLIC_STRIPE_KEY ?? "";
