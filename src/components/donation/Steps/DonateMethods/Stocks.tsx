@@ -1,13 +1,12 @@
 import { FormStep } from "slices/donation";
-import { appRoutes } from "constants/routes";
 import BuildEmailForm from "./BuildEmailForm";
+import getProfileUrl from "./getProfileUrl";
 
 type Props = { state: FormStep };
 
 export default function Stocks({ state }: Props) {
   const charityName = state.recipient.name;
-  const profileUrl = `${window.location.origin}${appRoutes.donate}/${state.recipient.id}`;
-
+  const profileUrl = getProfileUrl(state.recipient.id);
   return (
     <div className="grid gap-5">
       <h3 className="text-2xl sm:text-3xl text-center leading-relaxed">
