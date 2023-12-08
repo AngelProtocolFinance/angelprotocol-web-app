@@ -16,7 +16,7 @@ export default function ExpectedFunds(props: Props) {
   return (
     <div className="field">
       <div className="flex sm:gap-2 items-center mb-1">
-        <Label htmlFor="amount" required aria-required>
+        <Label htmlFor="amount">
           What is the amount of donations (in USD) you expect to receive monthly
           on our platform?
         </Label>
@@ -49,7 +49,7 @@ export default function ExpectedFunds(props: Props) {
         id="amount"
         type="text"
         value={value}
-        placeholder="10.000"
+        placeholder="1,000"
         onChange={(event) => {
           const tvalue = Number(event.target.value);
           if (isNaN(tvalue)) {

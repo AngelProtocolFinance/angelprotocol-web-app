@@ -29,6 +29,8 @@ type Props = {
   ) => Promise<void>;
 };
 
+const MIN_HEIGHT = "min-h-[20rem]";
+
 export default function RecipientDetails({
   isLoading,
   isSubmitting,
@@ -57,40 +59,42 @@ export default function RecipientDetails({
   // no need to check `isLoading` from the parent, as it already affects the value of `isLoadingRequirements`
   if (isLoadingRequirements) {
     return (
-      <div className="flex items-center gap-2">
-        <LoaderRing thickness={10} classes="w-6" /> Loading...
+      <div className={MIN_HEIGHT}>
+        <div className="flex items-center gap-2">
+          <LoaderRing thickness={10} classes="w-6" /> Loading...
+        </div>
       </div>
     );
   }
 
   if (isError) {
-    return <span>{GENERIC_ERROR_MESSAGE}</span>;
+    return <div className={MIN_HEIGHT}>{GENERIC_ERROR_MESSAGE}</div>;
   }
 
   // requirements *can* be empty, check the following example when source currency is USD and target is ALL (Albanian lek):
   // https://api.sandbox.transferwise.tech/v1/account-requirements?source=USD&target=ALL&sourceAmount=1000
   if (isEmpty(requirementsDataArray)) {
     return (
-      <span>
+      <div className={MIN_HEIGHT}>
         Target currency not supported. Please use a bank account with a
         different currency.
-      </span>
+      </div>
     );
   }
 
   // should never happen when `requirementsDataArray.length > 0`
   if (!selectedRequirementsData) {
     return (
-      <span>
+      <div className={MIN_HEIGHT}>
         There was an error selecting the requirements data. Please reload the
         page and try again. If the error persists, please contact{" "}
         {EMAIL_SUPPORT}.
-      </span>
+      </div>
     );
   }
 
   return (
-    <>
+    <div className={MIN_HEIGHT}>
       <AccountRequirementsSelector
         className="mb-6"
         disabled={isSubmitting}
@@ -115,6 +119,6 @@ export default function RecipientDetails({
         onSubmit={handleSubmit}
         onUpdateValues={updateDefaultValues}
       />
-    </>
+    </div>
   );
 }

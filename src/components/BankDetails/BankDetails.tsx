@@ -13,6 +13,11 @@ import RecipientDetails from "./RecipientDetails";
 import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
+/**
+ * Denominated in USD
+ */
+const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = 1000;
+
 type Props = {
   shouldUpdate: boolean;
   onInitiateUpdate: () => void;
@@ -47,8 +52,11 @@ function Content({
   isSubmitting,
   onSubmit,
 }: Omit<Props, "shouldUpdate" | "onInitiateUpdate">) {
-  const [expectedMontlyDonations, setExpectedMontlyDonations] =
-    useState<number>();
+  // the initial/default value will never be displayed, as ExpectedFunds displays its own internal value (empty by default)
+  const [expectedMontlyDonations, setExpectedMontlyDonations] = useState(
+    DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
+  );
+
   const [debounce, isDebouncing] = useDebounce();
 
   const { currencies, isLoading, targetCurrency, setTargetCurrency } =
@@ -79,35 +87,28 @@ function Content({
         classes={{ input: "md:w-80" }}
         disabled={isSubmitting}
         onChange={(value) => {
-          // if new value is empty or 0 (zero), no need to debounce, but
-          // still call the function itself to cancel the previous debounce call
-          const delay = !value ? 0 : 1000;
-          debounce(() => setExpectedMontlyDonations(value), delay);
+          // if value is empty or 0 (zero), use the default value so that there's some form to show
+          const newValue = value || DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT;
+          // if new value is the same as the current value, then there's no need to debounce,
+          // but still call the function to cancel the previous debounce call
+          const delay = newValue === expectedMontlyDonations ? 0 : 1000;
+          debounce(() => setExpectedMontlyDonations(newValue), delay);
         }}
       />
 
-      {/* Display disabled form buttons by default, this is necessary 
-          to be able to show "Back" button during registration */}
-      {!expectedMontlyDonations ? (
-        <FormButtons disabled refreshRequired />
-      ) : (
-        <>
-          <Divider />
-          <div className="min-h-[20rem]">
-            <RecipientDetails
-              // we need this key to tell React that when currency code changes,
-              // it needs to reset its state by re-rendering the whole component.
-              key={targetCurrency.code}
-              isLoading={isDebouncing}
-              currency={targetCurrency}
-              expectedMontlyDonations={expectedMontlyDonations}
-              isSubmitting={isSubmitting}
-              onSubmit={onSubmit}
-              FormButtons={FormButtons}
-            />
-          </div>
-        </>
-      )}
+      <Divider />
+
+      <RecipientDetails
+        // we need this key to tell React that when currency code changes,
+        // it needs to reset its state by re-rendering the whole component.
+        key={targetCurrency.code}
+        isLoading={isDebouncing}
+        currency={targetCurrency}
+        expectedMontlyDonations={expectedMontlyDonations}
+        isSubmitting={isSubmitting}
+        onSubmit={onSubmit}
+        FormButtons={FormButtons}
+      />
     </div>
   );
 }
