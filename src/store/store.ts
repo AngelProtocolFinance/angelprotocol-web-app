@@ -8,8 +8,8 @@ import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
 import gift from "slices/gift";
 import widget from "slices/widget";
+import config from "constants/aws";
 import { appRoutes } from "constants/routes";
-import config from "../aws-exports";
 
 export const store = configureStore({
   reducer: {
