@@ -1,9 +1,8 @@
-import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 import { BankingApplicationStatus } from "types/aws";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import { appRoutes } from "constants/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
 
 export default function Table({
@@ -26,15 +25,13 @@ export default function Table({
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
-          <>ID</>
           <>Endowment</>
           <>Bank name</>
           <>Account number</>
           <>Currency</>
-          <>Bank Statement</>
           <>Date created</>
-          <>Status</>
-          <span className="flex justify-center">Details</span>
+          <th className="text-center">Status</th>
+          <th className="text-center">Bank Statement</th>
         </Cells>
       </TableSection>
       <TableSection
@@ -51,15 +48,16 @@ export default function Table({
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
-              <>{row.wiseRecipientID}</>
-              <>{row.endowmentId}</>
+              <>{row.endowmentID}</>
+              <>{row.bankName}</>
+              <>{row.bankAccountNumber}</>
+              <>{row.payoutCurrency}</>
               <>{new Date(row.dateCreated).toLocaleDateString()}</>
-              <>{row.status}</>
               <td className="text-center">
                 <Status status={row.status} />
               </td>
-              <Link
-                to={appRoutes.applications + `/${row.wiseRecipientID}`}
+              <ExtLink
+                href={row.bankStatementFile.publicUrl}
                 className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
               >
                 <Icon
@@ -68,7 +66,7 @@ export default function Table({
                   title="application details"
                   className="inline-block"
                 />
-              </Link>
+              </ExtLink>
             </Cells>
           ))
           .concat(

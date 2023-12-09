@@ -11,7 +11,7 @@ export default function PayoutMethods() {
             wiseRecipientID: window.crypto.randomUUID(),
             bankAccountNumber: "1234",
             bankName: "Bitcoin bank LTD",
-            endowmentId: 1,
+            endowmentID: 1,
             payoutCurrency: "USD",
             bankStatementFile: {
               name: "Bank statement",

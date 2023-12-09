@@ -24,7 +24,7 @@ type BaseBankingApplication = {
   bankName: string;
   bankAccountNumber: string;
   payoutCurrency: string;
-  endowmentId: number;
+  endowmentID: number;
   bankStatementFile: FileObject;
 };
 
