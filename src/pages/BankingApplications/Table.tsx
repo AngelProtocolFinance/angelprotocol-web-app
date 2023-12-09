@@ -32,6 +32,7 @@ export default function Table({
           <>Date created</>
           <th className="text-center">Status</th>
           <th className="text-center">Bank Statement</th>
+          <></>
         </Cells>
       </TableSection>
       <TableSection
@@ -67,6 +68,7 @@ export default function Table({
                   className="inline-block"
                 />
               </ExtLink>
+              <>approve</>
             </Cells>
           ))
           .concat(
