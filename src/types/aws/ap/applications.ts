@@ -14,9 +14,10 @@ export type BankingApplicationsQueryParams = {
   status?: BankingApplicationStatus;
   endowmentID?: number;
   requestor: "endowment" | "bg-admin";
+  nextPageKey?: string; //base64 encoded keys
 };
 
-type BankingApplicationStatus = "under-review" | "approved" | "rejected";
+export type BankingApplicationStatus = "under-review" | "approved" | "rejected";
 
 type BaseBankingApplication = {
   wiseRecipientID: string;
@@ -33,4 +34,10 @@ export type BankingApplication = {
   defaultPriorityNum: number;
   priorityNum: number;
   status: BankingApplicationStatus;
+  dateCreated: string; //ISODateString
 } & BaseBankingApplication;
+
+export type BankingApplicationsPage = {
+  items: BankingApplication[];
+  nextPageKey?: string; //base64 encoded string
+};

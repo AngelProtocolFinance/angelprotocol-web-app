@@ -1,5 +1,5 @@
 import {
-  BankingApplication,
+  BankingApplicationsPage,
   BankingApplicationsQueryParams,
   NewBankingApplication,
 } from "types/aws";
@@ -17,7 +17,7 @@ const bankingApplications = aws.injectEndpoints({
       },
     }),
     bankingApplications: builder.query<
-      BankingApplication[],
+      BankingApplicationsPage,
       BankingApplicationsQueryParams
     >({
       query: (params) => {
@@ -30,5 +30,11 @@ const bankingApplications = aws.injectEndpoints({
   }),
 });
 
-export const { useNewBankingApplicationMutation, useBankingApplicationsQuery } =
-  bankingApplications;
+export const {
+  useNewBankingApplicationMutation,
+  useBankingApplicationsQuery,
+  endpoints: {
+    bankingApplications: { useLazyQuery: useLazyBankingApplicationsQuery },
+  },
+  util: { updateQueryData: updateBankingApplicationsQueryData },
+} = bankingApplications;
