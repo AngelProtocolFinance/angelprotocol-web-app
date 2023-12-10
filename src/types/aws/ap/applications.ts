@@ -41,3 +41,16 @@ export type BankingApplicationsPage = {
   items: BankingApplication[];
   nextPageKey?: string; //base64 encoded string
 };
+
+type Approval = { type: Extract<BankingApplicationStatus, "approved"> };
+type Rejection = {
+  type: Extract<BankingApplicationStatus, "rejected">;
+  reason: string;
+};
+type Priority = { type: "prioritize" };
+
+export type BankingApplicationUpdate = { uuid: string } & (
+  | Approval
+  | Rejection
+  | Priority
+);

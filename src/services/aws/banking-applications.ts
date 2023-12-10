@@ -1,4 +1,5 @@
 import {
+  BankingApplicationUpdate,
   BankingApplicationsPage,
   BankingApplicationsQueryParams,
   NewBankingApplication,
@@ -12,6 +13,18 @@ const bankingApplications = aws.injectEndpoints({
         return {
           method: "POST",
           url: "/staging/banking-applications",
+          body: payload,
+        };
+      },
+    }),
+    updateBankingApplication: builder.mutation<
+      unknown,
+      BankingApplicationUpdate
+    >({
+      query: ({ uuid, ...payload }) => {
+        return {
+          method: "PUT",
+          url: `/staging/banking-applications/${uuid}`,
           body: payload,
         };
       },
