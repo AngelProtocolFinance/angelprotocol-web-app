@@ -31,8 +31,8 @@ type BaseBankingApplication = {
 export type NewBankingApplication = BaseBankingApplication;
 
 export type BankingApplication = {
-  defaultPriorityNum: number;
-  priorityNum: number;
+  topPriorityNum: number;
+  thisPriorityNum: number;
   status: BankingApplicationStatus;
   dateCreated: string; //ISODateString
 } & BaseBankingApplication;
