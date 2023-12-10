@@ -77,14 +77,16 @@ export default function Table({
               </ExtLink>
               <div className="flex items-center gap-2">
                 <button
-                  className="text-green-d1"
+                  disabled={row.status !== "under-review"}
+                  className="disabled:text-gray text-green-d1"
                   type="button"
                   onClick={review("approve", row.wiseRecipientID)}
                 >
                   <Icon type="CheckCircle" size={18} />
                 </button>
                 <button
-                  className="text-red-d1"
+                  disabled={row.status !== "under-review"}
+                  className="disabled:text-gray text-red-d1"
                   type="button"
                   onClick={review("reject", row.wiseRecipientID)}
                 >
