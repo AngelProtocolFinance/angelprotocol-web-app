@@ -36,7 +36,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
     setParams(
       cleanObject({
         status: data.status.value,
-        endowmentID: +data.endowmentID,
+        endowmentID: data.endowmentID ? +data.endowmentID : undefined,
         requestor: "bg-admin",
       })
     );
