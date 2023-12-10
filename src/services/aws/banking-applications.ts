@@ -45,6 +45,7 @@ const bankingApplications = aws.injectEndpoints({
 
 export const {
   useNewBankingApplicationMutation,
+  useUpdateBankingApplicationMutation,
   useBankingApplicationsQuery,
   endpoints: {
     bankingApplications: { useLazyQuery: useLazyBankingApplicationsQuery },

@@ -1,9 +1,11 @@
 import { TableProps } from "./types";
 import { BankingApplicationStatus } from "types/aws";
+import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import LoadMoreBtn from "./LoadMoreBtn";
+import Prompt from "./Prompt";
 
 export default function Table({
   applications,
@@ -13,6 +15,11 @@ export default function Table({
   hasMore,
   onLoadMore,
 }: TableProps) {
+  const { showModal } = useModalContext();
+  const review = (verdict: "approve" | "reject", uuid: string) => () => {
+    showModal(Prompt, { verdict, uuid });
+  };
+
   return (
     <table
       className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
@@ -68,7 +75,18 @@ export default function Table({
                   className="inline-block"
                 />
               </ExtLink>
-              <>approve</>
+              <button
+                type="button"
+                onClick={review("approve", row.wiseRecipientID)}
+              >
+                approve
+              </button>
+              <button
+                type="button"
+                onClick={review("reject", row.wiseRecipientID)}
+              >
+                reject
+              </button>
             </Cells>
           ))
           .concat(
