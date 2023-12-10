@@ -68,7 +68,7 @@ export default function Prompt({ verdict, uuid }: Props) {
     >
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-prim p-5 font-work">
-          Changing Application Status
+          Banking application
         </p>
         {isDismissible && (
           <button
@@ -80,15 +80,8 @@ export default function Prompt({ verdict, uuid }: Props) {
           </button>
         )}
       </div>
-      <Icon type="ExclamationCircleFill" size={80} className="my-6 text-red" />
-
-      <h3 className="text-center text-2xl mb-2 leading-tight px-3 sm:px-8">
-        <div className="uppercase">{verdict}</div>
-        <div>Endowment</div>
-      </h3>
-
-      <p className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3 mt-4">
-        You are about to {verdict} this banking application
+      <p className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3 mt-4 font-semibold">
+        You are about to {verdict} this banking application.
       </p>
 
       {verdict === "approve" ? (
@@ -99,7 +92,7 @@ export default function Prompt({ verdict, uuid }: Props) {
       ) : null}
 
       <div className="flex items-center gap-2 mb-6">
-        <Status classes="bg-gray-d2">Pending</Status>
+        <Status classes="bg-gray-d2">Under review</Status>
         <Icon type="ArrowRight" />
         {verdict === "approve" ? (
           <Status classes="bg-green">Approved</Status>

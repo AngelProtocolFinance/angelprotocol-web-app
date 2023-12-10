@@ -32,11 +32,11 @@ export default function Table({
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
+          <>Date</>
           <>Endowment</>
           <>Bank name</>
           <>Account number</>
           <>Currency</>
-          <>Date created</>
           <th className="text-center">Status</th>
           <th className="text-center">Bank Statement</th>
           <></>
@@ -56,11 +56,11 @@ export default function Table({
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
+              <>{new Date(row.dateCreated).toLocaleDateString()}</>
               <>{row.endowmentID}</>
               <>{row.bankName}</>
               <>{row.bankAccountNumber}</>
               <>{row.payoutCurrency}</>
-              <>{new Date(row.dateCreated).toLocaleDateString()}</>
               <td className="text-center">
                 <Status status={row.status} />
               </td>
@@ -75,18 +75,22 @@ export default function Table({
                   className="inline-block"
                 />
               </ExtLink>
-              <button
-                type="button"
-                onClick={review("approve", row.wiseRecipientID)}
-              >
-                approve
-              </button>
-              <button
-                type="button"
-                onClick={review("reject", row.wiseRecipientID)}
-              >
-                reject
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  className="text-green-d1"
+                  type="button"
+                  onClick={review("approve", row.wiseRecipientID)}
+                >
+                  <Icon type="CheckCircle" size={18} />
+                </button>
+                <button
+                  className="text-red-d1"
+                  type="button"
+                  onClick={review("reject", row.wiseRecipientID)}
+                >
+                  <Icon type="CloseCircle" size={22} />
+                </button>
+              </div>
             </Cells>
           ))
           .concat(
