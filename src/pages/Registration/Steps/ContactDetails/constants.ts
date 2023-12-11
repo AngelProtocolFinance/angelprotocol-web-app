@@ -18,7 +18,7 @@ export const roles: { [key in ContactRoles]: string } = {
 };
 export const referralMethods: { [key in ReferralMethods]: string } = {
   "": "",
-  "angel-alliance": "Angel Alliance",
+  "better-giving-alliance": "Better Giving Alliance",
   discord: "Discord",
   facebook: "Facebook",
   linkedin: "Linkedin",

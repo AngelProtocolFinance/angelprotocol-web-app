@@ -41,7 +41,7 @@ export default function Card({
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
-          {/* NON-PROFIT NAME */}
+          {/* nonprofit NAME */}
           <h3 className="text-ellipsis line-clamp-2">{name}</h3>
           {/* TAGLINE */}
           {tagline && tagline !== PLACEHOLDER_TAGLINE ? (

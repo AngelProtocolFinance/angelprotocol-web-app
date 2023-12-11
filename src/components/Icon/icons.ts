@@ -42,7 +42,7 @@ import {
   FaUniversity,
   FaUserCircle,
 } from "react-icons/fa";
-import { FaMoneyBills } from "react-icons/fa6";
+import { FaFileCsv, FaMoneyBills } from "react-icons/fa6";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
@@ -99,6 +99,7 @@ export const icons = {
   Facebook: GrFacebookOption,
   FacebookCircle: FaFacebook,
   FatArrowDownload: IoMdDownload,
+  FileCSV: FaFileCsv,
   FileDownload: MdOutlineFileDownload,
   FileUpload: MdOutlineUploadFile,
   Filter: MdOutlineFilterAlt,

@@ -2,7 +2,10 @@ import { useEffect, useState } from "react";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import { useAdminContext } from "pages/Admin/Context";
-import { useProfileQuery } from "services/aws/aws";
+import {
+  useProfileQuery,
+  useUpdateBankStatementMutation,
+} from "services/aws/aws";
 import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
 import BankDetails from "components/BankDetails";
@@ -21,8 +24,10 @@ export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
   const [isSubmitting, setSubmitting] = useState(false);
+  const [shouldUpdate, setShouldUpdate] = useState(false);
 
   const [createRecipientAccount] = useCreateRecipientAccountMutation();
+  const [updateBankStatement] = useUpdateBankStatementMutation();
 
   // load profile
   const { id } = useAdminContext();
@@ -63,18 +68,22 @@ export default function Banking() {
   ) => {
     try {
       setSubmitting(true);
+
       const bankStatementPreview = await getFilePreviews({
         bankStatementFile,
       });
-      // TODO: logging just to avoid compiler warnings about unused variable,
-      // will be updated to real logic once possible
-      console.log(
-        `TODO: handle bank statement: ${bankStatementPreview.bankStatementFile[0].publicUrl}`
-      );
+
+      await updateBankStatement({
+        id: profile.id,
+        bank_statement_file: bankStatementPreview.bankStatementFile[0],
+      }).unwrap();
+
       await createRecipientAccount({
         endowmentId: endowment_id,
         request,
       }).unwrap();
+
+      setShouldUpdate(false);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
     } finally {
@@ -88,12 +97,14 @@ export default function Banking() {
       title="Bank account details"
       description="The following information will be used to register your bank account that will be used to withdraw your funds."
     >
-      <VerificationStatus status={verif_status} />
+      {!shouldUpdate && <VerificationStatus status={verif_status} />}
       <BankDetails
-        alreadySubmitted={isSubmitted}
-        isSubmitting={isSubmitting}
-        onSubmit={submit}
+        key={verif_status}
         FormButtons={FormButtons}
+        isSubmitting={isSubmitting}
+        onInitiateUpdate={() => setShouldUpdate(true)}
+        onSubmit={submit}
+        shouldUpdate={!isSubmitted || shouldUpdate}
       />
     </Group>
   );

@@ -10,7 +10,7 @@ export default function DonateFiatThanks() {
         Thank you for your donation using one of our fiat on-ramp providers!
       </h3>
       <p className="text-center mb-4">
-        We'll process your donation to the Non-profit you specified as soon as
+        We'll process your donation to the nonprofit you specified as soon as
         the payment has cleared. You can safely navigate away using the button
         below.
       </p>

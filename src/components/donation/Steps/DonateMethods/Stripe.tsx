@@ -49,6 +49,10 @@ export default function Stripe({
               liquidSplitPct: fv.pctLiquidSplit.toString(),
             }).unwrap();
 
+            if (isInsideWidget) {
+              return window.open(session.url, "_blank");
+            }
+
             setIsRedirecting(true);
             window.location.href = session.url;
           } catch (err) {

@@ -24,7 +24,7 @@ export type TransactionStatus = "open" | "approved" | "expired";
 export type EndowmentType = "charity" | "ast" | "daf";
 
 //https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types
-type ImageSubType = "svg" | "jpeg" | "png" | "webp";
+type ImageSubType = "svg+xml" | "jpeg" | "png" | "webp";
 type ApplicationSubType = "pdf";
 
 export type ImageMIMEType = `image/${ImageSubType}`;

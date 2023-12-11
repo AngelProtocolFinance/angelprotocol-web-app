@@ -11,6 +11,7 @@ export const EMAIL_SUPPORT = "support@better.giving";
 export const APP_NAME = "Better Giving";
 export const BASE_URL = "https://better.giving";
 export const DAPP_URL = "https://app.better.giving";
+export const AWS_S3_PUBLIC_BUCKET = "https://endow-profiles.s3.amazonaws.com";
 
 const ENV = process.env.REACT_APP_ENVIRONMENT;
 

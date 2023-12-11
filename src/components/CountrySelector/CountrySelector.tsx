@@ -46,50 +46,44 @@ export default function CountrySelector<
 
   return (
     <Combobox
+      aria-invalid={!!get(errors, `${props.fieldName}.name`)?.message}
+      aria-disabled={props.disabled || isSubmitting}
       disabled={props.disabled || isSubmitting}
       value={country}
       onChange={onCountryChange}
       as="div"
-      className="relative w-full"
+      className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${
+        props.classes?.container || ""
+      }`}
     >
-      <div
-        aria-invalid={!!get(errors, `${props.fieldName}.name`)?.message}
-        aria-disabled={props.disabled || isSubmitting}
-        className={`items-center flex field-container ${
-          props.classes?.container || ""
-        }`}
-      >
-        <span className="mr-1 empty:hidden text-3xl relative -bottom-0.5">
-          {country.flag || null}
-        </span>
+      <span className="mr-1 empty:hidden text-3xl relative -bottom-0.5">
+        {country.flag || null}
+      </span>
 
-        <Combobox.Button>
-          {({ open }) => (
-            <DrawerIcon isOpen={open} size={25} className="mr-1" />
-          )}
-        </Combobox.Button>
+      <Combobox.Button>
+        {({ open }) => <DrawerIcon isOpen={open} size={25} className="mr-1" />}
+      </Combobox.Button>
 
-        <Combobox.Input
-          ref={ref}
-          placeholder={props.placeholder}
-          onChange={(event) => setQuery(event.target.value as any)}
-          displayValue={(country: Country) => country.name}
-          className={props.classes?.input}
-        />
+      <Combobox.Input
+        ref={ref}
+        placeholder={props.placeholder}
+        onChange={(event) => setQuery(event.target.value as any)}
+        displayValue={(country: Country) => country.name}
+        className={props.classes?.input}
+      />
 
-        {country.name /** not placeholder */ && (
-          <button
-            className="absolute right-2 top-1/2 -translate-y-1/2 transform text-red hover:text-red-l1 active:text-red-d1 "
-            onClick={() => {
-              onCountryChange(placeHolderCountryOption);
-              setQuery("");
-              props.onReset && props.onReset();
-            }}
-          >
-            <Icon type="Close" size={16} />
-          </button>
-        )}
-      </div>
+      {country.name /** not placeholder */ && (
+        <button
+          className="absolute right-2 top-1/2 -translate-y-1/2 transform text-red hover:text-red-l1 active:text-red-d1 "
+          onClick={() => {
+            onCountryChange(placeHolderCountryOption);
+            setQuery("");
+            props.onReset && props.onReset();
+          }}
+        >
+          <Icon type="Close" size={16} />
+        </button>
+      )}
 
       <Options query={query} options={props.countries} />
 

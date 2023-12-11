@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { PropsWithChildren } from "react";
-import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { Classes } from "./types";
 import { unpack } from "./helpers";
 
@@ -24,6 +24,8 @@ export function CheckField<T extends FieldValues>({
   const id = `__${name}`;
   const { container, input: int, lbl, error } = unpack(classes);
 
+  const invalid = !!get(errors, name);
+
   return (
     <div className={`check-field ${container}`}>
       <input
@@ -32,6 +34,7 @@ export function CheckField<T extends FieldValues>({
         type="checkbox"
         id={id}
         disabled={isSubmitting || disabled}
+        aria-invalid={invalid}
       />
       {!!children && (
         <label data-required={required} className={lbl} htmlFor={id}>

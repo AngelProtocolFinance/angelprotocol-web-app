@@ -16,7 +16,7 @@ export default function ExpectedFunds(props: Props) {
   return (
     <div className="field">
       <div className="flex sm:gap-2 items-center mb-1">
-        <Label htmlFor="amount" required aria-required>
+        <Label htmlFor="amount">
           What is the amount of donations (in USD) you expect to receive monthly
           on our platform?
         </Label>
@@ -45,27 +45,25 @@ export default function ExpectedFunds(props: Props) {
           </>
         </Popover>
       </div>
-      <div className={props.classes.input}>
-        <input
-          id="amount"
-          type="text"
-          value={value}
-          placeholder="10.000"
-          onChange={(event) => {
-            const tvalue = Number(event.target.value);
-            if (isNaN(tvalue)) {
-              return event.preventDefault();
-            }
-            setValue(event.target.value);
-            props.onChange(tvalue);
-          }}
-          autoComplete="off"
-          className="field-input"
-          spellCheck={false}
-          disabled={props.disabled}
-          inputMode="numeric"
-        />
-      </div>
+      <input
+        id="amount"
+        type="text"
+        value={value}
+        placeholder="1,000"
+        onChange={(event) => {
+          const tvalue = Number(event.target.value);
+          if (isNaN(tvalue)) {
+            return event.preventDefault();
+          }
+          setValue(event.target.value);
+          props.onChange(tvalue);
+        }}
+        className={`field-input text-field ${props.classes.input}`}
+        autoComplete="off"
+        spellCheck={false}
+        disabled={props.disabled}
+        inputMode="numeric"
+      />
     </div>
   );
 }

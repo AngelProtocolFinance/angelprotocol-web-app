@@ -47,7 +47,7 @@ export default function Loaded(props: ApplicationDetails) {
         </span>
       </div>
 
-      <Container title="Non-Profit application">
+      <Container title="nonprofit application">
         <div className="grid sm:grid-cols-[auto_auto_1fr]">
           {doc.DocType === "FSA" ? (
             <Row label="Registration No.">{doc.RegistrationNumber}</Row>
@@ -66,7 +66,7 @@ export default function Loaded(props: ApplicationDetails) {
               <Row label="Contact national ID">
                 <DocLink url={doc.ProofOfIdentity.publicUrl} />
               </Row>
-              <Row label="Charity registration doc">
+              <Row label="Nonprofit registration doc">
                 <DocLink url={doc.ProofOfRegistration.publicUrl} />
               </Row>
               <Row label="Fiscal sponsorship agreement">
