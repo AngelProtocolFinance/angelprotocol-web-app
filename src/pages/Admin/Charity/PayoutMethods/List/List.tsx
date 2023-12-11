@@ -1,5 +1,6 @@
 import { useAdminContext } from "pages/Admin/Context";
 import { usePayoutMethodsQuery } from "services/aws/banking-applications";
+import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
@@ -11,10 +12,15 @@ export default function List() {
   });
 
   return (
-    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
-      <h1 className="text-center text-3xl max-lg:font-work col-span-full max-lg:mb-4">
-        Payout methods
-      </h1>
+    <div className="mt-8">
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="text-left text-lg">Payout methods</h1>
+        <button className="btn-green pl-2 pr-4 py-2 text-xs">
+          <Icon type="Plus" className="mr-2" size={16} />
+          <span>New</span>
+        </button>
+      </div>
+
       <QueryLoader
         queryState={queryState}
         messages={{
