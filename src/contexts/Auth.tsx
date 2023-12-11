@@ -1,6 +1,7 @@
 import { ComponentType, createContext, useContext } from "react";
 import { Location, Navigate, useLocation } from "react-router-dom";
 import { AuthenticatedUser, CognitoGroup } from "types/auth";
+import { SigninRouteState, WelcomeRouteState } from "types/routeStates";
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { useGetter } from "store/accessors";
@@ -23,8 +24,8 @@ export default function withAuth<Props>(
     }
 
     if (!user) {
-      const from = determineFromRoute(location);
-      return <Navigate to={appRoutes.signin} state={{ from }} replace />;
+      const state = determineState(location);
+      return <Navigate to={appRoutes.signin} state={state} replace />;
     }
 
     if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {
@@ -49,13 +50,19 @@ export default function withAuth<Props>(
   };
 }
 
-function determineFromRoute(location: Location): Location {
-  return location.pathname !== appRoutes.register
-    ? location
-    : {
+function determineState(location: Location): SigninRouteState {
+  if (location.pathname === appRoutes.register) {
+    const routeState: WelcomeRouteState = { continue: true };
+    return {
+      from: {
         ...location,
         pathname: `${location.pathname}/${regRoutes.welcome}`,
-      };
+      },
+      routeState,
+    };
+  }
+
+  return { from: location };
 }
 
 const INIT = "__init__" as unknown as AuthenticatedUser;

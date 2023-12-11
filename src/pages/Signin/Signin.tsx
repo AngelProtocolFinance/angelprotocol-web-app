@@ -1,6 +1,7 @@
 import { Authenticator } from "@aws-amplify/ui-react";
 import { useEffect } from "react";
-import { Location, Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import { SigninRouteState } from "types/routeStates";
 import ExtLink from "components/ExtLink";
 import LoaderRing from "components/LoaderRing";
 import { useGetter } from "store/accessors";
@@ -12,7 +13,7 @@ const OAUTH_PATH_STORAGE_KEY = "OATH_ORIGIN";
 export default function Signin() {
   const { state } = useLocation();
 
-  const _state = state as { from?: Location } | undefined;
+  const _state = state as SigninRouteState | undefined;
   const from = _state?.from?.pathname || "/";
   const search = _state?.from?.search || "";
 
@@ -30,7 +31,13 @@ export default function Signin() {
   }
 
   if (currUser) {
-    return <Navigate to={{ pathname: from, search }} replace />;
+    return (
+      <Navigate
+        to={{ pathname: from, search }}
+        state={_state?.routeState}
+        replace
+      />
+    );
   }
 
   return (
