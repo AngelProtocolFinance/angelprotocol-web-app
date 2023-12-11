@@ -19,7 +19,7 @@ export default function Header() {
         />
       </div>
       <h5 className="text-sm font-bold truncate mt-2">
-        {profile?.name || "Endowment"}
+        {profile?.name || "Nonprofit"}
       </h5>
       <MyEndowments showEndowments={true} endowments={[]} />
     </div>

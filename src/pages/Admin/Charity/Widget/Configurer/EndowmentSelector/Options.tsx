@@ -27,7 +27,7 @@ export default function Options({ searchText, isDebouncing = false }: Props) {
         }}
         messages={{
           loading: "loading options..",
-          error: "failed to get endowments",
+          error: "failed to get nonprofits",
           empty: searchText ? `${searchText} not found` : "no options found",
         }}
         classes={{ container: "w-full text-sm p-2" }}
