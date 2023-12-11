@@ -5,7 +5,7 @@ import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/re
 import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
-import routes from "../routes";
+import { regRoutes } from "constants/routes";
 
 const initialText = "Retry";
 const redirectingText = "Redirecting...";
@@ -50,7 +50,7 @@ export default function ErrorPage(props: ErrorQueryParams) {
       </button>
       <Link
         className="w-full max-w-[26.25rem] btn-outline-filled btn-reg mt-4"
-        to={`${appRoutes.register}/${routes.resume}`}
+        to={`${appRoutes.register}/${regRoutes.resume}`}
         aria-disabled={isRedirecting}
       >
         Back

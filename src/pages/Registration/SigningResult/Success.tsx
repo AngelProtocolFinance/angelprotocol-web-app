@@ -3,8 +3,8 @@ import { useLazyRegQuery } from "services/aws/registration";
 import Icon from "components/Icon";
 import { getSavedRegistrationReference } from "helpers";
 import { appRoutes } from "constants/routes";
+import { regRoutes } from "constants/routes";
 import { getRegistrationState } from "../Steps/getRegistrationState";
-import routes from "../routes";
 
 export default function Success() {
   const [checkPrevRegistration, { isLoading }] = useLazyRegQuery();
@@ -17,7 +17,7 @@ export default function Success() {
       if (!reference) return navigate(appRoutes.register);
       const savedRegistration = await checkPrevRegistration(reference).unwrap();
       const { state, nextStep } = getRegistrationState(savedRegistration);
-      navigate(`${appRoutes.register}/${routes.steps}/${nextStep}`, {
+      navigate(`${appRoutes.register}/${regRoutes.steps}/${nextStep}`, {
         state: state.data.init,
       });
     } catch (err) {

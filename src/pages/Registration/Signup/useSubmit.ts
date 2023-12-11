@@ -5,7 +5,7 @@ import { useNewApplicationMutation } from "services/aws/registration";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { storeRegistrationReference } from "helpers";
-import routes from "../routes";
+import { regRoutes } from "constants/routes";
 
 export default function useSubmit() {
   const { email } = useAuthenticatedUser();
@@ -25,7 +25,7 @@ export default function useSubmit() {
         reference: res.ContactPerson.PK,
       };
       storeRegistrationReference(state.reference);
-      navigate(routes.welcome, { state });
+      navigate(regRoutes.welcome, { state });
     } catch (err) {
       handleError(err);
     } finally {

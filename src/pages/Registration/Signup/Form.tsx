@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Separator } from "components/registration";
 import { APP_NAME } from "constants/env";
-import routes from "../routes";
+import { regRoutes } from "constants/routes";
 import useSubmit from "./useSubmit";
 
 const NEED_HELP_ARTICLE_ID = 6628120;
@@ -36,7 +36,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
 
       <Link
         className="btn-outline-filled btn-reg"
-        to={routes.resume}
+        to={regRoutes.resume}
         aria-disabled={isSubmitting}
       >
         Resume your registration

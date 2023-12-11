@@ -2,8 +2,8 @@ import { Link, Navigate, useLocation } from "react-router-dom";
 import { InitReg } from "./types";
 import Icon from "components/Icon";
 import { APP_NAME } from "constants/env";
-import { appRoutes } from "constants/routes";
-import routes, { steps } from "./routes";
+import { appRoutes, regRoutes } from "constants/routes";
+import { steps } from "./routes";
 
 export default function Welcome({ classes = "" }: { classes?: string }) {
   const { state } = useLocation();
@@ -24,7 +24,7 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
       </p>
       <Link
         className="w-full max-w-[26.25rem] btn-orange btn-reg"
-        to={`${appRoutes.register}/${routes.steps}/${steps.contact}`}
+        to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`}
         state={state}
       >
         Continue Registration
