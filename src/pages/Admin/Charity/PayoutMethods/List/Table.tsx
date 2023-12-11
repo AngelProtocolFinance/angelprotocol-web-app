@@ -61,14 +61,10 @@ function SetDefaultBtn({
   thisPriorityNum,
   topPriorityNum,
 }: PayoutMethod) {
-  const APPROVED_PRIORITY_NUM = 2;
   const [update, { isLoading }] = useUpdateBankingApplicationMutation();
 
   if (status !== "approved") return <></>;
-  if (
-    topPriorityNum === thisPriorityNum &&
-    topPriorityNum > APPROVED_PRIORITY_NUM
-  ) {
+  if (topPriorityNum === thisPriorityNum) {
     return <Icon type="CheckCircle" size={18} className="text-green-d1" />;
   }
 

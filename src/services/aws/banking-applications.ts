@@ -31,6 +31,14 @@ const bankingApplications = aws.injectEndpoints({
         };
       },
     }),
+    deleteBankingApplication: builder.mutation<unknown, string>({
+      query: (uuid) => {
+        return {
+          method: "DELETE",
+          url: `/staging/banking-applications/${uuid}`,
+        };
+      },
+    }),
     bankingApplications: builder.query<
       BankingApplicationsPage,
       BankingApplicationsQueryParams
@@ -59,6 +67,7 @@ export const {
   useNewBankingApplicationMutation,
   useUpdateBankingApplicationMutation,
   useBankingApplicationsQuery,
+  useDeleteBankingApplicationMutation,
   usePayoutMethodsQuery,
   endpoints: {
     bankingApplications: { useLazyQuery: useLazyBankingApplicationsQuery },
