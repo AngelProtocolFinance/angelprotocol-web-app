@@ -1,5 +1,8 @@
 import { BankingApplicationStatus, PayoutMethod } from "types/aws";
-import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
+import {
+  useDeleteBankingApplicationMutation,
+  useUpdateBankingApplicationMutation,
+} from "services/aws/banking-applications";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 
@@ -40,7 +43,7 @@ export default function Table({ methods, classes = "" }: Props) {
             type="td"
             cellClass="p-3 border-t border-prim max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
-            <>-</>
+            <DeleteBtn {...row} />
             <>{row.bankAccountNumber}</>
             <>{row.bankName}</>
             <>{row.payoutCurrency}</>
@@ -82,6 +85,44 @@ function SetDefaultBtn({
         size={18}
         className="text-gray hover:text-green active:text-green-d1"
       />
+    </button>
+  );
+}
+
+function DeleteBtn({
+  wiseRecipientID,
+  thisPriorityNum,
+  heirPriorityNum = 0,
+  topPriorityNum,
+}: PayoutMethod) {
+  const [deletePayoutMethod] = useDeleteBankingApplicationMutation();
+
+  async function handleClick() {
+    const APPROVED_PRIORITY_NUM = 2;
+    const isDefault = topPriorityNum === thisPriorityNum;
+    const isWithHeir = heirPriorityNum >= APPROVED_PRIORITY_NUM;
+    const deletingDefaultWithoutHeirMsg =
+      "Your Nonprofit must have at least one banking connection approved in order to receive payouts. Banking connections that are 'Under Review' do not count towards this and are not eligible to receive payouts until approved. Do you want to proceed with this deletion?";
+    const deletingApprovedMsg =
+      "Are you sure you want to delete this payment method?";
+    if (isDefault && isWithHeir) {
+      return alert(
+        "Kindly set another payout method as default before deleting"
+      );
+    }
+
+    if (isDefault && !window.confirm(deletingDefaultWithoutHeirMsg)) return;
+    if (!window.confirm(deletingApprovedMsg)) return;
+
+    const result = await deletePayoutMethod(wiseRecipientID);
+
+    if ("error" in result) return alert("Failed to delete");
+    alert("successfully deleted");
+  }
+
+  return (
+    <button type="button" onClick={handleClick}>
+      <Icon type="Dash" size={18} className="text-red hover:text-red-d1" />
     </button>
   );
 }

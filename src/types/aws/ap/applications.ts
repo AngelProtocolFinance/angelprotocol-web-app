@@ -37,6 +37,7 @@ export type NewBankingApplication = BaseBankingApplication;
 
 export type BankingApplication = {
   topPriorityNum?: number;
+  heirPriorityNum?: number;
   thisPriorityNum: number;
   status: BankingApplicationStatus;
   dateCreated: string; //ISODateString
