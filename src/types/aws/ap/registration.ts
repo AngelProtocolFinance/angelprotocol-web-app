@@ -44,6 +44,7 @@ type InitReg = {
   SK: "Registration";
   RegistrationDate: string /** ISO string*/;
   RegistrationStatus: RegistrationStatus;
+  RejectionReason: string;
   UN_SDG: UNSDG_NUMS[];
   bank_verification_status: BankVerificationStatus;
 };
