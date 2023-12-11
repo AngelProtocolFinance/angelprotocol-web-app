@@ -25,9 +25,9 @@ export default function PayPal() {
 function Content() {
   const [{ isPending }] = usePayPalScriptReducer();
   return (
-    <div className="grid place-items-center min-h-[16rem]">
+    <div className="grid place-items-center min-h-[16rem] isolate">
       {isPending && <LoaderRing thickness={10} classes="w-8" />}
-      <PayPalButtons />
+      <PayPalButtons className="w-full max-w-xs" />
     </div>
   );
 }
