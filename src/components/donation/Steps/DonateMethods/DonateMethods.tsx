@@ -26,7 +26,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       className="grid content-start mt-2"
       defaultIndex={state.details?.method === "crypto" ? 1 : 0}
     >
-      <Tab.List className="grid grid-cols-2 sm:grid-cols-4 mb-6">
+      <Tab.List className="grid grid-cols-2 sm:grid-cols-5 mb-6">
         <Tab className={({ selected }) => tabClasses(selected)}>
           Credit/Debit
         </Tab>
