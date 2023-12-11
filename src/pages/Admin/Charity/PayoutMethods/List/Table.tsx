@@ -1,4 +1,5 @@
 import { BankingApplicationStatus, PayoutMethod } from "types/aws";
+import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
 import TableSection, { Cells } from "components/TableSection";
 
 type Props = {
@@ -19,14 +20,12 @@ export default function Table({ methods, classes = "" }: Props) {
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
-          <>Date</>
-          <>Endowment</>
-          <>Bank name</>
+          <></>
           <>Account number</>
+          <>Bank name</>
           <>Currency</>
           <th className="text-center">Status</th>
-          <th className="text-center">Bank Statement</th>
-          <></>
+          <>default</>
         </Cells>
       </TableSection>
       <TableSection
@@ -40,16 +39,40 @@ export default function Table({ methods, classes = "" }: Props) {
             type="td"
             cellClass="p-3 border-t border-prim max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
-            <>{row.bankName}</>
+            <>-</>
             <>{row.bankAccountNumber}</>
+            <>{row.bankName}</>
             <>{row.payoutCurrency}</>
             <td className="text-center">
               <Status status={row.status} />
             </td>
+            <SetDefaultBtn {...row} />
           </Cells>
         ))}
       </TableSection>
     </table>
+  );
+}
+
+function SetDefaultBtn({
+  wiseRecipientID,
+  status,
+  thisPriorityNum,
+  topPriorityNum,
+}: PayoutMethod) {
+  const [update] = useUpdateBankingApplicationMutation();
+
+  if (status !== "approved") return <></>;
+  if (thisPriorityNum === topPriorityNum && topPriorityNum !== 0)
+    return <>default</>;
+
+  return (
+    <button
+      type="button"
+      onClick={() => update({ type: "prioritize", uuid: wiseRecipientID })}
+    >
+      set default
+    </button>
   );
 }
 
