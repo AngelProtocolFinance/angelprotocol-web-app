@@ -1,4 +1,5 @@
 import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
+import List from "./List";
 
 export default function PayoutMethods() {
   const [newApplication] = useNewBankingApplicationMutation();
@@ -11,7 +12,7 @@ export default function PayoutMethods() {
             wiseRecipientID: window.crypto.randomUUID(),
             bankAccountNumber: "1234",
             bankName: "Bitcoin bank LTD",
-            endowmentID: 1,
+            endowmentID: 32,
             payoutCurrency: "USD",
             bankStatementFile: {
               name: "Bank statement",
@@ -22,6 +23,7 @@ export default function PayoutMethods() {
       >
         create new banking record
       </button>
+      <List />
     </div>
   );
 }

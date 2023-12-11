@@ -2,7 +2,9 @@ import {
   BankingApplicationUpdate,
   BankingApplicationsPage,
   BankingApplicationsQueryParams,
+  EndowPayoutMethodsQueryParams,
   NewBankingApplication,
+  PayoutMethod,
 } from "types/aws";
 import { aws } from "./aws";
 
@@ -40,6 +42,16 @@ const bankingApplications = aws.injectEndpoints({
         };
       },
     }),
+    payoutMethods: builder.query<PayoutMethod[], EndowPayoutMethodsQueryParams>(
+      {
+        query: (params) => {
+          return {
+            url: "/staging/banking-applications",
+            params,
+          };
+        },
+      }
+    ),
   }),
 });
 
@@ -47,6 +59,7 @@ export const {
   useNewBankingApplicationMutation,
   useUpdateBankingApplicationMutation,
   useBankingApplicationsQuery,
+  usePayoutMethodsQuery,
   endpoints: {
     bankingApplications: { useLazyQuery: useLazyBankingApplicationsQuery },
   },

@@ -13,8 +13,13 @@ export type ApplicationsQueryParams = {
 export type BankingApplicationsQueryParams = {
   status?: BankingApplicationStatus;
   endowmentID?: number;
-  requestor: "endowment" | "bg-admin";
+  requestor: "bg-admin";
   nextPageKey?: string; //base64 encoded keys
+};
+
+export type EndowPayoutMethodsQueryParams = {
+  endowmentID: number;
+  requestor: "endowment";
 };
 
 export type BankingApplicationStatus = "under-review" | "approved" | "rejected";
@@ -36,6 +41,9 @@ export type BankingApplication = {
   status: BankingApplicationStatus;
   dateCreated: string; //ISODateString
 } & BaseBankingApplication;
+
+//alias for endow page
+export type PayoutMethod = BankingApplication;
 
 export type BankingApplicationsPage = {
   items: BankingApplication[];
