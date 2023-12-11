@@ -26,7 +26,7 @@ function Text(props: {
   title: "Principal" | "Impact";
 }) {
   const baseImpact =
-    "The Impact is the cumulative total of direct donations to the Liquid Account plus the funds distributed from the Principal. Assuming these funds were used immediately, the Impact is how much the Charity";
+    "The Impact is the cumulative total of direct donations to the Liquid Account plus the funds distributed from the Principal. Assuming these funds were used immediately, the Impact is how much the Nonprofit";
 
   let textBlob;
   if (props.type === "projected") {

@@ -13,8 +13,14 @@ import RecipientDetails from "./RecipientDetails";
 import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
+/**
+ * Denominated in USD
+ */
+const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = 1000;
+
 type Props = {
-  alreadySubmitted: boolean;
+  shouldUpdate: boolean;
+  onInitiateUpdate: () => void;
   isSubmitting: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
   onSubmit: (
@@ -25,14 +31,32 @@ type Props = {
 };
 
 export default function BankDetails({
-  alreadySubmitted,
+  shouldUpdate,
+  onInitiateUpdate,
+  ...props
+}: Props) {
+  if (!shouldUpdate) {
+    return (
+      <div className="flex flex-col w-full justify-between mt-8 max-md:items-center">
+        <UpdateDetailsButton onClick={onInitiateUpdate} />
+        <props.FormButtons disabled refreshRequired isSubmitted />
+      </div>
+    );
+  }
+
+  return <Content {...props} />;
+}
+
+function Content({
+  FormButtons,
   isSubmitting,
   onSubmit,
-  FormButtons,
-}: Props) {
-  const [shouldUpdate, setShouldUpdate] = useState(!alreadySubmitted);
-  const [expectedMontlyDonations, setExpectedMontlyDonations] =
-    useState<number>();
+}: Omit<Props, "shouldUpdate" | "onInitiateUpdate">) {
+  // the initial/default value will never be displayed, as ExpectedFunds displays its own internal value (empty by default)
+  const [expectedMontlyDonations, setExpectedMontlyDonations] = useState(
+    DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
+  );
+
   const [debounce, isDebouncing] = useDebounce();
 
   const { currencies, isLoading, targetCurrency, setTargetCurrency } =
@@ -50,15 +74,6 @@ export default function BankDetails({
     return <span>{GENERIC_ERROR_MESSAGE}</span>;
   }
 
-  if (!shouldUpdate) {
-    return (
-      <div className="flex flex-col w-full justify-between mt-8 max-md:items-center">
-        <UpdateDetailsButton onClick={() => setShouldUpdate(true)} />
-        <FormButtons disabled refreshRequired alreadySubmitted />
-      </div>
-    );
-  }
-
   return (
     <div className="grid gap-6">
       <CurrencySelector
@@ -72,42 +87,28 @@ export default function BankDetails({
         classes={{ input: "md:w-80" }}
         disabled={isSubmitting}
         onChange={(value) => {
-          // if new value is empty or 0 (zero), no need to debounce, but
-          // still call the function itself to cancel the previous debounce call
-          const delay = !value ? 0 : 1000;
-          debounce(() => setExpectedMontlyDonations(value), delay);
+          // if value is empty or 0 (zero), use the default value so that there's some form to show
+          const newValue = value || DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT;
+          // if new value is the same as the current value, then there's no need to debounce,
+          // but still call the function to cancel the previous debounce call
+          const delay = newValue === expectedMontlyDonations ? 0 : 1000;
+          debounce(() => setExpectedMontlyDonations(newValue), delay);
         }}
       />
 
-      {/* Display disabled form buttons by default, this is necessary 
-          to be able to show "Back" button during registration */}
-      {!expectedMontlyDonations ? (
-        <FormButtons disabled refreshRequired />
-      ) : (
-        <>
-          <Divider />
-          <div className="min-h-[20rem]">
-            {isDebouncing ? (
-              <div className="flex items-center gap-2">
-                <LoaderRing thickness={10} classes="w-6" /> Loading...
-              </div>
-            ) : (
-              <RecipientDetails
-                // we need this key to tell React that when any of the fields passed to this component changes,
-                // it needs to reset its state by re-rendering the whole component.
-                // This way the `react-hook-form` reruns the `useForm` initializer function with the new requirements
-                // that will get loaded due to changed target currency and expected montly donation (in Wise terms: source amount).
-                key={`${targetCurrency.code}${expectedMontlyDonations}`}
-                targetCurrency={targetCurrency.code}
-                expectedMontlyDonations={expectedMontlyDonations}
-                isSubmitting={isSubmitting}
-                onSubmit={onSubmit}
-                FormButtons={FormButtons}
-              />
-            )}
-          </div>
-        </>
-      )}
+      <Divider />
+
+      <RecipientDetails
+        // we need this key to tell React that when currency code changes,
+        // it needs to reset its state by re-rendering the whole component.
+        key={targetCurrency.code}
+        isLoading={isDebouncing}
+        currency={targetCurrency}
+        expectedMontlyDonations={expectedMontlyDonations}
+        isSubmitting={isSubmitting}
+        onSubmit={onSubmit}
+        FormButtons={FormButtons}
+      />
     </div>
   );
 }

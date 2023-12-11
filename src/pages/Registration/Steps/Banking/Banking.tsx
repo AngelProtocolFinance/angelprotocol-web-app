@@ -1,3 +1,4 @@
+import { useState } from "react";
 import BankDetails from "components/BankDetails";
 import { useRegState, withStepGuard } from "../StepGuard";
 import FormButtons from "./FormButtons";
@@ -5,6 +6,9 @@ import useSubmit from "./useSubmit";
 
 function Banking() {
   const { data } = useRegState<5>();
+
+  const [shouldUpdate, setShouldUpdate] = useState(false);
+
   const { submit, isSubmitting } = useSubmit();
 
   return (
@@ -13,10 +17,11 @@ function Banking() {
         Setup your banking details
       </h2>
       <BankDetails
-        alreadySubmitted={!!data.banking?.BankStatementFile}
+        shouldUpdate={!data.banking?.BankStatementFile || shouldUpdate}
+        FormButtons={FormButtons}
+        onInitiateUpdate={() => setShouldUpdate(true)}
         isSubmitting={isSubmitting}
         onSubmit={submit}
-        FormButtons={FormButtons}
       />
     </div>
   );

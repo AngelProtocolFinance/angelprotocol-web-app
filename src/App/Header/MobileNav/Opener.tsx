@@ -21,7 +21,7 @@ export function Opener({ classes, links }: Props) {
   return (
     <button
       onClick={() => showModal(Menu, { links })}
-      className={`${classes} items-center text-white justify-center`}
+      className={`${classes} items-center text-blue justify-center`}
     >
       <Icon type="Menu" size={24} />
     </button>

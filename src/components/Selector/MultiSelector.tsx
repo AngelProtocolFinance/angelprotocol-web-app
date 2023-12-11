@@ -49,6 +49,7 @@ export function MultiSelector<
 
   const isAllSelected = selected.length === options.length;
   const isDisabled = isSubmitting || disabled;
+  const invalid = !!get(errors, name)?.message;
 
   return (
     <>
@@ -63,10 +64,14 @@ export function MultiSelector<
       >
         <FocusableInput ref={ref} />
         <Combobox.Button
-          aria-invalid={!!get(errors, name)?.message}
+          aria-invalid={invalid}
           aria-disabled={isDisabled}
           as="div"
-          className={`${button} ${styles.selectorButton} p-1 focus-within:border-gray-d1 focus-within:dark:border-blue-l2`}
+          className={`${button} ${styles.selectorButton} ${
+            invalid
+              ? ""
+              : "focus-within:border-gray-d1 focus-within:dark:border-blue-l2"
+          } p-1`}
         >
           {({ open }) => (
             <>
