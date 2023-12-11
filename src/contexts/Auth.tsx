@@ -24,7 +24,7 @@ export default function withAuth<Props>(
     }
 
     if (!user) {
-      const state = determineState(location);
+      const state = determinePostAuthState(location);
       return <Navigate to={appRoutes.signin} state={state} replace />;
     }
 
@@ -50,7 +50,7 @@ export default function withAuth<Props>(
   };
 }
 
-function determineState(location: Location): SigninRouteState {
+function determinePostAuthState(location: Location): SigninRouteState {
   if (location.pathname === appRoutes.register) {
     const routeState: WelcomeRouteState = { continue: true };
     return {
