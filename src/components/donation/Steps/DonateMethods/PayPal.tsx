@@ -2,7 +2,9 @@ import {
   PayPalButtons,
   PayPalScriptProvider,
   ReactPayPalScriptOptions,
+  usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+import LoaderRing from "components/LoaderRing";
 
 const initialOptions: ReactPayPalScriptOptions = {
   clientId: "sb",
@@ -14,10 +16,18 @@ const initialOptions: ReactPayPalScriptOptions = {
 
 export default function PayPal() {
   return (
+    <PayPalScriptProvider options={initialOptions}>
+      <Content />
+    </PayPalScriptProvider>
+  );
+}
+
+function Content() {
+  const [{ isPending }] = usePayPalScriptReducer();
+  return (
     <div className="grid place-items-center min-h-[16rem]">
-      <PayPalScriptProvider options={initialOptions}>
-        <PayPalButtons />
-      </PayPalScriptProvider>
+      {isPending && <LoaderRing thickness={10} classes="w-8" />}
+      <PayPalButtons />
     </div>
   );
 }
