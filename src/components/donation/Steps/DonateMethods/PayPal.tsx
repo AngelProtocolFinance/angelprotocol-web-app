@@ -5,13 +5,13 @@ import {
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
 import LoaderRing from "components/LoaderRing";
+import { PAYPAL_CLIENT_ID } from "constants/env";
 
 const initialOptions: ReactPayPalScriptOptions = {
-  clientId: "sb",
+  clientId: PAYPAL_CLIENT_ID,
   commit: true,
   currency: "USD",
   enableFunding: "card,paylater,venmo",
-  dataSdkIntegrationSource: "integrationbuilder_sc",
 };
 
 export default function PayPal() {
