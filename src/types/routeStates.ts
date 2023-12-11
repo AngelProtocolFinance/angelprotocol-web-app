@@ -5,4 +5,4 @@ export type SigninRouteState = {
   routeState?: any;
 };
 
-export type WelcomeRouteState = { continue?: boolean };
+export type WelcomeRouteState = { initialize?: boolean };

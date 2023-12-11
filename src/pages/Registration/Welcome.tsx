@@ -17,7 +17,7 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
   const { state } = useLocation();
   const _state = state as WelcomeRouteState | undefined; //from non "/steps" navigations
 
-  const [isLoading, setLoading] = useState(_state?.continue);
+  const [isLoading, setLoading] = useState(_state?.initialize);
   const [initReg, setInitReg] = useState<InitReg>();
 
   const [register] = useNewApplicationMutation();

@@ -52,7 +52,7 @@ export default function withAuth<Props>(
 
 function determinePostAuthState(location: Location): SigninRouteState {
   if (location.pathname === appRoutes.register) {
-    const routeState: WelcomeRouteState = { continue: true };
+    const routeState: WelcomeRouteState = { initialize: true };
     return {
       from: {
         ...location,
