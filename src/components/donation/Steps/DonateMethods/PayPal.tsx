@@ -17,12 +17,12 @@ const initialOptions: ReactPayPalScriptOptions = {
 export default function PayPal() {
   return (
     <PayPalScriptProvider options={initialOptions}>
-      <Content />
+      <ButtonWrapper />
     </PayPalScriptProvider>
   );
 }
 
-function Content() {
+function ButtonWrapper() {
   const [{ isPending }] = usePayPalScriptReducer();
   return (
     <div className="grid place-items-center min-h-[16rem] isolate">
