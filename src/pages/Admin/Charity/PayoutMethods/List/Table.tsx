@@ -60,10 +60,14 @@ function SetDefaultBtn({
   thisPriorityNum,
   topPriorityNum,
 }: PayoutMethod) {
+  const APPROVED_PRIORITY_NUM = 2;
   const [update] = useUpdateBankingApplicationMutation();
 
   if (status !== "approved") return <></>;
-  if (thisPriorityNum === topPriorityNum && topPriorityNum !== 0)
+  if (
+    topPriorityNum === thisPriorityNum &&
+    topPriorityNum !== APPROVED_PRIORITY_NUM
+  )
     return <>default</>;
 
   return (

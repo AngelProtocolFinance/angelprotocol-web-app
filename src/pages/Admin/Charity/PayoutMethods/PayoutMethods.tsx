@@ -10,8 +10,8 @@ export default function PayoutMethods() {
         onClick={async () => {
           await newApplication({
             wiseRecipientID: window.crypto.randomUUID(),
-            bankAccountNumber: "3321",
-            bankName: "No coiners fiat bank",
+            bankAccountNumber: "1231",
+            bankName: "Solana 10dPERyear",
             endowmentID: 32,
             payoutCurrency: "USD",
             bankStatementFile: {
