@@ -1,10 +1,10 @@
 import { ComponentType, createContext, useContext } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Location, Navigate, useLocation } from "react-router-dom";
 import { AuthenticatedUser, CognitoGroup } from "types/auth";
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { useGetter } from "store/accessors";
-import { appRoutes } from "constants/routes";
+import { appRoutes, regRoutes } from "constants/routes";
 
 export default function withAuth<Props>(
   Component: ComponentType<Props & { user: AuthenticatedUser }>,
@@ -23,9 +23,8 @@ export default function withAuth<Props>(
     }
 
     if (!user) {
-      return (
-        <Navigate to={appRoutes.signin} state={{ from: location }} replace />
-      );
+      const from = determineFromRoute(location);
+      return <Navigate to={appRoutes.signin} state={{ from }} replace />;
     }
 
     if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {
@@ -48,6 +47,15 @@ export default function withAuth<Props>(
       </Context.Provider>
     );
   };
+}
+
+function determineFromRoute(location: Location): Location {
+  return location.pathname !== appRoutes.register
+    ? location
+    : {
+        ...location,
+        pathname: `${location.pathname}/${regRoutes.welcome}`,
+      };
 }
 
 const INIT = "__init__" as unknown as AuthenticatedUser;
