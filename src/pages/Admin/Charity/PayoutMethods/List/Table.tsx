@@ -1,5 +1,6 @@
 import { BankingApplicationStatus, PayoutMethod } from "types/aws";
 import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
+import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 
 type Props = {
@@ -61,21 +62,30 @@ function SetDefaultBtn({
   topPriorityNum,
 }: PayoutMethod) {
   const APPROVED_PRIORITY_NUM = 2;
-  const [update] = useUpdateBankingApplicationMutation();
+  const [update, { isLoading }] = useUpdateBankingApplicationMutation();
 
   if (status !== "approved") return <></>;
   if (
     topPriorityNum === thisPriorityNum &&
-    topPriorityNum !== APPROVED_PRIORITY_NUM
-  )
-    return <>default</>;
+    topPriorityNum > APPROVED_PRIORITY_NUM
+  ) {
+    return <Icon type="CheckCircle" size={18} className="text-green-d1" />;
+  }
+
+  if (isLoading) {
+    return <Icon type="Loading" className="animate-spin" />;
+  }
 
   return (
     <button
       type="button"
       onClick={() => update({ type: "prioritize", uuid: wiseRecipientID })}
     >
-      set default
+      <Icon
+        type="CheckCircle"
+        size={18}
+        className="text-gray hover:text-green active:text-green-d1"
+      />
     </button>
   );
 }
