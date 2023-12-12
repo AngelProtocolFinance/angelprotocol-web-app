@@ -35,7 +35,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       const { endows, "cognito:groups": groups = [] } =
         session.tokens.idToken?.payload || {};
 
-      const token = session.tokens.accessToken.toString();
+      const token = session.tokens.idToken?.toString() ?? "";
 
       const endowments =
         //either none or correctly formatted string
