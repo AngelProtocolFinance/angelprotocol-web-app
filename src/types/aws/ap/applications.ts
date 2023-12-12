@@ -31,6 +31,7 @@ type BaseBankingApplication = {
   payoutCurrency: string;
   endowmentID: number;
   bankStatementFile: FileObject;
+  email?: string;
 };
 
 export type NewBankingApplication = BaseBankingApplication;

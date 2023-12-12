@@ -44,7 +44,7 @@ export default function Table({ methods, classes = "" }: Props) {
             cellClass="p-3 border-t border-prim max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
             <DeleteBtn {...row} />
-            <>{row.bankAccountNumber}</>
+            <>...{row.bankAccountNumber}</>
             <>{row.bankName}</>
             <>{row.payoutCurrency}</>
             <td className="text-center">

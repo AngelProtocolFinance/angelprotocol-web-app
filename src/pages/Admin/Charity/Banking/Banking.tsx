@@ -2,8 +2,8 @@ import { useState } from "react";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import { useAdminContext } from "pages/Admin/Context";
-import { useUpdateBankStatementMutation } from "services/aws/aws";
-import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
+import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
+import { useAccountMutation } from "services/aws/wise";
 import { useErrorContext } from "contexts/ErrorContext";
 import BankDetails from "components/BankDetails";
 import Group from "components/Group";
@@ -15,10 +15,8 @@ export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
   const [isSubmitting, setSubmitting] = useState(false);
-
-  const [createRecipientAccount] = useCreateRecipientAccountMutation();
-  const [updateBankStatement] = useUpdateBankStatementMutation();
-
+  const [createRecipient] = useAccountMutation();
+  const [newApplication] = useNewBankingApplicationMutation();
   const { handleError } = useErrorContext();
 
   const submit = async (
@@ -28,19 +26,23 @@ export default function Banking() {
     try {
       setSubmitting(true);
 
-      const bankStatementPreview = await getFilePreviews({
-        bankStatementFile,
+      const [bankStatementPreview, recipient] = await Promise.all([
+        getFilePreviews({
+          bankStatementFile,
+        }),
+        createRecipient(request).unwrap(),
+      ]);
+
+      const { id, details, currency } = recipient;
+      await newApplication({
+        wiseRecipientID: id.toString(),
+        payoutCurrency: currency,
+        bankName: details.bankName || details.bankCode || "N/A",
+        bankAccountNumber: details.accountNumber?.slice(-4) || "00000",
+        endowmentID: endowment_id,
+        bankStatementFile: bankStatementPreview.bankStatementFile[0],
+        ...(details.email ? { email: details.email } : {}),
       });
-
-      await updateBankStatement({
-        id: endowment_id,
-        bank_statement_file: bankStatementPreview.bankStatementFile[0],
-      }).unwrap();
-
-      await createRecipientAccount({
-        endowmentId: endowment_id,
-        request,
-      }).unwrap();
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
     } finally {

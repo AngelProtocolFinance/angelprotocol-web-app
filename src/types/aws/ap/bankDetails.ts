@@ -44,6 +44,18 @@ type ValuesAllowed = {
   name: string;
 };
 
+//FUTURE: move wise types to types/wise
+export type V1RecipientAccount = {
+  id: number;
+  currency: string;
+  details: {
+    accountNumber?: string;
+    email?: string;
+    bankCode?: string;
+    bankName?: string;
+  };
+};
+
 export type CreateRecipientRequest = {
   accountHolderName: string;
   currency: string;
