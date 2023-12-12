@@ -3,6 +3,7 @@ import "quill/dist/quill.bubble.css";
 import {
   FieldValues,
   Path,
+  get,
   useController,
   useFormContext,
 } from "react-hook-form";
@@ -24,6 +25,8 @@ export function RichTextEditor<T extends FieldValues>(
     field: { value, onChange },
   } = useController<T>({ name: props.fieldName });
 
+  const invalid = !!get(errors, props.fieldName);
+
   return (
     <>
       <RichText
@@ -36,6 +39,7 @@ export function RichTextEditor<T extends FieldValues>(
         charLimit={props.charLimit}
         classes={props.classes}
         disabled={isSubmitting}
+        invalid={invalid}
       />
       <ErrorMessage
         errors={errors}

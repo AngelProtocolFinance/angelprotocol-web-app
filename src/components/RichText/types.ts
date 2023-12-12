@@ -10,6 +10,7 @@ export type Editable = {
   placeHolder?: string;
   charLimit?: number;
   disabled?: boolean;
+  invalid?: boolean;
 };
 
 export type EditorClasses = { container?: string; charCounter?: string };

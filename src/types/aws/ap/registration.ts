@@ -14,7 +14,7 @@ export type BankVerificationStatus = "Not Submitted" | "Under Review";
 export type ReferralMethods =
   | ""
   | "referral"
-  | "angel-alliance"
+  | "better-giving-alliance"
   | "discord"
   | "facebook"
   | "linkedin"
@@ -75,7 +75,7 @@ export type ContactDetails = {
   Goals: string;
   Role: ContactRoles;
   OtherRole: string;
-  ReferralMethod: ReferralMethods;
+  ReferralMethod: ReferralMethods | "angel-alliance"; //legacy
   ReferralCode: string; //when ReferralMethod is "referral"
   OtherReferralMethod: string; //when ReferralMethod is "other"
 };

@@ -23,7 +23,11 @@ function ContactDetails() {
           ...contact,
           PK: init.reference,
           Role: toRoleOption(contact.Role),
-          ReferralMethod: toReferralOption(contact.ReferralMethod),
+          ReferralMethod: toReferralOption(
+            contact.ReferralMethod === "angel-alliance"
+              ? "better-giving-alliance"
+              : contact.ReferralMethod
+          ),
           OrganizationName: contact.orgName,
         }
       : {

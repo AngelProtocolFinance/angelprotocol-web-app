@@ -15,7 +15,7 @@ type LINKS = {
 
 export const CHARITY_LINKS: LINKS = {
   HEADER_LINKS: [
-    { title: "For Non-Profits", href: BASE_URL, external: true },
+    { title: "For Nonprofits", href: BASE_URL, external: true },
     {
       title: "Marketplace",
       href: appRoutes.marketplace,
@@ -28,7 +28,7 @@ export const CHARITY_LINKS: LINKS = {
     },
     {
       title: "About",
-      href: `${BASE_URL}/about-better-giving/`,
+      href: `${BASE_URL}/better-giving-about/`,
       external: true,
     },
     { title: "Register", href: appRoutes.register },
@@ -78,7 +78,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "Twitter",
         size: 24,
       },
-      href: "https://twitter.com/angelgiving_",
+      href: "https://twitter.com/@BetterDotGiving",
     },
     {
       title: "Discord",

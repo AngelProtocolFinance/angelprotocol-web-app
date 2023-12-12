@@ -12,13 +12,13 @@ export default function Dashboard() {
 
   return (
     <div className="@container w-full max-w-4xl grid content-start mt-6">
-      <Seo title="Charity Dashboard" />
+      <Seo title="Nonprofit Dashboard" />
       <h3 className="uppercase font-extrabold text-2xl mb-4">Dashboard</h3>
       <QueryLoader
         queryState={queryState}
         messages={{
           loading: <LoaderSkeleton />,
-          error: "Failed to get non-profit organisation info",
+          error: "Failed to get nonprofit organisation info",
         }}
       >
         {({

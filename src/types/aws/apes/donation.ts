@@ -26,6 +26,10 @@ type RecipientEndowId = string;
 
 export type DonationReceivedByEndow = DonationRecordBase & {
   id: DonorAddress;
+  //only relevant for now in admin
+  //some record doesn't have this attribute
+  //percent string
+  splitLiq?: string;
 };
 
 export type DonationMadeByDonor = DonationRecordBase & {

@@ -29,7 +29,7 @@ export default function UserMenu() {
   return (
     <Popover className="relative">
       <Popover.Button className="cursor-pointer contents">
-        <Icon size={24} type="User" className="text-white disabled:text-gray" />
+        <Icon size={24} type="User" className="text-blue disabled:text-gray" />
       </Popover.Button>
 
       <Menu

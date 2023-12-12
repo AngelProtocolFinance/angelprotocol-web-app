@@ -1,5 +1,4 @@
-import { DonationReceivedByEndow, KYCData } from "types/aws";
-import CsvExporter from "components/CsvExporter";
+import { DonationReceivedByEndow } from "types/aws";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
@@ -29,133 +28,130 @@ export default function Table({
   );
 
   return (
-    <>
-      <CsvExporter
-        classes="hover:text-blue mb-5"
-        headers={csvHeadersDonations}
-        data={donations}
-        filename="received_donations.csv"
+    <table className="w-full text-sm rounded border border-separate border-spacing-0 border-prim">
+      <TableSection
+        type="thead"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
       >
-        Save Donation Records to CSV{" "}
-        <Icon type="FileDownload" className="text-2xl" />
-      </CsvExporter>
-      <CsvExporter
-        classes="hover:text-blue mb-5"
-        headers={csvHeadersReceipts}
-        data={donations.filter((x) => !!x.kycData).map((x) => x.kycData!)}
-        filename="receipts.csv"
-      >
-        Save Donor Information to CSV
-        <Icon type="FileDownload" className="text-2xl" />
-      </CsvExporter>
-      <table className="w-full border-collapse self-start">
-        <TableSection type="thead" rowClass="border-b-2 border-prim">
-          <Cells
-            type="th"
-            cellClass="text-left uppercase font-heading font-semibold text-sm p-2 first:pl-0 last:pr-0"
-          >
-            <HeaderButton
-              onClick={handleHeaderClick("amount")}
-              _activeSortKey={sortKey}
-              _sortKey="amount"
-              _sortDirection={sortDirection}
-            >
-              Amount
-            </HeaderButton>
-            <HeaderButton
-              onClick={handleHeaderClick("symbol")}
-              _activeSortKey={sortKey}
-              _sortKey="symbol"
-              _sortDirection={sortDirection}
-            >
-              Currency
-            </HeaderButton>
-            <HeaderButton
-              onClick={handleHeaderClick("date")}
-              _activeSortKey={sortKey}
-              _sortKey="date"
-              _sortDirection={sortDirection}
-            >
-              Date
-            </HeaderButton>
-            <>Transaction</>
-            <>Receipt provided</>
-          </Cells>
-        </TableSection>
-        <TableSection
-          type="tbody"
-          rowClass="border-b border-prim hover:bg-blue-l4 hover:dark:bg-blue-d4"
+        <Cells
+          type="th"
+          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
-          {sorted
-            .map(({ hash, amount, symbol, chainId, date, kycData }) => (
-              <Cells key={hash} type="td" cellClass="p-2 first:pl-0 last:pr-0">
-                <>{humanize(amount, 3)}</>
-                <span className="text-sm">{symbol}</span>
+          <HeaderButton
+            onClick={handleHeaderClick("date")}
+            _activeSortKey={sortKey}
+            _sortKey="date"
+            _sortDirection={sortDirection}
+          >
+            Date
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("symbol")}
+            _activeSortKey={sortKey}
+            _sortKey="symbol"
+            _sortDirection={sortDirection}
+          >
+            Currency
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("amount")}
+            _activeSortKey={sortKey}
+            _sortKey="amount"
+            _sortDirection={sortDirection}
+          >
+            Total Amount
+          </HeaderButton>
+          <>Current Portion</>
+          <>Sustainability Portion</>
+          <>Transaction</>
+          <>Receipt provided</>
+        </Cells>
+      </TableSection>
+      <TableSection
+        type="tbody"
+        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
+        selectedClass="bg-orange-l5 dark:bg-blue-d4"
+      >
+        {sorted
+          .map(
+            ({
+              hash,
+              amount,
+              symbol,
+              chainId,
+              date,
+              kycData,
+              splitLiq = "50",
+            }) => (
+              <Cells
+                key={hash}
+                type="td"
+                cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+                  hasMore ? "" : "first:rounded-bl last:rounded-br"
+                }`}
+              >
                 <span className="text-sm">
                   {new Date(date).toLocaleDateString()}
                 </span>
-                <ExtLink
-                  //default to ethereum for staging
-                  href={getTxUrl(chainId === "staging" ? "1" : chainId, hash)}
-                  className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
-                >
-                  {maskAddress(hash)}
-                </ExtLink>
-                {!kycData ? (
-                  <Icon type="CloseCircle" className="text-2xl text-red-400" />
-                ) : (
-                  <Icon
-                    type="CheckCircle"
-                    className="text-2xl text-green-400"
-                  />
-                )}
-                <></>
-              </Cells>
-            ))
-            .concat(
-              hasMore ? (
-                <td
-                  colSpan={9}
-                  key="load-more-btn"
-                  className="border-t border-prim rounded-b"
-                >
-                  <button
-                    type="button"
-                    onClick={onLoadMore}
-                    disabled={disabled}
-                    className="flex items-center justify-center gap-3 uppercase text-sm font-bold rounded-b w-full h-12 enabled:hover:bg-orange-l5 enabled:dark:hover:bg-blue-d3 active:bg-orange-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-gray aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray"
-                  >
-                    {isLoading ? "Loading..." : "Load More"}
-                  </button>
+                <span className="text-sm">{symbol}</span>
+                <>{humanize(amount, 3)}</>
+                <>{humanize(amount * (+splitLiq / 100), 3)}</>
+                <>{humanize(amount * ((100 - +splitLiq) / 100), 3)}</>
+                <>
+                  {chainId === "staging" ? (
+                    <span className="text-gray-d1 dark:text-gray text-sm">
+                      &lt; TX Link &gt;
+                    </span>
+                  ) : (
+                    <ExtLink
+                      //default to ethereum for staging
+                      href={getTxUrl(chainId, hash)}
+                      className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
+                    >
+                      {maskAddress(hash)}
+                    </ExtLink>
+                  )}
+                </>
+                <td className="relative">
+                  {!kycData ? (
+                    <Icon
+                      type="Close"
+                      //prevent icon size from affecting row height
+                      className="left-4 absolute top-1/2 -translate-y-1/2 text-red "
+                      size={22}
+                    />
+                  ) : (
+                    <Icon
+                      type="CheckCircle"
+                      className="left-4 absolute top-1/2 -translate-y-1/2  text-green"
+                      size={20}
+                    />
+                  )}
                 </td>
-              ) : (
-                []
-              )
-            )}
-        </TableSection>
-      </table>
-    </>
+              </Cells>
+            )
+          )
+          .concat(
+            hasMore ? (
+              <td
+                colSpan={9}
+                key="load-more-btn"
+                className="border-t border-prim rounded-b"
+              >
+                <button
+                  type="button"
+                  onClick={onLoadMore}
+                  disabled={disabled}
+                  className="flex items-center justify-center gap-3 uppercase text-sm font-bold rounded-b w-full h-12 enabled:hover:bg-orange-l5 enabled:dark:hover:bg-blue-d3 active:bg-orange-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-gray aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray"
+                >
+                  {isLoading ? "Loading..." : "Load More"}
+                </button>
+              </td>
+            ) : (
+              []
+            )
+          )}
+      </TableSection>
+    </table>
   );
 }
-
-const csvHeadersDonations: {
-  key: keyof DonationReceivedByEndow;
-  label: string;
-}[] = [
-  { key: "amount", label: "Amount" },
-  { key: "symbol", label: "Currency" },
-  { key: "date", label: "Date" },
-  { key: "hash", label: "Transaction Hash" },
-];
-
-const csvHeadersReceipts: { key: keyof KYCData; label: string }[] = [
-  { key: "fullName", label: "Full Name" },
-  { key: "email", label: "Email" },
-  { key: "consent_marketing", label: "Consented to Marketing" },
-  { key: "consent_tax", label: "Consented to tax" },
-  { key: "streetAddress", label: "Street Address" },
-  { key: "city", label: "City" },
-  { key: "zipCode", label: "Zip Code" },
-  { key: "state", label: "State" },
-  { key: "country", label: "Country" },
-];

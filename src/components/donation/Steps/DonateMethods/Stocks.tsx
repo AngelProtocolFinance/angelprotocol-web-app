@@ -33,7 +33,7 @@ export default function Stocks({ state }: Props) {
       </div>
       <p> You may also need the following information:</p>
       <span className="rounded bg-gray-l5 dark:bg-bluegray-d1 p-2">
-        Better.Giving is a non-profit with 501(c)(3) tax-exempt status, Federal
+        Better.Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>
       {/* build email form */}
@@ -75,8 +75,8 @@ export default function Stocks({ state }: Props) {
       </p>
       <p>
         You avoid paying both capital gains tax and stock sales commissions.
-        When you give appreciated stocks directly to charity, your gift can be
-        up to 20% larger because you avoid the taxes you'd incur from selling
+        When you give appreciated stocks directly to a nonprofit, your gift can
+        be up to 20% larger because you avoid the taxes you'd incur from selling
         and donating the cash.
       </p>
     </div>

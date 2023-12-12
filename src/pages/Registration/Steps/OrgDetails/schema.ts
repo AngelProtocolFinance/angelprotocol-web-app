@@ -1,13 +1,13 @@
-import { ObjectSchema, array, object, string } from "yup";
+import { ObjectSchema, array, object } from "yup";
 import { FormValues } from "./types";
 import { SchemaShape } from "schemas/types";
 import { Country } from "types/components";
 import { optionType } from "schemas/shape";
-import { requiredString } from "schemas/string";
+import { requiredString, url } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";
 
 export const schema = object<any, SchemaShape<FormValues>>({
-  Website: string().required("required").url("invalid url"),
+  Website: url.required("required"),
   UN_SDG: array()
     .min(1, "required")
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),

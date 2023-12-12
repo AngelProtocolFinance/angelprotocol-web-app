@@ -33,7 +33,7 @@ export default function DonateWidget() {
           loading: (
             <LoaderRing thickness={12} classes="w-28 place-self-center" />
           ),
-          error: "Failed to get non-profit info",
+          error: "Failed to get nonprofit info",
         }}
         classes={{ container: "grid place-items-center h-full w-full" }}
       >

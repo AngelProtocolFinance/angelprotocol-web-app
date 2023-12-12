@@ -18,20 +18,24 @@ export default function useSubmit() {
   const [checkPrevRegistration] = useLazyRegQuery();
 
   const onSubmit = async ({ reference }: FormValues) => {
-    const { isError, error, data } = await checkPrevRegistration(reference);
-    if (isError || !data) {
-      handleError(
-        error,
-        "No active application found with this registration reference"
-      );
-      return;
+    try {
+      const { isError, error, data } = await checkPrevRegistration(reference);
+      if (isError || !data) {
+        handleError(
+          error,
+          "No active application found with this registration reference"
+        );
+        return;
+      }
+      storeRegistrationReference(reference);
+
+      const { state, nextStep } = getRegistrationState(data);
+      const init = state.data.init;
+
+      navigate(`../${routes.steps}/${nextStep}`, { state: init });
+    } catch (err) {
+      handleError(err);
     }
-    storeRegistrationReference(reference);
-
-    const { state, nextStep } = getRegistrationState(data);
-    const init = state.data.init;
-
-    navigate(`../${routes.steps}/${nextStep}`, { state: init });
   };
 
   return { submit: handleSubmit(onSubmit), isSubmitting };

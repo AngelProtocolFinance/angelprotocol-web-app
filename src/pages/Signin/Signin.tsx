@@ -35,6 +35,9 @@ export default function Signin() {
 
   return (
     <div className="grid place-items-center py-14 empty:after:content-['Loading_credentials..']">
+      <h3 className="text-3xl text-center p-5">
+        Welcome! Sign in or create your new personal user account
+      </h3>
       <Authenticator
         components={{
           SignUp: {

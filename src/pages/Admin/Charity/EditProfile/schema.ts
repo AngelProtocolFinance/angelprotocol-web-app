@@ -12,7 +12,7 @@ export const VALID_MIME_TYPES: ImageMIMEType[] = [
   "image/jpeg",
   "image/png",
   "image/webp",
-  "image/svg",
+  "image/svg+xml",
 ];
 
 export const MAX_SIZE_IN_BYTES = 1e6;
