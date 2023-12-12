@@ -45,7 +45,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams({ requestor: "bg-admin" });
+    setParams({});
     buttonRef.current?.click();
   };
   return (

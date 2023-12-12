@@ -12,9 +12,7 @@ export default function usePagination() {
 
   const [query, setQuery] = useState("");
 
-  const [params, setParams] = useState<BankingApplicationsQueryParams>({
-    requestor: "bg-admin",
-  });
+  const [params, setParams] = useState<BankingApplicationsQueryParams>({});
 
   const queryState = useBankingApplicationsQuery(params);
 

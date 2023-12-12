@@ -7,10 +7,7 @@ import Table from "./Table";
 
 export default function List() {
   const { id } = useAdminContext();
-  const queryState = usePayoutMethodsQuery({
-    requestor: "endowment",
-    endowmentID: id,
-  });
+  const queryState = usePayoutMethodsQuery(id);
 
   return (
     <div className="mt-8">
@@ -27,10 +24,11 @@ export default function List() {
 
       <QueryLoader
         queryState={queryState}
+        classes={{ container: "mt-4 border-t pt-4 border-prim" }}
         messages={{
           loading: <Skeleton />,
-          error: "Failed to get applications",
-          empty: "No applications found.",
+          error: "Failed to get payout methods",
+          empty: "No payout methods found.",
         }}
       >
         {(methods) => (

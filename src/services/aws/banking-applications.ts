@@ -2,7 +2,6 @@ import {
   BankingApplicationUpdate,
   BankingApplicationsPage,
   BankingApplicationsQueryParams,
-  EndowPayoutMethodsQueryParams,
   NewBankingApplication,
   PayoutMethod,
 } from "types/aws";
@@ -46,20 +45,18 @@ const bankingApplications = aws.injectEndpoints({
       query: (params) => {
         return {
           url: "/staging/banking-applications",
-          params,
+          params: { ...params, requestor: "bg-admin" },
         };
       },
     }),
-    payoutMethods: builder.query<PayoutMethod[], EndowPayoutMethodsQueryParams>(
-      {
-        query: (params) => {
-          return {
-            url: "/staging/banking-applications",
-            params,
-          };
-        },
-      }
-    ),
+    payoutMethods: builder.query<PayoutMethod[], number>({
+      query: (endowmentID) => {
+        return {
+          url: "/staging/banking-applications",
+          params: { endowmentID, requestor: "endowment" },
+        };
+      },
+    }),
   }),
 });
 

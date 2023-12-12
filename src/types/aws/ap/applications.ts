@@ -13,13 +13,7 @@ export type ApplicationsQueryParams = {
 export type BankingApplicationsQueryParams = {
   status?: BankingApplicationStatus;
   endowmentID?: number;
-  requestor: "bg-admin";
   nextPageKey?: string; //base64 encoded keys
-};
-
-export type EndowPayoutMethodsQueryParams = {
-  endowmentID: number;
-  requestor: "endowment";
 };
 
 export type BankingApplicationStatus = "under-review" | "approved" | "rejected";
