@@ -5,8 +5,10 @@ import { useAdminContext } from "pages/Admin/Context";
 import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
 import { useAccountMutation } from "services/aws/wise";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
 import BankDetails from "components/BankDetails";
 import Group from "components/Group";
+import Prompt from "components/Prompt";
 import { getFilePreviews } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import FormButtons from "./FormButtons";
@@ -18,6 +20,7 @@ export default function Banking() {
   const [createRecipient] = useAccountMutation();
   const [newApplication] = useNewBankingApplicationMutation();
   const { handleError } = useErrorContext();
+  const { showModal } = useModalContext();
 
   const submit = async (
     request: CreateRecipientRequest,
@@ -42,6 +45,11 @@ export default function Banking() {
         endowmentID: endowment_id,
         bankStatementFile: bankStatementPreview.bankStatementFile[0],
         ...(details.email ? { email: details.email } : {}),
+      }).unwrap();
+
+      showModal(Prompt, {
+        headline: "Success!",
+        children: <p className="py-8">Banking details submitted for review!</p>,
       });
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
