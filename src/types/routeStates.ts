@@ -1,8 +1,4 @@
-import { Location } from "react-router-dom";
-
 export type SigninRouteState = {
-  from: Location;
-  routeState?: any;
+  from?: string;
+  search?: string;
 };
-
-export type WelcomeRouteState = { initialize?: boolean };

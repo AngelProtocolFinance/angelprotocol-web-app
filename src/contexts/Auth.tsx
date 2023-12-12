@@ -1,11 +1,11 @@
 import { ComponentType, createContext, useContext } from "react";
-import { Location, Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { AuthenticatedUser, CognitoGroup } from "types/auth";
-import { SigninRouteState, WelcomeRouteState } from "types/routeStates";
+import { SigninRouteState } from "types/routeStates";
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { useGetter } from "store/accessors";
-import { appRoutes, regRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 
 export default function withAuth<Props>(
   Component: ComponentType<Props & { user: AuthenticatedUser }>,
@@ -24,7 +24,7 @@ export default function withAuth<Props>(
     }
 
     if (!user) {
-      const state = determinePostAuthState(location);
+      const state: SigninRouteState = { from: location.pathname };
       return <Navigate to={appRoutes.signin} state={state} replace />;
     }
 
@@ -48,21 +48,6 @@ export default function withAuth<Props>(
       </Context.Provider>
     );
   };
-}
-
-function determinePostAuthState(location: Location): SigninRouteState {
-  if (location.pathname === appRoutes.register) {
-    const routeState: WelcomeRouteState = { initialize: true };
-    return {
-      from: {
-        ...location,
-        pathname: `${location.pathname}/${regRoutes.welcome}`,
-      },
-      routeState,
-    };
-  }
-
-  return { from: location };
 }
 
 const INIT = "__init__" as unknown as AuthenticatedUser;

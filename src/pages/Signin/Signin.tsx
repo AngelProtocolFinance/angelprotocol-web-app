@@ -1,21 +1,23 @@
 import { Authenticator } from "@aws-amplify/ui-react";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { SigninRouteState } from "types/routeStates";
 import ExtLink from "components/ExtLink";
 import LoaderRing from "components/LoaderRing";
 import { useGetter } from "store/accessors";
+import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { BASE_URL } from "constants/env";
+import { appRoutes, regRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
-
-const OAUTH_PATH_STORAGE_KEY = "OATH_ORIGIN";
 
 export default function Signin() {
   const { state } = useLocation();
+  const [isSigningUp, setSigningUp] = useState(false);
 
-  const _state = state as SigninRouteState | undefined;
-  const from = _state?.from?.pathname || "/";
-  const search = _state?.from?.search || "";
+  const { from, search } = determinePostAuthState(
+    state as SigninRouteState | undefined,
+    isSigningUp
+  );
 
   const currUser = useGetter((state) => state.auth.user);
   useEffect(() => {
@@ -31,13 +33,7 @@ export default function Signin() {
   }
 
   if (currUser) {
-    return (
-      <Navigate
-        to={{ pathname: from, search }}
-        state={_state?.routeState}
-        replace
-      />
-    );
+    return <Navigate to={{ pathname: from, search }} replace />;
   }
 
   return (
@@ -47,8 +43,15 @@ export default function Signin() {
       </h3>
       <Authenticator
         components={{
+          SignIn: {
+            Footer() {
+              useEffect(() => setSigningUp(false), []);
+              return <Authenticator.SignIn.Footer />;
+            },
+          },
           SignUp: {
             FormFields() {
+              useEffect(() => setSigningUp(true), []);
               return (
                 <>
                   <Authenticator.SignUp.FormFields />
@@ -108,4 +111,23 @@ export default function Signin() {
       />
     </div>
   );
+}
+
+function determinePostAuthState(
+  signInRouteState: SigninRouteState | undefined,
+  isSigningUp: boolean
+): Required<SigninRouteState> {
+  if (!signInRouteState) {
+    return { from: "/", search: "" };
+  }
+  if (signInRouteState.from === appRoutes.register && isSigningUp) {
+    return {
+      from: `${appRoutes.register}/${regRoutes.welcome}`,
+      search: signInRouteState.search || "",
+    };
+  }
+  return {
+    from: signInRouteState.from || "/",
+    search: signInRouteState.search || "",
+  };
 }

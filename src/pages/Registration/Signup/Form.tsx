@@ -1,5 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { WelcomeRouteState } from "types/routeStates";
 import { Separator } from "components/registration";
 import { APP_NAME } from "constants/env";
 import { regRoutes } from "constants/routes";
@@ -20,8 +19,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        const state: WelcomeRouteState = { initialize: true };
-        navigate(regRoutes.welcome, { state });
+        navigate(regRoutes.welcome);
       }}
       className={`${classes} justify-center gap-8 padded-container w-full max-w-[37.5rem] grid`}
     >

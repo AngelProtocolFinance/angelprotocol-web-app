@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { InitReg } from "./types";
-import { WelcomeRouteState } from "types/routeStates";
 import { useNewApplicationMutation } from "services/aws/registration";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -14,10 +13,7 @@ import { appRoutes, regRoutes } from "constants/routes";
 import { steps } from "./routes";
 
 export default function Welcome({ classes = "" }: { classes?: string }) {
-  const { state } = useLocation();
-  const _state = state as WelcomeRouteState | undefined; //from non "/steps" navigations
-
-  const [isLoading, setLoading] = useState(_state?.initialize);
+  const [isLoading, setLoading] = useState(true);
   const [initReg, setInitReg] = useState<InitReg>();
 
   const [register] = useNewApplicationMutation();
@@ -26,9 +22,6 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
 
   useEffect(() => {
     (async () => {
-      if (!isLoading) {
-        return;
-      }
       try {
         const res = await register({ email }).unwrap();
         const newInitReg: InitReg = {
@@ -43,18 +36,14 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
         setLoading(false);
       }
     })();
-  }, [email, isLoading, register, handleError]);
+  }, [email, register, handleError]);
 
   if (isLoading) {
     return (
-      <div className={`${classes} grid place-items center`}>
+      <div className={`${classes} grid place-items-center`}>
         <LoaderRing thickness={10} classes="w-8" />
       </div>
     );
-  }
-
-  if (!initReg) {
-    return <Navigate to=".." />;
   }
 
   return (
