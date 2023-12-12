@@ -12,7 +12,7 @@ const initialOptions: ReactPayPalScriptOptions = {
   clientId: PAYPAL_CLIENT_ID,
   commit: true,
   currency: "USD",
-  enableFunding: "card,paylater,venmo",
+  enableFunding: "paylater",
 };
 
 export default function PayPal() {
