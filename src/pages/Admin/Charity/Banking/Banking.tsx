@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import { useAdminContext } from "pages/Admin/Context";
@@ -8,9 +9,11 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import BankDetails from "components/BankDetails";
 import Group from "components/Group";
+import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { getFilePreviews } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { adminRoutes } from "constants/routes";
 import FormButtons from "./FormButtons";
 
 export default function Banking() {
@@ -59,18 +62,27 @@ export default function Banking() {
   };
 
   return (
-    <Group
-      className="max-w-4xl"
-      title="Bank account details"
-      description="The following information will be used to register your bank account that will be used to withdraw your funds."
-    >
-      <BankDetails
-        FormButtons={FormButtons}
-        isSubmitting={isSubmitting}
-        onInitiateUpdate={() => {}}
-        onSubmit={submit}
-        shouldUpdate
-      />
-    </Group>
+    <>
+      <Link
+        to={`../${adminRoutes.banking}`}
+        className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm uppercase"
+      >
+        <Icon type="Back" size={12} />
+        <span>Back</span>
+      </Link>
+      <Group
+        className="max-w-4xl"
+        title="Bank account details"
+        description="The following information will be used to register your bank account that will be used to withdraw your funds."
+      >
+        <BankDetails
+          FormButtons={FormButtons}
+          isSubmitting={isSubmitting}
+          onInitiateUpdate={() => {}}
+          onSubmit={submit}
+          shouldUpdate
+        />
+      </Group>
+    </>
   );
 }

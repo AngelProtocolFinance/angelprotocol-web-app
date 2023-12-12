@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useAdminContext } from "pages/Admin/Context";
 import { usePayoutMethodsQuery } from "services/aws/banking-applications";
 import ContentLoader from "components/ContentLoader";
@@ -13,13 +14,14 @@ export default function PayoutMethods() {
     <div>
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-left text-lg uppercase">Payout methods</h1>
-        <button
-          disabled={queryState.isLoading}
+        <Link
+          to="new"
+          aria-disabled={queryState.isLoading}
           className="btn-green pl-2 pr-4 py-2 text-xs"
         >
           <Icon type="Plus" className="mr-2" size={16} />
           <span>New</span>
-        </button>
+        </Link>
       </div>
 
       <QueryLoader
