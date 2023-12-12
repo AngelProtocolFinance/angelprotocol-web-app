@@ -1,4 +1,4 @@
-export type SigninRouteState = {
+export type SignInRouteState = {
   from?: string;
   search?: string;
 };

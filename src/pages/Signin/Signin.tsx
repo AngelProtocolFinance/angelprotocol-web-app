@@ -1,7 +1,7 @@
 import { Authenticator } from "@aws-amplify/ui-react";
 import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import { SigninRouteState } from "types/routeStates";
+import { SignInRouteState } from "types/routeStates";
 import ExtLink from "components/ExtLink";
 import LoaderRing from "components/LoaderRing";
 import { useGetter } from "store/accessors";
@@ -15,7 +15,7 @@ export default function Signin() {
   const [isSigningUp, setSigningUp] = useState(false);
 
   const { from, search } = determinePostAuthState(
-    state as SigninRouteState | undefined,
+    state as SignInRouteState | undefined,
     isSigningUp
   );
 
@@ -114,9 +114,9 @@ export default function Signin() {
 }
 
 function determinePostAuthState(
-  signInRouteState: SigninRouteState | undefined,
+  signInRouteState: SignInRouteState | undefined,
   isSigningUp: boolean
-): Required<SigninRouteState> {
+): Required<SignInRouteState> {
   if (!signInRouteState) {
     return { from: "/", search: "" };
   }

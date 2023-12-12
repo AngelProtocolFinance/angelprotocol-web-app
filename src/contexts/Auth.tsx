@@ -1,7 +1,7 @@
 import { ComponentType, createContext, useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { AuthenticatedUser, CognitoGroup } from "types/auth";
-import { SigninRouteState } from "types/routeStates";
+import { SignInRouteState } from "types/routeStates";
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { useGetter } from "store/accessors";
@@ -24,7 +24,7 @@ export default function withAuth<Props>(
     }
 
     if (!user) {
-      const state: SigninRouteState = { from: location.pathname };
+      const state: SignInRouteState = { from: location.pathname };
       return <Navigate to={appRoutes.signin} state={state} replace />;
     }
 
