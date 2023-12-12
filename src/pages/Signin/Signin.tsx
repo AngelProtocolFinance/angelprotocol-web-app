@@ -45,6 +45,8 @@ export default function Signin() {
         components={{
           SignIn: {
             Footer() {
+              // if the SignIn Footer is displayed, we're
+              // in the SignIn form
               useEffect(() => setSigningUp(false), []);
               return <Authenticator.SignIn.Footer />;
             },
