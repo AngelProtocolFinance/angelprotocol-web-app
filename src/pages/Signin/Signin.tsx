@@ -14,15 +14,12 @@ export default function Signin() {
   const { state } = useLocation();
   const [isSigningUp, setSigningUp] = useState(false);
 
-  const { from, search } = determinePostAuthState(
-    state as SignInRouteState | undefined,
-    isSigningUp
-  );
+  const to = determineTo(state as SignInRouteState | undefined, isSigningUp);
 
   const currUser = useGetter((state) => state.auth.user);
   useEffect(() => {
-    localStorage.setItem(OAUTH_PATH_STORAGE_KEY, from);
-  }, [from]);
+    localStorage.setItem(OAUTH_PATH_STORAGE_KEY, to.pathname);
+  }, [to.pathname]);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
     return (
@@ -33,7 +30,7 @@ export default function Signin() {
   }
 
   if (currUser) {
-    return <Navigate to={{ pathname: from, search }} replace />;
+    return <Navigate to={to} replace />;
   }
 
   return (
@@ -115,21 +112,14 @@ export default function Signin() {
   );
 }
 
-function determinePostAuthState(
+function determineTo(
   signInRouteState: SignInRouteState | undefined,
   isSigningUp: boolean
-): Required<SignInRouteState> {
-  if (!signInRouteState) {
-    return { from: "/", search: "" };
-  }
-  if (signInRouteState.from === appRoutes.register && isSigningUp) {
-    return {
-      from: `${appRoutes.register}/${regRoutes.welcome}`,
-      search: signInRouteState.search || "",
-    };
-  }
-  return {
-    from: signInRouteState.from || "/",
-    search: signInRouteState.search || "",
-  };
+): { pathname: string; search: string } {
+  const search = signInRouteState?.search || "";
+  const pathname =
+    isSigningUp && signInRouteState?.from === appRoutes.register
+      ? `${appRoutes.register}/${regRoutes.welcome}`
+      : signInRouteState?.from || "/";
+  return { pathname, search };
 }
