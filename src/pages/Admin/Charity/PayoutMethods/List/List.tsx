@@ -12,7 +12,7 @@ export default function List() {
   return (
     <div className="mt-8">
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-left text-lg">Payout methods</h1>
+        <h1 className="text-left text-lg uppercase">Payout methods</h1>
         <button
           disabled={queryState.isLoading}
           className="btn-green pl-2 pr-4 py-2 text-xs"

@@ -10,6 +10,7 @@ import { aws } from "./aws";
 const bankingApplications = aws.injectEndpoints({
   endpoints: (builder) => ({
     newBankingApplication: builder.mutation<unknown, NewBankingApplication>({
+      invalidatesTags: (_, error) => (error ? [] : ["banking-applications"]),
       query: (payload) => {
         return {
           method: "POST",
@@ -22,6 +23,7 @@ const bankingApplications = aws.injectEndpoints({
       unknown,
       BankingApplicationUpdate
     >({
+      invalidatesTags: (_, error) => (error ? [] : ["banking-applications"]),
       query: ({ uuid, ...payload }) => {
         return {
           method: "PUT",
@@ -31,6 +33,7 @@ const bankingApplications = aws.injectEndpoints({
       },
     }),
     deleteBankingApplication: builder.mutation<unknown, string>({
+      invalidatesTags: (_, error) => (error ? [] : ["banking-applications"]),
       query: (uuid) => {
         return {
           method: "DELETE",
@@ -42,6 +45,7 @@ const bankingApplications = aws.injectEndpoints({
       BankingApplicationsPage,
       BankingApplicationsQueryParams
     >({
+      providesTags: ["banking-applications"],
       query: (params) => {
         return {
           url: "/staging/banking-applications",
@@ -50,6 +54,7 @@ const bankingApplications = aws.injectEndpoints({
       },
     }),
     payoutMethods: builder.query<PayoutMethod[], number>({
+      providesTags: ["banking-applications"],
       query: (endowmentID) => {
         return {
           url: "/staging/banking-applications",
