@@ -13,7 +13,7 @@ import { getFilePreviews } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import FormButtons from "./FormButtons";
 
-export default function NewPayoutMethod() {
+export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
   const [isSubmitting, setSubmitting] = useState(false);
