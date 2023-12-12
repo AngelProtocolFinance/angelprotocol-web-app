@@ -1,1 +1,1 @@
-export { default } from "./Banking";
+export { default } from "./PayoutMethods";

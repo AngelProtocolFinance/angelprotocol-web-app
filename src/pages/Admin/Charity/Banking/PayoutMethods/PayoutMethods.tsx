@@ -5,13 +5,13 @@ import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import Table from "./Table";
 
-export default function List() {
+export default function PayoutMethods() {
   const { id } = useAdminContext();
   const queryState = usePayoutMethodsQuery(id);
 
   return (
-    <div className="mt-8">
-      <div className="flex items-center justify-between mb-2">
+    <div>
+      <div className="flex items-center justify-between mb-4">
         <h1 className="text-left text-lg uppercase">Payout methods</h1>
         <button
           disabled={queryState.isLoading}
