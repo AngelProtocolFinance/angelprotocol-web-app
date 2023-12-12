@@ -55,7 +55,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <DAFDirect />
         </Tab.Panel>
         <Tab.Panel>
-          <PayPal />
+          <PayPal state={state} />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
