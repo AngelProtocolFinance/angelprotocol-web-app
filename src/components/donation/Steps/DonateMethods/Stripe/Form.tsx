@@ -1,15 +1,20 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { ObjectSchema, number, object } from "yup";
 import { Props } from "./types";
+import { SchemaShape } from "schemas/types";
 import { useCreateStripePaymentIntentMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import ExtLink from "components/ExtLink";
 import Split from "components/Split";
+import { Field } from "components/form";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
 import AdvancedOptions from "../../../AdvancedOptions";
 
-type FV = {
+type FormValues = {
+  amount: number;
   pctLiquidSplit: number;
 };
 
@@ -21,7 +26,8 @@ export default function Form({
     recipient: { id: endowId },
   },
 }: Props & { onClientSecretLoaded: (clientSecret: string) => void }) {
-  const methods = useForm<FV>({
+  const methods = useForm<FormValues>({
+    resolver: yupResolver(schema),
     defaultValues: { pctLiquidSplit: 50 },
   });
   const { handleError } = useErrorContext();
@@ -33,7 +39,7 @@ export default function Form({
   const submit = methods.handleSubmit(async (fv) => {
     try {
       const { clientSecret } = await createPaymentIntent({
-        amount: 0,
+        amount: fv.amount,
         endowId: endowId,
         liquidSplitPct: fv.pctLiquidSplit.toString(),
       }).unwrap();
@@ -45,11 +51,16 @@ export default function Form({
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={submit}>
+      <form onSubmit={submit} className="grid gap-4">
+        <Field<FormValues>
+          name="amount"
+          label="Donation amount"
+          classes={{ label: "font-bold" }}
+        />
         <AdvancedOptions
           display={advanceOptDisplay}
           splitComponent={
-            <Split<FV, "pctLiquidSplit">
+            <Split<FormValues, "pctLiquidSplit">
               className="mb-6"
               liqPctField="pctLiquidSplit"
             />
@@ -94,3 +105,12 @@ export default function Form({
     </FormProvider>
   );
 }
+
+const schema = object<any, SchemaShape<FormValues>>({
+  // for making a number field optional using `nullable + transform`,
+  // see https://github.com/jquense/yup/issues/500#issuecomment-818582829
+  amount: number()
+    .required("required")
+    .positive("must be greater than zero")
+    .typeError("must be a number"),
+}) as ObjectSchema<FormValues>;
