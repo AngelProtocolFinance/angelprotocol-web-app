@@ -137,7 +137,7 @@ export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
 export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
 export type DoneBanking = Append<DoneDocs, BankingDetails, {}>;
 
-export type SubmissionDetails = { Email: string; EndowmentId: number };
+export type SubmissionDetails = { Email: string; EndowmentId?: number };
 
 export type InReview = Append<DoneBanking, SubmissionDetails, {}>;
 
@@ -243,5 +243,5 @@ export function isDoneBanking(data: SavedRegistration): data is DoneBanking {
 }
 
 export function isSubmitted(data: SavedRegistration): data is InReview {
-  return !!(data.Registration as SubmissionDetails).EndowmentId;
+  return !!(data.Registration as SubmissionDetails).Email;
 }
