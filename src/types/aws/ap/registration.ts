@@ -235,7 +235,12 @@ export function isDoneFSAInquiry(
 }
 
 export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
-  return !!(data.Registration as TDocumentation).Documentation;
+  const reg = data.Registration as Partial<TDocumentation>;
+
+  if (reg.Documentation?.DocType === "FSA") {
+    return !!reg.Documentation.SignedFiscalSponsorshipAgreement;
+  }
+  return !!reg.Documentation;
 }
 
 export function isDoneBanking(data: SavedRegistration): data is DoneBanking {
