@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { PaymentIntent } from "@stripe/stripe-js";
 import { EndowmentBalances, Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { APIs } from "constants/urls";
@@ -23,13 +24,23 @@ export const apes = createApi({
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
     }),
-
+    getStripePaymentIntent: builder.query<
+      PaymentIntent,
+      { clientSecret: string }
+    >({
+      query: ({ clientSecret }) => ({
+        url: `${v(
+          1
+        )}/fiat/stripe-proxy/apes/${apiEnv}/get-payment-intent/${clientSecret}`,
+      }),
+    }),
     createStripePaymentIntent: builder.mutation<
       { clientSecret: string },
       StripePaymentIntentParams
     >({
       query: ({ amount, endowId, liquidSplitPct }) => ({
-        url: `${v(2)}/fiat/stripe-proxy/apes/${apiEnv}`,
+        // url: `${v(2)}/fiat/stripe-proxy/apes/${apiEnv}`,
+        url: "temp-stripe-proxy-to-delete-later",
         method: "POST",
         body: JSON.stringify({
           endowmentId: endowId,
@@ -47,6 +58,7 @@ export const apes = createApi({
 export const {
   useTokensQuery,
   useEndowBalanceQuery,
+  useGetStripePaymentIntentQuery,
   useCreateStripePaymentIntentMutation,
   util: {
     invalidateTags: invalidateApesTags,
