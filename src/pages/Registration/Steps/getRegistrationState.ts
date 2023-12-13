@@ -36,6 +36,7 @@ export function getRegistrationState(reg: SavedRegistration): {
           documentation: docs(r),
           banking: bankDetails(r),
           status: r.RegistrationStatus,
+          endowId: r.EndowmentId,
         },
       },
       nextStep: steps.summary,
