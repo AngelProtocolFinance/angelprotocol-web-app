@@ -1,8 +1,8 @@
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FV } from "./types";
+import LoadText from "components/LoadText";
 import { Label, Radio } from "components/form";
-import { LoadText } from "components/registration";
 import { APP_NAME } from "constants/env";
 import { steps } from "../../routes";
 import { useRegState, withStepGuard } from "../StepGuard";
