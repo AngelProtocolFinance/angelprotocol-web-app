@@ -4,8 +4,8 @@ import { FormValues } from "./types";
 import { useLazyRegQuery } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { storeRegistrationReference } from "helpers";
+import { regRoutes } from "constants/routes";
 import { getRegistrationState } from "../Steps/getRegistrationState";
-import routes from "../routes";
 
 export default function useSubmit() {
   const {
@@ -32,7 +32,7 @@ export default function useSubmit() {
       const { state, nextStep } = getRegistrationState(data);
       const init = state.data.init;
 
-      navigate(`../${routes.steps}/${nextStep}`, { state: init });
+      navigate(`../${regRoutes.steps}/${nextStep}`, { state: init });
     } catch (err) {
       handleError(err);
     }

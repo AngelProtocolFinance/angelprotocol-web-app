@@ -1,25 +1,25 @@
 import { Authenticator } from "@aws-amplify/ui-react";
-import { useEffect } from "react";
-import { Location, Navigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { SignInRouteState } from "types/routeStates";
 import ExtLink from "components/ExtLink";
 import LoaderRing from "components/LoaderRing";
 import { useGetter } from "store/accessors";
+import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { BASE_URL } from "constants/env";
+import { appRoutes, regRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
-
-const OAUTH_PATH_STORAGE_KEY = "OATH_ORIGIN";
 
 export default function Signin() {
   const { state } = useLocation();
+  const [isSigningUp, setSigningUp] = useState(false);
 
-  const _state = state as { from?: Location } | undefined;
-  const from = _state?.from?.pathname || "/";
-  const search = _state?.from?.search || "";
+  const to = determineTo(state as SignInRouteState | undefined, isSigningUp);
 
   const currUser = useGetter((state) => state.auth.user);
   useEffect(() => {
-    localStorage.setItem(OAUTH_PATH_STORAGE_KEY, from);
-  }, [from]);
+    localStorage.setItem(OAUTH_PATH_STORAGE_KEY, to.pathname);
+  }, [to.pathname]);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
     return (
@@ -30,7 +30,7 @@ export default function Signin() {
   }
 
   if (currUser) {
-    return <Navigate to={{ pathname: from, search }} replace />;
+    return <Navigate to={to} replace />;
   }
 
   return (
@@ -40,8 +40,17 @@ export default function Signin() {
       </h3>
       <Authenticator
         components={{
+          SignIn: {
+            Footer() {
+              // if the SignIn Footer is displayed, we're
+              // in the SignIn form
+              useEffect(() => setSigningUp(false), []);
+              return <Authenticator.SignIn.Footer />;
+            },
+          },
           SignUp: {
             FormFields() {
+              useEffect(() => setSigningUp(true), []);
               return (
                 <>
                   <Authenticator.SignUp.FormFields />
@@ -101,4 +110,16 @@ export default function Signin() {
       />
     </div>
   );
+}
+
+function determineTo(
+  signInRouteState: SignInRouteState | undefined,
+  isSigningUp: boolean
+): { pathname: string; search: string } {
+  const search = signInRouteState?.search || "";
+  const pathname =
+    isSigningUp && signInRouteState?.from === appRoutes.register
+      ? `${appRoutes.register}/${regRoutes.welcome}`
+      : signInRouteState?.from || "/";
+  return { pathname, search };
 }
