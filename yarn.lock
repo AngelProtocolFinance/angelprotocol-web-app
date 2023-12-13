@@ -5216,6 +5216,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@stripe/react-stripe-js@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@stripe/react-stripe-js@npm:2.4.0"
+  dependencies:
+    prop-types: ^15.7.2
+  peerDependencies:
+    "@stripe/stripe-js": ^1.44.1 || ^2.0.0
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 4cf16c9bca6cff67cfef51d95a1521563dc579f5957ae0bcb773b958afa1a57bc90c35a157e2e11452a2d1c0c26eddbe5644afe7f07cd39ed55697385d7b18a9
+  languageName: node
+  linkType: hard
+
+"@stripe/stripe-js@npm:^2.2.1":
+  version: 2.2.1
+  resolution: "@stripe/stripe-js@npm:2.2.1"
+  checksum: e0387b6b2da8ed81e441f2ae44ab26a3530e93654487a00c0375d77195d1c01276d34d3783a14d5e35e4f4e8567bd31784cbbdf6766a292b8017b56ee03628c0
+  languageName: node
+  linkType: hard
+
 "@surma/rollup-plugin-off-main-thread@npm:^2.2.3":
   version: 2.2.3
   resolution: "@surma/rollup-plugin-off-main-thread@npm:2.2.3"
@@ -7065,6 +7085,8 @@ __metadata:
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.9.0
     "@sentry/react": 7.81.0
+    "@stripe/react-stripe-js": ^2.4.0
+    "@stripe/stripe-js": ^2.2.1
     "@tailwindcss/container-queries": ^0.1.0
     "@terra-money/terra.js": ^3.1.7
     "@terra-money/wallet-provider": ^3.11.1
