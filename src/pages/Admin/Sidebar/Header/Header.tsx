@@ -1,7 +1,6 @@
 import { useProfileQuery } from "services/aws/aws";
 import Image from "components/Image";
 import { useAdminContext } from "../../Context";
-import MyEndowments from "./MyEndowments";
 
 export default function Header() {
   const { id } = useAdminContext();
@@ -21,7 +20,6 @@ export default function Header() {
       <h5 className="text-sm font-bold truncate mt-2">
         {profile?.name || "Nonprofit"}
       </h5>
-      <MyEndowments showEndowments={true} endowments={[]} />
     </div>
   );
 }
