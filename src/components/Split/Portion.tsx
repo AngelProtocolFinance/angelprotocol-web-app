@@ -18,7 +18,9 @@ export default function Portion({
 }: Props) {
   return (
     <div className="flex flex-col items-center p-6 bg-orange-l6 dark:bg-blue-d6 border border-prim rounded">
-      <p className="uppercase font-bold text-sm sm:text-base">{title}</p>
+      <p className="uppercase font-bold text-sm sm:text-base text-center">
+        {title}
+      </p>
       <p className="text-xs sm:text-sm mb-2 font-bold">{percentage}%</p>
       <p className="uppercase text-xs sm:text-sm text-center font-body">
         {action}

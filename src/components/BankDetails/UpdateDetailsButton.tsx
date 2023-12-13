@@ -16,7 +16,7 @@ export default function UpdateDetailsButton(props: Props) {
         className="px-2 btn-orange text-xs w-40"
         onClick={onClick}
       >
-        Update Bank Details
+        Submit Bank Details
       </button>
       <Popover className="relative">
         <>

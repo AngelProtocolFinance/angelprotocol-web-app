@@ -24,7 +24,7 @@ function AlreadySubmitted() {
     <div className="grid gap-4 mt-16">
       <i className="text-xs sm:text-sm">
         You have already successfully completed this step. Click "Continue" to
-        go to the next step or click "Update Bank Details" button above to
+        go to the next step or click "Submit Bank Details" button above to
         submit different bank details for review.
       </i>
       <div className="grid grid-cols-2 sm:flex gap-2 w-full">
