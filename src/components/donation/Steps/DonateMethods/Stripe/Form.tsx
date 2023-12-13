@@ -7,6 +7,7 @@ import { SchemaShape } from "schemas/types";
 import { useCreateStripePaymentIntentMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import ExtLink from "components/ExtLink";
+import LoadText from "components/LoadText";
 import Split from "components/Split";
 import { Field } from "components/form";
 import { appRoutes } from "constants/routes";
@@ -89,7 +90,9 @@ export default function Form({
             className="btn-orange btn-donate w-1/2"
             type="submit"
           >
-            {isLoading ? "Processing..." : "Pay with card"}
+            <LoadText text="Processing..." isLoading={isLoading}>
+              Pay with card
+            </LoadText>
           </button>
         </div>
         <p className="text-sm italic text-gray-d2 dark:text-gray mt-4">
