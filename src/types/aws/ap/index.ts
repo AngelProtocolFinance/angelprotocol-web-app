@@ -72,7 +72,7 @@ export type EndowmentProfile = EndowmentBase & {
   };
   street_address?: string;
   url?: string;
-  wise_recipient_id: string;
+  wise_recipient_id: number;
 } & EndowmentBalances;
 
 export type EndowmentCard = EndowmentBase & {
