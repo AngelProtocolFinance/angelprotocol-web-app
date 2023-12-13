@@ -63,9 +63,13 @@ export function getRegistrationState(reg: SavedRegistration): {
 
   if (isDoneDocs(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
+    const isSignedFSA =
+      r.Documentation.DocType === "FSA"
+        ? !!r.Documentation.SignedFiscalSponsorshipAgreement
+        : true;
     return {
       state: {
-        step: 4,
+        step: (isSignedFSA ? 4 : 3) as 4,
         data: {
           init: initReg(c),
           contact: { ...c, orgName: r.OrganizationName },
