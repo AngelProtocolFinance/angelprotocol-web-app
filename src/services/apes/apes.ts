@@ -7,7 +7,8 @@ import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
 
-type StripeSessionURLParams = {
+type StripePaymentIntentParams = {
+  amount: number;
   endowId: number;
   liquidSplitPct: string;
 };
@@ -24,25 +25,26 @@ export const apes = createApi({
       query: (chainID) => `v1/tokens/${chainID}`,
     }),
 
-    stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
-      {
-        query: ({ endowId, liquidSplitPct }) => ({
-          url: `${v(1)}/fiat/stripe-proxy/apes/${apiEnv}`,
-          method: "POST",
-          body: JSON.stringify({
-            endowmentId: endowId,
-            splitLiq: liquidSplitPct,
-            redirectUrl: `${window.location.origin}${appRoutes.donate_fiat_thanks}`,
-          }),
+    createStripePaymentIntent: builder.mutation<
+      { clientSecret: string },
+      StripePaymentIntentParams
+    >({
+      query: ({ amount, endowId, liquidSplitPct }) => ({
+        url: `${v(2)}/fiat/stripe-proxy/apes/${apiEnv}`,
+        method: "POST",
+        body: JSON.stringify({
+          endowmentId: endowId,
+          splitLiq: liquidSplitPct,
+          amount: amount,
         }),
-      }
-    ),
+      }),
+    }),
   }),
 });
 
 export const {
   useTokensQuery,
-  useStripeSessionURLMutation,
+  useCreateStripePaymentIntentMutation,
   util: {
     invalidateTags: invalidateApesTags,
     updateQueryData: updateApesQueryData,
