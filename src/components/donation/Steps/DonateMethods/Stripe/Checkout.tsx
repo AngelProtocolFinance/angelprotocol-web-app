@@ -48,10 +48,10 @@ export default function Checkout() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="grid gap-4">
       <PaymentElement options={{ layout: "tabs" }} />
       <button
-        className="btn-orange btn-donate w-1/2"
+        className="btn-orange btn-donate w-1/2 justify-self-center"
         disabled={isLoading || !stripe || !elements}
         type="submit"
       >
