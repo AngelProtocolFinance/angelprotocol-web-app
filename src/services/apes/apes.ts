@@ -8,8 +8,8 @@ import { version as v } from "../helpers";
 import { tags } from "./tags";
 
 type StripePaymentIntentParams = {
-  amount: number;
-  endowId: number;
+  amountInCents: number;
+  endowmentId: number;
   liquidSplitPct: string;
 };
 
@@ -38,14 +38,13 @@ export const apes = createApi({
       { clientSecret: string },
       StripePaymentIntentParams
     >({
-      query: ({ amount, endowId, liquidSplitPct }) => ({
-        // url: `${v(2)}/fiat/stripe-proxy/apes/${apiEnv}`,
-        url: "temp-stripe-proxy-to-delete-later",
+      query: ({ amountInCents, endowmentId, liquidSplitPct }) => ({
+        url: `v2/fiat/stripe-proxy/apes/${apiEnv}`,
         method: "POST",
         body: JSON.stringify({
-          endowmentId: endowId,
+          endowmentId: endowmentId,
           splitLiq: liquidSplitPct,
-          amount: amount,
+          amount: amountInCents,
         }),
       }),
     }),
