@@ -2,10 +2,11 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import { Props } from "./types";
+import { PUBLIC_STRIPE_KEY } from "constants/env";
 import Checkout from "./Checkout";
 import Form from "./Form";
 
-const stripePromise = loadStripe("pk_test_TYooMQauvdEDq54NiTphI7jx");
+const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function Stripe(props: Props) {
   const [clientSecret, setClientSecret] = useState("");
