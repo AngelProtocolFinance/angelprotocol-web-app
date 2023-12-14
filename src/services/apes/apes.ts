@@ -24,14 +24,14 @@ export const apes = createApi({
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
     }),
-    getStripePaymentIntent: builder.query<
-      PaymentIntent,
+    getStripePaymentStatus: builder.query<
+      Pick<PaymentIntent, "status">,
       { clientSecret: string }
     >({
       query: ({ clientSecret }) => ({
         url: `${v(
           1
-        )}/fiat/stripe-proxy/apes/${apiEnv}/get-payment-intent/${clientSecret}`,
+        )}/fiat/stripe-proxy/apes/${apiEnv}/payment-status/${clientSecret}`,
       }),
     }),
     createStripePaymentIntent: builder.mutation<
@@ -57,7 +57,7 @@ export const apes = createApi({
 export const {
   useTokensQuery,
   useEndowBalanceQuery,
-  useGetStripePaymentIntentQuery,
+  useGetStripePaymentStatusQuery,
   useCreateStripePaymentIntentMutation,
   util: {
     invalidateTags: invalidateApesTags,
