@@ -16,6 +16,7 @@ const ENV = process.env.PUBLIC_ENVIRONMENT;
 
 export const IS_TEST = ENV === "STAGING";
 
-export const PUBLIC_STRIPE_KEY = IS_TEST
-  ? "pk_test_51MGl2PJBsJzBirEIi04vNpC8N1pvsmDb8zUHwBV0O47wLoi3atillyJSEz0Syb7dGSOoNEZmFEjZzkKVsWEOI5AP00MP1H0S2R"
-  : process.env.REACT_APP_PUBLIC_STRIPE_KEY || "";
+export const PUBLIC_STRIPE_KEY =
+  (IS_TEST
+    ? process.env.REACT_APP_PUBLIC_STRIPE_KEY_TEST
+    : process.env.REACT_APP_PUBLIC_STRIPE_KEY_PROD) || "";
