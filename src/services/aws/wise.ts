@@ -1,5 +1,5 @@
 import { CreateRecipientRequest, V1RecipientAccount } from "types/aws";
-import { aws } from "services/aws/aws";
+import { aws } from "../aws/aws";
 import { version as v } from "../helpers";
 
 export const wise = aws.injectEndpoints({
