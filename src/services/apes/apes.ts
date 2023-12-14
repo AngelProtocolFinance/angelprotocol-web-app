@@ -4,7 +4,6 @@ import { EndowmentBalances, Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
-import { version as v } from "../helpers";
 import { tags } from "./tags";
 
 type StripePaymentIntentParams = {
@@ -26,12 +25,10 @@ export const apes = createApi({
     }),
     getStripePaymentStatus: builder.query<
       Pick<PaymentIntent, "status">,
-      { clientSecret: string }
+      { paymentIntentId: string }
     >({
-      query: ({ clientSecret }) => ({
-        url: `${v(
-          1
-        )}/fiat/stripe-proxy/apes/${apiEnv}/payment-status/${clientSecret}`,
+      query: ({ paymentIntentId }) => ({
+        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?paymentIntentId=${paymentIntentId}`,
       }),
     }),
     createStripePaymentIntent: builder.mutation<
