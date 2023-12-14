@@ -6,6 +6,7 @@ import {
 import { FormEventHandler, useState } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import LoadText from "components/LoadText";
+import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
 
 export default function Checkout() {
@@ -13,7 +14,7 @@ export default function Checkout() {
   const elements = useElements();
   const { handleError } = useErrorContext();
 
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -49,16 +50,23 @@ export default function Checkout() {
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-4">
-      <PaymentElement options={{ layout: "tabs" }} />
-      <button
-        className="btn-orange btn-donate w-1/2 justify-self-center"
-        disabled={isLoading || !stripe || !elements}
-        type="submit"
-      >
-        <LoadText text="Processing..." isLoading={isLoading}>
-          Pay Now
-        </LoadText>
-      </button>
+      <PaymentElement
+        options={{ layout: "tabs" }}
+        onReady={() => setLoading(false)}
+      />
+      {isLoading ? (
+        <LoaderRing thickness={10} classes="w-12 justify-self-center" />
+      ) : (
+        <button
+          className="btn-orange btn-donate w-1/2 justify-self-center"
+          disabled={!stripe || !elements}
+          type="submit"
+        >
+          <LoadText text="Processing..." isLoading={isLoading}>
+            Pay Now
+          </LoadText>
+        </button>
+      )}
     </form>
   );
 }
