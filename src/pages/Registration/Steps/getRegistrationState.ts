@@ -67,14 +67,17 @@ export function getRegistrationState(reg: SavedRegistration): {
       r.Documentation.DocType === "FSA"
         ? !!r.Documentation.SignedFiscalSponsorshipAgreement
         : true;
+
     return {
       state: {
+        //cast to 4 (type only) to conform to type `RegStep4` which accepts documentation
         step: (isSignedFSA ? 4 : 3) as 4,
         data: {
           init: initReg(c),
           contact: { ...c, orgName: r.OrganizationName },
           orgDetails: orgDetails(r),
           fsaInquiry: fsaInquiry(r),
+          //even step is has value of `3` user could still go to step 4 with documentation pre-filled from previous uploads
           documentation: docs(r),
         },
       },
