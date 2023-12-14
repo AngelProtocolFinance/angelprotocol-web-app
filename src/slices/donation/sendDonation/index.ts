@@ -3,7 +3,7 @@ import { DonateArgs, TxStatus } from "../types";
 import { KYCData, TxLogPayload } from "types/aws";
 import { isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
-import { network } from "services/constants";
+import { apiEnv } from "services/constants";
 import { version as v } from "services/helpers";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
@@ -74,7 +74,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
           ...payload,
           ...payload.kycData,
           //helps AWS determine which txs are testnet and mainnet without checking all chainIDs
-          network,
+          network: apiEnv,
         }),
       });
 

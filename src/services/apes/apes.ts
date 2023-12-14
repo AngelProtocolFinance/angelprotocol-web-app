@@ -3,7 +3,7 @@ import { Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
-import { network } from "../constants";
+import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
 
@@ -27,7 +27,7 @@ export const apes = createApi({
     stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
       {
         query: ({ endowId, liquidSplitPct }) => ({
-          url: `${v(1)}/fiat/stripe-proxy/apes/${network}`,
+          url: `${v(1)}/fiat/stripe-proxy/apes/${apiEnv}`,
           method: "POST",
           body: JSON.stringify({
             endowmentId: endowId,

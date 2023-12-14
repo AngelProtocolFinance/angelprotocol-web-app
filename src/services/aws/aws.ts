@@ -22,7 +22,7 @@ import {
   Program,
   WalletProfile,
 } from "types/aws";
-import { network } from "services/constants";
+import { apiEnv } from "services/constants";
 import { RootState } from "store/store";
 import { logger } from "helpers";
 import { TEMP_JWT } from "constants/auth";
@@ -30,7 +30,7 @@ import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
 
 const getWalletProfileQuery = (walletAddr: string) =>
-  `/${v(2)}/profile/${network}/user/${walletAddr}`;
+  `/${v(2)}/profile/${apiEnv}/user/${walletAddr}`;
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -73,7 +73,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/${v(5)}/endowments/${network}`,
+          url: `/${v(5)}/endowments/${apiEnv}`,
           params: { ...params, return: endowCardFields },
         };
       },
@@ -82,7 +82,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/${v(5)}/endowments/${network}`,
+          url: `/${v(5)}/endowments/${apiEnv}`,
           params: { ...params, return: endowSelectorOptionFields },
         };
       },
@@ -135,7 +135,7 @@ export const aws = createApi({
     program: builder.query<Program, { endowId: number; programId: string }>({
       providesTags: ["profile", "program"],
       query: ({ endowId, programId }) =>
-        `/${v(1)}/profile/${network}/program/${endowId}/${programId}`,
+        `/${v(1)}/profile/${apiEnv}/program/${endowId}/${programId}`,
     }),
     editProfile: builder.mutation<
       EndowmentProfile,
