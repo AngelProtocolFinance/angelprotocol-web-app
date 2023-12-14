@@ -71,12 +71,13 @@ export default function Table({
                 <Icon
                   size={24}
                   type="Folder"
-                  title="application details"
+                  title="bank statement file"
                   className="inline-block"
                 />
               </ExtLink>
               <div className="flex items-center gap-2">
                 <button
+                  title="approve"
                   disabled={row.status !== "under-review"}
                   className="disabled:text-gray text-green-d1"
                   type="button"
@@ -85,6 +86,7 @@ export default function Table({
                   <Icon type="CheckCircle" size={18} />
                 </button>
                 <button
+                  title="reject"
                   disabled={row.status !== "under-review"}
                   className="disabled:text-gray text-red-d1"
                   type="button"

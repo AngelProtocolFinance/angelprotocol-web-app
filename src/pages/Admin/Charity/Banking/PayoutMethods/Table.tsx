@@ -76,6 +76,7 @@ function SetDefaultBtn({
 
   return (
     <button
+      title="set default payout method"
       type="button"
       onClick={() => update({ type: "prioritize", uuid: wiseRecipientID })}
     >
@@ -119,7 +120,7 @@ function DeleteBtn({
   }
 
   return (
-    <button type="button" onClick={handleClick}>
+    <button title="delete payout method" type="button" onClick={handleClick}>
       <Icon type="Dash" size={18} className="text-red hover:text-red-d1" />
     </button>
   );
