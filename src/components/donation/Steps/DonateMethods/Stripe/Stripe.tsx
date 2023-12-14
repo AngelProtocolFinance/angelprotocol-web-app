@@ -8,6 +8,8 @@ import Form from "./Form";
 
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
+// Followed Stripe's custom flow docs
+// https://stripe.com/docs/payments/quickstart
 export default function Stripe(props: Props) {
   const [clientSecret, setClientSecret] = useState("");
 
