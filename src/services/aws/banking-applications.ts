@@ -5,6 +5,7 @@ import {
   NewBankingApplication,
   PayoutMethod,
 } from "types/aws";
+import { TEMP_JWT } from "constants/auth";
 import { aws } from "./aws";
 
 const bankingApplications = aws.injectEndpoints({
@@ -16,6 +17,7 @@ const bankingApplications = aws.injectEndpoints({
           method: "POST",
           url: "/staging/banking-applications",
           body: payload,
+          headers: { Authorization: TEMP_JWT },
         };
       },
     }),
@@ -29,6 +31,7 @@ const bankingApplications = aws.injectEndpoints({
           method: "PUT",
           url: `/staging/banking-applications/${uuid}`,
           body: payload,
+          headers: { Authorization: TEMP_JWT },
         };
       },
     }),
@@ -38,6 +41,7 @@ const bankingApplications = aws.injectEndpoints({
         return {
           method: "DELETE",
           url: `/staging/banking-applications/${uuid}`,
+          headers: { Authorization: TEMP_JWT },
         };
       },
     }),
@@ -50,6 +54,7 @@ const bankingApplications = aws.injectEndpoints({
         return {
           url: "/staging/banking-applications",
           params: { ...params, requestor: "bg-admin" },
+          headers: { Authorization: TEMP_JWT },
         };
       },
     }),
@@ -59,6 +64,7 @@ const bankingApplications = aws.injectEndpoints({
         return {
           url: "/staging/banking-applications",
           params: { endowmentID, requestor: "endowment" },
+          headers: { Authorization: TEMP_JWT },
         };
       },
     }),

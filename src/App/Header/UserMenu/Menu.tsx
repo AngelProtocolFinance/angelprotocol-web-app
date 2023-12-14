@@ -53,6 +53,15 @@ export default function Menu({ classes = "", user, signOut }: Props) {
               <span>Applications Dashboard</span>
             </Link>
           )}
+          {user.groups.includes(groups["ap-admin"]) && (
+            <Link
+              to={appRoutes.banking_applications}
+              className="hover:text-orange text-sm flex items-center gap-1 mt-1"
+            >
+              <Icon type="SecurityScan" size={22} />
+              <span>Banking applications</span>
+            </Link>
+          )}
         </div>
       </div>
       <button
