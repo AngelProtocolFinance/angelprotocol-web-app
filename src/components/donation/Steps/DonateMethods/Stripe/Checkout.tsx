@@ -5,11 +5,12 @@ import {
 } from "@stripe/react-stripe-js";
 import { FormEventHandler, useState } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
+import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
 
-export default function Checkout() {
+export default function Checkout({ onBack }: { onBack: () => void }) {
   const stripe = useStripe();
   const elements = useElements();
   const { handleError } = useErrorContext();
@@ -50,6 +51,14 @@ export default function Checkout() {
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-4">
+      <button
+        type="button"
+        onClick={onBack}
+        className="text-blue underline hover:text-orange flex items-center gap-1 mb-2"
+      >
+        <Icon type="Back" />
+        <span>Back</span>
+      </button>
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setLoading(false)}

@@ -20,7 +20,7 @@ export default function Stripe(props: Props) {
       options={{ clientSecret, appearance: { theme: "stripe" } }}
       stripe={stripePromise}
     >
-      <Checkout />
+      <Checkout onBack={() => setClientSecret("")} />
     </Elements>
   );
 }
