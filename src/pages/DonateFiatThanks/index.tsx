@@ -29,6 +29,7 @@ export default function DonateFiatThanks() {
         loading: "Loading donation status",
         error: "Failed to load donation status",
       }}
+      classes={{ container: "place-self-center" }}
     >
       {({ status }) => {
         switch (status) {
