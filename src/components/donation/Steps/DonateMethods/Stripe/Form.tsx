@@ -55,7 +55,7 @@ export default function Form({
       <form onSubmit={submit} className="grid gap-4">
         <Field<FormValues>
           name="amount"
-          label="Donation amount"
+          label="Donation amount (USD)"
           classes={{ label: "font-bold" }}
         />
         <AdvancedOptions
