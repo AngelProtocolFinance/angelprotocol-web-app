@@ -11,8 +11,15 @@ frontend:
         - yarn install
     build:
       commands:
+<<<<<<< HEAD
         - PUBLIC_ENVIRONMENT=${ENVIRONMENT}
         - PUBLIC_SENTRY_DSN=${SENTRY_DSN}
+=======
+        - REACT_APP_ENVIRONMENT=${REACT_APP_ENVIRONMENT}
+        - REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN}
+        - REACT_APP_PUBLIC_STRIPE_KEY_PROD=${REACT_APP_PUBLIC_STRIPE_KEY_PROD}
+        - REACT_APP_PUBLIC_STRIPE_KEY_TEST=${REACT_APP_PUBLIC_STRIPE_KEY_TEST}
+>>>>>>> 89db852a9 (Add env vars to amplify.yml)
         - export NODE_OPTIONS="--max-old-space-size=8192"
         - yarn run build
   artifacts:

@@ -2,6 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
 import { EndowmentBalances, Token } from "types/aws";
 import { ChainID } from "types/chain";
+import { version as v } from "services/helpers";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
 import { tags } from "./tags";
