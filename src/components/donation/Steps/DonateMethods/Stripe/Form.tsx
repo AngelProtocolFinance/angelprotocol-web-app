@@ -9,7 +9,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
-import { Field } from "components/form";
+import { CheckField, Field } from "components/form";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
 import AdvancedOptions from "../../../AdvancedOptions";
@@ -17,19 +17,25 @@ import AdvancedOptions from "../../../AdvancedOptions";
 type FormValues = {
   amount: number;
   pctLiquidSplit: number;
+  userOptForKYC: boolean;
+};
+
+type FormProps = Props & {
+  onSubmit: (clientSecret: string, userOptForKYC: boolean) => void;
 };
 
 export default function Form({
   advanceOptDisplay,
-  onClientSecretLoaded,
+  onSubmit,
   widgetConfig,
-  state: {
-    recipient: { id: endowId },
-  },
-}: Props & { onClientSecretLoaded: (clientSecret: string) => void }) {
+  state: { recipient },
+}: FormProps) {
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    defaultValues: { pctLiquidSplit: 50 },
+    defaultValues: {
+      pctLiquidSplit: 50,
+      userOptForKYC: recipient.isKYCRequired, // if KYC required, user opts in by default
+    },
   });
   const { handleError } = useErrorContext();
   const [createPaymentIntent, { isLoading }] =
@@ -41,10 +47,10 @@ export default function Form({
     try {
       const { clientSecret } = await createPaymentIntent({
         amount: fv.amount,
-        endowmentId: endowId,
+        endowmentId: recipient.id,
         liquidSplitPct: fv.pctLiquidSplit.toString(),
       }).unwrap();
-      onClientSecretLoaded(clientSecret);
+      onSubmit(clientSecret, fv.userOptForKYC);
     } catch (err) {
       handleError(err, "Failed to load payment platform");
     }
@@ -58,6 +64,18 @@ export default function Form({
           label="Donation amount (USD)"
           classes={{ label: "font-bold" }}
         />
+        {!recipient.isKYCRequired && (
+          // if KYC is required, the checkbox is redundant
+          <CheckField<FormValues>
+            name="userOptForKYC"
+            classes={{
+              container: "text-sm",
+              error: "mt-2",
+            }}
+          >
+            Please send me a tax receipt
+          </CheckField>
+        )}
         <AdvancedOptions
           display={advanceOptDisplay}
           splitComponent={
@@ -80,7 +98,7 @@ export default function Form({
           {!isInsideWidget && (
             <Link
               className="btn-outline-filled btn-donate w-1/2"
-              to={`${appRoutes.marketplace}/${endowId}`}
+              to={`${appRoutes.marketplace}/${recipient.id}`}
             >
               back
             </Link>
