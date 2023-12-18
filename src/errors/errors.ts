@@ -1,5 +1,4 @@
-import { chainIds } from "constants/chainIds";
-import { EMAIL_SUPPORT, EXPECTED_NETWORK_TYPE } from "constants/env";
+import { EMAIL_SUPPORT } from "constants/env";
 
 export const AP_ERROR_DISCRIMINATOR = "AP_ERROR_DISCRIMINATOR";
 
@@ -48,24 +47,6 @@ export class WalletDisconnectedError extends APError {
 export class UnexpectedStateError extends APError {
   constructor(message = "App is in unexpected state") {
     super("UnexpectedStateError", message);
-  }
-}
-
-export class WrongNetworkError extends APError {
-  constructor() {
-    super(
-      "WrongNetworkError",
-      `Please connect to ${EXPECTED_NETWORK_TYPE} network and reload the page.`
-    );
-  }
-}
-
-export class UnsupportedChainError extends APError {
-  constructor(unsupportedChainId: string) {
-    super(
-      "UnsupportedChainError",
-      `The chain you are connected to (ID: ${unsupportedChainId}) is not supported. Valid networks are ${EXPECTED_NETWORK_TYPE} ones on: Juno (${chainIds.juno}), Polygon (${chainIds.polygon}), Terra (${chainIds.terra}), Binance (${chainIds.binance}) and Ethereum (${chainIds.ethereum}). Please switch to one of those and reload the page.`
-    );
   }
 }
 

@@ -1,5 +1,4 @@
 import isMobile from "is-mobile";
-import { NetworkType } from "types/lists";
 
 export const IS_MOBILE = isMobile();
 
@@ -16,6 +15,3 @@ export const AWS_S3_PUBLIC_BUCKET = "https://endow-profiles.s3.amazonaws.com";
 const ENV = process.env.REACT_APP_ENVIRONMENT;
 
 export const IS_TEST = ENV === "STAGING";
-export const EXPECTED_NETWORK_TYPE: NetworkType = IS_TEST
-  ? "testnet"
-  : "mainnet";
