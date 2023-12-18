@@ -1,4 +1,5 @@
 import {
+  BankingApplication,
   BankingApplicationUpdate,
   BankingApplicationsPage,
   BankingApplicationsQueryParams,
@@ -55,6 +56,22 @@ const bankingApplications = aws.injectEndpoints({
         return {
           url: `/${v(1)}/banking-applications`,
           params: { ...params, requestor: "bg-admin" },
+          headers: { Authorization: TEMP_JWT },
+        };
+      },
+    }),
+    bankingApplication: builder.query<
+      BankingApplication,
+      { requestor: "bg-admin" | number; uuid: string }
+    >({
+      providesTags: ["banking-applications"],
+      query: ({ requestor, uuid }) => {
+        return {
+          url: `/${v(1)}/banking-applications/${uuid}`,
+          params:
+            requestor === "bg-admin"
+              ? { requestor }
+              : { requestor: "endow-admin", endowmentID: requestor },
           headers: { Authorization: TEMP_JWT },
         };
       },
