@@ -1,3 +1,4 @@
+import { BankingApplicationDetails } from "../types";
 import { userIsSignedIn } from "types/auth";
 import {
   BankingApplication,
@@ -64,22 +65,26 @@ const bankingApplications = aws.injectEndpoints({
       },
     }),
     bankingApplication: builder.query<
-      BankingApplication & V2RecipientAccount,
+      BankingApplicationDetails,
       { requestor: "bg-admin" | number; uuid: string }
     >({
       providesTags: ["banking-applications"],
-      queryFn: async (arg, api, extraOptions, baseQuery) => {
+      async queryFn({ uuid, ...params }, api, extraOptions, baseQuery) {
         const {
           auth: { user },
         } = api.getState() as RootState;
         const token = userIsSignedIn(user) ? user.token : "";
 
         const bankRecordPromise = baseQuery({
-          url: `${v(1)}/banking-applications/${arg.uuid}`,
+          url: `${v(1)}/banking-applications/${uuid}`,
           headers: { Authorization: token },
+          params:
+            params.requestor === "bg-admin"
+              ? { requestor: params.requestor }
+              : { endowmentID: params.requestor, requestor: "endow-admin" },
         });
         const wiseRecipientPromise = baseQuery({
-          url: `/${v(1)}/wise-proxy/v2/accounts/${arg.uuid}`,
+          url: `/${v(1)}/wise-proxy/v2/accounts/${uuid}`,
           headers: { Authorization: token },
         });
 
@@ -87,6 +92,10 @@ const bankingApplications = aws.injectEndpoints({
           bankRecordPromise,
           wiseRecipientPromise,
         ]);
+
+        if (bankRecordRes.error || wiseRecipientRes.error) {
+          return { error: { status: 500, data: "Failed to get bank details" } };
+        }
 
         const recipient = wiseRecipientRes.data as V2RecipientAccount;
         const record = bankRecordRes.data as BankingApplication;

@@ -1,89 +1,57 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
-import { ApplicationDetails } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
+import { BankingApplicationDetails } from "services/types";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import Container from "./Container";
-import Prompt from "./Prompt";
 
-const NA = "Not provided";
-
-export default function Loaded(props: ApplicationDetails) {
-  const { showModal } = useModalContext();
-  const { ContactPerson: c, Registration: r, WiseRecipient: w } = props;
-  const doc = r.Documentation;
-
-  const review = (verdict: "approve" | "reject") => () => {
-    showModal(Prompt, { verdict, uuid: c.PK, orgName: r.OrganizationName });
-  };
-
-  const prevVerdict =
-    r.RegistrationStatus === "Active" || r.RegistrationStatus === "Rejected"
-      ? r.RegistrationStatus
-      : null;
+export default function Loaded(props: BankingApplicationDetails) {
+  const prevVerdict = props.status !== "under-review" ? props.status : null;
 
   return (
     <>
-      <h3 className="text-lg">{r.OrganizationName}</h3>
       {prevVerdict && (
         <div
           className={`${
-            prevVerdict === "Active" ? "bg-green" : "bg-red"
+            prevVerdict === "approved" ? "bg-green" : "bg-red"
           } text-white px-2 py-1 text-xs font-work uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
         >
-          {prevVerdict === "Active" ? "Approved" : "Rejected"}
+          {prevVerdict === "approved" ? "Approved" : "Rejected"}
         </div>
       )}
       <div className="flex max-sm:flex-col gap-x-4">
-        <span className="text-sm font-semibold uppercase">Application ID:</span>
-        <span className="uppercase text-sm font-work">{r.PK}</span>
+        <span className="text-sm font-semibold uppercase">Account ID:</span>
+        <span className="uppercase text-sm font-work">{props.id}</span>
       </div>
       <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
         <span className="text-sm font-semibold uppercase">Date submitted:</span>
         <span className="uppercase text-sm font-work">
-          {new Date(r.RegistrationDate).toLocaleDateString()}
+          {new Date(props.dateCreated).toLocaleDateString()}
         </span>
       </div>
 
-      <Container title="nonprofit application">
-        <div className="grid sm:grid-cols-[auto_auto_1fr]">
-          {doc.DocType === "FSA" ? (
-            <Row label="Registration No.">{doc.RegistrationNumber}</Row>
-          ) : (
-            <Row label="EIN">{doc.EIN}</Row>
-          )}
-          <Row label="HQ Country">{r.HqCountry}</Row>
-          <Row label="Countries active in">
-            {r.ActiveInCountries.join(", ")}
-          </Row>
-          <Row label="UN SDG">{r.UN_SDG.join(", ")}</Row>
-          <Row label="Contact name">{c.FirstName + " " + c.LastName}</Row>
-          <Row label="Contact email">{c.Email}</Row>
-          {doc.DocType === "FSA" && (
-            <>
-              <Row label="Contact national ID">
-                <DocLink url={doc.ProofOfIdentity.publicUrl} />
-              </Row>
-              <Row label="Nonprofit registration doc">
-                <DocLink url={doc.ProofOfRegistration.publicUrl} />
-              </Row>
-              <Row label="Fiscal sponsorship agreement">
-                <DocLink url={doc.SignedFiscalSponsorshipAgreement ?? ""} />
-              </Row>
-            </>
-          )}
-        </div>
-      </Container>
       <Container title="Banking details">
         <dl className="grid sm:grid-cols-[auto_auto_1fr]">
-          <Row label="Bank name">{w?.bankName || NA}</Row>
-          <Row label="Address">{w?.address || NA}</Row>
-          <Row label="Account number">{w?.accountNumber || NA}</Row>
-          <Row label="Account holder name">{w?.accountName || NA}</Row>
-          <Row label="Bank statement document">
-            <DocLink url={r.BankStatementFile.publicUrl} />
+          {props.displayFields.map(({ label, value, key }) => (
+            <Row key={key} label={label}>
+              {value}
+            </Row>
+          ))}
+          <Row label="Bank statement">
+            <ExtLink
+              href={props.bankStatementFile.publicUrl}
+              className="text-blue hover:text-blue-d1"
+            >
+              <span className="break-all">
+                {props.bankStatementFile.publicUrl}
+              </span>
+              <Icon
+                type="ExternalLink"
+                className="inline relative bottom-px ml-2"
+                size={15}
+              />
+            </ExtLink>
           </Row>
         </dl>
       </Container>
@@ -96,7 +64,6 @@ export default function Loaded(props: ApplicationDetails) {
         </Link>
         <button
           disabled={!!prevVerdict}
-          onClick={review("reject")}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
         >
@@ -104,7 +71,6 @@ export default function Loaded(props: ApplicationDetails) {
         </button>
         <button
           disabled={!!prevVerdict}
-          onClick={review("approve")}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-green"
         >
@@ -112,19 +78,6 @@ export default function Loaded(props: ApplicationDetails) {
         </button>
       </div>
     </>
-  );
-}
-
-function DocLink({ url }: { url: string }) {
-  return (
-    <ExtLink href={url} className="text-blue hover:text-blue-d1">
-      <span className="break-all">{url}</span>
-      <Icon
-        type="ExternalLink"
-        className="inline relative bottom-px ml-2"
-        size={15}
-      />
-    </ExtLink>
   );
 }
 

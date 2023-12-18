@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useApplicationQuery } from "services/aws/aws";
+import { useBankingApplicationQuery } from "services/aws/banking-applications";
 import withAuth from "contexts/Auth";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
@@ -9,9 +9,12 @@ import Loaded from "./Loaded";
 function BankingApplication() {
   const { id = "" } = useParams();
 
-  const queryState = useApplicationQuery(id, {
-    skip: !id,
-  });
+  const queryState = useBankingApplicationQuery(
+    { uuid: id, requestor: "bg-admin" },
+    {
+      skip: !id,
+    }
+  );
 
   return (
     <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
