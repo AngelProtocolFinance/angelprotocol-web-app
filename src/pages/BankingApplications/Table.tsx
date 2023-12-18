@@ -1,6 +1,6 @@
+import { Link } from "react-router-dom";
 import { TableProps } from "./types";
 import { BankingApplicationStatus } from "types/aws";
-import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
@@ -53,10 +53,8 @@ export default function Table({
               <td className="text-center">
                 <Status status={row.status} />
               </td>
-              <ExtLink
-                href={
-                  appRoutes.banking_applications + `/${row.wiseRecipientID}`
-                }
+              <Link
+                to={appRoutes.banking_applications + `/${row.wiseRecipientID}`}
                 className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
               >
                 <Icon
@@ -65,7 +63,7 @@ export default function Table({
                   title="bank statement file"
                   className="inline-block"
                 />
-              </ExtLink>
+              </Link>
             </Cells>
           ))
           .concat(

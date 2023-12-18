@@ -59,7 +59,7 @@ export default function Loaded(props: BankingApplicationDetails) {
       </dl>
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <Link
-          to={appRoutes.applications}
+          to={appRoutes.banking_applications}
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-outline"
         >
           back
