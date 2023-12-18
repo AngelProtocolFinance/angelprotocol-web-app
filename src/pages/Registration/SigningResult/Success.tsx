@@ -11,7 +11,6 @@ import routes from "../routes";
 const proxyFunctionURL =
   "https://h247dsayjkdwlheiboq54r2gxu0htegs.lambda-url.us-east-1.on.aws";
 const downloadZipURL = (eid: string) =>
-  //lambda function URL - function URLs can have streaming response
   proxyFunctionURL + (IS_TEST ? "/staging" : "") + `?eid=${eid}`;
 
 export default function Success({
