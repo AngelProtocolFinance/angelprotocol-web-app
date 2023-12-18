@@ -1,5 +1,5 @@
 import { DonaterConfigFromWidget } from "types/widget";
-import KYC from "components/KYC";
+import KYCForm from "components/KYCForm";
 import { useGetter, useSetter } from "store/accessors";
 import { setKYC, setStep } from "slices/donation";
 import DonateMethods from "./DonateMethods";
@@ -21,7 +21,7 @@ export default function CurrentStep({ config }: Props) {
       return <Submit {...state} />;
     case "kyc-form":
       return (
-        <KYC
+        <KYCForm
           type="on-donation"
           classes="grid gap-5 sm:grid-cols-2"
           recipient={state.recipient}
