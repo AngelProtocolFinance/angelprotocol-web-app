@@ -29,7 +29,7 @@ export const apes = createApi({
       { paymentIntentId: string }
     >({
       query: ({ paymentIntentId }) => ({
-        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?paymentIntentId=${paymentIntentId}`,
+        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
     createStripePaymentIntent: builder.mutation<
