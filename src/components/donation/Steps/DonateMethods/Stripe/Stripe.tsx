@@ -12,9 +12,22 @@ const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 // https://stripe.com/docs/payments/quickstart
 export default function Stripe(props: Props) {
   const [clientSecret, setClientSecret] = useState("");
+  const [showKYC, setShowKYC] = useState(props.state.recipient.isKYCRequired);
 
   if (!clientSecret) {
-    return <Form {...props} onClientSecretLoaded={setClientSecret} />;
+    return (
+      <Form
+        {...props}
+        onSubmit={(newClientSecret, userOptForKYC) => {
+          setClientSecret(newClientSecret);
+          setShowKYC(userOptForKYC);
+        }}
+      />
+    );
+  }
+
+  if (showKYC) {
+    return null;
   }
 
   return (
