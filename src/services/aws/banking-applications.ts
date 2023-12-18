@@ -1,3 +1,4 @@
+import { userIsSignedIn } from "types/auth";
 import {
   BankingApplication,
   BankingApplicationUpdate,
@@ -5,7 +6,9 @@ import {
   BankingApplicationsQueryParams,
   NewBankingApplication,
   PayoutMethod,
+  V2RecipientAccount,
 } from "types/aws";
+import { RootState } from "store/store";
 import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
@@ -61,19 +64,34 @@ const bankingApplications = aws.injectEndpoints({
       },
     }),
     bankingApplication: builder.query<
-      BankingApplication,
+      BankingApplication & V2RecipientAccount,
       { requestor: "bg-admin" | number; uuid: string }
     >({
       providesTags: ["banking-applications"],
-      query: ({ requestor, uuid }) => {
-        return {
-          url: `/${v(1)}/banking-applications/${uuid}`,
-          params:
-            requestor === "bg-admin"
-              ? { requestor }
-              : { requestor: "endow-admin", endowmentID: requestor },
-          headers: { Authorization: TEMP_JWT },
-        };
+      queryFn: async (arg, api, extraOptions, baseQuery) => {
+        const {
+          auth: { user },
+        } = api.getState() as RootState;
+        const token = userIsSignedIn(user) ? user.token : "";
+
+        const bankRecordPromise = baseQuery({
+          url: `${v(1)}/banking-applications/${arg.uuid}`,
+          headers: { Authorization: token },
+        });
+        const wiseRecipientPromise = baseQuery({
+          url: `/${v(1)}/wise-proxy/v2/accounts/${arg.uuid}`,
+          headers: { Authorization: token },
+        });
+
+        const [bankRecordRes, wiseRecipientRes] = await Promise.all([
+          bankRecordPromise,
+          wiseRecipientPromise,
+        ]);
+
+        const recipient = wiseRecipientRes.data as V2RecipientAccount;
+        const record = bankRecordRes.data as BankingApplication;
+
+        return { data: { ...record, ...recipient } };
       },
     }),
     payoutMethods: builder.query<PayoutMethod[], number>({
@@ -93,6 +111,7 @@ export const {
   useNewBankingApplicationMutation,
   useUpdateBankingApplicationMutation,
   useBankingApplicationsQuery,
+  useBankingApplicationQuery,
   useDeleteBankingApplicationMutation,
   usePayoutMethodsQuery,
   endpoints: {
