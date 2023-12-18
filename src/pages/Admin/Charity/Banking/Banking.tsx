@@ -4,7 +4,7 @@ import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import { useAdminContext } from "pages/Admin/Context";
 import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
-import { useAccountMutation } from "services/aws/wise";
+import { useCreateRecipientMutation } from "services/aws/wise";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import BankDetails from "components/BankDetails";
@@ -20,7 +20,7 @@ export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
   const [isSubmitting, setSubmitting] = useState(false);
-  const [createRecipient] = useAccountMutation();
+  const [createRecipient] = useCreateRecipientMutation();
   const [newApplication] = useNewBankingApplicationMutation();
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();

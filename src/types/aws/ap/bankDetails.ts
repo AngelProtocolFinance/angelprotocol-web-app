@@ -44,6 +44,21 @@ type ValuesAllowed = {
   name: string;
 };
 
+type DisplayField = {
+  key: string;
+  label: string;
+  value: string;
+};
+
+export type V2RecipientAccount = {
+  id: number;
+  longAccountSummary: string;
+  details: Record<string, string>;
+  //use to access details
+  commonFieldMap: Record<string, string>;
+  displayFields: DisplayField[];
+};
+
 //FUTURE: move wise types to types/wise
 export type V1RecipientAccount = {
   id: number;

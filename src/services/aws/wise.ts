@@ -1,10 +1,17 @@
-import { CreateRecipientRequest, V1RecipientAccount } from "types/aws";
+import {
+  CreateRecipientRequest,
+  V1RecipientAccount,
+  V2RecipientAccount,
+} from "types/aws";
 import { aws } from "../aws/aws";
 import { version as v } from "../helpers";
 
 export const wise = aws.injectEndpoints({
   endpoints: (builder) => ({
-    account: builder.mutation<V1RecipientAccount, CreateRecipientRequest>({
+    createRecipient: builder.mutation<
+      V1RecipientAccount,
+      CreateRecipientRequest
+    >({
       query: (payload) => {
         return {
           url: `/${v(1)}/wise-proxy/v1/accounts`,
@@ -14,7 +21,10 @@ export const wise = aws.injectEndpoints({
         };
       },
     }),
+    recipient: builder.query<V2RecipientAccount, string>({
+      query: (id: string) => `/${v(1)}/wise-proxy/v2/accounts/${id}`,
+    }),
   }),
 });
 
-export const { useAccountMutation } = wise;
+export const { useCreateRecipientMutation, useRecipientQuery } = wise;
