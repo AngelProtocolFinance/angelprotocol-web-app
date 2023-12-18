@@ -1,11 +1,10 @@
 import { TableProps } from "./types";
 import { BankingApplicationStatus } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
+import { appRoutes } from "constants/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
-import Prompt from "./Prompt";
 
 export default function Table({
   applications,
@@ -15,11 +14,6 @@ export default function Table({
   hasMore,
   onLoadMore,
 }: TableProps) {
-  const { showModal } = useModalContext();
-  const review = (verdict: "approve" | "reject", uuid: string) => () => {
-    showModal(Prompt, { verdict, uuid });
-  };
-
   return (
     <table
       className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
@@ -36,8 +30,7 @@ export default function Table({
           <>Endowment</>
           <>Account</>
           <th className="text-center">Status</th>
-          <th className="text-center">Bank Statement</th>
-          <></>
+          <th className="text-center">Details</th>
         </Cells>
       </TableSection>
       <TableSection
@@ -61,7 +54,9 @@ export default function Table({
                 <Status status={row.status} />
               </td>
               <ExtLink
-                href={row.bankStatementFile.publicUrl}
+                href={
+                  appRoutes.banking_applications + `/${row.wiseRecipientID}`
+                }
                 className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
               >
                 <Icon
@@ -71,26 +66,6 @@ export default function Table({
                   className="inline-block"
                 />
               </ExtLink>
-              <div className="flex items-center gap-2">
-                <button
-                  title="approve"
-                  disabled={row.status !== "under-review"}
-                  className="disabled:text-gray text-green-d1"
-                  type="button"
-                  onClick={review("approve", row.wiseRecipientID)}
-                >
-                  <Icon type="CheckCircle" size={18} />
-                </button>
-                <button
-                  title="reject"
-                  disabled={row.status !== "under-review"}
-                  className="disabled:text-gray text-red-d1"
-                  type="button"
-                  onClick={review("reject", row.wiseRecipientID)}
-                >
-                  <Icon type="CloseCircle" size={22} />
-                </button>
-              </div>
             </Cells>
           ))
           .concat(
