@@ -33,6 +33,7 @@ export default function Loaded(props: BankingApplicationDetails) {
       <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-prim rounded">
         <Row label="Currency">{props.currency}</Row>
         <Row label="Country">{props.country}</Row>
+        <Row label="Recipient name">{props.name.fullName}</Row>
         <Row label="Account type">{props.type}</Row>
         <Row label="Legal entity type">{props.legalEntityType}</Row>
         {props.displayFields.map(({ label, value, key }) => (
