@@ -40,7 +40,7 @@ export default function Form({
   const submit = methods.handleSubmit(async (fv) => {
     try {
       const { clientSecret } = await createPaymentIntent({
-        amountInCents: fv.amount * 100, // convert to cents
+        amount: fv.amount,
         endowmentId: endowId,
         liquidSplitPct: fv.pctLiquidSplit.toString(),
       }).unwrap();

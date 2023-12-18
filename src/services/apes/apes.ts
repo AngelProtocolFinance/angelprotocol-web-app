@@ -10,7 +10,8 @@ import { tags } from "./tags";
 const NETWORK = IS_TEST ? "staging" : "production";
 
 type StripePaymentIntentParams = {
-  amountInCents: number;
+  /** Denominated in USD. */
+  amount: number;
   endowmentId: number;
   liquidSplitPct: string;
 };
@@ -38,13 +39,13 @@ export const apes = createApi({
       { clientSecret: string },
       StripePaymentIntentParams
     >({
-      query: ({ amountInCents, endowmentId, liquidSplitPct }) => ({
+      query: ({ amount, endowmentId, liquidSplitPct }) => ({
         url: `v2/fiat/stripe-proxy/apes/${apiEnv}`,
         method: "POST",
         body: JSON.stringify({
           endowmentId: endowmentId,
           splitLiq: liquidSplitPct,
-          amount: amountInCents,
+          amount: amount,
         }),
       }),
     }),
