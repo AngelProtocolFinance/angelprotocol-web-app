@@ -14,9 +14,7 @@ export default function Tooltip(props: Props) {
       </p>
     );
   }
-  const {
-    state: { recipient },
-  } = props;
+  const { recipient } = props;
 
   return (
     (recipient.isKYCRequired && (

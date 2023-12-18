@@ -2,10 +2,10 @@ import { Disclosure } from "@headlessui/react";
 import { PropsWithChildren } from "react";
 import { TableProps } from "./types";
 import Icon, { DrawerIcon } from "components/Icon";
-import useKYC from "components/KYC/useKYC";
 import useSort from "hooks/useSort";
 import { humanize } from "helpers";
 import LoadMoreBtn from "./LoadMoreBtn";
+import useShowKYCForm from "./useShowKYCForm";
 
 export default function MobileTable({
   donations,
@@ -16,7 +16,7 @@ export default function MobileTable({
   onLoadMore,
 }: TableProps) {
   const { sorted } = useSort(donations, "date");
-  const showKYCForm = useKYC();
+  const showKYCForm = useShowKYCForm();
 
   return (
     <div
@@ -79,13 +79,7 @@ export default function MobileTable({
                 <Row title="Receipt" className="rounded-b">
                   <button
                     className="block"
-                    onClick={() =>
-                      showKYCForm({
-                        type: "post-donation",
-                        txHash: row.hash,
-                        classes: "grid gap-5",
-                      })
-                    }
+                    onClick={() => showKYCForm(row.hash)}
                   >
                     <Icon type="FatArrowDownload" className="text-2xl" />
                   </button>

@@ -3,13 +3,13 @@ import { TableProps } from "./types";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
-import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
 import { getTxUrl, humanize } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
 import LoadMoreBtn from "./LoadMoreBtn";
+import useShowKYCForm from "./useShowKYCForm";
 
 export default function Table({
   donations,
@@ -24,7 +24,7 @@ export default function Table({
     "date"
   );
 
-  const showKYCForm = useKYC();
+  const showKYCForm = useShowKYCForm();
 
   return (
     <table
@@ -139,13 +139,7 @@ export default function Table({
               </div>
               <button
                 className="w-full flex justify-center"
-                onClick={() =>
-                  showKYCForm({
-                    type: "post-donation",
-                    txHash: row.hash,
-                    classes: "grid gap-5",
-                  })
-                }
+                onClick={() => showKYCForm(row.hash)}
               >
                 <Icon type="FatArrowDownload" className="text-2xl" />
               </button>

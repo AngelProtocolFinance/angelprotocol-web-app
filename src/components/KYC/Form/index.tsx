@@ -9,7 +9,6 @@ import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import Controls from "./Controls";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
-import useSubmit from "./useSubmit";
 
 export const formStyle = "w-full text-gray-d2 dark:text-white font-work p-3";
 
@@ -20,7 +19,6 @@ export default function Form({ classes = "", ...props }: Props) {
     resetField,
     formState: { isSubmitting },
   } = useFormContext<FV>();
-  const submit = useSubmit(props);
   const isPostKyc = props.type === "post-donation";
 
   const country = watch("country.name");
@@ -28,7 +26,7 @@ export default function Form({ classes = "", ...props }: Props) {
 
   return (
     <form
-      onSubmit={handleSubmit(submit)}
+      onSubmit={handleSubmit(props.onSubmit)}
       className={`${classes} ${formStyle}`}
       autoComplete="off"
       autoSave="off"
