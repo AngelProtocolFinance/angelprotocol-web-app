@@ -34,9 +34,7 @@ export default function Table({
         >
           <>Date</>
           <>Endowment</>
-          <>Bank name</>
-          <>Account number</>
-          <>Currency</>
+          <>Account</>
           <th className="text-center">Status</th>
           <th className="text-center">Bank Statement</th>
           <></>
@@ -58,9 +56,7 @@ export default function Table({
             >
               <>{new Date(row.dateCreated).toLocaleDateString()}</>
               <>{row.endowmentID}</>
-              <>{row.bankName}</>
-              <>{row.bankAccountNumber}</>
-              <>{row.payoutCurrency}</>
+              <>{row.bankSummary}</>
               <td className="text-center">
                 <Status status={row.status} />
               </td>

@@ -40,14 +40,14 @@ export default function Banking() {
       ]);
 
       const { id, details, currency } = recipient;
+      const bankSummary = `${currency.toUpperCase()} account ending in ${details.accountNumber?.slice(
+        -4 || "0000"
+      )} `;
       await newApplication({
         wiseRecipientID: id.toString(),
-        payoutCurrency: currency,
-        bankName: details.bankName || details.bankCode || "N/A",
-        bankAccountNumber: details.accountNumber?.slice(-4) || "00000",
+        bankSummary,
         endowmentID: endowment_id,
         bankStatementFile: bankStatementPreview.bankStatementFile[0],
-        ...(details.email ? { email: details.email } : {}),
       }).unwrap();
 
       showModal(Prompt, {

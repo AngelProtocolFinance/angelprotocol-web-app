@@ -20,12 +20,9 @@ export type BankingApplicationStatus = "under-review" | "approved" | "rejected";
 
 type BaseBankingApplication = {
   wiseRecipientID: string;
-  bankName: string;
-  bankAccountNumber: string;
-  payoutCurrency: string;
   endowmentID: number;
+  bankSummary: string;
   bankStatementFile: FileObject;
-  email?: string;
 };
 
 export type NewBankingApplication = BaseBankingApplication;
