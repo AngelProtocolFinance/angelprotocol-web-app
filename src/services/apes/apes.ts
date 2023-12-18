@@ -1,19 +1,17 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
-import { Token } from "types/aws";
+import { KYCData, Token } from "types/aws";
 import { ChainID } from "types/chain";
-import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
 import { tags } from "./tags";
-
-const NETWORK = IS_TEST ? "staging" : "production";
 
 type StripePaymentIntentParams = {
   /** Denominated in USD. */
   amount: number;
   endowmentId: number;
   liquidSplitPct: string;
+  kycData?: KYCData;
 };
 
 export const apes = createApi({
@@ -29,23 +27,24 @@ export const apes = createApi({
     }),
     getStripePaymentStatus: builder.query<
       Pick<PaymentIntent, "status">,
-      { paymentIntentId: string }
+      { clientSecret: string }
     >({
-      query: ({ paymentIntentId }) => ({
-        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?paymentIntentId=${paymentIntentId}`,
+      query: ({ clientSecret }) => ({
+        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?client_secret=${clientSecret}`,
       }),
     }),
     createStripePaymentIntent: builder.mutation<
       { clientSecret: string },
       StripePaymentIntentParams
     >({
-      query: ({ amount, endowmentId, liquidSplitPct }) => ({
+      query: ({ amount, endowmentId, liquidSplitPct, kycData }) => ({
         url: `v2/fiat/stripe-proxy/apes/${apiEnv}`,
         method: "POST",
         body: JSON.stringify({
-          endowmentId: endowmentId,
+          amount,
+          endowmentId,
+          kycData,
           splitLiq: liquidSplitPct,
-          amount: amount,
         }),
       }),
     }),
