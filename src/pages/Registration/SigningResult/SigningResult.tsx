@@ -15,7 +15,7 @@ export default function SignResult({ classes = "" }) {
         " grid padded-container max-w-lg justify-items-center content-start"
       }
     >
-      {isSuccess(params) ? <Success /> : <ErrorPage {...params} />}
+      {isSuccess(params) ? <Success {...params} /> : <ErrorPage {...params} />}
     </div>
   );
 }
