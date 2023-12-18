@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { ObjectSchema, number, object } from "yup";
 import { Props } from "./types";
 import { SchemaShape } from "schemas/types";
-import { useCreateStripePaymentIntentMutation } from "services/apes";
-import { useErrorContext } from "contexts/ErrorContext";
 import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
@@ -21,7 +19,7 @@ type FormValues = {
 };
 
 type FormProps = Props & {
-  onSubmit: (clientSecret: string, userOptForKYC: boolean) => void;
+  onSubmit: (formValues: FormValues) => void | Promise<void>;
 };
 
 export default function Form({
@@ -37,24 +35,10 @@ export default function Form({
       userOptForKYC: recipient.isKYCRequired, // if KYC required, user opts in by default
     },
   });
-  const { handleError } = useErrorContext();
-  const [createPaymentIntent, { isLoading }] =
-    useCreateStripePaymentIntentMutation();
 
   const isInsideWidget = widgetConfig !== null;
 
-  const submit = methods.handleSubmit(async (fv) => {
-    try {
-      const { clientSecret } = await createPaymentIntent({
-        amount: fv.amount,
-        endowmentId: recipient.id,
-        liquidSplitPct: fv.pctLiquidSplit.toString(),
-      }).unwrap();
-      onSubmit(clientSecret, fv.userOptForKYC);
-    } catch (err) {
-      handleError(err, "Failed to load payment platform");
-    }
-  });
+  const submit = methods.handleSubmit(onSubmit);
 
   return (
     <FormProvider {...methods}>
@@ -104,11 +88,14 @@ export default function Form({
             </Link>
           )}
           <button
-            disabled={isLoading}
+            disabled={methods.formState.isSubmitting}
             className="btn-orange btn-donate w-1/2"
             type="submit"
           >
-            <LoadText text="Processing..." isLoading={isLoading}>
+            <LoadText
+              text="Processing..."
+              isLoading={methods.formState.isSubmitting}
+            >
               Pay with card
             </LoadText>
           </button>

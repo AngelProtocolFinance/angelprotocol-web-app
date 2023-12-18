@@ -9,13 +9,13 @@ import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 export default function DonateFiatThanks() {
-  const paymentIntentId = new URLSearchParams(window.location.search).get(
-    "payment_intent"
+  const clientSecret = new URLSearchParams(window.location.search).get(
+    "payment_intent_client_secret"
   );
 
   const queryState = useGetStripePaymentStatusQuery(
-    { paymentIntentId: paymentIntentId ?? "" },
-    { skip: !paymentIntentId }
+    { clientSecret: clientSecret ?? "" },
+    { skip: !clientSecret }
   );
 
   const { refetch } = queryState;
