@@ -1,12 +1,12 @@
 import { useRequestReceiptMutation } from "services/apes";
 import { useModalContext } from "contexts/ModalContext";
-import { FormValues, useKYC } from "components/KYC";
+import { FormValues, useKYCForm } from "components/KYCForm";
 import Prompt from "components/Prompt";
 
 export default function useShowKYCForm() {
   const [submitRequest] = useRequestReceiptMutation();
   const { showModal } = useModalContext();
-  const showKYC = useKYC();
+  const showKYC = useKYCForm();
 
   const submitKYC = async (data: FormValues, txId: string) => {
     const { name, address, email, city, state, usState, postalCode, country } =

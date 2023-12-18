@@ -6,7 +6,7 @@ import Modal from "components/Modal";
 import Form, { formStyle } from "./Form";
 import { schema } from "./schema";
 
-export default function KYC(props: Props) {
+export default function KYCForm(props: Props) {
   const isOnDonation = props.type === "on-donation";
 
   const methods = useForm<FormValues>({

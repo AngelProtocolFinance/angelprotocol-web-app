@@ -1,10 +1,10 @@
 import { Props } from "./types";
 import { useModalContext } from "contexts/ModalContext";
-import Receipter from "./index";
+import KYCForm from "./KYCForm";
 
-export function useKYC() {
+export function useKYCForm() {
   const { showModal } = useModalContext();
   return (props: Props) => {
-    showModal(Receipter, props);
+    showModal(KYCForm, props);
   };
 }
