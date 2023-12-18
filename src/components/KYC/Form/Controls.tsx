@@ -1,8 +1,6 @@
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues, OnDonation } from "../types";
-import { useSetter } from "store/accessors";
-import { setStep } from "slices/donation";
 import { appRoutes } from "constants/routes";
 
 export default function Controls({
@@ -13,20 +11,11 @@ export default function Controls({
     formState: { isSubmitting },
   } = useFormContext<FormValues>();
 
-  const dispatch = useSetter();
-  const { state } = props;
-  const {
-    recipient: { id: endowId },
-  } = state;
-
   return (
     <div className={`${classes} grid grid-cols-2 gap-5`}>
       <button
         className="btn-donate btn-outline-filled"
-        onClick={() => {
-          //kyc is always after donate form
-          dispatch(setStep("donate-form"));
-        }}
+        onClick={props.onBack}
         type="button"
       >
         Back
@@ -41,7 +30,7 @@ export default function Controls({
       </button>
 
       <Link
-        to={appRoutes.marketplace + `/${endowId}`}
+        to={`${appRoutes.marketplace}/${props.recipient.id}`}
         className="col-span-full btn-outline btn-donate"
       >
         Cancel
