@@ -7,7 +7,7 @@ import {
   useForm,
 } from "react-hook-form";
 import { object, string } from "yup";
-import { useReviewApplicationMutation } from "services/aws/aws";
+import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
@@ -17,12 +17,11 @@ import { Field } from "components/form";
 
 type Props = {
   uuid: string;
-  orgName: string;
   verdict: "approve" | "reject";
 };
 
-export default function Prompt({ verdict, orgName, uuid }: Props) {
-  const [review, { isLoading }] = useReviewApplicationMutation();
+export default function Prompt({ verdict, uuid }: Props) {
+  const [review, { isLoading }] = useUpdateBankingApplicationMutation();
   const { handleError } = useErrorContext();
   const { isDismissible, setModalOption, closeModal, showModal } =
     useModalContext();
@@ -38,13 +37,13 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
 
-  const onSubmit: SubmitHandler<FV> = async (fv) => {
+  const onSubmit: SubmitHandler<FV> = async ({ reason = "" }) => {
     setModalOption("isDismissible", false);
     const result = await review({
-      PK: uuid,
+      uuid,
       ...(verdict === "approve"
-        ? { verdict: "approved" }
-        : { verdict: "rejected", rejectionReason: fv.reason ?? "" }),
+        ? { type: "approved" }
+        : { type: "rejected", reason }),
     });
 
     if ("error" in result) {
@@ -69,7 +68,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
     >
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-prim p-5 font-work">
-          Changing Application Status
+          Banking application
         </p>
         {isDismissible && (
           <button
@@ -81,18 +80,8 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
           </button>
         )}
       </div>
-      <Icon type="ExclamationCircleFill" size={80} className="my-6 text-red" />
-
-      <h3 className="text-center text-2xl mb-2 leading-tight px-3 sm:px-8">
-        <div className="uppercase">{verdict}</div>
-        <div>Endowment</div>
-      </h3>
-
-      <p className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3 mt-4">
-        <span className="block">
-          You are about to {verdict} the Application for
-        </span>
-        <span className="font-semibold block">{orgName}</span>
+      <p className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3 mt-4 font-semibold">
+        You are about to {verdict} this banking application.
       </p>
 
       {verdict === "approve" ? (
@@ -102,13 +91,8 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
         </div>
       ) : null}
 
-      <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3 font-bold">
-        Please ensure you have confirmed all submitted details and supporting
-        documentation before proceeding!
-      </div>
-
       <div className="flex items-center gap-2 mb-6">
-        <Status classes="bg-gray-d2">Pending</Status>
+        <Status classes="bg-gray-d2">Under review</Status>
         <Icon type="ArrowRight" />
         {verdict === "approve" ? (
           <Status classes="bg-green">Approved</Status>

@@ -1,12 +1,19 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { BankingApplicationDetails } from "services/types";
+import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
+import Prompt from "./Prompt";
 
 export default function Loaded(props: BankingApplicationDetails) {
   const prevVerdict = props.status !== "under-review" ? props.status : null;
+
+  const { showModal } = useModalContext();
+  const verdict = (value: "approve" | "reject") => () => {
+    showModal(Prompt, { uuid: props.id.toString(), verdict: value });
+  };
 
   return (
     <>
@@ -66,6 +73,7 @@ export default function Loaded(props: BankingApplicationDetails) {
         </Link>
         <button
           disabled={!!prevVerdict}
+          onClick={verdict("reject")}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
         >
@@ -73,6 +81,7 @@ export default function Loaded(props: BankingApplicationDetails) {
         </button>
         <button
           disabled={!!prevVerdict}
+          onClick={verdict("approve")}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-green"
         >
