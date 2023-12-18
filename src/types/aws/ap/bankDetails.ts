@@ -50,12 +50,15 @@ type DisplayField = {
   value: string;
 };
 
+//https://docs.wise.com/api-docs/api-reference/recipient#object-v2
 export type V2RecipientAccount = {
   id: number;
   longAccountSummary: string;
-  details: Record<string, string>;
-  //use to access details
-  commonFieldMap: Record<string, string>;
+  name: { fullName: string };
+  currency: string; //3-letter code
+  country: string; //country code
+  type: string;
+  legalEntityType: "PERSON" | "BUSINESS";
   displayFields: DisplayField[];
 };
 

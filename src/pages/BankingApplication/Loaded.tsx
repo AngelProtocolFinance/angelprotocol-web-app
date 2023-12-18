@@ -4,7 +4,6 @@ import { BankingApplicationDetails } from "services/types";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
-import Container from "./Container";
 
 export default function Loaded(props: BankingApplicationDetails) {
   const prevVerdict = props.status !== "under-review" ? props.status : null;
@@ -31,30 +30,32 @@ export default function Loaded(props: BankingApplicationDetails) {
         </span>
       </div>
 
-      <Container title="Banking details">
-        <dl className="grid sm:grid-cols-[auto_auto_1fr]">
-          {props.displayFields.map(({ label, value, key }) => (
-            <Row key={key} label={label}>
-              {value}
-            </Row>
-          ))}
-          <Row label="Bank statement">
-            <ExtLink
-              href={props.bankStatementFile.publicUrl}
-              className="text-blue hover:text-blue-d1"
-            >
-              <span className="break-all">
-                {props.bankStatementFile.publicUrl}
-              </span>
-              <Icon
-                type="ExternalLink"
-                className="inline relative bottom-px ml-2"
-                size={15}
-              />
-            </ExtLink>
+      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-prim rounded">
+        <Row label="Currency">{props.currency}</Row>
+        <Row label="Country">{props.country}</Row>
+        <Row label="Account type">{props.type}</Row>
+        <Row label="Legal entity type">{props.legalEntityType}</Row>
+        {props.displayFields.map(({ label, value, key }) => (
+          <Row key={key} label={label}>
+            {value}
           </Row>
-        </dl>
-      </Container>
+        ))}
+        <Row label="Bank statement">
+          <ExtLink
+            href={props.bankStatementFile.publicUrl}
+            className="text-blue hover:text-blue-d1"
+          >
+            <span className="break-all">
+              {props.bankStatementFile.publicUrl}
+            </span>
+            <Icon
+              type="ExternalLink"
+              className="inline relative bottom-px ml-2"
+              size={15}
+            />
+          </ExtLink>
+        </Row>
+      </dl>
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <Link
           to={appRoutes.applications}
