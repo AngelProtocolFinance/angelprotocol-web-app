@@ -11,7 +11,7 @@ export default function PayoutMethod() {
   const { id: endowID } = useAdminContext();
 
   const queryState = useBankingApplicationQuery(
-    { uuid: id, requestor: "endow-admin", id: endowID },
+    { uuid: id, requestor: "endowment", endowmentID: endowID },
     {
       skip: !id,
     }

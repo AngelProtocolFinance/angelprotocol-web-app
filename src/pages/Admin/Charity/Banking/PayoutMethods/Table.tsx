@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { BankingApplicationStatus, PayoutMethod } from "types/aws";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import { adminRoutes } from "constants/routes";
 
 type Props = {
   methods: PayoutMethod[];
@@ -49,7 +48,7 @@ export default function Table({ methods, classes = "" }: Props) {
               )}
             </>
             <Link
-              to={adminRoutes.banking + `/${row.wiseRecipientID}`}
+              to={row.wiseRecipientID}
               className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
             >
               <Icon

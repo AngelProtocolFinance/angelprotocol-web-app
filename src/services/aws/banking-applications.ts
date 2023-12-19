@@ -68,7 +68,7 @@ const bankingApplications = aws.injectEndpoints({
       BankingApplicationDetails,
       { uuid: string } & (
         | { requestor: "bg-admin" }
-        | { requestor: "endow-admin"; id: number }
+        | { requestor: "endowment"; endowmentID: number }
       )
     >({
       providesTags: ["banking-applications"],
