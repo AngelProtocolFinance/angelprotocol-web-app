@@ -19,20 +19,23 @@ type FormValues = {
 };
 
 type FormProps = Props & {
+  defaultValues: Partial<FormValues>;
   onSubmit: (formValues: FormValues) => void | Promise<void>;
 };
 
 export default function Form({
   advanceOptDisplay,
-  onSubmit,
-  widgetConfig,
+  defaultValues,
   state: { recipient },
+  widgetConfig,
+  onSubmit,
 }: FormProps) {
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      pctLiquidSplit: 50,
-      userOptForKYC: recipient.isKYCRequired, // if KYC required, user opts in by default
+      amount: defaultValues.amount,
+      pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
+      userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
     },
   });
 
