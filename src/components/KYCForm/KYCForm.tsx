@@ -12,7 +12,7 @@ export default function KYCForm(props: Props) {
   const methods = useForm<FormValues>({
     mode: "onSubmit",
     reValidateMode: "onChange",
-    defaultValues: {
+    defaultValues: props.defaultValues ?? {
       country: placeHolderCountryOption,
       usState: { label: "", value: "" },
     },

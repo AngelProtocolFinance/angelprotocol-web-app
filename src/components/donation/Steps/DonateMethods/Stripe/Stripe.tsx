@@ -5,6 +5,7 @@ import { Props } from "./types";
 import { useCreateStripePaymentIntentMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import KYCForm from "components/KYCForm";
+import { KYC } from "slices/donation";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import Checkout from "./Checkout";
 import Form from "./Form";
@@ -21,12 +22,14 @@ export default function Stripe(props: Props) {
 
   switch (step.type) {
     case "init":
+      const { type, kycData, ...defaultValues } = step;
       return (
         <Form
           {...props}
+          defaultValues={defaultValues}
           onSubmit={async (fv) => {
             if (fv.userOptForKYC) {
-              return setStep({ type: "kyc", ...fv });
+              return setStep({ ...step, type: "kyc", ...fv });
             }
             try {
               const { clientSecret } = await createPaymentIntent({
@@ -34,7 +37,7 @@ export default function Stripe(props: Props) {
                 endowmentId: props.state.recipient.id,
                 liquidSplitPct: fv.pctLiquidSplit.toString(),
               }).unwrap();
-              setStep({ type: "checkout", clientSecret, ...fv });
+              setStep({ ...step, type: "checkout", clientSecret, ...fv });
             } catch (err) {
               handleError(err, "Failed to load payment platform");
             }
@@ -45,8 +48,9 @@ export default function Stripe(props: Props) {
       return (
         <KYCForm
           type="on-donation"
+          defaultValues={step.kycData}
           recipient={props.state.recipient}
-          onBack={() => setStep({ type: "init" })}
+          onBack={() => setStep({ ...step, type: "init" })}
           onSubmit={async (kyc) => {
             try {
               const { clientSecret } = await createPaymentIntent({
@@ -65,7 +69,12 @@ export default function Stripe(props: Props) {
                   consent_marketing: true,
                 },
               }).unwrap();
-              setStep({ ...step, type: "checkout", clientSecret });
+              setStep({
+                ...step,
+                type: "checkout",
+                clientSecret,
+                kycData: kyc,
+              });
             } catch (err) {
               handleError(err, "Failed to load payment platform");
             }
@@ -83,12 +92,11 @@ export default function Stripe(props: Props) {
         >
           <Checkout
             onBack={() => {
-              // KYC step was performed
+              // check whether KYC step was performed
               if (step.userOptForKYC) {
-                const { type, ...kycData } = step;
-                setStep({ type: "kyc", ...kycData });
+                setStep({ ...step, type: "kyc" });
               } else {
-                setStep({ type: "init" });
+                setStep({ ...step, type: "init" });
               }
             }}
           />
@@ -99,14 +107,16 @@ export default function Stripe(props: Props) {
 
 type InitStep = {
   type: "init";
+  kycData?: KYC;
+  amount?: number;
+  pctLiquidSplit?: number;
+  userOptForKYC?: boolean;
 };
 
 type KYCStep = {
   type: "kyc";
-  amount: number;
-  pctLiquidSplit: number;
-  userOptForKYC: boolean;
-};
+} & Required<Omit<InitStep, "type" | "kycData">> &
+  Pick<InitStep, "kycData">;
 
 type CheckoutStep = {
   type: "checkout";
