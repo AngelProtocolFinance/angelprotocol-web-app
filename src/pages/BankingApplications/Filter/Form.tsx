@@ -28,7 +28,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       <Field<FormValues>
         name="endowmentID"
         label="Endowment ID"
-        classes="px-4 lg:px-6 mt-4"
+        classes="mx-4 lg:mx-6 mt-4"
       />
       <StatusDropdown classes="px-4 lg:px-6 max-lg:mb-4" />
 

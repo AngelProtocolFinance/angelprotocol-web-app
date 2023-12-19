@@ -8,7 +8,9 @@ import { appRoutes } from "constants/routes";
 import Prompt from "./Prompt";
 
 export default function Loaded(props: BankingApplicationDetails) {
-  const prevVerdict = props.status !== "under-review" ? props.status : null;
+  const isApproved = props.status === "approved";
+  const isRejected = props.status === "rejected";
+  const prevVerdict = isApproved || isRejected;
 
   const { showModal } = useModalContext();
   const verdict = (value: "approve" | "reject") => () => {
@@ -20,11 +22,14 @@ export default function Loaded(props: BankingApplicationDetails) {
       {prevVerdict && (
         <div
           className={`${
-            prevVerdict === "approved" ? "bg-green" : "bg-red"
+            isApproved ? "bg-green" : "bg-red"
           } text-white px-2 py-1 text-xs font-work uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
         >
-          {prevVerdict === "approved" ? "Approved" : "Rejected"}
+          {isApproved ? "Approved" : "Rejected"}
         </div>
+      )}
+      {isRejected && (
+        <p className="text-red text-sm -mt-3">{props.rejectionReason}</p>
       )}
       <div className="flex max-sm:flex-col gap-x-4">
         <span className="text-sm font-semibold uppercase">Account ID:</span>
