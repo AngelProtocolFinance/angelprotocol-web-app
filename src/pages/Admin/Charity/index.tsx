@@ -2,7 +2,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { adminRoutes } from "constants/routes";
 import Layout from "../Layout";
 import { LINKS } from "../constants";
-import Banking, { NewPayoutMethod } from "./Banking";
+import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";
 import Dashboard from "./Dashboard";
 import Donations from "./Donations";
 import EditProfile from "./EditProfile";
@@ -36,6 +36,10 @@ export default function Charity() {
         <Route
           path={adminRoutes.banking + "/new"}
           element={<NewPayoutMethod />}
+        />
+        <Route
+          path={adminRoutes.banking + "/:id"}
+          element={<PayoutMethodDetails />}
         />
         <Route index element={<Dashboard />} />
         <Route
