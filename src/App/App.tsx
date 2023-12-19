@@ -21,6 +21,8 @@ const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
 const Applications = lazy(() => import("pages/Applications"));
 const Application = lazy(() => import("pages/Application"));
+const BankingApplications = lazy(() => import("pages/BankingApplications"));
+const BankingApplication = lazy(() => import("pages/BankingApplication"));
 
 export default function App() {
   const location = useLocation();
@@ -41,6 +43,14 @@ export default function App() {
             element={<Profile legacy />}
           />
           <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
+          <Route
+            path={appRoutes.banking_applications}
+            element={<BankingApplications />}
+          />
+          <Route
+            path={appRoutes.banking_applications + "/:id"}
+            element={<BankingApplication />}
+          />
           <Route path={appRoutes.applications} element={<Applications />} />
           <Route
             path={appRoutes.applications + "/:id"}

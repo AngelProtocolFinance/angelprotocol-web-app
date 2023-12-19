@@ -2,21 +2,11 @@ import { FormButtonsProps } from "components/BankDetails/types";
 import { LoadText } from "components/registration";
 
 export default function FormButtons({
-  isSubmitted = false,
   disabled = false,
   isSubmitting = false,
   refreshedRequirementsAdded = false,
   refreshRequired = false,
 }: FormButtonsProps) {
-  if (isSubmitted) {
-    return (
-      <i className="mt-8 text-xs sm:text-sm">
-        You have already successfully submitted your bank details. Click "Update
-        Bank Details" button above to submit new bank details for review.
-      </i>
-    );
-  }
-
   if (refreshRequired) {
     return (
       <div className="grid gap-4 mt-8">

@@ -1,66 +1,29 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import { useAdminContext } from "pages/Admin/Context";
-import {
-  useProfileQuery,
-  useUpdateBankStatementMutation,
-} from "services/aws/aws";
-import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
+import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
+import { useCreateRecipientMutation } from "services/aws/wise";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
 import BankDetails from "components/BankDetails";
 import Group from "components/Group";
-import LoaderRing from "components/LoaderRing";
+import Icon from "components/Icon";
+import Prompt from "components/Prompt";
 import { getFilePreviews } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { EMAIL_SUPPORT } from "constants/env";
+import { adminRoutes } from "constants/routes";
 import FormButtons from "./FormButtons";
-import VerificationStatus from "./VerificationStatus";
-
-const PROFILE_ERROR = `Error loading profile. Please try again later. If the error persists,
-please contact ${EMAIL_SUPPORT}.`;
 
 export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
   const [isSubmitting, setSubmitting] = useState(false);
-  const [shouldUpdate, setShouldUpdate] = useState(false);
-
-  const [createRecipientAccount] = useCreateRecipientAccountMutation();
-  const [updateBankStatement] = useUpdateBankStatementMutation();
-
-  // load profile
-  const { id } = useAdminContext();
-  const {
-    data: profile,
-    isLoading: isLoadingProfile,
-    isError: isProfileError,
-    error,
-  } = useProfileQuery({ endowId: id });
-
+  const [createRecipient] = useCreateRecipientMutation();
+  const [newApplication] = useNewBankingApplicationMutation();
   const { handleError } = useErrorContext();
-
-  useEffect(() => {
-    if (error) {
-      handleError(error, PROFILE_ERROR);
-    }
-  }, [error, handleError]);
-
-  if (isLoadingProfile) {
-    return (
-      <div className="flex items-center justify-center gap-2">
-        <LoaderRing thickness={10} classes="w-6" /> Loading...
-      </div>
-    );
-  }
-
-  if (isProfileError || !profile) {
-    return null;
-  }
-
-  const verif_status = profile.bank_verification_status;
-
-  const isSubmitted = verif_status !== "Not Submitted";
+  const { showModal } = useModalContext();
 
   const submit = async (
     request: CreateRecipientRequest,
@@ -69,21 +32,29 @@ export default function Banking() {
     try {
       setSubmitting(true);
 
-      const bankStatementPreview = await getFilePreviews({
-        bankStatementFile,
+      const [bankStatementPreview, recipient] = await Promise.all([
+        getFilePreviews({
+          bankStatementFile,
+        }),
+        createRecipient(request).unwrap(),
+      ]);
+
+      const { id, details, currency } = recipient;
+      //creating account return V1Recipient and doesn't have longAccount summary field
+      const bankSummary = `${currency.toUpperCase()} account ending in ${details.accountNumber?.slice(
+        -4 || "0000"
+      )} `;
+      await newApplication({
+        wiseRecipientID: id.toString(),
+        bankSummary,
+        endowmentID: endowment_id,
+        bankStatementFile: bankStatementPreview.bankStatementFile[0],
+      }).unwrap();
+
+      showModal(Prompt, {
+        headline: "Success!",
+        children: <p className="py-8">Banking details submitted for review!</p>,
       });
-
-      await updateBankStatement({
-        id: profile.id,
-        bank_statement_file: bankStatementPreview.bankStatementFile[0],
-      }).unwrap();
-
-      await createRecipientAccount({
-        endowmentId: endowment_id,
-        request,
-      }).unwrap();
-
-      setShouldUpdate(false);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
     } finally {
@@ -92,20 +63,27 @@ export default function Banking() {
   };
 
   return (
-    <Group
-      className="max-w-4xl"
-      title="Bank account details"
-      description="The following information will be used to register your bank account that will be used to withdraw your funds."
-    >
-      {!shouldUpdate && <VerificationStatus status={verif_status} />}
-      <BankDetails
-        key={verif_status}
-        FormButtons={FormButtons}
-        isSubmitting={isSubmitting}
-        onInitiateUpdate={() => setShouldUpdate(true)}
-        onSubmit={submit}
-        shouldUpdate={!isSubmitted || shouldUpdate}
-      />
-    </Group>
+    <>
+      <Link
+        to={`../${adminRoutes.banking}`}
+        className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm uppercase"
+      >
+        <Icon type="Back" size={12} />
+        <span>Back</span>
+      </Link>
+      <Group
+        className="max-w-4xl"
+        title="Bank account details"
+        description="The following information will be used to register your bank account that will be used to withdraw your funds."
+      >
+        <BankDetails
+          FormButtons={FormButtons}
+          isSubmitting={isSubmitting}
+          onInitiateUpdate={() => {}}
+          onSubmit={submit}
+          shouldUpdate
+        />
+      </Group>
+    </>
   );
 }

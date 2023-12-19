@@ -4,6 +4,7 @@ export enum appRoutes {
   leaderboard = "/leaderboard",
   admin = "/admin",
   applications = "/applications",
+  banking_applications = "/banking-applications",
   register = "/register",
   signin = "/signin",
   profile = "/profile",

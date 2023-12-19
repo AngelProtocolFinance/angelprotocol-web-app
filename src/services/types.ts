@@ -1,6 +1,8 @@
 import {
+  BankingApplication,
   EndowmentProfileUpdate,
   FSASignerDocumentation,
+  V2RecipientAccount,
   WalletProfile,
 } from "types/aws";
 import { SemiPartial } from "types/utils";
@@ -40,3 +42,5 @@ export type FiscalSponsorhipAgreementSigner =
 export type VersionSpecificWalletProfile = WalletProfile & {
   version: "legacy" | "latest";
 };
+
+export type BankingApplicationDetails = BankingApplication & V2RecipientAccount;
