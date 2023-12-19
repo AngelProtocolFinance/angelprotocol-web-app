@@ -9,16 +9,17 @@ import { adminRoutes } from "constants/routes";
 import DeletePrompt from "./DeletePrompt";
 
 export default function Loaded(props: BankingApplicationDetails) {
-  const prevVerdict = props.status !== "under-review" ? props.status : null;
-  const isDefault = props.thisPriorityNum === props.topPriorityNum;
   const [update, { isLoading }] = useUpdateBankingApplicationMutation();
+
+  const isRejected = props.status === "rejected";
+  const isApproved = props.status === "approved";
+  const prevVerdict = isRejected || isApproved;
+  const isDefault = props.thisPriorityNum === props.topPriorityNum;
 
   const { showModal } = useModalContext();
 
   async function setDefault() {
-    if (props.status !== "approved")
-      return alert("This payout method is still under review");
-
+    if (isApproved) return alert("This payout method is still under review");
     if (isDefault) return alert("This payout method is already default");
 
     await update({ type: "prioritize", uuid: props.id.toString() });
@@ -51,10 +52,10 @@ export default function Loaded(props: BankingApplicationDetails) {
         {prevVerdict && (
           <div
             className={`${
-              prevVerdict === "approved" ? "bg-green" : "bg-red"
+              isApproved ? "bg-green" : "bg-red"
             } text-white px-2 py-1 text-xs font-work uppercase rounded inline-block`}
           >
-            {prevVerdict === "approved" ? "Approved" : "Rejected"}
+            {isApproved ? "Approved" : "Rejected"}
           </div>
         )}
         {isDefault && (
@@ -64,7 +65,7 @@ export default function Loaded(props: BankingApplicationDetails) {
         )}
       </div>
 
-      {prevVerdict === "rejected" && (
+      {isRejected && (
         <p className="text-sm text-red my-2">
           <Icon type="Info" className="relative inline bottom-px mr-1" />
           <span>hello world hahadhfa1209312038</span>
@@ -98,7 +99,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           </ExtLink>
         </Row>
       </dl>
-      <div className="flex gap-x-3 mt-4 justify-self-end">
+      <div className="flex max-sm:flex-col gap-1 sm:gap-3 mt-4 sm:justify-self-end">
         <Link
           to={`../${adminRoutes.banking}`}
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-outline"
@@ -106,6 +107,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           back
         </Link>
         <button
+          disabled={isRejected}
           onClick={() => deleteMethod()}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
@@ -113,7 +115,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           delete
         </button>
         <button
-          disabled={isLoading || isDefault}
+          disabled={isLoading || isDefault || isRejected}
           onClick={() => setDefault()}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-orange"
