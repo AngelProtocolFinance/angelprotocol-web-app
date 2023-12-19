@@ -10,25 +10,23 @@ import DeletePrompt from "./DeletePrompt";
 
 export default function Loaded(props: BankingApplicationDetails) {
   const prevVerdict = props.status !== "under-review" ? props.status : null;
+  const isDefault = props.thisPriorityNum === props.topPriorityNum;
   const [update, { isLoading }] = useUpdateBankingApplicationMutation();
 
   const { showModal } = useModalContext();
 
-  async function setDefault(v: BankingApplicationDetails) {
-    if (v.status !== "approved")
+  async function setDefault() {
+    if (props.status !== "approved")
       return alert("This payout method is still under review");
 
-    if (v.topPriorityNum === v.thisPriorityNum) {
-      return alert("This payout method is already default");
-    }
+    if (isDefault) return alert("This payout method is already default");
 
-    await update({ type: "prioritize", uuid: v.id.toString() });
+    await update({ type: "prioritize", uuid: props.id.toString() });
   }
 
-  async function deleteMethod(v: BankingApplicationDetails) {
+  async function deleteMethod() {
     const APPROVED_PRIORITY_NUM = 2;
-    const isDefault = v.topPriorityNum === v.thisPriorityNum;
-    const isWithHeir = (v.heirPriorityNum || 0) >= APPROVED_PRIORITY_NUM;
+    const isWithHeir = (props.heirPriorityNum || 0) >= APPROVED_PRIORITY_NUM;
 
     const [canProceed, message] =
       isDefault && isWithHeir
@@ -42,25 +40,38 @@ export default function Loaded(props: BankingApplicationDetails) {
 
     showModal(DeletePrompt, {
       canProceed,
-      uuid: v.id.toString(),
+      uuid: props.id.toString(),
       message,
     });
   }
 
   return (
-    <>
-      {prevVerdict && (
-        <div
-          className={`${
-            prevVerdict === "approved" ? "bg-green" : "bg-red"
-          } text-white px-2 py-1 text-xs font-work uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
-        >
-          {prevVerdict === "approved" ? "Approved" : "Rejected"}
-        </div>
-      )}
-      {prevVerdict === "rejected" && <p>rejection reason</p>}
+    <div className="grid">
+      <div className="flex items-center gap-2">
+        {prevVerdict && (
+          <div
+            className={`${
+              prevVerdict === "approved" ? "bg-green" : "bg-red"
+            } text-white px-2 py-1 text-xs font-work uppercase rounded inline-block`}
+          >
+            {prevVerdict === "approved" ? "Approved" : "Rejected"}
+          </div>
+        )}
+        {isDefault && (
+          <div className="bg-blue text-white px-2 py-1 text-xs font-work uppercase rounded inline-block">
+            Default
+          </div>
+        )}
+      </div>
 
-      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-prim rounded">
+      {prevVerdict === "rejected" && (
+        <p className="text-sm text-red my-2">
+          <Icon type="Info" className="relative inline bottom-px mr-1" />
+          <span>hello world hahadhfa1209312038</span>
+        </p>
+      )}
+
+      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-prim rounded mt-2">
         <Row label="Currency">{props.currency}</Row>
         <Row label="Country">{props.country}</Row>
         <Row label="Recipient name">{props.name.fullName}</Row>
@@ -87,7 +98,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           </ExtLink>
         </Row>
       </dl>
-      <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
+      <div className="flex gap-x-3 mt-4 justify-self-end">
         <Link
           to={`../${adminRoutes.banking}`}
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-outline"
@@ -95,23 +106,22 @@ export default function Loaded(props: BankingApplicationDetails) {
           back
         </Link>
         <button
-          disabled={!!prevVerdict}
-          onClick={() => deleteMethod(props)}
+          onClick={() => deleteMethod()}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
         >
           delete
         </button>
         <button
-          disabled={isLoading}
-          onClick={() => setDefault(props)}
+          disabled={isLoading || isDefault}
+          onClick={() => setDefault()}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-orange"
         >
           set default
         </button>
       </div>
-    </>
+    </div>
   );
 }
 

@@ -33,6 +33,7 @@ export type BankingApplication = {
   thisPriorityNum: number;
   status: BankingApplicationStatus;
   dateCreated: string; //ISODateString
+  rejectionReason: string;
 } & BaseBankingApplication;
 
 //alias for endow page

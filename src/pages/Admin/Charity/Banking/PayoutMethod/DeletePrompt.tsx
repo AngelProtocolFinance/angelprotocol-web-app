@@ -51,7 +51,7 @@ export default function DeletePrompt({ message, uuid, canProceed }: Props) {
       </div>
       <Icon type="ExclamationCircleFill" size={80} className="mt-6 text-red" />
 
-      <div className="p-6 text-center text-gray-d1 dark:text-gray-l3 font-semibold">
+      <div className="p-6 text-center text-gray-d1 dark:text-gray-l3">
         {message}
       </div>
 
