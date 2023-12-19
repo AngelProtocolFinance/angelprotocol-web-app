@@ -66,7 +66,10 @@ const bankingApplications = aws.injectEndpoints({
     }),
     bankingApplication: builder.query<
       BankingApplicationDetails,
-      { requestor: "bg-admin" | number; uuid: string }
+      { uuid: string } & (
+        | { requestor: "bg-admin" }
+        | { requestor: "endow-admin"; id: number }
+      )
     >({
       providesTags: ["banking-applications"],
       async queryFn({ uuid, ...params }, api, extraOptions, baseQuery) {
@@ -78,10 +81,7 @@ const bankingApplications = aws.injectEndpoints({
         const bankRecordPromise = baseQuery({
           url: `${v(1)}/banking-applications/${uuid}`,
           headers: { Authorization: token },
-          params:
-            params.requestor === "bg-admin"
-              ? { requestor: params.requestor }
-              : { endowmentID: params.requestor, requestor: "endow-admin" },
+          params,
         });
         const wiseRecipientPromise = baseQuery({
           url: `/${v(1)}/wise-proxy/v2/accounts/${uuid}`,
