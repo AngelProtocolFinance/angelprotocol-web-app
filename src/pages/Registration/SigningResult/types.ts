@@ -7,7 +7,7 @@ type BaseQueryParams = {
   etchPacketEid: string;
 };
 
-type SignerCompleteQueryParams = BaseQueryParams & {
+export type SignerCompleteQueryParams = BaseQueryParams & {
   action: "signerComplete";
   signerStatus: "completed";
 };

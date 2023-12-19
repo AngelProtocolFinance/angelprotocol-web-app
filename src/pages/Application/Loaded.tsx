@@ -36,6 +36,16 @@ export default function Loaded(props: ApplicationDetails) {
           {prevVerdict === "Active" ? "Approved" : "Rejected"}
         </div>
       )}
+      {r.RegistrationStatus === "Rejected" && (
+        <div className="flex max-sm:flex-col gap-x-4">
+          <span className="text-sm font-semibold uppercase">
+            Rejection reason:
+          </span>
+          <span className="uppercase text-sm font-work">
+            {r.RejectionReason}
+          </span>
+        </div>
+      )}
       <div className="flex max-sm:flex-col gap-x-4">
         <span className="text-sm font-semibold uppercase">Application ID:</span>
         <span className="uppercase text-sm font-work">{r.PK}</span>

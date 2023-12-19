@@ -1,4 +1,4 @@
-import { EndowmentType, NetworkType, UNSDG_NUMS } from "../../lists";
+import { APIEnvironment, EndowmentType, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
@@ -72,7 +72,7 @@ export type EndowmentProfile = EndowmentBase & {
   };
   street_address?: string;
   url?: string;
-  wise_recipient_id: string;
+  wise_recipient_id: number;
 } & EndowmentBalances;
 
 export type EndowmentCard = EndowmentBase & {
@@ -166,7 +166,7 @@ export type EndowmentBookmark = {
 
 export type WalletProfile = {
   wallet: string;
-  network: NetworkType;
+  network: APIEnvironment;
   admin: EndowmentBookmark[];
   bookmarks: EndowmentBookmark[];
 };

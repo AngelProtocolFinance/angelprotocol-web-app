@@ -78,7 +78,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "Twitter",
         size: 24,
       },
-      href: "https://twitter.com/@BetterDotGiving",
+      href: "https://twitter.com/BetterDotGiving",
     },
     {
       title: "Discord",
@@ -86,7 +86,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "Discord",
         size: 24,
       },
-      href: "https://discord.gg/angelprotocol",
+      href: "https://discord.gg/kPjCcJCXX7",
     },
     {
       title: "YouTube",
@@ -94,7 +94,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "Youtube",
         size: 24,
       },
-      href: "https://www.youtube.com/@AngelGiving",
+      href: "https://www.youtube.com/@bettergiving",
     },
     {
       title: "Facebook",
@@ -102,7 +102,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "FacebookCircle",
         size: 24,
       },
-      href: "https://www.facebook.com/AngelgivingFB/",
+      href: "https://www.facebook.com/BetterGivingFB/",
     },
     {
       title: "Linkedin",
@@ -110,7 +110,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "Linkedin",
         size: 24,
       },
-      href: "https://www.linkedin.com/company/angel-giving/",
+      href: "https://www.linkedin.com/company/better-giving/",
     },
   ],
 };

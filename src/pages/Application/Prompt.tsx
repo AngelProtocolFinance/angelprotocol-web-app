@@ -85,7 +85,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
 
       <h3 className="text-center text-2xl mb-2 leading-tight px-3 sm:px-8">
         <div className="uppercase">{verdict}</div>
-        <div>Endowment</div>
+        <div>Nonprofit</div>
       </h3>
 
       <p className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3 mt-4">

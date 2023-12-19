@@ -1,4 +1,4 @@
-import { NetworkType } from "types/lists";
+import { APIEnvironment } from "types/lists";
 import { IS_TEST } from "constants/env";
 
-export const network: NetworkType = IS_TEST ? "testnet" : "mainnet";
+export const apiEnv: APIEnvironment = IS_TEST ? "staging" : "production";
