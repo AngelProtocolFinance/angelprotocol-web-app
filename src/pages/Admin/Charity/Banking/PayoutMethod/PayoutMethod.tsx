@@ -1,9 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useAdminContext } from "pages/Admin/Context";
 import { useBankingApplicationQuery } from "services/aws/banking-applications";
-import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
-import { ErrorStatus } from "components/Status";
+import { ErrorStatus, LoadingStatus } from "components/Status";
 import Loaded from "./Loaded";
 
 export default function PayoutMethod() {
@@ -23,7 +22,9 @@ export default function PayoutMethod() {
         queryState={queryState}
         messages={{
           loading: (
-            <LoaderRing thickness={10} classes="w-32 justify-self-center" />
+            <LoadingStatus classes="justify-self-center">
+              Loading bank details..
+            </LoadingStatus>
           ),
           error: (
             <ErrorStatus classes="justify-self-center">

@@ -1,33 +1,44 @@
+import { useNavigate } from "react-router-dom";
 import { useDeleteBankingApplicationMutation } from "services/aws/banking-applications";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import Prompt from "components/Prompt";
+import { adminRoutes, appRoutes } from "constants/routes";
 
 type Props = {
+  endowID: number;
   message: string;
   uuid: string;
   canProceed: boolean;
 };
 
-export default function DeletePrompt({ message, uuid, canProceed }: Props) {
+export default function DeletePrompt({
+  message,
+  uuid,
+  canProceed,
+  endowID,
+}: Props) {
   const [deletePayoutMethod, { isLoading }] =
     useDeleteBankingApplicationMutation();
   const { handleError } = useErrorContext();
   const { isDismissible, setModalOption, closeModal, showModal } =
     useModalContext();
+  const navigate = useNavigate();
 
   const handleConfirm = async () => {
     try {
       setModalOption("isDismissible", false);
       await deletePayoutMethod(uuid).unwrap();
+
       showModal(Prompt, {
         headline: "Success!",
         children: (
           <p className="my-4 text-lg font-semibold">Payout method deleted</p>
         ),
       });
+      navigate(appRoutes.admin + `/${endowID}/${adminRoutes.banking}`);
     } catch (err) {
       handleError(err);
     }

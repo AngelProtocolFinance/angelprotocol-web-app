@@ -63,6 +63,7 @@ export const aws = createApi({
     "applications",
     "application",
     "banking-applications",
+    "banking-application",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,

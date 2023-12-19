@@ -13,7 +13,7 @@ export default function PayoutMethods() {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-left text-lg uppercase">Payout methods</h1>
+        <h1 className="text-left text-lg uppercase">Current Banking Details</h1>
         <Link
           to="new"
           aria-disabled={queryState.isLoading}

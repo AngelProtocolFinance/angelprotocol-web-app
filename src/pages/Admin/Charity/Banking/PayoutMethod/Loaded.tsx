@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { BankingApplicationDetails } from "services/types";
+import { useAdminContext } from "pages/Admin/Context";
 import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
 import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
@@ -9,6 +10,7 @@ import { adminRoutes } from "constants/routes";
 import DeletePrompt from "./DeletePrompt";
 
 export default function Loaded(props: BankingApplicationDetails) {
+  const { id: endowID } = useAdminContext();
   const [update, { isLoading }] = useUpdateBankingApplicationMutation();
 
   const isRejected = props.status === "rejected";
@@ -43,6 +45,7 @@ export default function Loaded(props: BankingApplicationDetails) {
       canProceed,
       uuid: props.id.toString(),
       message,
+      endowID,
     });
   }
 
@@ -107,7 +110,6 @@ export default function Loaded(props: BankingApplicationDetails) {
           back
         </Link>
         <button
-          disabled={isRejected}
           onClick={() => deleteMethod()}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"

@@ -31,7 +31,8 @@ const bankingApplications = aws.injectEndpoints({
       unknown,
       BankingApplicationUpdate
     >({
-      invalidatesTags: (_, error) => (error ? [] : ["banking-applications"]),
+      invalidatesTags: (_, error) =>
+        error ? [] : ["banking-applications", "banking-application"],
       query: ({ uuid, ...payload }) => {
         return {
           method: "PUT",
@@ -42,7 +43,8 @@ const bankingApplications = aws.injectEndpoints({
       },
     }),
     deleteBankingApplication: builder.mutation<unknown, string>({
-      invalidatesTags: (_, error) => (error ? [] : ["banking-applications"]),
+      invalidatesTags: (_, error) =>
+        error ? [] : ["banking-applications", "banking-application"],
       query: (uuid) => {
         return {
           method: "DELETE",
@@ -71,7 +73,7 @@ const bankingApplications = aws.injectEndpoints({
         | { requestor: "endowment"; endowmentID: number }
       )
     >({
-      providesTags: ["banking-applications"],
+      providesTags: ["banking-application"],
       async queryFn({ uuid, ...params }, api, extraOptions, baseQuery) {
         const {
           auth: { user },
