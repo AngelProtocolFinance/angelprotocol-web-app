@@ -57,7 +57,7 @@ function FormWithContext(props: TProfile & { id: number }) {
       publicUrl: props.image ?? "",
       preview: props.image ?? "",
     },
-    logo: { name: "", publicUrl: props.logo ?? "", preview: props.logo ?? "" },
+    logo: { name: "", publicUrl: props.logo, preview: props.logo },
     endow_designation: init.endow_designation
       ? { label: init.endow_designation, value: init.endow_designation }
       : { label: "", value: "" },
