@@ -46,7 +46,7 @@ export function Selector<
           aria-invalid={!!get(errors, valuePath)?.message}
           aria-disabled={isDisabled}
           as="button"
-          className={`${button} ${styles.selectorButton}`}
+          className={`${button} ${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
         >
           {({ open }) => (
             <>

@@ -1,13 +1,3 @@
-enum routes {
-  index = "",
-  resume = "resume",
-  success = "success",
-  welcome = "welcome",
-  steps = "steps",
-  sign_notice = "sign-notice",
-  sign_result = "sign-result",
-}
-
 export enum steps {
   contact = "1",
   orgDetails = "2",
@@ -16,5 +6,3 @@ export enum steps {
   banking = "5",
   summary = "6",
 }
-
-export default routes;

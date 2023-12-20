@@ -1,11 +1,11 @@
 import { Navigate } from "react-router-dom";
 import { CompleteRegistration } from "pages/Registration/types";
-import routes from "pages/Registration/routes";
 import { useSubmitMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { handleMutationResult } from "helpers";
+import { regRoutes } from "constants/routes";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
@@ -43,7 +43,7 @@ function Dashboard() {
   const isStepDisabled = isSubmitting || status === "Under Review";
 
   if (status === "Active") {
-    return <Navigate to={`../../${routes.success}`} state={data} />;
+    return <Navigate to={`../../${regRoutes.success}`} state={data} />;
   }
 
   return (

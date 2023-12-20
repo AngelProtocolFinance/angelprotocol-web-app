@@ -4,6 +4,7 @@ export enum appRoutes {
   leaderboard = "/leaderboard",
   admin = "/admin",
   applications = "/applications",
+  banking_applications = "/banking-applications",
   register = "/register",
   signin = "/signin",
   profile = "/profile",
@@ -23,3 +24,13 @@ export const adminRoutes = {
   widget_config: "widget-config",
   donations: "donations",
 } as const;
+
+export enum regRoutes {
+  index = "",
+  resume = "resume",
+  success = "success",
+  welcome = "welcome",
+  steps = "steps",
+  sign_notice = "sign-notice",
+  sign_result = "sign-result",
+}

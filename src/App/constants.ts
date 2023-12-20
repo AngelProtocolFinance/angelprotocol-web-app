@@ -38,7 +38,7 @@ export const CHARITY_LINKS: LINKS = {
       title: "How We Can Help",
       links: [
         {
-          text: "nonprofits",
+          text: "Non-profits",
           href: BASE_URL,
         },
         {

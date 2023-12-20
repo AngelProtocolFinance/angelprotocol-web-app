@@ -44,6 +44,36 @@ type ValuesAllowed = {
   name: string;
 };
 
+type DisplayField = {
+  key: string;
+  label: string;
+  value: string;
+};
+
+//https://docs.wise.com/api-docs/api-reference/recipient#object-v2
+export type V2RecipientAccount = {
+  id: number;
+  longAccountSummary: string;
+  name: { fullName: string };
+  currency: string; //3-letter code
+  country: string; //country code
+  type: string;
+  legalEntityType: "PERSON" | "BUSINESS";
+  displayFields: DisplayField[];
+};
+
+//FUTURE: move wise types to types/wise
+export type V1RecipientAccount = {
+  id: number;
+  currency: string;
+  details: {
+    accountNumber?: string;
+    email?: string;
+    bankCode?: string;
+    bankName?: string;
+  };
+};
+
 export type CreateRecipientRequest = {
   accountHolderName: string;
   currency: string;
