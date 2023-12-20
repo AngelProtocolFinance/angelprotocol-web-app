@@ -6,7 +6,7 @@ import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EMAIL_SUPPORT } from "constants/env";
-import { Currency } from "../CurrencySelector";
+import { Currency } from "../../CurrencySelector";
 import AccountRequirementsSelector from "./AccountRequirementsSelector";
 import RecipientDetailsForm from "./RecipientDetailsForm";
 import useRecipientDetails from "./useRecipientDetails";

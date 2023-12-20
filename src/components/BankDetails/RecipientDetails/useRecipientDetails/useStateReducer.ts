@@ -2,7 +2,7 @@ import { useReducer } from "react";
 import { FormValues, RequirementsData } from "../types";
 import { AccountRequirements, Quote } from "types/aws";
 import { UnexpectedStateError } from "errors/errors";
-import { Currency } from "../../CurrencySelector";
+import { Currency } from "../../../CurrencySelector";
 import mergeRequirements from "./mergeRequirements";
 
 type State = {

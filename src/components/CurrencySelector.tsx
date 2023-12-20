@@ -1,9 +1,9 @@
 import { Combobox, Transition } from "@headlessui/react";
 import { Fragment, memo, useRef, useState } from "react";
 import { WiseCurrency } from "types/aws";
-import { DrawerIcon } from "components/Icon";
-import { Label } from "components/form";
 import { isEmpty } from "helpers";
+import { DrawerIcon } from "./Icon";
+import { Label } from "./form";
 
 export type Currency = {
   code: string;

@@ -7,7 +7,7 @@ import LoaderRing from "components/LoaderRing";
 import useDebounce from "hooks/useDebounce";
 import { isEmpty } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import CurrencySelector from "./CurrencySelector";
+import CurrencySelector from "../CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 import UpdateDetailsButton from "./UpdateDetailsButton";

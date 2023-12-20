@@ -11,7 +11,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { UnexpectedStateError } from "errors/errors";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { Currency } from "../../CurrencySelector";
+import { Currency } from "../../../CurrencySelector";
 import useStateReducer from "./useStateReducer";
 
 export default function useRecipientDetails(
