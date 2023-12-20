@@ -116,16 +116,16 @@ export default function Table({
               <span className="font-body text-sm">{row.symbol}</span>
               <>{humanize(row.amount, 3)}</>
               <>{`$${humanize(row.usdValue, 2)}`}</>
-              <ExtLink
-                href={getTxUrl(
-                  //default to ethereum for staging
-                  row.chainId === "staging" ? "1" : row.chainId,
-                  row.hash
-                )}
-                className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
-              >
-                {row.hash}
-              </ExtLink>
+              {row.chainId === "fiat" || row.chainId === "staging" ? (
+                <>- - -</>
+              ) : (
+                <ExtLink
+                  href={getTxUrl(row.chainId, row.hash)}
+                  className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
+                >
+                  {row.hash}
+                </ExtLink>
+              )}
               <div className="text-center text-white">
                 <span
                   className={`${
