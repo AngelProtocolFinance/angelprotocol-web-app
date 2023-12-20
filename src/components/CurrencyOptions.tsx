@@ -7,7 +7,10 @@ type Props = {
   searchText?: string;
 };
 
-export default function Options({ classes = "", searchText = "" }: Props) {
+export default function CurrencyOptions({
+  classes = "",
+  searchText = "",
+}: Props) {
   const { data: currencies = [] } = useCurrencisQuery(
     {},
     {

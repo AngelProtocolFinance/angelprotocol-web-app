@@ -3,7 +3,7 @@ import { IFormButtons, OnSubmit } from "./types";
 import { WiseCurrency } from "types/aws";
 import Divider from "components/Divider";
 import useDebouncer from "hooks/useDebouncer";
-import CurrencySelector from "./CurrencySelector";
+import CurrencySelector from "../CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 

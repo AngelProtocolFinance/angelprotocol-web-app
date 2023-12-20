@@ -1,9 +1,9 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
 import { WiseCurrency } from "types/aws";
-import { DrawerIcon } from "components/Icon";
-import { Label } from "components/form";
 import CurrencyOptions from "./CurrencyOptions";
+import { DrawerIcon } from "./Icon";
+import { Label } from "./form";
 
 export type Currency = {
   code: string;
