@@ -117,7 +117,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           delete
         </button>
         <button
-          disabled={isLoading || isDefault || isRejected}
+          disabled={isLoading || isDefault || !isApproved}
           onClick={() => setDefault()}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-orange"
