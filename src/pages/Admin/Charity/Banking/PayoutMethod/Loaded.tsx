@@ -71,7 +71,7 @@ export default function Loaded(props: BankingApplicationDetails) {
       {isRejected && (
         <p className="text-sm text-red my-2">
           <Icon type="Info" className="relative inline bottom-px mr-1" />
-          <span>hello world hahadhfa1209312038</span>
+          <span>{props.rejectionReason}</span>
         </p>
       )}
 
