@@ -13,18 +13,16 @@ import {
   ApplicationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
+  EndowmentLink,
   EndowmentOption,
   EndowmentProfile,
-  EndowmentProfileUpdate,
   EndowmentsQueryParams,
-  FileObject,
   PaginatedAWSQueryRes,
   Program,
   WalletProfile,
 } from "types/aws";
 import { apiEnv } from "services/constants";
 import { RootState } from "store/store";
-import { logger } from "helpers";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
@@ -116,24 +114,19 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    profile: builder.query<
-      EndowmentProfile,
-      { endowId: number; isLegacy?: boolean }
-    >({
+    endowmentLink: builder.query<EndowmentLink, number>({
       providesTags: ["profile"],
-      query: ({ endowId, isLegacy = false }) => ({
-        params: { legacy: isLegacy },
-        url: `/${v(1)}/profile/endowment/${endowId}`,
-      }),
-      transformResponse(r: EndowmentProfile) {
-        //transform cloudsearch placeholders
-        const tagline = r.tagline === " " ? "" : r.tagline;
-        return {
-          ...r,
-          tagline,
-        };
-      },
+      query: (id) => `v6/endowments/${id}?env=${apiEnv}&format=link`,
     }),
+    profile: builder.query<EndowmentProfile, number>({
+      providesTags: ["profile"],
+      query: (id) => `v6/endowments/${id}?env=${apiEnv}&format=profile`,
+    }),
+    programs: builder.query<EndowmentProfile, number>({
+      providesTags: ["profile"],
+      query: (id) => `v6/endowments/${id}?env=${apiEnv}&format=programs`,
+    }),
+
     program: builder.query<Program, { endowId: number; programId: string }>({
       providesTags: ["profile", "program"],
       query: ({ endowId, programId }) =>
@@ -186,32 +179,6 @@ export const aws = createApi({
         };
       },
     }),
-    updateBankStatement: builder.mutation<
-      EndowmentProfile,
-      { id: number; bank_statement_file: FileObject }
-    >({
-      query: (payload) => {
-        return {
-          url: `/${v(1)}/profile/endowment/bank-statement`,
-          method: "PUT",
-          headers: { authorization: TEMP_JWT },
-          body: payload,
-        };
-      },
-      /** pessimistic manual cache update so not to GET fresh data */
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          dispatch(
-            updateAWSQueryData("profile", { endowId: args.id }, (draft) => {
-              draft = { ...data };
-            })
-          );
-        } catch (err) {
-          logger.error(err);
-        }
-      },
-    }),
   }),
 });
 
@@ -221,12 +188,13 @@ export const {
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,
   useProfileQuery,
+  useProgramsQuery,
+  useEndowmentLinkQuery,
   useProgramQuery,
   useEditProfileMutation,
   useApplicationsQuery,
   useApplicationQuery,
   useReviewApplicationMutation,
-  useUpdateBankStatementMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
@@ -240,13 +208,9 @@ export const {
   },
 } = aws;
 
-type EndowCardFields = keyof (Omit<EndowmentCard, "hq"> &
-  /** replace with cloudsearch specific field format */
-  Pick<EndowmentProfileUpdate, "hq_country">);
-
 //object format first to avoid duplicates
 const endowCardObj: {
-  [key in EndowCardFields]: any; //we care only for keys
+  [key in keyof EndowmentCard]: ""; //we care only for keys
 } = {
   hq_country: "",
   endow_designation: "",
@@ -255,17 +219,13 @@ const endowCardObj: {
   id: "",
   logo: "",
   kyc_donors_only: "",
-  contributor_verification_required: "",
   name: "",
   tagline: "",
-  endow_type: "",
-  published: false,
-  program: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 
 const endowSelectorOptionObj: {
-  [key in Extract<EndowCardFields, "id" | "name">]: any;
+  [key in keyof EndowmentOption]: "";
 } = {
   id: "",
   name: "",

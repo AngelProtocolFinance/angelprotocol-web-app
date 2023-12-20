@@ -1,4 +1,5 @@
-import { APIEnvironment, EndowmentType, UNSDG_NUMS } from "../../lists";
+import { Except } from "type-fest";
+import { APIEnvironment, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
@@ -24,91 +25,65 @@ export type EndowDesignation =
   | "Hospital"
   | "Other";
 
-type EndowmentBase = {
-  hq_country: string;
+type SocialMediaURLs = {
+  twitter: string; //or empty
+  facebook: string; //or empty
+  linkedin: string; //or empty
+  instagram: string; //or empty
+  discord: string; //or empty
+  youtube: string; //or empty
+  tiktok: string; //or empty
+};
+
+type EndowmentItem = {
+  id: number;
+  active_in_countries: string[];
+  contact_email: string;
   endow_designation: EndowDesignation;
-  active_in_countries: string[];
-  sdgs: UNSDG_NUMS[];
-  id: number;
-  logo: string;
-  kyc_donors_only: boolean;
-  contributor_verification_required: boolean;
-  program: Program[];
-
-  name: string;
-  tagline: string;
-};
-
-export type EndowmentProfile = EndowmentBase & {
   fiscal_sponsored: boolean;
-  contact_email: string;
-  image: string;
-  overview: string; //or empty
-  published: boolean;
-  registration_number: string;
-  social_media_urls: {
-    twitter: string; //or empty
-    facebook: string; //or empty
-    linkedin: string; //or empty
-    instagram: string; //or empty
-    discord: string; //or empty
-    youtube: string; //or empty
-    tiktok: string; //or empty
-  };
-  street_address: string; //or empty
-  url: string;
-  wise_recipient_id: number;
-};
-
-export type EndowmentCard = EndowmentBase & {
-  endow_type: EndowmentType;
-  published: boolean;
-};
-
-export type EndowmentOption = Pick<EndowmentBase, "id" | "name">;
-
-export type EndowmentProfileUpdate = {
-  //required
-  id: number;
-
-  /** optional, though set as required in this type
-  to force setting of default values - "", [], etc ..*/
-
-  active_in_countries: string[];
-  categories: {
-    general: string[];
-    sdgs: UNSDG_NUMS[];
-  };
-  charity_navigator_rating: string;
-  contact_email: string;
-  // categories_sdgs: UNSDG_NUMS[];
-  contributor_verification_required: boolean;
-  endow_designation: EndowDesignation | "";
   hq_country: string;
   image: string;
   kyc_donors_only: boolean;
   logo: string;
   name: string;
-
-  overview: string;
+  overview: string; //or empty
   program: Program[];
-  program_id: string;
   published: boolean;
   registration_number: string;
   sdgs: UNSDG_NUMS[];
-  social_media_urls: {
-    facebook: string;
-    linkedin: string;
-    twitter: string;
-    discord: string;
-    instagram: string;
-    youtube: string;
-    tiktok: string;
-  };
-  street_address: string;
+  social_media_urls: SocialMediaURLs;
+  street_address: string; //or empty
   tagline: string;
-  tier: EndowmentTierNum /** 1 - 3  */;
-  url: string | null;
+  url: string;
+};
+
+export type EndowmentProfile = EndowmentItem;
+export type EndowmentPrograms = Pick<EndowmentItem, "program">;
+
+export type EndowmentCard = Pick<
+  EndowmentItem,
+  | "id"
+  | "active_in_countries"
+  | "endow_designation"
+  | "hq_country"
+  | "kyc_donors_only"
+  | "logo"
+  | "name"
+  | "sdgs"
+  | "tagline"
+>;
+
+export type EndowmentLink = Pick<EndowmentItem, "name" | "logo">;
+
+export type EndowmentOption = Pick<EndowmentItem, "id" | "name">;
+
+//most are optional except id, but typed as required to force setting of default values - "", [], etc ..
+export type EndowmentProfileUpdate = Except<
+  EndowmentItem,
+  "endow_designation" | "fiscal_sponsored"
+> & {
+  endow_designation: EndowDesignation | "";
+  program_id: string;
 };
 
 export type SortDirection = "asc" | "desc";

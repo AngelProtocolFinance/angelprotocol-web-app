@@ -19,12 +19,7 @@ import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
   const { id } = useAdminContext();
-  const {
-    data: profile,
-    isLoading,
-    isFetching,
-    isError,
-  } = useProfileQuery({ endowId: id });
+  const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
 
   const content =
     isLoading || isFetching ? (

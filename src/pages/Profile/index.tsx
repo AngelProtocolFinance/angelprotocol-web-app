@@ -10,17 +10,12 @@ import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
-// import Unpublished from "./Unpublished";
-
 export default function Profile({ legacy = false }) {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useProfileQuery(
-    { endowId: numId, isLegacy: legacy },
-    {
-      skip: numId === 0,
-    }
-  );
+  const { isLoading, isError, data } = useProfileQuery(numId, {
+    skip: numId === 0,
+  });
 
   if (isLoading) return <Skeleton />;
   if (isError || !data) return <PageError />;

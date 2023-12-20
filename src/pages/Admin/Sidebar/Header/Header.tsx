@@ -4,7 +4,7 @@ import { useAdminContext } from "../../Context";
 
 export default function Header() {
   const { id } = useAdminContext();
-  const { data: profile, isLoading } = useProfileQuery({ endowId: id });
+  const { data: profile, isLoading } = useProfileQuery(id);
 
   return (
     <div

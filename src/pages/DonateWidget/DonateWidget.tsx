@@ -14,7 +14,7 @@ export default function DonateWidget() {
   const routeParams = useParams();
   const [searchParams] = useSearchParams();
   const endowId = idParamToNum(routeParams.id);
-  const queryState = useProfileQuery({ endowId }, { skip: endowId === 0 });
+  const queryState = useProfileQuery(endowId, { skip: endowId === 0 });
 
   /** Hide the Intercom chatbot */
   useEffect(() => {
