@@ -35,9 +35,9 @@ export type EndowDesignation =
   | "Other";
 
 type EndowmentBase = {
-  hq_country?: string;
+  hq_country: string;
   endow_designation: EndowDesignation;
-  active_in_countries?: string[];
+  active_in_countries: string[];
   sdgs: UNSDG_NUMS[];
   id: number;
   logo: string;
@@ -53,20 +53,20 @@ export type EndowmentProfile = EndowmentBase & {
   fiscal_sponsored: boolean;
   contact_email: string;
   image: string;
-  overview?: string;
+  overview: string; //or empty
   published: boolean;
-  registration_number?: string;
+  registration_number: string;
   social_media_urls: {
-    twitter?: string;
-    facebook?: string;
-    linkedin?: string;
-    instagram?: string;
-    discord?: string;
-    youtube?: string;
-    tiktok?: string;
+    twitter: string; //or empty
+    facebook: string; //or empty
+    linkedin: string; //or empty
+    instagram: string; //or empty
+    discord: string; //or empty
+    youtube: string; //or empty
+    tiktok: string; //or empty
   };
-  street_address?: string;
-  url?: string;
+  street_address: string; //or empty
+  url: string;
   wise_recipient_id: number;
 } & EndowmentBalances;
 

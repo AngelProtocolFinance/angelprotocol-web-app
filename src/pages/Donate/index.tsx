@@ -33,7 +33,7 @@ export default function Donate() {
           <>
             <Seo
               title={`Donate to ${profile.name} - ${APP_NAME}`}
-              description={`${(profile?.overview ?? "").slice(0, 140)}`}
+              description={profile.overview.slice(0, 140)}
               name={`${profile.name}`}
               image={`${profile.logo}`}
               url={`${DAPP_URL}/donate/${profile.id}`}

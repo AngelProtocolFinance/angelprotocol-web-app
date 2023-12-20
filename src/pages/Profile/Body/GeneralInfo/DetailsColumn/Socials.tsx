@@ -5,47 +5,17 @@ import Icon, { IconType } from "components/Icon";
 export default function Socials(
   props: Pick<EndowmentProfile, "social_media_urls">
 ) {
+  const { facebook, linkedin, twitter, discord, instagram, youtube, tiktok } =
+    props.social_media_urls;
   return (
     <div className="flex items-center gap-3">
-      {props.social_media_urls.facebook && (
-        <SocialsIcon
-          href={props.social_media_urls.facebook}
-          iconType="Facebook"
-        />
-      )}
-      {props.social_media_urls.linkedin && (
-        <SocialsIcon
-          href={props.social_media_urls.linkedin}
-          iconType="LinkedinIn"
-        />
-      )}
-      {props.social_media_urls.twitter && (
-        <SocialsIcon
-          href={props.social_media_urls.twitter}
-          iconType="Twitter"
-        />
-      )}
-      {props.social_media_urls.discord && (
-        <SocialsIcon
-          href={props.social_media_urls.discord}
-          iconType="Discord"
-        />
-      )}
-      {props.social_media_urls.instagram && (
-        <SocialsIcon
-          href={props.social_media_urls.instagram}
-          iconType="Instagram"
-        />
-      )}
-      {props.social_media_urls.youtube && (
-        <SocialsIcon
-          href={props.social_media_urls.youtube}
-          iconType="Youtube"
-        />
-      )}
-      {props.social_media_urls.tiktok && (
-        <SocialsIcon href={props.social_media_urls.tiktok} iconType="Tiktok" />
-      )}
+      {facebook && <SocialsIcon href={facebook} iconType="Facebook" />}
+      {linkedin && <SocialsIcon href={linkedin} iconType="LinkedinIn" />}
+      {twitter && <SocialsIcon href={twitter} iconType="Twitter" />}
+      {discord && <SocialsIcon href={discord} iconType="Discord" />}
+      {instagram && <SocialsIcon href={instagram} iconType="Instagram" />}
+      {youtube && <SocialsIcon href={youtube} iconType="Youtube" />}
+      {tiktok && <SocialsIcon href={tiktok} iconType="Tiktok" />}
     </div>
   );
 }
