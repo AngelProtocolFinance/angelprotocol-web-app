@@ -2,16 +2,6 @@ import { APIEnvironment, EndowmentType, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
-type EndowmentBalances = {
-  contributionsCount: number;
-  donationsBal: number;
-  payoutsMade: number;
-  payoutsPending: number;
-  sustainabilityFundBal: number;
-  totalContributions: number;
-  totalEarnings: number;
-};
-
 export type MileStone = {
   milestone_date: string; //isoDate
   milestone_description: string;
@@ -68,7 +58,7 @@ export type EndowmentProfile = EndowmentBase & {
   street_address: string; //or empty
   url: string;
   wise_recipient_id: number;
-} & EndowmentBalances;
+};
 
 export type EndowmentCard = EndowmentBase & {
   endow_type: EndowmentType;

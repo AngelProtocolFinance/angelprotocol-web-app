@@ -20,3 +20,13 @@ export type Token = {
   coingecko_denom: string;
   type: TokenType;
 };
+
+export type EndowmentBalances = {
+  contributionsCount: number;
+  donationsBal: number;
+  payoutsMade: number;
+  payoutsPending: number;
+  sustainabilityFundBal: number;
+  totalContributions: number;
+  totalEarnings: number;
+};

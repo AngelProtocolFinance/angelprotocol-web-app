@@ -1,12 +1,17 @@
 import { useProfileContext } from "pages/Profile/ProfileContext";
+import { useEndowBalanceQuery } from "services/apes";
 import { humanize } from "helpers";
 
 export default function Balances() {
-  const { totalContributions } = useProfileContext();
+  const { id } = useProfileContext();
+  const { data } = useEndowBalanceQuery(id);
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <Balance title="Total Contributions" amount={totalContributions || 0} />
+      <Balance
+        title="Total Contributions"
+        amount={data?.totalContributions ?? 0}
+      />
     </div>
   );
 }
