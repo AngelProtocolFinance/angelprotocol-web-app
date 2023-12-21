@@ -12,8 +12,8 @@ import {
   ApplicationVerdict,
   ApplicationsQueryParams,
   EndowListPaginatedAWSQueryRes,
+  Endowment,
   EndowmentCard,
-  EndowmentLink,
   EndowmentOption,
   EndowmentProfile,
   EndowmentsQueryParams,
@@ -114,19 +114,19 @@ export const aws = createApi({
       },
       transformResponse: (response: { data: any }) => response,
     }),
-    endowmentLink: builder.query<EndowmentLink, number>({
+    endowment: builder.query<
+      Endowment,
+      { id: number; fields?: (keyof Endowment)[] }
+    >({
       providesTags: ["profile"],
-      query: (id) => `v6/endowments/${id}?env=${apiEnv}&format=link`,
+      query: ({ id, fields }) => ({
+        url: `v6/endowments/${id}`,
+        params: {
+          env: apiEnv,
+          ...(fields ? { fields: fields.join(",") } : {}),
+        },
+      }),
     }),
-    profile: builder.query<EndowmentProfile, number>({
-      providesTags: ["profile"],
-      query: (id) => `v6/endowments/${id}?env=${apiEnv}&format=profile`,
-    }),
-    programs: builder.query<EndowmentProfile, number>({
-      providesTags: ["profile"],
-      query: (id) => `v6/endowments/${id}?env=${apiEnv}&format=programs`,
-    }),
-
     program: builder.query<Program, { endowId: number; programId: string }>({
       providesTags: ["profile", "program"],
       query: ({ endowId, programId }) =>
@@ -185,11 +185,9 @@ export const aws = createApi({
 export const {
   useWalletProfileQuery,
   useToggleBookmarkMutation,
+  useEndowmentQuery,
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,
-  useProfileQuery,
-  useProgramsQuery,
-  useEndowmentLinkQuery,
   useProgramQuery,
   useEditProfileMutation,
   useApplicationsQuery,
@@ -199,7 +197,7 @@ export const {
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
-    profile: { useLazyQuery: useLazyProfileQuery },
+    endowment: { useLazyQuery: useLazyProfileQuery },
     applications: { useLazyQuery: useLazyApplicationsQuery },
   },
   util: {

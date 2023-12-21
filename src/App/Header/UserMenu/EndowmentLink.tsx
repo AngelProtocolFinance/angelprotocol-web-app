@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useEndowmentLinkQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import QueryLoader from "components/QueryLoader";
@@ -7,7 +7,7 @@ import { appRoutes } from "constants/routes";
 
 type Props = { endowId: number };
 export default function EndowmentLink({ endowId }: Props) {
-  const query = useEndowmentLinkQuery(endowId);
+  const query = useEndowment(endowId, ["name", "logo"]);
   return (
     <QueryLoader
       queryState={query}

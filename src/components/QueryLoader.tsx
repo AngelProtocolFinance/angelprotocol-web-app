@@ -1,14 +1,7 @@
-import { BaseQueryFn } from "@reduxjs/toolkit/dist/query";
-import { TypedUseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 import { ReactElement } from "react";
+import { QueryState } from "types/third-party/redux";
 import Status, { ErrorStatus, LoadingStatus } from "components/Status";
 import { isEmpty } from "helpers";
-
-type Base = BaseQueryFn<any, unknown, unknown, {}, {}>;
-type QueryState<T> = Pick<
-  TypedUseQueryHookResult<T, any, Base>,
-  "isLoading" | "isError" | "data"
->;
 
 type Props<T> = {
   queryState: QueryState<T>;

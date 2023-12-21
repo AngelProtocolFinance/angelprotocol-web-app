@@ -1,5 +1,5 @@
 import { Navigate, useParams } from "react-router-dom";
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
@@ -13,9 +13,7 @@ import Skeleton from "./Skeleton";
 export default function Profile({ legacy = false }) {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useProfileQuery(numId, {
-    skip: numId === 0,
-  });
+  const { isLoading, isError, data } = useEndowment(numId, "all");
 
   if (isLoading) return <Skeleton />;
   if (isError || !data) return <PageError />;

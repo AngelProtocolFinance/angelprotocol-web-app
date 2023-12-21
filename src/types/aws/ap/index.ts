@@ -35,7 +35,7 @@ type SocialMediaURLs = {
   tiktok: string; //or empty
 };
 
-type EndowmentItem = {
+export type Endowment = {
   id: number;
   active_in_countries: string[];
   contact_email: string;
@@ -57,11 +57,10 @@ type EndowmentItem = {
   url: string;
 };
 
-export type EndowmentProfile = EndowmentItem;
-export type EndowmentPrograms = Pick<EndowmentItem, "program">;
+export type EndowmentProfile = Endowment;
 
 export type EndowmentCard = Pick<
-  EndowmentItem,
+  Endowment,
   | "id"
   | "active_in_countries"
   | "endow_designation"
@@ -72,14 +71,11 @@ export type EndowmentCard = Pick<
   | "sdgs"
   | "tagline"
 >;
-
-export type EndowmentLink = Pick<EndowmentItem, "name" | "logo">;
-
-export type EndowmentOption = Pick<EndowmentItem, "id" | "name">;
+export type EndowmentOption = Pick<Endowment, "id" | "name">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
-  EndowmentItem,
+  Endowment,
   "endow_designation" | "fiscal_sponsored"
 > & {
   endow_designation: EndowDesignation | "";

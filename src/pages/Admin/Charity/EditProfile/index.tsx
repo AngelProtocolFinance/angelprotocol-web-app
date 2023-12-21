@@ -5,7 +5,7 @@ import {
   EndowmentProfileUpdate,
   EndowmentProfile as TProfile,
 } from "types/aws";
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import { country } from "components/CountrySelector";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
@@ -19,16 +19,15 @@ import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
   const { id } = useAdminContext();
-  const { data: profile, isLoading, isFetching, isError } = useProfileQuery(id);
+  const { data: profile, isLoading, isError } = useEndowment(id, "all");
 
-  const content =
-    isLoading || isFetching ? (
-      <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
-    ) : isError || !profile ? (
-      <FormError errorMessage="Failed to load profile" />
-    ) : (
-      <FormWithContext {...profile} />
-    );
+  const content = isLoading ? (
+    <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
+  ) : isError || !profile ? (
+    <FormError errorMessage="Failed to load profile" />
+  ) : (
+    <FormWithContext {...profile} />
+  );
 
   return (
     <>
