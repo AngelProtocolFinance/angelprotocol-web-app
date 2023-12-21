@@ -9,6 +9,7 @@ export default defineConfig({
     appIcon: "./public/favicon.png",
     favicon: "./public/favicon.png",
     title: "Support an impact organization",
+    template: "./public/index.html",
   },
   plugins: [pluginReact(), pluginNodePolyfill()],
   tools: {
