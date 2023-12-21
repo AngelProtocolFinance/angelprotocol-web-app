@@ -6,10 +6,10 @@ import tailwind from "tailwindcss";
 export default defineConfig({
   server: { port: 4200 },
   html: {
-    appIcon: "./public/favicon.png",
-    favicon: "./public/favicon.png",
+    appIcon: "./src/assets/favicon.png",
+    favicon: "./src/assets/favicon.png",
     title: "Support an impact organization",
-    template: "./public/index.html",
+    template: "./index.html",
   },
   plugins: [pluginReact(), pluginNodePolyfill()],
   tools: {
