@@ -1,5 +1,6 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { vi } from "vitest";
 import Copier from "./Copier";
 
 // Mock copy button
@@ -17,7 +18,7 @@ Object.assign(navigator, {
 
 describe("Copier component test:", () => {
   test("copies correct text and able to change appearance when clicked", async () => {
-    jest.spyOn(navigator.clipboard, "writeText");
+    vi.spyOn(navigator.clipboard, "writeText");
 
     render(<CopyButton />);
 

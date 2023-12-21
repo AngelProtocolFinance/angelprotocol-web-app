@@ -1,8 +1,9 @@
 import { render } from "@testing-library/react";
+import { vi } from "vitest";
 import CsvExporter from "../CsvExporter";
 
-const mockChildComponent = jest.fn();
-jest.mock("react-csv", () => ({
+const mockChildComponent = vi.fn();
+vi.mock("react-csv", () => ({
   __esModule: true,
   CSVLink: (props: any) => {
     mockChildComponent(props);

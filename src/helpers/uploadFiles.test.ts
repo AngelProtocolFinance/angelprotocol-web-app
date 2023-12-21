@@ -1,3 +1,4 @@
+import { vi } from "vitest";
 import { APIs } from "constants/urls";
 import { Bucket, bucketURL, uploadFiles } from "./uploadFiles";
 
@@ -5,13 +6,17 @@ const TIME_STAMP = 123456789;
 const AUTH_TOKEN = "test";
 const bucket: Bucket = "endow-profiles";
 const baseURL = `https://${bucket}.${bucketURL}/${TIME_STAMP}`;
-global.fetch = jest.fn();
+global.fetch = vi.fn() as any;
 
-jest.mock("./jwt-token", () => ({ jwtToken: () => AUTH_TOKEN }));
+vi.mock("./jwt-token", () => ({ jwtToken: () => AUTH_TOKEN }));
+
+afterEach(() => {
+  vi.clearAllMocks();
+});
 
 describe("uploadFiles tests", () => {
   test("upload multiple files", async () => {
-    Date.now = jest.fn(() => TIME_STAMP);
+    Date.now = vi.fn(() => TIME_STAMP);
 
     const files = [new File([], "file1"), new File([], "file2")];
 
@@ -21,7 +26,7 @@ describe("uploadFiles tests", () => {
   });
 
   test("check generated call parameters", async () => {
-    Date.now = jest.fn(() => TIME_STAMP);
+    Date.now = vi.fn(() => TIME_STAMP);
 
     const file = new File([], " test file name");
 
