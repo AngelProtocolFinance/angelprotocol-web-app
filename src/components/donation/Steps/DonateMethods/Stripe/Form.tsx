@@ -10,10 +10,8 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { Currency } from "components/CurrencySelector";
 import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
-import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
-import { ErrorStatus } from "components/Status";
 import { CheckField, Field } from "components/form";
 import { requiredString } from "schemas/string";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
@@ -46,17 +44,7 @@ export default function Form(props: FormProps) {
   return (
     <QueryLoader
       queryState={queryState}
-      classes={{ container: "grid h-full w-full" }}
-      messages={{
-        loading: (
-          <LoaderRing thickness={10} classes="w-32 justify-self-center" />
-        ),
-        error: (
-          <ErrorStatus classes="justify-self-center">
-            Failed to load banking application
-          </ErrorStatus>
-        ),
-      }}
+      classes={{ container: "grid justify-center" }}
     >
       {(data) => (
         <Content {...props} currencies={data.supported_payment_currencies} />
