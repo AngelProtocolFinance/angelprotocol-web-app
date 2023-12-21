@@ -77,10 +77,7 @@ function Content({
     resolver: yupResolver(schema),
     defaultValues: {
       amount: defaultValues.amount,
-      currency: {
-        code: currencies[0].toUpperCase(),
-        name: currencies[0].toUpperCase(),
-      },
+      currency: { code: currencies[0].toUpperCase() },
       pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
       userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
     },
