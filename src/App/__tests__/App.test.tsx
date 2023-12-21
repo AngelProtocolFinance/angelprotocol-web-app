@@ -27,6 +27,10 @@ jest.mock("services/aws/leaderboard", () => ({
   }),
 }));
 
+jest.mock("react-use-intercom", () => ({
+  useIntercom: () => ({}),
+}));
+
 //test comment 3
 
 const heroText = /BETTER GIVING REDEFINES/i;
