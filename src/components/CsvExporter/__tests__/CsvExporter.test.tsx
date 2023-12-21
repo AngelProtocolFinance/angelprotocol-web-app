@@ -1,5 +1,5 @@
 import { render } from "@testing-library/react";
-import { vi } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import CsvExporter from "../CsvExporter";
 
 const mockChildComponent = vi.fn();
@@ -12,7 +12,7 @@ vi.mock("react-csv", () => ({
 }));
 
 describe("CsvExporter tests", () => {
-  it("downloads the file with provided name", async () => {
+  test("downloads the file with provided name", async () => {
     const headers = [
       { key: "key1", label: "Key1" },
       { key: "key2", label: "Key2" },
