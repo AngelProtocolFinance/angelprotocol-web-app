@@ -10,9 +10,11 @@ import { tags } from "./tags";
 type StripePaymentIntentParams = {
   /** Denominated in USD. */
   amount: number;
+  /**ISO 3166-1 alpha-3 code */
+  currency: string;
   endowmentId: number;
-  liquidSplitPct: string;
   kycData?: KYCData;
+  splitLiq: string;
 };
 
 export const apes = createApi({
@@ -27,15 +29,10 @@ export const apes = createApi({
       { clientSecret: string },
       StripePaymentIntentParams
     >({
-      query: ({ amount, endowmentId, liquidSplitPct, kycData }) => ({
+      query: (data) => ({
         url: `v2/fiat/stripe-proxy/apes/${apiEnv}`,
         method: "POST",
-        body: JSON.stringify({
-          amount,
-          endowmentId,
-          kycData,
-          splitLiq: liquidSplitPct,
-        }),
+        body: JSON.stringify(data),
       }),
     }),
     endowBalance: builder.query<EndowmentBalances, number>({
