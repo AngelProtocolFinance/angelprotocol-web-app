@@ -18,6 +18,7 @@ type Props = {
 };
 
 export default function BankDetails({ FormButtons, onSubmit }: Props) {
+  const [isSubmitting, setSubmitting] = useState(false);
   const [currency, setCurrency] = useState<Pick<WiseCurrency, "code" | "name">>(
     { code: "USD", name: "United States Dollar" }
   );
@@ -27,17 +28,25 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
   const [debouncedAmount] = useDebouncer(amount, 500);
   const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;
 
+  const handleSubmit: OnSubmit = async (...params) => {
+    setSubmitting(true);
+    await onSubmit(...params);
+    setSubmitting(false);
+  };
+
   return (
     <div className="grid gap-6">
       <CurrencySelector
         onChange={(c) => setCurrency(c)}
         value={currency}
         classes={{ combobox: "w-full md:w-80" }}
+        disabled={isSubmitting}
       />
       <ExpectedFunds
         value={amount}
         onChange={(amount) => setAmount(amount)}
         classes={{ input: "md:w-80" }}
+        disabled={isSubmitting}
       />
 
       <Divider />
@@ -45,8 +54,9 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
       <RecipientDetails
         amount={amnt}
         currency={currency.code}
+        disabled={isSubmitting}
         FormButtons={FormButtons}
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
       />
     </div>
   );

@@ -7,13 +7,20 @@ import { isEmpty } from "helpers";
 import RecipientDetailsForm from "./RecipientDetailsForm";
 
 type Props = {
+  disabled: boolean;
   currency: string;
   amount: number;
   FormButtons: IFormButtons;
   onSubmit: OnSubmit;
 };
 
-function RecipientDetails({ currency, amount, FormButtons, onSubmit }: Props) {
+function RecipientDetails({
+  amount,
+  currency,
+  disabled,
+  FormButtons,
+  onSubmit,
+}: Props) {
   const { data, isLoading, isError, isFetching } = useRequirementsQuery(
     {
       amount,
@@ -59,7 +66,7 @@ function RecipientDetails({ currency, amount, FormButtons, onSubmit }: Props) {
         <select
           value={reqIdx}
           onChange={(e) => setSelectedIdx(+e.target.value)}
-          disabled={isFetching}
+          disabled={disabled || isFetching}
           className="field-input"
         >
           {requirements.map((v, i) => (
@@ -71,7 +78,7 @@ function RecipientDetails({ currency, amount, FormButtons, onSubmit }: Props) {
       </div>
 
       <RecipientDetailsForm
-        disabled={isFetching}
+        disabled={disabled || isFetching}
         quoteId={data?.quoteId ?? ""}
         type={requirements[reqIdx].type}
         currency={currency}
