@@ -1,22 +1,20 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { ObjectSchema, number, object } from "yup";
-import { Props } from "./types";
+import { FormValues, Props } from "./types";
 import { SchemaShape } from "schemas/types";
+import { Currency } from "components/CurrencySelector";
 import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
+import { requiredString } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
 import AdvancedOptions from "../../../AdvancedOptions";
-
-type FormValues = {
-  amount: number;
-  pctLiquidSplit: number;
-  userOptForKYC: boolean;
-};
+import CurrencySelectorField from "./CurrencySelectorField";
 
 type FormProps = Props & {
   defaultValues: Partial<FormValues>;
@@ -30,10 +28,12 @@ export default function Form({
   widgetConfig,
   onSubmit,
 }: FormProps) {
+  const [currencies, setCurrencies] = useState<Currency[]>([]);
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
       amount: defaultValues.amount,
+      currency: { code: "", name: "" },
       pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
       userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
     },
@@ -50,6 +50,10 @@ export default function Form({
           name="amount"
           label="Donation amount (USD)"
           classes={{ label: "font-bold" }}
+        />
+        <CurrencySelectorField<FormValues>
+          name="currency"
+          currencies={currencies}
         />
         {!recipient.isKYCRequired && (
           // if KYC is required, the checkbox is redundant
@@ -124,4 +128,7 @@ const schema = object<any, SchemaShape<FormValues>>({
     .required("required")
     .positive("must be greater than zero")
     .typeError("must be a number"),
+  currency: object<any, SchemaShape<Currency>>({
+    code: requiredString.length(3),
+  }),
 }) as ObjectSchema<FormValues>;
