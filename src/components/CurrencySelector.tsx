@@ -1,16 +1,18 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
-import { Currency } from "./types";
 import { WiseCurrency } from "types/aws";
-import { DrawerIcon } from "../Icon";
-import { Label } from "../form";
-import CurrencyOptions from "./CurrencyOptions";
+import CurrencyOptions from "./CurrencySelector2/CurrencyOptions";
+import { DrawerIcon } from "./Icon";
+import { Label } from "./form";
+
+export type Currency = { code: string; name?: string };
 
 type Props = {
   classes?: { combobox?: string };
   currencies: Currency[];
   disabled: boolean;
   value: Currency;
+  label: string;
   onChange: (currency: Currency) => void;
 };
 
@@ -22,7 +24,7 @@ export default function CurrencySelector(props: Props) {
     const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
     const matchesCode = c.code.toLowerCase().includes(formatQuery);
     const matchesName = c.name
-      .toLowerCase()
+      ?.toLowerCase()
       .replace(/\s+/g, "") // ignore spaces and casing
       .includes(formatQuery);
 
@@ -32,7 +34,7 @@ export default function CurrencySelector(props: Props) {
   return (
     <div className="field">
       <Label htmlFor="wise__currency" required aria-required>
-        Select your bank account currency:
+        {props.label}
       </Label>
       <Combobox
         by="code"

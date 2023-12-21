@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { IFormButtons, OnSubmit } from "./types";
-import { WiseCurrency } from "types/aws";
 import { useCurrencisQuery } from "services/aws/wise";
 import Divider from "components/Divider";
 import useDebouncer from "hooks/useDebouncer";
-import CurrencySelector from "../CurrencySelector";
+import CurrencySelector, { Currency } from "../CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 
@@ -20,9 +19,10 @@ type Props = {
 
 export default function BankDetails({ FormButtons, onSubmit }: Props) {
   const [isSubmitting, setSubmitting] = useState(false);
-  const [currency, setCurrency] = useState<Pick<WiseCurrency, "code" | "name">>(
-    { code: "USD", name: "United States Dollar" }
-  );
+  const [currency, setCurrency] = useState<Currency>({
+    code: "USD",
+    name: "United States Dollar",
+  });
   const [amount, setAmount] = useState(
     DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
   );
@@ -45,6 +45,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
         value={currency}
         classes={{ combobox: "w-full md:w-80" }}
         disabled={isSubmitting}
+        label="Select your bank account currency:"
       />
       <ExpectedFunds
         value={amount}
