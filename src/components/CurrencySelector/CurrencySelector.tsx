@@ -1,17 +1,14 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
+import { Currency } from "./types";
 import { WiseCurrency } from "types/aws";
+import { DrawerIcon } from "../Icon";
+import { Label } from "../form";
 import CurrencyOptions from "./CurrencyOptions";
-import { DrawerIcon } from "./Icon";
-import { Label } from "./form";
-
-export type Currency = {
-  code: string;
-  name: string;
-};
 
 type Props = {
   classes?: { combobox?: string };
+  currencies: Currency[];
   disabled: boolean;
   value: Currency;
   onChange: (currency: Currency) => void;
@@ -19,6 +16,18 @@ type Props = {
 
 export default function CurrencySelector(props: Props) {
   const [query, setQuery] = useState("");
+
+  const filteredCurrencies = props.currencies.filter((c) => {
+    // check whether query matches either the currency name or any of its keywords
+    const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
+    const matchesCode = c.code.toLowerCase().includes(formatQuery);
+    const matchesName = c.name
+      .toLowerCase()
+      .replace(/\s+/g, "") // ignore spaces and casing
+      .includes(formatQuery);
+
+    return matchesCode || matchesName;
+  });
 
   return (
     <div className="field">
@@ -58,7 +67,7 @@ export default function CurrencySelector(props: Props) {
 
         <CurrencyOptions
           classes="absolute top-full mt-2 z-10"
-          searchText={query}
+          currencies={filteredCurrencies}
         />
       </Combobox>
     </div>

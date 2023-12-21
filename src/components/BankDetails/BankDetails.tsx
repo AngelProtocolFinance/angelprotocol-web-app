@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { IFormButtons, OnSubmit } from "./types";
 import { WiseCurrency } from "types/aws";
+import { useCurrencisQuery } from "services/aws/wise";
 import Divider from "components/Divider";
 import useDebouncer from "hooks/useDebouncer";
 import CurrencySelector from "../CurrencySelector";
@@ -34,9 +35,12 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
     setSubmitting(false);
   };
 
+  const { data: currencies = [] } = useCurrencisQuery({});
+
   return (
     <div className="grid gap-6">
       <CurrencySelector
+        currencies={currencies}
         onChange={(c) => setCurrency(c)}
         value={currency}
         classes={{ combobox: "w-full md:w-80" }}
