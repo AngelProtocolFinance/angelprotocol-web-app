@@ -12,9 +12,7 @@ function Footer({ linkGroups, socials }: Props) {
     if (!node) return;
     const observer = new IntersectionObserver(
       ([e]) => {
-        const intercom = document.querySelector(
-          ".intercom-lightweight-app-launcher"
-        );
+        const intercom = document.querySelector(".intercom-launcher");
         intercom?.classList.toggle("hidden", e.isIntersecting);
       },
       { threshold: [0.5] }
