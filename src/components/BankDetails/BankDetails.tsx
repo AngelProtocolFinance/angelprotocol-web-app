@@ -82,6 +82,7 @@ function Content({
         onChange={setTargetCurrency}
         classes={{ combobox: "w-full md:w-80" }}
         disabled={isSubmitting}
+        label="Select your bank account currency:"
       />
       <ExpectedFunds
         classes={{ input: "md:w-80" }}

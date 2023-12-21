@@ -12,9 +12,10 @@ export type Currency = {
 
 type Props = {
   classes?: { combobox?: string };
-  disabled: boolean;
-  value: Currency;
   currencies: Currency[];
+  disabled: boolean;
+  label: string;
+  value: Currency;
   onChange: (currency: Currency) => void;
 };
 
@@ -44,7 +45,7 @@ function CurrencySelector(props: Props) {
   return (
     <div className="field">
       <Label htmlFor={inputRef.current?.id} required aria-required>
-        Select your bank account currency:
+        {props.label}
       </Label>
       <Combobox
         value={props.value}

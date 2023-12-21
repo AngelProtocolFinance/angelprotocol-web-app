@@ -22,11 +22,12 @@ export default function CurrencySelectorField<T extends FieldValues>(
 
   return (
     <CurrencySelector
-      value={field.value}
-      onChange={field.onChange}
       classes={props.classes}
       currencies={props.currencies.map((x) => ({ code: x.toUpperCase() }))}
       disabled={!!props.disabled || formState.isSubmitting}
+      label="Select your donation currency:"
+      onChange={field.onChange}
+      value={field.value}
     />
   );
 }
