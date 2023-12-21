@@ -10,7 +10,7 @@
     "test": "react-app-rewired test --colors",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
     "lint-staged": "lint-staged --config lint-staged.js",
-    "serve-build": "yarn build && yarn dlx serve -s build -p 4200",
+    "preview": "rsbuild preview",
     "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "husky install"
   },

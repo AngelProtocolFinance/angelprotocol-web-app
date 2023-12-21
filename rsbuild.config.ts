@@ -11,6 +11,7 @@ export default defineConfig({
     title: "Support an impact organization",
     template: "./index.html",
   },
+  output: { distPath: { root: "build" } },
   plugins: [pluginReact(), pluginNodePolyfill()],
   tools: {
     postcss: {
