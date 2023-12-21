@@ -1,4 +1,5 @@
 import { memo } from "react";
+import { useIntercom } from "react-use-intercom";
 import { LinkGroup, SocialMediaLink } from "../types";
 import { APP_NAME } from "constants/env";
 import Links from "./Links";
@@ -8,8 +9,26 @@ import Socials from "./Socials";
 type Props = { linkGroups: LinkGroup[]; socials: SocialMediaLink[] };
 
 function Footer({ linkGroups, socials }: Props) {
+  const { shutdown, boot } = useIntercom();
+
+  function ref(node: HTMLElement | null) {
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        //more than 50% of footer is visible
+        if (e.isIntersecting) return shutdown();
+        boot(); //re-boots uses cached resources
+      },
+      { threshold: [0.5] }
+    );
+    observer.observe(node);
+  }
+
   return (
-    <footer className="flex flex-col items-center text-white bg-blue dark:bg-blue-d3">
+    <footer
+      ref={ref}
+      className="flex flex-col items-center text-white bg-blue dark:bg-blue-d3"
+    >
       <section className="padded-container flex flex-col gap-8 items-center justify-center w-full pt-8 pb-10 lg:flex-row lg:items-start lg:justify-between lg:gap-0 lg:pb-16">
         <Links groups={linkGroups} />
         <Newsletter />
