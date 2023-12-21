@@ -7,7 +7,7 @@ import { Label } from "./form";
 
 export type Currency = {
   code: string;
-  name: string;
+  name?: string;
 };
 
 type Props = {
@@ -24,11 +24,11 @@ function currencyFilter(query: string): (value: Currency) => boolean {
     const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
     const matchesCode = currency.code.toLowerCase().includes(formatQuery);
     const matchesName = currency.name
-      .toLowerCase()
+      ?.toLowerCase()
       .replace(/\s+/g, "") // ignore spaces and casing
       .includes(formatQuery);
 
-    return matchesCode || matchesName;
+    return matchesCode || !!matchesName;
   };
 }
 
