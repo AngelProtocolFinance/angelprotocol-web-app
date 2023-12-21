@@ -80,7 +80,7 @@ function Content({
       <form onSubmit={submit} className="grid gap-4">
         <Field<FormValues>
           name="amount"
-          label="Donation amount (USD)"
+          label="Donation amount"
           classes={{ label: "font-bold" }}
         />
         <CurrencySelectorField<FormValues>
