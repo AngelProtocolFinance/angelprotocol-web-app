@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "react-app-rewired --max_old_space_size=4096 build",
+    "build": "rsbuild build",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "rsbuild dev",
     "test": "react-app-rewired test --colors",
