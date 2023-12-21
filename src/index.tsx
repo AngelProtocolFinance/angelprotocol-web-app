@@ -4,7 +4,6 @@ import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { IntercomProvider } from "react-use-intercom";
 import Loader from "components/Loader";
 import { store } from "store/store";
 import ErrorBoundary from "errors/ErrorBoundary";
@@ -35,9 +34,7 @@ root.render(
         <BrowserRouter>
           <Suspense fallback={<LoaderComponent />}>
             <Authenticator.Provider>
-              <IntercomProvider appId="fh3v40sb" autoBoot>
-                <App />
-              </IntercomProvider>
+              <App />
             </Authenticator.Provider>
           </Suspense>
         </BrowserRouter>

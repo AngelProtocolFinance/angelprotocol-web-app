@@ -1,5 +1,4 @@
 import { memo } from "react";
-import { useIntercom } from "react-use-intercom";
 import { LinkGroup, SocialMediaLink } from "../types";
 import { APP_NAME } from "constants/env";
 import Links from "./Links";
@@ -9,15 +8,15 @@ import Socials from "./Socials";
 type Props = { linkGroups: LinkGroup[]; socials: SocialMediaLink[] };
 
 function Footer({ linkGroups, socials }: Props) {
-  const { shutdown, boot } = useIntercom();
-
   function ref(node: HTMLElement | null) {
     if (!node) return;
     const observer = new IntersectionObserver(
       ([e]) => {
-        //more than 50% of footer is visible
-        if (e.isIntersecting) return shutdown();
-        boot(); //re-boots uses cached resources
+        const intercom = document.querySelector(
+          ".intercom-lightweight-app-launcher"
+        );
+        console.log(intercom);
+        intercom?.classList.toggle("hidden", e.isIntersecting);
       },
       { threshold: [0.5] }
     );
