@@ -7,7 +7,7 @@ import { appRoutes } from "constants/routes";
 
 type Props = { endowId: number };
 export default function EndowmentLink({ endowId }: Props) {
-  const query = useEndowment(endowId, ["name", "logo"]);
+  const query = useEndowment(endowId, ["logo", "name"]);
   return (
     <QueryLoader
       queryState={query}

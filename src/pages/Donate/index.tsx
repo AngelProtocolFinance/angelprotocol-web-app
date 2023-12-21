@@ -10,13 +10,13 @@ export default function Donate() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
   const queryState = useEndowment(numId, [
-    "name",
-    "image",
-    "logo",
-    "overview",
-    "kyc_donors_only",
     "fiscal_sponsored",
     "id",
+    "image",
+    "kyc_donors_only",
+    "logo",
+    "name",
+    "overview",
   ]);
 
   return (
