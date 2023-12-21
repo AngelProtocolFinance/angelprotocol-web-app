@@ -5,7 +5,7 @@ import { isEmpty } from "helpers";
 
 type Props<T> = {
   queryState: QueryState<T>;
-  messages: {
+  messages?: {
     loading?: string | ReactElement;
     error?: string | ReactElement;
     empty?: T extends any[] ? string | ReactElement : never;
@@ -20,7 +20,7 @@ type Props<T> = {
 export default function QueryLoader<T>({
   queryState,
   classes = {},
-  messages,
+  messages = {},
   children,
   filterFn,
 }: Props<T>) {
