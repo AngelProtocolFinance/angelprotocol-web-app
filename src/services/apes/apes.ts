@@ -22,17 +22,6 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
-    tokens: builder.query<Token[], ChainID>({
-      query: (chainID) => `v1/tokens/${chainID}`,
-    }),
-    getStripePaymentStatus: builder.query<
-      Pick<PaymentIntent, "status">,
-      { paymentIntentId: string }
-    >({
-      query: ({ paymentIntentId }) => ({
-        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?payment_intent=${paymentIntentId}`,
-      }),
-    }),
     createStripePaymentIntent: builder.mutation<
       { clientSecret: string },
       StripePaymentIntentParams
@@ -48,13 +37,33 @@ export const apes = createApi({
         }),
       }),
     }),
+    getStripePaymentStatus: builder.query<
+      Pick<PaymentIntent, "status">,
+      { paymentIntentId: string }
+    >({
+      query: ({ paymentIntentId }) => ({
+        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?payment_intent=${paymentIntentId}`,
+      }),
+    }),
+    stripeCurrencies: builder.query<
+      { supported_payment_currencies: string[] }, // Array of ISO 3166-1 alpha-3 codes
+      { country_code: string } // ISO 3166-1 alpha-2 code
+    >({
+      query: ({ country_code }) => ({
+        url: `v2/fiat/stripe-proxy/apes/${apiEnv}/${country_code}`,
+      }),
+    }),
+    tokens: builder.query<Token[], ChainID>({
+      query: (chainID) => `v1/tokens/${chainID}`,
+    }),
   }),
 });
 
 export const {
-  useTokensQuery,
-  useGetStripePaymentStatusQuery,
   useCreateStripePaymentIntentMutation,
+  useGetStripePaymentStatusQuery,
+  useStripeCurrenciesQuery,
+  useTokensQuery,
   util: {
     invalidateTags: invalidateApesTags,
     updateQueryData: updateApesQueryData,
