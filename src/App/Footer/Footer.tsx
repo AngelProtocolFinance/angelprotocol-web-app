@@ -15,7 +15,6 @@ function Footer({ linkGroups, socials }: Props) {
         const intercom = document.querySelector(
           ".intercom-lightweight-app-launcher"
         );
-        console.log(intercom);
         intercom?.classList.toggle("hidden", e.isIntersecting);
       },
       { threshold: [0.5] }
