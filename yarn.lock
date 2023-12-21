@@ -4443,7 +4443,6 @@ __metadata:
     prettier: "npm:3.0.1"
     quill: "npm:^1.3.7"
     react: "npm:^18.2.0"
-    react-app-rewired: "npm:^2.2.1"
     react-csv: "npm:^2.2.2"
     react-dom: "npm:^18.2.0"
     react-dropzone: "npm:^14.2.2"
@@ -4458,7 +4457,6 @@ __metadata:
     tsc-files: "npm:^1.1.3"
     type-fest: "npm:^3.9.0"
     typescript: "npm:<4.8.0"
-    web-vitals: "npm:3.4.0"
     yup: "npm:1.3.0"
   languageName: unknown
   linkType: soft
@@ -9380,19 +9378,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-app-rewired@npm:^2.2.1":
-  version: 2.2.1
-  resolution: "react-app-rewired@npm:2.2.1"
-  dependencies:
-    semver: "npm:^5.6.0"
-  peerDependencies:
-    react-scripts: ">=2.1.3"
-  bin:
-    react-app-rewired: bin/index.js
-  checksum: 4ce0b5ea9537b8d2e123146ac023295a68e3952bc63b90426a1f95fc777b0c15067ec5f382962d30bb957d30c5928ae90f3499d5911d03a2202253fd84e55fb2
-  languageName: node
-  linkType: hard
-
 "react-csv@npm:^2.2.2":
   version: 2.2.2
   resolution: "react-csv@npm:2.2.2"
@@ -9953,15 +9938,6 @@ __metadata:
     node-gyp: "npm:latest"
     node-gyp-build: "npm:^4.2.0"
   checksum: 8b45820cd90fd2f95cc8fdb9bf8a71e572de09f2311911ae461a951ffa9e30c99186a129d0f1afeb380dd67eca0c10493f8a7513c39063fda015e99995088e3b
-  languageName: node
-  linkType: hard
-
-"semver@npm:^5.6.0":
-  version: 5.7.2
-  resolution: "semver@npm:5.7.2"
-  bin:
-    semver: bin/semver
-  checksum: fca14418a174d4b4ef1fecb32c5941e3412d52a4d3d85165924ce3a47fbc7073372c26faf7484ceb4bbc2bde25880c6b97e492473dc7e9708fdfb1c6a02d546e
   languageName: node
   linkType: hard
 
@@ -11175,13 +11151,6 @@ __metadata:
     glob-to-regexp: "npm:^0.4.1"
     graceful-fs: "npm:^4.1.2"
   checksum: 4280b45bc4b5d45d5579113f2a4af93b67ae1b9607cc3d86ae41cdd53ead10db5d9dc3237f24256d05ef88b28c69a02712f78e434cb7ecc8edaca134a56e8cab
-  languageName: node
-  linkType: hard
-
-"web-vitals@npm:3.4.0":
-  version: 3.4.0
-  resolution: "web-vitals@npm:3.4.0"
-  checksum: 9e6ed5a1a86169f335887ecc63a547297788d3c10e9fb82accb543cf59afd2eefcf7bc24421dfcb4e31551169650a93b6c220b29935a421ca34edbd25c3fa613
   languageName: node
   linkType: hard
 
