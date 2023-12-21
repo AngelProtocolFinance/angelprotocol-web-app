@@ -54,7 +54,7 @@ export const apes = createApi({
       { country_code: string } // ISO 3166-1 alpha-2 code
     >({
       query: ({ country_code }) => ({
-        url: `v2/fiat/stripe-proxy/apes/${apiEnv}/${country_code}`,
+        url: `v2/fiat/stripe-proxy/apes/${apiEnv}/currencies/${country_code}`,
       }),
     }),
     tokens: builder.query<Token[], ChainID>({

@@ -25,10 +25,7 @@ export default function CurrencySelectorField<T extends FieldValues>(
       value={field.value}
       onChange={field.onChange}
       classes={props.classes}
-      currencies={props.currencies.map((x) => ({
-        code: x,
-        name: x.toUpperCase(),
-      }))}
+      currencies={props.currencies.map((x) => ({ code: x, name: x }))}
       disabled={!!props.disabled || formState.isSubmitting}
     />
   );
