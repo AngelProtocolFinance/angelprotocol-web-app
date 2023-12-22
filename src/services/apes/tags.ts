@@ -1,1 +1,1 @@
-export const tags = ["chain", "donations", "tokens", "balance"] as const;
+export const tags = ["chain", "donations", "tokens"] as const;

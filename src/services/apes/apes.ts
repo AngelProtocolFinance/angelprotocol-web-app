@@ -38,7 +38,6 @@ export const apes = createApi({
       }
     ),
     endowBalance: builder.query<EndowmentBalances, number>({
-      providesTags: ["balance"],
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
   }),
