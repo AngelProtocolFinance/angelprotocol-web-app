@@ -8,8 +8,23 @@ import Socials from "./Socials";
 type Props = { linkGroups: LinkGroup[]; socials: SocialMediaLink[] };
 
 function Footer({ linkGroups, socials }: Props) {
+  function ref(node: HTMLElement | null) {
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        const intercom = document.querySelector(".intercom-launcher");
+        intercom?.classList.toggle("hidden", e.isIntersecting);
+      },
+      { threshold: [0.5] }
+    );
+    observer.observe(node);
+  }
+
   return (
-    <footer className="flex flex-col items-center text-white bg-blue dark:bg-blue-d3">
+    <footer
+      ref={ref}
+      className="flex flex-col items-center text-white bg-blue dark:bg-blue-d3"
+    >
       <section className="padded-container flex flex-col gap-8 items-center justify-center w-full pt-8 pb-10 lg:flex-row lg:items-start lg:justify-between lg:gap-0 lg:pb-16">
         <Links groups={linkGroups} />
         <Newsletter />
