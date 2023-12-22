@@ -5,10 +5,10 @@ import { useEndowmentQuery } from "./aws";
 type ArrayValues<T extends readonly unknown[]> = T[number];
 
 type K = keyof Endowment;
-export function useEndowment<T extends K[] | "all">(id: number, fields: T) {
+export function useEndowment<T extends K[]>(id: number, fields?: T) {
   const query = useEndowmentQuery({
     id,
-    ...(fields === "all" ? {} : { fields }),
+    fields,
   });
 
   return query as QueryState<
