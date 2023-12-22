@@ -26,13 +26,20 @@ export type EndowDesignation =
   | "Other";
 
 type SocialMediaURLs = {
-  twitter: string; //or empty
-  facebook: string; //or empty
-  linkedin: string; //or empty
-  instagram: string; //or empty
-  discord: string; //or empty
-  youtube: string; //or empty
-  tiktok: string; //or empty
+  /** empty string by default */
+  twitter: string;
+  /** empty string by default */
+  facebook: string;
+  /** empty string by default */
+  linkedin: string;
+  /** empty string by default */
+  instagram: string;
+  /** empty string by default */
+  discord: string;
+  /** empty string by default */
+  youtube: string;
+  /** empty string by default */
+  tiktok: string;
 };
 
 export type Endowment = {
@@ -46,13 +53,15 @@ export type Endowment = {
   kyc_donors_only: boolean;
   logo: string;
   name: string;
-  overview: string; //or empty
+  /** empty string by default */
+  overview: string;
   program: Program[];
   published: boolean;
   registration_number: string;
   sdgs: UNSDG_NUMS[];
   social_media_urls: SocialMediaURLs;
-  street_address: string; //or empty
+  /** empty string by default */
+  street_address: string;
   tagline: string;
   url: string;
 };
