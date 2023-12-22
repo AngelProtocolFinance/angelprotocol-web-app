@@ -19,15 +19,21 @@ import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
   const { id } = useAdminContext();
-  const { data: profile, isLoading, isError } = useEndowment(id, "all");
+  const {
+    data: profile,
+    isLoading,
+    isError,
+    isFetching,
+  } = useEndowment(id, "all");
 
-  const content = isLoading ? (
-    <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
-  ) : isError || !profile ? (
-    <FormError errorMessage="Failed to load profile" />
-  ) : (
-    <FormWithContext {...profile} />
-  );
+  const content =
+    isLoading || isFetching ? (
+      <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
+    ) : isError || !profile ? (
+      <FormError errorMessage="Failed to load profile" />
+    ) : (
+      <FormWithContext {...profile} />
+    );
 
   return (
     <>

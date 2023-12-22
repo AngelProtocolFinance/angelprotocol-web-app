@@ -20,14 +20,15 @@ export default function useCards() {
     {}
   );
 
-  const { isLoading, data, isError, originalArgs } = useEndowmentCardsQuery({
-    query: searchText,
-    sort: sort ? `${sort.key}+${sort.direction}` : undefined,
-    page: 1, // always starts at page 1
-    hits: 15,
-    published: "true",
-    ..._params,
-  });
+  const { isLoading, isFetching, data, isError, originalArgs } =
+    useEndowmentCardsQuery({
+      query: searchText,
+      sort: sort ? `${sort.key}+${sort.direction}` : undefined,
+      page: 1, // always starts at page 1
+      hits: 15,
+      published: "true",
+      ..._params,
+    });
 
   const [loadMore, { isLoading: isLoadingNextPage }] =
     useLazyEndowmentCardsQuery();
@@ -58,5 +59,13 @@ export default function useCards() {
   // initial assumption is that there's no more to load until we get first res from query
   const hasMore = (data?.Page || 0) < (data?.NumOfPages || 0);
 
-  return { hasMore, isLoading, isLoadingNextPage, loadNextPage, data, isError };
+  return {
+    hasMore,
+    isLoading,
+    isFetching,
+    isLoadingNextPage,
+    loadNextPage,
+    data,
+    isError,
+  };
 }

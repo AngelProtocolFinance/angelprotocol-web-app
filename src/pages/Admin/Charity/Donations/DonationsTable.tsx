@@ -9,10 +9,17 @@ import Table from "./Table";
 export default function DonationsTable({ classes = "" }) {
   const { id: endowmentId } = useAdminContext();
 
-  const { data, isLoading, isError, hasMore, loadNextPage, isLoadingNextPage } =
-    usePaginatedDonationRecords({
-      endowmentId: endowmentId.toString(),
-    });
+  const {
+    data,
+    isLoading,
+    isFetching,
+    isError,
+    hasMore,
+    loadNextPage,
+    isLoadingNextPage,
+  } = usePaginatedDonationRecords({
+    endowmentId: endowmentId.toString(),
+  });
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
   return (
@@ -21,6 +28,7 @@ export default function DonationsTable({ classes = "" }) {
         queryState={{
           data: data?.Items,
           isLoading,
+          isFetching,
           isError,
         }}
         messages={{

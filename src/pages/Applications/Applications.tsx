@@ -49,7 +49,8 @@ function Applications() {
       <QueryLoader
         queryState={{
           data: data?.Items,
-          isLoading: isLoading,
+          isLoading,
+          isFetching,
           isError: isError,
         }}
         messages={{
