@@ -33,7 +33,7 @@ export default function KYC(props: Props) {
   return (
     <FormProvider {...methods}>
       <Modal
-        className={`${formStyle} fixed-center z-20 rounded-md p-6 w-full max-w-xl max-h-[85vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray`}
+        className={`${formStyle} bg-white fixed-center z-20 rounded-md p-6 w-full max-w-xl max-h-[85vh] overflow-y-auto scroller shadow-lg border-none dark:border-2 dark:border-bluegray`}
       >
         <Form {...props} />
       </Modal>
