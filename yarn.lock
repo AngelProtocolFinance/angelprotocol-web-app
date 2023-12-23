@@ -4480,7 +4480,7 @@ __metadata:
     source-map-explorer: "npm:^2.5.2"
     tailwindcss: "npm:3.4.0"
     tsc-files: "npm:1.1.4"
-    type-fest: "npm:^3.9.0"
+    type-fest: "npm:4.8.3"
     typescript: "npm:5.3.3"
     vite-tsconfig-paths: "npm:4.2.2"
     vitest: "npm:1.1.0"
@@ -10869,6 +10869,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"type-fest@npm:4.8.3":
+  version: 4.8.3
+  resolution: "type-fest@npm:4.8.3"
+  checksum: 90e440347c542282b0a92bb181fb30af529be6d6820dd7ec6141309f2ca143855a8fbca18969623b19bc15a3dcce6000af19f97cae81a39fbd2638c15a06d078
+  languageName: node
+  linkType: hard
+
 "type-fest@npm:^0.20.2":
   version: 0.20.2
   resolution: "type-fest@npm:0.20.2"
@@ -10894,13 +10901,6 @@ __metadata:
   version: 2.19.0
   resolution: "type-fest@npm:2.19.0"
   checksum: 7bf9e8fdf34f92c8bb364c0af14ca875fac7e0183f2985498b77be129dc1b3b1ad0a6b3281580f19e48c6105c037fb966ad9934520c69c6434d17fd0af4eed78
-  languageName: node
-  linkType: hard
-
-"type-fest@npm:^3.9.0":
-  version: 3.13.1
-  resolution: "type-fest@npm:3.13.1"
-  checksum: 9a8a2359ada34c9b3affcaf3a8f73ee14c52779e89950db337ce66fb74c3399776c697c99f2532e9b16e10e61cfdba3b1c19daffb93b338b742f0acd0117ce12
   languageName: node
   linkType: hard
 
