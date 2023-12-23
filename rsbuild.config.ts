@@ -1,9 +1,9 @@
-import { defineConfig } from "@rsbuild/core";
+import { RsbuildConfig, defineConfig } from "@rsbuild/core";
 import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill";
 import { pluginReact } from "@rsbuild/plugin-react";
 import tailwind from "tailwindcss";
 
-export default defineConfig({
+const config: RsbuildConfig = {
   server: { port: 4200 },
   html: {
     appIcon: "./src/assets/favicon.png",
@@ -20,4 +20,6 @@ export default defineConfig({
       },
     },
   },
-});
+};
+
+export default defineConfig(config);
