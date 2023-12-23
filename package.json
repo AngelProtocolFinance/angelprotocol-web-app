@@ -14,11 +14,6 @@
     "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "husky install"
   },
-  "jest": {
-    "moduleNameMapper": {
-      "@aws-amplify/ui-react/styles.css": "@aws-amplify/ui-react/dist/styles.css"
-    }
-  },
   "eslintConfig": {
     "extends": [
       "react-app",
