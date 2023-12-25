@@ -6177,6 +6177,9 @@ __metadata:
     vite-tsconfig-paths: "npm:4.2.2"
     vitest: "npm:1.1.0"
     yup: "npm:1.3.0"
+  peerDependenciesMeta:
+    postcss:
+      optional: true
   languageName: unknown
   linkType: soft
 
