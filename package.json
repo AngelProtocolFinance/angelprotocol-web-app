@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "build": "rsbuild build",
-    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "start": "rsbuild dev",
     "test": "vitest",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
@@ -110,7 +109,6 @@
     "postcss-import": "15.1.0",
     "prettier": "3.0.1",
     "react-test-renderer": "18.2.0",
-    "source-map-explorer": "2.5.3",
     "tailwindcss": "3.4.0",
     "tsc-files": "1.1.4",
     "typescript": "<5.2.0",
