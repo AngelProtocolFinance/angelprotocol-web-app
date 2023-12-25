@@ -1,5 +1,4 @@
 import Cropper from "cropperjs";
-import "cropperjs/dist/cropper.min.css";
 import { useCallback, useRef } from "react";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";

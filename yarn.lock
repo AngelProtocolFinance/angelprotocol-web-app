@@ -6157,6 +6157,7 @@ __metadata:
     is-mobile: "npm:4.0.0"
     jsdom: "npm:23.0.1"
     lint-staged: "npm:15.0.2"
+    postcss-import: "npm:15.1.0"
     prettier: "npm:3.0.1"
     quill: "npm:1.3.7"
     react: "npm:18.2.0"
@@ -11532,7 +11533,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-import@npm:^15.1.0":
+"postcss-import@npm:15.1.0, postcss-import@npm:^15.1.0":
   version: 15.1.0
   resolution: "postcss-import@npm:15.1.0"
   dependencies:

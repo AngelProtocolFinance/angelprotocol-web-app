@@ -1,0 +1,139 @@
+[data-amplify-authenticator] {
+  --amplify-components-heading-color: theme(colors.gray.d2);
+  --amplify-components-text-color: theme(colors.gray.d2);
+  --amplify-components-authenticator-state-inactive-background-color: transparent;
+  --amplify-components-authenticator-router-box-shadow: theme(boxShadow.none);
+  --amplify-components-authenticator-router-border-color: theme(
+    borderColor.gray.l3
+  );
+  /** tabs */
+  --amplify-components-tabs-item-hover-color: theme(colors.gray.d2);
+  --amplify-components-tabs-item-focus-color: theme(colors.orange.DEFAULT);
+  --amplify-components-tabs-item-border-color: theme(colors.gray.l3);
+  --amplify-components-tabs-item-active-border-color: theme(
+    colors.orange.DEFAULT
+  );
+  --amplify-components-tabs-item-color: theme(colors.gray.d2);
+  --amplify-components-tabs-item-active-color: theme(colors.orange.DEFAULT);
+
+  /** fields */
+  --amplify-components-input-border-color: theme(colors.gray.l3);
+  --amplify-components-fieldcontrol-color: theme(colors.gray.d2);
+  --amplify-components-field-label-color: theme(colors.gray.d2);
+  --amplify-components-input-focus-border-color: theme(colors.gray.d1);
+  --amplify-components-fieldcontrol-error-border-color: theme(
+    colors.red.DEFAULT
+  );
+  --amplify-components-text-error-color: theme(colors.red.DEFAULT);
+
+  --amplify-components-button-border-color: theme(colors.gray.l3);
+  --amplify-components-button-hover-border-color: theme(colors.blue.d1);
+  --amplify-components-button-active-border-color: theme(colors.blue.d1);
+  --amplify-components-button-focus-border-color: theme(colors.blue.d1);
+  --amplify-components-button-color: theme(colors.gray.d2);
+  --amplify-components-button-destructive-color: theme(colors.red.DEFAULT);
+  --amplify-components-fieldcontrol-error-color: theme(colors.red.DEFAULT);
+  --amplify-components-button-hover-background-color: theme(colors.transparent);
+  --amplify-components-button-active-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-button-focus-background-color: theme(colors.transparent);
+
+  /** password */
+  --amplify-components-passwordfield-button-color: theme(colors.gray.d2);
+  --amplify-components-passwordfield-button-hover-color: theme(colors.gray.d2);
+  --amplify-components-passwordfield-button-active-color: theme(colors.gray.d2);
+  --amplify-components-passwordfield-button-hover-color: theme(colors.gray.d2);
+  --amplify-components-passwordfield-button-active-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-passwordfield-button-hover-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-passwordfield-button-hover-border-color: theme(
+    colors.gray.l3
+  );
+
+  /** link */
+  --amplify-components-button-link-color: theme(colors.blue.DEFAULT);
+  --amplify-components-button-link-hover-color: theme(colors.blue.d1);
+  --amplify-components-button-link-focus-color: theme(colors.blue.d1);
+  --amplify-components-button-link-active-color: theme(colors.blue.d1);
+
+  --amplify-components-button-link-hover-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-button-link-focus-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-button-link-active-background-color: theme(
+    colors.transparent
+  );
+
+  /** submit button */
+  --amplify-components-button-primary-background-color: theme(
+    colors.orange.DEFAULT
+  );
+  --amplify-components-button-primary-hover-background-color: theme(
+    colors.orange.l1
+  );
+}
+
+[data-amplify-authenticator] .amplify-text--error {
+  font-size: theme(fontSize.sm);
+}
+
+html:is(.dark) [data-amplify-authenticator] {
+  --amplify-components-divider-label-background-color: theme(colors.blue.d6);
+  --amplify-internal-button-color: theme(colors.white);
+  --amplify-components-heading-color: theme(colors.white);
+  --amplify-components-text-color: theme(colors.white);
+  /** tabs */
+  --amplify-components-tabs-item-color: theme(colors.white);
+  --amplify-components-tabs-item-hover-color: theme(colors.white);
+  --amplify-components-tabs-item-border-color: theme(colors.bluegray.DEFAULT);
+
+  /** fields */
+  --amplify-components-input-border-color: theme(colors.bluegray.DEFAULT);
+  --amplify-components-input-color: theme(colors.white);
+  --amplify-components-field-label-color: theme(colors.white);
+  --amplify-components-input-focus-border-color: theme(colors.blue.d2);
+  --amplify-components-fieldcontrol-error-border-color: theme(colors.red.l2);
+  --amplify-components-text-error-color: theme(colors.red.l2);
+
+  --amplify-components-button-border-color: theme(colors.bluegray.DEFAULT);
+  --amplify-components-button-color: theme(colors.white);
+  --amplify-components-button-destructive-color: theme(colors.red.l2);
+  --amplify-components-button-active-color: theme(colors.white);
+  --amplify-components-button-hover-color: theme(colors.white);
+  --amplify-components-button-focus-color: theme(colors.white);
+  --amplify-components-button-hover-color: theme(colors.white);
+  --amplify-components-button-hover-background-color: theme(colors.blue.d6);
+  --amplify-components-button-focus-background-color: theme(colors.blue.d6);
+  --amplify-components-button-active-background-color: theme(colors.blue.d6);
+
+  /** password */
+  --amplify-components-passwordfield-button-color: theme(colors.white);
+  --amplify-components-passwordfield-button-hover-color: theme(colors.white);
+  --amplify-components-passwordfield-button-active-color: theme(colors.white);
+  --amplify-components-passwordfield-button-focus-color: theme(colors.white);
+  --amplify-components-passwordfield-button-active-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-passwordfield-button-hover-background-color: theme(
+    colors.transparent
+  );
+  --amplify-components-passwordfield-button-hover-border-color: theme(
+    colors.bluegray.DEFAULT
+  );
+  --amplify-components-passwordfield-button-focus-border-color: theme(
+    colors.bluegray.DEFAULT
+  );
+
+  --amplify-components-authenticator-router-border-color: theme(
+    borderColor.bluegray.DEFAULT
+  );
+  --amplify-components-authenticator-router-background-color: theme(
+    colors.blue.d6
+  );
+}

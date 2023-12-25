@@ -107,6 +107,7 @@
     "husky": "8.0.3",
     "jsdom": "23.0.1",
     "lint-staged": "15.0.2",
+    "postcss-import": "15.1.0",
     "prettier": "3.0.1",
     "react-test-renderer": "18.2.0",
     "source-map-explorer": "2.5.3",
