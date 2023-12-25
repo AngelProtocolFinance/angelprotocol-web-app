@@ -5,7 +5,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "rsbuild build",
+    "build": "tsc && rsbuild build",
     "start": "rsbuild dev",
     "test": "vitest",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
