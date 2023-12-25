@@ -111,7 +111,7 @@
     "@walletconnect/types": "2.10.5",
     "eslint": "^8.3.0",
     "eslint-config-prettier": "9.0.0",
-    "eslint-plugin-prettier": "5.0.0",
+    "eslint-plugin-prettier": "5.1.2",
     "husky": "^8.0.3",
     "lint-staged": "15.0.2",
     "node-stdlib-browser": "^1.2.0",
