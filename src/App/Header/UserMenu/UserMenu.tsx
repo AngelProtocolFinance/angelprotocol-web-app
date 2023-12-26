@@ -1,6 +1,7 @@
 import { Popover } from "@headlessui/react";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { SignInRouteState } from "types/routeStates";
 import Icon from "components/Icon";
 import { useGetter, useSetter } from "store/accessors";
 import { logout } from "slices/auth";
@@ -14,10 +15,11 @@ export default function UserMenu() {
   const location = useLocation();
 
   if (!user || user === "loading") {
+    const state: SignInRouteState = { from: location.pathname };
     return (
       <Link
         to={appRoutes.signin}
-        state={{ from: location }}
+        state={state}
         className="btn-orange px-3 h-10 rounded-lg text-sm"
         aria-disabled={user === "loading"}
       >
