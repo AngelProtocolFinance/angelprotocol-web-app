@@ -1,5 +1,5 @@
 /** @type {import("prettier").Config} */
-const config = {
+export default {
   printWidth: 80,
   tabWidth: 2,
   useTabs: false,
@@ -38,5 +38,3 @@ const config = {
   importOrderSortSpecifiers: true,
   plugins: ["@trivago/prettier-plugin-sort-imports"],
 };
-
-module.exports = config;

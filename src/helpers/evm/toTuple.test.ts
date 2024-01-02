@@ -1,3 +1,4 @@
+import { describe, expect, test } from "vitest";
 import { Tupleable } from "types/evm";
 import { toTuple } from "./toTuple";
 

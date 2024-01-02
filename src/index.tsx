@@ -8,7 +8,6 @@ import Loader from "components/Loader";
 import { store } from "store/store";
 import ErrorBoundary from "errors/ErrorBoundary";
 import "./index.css";
-import reportWebVitals from "./reportWebVitals";
 
 //set theme immediately, so even suspense loaders and can use it
 // NOTE: Turning off option for Dark theme for now
@@ -24,7 +23,7 @@ const container = document.getElementById("root");
 const root = createRoot(container as Element);
 
 Sentry.init({
-  dsn: process.env.REACT_APP_SENTRY_DSN,
+  dsn: process.env.PUBLIC_SENTRY_DSN,
 });
 
 root.render(
@@ -42,8 +41,3 @@ root.render(
     </ErrorBoundary>
   </StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(logger.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

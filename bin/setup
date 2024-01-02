@@ -1,4 +1,0 @@
-#!/usr/bin/env sh
-
-# Install JavaScript dependencies with Yarn
-yarn
