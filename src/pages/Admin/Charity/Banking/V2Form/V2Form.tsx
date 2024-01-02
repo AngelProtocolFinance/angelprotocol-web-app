@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { WiseCurrency } from "types/aws";
-import useDebouncer from "hooks/useDebouncer";
 import Requirements from "./Requirements";
 import ExpectedFunds from "./Requirements/ExpectedFunds";
 import WiseCurrencies from "./Requirements/WiseCurrencies";
@@ -10,7 +9,6 @@ export default function V2Form() {
     { code: "USD", name: "United States Dollar" }
   );
   const [amount, setAmount] = useState("1000");
-  const [debouncedAmount, isDebouncing] = useDebouncer(amount, 1000);
 
   return (
     <div className="grid w-full gap-6 p-6 border border-prim rounded bg-white dark:bg-blue-d6 max-w-4xl">
@@ -30,7 +28,7 @@ export default function V2Form() {
         onChange={(amount) => setAmount(amount)}
         classes={{ input: "md:w-80" }}
       />
-      <Requirements />
+      <Requirements amount={amount} currency={currency.code} />
     </div>
   );
 }
