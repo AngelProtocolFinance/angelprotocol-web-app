@@ -97,21 +97,19 @@ export default function Table({
                 <>{humanize(amount, 3)}</>
                 <>{humanize(amount * (+splitLiq / 100), 3)}</>
                 <>{humanize(amount * ((100 - +splitLiq) / 100), 3)}</>
-                <>
-                  {chainId === "staging" ? (
-                    <span className="text-gray-d1 dark:text-gray text-sm">
-                      &lt; TX Link &gt;
-                    </span>
-                  ) : (
-                    <ExtLink
-                      //default to ethereum for staging
-                      href={getTxUrl(chainId, hash)}
-                      className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
-                    >
-                      {maskAddress(hash)}
-                    </ExtLink>
-                  )}
-                </>
+
+                {chainId === "staging" || chainId === "fiat" ? (
+                  <>- - -</>
+                ) : (
+                  <ExtLink
+                    //default to ethereum for staging
+                    href={getTxUrl(chainId, hash)}
+                    className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
+                  >
+                    {maskAddress(hash)}
+                  </ExtLink>
+                )}
+
                 <td className="relative">
                   {!kycData ? (
                     <Icon

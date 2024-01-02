@@ -8,7 +8,12 @@ export default function ApiKeyChecker(props: PropsWithChildren<{}>) {
 
   return (
     <QueryLoader
-      queryState={{ isError: false, isLoading: false, data: {} }}
+      queryState={{
+        isError: false,
+        isLoading: false,
+        isFetching: false,
+        data: {},
+      }}
       messages={{ error: "Invalid API key" }}
       classes={{ container: "text-center mt-8" }}
     >
