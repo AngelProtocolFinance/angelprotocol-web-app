@@ -16,10 +16,10 @@ export default function DetailsColumn({ className = "" }) {
       <div
         className={`${className} flex flex-col gap-8 w-full lg:w-96 p-8 border border-prim rounded text-gray-d2 dark:bg-blue-d6  dark:text-white`}
       >
-        {!!p.registration_number && (
+        {p.registration_number && (
           <Detail title="registration no.">{p.registration_number}</Detail>
         )}
-        {!!p.street_address && (
+        {p.street_address && (
           <Detail title="address">{p.street_address}</Detail>
         )}
         <Detail title="active in">

@@ -32,7 +32,8 @@ function BankingApplications() {
       <QueryLoader
         queryState={{
           data: data?.items,
-          isLoading: isLoading,
+          isLoading,
+          isFetching,
           isError: isError,
         }}
         messages={{

@@ -5,7 +5,7 @@ import {
   EndowmentProfileUpdate,
   EndowmentProfile as TProfile,
 } from "types/aws";
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import { country } from "components/CountrySelector";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
@@ -19,12 +19,7 @@ import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
   const { id } = useAdminContext();
-  const {
-    data: profile,
-    isLoading,
-    isFetching,
-    isError,
-  } = useProfileQuery({ endowId: id });
+  const { data: profile, isLoading, isError, isFetching } = useEndowment(id);
 
   const content =
     isLoading || isFetching ? (
@@ -57,11 +52,11 @@ function FormWithContext(props: TProfile & { id: number }) {
       publicUrl: props.image ?? "",
       preview: props.image ?? "",
     },
-    logo: { name: "", publicUrl: props.logo ?? "", preview: props.logo ?? "" },
+    logo: { name: "", publicUrl: props.logo, preview: props.logo },
     endow_designation: init.endow_designation
       ? { label: init.endow_designation, value: init.endow_designation }
       : { label: "", value: "" },
-    hq_country: country(props.hq_country ?? ""),
+    hq_country: country(props.hq_country),
     sdgs: init.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
     active_in_countries: init.active_in_countries.map((x) => ({
       label: x,

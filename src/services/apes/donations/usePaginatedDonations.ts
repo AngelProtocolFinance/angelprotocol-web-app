@@ -55,7 +55,7 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
     },
   });
 
-  const { isLoading, isError, data, originalArgs } = queryState;
+  const { isLoading, isFetching, isError, data, originalArgs } = queryState;
 
   const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
     useLazyDonationsQuery();
@@ -92,6 +92,7 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
     hasMore,
     isError: isError || isErrorNextPage,
     isLoading: isLoading || isDebouncing,
+    isFetching,
     isLoadingNextPage,
     query,
     loadNextPage,

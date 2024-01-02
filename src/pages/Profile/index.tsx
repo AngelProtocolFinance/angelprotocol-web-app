@@ -1,5 +1,5 @@
 import { Navigate, useParams } from "react-router-dom";
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
@@ -10,17 +10,10 @@ import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
-// import Unpublished from "./Unpublished";
-
 export default function Profile({ legacy = false }) {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useProfileQuery(
-    { endowId: numId, isLegacy: legacy },
-    {
-      skip: numId === 0,
-    }
-  );
+  const { isLoading, isError, data } = useEndowment(numId);
 
   if (isLoading) return <Skeleton />;
   if (isError || !data) return <PageError />;
@@ -41,7 +34,7 @@ export default function Profile({ legacy = false }) {
     <ProfileContext.Provider value={data}>
       <Seo
         title={`${data.name} - ${APP_NAME}`}
-        description={`${(data.overview ?? "").slice(0, 140)}`}
+        description={data?.overview.slice(0, 140)}
         name={data.name}
         image={data.logo}
         url={`${DAPP_URL}/profile/${data.id}`}

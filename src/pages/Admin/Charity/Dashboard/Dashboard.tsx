@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { useAdminContext } from "pages/Admin/Context";
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowBalanceQuery } from "services/apes";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import Seo from "../Seo";
@@ -8,7 +8,7 @@ import Balance from "./Balance";
 
 export default function Dashboard() {
   const { id } = useAdminContext();
-  const queryState = useProfileQuery({ endowId: id }, { skip: !id });
+  const queryState = useEndowBalanceQuery(id, { skip: !id });
 
   return (
     <div className="@container w-full max-w-4xl grid content-start mt-6">

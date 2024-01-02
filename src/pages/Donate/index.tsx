@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { idParamToNum } from "helpers";
@@ -9,7 +9,15 @@ import Content from "./Content";
 export default function Donate() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const queryState = useProfileQuery({ endowId: numId }, { skip: numId === 0 });
+  const queryState = useEndowment(numId, [
+    "fiscal_sponsored",
+    "id",
+    "image",
+    "kyc_donors_only",
+    "logo",
+    "name",
+    "overview",
+  ]);
 
   return (
     <section className="grid content-start w-full font-work min-h-screen sm:min-h-[900px] pb-20">
@@ -33,7 +41,7 @@ export default function Donate() {
           <>
             <Seo
               title={`Donate to ${profile.name} - ${APP_NAME}`}
-              description={`${(profile?.overview ?? "").slice(0, 140)}`}
+              description={profile.overview.slice(0, 140)}
               name={`${profile.name}`}
               image={`${profile.logo}`}
               url={`${DAPP_URL}/donate/${profile.id}`}
