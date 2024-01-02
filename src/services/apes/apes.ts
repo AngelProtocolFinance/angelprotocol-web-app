@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Token } from "types/aws";
+import { EndowmentBalances, Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
@@ -37,12 +37,16 @@ export const apes = createApi({
         }),
       }
     ),
+    endowBalance: builder.query<EndowmentBalances, number>({
+      query: (endowId) => `${v(1)}/balances/${endowId}`,
+    }),
   }),
 });
 
 export const {
   useTokensQuery,
   useStripeSessionURLMutation,
+  useEndowBalanceQuery,
   util: {
     invalidateTags: invalidateApesTags,
     updateQueryData: updateApesQueryData,

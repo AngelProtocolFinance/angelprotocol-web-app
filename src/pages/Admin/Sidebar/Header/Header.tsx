@@ -1,10 +1,10 @@
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import Image from "components/Image";
 import { useAdminContext } from "../../Context";
 
 export default function Header() {
   const { id } = useAdminContext();
-  const { data: profile, isLoading } = useProfileQuery({ endowId: id });
+  const { data: profile, isLoading } = useEndowment(id, ["logo", "name"]);
 
   return (
     <div

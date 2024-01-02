@@ -3,13 +3,21 @@ import Card from "./Card";
 import useCards from "./useCards";
 
 export default function Cards({ classes = "" }: { classes?: string }) {
-  const { hasMore, isLoading, isLoadingNextPage, loadNextPage, data, isError } =
-    useCards();
+  const {
+    hasMore,
+    isLoading,
+    isFetching,
+    isLoadingNextPage,
+    loadNextPage,
+    data,
+    isError,
+  } = useCards();
   return (
     <QueryLoader
       queryState={{
         data: data?.Items,
-        isLoading: isLoading,
+        isLoading,
+        isFetching,
         isError,
       }}
       messages={{

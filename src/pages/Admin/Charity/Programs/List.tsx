@@ -1,5 +1,5 @@
 import { useAdminContext } from "pages/Admin/Context";
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { ErrorStatus, Info } from "components/Status";
@@ -7,7 +7,7 @@ import { Program } from "./Program";
 
 export default function List() {
   const { id } = useAdminContext();
-  const queryState = useProfileQuery({ endowId: id });
+  const queryState = useEndowment(id, ["program"]);
 
   return (
     <QueryLoader

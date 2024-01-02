@@ -71,7 +71,7 @@ export default function Loaded(props: BankingApplicationDetails) {
       {isRejected && (
         <p className="text-sm text-red my-2">
           <Icon type="Info" className="relative inline bottom-px mr-1" />
-          <span>hello world hahadhfa1209312038</span>
+          <span>{props.rejectionReason}</span>
         </p>
       )}
 
@@ -117,7 +117,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           delete
         </button>
         <button
-          disabled={isLoading || isDefault || isRejected}
+          disabled={isLoading || isDefault || !isApproved}
           onClick={() => setDefault()}
           type="button"
           className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-orange"

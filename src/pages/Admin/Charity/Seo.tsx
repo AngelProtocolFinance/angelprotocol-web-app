@@ -1,4 +1,4 @@
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import CommonSEO from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -12,12 +12,12 @@ export default function Seo({
   url?: string;
 }) {
   const { id } = useAdminContext();
-  const { data: profile } = useProfileQuery({ endowId: id });
+  const { data: profile } = useEndowment(id, ["logo", "name", "overview"]);
 
   return (
     <CommonSEO
       title={`${title} - ${APP_NAME}`}
-      description={(profile?.overview ?? "").slice(0, 140)}
+      description={profile?.overview.slice(0, 140)}
       name={profile?.name}
       image={profile?.logo}
       url={`${DAPP_URL}/${appRoutes.admin}/${id}/${url}`}
