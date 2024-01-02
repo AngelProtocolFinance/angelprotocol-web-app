@@ -1,6 +1,7 @@
 import { Tab } from "@headlessui/react";
 import { useRequirementsQuery } from "services/aws/wise";
 import useDebouncer from "hooks/useDebouncer";
+import Form from "./Form";
 
 type Props = {
   currency: string;
@@ -11,7 +12,7 @@ export default function Requirements({ currency, amount }: Props) {
   const [debouncedAmount, isDebouncing] = useDebouncer(amount, 500);
 
   const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;
-  const { data: requirements = [], requestId } = useRequirementsQuery(
+  const { data: requirements = [] } = useRequirementsQuery(
     {
       amount: amnt,
       currency,
@@ -34,9 +35,11 @@ export default function Requirements({ currency, amount }: Props) {
         ))}
       </Tab.List>
       <Tab.Panels>
-        <Tab.Panel>Content 1</Tab.Panel>
-        <Tab.Panel>Content 2</Tab.Panel>
-        <Tab.Panel>Content 3</Tab.Panel>
+        {requirements.map((r) => (
+          <Tab.Panel key={r.type}>
+            <Form fields={r.fields.flatMap((f) => f.group)} />
+          </Tab.Panel>
+        ))}
       </Tab.Panels>
     </Tab.Group>
   );
