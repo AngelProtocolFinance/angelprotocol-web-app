@@ -1,3 +1,5 @@
+import Requirements from "./Requirements";
+
 export default function V2Form() {
   return (
     <div className="grid w-full gap-6 p-6 border border-prim rounded bg-white dark:bg-blue-d6 max-w-4xl">
@@ -6,6 +8,7 @@ export default function V2Form() {
         The following information will be used to register your bank account
         that will be used to withdraw your funds.
       </p>
+      <Requirements />
     </div>
   );
 }
