@@ -1,4 +1,6 @@
 import { Tab } from "@headlessui/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useRequirementsQuery } from "services/aws/wise";
 import useDebouncer from "hooks/useDebouncer";
 import Form from "./Form";
@@ -12,7 +14,7 @@ export default function Requirements({ currency, amount }: Props) {
   const [debouncedAmount, isDebouncing] = useDebouncer(amount, 500);
 
   const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;
-  const { data: requirements = [] } = useRequirementsQuery(
+  const { data: requirements = [], isLoading } = useRequirementsQuery(
     {
       amount: amnt,
       currency,
@@ -20,27 +22,28 @@ export default function Requirements({ currency, amount }: Props) {
     { skip: !amnt || isDebouncing }
   );
 
+  const numReq = requirements.length;
+  const [reqIdx, setReqIdx] = useState(numReq === 0 ? numReq : numReq - 1);
+
+  if (isLoading) {
+    return <div>loading...</div>;
+  }
+
   if (requirements.length <= 0)
     return <div>payout to ${currency} is not available</div>;
 
-  if (requirements.length === 1) {
-    return <div>show single requirement</div>;
-  }
-
   return (
-    <Tab.Group>
-      <Tab.List className="flex gap-2">
-        {requirements.map((r) => (
-          <Tab key={r.type}>{r.title}</Tab>
-        ))}
-      </Tab.List>
-      <Tab.Panels>
-        {requirements.map((r) => (
-          <Tab.Panel key={r.type}>
-            <Form fields={r.fields.flatMap((f) => f.group)} />
-          </Tab.Panel>
-        ))}
-      </Tab.Panels>
-    </Tab.Group>
+    <>
+      {requirements.length > 1 && (
+        <select value={reqIdx} onChange={(e) => setReqIdx(+e.target.value)}>
+          {requirements.map((v, i) => (
+            <option value={i}>{v.title}</option>
+          ))}
+        </select>
+      )}
+      <Form
+        fields={requirements[reqIdx]?.fields.flatMap((f) => f.group) || []}
+      />
+    </>
   );
 }
