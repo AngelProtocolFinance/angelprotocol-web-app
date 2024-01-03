@@ -44,6 +44,37 @@ export default function Form({ fields }: Props) {
             </div>
           );
         }
+
+        if (f.type === "radio") {
+          return (
+            <div key={f.key}>
+              <p>{f.name}</p>
+
+              <div className="flex items-center gap-2">
+                {f.valuesAllowed?.map((v) => (
+                  <div className="flex items-center gap-1">
+                    <input
+                      id={`radio__${v.key}`}
+                      type="radio"
+                      value={v.key}
+                      {...register(f.key, {
+                        required: f.required ? "required" : false,
+                      })}
+                    />
+                    <label htmlFor={`radio__${v.key}`}>{v.name}</label>
+                  </div>
+                ))}
+              </div>
+              <ErrorMessage
+                errors={errors}
+                name={f.key}
+                as="p"
+                className="text-red text-xs"
+              />
+            </div>
+          );
+        }
+
         if (f.type === "text") {
           return (
             <div key={f.key} className="grid gap-1 border border-prim p-1">
