@@ -120,10 +120,7 @@ export async function estimateDonation({
     if (!estimate) return null;
 
     // ///////////// Sucessful simulation ///////////////
-    const [amountUSDRate, txFeeUSDRate] = await Promise.all([
-      USD(token.coingecko_denom),
-      USD(estimate.fee.coinGeckoId),
-    ]);
+    const amountUSDRate = await USD(token.coingecko_denom);
 
     const amountUSDDec = new Decimal(amountUSDRate).mul(token.amount);
     const amountItem: EstimateItem = {
@@ -136,18 +133,11 @@ export async function estimateDonation({
       prettyFiatAmount: `$${humanize(amountUSDDec, 4)}`,
     };
 
-    const txFeeUSDDec = new Decimal(txFeeUSDRate).mul(estimate.fee.amount);
-
     const baseFee = amountUSDDec.mul(BASE_FEE_RATE_PCT).div(100);
     const cryptoFee = amountUSDDec.mul(CRYPTO_FEE_RATE_PCT).div(100);
     const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(amountUSDDec);
-    //feeUSD is on top of tokenAmountUSD
 
-    const totalFeeDec = baseFee
-      .add(cryptoFee)
-      .add(fiscalSponsorShipFee)
-      .add(txFeeUSDDec);
-
+    const totalFeeDec = baseFee.add(cryptoFee).add(fiscalSponsorShipFee);
     const totalPct = totalFeeDec.div(amountUSDDec).mul(100).toFixed(2);
 
     const totalFeeItem: EstimateItem = {
