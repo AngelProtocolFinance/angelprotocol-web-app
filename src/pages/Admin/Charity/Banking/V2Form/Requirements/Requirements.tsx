@@ -1,6 +1,4 @@
-import { Tab } from "@headlessui/react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { useRequirementsQuery } from "services/aws/wise";
 import useDebouncer from "hooks/useDebouncer";
 import Form from "./Form";
