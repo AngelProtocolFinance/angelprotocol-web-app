@@ -1,12 +1,13 @@
+import { describe, expect, test, vi } from "vitest";
 import { FileObject } from "types/aws";
-import { Bucket, bucketURL } from "helpers/uploadFiles";
+import { Bucket, bucketURL } from "../uploadFiles";
 import { getFilePreviews } from "./getFilePreviews";
 
 const file1 = new File([], "file1");
 const file2 = new File([], "file2");
 const file3 = new File([], "file3");
 
-jest.mock("../jwt-token", () => ({ jwtToken: () => "test token" }));
+vi.mock("../jwt-token", () => ({ jwtToken: () => "test token" }));
 
 const preview1: FileObject = { name: "preview1", publicUrl: "preview1Url" };
 const preview2: FileObject = { name: "preview2", publicUrl: "preview2Url" };
@@ -29,8 +30,8 @@ const result3: FileObject = {
   publicUrl: `${baseURL}-${file3.name}`,
 };
 
-const uploadFiles = jest.fn();
-global.fetch = jest.fn();
+const uploadFiles = vi.fn();
+global.fetch = vi.fn() as any;
 
 describe("get documentation file previews", () => {
   test("correct preview mapping for new uploads", async () => {
@@ -39,7 +40,7 @@ describe("get documentation file previews", () => {
       b: { files: [file1, file3], previews: [] },
       c: { files: [file2, file1, file3], previews: [] },
     };
-    Date.now = jest.fn(() => timeStamp);
+    Date.now = vi.fn(() => timeStamp);
     uploadFiles.mockResolvedValue(baseURL);
     const previews = await getFilePreviews(documentationVals);
     expect(previews).toStrictEqual({
@@ -49,7 +50,7 @@ describe("get documentation file previews", () => {
     });
   });
   test("previous upload is used when no new files", async () => {
-    Date.now = jest.fn(() => timeStamp);
+    Date.now = vi.fn(() => timeStamp);
     uploadFiles.mockResolvedValue(baseURL);
     const documentationVals: Parameters<typeof getFilePreviews>[0] = {
       a: { files: [file1], previews: [preview1, preview2] },

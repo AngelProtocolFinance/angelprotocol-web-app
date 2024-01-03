@@ -1,12 +1,13 @@
 import { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
 
+const baseProxyURL = "https://59vigz9r91.execute-api.us-east-1.amazonaws.com";
 //mainnets
 export const polygon: Chain = {
   isTest: false,
   id: "137",
   brand: "polygon",
   name: "Polygon",
-  rpc: "https://polygon.llamarpc.com",
+  rpc: baseProxyURL + "/polygon",
   lcd: "",
   blockExplorer: "https://polygonscan.com",
   nativeToken: {
@@ -22,7 +23,7 @@ export const ethereum: Chain = {
   id: "1",
   brand: "ethereum",
   name: "Ethereum",
-  rpc: "https://eth.llamarpc.com",
+  rpc: baseProxyURL + "/ethereum",
   lcd: "",
   blockExplorer: "https://etherscan.io",
   nativeToken: {
@@ -38,7 +39,7 @@ export const binance: Chain = {
   id: "56",
   brand: "binance",
   name: "Binance",
-  rpc: "https://rpc.ankr.com/bsc",
+  rpc: baseProxyURL + "/bsc",
   lcd: "",
   blockExplorer: "https://bscscan.com",
   nativeToken: {
@@ -87,7 +88,7 @@ export const mumbai: Chain = {
   id: "80001",
   brand: "polygon",
   name: "Polygon Mumbai Testnet",
-  rpc: "https://rpc.ankr.com/polygon_mumbai",
+  rpc: baseProxyURL + "/mumbai",
   lcd: "",
   blockExplorer: "https://mumbai.polygonscan.com",
   nativeToken: {
@@ -103,7 +104,7 @@ export const goerli: Chain = {
   id: "5",
   brand: "ethereum",
   name: "Ethereum Goerli Testnet",
-  rpc: "https://rpc.ankr.com/eth_goerli",
+  rpc: baseProxyURL + "/goerli",
   lcd: "",
   blockExplorer: "https://goerli.etherscan.io",
   nativeToken: {
@@ -119,7 +120,7 @@ export const binanceTestnet: Chain = {
   id: "97",
   brand: "binance",
   name: "Binance Testnet",
-  rpc: "https://rpc.ankr.com/bsc_testnet_chapel",
+  rpc: baseProxyURL + "/bsc-test",
   lcd: "",
   blockExplorer: "https://testnet.bscscan.com",
   nativeToken: {

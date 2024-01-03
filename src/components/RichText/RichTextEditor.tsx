@@ -1,5 +1,4 @@
 import { ErrorMessage } from "@hookform/error-message";
-import "quill/dist/quill.bubble.css";
 import {
   FieldValues,
   Path,

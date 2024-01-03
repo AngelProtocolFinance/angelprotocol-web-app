@@ -16,6 +16,7 @@ export default withAuth(function Donations({ user }) {
     hasMore,
     isError,
     isLoading,
+    isFetching,
     isLoadingNextPage,
     query,
     loadNextPage,
@@ -62,7 +63,8 @@ export default withAuth(function Donations({ user }) {
       <QueryLoader
         queryState={{
           data: data?.Items,
-          isLoading: isLoading,
+          isLoading,
+          isFetching,
           isError: isError,
         }}
         messages={{

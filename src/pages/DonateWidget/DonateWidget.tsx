@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
-import { useProfileQuery } from "services/aws/aws";
+import { useEndowment } from "services/aws/useEndowment";
 import { DappLogo } from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
@@ -14,7 +14,7 @@ export default function DonateWidget() {
   const routeParams = useParams();
   const [searchParams] = useSearchParams();
   const endowId = idParamToNum(routeParams.id);
-  const queryState = useProfileQuery({ endowId }, { skip: endowId === 0 });
+  const queryState = useEndowment(endowId);
 
   /** Hide the Intercom chatbot */
   useEffect(() => {

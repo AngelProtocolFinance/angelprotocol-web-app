@@ -1,32 +1,24 @@
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-// NOTE(davidlumley): Override default Crypto for terra.js
-//                    see: https://github.com/terra-money/terra.js/issues/100
-import { Crypto } from "@peculiar/webcrypto";
 import "@testing-library/jest-dom";
-import { TextDecoder, TextEncoder } from "util";
+import { vi } from "vitest";
 
-jest.mock("@walletconnect/modal", () => ({
-  __esModule: true,
-  WalletConnectModal: jest.fn(),
+vi.mock("@walletconnect/modal", () => ({
+  WalletConnectModal: vi.fn(),
 }));
-jest.mock("@walletconnect/sign-client", () => ({
-  __esModule: true,
+vi.mock("@walletconnect/sign-client", () => ({
   SignClient: {
-    init: jest.fn(async () => ({
+    init: vi.fn(async () => ({
       session: {
-        getAll: jest.fn(),
+        getAll: vi.fn(),
       },
     })),
   },
 }));
 
 class IntersectionObserver {
-  observe = jest.fn();
-  disconnect = jest.fn();
-  unobserve = jest.fn();
+  observe = vi.fn();
+  disconnect = vi.fn();
+  unobserve = vi.fn();
 }
 
 Object.defineProperty(window, "IntersectionObserver", {
@@ -41,13 +33,8 @@ Object.defineProperty(window, "matchMedia", {
     matches: false,
     media: query,
     onchange: null,
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
   }),
 });
-
-// required after adding @cosmjs/cosmwasm-stargate
-global.TextEncoder = TextEncoder;
-(global as any).TextDecoder = TextDecoder; // `global as any` cast required due to (expected) type incompatibility
-global.crypto = new Crypto();

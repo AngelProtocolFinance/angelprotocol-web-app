@@ -2,6 +2,7 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
+import { describe, expect, test, vi } from "vitest";
 import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
 import App from "../App";
@@ -12,7 +13,7 @@ const mockMetrics: DonationsMetricList = {
   donations_total_amount: 0,
 };
 
-jest.mock("services/aws/business_metrics", () => ({
+vi.mock("services/aws/business_metrics", () => ({
   __esModule: true,
   useMetricsListQuery: () => ({
     data: mockMetrics,
@@ -20,14 +21,12 @@ jest.mock("services/aws/business_metrics", () => ({
 }));
 
 const mockUpdate: Update = { last_update: "", endowments: [] };
-jest.mock("services/aws/leaderboard", () => ({
+vi.mock("services/aws/leaderboard", () => ({
   __esModule: true,
   useLeaderboardsQuery: () => ({
     data: mockUpdate,
   }),
 }));
-
-//test comment 3
 
 const heroText = /BETTER GIVING REDEFINES/i;
 const marketLink = /marketplace/i;
@@ -38,7 +37,7 @@ const loaderTestId = "loader";
 describe("App.tsx tests", () => {
   // const governanceLinkText = /governance/i;
 
-  window.scrollTo = jest.fn();
+  window.scrollTo = vi.fn() as any;
 
   test("Visit top level pages", async () => {
     render(

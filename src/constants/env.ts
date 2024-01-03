@@ -12,7 +12,7 @@ export const BASE_URL = "https://better.giving";
 export const DAPP_URL = "https://app.better.giving";
 export const AWS_S3_PUBLIC_BUCKET = "https://endow-profiles.s3.amazonaws.com";
 
-const ENV = process.env.REACT_APP_ENVIRONMENT;
+const ENV = process.env.PUBLIC_ENVIRONMENT;
 
 export const IS_TEST = ENV === "STAGING";
 
