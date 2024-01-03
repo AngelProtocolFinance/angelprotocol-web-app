@@ -55,7 +55,7 @@ export default function Breakdown({
           </span>
         </Row>
         <LoadingStatus classes="justify-self-center my-6">
-          Estimating transaction cost..
+          Simulating transaction...
         </LoadingStatus>
       </>
     );
