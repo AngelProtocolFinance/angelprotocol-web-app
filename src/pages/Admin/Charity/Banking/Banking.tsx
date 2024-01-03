@@ -48,7 +48,7 @@ export default function Banking() {
         bankSummary,
         endowmentID: endowment_id,
         bankStatementFile: bankStatementPreview.bankStatementFile[0],
-      });
+      }).unwrap();
 
       showModal(Prompt, {
         headline: "Success!",
