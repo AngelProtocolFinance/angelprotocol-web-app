@@ -20,6 +20,7 @@ export default function Form({ fields }: Props) {
       className="grid gap-3"
     >
       {fields.map((f) => {
+        console.log(f);
         if (f.type === "select") {
           return (
             <div key={f.key} className="grid gap-1 border border-prim p-1">
@@ -52,13 +53,31 @@ export default function Form({ fields }: Props) {
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {
-                  required: f.required,
-                  maxLength: f.maxLength || undefined,
-                  minLength: f.minLength || undefined,
+                  required: f.required ? "required" : false,
+                  maxLength: f.maxLength
+                    ? {
+                        value: f.maxLength,
+                        message: `max ${f.maxLength} chars`,
+                      }
+                    : undefined,
+                  minLength: f.minLength
+                    ? {
+                        value: f.minLength,
+                        message: `min ${f.minLength} chars`,
+                      }
+                    : undefined,
                   pattern: f.validationRegexp
                     ? {
                         value: new RegExp(f.validationRegexp),
-                        message: "Invalid",
+                        message: "invalid",
+                      }
+                    : undefined,
+
+                  validate: f.validationAsync
+                    ? async (v: string) => {
+                        const { params, url } = f.validationAsync!;
+                        const res = await fetch(`${url}?${params[0].key}=${v}`);
+                        return res.ok || "invalid";
                       }
                     : undefined,
                 })}
@@ -73,7 +92,11 @@ export default function Form({ fields }: Props) {
           );
         }
 
-        return <div key={f.key}>{f.name}</div>;
+        return (
+          <div className="bg-red" key={f.key}>
+            {f.name}
+          </div>
+        );
       })}
       <button type="submit">submit</button>
     </form>

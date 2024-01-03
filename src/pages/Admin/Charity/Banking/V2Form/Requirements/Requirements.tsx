@@ -35,7 +35,9 @@ export default function Requirements({ currency, amount }: Props) {
       {requirements.length > 1 && (
         <select value={reqIdx} onChange={(e) => setReqIdx(+e.target.value)}>
           {requirements.map((v, i) => (
-            <option value={i}>{v.title}</option>
+            <option key={v.type} value={i}>
+              {v.title}
+            </option>
           ))}
         </select>
       )}
