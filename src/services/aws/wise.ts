@@ -6,6 +6,16 @@ import {
 import { aws } from "../aws/aws";
 import { version as v } from "../helpers";
 
+type ValidationError = {
+  code: string;
+  message: string;
+  arguments: string[];
+};
+
+type ValidationContent = {
+  errors: ValidationError[];
+};
+
 export const wise = aws.injectEndpoints({
   endpoints: (builder) => ({
     createRecipient: builder.mutation<
@@ -19,6 +29,12 @@ export const wise = aws.injectEndpoints({
           body: payload,
           headers: { "Content-Type": "application/json" },
         };
+      },
+      transformErrorResponse(res) {
+        if (res.status === 422) {
+          return (res.data as ValidationContent).errors[0].message;
+        }
+        return "Failed to create recipient";
       },
     }),
     recipient: builder.query<V2RecipientAccount, string>({
