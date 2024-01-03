@@ -12,7 +12,7 @@ export default function Requirements({ currency, amount }: Props) {
   const [debouncedAmount, isDebouncing] = useDebouncer(amount, 500);
 
   const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;
-  const { data: requirements = [], isLoading } = useRequirementsQuery(
+  const { data, isLoading, isError } = useRequirementsQuery(
     {
       amount: amnt,
       currency,
@@ -20,11 +20,16 @@ export default function Requirements({ currency, amount }: Props) {
     { skip: !amnt || isDebouncing }
   );
 
+  const requirements = data?.requirements || [];
   const numReq = requirements.length;
   const [reqIdx, setReqIdx] = useState(numReq === 0 ? numReq : numReq - 1);
 
   if (isLoading) {
     return <div>loading...</div>;
+  }
+
+  if ((!data && !isDebouncing) || isError) {
+    return <div>failed to load banking form</div>;
   }
 
   if (requirements.length <= 0)
@@ -42,6 +47,9 @@ export default function Requirements({ currency, amount }: Props) {
         </select>
       )}
       <Form
+        quoteId={data?.quoteId ?? ""}
+        type={requirements[reqIdx].type}
+        currency={currency}
         fields={requirements[reqIdx]?.fields.flatMap((f) => f.group) || []}
       />
     </>

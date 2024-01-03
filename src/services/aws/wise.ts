@@ -9,6 +9,8 @@ import {
 import { aws } from "../aws/aws";
 import { version as v } from "../helpers";
 
+const baseURL = `/${v(1)}/wise-proxy/`;
+
 export const wise = aws.injectEndpoints({
   endpoints: (builder) => ({
     createRecipient: builder.mutation<
@@ -17,7 +19,7 @@ export const wise = aws.injectEndpoints({
     >({
       query: (payload) => {
         return {
-          url: `/${v(1)}/wise-proxy/v1/accounts`,
+          url: `${baseURL}/v1/accounts`,
           method: "POST",
           body: payload,
           headers: { "Content-Type": "application/json" },
@@ -25,18 +27,48 @@ export const wise = aws.injectEndpoints({
       },
     }),
     recipient: builder.query<V2RecipientAccount, string>({
-      query: (id: string) => `/${v(1)}/wise-proxy/v2/accounts/${id}`,
+      query: (id: string) => `${baseURL}/v2/accounts/${id}`,
     }),
     currencis: builder.query<WiseCurrency[], unknown>({
-      query: () => `/${v(1)}/wise-proxy/v1/currencies`,
+      query: () => `${baseURL}/v1/currencies`,
     }),
-    requirements: builder.query<
+    /**
+     * postAccountRequirements: builder.mutation<
       AccountRequirements[],
+      { quoteId: string; request: CreateRecipientRequest }
+    >({
+      query: ({ quoteId, request }) => ({
+        url: `/${v(1)}/wise`,
+        method: "POST",
+        body: {
+          method: "POST",
+          url: `/v1/quotes/${quoteId}/account-requirements`,
+          headers: { "Accept-Minor-Version": "1" },
+          payload: JSON.stringify(request),
+        },
+      }),
+     */
+    newRequirements: builder.mutation<
+      AccountRequirements[],
+      { quoteId: string; request: CreateRecipientRequest }
+    >({
+      query: ({ quoteId, request }) => {
+        return {
+          method: "POST",
+          url: `${baseURL}/quotes/${quoteId}/account-requirements`,
+          headers: { "Accept-Minor-Version": "1" },
+          body: request,
+        };
+      },
+    }),
+
+    requirements: builder.query<
+      { requirements: AccountRequirements[]; quoteId: string },
       { amount: number; currency: string }
     >({
       async queryFn(arg, api, extraOptions, baseQuery) {
         const quoteRes = await baseQuery({
-          url: `/${v(1)}/wise-proxy/v3/profiles/{{profileId}}/quotes`,
+          url: `${baseURL}/v3/profiles/{{profileId}}/quotes`,
           method: "POST",
           body: {
             sourceCurrency: "USD",
@@ -51,7 +83,7 @@ export const wise = aws.injectEndpoints({
         const quote = quoteRes.data as Quote;
 
         const requirementsRes = await baseQuery({
-          url: `/${v(1)}/wise-proxy/v1/quotes/${quote.id}/account-requirements`,
+          url: `${baseURL}/v1/quotes/${quote.id}/account-requirements`,
           headers: { "Accept-Minor-Version": "1" },
         });
 
@@ -61,7 +93,7 @@ export const wise = aws.injectEndpoints({
           return { error: { status: 500, data: "failed to get quote" } };
         }
 
-        return { data: requirements };
+        return { data: { requirements, quoteId: quote.id } };
       },
     }),
   }),

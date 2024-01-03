@@ -2,14 +2,21 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import { Group } from "types/aws";
 
-type Props = { fields: Group[] };
+type Props = {
+  fields: Group[];
+  currency: string;
+  type: string;
+  quoteId: string;
+};
 
-export default function Form({ fields }: Props) {
+export default function Form({ fields, currency, type }: Props) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  console.log({ currency, type });
 
   return (
     <form
@@ -32,7 +39,9 @@ export default function Form({ fields }: Props) {
                 })}
               >
                 {f.valuesAllowed?.map((v) => (
-                  <option value={v.key}>{v.name}</option>
+                  <option key={v.key} value={v.key}>
+                    {v.name}
+                  </option>
                 ))}
               </select>
               <ErrorMessage
