@@ -2,6 +2,7 @@ import {
   dummyDonationsMetricList as metricsPlaceholder,
   useMetricsListQuery,
 } from "services/aws/business_metrics";
+import { humanize } from "helpers";
 
 export default function DonationMetrics() {
   const { data: metrics = metricsPlaceholder } = useMetricsListQuery({});
@@ -9,10 +10,7 @@ export default function DonationMetrics() {
   return (
     <div className="text-center">
       <h2 className="my-3 text-3xl font-extrabold">
-        Total Donations: ${" "}
-        {`${Number(
-          metrics.donations_total_amount_v2.toFixed(2)
-        ).toLocaleString()}`}
+        Total Donations: $ {humanize(metrics.donations_total_amount_v2, 2)}
       </h2>
       {/*<h3 className="text-xl font-semibold">
         Daily Donations Total: ${" "}
