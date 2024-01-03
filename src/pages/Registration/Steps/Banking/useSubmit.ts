@@ -6,7 +6,6 @@ import { useCreateRecipientAccountMutation } from "services/aws/bankDetails";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getFilePreviews } from "helpers";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 
@@ -41,19 +40,16 @@ export default function useSubmit() {
         request,
       }).unwrap();
 
-      const result = await updateReg({
+      await updateReg({
         reference: data.init.reference,
         type: "banking",
         BankStatementFile: bankStatementPreview.bankStatementFile[0],
         wise_recipient_id,
-      });
+      }).unwrap();
 
-      if ("error" in result) {
-        return handleError(result.error);
-      }
       return navigate(`../${steps.summary}`, { state: data.init });
     } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
+      handleError(error);
     } finally {
       setSubmitting(false);
     }

@@ -12,7 +12,6 @@ import Group from "components/Group";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { getFilePreviews } from "helpers";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { adminRoutes } from "constants/routes";
 import FormButtons from "./FormButtons";
 
@@ -56,7 +55,7 @@ export default function Banking() {
         children: <p className="py-8">Banking details submitted for review!</p>,
       });
     } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
+      handleError(error);
     } finally {
       setSubmitting(false);
     }
