@@ -5,6 +5,7 @@ import { ChainID } from "types/chain";
 import { version as v } from "services/helpers";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
+import { version as v } from "../helpers";
 import { tags } from "./tags";
 
 type StripePaymentIntentParams = {
@@ -57,6 +58,10 @@ export const apes = createApi({
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
     }),
+
+    endowBalance: builder.query<EndowmentBalances, number>({
+      query: (endowId) => `${v(1)}/balances/${endowId}`,
+    }),
   }),
 });
 
@@ -66,6 +71,7 @@ export const {
   useGetStripePaymentStatusQuery,
   useStripeCurrenciesQuery,
   useTokensQuery,
+  useEndowBalanceQuery,
   util: {
     invalidateTags: invalidateApesTags,
     updateQueryData: updateApesQueryData,
