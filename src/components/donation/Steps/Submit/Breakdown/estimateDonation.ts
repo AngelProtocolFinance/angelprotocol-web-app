@@ -120,48 +120,34 @@ export async function estimateDonation({
     if (!estimate) return null;
 
     // ///////////// Sucessful simulation ///////////////
-    const [tokenUSD, feeUSD] = await Promise.all([
-      USD(token.coingecko_denom),
-      USD(estimate.fee.coinGeckoId),
-    ]);
+    const amountUSDRate = await USD(token.coingecko_denom);
 
-    const tokenUSDDec = new Decimal(tokenUSD).mul(token.amount);
-    const amount: EstimateItem = {
+    const amountUSDDec = new Decimal(amountUSDRate).mul(token.amount);
+    const amountItem: EstimateItem = {
       name: "Amount",
       cryptoAmount: {
         value: token.amount,
         symbol: token.symbol,
       },
-      fiatAmount: tokenUSDDec.toNumber(),
-      prettyFiatAmount: `$${humanize(tokenUSDDec, 4)}`,
+      fiatAmount: amountUSDDec.toNumber(),
+      prettyFiatAmount: `$${humanize(amountUSDDec, 4)}`,
     };
 
-    const feeUSDDec = new Decimal(feeUSD).mul(estimate.fee.amount);
+    const baseFee = amountUSDDec.mul(BASE_FEE_RATE_PCT).div(100);
+    const cryptoFee = amountUSDDec.mul(CRYPTO_FEE_RATE_PCT).div(100);
+    const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(amountUSDDec);
 
-    const baseFee = tokenUSDDec.mul(BASE_FEE_RATE_PCT).div(100);
-    const cryptoFee = tokenUSDDec.mul(CRYPTO_FEE_RATE_PCT).div(100);
-    const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(tokenUSDDec);
-    //feeUSD is on top of tokenAmountUSD
     const totalFeeDec = baseFee.add(cryptoFee).add(fiscalSponsorShipFee);
+    const totalPct = totalFeeDec.div(amountUSDDec).mul(100).toFixed(2);
 
-    const transactionFee: EstimateItem = {
-      name: "Transaction fee",
-      cryptoAmount: {
-        value: estimate.fee.amount.toString(),
-        symbol: estimate.fee.symbol,
-      },
-      fiatAmount: feeUSDDec.toNumber(),
-      prettyFiatAmount: prettyDollar(feeUSDDec),
-    };
-
-    const donationFee: EstimateItem = {
-      name: "Better Giving Fee",
+    const totalFeeItem: EstimateItem = {
+      name: `Platform Fee (${totalPct}) %`,
       fiatAmount: totalFeeDec.toNumber(),
       prettyFiatAmount: prettyDollar(totalFeeDec),
     };
 
-    const totalDec = tokenUSDDec.sub(totalFeeDec);
-    const total: EstimateItem = {
+    const totalDec = amountUSDDec.sub(totalFeeDec);
+    const totalItem: EstimateItem = {
       name: "Estimated proceeds",
       fiatAmount: totalDec.toNumber(),
       prettyFiatAmount: prettyDollar(totalDec),
@@ -169,7 +155,7 @@ export async function estimateDonation({
 
     return {
       ...estimate,
-      items: [amount, donationFee, transactionFee, total],
+      items: [amountItem, totalFeeItem, totalItem],
     };
   } catch (err) {
     logger.error(err);

@@ -46,16 +46,13 @@ export default function Breakdown({
   if (estimate === "loading") {
     return (
       <>
-        <Row title="Transaction costs:">
-          <span>----</span>
-        </Row>
         <Row title="TOTAL">
           <span>
             {token.symbol} {humanize(token.amount, 4)}
           </span>
         </Row>
         <LoadingStatus classes="justify-self-center my-6">
-          Estimating transaction cost..
+          Simulating transaction...
         </LoadingStatus>
       </>
     );
