@@ -7,7 +7,6 @@ import { appRoutes } from "constants/routes";
 import Amount from "./Amount";
 import projectFunds from "./projectFunds";
 
-const defaultIcon = "/images/angelprotocol-horiz-blu.png";
 export default function Row({
   total_liq,
   total_lock,
@@ -20,7 +19,7 @@ export default function Row({
     <Cells type="td" cellClass="first:pl-4 last:pr-4 py-3">
       <Image
         src={charity_logo || defaultLogo}
-        onError={(e) => e.currentTarget.setAttribute("src", defaultIcon)}
+        onError={(e) => e.currentTarget.setAttribute("src", defaultLogo)}
         loading="lazy"
         className="h-16 aspect-video rounded border border-gray-l3 dark:border-none dark:bg-white p-2"
       />
