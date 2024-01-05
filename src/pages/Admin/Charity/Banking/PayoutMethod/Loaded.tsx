@@ -21,7 +21,7 @@ export default function Loaded(props: BankingApplicationDetails) {
   const { showModal } = useModalContext();
 
   async function setDefault() {
-    if (isApproved) return alert("This payout method is still under review");
+    if (!isApproved) return alert("This payout method is still under review");
     if (isDefault) return alert("This payout method is already default");
 
     await update({ type: "prioritize", uuid: props.id.toString() });
