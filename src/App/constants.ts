@@ -31,7 +31,7 @@ export const CHARITY_LINKS: LINKS = {
       href: `${BASE_URL}/better-giving-about/`,
       external: true,
     },
-    { title: "Register", href: appRoutes.register },
+    { title: "Register NPO", href: appRoutes.register },
   ],
   GROUPS_DATA: [
     {

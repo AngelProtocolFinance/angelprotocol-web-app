@@ -23,7 +23,7 @@ export default function UserMenu() {
         className="btn-orange px-3 h-10 rounded-lg text-sm"
         aria-disabled={user === "loading"}
       >
-        Login
+        Sign-up / Login
       </Link>
     );
   }
