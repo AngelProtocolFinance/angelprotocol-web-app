@@ -48,11 +48,30 @@ export const apes = createApi({
     }),
     stripeCurrencies: builder.query<
       { supported_payment_currencies: string[] }, // Array of ISO 3166-1 alpha-3 codes
-      { country_code: string } // ISO 3166-1 alpha-2 code
+      null
     >({
-      query: ({ country_code }) => ({
-        url: `v2/fiat/stripe-proxy/apes/${apiEnv}/currencies/${country_code}`,
-      }),
+      async queryFn(_args, _api, _extraOptions, baseQuery) {
+        return await fetch("https://ipapi.co/json/")
+          .then<{
+            country_code: string; // ISO 3166-1 alpha-2 code
+          }>((response) => response.json())
+          .then(({ country_code }) =>
+            baseQuery({
+              url: `v2/fiat/stripe-proxy/apes/${apiEnv}/currencies/${country_code}`,
+            })
+          )
+          .then((currencies) => {
+            if (currencies.error) {
+              return currencies;
+            }
+            return {
+              ...currencies,
+              data: currencies.data as {
+                supported_payment_currencies: string[];
+              },
+            };
+          });
+      },
     }),
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
