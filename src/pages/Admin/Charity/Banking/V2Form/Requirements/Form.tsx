@@ -60,8 +60,8 @@ export default function Form({
         const labelRequired = f.required ? true : undefined;
         if (f.type === "select") {
           return (
-            <div key={f.key} className="grid gap-1 group">
-              <Label required={labelRequired} htmlFor={f.key}>
+            <div key={f.key} className="">
+              <Label required={labelRequired} htmlFor={f.key} className="mb-1">
                 {f.name}
               </Label>
               <select
@@ -71,7 +71,7 @@ export default function Form({
                 })}
                 aria-required={f.required}
                 id={f.key}
-                className="px-4 py-3.5 text-sm appearance-none w-full border border-prim rounded relative after:content-['*'] after:absolute after:right-0 after:text-blue disabled:bg-gray-l5"
+                className="field-input"
               >
                 {f.valuesAllowed?.map((v) => (
                   <option key={v.key} value={v.key} className="font-work">
@@ -99,7 +99,7 @@ export default function Form({
                 {f.valuesAllowed?.map((v) => (
                   <div
                     key={v.key}
-                    className="relative border border-prim rounded px-4 py-3.5 text-sm has-[:checked]:border-orange w-32 h-10 focus-within:ring-2 focus-within:ring-blue-d1"
+                    className="relative border border-prim rounded px-4 py-3.5 text-sm has-[:checked]:border-orange w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1"
                   >
                     <input
                       className="appearance none w-0 h-0"
@@ -139,7 +139,7 @@ export default function Form({
                 {f.name}
               </Label>
               <input
-                className="w-full px-4 py-3.5 text-sm rounded border border-prim"
+                className="field-input"
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {
