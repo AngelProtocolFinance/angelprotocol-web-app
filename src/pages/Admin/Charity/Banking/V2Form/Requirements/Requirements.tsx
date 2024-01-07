@@ -26,7 +26,11 @@ function Requirements({ currency, amount }: Props) {
   const reqIdx = selectedIdx + 1 > requirements.length ? 0 : selectedIdx;
 
   if (isLoading) {
-    return <div>loading...</div>;
+    return (
+      <LoadingStatus classes="text-orange text-sm">
+        Loading requirements...
+      </LoadingStatus>
+    );
   }
 
   if (isEmpty(requirements) || isError) {
