@@ -71,7 +71,7 @@ export default function Form({
                 })}
                 aria-required={f.required}
                 id={f.key}
-                className="appearance-none w-full border border-prim p-3 rounded relative after:content-['*'] after:absolute after:right-0 after:text-blue disabled:bg-gray-l5"
+                className="px-4 py-3.5 text-sm appearance-none w-full border border-prim rounded relative after:content-['*'] after:absolute after:right-0 after:text-blue disabled:bg-gray-l5"
               >
                 {f.valuesAllowed?.map((v) => (
                   <option key={v.key} value={v.key} className="font-work">
@@ -99,7 +99,7 @@ export default function Form({
                 {f.valuesAllowed?.map((v) => (
                   <div
                     key={v.key}
-                    className="relative border border-prim rounded-full px-4 py-1 has-[:checked]:border-orange w-32 h-10 focus-within:ring-2 focus-within:ring-blue-d1"
+                    className="relative border border-prim rounded px-4 py-3.5 text-sm has-[:checked]:border-orange w-32 h-10 focus-within:ring-2 focus-within:ring-blue-d1"
                   >
                     <input
                       className="appearance none w-0 h-0"
@@ -139,7 +139,7 @@ export default function Form({
                 {f.name}
               </Label>
               <input
-                className="w-full p-3 rounded border border-prim"
+                className="w-full px-4 py-3.5 text-sm rounded border border-prim"
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {

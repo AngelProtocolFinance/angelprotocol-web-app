@@ -53,7 +53,7 @@ function Requirements({ currency, amount }: Props) {
           value={reqIdx}
           onChange={(e) => setSelectedIdx(+e.target.value)}
           disabled={isFetching}
-          className="p-3 rounded border border-prim appearance-none disabled:bg-gray-l5 w-full"
+          className="px-4 py-3.5 text-sm rounded border border-prim appearance-none disabled:bg-gray-l5 w-full"
         >
           {requirements.map((v, i) => (
             <option key={v.type} value={i}>
