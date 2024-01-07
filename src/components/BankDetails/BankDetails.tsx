@@ -51,7 +51,11 @@ export default function BankDetails({
 
       <Divider />
 
-      <RecipientDetails amount={amnt} currency={currency.code} />
+      <RecipientDetails
+        amount={amnt}
+        currency={currency.code}
+        FormButtons={FormButtons}
+      />
     </div>
   );
 }

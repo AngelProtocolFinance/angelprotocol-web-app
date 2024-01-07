@@ -1,6 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { ComponentType } from "react";
 import { useForm } from "react-hook-form";
+import { FormButtonsProps } from "../../types";
 import { Group } from "types/aws";
 import { ApplicationMIMEType } from "types/lists";
 import {
@@ -16,6 +18,7 @@ type Props = {
   type: string;
   quoteId: string;
   disabled?: boolean;
+  FormButtons: ComponentType<FormButtonsProps>;
 };
 
 type ValidationError = {
@@ -28,13 +31,14 @@ type ValidationContent = {
   errors: ValidationError[];
 };
 
-export default function Form({
+export default function RecipientDetailsForm({
   fields,
   currency,
   type,
   quoteId,
   amount,
   disabled,
+  FormButtons,
 }: Props) {
   const {
     register,
@@ -42,7 +46,7 @@ export default function Form({
     getValues,
     setError,
     setFocus,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     watch,
   } = useForm({ disabled });
 
@@ -319,7 +323,7 @@ export default function Form({
         />
       </div>
 
-      <button type="submit">submit</button>
+      <FormButtons disabled={disabled} isSubmitting={isSubmitting} />
     </form>
   );
 }

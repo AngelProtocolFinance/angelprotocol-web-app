@@ -1,4 +1,5 @@
-import { memo, useState } from "react";
+import { ComponentType, memo, useState } from "react";
+import { FormButtonsProps } from "../types";
 import { useRequirementsQuery } from "services/aws/wise";
 import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
@@ -8,9 +9,10 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 type Props = {
   currency: string;
   amount: number;
+  FormButtons: ComponentType<FormButtonsProps>;
 };
 
-function RecipientDetails({ currency, amount }: Props) {
+function RecipientDetails({ currency, amount, FormButtons }: Props) {
   const { data, isLoading, isError, isFetching } = useRequirementsQuery(
     {
       amount,
@@ -74,6 +76,7 @@ function RecipientDetails({ currency, amount }: Props) {
         currency={currency}
         amount={amount}
         fields={requirements[reqIdx]?.fields.flatMap((f) => f.group) || []}
+        FormButtons={FormButtons}
       />
     </>
   );
