@@ -1,20 +1,11 @@
 import { ComponentType, useState } from "react";
 import { FormButtonsProps } from "./types";
-import {
-  CreateRecipientRequest,
-  V1RecipientAccount,
-  WiseCurrency,
-} from "types/aws";
+import { V1RecipientAccount, WiseCurrency } from "types/aws";
 import Divider from "components/Divider";
-import LoaderRing from "components/LoaderRing";
-import useDebounce from "hooks/useDebounce";
 import useDebouncer from "hooks/useDebouncer";
-import { isEmpty } from "helpers";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import CurrencySelector from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
-import useCurrencies from "./useCurrencies";
 
 /**
  * Denominated in USD
@@ -60,17 +51,7 @@ export default function BankDetails({
 
       <Divider />
 
-      <RecipientDetails
-        // we need this key to tell React that when currency code changes,
-        // it needs to reset its state by re-rendering the whole component.
-        key={targetCurrency.code}
-        isLoading={isDebouncing}
-        currency={targetCurrency}
-        expectedMontlyDonations={expectedMontlyDonations}
-        isSubmitting={isSubmitting}
-        onSubmit={onSubmit}
-        FormButtons={FormButtons}
-      />
+      <RecipientDetails amount={amnt} currency={currency.code} />
     </div>
   );
 }
