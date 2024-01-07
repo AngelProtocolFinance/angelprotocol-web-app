@@ -3,7 +3,7 @@ import { useState } from "react";
 import { WiseCurrency } from "types/aws";
 import { DrawerIcon } from "components/Icon";
 import { Label } from "components/form";
-import Options from "./Options";
+import Options from "./CurrencyOptions";
 
 export type Currency = {
   code: string;
