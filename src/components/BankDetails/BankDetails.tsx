@@ -11,9 +11,9 @@ import useDebounce from "hooks/useDebounce";
 import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import CurrencySelector from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
-import CurrencySelector from "./WiseCurrencies/CurrencySelector";
 import useCurrencies from "./useCurrencies";
 
 /**
@@ -47,23 +47,15 @@ export default function BankDetails({
   return (
     <div className="grid gap-6">
       <CurrencySelector
-        value={targetCurrency}
-        currencies={currencies}
-        onChange={setTargetCurrency}
+        onChange={(c) => setCurrency(c)}
+        value={currency}
+        disabled={false}
         classes={{ combobox: "w-full md:w-80" }}
-        disabled={isSubmitting}
       />
       <ExpectedFunds
+        value={amount}
+        onChange={(amount) => setAmount(amount)}
         classes={{ input: "md:w-80" }}
-        disabled={isSubmitting}
-        onChange={(value) => {
-          // if value is empty or 0 (zero), use the default value so that there's some form to show
-          const newValue = value || DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT;
-          // if new value is the same as the current value, then there's no need to debounce,
-          // but still call the function to cancel the previous debounce call
-          const delay = newValue === expectedMontlyDonations ? 0 : 1000;
-          debounce(() => setExpectedMontlyDonations(newValue), delay);
-        }}
       />
 
       <Divider />
