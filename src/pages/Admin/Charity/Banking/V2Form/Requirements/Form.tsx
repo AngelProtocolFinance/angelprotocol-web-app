@@ -3,6 +3,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import { Group } from "types/aws";
 import { useNewRequirementsMutation } from "services/aws/wise";
+import { Label } from "components/form";
 
 type Props = {
   fields: Group[];
@@ -55,17 +56,13 @@ export default function Form({
     >
       {fields.map((f) => {
         console.log(f);
-
+        const labelRequired = f.required ? true : undefined;
         if (f.type === "select") {
           return (
             <div key={f.key} className="grid gap-1 group">
-              <label
-                aria-required={f.required}
-                className="text-sm aria-required:after:content-['*'] after:text-red after:ml-1"
-                htmlFor={f.key}
-              >
+              <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
-              </label>
+              </Label>
               <select
                 {...register(f.key, {
                   required: f.required ? "required" : false,
@@ -94,12 +91,7 @@ export default function Form({
         if (f.type === "radio") {
           return (
             <div key={f.key} className="grid gap-1">
-              <p
-                aria-required={f.required}
-                className="text-sm mb-1 aria-required:after:content-['*'] after:text-red after:ml-1"
-              >
-                {f.name}
-              </p>
+              <Label required={labelRequired}>{f.name}</Label>
               <div className="flex items-center gap-4 rounded border border-prim p-3">
                 {f.valuesAllowed?.map((v) => (
                   <div
@@ -134,13 +126,9 @@ export default function Form({
         if (f.type === "text") {
           return (
             <div key={f.key} className="grid gap-1">
-              <label
-                aria-required={f.required}
-                htmlFor={f.key}
-                className="text-sm aria-required:after:content-['*'] after:text-red after:ml-1"
-              >
+              <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
-              </label>
+              </Label>
               <input
                 className="w-full p-3 rounded border border-prim"
                 type="text"
