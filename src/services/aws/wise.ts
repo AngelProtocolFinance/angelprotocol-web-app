@@ -9,7 +9,7 @@ import {
 import { aws } from "../aws/aws";
 import { version as v } from "../helpers";
 
-const baseURL = `/${v(1)}/wise-proxy/`;
+const baseURL = `/${v(1)}/wise-proxy`;
 
 export const wise = aws.injectEndpoints({
   endpoints: (builder) => ({
@@ -45,7 +45,7 @@ export const wise = aws.injectEndpoints({
       query: ({ quoteId, request }) => {
         return {
           method: "POST",
-          url: `${baseURL}/quotes/${quoteId}/account-requirements`,
+          url: `${baseURL}/v1/quotes/${quoteId}/account-requirements`,
           headers: { "Accept-Minor-Version": "1" },
           body: request,
         };
@@ -106,4 +106,5 @@ export const {
   useRecipientQuery,
   useCurrencisQuery,
   useRequirementsQuery,
+  useNewRequirementsMutation,
 } = wise;

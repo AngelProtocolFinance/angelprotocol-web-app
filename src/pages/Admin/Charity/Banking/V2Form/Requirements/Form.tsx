@@ -1,6 +1,8 @@
+import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import { Group } from "types/aws";
+import { useNewRequirementsMutation } from "services/aws/wise";
 
 type Props = {
   fields: Group[];
@@ -10,14 +12,38 @@ type Props = {
   quoteId: string;
 };
 
-export default function Form({ fields, currency, type }: Props) {
+export default function Form({
+  fields,
+  currency,
+  type,
+  quoteId,
+  amount,
+}: Props) {
   const {
     register,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm();
 
-  console.log({ currency, type });
+  const [updateRequirements] = useNewRequirementsMutation();
+
+  async function refresh() {
+    const { accountHolderName, ...details } = getValues() as any;
+    await updateRequirements({
+      quoteId,
+      amount,
+      currency,
+      request: {
+        accountHolderName,
+        currency,
+        ownedByCustomer: false,
+        profile: "{{profileId}}",
+        type,
+        details,
+      },
+    });
+  }
 
   return (
     <form
@@ -25,22 +51,27 @@ export default function Form({ fields, currency, type }: Props) {
         (fv) => console.log({ fv }),
         (err) => console.log({ err })
       )}
-      className="grid gap-3"
+      className="grid gap-4 font-work"
     >
       {fields.map((f) => {
         console.log(f);
+
         if (f.type === "select") {
           return (
-            <div key={f.key} className="grid gap-1 border border-prim p-1">
-              <label htmlFor={f.key}>{f.name}</label>
+            <div key={f.key} className="grid gap-1">
+              <label className="text-sm" htmlFor={f.key}>
+                {f.name}
+              </label>
               <select
-                id={f.key}
                 {...register(f.key, {
                   required: f.required ? "required" : false,
+                  onChange: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
+                id={f.key}
+                className="appearance-none w-full border border-prim p-3 rounded"
               >
                 {f.valuesAllowed?.map((v) => (
-                  <option key={v.key} value={v.key}>
+                  <option key={v.key} value={v.key} className="font-work">
                     {v.name}
                   </option>
                 ))}
@@ -57,18 +88,23 @@ export default function Form({ fields, currency, type }: Props) {
 
         if (f.type === "radio") {
           return (
-            <div key={f.key}>
-              <p>{f.name}</p>
-
-              <div className="flex items-center gap-2">
+            <div key={f.key} className="grid gap-1">
+              <p className="text-sm mb-1">{f.name}</p>
+              <div className="flex items-center gap-4 rounded border border-prim p-3">
                 {f.valuesAllowed?.map((v) => (
-                  <div className="flex items-center gap-1">
+                  <div
+                    key={v.key}
+                    className="flex items-center gap-1 accent-orange"
+                  >
                     <input
                       id={`radio__${v.key}`}
                       type="radio"
                       value={v.key}
                       {...register(f.key, {
                         required: f.required ? "required" : false,
+                        onChange: f.refreshRequirementsOnChange
+                          ? refresh
+                          : undefined,
                       })}
                     />
                     <label htmlFor={`radio__${v.key}`}>{v.name}</label>
@@ -79,7 +115,7 @@ export default function Form({ fields, currency, type }: Props) {
                 errors={errors}
                 name={f.key}
                 as="p"
-                className="text-red text-xs"
+                className="text-red text-xs justify-self-end -mb-4"
               />
             </div>
           );
@@ -87,10 +123,12 @@ export default function Form({ fields, currency, type }: Props) {
 
         if (f.type === "text") {
           return (
-            <div key={f.key} className="grid gap-1 border border-prim p-1">
-              <label htmlFor={f.key}>{f.name}</label>
+            <div key={f.key} className="grid gap-1">
+              <label htmlFor={f.key} className="text-sm">
+                {f.name}
+              </label>
               <input
-                className="w-full"
+                className="w-full p-3 rounded border border-prim"
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {
@@ -121,13 +159,15 @@ export default function Form({ fields, currency, type }: Props) {
                         return res.ok || "invalid";
                       }
                     : undefined,
+                  //onBlur only as text input changes rapidly
+                  onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
               <ErrorMessage
                 errors={errors}
                 name={f.key}
                 as="p"
-                className="text-red text-xs"
+                className="text-red text-xs justify-self-end -mb-4"
               />
             </div>
           );

@@ -39,18 +39,14 @@ export default function Requirements({ currency, amount }: Props) {
 
   return (
     <>
-      {requirements.length > 1 && (
-        <select
-          value={reqIdx}
-          onChange={(e) => setSelectedIdx(+e.target.value)}
-        >
-          {requirements.map((v, i) => (
-            <option key={v.type} value={i}>
-              {v.title}
-            </option>
-          ))}
-        </select>
-      )}
+      <select value={reqIdx} onChange={(e) => setSelectedIdx(+e.target.value)}>
+        {requirements.map((v, i) => (
+          <option key={v.type} value={i}>
+            {v.title}
+          </option>
+        ))}
+      </select>
+
       <Form
         quoteId={data?.quoteId ?? ""}
         type={requirements[reqIdx].type}
