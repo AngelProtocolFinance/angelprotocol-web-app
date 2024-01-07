@@ -1,7 +1,11 @@
 import { ErrorMessage } from "@hookform/error-message";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useForm } from "react-hook-form";
 import { Group } from "types/aws";
-import { useNewRequirementsMutation } from "services/aws/wise";
+import {
+  useCreateRecipientMutation,
+  useNewRequirementsMutation,
+} from "services/aws/wise";
 import { Label } from "components/form";
 
 type Props = {
@@ -11,6 +15,16 @@ type Props = {
   type: string;
   quoteId: string;
   disabled?: boolean;
+};
+
+type ValidationError = {
+  code: string;
+  message: string;
+  arguments: string[]; //key, value
+};
+
+type ValidationContent = {
+  errors: ValidationError[];
 };
 
 export default function Form({
@@ -25,13 +39,16 @@ export default function Form({
     register,
     handleSubmit,
     getValues,
+    setError,
+    setFocus,
     formState: { errors },
   } = useForm({ disabled });
 
   const [updateRequirements] = useNewRequirementsMutation();
+  const [createRecipient] = useCreateRecipientMutation();
 
   async function refresh() {
-    const { accountHolderName, ...details } = getValues() as any;
+    const { accountHolderName, ...details } = getValues();
     await updateRequirements({
       quoteId,
       amount,
@@ -50,7 +67,32 @@ export default function Form({
   return (
     <form
       onSubmit={handleSubmit(
-        (fv) => console.log({ fv }),
+        async (fv) => {
+          const { accountHolderName, ...details } = fv;
+          const res = await createRecipient({
+            accountHolderName,
+            currency,
+            ownedByCustomer: false,
+            profile: "{{profileId}}",
+            type,
+            details,
+          });
+
+          if ("error" in res) {
+            const error = res.error as FetchBaseQueryError;
+            if (error.status === 422) {
+              const content = error.data as ValidationContent;
+
+              for (const err of content.errors) {
+                const [name] = err.arguments;
+                setError(name, { message: err.message });
+              }
+              //only focus on first error
+              const [name] = content.errors[0].arguments;
+              setFocus(name);
+            }
+          }
+        },
         (err) => console.log({ err })
       )}
       className="grid gap-5 font-work text-gray-d2"
