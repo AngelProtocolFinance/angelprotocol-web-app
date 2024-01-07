@@ -69,6 +69,7 @@ export default function Form({
       onSubmit={handleSubmit(
         async (fv) => {
           const { accountHolderName, ...details } = fv;
+
           const res = await createRecipient({
             accountHolderName,
             currency,
@@ -89,7 +90,7 @@ export default function Form({
               }
               //only focus on first error
               const [name] = content.errors[0].arguments;
-              setFocus(name);
+              return setFocus(name);
             }
           }
         },
@@ -98,7 +99,6 @@ export default function Form({
       className="grid gap-5 text-gray-d2"
     >
       {fields.map((f) => {
-        console.log(f);
         const labelRequired = f.required ? true : undefined;
         if (f.type === "select") {
           return (
@@ -110,6 +110,7 @@ export default function Form({
                 {...register(f.key, {
                   required: f.required ? "required" : false,
                   onChange: f.refreshRequirementsOnChange ? refresh : undefined,
+                  shouldUnregister: true,
                 })}
                 aria-required={f.required}
                 id={f.key}
@@ -153,6 +154,7 @@ export default function Form({
                         onChange: f.refreshRequirementsOnChange
                           ? refresh
                           : undefined,
+                        shouldUnregister: true,
                       })}
                     />
                     <label
@@ -214,6 +216,7 @@ export default function Form({
                     : undefined,
                   //onBlur only as text input changes rapidly
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
+                  shouldUnregister: true,
                 })}
               />
               <ErrorMessage
@@ -253,6 +256,7 @@ export default function Form({
                     : undefined,
                   //onBlur only as text input changes rapidly
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
+                  shouldUnregister: true,
                 })}
               />
               <ErrorMessage
