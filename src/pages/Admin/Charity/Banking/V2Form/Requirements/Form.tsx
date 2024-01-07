@@ -1,4 +1,3 @@
-import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useForm } from "react-hook-form";
 import { Group } from "types/aws";
@@ -162,6 +161,45 @@ export default function Form({
                       }
                     : undefined,
 
+                  validate: f.validationAsync
+                    ? async (v: string) => {
+                        const { params, url } = f.validationAsync!;
+                        const res = await fetch(`${url}?${params[0].key}=${v}`);
+                        return res.ok || "invalid";
+                      }
+                    : undefined,
+                  //onBlur only as text input changes rapidly
+                  onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
+                })}
+              />
+              <ErrorMessage
+                errors={errors}
+                name={f.key}
+                as="p"
+                className="text-red text-xs justify-self-end -mb-5"
+              />
+            </div>
+          );
+        }
+
+        if (f.type === "date") {
+          return (
+            <div key={f.key} className="grid gap-1">
+              <Label required={labelRequired} htmlFor={f.key}>
+                {f.name}
+              </Label>
+              <input
+                className="w-full p-3 rounded border border-prim"
+                type="text"
+                placeholder={f.example}
+                {...register(f.key, {
+                  required: f.required ? "required" : false,
+                  pattern: f.validationRegexp
+                    ? {
+                        value: new RegExp(f.validationRegexp),
+                        message: `format ${f.example}`,
+                      }
+                    : undefined,
                   validate: f.validationAsync
                     ? async (v: string) => {
                         const { params, url } = f.validationAsync!;
