@@ -1,5 +1,5 @@
 import { ComponentType, memo, useState } from "react";
-import { FormButtonsProps } from "../types";
+import { FormButtonsProps, OnSubmit } from "../types";
 import { useRequirementsQuery } from "services/aws/wise";
 import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
@@ -10,9 +10,10 @@ type Props = {
   currency: string;
   amount: number;
   FormButtons: ComponentType<FormButtonsProps>;
+  onSubmit: OnSubmit;
 };
 
-function RecipientDetails({ currency, amount, FormButtons }: Props) {
+function RecipientDetails({ currency, amount, FormButtons, onSubmit }: Props) {
   const { data, isLoading, isError, isFetching } = useRequirementsQuery(
     {
       amount,
@@ -77,6 +78,7 @@ function RecipientDetails({ currency, amount, FormButtons }: Props) {
         amount={amount}
         fields={requirements[reqIdx]?.fields.flatMap((f) => f.group) || []}
         FormButtons={FormButtons}
+        onSubmit={onSubmit}
       />
     </>
   );

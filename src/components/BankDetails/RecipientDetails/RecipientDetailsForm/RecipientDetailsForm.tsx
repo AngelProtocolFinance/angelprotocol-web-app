@@ -1,8 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { ComponentType } from "react";
 import { useForm } from "react-hook-form";
-import { FormButtonsProps } from "../../types";
+import { IFormButtons, OnSubmit } from "../../types";
 import { Group } from "types/aws";
 import { ApplicationMIMEType } from "types/lists";
 import {
@@ -18,7 +17,8 @@ type Props = {
   type: string;
   quoteId: string;
   disabled?: boolean;
-  FormButtons: ComponentType<FormButtonsProps>;
+  FormButtons: IFormButtons;
+  onSubmit: OnSubmit;
 };
 
 type ValidationError = {
@@ -38,6 +38,7 @@ export default function RecipientDetailsForm({
   quoteId,
   amount,
   disabled,
+  onSubmit,
   FormButtons,
 }: Props) {
   const {
@@ -75,9 +76,9 @@ export default function RecipientDetailsForm({
 
   return (
     <form
-      onSubmit={handleSubmit(
-        async (fv) => {
-          const { accountHolderName, ...details } = fv;
+      onSubmit={handleSubmit(async (fv) => {
+        try {
+          const { accountHolderName, bankStatement, ...details } = fv;
 
           const res = await createRecipient({
             accountHolderName,
@@ -101,10 +102,15 @@ export default function RecipientDetailsForm({
               const [name] = content.errors[0].arguments;
               return setFocus(name);
             }
+            return null;
           }
-        },
-        (err) => console.log({ err })
-      )}
+
+          const file = (bankStatement as FileList).item(0)!;
+          await onSubmit(res.data, file);
+        } catch (err) {
+          return null;
+        }
+      })}
       className="grid gap-5 text-gray-d2"
     >
       {fields.map((f) => {

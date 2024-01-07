@@ -1,6 +1,6 @@
 import { ComponentType, useState } from "react";
-import { FormButtonsProps } from "./types";
-import { V1RecipientAccount, WiseCurrency } from "types/aws";
+import { FormButtonsProps, OnSubmit } from "./types";
+import { WiseCurrency } from "types/aws";
 import Divider from "components/Divider";
 import useDebouncer from "hooks/useDebouncer";
 import CurrencySelector from "./CurrencySelector";
@@ -13,19 +13,11 @@ import RecipientDetails from "./RecipientDetails";
 const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = "1000";
 
 type Props = {
-  isSubmitting: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
-  onSubmit: (
-    recipient: V1RecipientAccount,
-    bankStatementFile: File
-  ) => Promise<void>;
+  onSubmit: OnSubmit;
 };
 
-export default function BankDetails({
-  FormButtons,
-  isSubmitting,
-  onSubmit,
-}: Props) {
+export default function BankDetails({ FormButtons, onSubmit }: Props) {
   const [currency, setCurrency] = useState<Pick<WiseCurrency, "code" | "name">>(
     { code: "USD", name: "United States Dollar" }
   );
@@ -55,6 +47,7 @@ export default function BankDetails({
         amount={amnt}
         currency={currency.code}
         FormButtons={FormButtons}
+        onSubmit={onSubmit}
       />
     </div>
   );
