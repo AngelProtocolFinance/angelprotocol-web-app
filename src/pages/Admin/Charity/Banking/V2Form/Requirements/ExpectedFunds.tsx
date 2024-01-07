@@ -1,6 +1,3 @@
-import { Popover, Transition } from "@headlessui/react";
-import { Fragment } from "react";
-import Icon from "components/Icon";
 import { Label } from "components/form";
 import { APP_NAME } from "constants/env";
 
