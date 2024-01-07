@@ -17,7 +17,7 @@ type Props = {
   onChange: (currency: Currency) => void;
 };
 
-export default function WiseCurrencies(props: Props) {
+export default function CurrencySelector(props: Props) {
   const [query, setQuery] = useState("");
 
   return (
