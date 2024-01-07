@@ -32,25 +32,15 @@ export const wise = aws.injectEndpoints({
     currencis: builder.query<WiseCurrency[], unknown>({
       query: () => `${baseURL}/v1/currencies`,
     }),
-    /**
-     * postAccountRequirements: builder.mutation<
-      AccountRequirements[],
-      { quoteId: string; request: CreateRecipientRequest }
-    >({
-      query: ({ quoteId, request }) => ({
-        url: `/${v(1)}/wise`,
-        method: "POST",
-        body: {
-          method: "POST",
-          url: `/v1/quotes/${quoteId}/account-requirements`,
-          headers: { "Accept-Minor-Version": "1" },
-          payload: JSON.stringify(request),
-        },
-      }),
-     */
+
     newRequirements: builder.mutation<
       AccountRequirements[],
-      { quoteId: string; request: CreateRecipientRequest }
+      {
+        quoteId: string;
+        request: CreateRecipientRequest;
+        amount: number;
+        currency: string;
+      }
     >({
       query: ({ quoteId, request }) => {
         return {
@@ -59,6 +49,18 @@ export const wise = aws.injectEndpoints({
           headers: { "Accept-Minor-Version": "1" },
           body: request,
         };
+      },
+      async onQueryStarted({ currency, amount }, { dispatch, queryFulfilled }) {
+        const { data } = await queryFulfilled;
+        dispatch(
+          wise.util.updateQueryData(
+            "requirements",
+            { currency, amount },
+            (draft) => {
+              draft.requirements = data;
+            }
+          )
+        );
       },
     }),
 

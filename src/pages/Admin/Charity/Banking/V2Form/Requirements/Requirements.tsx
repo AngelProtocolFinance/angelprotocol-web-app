@@ -55,6 +55,7 @@ export default function Requirements({ currency, amount }: Props) {
         quoteId={data?.quoteId ?? ""}
         type={requirements[reqIdx].type}
         currency={currency}
+        amount={amnt}
         fields={requirements[reqIdx]?.fields.flatMap((f) => f.group) || []}
       />
     </>

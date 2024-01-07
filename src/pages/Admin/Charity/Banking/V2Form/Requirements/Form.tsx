@@ -5,6 +5,7 @@ import { Group } from "types/aws";
 type Props = {
   fields: Group[];
   currency: string;
+  amount: number;
   type: string;
   quoteId: string;
 };
