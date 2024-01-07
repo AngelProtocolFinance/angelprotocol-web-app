@@ -99,7 +99,7 @@ export default function Form({
                 {f.valuesAllowed?.map((v) => (
                   <div
                     key={v.key}
-                    className="relative border border-prim rounded px-4 py-3.5 text-sm has-[:checked]:border-orange w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1"
+                    className="relative border border-prim rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1"
                   >
                     <input
                       className="appearance none w-0 h-0"
