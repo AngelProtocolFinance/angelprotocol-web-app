@@ -95,7 +95,7 @@ export default function Form({
         },
         (err) => console.log({ err })
       )}
-      className="grid gap-5 font-work text-gray-d2"
+      className="grid gap-5 text-gray-d2"
     >
       {fields.map((f) => {
         console.log(f);
