@@ -42,7 +42,11 @@ export default function Form({
     setError,
     setFocus,
     formState: { errors },
+    watch,
   } = useForm({ disabled });
+
+  const bankStatement = watch("bankStatement");
+  console.log({ bankStatement });
 
   const [updateRequirements] = useNewRequirementsMutation();
   const [createRecipient] = useCreateRecipientMutation();
@@ -275,6 +279,25 @@ export default function Form({
           </div>
         );
       })}
+
+      <div className="grid gap-1">
+        <Label htmlFor="bank__statement" required>
+          Bank statement
+        </Label>
+        <input
+          id="bank__statement"
+          type="file"
+          className="text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-orange file:text-white text-gray-d1"
+          {...register("bankStatement", { required: "required" })}
+        />
+        <ErrorMessage
+          errors={errors}
+          name="bankStatement"
+          as="p"
+          className="text-red text-xs justify-self-end -mb-5"
+        />
+      </div>
+
       <button type="submit">submit</button>
     </form>
   );
