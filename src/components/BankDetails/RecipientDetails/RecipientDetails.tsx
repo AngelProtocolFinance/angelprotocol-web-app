@@ -10,7 +10,7 @@ type Props = {
   amount: number;
 };
 
-function Requirements({ currency, amount }: Props) {
+function RecipientDetails({ currency, amount }: Props) {
   const { data, isLoading, isError, isFetching } = useRequirementsQuery(
     {
       amount,
@@ -79,4 +79,4 @@ function Requirements({ currency, amount }: Props) {
   );
 }
 
-export default memo(Requirements);
+export default memo(RecipientDetails);
