@@ -47,7 +47,7 @@ function Requirements({ currency, amount }: Props) {
       )}
       <div>
         <Label className="mb-2" required>
-          Payment option
+          Mode
         </Label>
         <select
           value={reqIdx}
