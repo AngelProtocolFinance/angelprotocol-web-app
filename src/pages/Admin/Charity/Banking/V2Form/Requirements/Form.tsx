@@ -52,7 +52,7 @@ export default function Form({
         (fv) => console.log({ fv }),
         (err) => console.log({ err })
       )}
-      className="grid gap-4 font-work"
+      className="grid gap-5 font-work text-gray-d2"
     >
       {fields.map((f) => {
         console.log(f);
@@ -82,7 +82,7 @@ export default function Form({
                 errors={errors}
                 name={f.key}
                 as="p"
-                className="text-red text-xs"
+                className="text-red text-xs -mb-5"
               />
             </div>
           );
@@ -91,14 +91,17 @@ export default function Form({
         if (f.type === "radio") {
           return (
             <div key={f.key} className="grid gap-1">
-              <Label required={labelRequired}>{f.name}</Label>
-              <div className="flex items-center gap-4 rounded border border-prim p-3">
+              <Label required={labelRequired} className="mb-1">
+                {f.name}
+              </Label>
+              <div className="flex items-center gap-2">
                 {f.valuesAllowed?.map((v) => (
                   <div
                     key={v.key}
-                    className="flex items-center gap-1 accent-orange"
+                    className="relative border border-prim rounded-full px-4 py-1 has-[:checked]:border-orange w-32 h-10 focus-within:ring-2 focus-within:ring-blue-d1"
                   >
                     <input
+                      className="appearance none w-0 h-0"
                       id={`radio__${v.key}`}
                       type="radio"
                       value={v.key}
@@ -109,7 +112,12 @@ export default function Form({
                           : undefined,
                       })}
                     />
-                    <label htmlFor={`radio__${v.key}`}>{v.name}</label>
+                    <label
+                      htmlFor={`radio__${v.key}`}
+                      className="absolute inset-0 w-full grid place-items-center"
+                    >
+                      {v.name}
+                    </label>
                   </div>
                 ))}
               </div>
@@ -117,7 +125,7 @@ export default function Form({
                 errors={errors}
                 name={f.key}
                 as="p"
-                className="text-red text-xs justify-self-end -mb-4"
+                className="text-red text-xs justify-self-end -mb-5"
               />
             </div>
           );
@@ -169,7 +177,7 @@ export default function Form({
                 errors={errors}
                 name={f.key}
                 as="p"
-                className="text-red text-xs justify-self-end -mb-4"
+                className="text-red text-xs justify-self-end -mb-5"
               />
             </div>
           );
