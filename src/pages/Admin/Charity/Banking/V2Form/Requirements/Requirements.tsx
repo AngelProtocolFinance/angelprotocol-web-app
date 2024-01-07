@@ -57,7 +57,7 @@ function Requirements({ currency, amount }: Props) {
           value={reqIdx}
           onChange={(e) => setSelectedIdx(+e.target.value)}
           disabled={isFetching}
-          className="field-input after:content-['*'] relative after:absolute after:right-0 after:top-0"
+          className="field-input"
         >
           {requirements.map((v, i) => (
             <option key={v.type} value={i}>
