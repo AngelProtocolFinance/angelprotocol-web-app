@@ -7,7 +7,7 @@ import CountrySelector from "components/CountrySelector";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { isEmpty } from "helpers";
-import { Currency } from "../../CurrencySelector";
+import { Currency } from "../../WiseCurrencies/CurrencySelector";
 import { isCountry, undot } from "../helpers";
 
 type Props = {

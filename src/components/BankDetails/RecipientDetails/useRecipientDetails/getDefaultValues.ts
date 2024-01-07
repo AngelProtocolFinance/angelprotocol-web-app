@@ -2,7 +2,7 @@ import { FormValues } from "../types";
 import { AccountRequirements, Field, Group } from "types/aws";
 import { Country } from "types/components";
 import { asset } from "components/FileDropzone";
-import { Currency } from "../../CurrencySelector";
+import { Currency } from "../../WiseCurrencies/CurrencySelector";
 import { isCountry, isTextType, undot } from "../helpers";
 
 /**

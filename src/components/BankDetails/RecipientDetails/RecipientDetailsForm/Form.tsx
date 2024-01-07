@@ -6,7 +6,7 @@ import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import FileDropzone from "components/FileDropzone";
 import { Label } from "components/form";
-import { Currency } from "../../CurrencySelector";
+import { Currency } from "../../WiseCurrencies/CurrencySelector";
 import RequirementField from "./RequirementField";
 import { MB_LIMIT, VALID_MIME_TYPES } from "./constants";
 import formToCreateRecipientRequest from "./formToCreateRecipientRequest";

@@ -4,7 +4,7 @@ import { FormButtonsProps } from "../../types";
 import { FormValues, RequirementsData } from "../types";
 import { CreateRecipientRequest } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
-import { Currency } from "../../CurrencySelector";
+import { Currency } from "../../WiseCurrencies/CurrencySelector";
 import Form from "./Form";
 import useRecipientDetailsForm from "./useRecipientDetailsForm";
 

@@ -11,15 +11,15 @@ import useDebounce from "hooks/useDebounce";
 import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import CurrencySelector from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
+import CurrencySelector from "./WiseCurrencies/CurrencySelector";
 import useCurrencies from "./useCurrencies";
 
 /**
  * Denominated in USD
  */
-const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = 1000;
+const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = "1000";
 
 type Props = {
   isSubmitting: boolean;
@@ -38,7 +38,9 @@ export default function BankDetails({
   const [currency, setCurrency] = useState<Pick<WiseCurrency, "code" | "name">>(
     { code: "USD", name: "United States Dollar" }
   );
-  const [amount, setAmount] = useState("1000");
+  const [amount, setAmount] = useState(
+    DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
+  );
   const [debouncedAmount] = useDebouncer(amount, 500);
   const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;
 
