@@ -10,6 +10,7 @@ type Props = {
   amount: number;
   type: string;
   quoteId: string;
+  disabled?: boolean;
 };
 
 export default function Form({
@@ -18,13 +19,14 @@ export default function Form({
   type,
   quoteId,
   amount,
+  disabled,
 }: Props) {
   const {
     register,
     handleSubmit,
     getValues,
     formState: { errors },
-  } = useForm();
+  } = useForm({ disabled });
 
   const [updateRequirements] = useNewRequirementsMutation();
 
@@ -69,7 +71,7 @@ export default function Form({
                 })}
                 aria-required={f.required}
                 id={f.key}
-                className="appearance-none w-full border border-prim p-3 rounded relative after:content-['*'] after:absolute after:right-0 after:text-blue"
+                className="appearance-none w-full border border-prim p-3 rounded relative after:content-['*'] after:absolute after:right-0 after:text-blue disabled:bg-gray-l5"
               >
                 {f.valuesAllowed?.map((v) => (
                   <option key={v.key} value={v.key} className="font-work">

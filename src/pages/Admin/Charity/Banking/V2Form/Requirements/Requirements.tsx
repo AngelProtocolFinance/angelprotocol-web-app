@@ -1,23 +1,22 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useRequirementsQuery } from "services/aws/wise";
-import useDebouncer from "hooks/useDebouncer";
+import { Info, LoadingStatus } from "components/Status";
+import { Label } from "components/form";
+import { isEmpty } from "helpers";
 import Form from "./Form";
 
 type Props = {
   currency: string;
-  amount: string;
+  amount: number;
 };
 
-export default function Requirements({ currency, amount }: Props) {
-  const [debouncedAmount, isDebouncing] = useDebouncer(amount, 500);
-
-  const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;
-  const { data, isLoading, isError } = useRequirementsQuery(
+function Requirements({ currency, amount }: Props) {
+  const { data, isLoading, isError, isFetching } = useRequirementsQuery(
     {
-      amount: amnt,
+      amount,
       currency,
     },
-    { skip: !amnt || isDebouncing }
+    { skip: !amount }
   );
 
   const requirements = data?.requirements || [];
@@ -30,30 +29,50 @@ export default function Requirements({ currency, amount }: Props) {
     return <div>loading...</div>;
   }
 
-  if ((!data && !isDebouncing) || isError) {
-    return <div>failed to load banking form</div>;
+  if (isEmpty(requirements) || isError) {
+    return (
+      <Info classes="text-sm">
+        Payout to <span className="font-bold">{currency}</span> is currently not
+        available. Please select other currency.
+      </Info>
+    );
   }
-
-  if (requirements.length <= 0)
-    return <div>payout to ${currency} is not available</div>;
 
   return (
     <>
-      <select value={reqIdx} onChange={(e) => setSelectedIdx(+e.target.value)}>
-        {requirements.map((v, i) => (
-          <option key={v.type} value={i}>
-            {v.title}
-          </option>
-        ))}
-      </select>
+      {isFetching && (
+        <LoadingStatus classes="text-orange text-xs">
+          Refreshing requirements..
+        </LoadingStatus>
+      )}
+      <div>
+        <Label className="mb-2" required>
+          Payment option
+        </Label>
+        <select
+          value={reqIdx}
+          onChange={(e) => setSelectedIdx(+e.target.value)}
+          disabled={isFetching}
+          className="p-3 rounded border border-prim appearance-none disabled:bg-gray-l5 w-full"
+        >
+          {requirements.map((v, i) => (
+            <option key={v.type} value={i}>
+              {v.title}
+            </option>
+          ))}
+        </select>
+      </div>
 
       <Form
+        disabled={isFetching}
         quoteId={data?.quoteId ?? ""}
         type={requirements[reqIdx].type}
         currency={currency}
-        amount={amnt}
+        amount={amount}
         fields={requirements[reqIdx]?.fields.flatMap((f) => f.group) || []}
       />
     </>
   );
 }
+
+export default memo(Requirements);
