@@ -2,6 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useForm } from "react-hook-form";
 import { Group } from "types/aws";
+import { ApplicationMIMEType } from "types/lists";
 import {
   useCreateRecipientMutation,
   useNewRequirementsMutation,
@@ -52,7 +53,7 @@ export default function Form({
   const [createRecipient] = useCreateRecipientMutation();
 
   async function refresh() {
-    const { accountHolderName, ...details } = getValues();
+    const { accountHolderName, bankStatement, ...details } = getValues();
     await updateRequirements({
       quoteId,
       amount,
@@ -288,8 +289,28 @@ export default function Form({
           id="bank__statement"
           type="file"
           className="text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-orange file:text-white text-gray-d1"
-          {...register("bankStatement", { required: "required" })}
+          {...register("bankStatement", {
+            validate(value?: FileList) {
+              //multile:false
+              const file = value?.item(0);
+              //required: is already handled
+              if (!file) return "required";
+
+              const VALID_TYPE: ApplicationMIMEType = "application/pdf";
+              if (file.type !== VALID_TYPE) {
+                return "must be PDF file";
+              }
+
+              const MB_LIMIT = 6;
+              if (file.size >= Math.pow(10, MB_LIMIT)) {
+                return `exceeds ${MB_LIMIT}MB`;
+              }
+
+              return true;
+            },
+          })}
         />
+
         <ErrorMessage
           errors={errors}
           name="bankStatement"
