@@ -3,7 +3,7 @@ import { useRequirementsQuery } from "services/aws/wise";
 import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
 import { isEmpty } from "helpers";
-import Form from "./Form";
+import RecipientDetailsForm from "./RecipientDetailsForm";
 
 type Props = {
   currency: string;
@@ -67,7 +67,7 @@ function RecipientDetails({ currency, amount }: Props) {
         </select>
       </div>
 
-      <Form
+      <RecipientDetailsForm
         disabled={isFetching}
         quoteId={data?.quoteId ?? ""}
         type={requirements[reqIdx].type}
