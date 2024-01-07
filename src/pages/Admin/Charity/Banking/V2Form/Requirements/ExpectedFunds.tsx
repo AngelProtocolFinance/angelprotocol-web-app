@@ -11,7 +11,7 @@ type Props = {
 export default function ExpectedFunds(props: Props) {
   return (
     <div className="field">
-      <Label htmlFor="wise__amount">
+      <Label htmlFor="wise__amount" required>
         What is the amount of donations (in USD) you expect to receive monthly
         on our platform?
       </Label>
