@@ -21,8 +21,10 @@ export default function Requirements({ currency, amount }: Props) {
   );
 
   const requirements = data?.requirements || [];
-  const numReq = requirements.length;
-  const [reqIdx, setReqIdx] = useState(numReq === 0 ? numReq : numReq - 1);
+  const [selectedIdx, setSelectedIdx] = useState(0);
+
+  // when num options is reduced from current selected, revert to first option
+  const reqIdx = selectedIdx + 1 > requirements.length ? 0 : selectedIdx;
 
   if (isLoading) {
     return <div>loading...</div>;
@@ -38,7 +40,10 @@ export default function Requirements({ currency, amount }: Props) {
   return (
     <>
       {requirements.length > 1 && (
-        <select value={reqIdx} onChange={(e) => setReqIdx(+e.target.value)}>
+        <select
+          value={reqIdx}
+          onChange={(e) => setSelectedIdx(+e.target.value)}
+        >
           {requirements.map((v, i) => (
             <option key={v.type} value={i}>
               {v.title}
