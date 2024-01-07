@@ -1,16 +1,19 @@
 import { ComponentType, useState } from "react";
 import { FormButtonsProps } from "./types";
-import { CreateRecipientRequest } from "types/aws";
-import { FileDropzoneAsset } from "types/components";
+import {
+  CreateRecipientRequest,
+  V1RecipientAccount,
+  WiseCurrency,
+} from "types/aws";
 import Divider from "components/Divider";
 import LoaderRing from "components/LoaderRing";
 import useDebounce from "hooks/useDebounce";
+import useDebouncer from "hooks/useDebouncer";
 import { isEmpty } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import CurrencySelector from "./CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
-import UpdateDetailsButton from "./UpdateDetailsButton";
 import useCurrencies from "./useCurrencies";
 
 /**
@@ -19,60 +22,25 @@ import useCurrencies from "./useCurrencies";
 const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = 1000;
 
 type Props = {
-  shouldUpdate: boolean;
-  onInitiateUpdate: () => void;
   isSubmitting: boolean;
   FormButtons: ComponentType<FormButtonsProps>;
   onSubmit: (
-    request: CreateRecipientRequest,
-    bankStatementFile: FileDropzoneAsset,
-    isDirty: boolean
+    recipient: V1RecipientAccount,
+    bankStatementFile: File
   ) => Promise<void>;
 };
 
 export default function BankDetails({
-  shouldUpdate,
-  onInitiateUpdate,
-  ...props
-}: Props) {
-  if (!shouldUpdate) {
-    return (
-      <div className="flex flex-col w-full justify-between mt-8 max-md:items-center">
-        <UpdateDetailsButton onClick={onInitiateUpdate} />
-        <props.FormButtons disabled refreshRequired isSubmitted />
-      </div>
-    );
-  }
-
-  return <Content {...props} />;
-}
-
-function Content({
   FormButtons,
   isSubmitting,
   onSubmit,
-}: Omit<Props, "shouldUpdate" | "onInitiateUpdate">) {
-  // the initial/default value will never be displayed, as ExpectedFunds displays its own internal value (empty by default)
-  const [expectedMontlyDonations, setExpectedMontlyDonations] = useState(
-    DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
+}: Props) {
+  const [currency, setCurrency] = useState<Pick<WiseCurrency, "code" | "name">>(
+    { code: "USD", name: "United States Dollar" }
   );
-
-  const [debounce, isDebouncing] = useDebounce();
-
-  const { currencies, isLoading, targetCurrency, setTargetCurrency } =
-    useCurrencies();
-
-  if (isLoading) {
-    return (
-      <div className="flex items-center gap-2">
-        <LoaderRing thickness={10} classes="w-6" /> Loading...
-      </div>
-    );
-  }
-
-  if (isEmpty(currencies) || !targetCurrency) {
-    return <span>{GENERIC_ERROR_MESSAGE}</span>;
-  }
+  const [amount, setAmount] = useState("1000");
+  const [debouncedAmount] = useDebouncer(amount, 500);
+  const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;
 
   return (
     <div className="grid gap-6">
