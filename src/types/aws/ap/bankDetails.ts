@@ -103,3 +103,16 @@ export type WiseCurrency = {
   countryKeywords: string[];
   supportsDecimals: boolean;
 };
+
+type ValidationError = {
+  code: string;
+  message: string;
+  arguments: string[]; //key, value
+  path: string;
+};
+
+//https://docs.wise.com/api-docs/features/errors#validation-errors
+export type ValidationContent = {
+  timestamp: string;
+  errors: ValidationError[];
+};
