@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAdminContext } from "pages/Admin/Context";
 import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -18,6 +18,7 @@ export default function Banking() {
   const [newApplication] = useNewBankingApplicationMutation();
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
+  const navigate = useNavigate();
 
   const submit: OnSubmit = async (recipient, bankStatementFile) => {
     try {
@@ -51,9 +52,10 @@ export default function Banking() {
         headline: "Success!",
         children: <p className="py-8">Banking details submitted for review!</p>,
       });
+
+      navigate(`../${adminRoutes.banking}`);
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
-    } finally {
     }
   };
 
