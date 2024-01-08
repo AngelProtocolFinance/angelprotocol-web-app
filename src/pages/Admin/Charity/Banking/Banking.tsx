@@ -22,13 +22,6 @@ export default function Banking() {
 
   const submit: OnSubmit = async (recipient, bankStatementFile) => {
     try {
-      if (!recipient) {
-        return showModal(Prompt, {
-          headline: "Error",
-          children: <p className="py-8">Failed to create recipient.</p>,
-        });
-      }
-
       const { bankStatement } = await getFilePreviews({
         bankStatement: { previews: [], files: [bankStatementFile] },
       });

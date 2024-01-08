@@ -8,6 +8,7 @@ import {
   useCreateRecipientMutation,
   useNewRequirementsMutation,
 } from "services/aws/wise";
+import { useErrorContext } from "contexts/ErrorContext";
 import { Label } from "components/form";
 
 type Props = {
@@ -40,6 +41,7 @@ export default function RecipientDetailsForm({
     formState: { errors, isSubmitting },
   } = useForm({ disabled });
 
+  const { handleError } = useErrorContext();
   const [updateRequirements] = useNewRequirementsMutation();
   const [createRecipient] = useCreateRecipientMutation();
 
@@ -88,13 +90,13 @@ export default function RecipientDetailsForm({
               const [name] = content.errors[0].arguments;
               return setFocus(name);
             }
-            return null;
+            return;
           }
 
           const file = (bankStatement as FileList).item(0)!;
           await onSubmit(res.data, file);
         } catch (err) {
-          return null;
+          handleError(err);
         }
       })}
       className="grid gap-5 text-gray-d2"
@@ -112,6 +114,7 @@ export default function RecipientDetailsForm({
                   required: f.required ? "required" : false,
                   onChange: f.refreshRequirementsOnChange ? refresh : undefined,
                   shouldUnregister: true,
+                  disabled: isSubmitting,
                 })}
                 aria-required={f.required}
                 id={f.key}
@@ -156,6 +159,7 @@ export default function RecipientDetailsForm({
                           ? refresh
                           : undefined,
                         shouldUnregister: true,
+                        disabled: isSubmitting,
                       })}
                     />
                     <label
@@ -218,6 +222,7 @@ export default function RecipientDetailsForm({
                   //onBlur only as text input changes rapidly
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                   shouldUnregister: true,
+                  disabled: isSubmitting,
                 })}
               />
               <ErrorMessage
@@ -248,16 +253,9 @@ export default function RecipientDetailsForm({
                         message: `format ${f.example}`,
                       }
                     : undefined,
-                  validate: f.validationAsync
-                    ? async (v: string) => {
-                        const { params, url } = f.validationAsync!;
-                        const res = await fetch(`${url}?${params[0].key}=${v}`);
-                        return res.ok || "invalid";
-                      }
-                    : undefined,
-                  //onBlur only as text input changes rapidly
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                   shouldUnregister: true,
+                  disabled: isSubmitting,
                 })}
               />
               <ErrorMessage
@@ -284,8 +282,10 @@ export default function RecipientDetailsForm({
         <input
           id="bank__statement"
           type="file"
-          className="text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
+          className="disabled:bg-gray-l5 text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
           {...register("bankStatement", {
+            disabled: isSubmitting,
+            shouldUnregister: true,
             validate(value?: FileList) {
               //multile:false
               const file = value?.item(0);

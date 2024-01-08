@@ -15,10 +15,6 @@ export default function useSubmit() {
 
   const submit: OnSubmit = async (recipient, file) => {
     try {
-      if (!recipient) {
-        return handleError("Failed to create recipient");
-      }
-
       const bankStatementPreview = await getFilePreviews({
         bankStatementFile: { previews: [], files: [file] },
       });

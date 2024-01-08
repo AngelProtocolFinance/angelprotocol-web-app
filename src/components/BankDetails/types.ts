@@ -9,6 +9,6 @@ export type FormButtonsProps = {
 export type IFormButtons = ComponentType<FormButtonsProps>;
 
 export type OnSubmit = (
-  recipient: V1RecipientAccount | null,
+  recipient: V1RecipientAccount,
   bankStatementFile: File
 ) => Promise<void>;
