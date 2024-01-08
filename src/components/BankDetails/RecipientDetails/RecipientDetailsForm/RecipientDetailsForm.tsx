@@ -106,7 +106,7 @@ export default function RecipientDetailsForm({
           }
 
           const file = (bankStatement as FileList).item(0)!;
-          await onSubmit(res.data, file);
+          await onSubmit(res.data, file, false);
         } catch (err) {
           return null;
         }
