@@ -32,7 +32,6 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
       <CurrencySelector
         onChange={(c) => setCurrency(c)}
         value={currency}
-        disabled={false}
         classes={{ combobox: "w-full md:w-80" }}
       />
       <ExpectedFunds

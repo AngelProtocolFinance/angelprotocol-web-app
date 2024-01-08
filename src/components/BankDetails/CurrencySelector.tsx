@@ -3,7 +3,7 @@ import { useState } from "react";
 import { WiseCurrency } from "types/aws";
 import { DrawerIcon } from "components/Icon";
 import { Label } from "components/form";
-import Options from "./CurrencyOptions";
+import CurrencyOptions from "./CurrencyOptions";
 
 export type Currency = {
   code: string;
@@ -12,7 +12,6 @@ export type Currency = {
 
 type Props = {
   classes: { combobox: string };
-  disabled: boolean;
   value: Currency;
   onChange: (currency: Currency) => void;
 };
@@ -28,8 +27,6 @@ export default function CurrencySelector(props: Props) {
       <Combobox
         by="code"
         value={props.value}
-        aria-disabled={props.disabled}
-        disabled={props.disabled}
         onChange={props.onChange}
         as="div"
         className={`relative items-center grid grid-cols-[1fr_auto] field-container ${props.classes.combobox}`}
@@ -54,7 +51,10 @@ export default function CurrencySelector(props: Props) {
           )}
         </Combobox.Button>
 
-        <Options classes="absolute top-full mt-2 z-10" searchText={query} />
+        <CurrencyOptions
+          classes="absolute top-full mt-2 z-10"
+          searchText={query}
+        />
       </Combobox>
     </div>
   );
