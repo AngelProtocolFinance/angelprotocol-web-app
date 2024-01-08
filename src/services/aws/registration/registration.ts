@@ -27,20 +27,18 @@ const registration_api = aws.injectEndpoints({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    reg: builder.query<SavedRegistration, { reference: string; email: string }>(
-      {
-        providesTags: [{ type: "admin", id: adminTags.registration }],
-        query: ({ reference: uuid, email }) => {
-          return {
-            url: "v1/registration",
-            params: { uuid, email },
-          };
-        },
-        transformResponse(res: SavedRegistration) {
-          return { ...res, reqId: 0 };
-        },
-      }
-    ),
+    reg: builder.query<SavedRegistration, string>({
+      providesTags: [{ type: "admin", id: adminTags.registration }],
+      query: (uuid) => {
+        return {
+          url: "v1/registration",
+          params: { uuid },
+        };
+      },
+      transformResponse(res: SavedRegistration) {
+        return { ...res, reqId: 0 };
+      },
+    }),
     fiscalSponsorshipAgreementSigningURL: builder.mutation<
       { url: string },
       FiscalSponsorhipAgreementSigner
