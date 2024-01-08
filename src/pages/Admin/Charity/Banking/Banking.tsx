@@ -7,7 +7,7 @@ import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
-import { uploadFiles } from "helpers/uploadFiles";
+import { getFilePreviews } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { adminRoutes } from "constants/routes";
 import FormButtons from "./FormButtons";
@@ -28,17 +28,9 @@ export default function Banking() {
         });
       }
 
-      const bankStatementURL = await uploadFiles(
-        [bankStatementFile],
-        "endow-profiles"
-      );
-
-      if (!bankStatementURL) {
-        return showModal(Prompt, {
-          headline: "Error",
-          children: <p className="py-8">Failed to upload bank statement.</p>,
-        });
-      }
+      const { bankStatement } = await getFilePreviews({
+        bankStatement: { previews: [], files: [bankStatementFile] },
+      });
 
       const { id, details, currency } = recipient;
       //creating account return V1Recipient and doesn't have longAccount summary field
@@ -51,7 +43,7 @@ export default function Banking() {
         endowmentID: endowment_id,
         bankStatementFile: {
           name: "bank statement",
-          publicUrl: bankStatementURL,
+          publicUrl: bankStatement[0].publicUrl,
         },
       }).unwrap();
 
