@@ -1,6 +1,5 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
-import { WiseCurrency } from "types/aws";
 import CurrencyOptions from "./CurrencySelector2/CurrencyOptions";
 import { DrawerIcon } from "./Icon";
 import { Label } from "./form";
@@ -48,7 +47,7 @@ export default function CurrencySelector(props: Props) {
         <Combobox.Input
           id="wise__currency"
           className="w-full border-r border-gray-l3 dark:border-bluegray px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
-          displayValue={(currency: WiseCurrency) =>
+          displayValue={(currency: Currency) =>
             !!currency.name
               ? `${currency.code} - ${currency.name}`
               : currency.code
