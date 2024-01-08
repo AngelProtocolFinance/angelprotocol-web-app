@@ -143,6 +143,4 @@ export const {
   useUpdateRegMutation,
   useNewApplicationMutation,
   useSubmitMutation,
-
-  util: { updateQueryData: updateRegData },
 } = registration_api;

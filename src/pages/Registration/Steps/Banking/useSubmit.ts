@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -13,15 +12,12 @@ export default function useSubmit() {
   const [updateReg] = useUpdateRegMutation();
   const { handleError } = useErrorContext();
   const navigate = useNavigate();
-  const [isSubmitting, setSubmitting] = useState(false);
 
   const submit: OnSubmit = async (recipient, file) => {
     try {
       if (!recipient) {
         return handleError("Failed to create recipient");
       }
-
-      setSubmitting(true);
 
       const bankStatementPreview = await getFilePreviews({
         bankStatementFile: { previews: [], files: [file] },
@@ -41,10 +37,8 @@ export default function useSubmit() {
       return navigate(`../${steps.summary}`, { state: data.init });
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
-    } finally {
-      setSubmitting(false);
     }
   };
 
-  return { isSubmitting, submit };
+  return { submit };
 }

@@ -1,6 +1,5 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { BankingDetails } from "types/aws";
-import { updateRegData } from "services/aws/registration";
 import BankDetails from "components/BankDetails";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon/Icon";
@@ -10,38 +9,39 @@ import FormButtons from "./FormButtons";
 import useSubmit from "./useSubmit";
 
 function Banking() {
-  const { submit } = useSubmit();
   const { data } = useRegState<5>();
+  const [isChanging, setIsChanging] = useState(false);
+  const { submit } = useSubmit();
 
-  if (data.banking) {
+  if (data.banking && !isChanging) {
     return (
-      <div className="flex flex-col max-sm:items-center gap-4">
+      <div className="flex flex-col items-start max-sm:items-center">
         <h2 className="text-center sm:text-left text-xl mb-2">
-          Setup your banking details
+          Banking details
         </h2>
 
-        <ExtLink>
+        <p className="font-work mt-6 mb-1">
+          <span className="uppercase text-sm font-semibold">account id: </span>
+          <span className="text-gray-d1 ">
+            {data.banking.wise_recipient_id}
+          </span>
+        </p>
+        <ExtLink
+          href={data.banking.BankStatementFile.publicUrl}
+          className="flex items-center gap-2 text-blue hover:text-blue-d1"
+        >
           <Icon type="ExternalLink" />
           <span>Bank statement</span>
         </ExtLink>
-        <p>
-          <span>account id:</span>
-          {data.banking.wise_recipient_id}
-        </p>
         <button
+          className="btn-red px-2 py-1 rounded text-xs mt-2 mb-8"
           type="button"
-          onClick={() => {
-            updateRegData("reg", data.init.reference, (draft) => {
-              (
-                draft.Registration as Partial<BankingDetails>
-              ).BankStatementFile = undefined;
-            });
-          }}
+          onClick={() => setIsChanging(true)}
         >
           change
         </button>
 
-        <div className="grid grid-cols-2 sm:flex gap-2 w-full">
+        <div className="grid grid-cols-2 sm:flex gap-2 w-full mt-auto">
           <Link
             to={`../${steps.docs}`}
             state={data.init}
@@ -61,7 +61,23 @@ function Banking() {
     );
   }
 
-  return <BankDetails FormButtons={FormButtons} onSubmit={submit} />;
+  return (
+    <div className="flex flex-col items-start max-sm:items-center">
+      {isChanging && (
+        <button
+          className="btn-orange px-2 py-1 rounded text-xs mt-2 mb-4"
+          type="button"
+          onClick={() => setIsChanging(false)}
+        >
+          cancel
+        </button>
+      )}
+      <h2 className="text-center sm:text-left text-xl mb-4">
+        {isChanging ? "Update" : "Setup"} your banking details
+      </h2>
+      <BankDetails FormButtons={FormButtons} onSubmit={submit} />
+    </div>
+  );
 }
 
 export default withStepGuard(Banking);
