@@ -10,6 +10,8 @@ import {
 } from "services/aws/wise";
 import { useErrorContext } from "contexts/ErrorContext";
 import { Label } from "components/form";
+import { isEmpty } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
 type Props = {
   fields: Group[];
@@ -77,24 +79,38 @@ export default function RecipientDetailsForm({
             details,
           });
 
-          if ("error" in res) {
-            const error = res.error as FetchBaseQueryError;
-            if (error.status === 422) {
-              const content = error.data as ValidationContent;
-
-              for (const err of content.errors) {
-                const [name] = err.arguments;
-                setError(name, { message: err.message });
-              }
-              //only focus on first error
-              const [name] = content.errors[0].arguments;
-              return setFocus(name);
-            }
-            return;
+          if ("data" in res) {
+            const file = (bankStatement as FileList).item(0)!;
+            return await onSubmit(res.data, file);
           }
 
-          const file = (bankStatement as FileList).item(0)!;
-          await onSubmit(res.data, file);
+          //ERROR handling
+          const error = res.error as FetchBaseQueryError;
+          if (error.status !== 422) return handleError(res.error);
+
+          //only handle 422
+          const content = error.data as ValidationContent;
+
+          //filter "NOT_VALID"
+          const _errs = content.errors;
+          const validations = content.errors.filter(
+            (err) => err.code === "NOT_VALID"
+          );
+
+          if (isEmpty(validations)) {
+            return handleError(_errs[0].message || GENERIC_ERROR_MESSAGE);
+          }
+
+          //SET field errors
+          for (const v of validations) {
+            setError(v.path, { message: v.message });
+          }
+
+          setTimeout(() => {
+            //focus 1st error only
+            setFocus(validations[0].path);
+            //wait a bit for `isSubmitting:false`, as disabled fields can't be focused
+          }, 50);
         } catch (err) {
           handleError(err);
         }
