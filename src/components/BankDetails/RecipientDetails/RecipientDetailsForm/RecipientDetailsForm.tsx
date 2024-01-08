@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { useForm } from "react-hook-form";
 import { IFormButtons, OnSubmit } from "../../types";
-import { Group } from "types/aws";
+import { Group, ValidationContent } from "types/aws";
 import { ApplicationMIMEType } from "types/lists";
 import {
   useCreateRecipientMutation,
@@ -19,16 +19,6 @@ type Props = {
   disabled?: boolean;
   FormButtons: IFormButtons;
   onSubmit: OnSubmit;
-};
-
-type ValidationError = {
-  code: string;
-  message: string;
-  arguments: string[]; //key, value
-};
-
-type ValidationContent = {
-  errors: ValidationError[];
 };
 
 export default function RecipientDetailsForm({
@@ -48,11 +38,7 @@ export default function RecipientDetailsForm({
     setError,
     setFocus,
     formState: { errors, isSubmitting },
-    watch,
   } = useForm({ disabled });
-
-  const bankStatement = watch("bankStatement");
-  console.log({ bankStatement });
 
   const [updateRequirements] = useNewRequirementsMutation();
   const [createRecipient] = useCreateRecipientMutation();

@@ -1,5 +1,5 @@
-import { ComponentType, useState } from "react";
-import { FormButtonsProps, OnSubmit } from "./types";
+import { useState } from "react";
+import { IFormButtons, OnSubmit } from "./types";
 import { WiseCurrency } from "types/aws";
 import Divider from "components/Divider";
 import useDebouncer from "hooks/useDebouncer";
@@ -13,7 +13,7 @@ import RecipientDetails from "./RecipientDetails";
 const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = "1000";
 
 type Props = {
-  FormButtons: ComponentType<FormButtonsProps>;
+  FormButtons: IFormButtons;
   onSubmit: OnSubmit;
 };
 

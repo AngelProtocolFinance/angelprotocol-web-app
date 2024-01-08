@@ -103,3 +103,13 @@ export type WiseCurrency = {
   countryKeywords: string[];
   supportsDecimals: boolean;
 };
+
+type ValidationError = {
+  code: string;
+  message: string;
+  arguments: string[]; //key, value
+};
+
+export type ValidationContent = {
+  errors: ValidationError[];
+};

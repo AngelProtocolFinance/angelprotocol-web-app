@@ -1,5 +1,5 @@
-import { ComponentType, memo, useState } from "react";
-import { FormButtonsProps, OnSubmit } from "../types";
+import { memo, useState } from "react";
+import { IFormButtons, OnSubmit } from "../types";
 import { useRequirementsQuery } from "services/aws/wise";
 import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
@@ -9,7 +9,7 @@ import RecipientDetailsForm from "./RecipientDetailsForm";
 type Props = {
   currency: string;
   amount: number;
-  FormButtons: ComponentType<FormButtonsProps>;
+  FormButtons: IFormButtons;
   onSubmit: OnSubmit;
 };
 
@@ -39,8 +39,8 @@ function RecipientDetails({ currency, amount, FormButtons, onSubmit }: Props) {
   if (isEmpty(requirements) || isError) {
     return (
       <Info classes="text-sm">
-        Payout to <span className="font-bold">{currency}</span> is currently not
-        available. Please select other currency.
+        Target currency <span className="font-bold">{currency}</span> is not
+        supported. Please use a bank account with a different currency.
       </Info>
     );
   }
