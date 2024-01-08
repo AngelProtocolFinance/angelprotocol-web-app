@@ -106,7 +106,7 @@ export default function RecipientDetailsForm({
           }
 
           const file = (bankStatement as FileList).item(0)!;
-          await onSubmit(res.data, file, false);
+          await onSubmit(res.data, file);
         } catch (err) {
           return null;
         }
@@ -298,7 +298,7 @@ export default function RecipientDetailsForm({
         <input
           id="bank__statement"
           type="file"
-          className="text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-orange file:text-white text-gray-d1"
+          className="text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
           {...register("bankStatement", {
             validate(value?: FileList) {
               //multile:false
