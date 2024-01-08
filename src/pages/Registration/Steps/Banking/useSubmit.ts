@@ -15,12 +15,8 @@ export default function useSubmit() {
   const navigate = useNavigate();
   const [isSubmitting, setSubmitting] = useState(false);
 
-  const submit: OnSubmit = async (recipient, file, isDirty) => {
+  const submit: OnSubmit = async (recipient, file) => {
     try {
-      if (!isDirty && data.banking?.BankStatementFile) {
-        return navigate(`../${steps.summary}`, { state: data.init });
-      }
-
       if (!recipient) {
         return handleError("Failed to create recipient");
       }
@@ -41,6 +37,7 @@ export default function useSubmit() {
       if ("error" in result) {
         return handleError(result.error);
       }
+
       return navigate(`../${steps.summary}`, { state: data.init });
     } catch (error) {
       handleError(error, GENERIC_ERROR_MESSAGE);
