@@ -49,7 +49,7 @@
     "node": "18.16.1"
   },
   "dependencies": {
-    "@aws-amplify/ui-react": "6.0.3",
+    "@aws-amplify/ui-react": "6.1.0",
     "@cosmjs/encoding": "0.31.1",
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/bignumber": "^5.7.0",
