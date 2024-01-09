@@ -33,6 +33,7 @@ const registration_api = aws.injectEndpoints({
         return {
           url: "v1/registration",
           params: { uuid },
+          headers: { authorization: TEMP_JWT },
         };
       },
       transformResponse(res: SavedRegistration) {
