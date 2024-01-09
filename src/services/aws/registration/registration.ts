@@ -7,6 +7,7 @@ import {
   SubmitResult,
 } from "types/aws";
 import { adminTags } from "services/aws/tags";
+import { apiEnv } from "services/constants";
 import { logger } from "helpers";
 import { TEMP_JWT } from "constants/auth";
 import { EMAIL_SUPPORT } from "constants/env";
@@ -31,7 +32,7 @@ const registration_api = aws.injectEndpoints({
       providesTags: [{ type: "admin", id: adminTags.registration }],
       query: (uuid) => {
         return {
-          url: "v1/registration",
+          url: `v1/registration/${apiEnv}`,
           params: { uuid },
           headers: { authorization: TEMP_JWT },
         };
