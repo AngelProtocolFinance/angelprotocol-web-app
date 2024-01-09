@@ -32,7 +32,7 @@ const registration_api = aws.injectEndpoints({
       providesTags: [{ type: "admin", id: adminTags.registration }],
       query: (uuid) => {
         return {
-          url: `v1/registration/${apiEnv}`,
+          url: `v5/registration/${apiEnv}`,
           params: { uuid },
           headers: { authorization: TEMP_JWT },
         };
