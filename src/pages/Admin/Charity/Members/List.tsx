@@ -1,5 +1,6 @@
 import { useAdminContext } from "pages/Admin/Context";
-import { useUsersQuery } from "services/aws/users";
+import { useDeleteEndowAdminMutation, useUsersQuery } from "services/aws/users";
+import { useAuthenticatedUser } from "contexts/Auth";
 import { useModalContext } from "contexts/ModalContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
@@ -44,6 +45,18 @@ type LoadedProps = {
   members: string[];
 };
 function Loaded({ members, classes = "" }: LoadedProps) {
+  const { email: user } = useAuthenticatedUser();
+  const { id } = useAdminContext();
+  const [removeUser, { isLoading }] = useDeleteEndowAdminMutation();
+
+  async function handleRemove(toRemove: string) {
+    if (toRemove === user) return window.alert("Can't delete self");
+    if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
+
+    const result = await removeUser({ email: toRemove, endowID: id });
+    if ("error" in result) return window.alert("Failed to remove user");
+  }
+
   return (
     <table
       className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
@@ -71,7 +84,14 @@ function Loaded({ members, classes = "" }: LoadedProps) {
             type="td"
             cellClass="p-3 border-t border-prim max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
-            <>--</>
+            <button
+              disabled={isLoading}
+              onClick={() => handleRemove(member)}
+              type="button"
+              className="text-red disabled:text-gray"
+            >
+              <Icon type="Dash" />
+            </button>
             <>{member}</>
           </Cells>
         ))}

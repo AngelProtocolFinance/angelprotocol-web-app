@@ -19,7 +19,7 @@ export type Props = {
 };
 
 export default function AddForm({ added, endowID }: Props) {
-  const [addAdmin] = useNewEndowAdminMutation();
+  const [addAdmin, { isLoading }] = useNewEndowAdminMutation();
   const { setModalOption, showModal } = useModalContext();
   const methods = useForm({
     resolver: yupResolver(
@@ -45,6 +45,7 @@ export default function AddForm({ added, endowID }: Props) {
         email: fv.email,
         endowID,
       }).unwrap();
+
       showModal(Prompt, {
         headline: "Success!",
         children: (
@@ -75,7 +76,7 @@ export default function AddForm({ added, endowID }: Props) {
         <Field<FV> name="firstName" label="First name" required />
         <Field<FV> name="lastName" label="Last name" required />
       </FormProvider>
-      <button type="submit" className="btn btn-orange mt-6">
+      <button disabled={isLoading} type="submit" className="btn-orange mt-6">
         Add member
       </button>
     </Modal>

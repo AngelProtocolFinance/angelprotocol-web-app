@@ -1,6 +1,5 @@
 import {
   DeleteEndowAdminPayload,
-  NewEndowAdmin,
   NewEndowAdminPayload,
 } from "types/aws/ap/users";
 import { TEMP_JWT } from "constants/auth";
