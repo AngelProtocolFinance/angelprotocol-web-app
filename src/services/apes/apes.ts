@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
-import { EndowmentBalances, KYCData, Token } from "types/aws";
+import { EndowmentBalances, FiatCurrencyData, KYCData, Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { version as v } from "services/helpers";
 import { APIs } from "constants/urls";
@@ -46,10 +46,7 @@ export const apes = createApi({
         url: `v2/fiat/stripe-proxy/apes/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
-    stripeCurrencies: builder.query<
-      { supported_payment_currencies: string[] }, // Array of ISO 3166-1 alpha-3 codes
-      null
-    >({
+    stripeCurrencies: builder.query<FiatCurrencyData, null>({
       async queryFn(_args, _api, _extraOptions, baseQuery) {
         return await fetch("https://ipapi.co/json/")
           .then<{
@@ -66,9 +63,7 @@ export const apes = createApi({
             }
             return {
               ...currencies,
-              data: currencies.data as {
-                supported_payment_currencies: string[];
-              },
+              data: currencies.data as FiatCurrencyData,
             };
           });
       },

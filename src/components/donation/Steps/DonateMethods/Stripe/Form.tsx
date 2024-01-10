@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { ObjectSchema, number, object } from "yup";
 import { FormValues, Props } from "./types";
 import { SchemaShape } from "schemas/types";
+import { FiatCurrencyData } from "types/aws";
 import { useStripeCurrenciesQuery } from "services/apes";
 import { Currency } from "components/CurrencySelector";
 import ExtLink from "components/ExtLink";
@@ -29,9 +30,7 @@ export default function Form(props: FormProps) {
       queryState={queryState}
       classes={{ container: "grid justify-center" }}
     >
-      {(data) => (
-        <Content {...props} currencies={data.supported_payment_currencies} />
-      )}
+      {(data) => <Content {...props} currencies={data.currencies} />}
     </QueryLoader>
   );
 }
@@ -43,12 +42,12 @@ function Content({
   state: { recipient },
   widgetConfig,
   onSubmit,
-}: FormProps & { currencies: string[] }) {
+}: FormProps & FiatCurrencyData) {
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
       amount: defaultValues.amount,
-      currency: { code: currencies[0].toUpperCase() },
+      currency: { code: currencies[0].currency_code.toUpperCase() },
       pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
       userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
     },
@@ -68,7 +67,7 @@ function Content({
         />
         <CurrencySelectorField<FormValues>
           name="currency"
-          currencies={currencies}
+          currencies={currencies.map((x) => x.currency_code)}
         />
         {!recipient.isKYCRequired && (
           // if KYC is required, the checkbox is redundant

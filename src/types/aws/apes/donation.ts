@@ -71,3 +71,11 @@ export type TxLogPayload = {
   walletAddress: string;
   kycData?: KYCData;
 };
+
+export type FiatCurrencyData = {
+  currencies: {
+    currency_code: string; // ISO 3166-1 alpha-3 code
+    minimum_amount: number;
+    rate: number;
+  }[];
+};
