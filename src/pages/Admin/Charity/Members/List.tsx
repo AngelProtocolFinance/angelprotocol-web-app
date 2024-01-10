@@ -1,11 +1,14 @@
 import { useAdminContext } from "pages/Admin/Context";
 import { useUsersQuery } from "services/aws/users";
+import { useModalContext } from "contexts/ModalContext";
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import TableSection, { Cells } from "components/TableSection";
+import AddForm from "./AddForm";
 
 export default function List() {
+  const { showModal } = useModalContext();
   const { id } = useAdminContext();
 
   const queryState = useUsersQuery(id);
@@ -15,6 +18,9 @@ export default function List() {
         type="button"
         disabled={queryState.isLoading}
         className="justify-self-end btn-orange px-4 py-1.5 text-sm gap-2 mb-2"
+        onClick={() =>
+          showModal(AddForm, { added: queryState.data || [], endowID: id })
+        }
       >
         <Icon type="Plus" />
         <span>Invite user</span>

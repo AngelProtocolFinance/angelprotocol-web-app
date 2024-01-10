@@ -42,7 +42,7 @@ export default function AddForm({ added, endowID }: Props) {
       await addAdmin({
         firstName: fv.firstName,
         lastName: fv.lastName,
-        email: fv.lastName,
+        email: fv.email,
         endowID,
       }).unwrap();
       showModal(Prompt, {
