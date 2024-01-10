@@ -6,19 +6,21 @@ import {
   useForm,
 } from "react-hook-form";
 import { object } from "yup";
-import { useAuthenticatedUser } from "contexts/Auth";
+import { useNewEndowAdminMutation } from "services/aws/users";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
+import Prompt from "components/Prompt";
 import { Field } from "components/form";
 import { requiredString } from "schemas/string";
 
 export type Props = {
+  endowID: number;
   added: string[];
 };
 
-export default function AddForm({ added }: Props) {
-  const { email: userEmail } = useAuthenticatedUser();
-  const { closeModal } = useModalContext();
+export default function AddForm({ added, endowID }: Props) {
+  const [addAdmin] = useNewEndowAdminMutation();
+  const { setModalOption, showModal } = useModalContext();
   const methods = useForm({
     resolver: yupResolver(
       object({
@@ -34,7 +36,33 @@ export default function AddForm({ added }: Props) {
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
   const { handleSubmit } = methods;
 
-  const submit: SubmitHandler<FV> = async (data) => {};
+  const submit: SubmitHandler<FV> = async (fv) => {
+    try {
+      setModalOption("isDismissible", false);
+      await addAdmin({
+        firstName: fv.firstName,
+        lastName: fv.lastName,
+        email: fv.lastName,
+        endowID,
+      }).unwrap();
+      showModal(Prompt, {
+        headline: "Success!",
+        children: (
+          <p className="py-6">
+            <span className="font-semibold">{fv.email}</span> is now a member of
+            this endowment.
+          </p>
+        ),
+      });
+    } catch (err) {
+      showModal(Prompt, {
+        headline: "Error.",
+        children: (
+          <p className="py-6 text-red">Failed to add {fv.email} to members</p>
+        ),
+      });
+    }
+  };
 
   return (
     <Modal
