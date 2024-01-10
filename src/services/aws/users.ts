@@ -1,4 +1,8 @@
-import { NewEndowAdmin } from "types/aws/ap/users";
+import {
+  DeleteEndowAdminPayload,
+  NewEndowAdmin,
+  NewEndowAdminPayload,
+} from "types/aws/ap/users";
 import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
@@ -14,7 +18,7 @@ const users = aws.injectEndpoints({
         };
       },
     }),
-    newEndowAdmin: builder.mutation<unknown, NewEndowAdmin>({
+    newEndowAdmin: builder.mutation<unknown, NewEndowAdminPayload>({
       invalidatesTags: (_, error) => (error ? [] : ["users"]),
       query: ({ endowID, ...payload }) => {
         return {
@@ -25,7 +29,22 @@ const users = aws.injectEndpoints({
         };
       },
     }),
+    deleteEndowAdmin: builder.mutation<unknown, DeleteEndowAdminPayload>({
+      invalidatesTags: (_, error) => (error ? [] : ["users"]),
+      query: ({ endowID, ...payload }) => {
+        return {
+          method: "DELETE",
+          url: `/${v(1)}/users/${endowID}`,
+          body: payload,
+          headers: { Authorization: TEMP_JWT },
+        };
+      },
+    }),
   }),
 });
 
-export const { useUsersQuery, useNewEndowAdminMutation } = users;
+export const {
+  useUsersQuery,
+  useNewEndowAdminMutation,
+  useDeleteEndowAdminMutation,
+} = users;
