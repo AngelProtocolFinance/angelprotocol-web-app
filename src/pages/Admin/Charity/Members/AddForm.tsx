@@ -50,8 +50,9 @@ export default function AddForm({ added, endowID }: Props) {
         headline: "Success!",
         children: (
           <p className="py-6">
-            <span className="font-semibold">{fv.email}</span> is now a member of
-            this endowment.
+            User succesfully added!{" "}
+            <span className="font-semibold">{fv.email}</span> should signin to
+            apply new credentials.
           </p>
         ),
       });
