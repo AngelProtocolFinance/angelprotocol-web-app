@@ -1,35 +1,43 @@
 import { useAdminContext } from "pages/Admin/Context";
 import { useUsersQuery } from "services/aws/users";
+import ContentLoader from "components/ContentLoader";
+import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import TableSection, { Cells } from "components/TableSection";
 
-export default function Loader() {
+export default function List() {
   const { id } = useAdminContext();
+
   const queryState = useUsersQuery(id);
   return (
-    <QueryLoader
-      queryState={queryState}
-      classes={{ container: "mt-4 border-t pt-4 border-prim" }}
-      messages={{
-        loading: "Loading members...",
-        error: "Failed to get members",
-        empty: "No members found.",
-      }}
-    >
-      {(members) => (
-        <div className="grid col-span-full overflow-x-auto">
-          <Table members={members} />
-        </div>
-      )}
-    </QueryLoader>
+    <div>
+      <button
+        type="button"
+        disabled={queryState.isLoading}
+        className="justify-self-end btn-orange px-4 py-1.5 text-sm gap-2 mb-2"
+      >
+        <Icon type="Plus" />
+        <span>Invite user</span>
+      </button>
+      <QueryLoader
+        queryState={queryState}
+        messages={{
+          loading: <Skeleton />,
+          error: "Failed to get members",
+          empty: "No members found.",
+        }}
+      >
+        {(members) => <Loaded members={members} />}
+      </QueryLoader>
+    </div>
   );
 }
 
-type TableProps = {
+type LoadedProps = {
   classes?: string;
   members: string[];
 };
-function Table({ members, classes = "" }: TableProps) {
+function Loaded({ members, classes = "" }: LoadedProps) {
   return (
     <table
       className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
@@ -42,7 +50,7 @@ function Table({ members, classes = "" }: TableProps) {
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
-          <></>
+          <td className="w-8" />
           <>Email</>
         </Cells>
       </TableSection>
@@ -63,5 +71,16 @@ function Table({ members, classes = "" }: TableProps) {
         ))}
       </TableSection>
     </table>
+  );
+}
+
+function Skeleton() {
+  return (
+    <div className="grid gap-y-1 mt-2">
+      <ContentLoader className="h-12 w-full rounded" />
+      <ContentLoader className="h-12 w-full rounded" />
+      <ContentLoader className="h-12 w-full rounded" />
+      <ContentLoader className="h-12 w-full rounded" />
+    </div>
   );
 }
