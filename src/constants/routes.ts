@@ -23,6 +23,7 @@ export const adminRoutes = {
   banking: "banking",
   widget_config: "widget-config",
   donations: "donations",
+  members: "members",
 } as const;
 
 export enum regRoutes {

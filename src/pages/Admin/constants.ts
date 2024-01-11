@@ -56,6 +56,15 @@ export const LINKS: {
       size: 24,
     },
   },
+  members: {
+    title: "Members",
+    to: "members",
+    icon: {
+      type: "Users",
+      size: 24,
+    },
+  },
+
   banking: {
     title: "Banking",
     to: sidebarRoutes.banking,

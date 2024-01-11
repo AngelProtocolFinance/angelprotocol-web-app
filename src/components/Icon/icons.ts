@@ -52,6 +52,7 @@ import {
   IoClose,
   IoCloseCircle,
   IoCrop,
+  IoPeople,
   IoWalletSharp,
   IoWarning,
 } from "react-icons/io5";
@@ -138,6 +139,7 @@ export const icons = {
   Up: VscTriangleUp,
   Upload: AiOutlineUpload,
   User: FaUserCircle,
+  Users: IoPeople,
   Wallet: IoWalletSharp,
   Warning: IoWarning,
   Widget: MdWidgets,
