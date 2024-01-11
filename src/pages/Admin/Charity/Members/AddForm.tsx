@@ -6,6 +6,7 @@ import {
   useForm,
 } from "react-hook-form";
 import { object } from "yup";
+import { useLazyProfileQuery } from "services/aws/aws";
 import { useNewEndowAdminMutation } from "services/aws/users";
 import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
@@ -20,6 +21,7 @@ export type Props = {
 
 export default function AddForm({ added, endowID }: Props) {
   const [addAdmin, { isLoading }] = useNewEndowAdminMutation();
+  const [profile] = useLazyProfileQuery();
   const { setModalOption, showModal } = useModalContext();
   const methods = useForm({
     resolver: yupResolver(
@@ -39,11 +41,15 @@ export default function AddForm({ added, endowID }: Props) {
   const submit: SubmitHandler<FV> = async (fv) => {
     try {
       setModalOption("isDismissible", false);
+      //get endowname
+      const { data } = await profile({ id: endowID, fields: ["name"] });
+
       await addAdmin({
         firstName: fv.firstName,
         lastName: fv.lastName,
         email: fv.email,
         endowID,
+        endowName: data?.name || `Endowment:${endowID}`,
       }).unwrap();
 
       showModal(Prompt, {
