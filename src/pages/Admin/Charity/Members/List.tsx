@@ -84,14 +84,17 @@ function Loaded({ members, classes = "" }: LoadedProps) {
             type="td"
             cellClass="p-3 border-t border-prim max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
-            <button
-              disabled={isLoading}
-              onClick={() => handleRemove(member)}
-              type="button"
-              className="text-red disabled:text-gray"
-            >
-              <Icon type="Dash" />
-            </button>
+            <td className="relative">
+              <button
+                disabled={isLoading}
+                onClick={() => handleRemove(member)}
+                type="button"
+                className=" disabled:text-gray hover:text-red active:text-red absolute-center"
+              >
+                <Icon type="Delete" size={16} />
+              </button>
+            </td>
+
             <>{member}</>
           </Cells>
         ))}
