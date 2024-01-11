@@ -13,7 +13,7 @@ export default function Categories() {
 
   return (
     <FlatFilter
-      label="SDGs"
+      label="Categories"
       selectedValues={sdgGroups}
       options={Object.entries(categories).map(([num, { name }]) => ({
         key: num,
