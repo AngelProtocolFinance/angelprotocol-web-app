@@ -8,7 +8,7 @@ import {
   setKYCOnly,
   setSDGgroups,
 } from "slices/components/marketFilter";
-import { categories, unsdgs } from "constants/unsdgs";
+import { categories } from "constants/unsdgs";
 
 export default function ActiveFilters() {
   const { endow_designation, sdgGroups, countries, kyc_only } = useGetter(
