@@ -1,23 +1,26 @@
-import { UNSDG_NUMS } from "types/lists";
+import { SDGGroup } from "types/lists";
 import { useGetter, useSetter } from "store/accessors";
-import { setSdgs } from "slices/components/marketFilter";
-import { unsdgs } from "constants/unsdgs";
+import { setSDGgroups } from "slices/components/marketFilter";
+import { categories } from "constants/unsdgs";
 import { FlatFilter } from "./common";
 
-export default function SDGs() {
-  const sdgs = useGetter((state) => state.component.marketFilter.sdgs);
+export default function Categories() {
+  const sdgGroups = useGetter(
+    (state) => state.component.marketFilter.sdgGroups
+  );
+
   const dispatch = useSetter();
 
   return (
     <FlatFilter
       label="SDGs"
-      selectedValues={sdgs}
-      options={Object.entries(unsdgs).map(([sdgNum, { title }]) => ({
-        key: sdgNum,
-        value: +sdgNum as UNSDG_NUMS,
-        displayText: `${sdgNum} : ${title}`,
+      selectedValues={sdgGroups}
+      options={Object.entries(categories).map(([num, { name }]) => ({
+        key: num,
+        value: +num as SDGGroup,
+        displayText: name,
       }))}
-      onChange={(value) => dispatch(setSdgs(value))}
+      onChange={(value) => dispatch(setSDGgroups(value))}
     />
   );
 }

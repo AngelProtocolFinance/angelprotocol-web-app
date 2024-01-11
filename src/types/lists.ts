@@ -20,6 +20,8 @@ export type UNSDG_NUMS =
   | 16
   | 17;
 
+export type SDGGroup = 1 | 2 | 3 | 4 | 5 | 6;
+
 export type TransactionStatus = "open" | "approved" | "expired";
 export type EndowmentType = "charity" | "ast" | "daf";
 
