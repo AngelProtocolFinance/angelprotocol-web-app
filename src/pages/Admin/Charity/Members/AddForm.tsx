@@ -20,7 +20,7 @@ export type Props = {
 };
 
 export default function AddForm({ added, endowID }: Props) {
-  const [addAdmin, { isLoading }] = useNewEndowAdminMutation();
+  const [addAdmin] = useNewEndowAdminMutation();
   const [profile] = useLazyProfileQuery();
   const { setModalOption, showModal } = useModalContext();
   const methods = useForm({
@@ -36,7 +36,10 @@ export default function AddForm({ added, endowID }: Props) {
   });
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
 
   const submit: SubmitHandler<FV> = async (fv) => {
     try {
@@ -83,7 +86,7 @@ export default function AddForm({ added, endowID }: Props) {
         <Field<FV> name="firstName" label="First name" required />
         <Field<FV> name="lastName" label="Last name" required />
       </FormProvider>
-      <button disabled={isLoading} type="submit" className="btn-orange mt-6">
+      <button disabled={isSubmitting} type="submit" className="btn-orange mt-6">
         Add member
       </button>
     </Modal>
