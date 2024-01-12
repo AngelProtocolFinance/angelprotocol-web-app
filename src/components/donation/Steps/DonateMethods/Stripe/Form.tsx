@@ -1,22 +1,23 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
+import { useState } from "react";
+import { FormProvider, get, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { ObjectSchema, number, object } from "yup";
 import { FormValues, Props } from "./types";
 import { SchemaShape } from "schemas/types";
 import { FiatCurrencyData } from "types/aws";
 import { useStripeCurrenciesQuery } from "services/apes";
-import { Currency } from "components/CurrencySelector";
+import CurrencySelector, { Currency } from "components/CurrencySelector";
 import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
-import { CheckField, Field } from "components/form";
+import { CheckField, Field, Label } from "components/form";
 import { requiredString } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
 import AdvancedOptions from "../../../AdvancedOptions";
-import CurrencySelectorField from "./CurrencySelectorField";
 
 type FormProps = Props & {
   defaultValues: Partial<FormValues>;
@@ -30,27 +31,33 @@ export default function Form(props: FormProps) {
       queryState={queryState}
       classes={{ container: "grid justify-center" }}
     >
-      {(data) => <Content {...props} currencies={data.currencies} />}
+      {(data) => <Content {...props} fiatCurrencyData={data} />}
     </QueryLoader>
   );
 }
 
 function Content({
   advanceOptDisplay,
-  currencies,
+  fiatCurrencyData,
   defaultValues,
   state: { recipient },
   widgetConfig,
   onSubmit,
-}: FormProps & FiatCurrencyData) {
+}: FormProps & { fiatCurrencyData: FiatCurrencyData }) {
+  const [selectedCurrencyData, setSelectedCurrencyData] = useState(
+    fiatCurrencyData.currencies[0]
+  );
   const methods = useForm<FormValues>({
-    resolver: yupResolver(schema),
     defaultValues: {
       amount: defaultValues.amount,
-      currency: { code: currencies[0].currency_code.toUpperCase() },
+      currency: { code: selectedCurrencyData.currency_code.toUpperCase() },
       pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
       userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
     },
+  });
+  const { field } = useController({
+    control: methods.control,
+    name: "currency",
   });
 
   const isInsideWidget = widgetConfig !== null;
@@ -63,11 +70,39 @@ function Content({
         <Field<FormValues>
           name="amount"
           label="Donation amount"
-          classes={{ label: "font-bold" }}
+          required
+          registerOptions={{
+            required: "required",
+            min: {
+              value: selectedCurrencyData.minimum_amount,
+              message: `must be greater than ${selectedCurrencyData.minimum_amount}`,
+            },
+            pattern: {
+              value: /[0-9]+/,
+              message: "must be a number",
+            },
+            shouldUnregister: true,
+          }}
+          tooltip={`The minimum donation amount is 1 USD or ${
+            selectedCurrencyData.minimum_amount
+          } ${selectedCurrencyData.currency_code.toUpperCase()}`}
         />
-        <CurrencySelectorField<FormValues>
-          name="currency"
-          currencies={currencies.map((x) => x.currency_code)}
+        <CurrencySelector
+          currencies={fiatCurrencyData.currencies.map((x) => ({
+            code: x.currency_code,
+          }))}
+          disabled={methods.formState.isSubmitting}
+          label="Select your donation currency:"
+          onChange={(currency) => {
+            setSelectedCurrencyData(
+              // new currency can be selected only among the passed fiat currency data
+              fiatCurrencyData.currencies.find(
+                (x) => x.currency_code === currency.code
+              )!
+            );
+            field.onChange(currency);
+          }}
+          value={field.value}
         />
         {!recipient.isKYCRequired && (
           // if KYC is required, the checkbox is redundant
@@ -134,15 +169,3 @@ function Content({
     </FormProvider>
   );
 }
-
-const schema = object<any, SchemaShape<FormValues>>({
-  // for making a number field optional using `nullable + transform`,
-  // see https://github.com/jquense/yup/issues/500#issuecomment-818582829
-  amount: number()
-    .required("required")
-    .positive("must be greater than zero")
-    .typeError("must be a number"),
-  currency: object<any, SchemaShape<Currency>>({
-    code: requiredString.length(3), // ISO 3166-1 alpha-3 code
-  }),
-}) as ObjectSchema<FormValues>;

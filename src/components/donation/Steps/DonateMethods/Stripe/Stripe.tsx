@@ -33,7 +33,7 @@ export default function Stripe(props: Props) {
             }
             try {
               const { clientSecret } = await createPaymentIntent({
-                amount: fv.amount,
+                amount: +fv.amount,
                 currency: fv.currency.code,
                 endowmentId: props.state.recipient.id,
                 splitLiq: fv.pctLiquidSplit.toString(),
@@ -56,7 +56,7 @@ export default function Stripe(props: Props) {
           onSubmit={async (kyc) => {
             try {
               const { clientSecret } = await createPaymentIntent({
-                amount: step.amount,
+                amount: +step.amount,
                 currency: step.currency.code,
                 endowmentId: props.state.recipient.id,
                 splitLiq: step.pctLiquidSplit.toString(),
