@@ -8,6 +8,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import LoaderRing from "components/LoaderRing";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 
 // Code inspired by React Stripe.js docs, see:
@@ -64,6 +65,10 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setLoading(false)}
+        onLoadError={(error) => {
+          setLoading(false);
+          handleError(error, GENERIC_ERROR_MESSAGE);
+        }}
       />
       {isLoading ? (
         <LoaderRing thickness={10} classes="w-12 justify-self-center" />
