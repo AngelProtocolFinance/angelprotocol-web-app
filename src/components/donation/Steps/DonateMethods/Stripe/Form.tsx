@@ -143,6 +143,6 @@ const schema = object<any, SchemaShape<FormValues>>({
     .positive("must be greater than zero")
     .typeError("must be a number"),
   currency: object<any, SchemaShape<Currency>>({
-    code: requiredString.length(3),
+    code: requiredString.length(3), // ISO 3166-1 alpha-3 code
   }),
 }) as ObjectSchema<FormValues>;
