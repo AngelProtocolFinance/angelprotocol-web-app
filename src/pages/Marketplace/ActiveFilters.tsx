@@ -6,12 +6,12 @@ import {
   setCountries,
   setDesignations,
   setKYCOnly,
-  setSdgs,
+  setSDGgroups,
 } from "slices/components/marketFilter";
-import { unsdgs } from "constants/unsdgs";
+import { categories } from "constants/unsdgs";
 
 export default function ActiveFilters() {
-  const { endow_designation, sdgs, countries, kyc_only } = useGetter(
+  const { endow_designation, sdgGroups, countries, kyc_only } = useGetter(
     (state) => state.component.marketFilter
   );
 
@@ -32,12 +32,14 @@ export default function ActiveFilters() {
     </Item>
   ));
 
-  const sdgFilters = sdgs.map((sdgNum) => (
+  const sdgFilters = sdgGroups.map((groupNum) => (
     <Item
-      key={sdgNum}
-      onRemove={() => dispatch(setSdgs(sdgs.filter((s) => s !== sdgNum)))}
+      key={groupNum}
+      onRemove={() =>
+        dispatch(setSDGgroups(sdgGroups.filter((s) => s !== groupNum)))
+      }
     >
-      SDG {sdgNum}: {unsdgs[sdgNum].title}
+      {categories[groupNum].name}
     </Item>
   ));
 
