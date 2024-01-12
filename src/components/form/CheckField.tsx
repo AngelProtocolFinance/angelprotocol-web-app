@@ -34,6 +34,7 @@ export function CheckField<T extends FieldValues>({
         type="checkbox"
         id={id}
         disabled={isSubmitting || disabled}
+        aria-disabled={isSubmitting || disabled}
         aria-invalid={invalid}
       />
       {!!children && (

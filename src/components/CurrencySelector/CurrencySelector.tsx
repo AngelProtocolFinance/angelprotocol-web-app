@@ -40,6 +40,7 @@ export default function CurrencySelector(props: Props) {
         {props.label}
       </Label>
       <Combobox
+        aria-disabled={props.disabled}
         by="code"
         value={props.value}
         onChange={props.onChange}
