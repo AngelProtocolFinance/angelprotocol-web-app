@@ -5,9 +5,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { FormEventHandler, useState } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
-import Icon from "components/Icon";
 import LoadText from "components/LoadText";
-import LoaderRing from "components/LoaderRing";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 
@@ -53,15 +51,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-4">
-      <button
-        type="button"
-        onClick={onBack}
-        className="text-blue underline hover:text-orange flex items-center gap-1 mb-2"
-      >
-        <Icon type="Back" />
-        <span>Back</span>
-      </button>
+    <form onSubmit={handleSubmit} className="grid gap-8">
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setLoading(false)}
@@ -71,17 +61,32 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
         }}
       />
       {isLoading ? (
-        <LoaderRing thickness={10} classes="w-12 justify-self-center" />
-      ) : (
         <button
-          className="btn-orange btn-donate w-1/2 justify-self-center"
-          disabled={!stripe || !elements}
-          type="submit"
+          className="btn-outline-filled btn-donate w-1/2"
+          onClick={onBack}
+          type="button"
         >
-          <LoadText text="Processing..." isLoading={isLoading}>
-            Pay Now
-          </LoadText>
+          Back
         </button>
+      ) : (
+        <div className="grid grid-cols-2 gap-5 w-full">
+          <button
+            className="btn-outline-filled btn-donate"
+            onClick={onBack}
+            type="button"
+          >
+            Back
+          </button>
+          <button
+            className="btn-orange btn-donate"
+            disabled={!stripe || !elements}
+            type="submit"
+          >
+            <LoadText text="Processing..." isLoading={isLoading}>
+              Pay Now
+            </LoadText>
+          </button>
+        </div>
       )}
     </form>
   );
