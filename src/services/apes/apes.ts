@@ -57,13 +57,13 @@ export const apes = createApi({
               url: `v2/fiat/stripe-proxy/apes/${apiEnv}/currencies/${country_code}`,
             })
           )
-          .then((currencies) => {
-            if (currencies.error) {
-              return currencies;
+          .then((response) => {
+            if (response.error) {
+              return response;
             }
             return {
-              ...currencies,
-              data: currencies.data as FiatCurrencyData,
+              ...response,
+              data: response.data as FiatCurrencyData,
             };
           });
       },
