@@ -74,7 +74,8 @@ export type TxLogPayload = {
 
 export type FiatCurrencyData = {
   currencies: {
-    currency_code: string; // ISO 3166-1 alpha-3 code
+    /** ISO 3166-1 alpha-3 code */
+    currency_code: string;
     minimum_amount: number;
     rate: number;
     timestamp: string;
