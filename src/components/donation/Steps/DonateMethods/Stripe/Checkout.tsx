@@ -10,6 +10,8 @@ import LoadText from "components/LoadText";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
 
+// Code inspired by React Stripe.js docs, see:
+// https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout({ onBack }: { onBack: () => void }) {
   const stripe = useStripe();
   const elements = useElements();
