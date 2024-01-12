@@ -55,6 +55,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
         classes={{ combobox: "w-full md:w-80" }}
         disabled={isSubmitting || isLoading}
         label="Select your bank account currency:"
+        required
       />
       <ExpectedFunds
         value={amount}

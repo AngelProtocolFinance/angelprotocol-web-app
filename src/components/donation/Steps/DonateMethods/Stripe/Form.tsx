@@ -103,6 +103,7 @@ function Content({
             field.onChange(currency);
           }}
           value={field.value}
+          required
         />
         {!recipient.isKYCRequired && (
           // if KYC is required, the checkbox is redundant
