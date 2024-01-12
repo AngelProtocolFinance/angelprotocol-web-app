@@ -77,5 +77,6 @@ export type FiatCurrencyData = {
     currency_code: string; // ISO 3166-1 alpha-3 code
     minimum_amount: number;
     rate: number;
+    timestamp: string;
   }[];
 };
