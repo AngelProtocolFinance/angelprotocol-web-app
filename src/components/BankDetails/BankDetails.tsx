@@ -14,6 +14,7 @@ const DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT = "1000";
 
 type Props = {
   FormButtons: IFormButtons;
+  /** All errors should be handled inside `onSubmit` */
   onSubmit: OnSubmit;
 };
 
@@ -30,12 +31,20 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
   const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;
 
   const handleSubmit: OnSubmit = async (...params) => {
-    setSubmitting(true);
-    await onSubmit(...params);
-    setSubmitting(false);
+    try {
+      setSubmitting(true);
+      await onSubmit(...params);
+    } catch (error) {
+      // All errors should be handled in `onSubmit`.
+      // This try/catch is just to ensure that `isSubmitting`
+      // is set to false at the end of the operation.
+      console.error(error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const { data: currencies = [] } = useCurrencisQuery({});
+  const { data: currencies = [], isLoading } = useCurrencisQuery({});
 
   return (
     <div className="grid gap-6">
@@ -44,7 +53,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
         onChange={(c) => setCurrency(c)}
         value={currency}
         classes={{ combobox: "w-full md:w-80" }}
-        disabled={isSubmitting}
+        disabled={isSubmitting || isLoading}
         label="Select your bank account currency:"
       />
       <ExpectedFunds
