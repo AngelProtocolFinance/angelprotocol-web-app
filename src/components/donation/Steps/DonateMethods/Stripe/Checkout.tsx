@@ -17,6 +17,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   const { handleError } = useErrorContext();
 
   const [isLoading, setLoading] = useState(true);
+  const [isSubmitting, setSubmitting] = useState(true);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -27,7 +28,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
       return;
     }
 
-    setLoading(true);
+    setSubmitting(true);
 
     const { error } = await stripe.confirmPayment({
       elements,
@@ -47,7 +48,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
       handleError("An unexpected error occurred.");
     }
 
-    setLoading(false);
+    setSubmitting(false);
   };
 
   return (
@@ -82,7 +83,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
             disabled={!stripe || !elements}
             type="submit"
           >
-            <LoadText text="Processing..." isLoading={isLoading}>
+            <LoadText text="Processing..." isLoading={isSubmitting}>
               Pay Now
             </LoadText>
           </button>
