@@ -81,6 +81,7 @@ export default function AddForm({ added, endowID }: Props) {
       as="form"
       className="p-6 fixed-center z-10 grid gap-4 text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
+      <h4 className="text-center text-xl font-bold mb-4">Invite User</h4>
       <FormProvider {...methods}>
         <Field<FV> name="email" label="Email" required />
         <Field<FV> name="firstName" label="First name" required />
