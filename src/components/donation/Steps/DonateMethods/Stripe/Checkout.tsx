@@ -17,7 +17,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   const { handleError } = useErrorContext();
 
   const [isLoading, setLoading] = useState(true);
-  const [isSubmitting, setSubmitting] = useState(true);
+  const [isSubmitting, setSubmitting] = useState(false);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -80,7 +80,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
           </button>
           <button
             className="btn-orange btn-donate"
-            disabled={!stripe || !elements}
+            disabled={!stripe || !elements || isSubmitting}
             type="submit"
           >
             <LoadText text="Processing..." isLoading={isSubmitting}>
