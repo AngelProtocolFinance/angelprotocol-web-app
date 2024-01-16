@@ -9,7 +9,7 @@
     "start": "rsbuild dev",
     "test": "vitest",
     "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "lint-staged": "lint-staged --config lint-staged.js",
+    "lint-staged": "lint-staged --config lint-staged.cjs",
     "preview": "rsbuild preview",
     "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'",
     "prepare": "husky install"
