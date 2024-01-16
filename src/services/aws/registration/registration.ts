@@ -22,7 +22,7 @@ const registration_api = aws.injectEndpoints({
     >({
       invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ email }) => ({
-        url: `${v(4)}/registration`,
+        url: `v5/registration`,
         method: "POST",
         body: { Email: email },
         headers: { authorization: TEMP_JWT },
