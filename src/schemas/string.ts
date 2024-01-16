@@ -39,7 +39,9 @@ export function walletAddrPatten(chainId: ChainID) {
     case "56":
     case "97":
     case "137":
+    case "42161":
     case "80001":
+    case "421614":
       return evmAddrPattern;
     case "pisco-1":
     case "phoenix-1":

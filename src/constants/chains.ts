@@ -34,6 +34,22 @@ export const ethereum: Chain = {
   },
 };
 
+export const arbitrum: Chain = {
+  isTest: false,
+  id: "42161",
+  brand: "arbitrum",
+  name: "Arbitrum One",
+  rpc: baseProxyURL + "/arbitrum",
+  lcd: "",
+  blockExplorer: "https://arbiscan.io",
+  nativeToken: {
+    id: "42161",
+    symbol: "ETH",
+    decimals: 18,
+    coinGeckoId: "ethereum",
+  },
+};
+
 export const binance: Chain = {
   isTest: false,
   id: "56",
@@ -87,7 +103,7 @@ export const mumbai: Chain = {
   isTest: true,
   id: "80001",
   brand: "polygon",
-  name: "Polygon Mumbai Testnet",
+  name: "Polygon Mumbai",
   rpc: baseProxyURL + "/mumbai",
   lcd: "",
   blockExplorer: "https://mumbai.polygonscan.com",
@@ -103,12 +119,28 @@ export const goerli: Chain = {
   isTest: true,
   id: "5",
   brand: "ethereum",
-  name: "Ethereum Goerli Testnet",
+  name: "Ethereum Goerli",
   rpc: baseProxyURL + "/goerli",
   lcd: "",
   blockExplorer: "https://goerli.etherscan.io",
   nativeToken: {
     id: "5",
+    symbol: "ETH",
+    decimals: 18,
+    coinGeckoId: "ethereum",
+  },
+};
+
+export const arbitrumSepolia: Chain = {
+  isTest: true,
+  id: "421614",
+  brand: "arbitrum",
+  name: "Arbitrum Sepolia",
+  rpc: baseProxyURL + "/arbitrum-test",
+  lcd: "",
+  blockExplorer: "https://sepolia.arbiscan.io",
+  nativeToken: {
+    id: "421614",
     symbol: "ETH",
     decimals: 18,
     coinGeckoId: "ethereum",
@@ -135,7 +167,7 @@ export const terraTestnet: Chain = {
   isTest: true,
   id: "pisco-1",
   brand: "terra",
-  name: "Terra Pisco testnet",
+  name: "Terra Pisco",
   lcd: "https://pisco-lcd.terra.dev",
   rpc: "",
   blockExplorer: "https://finder.terra.money/testnet",
@@ -150,11 +182,13 @@ export const terraTestnet: Chain = {
 export const chainList: Chain[] = [
   polygon,
   ethereum,
+  arbitrum,
   binance,
   juno,
   terraMainnet,
   mumbai,
   goerli,
+  arbitrumSepolia,
   binanceTestnet,
   terraTestnet,
 ];
@@ -164,5 +198,14 @@ export const chains: Chains = chainList.reduce(
   {} as Chains
 );
 
-export const EVMChains: EVMChainID[] = ["1", "137", "5", "56", "80001", "97"];
+export const EVMChains: EVMChainID[] = [
+  "1",
+  "137",
+  "42161",
+  "421614",
+  "5",
+  "56",
+  "80001",
+  "97",
+];
 export const cosmosChains: CosmosChainID[] = ["juno-1", "uni-6"];

@@ -1,6 +1,12 @@
 export type APIEnvironment = "staging" | "production";
 export type UserTypes = "charity-owner" | "angelprotocol-web-app" | "app-user";
-export type Chains = "terra" | "juno" | "ethereum" | "binance" | "polygon";
+export type Chains =
+  | "terra"
+  | "juno"
+  | "ethereum"
+  | "arbitrum"
+  | "binance"
+  | "polygon";
 export type UNSDG_NUMS =
   | 1
   | 2
