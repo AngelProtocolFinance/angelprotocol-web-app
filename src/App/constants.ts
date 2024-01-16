@@ -1,5 +1,5 @@
 import { Link, LinkGroup, SocialMediaLink } from "./types";
-import { BASE_URL, DAPP_URL } from "constants/env";
+import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import {
   PRIVACY_POLICY,
@@ -45,7 +45,6 @@ export const CHARITY_LINKS: LINKS = {
           text: "Giving Partners (CSR)",
           href: `${BASE_URL}/giving-partners-csr/`,
         },
-        // { text: "Impact Board", href: `${DAPP_URL}/leaderboard/` },
       ],
     },
     {
