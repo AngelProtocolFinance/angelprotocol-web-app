@@ -136,7 +136,7 @@ export const arbitrumSepolia: Chain = {
   id: "421614",
   brand: "arbitrum",
   name: "Arbitrum Sepolia Testnet",
-  rpc: baseProxyURL + "/arbitrum",
+  rpc: baseProxyURL + "/arbitrum-test",
   lcd: "",
   blockExplorer: "https://sepolia.arbiscan.io",
   nativeToken: {
