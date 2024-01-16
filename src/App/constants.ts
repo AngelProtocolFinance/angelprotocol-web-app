@@ -45,7 +45,7 @@ export const CHARITY_LINKS: LINKS = {
           text: "Giving Partners (CSR)",
           href: `${BASE_URL}/giving-partners-csr/`,
         },
-        { text: "Impact Board", href: `${DAPP_URL}/leaderboard/` },
+        // { text: "Impact Board", href: `${DAPP_URL}/leaderboard/` },
       ],
     },
     {
