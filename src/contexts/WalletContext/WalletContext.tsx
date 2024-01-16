@@ -1,7 +1,6 @@
 import isMobile from "is-mobile";
 import { PropsWithChildren, createContext, useContext } from "react";
 import { WalletContextState } from "./types";
-import { EVMChainID } from "types/chain";
 import { ConnectedWallet, DisconnectedWallet, Wallet } from "types/wallet";
 import { EVMChains } from "constants/chains";
 import useInjectedProvider from "./useInjectedProvider";
@@ -74,8 +73,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         isLoading
           ? "loading"
           : connectedWallet
-            ? connectedWallet
-            : (wallets as DisconnectedWallet[])
+          ? connectedWallet
+          : (wallets as DisconnectedWallet[])
       }
     >
       {props.children}
