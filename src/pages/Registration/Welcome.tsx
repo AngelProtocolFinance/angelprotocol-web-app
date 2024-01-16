@@ -36,7 +36,7 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
         setLoading(false);
       }
     })();
-  }, [email, register, handleError]);
+  }, [email]);
 
   if (isLoading) {
     return (
