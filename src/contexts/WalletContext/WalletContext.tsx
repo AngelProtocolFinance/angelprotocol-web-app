@@ -3,6 +3,7 @@ import { PropsWithChildren, createContext, useContext } from "react";
 import { WalletContextState } from "./types";
 import { EVMChainID } from "types/chain";
 import { ConnectedWallet, DisconnectedWallet, Wallet } from "types/wallet";
+import { EVMChains } from "constants/chains";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
@@ -11,8 +12,6 @@ import { useEVMWC, useKeplrWC } from "./wallet-connect";
 const binanceWalletIcon = "/icons/wallets/binance.png";
 const metamaskIcon = "/icons/wallets/metamask.png";
 const xdefiIcon = "/icons/wallets/xdefi.jpg";
-
-const EVMChains: EVMChainID[] = ["1", "137", "5", "56", "80001", "97"];
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const metamask = useInjectedProvider(
@@ -75,8 +74,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         isLoading
           ? "loading"
           : connectedWallet
-          ? connectedWallet
-          : (wallets as DisconnectedWallet[])
+            ? connectedWallet
+            : (wallets as DisconnectedWallet[])
       }
     >
       {props.children}
