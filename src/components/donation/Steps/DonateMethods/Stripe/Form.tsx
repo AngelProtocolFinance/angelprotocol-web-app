@@ -45,7 +45,7 @@ function Content({
   onSubmit,
 }: FormProps & { fiatCurrencyData: FiatCurrencyData }) {
   const [selectedCurrencyData, setSelectedCurrencyData] = useState(
-    fiatCurrencyData.currencies[0]
+    getDefaultCurrency(fiatCurrencyData.currencies)
   );
   const methods = useForm<FormValues>({
     defaultValues: {
@@ -169,4 +169,10 @@ function Content({
       </form>
     </FormProvider>
   );
+}
+
+function getDefaultCurrency(
+  currencies: FiatCurrencyData["currencies"]
+): FiatCurrencyData["currencies"][number] {
+  return currencies.find((x) => x.currency_code === "usd") ?? currencies[0];
 }
