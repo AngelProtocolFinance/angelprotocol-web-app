@@ -28,9 +28,9 @@ export default function Banking() {
 
       const { id, details, currency } = recipient;
       //creating account return V1Recipient and doesn't have longAccount summary field
-      const bankSummary = `${currency.toUpperCase()} account ending in ${details.accountNumber?.slice(
-        -4 || "0000"
-      )} `;
+      const bankSummary = `${currency.toUpperCase()} account ending in ${
+        details.accountNumber?.slice(-4) || "0000"
+      } `;
       await newApplication({
         wiseRecipientID: id.toString(),
         bankSummary,
