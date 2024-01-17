@@ -2,9 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
 import { EndowmentBalances, FiatCurrencyData, KYCData, Token } from "types/aws";
 import { ChainID } from "types/chain";
-import { version as v } from "services/helpers";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
+import { version as v } from "../helpers";
 import { tags } from "./tags";
 
 type StripePaymentIntentParams = {
