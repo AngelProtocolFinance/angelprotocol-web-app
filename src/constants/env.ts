@@ -18,6 +18,4 @@ export const IS_TEST = ENVIRONMENT === "dev";
 
 export const PUBLIC_STRIPE_KEY = process.env.PUBLIC_STRIPE_KEY || "";
 
-export const PAYPAL_CLIENT_ID = IS_TEST
-  ? "sb" // recommended in sandbox mode, see https://developer.paypal.com/sdk/js/configuration/#link-clientid
-  : process.env.REACT_APP_PAYPAL_CLIENT_ID || "";
+export const PAYPAL_CLIENT_ID = process.env.PUBLIC_PAYPAL_CLIENT_ID || "";
