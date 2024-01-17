@@ -4,11 +4,13 @@ import {
   ReactPayPalScriptOptions,
   usePayPalScriptReducer,
 } from "@paypal/react-paypal-js";
+import { useCreatePayPalOrderMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import LoaderRing from "components/LoaderRing";
 import Prompt from "components/Prompt";
 import { FormStep } from "slices/donation";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { PAYPAL_CLIENT_ID } from "constants/env";
 
 const initialOptions: ReactPayPalScriptOptions = {
@@ -36,6 +38,23 @@ function ButtonWrapper({ state }: Props) {
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
 
+  const [createPayPalOrder] = useCreatePayPalOrderMutation();
+
+  const handleCreateOrder = async () => {
+    try {
+      const result = await createPayPalOrder({
+        amount: 24000,
+        currency: "usd",
+        endowmentId: 53,
+        splitLiq: "50",
+      }).unwrap();
+      return result.orderId;
+    } catch (error) {
+      handleError(error, GENERIC_ERROR_MESSAGE);
+      return "";
+    }
+  };
+
   const handleApprove = async () => {
     showModal(Prompt, {
       type: "success",
@@ -57,6 +76,7 @@ function ButtonWrapper({ state }: Props) {
         className="w-full max-w-xs"
         onError={handleError}
         onApprove={handleApprove}
+        createOrder={handleCreateOrder}
       />
     </div>
   );
