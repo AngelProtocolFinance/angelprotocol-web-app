@@ -1,23 +1,20 @@
-import { ErrorMessage } from "@hookform/error-message";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useState } from "react";
-import { FormProvider, get, useController, useForm } from "react-hook-form";
+import { FormProvider, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { ObjectSchema, number, object } from "yup";
 import { FormValues, Props } from "./types";
-import { SchemaShape } from "schemas/types";
 import { FiatCurrencyData } from "types/aws";
 import { useStripeCurrenciesQuery } from "services/apes";
-import CurrencySelector, { Currency } from "components/CurrencySelector";
+import CurrencySelector from "components/CurrencySelector";
 import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
-import { CheckField, Field, Label } from "components/form";
-import { requiredString } from "schemas/string";
+import { CheckField, Field } from "components/form";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
 import AdvancedOptions from "../../../AdvancedOptions";
+
+const USD_CODE = "usd";
 
 type FormProps = Props & {
   defaultValues: Partial<FormValues>;
@@ -83,9 +80,7 @@ function Content({
             },
             shouldUnregister: true,
           }}
-          tooltip={`The minimum donation amount is 1 USD or ${
-            selectedCurrencyData.minimum_amount
-          } ${selectedCurrencyData.currency_code.toUpperCase()}`}
+          tooltip={createTooltip(selectedCurrencyData)}
         />
         <CurrencySelector
           currencies={fiatCurrencyData.currencies.map((x) => ({
@@ -171,8 +166,17 @@ function Content({
   );
 }
 
+function createTooltip({
+  currency_code,
+  minimum_amount,
+}: FiatCurrencyData["currencies"][number]): string {
+  return currency_code === USD_CODE
+    ? "The minimum donation amount is 1 USD"
+    : `The minimum donation amount is 1 USD or ${minimum_amount} ${currency_code.toUpperCase()}`;
+}
+
 function getDefaultCurrency(
   currencies: FiatCurrencyData["currencies"]
 ): FiatCurrencyData["currencies"][number] {
-  return currencies.find((x) => x.currency_code === "usd") ?? currencies[0];
+  return currencies.find((x) => x.currency_code === USD_CODE) ?? currencies[0];
 }
