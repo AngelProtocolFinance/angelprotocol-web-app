@@ -148,7 +148,7 @@ function Content({
               text="Processing..."
               isLoading={methods.formState.isSubmitting}
             >
-              Pay with card
+              Continue
             </LoadText>
           </button>
         </div>
