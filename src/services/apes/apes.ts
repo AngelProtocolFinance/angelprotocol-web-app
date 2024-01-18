@@ -11,10 +11,15 @@ import { tags } from "./tags";
 type StripePaymentIntentParams = {
   /** Denominated in USD. */
   amount: number;
-  /**ISO 3166-1 alpha-3 code */
+  /**ISO 3166-1 alpha-3 code. */
   currency: string;
   endowmentId: number;
-  kycData: SemiPartial<KYCData, "email">;
+  /** Either all fields are defined and filled or only 'email' is. */
+  kycData:
+    | KYCData
+    | (Pick<KYCData, "email"> & {
+        [K in keyof Omit<KYCData, "email">]?: undefined;
+      });
   splitLiq: string;
 };
 
