@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues, Props } from "./types";
@@ -10,6 +10,7 @@ import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
+import { useGetter } from "store/accessors";
 import { requiredString } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
@@ -23,32 +24,48 @@ type FormProps = Props & {
 };
 
 export default function Form(props: FormProps) {
+  const user = useGetter((state) => state.auth.user);
   const queryState = useStripeCurrenciesQuery(null);
   return (
     <QueryLoader
-      queryState={queryState}
+      queryState={{
+        ...queryState,
+        isLoading: queryState.isLoading || user === "loading",
+      }}
       classes={{ container: "grid justify-center" }}
     >
-      {(data) => <Content {...props} fiatCurrencyData={data} />}
+      {(data) => (
+        <Content
+          {...props}
+          fiatCurrencyData={data}
+          defaultEmail={!user || user === "loading" ? "" : user.email}
+        />
+      )}
     </QueryLoader>
   );
 }
 
 function Content({
   advanceOptDisplay,
+  defaultEmail,
   fiatCurrencyData,
   defaultValues,
   state: { recipient },
   widgetConfig,
   onSubmit,
-}: FormProps & { fiatCurrencyData: FiatCurrencyData }) {
+}: FormProps & {
+  defaultEmail: string;
+  fiatCurrencyData: FiatCurrencyData;
+}) {
   const [selectedCurrencyData, setSelectedCurrencyData] = useState(
     getDefaultCurrency(fiatCurrencyData.currencies)
   );
+
   const methods = useForm<FormValues>({
     defaultValues: {
       amount: defaultValues.amount,
       currency: { code: selectedCurrencyData.currency_code.toUpperCase() },
+      email: defaultEmail,
       pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
       userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
     },
@@ -57,6 +74,11 @@ function Content({
     control: methods.control,
     name: "currency",
   });
+
+  useEffect(
+    () => methods.setValue("email", defaultEmail),
+    [methods, defaultEmail]
+  );
 
   const isInsideWidget = widgetConfig !== null;
 
@@ -102,16 +124,18 @@ function Content({
           }}
           tooltip={createTooltip(selectedCurrencyData)}
         />
-        <Field<FormValues>
-          name="email"
-          label="Email"
-          required
-          registerOptions={{
-            required: "required",
-            validate: (value) =>
-              requiredString.email().isValidSync(value) || "invalid email",
-          }}
-        />
+        {!defaultEmail && (
+          <Field<FormValues>
+            name="email"
+            label="Email"
+            required
+            registerOptions={{
+              required: "required",
+              validate: (value) =>
+                requiredString.email().isValidSync(value) || "invalid email",
+            }}
+          />
+        )}
         {!recipient.isKYCRequired && (
           // if KYC is required, the checkbox is redundant
           <CheckField<FormValues>

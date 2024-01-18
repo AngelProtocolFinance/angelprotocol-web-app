@@ -36,6 +36,7 @@ export default function Stripe(props: Props) {
                 amount: +fv.amount,
                 currency: fv.currency.code,
                 endowmentId: props.state.recipient.id,
+                kycData: { email: fv.email },
                 splitLiq: fv.pctLiquidSplit.toString(),
               }).unwrap();
               setStep({ ...step, type: "checkout", clientSecret, ...fv });
