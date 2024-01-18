@@ -52,7 +52,7 @@ function Content({
       userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
     },
   });
-  const { field } = useController({
+  const { field: currencyField } = useController({
     control: methods.control,
     name: "currency",
   });
@@ -77,9 +77,9 @@ function Content({
                 (x) => x.currency_code === currency.code
               )!
             );
-            field.onChange(currency);
+            currencyField.onChange(currency);
           }}
-          value={field.value}
+          value={currencyField.value}
           required
         />
         <Field<FormValues>
