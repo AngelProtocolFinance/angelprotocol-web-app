@@ -86,6 +86,7 @@ function Content({
           name="amount"
           label="Donation amount"
           required
+          // validation must be dynamicly set depending on which exact currency is selected
           registerOptions={{
             required: "required",
             min: {
