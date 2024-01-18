@@ -10,7 +10,6 @@ import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { requiredString } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
 import AdvancedOptions from "../../../AdvancedOptions";
@@ -101,16 +100,6 @@ function Content({
             shouldUnregister: true,
           }}
           tooltip={createTooltip(selectedCurrencyData)}
-        />
-        <Field<FormValues>
-          name="email"
-          label="Email"
-          required
-          registerOptions={{
-            required: "required",
-            validate: (value) =>
-              requiredString.email().isValidSync(value) || "invalid email",
-          }}
         />
         {!recipient.isKYCRequired && (
           // if KYC is required, the checkbox is redundant
