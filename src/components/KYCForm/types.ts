@@ -16,6 +16,6 @@ type PostDonation = {
 
 export type Props = (OnDonation | PostDonation) & {
   classes?: string;
-  defaultValues?: FormValues;
+  defaultValues?: Partial<FormValues>;
   onSubmit: (formValues: FormValues) => void | Promise<void>;
 };

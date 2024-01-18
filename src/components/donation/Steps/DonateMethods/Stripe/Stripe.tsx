@@ -2,6 +2,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import { FormValues, Props } from "./types";
+import { SemiPartial } from "types/utils";
 import { useCreateStripePaymentIntentMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import KYCForm from "components/KYCForm";
@@ -22,24 +23,33 @@ export default function Stripe(props: Props) {
 
   switch (step.type) {
     case "init":
-      const { type, kycData, ...defaultValues } = step;
+      const { type, ...defaultValues } = step;
       return (
         <Form
           {...props}
           defaultValues={defaultValues}
           onSubmit={async (fv) => {
             if (fv.userOptForKYC) {
-              return setStep({ ...step, type: "kyc", ...fv });
+              return setStep({
+                ...step,
+                type: "kyc",
+                ...fv,
+              });
             }
             try {
               const { clientSecret } = await createPaymentIntent({
                 amount: +fv.amount,
                 currency: fv.currency.code,
                 endowmentId: props.state.recipient.id,
-                kycData: { email: fv.email },
+                kycData: fv.kycData,
                 splitLiq: fv.pctLiquidSplit.toString(),
               }).unwrap();
-              setStep({ ...step, type: "checkout", clientSecret, ...fv });
+              setStep({
+                ...step,
+                type: "checkout",
+                clientSecret,
+                ...fv,
+              });
             } catch (err) {
               handleError(err, "Failed to load payment platform");
             }
@@ -111,13 +121,12 @@ export default function Stripe(props: Props) {
 
 type InitStep = {
   type: "init";
-  kycData?: KYC;
 } & Partial<FormValues>;
 
 type KYCStep = {
   type: "kyc";
-} & Required<Omit<InitStep, "type" | "kycData">> &
-  Pick<InitStep, "kycData">;
+  kycData: SemiPartial<KYC, "email">;
+} & Omit<FormValues, "email">;
 
 type CheckoutStep = {
   type: "checkout";
