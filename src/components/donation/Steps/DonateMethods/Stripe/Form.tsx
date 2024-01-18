@@ -64,24 +64,6 @@ function Content({
   return (
     <FormProvider {...methods}>
       <form onSubmit={submit} className="grid gap-4">
-        <Field<FormValues>
-          name="amount"
-          label="Donation amount"
-          required
-          registerOptions={{
-            required: "required",
-            min: {
-              value: selectedCurrencyData.minimum_amount,
-              message: `must be greater than ${selectedCurrencyData.minimum_amount}`,
-            },
-            pattern: {
-              value: /[0-9]+/,
-              message: "must be a number",
-            },
-            shouldUnregister: true,
-          }}
-          tooltip={createTooltip(selectedCurrencyData)}
-        />
         <CurrencySelector
           currencies={fiatCurrencyData.currencies.map((x) => ({
             code: x.currency_code,
@@ -99,6 +81,24 @@ function Content({
           }}
           value={field.value}
           required
+        />
+        <Field<FormValues>
+          name="amount"
+          label="Donation amount"
+          required
+          registerOptions={{
+            required: "required",
+            min: {
+              value: selectedCurrencyData.minimum_amount,
+              message: `must be greater than ${selectedCurrencyData.minimum_amount}`,
+            },
+            pattern: {
+              value: /[0-9]+/,
+              message: "must be a number",
+            },
+            shouldUnregister: true,
+          }}
+          tooltip={createTooltip(selectedCurrencyData)}
         />
         {!recipient.isKYCRequired && (
           // if KYC is required, the checkbox is redundant
