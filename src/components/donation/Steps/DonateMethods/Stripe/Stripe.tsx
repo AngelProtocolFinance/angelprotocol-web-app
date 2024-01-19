@@ -121,8 +121,8 @@ type InitStep = {
 
 type KYCStep = {
   type: "kyc";
-} & Required<Omit<InitStep, "type" | "kycData">> &
-  Pick<InitStep, "kycData">;
+  kycData?: KYC;
+} & FormValues;
 
 type CheckoutStep = {
   type: "checkout";
