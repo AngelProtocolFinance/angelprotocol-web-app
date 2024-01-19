@@ -1,4 +1,4 @@
-import { ObjectSchema, object, string } from "yup";
+import { ObjectSchema, object } from "yup";
 import { FormValues as FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { requiredString } from "schemas/string";

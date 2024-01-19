@@ -2,7 +2,6 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useState } from "react";
 import { FormValues, Props } from "./types";
-import { SemiPartial } from "types/utils";
 import { useCreateStripePaymentIntentMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import KYCForm from "components/KYCForm";
