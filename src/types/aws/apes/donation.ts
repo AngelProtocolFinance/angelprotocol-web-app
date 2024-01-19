@@ -2,7 +2,7 @@ import { ChainID } from "../../chain";
 
 export type KYCData = {
   fullName: string; // "John Doe"
-  email: string; // "john@doe.email.com"
+  kycEmail: string; // "john@doe.email.com"
   streetAddress: string;
   city: string;
   state: string;

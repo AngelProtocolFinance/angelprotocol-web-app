@@ -12,7 +12,7 @@ export type Props = {
 export type FormValues = {
   amount: string;
   currency: Currency;
-  kycData: { email: string };
+  email: string;
   pctLiquidSplit: number;
   userOptForKYC: boolean;
 };

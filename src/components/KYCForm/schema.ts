@@ -18,5 +18,5 @@ export const schema = object<any, SchemaShape<FV>>({
     name: requiredString,
   }),
   //  usState: no need to validate, optional and preselected
-  email: requiredString.email("invalid"),
+  kycEmail: requiredString.email("invalid"),
 }) as ObjectSchema<FV>;

@@ -115,7 +115,7 @@ export default function Form({ classes = "", ...props }: Props) {
       )}
 
       <Field<FV>
-        name="email"
+        name="kycEmail"
         label="Email address"
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full field-kyc" }}

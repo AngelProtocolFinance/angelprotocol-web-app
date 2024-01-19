@@ -30,26 +30,17 @@ export default function Stripe(props: Props) {
           defaultValues={defaultValues}
           onSubmit={async (fv) => {
             if (fv.userOptForKYC) {
-              return setStep({
-                ...step,
-                type: "kyc",
-                ...fv,
-              });
+              return setStep({ ...step, type: "kyc", ...fv });
             }
             try {
               const { clientSecret } = await createPaymentIntent({
                 amount: +fv.amount,
                 currency: fv.currency.code,
                 endowmentId: props.state.recipient.id,
-                kycData: fv.kycData,
+                email: fv.email,
                 splitLiq: fv.pctLiquidSplit.toString(),
               }).unwrap();
-              setStep({
-                ...step,
-                type: "checkout",
-                clientSecret,
-                ...fv,
-              });
+              setStep({ ...step, type: "checkout", clientSecret, ...fv });
             } catch (err) {
               handleError(err, "Failed to load payment platform");
             }
@@ -69,18 +60,19 @@ export default function Stripe(props: Props) {
               const { clientSecret } = await createPaymentIntent({
                 amount: +step.amount,
                 currency: step.currency.code,
+                email: step.email,
                 endowmentId: props.state.recipient.id,
                 splitLiq: step.pctLiquidSplit.toString(),
                 kycData: {
-                  fullName: `${kyc.name.first} ${kyc.name.last}`,
-                  email: kyc.email,
-                  streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
                   city: kyc.city,
+                  consent_marketing: true,
+                  consent_tax: true,
+                  country: kyc.country.name,
+                  fullName: `${kyc.name.first} ${kyc.name.last}`,
+                  kycEmail: kyc.kycEmail,
+                  streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
                   state: kyc.usState.value || kyc.state,
                   zipCode: kyc.postalCode,
-                  country: kyc.country.name,
-                  consent_tax: true,
-                  consent_marketing: true,
                 },
               }).unwrap();
               setStep({
@@ -121,12 +113,13 @@ export default function Stripe(props: Props) {
 
 type InitStep = {
   type: "init";
+  kycData?: KYC;
 } & Partial<FormValues>;
 
 type KYCStep = {
   type: "kyc";
-  kycData: SemiPartial<KYC, "email">;
-} & Omit<FormValues, "email">;
+} & Required<Omit<InitStep, "type" | "kycData">> &
+  Pick<InitStep, "kycData">;
 
 type CheckoutStep = {
   type: "checkout";

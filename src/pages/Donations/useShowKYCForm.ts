@@ -9,12 +9,20 @@ export default function useShowKYCForm() {
   const showKYC = useKYCForm();
 
   const submitKYC = async (data: FormValues, txId: string) => {
-    const { name, address, email, city, state, usState, postalCode, country } =
-      data;
+    const {
+      name,
+      address,
+      kycEmail: email,
+      city,
+      state,
+      usState,
+      postalCode,
+      country,
+    } = data;
 
     const response = await submitRequest({
       fullName: `${name.first} ${name.last}`,
-      email,
+      kycEmail: email,
       streetAddress: `${address.street} ${address.complement}`,
       city,
       state: usState.value || state,

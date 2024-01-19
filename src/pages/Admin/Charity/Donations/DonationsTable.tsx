@@ -90,7 +90,7 @@ const csvHeadersDonations: {
 
 const csvHeadersReceipts: { key: keyof KYCData; label: string }[] = [
   { key: "fullName", label: "Full Name" },
-  { key: "email", label: "Email" },
+  { key: "kycEmail", label: "Email" },
   { key: "consent_marketing", label: "Consented to Marketing" },
   { key: "consent_tax", label: "Consented to tax" },
   { key: "streetAddress", label: "Street Address" },

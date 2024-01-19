@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
 import { EndowmentBalances, FiatCurrencyData, KYCData, Token } from "types/aws";
 import { ChainID } from "types/chain";
-import { SemiPartial } from "types/utils";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
@@ -13,13 +12,9 @@ type StripePaymentIntentParams = {
   amount: number;
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
+  email: string;
   endowmentId: number;
-  /** Either all fields are defined and filled or only 'email' is. */
-  kycData:
-    | KYCData
-    | (Pick<KYCData, "email"> & {
-        [K in keyof Omit<KYCData, "email">]?: undefined;
-      });
+  kycData?: KYCData;
   splitLiq: string;
 };
 

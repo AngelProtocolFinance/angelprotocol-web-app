@@ -37,7 +37,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       const kycData: KYCData | undefined = kyc
         ? {
             fullName: `${kyc.name.first} ${kyc.name.last}`,
-            email: kyc.email,
+            kycEmail: kyc.kycEmail,
             streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
             city: kyc.city,
             state: kyc.usState.value || kyc.state,

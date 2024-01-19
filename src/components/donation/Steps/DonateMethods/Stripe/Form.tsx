@@ -65,7 +65,7 @@ function Content({
     defaultValues: {
       amount: defaultValues.amount,
       currency: { code: selectedCurrencyData.currency_code.toUpperCase() },
-      kycData: defaultValues.kycData ?? { email: defaultEmail },
+      email: defaultValues.email ?? defaultEmail,
       pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
       userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
     },
@@ -76,12 +76,8 @@ function Content({
   });
 
   useEffect(
-    () =>
-      methods.setValue(
-        "kycData.email",
-        defaultValues.kycData?.email ?? defaultEmail
-      ),
-    [methods, defaultEmail, defaultValues.kycData]
+    () => methods.setValue("email", defaultValues.email ?? defaultEmail),
+    [methods, defaultEmail, defaultValues.email]
   );
 
   const isInsideWidget = widgetConfig !== null;
@@ -130,7 +126,7 @@ function Content({
         />
         {!defaultEmail && (
           <Field<FormValues>
-            name="kycData.email"
+            name="email"
             label="Email"
             required
             registerOptions={{
