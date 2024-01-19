@@ -24,6 +24,7 @@ type CreatePayPalOrderParams = {
   amount: number;
   /**ISO 3166-1 alpha-3 code */
   currency: string;
+  email: string;
   endowmentId: number;
   kycData?: KYCData;
   splitLiq: string;
