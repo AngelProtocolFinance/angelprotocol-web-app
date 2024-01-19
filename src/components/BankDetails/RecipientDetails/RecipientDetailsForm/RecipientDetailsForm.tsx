@@ -12,6 +12,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { Label } from "components/form";
 import { isEmpty } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import Form from "./Form";
 
 type Props = {
   fields: Group[];
@@ -41,7 +42,7 @@ export default function RecipientDetailsForm({
     setError,
     setFocus,
     formState: { errors, isSubmitting },
-  } = useForm({ disabled });
+  } = useForm({ disabled, shouldUnregister: true });
 
   const { handleError } = useErrorContext();
   const [updateRequirements] = useNewRequirementsMutation();
@@ -65,7 +66,8 @@ export default function RecipientDetailsForm({
   }
 
   return (
-    <form
+    <Form
+      isSubmitting={isSubmitting}
       onSubmit={handleSubmit(async (fv) => {
         try {
           const { accountHolderName, bankStatement, ...details } = fv;
@@ -129,8 +131,6 @@ export default function RecipientDetailsForm({
                 {...register(f.key, {
                   required: f.required ? "required" : false,
                   onChange: f.refreshRequirementsOnChange ? refresh : undefined,
-                  shouldUnregister: true,
-                  disabled: isSubmitting,
                 })}
                 aria-required={f.required}
                 id={f.key}
@@ -174,8 +174,6 @@ export default function RecipientDetailsForm({
                         onChange: f.refreshRequirementsOnChange
                           ? refresh
                           : undefined,
-                        shouldUnregister: true,
-                        disabled: isSubmitting,
                       })}
                     />
                     <label
@@ -237,8 +235,6 @@ export default function RecipientDetailsForm({
                     : undefined,
                   //onBlur only as text input changes rapidly
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
-                  shouldUnregister: true,
-                  disabled: isSubmitting,
                 })}
               />
               <ErrorMessage
@@ -270,8 +266,6 @@ export default function RecipientDetailsForm({
                       }
                     : undefined,
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
-                  shouldUnregister: true,
-                  disabled: isSubmitting,
                 })}
               />
               <ErrorMessage
@@ -300,8 +294,6 @@ export default function RecipientDetailsForm({
           type="file"
           className="disabled:bg-gray-l5 text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
           {...register("bankStatement", {
-            disabled: isSubmitting,
-            shouldUnregister: true,
             validate(value?: FileList) {
               //multile:false
               const file = value?.item(0);
@@ -332,6 +324,6 @@ export default function RecipientDetailsForm({
       </div>
 
       <FormButtons disabled={disabled} isSubmitting={isSubmitting} />
-    </form>
+    </Form>
   );
 }
