@@ -52,7 +52,10 @@ export default function Stripe(props: Props) {
         <KYCForm
           type="on-donation"
           classes="grid gap-5 sm:grid-cols-2"
-          defaultValues={step.kycData}
+          defaultValues={{
+            ...(step.kycData ?? {}),
+            kycEmail: step.kycData?.kycEmail ?? step.email,
+          }}
           recipient={props.state.recipient}
           onBack={() => setStep({ ...step, type: "init" })}
           onSubmit={async (kyc) => {
