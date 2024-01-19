@@ -57,6 +57,9 @@ function Content({
   authUserEmail: string;
   fiatCurrencyData: FiatCurrencyData;
 }) {
+  // store auth. user's email and if the user is in the process of logging out (so that
+  // `authUserEmail === ""`), we can use this variable to keep hiding the email field
+  // (otherwise the user might get a sudden flash of the email field before being redirected)
   const [originialAuthUserEmail] = useState(authUserEmail);
 
   const [selectedCurrencyData, setSelectedCurrencyData] = useState(
