@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FormProvider, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues, Props } from "./types";
@@ -38,7 +38,7 @@ export default function Form(props: FormProps) {
         <Content
           {...props}
           fiatCurrencyData={data}
-          defaultEmail={!user || user === "loading" ? "" : user.email}
+          authUserEmail={!user || user === "loading" ? "" : user.email}
         />
       )}
     </QueryLoader>
@@ -47,16 +47,18 @@ export default function Form(props: FormProps) {
 
 function Content({
   advanceOptDisplay,
-  defaultEmail,
+  authUserEmail,
   fiatCurrencyData,
   defaultValues,
   state: { recipient },
   widgetConfig,
   onSubmit,
 }: FormProps & {
-  defaultEmail: string;
+  authUserEmail: string;
   fiatCurrencyData: FiatCurrencyData;
 }) {
+  const [originialAuthUserEmail] = useState(authUserEmail);
+
   const [selectedCurrencyData, setSelectedCurrencyData] = useState(
     getDefaultCurrency(fiatCurrencyData.currencies)
   );
@@ -65,7 +67,7 @@ function Content({
     defaultValues: {
       amount: defaultValues.amount,
       currency: { code: selectedCurrencyData.currency_code.toUpperCase() },
-      email: defaultValues.email ?? defaultEmail,
+      email: defaultValues.email ?? originialAuthUserEmail,
       pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
       userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
     },
@@ -74,11 +76,6 @@ function Content({
     control: methods.control,
     name: "currency",
   });
-
-  useEffect(
-    () => methods.setValue("email", defaultValues.email ?? defaultEmail),
-    [methods, defaultEmail, defaultValues.email]
-  );
 
   const isInsideWidget = widgetConfig !== null;
 
@@ -124,7 +121,7 @@ function Content({
           }}
           tooltip={createTooltip(selectedCurrencyData)}
         />
-        {!defaultEmail && (
+        {!originialAuthUserEmail && (
           <Field<FormValues>
             name="email"
             label="Email"
