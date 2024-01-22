@@ -45,7 +45,6 @@ type SocialMediaURLs = {
 export type Endowment = {
   id: number;
   active_in_countries: string[];
-  contact_email: string;
   endow_designation: EndowDesignation;
   fiscal_sponsored: boolean;
   hq_country: string;
@@ -107,15 +106,12 @@ export type EndowmentsQueryParams = {
 };
 
 export interface LeaderboardEntry {
-  // chain: NetworkType;
   charity_logo: string;
   charity_name: string;
   endowment_id: number;
   total_liq: number;
   total_lock: number;
   overall: number;
-  //tier: EndowmentTier
-  //charity_owner:string
 }
 
 export interface Update {
