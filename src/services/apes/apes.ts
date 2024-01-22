@@ -38,6 +38,17 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
+    createPayPalOrder: builder.mutation<
+      { orderId: string },
+      CreatePayPalOrderParams
+    >({
+      query: (params) => ({
+        url: `v1/fiat/paypal/apes/${apiEnv}/orders`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+        body: JSON.stringify(params),
+      }),
+    }),
     createStripePaymentIntent: builder.mutation<
       { clientSecret: string },
       StripePaymentIntentParams
@@ -83,17 +94,6 @@ export const apes = createApi({
     }),
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
-    }),
-    createPayPalOrder: builder.mutation<
-      { orderId: string },
-      CreatePayPalOrderParams
-    >({
-      query: (params) => ({
-        url: `v1/fiat/paypal/apes/${apiEnv}/orders`,
-        method: "POST",
-        headers: { authorization: TEMP_JWT },
-        body: JSON.stringify(params),
-      }),
     }),
   }),
 });
