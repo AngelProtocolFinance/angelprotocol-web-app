@@ -6,19 +6,17 @@ import Modal from "components/Modal";
 import Form, { formStyle } from "./Form";
 import { schema } from "./schema";
 
-export default function KYC(props: Props) {
+export default function KYCForm(props: Props) {
   const isOnDonation = props.type === "on-donation";
 
   const methods = useForm<FormValues>({
     mode: "onSubmit",
     reValidateMode: "onChange",
-    defaultValues:
-      isOnDonation && props.state.kyc
-        ? props.state.kyc
-        : {
-            country: placeHolderCountryOption,
-            usState: { label: "", value: "" },
-          },
+    defaultValues: {
+      ...(props.defaultValues ?? {}),
+      country: props.defaultValues?.country ?? placeHolderCountryOption,
+      usState: props.defaultValues?.usState ?? { label: "", value: "" },
+    },
     resolver: yupResolver(schema),
   });
 

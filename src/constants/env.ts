@@ -15,3 +15,5 @@ export const AWS_S3_PUBLIC_BUCKET = "https://endow-profiles.s3.amazonaws.com";
 const ENV = process.env.PUBLIC_ENVIRONMENT;
 
 export const IS_TEST = ENV === "STAGING";
+
+export const PUBLIC_STRIPE_KEY = process.env.PUBLIC_STRIPE_KEY || "";

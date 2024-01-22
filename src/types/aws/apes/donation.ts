@@ -2,7 +2,7 @@ import { ChainID } from "../../chain";
 
 export type KYCData = {
   fullName: string; // "John Doe"
-  email: string; // "john@doe.email.com"
+  kycEmail: string; // "john@doe.email.com"
   streetAddress: string;
   city: string;
   state: string;
@@ -70,4 +70,14 @@ export type TxLogPayload = {
   endowmentId: number;
   walletAddress: string;
   kycData?: KYCData;
+};
+
+export type FiatCurrencyData = {
+  currencies: {
+    /** ISO 3166-1 alpha-3 code */
+    currency_code: string;
+    minimum_amount: number;
+    rate: number;
+    timestamp: string;
+  }[];
 };

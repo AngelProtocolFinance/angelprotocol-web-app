@@ -1,13 +1,19 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { createElement } from "react";
-import { FieldValues, Path, get, useFormContext } from "react-hook-form";
+import { HTMLInputTypeAttribute, createElement } from "react";
+import {
+  FieldValues,
+  Path,
+  RegisterOptions,
+  get,
+  useFormContext,
+} from "react-hook-form";
 import { Classes } from "./types";
 import { Label } from ".";
 import { unpack } from "./helpers";
 
 const textarea = "textarea" as const;
 type TextArea = typeof textarea;
-type InputType = HTMLInputElement["type"] | TextArea;
+type InputType = HTMLInputTypeAttribute | TextArea;
 
 type FieldProps<T extends FieldValues, K extends InputType> = Omit<
   K extends TextArea
@@ -20,9 +26,10 @@ type FieldProps<T extends FieldValues, K extends InputType> = Omit<
   tooltip?: string;
   label: string;
   type?: K;
+  registerOptions?: RegisterOptions<FieldValues, Path<T>> | undefined;
 };
 
-export function Field<T extends FieldValues, K extends InputType = "text">({
+export function Field<T extends FieldValues, K extends InputType = InputType>({
   type = "text" as K,
   label,
   name,
@@ -30,6 +37,10 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
   tooltip,
   required,
   disabled,
+  registerOptions = {
+    valueAsNumber: type === "number",
+    required: required ? "required" : undefined,
+  },
   ...props
 }: FieldProps<T, K>) {
   const {
@@ -40,15 +51,16 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
   const { container, input, lbl, error } = unpack(classes);
 
   const id = "__" + String(name);
+
   return (
-    <div className={container + " field"}>
+    <div className={container + " field"} aria-required={required}>
       <Label className={lbl} required={required} htmlFor={id}>
         {label}
       </Label>
 
       {createElement(type === textarea ? textarea : "input", {
         ...props,
-        ...register(name, { valueAsNumber: type === "number" }),
+        ...register(name, registerOptions),
         ...(type === textarea ? {} : { type }),
         id,
         "aria-invalid": !!get(errors, name)?.message,

@@ -8,5 +8,5 @@ export type TagPayload = PayloadAction<Tag[], string>;
 type Base = BaseQueryFn<any, unknown, unknown, {}, {}>;
 export type QueryState<T> = Pick<
   TypedUseQueryHookResult<T, any, Base>,
-  "isLoading" | "isError" | "data" | "isFetching"
+  "isLoading" | "isError" | "data" | "isFetching" | "error"
 >;

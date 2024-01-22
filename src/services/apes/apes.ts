@@ -1,15 +1,21 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { EndowmentBalances, Token } from "types/aws";
+import { PaymentIntent } from "@stripe/stripe-js";
+import { EndowmentBalances, FiatCurrencyData, KYCData, Token } from "types/aws";
 import { ChainID } from "types/chain";
-import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
 
-type StripeSessionURLParams = {
-  endowId: number;
-  liquidSplitPct: string;
+type StripePaymentIntentParams = {
+  /** Denominated in USD. */
+  amount: number;
+  /**ISO 3166-1 alpha-3 code. */
+  currency: string;
+  email: string;
+  endowmentId: number;
+  kycData?: KYCData;
+  splitLiq: string;
 };
 
 export const apes = createApi({
@@ -20,33 +26,61 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
-    tokens: builder.query<Token[], ChainID>({
-      query: (chainID) => `v1/tokens/${chainID}`,
+    createStripePaymentIntent: builder.mutation<
+      { clientSecret: string },
+      StripePaymentIntentParams
+    >({
+      query: (data) => ({
+        url: `v2/fiat/stripe-proxy/apes/${apiEnv}`,
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
     }),
-
-    stripeSessionURL: builder.mutation<{ url: string }, StripeSessionURLParams>(
-      {
-        query: ({ endowId, liquidSplitPct }) => ({
-          url: `${v(1)}/fiat/stripe-proxy/apes/${apiEnv}`,
-          method: "POST",
-          body: JSON.stringify({
-            endowmentId: endowId,
-            splitLiq: liquidSplitPct,
-            redirectUrl: `${window.location.origin}${appRoutes.donate_fiat_thanks}`,
-          }),
-        }),
-      }
-    ),
     endowBalance: builder.query<EndowmentBalances, number>({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
+    }),
+    getStripePaymentStatus: builder.query<
+      Pick<PaymentIntent, "status">,
+      { paymentIntentId: string }
+    >({
+      query: ({ paymentIntentId }) => ({
+        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?payment_intent=${paymentIntentId}`,
+      }),
+    }),
+    stripeCurrencies: builder.query<FiatCurrencyData, null>({
+      async queryFn(_args, _api, _extraOptions, baseQuery) {
+        return await fetch("https://ipapi.co/json/")
+          .then<{
+            country_code: string; // ISO 3166-1 alpha-2 code
+          }>((response) => response.json())
+          .then(({ country_code }) =>
+            baseQuery({
+              url: `v2/fiat/stripe-proxy/apes/${apiEnv}/currencies/${country_code}`,
+            })
+          )
+          .then((response) => {
+            if (response.error) {
+              return response;
+            }
+            return {
+              ...response,
+              data: response.data as FiatCurrencyData,
+            };
+          });
+      },
+    }),
+    tokens: builder.query<Token[], ChainID>({
+      query: (chainID) => `v1/tokens/${chainID}`,
     }),
   }),
 });
 
 export const {
-  useTokensQuery,
-  useStripeSessionURLMutation,
+  useCreateStripePaymentIntentMutation,
   useEndowBalanceQuery,
+  useGetStripePaymentStatusQuery,
+  useStripeCurrenciesQuery,
+  useTokensQuery,
   util: {
     invalidateTags: invalidateApesTags,
     updateQueryData: updateApesQueryData,

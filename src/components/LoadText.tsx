@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import Icon from "components/Icon";
 
-export function LoadText({
+export default function LoadText({
   text = "Submitting...",
   isLoading,
   children,

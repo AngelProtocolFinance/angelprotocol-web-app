@@ -26,7 +26,7 @@ export type KYC = {
   country: Country;
   state: string;
   usState: OptionType<string>;
-  email: string;
+  kycEmail: string;
   agreedToGetUpdates: boolean;
 };
 

@@ -11,14 +11,14 @@ export default function Slider<FV extends FieldValues, P extends Path<FV>>(
 ) {
   const {
     register,
-    formState: { isValid },
+    formState: { isValid, isSubmitting },
   } = useFormContext<FV>();
 
   return (
     <div className={`${props.className || ""} select-none`}>
       <input
         className="range"
-        disabled={!isValid || props.disabled}
+        disabled={!isValid || isSubmitting || props.disabled}
         {...register(props.liqPctField)}
         type="range"
       />

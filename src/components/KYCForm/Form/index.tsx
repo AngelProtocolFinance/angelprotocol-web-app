@@ -9,7 +9,6 @@ import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import Controls from "./Controls";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
-import useSubmit from "./useSubmit";
 
 export const formStyle = "w-full text-gray-d2 dark:text-white font-work p-3";
 
@@ -20,7 +19,6 @@ export default function Form({ classes = "", ...props }: Props) {
     resetField,
     formState: { isSubmitting },
   } = useFormContext<FV>();
-  const submit = useSubmit(props);
   const isPostKyc = props.type === "post-donation";
 
   const country = watch("country.name");
@@ -28,7 +26,7 @@ export default function Form({ classes = "", ...props }: Props) {
 
   return (
     <form
-      onSubmit={handleSubmit(submit)}
+      onSubmit={handleSubmit(props.onSubmit)}
       className={`${classes} ${formStyle}`}
       autoComplete="off"
       autoSave="off"
@@ -42,40 +40,44 @@ export default function Form({ classes = "", ...props }: Props) {
         name="name.first"
         label="First name"
         placeholder="e.g. John"
+        required
       />
       <Field<FV>
         classes="field-kyc"
         name="name.last"
         label="Last name"
         placeholder="e.g. Doe"
+        required
       />
       <Field<FV>
         classes="field-kyc"
         name="address.street"
         label="Address"
         placeholder="e.g. Street Rd 9920"
+        required
       />
       <Field<FV>
         classes="field-kyc"
         name="address.complement"
         label="Address Line 2"
         placeholder="e.g. PO Box 1234"
-        required={false}
       />
       <Field<FV>
         classes="field-kyc"
         name="city"
         label="City"
         placeholder="e.g. London"
+        required
       />
       <Field<FV>
         classes="field-kyc"
         name="postalCode"
         label="Zip code"
         placeholder="e.g. 1080"
+        required
       />
       <div className="grid relative">
-        <Label htmlFor="country" className="mb-2">
+        <Label htmlFor="country" className="mb-2" required>
           Country
         </Label>
 
@@ -113,10 +115,11 @@ export default function Form({ classes = "", ...props }: Props) {
       )}
 
       <Field<FV>
-        name="email"
+        name="kycEmail"
         label="Email address"
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full field-kyc" }}
+        required
       />
       <p className="text-sm col-span-full">
         By submitting this information, you agree to our{" "}

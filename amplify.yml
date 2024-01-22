@@ -13,6 +13,7 @@ frontend:
       commands:
         - PUBLIC_ENVIRONMENT=${ENVIRONMENT}
         - PUBLIC_SENTRY_DSN=${SENTRY_DSN}
+        - PUBLIC_STRIPE_KEY=${PUBLIC_STRIPE_KEY}
         - export NODE_OPTIONS="--max-old-space-size=8192"
         - yarn run build
   artifacts:
