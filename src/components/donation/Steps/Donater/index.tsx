@@ -15,6 +15,7 @@ type Props = FormStep & {
 
 export default function Donater({ config, ...state }: Props) {
   const initial: DonateValues = {
+    source: config ? "bg-widget" : "bg-marketplace",
     token: initToken,
     pctLiquidSplit: config?.liquidSplitPct ?? 50,
     chainId: IS_TEST

@@ -59,7 +59,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         transactionId: hash,
         walletAddress: txPackage.sender,
         endowmentId: recipient.id,
-        appUsed: "bg-widget",
+        appUsed: details.source,
       };
 
       const response = await fetch(APIs.apes + `/${v(1)}/donations`, {

@@ -1,6 +1,7 @@
 import { ChainID } from "types/chain";
 import { OptionType } from "types/components";
 import { Country } from "types/components";
+import { DonationSource } from "types/lists";
 import { TokenWithAmount, TxPackage } from "types/tx";
 
 export type DonationRecipient = {
@@ -11,6 +12,7 @@ export type DonationRecipient = {
 };
 
 export type DonationDetails = {
+  source: DonationSource;
   method: "stripe" | "crypto"; //use to preserve selected method
   token: TokenWithAmount;
   pctLiquidSplit: number; // <input range value transformed to number via onChange

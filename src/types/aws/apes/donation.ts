@@ -1,3 +1,4 @@
+import { DonationSource } from "types/lists";
 import { ChainID } from "../../chain";
 
 export type KYCData = {
@@ -65,7 +66,7 @@ export type CryptoDonation = {
   /** 1 - 100 */
   splitLiq: number;
   chainName: string;
-  appUsed: "bg-marketplace" | "bg-widget";
+  appUsed: DonationSource;
   kyc?: KYCData;
 };
 
