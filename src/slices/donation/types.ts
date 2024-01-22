@@ -27,7 +27,6 @@ export type KYC = {
   state: string;
   usState: OptionType<string>;
   kycEmail: string;
-  agreedToGetUpdates: boolean;
 };
 
 type InitStep = {

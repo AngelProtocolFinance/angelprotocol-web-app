@@ -1,14 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { DonateArgs, TxStatus } from "../types";
-import { KYCData, TxLogPayload } from "types/aws";
+import { CryptoDonation, KYCData } from "types/aws";
 import { isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
-import { apiEnv } from "services/constants";
 import { version as v } from "services/helpers";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { LogDonationFail } from "errors/errors";
-import { chainIds } from "constants/chainIds";
 import { chains } from "constants/chains";
 import { APIs } from "constants/urls";
 import donation, { setTxStatus } from "../donation";
@@ -43,8 +41,6 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
             state: kyc.usState.value || kyc.state,
             zipCode: kyc.postalCode,
             country: kyc.country.name,
-            consent_tax: true,
-            consent_marketing: true,
           }
         : undefined;
 
@@ -53,29 +49,22 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       });
 
       /** SAVE DONATION */
-      const payload: TxLogPayload = {
-        ...kycData /** receipt is sent to user if kyc is provider upfront */,
+      const payload: CryptoDonation = {
+        kyc: kycData /** receipt is sent to user if kyc is provider upfront */,
         amount: +token.amount,
         chainId: chain.id,
-        destinationChainId: chainIds.polygon,
         chainName: chain.name,
-        charityName: recipient.name,
         denomination: token.symbol,
-        splitLiq: `${pctLiquidSplit}`,
+        splitLiq: pctLiquidSplit,
         transactionId: hash,
-        transactionDate: new Date().toISOString(),
         walletAddress: txPackage.sender,
         endowmentId: recipient.id,
+        appUsed: "bg-widget",
       };
 
-      const response = await fetch(APIs.apes + `/${v(4)}/donation/apes`, {
+      const response = await fetch(APIs.apes + `/${v(1)}/donations`, {
         method: "POST",
-        body: JSON.stringify({
-          ...payload,
-          ...payload.kycData,
-          //helps AWS determine which txs are testnet and mainnet without checking all chainIDs
-          network: apiEnv,
-        }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {

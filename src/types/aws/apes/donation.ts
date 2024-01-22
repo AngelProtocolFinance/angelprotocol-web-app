@@ -8,8 +8,6 @@ export type KYCData = {
   state: string;
   zipCode: string; //2000
   country: string;
-  consent_tax: boolean;
-  consent_marketing: boolean;
 };
 
 type DonationRecordBase = {
@@ -57,19 +55,18 @@ export type DonationsQueryParams = {
   limit?: number; // Number of items to be returned per request
 };
 
-export type TxLogPayload = {
+export type CryptoDonation = {
   amount: number;
-  chainId: string;
-  destinationChainId: string;
-  chainName: string;
-  charityName: string;
   denomination: string;
-  splitLiq: string; //"50"
-  transactionId: string;
-  transactionDate: string;
   endowmentId: number;
+  chainId: string;
+  transactionId: string;
   walletAddress: string;
-  kycData?: KYCData;
+  /** 1 - 100 */
+  splitLiq: number;
+  chainName: string;
+  appUsed: "bg-marketplace" | "bg-widget";
+  kyc?: KYCData;
 };
 
 export type FiatCurrencyData = {
