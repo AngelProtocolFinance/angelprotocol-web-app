@@ -1,16 +1,33 @@
+/** See response type in https://developer.paypal.com/docs/api/orders/v2/#orders_capture */
 export interface PayPalOrder {
   id: string;
-  status: string;
+  status: Status;
   payment_source: PaymentSource;
   purchase_units: PurchaseUnit[];
   payer: Payer;
   links: Link[];
 }
 
+type Status =
+  | "CREATED"
+  | "SAVED"
+  | "APPROVED"
+  | "VOIDED"
+  | "COMPLETED"
+  | "PAYER_ACTION_REQUIRED";
+
 interface Link {
   href: string;
   rel: string;
-  method: string;
+  method:
+    | "GET"
+    | "POST"
+    | "PUT"
+    | "DELETE"
+    | "HEAD"
+    | "CONNECT"
+    | "OPTIONS"
+    | "PATCH";
 }
 
 interface Payer {
