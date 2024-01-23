@@ -12,28 +12,22 @@ type Props = {
 };
 
 const tabClasses = (selected: boolean) =>
-  `${
-    selected
-      ? "border-orange text-orange"
-      : "border-gray-l3 dark:border-bluegray"
-  } uppercase p-2 border-b-4 hover:text-orange-l1 hover:border-orange-l1`;
+  `${selected ? "bg-white font-semibold" : ""} px-6 py-2 text-sm`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {
   return (
     <Tab.Group
       as="div"
-      className="grid content-start mt-2"
+      className="grid grid-cols-[auto_1fr] content-start mt-2 bg-white"
       defaultIndex={state.details?.method === "crypto" ? 1 : 0}
     >
-      <Tab.List className="grid grid-cols-2 sm:grid-cols-4 mb-6">
-        <Tab className={({ selected }) => tabClasses(selected)}>
-          Credit/Debit
-        </Tab>
+      <Tab.List className="grid content-start container bg-gray-l5">
+        <Tab className={({ selected }) => tabClasses(selected)}>Cards</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>Crypto</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>Stocks</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>DAF</Tab>
       </Tab.List>
-      <Tab.Panels>
+      <Tab.Panels as="div" className="p-4">
         <Tab.Panel>
           <Stripe
             widgetConfig={donaterConfig}
