@@ -2,12 +2,30 @@ import { ChainID } from "types/chain";
 import { OptionType } from "types/components";
 import { Country } from "types/components";
 import { TokenWithAmount, TxPackage } from "types/tx";
+import { Currency } from "components/CurrencySelector";
 
 export type DonationRecipient = {
   id: number;
   name: string;
   isKYCRequired: boolean;
   isFiscalSponsored: boolean;
+};
+
+export type CryptoDonationDetails = {
+  method: "crypto"; //use to preserve selected method
+  token: TokenWithAmount;
+  pctLiquidSplit: number; // <input range value transformed to number via onChange
+  chainId: OptionType<ChainID>;
+  userOptForKYC: boolean;
+};
+
+export type StripeDonationDetails = {
+  method: "stripe";
+  amount: string;
+  currency: Currency; //TODO: move to types/components
+  email: string;
+  pctLiquidSplit: number;
+  userOptForKYC: boolean;
 };
 
 export type DonationDetails = {
