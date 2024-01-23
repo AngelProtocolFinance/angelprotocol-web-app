@@ -1,5 +1,6 @@
 import { memo, useEffect, useRef } from "react";
 import Breadcrumbs from "components/Breadcrumbs";
+import ExtLink from "components/ExtLink";
 import { Steps } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
 import {
@@ -8,6 +9,7 @@ import {
   setRecipient,
 } from "slices/donation";
 import { appRoutes } from "constants/routes";
+import { TERMS_OF_USE_DONOR } from "constants/urls";
 
 function Content(props: DonationRecipient) {
   const dispatch = useSetter();
@@ -55,6 +57,16 @@ function Content(props: DonationRecipient) {
       )}
 
       <Steps className="justify-self-center" donaterConfig={null} />
+
+      <p className="text-sm text-gray-d1 dark:text-gray mt-2">
+        By making a donation, you agree to our{" "}
+        <ExtLink
+          className="hover:underline text-gray-d2 "
+          href={TERMS_OF_USE_DONOR}
+        >
+          Terms & Conditions
+        </ExtLink>
+      </p>
     </div>
   );
 }
