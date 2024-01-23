@@ -22,7 +22,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
     <Tab.Group
       vertical
       as="div"
-      className="grid grid-cols-[auto_1fr] content-start container"
+      className="grid grid-cols-[auto_1fr] container"
       defaultIndex={state.details?.method === "crypto" ? 1 : 0}
     >
       <Tab.List className="grid content-start bg-blue-l4 divide-y divide-white">

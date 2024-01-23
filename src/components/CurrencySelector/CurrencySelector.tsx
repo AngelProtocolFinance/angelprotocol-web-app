@@ -6,7 +6,7 @@ import { Label } from "../form";
 import CurrencyOptions from "./CurrencyOptions";
 
 type Props = {
-  classes?: { combobox?: string };
+  classes?: { combobox?: string; label?: string };
   currencies: Currency[];
   disabled: boolean;
   required?: boolean;
@@ -34,6 +34,7 @@ export default function CurrencySelector(props: Props) {
     <div className="field">
       <Label
         htmlFor="wise__currency"
+        className={props.classes?.label ?? ""}
         required={props.required}
         aria-required={props.required}
       >

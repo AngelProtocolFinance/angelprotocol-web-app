@@ -92,7 +92,7 @@ function Content({
             code: x.currency_code,
           }))}
           disabled={methods.formState.isSubmitting}
-          label="Select your donation currency:"
+          label="Currency:"
           onChange={(currency) => {
             setSelectedCurrencyData(
               // new currency can be selected only among the passed fiat currency data
@@ -103,11 +103,13 @@ function Content({
             currencyField.onChange(currency);
           }}
           value={currencyField.value}
+          classes={{ label: "font-bold" }}
           required
         />
         <Field<FormValues>
           name="amount"
           label="Donation amount"
+          classes={{ label: "font-bold" }}
           required
           // validation must be dynamicly set depending on which exact currency is selected
           registerOptions={{
