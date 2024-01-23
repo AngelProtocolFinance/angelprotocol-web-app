@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { TxStep } from "slices/donation";
-import { getTxUrl, humanize } from "helpers";
+import { condenseToNum, getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import Share, { SocialMedia } from "./Share";
 
@@ -22,7 +22,10 @@ export default function Success({
       <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-12 text-center leading-relaxed">
         Thank you for your donation of{" "}
         <span className="font-extrabold">
-          {token.symbol} {humanize(token.amount)}
+          {token.symbol}{" "}
+          {token.amount < 0.01
+            ? condenseToNum(token.amount)
+            : humanize(token.amount)}
         </span>{" "}
         to <span className="font-extrabold">{name}</span>!
       </h3>
