@@ -13,7 +13,7 @@ export default function CurrentStep({ config }: Props) {
   const dispatch = useSetter();
 
   if (state.step === "tx") {
-    return <Result {...state} classes="justify-self-center mt-16" />;
+    return <Result {...state} classes="justify-self-center p-8" />;
   }
 
   switch (state.step) {
@@ -23,7 +23,7 @@ export default function CurrentStep({ config }: Props) {
       return (
         <KYCForm
           type="on-donation"
-          classes="grid gap-5 sm:grid-cols-2"
+          classes="grid gap-5 sm:grid-cols-2 p-8"
           recipient={state.recipient}
           onBack={() => {
             //kyc is always after donate form

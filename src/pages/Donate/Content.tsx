@@ -30,11 +30,11 @@ function Content(props: DonationRecipient) {
 
   return (
     <div
-      className="justify-self-center grid padded-container max-w-[35rem] py-8 @sm:py-20"
+      className="justify-self-center grid padded-container max-w-[35rem] py-4 @sm:py-10"
       id={CONTAINER_ID}
     >
       <Breadcrumbs
-        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
+        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-6"
         items={[
           { title: "Marketplace", to: `${appRoutes.marketplace}/` },
           {

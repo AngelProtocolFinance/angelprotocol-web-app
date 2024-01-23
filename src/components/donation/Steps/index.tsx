@@ -11,7 +11,9 @@ type Props = {
 
 export function Steps({ className = "", donaterConfig }: Props) {
   return (
-    <div className={`grid ${className} w-full`}>
+    <div
+      className={`grid ${className} w-full container rounded bg-white min-h-96`}
+    >
       <WalletProvider {...chainOptions}>
         <WalletContext>
           <CurrentStep config={donaterConfig} />

@@ -1,5 +1,6 @@
 import { Tab } from "@headlessui/react";
 import { DonaterConfigFromWidget } from "types/widget";
+import Icon from "components/Icon/Icon";
 import { FormStep } from "slices/donation";
 import Donater from "../Donater";
 import DAFDirect from "./DAFDirect";
@@ -12,22 +13,25 @@ type Props = {
 };
 
 const tabClasses = (selected: boolean) =>
-  `${selected ? "bg-white font-semibold" : ""} px-6 py-2 text-sm`;
+  `${
+    selected ? "bg-white font-semibold" : ""
+  } text-sm p-4 focus:outline-none w-40 flex items-center gap-2`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {
   return (
     <Tab.Group
+      vertical
       as="div"
-      className="grid grid-cols-[auto_1fr] content-start mt-2 bg-white"
+      className="grid grid-cols-[auto_1fr] content-start container"
       defaultIndex={state.details?.method === "crypto" ? 1 : 0}
     >
-      <Tab.List className="grid content-start container bg-gray-l5">
-        <Tab className={({ selected }) => tabClasses(selected)}>Cards</Tab>
+      <Tab.List className="grid content-start bg-blue-l4 divide-y divide-white">
+        <Tab className={({ selected }) => tabClasses(selected)}>Card</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>Crypto</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>Stocks</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>DAF</Tab>
       </Tab.List>
-      <Tab.Panels as="div" className="p-4">
+      <Tab.Panels as="div" className="p-8">
         <Tab.Panel>
           <Stripe
             widgetConfig={donaterConfig}
