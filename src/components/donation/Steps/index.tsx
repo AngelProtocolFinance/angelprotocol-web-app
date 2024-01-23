@@ -12,7 +12,7 @@ type Props = {
 export function Steps({ className = "", donaterConfig }: Props) {
   return (
     <div
-      className={`grid ${className} w-full container rounded overflow-clip bg-white min-h-96`}
+      className={`grid ${className} w-full @container rounded overflow-clip bg-white min-h-96`}
     >
       <WalletProvider {...chainOptions}>
         <WalletContext>

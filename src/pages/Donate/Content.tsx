@@ -30,7 +30,7 @@ function Content(props: DonationRecipient) {
 
   return (
     <div
-      className="justify-self-center grid sm:w-[35rem] py-4 @sm:py-10"
+      className="justify-self-center grid w-full sm:w-[35rem] py-4 @sm:py-10"
       id={CONTAINER_ID}
     >
       <Breadcrumbs
