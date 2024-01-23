@@ -1,12 +1,30 @@
-/** See response type in https://developer.paypal.com/docs/api/orders/v2/#orders_capture */
-export interface PayPalOrder {
-  id: string;
-  status: Status;
-  payment_source: PaymentSource;
-  purchase_units: PurchaseUnit[];
-  payer: Payer;
-  links: Link[];
-}
+/**
+ * See:
+ * - response type -> https://developer.paypal.com/docs/api/orders/v2/#orders_capture
+ * - error handling in integration guide -> https://developer.paypal.com/docs/checkout/standard/integrate/#link-integratefrontend
+ * - all possible errors -> https://developer.paypal.com/api/rest/reference/orders/v2/errors/#capture-order
+ */
+export type PayPalOrder =
+  | {
+      id: string;
+      status: Status;
+      payment_source: PaymentSource;
+      purchase_units?: PurchaseUnit[];
+      payer: Payer;
+      links: Link[];
+    }
+  | {
+      details: {
+        issue: "INSTRUMENT_DECLINED";
+      }[];
+    }
+  | {
+      debug_id: string;
+      details: {
+        issue: string;
+        description: string;
+      }[];
+    };
 
 type Status =
   | "CREATED"

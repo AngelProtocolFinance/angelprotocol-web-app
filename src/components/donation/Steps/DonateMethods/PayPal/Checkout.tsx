@@ -1,8 +1,11 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useCapturePayPalOrderMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import LoaderRing from "components/LoaderRing";
+import { isEmpty } from "helpers";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 
 type Props = {
@@ -19,11 +22,7 @@ export default function Checkout({ orderId, onBack }: Props) {
   const [isSubmitting, setSubmitting] = useState(false);
 
   const [{ isPending }] = usePayPalScriptReducer();
-
-  const handleApprove = async () => {
-    setSubmitting(false);
-    navigate(appRoutes.stripe_payment_status);
-  };
+  const [captureOrder] = useCapturePayPalOrderMutation();
 
   return (
     <div className="grid place-items-center min-h-[16rem] isolate">
@@ -42,7 +41,34 @@ export default function Checkout({ orderId, onBack }: Props) {
             disabled={isSubmitting}
             className="w-full max-w-xs"
             onError={handleError}
-            onApprove={handleApprove}
+            onApprove={async (data, actions) => {
+              try {
+                const order = await captureOrder({
+                  orderId: data.orderID,
+                }).unwrap();
+
+                if ("details" in order) {
+                  if (order.details.at(0)?.issue === "INSTRUMENT_DECLINED") {
+                    // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                    // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+                    return actions.restart();
+                  } else if ("debug_id" in order) {
+                    // (2) Other non-recoverable errors -> Show a failure message
+                    throw new Error(
+                      `${order.details.at(0)?.description} (${order.debug_id})`
+                    );
+                  }
+                } else if (isEmpty(order.purchase_units ?? [])) {
+                  throw new Error(JSON.stringify(order));
+                } else {
+                  navigate(appRoutes.donate_fiat_thanks);
+                }
+              } catch (error) {
+                handleError(error, GENERIC_ERROR_MESSAGE);
+              } finally {
+                setSubmitting(false);
+              }
+            }}
             createOrder={async () => {
               setSubmitting(true);
               return orderId;
