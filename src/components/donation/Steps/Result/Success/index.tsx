@@ -23,7 +23,7 @@ export default function Success({
         Thank you for your donation of{" "}
         <span className="font-extrabold">
           {token.symbol}{" "}
-          {token.amount < 0.01
+          {parseFloat(token.amount) < 0.01
             ? condenseToNum(token.amount)
             : humanize(token.amount)}
         </span>{" "}
