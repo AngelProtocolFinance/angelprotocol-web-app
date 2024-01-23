@@ -3,7 +3,7 @@ import { useGetStripePaymentStatusQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import DonateFiatThanks from "./DonateFiatThanks";
 
-export default function StripePaymentProcessor() {
+export default function StripePaymentStatus() {
   const paymentIntentId = new URLSearchParams(window.location.search).get(
     "payment_intent"
   );
