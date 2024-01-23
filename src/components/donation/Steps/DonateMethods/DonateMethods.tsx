@@ -1,9 +1,6 @@
 import { Tab } from "@headlessui/react";
 import { DonaterConfigFromWidget } from "types/widget";
-import ExtLink from "components/ExtLink";
-import Icon from "components/Icon/Icon";
 import { FormStep } from "slices/donation";
-import { TERMS_OF_USE_DONOR } from "constants/urls";
 import Donater from "../Donater";
 import DAFDirect from "./DAFDirect";
 import Stocks from "./Stocks";

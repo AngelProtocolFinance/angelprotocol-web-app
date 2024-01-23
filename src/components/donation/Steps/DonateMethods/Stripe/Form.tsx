@@ -5,7 +5,6 @@ import { FormValues, Props } from "./types";
 import { FiatCurrencyData } from "types/aws";
 import { useStripeCurrenciesQuery } from "services/apes";
 import CurrencySelector from "components/CurrencySelector";
-import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
@@ -13,7 +12,6 @@ import { CheckField, Field } from "components/form";
 import { useGetter } from "store/accessors";
 import { requiredString } from "schemas/string";
 import { appRoutes } from "constants/routes";
-import { TERMS_OF_USE_DONOR } from "constants/urls";
 import AdvancedOptions from "../../../AdvancedOptions";
 
 const USD_CODE = "usd";
