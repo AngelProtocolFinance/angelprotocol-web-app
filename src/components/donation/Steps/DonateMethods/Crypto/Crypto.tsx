@@ -13,7 +13,7 @@ type Props = FormStep & {
   config: DonaterConfigFromWidget | null;
 };
 
-export default function Donater({ config, ...state }: Props) {
+export default function Crypto({ config, ...state }: Props) {
   const initial: DonateValues = {
     token: initToken,
     pctLiquidSplit: config?.liquidSplitPct ?? 50,
