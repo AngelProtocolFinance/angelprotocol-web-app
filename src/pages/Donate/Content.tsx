@@ -58,7 +58,7 @@ function Content(props: DonationRecipient) {
 
       <Steps className="justify-self-center" donaterConfig={null} />
 
-      <p className="text-sm text-gray-d1 dark:text-gray mt-2">
+      <p className="text-sm text-gray-d1 dark:text-gray mt-2 text-center">
         By making a donation, you agree to our{" "}
         <ExtLink
           className="hover:underline text-gray-d2 "
