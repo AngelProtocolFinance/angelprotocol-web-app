@@ -35,7 +35,7 @@ export default function Stripe(props: Props) {
               const { clientSecret } = await createPaymentIntent({
                 amount: +fv.amount,
                 currency: fv.currency.code,
-                endowmentId: props.state.recipient.id,
+                endowmentId: props.recipient.id,
                 email: fv.email,
                 splitLiq: fv.pctLiquidSplit.toString(),
               }).unwrap();
@@ -55,7 +55,7 @@ export default function Stripe(props: Props) {
             ...(step.kycData ?? {}),
             kycEmail: step.kycData?.kycEmail ?? step.email,
           }}
-          recipient={props.state.recipient}
+          recipient={props.recipient}
           onBack={() => setStep({ ...step, type: "init" })}
           onSubmit={async (kyc) => {
             try {
@@ -63,7 +63,7 @@ export default function Stripe(props: Props) {
                 amount: +step.amount,
                 currency: step.currency.code,
                 email: step.email,
-                endowmentId: props.state.recipient.id,
+                endowmentId: props.recipient.id,
                 splitLiq: step.pctLiquidSplit.toString(),
                 kycData: {
                   city: kyc.city,

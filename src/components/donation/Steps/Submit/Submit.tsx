@@ -4,13 +4,13 @@ import { TxPackage } from "types/tx";
 import { ConnectedWallet, isCosmos, isEVM, isTerra } from "types/wallet";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { Info, LoadingStatus } from "components/Status";
-import { SubmitStep } from "slices/donation";
+import { CryptoSubmitStep } from "slices/donation";
 import { chains } from "constants/chains";
 import Breakdown from "./Breakdown";
 import Container from "./Container";
 import WalletSelection from "./WalletSelection";
 
-export default function Submit(props: SubmitStep) {
+export default function Submit(props: CryptoSubmitStep) {
   const wallet = useWalletContext();
   const chainID = props.details.chainId.value;
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");

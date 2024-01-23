@@ -64,23 +64,23 @@ export type KYCStep = {
   step: "kyc-form";
   recipient: DonationRecipient;
   kyc?: KYC;
-};
+} & Omit<Required<FormStep>, "step">;
 
 export type CryptoSubmitStep = {
   step: "submit";
   //donation can be submitted without KYC
-} & Omit<CryptoFormStep, "step"> &
-  Omit<KYCStep, "step">;
+} & Omit<KYCStep, "step" | "details"> & { details: CryptoDonationDetails };
 
 export type StripeCheckoutStep = {
   step: "submit";
   //donation can be submitted without KYC
 } & Omit<StripeFormStep, "step"> &
-  Omit<KYCStep, "step">;
+  Omit<KYCStep, "step" | "details"> & { details: StripeDonationDetails };
 
 export type SubmitStep = CryptoSubmitStep | StripeCheckoutStep;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
+
 export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;

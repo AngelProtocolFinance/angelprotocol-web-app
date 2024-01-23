@@ -48,7 +48,7 @@ function Content({
   authUserEmail,
   fiatCurrencyData,
   defaultValues,
-  state: { recipient },
+  recipient,
   widgetConfig,
   onSubmit,
 }: FormProps & {

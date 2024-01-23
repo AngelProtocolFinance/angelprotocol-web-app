@@ -1,4 +1,4 @@
-import { TxStep } from "slices/donation";
+import { CryptoResultStep } from "slices/donation";
 import Err from "./Err";
 import Loading from "./Loading";
 import Success from "./Success";
@@ -6,7 +6,7 @@ import Success from "./Success";
 export default function Result({
   classes = "",
   ...state
-}: TxStep & { classes?: string }) {
+}: CryptoResultStep & { classes?: string }) {
   const { status } = state;
   if (status === "error") {
     const { recipient } = state;

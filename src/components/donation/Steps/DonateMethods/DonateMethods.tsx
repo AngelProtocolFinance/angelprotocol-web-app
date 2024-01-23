@@ -1,7 +1,7 @@
 import { Tab } from "@headlessui/react";
 import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";
-import Donater from "../Donater";
+import Crypto from "./Crypto";
 import DAFDirect from "./DAFDirect";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
@@ -35,15 +35,26 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       <Tab.Panels as="div" className="p-8">
         <Tab.Panel>
           <Stripe
+            recipient={state.recipient}
+            step={state.step}
+            details={
+              state.details?.method === "stripe" ? state.details : undefined
+            }
             widgetConfig={donaterConfig}
             advanceOptDisplay={
               donaterConfig?.advancedOptionsDisplay ?? "collapsed"
             }
-            state={state}
           />
         </Tab.Panel>
         <Tab.Panel>
-          <Donater {...state} config={donaterConfig} />
+          <Crypto
+            recipient={state.recipient}
+            step={state.step}
+            details={
+              state.details?.method === "crypto" ? state.details : undefined
+            }
+            config={donaterConfig}
+          />
         </Tab.Panel>
         <Tab.Panel>
           <Stocks state={state} />
