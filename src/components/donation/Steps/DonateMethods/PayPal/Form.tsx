@@ -3,7 +3,7 @@ import { FormProvider, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues, Props } from "./types";
 import { FiatCurrencyData } from "types/aws";
-import { useStripeCurrenciesQuery } from "services/apes";
+import { usePaypalCurrenciesQuery } from "services/apes";
 import CurrencySelector from "components/CurrencySelector";
 import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
@@ -25,7 +25,7 @@ type FormProps = Props & {
 
 export default function Form(props: FormProps) {
   const user = useGetter((state) => state.auth.user);
-  const queryState = useStripeCurrenciesQuery(null);
+  const queryState = usePaypalCurrenciesQuery(null);
   return (
     <QueryLoader
       queryState={{

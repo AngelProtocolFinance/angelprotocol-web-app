@@ -70,6 +70,11 @@ export const apes = createApi({
         url: `v2/fiat/stripe-proxy/apes/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
+    paypalCurrencies: builder.query<FiatCurrencyData, null>({
+      query: () => ({
+        url: `dev/v1/fiat/paypal/currencies`,
+      }),
+    }),
     stripeCurrencies: builder.query<FiatCurrencyData, null>({
       async queryFn(_args, _api, _extraOptions, baseQuery) {
         return await fetch("https://ipapi.co/json/")
@@ -103,6 +108,7 @@ export const {
   useCreatePayPalOrderMutation,
   useEndowBalanceQuery,
   useGetStripePaymentStatusQuery,
+  usePaypalCurrenciesQuery,
   useStripeCurrenciesQuery,
   useTokensQuery,
   util: {
