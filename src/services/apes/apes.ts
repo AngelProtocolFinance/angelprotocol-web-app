@@ -43,7 +43,7 @@ export const apes = createApi({
       CreatePayPalOrderParams
     >({
       query: (params) => ({
-        url: `v1/fiat/paypal/apes/${apiEnv}/orders`,
+        url: `dev/v1/fiat/paypal/apes/${apiEnv}/orders`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
