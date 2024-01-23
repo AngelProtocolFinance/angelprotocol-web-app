@@ -27,7 +27,7 @@ export default function Body() {
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center font-body">
           <div className="flex flex-col items-center lg:items-start w-full gap-2 text-center lg:text-left">
             <div className="flex max-sm:flex-col items-center gap-3">
-              <h3 className="font-header text-3xl w-full max-w-2xl break-all sm:break-words">
+              <h3 className="font-header text-3xl w-full max-w-2xl break-words">
                 {p.name}
               </h3>
               <BookmarkBtn endowId={p.id} />
