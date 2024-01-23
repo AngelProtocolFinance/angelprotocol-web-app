@@ -1,6 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
-import { EndowmentBalances, FiatCurrencyData, KYCData, Token } from "types/aws";
+import {
+  EndowmentBalances,
+  FiatCurrencyData,
+  KYCData,
+  PayPalOrder,
+  Token,
+} from "types/aws";
 import { ChainID } from "types/chain";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
@@ -38,6 +44,13 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
+    capturePayPalOrder: builder.mutation<PayPalOrder, { orderId: string }>({
+      query: (params) => ({
+        url: `dev/v1/fiat/paypal/apes/${apiEnv}/orders/${params.orderId}/capture`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+      }),
+    }),
     createPayPalOrder: builder.mutation<
       { orderId: string },
       CreatePayPalOrderParams
@@ -104,6 +117,7 @@ export const apes = createApi({
 });
 
 export const {
+  useCapturePayPalOrderMutation,
   useCreateStripePaymentIntentMutation,
   useCreatePayPalOrderMutation,
   useEndowBalanceQuery,
