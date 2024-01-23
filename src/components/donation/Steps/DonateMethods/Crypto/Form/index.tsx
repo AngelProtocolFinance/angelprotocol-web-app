@@ -9,11 +9,11 @@ import { setDetails } from "slices/donation";
 import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { Selector } from "../../../../Selector";
-import Split from "../../../../Split";
-import TokenField from "../../../../TokenField";
-import { CheckField, Label } from "../../../../form";
-import AdvancedOptions from "../../../AdvancedOptions";
+import { Selector } from "../../../../../Selector";
+import Split from "../../../../../Split";
+import TokenField from "../../../../../TokenField";
+import { CheckField, Label } from "../../../../../form";
+import AdvancedOptions from "../../../../AdvancedOptions";
 import { initToken } from "../constants";
 
 type Props = {
