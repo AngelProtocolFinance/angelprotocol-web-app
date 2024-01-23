@@ -61,7 +61,7 @@ export default function App() {
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
             path={appRoutes.donate_fiat_thanks}
-            element={<DonateFiatThanks status="success" />}
+            element={<DonateFiatThanks />}
           />
           <Route
             path={appRoutes.stripe_payment_status}
