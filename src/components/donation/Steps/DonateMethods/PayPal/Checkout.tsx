@@ -22,7 +22,7 @@ export default function Checkout({ orderId, onBack }: Props) {
 
   const handleApprove = async () => {
     setSubmitting(false);
-    navigate(appRoutes.donate_fiat_thanks);
+    navigate(appRoutes.stripe_payment_status);
   };
 
   return (

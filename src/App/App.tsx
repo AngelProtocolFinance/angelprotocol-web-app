@@ -14,7 +14,6 @@ const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));
-const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
@@ -22,6 +21,9 @@ const Applications = lazy(() => import("pages/Applications"));
 const Application = lazy(() => import("pages/Application"));
 const BankingApplications = lazy(() => import("pages/BankingApplications"));
 const BankingApplication = lazy(() => import("pages/BankingApplication"));
+const StripePaymentProcessor = lazy(
+  () => import("pages/StripePaymentProcessor")
+);
 
 export default function App() {
   const location = useLocation();
@@ -59,8 +61,8 @@ export default function App() {
           <Route path={appRoutes.donations} element={<Donations />} />
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
-            path={appRoutes.donate_fiat_thanks}
-            element={<DonateFiatThanks />}
+            path={appRoutes.stripe_payment_status}
+            element={<StripePaymentProcessor />}
           />
           <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
           <Route path={`${appRoutes.register}/*`} element={<Registration />} />

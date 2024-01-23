@@ -1,52 +1,27 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useGetStripePaymentStatusQuery } from "services/apes";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
-import QueryLoader from "components/QueryLoader";
 import { useGetter } from "store/accessors";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 
-export default function DonateFiatThanks() {
-  const paymentIntentId = new URLSearchParams(window.location.search).get(
-    "payment_intent"
-  );
+type Props = {
+  status: "success" | "processing" | "failure";
+  handleProcessing: () => void;
+};
 
-  const queryState = useGetStripePaymentStatusQuery(
-    {
-      paymentIntentId: paymentIntentId ?? "",
-    },
-    { skip: !paymentIntentId }
-  );
-
-  const { refetch } = queryState;
-
-  const handleProcessing = useCallback(() => refetch(), [refetch]);
-
-  return (
-    <QueryLoader
-      queryState={queryState}
-      messages={{
-        loading: "Loading donation status",
-        error: "Failed to load donation status",
-      }}
-      classes={{ container: "place-self-center" }}
-    >
-      {({ status }) => {
-        switch (status) {
-          case "succeeded":
-            return <Success />;
-          case "processing":
-            return <Processing onMount={handleProcessing} />;
-          case "requires_payment_method":
-            return <Unsuccessful />;
-          default:
-            return <SomethingWentWrong />;
-        }
-      }}
-    </QueryLoader>
-  );
+export default function DonateFiatThanks({ status, handleProcessing }: Props) {
+  switch (status) {
+    case "success":
+      return <Success />;
+    case "processing":
+      return <Processing onMount={handleProcessing} />;
+    case "failure":
+      return <Unsuccessful />;
+    default:
+      return <SomethingWentWrong />;
+  }
 }
 
 function Success() {

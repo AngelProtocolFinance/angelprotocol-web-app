@@ -33,7 +33,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}${appRoutes.donate_fiat_thanks}`,
+        return_url: `${window.location.origin}${appRoutes.stripe_payment_status}`,
       },
     });
 
