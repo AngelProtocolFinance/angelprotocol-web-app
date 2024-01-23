@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/react";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import DonateFiatThanks from "pages/DonateFiatThanks";
 import OAUTHRedirector from "pages/OAuthRedirector";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
@@ -58,6 +59,10 @@ export default function App() {
 
           <Route path={appRoutes.donations} element={<Donations />} />
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
+          <Route
+            path={appRoutes.donate_fiat_thanks}
+            element={<DonateFiatThanks status="success" />}
+          />
           <Route
             path={appRoutes.stripe_payment_status}
             element={<StripePaymentStatus />}

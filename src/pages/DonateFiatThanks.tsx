@@ -6,17 +6,20 @@ import { useGetter } from "store/accessors";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 
-type Props = {
-  status: "success" | "processing" | "failure";
-  handleProcessing: () => void;
-};
+type Props =
+  | { status: "success" }
+  | { status: "failure" }
+  | {
+      status: "processing";
+      handleProcessing: () => void;
+    };
 
-export default function DonateFiatThanks({ status, handleProcessing }: Props) {
-  switch (status) {
+export default function DonateFiatThanks(props: Props) {
+  switch (props.status) {
     case "success":
       return <Success />;
     case "processing":
-      return <Processing onMount={handleProcessing} />;
+      return <Processing onMount={props.handleProcessing} />;
     case "failure":
       return <Unsuccessful />;
     default:

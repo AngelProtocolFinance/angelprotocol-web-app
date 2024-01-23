@@ -10,6 +10,7 @@ export enum appRoutes {
   profile = "/profile",
   donations = "/donations",
   donate = "/donate",
+  donate_fiat_thanks = "/donate-fiat-thanks",
   stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",
   gift = "/gift",
