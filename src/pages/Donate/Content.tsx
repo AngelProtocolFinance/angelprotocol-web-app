@@ -30,7 +30,7 @@ function Content(props: DonationRecipient) {
 
   return (
     <div
-      className="justify-self-center grid padded-container max-w-[35rem] py-4 @sm:py-10"
+      className="justify-self-center grid sm:w-[35rem] py-4 @sm:py-10"
       id={CONTAINER_ID}
     >
       <Breadcrumbs
@@ -49,7 +49,7 @@ function Content(props: DonationRecipient) {
       />
 
       {!isFinalized(state) && (
-        <h3 className="text-center text-xl sm:text-3xl leading-snug mb-4">
+        <h3 className="sm:text-center text-xl sm:text-3xl leading-snug mb-4">
           {state.recipient?.name}
         </h3>
       )}
