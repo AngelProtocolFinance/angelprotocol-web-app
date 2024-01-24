@@ -128,13 +128,13 @@ function Content({
             currencyField.onChange(currency);
           }}
           value={currencyField.value}
-          classes={{ label: "font-bold" }}
+          classes={{ label: "font-semibold" }}
           required
         />
         <Field<FormValues>
           name="amount"
           label="Donation amount"
-          classes={{ label: "font-bold" }}
+          classes={{ label: "font-semibold" }}
           required
           // validation must be dynamicly set depending on which exact currency is selected
           registerOptions={{
@@ -156,6 +156,7 @@ function Content({
             name="email"
             label="Email"
             required
+            classes={{ label: "font-semibold" }}
             registerOptions={{
               required: "required",
               validate: (value) =>

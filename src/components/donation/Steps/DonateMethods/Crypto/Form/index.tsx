@@ -45,7 +45,7 @@ export default function Form({ configFromWidget }: Props) {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
-      <Label htmlFor="chainId" className="mb-1 font-bold" required>
+      <Label htmlFor="chainId" className="mb-1 font-semibold" required>
         Network
       </Label>
       <Selector<DonateValues, "chainId", ChainID>

@@ -15,8 +15,8 @@ const tabClasses = (selected: boolean) =>
   `${
     selected
       ? "font-semibold bg-blue @md:bg-white text-white @md:text-black"
-      : ""
-  } text-sm text-left p-2 @md:p-4 focus:outline-none @md:w-40 rounded border border-prim @md:border-none`;
+      : "border border-prim @md:border-none"
+  } text-sm text-left p-2 @md:p-4 focus:outline-none @md:w-40 rounded @md:rounded-none`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {
   return (
