@@ -58,12 +58,12 @@ export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type KYCStep = {
   step: "kyc-form";
   recipient: DonationRecipient;
-  kyc?: KYC;
+  kyc?: Partial<KYC>;
 } & Omit<Required<FormStep<DonationDetails>>, "step">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<KYCStep, "step" | "details"> & { details: T };
+} & Omit<KYCStep, "step" | "details" | "kyc"> & { details: T; kyc?: KYC }; //either skipped or complete
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;

@@ -27,6 +27,7 @@ export default function CurrentStep({ config }: Props) {
       <KYCForm
         type="on-donation"
         classes="grid gap-5 sm:grid-cols-2 p-4 @md:p-8"
+        defaultValues={state.kyc}
         recipient={state.recipient}
         onBack={() => {
           //kyc is always after donate form
