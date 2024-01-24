@@ -10,14 +10,11 @@ import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 export default function StripePaymentStatus() {
-  const paymentIntentId = new URLSearchParams(window.location.search).get(
-    "payment_intent"
-  );
+  const paymentIntentId =
+    new URLSearchParams(window.location.search).get("payment_intent") ?? "";
 
   const queryState = useGetStripePaymentStatusQuery(
-    {
-      paymentIntentId: paymentIntentId ?? "",
-    },
+    { paymentIntentId },
     { skip: !paymentIntentId }
   );
 
