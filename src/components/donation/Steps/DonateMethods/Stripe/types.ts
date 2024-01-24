@@ -1,6 +1,5 @@
 import { DonaterConfigFromWidget } from "types/widget";
-import { Currency } from "components/CurrencySelector";
-import { StripeFormStep } from "slices/donation";
+import { StripeDonationDetails, StripeFormStep } from "slices/donation";
 import { type AdvancedOptionsDisplay } from "../../../AdvancedOptions";
 
 export type Props = {
@@ -8,10 +7,7 @@ export type Props = {
   widgetConfig: DonaterConfigFromWidget | null;
 } & StripeFormStep;
 
-export type FormValues = {
-  amount: string;
-  currency: Currency;
-  email: string;
-  pctLiquidSplit: number;
-  userOptForKYC: boolean;
-};
+export type FormValues = Omit<
+  StripeDonationDetails,
+  "method" | "checkoutSecret"
+>;

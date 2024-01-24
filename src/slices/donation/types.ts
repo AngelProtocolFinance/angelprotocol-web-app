@@ -1,4 +1,3 @@
-import { DoneOrgDetails } from "types/aws";
 import { ChainID } from "types/chain";
 import { OptionType } from "types/components";
 import { Country } from "types/components";
@@ -27,6 +26,7 @@ export type StripeDonationDetails = {
   email: string;
   pctLiquidSplit: number;
   userOptForKYC: boolean;
+  checkoutSecret: string;
 };
 
 export type DonationDetails = StripeDonationDetails | CryptoDonationDetails;
@@ -86,9 +86,3 @@ export type DonationState =
 export type DonateArgs = { donation: CryptoSubmitStep } & TxPackage;
 
 export type DonationStep = DonationState["step"];
-
-export function isCrypto(
-  step: SubmitStep | FormStep
-): step is CryptoSubmitStep | CryptoSubmitStep {
-  return step.details?.method === "crypto";
-}

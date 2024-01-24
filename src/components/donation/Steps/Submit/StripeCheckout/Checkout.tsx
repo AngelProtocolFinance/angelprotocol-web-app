@@ -52,7 +52,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-8">
+    <form onSubmit={handleSubmit} className="grid gap-8 p-8">
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setLoading(false)}

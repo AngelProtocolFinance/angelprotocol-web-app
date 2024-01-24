@@ -1,84 +1,111 @@
 import { useState } from "react";
-import { FormProvider, useController, useForm } from "react-hook-form";
+import {
+  FormProvider,
+  SubmitHandler,
+  useController,
+  useForm,
+} from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues, Props } from "./types";
+import { userIsSignedIn } from "types/auth";
 import { FiatCurrencyData } from "types/aws";
-import { useStripeCurrenciesQuery } from "services/apes";
+import {
+  useCreateStripePaymentIntentMutation,
+  useStripeCurrenciesQuery,
+} from "services/apes";
+import { useErrorContext } from "contexts/ErrorContext";
 import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { setDetails } from "slices/donation";
 import { requiredString } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import AdvancedOptions from "../../../AdvancedOptions";
 
 const USD_CODE = "usd";
 
-type FormProps = Props & {
-  defaultValues: Partial<FormValues>;
-  onSubmit: (formValues: FormValues) => void | Promise<void>;
-};
-
-export default function Form(props: FormProps) {
-  const user = useGetter((state) => state.auth.user);
+export default function Form(props: Props) {
   const queryState = useStripeCurrenciesQuery(null);
   return (
     <QueryLoader
-      queryState={{
-        ...queryState,
-        isLoading: queryState.isLoading || user === "loading",
-      }}
+      queryState={queryState}
       classes={{ container: "grid justify-center" }}
     >
-      {(data) => (
-        <Content
-          {...props}
-          fiatCurrencyData={data}
-          authUserEmail={!user || user === "loading" ? "" : user.email}
-        />
-      )}
+      {(data) => <Content {...props} fiatCurrencyData={data} />}
     </QueryLoader>
   );
 }
 
 function Content({
   advanceOptDisplay,
-  authUserEmail,
   fiatCurrencyData,
-  defaultValues,
   recipient,
   widgetConfig,
-  onSubmit,
-}: FormProps & {
-  authUserEmail: string;
+  details,
+}: Props & {
   fiatCurrencyData: FiatCurrencyData;
 }) {
-  // store auth. user's email and if the user is in the process of logging out (so that
-  // `authUserEmail === ""`), we can use this variable to keep hiding the email field
-  // (otherwise the user might get a sudden flash of the email field before being redirected)
-  const [originialAuthUserEmail] = useState(authUserEmail);
-
+  const authUser = useGetter((state) => state.auth.user);
+  const dispatch = useSetter();
+  const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
+  const { handleError } = useErrorContext();
+  const [createPaymentIntent] = useCreateStripePaymentIntentMutation();
   const [selectedCurrencyData, setSelectedCurrencyData] = useState(
     getDefaultCurrency(fiatCurrencyData.currencies)
   );
 
+  const initial: FormValues = {
+    amount: "",
+    currency: { code: "USD" },
+    email: authUserEmail,
+    pctLiquidSplit: 50,
+    userOptForKYC: false,
+  };
+
   const methods = useForm<FormValues>({
-    defaultValues: {
-      amount: defaultValues.amount,
-      currency: { code: selectedCurrencyData.currency_code.toUpperCase() },
-      email: defaultValues.email ?? originialAuthUserEmail,
-      pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
-      userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
-    },
+    defaultValues: details || initial,
   });
+
+  const {
+    control,
+    formState: { isDirty },
+  } = methods;
+
   const { field: currencyField } = useController({
-    control: methods.control,
+    control,
     name: "currency",
   });
 
   const isInsideWidget = widgetConfig !== null;
+
+  const onSubmit: SubmitHandler<FormValues> = async (fv) => {
+    try {
+      if (!isDirty && details) {
+        dispatch(setDetails(details));
+      }
+
+      const { clientSecret } = await createPaymentIntent({
+        amount: +fv.amount,
+        currency: fv.currency.code,
+        endowmentId: recipient.id,
+        email: fv.email,
+        splitLiq: fv.pctLiquidSplit.toString(),
+      }).unwrap();
+
+      dispatch(
+        setDetails({
+          ...fv,
+          method: "stripe",
+          checkoutSecret: clientSecret,
+        })
+      );
+    } catch (err) {
+      handleError(err, "Failed to load payment platform");
+    }
+  };
 
   const submit = methods.handleSubmit(onSubmit);
 
@@ -124,7 +151,7 @@ function Content({
           }}
           tooltip={createTooltip(selectedCurrencyData)}
         />
-        {!originialAuthUserEmail && (
+        {!authUserEmail && (
           <Field<FormValues>
             name="email"
             label="Email"

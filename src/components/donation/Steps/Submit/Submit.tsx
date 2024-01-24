@@ -1,9 +1,13 @@
-import { SubmitStep, isCrypto } from "slices/donation";
+import { SubmitStep } from "slices/donation";
 import Crypto from "./Crypto";
+import StripeCheckout from "./StripeCheckout";
 
 export default function Submit(props: SubmitStep) {
-  if (isCrypto(props)) {
-    return <Crypto {...props} />;
+  if (props.details.method === "crypto") {
+    const { details, ...rest } = props;
+    return <Crypto details={details} {...rest} />;
   }
-  return <></>;
+
+  const { details, ...rest } = props;
+  return <StripeCheckout details={details} {...rest} />;
 }
