@@ -26,7 +26,6 @@ export type StripeDonationDetails = {
   email: string;
   pctLiquidSplit: number;
   userOptForKYC: boolean;
-  checkoutSecret: string;
 };
 
 export type DonationDetails = StripeDonationDetails | CryptoDonationDetails;

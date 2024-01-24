@@ -7,7 +7,4 @@ export type Props = {
   widgetConfig: DonaterConfigFromWidget | null;
 } & StripeFormStep;
 
-export type FormValues = Omit<
-  StripeDonationDetails,
-  "method" | "checkoutSecret"
->;
+export type FormValues = Omit<StripeDonationDetails, "method">;

@@ -9,10 +9,7 @@ import { Link } from "react-router-dom";
 import { FormValues, Props } from "./types";
 import { userIsSignedIn } from "types/auth";
 import { FiatCurrencyData } from "types/aws";
-import {
-  useCreateStripePaymentIntentMutation,
-  useStripeCurrenciesQuery,
-} from "services/apes";
+import { useStripeCurrenciesQuery } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
@@ -52,7 +49,6 @@ function Content({
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
   const { handleError } = useErrorContext();
-  const [createPaymentIntent] = useCreateStripePaymentIntentMutation();
   const [selectedCurrencyData, setSelectedCurrencyData] = useState(
     getDefaultCurrency(fiatCurrencyData.currencies)
   );
@@ -69,13 +65,8 @@ function Content({
     defaultValues: details || initial,
   });
 
-  const {
-    control,
-    formState: { isDirty },
-  } = methods;
-
   const { field: currencyField } = useController({
-    control,
+    control: methods.control,
     name: "currency",
   });
 
@@ -83,23 +74,10 @@ function Content({
 
   const onSubmit: SubmitHandler<FormValues> = async (fv) => {
     try {
-      if (!isDirty && details) {
-        dispatch(setDetails(details));
-      }
-
-      const { clientSecret } = await createPaymentIntent({
-        amount: +fv.amount,
-        currency: fv.currency.code,
-        endowmentId: recipient.id,
-        email: fv.email,
-        splitLiq: fv.pctLiquidSplit.toString(),
-      }).unwrap();
-
       dispatch(
         setDetails({
           ...fv,
           method: "stripe",
-          checkoutSecret: clientSecret,
         })
       );
     } catch (err) {
