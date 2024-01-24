@@ -1,6 +1,6 @@
 import { PaymentIntent } from "@stripe/stripe-js";
 import { useCallback, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useGetStripePaymentStatusQuery } from "services/apes";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
@@ -8,7 +8,6 @@ import QueryLoader from "components/QueryLoader";
 import { useGetter } from "store/accessors";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
-import DonateFiatThanks from "./DonateFiatThanks";
 
 export default function StripePaymentStatus() {
   const paymentIntentId = new URLSearchParams(window.location.search).get(
@@ -43,7 +42,7 @@ export default function StripePaymentStatus() {
 function Content(props: { status: PaymentIntent.Status; onMount: () => void }) {
   switch (props.status) {
     case "succeeded":
-      return <DonateFiatThanks />;
+      return <Navigate to={appRoutes.donate_fiat_thanks} />;
     case "processing":
       return <Processing onMount={props.onMount} />;
     case "canceled":
