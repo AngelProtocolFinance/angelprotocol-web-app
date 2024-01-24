@@ -10,7 +10,7 @@ import Breakdown from "./Breakdown";
 import Container from "./Container";
 import WalletSelection from "./WalletSelection";
 
-export default function Submit(props: CryptoSubmitStep) {
+export default function Crypto(props: CryptoSubmitStep) {
   const wallet = useWalletContext();
   const chainID = props.details.chainId.value;
   const [estimate, setEstimate] = useState<EstimateStatus>("loading");

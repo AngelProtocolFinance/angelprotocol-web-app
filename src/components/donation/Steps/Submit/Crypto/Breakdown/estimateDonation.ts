@@ -2,7 +2,7 @@ import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import Decimal from "decimal.js";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { EstimateInput, EstimateResult } from "types/tx";
-import { SubmitStep } from "slices/donation";
+import { CryptoSubmitStep } from "slices/donation";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { humanize, logger, scale, scaleToStr } from "helpers";
@@ -40,7 +40,7 @@ export async function estimateDonation({
     token,
     chainId: { value: chainID },
   },
-}: SubmitStep & { sender: string }): Promise<DonationEstimate | null> {
+}: CryptoSubmitStep & { sender: string }): Promise<DonationEstimate | null> {
   let toEstimate: EstimateInput;
   // ///////////// GET TX CONTENT ///////////////
 

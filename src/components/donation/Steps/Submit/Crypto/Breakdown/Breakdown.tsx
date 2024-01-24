@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { EstimateStatus } from "../types";
 import { ErrorStatus, LoadingStatus } from "components/Status";
-import { SubmitStep } from "slices/donation";
+import { CryptoSubmitStep } from "slices/donation";
 import { humanize } from "helpers";
 import { Row } from "../Row";
 import { estimateDonation } from "./estimateDonation";
@@ -11,7 +11,7 @@ type Props = {
   estimate: EstimateStatus;
   setEstimate: React.Dispatch<React.SetStateAction<EstimateStatus>>;
   sender: string;
-  submitStep: SubmitStep;
+  submitStep: CryptoSubmitStep;
 };
 
 export default function Breakdown({

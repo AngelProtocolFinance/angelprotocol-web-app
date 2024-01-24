@@ -86,3 +86,9 @@ export type DonationState =
 export type DonateArgs = { donation: CryptoSubmitStep } & TxPackage;
 
 export type DonationStep = DonationState["step"];
+
+export function isCrypto(
+  step: SubmitStep | FormStep
+): step is CryptoSubmitStep | CryptoSubmitStep {
+  return step.details?.method === "crypto";
+}
