@@ -52,7 +52,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-8 p-8">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-8 p-8">
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setLoading(false)}
@@ -61,16 +61,17 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
           handleError(error, GENERIC_ERROR_MESSAGE);
         }}
       />
+
       {isLoading ? (
         <button
-          className="btn-outline-filled btn-donate w-1/2"
+          className="btn-outline-filled btn-donate w-1/2 mt-auto"
           onClick={onBack}
           type="button"
         >
           Back
         </button>
       ) : (
-        <div className="grid grid-cols-2 gap-5 w-full">
+        <div className="grid grid-cols-2 gap-5 w-full mt-auto">
           <button
             className="btn-outline-filled btn-donate"
             onClick={onBack}
