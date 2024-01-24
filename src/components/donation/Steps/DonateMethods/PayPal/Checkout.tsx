@@ -28,7 +28,7 @@ export default function Checkout({ orderId, onBack }: Props) {
     <div className="grid place-items-center min-h-[16rem] isolate">
       {isPending && <LoaderRing thickness={10} classes="w-8" />}
       {!isPending && (
-        <div className="grid grid-cols-2 gap-5 w-full">
+        <div className="grid sm:grid-cols-2 gap-5 w-full">
           <button
             className="btn-outline-filled btn-donate"
             onClick={onBack}
@@ -39,7 +39,6 @@ export default function Checkout({ orderId, onBack }: Props) {
           </button>
           <PayPalButtons
             disabled={isSubmitting}
-            className="w-full max-w-xs"
             onCancel={() => setSubmitting(false)}
             onError={(error) => {
               setSubmitting(false);
