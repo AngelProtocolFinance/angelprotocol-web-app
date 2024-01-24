@@ -55,7 +55,13 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <DAFDirect />
         </Tab.Panel>
         <Tab.Panel>
-          <PayPal state={state} />
+          <PayPal
+            state={state}
+            widgetConfig={donaterConfig}
+            advanceOptDisplay={
+              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
+            }
+          />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
