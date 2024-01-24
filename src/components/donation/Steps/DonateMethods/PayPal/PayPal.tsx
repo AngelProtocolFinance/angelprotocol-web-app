@@ -77,8 +77,6 @@ export default function PayPal(props: Props) {
                 splitLiq: step.pctLiquidSplit.toString(),
                 kycData: {
                   city: kyc.city,
-                  consent_marketing: true,
-                  consent_tax: true,
                   country: kyc.country.name,
                   fullName: `${kyc.name.first} ${kyc.name.last}`,
                   kycEmail: kyc.kycEmail,

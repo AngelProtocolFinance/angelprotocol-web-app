@@ -28,8 +28,6 @@ export default function useShowKYCForm() {
       state: usState.value || state,
       zipCode: postalCode,
       country: country.name,
-      consent_tax: true,
-      consent_marketing: true,
       transactionId: txId,
     });
 
