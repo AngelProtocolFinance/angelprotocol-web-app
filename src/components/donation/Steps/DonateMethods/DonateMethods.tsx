@@ -16,12 +16,12 @@ const tabClasses = (selected: boolean) =>
     selected
       ? "font-semibold bg-blue @md:bg-white text-white @md:text-black"
       : "border border-prim @md:border-none"
-  } text-sm text-left p-2 @md:p-4 focus:outline-none @md:w-40 rounded @md:rounded-none`;
+  } text-sm text-left p-2 @md:p-4 focus:outline-none @md:w-28 rounded @md:rounded-none`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {
   return (
     <Tab.Group
-      vertical
+      manual
       as="div"
       className="grid @md:grid-cols-[auto_1fr] container"
       defaultIndex={state.details?.method === "crypto" ? 1 : 0}
@@ -32,7 +32,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
         <Tab className={({ selected }) => tabClasses(selected)}>Stocks</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>DAF</Tab>
       </Tab.List>
-      <Tab.Panels as="div" className="p-8">
+      <Tab.Panels as="div" className="py-4 px-8">
         <Tab.Panel>
           <Stripe
             recipient={state.recipient}
