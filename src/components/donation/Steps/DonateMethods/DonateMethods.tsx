@@ -32,7 +32,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
         <Tab className={({ selected }) => tabClasses(selected)}>Stocks</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>DAF</Tab>
       </Tab.List>
-      <Tab.Panels as="div" className="py-4 px-8">
+      <Tab.Panels as="div" className="p-8 pt-4">
         <Tab.Panel>
           <Stripe
             recipient={state.recipient}
