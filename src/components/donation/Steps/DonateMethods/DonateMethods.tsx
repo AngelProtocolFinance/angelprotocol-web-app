@@ -23,7 +23,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
     <Tab.Group
       manual
       as="div"
-      className="grid @md:grid-cols-[auto_1fr] container"
+      className="grid @md:grid-cols-[auto_1fr]"
       defaultIndex={state.details?.method === "crypto" ? 1 : 0}
     >
       <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-1 content-start @md:bg-blue-l4 @md:divide-y @md:divide-white">
@@ -32,7 +32,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
         <Tab className={({ selected }) => tabClasses(selected)}>Stocks</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>DAF</Tab>
       </Tab.List>
-      <Tab.Panels as="div" className="p-8 pt-4">
+      <Tab.Panels as="div" className="p-4 @md:p-8 pt-0 @md:pt-4 ">
         <Tab.Panel>
           <Stripe
             recipient={state.recipient}

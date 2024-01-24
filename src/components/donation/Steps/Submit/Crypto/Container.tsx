@@ -25,7 +25,7 @@ export default function Container({ children, txPackage, ...props }: Props) {
   }
 
   return (
-    <div className="grid content-start p-8">
+    <div className="grid content-start p-4 @md:p-8">
       {props.wallet && (
         <Row
           title={maskAddress(props.wallet.address)}

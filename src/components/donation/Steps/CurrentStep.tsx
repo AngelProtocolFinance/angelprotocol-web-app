@@ -15,7 +15,7 @@ export default function CurrentStep({ config }: Props) {
   if (state.step === "init") return <></>; // <Steps /> sets to step 1 onMount
 
   if (state.step === "tx") {
-    return <Result {...state} classes="justify-self-center p-8" />;
+    return <Result {...state} classes="justify-self-center p-4 @md:p-8" />;
   }
 
   if (state.step === "submit") {
@@ -26,7 +26,7 @@ export default function CurrentStep({ config }: Props) {
     return (
       <KYCForm
         type="on-donation"
-        classes="grid gap-5 sm:grid-cols-2 p-8"
+        classes="grid gap-5 sm:grid-cols-2 p-4 @md:p-8"
         recipient={state.recipient}
         onBack={() => {
           //kyc is always after donate form

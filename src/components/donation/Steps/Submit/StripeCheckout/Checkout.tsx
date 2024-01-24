@@ -52,7 +52,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-8 p-8">
+    <form onSubmit={handleSubmit} className="flex flex-col gap-8 p-4 @md:p-8">
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setLoading(false)}

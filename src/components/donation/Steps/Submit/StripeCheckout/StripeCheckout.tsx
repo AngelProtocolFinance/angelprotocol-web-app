@@ -61,7 +61,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   if (resource === "loading") {
     return (
-      <div className="grid place-items-center content-center gap-6 p-8">
+      <div className="grid place-items-center content-center gap-6 p-4 @md:p-8">
         <LoaderRing thickness={10} classes="w-32" />
         <p className="text-center">Loading payment form...</p>
       </div>
@@ -70,7 +70,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   if (resource === "error") {
     return (
-      <div className="grid place-items-center content-center gap-6 p-8">
+      <div className="grid place-items-center content-center gap-6 p-4 @md:p-8">
         <Icon type="ExclamationCircleFill" size={60} className="text-red" />
         <p className="text-center">{GENERIC_ERROR_MESSAGE}</p>
       </div>
