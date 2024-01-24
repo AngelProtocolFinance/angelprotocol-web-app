@@ -17,12 +17,12 @@ type Props = {
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout({ orderId, onBack }: Props) {
   const navigate = useNavigate();
-  const { handleError } = useErrorContext();
 
   const [isSubmitting, setSubmitting] = useState(false);
 
   const [{ isPending }] = usePayPalScriptReducer();
   const [captureOrder] = useCapturePayPalOrderMutation();
+  const { handleError } = useErrorContext();
 
   return (
     <div className="grid place-items-center min-h-[16rem] isolate">
