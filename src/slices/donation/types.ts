@@ -1,3 +1,4 @@
+import { DoneOrgDetails } from "types/aws";
 import { ChainID } from "types/chain";
 import { OptionType } from "types/components";
 import { Country } from "types/components";
@@ -47,40 +48,28 @@ type InitStep = {
   recipient?: DonationRecipient;
 };
 
-export type StripeFormStep = {
+export type FormStep<T extends DonationDetails = DonationDetails> = {
   step: "donate-form";
-  details?: StripeDonationDetails;
+  details?: T;
 } & Omit<Required<InitStep>, "step">;
-
-export type CryptoFormStep = {
-  step: "donate-form";
-  details?: CryptoDonationDetails;
-} & Omit<Required<InitStep>, "step">;
-
-export type FormStep = StripeFormStep | CryptoFormStep;
+export type StripeFormStep = FormStep<StripeDonationDetails>;
+export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 
 //KYC step need not know donation details
 export type KYCStep = {
   step: "kyc-form";
   recipient: DonationRecipient;
   kyc?: KYC;
-} & Omit<Required<FormStep>, "step">;
+} & Omit<Required<FormStep<DonationDetails>>, "step">;
 
-export type CryptoSubmitStep = {
+export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-  //donation can be submitted without KYC
-} & Omit<KYCStep, "step" | "details"> & { details: CryptoDonationDetails };
+} & Omit<KYCStep, "step" | "details"> & { details: T };
 
-export type StripeCheckoutStep = {
-  step: "submit";
-  //donation can be submitted without KYC
-} & Omit<StripeFormStep, "step"> &
-  Omit<KYCStep, "step" | "details"> & { details: StripeDonationDetails };
-
-export type SubmitStep = CryptoSubmitStep | StripeCheckoutStep;
+export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
+export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
-
 export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;
@@ -88,15 +77,10 @@ export type CryptoResultStep = {
 
 export type DonationState =
   | InitStep
-  /** donation methods */
-  | CryptoFormStep
-  | StripeFormStep
-  /** donation methods */
+  | FormStep
+  | SubmitStep
   | KYCStep
-  /** submission methods */
-  | CryptoSubmitStep
-  | StripeCheckoutStep
-  /** submission methods */
+  | SubmitStep
   | CryptoResultStep;
 
 export type DonateArgs = { donation: CryptoSubmitStep } & TxPackage;

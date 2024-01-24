@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
+  CryptoResultStep,
   DonationDetails,
   DonationRecipient,
   DonationState,
@@ -52,7 +53,7 @@ const donation = createSlice({
 
     setTxStatus(state, { payload }: PayloadAction<TxStatus>) {
       return {
-        ...(state as SubmitStep),
+        ...(state as CryptoResultStep),
         step: "tx",
         status: payload,
       };

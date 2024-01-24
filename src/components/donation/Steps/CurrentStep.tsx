@@ -4,7 +4,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { setKYC, setStep } from "slices/donation";
 import DonateMethods from "./DonateMethods";
 import Result from "./Result";
-import Submit from "./Submit";
+import Submit from "./Submit/Crypto";
 
 type Props = { config: DonaterConfigFromWidget | null };
 

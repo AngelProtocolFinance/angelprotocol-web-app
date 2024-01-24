@@ -8,7 +8,7 @@ import { sendDonation } from "slices/donation/sendDonation";
 import { maskAddress } from "helpers";
 import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
-import Image from "../../../Image";
+import Image from "../../../../Image";
 import { Row } from "./Row";
 
 type Props = PropsWithChildren<
