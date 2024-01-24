@@ -8,7 +8,7 @@ export default function Loading({
   classes?: string;
 }) {
   return (
-    <div className={`grid justify-items-center gap-6 ${classes}`}>
+    <div className={`grid place-items-center content-center gap-6 ${classes}`}>
       <LoaderRing thickness={10} classes="w-32" />
       <p className="text-center">{message}</p>
     </div>
