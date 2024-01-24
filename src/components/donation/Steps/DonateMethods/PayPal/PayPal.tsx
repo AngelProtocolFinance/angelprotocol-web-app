@@ -20,6 +20,8 @@ const initialOptions: ReactPayPalScriptOptions = {
   disableFunding: "card,venmo",
 };
 
+// Inspiration for the wiring implementation:
+// https://developer.paypal.com/docs/checkout/standard/integrate/#link-integratefrontend
 export default function PayPal(props: Props) {
   const [step, setStep] = useState<Step>({ type: "init" });
 
