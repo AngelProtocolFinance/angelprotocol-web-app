@@ -40,7 +40,11 @@ export default function Checkout({ orderId, onBack }: Props) {
           <PayPalButtons
             disabled={isSubmitting}
             className="w-full max-w-xs"
-            onError={handleError}
+            onCancel={() => setSubmitting(false)}
+            onError={(error) => {
+              setSubmitting(false);
+              handleError(error);
+            }}
             onApprove={async (data, actions) => {
               try {
                 const order = await captureOrder({
