@@ -2,8 +2,11 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useRef, useState } from "react";
 import { useCreateStripePaymentIntentMutation } from "services/apes";
+import Icon from "components/Icon/Icon";
+import LoaderRing from "components/LoaderRing";
 import { useSetter } from "store/accessors";
 import { StripeCheckoutStep, setStep } from "slices/donation";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import Checkout from "./Checkout";
 
@@ -57,11 +60,21 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
   }, []);
 
   if (resource === "loading") {
-    return <div>loading...</div>;
+    return (
+      <div className="grid place-items-center content-center gap-6 p-8">
+        <LoaderRing thickness={10} classes="w-32" />
+        <p className="text-center">Loading payment form...</p>
+      </div>
+    );
   }
 
   if (resource === "error") {
-    return <div>failed to get stripe resource </div>;
+    return (
+      <div className="grid place-items-center content-center gap-6 p-8">
+        <Icon type="ExclamationCircleFill" size={60} className="text-red" />
+        <p className="text-center">{GENERIC_ERROR_MESSAGE}</p>
+      </div>
+    );
   }
 
   return (
