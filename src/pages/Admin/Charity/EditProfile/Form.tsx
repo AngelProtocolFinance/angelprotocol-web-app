@@ -91,6 +91,18 @@ export default function Form() {
           }}
           maxSize={MAX_SIZE_IN_BYTES}
         />
+        <Label className="-mb-4">
+          Marketplace Card image for your organization
+        </Label>
+        <ImgEditor<FV, "card_img">
+          name="card_img"
+          accept={VALID_MIME_TYPES}
+          aspect={[2, 1]}
+          classes={{
+            container: "mb-4",
+            dropzone: "w-full aspect-[2/1]",
+          }}
+        />
         <Label className="-mb-4">Description of your organization</Label>
         <RichTextEditor<FV>
           fieldName="overview"

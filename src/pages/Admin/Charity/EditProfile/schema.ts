@@ -30,6 +30,7 @@ export const schema = object<any, SchemaShape<FV>>({
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
   tagline: requiredString.max(140, "max length is 140 chars"),
   image: fileObj,
+  card_img: fileObj,
   logo: fileObj,
   url: url,
   // registration_number: no need to validate,
