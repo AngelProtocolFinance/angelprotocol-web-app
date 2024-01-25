@@ -1,63 +1,44 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { useEffect, useRef, useState } from "react";
-import { useCreatePayPalOrderMutation } from "services/apes";
-import Icon from "components/Icon/Icon";
-import LoaderRing from "components/LoaderRing";
+import { usePaypalOrderQuery } from "services/apes";
 import { useSetter } from "store/accessors";
 import { PaypalCheckoutStep, setStep } from "slices/donation";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { PAYPAL_CLIENT_ID } from "constants/env";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
 
-type Resource =
-  | "loading"
-  | "error"
-  | {
-      orderId: string;
-    };
-
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function PaypalCheckout(props: PaypalCheckoutStep) {
   const { details, recipient, kyc } = props;
-  const [resource, setResource] = useState<Resource>("loading");
-  const [createPayPalOrder] = useCreatePayPalOrderMutation();
+
+  const {
+    data: orderId,
+    isLoading,
+    isError,
+  } = usePaypalOrderQuery({
+    amount: +details.amount,
+    currency: details.currency.code,
+    endowmentId: recipient.id,
+    email: details.email,
+    splitLiq: details.pctLiquidSplit.toString(),
+    kycData: kyc
+      ? {
+          city: kyc.city,
+          country: kyc.country.name,
+          fullName: `${kyc.name.first} ${kyc.name.last}`,
+          kycEmail: kyc.kycEmail,
+          streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
+          state: kyc.usState.value || kyc.state,
+          zipCode: kyc.postalCode,
+        }
+      : undefined,
+  });
 
   const dispatch = useSetter();
-  const isInitRef = useRef(false);
 
-  useEffect(() => {
-    if (isInitRef.current) return; //prevent from running effect twice in dev:strict-mode
-    isInitRef.current = true;
-
-    createPayPalOrder({
-      amount: +details.amount,
-      currency: details.currency.code,
-      endowmentId: recipient.id,
-      email: details.email,
-      splitLiq: details.pctLiquidSplit.toString(),
-      kycData: kyc
-        ? {
-            city: kyc.city,
-            country: kyc.country.name,
-            fullName: `${kyc.name.first} ${kyc.name.last}`,
-            kycEmail: kyc.kycEmail,
-            streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
-            state: kyc.usState.value || kyc.state,
-            zipCode: kyc.postalCode,
-          }
-        : undefined,
-    })
-      .unwrap()
-      .then(({ orderId }) => setResource({ orderId }))
-      .catch(() => setResource("error"));
-    //eslint-disable-next-line
-  }, []);
-
-  if (resource === "loading") return <Loader msg="Loading payment form..." />;
-  if (resource === "error") return <Err />;
+  if (isLoading) return <Loader msg="Loading payment form..." />;
+  if (isError || !orderId) return <Err />;
 
   return (
     <PayPalScriptProvider
@@ -70,7 +51,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
       }}
     >
       <Checkout
-        orderId={resource.orderId}
+        orderId={orderId}
         onBack={() => {
           const action = details.userOptForKYC
             ? setStep("kyc-form")
