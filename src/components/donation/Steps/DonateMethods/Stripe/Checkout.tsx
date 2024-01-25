@@ -6,6 +6,7 @@ import {
 import { FormEventHandler, useState } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import LoadText from "components/LoadText";
+import LoaderRing from "components/LoaderRing";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 
@@ -17,6 +18,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   const { handleError } = useErrorContext();
 
   const [isLoading, setLoading] = useState(true);
+  const [showLoader, setShowLoader] = useState(true);
   const [isSubmitting, setSubmitting] = useState(false);
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
@@ -33,7 +35,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}${appRoutes.donate_fiat_thanks}`,
+        return_url: `${window.location.origin}${appRoutes.stripe_payment_status}`,
       },
     });
 
@@ -60,8 +62,11 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
           setLoading(false);
           handleError(error, GENERIC_ERROR_MESSAGE);
         }}
+        onLoaderStart={() => setShowLoader(false)}
       />
-      {isLoading ? (
+      {showLoader ? (
+        <LoaderRing thickness={10} classes="w-24 justify-self-center" />
+      ) : isLoading ? (
         <button
           className="btn-outline-filled btn-donate w-1/2"
           onClick={onBack}

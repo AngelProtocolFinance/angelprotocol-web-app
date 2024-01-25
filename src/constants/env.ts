@@ -17,3 +17,5 @@ export const ENVIRONMENT = process.env.PUBLIC_ENVIRONMENT;
 export const IS_TEST = ENVIRONMENT === "dev";
 
 export const PUBLIC_STRIPE_KEY = process.env.PUBLIC_STRIPE_KEY || "";
+
+export const PAYPAL_CLIENT_ID = process.env.PUBLIC_PAYPAL_CLIENT_ID || "";

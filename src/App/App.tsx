@@ -1,6 +1,7 @@
 import * as Sentry from "@sentry/react";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import DonateFiatThanks from "pages/DonateFiatThanks";
 import OAUTHRedirector from "pages/OAuthRedirector";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
@@ -14,7 +15,6 @@ const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));
-const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
@@ -22,6 +22,7 @@ const Applications = lazy(() => import("pages/Applications"));
 const Application = lazy(() => import("pages/Application"));
 const BankingApplications = lazy(() => import("pages/BankingApplications"));
 const BankingApplication = lazy(() => import("pages/BankingApplication"));
+const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 
 export default function App() {
   const location = useLocation();
@@ -61,6 +62,10 @@ export default function App() {
           <Route
             path={appRoutes.donate_fiat_thanks}
             element={<DonateFiatThanks />}
+          />
+          <Route
+            path={appRoutes.stripe_payment_status}
+            element={<StripePaymentStatus />}
           />
           <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
           <Route path={`${appRoutes.register}/*`} element={<Registration />} />

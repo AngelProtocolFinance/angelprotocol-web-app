@@ -1,24 +1,33 @@
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
+import {
+  PayPalScriptProvider,
+  ReactPayPalScriptOptions,
+} from "@paypal/react-paypal-js";
 import { useState } from "react";
 import { FormValues, Props } from "./types";
-import { useCreateStripePaymentIntentMutation } from "services/apes";
+import { useCreatePayPalOrderMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import KYCForm from "components/KYCForm";
 import { KYC } from "slices/donation";
-import { PUBLIC_STRIPE_KEY } from "constants/env";
+import { PAYPAL_CLIENT_ID } from "constants/env";
 import Checkout from "./Checkout";
 import Form from "./Form";
 
-const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
+const initialOptions: ReactPayPalScriptOptions = {
+  clientId: PAYPAL_CLIENT_ID,
+  commit: true,
+  currency: "USD",
+  enableFunding: "paylater",
+  disableFunding: "card,venmo",
+};
 
-// Followed Stripe's custom flow docs
-// https://stripe.com/docs/payments/quickstart
-export default function Stripe(props: Props) {
+// Inspiration for the wiring implementation:
+// https://developer.paypal.com/docs/checkout/standard/integrate/#link-integratefrontend
+export default function PayPal(props: Props) {
   const [step, setStep] = useState<Step>({ type: "init" });
 
   const { handleError } = useErrorContext();
-  const [createPaymentIntent] = useCreateStripePaymentIntentMutation();
+
+  const [createPayPalOrder] = useCreatePayPalOrderMutation();
 
   switch (step.type) {
     case "init":
@@ -32,14 +41,14 @@ export default function Stripe(props: Props) {
               return setStep({ ...step, type: "kyc", ...fv });
             }
             try {
-              const { clientSecret } = await createPaymentIntent({
+              const { orderId } = await createPayPalOrder({
                 amount: +fv.amount,
                 currency: fv.currency.code,
                 endowmentId: props.state.recipient.id,
                 email: fv.email,
                 splitLiq: fv.pctLiquidSplit.toString(),
               }).unwrap();
-              setStep({ ...step, type: "checkout", clientSecret, ...fv });
+              setStep({ ...step, type: "checkout", orderId, ...fv });
             } catch (err) {
               handleError(err, "Failed to load payment platform");
             }
@@ -59,7 +68,7 @@ export default function Stripe(props: Props) {
           onBack={() => setStep({ ...step, type: "init" })}
           onSubmit={async (kyc) => {
             try {
-              const { clientSecret } = await createPaymentIntent({
+              const { orderId } = await createPayPalOrder({
                 amount: +step.amount,
                 currency: step.currency.code,
                 email: step.email,
@@ -78,7 +87,7 @@ export default function Stripe(props: Props) {
               setStep({
                 ...step,
                 type: "checkout",
-                clientSecret,
+                orderId,
                 kycData: kyc,
               });
             } catch (err) {
@@ -89,14 +98,9 @@ export default function Stripe(props: Props) {
       );
     default:
       return (
-        <Elements
-          options={{
-            clientSecret: step.clientSecret,
-            appearance: { theme: "stripe" },
-          }}
-          stripe={stripePromise}
-        >
+        <PayPalScriptProvider options={initialOptions}>
           <Checkout
+            orderId={step.orderId}
             onBack={() => {
               // check whether KYC step was performed
               if (step.userOptForKYC) {
@@ -106,7 +110,7 @@ export default function Stripe(props: Props) {
               }
             }}
           />
-        </Elements>
+        </PayPalScriptProvider>
       );
   }
 }
@@ -123,7 +127,7 @@ type KYCStep = {
 
 type CheckoutStep = {
   type: "checkout";
-  clientSecret: string;
+  orderId: string;
 } & Omit<KYCStep, "type">;
 
 type Step = InitStep | KYCStep | CheckoutStep;

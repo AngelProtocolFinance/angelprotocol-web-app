@@ -1,5 +1,6 @@
+import { PaymentIntent } from "@stripe/stripe-js";
 import { useCallback, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useGetStripePaymentStatusQuery } from "services/apes";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
@@ -8,13 +9,12 @@ import { useGetter } from "store/accessors";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 
-export default function DonateFiatThanks() {
-  const paymentIntentId = new URLSearchParams(window.location.search).get(
-    "payment_intent"
-  );
+export default function StripePaymentStatus() {
+  const paymentIntentId =
+    new URLSearchParams(window.location.search).get("payment_intent") ?? "";
 
   const queryState = useGetStripePaymentStatusQuery(
-    { paymentIntentId: paymentIntentId ?? "" },
+    { paymentIntentId },
     { skip: !paymentIntentId }
   );
 
@@ -31,49 +31,23 @@ export default function DonateFiatThanks() {
       }}
       classes={{ container: "place-self-center" }}
     >
-      {({ status }) => {
-        switch (status) {
-          case "succeeded":
-            return <Success />;
-          case "processing":
-            return <Processing onMount={handleProcessing} />;
-          case "requires_payment_method":
-            return <Unsuccessful />;
-          default:
-            return <SomethingWentWrong />;
-        }
-      }}
+      {({ status }) => <Content status={status} onMount={handleProcessing} />}
     </QueryLoader>
   );
 }
 
-function Success() {
-  return (
-    <div className="justify-self-center display-block m-auto max-w-[35rem] py-8 sm:py-20 scroll-mt-6">
-      <Icon type="CheckCircle" size={96} className="text-green mb-4 mx-auto" />
-      <h3 className="text-2xl sm:text-3xl mb-8 sm:mb-12 text-center">
-        Thank you for your donation using one of our fiat on-ramp providers!
-      </h3>
-      <p className="text-center mb-4">
-        We'll process your donation to the nonprofit you specified as soon as
-        the payment has cleared. You can safely navigate away using the button
-        below.
-      </p>
-      <p className="text-center mb-8">
-        If you need a receipt for your donation, please fill out the KYC form
-        for this transaction on your{" "}
-        <Link to={appRoutes.donations}>My donations</Link> page.
-      </p>
-      <Link
-        to={appRoutes.marketplace}
-        className="w-full sm:w-auto btn-orange btn-donate h-10 rounded-lg"
-      >
-        Back to the platform
-      </Link>
-    </div>
-  );
+function Content(props: { status: PaymentIntent.Status; onMount: () => void }) {
+  switch (props.status) {
+    case "succeeded":
+      return <Navigate to={appRoutes.donate_fiat_thanks} />;
+    case "processing":
+      return <Processing onMount={props.onMount} />;
+    case "canceled":
+      return <Unsuccessful />;
+    default:
+      return <SomethingWentWrong />;
+  }
 }
-
 function Processing({ onMount = () => {} }) {
   useEffect(() => onMount(), [onMount]);
   return (
