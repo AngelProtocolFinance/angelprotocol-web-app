@@ -1,13 +1,15 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
 import { Currency } from "./types";
+import { QueryState, isQuery } from "types/third-party/redux";
+import Icon from "components/Icon/Icon";
 import { DrawerIcon } from "../Icon";
 import { Label } from "../form";
 import CurrencyOptions from "./CurrencyOptions";
 
 type Props = {
   classes?: { combobox?: string; label?: string };
-  currencies: Currency[];
+  currencies: Currency[] | QueryState<Currency[]>;
   disabled: boolean;
   required?: boolean;
   value: Currency;
@@ -15,20 +17,11 @@ type Props = {
   onChange: (currency: Currency) => void;
 };
 
-export default function CurrencySelector(props: Props) {
+export default function CurrencySelector({ currencies, ...props }: Props) {
   const [query, setQuery] = useState("");
 
-  const filteredCurrencies = props.currencies.filter((c) => {
-    // check whether query matches either the currency name or any of its keywords
-    const formatQuery = query.toLowerCase().replace(/\s+/g, ""); // ignore spaces and casing
-    const matchesCode = c.code.toLowerCase().includes(formatQuery);
-    const matchesName = c.name
-      ?.toLowerCase()
-      .replace(/\s+/g, "") // ignore spaces and casing
-      .includes(formatQuery);
-
-    return matchesCode || matchesName;
-  });
+  const isCurrencyLoading = isQuery(currencies) && currencies.isLoading;
+  const isCurrencyError = isQuery(currencies) && currencies.isError;
 
   return (
     <div className="field">
@@ -41,7 +34,7 @@ export default function CurrencySelector(props: Props) {
         {props.label}
       </Label>
       <Combobox
-        aria-disabled={props.disabled}
+        aria-disabled={props.disabled || isCurrencyError}
         by="code"
         value={props.value}
         onChange={props.onChange}
@@ -62,19 +55,30 @@ export default function CurrencySelector(props: Props) {
           spellCheck={false}
         />
         <Combobox.Button className="flex items-center px-2">
-          {({ open }) => (
-            <DrawerIcon
-              isOpen={open}
-              size={25}
-              className="h-full w-full text-gray-400"
-              aria-hidden
-            />
-          )}
+          {({ open }) =>
+            isCurrencyLoading ? (
+              <Icon
+                type="Loading"
+                className="text-gray animate-spin"
+                size={20}
+              />
+            ) : (
+              <DrawerIcon
+                isOpen={open}
+                size={25}
+                className={`h-full w-full text-gray-400 ${
+                  isCurrencyError ? "text-red" : "text-gray-400"
+                }`}
+                aria-hidden
+              />
+            )
+          }
         </Combobox.Button>
 
         <CurrencyOptions
+          query={query}
           classes="absolute top-full mt-2 z-10"
-          currencies={filteredCurrencies}
+          currencies={currencies}
         />
       </Combobox>
     </div>

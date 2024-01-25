@@ -44,3 +44,6 @@ export type VersionSpecificWalletProfile = WalletProfile & {
 };
 
 export type BankingApplicationDetails = BankingApplication & V2RecipientAccount;
+
+export type CurrencyInfo = { minAmount: number; rate: number; code: string };
+export type CurrencyInfos = Record<string, CurrencyInfo>;

@@ -1,1 +1,1 @@
-export { default } from "./Stripe";
+export { default } from "./Form";

@@ -7,13 +7,12 @@ import {
 } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues, Props } from "./types";
+import { CurrencyInfo } from "services/types";
 import { userIsSignedIn } from "types/auth";
-import { FiatCurrencyData } from "types/aws";
 import { useStripeCurrenciesQuery } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
-import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
 import { useGetter, useSetter } from "store/accessors";
@@ -23,35 +22,26 @@ import { appRoutes } from "constants/routes";
 import AdvancedOptions from "../../../AdvancedOptions";
 
 const USD_CODE = "usd";
+const defaultCurrencyInfo: CurrencyInfo = {
+  rate: 1,
+  minAmount: 1,
+  code: "USD",
+};
 
-export default function Form(props: Props) {
-  const queryState = useStripeCurrenciesQuery(null);
-  return (
-    <QueryLoader
-      queryState={queryState}
-      classes={{ container: "grid justify-center" }}
-    >
-      {(data) => <Content {...props} fiatCurrencyData={data} />}
-    </QueryLoader>
-  );
-}
-
-function Content({
+export default function Form({
   advanceOptDisplay,
-  fiatCurrencyData,
   recipient,
   widgetConfig,
   details,
-}: Props & {
-  fiatCurrencyData: FiatCurrencyData;
-}) {
+}: Props) {
   const authUser = useGetter((state) => state.auth.user);
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
   const { handleError } = useErrorContext();
-  const [selectedCurrencyData, setSelectedCurrencyData] = useState(
-    getDefaultCurrency(fiatCurrencyData.currencies)
-  );
+
+  const currenciesQuery = useStripeCurrenciesQuery(null);
+  const [currencyInfo, setCurrencyInfo] =
+    useState<CurrencyInfo>(defaultCurrencyInfo);
 
   const initial: FormValues = {
     amount: "",
@@ -91,18 +81,17 @@ function Content({
     <FormProvider {...methods}>
       <form onSubmit={submit} className="grid gap-4">
         <CurrencySelector
-          currencies={fiatCurrencyData.currencies.map((x) => ({
-            code: x.currency_code,
-          }))}
+          currencies={{
+            ...currenciesQuery,
+            data: currenciesQuery.data?.currencies,
+          }}
           disabled={methods.formState.isSubmitting}
           label="Currency:"
           onChange={(currency) => {
-            setSelectedCurrencyData(
-              // new currency can be selected only among the passed fiat currency data
-              fiatCurrencyData.currencies.find(
-                (x) => x.currency_code === currency.code
-              )!
-            );
+            const info =
+              currenciesQuery.data?.map?.[currency.code] ?? defaultCurrencyInfo;
+
+            setCurrencyInfo(info);
             currencyField.onChange(currency);
           }}
           value={currencyField.value}
@@ -118,8 +107,8 @@ function Content({
           registerOptions={{
             required: "required",
             min: {
-              value: selectedCurrencyData.minimum_amount,
-              message: `must be greater than ${selectedCurrencyData.minimum_amount}`,
+              value: currencyInfo.minAmount,
+              message: `must be greater than ${currencyInfo.minAmount}`,
             },
             pattern: {
               value: /[0-9]+/,
@@ -127,7 +116,7 @@ function Content({
             },
             shouldUnregister: true,
           }}
-          tooltip={createTooltip(selectedCurrencyData)}
+          tooltip={createTooltip(currencyInfo)}
         />
         {!authUserEmail && (
           <Field<FormValues>
@@ -199,17 +188,8 @@ function Content({
   );
 }
 
-function createTooltip({
-  currency_code,
-  minimum_amount,
-}: FiatCurrencyData["currencies"][number]): string {
-  return currency_code === USD_CODE
+function createTooltip({ code, minAmount }: CurrencyInfo): string {
+  return code === USD_CODE
     ? "The minimum donation amount is 1 USD"
-    : `The minimum donation amount is 1 USD or ${minimum_amount} ${currency_code.toUpperCase()}`;
-}
-
-function getDefaultCurrency(
-  currencies: FiatCurrencyData["currencies"]
-): FiatCurrencyData["currencies"][number] {
-  return currencies.find((x) => x.currency_code === USD_CODE) ?? currencies[0];
+    : `The minimum donation amount is 1 USD or ${minAmount} ${code.toUpperCase()}`;
 }

@@ -44,7 +44,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
     }
   };
 
-  const { data: currencies = [], isLoading } = useCurrencisQuery({});
+  const currencies = useCurrencisQuery({});
 
   return (
     <div className="grid gap-6">
@@ -53,7 +53,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
         onChange={(c) => setCurrency(c)}
         value={currency}
         classes={{ combobox: "w-full md:w-80" }}
-        disabled={isSubmitting || isLoading}
+        disabled={isSubmitting}
         label="Select your bank account currency:"
         required
       />

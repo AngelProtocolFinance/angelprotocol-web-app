@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
+import { CurrencyInfos } from "services/types";
 import {
   EndowmentBalances,
   FiatCurrencyData,
@@ -8,6 +9,7 @@ import {
   Token,
 } from "types/aws";
 import { ChainID } from "types/chain";
+import { Currency } from "components/CurrencySelector";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
@@ -46,7 +48,7 @@ export const apes = createApi({
   endpoints: (builder) => ({
     capturePayPalOrder: builder.mutation<PayPalOrder, { orderId: string }>({
       query: (params) => ({
-        url: `v1/fiat/paypal/apes/${apiEnv}/orders/${params.orderId}/capture`,
+        url: `v1/fiat/paypal/${apiEnv}/orders/${params.orderId}/capture`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
       }),
@@ -56,7 +58,7 @@ export const apes = createApi({
       CreatePayPalOrderParams
     >({
       query: (params) => ({
-        url: `v1/fiat/paypal/apes/${apiEnv}/orders`,
+        url: `v1/fiat/paypal/${apiEnv}/orders`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
@@ -67,7 +69,7 @@ export const apes = createApi({
       StripePaymentIntentParams
     >({
       query: (data) => ({
-        url: `v2/fiat/stripe-proxy/apes/${apiEnv}`,
+        url: `v2/fiat/stripe-proxy/${apiEnv}`,
         method: "POST",
         body: JSON.stringify(data),
       }),
@@ -80,15 +82,37 @@ export const apes = createApi({
       { paymentIntentId: string }
     >({
       query: ({ paymentIntentId }) => ({
-        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?payment_intent=${paymentIntentId}`,
+        url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
-    paypalCurrencies: builder.query<FiatCurrencyData, null>({
+    paypalCurrencies: builder.query<
+      { currencies: Currency[]; map: CurrencyInfos },
+      null
+    >({
       query: () => ({
         url: `v1/fiat/paypal/currencies`,
       }),
+      transformResponse(res: FiatCurrencyData) {
+        return {
+          currencies: res.currencies.map((c) => ({ code: c.currency_code })),
+          map: res.currencies.reduce(
+            (prev, curr) => ({
+              ...prev,
+              [curr.currency_code]: {
+                minAmount: curr.minimum_amount,
+                rate: curr.rate,
+                code: curr.currency_code,
+              },
+            }),
+            {} as CurrencyInfos
+          ),
+        };
+      },
     }),
-    stripeCurrencies: builder.query<FiatCurrencyData, null>({
+    stripeCurrencies: builder.query<
+      { currencies: Currency[]; map: CurrencyInfos },
+      null
+    >({
       async queryFn(_args, _api, _extraOptions, baseQuery) {
         return await fetch("https://ipapi.co/json/")
           .then<{
@@ -96,16 +120,34 @@ export const apes = createApi({
           }>((response) => response.json())
           .then(({ country_code }) =>
             baseQuery({
-              url: `v2/fiat/stripe-proxy/apes/${apiEnv}/currencies/${country_code}`,
+              url: `v2/fiat/stripe-proxy/${apiEnv}/currencies/${country_code}`,
             })
           )
           .then((response) => {
             if (response.error) {
               return response;
             }
+
+            const data = response.data as FiatCurrencyData;
+            const currencies: Currency[] = data.currencies.map((c) => ({
+              code: c.currency_code,
+            }));
+
+            const map = data.currencies.reduce(
+              (prev, curr) => ({
+                ...prev,
+                [curr.currency_code]: {
+                  minAmount: curr.minimum_amount,
+                  rate: curr.rate,
+                  code: curr.currency_code,
+                },
+              }),
+              {} as CurrencyInfos
+            );
+
             return {
               ...response,
-              data: response.data as FiatCurrencyData,
+              data: { currencies, map },
             };
           });
       },
