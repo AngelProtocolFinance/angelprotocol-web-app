@@ -18,6 +18,11 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   const { handleError } = useErrorContext();
 
   const [isLoading, setLoading] = useState(true);
+  // There is a small delay before Stripe Payment Element starts to load.
+  // To avoid just showing the "Back" button with nothing else on screen,
+  // we first show a Loader ring and when the Stripe Element starts loading
+  // (it has an inherent loading animation) that's when we hide the loader ring
+  // and start showing the "Back" button
   const [showLoader, setShowLoader] = useState(true);
   const [isSubmitting, setSubmitting] = useState(false);
 
