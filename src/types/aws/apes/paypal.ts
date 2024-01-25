@@ -1,5 +1,9 @@
 /**
- * See:
+ * Note: if an error occurs, the `PayPalOrder.details` array is always sure to have
+ * only one item, because we treat a donation as a single "purchase unit"
+ * (1 purchase unit === 1 item in `details` array).
+ *
+ * For more info see:
  * - response type -> https://developer.paypal.com/docs/api/orders/v2/#orders_capture
  * - error handling in integration guide -> https://developer.paypal.com/docs/checkout/standard/integrate/#link-integratefrontend
  * - all possible errors -> https://developer.paypal.com/api/rest/reference/orders/v2/errors/#capture-order
@@ -14,16 +18,20 @@ export type PayPalOrder =
       links: Link[];
     }
   | {
-      details: {
-        issue: "INSTRUMENT_DECLINED";
-      }[];
+      details: [
+        {
+          issue: "INSTRUMENT_DECLINED";
+        },
+      ];
     }
   | {
       debug_id: string;
-      details: {
-        issue: string;
-        description: string;
-      }[];
+      details: [
+        {
+          issue: string;
+          description: string;
+        },
+      ];
     };
 
 type Status =

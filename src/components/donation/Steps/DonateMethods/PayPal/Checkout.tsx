@@ -51,14 +51,14 @@ export default function Checkout({ orderId, onBack }: Props) {
                 }).unwrap();
 
                 if ("details" in order) {
-                  if (order.details.at(0)?.issue === "INSTRUMENT_DECLINED") {
+                  if (order.details[0]?.issue === "INSTRUMENT_DECLINED") {
                     // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
                     // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
                     return actions.restart();
                   } else if ("debug_id" in order) {
                     // (2) Other non-recoverable errors -> Show a failure message
                     throw new Error(
-                      `${order.details.at(0)?.description} (${order.debug_id})`
+                      `${order.details[0]?.description} (${order.debug_id})`
                     );
                   }
                 } else if (isEmpty(order.purchase_units ?? [])) {
