@@ -1,5 +1,5 @@
 import { Combobox } from "@headlessui/react";
-import { Currency } from "./types";
+import { Currency } from "types/components";
 import { QueryState } from "types/third-party/redux";
 import QueryLoader from "components/QueryLoader";
 
@@ -51,8 +51,8 @@ export default function CurrencyOptions({
         <Combobox.Options
           className={`${classes} w-full bg-white dark:bg-blue-d6 shadow-lg rounded max-h-52 overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`}
         >
-          {currencies.map(({ code, name }) => (
-            <Combobox.Option key={code} value={{ code, name }}>
+          {currencies.map(({ code, name, min }) => (
+            <Combobox.Option key={code} value={{ code, name, min }}>
               {({ active, selected }) => (
                 <div
                   className={`${active ? "bg-blue-l2 dark:bg-blue-d1" : ""} ${

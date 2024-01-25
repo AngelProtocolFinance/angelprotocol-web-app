@@ -1,8 +1,7 @@
 import { ChainID } from "types/chain";
-import { OptionType } from "types/components";
+import { Currency, OptionType } from "types/components";
 import { Country } from "types/components";
 import { TokenWithAmount, TxPackage } from "types/tx";
-import { Currency } from "components/CurrencySelector";
 
 export type DonationRecipient = {
   id: number;
@@ -21,7 +20,7 @@ export type CryptoDonationDetails = {
 
 type FiatDonationDetails = {
   amount: string;
-  currency: Currency; //TODO: move to types/components
+  currency: Currency;
   email: string;
   pctLiquidSplit: number;
   userOptForKYC: boolean;

@@ -16,3 +16,6 @@ export type Country = {
   flag: string;
   code: string;
 };
+
+//currency selector
+export type Currency = { code: string; name?: string; min?: number };

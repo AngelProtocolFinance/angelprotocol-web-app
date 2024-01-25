@@ -1,16 +1,9 @@
-import { useState } from "react";
-import {
-  FormProvider,
-  SubmitHandler,
-  useController,
-  useForm,
-} from "react-hook-form";
+import { FormProvider, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues, Props } from "./types";
-import { CurrencyInfo } from "services/types";
 import { userIsSignedIn } from "types/auth";
+import { Currency } from "types/components";
 import { usePaypalCurrenciesQuery } from "services/apes";
-import { useErrorContext } from "contexts/ErrorContext";
 import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
@@ -22,11 +15,6 @@ import { appRoutes } from "constants/routes";
 import AdvancedOptions from "../../../AdvancedOptions";
 
 const USD_CODE = "usd";
-const defaultCurrencyInfo: CurrencyInfo = {
-  rate: 1,
-  minAmount: 1,
-  code: "USD",
-};
 
 export default function Form({
   advanceOptDisplay,
@@ -37,16 +25,12 @@ export default function Form({
   const user = useGetter((state) => state.auth.user);
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(user) ? user.email : "";
-  const { handleError } = useErrorContext();
 
-  const currenciesQuery = usePaypalCurrenciesQuery(null);
-
-  const [currencyInfo, setCurrencyInfo] =
-    useState<CurrencyInfo>(defaultCurrencyInfo);
+  const currencies = usePaypalCurrenciesQuery(null);
 
   const initial: FormValues = {
     amount: "",
-    currency: { code: "USD" },
+    currency: { code: USD_CODE, min: 1 },
     email: authUserEmail,
     pctLiquidSplit: 50,
     userOptForKYC: false,
@@ -55,45 +39,35 @@ export default function Form({
   const methods = useForm<FormValues>({
     defaultValues: details || initial,
   });
-  const { field: currencyField } = useController({
+  const {
+    field: { value: currency, onChange: onCurrencyChange },
+  } = useController({
     control: methods.control,
     name: "currency",
   });
 
   const isInsideWidget = widgetConfig !== null;
 
-  const onSubmit: SubmitHandler<FormValues> = async (fv) => {
-    try {
-      dispatch(
-        setDetails({
-          ...fv,
-          method: "paypal",
-        })
-      );
-    } catch (err) {
-      handleError(err, "Failed to load payment platform");
-    }
-  };
-
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className="grid gap-4">
+      <form
+        onSubmit={methods.handleSubmit((fv) => {
+          dispatch(
+            setDetails({
+              ...fv,
+              method: "paypal",
+            })
+          );
+        })}
+        className="grid gap-4"
+      >
         <CurrencySelector
-          currencies={{
-            ...currenciesQuery,
-            data: currenciesQuery.data?.currencies,
-          }}
+          currencies={currencies}
           disabled={methods.formState.isSubmitting}
           classes={{ label: "font-semibold" }}
-          label="Currency:"
-          onChange={(currency) => {
-            console.log(currency);
-            const info =
-              currenciesQuery.data?.map?.[currency.code] ?? defaultCurrencyInfo;
-            setCurrencyInfo(info);
-            currencyField.onChange(currency);
-          }}
-          value={currencyField.value}
+          label="Currency"
+          onChange={onCurrencyChange}
+          value={currency}
           required
         />
         <Field<FormValues>
@@ -104,17 +78,19 @@ export default function Form({
           // validation must be dynamicly set depending on which exact currency is selected
           registerOptions={{
             required: "required",
-            min: {
-              value: currencyInfo.minAmount,
-              message: `must be greater than ${currencyInfo.minAmount}`,
-            },
+            min: currency.min
+              ? {
+                  value: currency.min,
+                  message: `must be greater than ${currency.min}`,
+                }
+              : undefined,
             pattern: {
               value: /[0-9]+/,
               message: "must be a number",
             },
             shouldUnregister: true,
           }}
-          tooltip={createTooltip(currencyInfo)}
+          tooltip={createTooltip(currency)}
         />
         {!authUserEmail && (
           <Field<FormValues>
@@ -186,8 +162,9 @@ export default function Form({
   );
 }
 
-function createTooltip({ code, minAmount }: CurrencyInfo): string {
+function createTooltip({ code, min }: Currency): string | undefined {
+  if (!min) return undefined;
   return code === USD_CODE
     ? "The minimum donation amount is 1 USD"
-    : `The minimum donation amount is 1 USD or ${minAmount} ${code.toUpperCase()}`;
+    : `The minimum donation amount is 1 USD or ${min} ${code.toUpperCase()}`;
 }

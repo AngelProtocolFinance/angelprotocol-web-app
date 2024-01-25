@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { IFormButtons, OnSubmit } from "./types";
+import { Currency } from "types/components";
 import { useCurrencisQuery } from "services/aws/wise";
 import Divider from "components/Divider";
 import useDebouncer from "hooks/useDebouncer";
-import CurrencySelector, { Currency } from "../CurrencySelector";
+import CurrencySelector from "../CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 
@@ -21,7 +22,7 @@ type Props = {
 export default function BankDetails({ FormButtons, onSubmit }: Props) {
   const [isSubmitting, setSubmitting] = useState(false);
   const [currency, setCurrency] = useState<Currency>({
-    code: "USD",
+    code: "usd",
     name: "United States Dollar",
   });
   const [amount, setAmount] = useState(

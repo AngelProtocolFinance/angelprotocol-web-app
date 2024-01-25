@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
-import { CurrencyInfos } from "services/types";
 import {
   EndowmentBalances,
   FiatCurrencyData,
@@ -9,7 +8,7 @@ import {
   Token,
 } from "types/aws";
 import { ChainID } from "types/chain";
-import { Currency } from "components/CurrencySelector";
+import { Currency } from "types/components";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
@@ -85,34 +84,17 @@ export const apes = createApi({
         url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
-    paypalCurrencies: builder.query<
-      { currencies: Currency[]; map: CurrencyInfos },
-      null
-    >({
+    paypalCurrencies: builder.query<Currency[], null>({
       query: () => ({
         url: `v1/fiat/paypal/currencies`,
       }),
-      transformResponse(res: FiatCurrencyData) {
-        return {
-          currencies: res.currencies.map((c) => ({ code: c.currency_code })),
-          map: res.currencies.reduce(
-            (prev, curr) => ({
-              ...prev,
-              [curr.currency_code]: {
-                minAmount: curr.minimum_amount,
-                rate: curr.rate,
-                code: curr.currency_code,
-              },
-            }),
-            {} as CurrencyInfos
-          ),
-        };
-      },
+      transformResponse: (res: FiatCurrencyData) =>
+        res.currencies.map((c) => ({
+          code: c.currency_code,
+          min: c.minimum_amount,
+        })),
     }),
-    stripeCurrencies: builder.query<
-      { currencies: Currency[]; map: CurrencyInfos },
-      null
-    >({
+    stripeCurrencies: builder.query<Currency[], null>({
       async queryFn(_args, _api, _extraOptions, baseQuery) {
         return await fetch("https://ipapi.co/json/")
           .then<{
@@ -129,25 +111,12 @@ export const apes = createApi({
             }
 
             const data = response.data as FiatCurrencyData;
-            const currencies: Currency[] = data.currencies.map((c) => ({
-              code: c.currency_code,
-            }));
-
-            const map = data.currencies.reduce(
-              (prev, curr) => ({
-                ...prev,
-                [curr.currency_code]: {
-                  minAmount: curr.minimum_amount,
-                  rate: curr.rate,
-                  code: curr.currency_code,
-                },
-              }),
-              {} as CurrencyInfos
-            );
 
             return {
-              ...response,
-              data: { currencies, map },
+              data: data.currencies.map((c) => ({
+                code: c.currency_code,
+                min: c.minimum_amount,
+              })),
             };
           });
       },
