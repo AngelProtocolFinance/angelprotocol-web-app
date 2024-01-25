@@ -52,7 +52,7 @@ export type Endowment = {
   kyc_donors_only: boolean;
   logo: string;
   name: string;
-  card_img: string;
+  card_img?: string;
   /** empty string by default */
   overview: string;
   program: Program[];
