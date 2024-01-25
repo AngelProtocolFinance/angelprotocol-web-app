@@ -1,16 +1,24 @@
 import { useState } from "react";
-import { FormProvider, useController, useForm } from "react-hook-form";
+import {
+  FormProvider,
+  SubmitHandler,
+  useController,
+  useForm,
+} from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FormValues, Props } from "./types";
+import { userIsSignedIn } from "types/auth";
 import { FiatCurrencyData } from "types/aws";
 import { usePaypalCurrenciesQuery } from "services/apes";
+import { useErrorContext } from "contexts/ErrorContext";
 import CurrencySelector from "components/CurrencySelector";
 import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { useGetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { setDetails } from "slices/donation";
 import { requiredString } from "schemas/string";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
@@ -18,62 +26,45 @@ import AdvancedOptions from "../../../AdvancedOptions";
 
 const USD_CODE = "usd";
 
-type FormProps = Props & {
-  defaultValues: Partial<FormValues>;
-  onSubmit: (formValues: FormValues) => void | Promise<void>;
-};
-
-export default function Form(props: FormProps) {
-  const user = useGetter((state) => state.auth.user);
+export default function Form(props: Props) {
   const queryState = usePaypalCurrenciesQuery(null);
   return (
     <QueryLoader
-      queryState={{
-        ...queryState,
-        isLoading: queryState.isLoading || user === "loading",
-      }}
+      queryState={queryState}
       classes={{ container: "grid justify-center" }}
     >
-      {(data) => (
-        <Content
-          {...props}
-          fiatCurrencyData={data}
-          authUserEmail={!user || user === "loading" ? "" : user.email}
-        />
-      )}
+      {(data) => <Content {...props} fiatCurrencyData={data} />}
     </QueryLoader>
   );
 }
 
 function Content({
   advanceOptDisplay,
-  authUserEmail,
   fiatCurrencyData,
-  defaultValues,
-  state: { recipient },
+  recipient,
   widgetConfig,
-  onSubmit,
-}: FormProps & {
-  authUserEmail: string;
+}: Props & {
   fiatCurrencyData: FiatCurrencyData;
 }) {
-  // store auth. user's email and if the user is in the process of logging out (so that
-  // `authUserEmail === ""`), we can use this variable to keep hiding the email field
-  // (otherwise the user might get a sudden flash of the email field before being redirected)
-  const [originialAuthUserEmail] = useState(authUserEmail);
+  const user = useGetter((state) => state.auth.user);
+  const dispatch = useSetter();
+  const authUserEmail = userIsSignedIn(user) ? user.email : "";
+  const { handleError } = useErrorContext();
 
   const [selectedCurrencyData, setSelectedCurrencyData] = useState(
     getDefaultCurrency(fiatCurrencyData.currencies)
   );
 
+  const initial: FormValues = {
+    amount: "",
+    currency: { code: "USD" },
+    email: authUserEmail,
+    pctLiquidSplit: 50,
+    userOptForKYC: false,
+  };
+
   const methods = useForm<FormValues>({
-    defaultValues: {
-      amount: defaultValues.amount,
-      currency: { code: selectedCurrencyData.currency_code.toUpperCase() },
-      email: defaultValues.email ?? originialAuthUserEmail,
-      pctLiquidSplit: defaultValues.pctLiquidSplit ?? 50,
-      userOptForKYC: recipient.isKYCRequired || defaultValues.userOptForKYC, // if KYC required, user opts in by default
-    },
+    defaultValues: initial,
   });
   const { field: currencyField } = useController({
     control: methods.control,
@@ -82,17 +73,28 @@ function Content({
 
   const isInsideWidget = widgetConfig !== null;
 
-  const submit = methods.handleSubmit(onSubmit);
+  const onSubmit: SubmitHandler<FormValues> = async (fv) => {
+    try {
+      dispatch(
+        setDetails({
+          ...fv,
+          method: "paypal",
+        })
+      );
+    } catch (err) {
+      handleError(err, "Failed to load payment platform");
+    }
+  };
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={submit} className="grid gap-4">
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="grid gap-4">
         <CurrencySelector
           currencies={fiatCurrencyData.currencies.map((x) => ({
             code: x.currency_code,
           }))}
           disabled={methods.formState.isSubmitting}
-          label="Select your donation currency:"
+          label="donation currency:"
           onChange={(currency) => {
             setSelectedCurrencyData(
               // new currency can be selected only among the passed fiat currency data
@@ -124,7 +126,7 @@ function Content({
           }}
           tooltip={createTooltip(selectedCurrencyData)}
         />
-        {!originialAuthUserEmail && (
+        {!authUserEmail && (
           <Field<FormValues>
             name="email"
             label="Email"
@@ -188,15 +190,6 @@ function Content({
             </LoadText>
           </button>
         </div>
-        <p className="text-sm italic text-gray-d2 dark:text-gray mt-4">
-          By making a donation, you agree to our{" "}
-          <ExtLink
-            className="underline text-orange hover:text-orange-l2"
-            href={TERMS_OF_USE_DONOR}
-          >
-            Terms & Conditions
-          </ExtLink>
-        </p>
       </form>
     </FormProvider>
   );

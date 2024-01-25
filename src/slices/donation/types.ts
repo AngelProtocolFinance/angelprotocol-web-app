@@ -19,8 +19,7 @@ export type CryptoDonationDetails = {
   userOptForKYC: boolean;
 };
 
-export type StripeDonationDetails = {
-  method: "stripe";
+type FiatDonationDetails = {
   amount: string;
   currency: Currency; //TODO: move to types/components
   email: string;
@@ -28,7 +27,18 @@ export type StripeDonationDetails = {
   userOptForKYC: boolean;
 };
 
-export type DonationDetails = StripeDonationDetails | CryptoDonationDetails;
+export type StripeDonationDetails = {
+  method: "stripe";
+} & FiatDonationDetails;
+
+export type PaypalDonationDetails = {
+  method: "paypal";
+} & FiatDonationDetails;
+
+export type DonationDetails =
+  | StripeDonationDetails
+  | PaypalDonationDetails
+  | CryptoDonationDetails;
 
 export type KYC = {
   name: { first: string; last: string };
@@ -53,6 +63,7 @@ export type FormStep<T extends DonationDetails = DonationDetails> = {
 } & Omit<Required<InitStep>, "step">;
 export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
+export type PaypalFormStep = FormStep<PaypalDonationDetails>;
 
 //KYC step need not know donation details
 export type KYCStep = {
@@ -67,6 +78,7 @@ export type SubmitStep<T extends DonationDetails = DonationDetails> = {
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
+export type PaypalCheckoutStep = SubmitStep<PaypalDonationDetails>;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
 export type CryptoResultStep = {
