@@ -29,10 +29,10 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
     >
       <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-1 content-start @md:bg-blue-l4 @md:divide-y @md:divide-white">
         <Tab className={({ selected }) => tabClasses(selected)}>Card</Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>PayPal</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>Crypto</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>Stocks</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>DAF</Tab>
-        <Tab className={({ selected }) => tabClasses(selected)}>PayPal</Tab>
       </Tab.List>
       <Tab.Panels as="div" className="p-4 @md:p-8 pt-0 @md:pt-4 ">
         <Tab.Panel>

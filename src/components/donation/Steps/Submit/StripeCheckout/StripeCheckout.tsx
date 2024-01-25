@@ -42,8 +42,6 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       kycData: kyc
         ? {
             city: kyc.city,
-            consent_marketing: true,
-            consent_tax: true,
             country: kyc.country.name,
             fullName: `${kyc.name.first} ${kyc.name.last}`,
             kycEmail: kyc.kycEmail,
