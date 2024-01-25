@@ -73,8 +73,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         isLoading
           ? "loading"
           : connectedWallet
-          ? connectedWallet
-          : (wallets as DisconnectedWallet[])
+            ? connectedWallet
+            : (wallets as DisconnectedWallet[])
       }
     >
       {props.children}

@@ -15,8 +15,8 @@ export default function CurrencyDropdown({ classes = "" }) {
   const tokenTypes: Token["type"][] = isJuno
     ? ["juno-native", "ibc"]
     : isTerra
-    ? ["terra-native", "ibc", "cw20"]
-    : ["evm-native", "erc20"];
+      ? ["terra-native", "ibc", "cw20"]
+      : ["evm-native", "erc20"];
 
   const queryState = useCurrenciesQuery();
 
