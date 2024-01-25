@@ -46,7 +46,7 @@ export const apes = createApi({
   endpoints: (builder) => ({
     capturePayPalOrder: builder.mutation<PayPalOrder, { orderId: string }>({
       query: (params) => ({
-        url: `v1/fiat/paypal/apes/${apiEnv}/orders/${params.orderId}/capture`,
+        url: `v1/fiat/paypal/${apiEnv}/orders/${params.orderId}/capture`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
       }),
@@ -56,7 +56,7 @@ export const apes = createApi({
       CreatePayPalOrderParams
     >({
       query: (params) => ({
-        url: `v1/fiat/paypal/apes/${apiEnv}/orders`,
+        url: `v1/fiat/paypal/${apiEnv}/orders`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
@@ -67,7 +67,7 @@ export const apes = createApi({
       StripePaymentIntentParams
     >({
       query: (data) => ({
-        url: `v2/fiat/stripe-proxy/apes/${apiEnv}`,
+        url: `v2/fiat/stripe-proxy/${apiEnv}`,
         method: "POST",
         body: JSON.stringify(data),
       }),
@@ -80,7 +80,7 @@ export const apes = createApi({
       { paymentIntentId: string }
     >({
       query: ({ paymentIntentId }) => ({
-        url: `v2/fiat/stripe-proxy/apes/${apiEnv}?payment_intent=${paymentIntentId}`,
+        url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
     paypalCurrencies: builder.query<FiatCurrencyData, null>({
@@ -96,7 +96,7 @@ export const apes = createApi({
           }>((response) => response.json())
           .then(({ country_code }) =>
             baseQuery({
-              url: `v2/fiat/stripe-proxy/apes/${apiEnv}/currencies/${country_code}`,
+              url: `v2/fiat/stripe-proxy/${apiEnv}/currencies/${country_code}`,
             })
           )
           .then((response) => {
