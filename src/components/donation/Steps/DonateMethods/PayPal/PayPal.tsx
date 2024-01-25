@@ -9,7 +9,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import KYCForm from "components/KYCForm";
 import { KYC } from "slices/donation";
 import { PAYPAL_CLIENT_ID } from "constants/env";
-import Checkout from "./Checkout";
+import Checkout from "../../Submit/PaypalCheckout/Checkout";
 import Form from "./Form";
 
 const initialOptions: ReactPayPalScriptOptions = {
