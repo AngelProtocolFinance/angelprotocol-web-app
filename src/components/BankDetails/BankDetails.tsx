@@ -22,7 +22,7 @@ type Props = {
 export default function BankDetails({ FormButtons, onSubmit }: Props) {
   const [isSubmitting, setSubmitting] = useState(false);
   const [currency, setCurrency] = useState<Currency>({
-    code: "usd",
+    code: "USD",
     name: "United States Dollar",
   });
   const [amount, setAmount] = useState(

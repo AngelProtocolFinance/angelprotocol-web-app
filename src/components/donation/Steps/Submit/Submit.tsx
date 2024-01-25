@@ -1,6 +1,6 @@
 import { SubmitStep } from "slices/donation";
 import Crypto from "./Crypto";
-import PaypalCheckout from "./PaypalCheckout/PaypalCheckout";
+import PaypalCheckout from "./PaypalCheckout";
 import StripeCheckout from "./StripeCheckout";
 
 export default function Submit(props: SubmitStep) {

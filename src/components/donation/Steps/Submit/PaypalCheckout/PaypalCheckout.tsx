@@ -7,6 +7,8 @@ import { useSetter } from "store/accessors";
 import { PaypalCheckoutStep, setStep } from "slices/donation";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { PAYPAL_CLIENT_ID } from "constants/env";
+import Err from "../Err";
+import Loader from "../Loader";
 import Checkout from "./Checkout";
 
 type Resource =
@@ -54,23 +56,8 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
     //eslint-disable-next-line
   }, []);
 
-  if (resource === "loading") {
-    return (
-      <div className="grid place-items-center content-center gap-6 p-4 @md:p-8">
-        <LoaderRing thickness={10} classes="w-32" />
-        <p className="text-center">Loading payment form...</p>
-      </div>
-    );
-  }
-
-  if (resource === "error") {
-    return (
-      <div className="grid place-items-center content-center gap-6 p-4 @md:p-8">
-        <Icon type="ExclamationCircleFill" size={60} className="text-red" />
-        <p className="text-center">{GENERIC_ERROR_MESSAGE}</p>
-      </div>
-    );
-  }
+  if (resource === "loading") return <Loader msg="Loading payment form..." />;
+  if (resource === "error") return <Err />;
 
   return (
     <PayPalScriptProvider
