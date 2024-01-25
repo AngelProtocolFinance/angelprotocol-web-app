@@ -1,6 +1,6 @@
 import { Tab } from "@headlessui/react";
 import { DonaterConfigFromWidget } from "types/widget";
-import { FormStep } from "slices/donation";
+import { DonationDetails, FormStep } from "slices/donation";
 import Crypto from "./Crypto";
 import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";
@@ -10,6 +10,19 @@ import Stripe from "./Stripe";
 type Props = {
   donaterConfig: DonaterConfigFromWidget | null;
   state: FormStep;
+};
+
+const tabIdx = (method?: DonationDetails["method"]) => {
+  switch (method) {
+    case "crypto":
+      return 1;
+    case "paypal":
+      return 4;
+    case "stripe":
+      return 0;
+    default:
+      return 0;
+  }
 };
 
 const tabClasses = (selected: boolean) =>
@@ -25,7 +38,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       manual
       as="div"
       className="grid @md:grid-cols-[auto_1fr]"
-      defaultIndex={state.details?.method === "crypto" ? 1 : 0}
+      defaultIndex={tabIdx(state.details?.method)}
     >
       <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-1 content-start @md:bg-blue-l4 @md:divide-y @md:divide-white">
         <Tab className={({ selected }) => tabClasses(selected)}>Card</Tab>

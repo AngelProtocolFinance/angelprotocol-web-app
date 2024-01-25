@@ -12,7 +12,6 @@ import { FiatCurrencyData } from "types/aws";
 import { usePaypalCurrenciesQuery } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
 import CurrencySelector from "components/CurrencySelector";
-import ExtLink from "components/ExtLink";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import Split from "components/Split";
@@ -21,7 +20,6 @@ import { useGetter, useSetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { requiredString } from "schemas/string";
 import { appRoutes } from "constants/routes";
-import { TERMS_OF_USE_DONOR } from "constants/urls";
 import AdvancedOptions from "../../../AdvancedOptions";
 
 const USD_CODE = "usd";
@@ -42,6 +40,7 @@ function Content({
   advanceOptDisplay,
   fiatCurrencyData,
   recipient,
+  details,
   widgetConfig,
 }: Props & {
   fiatCurrencyData: FiatCurrencyData;
@@ -64,7 +63,7 @@ function Content({
   };
 
   const methods = useForm<FormValues>({
-    defaultValues: initial,
+    defaultValues: details || initial,
   });
   const { field: currencyField } = useController({
     control: methods.control,
