@@ -8,8 +8,6 @@ export type KYCData = {
   state: string;
   zipCode: string; //2000
   country: string;
-  consent_tax: boolean;
-  consent_marketing: boolean;
 };
 
 type DonationRecordBase = {

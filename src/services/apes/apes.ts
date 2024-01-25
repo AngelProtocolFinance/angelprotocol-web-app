@@ -1,7 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
-import { EndowmentBalances, FiatCurrencyData, KYCData, Token } from "types/aws";
+import {
+  EndowmentBalances,
+  FiatCurrencyData,
+  KYCData,
+  PayPalOrder,
+  Token,
+} from "types/aws";
 import { ChainID } from "types/chain";
+import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
@@ -18,6 +25,17 @@ type StripePaymentIntentParams = {
   splitLiq: string;
 };
 
+type CreatePayPalOrderParams = {
+  /** Denominated in USD. */
+  amount: number;
+  /**ISO 3166-1 alpha-3 code */
+  currency: string;
+  email: string;
+  endowmentId: number;
+  kycData?: KYCData;
+  splitLiq: string;
+};
+
 export const apes = createApi({
   reducerPath: "apes",
   baseQuery: fetchBaseQuery({
@@ -26,6 +44,24 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
+    capturePayPalOrder: builder.mutation<PayPalOrder, { orderId: string }>({
+      query: (params) => ({
+        url: `v1/fiat/paypal/apes/${apiEnv}/orders/${params.orderId}/capture`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+      }),
+    }),
+    createPayPalOrder: builder.mutation<
+      { orderId: string },
+      CreatePayPalOrderParams
+    >({
+      query: (params) => ({
+        url: `v1/fiat/paypal/apes/${apiEnv}/orders`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+        body: JSON.stringify(params),
+      }),
+    }),
     createStripePaymentIntent: builder.mutation<
       { clientSecret: string },
       StripePaymentIntentParams
@@ -45,6 +81,11 @@ export const apes = createApi({
     >({
       query: ({ paymentIntentId }) => ({
         url: `v2/fiat/stripe-proxy/apes/${apiEnv}?payment_intent=${paymentIntentId}`,
+      }),
+    }),
+    paypalCurrencies: builder.query<FiatCurrencyData, null>({
+      query: () => ({
+        url: `v1/fiat/paypal/currencies`,
       }),
     }),
     stripeCurrencies: builder.query<FiatCurrencyData, null>({
@@ -76,9 +117,12 @@ export const apes = createApi({
 });
 
 export const {
+  useCapturePayPalOrderMutation,
   useCreateStripePaymentIntentMutation,
+  useCreatePayPalOrderMutation,
   useEndowBalanceQuery,
   useGetStripePaymentStatusQuery,
+  usePaypalCurrenciesQuery,
   useStripeCurrenciesQuery,
   useTokensQuery,
   util: {

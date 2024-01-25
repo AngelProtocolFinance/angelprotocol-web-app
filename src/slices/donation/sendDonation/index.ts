@@ -43,8 +43,6 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
             state: kyc.usState.value || kyc.state,
             zipCode: kyc.postalCode,
             country: kyc.country.name,
-            consent_tax: true,
-            consent_marketing: true,
           }
         : undefined;
 

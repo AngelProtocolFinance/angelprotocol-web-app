@@ -3,6 +3,7 @@ import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";
 import Crypto from "./Crypto";
 import DAFDirect from "./DAFDirect";
+import PayPal from "./PayPal";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
 
@@ -31,6 +32,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
         <Tab className={({ selected }) => tabClasses(selected)}>Crypto</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>Stocks</Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>DAF</Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>PayPal</Tab>
       </Tab.List>
       <Tab.Panels as="div" className="p-4 @md:p-8 pt-0 @md:pt-4 ">
         <Tab.Panel>
@@ -61,6 +63,15 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
         </Tab.Panel>
         <Tab.Panel>
           <DAFDirect />
+        </Tab.Panel>
+        <Tab.Panel>
+          <PayPal
+            state={state}
+            widgetConfig={donaterConfig}
+            advanceOptDisplay={
+              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
+            }
+          />
         </Tab.Panel>
       </Tab.Panels>
     </Tab.Group>
