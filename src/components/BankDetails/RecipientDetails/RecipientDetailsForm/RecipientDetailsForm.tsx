@@ -306,7 +306,7 @@ export default function RecipientDetailsForm({
               }
 
               const MB_LIMIT = 6;
-              if (file.size >= Math.pow(10, MB_LIMIT)) {
+              if (file.size >= 10 ** MB_LIMIT) {
                 return `exceeds ${MB_LIMIT}MB`;
               }
 

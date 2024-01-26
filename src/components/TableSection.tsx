@@ -7,11 +7,10 @@ export default function TableSection(props: HeadProps | BodyProps) {
       return (
         <tr
           key={index}
-          onClick={props.onRowSelect && props.onRowSelect(index)}
-          className={
-            props.rowClass +
-            ` ${props.selectedRow === index ? props.selectedClass || "" : ""}`
-          }
+          onClick={props.onRowSelect?.(index)}
+          className={`${props.rowClass} ${
+            props.selectedRow === index ? props.selectedClass || "" : ""
+          }`}
         >
           {child}
         </tr>

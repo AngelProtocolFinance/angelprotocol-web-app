@@ -17,9 +17,9 @@ export default function Loader({
       data-testid="loader"
       className={`w-full h-full bg-none-400 flex items-center justify-center ${gapClass} ${className}`}
     >
-      <div className={`${boxStyles}`}></div>
-      <div className={`${boxStyles} box-delay-1`}></div>
-      <div className={`${boxStyles} box-delay-2`}></div>
+      <div className={`${boxStyles}`} />
+      <div className={`${boxStyles} box-delay-1`} />
+      <div className={`${boxStyles} box-delay-2`} />
     </div>
   );
 }

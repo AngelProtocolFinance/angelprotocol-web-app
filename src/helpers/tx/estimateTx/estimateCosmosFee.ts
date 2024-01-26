@@ -28,7 +28,7 @@ export async function estimateCosmosFee(
 ): Promise<EstimateResult> {
   const chain = chains[chainID];
   const { account } = await fetch(
-    chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`,
+    `${chain.lcd}/cosmos/auth/v1beta1/accounts/${sender}`,
   ).then<{ account: JSONAccount }>((res) => res.json());
 
   const pub = PubKey.fromJSON({ key: account.pub_key.key });
@@ -70,7 +70,7 @@ export async function estimateCosmosFee(
     signatures: [new Uint8Array(0)],
   };
 
-  const res = await fetch(chain.lcd + "/cosmos/tx/v1beta1/simulate", {
+  const res = await fetch(`${chain.lcd}/cosmos/tx/v1beta1/simulate`, {
     method: "POST",
     body: JSON.stringify({
       tx_bytes: base64FromU8a(TxRaw.encode(simTx).finish()),

@@ -48,9 +48,9 @@ function WithTooltip(props: {
 }) {
   return cloneElement(props.children, {
     "data-before-content": props.text,
-    className:
-      props.children.props.className +
-      ` ${props.classes ?? "" /** control position */} relative before:w-48 before:z-10 before:content-[attr(data-before-content)] hover:before:block before:hidden before:absolute  
+    className: `${props.children.props.className} ${
+      props.classes ?? "" /** control position */
+    } relative before:w-48 before:z-10 before:content-[attr(data-before-content)] hover:before:block before:hidden before:absolute  
       before:text-xs before:bg-gray-l6 before:dark:bg-blue-d6 before:text-gray-d1 before:dark:text-gray before:border before:border-prim before:p-2 before:rounded`,
   });
 }

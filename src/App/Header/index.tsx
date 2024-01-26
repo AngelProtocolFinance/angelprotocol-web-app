@@ -58,10 +58,10 @@ function hasBanner(location: Location): boolean {
     [
       /**routes with banner */
       appRoutes.marketplace,
-      appRoutes.gift + "/*",
-      appRoutes.donate + "/:id",
-      appRoutes.profile + "/:id",
-      appRoutes.marketplace + "/:id",
+      `${appRoutes.gift}/*`,
+      `${appRoutes.donate}/:id`,
+      `${appRoutes.profile}/:id`,
+      `${appRoutes.marketplace}/:id`,
     ].map((r) => ({ path: r })),
     location,
   );

@@ -59,18 +59,18 @@ function PromptIcon({
   switch (type) {
     case "success":
       return (
-        <Icon type="CheckCircle" size={92} className={common + " text-green"} />
+        <Icon type="CheckCircle" size={92} className={`${common} text-green`} />
       );
     case "error":
       return (
         <Icon
           type="ExclamationCircleFill"
           size={80}
-          className={common + " text-red"}
+          className={`${common} text-red`}
         />
       );
     case "loading":
-      return <LoaderRing thickness={12} classes={common + " h-24"} />;
+      return <LoaderRing thickness={12} classes={`${common} h-24`} />;
     default:
       return null;
   }

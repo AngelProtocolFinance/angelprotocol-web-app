@@ -62,9 +62,8 @@ function CurrStep(props: GiftState) {
     }
 
     return <Purchaser {...props} wallet={wallet} />;
-  } else {
-    return <Result {...props} />;
   }
+  return <Result {...props} />;
 }
 
 function isHeadingShown(state: GiftState) {

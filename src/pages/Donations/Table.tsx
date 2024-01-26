@@ -62,7 +62,7 @@ export default function Table({
           >
             Network
           </HeaderButton>
-          <>Currency</>
+          Currency
           <HeaderButton
             onClick={handleHeaderClick("amount")}
             _activeSortKey={sortKey}
@@ -79,7 +79,7 @@ export default function Table({
           >
             USD Value
           </HeaderButton>
-          <>TX Hash</>
+          TX Hash
           <span className="flex justify-center">Status</span>
           <span className="flex justify-center">Receipt</span>
         </Cells>
@@ -111,11 +111,11 @@ export default function Table({
                 </span>
                 <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
-              <>{new Date(row.date).toLocaleDateString()}</>
-              <>{row.chainName}</>
+              {new Date(row.date).toLocaleDateString()}
+              {row.chainName}
               <span className="font-body text-sm">{row.symbol}</span>
-              <>{humanize(row.amount, 3)}</>
-              <>{`$${humanize(row.usdValue, 2)}`}</>
+              {humanize(row.amount, 3)}
+              {`$${humanize(row.usdValue, 2)}`}
               {row.chainId === "fiat" || row.chainId === "staging" ? (
                 <>- - -</>
               ) : (

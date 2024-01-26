@@ -28,7 +28,7 @@ export default function Err({
       </p>
       <div className="grid sm:grid-cols-2 mt-12 gap-5 w-full sm:w-auto">
         <Link
-          to={appRoutes.marketplace + `/${endowId}`}
+          to={`${appRoutes.marketplace}/${endowId}`}
           className="btn-outline-filled btn-donate w-full text-center"
         >
           Back to the platform

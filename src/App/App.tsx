@@ -48,12 +48,12 @@ export default function App() {
             element={<BankingApplications />}
           />
           <Route
-            path={appRoutes.banking_applications + "/:id"}
+            path={`${appRoutes.banking_applications}/:id`}
             element={<BankingApplication />}
           />
           <Route path={appRoutes.applications} element={<Applications />} />
           <Route
-            path={appRoutes.applications + "/:id"}
+            path={`${appRoutes.applications}/:id`}
             element={<Application />}
           />
 

@@ -36,10 +36,7 @@ export default function Content({
 
   return (
     <div
-      className={
-        classes +
-        " max-w-3xl w-full h-full p-6 grid content-start justify-items-center"
-      }
+      className={`${classes} max-w-3xl w-full h-full p-6 grid content-start justify-items-center`}
     >
       <Seo
         title={`Donate to ${profile.name} - ${APP_NAME}`}

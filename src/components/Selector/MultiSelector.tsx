@@ -151,7 +151,7 @@ export function MultiSelector<
           className={styles.error}
         />
       </Combobox>
-      {children && children(selected)}
+      {children?.(selected)}
     </>
   );
 }

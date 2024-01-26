@@ -26,7 +26,7 @@ export default function Form({ classes = "" }) {
 
   async function submit({ recipient, secret, message }: FV) {
     try {
-      const res = await fetch(APIs.aws + "/v1/giftcard/send-email", {
+      const res = await fetch(`${APIs.aws}/v1/giftcard/send-email`, {
         method: "POST",
         body: JSON.stringify({
           email: recipient.email,

@@ -21,7 +21,7 @@ export default function Stripe(props: Props) {
   const [createPaymentIntent] = useCreateStripePaymentIntentMutation();
 
   switch (step.type) {
-    case "init":
+    case "init": {
       const { type, ...defaultValues } = step;
       return (
         <Form
@@ -46,6 +46,7 @@ export default function Stripe(props: Props) {
           }}
         />
       );
+    }
     case "kyc":
       return (
         <KYCForm

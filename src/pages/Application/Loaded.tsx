@@ -69,7 +69,7 @@ export default function Loaded(props: ApplicationDetails) {
             {r.ActiveInCountries.join(", ")}
           </Row>
           <Row label="UN SDG">{r.UN_SDG.join(", ")}</Row>
-          <Row label="Contact name">{c.FirstName + " " + c.LastName}</Row>
+          <Row label="Contact name">{`${c.FirstName} ${c.LastName}`}</Row>
           <Row label="Contact email">{c.Email}</Row>
           {doc.DocType === "FSA" && (
             <>

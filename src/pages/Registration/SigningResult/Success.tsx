@@ -11,7 +11,7 @@ import { SignerCompleteQueryParams } from "./types";
 const proxyFunctionURL =
   "https://h247dsayjkdwlheiboq54r2gxu0htegs.lambda-url.us-east-1.on.aws";
 const downloadZipURL = (eid: string) =>
-  proxyFunctionURL + (IS_TEST ? "/staging" : "") + `?eid=${eid}`;
+  `${proxyFunctionURL + (IS_TEST ? "/staging" : "")}?eid=${eid}`;
 
 export default function Success({
   documentGroupEid,

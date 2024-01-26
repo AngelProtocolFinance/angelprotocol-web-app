@@ -33,12 +33,7 @@ const widgetURLfn = (config: WidgetConfig) => {
     advancedOptionsDisplay: config.advancedOptions.display,
     liquidSplitPct: config.advancedOptions.liquidSplitPct.toString(),
   };
-  return (
-    window.location.origin +
-    appRoutes.donate_widget +
-    "/" +
-    config.endowment.id +
-    "?" +
-    new URLSearchParams(params).toString()
-  );
+  return `${window.location.origin + appRoutes.donate_widget}/${
+    config.endowment.id
+  }?${new URLSearchParams(params).toString()}`;
 };

@@ -21,10 +21,9 @@ export default function Table({ methods, classes = "" }: Props) {
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
-          <>Date submitted</>
-          <>Account</>
+          Date submitted Account
           <th className="text-center">Status</th>
-          <>default</>
+          default
           <th className="text-center">details</th>
         </Cells>
       </TableSection>
@@ -39,8 +38,8 @@ export default function Table({ methods, classes = "" }: Props) {
             type="td"
             cellClass="p-3 border-t border-prim max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
-            <>{new Date(row.dateCreated).toLocaleDateString()}</>
-            <>{row.bankSummary}</>
+            {new Date(row.dateCreated).toLocaleDateString()}
+            {row.bankSummary}
             <td className="text-center">
               <Status status={row.status} />
             </td>

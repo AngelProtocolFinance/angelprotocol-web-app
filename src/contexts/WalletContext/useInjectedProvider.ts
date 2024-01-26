@@ -33,7 +33,7 @@ export default function useInjectedWallet(
     shouldReconnect && connect(false);
     return () => {
       injectedProvider(providerID).then((provider) => {
-        if (provider && provider.removeListener) {
+        if (provider?.removeListener) {
           provider.removeListener("accountsChanged", handleAccountsChange);
           provider.removeListener("chainChanged", handleChainChange);
         }
@@ -113,7 +113,8 @@ export default function useInjectedWallet(
       if (providerID === "xdefi-evm" && !isXdefiPrioritized()) {
         if (!isUserInitiated) return;
         return alert("Kindly prioritize Xdefi and reload the page");
-      } else if (providerID !== "xdefi-evm" && isXdefiPrioritized()) {
+      }
+      if (providerID !== "xdefi-evm" && isXdefiPrioritized()) {
         if (!isUserInitiated) return;
         return alert("Kindly remove priority to Xdefi and reload the page");
       }

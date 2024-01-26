@@ -53,7 +53,7 @@ export default function CurrencySelector(props: Props) {
           id="wise__currency"
           className="w-full border-r border-gray-l3 dark:border-bluegray px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
           displayValue={(currency: Currency) =>
-            !!currency.name
+            currency.name
               ? `${currency.code.toUpperCase()} - ${currency.name}`
               : currency.code.toUpperCase()
           }

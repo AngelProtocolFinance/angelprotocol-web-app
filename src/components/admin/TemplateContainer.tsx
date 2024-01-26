@@ -9,7 +9,7 @@ export function DivContainer({
   classes = "",
 }: PropsWithChildren<{ classes?: string; disabled?: boolean }>) {
   return (
-    <fieldset disabled={disabled} className={containerClass + " " + classes}>
+    <fieldset disabled={disabled} className={`${containerClass} ${classes}`}>
       {children}
     </fieldset>
   );

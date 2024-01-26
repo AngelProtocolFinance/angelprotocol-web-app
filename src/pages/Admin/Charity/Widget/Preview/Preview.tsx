@@ -7,7 +7,7 @@ export default function Preview({ classes = "" }) {
   const { endowment, isDescriptionTextShown } = widgetConfig;
   const endowName = endowment.name ?? "nonprofit name";
   return (
-    <section className={classes + " @container/preview pb-4"}>
+    <section className={`${classes} @container/preview pb-4`}>
       <h2 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3">
         That's what our widget looks like:
       </h2>

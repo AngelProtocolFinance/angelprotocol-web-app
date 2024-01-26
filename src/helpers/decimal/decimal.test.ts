@@ -105,32 +105,32 @@ describe("common decimal helpers", () => {
   test("to currency: truncating gt 1k", () => {
     expect(humanize(1234.23456789, 0, true)).toBe(
       //toLocalString output may vary depending on machine
-      toPreciseLocaleString(1, 0) + "K",
+      `${toPreciseLocaleString(1, 0)}K`,
     );
     expect(humanize(1234.23456789, 1, true)).toBe(
-      toPreciseLocaleString(1.2, 1) + "K",
+      `${toPreciseLocaleString(1.2, 1)}K`,
     );
     expect(humanize(1234.23456789, 2, true)).toBe(
-      toPreciseLocaleString(1.23, 2) + "K",
+      `${toPreciseLocaleString(1.23, 2)}K`,
     );
     expect(humanize(1234.23456789, 4, true)).toBe(
-      toPreciseLocaleString(1.2342, 4) + "K",
+      `${toPreciseLocaleString(1.2342, 4)}K`,
     );
   });
 
   test("to currency: truncating gt 1M", () => {
     expect(humanize(1_234_567.23456789, 0, true)).toBe(
       //toLocalString output may vary depending on machine
-      toPreciseLocaleString(1, 0) + "M",
+      `${toPreciseLocaleString(1, 0)}M`,
     );
     expect(humanize(1_234_567.23456789, 1, true)).toBe(
-      toPreciseLocaleString(1.2, 1) + "M",
+      `${toPreciseLocaleString(1.2, 1)}M`,
     );
     expect(humanize(1_234_567.23456789, 2, true)).toBe(
-      toPreciseLocaleString(1.23, 2) + "M",
+      `${toPreciseLocaleString(1.23, 2)}M`,
     );
     expect(humanize(1_234_567.23456789, 4, true)).toBe(
-      toPreciseLocaleString(1.2345, 4) + "M",
+      `${toPreciseLocaleString(1.2345, 4)}M`,
     );
 
     expect(humanize(1_234_567.23456789, 0, false)).toBe(
@@ -151,16 +151,16 @@ describe("common decimal helpers", () => {
   test("to currency: truncating gt 1B", () => {
     expect(humanize(1_234_567_891.23456789, 0, true)).toBe(
       //toLocalString output may vary depending on machine
-      toPreciseLocaleString(1, 0) + "B",
+      `${toPreciseLocaleString(1, 0)}B`,
     );
     expect(humanize(1_234_567_891.23456789, 1, true)).toBe(
-      toPreciseLocaleString(1.2, 1) + "B",
+      `${toPreciseLocaleString(1.2, 1)}B`,
     );
     expect(humanize(1_234_567_891.23456789, 2, true)).toBe(
-      toPreciseLocaleString(1.23, 2) + "B",
+      `${toPreciseLocaleString(1.23, 2)}B`,
     );
     expect(humanize(1_234_567_891.23456789, 4, true)).toBe(
-      toPreciseLocaleString(1.2345, 4) + "B",
+      `${toPreciseLocaleString(1.2345, 4)}B`,
     );
 
     expect(humanize(1_234_567_891.23456789, 0, false)).toBe(

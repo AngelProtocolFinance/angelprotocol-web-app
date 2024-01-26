@@ -50,7 +50,7 @@ export default withAuth(function Donations({ user }) {
           disabled={isError}
           className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-bluegray-d1"
           type="text"
-          placeholder={`Search donations...`}
+          placeholder={"Search donations..."}
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
         />

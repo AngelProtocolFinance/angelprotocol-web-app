@@ -27,7 +27,7 @@ export async function sendCosmosTx(
     signatures: [u8aFromBase64(signature.signature)],
   };
 
-  const result = await fetch(lcd + "/cosmos/tx/v1beta1/txs", {
+  const result = await fetch(`${lcd}/cosmos/tx/v1beta1/txs`, {
     method: "POST",
     body: JSON.stringify({
       tx_bytes: base64FromU8a(TxRaw.encode(tx).finish()),
@@ -48,7 +48,7 @@ export async function sendCosmosTx(
   }
 
   const receipt = await _receipt(
-    lcd + `/cosmos/tx/v1beta1/txs/${txhash}`,
+    `${lcd}/cosmos/tx/v1beta1/txs/${txhash}`,
     10,
     txhash,
     chainID,

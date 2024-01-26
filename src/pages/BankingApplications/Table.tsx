@@ -26,9 +26,7 @@ export default function Table({
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
-          <>Date</>
-          <>Endowment</>
-          <>Account</>
+          Date Endowment Account
           <th className="text-center">Status</th>
           <th className="text-center">Details</th>
         </Cells>
@@ -47,14 +45,14 @@ export default function Table({
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
-              <>{new Date(row.dateCreated).toLocaleDateString()}</>
-              <>{row.endowmentID}</>
-              <>{row.bankSummary}</>
+              {new Date(row.dateCreated).toLocaleDateString()}
+              {row.endowmentID}
+              {row.bankSummary}
               <td className="text-center">
                 <Status status={row.status} />
               </td>
               <Link
-                to={appRoutes.banking_applications + `/${row.wiseRecipientID}`}
+                to={`${appRoutes.banking_applications}/${row.wiseRecipientID}`}
                 className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
               >
                 <Icon

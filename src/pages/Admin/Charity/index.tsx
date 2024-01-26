@@ -33,18 +33,18 @@ export default function Charity() {
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.programs} element={<Programs />} />
         <Route
-          path={adminRoutes.program_editor + "/:id"}
+          path={`${adminRoutes.program_editor}/:id`}
           element={<ProgramEditor />}
         />
 
         <Route path={adminRoutes.members} element={<Members />} />
         <Route path={adminRoutes.banking} element={<Banking />} />
         <Route
-          path={adminRoutes.banking + "/new"}
+          path={`${adminRoutes.banking}/new`}
           element={<NewPayoutMethod />}
         />
         <Route
-          path={adminRoutes.banking + "/:id"}
+          path={`${adminRoutes.banking}/:id`}
           element={<PayoutMethodDetails />}
         />
         <Route path={adminRoutes.widget_config} element={<Widget />} />

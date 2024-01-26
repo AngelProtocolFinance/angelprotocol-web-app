@@ -44,7 +44,7 @@ export default function useImgEditor<T extends FieldValues, K extends Path<T>>({
     const newFile = files[0];
     if (newFile) {
       //preview & crop valid formats only
-      if (!!accept.find((x) => x === newFile.type)) {
+      if (accept.find((x) => x === newFile.type)) {
         const preview = URL.createObjectURL(newFile);
         showModal(ImgCropper, {
           preview,

@@ -45,7 +45,7 @@ export const purchase = createAsyncThunk<void, Args>(
       const secret = `ap-${details.chainID}-${preImage}`;
 
       updateTx({ msg: "Processing giftcard code..." });
-      const res = await fetch(APIs.aws + "/v1/giftcard/deposit", {
+      const res = await fetch(`${APIs.aws}/v1/giftcard/deposit`, {
         method: "POST",
         body: JSON.stringify({
           secret,

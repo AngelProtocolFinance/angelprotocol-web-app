@@ -61,10 +61,7 @@ export default function Table({
           >
             Total Amount
           </HeaderButton>
-          <>Current Portion</>
-          <>Sustainability Portion</>
-          <>Transaction</>
-          <>Receipt provided</>
+          Current Portion Sustainability Portion Transaction Receipt provided
         </Cells>
       </TableSection>
       <TableSection
@@ -94,9 +91,9 @@ export default function Table({
                   {new Date(date).toLocaleDateString()}
                 </span>
                 <span className="text-sm">{symbol}</span>
-                <>{humanize(amount, 3)}</>
-                <>{humanize(amount * (+splitLiq / 100), 3)}</>
-                <>{humanize(amount * ((100 - +splitLiq) / 100), 3)}</>
+                {humanize(amount, 3)}
+                {humanize(amount * (+splitLiq / 100), 3)}
+                {humanize(amount * ((100 - +splitLiq) / 100), 3)}
 
                 {chainId === "staging" || chainId === "fiat" ? (
                   <>- - -</>

@@ -19,5 +19,5 @@ function getNextYearVal(
   mode: number, //num times compounded on course of period
   pv: number, // current value
 ) {
-  return pv * Math.pow(1 + apy / 100 / mode, mode);
+  return pv * (1 + apy / 100 / mode) ** mode;
 }

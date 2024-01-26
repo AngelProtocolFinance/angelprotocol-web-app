@@ -3,6 +3,6 @@ export function idParamToNum(id?: string | number | null) {
 
   const numId = Number(id);
 
-  if (isNaN(numId)) return 0;
+  if (Number.isNaN(numId)) return 0;
   return Math.floor(numId);
 }

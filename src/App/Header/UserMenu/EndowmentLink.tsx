@@ -18,7 +18,7 @@ export default function EndowmentLink({ endowId }: Props) {
     >
       {({ name, logo }) => (
         <Link
-          to={appRoutes.admin + `/${endowId}`}
+          to={`${appRoutes.admin}/${endowId}`}
           className="hover:text-orange text-sm flex items-center gap-2"
         >
           <Image src={logo} className="object-cover h-[20px] w-[20px]" />

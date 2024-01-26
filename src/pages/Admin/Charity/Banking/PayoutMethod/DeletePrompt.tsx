@@ -38,7 +38,7 @@ export default function DeletePrompt({
           <p className="my-4 text-lg font-semibold">Payout method deleted</p>
         ),
       });
-      navigate(appRoutes.admin + `/${endowID}/${adminRoutes.banking}`);
+      navigate(`${appRoutes.admin}/${endowID}/${adminRoutes.banking}`);
     } catch (err) {
       handleError(err);
     }

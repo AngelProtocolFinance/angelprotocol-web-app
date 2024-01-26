@@ -37,6 +37,6 @@ export default async function estimateTerraFee(
 }
 
 function extractFeeAmount(stdFee: Fee, denom: string): number {
-  const stdFeeAmount = stdFee.amount.get(denom)!.amount;
+  const stdFeeAmount = stdFee.amount.get(denom)?.amount;
   return condenseToNum(stdFeeAmount);
 }

@@ -7,7 +7,7 @@ export const polygon: Chain = {
   id: "137",
   brand: "polygon",
   name: "Polygon",
-  rpc: baseProxyURL + "/polygon",
+  rpc: `${baseProxyURL}/polygon`,
   lcd: "",
   blockExplorer: "https://polygonscan.com",
   nativeToken: {
@@ -23,7 +23,7 @@ export const ethereum: Chain = {
   id: "1",
   brand: "ethereum",
   name: "Ethereum",
-  rpc: baseProxyURL + "/ethereum",
+  rpc: `${baseProxyURL}/ethereum`,
   lcd: "",
   blockExplorer: "https://etherscan.io",
   nativeToken: {
@@ -39,7 +39,7 @@ export const arbitrum: Chain = {
   id: "42161",
   brand: "arbitrum",
   name: "Arbitrum One",
-  rpc: baseProxyURL + "/arbitrum",
+  rpc: `${baseProxyURL}/arbitrum`,
   lcd: "",
   blockExplorer: "https://arbiscan.io",
   nativeToken: {
@@ -55,7 +55,7 @@ export const binance: Chain = {
   id: "56",
   brand: "binance",
   name: "Binance",
-  rpc: baseProxyURL + "/bsc",
+  rpc: `${baseProxyURL}/bsc`,
   lcd: "",
   blockExplorer: "https://bscscan.com",
   nativeToken: {
@@ -104,7 +104,7 @@ export const mumbai: Chain = {
   id: "80001",
   brand: "polygon",
   name: "Polygon Mumbai",
-  rpc: baseProxyURL + "/mumbai",
+  rpc: `${baseProxyURL}/mumbai`,
   lcd: "",
   blockExplorer: "https://mumbai.polygonscan.com",
   nativeToken: {
@@ -120,7 +120,7 @@ export const goerli: Chain = {
   id: "5",
   brand: "ethereum",
   name: "Ethereum Goerli",
-  rpc: baseProxyURL + "/goerli",
+  rpc: `${baseProxyURL}/goerli`,
   lcd: "",
   blockExplorer: "https://goerli.etherscan.io",
   nativeToken: {
@@ -136,7 +136,7 @@ export const arbitrumSepolia: Chain = {
   id: "421614",
   brand: "arbitrum",
   name: "Arbitrum Sepolia",
-  rpc: baseProxyURL + "/arbitrum-test",
+  rpc: `${baseProxyURL}/arbitrum-test`,
   lcd: "",
   blockExplorer: "https://sepolia.arbiscan.io",
   nativeToken: {
@@ -152,7 +152,7 @@ export const binanceTestnet: Chain = {
   id: "97",
   brand: "binance",
   name: "Binance Testnet",
-  rpc: baseProxyURL + "/bsc-test",
+  rpc: `${baseProxyURL}/bsc-test`,
   lcd: "",
   blockExplorer: "https://testnet.bscscan.com",
   nativeToken: {

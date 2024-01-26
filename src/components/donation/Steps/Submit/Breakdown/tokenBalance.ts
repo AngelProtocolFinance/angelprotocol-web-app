@@ -20,8 +20,7 @@ export const tokenBalance = async (
     case "terra-native":
     case "ibc": {
       return fetch(
-        lcd +
-          `/cosmos/bank/v1beta1/balances/${holder}/by_denom?denom=${token_id}`,
+        `${lcd}/cosmos/bank/v1beta1/balances/${holder}/by_denom?denom=${token_id}`,
       )
         .then<CosmosBalance>((res) => res.json())
         .then((d) => condenseToNum(d.balance.amount, decimals));

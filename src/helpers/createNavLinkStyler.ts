@@ -5,5 +5,5 @@ export function createNavLinkStyler(
   activeClassName: string,
 ): NavLinkProps["className"] {
   return (props: { isActive: boolean }) =>
-    props.isActive ? className + " " + activeClassName : className;
+    props.isActive ? `${className} ${activeClassName}` : className;
 }

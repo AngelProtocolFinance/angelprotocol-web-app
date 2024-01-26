@@ -18,7 +18,7 @@ export default function DAFDirect() {
         width="180"
         height="300"
         className="justify-self-center"
-      ></IFrame>
+      />
     </div>
   );
 }

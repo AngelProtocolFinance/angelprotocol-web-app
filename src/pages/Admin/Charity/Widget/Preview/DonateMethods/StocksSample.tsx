@@ -23,7 +23,7 @@ export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
         <p>Account name: Altruistic Partners Empowering Society, Inc</p>
         <p>
           Reference: [Internal Ref#, if needed] {name} (
-          {window.location.origin + appRoutes.marketplace + `${id}`})
+          {`${window.location.origin + appRoutes.marketplace}${id}`})
         </p>
       </div>
       <p> You may also need the following information:</p>

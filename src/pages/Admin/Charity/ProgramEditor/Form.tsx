@@ -63,7 +63,7 @@ export default function Form() {
           </button>
         ) : (
           <Link
-            to={"../" + adminRoutes.programs}
+            to={`../${adminRoutes.programs}`}
             className="px-6 btn-outline-filled text-sm"
           >
             Cancel

@@ -34,10 +34,10 @@ export default function IFrame({
         title={title}
         className={`${isLoading ? "hidden" : ""} ${className}`}
         onLoad={(e) => {
-          onLoad && onLoad(e);
+          onLoad?.(e);
           setLoading(false);
         }}
-      ></iframe>
+      />
     </>
   );
 }

@@ -70,7 +70,7 @@ function Loaded({ members, classes = "" }: LoadedProps) {
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <td className="w-8" />
-          <>Email</>
+          Email
         </Cells>
       </TableSection>
       <TableSection
@@ -95,7 +95,7 @@ function Loaded({ members, classes = "" }: LoadedProps) {
               </button>
             </td>
 
-            <>{member}</>
+            {member}
           </Cells>
         ))}
       </TableSection>

@@ -50,10 +50,10 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
 
   const { container, input, lbl, error } = unpack(classes);
 
-  const id = "__" + String(name);
+  const id = `__${String(name)}`;
 
   return (
-    <div className={container + " field"} aria-required={required}>
+    <div className={`${container} field`} aria-required={required}>
       <Label className={lbl} required={required} htmlFor={id}>
         {label}
       </Label>
@@ -72,7 +72,7 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
       })}
 
       {(tooltip && ( //tooltip in normal flow
-        <p className={error + " text-left mt-2 left-0 text-xs"}>
+        <p className={`${error} text-left mt-2 left-0 text-xs`}>
           <span className="text-gray-d1 dark:text-gray">{tooltip}</span>{" "}
           <ErrorMessage
             errors={errors}

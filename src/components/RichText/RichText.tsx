@@ -47,7 +47,7 @@ export default function RichText(props: Props) {
         setNumChars(numChars);
 
         if (props.charLimit && numChars > props.charLimit) {
-          return props.onError(`character limit reached`);
+          return props.onError("character limit reached");
         }
 
         props.onChange(

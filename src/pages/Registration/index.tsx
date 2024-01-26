@@ -29,7 +29,7 @@ function Registration() {
           }
         />
         <Route
-          path={regRoutes.steps + "/*"}
+          path={`${regRoutes.steps}/*`}
           element={<Steps classes="my-0 md:my-20 justify-self-center" />}
         />
         <Route

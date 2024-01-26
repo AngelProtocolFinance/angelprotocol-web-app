@@ -16,7 +16,7 @@ export function TxPrompt(props: TxState) {
       {isTxSuccess(props) && props.success.link && (
         <button
           onClick={() => {
-            navigate(props.success.link!.url);
+            navigate(props.success.link?.url);
             closeModal();
           }}
           className="inline-block justify-self-center bg-blue uppercase text-xs py-1 px-2 text-white rounded mt-4"
@@ -43,13 +43,13 @@ function toPrompt(props: TxState): PromptProps & { message: string } {
       headline: "Transaction",
       message: props.loading,
     };
-  } else if (isTxError(props)) {
-    return { type: "error", headline: "Transaction", message: props.error };
-  } else {
-    return {
-      type: "success",
-      headline: "Transaction",
-      message: props.success.message,
-    };
   }
+  if (isTxError(props)) {
+    return { type: "error", headline: "Transaction", message: props.error };
+  }
+  return {
+    type: "success",
+    headline: "Transaction",
+    message: props.success.message,
+  };
 }

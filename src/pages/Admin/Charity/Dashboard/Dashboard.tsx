@@ -31,7 +31,7 @@ export default function Dashboard() {
           totalContributions,
         }) => {
           const earningsPayoutsPending = payoutsPending - donationsBal;
-          const earningsPayoutsMade = isNaN(totalEarnings)
+          const earningsPayoutsMade = Number.isNaN(totalEarnings)
             ? 0
             : totalEarnings - earningsPayoutsPending;
           const donationsPaidOut = payoutsMade - earningsPayoutsMade;

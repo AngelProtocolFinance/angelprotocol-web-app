@@ -78,7 +78,7 @@ export default function CountrySelector<
           onClick={() => {
             onCountryChange(placeHolderCountryOption);
             setQuery("");
-            props.onReset && props.onReset();
+            props.onReset?.();
           }}
         >
           <Icon type="Close" size={16} />

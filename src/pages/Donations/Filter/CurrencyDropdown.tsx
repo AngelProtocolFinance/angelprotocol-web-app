@@ -21,7 +21,7 @@ export default function CurrencyDropdown({ classes = "" }) {
   const queryState = useCurrenciesQuery();
 
   return (
-    <div className={classes + " grid gap-2"}>
+    <div className={`${classes} grid gap-2`}>
       <label className="text-sm">Currency</label>
       <QueryLoader
         queryState={queryState}
@@ -31,8 +31,7 @@ export default function CurrencyDropdown({ classes = "" }) {
           empty: "No tokens to select from",
         }}
         classes={{
-          container:
-            selectorButtonStyle + " bg-white dark:bg-blue-d6 px-4 py-3",
+          container: `${selectorButtonStyle} bg-white dark:bg-blue-d6 px-4 py-3`,
         }}
         filterFn={(token) => tokenTypes.includes(token.type)}
       >

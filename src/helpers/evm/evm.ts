@@ -12,9 +12,10 @@ export async function injectedProvider(
     /** only used in sendTx */
     case "xdefi-evm":
       return window.xfi?.ethereum as InjectedProvider;
-    default:
+    default: {
       const x: never = id;
       throw new Error(`${x} not used`);
+    }
   }
 }
 

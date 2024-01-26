@@ -19,7 +19,7 @@ export async function uploadFiles(
 
   await Promise.all(
     files.map((f, idx) =>
-      fetch(APIs.aws + "/v1/file-upload", {
+      fetch(`${APIs.aws}/v1/file-upload`, {
         method: "POST",
         body: JSON.stringify({
           bucket,

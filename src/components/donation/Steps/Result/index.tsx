@@ -11,9 +11,9 @@ export default function Result({
   if (status === "error") {
     const { recipient } = state;
     return <Err classes={classes} endowId={recipient.id} />;
-  } else if ("loadingMsg" in status) {
-    return <Loading message={status.loadingMsg} classes={classes} />;
-  } else {
-    return <Success classes={classes} {...state} hash={status.hash} />;
   }
+  if ("loadingMsg" in status) {
+    return <Loading message={status.loadingMsg} classes={classes} />;
+  }
+  return <Success classes={classes} {...state} hash={status.hash} />;
 }

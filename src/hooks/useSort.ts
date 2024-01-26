@@ -24,11 +24,11 @@ export default function useSort<T>(donations: T[], defaultSortKey: keyof T) {
     txs.sort((prev, next) => {
       if (prev[sortKey]! > next[sortKey]!) {
         return gtSortVal;
-      } else if (prev[sortKey]! < next[sortKey]!) {
-        return ltSortVal;
-      } else {
-        return 0;
       }
+      if (prev[sortKey]! < next[sortKey]!) {
+        return ltSortVal;
+      }
+      return 0;
     });
     return txs;
   }, [donations, sortKey, sortDirection]);

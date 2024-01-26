@@ -100,7 +100,7 @@ function TxTotal({
         </>
       );
 
-    default:
+    default: {
       const { fee } = estimate;
       const total =
         fee.symbol === token.symbol
@@ -119,6 +119,7 @@ function TxTotal({
           </Row>
         </>
       );
+    }
   }
 }
 

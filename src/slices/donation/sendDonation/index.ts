@@ -66,7 +66,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         endowmentId: recipient.id,
       };
 
-      const response = await fetch(APIs.apes + `/${v(4)}/donation/apes`, {
+      const response = await fetch(`${APIs.apes}/${v(4)}/donation/apes`, {
         method: "POST",
         body: JSON.stringify({
           ...payload,

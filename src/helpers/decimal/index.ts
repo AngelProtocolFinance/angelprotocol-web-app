@@ -103,9 +103,11 @@ export function roundDownToNum(num: Dec.Value, precision = 2) {
 function shorten(num: Dec): [Dec, string] {
   if (num.gt(1e9)) {
     return [num.div(1e9), "B"];
-  } else if (num.gt(1e6)) {
+  }
+  if (num.gt(1e6)) {
     return [num.div(1e6), "M"];
-  } else if (num.gt(1e3)) {
+  }
+  if (num.gt(1e3)) {
     return [num.div(1e3), "K"];
   }
   return [num, ""];

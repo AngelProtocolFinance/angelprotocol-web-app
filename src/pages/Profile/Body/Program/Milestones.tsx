@@ -14,7 +14,7 @@ export default function Milestones({ classes = "", milestones }: Props) {
   return (
     <Container
       title="Milestones"
-      classes={classes + " w-full lg:w-[29.75rem]"}
+      classes={`${classes} w-full lg:w-[29.75rem]`}
       expanded
     >
       {!isEmpty(milestones) ? (

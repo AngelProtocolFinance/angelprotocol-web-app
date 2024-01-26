@@ -15,8 +15,9 @@ export default function sendTx({ sender, ...txPackage }: TxPackage) {
       const { chainID, toSend, post } = txPackage;
       return sendTerraTx(chainID, post, toSend);
     }
-    default:
+    default: {
       const { chainID, toSend, request } = txPackage;
       return sendEVMTx(toSend, request, chainID);
+    }
   }
 }

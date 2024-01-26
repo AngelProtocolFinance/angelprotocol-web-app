@@ -25,7 +25,7 @@ export default function Form({ classes = "" }) {
   async function submit(data: FV) {
     /** restricted by submit button */
     const wallet = walletState as ConnectedWallet;
-    const res = await fetch(APIs.aws + "/v1/giftcard/claim", {
+    const res = await fetch(`${APIs.aws}/v1/giftcard/claim`, {
       method: "POST",
       body: JSON.stringify({
         secret: data.secret,
@@ -44,7 +44,8 @@ export default function Form({ classes = "" }) {
       type: "success",
       headline: "Redeem",
       title: "Giftcard Redeemed Successfully",
-      children: `Giftcard balance has been credited to your account and you can start donating!`,
+      children:
+        "Giftcard balance has been credited to your account and you can start donating!",
     });
     reset();
   }

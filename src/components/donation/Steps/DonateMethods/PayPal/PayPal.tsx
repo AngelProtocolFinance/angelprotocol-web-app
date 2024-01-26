@@ -30,7 +30,7 @@ export default function PayPal(props: Props) {
   const [createPayPalOrder] = useCreatePayPalOrderMutation();
 
   switch (step.type) {
-    case "init":
+    case "init": {
       const { type, ...defaultValues } = step;
       return (
         <Form
@@ -55,6 +55,7 @@ export default function PayPal(props: Props) {
           }}
         />
       );
+    }
     case "kyc":
       return (
         <KYCForm

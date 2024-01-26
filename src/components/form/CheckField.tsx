@@ -30,7 +30,7 @@ export function CheckField<T extends FieldValues>({
     <div className={`check-field ${container}`}>
       <input
         {...register(name)}
-        className={int + " peer"}
+        className={`${int} peer`}
         type="checkbox"
         id={id}
         disabled={isSubmitting || disabled}

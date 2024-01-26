@@ -84,14 +84,14 @@ export default function Table({
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
-              <>{row.OrganizationName}</>
-              <>{new Date(row.RegistrationDate).toLocaleDateString()}</>
-              <>{row.HqCountry}</>
+              {row.OrganizationName}
+              {new Date(row.RegistrationDate).toLocaleDateString()}
+              {row.HqCountry}
               <td className="text-center">
                 <Status status={row.RegistrationStatus} />
               </td>
               <Link
-                to={appRoutes.applications + `/${row.PK}`}
+                to={`${appRoutes.applications}/${row.PK}`}
                 className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
               >
                 <Icon

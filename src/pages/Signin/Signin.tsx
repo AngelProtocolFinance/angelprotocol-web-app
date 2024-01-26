@@ -47,7 +47,8 @@ export default function Signin() {
                   ".amplify-text.amplify-authenticator__subtitle",
                 );
                 if (!subtitle) return;
-                subtitle.innerHTML = `<p>To continue, enter the code we emailed to you. It may take a couple of minutes to arrive.</p>`;
+                subtitle.innerHTML =
+                  "<p>To continue, enter the code we emailed to you. It may take a couple of minutes to arrive.</p>";
               }, []);
               return (
                 <h4 className="-mb-2">We emailed you a confirmation code.</h4>

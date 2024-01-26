@@ -26,9 +26,7 @@ export default function CurrencyOptions({
                   selected ? "font-semibold" : "font-normal"
                 } flex items-center gap-2 p-2 text-sm cursor-pointer truncate`}
               >
-                {!!name
-                  ? `${code.toUpperCase()} - ${name}`
-                  : code.toUpperCase()}
+                {name ? `${code.toUpperCase()} - ${name}` : code.toUpperCase()}
               </div>
             )}
           </Combobox.Option>

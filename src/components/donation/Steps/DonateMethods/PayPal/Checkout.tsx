@@ -55,7 +55,8 @@ export default function Checkout({ orderId, onBack }: Props) {
                     // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
                     // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
                     return actions.restart();
-                  } else if ("debug_id" in order) {
+                  }
+                  if ("debug_id" in order) {
                     // (2) Other non-recoverable errors -> Show a failure message
                     throw new Error(
                       `${order.details[0]?.description} (${order.debug_id})`,

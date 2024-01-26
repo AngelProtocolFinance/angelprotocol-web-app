@@ -21,10 +21,7 @@ export default function Table({ classes = "", endowments }: Props) {
             type="th"
             cellClass="text-left py-6 text-lg font-heading font-semibold"
           >
-            <></>
-            <>Organization</>
-            <>Total</>
-            <>10YR Projection</>
+            Organization Total 10YR Projection
           </Cells>
         </TableSection>
         <TableSection

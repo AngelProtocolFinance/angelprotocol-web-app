@@ -49,8 +49,9 @@ export function walletAddrPatten(chainId: ChainID) {
     case "juno-1":
     case "uni-6":
       return junoAddrPattern;
-    default:
+    default: {
       const x: never = chainId;
       throw new Error(`unhandled ${x}`);
+    }
   }
 }

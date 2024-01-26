@@ -26,7 +26,7 @@ export default function Breakdown({
       const { token, chainId } = submitStep.details;
       const balance = await tokenBalance(token, chainId.value, sender);
       if (balance < +token.amount) {
-        return setEstimate({ error: `Not enough balance` });
+        return setEstimate({ error: "Not enough balance" });
       }
 
       const newEstimate = await estimateDonation({ ...submitStep, sender });

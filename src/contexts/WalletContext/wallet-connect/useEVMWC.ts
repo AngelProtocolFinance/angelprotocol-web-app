@@ -154,7 +154,7 @@ const connected = (
     id: "evm-wc",
     request<T>({ method, params }: RequestArguments) {
       return client.request<T>({
-        topic: session!.topic,
+        topic: session?.topic,
         chainId: `eip155:${acc.chainId}`,
         request: {
           method,

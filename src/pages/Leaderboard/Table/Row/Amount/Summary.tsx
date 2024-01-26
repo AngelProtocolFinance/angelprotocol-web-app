@@ -33,14 +33,12 @@ function Text(props: {
     textBlob =
       props.title === "Principal"
         ? "Assuming no further donations were received than in the TOTAL column at this date, this is how much will have been donated into the Principal. Plus 25% of the yield earned with both compounded over the year."
-        : baseImpact +
-          " will have been able to use day to day over 10 years without touching the Principal.";
+        : `${baseImpact} will have been able to use day to day over 10 years without touching the Principal.`;
   } else {
     textBlob =
       props.title === "Principal"
         ? "The Principal is how much has been donated and earned from yield at this date, less that transferred to the Liquid Account for immediate use. Of the yield, 75% goes to the Liquid Account, 25% reinvested."
-        : baseImpact +
-          " has been able to use day to day without touching the Principal.";
+        : `${baseImpact} has been able to use day to day without touching the Principal.`;
   }
 
   return (

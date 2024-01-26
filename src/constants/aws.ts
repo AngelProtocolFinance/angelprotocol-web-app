@@ -18,8 +18,8 @@ const common = IS_TEST
 const oauth: OAuthConfig = {
   domain: common.OAuthDomain,
   scopes: ["email", "openid", "profile", "aws.cognito.signin.user.admin"],
-  redirectSignIn: [window.location.origin + `${appRoutes.auth_redirector}/`],
-  redirectSignOut: [window.location.origin + "/"],
+  redirectSignIn: [`${window.location.origin}${appRoutes.auth_redirector}/`],
+  redirectSignOut: [`${window.location.origin}/`],
   responseType: "code",
   providers: ["Google"],
 };
