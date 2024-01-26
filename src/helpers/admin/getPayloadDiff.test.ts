@@ -43,7 +43,7 @@ describe("getPayloadDiff", () => {
   test("include attributes not in prev but in next, given that next is truthy (including 0, [] and false)", () => {
     expect(
       getPayloadDiff(
-        //biome-ignore format:;
+        //biome-ignore format:
         {},
         {
           a: null,
