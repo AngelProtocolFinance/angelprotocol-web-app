@@ -3,7 +3,6 @@ import { DonateArgs, TxStatus } from "../types";
 import { CryptoDonation, KYCData } from "types/aws";
 import { isTxResultError } from "types/tx";
 import { invalidateApesTags } from "services/apes";
-import { version as v } from "services/helpers";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { LogDonationFail } from "errors/errors";
@@ -62,7 +61,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         appUsed: details.source,
       };
 
-      const response = await fetch(APIs.apes + `/crypto-donation`, {
+      const response = await fetch(APIs.apes + "/crypto-donation", {
         method: "POST",
         body: JSON.stringify(payload),
       });
