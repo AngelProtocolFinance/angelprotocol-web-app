@@ -11,7 +11,7 @@
     "format": "biome format --write src",
     "lint": "biome lint ./src",
     "check": "biome check --apply src",
-    "check-unsafe": "biome check --apply-unsafe src"
+    "check-unsafe": "biome check --apply-unsafe src",
     "preview": "rsbuild preview"
   },
   "browserslist": {
