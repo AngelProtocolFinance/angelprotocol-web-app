@@ -1,4 +1,7 @@
+import { chains } from "constants/chains";
+import { EIPMethods } from "constants/evm";
 import Decimal from "decimal.js";
+import { injectedProvider, isEmpty, logger } from "helpers";
 import { useEffect, useState } from "react";
 import { ChainID } from "types/chain";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
@@ -8,9 +11,6 @@ import {
   Wallet,
   WalletMeta,
 } from "types/wallet";
-import { injectedProvider, isEmpty, logger } from "helpers";
-import { chains } from "constants/chains";
-import { EIPMethods } from "constants/evm";
 import { toPrefixedHex } from "./helpers";
 import { retrieveUserAction, saveUserAction } from "./helpers";
 import { isXdefiPrioritized } from "./helpers/isXdefiPrioritized";

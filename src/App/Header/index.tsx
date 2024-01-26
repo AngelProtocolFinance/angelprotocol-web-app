@@ -1,8 +1,8 @@
+import { DappLogo } from "components/Image";
+import { appRoutes } from "constants/routes";
 import { useEffect, useRef, useState } from "react";
 import { Location, matchRoutes, useLocation } from "react-router-dom";
 import { Link } from "../types";
-import { DappLogo } from "components/Image";
-import { appRoutes } from "constants/routes";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import UserMenu from "./UserMenu";

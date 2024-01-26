@@ -1,9 +1,9 @@
-import { memo, useState } from "react";
-import { IFormButtons, OnSubmit } from "../types";
-import { useRequirementsQuery } from "services/aws/wise";
 import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
 import { isEmpty } from "helpers";
+import { memo, useState } from "react";
+import { useRequirementsQuery } from "services/aws/wise";
+import { IFormButtons, OnSubmit } from "../types";
 import RecipientDetailsForm from "./RecipientDetailsForm";
 
 type Props = {

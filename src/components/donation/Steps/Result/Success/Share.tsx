@@ -1,10 +1,10 @@
-import { useCallback, useState } from "react";
-import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
 import Modal from "components/Modal";
-import { DonationRecipient } from "slices/donation";
 import { DAPP_URL } from "constants/env";
+import { useModalContext } from "contexts/ModalContext";
+import { useCallback, useState } from "react";
+import { DonationRecipient } from "slices/donation";
 
 export type SocialMedia = Extract<
   IconType,

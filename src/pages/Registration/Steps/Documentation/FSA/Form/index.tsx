@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
-import { FormValues as FV, Props } from "../types";
-import { useRegState } from "pages/Registration/Steps/StepGuard";
 import ExtLink from "components/ExtLink";
 import FileDropzone from "components/FileDropzone";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import { Field, Label } from "components/form";
+import { useRegState } from "pages/Registration/Steps/StepGuard";
+import { Link } from "react-router-dom";
 import { steps } from "../../../../routes";
 import { MB_LIMIT, VALID_MIME_TYPES } from "../schema";
+import { FormValues as FV, Props } from "../types";
 import useSubmit from "./useSubmit";
 
 export default function Form(props: Props) {

@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { FormValues } from "./types";
-import { WidgetConfig } from "types/widget";
-import { useSetter } from "store/accessors";
 import { resetWidgetConfig, updateWidgetConfig } from "slices/widget";
+import { useSetter } from "store/accessors";
+import { WidgetConfig } from "types/widget";
 import Form from "./Form";
 import { schema } from "./schema";
+import { FormValues } from "./types";
 
 export default function Configurer({ classes = "" }) {
   const dispatch = useSetter();

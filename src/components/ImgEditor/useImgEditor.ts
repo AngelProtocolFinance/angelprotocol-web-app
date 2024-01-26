@@ -1,12 +1,12 @@
+import Prompt from "components/Prompt";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { useModalContext } from "contexts/ModalContext";
 import { MouseEventHandler } from "react";
 import { DropzoneOptions } from "react-dropzone";
 import { FieldValues, useController, useFormContext } from "react-hook-form";
 import { Path } from "react-hook-form";
-import { ImgLink, Props } from "./types";
-import { useModalContext } from "contexts/ModalContext";
-import Prompt from "components/Prompt";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import ImgCropper from "./ImgCropper";
+import { ImgLink, Props } from "./types";
 
 type Key = keyof ImgLink;
 const fileKey: Key = "file";

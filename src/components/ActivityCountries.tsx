@@ -1,7 +1,7 @@
-import { FieldValues, Path, PathValue } from "react-hook-form";
-import { OptionType } from "types/components";
 import countries from "assets/countries/all.json";
 import { MultiSelector } from "components/Selector";
+import { FieldValues, Path, PathValue } from "react-hook-form";
+import { OptionType } from "types/components";
 
 type Props<T extends FieldValues, K extends Path<T>> = {
   name: PathValue<T, K> extends OptionType<string>[] ? K : never;

@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { useEndowment } from "services/aws/useEndowment";
 import { DappLogo } from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { idParamToNum, setToLightMode } from "helpers";
+import { useEffect } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useEndowment } from "services/aws/useEndowment";
 import Content from "./Content";
 
 //light mode by default

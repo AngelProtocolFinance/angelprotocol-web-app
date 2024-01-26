@@ -1,5 +1,5 @@
-import { MsgSendType, MsgTypes, TxArgs } from "./types";
 import { objToBase64 } from "helpers";
+import { MsgSendType, MsgTypes, TxArgs } from "./types";
 
 export const msgs: {
   [T in Exclude<MsgTypes, MsgSendType>]: (args: TxArgs<T>) => object;

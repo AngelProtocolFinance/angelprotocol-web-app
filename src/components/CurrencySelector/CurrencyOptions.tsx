@@ -1,6 +1,6 @@
 import { Combobox } from "@headlessui/react";
-import { Currency } from "./types";
 import { isEmpty } from "helpers";
+import { Currency } from "./types";
 
 type Props = {
   classes?: string;

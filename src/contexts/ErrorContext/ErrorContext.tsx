@@ -1,13 +1,13 @@
+import Prompt from "components/Prompt";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
+import { logger } from "helpers";
 import {
   PropsWithChildren,
   createContext,
   useCallback,
   useContext,
 } from "react";
-import Prompt from "components/Prompt";
-import { logger } from "helpers";
-import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useModalContext } from "../ModalContext";
 
 type State = { handleError: (error: any, displayMessage?: string) => void };

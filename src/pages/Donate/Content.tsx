@@ -1,13 +1,13 @@
-import { memo, useEffect, useRef } from "react";
 import Breadcrumbs from "components/Breadcrumbs";
 import { Steps } from "components/donation";
-import { useGetter, useSetter } from "store/accessors";
+import { appRoutes } from "constants/routes";
+import { memo, useEffect, useRef } from "react";
 import {
   DonationRecipient,
   DonationState,
   setRecipient,
 } from "slices/donation";
-import { appRoutes } from "constants/routes";
+import { useGetter, useSetter } from "store/accessors";
 
 function Content(props: DonationRecipient) {
   const dispatch = useSetter();

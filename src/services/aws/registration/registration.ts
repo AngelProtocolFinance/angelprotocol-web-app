@@ -1,4 +1,8 @@
-import { FiscalSponsorhipAgreementSigner } from "../../types";
+import { TEMP_JWT } from "constants/auth";
+import { EMAIL_SUPPORT } from "constants/env";
+import { logger } from "helpers";
+import { adminTags } from "services/aws/tags";
+import { apiEnv } from "services/constants";
 import {
   ContactUpdateResult,
   InitApplication,
@@ -6,12 +10,8 @@ import {
   SavedRegistration,
   SubmitResult,
 } from "types/aws";
-import { adminTags } from "services/aws/tags";
-import { apiEnv } from "services/constants";
-import { logger } from "helpers";
-import { TEMP_JWT } from "constants/auth";
-import { EMAIL_SUPPORT } from "constants/env";
 import { version as v } from "../../helpers";
+import { FiscalSponsorhipAgreementSigner } from "../../types";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({

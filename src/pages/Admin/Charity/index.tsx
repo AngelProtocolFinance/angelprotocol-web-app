@@ -1,5 +1,5 @@
-import { Navigate, Route, Routes } from "react-router-dom";
 import { adminRoutes } from "constants/routes";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Layout from "../Layout";
 import { LINKS } from "../constants";
 import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";

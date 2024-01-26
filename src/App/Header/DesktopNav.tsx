@@ -1,7 +1,7 @@
-import { NavLink } from "react-router-dom";
-import { Link } from "../types";
 import ExtLink from "components/ExtLink";
 import { createNavLinkStyler } from "helpers";
+import { NavLink } from "react-router-dom";
+import { Link } from "../types";
 
 type Props = { classes: string; links: Link[] };
 

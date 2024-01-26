@@ -1,5 +1,5 @@
-import { WidgetConfig } from "types/widget";
 import { appRoutes } from "constants/routes";
+import { WidgetConfig } from "types/widget";
 
 export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
   return (

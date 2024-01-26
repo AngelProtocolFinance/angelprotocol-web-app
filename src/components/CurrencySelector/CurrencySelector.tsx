@@ -1,9 +1,9 @@
 import { Combobox } from "@headlessui/react";
 import { useState } from "react";
-import { Currency } from "./types";
 import { DrawerIcon } from "../Icon";
 import { Label } from "../form";
 import CurrencyOptions from "./CurrencyOptions";
+import { Currency } from "./types";
 
 type Props = {
   classes?: { combobox?: string };

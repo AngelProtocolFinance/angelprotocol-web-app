@@ -1,17 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { DonateArgs, TxStatus } from "../types";
-import { KYCData, TxLogPayload } from "types/aws";
-import { isTxResultError } from "types/tx";
-import { invalidateApesTags } from "services/apes";
-import { apiEnv } from "services/constants";
-import { version as v } from "services/helpers";
-import { logger } from "helpers";
-import { sendTx } from "helpers/tx";
-import { LogDonationFail } from "errors/errors";
 import { chainIds } from "constants/chainIds";
 import { chains } from "constants/chains";
 import { APIs } from "constants/urls";
+import { LogDonationFail } from "errors/errors";
+import { logger } from "helpers";
+import { sendTx } from "helpers/tx";
+import { invalidateApesTags } from "services/apes";
+import { apiEnv } from "services/constants";
+import { version as v } from "services/helpers";
+import { KYCData, TxLogPayload } from "types/aws";
+import { isTxResultError } from "types/tx";
 import donation, { setTxStatus } from "../donation";
+import { DonateArgs, TxStatus } from "../types";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,

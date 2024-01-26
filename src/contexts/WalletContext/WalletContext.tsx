@@ -1,8 +1,8 @@
+import { EVMChains } from "constants/chains";
 import isMobile from "is-mobile";
 import { PropsWithChildren, createContext, useContext } from "react";
-import { WalletContextState } from "./types";
 import { ConnectedWallet, DisconnectedWallet, Wallet } from "types/wallet";
-import { EVMChains } from "constants/chains";
+import { WalletContextState } from "./types";
 import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";

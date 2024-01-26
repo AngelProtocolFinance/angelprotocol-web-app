@@ -1,12 +1,12 @@
-import { useNavigate } from "react-router-dom";
-import { SignerCompleteQueryParams } from "./types";
-import { useLazyRegQuery } from "services/aws/registration";
 import Icon from "components/Icon";
-import { getSavedRegistrationReference } from "helpers";
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { regRoutes } from "constants/routes";
+import { getSavedRegistrationReference } from "helpers";
+import { useNavigate } from "react-router-dom";
+import { useLazyRegQuery } from "services/aws/registration";
 import { getRegistrationState } from "../Steps/getRegistrationState";
+import { SignerCompleteQueryParams } from "./types";
 
 const proxyFunctionURL =
   "https://h247dsayjkdwlheiboq54r2gxu0htegs.lambda-url.us-east-1.on.aws";

@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { ErrorQueryParams } from "./types";
-import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { regRoutes } from "constants/routes";
+import { useErrorContext } from "contexts/ErrorContext";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/registration";
+import { ErrorQueryParams } from "./types";
 
 const initialText = "Retry";
 const redirectingText = "Redirecting...";

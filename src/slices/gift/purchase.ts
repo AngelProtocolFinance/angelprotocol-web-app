@@ -1,11 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { TxPackage, isTxResultError } from "types/tx";
-import { invalidateApesTags } from "services/apes";
-import { logger } from "helpers";
-import { sendTx } from "helpers/tx";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { EMAIL_SUPPORT } from "constants/env";
 import { APIs } from "constants/urls";
+import { logger } from "helpers";
+import { sendTx } from "helpers/tx";
+import { invalidateApesTags } from "services/apes";
+import { TxPackage, isTxResultError } from "types/tx";
 import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
 
 type Args = {
@@ -40,9 +40,9 @@ export const purchase = createAsyncThunk<void, Args>(
         });
       }
 
-      let randNums = window.crypto.getRandomValues(new BigUint64Array(62));
-      let preImage = `${randNums[0]}${randNums[1]}`;
-      let secret = `ap-${details.chainID}-${preImage}`;
+      const randNums = window.crypto.getRandomValues(new BigUint64Array(62));
+      const preImage = `${randNums[0]}${randNums[1]}`;
+      const secret = `ap-${details.chainID}-${preImage}`;
 
       updateTx({ msg: "Processing giftcard code..." });
       const res = await fetch(APIs.aws + "/v1/giftcard/deposit", {

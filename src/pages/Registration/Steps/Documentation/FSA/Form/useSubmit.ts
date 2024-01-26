@@ -1,12 +1,12 @@
+import { useErrorContext } from "contexts/ErrorContext";
+import { getFilePreviews } from "helpers";
+import { useRegState } from "pages/Registration/Steps/StepGuard";
 import { useState } from "react";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { FormValues, Props } from "../types";
-import { useRegState } from "pages/Registration/Steps/StepGuard";
 import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import { getFilePreviews } from "helpers";
 import { steps } from "../../../../routes";
+import { FormValues, Props } from "../types";
 
 export default function useSubmit({ doc }: Props) {
   const {

@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import { TableProps } from "./types";
-import { BankingApplicationStatus } from "types/aws";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
+import { BankingApplicationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { TableProps } from "./types";
 
 export default function Table({
   applications,

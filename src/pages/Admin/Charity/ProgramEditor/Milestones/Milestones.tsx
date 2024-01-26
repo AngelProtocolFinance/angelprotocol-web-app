@@ -1,9 +1,9 @@
-import { useFieldArray } from "react-hook-form";
-import { FV } from "../types";
 import Icon from "components/Icon";
 import { Info } from "components/Status";
 import { dateToFormFormat } from "components/form";
 import { isEmpty } from "helpers";
+import { useFieldArray } from "react-hook-form";
+import { FV } from "../types";
 import Milestone from "./Milestone";
 
 export default function Milestones() {

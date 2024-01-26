@@ -1,9 +1,9 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { LinkGroup } from "./types";
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import Header from "./Header";
+import { LinkGroup } from "./types";
 
 type Props = {
   className?: string;

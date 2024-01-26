@@ -1,10 +1,10 @@
-import { FormValues as FV } from "../types";
-import { ContactRoles, ReferralMethods } from "types/aws";
 import LoadText from "components/LoadText";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { APP_NAME } from "constants/env";
+import { ContactRoles, ReferralMethods } from "types/aws";
 import { referralOptions, roleOptions } from "../constants";
+import { FormValues as FV } from "../types";
 import useSubmit from "./useSubmit";
 
 export default function Form({ classes = "" }: { classes?: string }) {

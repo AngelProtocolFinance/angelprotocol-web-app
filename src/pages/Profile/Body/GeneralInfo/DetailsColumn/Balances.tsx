@@ -1,6 +1,6 @@
+import { humanize } from "helpers";
 import { useProfileContext } from "pages/Profile/ProfileContext";
 import { useEndowBalanceQuery } from "services/apes";
-import { humanize } from "helpers";
 
 export default function Balances() {
   const { id } = useProfileContext();

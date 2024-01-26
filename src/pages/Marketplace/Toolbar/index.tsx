@@ -1,5 +1,5 @@
-import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
+import { useModalContext } from "contexts/ModalContext";
 import Filter from "../Filter";
 import Search from "./Search";
 

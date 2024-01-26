@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { BankingApplicationsQueryParams } from "types/aws";
 import {
   updateBankingApplicationsQueryData,
   useBankingApplicationsQuery,
   useLazyBankingApplicationsQuery,
 } from "services/aws/banking-applications";
 import { useSetter } from "store/accessors";
+import { BankingApplicationsQueryParams } from "types/aws";
 
 export default function usePagination() {
   const dispatch = useSetter();

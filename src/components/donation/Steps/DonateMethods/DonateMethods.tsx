@@ -1,6 +1,6 @@
 import { Tab } from "@headlessui/react";
-import { DonaterConfigFromWidget } from "types/widget";
 import { FormStep } from "slices/donation";
+import { DonaterConfigFromWidget } from "types/widget";
 import Donater from "../Donater";
 import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";

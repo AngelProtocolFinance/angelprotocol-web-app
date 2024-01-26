@@ -1,13 +1,13 @@
-import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
-import { TxPackage } from "types/tx";
-import { ConnectedWallet } from "types/wallet";
-import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/donation";
-import { sendDonation } from "slices/donation/sendDonation";
-import { maskAddress } from "helpers";
 import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
+import { maskAddress } from "helpers";
+import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
+import { SubmitStep, setStep } from "slices/donation";
+import { sendDonation } from "slices/donation/sendDonation";
+import { useSetter } from "store/accessors";
+import { TxPackage } from "types/tx";
+import { ConnectedWallet } from "types/wallet";
 import Image from "../../../Image";
 import { Row } from "./Row";
 

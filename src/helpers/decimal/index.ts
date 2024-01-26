@@ -75,7 +75,7 @@ export function scaleToStr(
 
 /** convert numbers to user's number format with precision defined */
 export function humanize(num: Dec.Value, precision = 2, truncate = false) {
-  let _num = new Dec(num);
+  const _num = new Dec(num);
   const [truncated, suffix] = truncate ? shorten(_num) : [_num, ""];
   //set local to undefined to use user's default format
   return (

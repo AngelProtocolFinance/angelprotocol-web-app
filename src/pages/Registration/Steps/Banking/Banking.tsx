@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import BankDetails from "components/BankDetails";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon/Icon";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import { steps } from "../../routes";
 import { useRegState, withStepGuard } from "../StepGuard";
 import FormButtons from "./FormButtons";

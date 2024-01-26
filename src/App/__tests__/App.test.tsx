@@ -2,9 +2,9 @@ import { Authenticator } from "@aws-amplify/ui-react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, test, vi } from "vitest";
-import { DonationsMetricList, Update } from "types/aws";
 import { store } from "store/store";
+import { DonationsMetricList, Update } from "types/aws";
+import { describe, expect, test, vi } from "vitest";
 import App from "../App";
 
 const mockMetrics: DonationsMetricList = {

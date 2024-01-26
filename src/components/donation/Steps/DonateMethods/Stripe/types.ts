@@ -1,6 +1,6 @@
-import { DonaterConfigFromWidget } from "types/widget";
 import { Currency } from "components/CurrencySelector";
 import { FormStep } from "slices/donation";
+import { DonaterConfigFromWidget } from "types/widget";
 import { type AdvancedOptionsDisplay } from "../../../AdvancedOptions";
 
 export type Props = {

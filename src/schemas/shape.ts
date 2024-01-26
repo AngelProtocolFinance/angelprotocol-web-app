@@ -1,9 +1,9 @@
-import { lazy, object, string } from "yup";
-import { SchemaShape } from "./types";
 import { OptionType } from "types/components";
 import type { TokenWithAmount as TWA } from "types/tx";
+import { lazy, object, string } from "yup";
 import { tokenConstraint } from "./number";
 import { requiredString } from "./string";
+import { SchemaShape } from "./types";
 
 type Key = keyof TWA;
 type Min = TWA["min_donation_amnt"];

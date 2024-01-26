@@ -1,7 +1,7 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { DonaterConfigFromWidget } from "types/widget";
-import WalletContext from "contexts/WalletContext";
 import { chainOptions } from "constants/chainOptions";
+import WalletContext from "contexts/WalletContext";
+import { DonaterConfigFromWidget } from "types/widget";
 import CurrentStep from "./CurrentStep";
 
 type Props = {

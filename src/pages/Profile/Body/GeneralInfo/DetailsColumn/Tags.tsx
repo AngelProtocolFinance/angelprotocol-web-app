@@ -1,7 +1,7 @@
-import { PropsWithChildren } from "react";
-import { EndowmentProfile } from "types/aws";
 import Icon from "components/Icon";
 import { unsdgs } from "constants/unsdgs";
+import { PropsWithChildren } from "react";
+import { EndowmentProfile } from "types/aws";
 import EndowDesignationTag from "./EndowDesignationTag";
 
 export default function Tags(props: EndowmentProfile) {

@@ -1,6 +1,6 @@
-import { PropsWithChildren } from "react";
 import Icon from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
+import { categories } from "constants/unsdgs";
+import { PropsWithChildren } from "react";
 import {
   reset,
   setCountries,
@@ -8,7 +8,7 @@ import {
   setKYCOnly,
   setSDGgroups,
 } from "slices/components/marketFilter";
-import { categories } from "constants/unsdgs";
+import { useGetter, useSetter } from "store/accessors";
 
 export default function ActiveFilters() {
   const { endow_designation, sdgGroups, countries, kyc_only } = useGetter(

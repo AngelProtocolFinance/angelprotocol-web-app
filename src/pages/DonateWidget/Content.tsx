@@ -1,12 +1,12 @@
-import { useEffect } from "react";
-import { EndowmentProfile } from "types/aws";
-import { configIsFallback } from "types/widget";
 import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
 import { Steps } from "components/donation";
-import { useSetter } from "store/accessors";
-import { DonationRecipient, setRecipient } from "slices/donation";
 import { APP_NAME, DAPP_URL } from "constants/env";
+import { useEffect } from "react";
+import { DonationRecipient, setRecipient } from "slices/donation";
+import { useSetter } from "store/accessors";
+import { EndowmentProfile } from "types/aws";
+import { configIsFallback } from "types/widget";
 import donaterConfigFn from "./donaterConfig";
 
 type Props = {

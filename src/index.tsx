@@ -1,12 +1,12 @@
 import { Authenticator } from "@aws-amplify/ui-react";
 import * as Sentry from "@sentry/react";
+import Loader from "components/Loader";
+import ErrorBoundary from "errors/ErrorBoundary";
 import { StrictMode, Suspense, lazy } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import Loader from "components/Loader";
 import { store } from "store/store";
-import ErrorBoundary from "errors/ErrorBoundary";
 import "./index.css";
 
 //set theme immediately, so even suspense loaders and can use it

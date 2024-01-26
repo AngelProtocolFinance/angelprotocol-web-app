@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
-import { ObjectSchema, number, object, string } from "yup";
-import { SchemaShape } from "schemas/types";
 import Group from "components/Group";
 import { Field } from "components/form";
 import { EMAIL_SUPPORT } from "constants/env";
+import { FormProvider, useForm } from "react-hook-form";
+import { SchemaShape } from "schemas/types";
+import { ObjectSchema, number, object, string } from "yup";
 
 type Props = {
   charityName: string;

@@ -1,10 +1,10 @@
-import { ObjectSchema, object } from "yup";
-import { FormValues } from "./types";
-import { SchemaShape } from "schemas/types";
-import { MIMEType } from "types/lists";
+import { BYTES_IN_MB } from "constants/common";
 import { fileDropzoneAssetShape } from "schemas/file";
 import { requiredString } from "schemas/string";
-import { BYTES_IN_MB } from "constants/common";
+import { SchemaShape } from "schemas/types";
+import { MIMEType } from "types/lists";
+import { ObjectSchema, object } from "yup";
+import { FormValues } from "./types";
 
 export const MB_LIMIT = 6;
 

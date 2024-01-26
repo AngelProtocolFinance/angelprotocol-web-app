@@ -1,14 +1,14 @@
-import { Link } from "react-router-dom";
-import { TableProps } from "./types";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import useSort from "hooks/useSort";
-import { getTxUrl, humanize } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
+import { getTxUrl, humanize } from "helpers";
+import useSort from "hooks/useSort";
+import { Link } from "react-router-dom";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
 
 export default function Table({

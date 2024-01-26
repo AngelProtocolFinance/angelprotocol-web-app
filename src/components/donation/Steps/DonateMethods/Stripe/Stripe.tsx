@@ -1,14 +1,14 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { useState } from "react";
-import { FormValues, Props } from "./types";
-import { useCreateStripePaymentIntentMutation } from "services/apes";
-import { useErrorContext } from "contexts/ErrorContext";
 import KYCForm from "components/KYCForm";
-import { KYC } from "slices/donation";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
+import { useErrorContext } from "contexts/ErrorContext";
+import { useState } from "react";
+import { useCreateStripePaymentIntentMutation } from "services/apes";
+import { KYC } from "slices/donation";
 import Checkout from "./Checkout";
 import Form from "./Form";
+import { FormValues, Props } from "./types";
 
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 

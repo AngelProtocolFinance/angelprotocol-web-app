@@ -1,9 +1,9 @@
-import Cropper from "cropperjs";
-import { useCallback, useRef } from "react";
-import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import Modal from "components/Modal";
+import { useModalContext } from "contexts/ModalContext";
+import Cropper from "cropperjs";
+import { useCallback, useRef } from "react";
 
 type Props = {
   preview: string;

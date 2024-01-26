@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { IFormButtons, OnSubmit } from "./types";
-import { useCurrencisQuery } from "services/aws/wise";
 import Divider from "components/Divider";
 import useDebouncer from "hooks/useDebouncer";
+import { useState } from "react";
+import { useCurrencisQuery } from "services/aws/wise";
 import CurrencySelector, { Currency } from "../CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
+import { IFormButtons, OnSubmit } from "./types";
 
 /**
  * Denominated in USD

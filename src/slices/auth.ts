@@ -6,8 +6,8 @@ import {
   getCurrentUser,
   signOut,
 } from "aws-amplify/auth";
-import { User, userIsSignedIn } from "types/auth";
 import { logger } from "helpers";
+import { User, userIsSignedIn } from "types/auth";
 
 type State = {
   user: User;

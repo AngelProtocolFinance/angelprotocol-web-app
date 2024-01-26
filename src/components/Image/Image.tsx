@@ -1,11 +1,11 @@
+import ContentLoader from "components/ContentLoader";
+import ExtLink from "components/ExtLink";
 import React, {
   PropsWithChildren,
   useImperativeHandle,
   useRef,
   useState,
 } from "react";
-import ContentLoader from "components/ContentLoader";
-import ExtLink from "components/ExtLink";
 import ImagePlaceholder from "./ImagePlaceholder";
 
 export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {

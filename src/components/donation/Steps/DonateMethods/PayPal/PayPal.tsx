@@ -2,15 +2,15 @@ import {
   PayPalScriptProvider,
   ReactPayPalScriptOptions,
 } from "@paypal/react-paypal-js";
-import { useState } from "react";
-import { FormValues, Props } from "./types";
-import { useCreatePayPalOrderMutation } from "services/apes";
-import { useErrorContext } from "contexts/ErrorContext";
 import KYCForm from "components/KYCForm";
-import { KYC } from "slices/donation";
 import { PAYPAL_CLIENT_ID } from "constants/env";
+import { useErrorContext } from "contexts/ErrorContext";
+import { useState } from "react";
+import { useCreatePayPalOrderMutation } from "services/apes";
+import { KYC } from "slices/donation";
 import Checkout from "./Checkout";
 import Form from "./Form";
+import { FormValues, Props } from "./types";
 
 const initialOptions: ReactPayPalScriptOptions = {
   clientId: PAYPAL_CLIENT_ID,

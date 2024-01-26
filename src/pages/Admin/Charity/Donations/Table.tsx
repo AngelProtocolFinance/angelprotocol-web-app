@@ -1,10 +1,10 @@
-import { DonationReceivedByEndow } from "types/aws";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import useSort from "hooks/useSort";
 import { getTxUrl, humanize, maskAddress } from "helpers";
+import useSort from "hooks/useSort";
+import { DonationReceivedByEndow } from "types/aws";
 
 type Props = {
   donations: DonationReceivedByEndow[];

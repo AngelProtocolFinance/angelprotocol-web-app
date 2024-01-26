@@ -1,7 +1,7 @@
-import { DonaterConfigFromWidget } from "types/widget";
 import KYCForm from "components/KYCForm";
-import { useGetter, useSetter } from "store/accessors";
 import { setKYC, setStep } from "slices/donation";
+import { useGetter, useSetter } from "store/accessors";
+import { DonaterConfigFromWidget } from "types/widget";
 import DonateMethods from "./DonateMethods";
 import Result from "./Result";
 import Submit from "./Submit";

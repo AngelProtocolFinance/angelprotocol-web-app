@@ -1,18 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import Modal from "components/Modal";
+import Prompt from "components/Prompt";
+import { Field } from "components/form";
+import { useModalContext } from "contexts/ModalContext";
 import {
   FormProvider,
   SubmitHandler,
   UseFormReturn,
   useForm,
 } from "react-hook-form";
-import { object } from "yup";
+import { requiredString } from "schemas/string";
 import { useLazyProfileQuery } from "services/aws/aws";
 import { useNewEndowAdminMutation } from "services/aws/users";
-import { useModalContext } from "contexts/ModalContext";
-import Modal from "components/Modal";
-import Prompt from "components/Prompt";
-import { Field } from "components/form";
-import { requiredString } from "schemas/string";
+import { object } from "yup";
 
 export type Props = {
   endowID: number;

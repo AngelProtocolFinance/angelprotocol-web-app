@@ -1,3 +1,4 @@
+import { IS_TEST } from "constants/env";
 import {
   DonationRecord,
   DonationsQueryParams,
@@ -5,7 +6,6 @@ import {
   ReceiptPayload,
   Token,
 } from "types/aws";
-import { IS_TEST } from "constants/env";
 import { version as v } from "../../helpers";
 import { apes } from "../apes";
 

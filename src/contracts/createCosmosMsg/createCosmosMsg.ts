@@ -1,9 +1,9 @@
 import { toUtf8 } from "@cosmjs/encoding";
-import { MsgOptions, MsgSendType, MsgTypes } from "./types";
 import { MsgSend } from "@keplr-wallet/proto-types/cosmos/bank/v1beta1/tx";
 import { MsgExecuteContract } from "@keplr-wallet/proto-types/cosmwasm/wasm/v1/tx";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { msgs } from "./msgs";
+import { MsgOptions, MsgSendType, MsgTypes } from "./types";
 
 export default function createCosmosMsg<T extends MsgTypes>(
   sender: string,

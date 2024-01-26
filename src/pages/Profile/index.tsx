@@ -1,10 +1,10 @@
-import { Navigate, useParams } from "react-router-dom";
-import { useEndowment } from "services/aws/useEndowment";
 import Image from "components/Image";
 import Seo from "components/Seo";
-import { idParamToNum } from "helpers";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { idParamToNum } from "helpers";
+import { Navigate, useParams } from "react-router-dom";
+import { useEndowment } from "services/aws/useEndowment";
 import Body from "./Body";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";

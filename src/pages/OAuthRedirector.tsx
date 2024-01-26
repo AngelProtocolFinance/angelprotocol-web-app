@@ -1,6 +1,6 @@
+import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 
 // For some reason aws-amplify redirects to this page twice; the slowness of the 2nd
 // redirect causes the final URL to be of this page even though the rendered page is

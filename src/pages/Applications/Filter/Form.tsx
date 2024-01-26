@@ -1,11 +1,11 @@
 import { Popover } from "@headlessui/react";
-import { FC, FormEventHandler } from "react";
-import { FormValues as FV } from "./types";
 import countries from "assets/countries/all.json";
 import CountrySelector from "components/CountrySelector";
 import Icon from "components/Icon";
 import { DateInput } from "components/form";
+import { FC, FormEventHandler } from "react";
 import RegStatusDropdown from "./RegStatusDropdown";
+import { FormValues as FV } from "./types";
 
 type Props = {
   submit: FormEventHandler<HTMLFormElement>;

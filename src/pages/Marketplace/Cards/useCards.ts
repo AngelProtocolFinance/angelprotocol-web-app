@@ -1,11 +1,11 @@
+import { categories } from "constants/unsdgs";
+import { isEmpty } from "helpers";
 import {
   updateAWSQueryData,
   useEndowmentCardsQuery,
   useLazyEndowmentCardsQuery,
 } from "services/aws/aws";
 import { useGetter, useSetter } from "store/accessors";
-import { isEmpty } from "helpers";
-import { categories } from "constants/unsdgs";
 
 export default function useCards() {
   const dispatch = useSetter();

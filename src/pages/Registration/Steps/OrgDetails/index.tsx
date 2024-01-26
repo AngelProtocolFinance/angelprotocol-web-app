@@ -1,12 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
-import { FormValues } from "./types";
-import { OrgDetails as TOrgDetails } from "types/aws";
 import { country } from "components/CountrySelector";
 import { unsdgs } from "constants/unsdgs";
+import { FormProvider, useForm } from "react-hook-form";
+import { OrgDetails as TOrgDetails } from "types/aws";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
 import { schema } from "./schema";
+import { FormValues } from "./types";
 
 function OrgDetails() {
   const {

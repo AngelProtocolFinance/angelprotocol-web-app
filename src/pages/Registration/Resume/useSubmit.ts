@@ -1,11 +1,11 @@
-import { useFormContext } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { FormValues } from "./types";
-import { useLazyRegQuery } from "services/aws/registration";
+import { regRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { storeRegistrationReference } from "helpers";
-import { regRoutes } from "constants/routes";
+import { useFormContext } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useLazyRegQuery } from "services/aws/registration";
 import { getRegistrationState } from "../Steps/getRegistrationState";
+import { FormValues } from "./types";
 
 export default function useSubmit() {
   const {

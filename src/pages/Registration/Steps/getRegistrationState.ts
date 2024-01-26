@@ -1,4 +1,3 @@
-import { InitReg, RegistrationState } from "../types";
 import {
   BankingDetails,
   DoneBanking,
@@ -18,6 +17,7 @@ import {
   isSubmitted,
 } from "types/aws";
 import { steps } from "../routes";
+import { InitReg, RegistrationState } from "../types";
 
 export function getRegistrationState(reg: SavedRegistration): {
   state: RegistrationState;

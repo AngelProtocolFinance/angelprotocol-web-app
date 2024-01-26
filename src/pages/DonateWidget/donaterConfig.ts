@@ -1,6 +1,6 @@
-import { number, object, string } from "yup";
 import { SchemaShape } from "schemas/types";
 import { DonaterConfigFromWidget, WidgetURLSearchParams } from "types/widget";
+import { number, object, string } from "yup";
 
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   advancedOptionsDisplay: string()

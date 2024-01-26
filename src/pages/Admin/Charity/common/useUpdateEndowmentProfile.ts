@@ -1,9 +1,9 @@
-import { ProfileUpdateMsg, ProgramDeleteMsg } from "services/types";
-import { useEditProfileMutation } from "services/aws/aws";
-import { useModalContext } from "contexts/ModalContext";
 import { TxPrompt } from "components/Prompt";
-import { cleanObject } from "helpers/cleanObject";
 import { appRoutes } from "constants/routes";
+import { useModalContext } from "contexts/ModalContext";
+import { cleanObject } from "helpers/cleanObject";
+import { useEditProfileMutation } from "services/aws/aws";
+import { ProfileUpdateMsg, ProgramDeleteMsg } from "services/types";
 
 export function useUpdateEndowmentProfile() {
   const { showModal } = useModalContext();

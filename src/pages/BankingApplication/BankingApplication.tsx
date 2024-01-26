@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
-import { useBankingApplicationQuery } from "services/aws/banking-applications";
-import withAuth from "contexts/Auth";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { ErrorStatus } from "components/Status";
+import withAuth from "contexts/Auth";
+import { useParams } from "react-router-dom";
+import { useBankingApplicationQuery } from "services/aws/banking-applications";
 import Loaded from "./Loaded";
 
 function BankingApplication() {

@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
 import { Separator } from "components/registration";
 import { APP_NAME } from "constants/env";
 import { regRoutes } from "constants/routes";
+import { Link, useNavigate } from "react-router-dom";
 
 const NEED_HELP_ARTICLE_ID = 6628120;
 

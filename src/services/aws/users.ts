@@ -1,8 +1,8 @@
+import { TEMP_JWT } from "constants/auth";
 import {
   DeleteEndowAdminPayload,
   NewEndowAdminPayload,
 } from "types/aws/ap/users";
-import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
