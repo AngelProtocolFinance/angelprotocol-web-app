@@ -12,8 +12,10 @@ export const BASE_URL = "https://better.giving";
 export const DAPP_URL = "https://app.better.giving";
 export const AWS_S3_PUBLIC_BUCKET = "https://endow-profiles.s3.amazonaws.com";
 
-const ENV = process.env.PUBLIC_ENVIRONMENT;
+export const ENVIRONMENT = process.env.PUBLIC_ENVIRONMENT;
 
-export const IS_TEST = ENV === "STAGING";
+export const IS_TEST = ENVIRONMENT === "dev";
 
 export const PUBLIC_STRIPE_KEY = process.env.PUBLIC_STRIPE_KEY || "";
+
+export const PAYPAL_CLIENT_ID = process.env.PUBLIC_PAYPAL_CLIENT_ID || "";

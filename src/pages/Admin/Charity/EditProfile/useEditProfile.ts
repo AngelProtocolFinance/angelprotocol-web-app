@@ -28,18 +28,21 @@ export default function useEditProfile() {
        * to tx submission. Other users of useTxSender
        */
 
-      const [bannerUrl, logoUrl] = await uploadImgs([fv.image, fv.logo], () => {
-        showModal(
-          TxPrompt,
-          { loading: "Uploading images.." },
-          { isDismissible: false }
-        );
-      });
+      const [bannerUrl, logoUrl, cardImgUrl] = await uploadImgs(
+        [fv.image, fv.logo, fv.card_img],
+        () => {
+          showModal(
+            TxPrompt,
+            { loading: "Uploading images.." },
+            { isDismissible: false }
+          );
+        }
+      );
 
       const update = toProfileUpdate({
         type: "final",
         data: { ...fv, id },
-        urls: { image: bannerUrl, logo: logoUrl },
+        urls: { image: bannerUrl, logo: logoUrl, card_img: cardImgUrl },
       });
 
       const diffs = getPayloadDiff(initial, update);

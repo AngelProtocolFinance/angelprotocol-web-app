@@ -1,7 +1,6 @@
 import * as Sentry from "@sentry/react";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import OAUTHRedirector from "pages/OAuthRedirector";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { appRoutes } from "constants/routes";
@@ -22,6 +21,8 @@ const Applications = lazy(() => import("pages/Applications"));
 const Application = lazy(() => import("pages/Application"));
 const BankingApplications = lazy(() => import("pages/BankingApplications"));
 const BankingApplication = lazy(() => import("pages/BankingApplication"));
+const OAuthRedirector = lazy(() => import("pages/OAuthRedirector"));
+const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 
 export default function App() {
   const location = useLocation();
@@ -62,13 +63,17 @@ export default function App() {
             path={appRoutes.donate_fiat_thanks}
             element={<DonateFiatThanks />}
           />
+          <Route
+            path={appRoutes.stripe_payment_status}
+            element={<StripePaymentStatus />}
+          />
           <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
           <Route path={`${appRoutes.register}/*`} element={<Registration />} />
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
           <Route path={appRoutes.signin} element={<Signin />} />
           <Route
             path={appRoutes.auth_redirector}
-            element={<OAUTHRedirector />}
+            element={<OAuthRedirector />}
           />
           <Route path={appRoutes.marketplace}>
             <Route path=":id/*" element={<Profile />} />
