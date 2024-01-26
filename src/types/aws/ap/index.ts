@@ -103,7 +103,6 @@ export type EndowmentsQueryParams = {
   sdgs?: string; // comma separated sdg values.
   kyc_only?: string; // comma separated boolean values
   countries?: string; //comma separated country names
-  hits?: number; // Number of items to be returned per request. If not provided, API defaults to return all
   published: "true";
 };
 
