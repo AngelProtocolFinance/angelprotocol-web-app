@@ -62,9 +62,9 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         appUsed: details.source,
       };
 
-      const response = await fetch(APIs.apes + `/${v(1)}/donations`, {
+      const response = await fetch(APIs.apes + `/crypto-donation`, {
         method: "POST",
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, appUsed: "angel-protocol" }),
       });
 
       if (!response.ok) {
