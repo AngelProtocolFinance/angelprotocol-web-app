@@ -31,7 +31,7 @@ export default function QueryLoader<T>({
     return renderMessage(
       (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
       messages.loading,
-      container
+      container,
     );
   }
   if (isError || !data) {
@@ -39,7 +39,7 @@ export default function QueryLoader<T>({
     return renderMessage(
       (msg) => <ErrorStatus>{msg || "Failed to get data"}</ErrorStatus>,
       messages.error,
-      container
+      container,
     );
   }
 
@@ -48,7 +48,7 @@ export default function QueryLoader<T>({
       return renderMessage(
         (msg) => <Status icon="Info">{msg || "No data"}</Status>,
         messages.empty,
-        container
+        container,
       );
     }
 
@@ -58,7 +58,7 @@ export default function QueryLoader<T>({
         return renderMessage(
           (msg) => <Status icon="Info">{msg || "No data"}</Status>,
           messages.empty,
-          container
+          container,
         );
       }
 
@@ -72,7 +72,7 @@ export default function QueryLoader<T>({
 function renderMessage(
   fallback: (message?: string) => ReactElement,
   message?: string | ReactElement,
-  classes?: string
+  classes?: string,
 ) {
   if (message == null || typeof message === "string") {
     return <div className={classes}>{fallback(message)}</div>;

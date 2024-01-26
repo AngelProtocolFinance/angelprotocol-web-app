@@ -27,7 +27,7 @@ export default function usePaginatedApplications() {
       const filtered = data?.Items.filter(({ OrganizationName, PK }) =>
         (OrganizationName + PK)
           .toLowerCase()
-          .includes(debouncedQuery.toLowerCase())
+          .includes(debouncedQuery.toLowerCase()),
       );
 
       return {
@@ -59,7 +59,7 @@ export default function usePaginatedApplications() {
           updateAWSQueryData("applications", originalArgs, (prevResult) => {
             prevResult.Items.push(...newEndowRes.Items);
             prevResult.ItemCutoff = newEndowRes.ItemCutoff;
-          })
+          }),
         );
       }
     }

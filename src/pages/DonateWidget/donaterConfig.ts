@@ -18,11 +18,11 @@ const fallbackConfig: DonaterConfigFromWidget = {
 };
 
 export default function donaterConfig(
-  searchParams: URLSearchParams
+  searchParams: URLSearchParams,
 ): DonaterConfigFromWidget {
   try {
     const parsedConfig = Object.fromEntries(
-      searchParams.entries()
+      searchParams.entries(),
     ) as WidgetURLSearchParams;
 
     if (!schema.isValidSync(parsedConfig)) {

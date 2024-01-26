@@ -15,7 +15,7 @@ export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
   (
     { alt = "", className, isSrcLoading, href, title, onError, ...props },
-    forwardRef
+    forwardRef,
   ) => {
     const ref = useRef<HTMLImageElement>(null);
     const [isError, setError] = useState(false);
@@ -23,7 +23,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
     // https://legacy.reactjs.org/docs/hooks-reference.html#useimperativehandle
     useImperativeHandle<HTMLImageElement | null, HTMLImageElement | null>(
       forwardRef,
-      () => ref.current
+      () => ref.current,
     );
 
     if ((!props.src && !isSrcLoading) || isError) {
@@ -77,7 +77,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
         </WithLink>
       </>
     );
-  }
+  },
 );
 
 function WithLink({

@@ -9,7 +9,7 @@ import { appRoutes } from "constants/routes";
 
 export default function withAuth<Props>(
   Component: ComponentType<Props & { user: AuthenticatedUser }>,
-  requiredGroups?: CognitoGroup[]
+  requiredGroups?: CognitoGroup[],
 ) {
   return function Protected(props: Props) {
     const location = useLocation();
@@ -57,7 +57,7 @@ export function useAuthenticatedUser() {
   const val = useContext(Context);
   if (val === INIT)
     throw new Error(
-      "useAuthenticatedUser can only be used in components inside withAuth HOC"
+      "useAuthenticatedUser can only be used in components inside withAuth HOC",
     );
   return val;
 }

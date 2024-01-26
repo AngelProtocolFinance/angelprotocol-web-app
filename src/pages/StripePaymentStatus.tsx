@@ -15,7 +15,7 @@ export default function StripePaymentStatus() {
 
   const queryState = useGetStripePaymentStatusQuery(
     { paymentIntentId },
-    { skip: !paymentIntentId }
+    { skip: !paymentIntentId },
   );
 
   const { refetch } = queryState;

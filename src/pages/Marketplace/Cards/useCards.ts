@@ -10,7 +10,7 @@ import { categories } from "constants/unsdgs";
 export default function useCards() {
   const dispatch = useSetter();
   const { sort, searchText, sdgGroups, ...params } = useGetter(
-    (state) => state.component.marketFilter
+    (state) => state.component.marketFilter,
   );
 
   const sdgs = sdgGroups.flatMap((g) => categories[g].sdgs);
@@ -20,7 +20,7 @@ export default function useCards() {
       ...prev,
       ...(isEmpty(val) ? {} : { [key]: val.join(",") }),
     }),
-    {}
+    {},
   );
 
   const { isLoading, isFetching, data, isError, originalArgs } =
@@ -54,7 +54,7 @@ export default function useCards() {
           updateAWSQueryData("endowmentCards", originalArgs, (prevResult) => {
             prevResult.Items.push(...newEndowRes.Items);
             prevResult.Page = newEndowRes.Page;
-          })
+          }),
         );
       }
     }

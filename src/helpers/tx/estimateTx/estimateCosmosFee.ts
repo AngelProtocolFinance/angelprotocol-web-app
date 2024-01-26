@@ -24,11 +24,11 @@ const GAS_ADJUSTMENT = 1.5;
 export async function estimateCosmosFee(
   chainID: CosmosChainID,
   sender: string,
-  msgs: Any[]
+  msgs: Any[],
 ): Promise<EstimateResult> {
   const chain = chains[chainID];
   const { account } = await fetch(
-    chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`
+    chain.lcd + `/cosmos/auth/v1beta1/accounts/${sender}`,
   ).then<{ account: JSONAccount }>((res) => res.json());
 
   const pub = PubKey.fromJSON({ key: account.pub_key.key });

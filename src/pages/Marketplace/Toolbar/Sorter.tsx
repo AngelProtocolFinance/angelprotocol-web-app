@@ -20,7 +20,7 @@ export default function Sorter() {
       setSort({
         key: value,
         direction: "desc" /** default dir when sort is not specified is 'asc'*/,
-      })
+      }),
     );
   }
 
@@ -30,7 +30,10 @@ export default function Sorter() {
 
   function toggleDirection(sort: Sort) {
     dispatch(
-      setSort({ ...sort, direction: sort.direction === "asc" ? "desc" : "asc" })
+      setSort({
+        ...sort,
+        direction: sort.direction === "asc" ? "desc" : "asc",
+      }),
     );
   }
 

@@ -10,7 +10,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
   const [query, setQuery] = useState("");
 
   const queryStatus = useGetter(
-    (state) => state.aws.queries.endowments?.status
+    (state) => state.aws.queries.endowments?.status,
   );
 
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);

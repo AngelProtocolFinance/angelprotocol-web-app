@@ -16,7 +16,7 @@ const DEFAULT_DECIMAL = 6;
  */
 export function condense(
   scaled: Dec.Value,
-  decimals: number = DEFAULT_DECIMAL
+  decimals: number = DEFAULT_DECIMAL,
 ) {
   return new Dec(scaled).div(new Dec(10).pow(decimals));
 }
@@ -28,7 +28,7 @@ export function condense(
  */
 export function condenseToNum(
   scaled: Dec.Value,
-  decimals: number = DEFAULT_DECIMAL
+  decimals: number = DEFAULT_DECIMAL,
 ) {
   return condense(scaled, decimals).toNumber();
 }
@@ -40,7 +40,7 @@ export function condenseToNum(
  */
 export function condenseToStr(
   scaled: Dec.Value,
-  decimals: number = DEFAULT_DECIMAL
+  decimals: number = DEFAULT_DECIMAL,
 ) {
   return condense(scaled, decimals).toString();
 }
@@ -53,7 +53,7 @@ export function condenseToStr(
  */
 export function scale(
   condensed: Dec.Value,
-  decimals: number = DEFAULT_DECIMAL
+  decimals: number = DEFAULT_DECIMAL,
 ) {
   return new Dec(condensed).mul(new Dec(10).pow(decimals));
 }
@@ -65,7 +65,7 @@ export function scale(
  */
 export function scaleToStr(
   condensed: Dec.Value,
-  decimals: number = DEFAULT_DECIMAL
+  decimals: number = DEFAULT_DECIMAL,
 ) {
   return scale(condensed, decimals)
     .divToInt(1) /** we always convert to int e.g '1.23456789 atom' 

@@ -23,7 +23,7 @@ export default function useSubmit() {
       if (isError || !data) {
         handleError(
           error,
-          "No active application found with this registration reference"
+          "No active application found with this registration reference",
         );
         return;
       }

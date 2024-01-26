@@ -31,7 +31,7 @@ export default function AddForm({ added, endowID }: Props) {
         email: requiredString
           .email("invalid email")
           .notOneOf(added, "already a member"),
-      })
+      }),
     ),
   });
 

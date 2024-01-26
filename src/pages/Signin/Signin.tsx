@@ -44,7 +44,7 @@ export default function Signin() {
             Header() {
               useEffect(() => {
                 const subtitle = document.querySelector(
-                  ".amplify-text.amplify-authenticator__subtitle"
+                  ".amplify-text.amplify-authenticator__subtitle",
                 );
                 if (!subtitle) return;
                 subtitle.innerHTML = `<p>To continue, enter the code we emailed to you. It may take a couple of minutes to arrive.</p>`;
@@ -128,7 +128,7 @@ export default function Signin() {
 
 function determineTo(
   signInRouteState: SignInRouteState | undefined,
-  isSigningUp: boolean
+  isSigningUp: boolean,
 ): { pathname: string; search: string } {
   const search = signInRouteState?.search || "";
   const pathname =

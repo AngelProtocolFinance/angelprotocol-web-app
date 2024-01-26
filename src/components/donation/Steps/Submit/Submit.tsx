@@ -94,7 +94,7 @@ export default function Submit(props: SubmitStep) {
 
 const txPackage = (
   estimate: EstimateStatus,
-  wallet: ConnectedWallet
+  wallet: ConnectedWallet,
 ): TxPackage | undefined => {
   if (!isSuccess(estimate)) return undefined;
 

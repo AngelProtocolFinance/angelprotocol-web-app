@@ -25,10 +25,10 @@ describe("CsvExporter tests", () => {
     render(
       <CsvExporter data={data} headers={headers} filename={filename}>
         Save
-      </CsvExporter>
+      </CsvExporter>,
     );
     expect(mockChildComponent).toHaveBeenCalledWith(
-      expect.objectContaining({ data, filename, headers })
+      expect.objectContaining({ data, filename, headers }),
     );
   });
 });

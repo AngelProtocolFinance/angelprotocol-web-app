@@ -20,7 +20,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       logo: metamaskIcon,
       supportedChains: EVMChains,
     },
-    "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
+    "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn",
   );
 
   const binance = useInjectedProvider(
@@ -30,13 +30,13 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
       logo: binanceWalletIcon,
       supportedChains: ["56", "97"],
     },
-    "https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp"
+    "https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp",
   );
 
   const xdefiEvm = useInjectedProvider(
     "xdefi-evm",
     { logo: xdefiIcon, name: "Xdefi", supportedChains: EVMChains },
-    "https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf?hl=en"
+    "https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf?hl=en",
   );
 
   const { wc: stationMobile, extensions } = useTerra();
@@ -73,8 +73,8 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         isLoading
           ? "loading"
           : connectedWallet
-          ? connectedWallet
-          : (wallets as DisconnectedWallet[])
+            ? connectedWallet
+            : (wallets as DisconnectedWallet[])
       }
     >
       {props.children}
@@ -84,7 +84,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
 
 const UNINITIALIZED = "unitialized";
 const context = createContext<WalletContextState>(
-  UNINITIALIZED as unknown as WalletContextState
+  UNINITIALIZED as unknown as WalletContextState,
 );
 
 export const useWalletContext = () => {

@@ -52,7 +52,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
         regDateEnd: ISOdate(data.endDate, true),
         regStatus: data.status.value,
         hqCountry: data.hqCountry.name,
-      })
+      }),
     );
     buttonRef.current?.click();
   }

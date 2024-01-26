@@ -34,9 +34,9 @@ export default function useEditProfile() {
           showModal(
             TxPrompt,
             { loading: "Uploading images.." },
-            { isDismissible: false }
+            { isDismissible: false },
           );
-        }
+        },
       );
 
       const update = toProfileUpdate({
@@ -57,7 +57,7 @@ export default function useEditProfile() {
           const key = path.split(".")[0] as keyof ProfileUpdateMsg;
           return { ...result, [key]: update[key] };
         },
-        { id }
+        { id },
       );
 
       await updateProfile(cleanUpdate);
@@ -78,12 +78,12 @@ export default function useEditProfile() {
 
 async function uploadImgs(
   imgs: ImgLink[],
-  onUpload: () => void
+  onUpload: () => void,
 ): Promise<string[]> {
   const files = imgs.flatMap((img) => (img.file ? [img.file] : []));
   if (!isEmpty(files)) onUpload();
   const baseURL = await uploadFiles(files, "endow-profiles");
   return imgs.map((img) =>
-    img.file && baseURL ? getFullURL(baseURL, img.file.name) : img.publicUrl
+    img.file && baseURL ? getFullURL(baseURL, img.file.name) : img.publicUrl,
   );
 }

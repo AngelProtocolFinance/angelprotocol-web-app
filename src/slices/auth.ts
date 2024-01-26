@@ -58,7 +58,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       logger.error(err);
       return null;
     }
-  }
+  },
 );
 
 const auth = createSlice({

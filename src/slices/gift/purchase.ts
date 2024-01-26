@@ -71,7 +71,7 @@ export const purchase = createAsyncThunk<void, Args>(
       /** invalidate user balance */
       dispatch(invalidateApesTags(["tokens"]));
     }
-  }
+  },
 );
 
 function saveCode(code: string) {

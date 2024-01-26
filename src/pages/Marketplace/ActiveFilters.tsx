@@ -12,7 +12,7 @@ import { categories } from "constants/unsdgs";
 
 export default function ActiveFilters() {
   const { endow_designation, sdgGroups, countries, kyc_only } = useGetter(
-    (state) => state.component.marketFilter
+    (state) => state.component.marketFilter,
   );
 
   const dispatch = useSetter();
@@ -23,8 +23,8 @@ export default function ActiveFilters() {
       onRemove={() =>
         dispatch(
           setDesignations(
-            endow_designation.filter((val) => val !== designation)
-          )
+            endow_designation.filter((val) => val !== designation),
+          ),
         )
       }
     >

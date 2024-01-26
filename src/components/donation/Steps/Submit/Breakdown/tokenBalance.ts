@@ -11,7 +11,7 @@ type CosmosBalance = { balance: { denom: string; amount: string } };
 export const tokenBalance = async (
   { decimals, token_id, type }: Token,
   chainID: ChainID,
-  holder: string
+  holder: string,
 ): Promise<number> => {
   const { lcd, rpc } = chains[chainID];
 
@@ -21,19 +21,19 @@ export const tokenBalance = async (
     case "ibc": {
       return fetch(
         lcd +
-          `/cosmos/bank/v1beta1/balances/${holder}/by_denom?denom=${token_id}`
+          `/cosmos/bank/v1beta1/balances/${holder}/by_denom?denom=${token_id}`,
       )
         .then<CosmosBalance>((res) => res.json())
         .then((d) => condenseToNum(d.balance.amount, decimals));
     }
     case "cw20":
       return cw20Balance(token_id, holder, lcd).then((bal) =>
-        condenseToNum(bal, decimals)
+        condenseToNum(bal, decimals),
       );
 
     case "erc20":
       return erc20Balance(token_id, holder, rpc).then((bal) =>
-        condenseToNum(bal, decimals)
+        condenseToNum(bal, decimals),
       );
 
     case "evm-native": {
@@ -53,12 +53,12 @@ export const tokenBalance = async (
 async function cw20Balance(
   contract: string,
   address: string,
-  lcd: string
+  lcd: string,
 ): Promise<string> {
   return fetch(
     `${lcd}/cosmwasm/wasm/v1/contract/${contract}/smart/${objToBase64({
       balance: { address },
-    })}`
+    })}`,
   )
     .then<{ data: CW20Balance }>((res) => {
       if (!res.ok) throw new Error("failed to get cw20 balance");
@@ -70,7 +70,7 @@ async function cw20Balance(
 async function erc20Balance(
   tokenContract: string,
   walletAddress: string,
-  rpcURL: string
+  rpcURL: string,
 ) {
   const data = erc20.encodeFunctionData("balanceOf", [walletAddress]);
   const result = await request({

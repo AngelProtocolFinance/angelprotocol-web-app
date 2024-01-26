@@ -44,7 +44,7 @@ export function useRegState<T extends RegStep>(): Extract<
   const val = useContext(Context);
   if (isEmpty(Object.entries(val))) {
     throw new Error(
-      `${useRegState.name} should only be used inside ${withStepGuard.name} context`
+      `${useRegState.name} should only be used inside ${withStepGuard.name} context`,
     );
   }
   return val as any;

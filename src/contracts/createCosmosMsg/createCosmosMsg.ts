@@ -8,7 +8,7 @@ import { msgs } from "./msgs";
 export default function createCosmosMsg<T extends MsgTypes>(
   sender: string,
   type: T,
-  options: MsgOptions<T>
+  options: MsgOptions<T>,
 ): Any {
   if (type === "recipient.send") {
     const opts = options as MsgOptions<MsgSendType>;

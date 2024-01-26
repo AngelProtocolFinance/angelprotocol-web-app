@@ -34,5 +34,5 @@ type FallbackConfig = {
 export type DonaterConfigFromWidget = ValidConfig | FallbackConfig;
 
 export const configIsFallback = (
-  config: DonaterConfigFromWidget
+  config: DonaterConfigFromWidget,
 ): config is FallbackConfig => config.isFallback;

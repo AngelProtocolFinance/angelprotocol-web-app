@@ -3,7 +3,7 @@ import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
 
 export default function Socials(
-  props: Pick<EndowmentProfile, "social_media_urls">
+  props: Pick<EndowmentProfile, "social_media_urls">,
 ) {
   const { facebook, linkedin, twitter, discord, instagram, youtube, tiktok } =
     props.social_media_urls;

@@ -85,7 +85,7 @@ const registration_api = aws.injectEndpoints({
                       data as ContactUpdateResult;
                     draft.ContactPerson = Object.assign(
                       draft.ContactPerson,
-                      ContactPerson
+                      ContactPerson,
                     );
                     draft.Registration = {
                       ...draft.Registration,
@@ -109,11 +109,11 @@ const registration_api = aws.injectEndpoints({
 
                   draft.Registration = Object.assign(
                     draft.Registration,
-                    tempData
+                    tempData,
                   );
                 }
               }
-            })
+            }),
           );
         } catch (err) {
           logger.error(err);

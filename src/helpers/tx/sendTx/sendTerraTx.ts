@@ -8,7 +8,7 @@ import { logger } from "../../logger";
 export async function sendTerraTx(
   chainID: TerraChainID,
   post: ConnectedWallet["post"],
-  tx: CreateTxOptions
+  tx: CreateTxOptions,
 ): Promise<TxResult> {
   try {
     const { result, success } = await post(tx);

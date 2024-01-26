@@ -5,7 +5,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 export default function ErrorHandler(
   props: PropsWithChildren<{
     error?: Error;
-  }>
+  }>,
 ) {
   const { handleError } = useErrorContext();
   useEffect(() => {

@@ -47,7 +47,7 @@ describe("App.tsx tests", () => {
             <App />
           </Provider>
         </Authenticator.Provider>
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     // footer is immediately rendered
     // role here https://www.w3.org/TR/html-aria/#docconformance
@@ -57,7 +57,7 @@ describe("App.tsx tests", () => {
     expect(
       screen.getByRole("link", {
         name: marketLink,
-      })
+      }),
     ).toBeInTheDocument();
     // expect(
     //   screen.getByRole("link", {
@@ -67,14 +67,14 @@ describe("App.tsx tests", () => {
     expect(
       screen.getByRole("link", {
         name: regLink,
-      })
+      }),
     ).toBeInTheDocument();
 
     //marketplace is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
     //marketplace is finally loaded
     expect(
-      await screen.findByRole("heading", { name: heroText }, { timeout: 3000 })
+      await screen.findByRole("heading", { name: heroText }, { timeout: 3000 }),
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
@@ -96,13 +96,13 @@ describe("App.tsx tests", () => {
     fireEvent.click(
       screen.getByRole("link", {
         name: regLink,
-      })
+      }),
     );
     //registration is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
     //registration auth is loaded
     expect(
-      await screen.findByRole("tab", { name: /sign in/i })
+      await screen.findByRole("tab", { name: /sign in/i }),
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
@@ -120,7 +120,7 @@ describe("App.tsx tests", () => {
     fireEvent.click(
       screen.getByRole("link", {
         name: marketLink,
-      })
+      }),
     );
     //marketplace is already lazy loaded on first visit
     expect(screen.getByRole("heading", { name: heroText })).toBeInTheDocument();

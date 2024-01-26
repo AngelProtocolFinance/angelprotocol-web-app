@@ -7,7 +7,7 @@ import { logger } from "../../logger";
 export async function sendEVMTx(
   tx: EVMTx,
   request: Requester,
-  chainID: EVMChainID
+  chainID: EVMChainID,
 ): Promise<TxResult> {
   try {
     const hash = await request<string>({
@@ -37,7 +37,7 @@ export async function sendEVMTx(
 async function getReceipt(
   request: Requester,
   hash: string,
-  retries: number
+  retries: number,
 ): Promise<TxReceipt | null> {
   if (retries === 0) return null;
 

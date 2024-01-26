@@ -97,7 +97,7 @@ export const apes = createApi({
           .then(({ country_code }) =>
             baseQuery({
               url: `v2/fiat/stripe-proxy/${apiEnv}/currencies/${country_code}`,
-            })
+            }),
           )
           .then((response) => {
             if (response.error) {

@@ -7,7 +7,7 @@ import { condenseToNum } from "../../decimal";
 export default async function estimateTerraFee(
   chainID: TerraChainID,
   sender: string,
-  msgs: Msg[]
+  msgs: Msg[],
 ): Promise<EstimateResult> {
   const { lcd, nativeToken } = chains[chainID];
   const client = new LCDClient({
@@ -21,7 +21,7 @@ export default async function estimateTerraFee(
   const account = await client.auth.accountInfo(sender);
   const fee = await client.tx.estimateFee(
     [{ sequenceNumber: account.getSequenceNumber() }],
-    { msgs, feeDenoms: [nativeToken.id] }
+    { msgs, feeDenoms: [nativeToken.id] },
   );
   const amount = extractFeeAmount(fee, nativeToken.id);
 

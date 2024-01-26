@@ -40,7 +40,7 @@ export default function useSidebarOpener(linkGroups: LinkGroup[]) {
     {
       debounceTime: 50,
       shouldAttachListener: isModalOpen,
-    }
+    },
   );
 
   const open = () => showModal(ToggleableSidebar, { linkGroups });

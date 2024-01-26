@@ -26,7 +26,7 @@ const milesStoneSchema = object<any, SchemaShape<FormMilestone>>({
   milestone_date: date().typeError("invalid date"),
   milestone_description: string().max(
     MAX_CHARS,
-    `max length is ${MAX_CHARS} chars`
+    `max length is ${MAX_CHARS} chars`,
   ),
   milestone_title: requiredString,
   milestone_media: fileObj,
@@ -38,7 +38,7 @@ export const schema = object<any, SchemaShape<FV>>({
   title: requiredString,
   description: requiredString.max(
     MAX_CHARS,
-    `max length is ${MAX_CHARS} chars`
+    `max length is ${MAX_CHARS} chars`,
   ),
   image: fileObj,
   milestones: array(milesStoneSchema),

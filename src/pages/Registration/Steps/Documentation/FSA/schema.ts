@@ -18,7 +18,7 @@ export const VALID_MIME_TYPES: MIMEType[] = [
 const assetShape = fileDropzoneAssetShape(
   MB_LIMIT * BYTES_IN_MB,
   VALID_MIME_TYPES,
-  true
+  true,
 );
 
 export const schema = object<any, SchemaShape<FormValues>>({
@@ -28,6 +28,6 @@ export const schema = object<any, SchemaShape<FormValues>>({
   LegalEntityType: requiredString,
   ProjectDescription: requiredString.max(
     4000,
-    "maximum 4000 characters allowed"
+    "maximum 4000 characters allowed",
   ),
 }) as ObjectSchema<FormValues>;

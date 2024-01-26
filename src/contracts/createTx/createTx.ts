@@ -6,7 +6,7 @@ export function createTx<T extends TxType>(
   sender: string,
   type: T,
   options: TxOptions<T>,
-  value?: string
+  value?: string,
 ): SimulContractTx {
   const [data, destination] = encodeTx(type, options);
   return {
@@ -19,7 +19,7 @@ export function createTx<T extends TxType>(
 
 function encodeTx<T extends TxType>(
   type: T,
-  options: TxOptions<T>
+  options: TxOptions<T>,
 ): [string, string] {
   const [contract_key] = type.split(".");
   const { [contract_key]: c, ...args } = options as any;

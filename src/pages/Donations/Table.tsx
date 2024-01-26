@@ -21,7 +21,7 @@ export default function Table({
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
     donations,
-    "date"
+    "date",
   );
 
   const showKYCForm = useShowKYCForm();
@@ -160,7 +160,7 @@ export default function Table({
               </td>
             ) : (
               []
-            )
+            ),
           )}
       </TableSection>
     </table>

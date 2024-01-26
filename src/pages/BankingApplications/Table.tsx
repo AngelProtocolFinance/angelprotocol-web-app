@@ -81,7 +81,7 @@ export default function Table({
               </td>
             ) : (
               []
-            )
+            ),
           )}
       </TableSection>
     </table>

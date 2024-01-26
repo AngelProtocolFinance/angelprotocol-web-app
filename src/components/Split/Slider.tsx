@@ -7,7 +7,7 @@ type Props<FV extends FieldValues, P extends Path<FV>> = {
 };
 
 export default function Slider<FV extends FieldValues, P extends Path<FV>>(
-  props: Props<FV, P>
+  props: Props<FV, P>,
 ) {
   const {
     register,

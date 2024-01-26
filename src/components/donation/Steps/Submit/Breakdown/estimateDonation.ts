@@ -45,7 +45,7 @@ export async function estimateDonation({
   // ///////////// GET TX CONTENT ///////////////
 
   const fiscalSponsorShipFeeFn = _fiscalSponsorShipFeeFn(
-    recipient.isFiscalSponsored
+    recipient.isFiscalSponsored,
   );
 
   try {

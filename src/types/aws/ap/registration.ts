@@ -219,13 +219,13 @@ export function isDoneContact(data: SavedRegistration): data is DoneContact {
 }
 
 export function isDoneOrgDetails(
-  data: SavedRegistration
+  data: SavedRegistration,
 ): data is DoneOrgDetails {
   return !!(data.Registration as OrgDetails).Website;
 }
 
 export function isDoneFSAInquiry(
-  data: SavedRegistration
+  data: SavedRegistration,
 ): data is DoneFSAInquiry {
   //could be false
   return !(

@@ -25,7 +25,7 @@ export default function Form({ configFromWidget }: Props) {
     useFormContext<DonateValues>();
   const endowId = useGetter((state) => state.donation.recipient?.id);
   const isKYCRequired = useGetter(
-    (state) => state.donation.recipient?.isKYCRequired
+    (state) => state.donation.recipient?.isKYCRequired,
   );
 
   const dispatch = useDispatch();

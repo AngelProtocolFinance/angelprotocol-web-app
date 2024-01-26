@@ -195,7 +195,7 @@ export const chainList: Chain[] = [
 
 export const chains: Chains = chainList.reduce(
   (prev, curr) => ({ ...prev, [curr.id]: curr }),
-  {} as Chains
+  {} as Chains,
 );
 
 export const EVMChains: EVMChainID[] = [

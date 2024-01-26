@@ -14,15 +14,15 @@ export const schema = object<any, SchemaShape<FormValues>>({
   startDate: dateSchema.when(endKey, ([endDate], schema) =>
     date().isValidSync(endDate)
       ? schema.max(endDate, "can't be later than end date")
-      : schema
+      : schema,
   ),
   endDate: lazy((val) =>
     val
       ? dateSchema.when(startKey, ([startDate], schema) =>
           date().isValidSync(startDate)
             ? schema.min(ref(startKey), "can't be earlier than start date")
-            : schema
+            : schema,
         )
-      : string().required("invalid")
+      : string().required("invalid"),
   ),
 }) as ObjectSchema<FormValues>;

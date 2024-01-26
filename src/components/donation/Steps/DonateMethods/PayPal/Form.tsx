@@ -63,7 +63,7 @@ function Content({
   const [originialAuthUserEmail] = useState(authUserEmail);
 
   const [selectedCurrencyData, setSelectedCurrencyData] = useState(
-    getDefaultCurrency(fiatCurrencyData.currencies)
+    getDefaultCurrency(fiatCurrencyData.currencies),
   );
 
   const methods = useForm<FormValues>({
@@ -97,8 +97,8 @@ function Content({
             setSelectedCurrencyData(
               // new currency can be selected only among the passed fiat currency data
               fiatCurrencyData.currencies.find(
-                (x) => x.currency_code === currency.code
-              )!
+                (x) => x.currency_code === currency.code,
+              )!,
             );
             currencyField.onChange(currency);
           }}
@@ -212,7 +212,7 @@ function createTooltip({
 }
 
 function getDefaultCurrency(
-  currencies: FiatCurrencyData["currencies"]
+  currencies: FiatCurrencyData["currencies"],
 ): FiatCurrencyData["currencies"][number] {
   return currencies.find((x) => x.currency_code === USD_CODE) ?? currencies[0];
 }

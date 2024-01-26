@@ -20,7 +20,7 @@ export type ProgramDeleteMsg = Pick<
 >;
 
 export function isDeleteMsg(
-  msg: ProfileUpdateMsg | ProgramDeleteMsg
+  msg: ProfileUpdateMsg | ProgramDeleteMsg,
 ): msg is ProgramDeleteMsg {
   return (
     //for edits, program_id is accompanied by program:[]

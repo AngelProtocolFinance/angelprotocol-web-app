@@ -13,7 +13,7 @@ type Options<T extends object> = {
 
 export default function useHandleScreenResize<T extends object>(
   onResize: (screenSize: number, ref: T) => void,
-  options?: Options<T>
+  options?: Options<T>,
 ) {
   useEffect(() => {
     const {

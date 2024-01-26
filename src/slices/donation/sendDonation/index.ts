@@ -17,7 +17,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,
   async (
     { donation: { details, kyc, recipient }, ...txPackage },
-    { dispatch }
+    { dispatch },
   ) => {
     const chain = chains[details.chainId.value];
     const updateTx = (status: TxStatus) => {
@@ -87,5 +87,5 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       logger.error(err);
       updateTx("error");
     }
-  }
+  },
 );

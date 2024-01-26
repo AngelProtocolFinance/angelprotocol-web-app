@@ -39,5 +39,5 @@ root.render(
         </BrowserRouter>
       </Provider>
     </ErrorBoundary>
-  </StrictMode>
+  </StrictMode>,
 );

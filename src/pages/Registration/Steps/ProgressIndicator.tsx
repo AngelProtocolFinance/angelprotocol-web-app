@@ -35,7 +35,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
       shouldCallOnResizeOnLoad: true,
       debounceTime: 150,
       ref: { isOpen: isOtherStepsShown, isDesktop },
-    }
+    },
   );
 
   /**

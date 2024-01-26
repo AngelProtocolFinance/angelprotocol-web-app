@@ -19,7 +19,7 @@ import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
-  getSDGLabelValuePair(key, title)
+  getSDGLabelValuePair(key, title),
 );
 
 const endowDesignations: EndowDesignation[] = [

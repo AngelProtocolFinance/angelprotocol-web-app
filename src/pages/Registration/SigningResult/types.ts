@@ -23,5 +23,5 @@ export type ErrorQueryParams = BaseQueryParams & {
 export type QueryParams = SignerCompleteQueryParams | ErrorQueryParams;
 
 export const isSuccess = (
-  params: QueryParams
+  params: QueryParams,
 ): params is SignerCompleteQueryParams => params.action === "signerComplete";

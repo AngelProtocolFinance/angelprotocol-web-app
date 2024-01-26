@@ -12,7 +12,7 @@ const countryWhiteList = ["United States"]; //will add more in the future;
 function FSAInquiry() {
   const { data } = useRegState<3>();
   const possiblyTaxExempt = countryWhiteList.includes(
-    data.orgDetails.HqCountry
+    data.orgDetails.HqCountry,
   );
   const methods = useForm<FV>({
     defaultValues: {

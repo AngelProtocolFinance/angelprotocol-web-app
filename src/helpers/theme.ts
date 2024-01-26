@@ -10,7 +10,7 @@ const THEME_KEY = "__ap_theme";
 export function isPrevDark() {
   const userTheme = localStorage.getItem(THEME_KEY) as Theme | null;
   const isSystemThemeDark = window.matchMedia(
-    "(prefers-color-scheme: dark)"
+    "(prefers-color-scheme: dark)",
   ).matches;
 
   return (

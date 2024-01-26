@@ -10,7 +10,7 @@ import { request } from "../../evm";
 export async function estimateEVMFee(
   chainID: EVMChainID,
   sender: string,
-  tx: SimulTx
+  tx: SimulTx,
 ): Promise<EstimateResult> {
   const { rpc, nativeToken } = chains[chainID];
   const [nonce, gas, gasPrice] = await Promise.all([

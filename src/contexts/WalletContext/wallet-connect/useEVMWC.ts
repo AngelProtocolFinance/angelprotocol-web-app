@@ -51,7 +51,7 @@ export function useEVMWC(meta: WalletMeta): Wallet {
     setState((prev) =>
       prev.status === "connected"
         ? { ...prev, ...account(namespaces.eip155) }
-        : prev
+        : prev,
     );
   }
 
@@ -144,7 +144,7 @@ export function useEVMWC(meta: WalletMeta): Wallet {
 
 const connected = (
   session: SessionTypes.Struct,
-  client: SignClient
+  client: SignClient,
 ): EVMConnected => {
   const acc = account(session.namespaces.eip155);
   return {

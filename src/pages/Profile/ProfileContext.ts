@@ -9,7 +9,7 @@ export const useProfileContext = (): EndowmentProfile => {
 
   if (isEmpty(Object.entries(val))) {
     throw new Error(
-      "useProfileContext should only be used inside ProfileContext"
+      "useProfileContext should only be used inside ProfileContext",
     );
   }
   return val;

@@ -51,7 +51,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
         });
       }
     },
-    [showModal]
+    [showModal],
   );
 
   return (

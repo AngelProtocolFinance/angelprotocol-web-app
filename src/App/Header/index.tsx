@@ -63,6 +63,6 @@ function hasBanner(location: Location): boolean {
       appRoutes.profile + "/:id",
       appRoutes.marketplace + "/:id",
     ].map((r) => ({ path: r })),
-    location
+    location,
   );
 }

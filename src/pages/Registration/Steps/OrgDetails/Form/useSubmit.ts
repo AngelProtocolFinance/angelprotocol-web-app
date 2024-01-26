@@ -31,7 +31,7 @@ export default function useSubmit() {
       //payload
       Website: fv.Website,
       UN_SDG: fv.UN_SDG.map(
-        (sdg) => sdg.value
+        (sdg) => sdg.value,
       ) /**TODO: AWS update to accept number[] */,
       KycDonorsOnly: fv.isAnonymousDonationsAllowed === "No",
       HqCountry: fv.HqCountry.name,

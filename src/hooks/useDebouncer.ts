@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function useDebouncer<T = number>(
   value: T,
-  delay: number
+  delay: number,
 ): [T, boolean] {
   const [loading, setLoading] = useState(false);
   const [_value, _setValue] = useState<T>(value);

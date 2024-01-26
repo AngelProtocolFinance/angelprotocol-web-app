@@ -26,7 +26,7 @@ function ContactDetails() {
           ReferralMethod: toReferralOption(
             contact.ReferralMethod === "angel-alliance"
               ? "better-giving-alliance"
-              : contact.ReferralMethod
+              : contact.ReferralMethod,
           ),
           OrganizationName: contact.orgName,
         }

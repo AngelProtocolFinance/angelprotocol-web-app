@@ -16,7 +16,7 @@ export async function sendCosmosTx(
   chainID: CosmosChainID,
   sender: string,
   doc: SignDoc,
-  sign: Keplr["signDirect"]
+  sign: Keplr["signDirect"],
 ): Promise<TxResult> {
   const { lcd } = chains[chainID];
   const { signature, signed } = await sign(chainID, sender, doc);
@@ -51,7 +51,7 @@ export async function sendCosmosTx(
     lcd + `/cosmos/tx/v1beta1/txs/${txhash}`,
     10,
     txhash,
-    chainID
+    chainID,
   );
 
   if (isReceiptError(receipt)) return receipt;
@@ -66,7 +66,7 @@ async function _receipt(
   url: string,
   retries: number,
   hash: string,
-  chainID: ChainID
+  chainID: ChainID,
 ): Promise<TxResponse | TxError> {
   if (retries === 0) {
     return {

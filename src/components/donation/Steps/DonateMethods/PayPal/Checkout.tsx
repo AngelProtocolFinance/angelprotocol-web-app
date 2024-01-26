@@ -58,7 +58,7 @@ export default function Checkout({ orderId, onBack }: Props) {
                   } else if ("debug_id" in order) {
                     // (2) Other non-recoverable errors -> Show a failure message
                     throw new Error(
-                      `${order.details[0]?.description} (${order.debug_id})`
+                      `${order.details[0]?.description} (${order.debug_id})`,
                     );
                   }
                 } else if (isEmpty(order.purchase_units ?? [])) {

@@ -6,7 +6,7 @@ import { FlatFilter } from "./common";
 
 export default function Categories() {
   const sdgGroups = useGetter(
-    (state) => state.component.marketFilter.sdgGroups
+    (state) => state.component.marketFilter.sdgGroups,
   );
 
   const dispatch = useSetter();

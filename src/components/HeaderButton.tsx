@@ -5,7 +5,7 @@ export function HeaderButton<T>(
     _sortDirection: "asc" | "desc";
     _sortKey: keyof T;
     _activeSortKey: keyof T;
-  }
+  },
 ) {
   const {
     _activeSortKey,

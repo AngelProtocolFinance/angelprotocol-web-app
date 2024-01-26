@@ -14,7 +14,7 @@ export default function OAUTHRedirector() {
   useEffect(() => {
     const timeout = setTimeout(
       () => navigate(localStorage.getItem(OAUTH_PATH_STORAGE_KEY) ?? "/"),
-      DELAY
+      DELAY,
     );
     return () => {
       clearTimeout(timeout);

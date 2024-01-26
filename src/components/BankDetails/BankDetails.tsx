@@ -25,7 +25,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
     name: "United States Dollar",
   });
   const [amount, setAmount] = useState(
-    DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
+    DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT,
   );
   const [debouncedAmount] = useDebouncer(amount, 500);
   const amnt = /^[1-9]\d*$/.test(debouncedAmount) ? +debouncedAmount : 0;

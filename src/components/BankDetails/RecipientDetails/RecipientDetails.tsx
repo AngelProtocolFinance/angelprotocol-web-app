@@ -26,7 +26,7 @@ function RecipientDetails({
       amount,
       currency,
     },
-    { skip: !amount }
+    { skip: !amount },
   );
 
   const requirements = data?.requirements || [];

@@ -87,7 +87,7 @@ export default function useImgEditor<T extends FieldValues, K extends Path<T>>({
     onFileChange(
       new File([blob], originalFile.name, {
         type: blob.type,
-      })
+      }),
     );
   }
 

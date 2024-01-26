@@ -71,7 +71,7 @@ function Portion(
     action: string;
     title: string;
     percentage: number;
-  }>
+  }>,
 ) {
   return (
     <div className="flex flex-col items-center p-6 bg-orange-l6 border border-gray-l2 rounded">

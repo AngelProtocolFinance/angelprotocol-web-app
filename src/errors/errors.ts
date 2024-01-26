@@ -30,7 +30,7 @@ export class LogDonationFail extends Error {
   txHash: string;
   constructor(chainId: string, txHash: string) {
     super(
-      `Failed to log your donation for receipt purposes. Kindly send an email to ${EMAIL_SUPPORT}`
+      `Failed to log your donation for receipt purposes. Kindly send an email to ${EMAIL_SUPPORT}`,
     );
     this.chainId = chainId;
     this.txHash = txHash;
@@ -54,7 +54,7 @@ export class ManualChainSwitchRequiredError extends APError {
   constructor(chainId: string) {
     super(
       "ManualChainSwitchRequiredError",
-      `Please use your wallet to switch to ${chainId} chain and reload the page`
+      `Please use your wallet to switch to ${chainId} chain and reload the page`,
     );
   }
 }

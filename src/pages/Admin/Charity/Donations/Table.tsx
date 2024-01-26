@@ -24,7 +24,7 @@ export default function Table({
 }: Props) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
     donations,
-    "date"
+    "date",
   );
 
   return (
@@ -127,7 +127,7 @@ export default function Table({
                   )}
                 </td>
               </Cells>
-            )
+            ),
           )
           .concat(
             hasMore ? (
@@ -147,7 +147,7 @@ export default function Table({
               </td>
             ) : (
               []
-            )
+            ),
           )}
       </TableSection>
     </table>

@@ -23,7 +23,7 @@ export default function SubscriptionForm() {
         email: string()
           .email("Invalid email format")
           .required("Please enter your email."),
-      })
+      }),
     ),
     reValidateMode: "onSubmit",
   });

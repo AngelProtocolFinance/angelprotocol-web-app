@@ -18,7 +18,7 @@ export default function Table({
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
     applications,
-    "RegistrationDate"
+    "RegistrationDate",
   );
 
   return (
@@ -118,7 +118,7 @@ export default function Table({
               </td>
             ) : (
               []
-            )
+            ),
           )}
       </TableSection>
     </table>

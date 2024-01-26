@@ -33,7 +33,7 @@ export default function ImgCropper({
         });
       }
     },
-    [x, y]
+    [x, y],
   );
 
   function handleSave() {

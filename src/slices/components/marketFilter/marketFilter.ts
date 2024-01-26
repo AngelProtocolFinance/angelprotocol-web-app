@@ -28,7 +28,7 @@ const marketFilter = createSlice({
     },
     setDesignations: (
       state,
-      { payload }: PayloadAction<EndowDesignation[]>
+      { payload }: PayloadAction<EndowDesignation[]>,
     ) => {
       state.endow_designation = payload;
     },

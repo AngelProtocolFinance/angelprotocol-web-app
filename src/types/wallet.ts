@@ -87,12 +87,12 @@ const types: { [key in WalletID]: "cosmos" | "terra" | "evm" } = {
 
 //type guards
 export const isCosmos = (
-  val: Connected | ConnectedWallet
+  val: Connected | ConnectedWallet,
 ): val is CosmosConnected => types[val.id] === "cosmos";
 
 export const isEVM = (val: Connected | ConnectedWallet): val is EVMConnected =>
   types[val.id] === "evm";
 
 export const isTerra = (
-  val: Connected | ConnectedWallet
+  val: Connected | ConnectedWallet,
 ): val is TerraConnected => types[val.id] === "terra";

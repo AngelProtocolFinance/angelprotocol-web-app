@@ -11,7 +11,7 @@ type Props<FV extends FieldValues, P extends Path<FV>> = {
 };
 
 export default function Split<FV extends FieldValues, P extends Path<FV>>(
-  props: Props<FV, P>
+  props: Props<FV, P>,
 ) {
   const { watch } = useFormContext<FV>();
   const liquidPercentage = watch(props.liqPctField);

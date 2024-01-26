@@ -18,7 +18,7 @@ import { isXdefiPrioritized } from "./helpers/isXdefiPrioritized";
 export default function useInjectedWallet(
   providerID: InjectedProviderID,
   meta: WalletMeta,
-  installURL: string
+  installURL: string,
 ): Wallet {
   const actionKey = `${providerID}__pref`;
 
@@ -90,7 +90,7 @@ export default function useInjectedWallet(
                   blockExplorerUrls: [chain.blockExplorer],
                 },
               ],
-            })
+            }),
         );
     } catch (err) {
       logger.error(err);

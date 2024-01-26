@@ -17,7 +17,7 @@ const options: FilterOption<EndowDesignation>[] = [
 
 export default function Designations() {
   const designations = useGetter(
-    (state) => state.component.marketFilter.endow_designation
+    (state) => state.component.marketFilter.endow_designation,
   );
   const dispatch = useSetter();
 

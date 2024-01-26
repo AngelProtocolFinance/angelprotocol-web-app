@@ -31,7 +31,7 @@ export const referralMethods: { [key in ReferralMethods]: string } = {
 };
 
 function genOptions<T extends object>(
-  objOptions: T
+  objOptions: T,
 ): T extends { [key in infer R]: any } ? OptionType<R>[] : OptionType<never>[] {
   return Object.entries(objOptions).map(([value, label]) => ({
     value,

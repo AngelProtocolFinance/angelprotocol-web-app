@@ -13,8 +13,8 @@ export const walletAddr = (chainId: ChainID) =>
       ? Yup.string()
       : Yup.string().matches(
           walletAddrPatten(chainId),
-          "wallet address not valid"
-        )
+          "wallet address not valid",
+        ),
   );
 
 export const url = Yup.string()

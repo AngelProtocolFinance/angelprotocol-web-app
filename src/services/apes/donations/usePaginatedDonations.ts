@@ -20,7 +20,7 @@ type EndowmentOwner = { endowmentId: string };
 type RecordOwner = DonorOwner | EndowmentOwner;
 
 export default function usePaginatedDonationRecords<T extends RecordOwner>(
-  owner: T
+  owner: T,
 ) {
   const dispatch = useSetter();
 
@@ -45,7 +45,7 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
         Object.values(flatFields)
           .reduce<string>((result, val) => `${val}` + result, "")
           .toLocaleLowerCase()
-          .includes(debouncedQuery.toLocaleLowerCase())
+          .includes(debouncedQuery.toLocaleLowerCase()),
       );
 
       return {
@@ -77,7 +77,7 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
           updateDonationsQueryData("donations", originalArgs, (prevResult) => {
             prevResult.Items.push(...newEndowRes.Items);
             prevResult.ItemCutoff = newEndowRes.ItemCutoff;
-          })
+          }),
         );
       }
     }

@@ -13,7 +13,7 @@ type Props = {
 
 export default function Options({ query, options }: Props) {
   const filtered = options.filter((o) =>
-    o.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+    o.name.toLocaleLowerCase().includes(query.toLocaleLowerCase()),
   );
   return (
     <Combobox.Options

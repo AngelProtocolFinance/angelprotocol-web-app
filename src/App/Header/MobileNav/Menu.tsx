@@ -42,7 +42,7 @@ export default function Menu({ links }: { links: Link[] }) {
             >
               {link.title}
             </NavLink>
-          )
+          ),
         )}
       </nav>
     </Dialog.Panel>

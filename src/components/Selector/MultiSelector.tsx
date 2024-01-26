@@ -41,7 +41,7 @@ export function MultiSelector<
   const filteredOptions =
     searchable && searchText
       ? options.filter((o) =>
-          o.label.toLowerCase().includes(searchText.toLowerCase())
+          o.label.toLowerCase().includes(searchText.toLowerCase()),
         )
       : options;
 

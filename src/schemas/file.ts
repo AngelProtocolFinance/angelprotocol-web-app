@@ -9,7 +9,7 @@ const previewsKey: keyof FileDropzoneAsset = "previews";
 export function fileDropzoneAssetShape(
   maxByteSize: number,
   validMimeTypes: MIMEType[],
-  required = false
+  required = false,
 ) {
   return Yup.object({
     files: Yup.array(genFileSchema(maxByteSize, validMimeTypes)).when(
@@ -17,7 +17,7 @@ export function fileDropzoneAssetShape(
       ([previews], schema) =>
         isEmpty(previews as FileObject[]) && required
           ? schema.min(1, "required")
-          : schema
+          : schema,
     ),
   });
 }

@@ -13,14 +13,14 @@ const referralMethodKey: Key = "ReferralMethod";
 const otherRole = string().when(roleKey, ([option], schema) =>
   (option as OptionType<ContactRoles>).value === "other"
     ? schema.required("required")
-    : schema
+    : schema,
 );
 
 const otherReferralMethod = (referralMethod: ReferralMethods) =>
   string().when(referralMethodKey, ([option], schema) =>
     (option as OptionType<ReferralMethods>).value === referralMethod
       ? schema.required("required")
-      : schema
+      : schema,
   );
 
 export const schema = object<any, SchemaShape<FormValues>>({

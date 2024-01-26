@@ -13,7 +13,7 @@ function BankingApplication() {
     { uuid: id, requestor: "bg-admin" },
     {
       skip: !id,
-    }
+    },
   );
 
   return (

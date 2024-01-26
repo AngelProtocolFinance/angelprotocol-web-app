@@ -56,6 +56,6 @@ export default function Tooltip<T extends HTMLElement>({
     >
       {content}
     </Transition>,
-    document.body
+    document.body,
   );
 }

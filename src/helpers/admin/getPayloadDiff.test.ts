@@ -6,16 +6,16 @@ describe("getPayloadDiff", () => {
     expect(
       getPayloadDiff(
         //prettier-ignore
-        { a: 1, b: 2, c: 3, d:NaN },
-        { a: 1, b: 2, c: 3, d: NaN }
-      )
+        { a: 1, b: 2, c: 3, d: NaN },
+        { a: 1, b: 2, c: 3, d: NaN },
+      ),
     ).toStrictEqual([]);
     expect(
       getPayloadDiff(
         //prettier-ignore
-        { a: 1, b: 2, c: 3, d:[1], e: [1, 2], f: [1, 2] },
-        { a: 4, b: 5, c: 6, d: [1, 2], e: [1], f: [1, 3] }
-      )
+        { a: 1, b: 2, c: 3, d: [1], e: [1, 2], f: [1, 2] },
+        { a: 4, b: 5, c: 6, d: [1, 2], e: [1], f: [1, 3] },
+      ),
     ).toStrictEqual([
       ["a", 1, 4],
       ["b", 2, 5],
@@ -29,10 +29,20 @@ describe("getPayloadDiff", () => {
     expect(
       getPayloadDiff(
         //prettier-ignore
-        { a: 1, b: "a", c: 3, d:undefined, e:"", f:4, g:[1], h: 5, i: NaN},
+        { a: 1, b: "a", c: 3, d: undefined, e: "", f: 4, g: [1], h: 5, i: NaN },
         //prettier-ignore
-        { a: 0, b: "b", c: "", d: null, e: undefined, f: false, g: [], h: NaN, i:NaN }
-      )
+        {
+          a: 0,
+          b: "b",
+          c: "",
+          d: null,
+          e: undefined,
+          f: false,
+          g: [],
+          h: NaN,
+          i: NaN,
+        },
+      ),
     ).toStrictEqual([
       ["a", 1, 0],
       ["b", "a", "b"],
@@ -56,8 +66,8 @@ describe("getPayloadDiff", () => {
           g: false,
           h: [],
           i: [1],
-        }
-      )
+        },
+      ),
     ).toStrictEqual([
       ["b", NOT_SET, "b"],
       ["d", NOT_SET, 0],
@@ -72,8 +82,8 @@ describe("getPayloadDiff", () => {
       getPayloadDiff(
         //prettier ignore
         { a: 0 },
-        { a: 0 }
-      )
+        { a: 0 },
+      ),
     ).toStrictEqual([]);
   });
   test("prev is false", () => {
@@ -81,8 +91,8 @@ describe("getPayloadDiff", () => {
       getPayloadDiff(
         //prettier ignore
         { a: false },
-        { a: false }
-      )
+        { a: false },
+      ),
     ).toStrictEqual([]);
   });
   test("prev is empty array []", () => {
@@ -90,8 +100,8 @@ describe("getPayloadDiff", () => {
       getPayloadDiff(
         //prettier ignore
         { a: [] },
-        { a: [] }
-      )
+        { a: [] },
+      ),
     ).toStrictEqual([]);
   });
   test("both the same string in prev and next", () => {
@@ -99,8 +109,8 @@ describe("getPayloadDiff", () => {
       getPayloadDiff(
         //prettier ignore
         { a: "a" },
-        { a: "a" }
-      )
+        { a: "a" },
+      ),
     ).toStrictEqual([]);
   });
   test("include diff subobjects", () => {
@@ -148,8 +158,8 @@ describe("getPayloadDiff", () => {
             g: "a",
             h: "same",
           },
-        }
-      )
+        },
+      ),
     ).toStrictEqual([
       ["first.a", true, false],
       ["first.c", 1, 2],

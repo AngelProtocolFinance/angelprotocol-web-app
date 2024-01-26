@@ -6,7 +6,7 @@ type Quotation = {
 
 export const USD = async (coinId: string): Promise<number> =>
   fetch(
-    `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
+    `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`,
   )
     .then<Quotation>((res) => {
       if (!res.ok) throw new Error("Failed to fetch USD value");

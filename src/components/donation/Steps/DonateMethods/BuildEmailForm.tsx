@@ -29,8 +29,8 @@ export default function BuildEmailForm({ charityName, profileUrl }: Props) {
         profileUrl,
         emailTo,
         numberOfShares,
-        stockSymbol
-      )
+        stockSymbol,
+      ),
   );
 
   return (
@@ -86,7 +86,7 @@ const openEmailClient = (
   profileUrl: string,
   emailTo: string,
   numberOfShares: number | null,
-  stockSymbol: string
+  stockSymbol: string,
 ) => {
   window.open(`
   mailto:${emailTo}

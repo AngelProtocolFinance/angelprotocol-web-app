@@ -113,7 +113,7 @@ export function useKeplrWC(): Wallet {
 
 const connected = (
   session: SessionTypes.Struct,
-  client: SignClient
+  client: SignClient,
 ): CosmosConnected => {
   return {
     ...account(session.namespaces.cosmos),

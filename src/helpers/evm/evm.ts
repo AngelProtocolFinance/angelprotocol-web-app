@@ -2,7 +2,7 @@ import { InjectedProvider, RequestArguments } from "types/evm";
 import { InjectedProviderID } from "types/wallet";
 
 export async function injectedProvider(
-  id: InjectedProviderID
+  id: InjectedProviderID,
 ): Promise<InjectedProvider | undefined> {
   switch (id) {
     case "binance-wallet":

@@ -7,7 +7,7 @@ export async function getFilePreviews<
   T extends { [index: string]: FileDropzoneAsset },
 >(fields: T): Promise<{ [key in keyof T]: FileObject[] }> {
   const files = Object.entries(fields).flatMap<File>(
-    ([, asset]) => asset.files
+    ([, asset]) => asset.files,
   );
 
   const baseURL = await uploadFiles(files, "endow-reg");

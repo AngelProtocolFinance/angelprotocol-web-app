@@ -38,7 +38,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
         status: data.status.value,
         endowmentID: data.endowmentID ? +data.endowmentID : undefined,
         requestor: "bg-admin",
-      })
+      }),
     );
     buttonRef.current?.click();
   }

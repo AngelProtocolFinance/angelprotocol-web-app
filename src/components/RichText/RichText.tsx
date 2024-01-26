@@ -52,7 +52,7 @@ export default function RichText(props: Props) {
 
         props.onChange(
           //quill clean state has residual `\n`
-          numChars <= 0 ? "" : JSON.stringify(quill.getContents())
+          numChars <= 0 ? "" : JSON.stringify(quill.getContents()),
         );
       });
     }

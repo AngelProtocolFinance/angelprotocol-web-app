@@ -58,8 +58,8 @@ export const wise = aws.injectEndpoints({
             { currency, amount },
             (draft) => {
               draft.requirements = data;
-            }
-          )
+            },
+          ),
         );
       },
     }),

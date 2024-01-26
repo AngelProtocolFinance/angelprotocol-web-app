@@ -8,7 +8,7 @@ export const bucketURL = "s3.amazonaws.com";
 const SPACES = /\s+/g;
 export async function uploadFiles(
   files: File[],
-  bucket: Bucket
+  bucket: Bucket,
 ): Promise<string | null> {
   if (isEmpty(files)) return null;
 
@@ -27,8 +27,8 @@ export async function uploadFiles(
           fileName: `${timeStamp}-${f.name.replace(SPACES, "_")}`,
         }),
         headers: { authorization: `Bearer ${token}` },
-      })
-    )
+      }),
+    ),
   );
 
   //return baseURL and let consumer build file path

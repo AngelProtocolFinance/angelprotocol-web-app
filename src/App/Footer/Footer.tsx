@@ -15,7 +15,7 @@ function Footer({ linkGroups, socials }: Props) {
         const intercom = document.querySelector(".intercom-launcher");
         intercom?.classList.toggle("hidden", e.isIntersecting);
       },
-      { threshold: [0.5] }
+      { threshold: [0.5] },
     );
     observer.observe(node);
   }

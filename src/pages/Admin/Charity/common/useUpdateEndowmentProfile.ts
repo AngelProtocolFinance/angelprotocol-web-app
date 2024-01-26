@@ -16,7 +16,7 @@ export function useUpdateEndowmentProfile() {
       showModal(
         TxPrompt,
         { loading: "Submitting changes.." },
-        { isDismissible: false }
+        { isDismissible: false },
       );
 
       const result = await submit(msg);

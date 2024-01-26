@@ -31,7 +31,7 @@ describe("Copier component test:", () => {
     await waitFor(() => {
       // Expects mock Clipboard API to be invoked
       expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-        "S4mple-Text+2_Copy0"
+        "S4mple-Text+2_Copy0",
       );
     });
 

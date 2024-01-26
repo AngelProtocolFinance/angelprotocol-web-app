@@ -15,7 +15,7 @@ export default function ProgramEditor() {
   const { id: endowId } = useAdminContext();
   const programQuery = useProgramQuery(
     { endowId, programId },
-    { skip: !programId || programId === NEW }
+    { skip: !programId || programId === NEW },
   );
 
   if (programId === NEW)

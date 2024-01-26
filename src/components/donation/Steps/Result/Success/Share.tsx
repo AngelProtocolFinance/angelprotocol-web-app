@@ -92,7 +92,7 @@ function generateShareLink(rawText: string, type: SocialMedia) {
      */
     case "Facebook":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        DAPP_URL
+        DAPP_URL,
       )}&quote=${encodedText}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons

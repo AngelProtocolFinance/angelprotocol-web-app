@@ -28,12 +28,12 @@ export default function DesktopNav({ classes, links }: Props) {
             to={link.href}
             className={createNavLinkStyler(
               styles,
-              "pointer-events-none text-orange-l1"
+              "pointer-events-none text-orange-l1",
             )}
           >
             {link.title}
           </NavLink>
-        )
+        ),
       )}
     </nav>
   );

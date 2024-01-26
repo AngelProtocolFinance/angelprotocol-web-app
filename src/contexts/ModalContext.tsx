@@ -19,7 +19,7 @@ type ModalState = {
 type Opener = <T extends {}>(
   Modal: FC<T>,
   props: T,
-  options?: Partial<ModalOptions>
+  options?: Partial<ModalOptions>,
 ) => void;
 
 type ContextState = {
@@ -32,12 +32,12 @@ type ContextState = {
   closeModal(): void;
   setModalOption<T extends keyof ModalOptions>(
     option: T,
-    val: ModalOptions[T]
+    val: ModalOptions[T],
   ): void;
 };
 
 export default function ModalContext(
-  props: PropsWithChildren<{ id?: string }>
+  props: PropsWithChildren<{ id?: string }>,
 ) {
   const [state, setState] = useState<ModalState>();
 
@@ -66,7 +66,7 @@ export default function ModalContext(
         return { ...prev, [option]: val };
       });
     },
-    []
+    [],
   );
 
   return (

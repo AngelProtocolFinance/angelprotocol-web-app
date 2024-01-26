@@ -31,7 +31,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
       object({
         reason:
           verdict === "approve" ? string() : string().required("required"),
-      })
+      }),
     ),
     defaultValues: { reason: "" },
   });

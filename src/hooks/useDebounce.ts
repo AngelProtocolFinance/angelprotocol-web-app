@@ -24,7 +24,7 @@ function useDebounce(): [
         }
       }, delay);
     },
-    []
+    [],
   );
 
   return [debounce, isDebouncing];

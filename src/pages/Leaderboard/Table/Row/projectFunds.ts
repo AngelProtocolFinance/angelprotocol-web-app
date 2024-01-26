@@ -3,7 +3,7 @@ export default function projectFunds(
   locked: number,
   liquid: number,
   apy: number,
-  harvest_rate: number
+  harvest_rate: number,
 ): { locked: number; liquid: number } {
   //base case
   if (years <= 0) {
@@ -17,7 +17,7 @@ export default function projectFunds(
 function getNextYearVal(
   apy: number, //annual rate
   mode: number, //num times compounded on course of period
-  pv: number // current value
+  pv: number, // current value
 ) {
   return pv * Math.pow(1 + apy / 100 / mode, mode);
 }

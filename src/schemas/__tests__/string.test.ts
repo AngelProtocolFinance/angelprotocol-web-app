@@ -41,7 +41,7 @@ describe("string schemas tests", () => {
     test.each(cases)(
       'url("$input") === $expected',
       async ({ input, expected }) =>
-        expect(await url.isValid(input)).toBe(expected)
+        expect(await url.isValid(input)).toBe(expected),
     );
   });
 });

@@ -41,8 +41,8 @@ export default function usePagination() {
             (prevResult) => {
               prevResult.items.push(...newPageRes.items);
               prevResult.nextPageKey = newPageRes.nextPageKey;
-            }
-          )
+            },
+          ),
         );
       }
     }

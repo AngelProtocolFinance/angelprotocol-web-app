@@ -46,9 +46,9 @@ export function Cells(props: CellProps) {
             ? "td"
             : "th"
           : //th first on body
-          index === 0
-          ? "th"
-          : "td",
+            index === 0
+            ? "th"
+            : "td",
         {
           key: index,
           className:
@@ -56,7 +56,7 @@ export function Cells(props: CellProps) {
               ? props.verticalHeaderClass || ""
               : props.cellClass,
           children: child,
-        }
+        },
       );
     }
 

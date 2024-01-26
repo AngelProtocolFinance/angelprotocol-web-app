@@ -6,7 +6,7 @@ import estimateTerraFee from "./estimateTerraFee";
 
 export default async function estimateTx(
   toEstimate: EstimateInput,
-  sender: { address: string }
+  sender: { address: string },
 ): Promise<EstimateResult | null> {
   try {
     switch (toEstimate.chainID) {

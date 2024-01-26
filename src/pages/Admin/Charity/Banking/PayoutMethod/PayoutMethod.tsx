@@ -13,7 +13,7 @@ export default function PayoutMethod() {
     { uuid: id, requestor: "endowment", endowmentID: endowID },
     {
       skip: !id,
-    }
+    },
   );
 
   return (
