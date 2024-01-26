@@ -5,14 +5,13 @@ describe("getPayloadDiff", () => {
   test("include changes from prev to next", () => {
     expect(
       getPayloadDiff(
-        //biome-ignore format:;
+        //biome-ignore format:
         { a: 1, b: 2, c: 3, d: NaN },
         { a: 1, b: 2, c: 3, d: NaN }
       )
     ).toStrictEqual([]);
     expect(
       getPayloadDiff(
-        //biome-ignore format:;
         { a: 1, b: 2, c: 3, d: [1], e: [1, 2], f: [1, 2] },
         { a: 4, b: 5, c: 6, d: [1, 2], e: [1], f: [1, 3] }
       )
@@ -28,20 +27,10 @@ describe("getPayloadDiff", () => {
   test("if prev !== next, include next if it's truthy (including 0, '', [] and false)", () => {
     expect(
       getPayloadDiff(
-        //biome-ignore format:;
+        //biome-ignore format:
         { a: 1, b: "a", c: 3, d: undefined, e: "", f: 4, g: [1], h: 5, i: NaN },
-        //biome-ignore format:;
-        {
-          a: 0,
-          b: "b",
-          c: "",
-          d: null,
-          e: undefined,
-          f: false,
-          g: [],
-          h: NaN,
-          i: NaN,
-        }
+        //biome-ignore format:
+        { a: 0, b: "b", c: "", d: null, e: undefined, f: false, g: [], h: NaN, i: NaN }
       )
     ).toStrictEqual([
       ["a", 1, 0],

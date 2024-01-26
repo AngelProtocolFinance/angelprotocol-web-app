@@ -8,16 +8,12 @@
     "build": "tsc && rsbuild build",
     "start": "rsbuild dev",
     "test": "vitest",
-    "format": "biome format ./src --write",
+    "format": "biome format --write src",
     "lint": "biome lint ./src",
     "preview": "rsbuild preview"
   },
   "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
+    "production": [">0.2%", "not dead", "not op_mini all"],
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",
