@@ -142,7 +142,7 @@ export default function Form({
               className="btn-outline-filled btn-donate w-1/2"
               to={`${appRoutes.marketplace}/${recipient.id}`}
             >
-              back
+              Cancel
             </Link>
           )}
           <button
