@@ -7,6 +7,7 @@ import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
+import { useState } from "react";
 
 type Props = {
   donaterConfig: DonaterConfigFromWidget | null;
@@ -34,6 +35,7 @@ const tabClasses = (selected: boolean) =>
   } text-sm flex items-center gap-2 p-2 @md:px-3 @md:py-4 focus:outline-none @md:w-28 rounded @md:rounded-none`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {
+  const [isExpanded, setIsExpanded] = useState(false);
   return (
     <Tab.Group
       manual
@@ -47,9 +49,10 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <span>Card</span>
         </Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>
-          <Icon type="Bitcoin" size={18} />
-          <span>Crypto</span>
+          <Icon type="Paypal" size={16} />
+          <span>Paypal</span>
         </Tab>
+
         <Tab className={({ selected }) => tabClasses(selected)}>
           <Icon type="Stocks" size={18} />
           <span>Stocks</span>
@@ -58,10 +61,14 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <Icon type="Advisor" size={19} />
           <span>DAF</span>
         </Tab>
-        <Tab className={({ selected }) => tabClasses(selected)}>
-          <Icon type="Paypal" size={16} />
-          <span>Paypal</span>
-        </Tab>
+
+        {/** more options */}
+        <div className="contents">
+          <Tab className={({ selected }) => tabClasses(selected)}>
+            <Icon type="Bitcoin" size={18} />
+            <span>Crypto</span>
+          </Tab>
+        </div>
       </Tab.List>
       <Tab.Panels as="div" className="p-4 @md:p-8 pt-0 @md:pt-4 ">
         <Tab.Panel>
@@ -78,22 +85,6 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           />
         </Tab.Panel>
         <Tab.Panel>
-          <Crypto
-            recipient={state.recipient}
-            step={state.step}
-            details={
-              state.details?.method === "crypto" ? state.details : undefined
-            }
-            config={donaterConfig}
-          />
-        </Tab.Panel>
-        <Tab.Panel>
-          <Stocks state={state} />
-        </Tab.Panel>
-        <Tab.Panel>
-          <DAFDirect />
-        </Tab.Panel>
-        <Tab.Panel>
           <PayPal
             recipient={state.recipient}
             step={state.step}
@@ -104,6 +95,22 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
             advanceOptDisplay={
               donaterConfig?.advancedOptionsDisplay ?? "collapsed"
             }
+          />
+        </Tab.Panel>
+        <Tab.Panel>
+          <Stocks state={state} />
+        </Tab.Panel>
+        <Tab.Panel>
+          <DAFDirect />
+        </Tab.Panel>
+        <Tab.Panel>
+          <Crypto
+            recipient={state.recipient}
+            step={state.step}
+            details={
+              state.details?.method === "crypto" ? state.details : undefined
+            }
+            config={donaterConfig}
           />
         </Tab.Panel>
       </Tab.Panels>
