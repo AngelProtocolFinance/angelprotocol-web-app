@@ -35,7 +35,7 @@ function Content(props: Props) {
 
   return (
     <div
-      className="grid grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full padded-container py-4 @sm:py-10 font-work"
+      className="grid md:grid-cols-[auto_1fr] md:gap-y-4 lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full padded-container py-4 @sm:py-10 font-work"
       id={CONTAINER_ID}
     >
       <Link
@@ -44,9 +44,17 @@ function Content(props: Props) {
       >
         Cancel
       </Link>
-      <OrgCard name={props.name} tagline={props.tagline} logo={props.logo} />
-      <Steps className="justify-self-center w-full" donaterConfig={null} />
-      <FAQ />
+      <OrgCard
+        name={props.name}
+        tagline={props.tagline}
+        logo={props.logo}
+        classes="md:col-start-1 md:row-start-2 w-72 md:h-full"
+      />
+      <Steps
+        className="md:row-span-2 md:row-start-2 md:col-start-2"
+        donaterConfig={null}
+      />
+      <FAQ classes="md:row-start-3 md:col-start-1 w-72 lg:row-start-2 lg:col-start-3" />
 
       <p className="text-sm text-gray-d1 dark:text-gray mt-2 text-center col-span-full">
         By making a donation, you agree to our{" "}

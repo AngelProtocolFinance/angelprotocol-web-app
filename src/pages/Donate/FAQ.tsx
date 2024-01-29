@@ -5,7 +5,7 @@ export default function FAQ({ classes = "" }) {
   return (
     <div
       className={
-        classes + " w-72 border border-prim p-4 rounded font-work grid gap-4"
+        classes + " border border-prim p-4 rounded font-work grid gap-4"
       }
     >
       {faqs.map((faq) => (
