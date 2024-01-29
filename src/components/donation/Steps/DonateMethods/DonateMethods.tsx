@@ -1,6 +1,7 @@
 import { Tab } from "@headlessui/react";
-import { DonaterConfigFromWidget } from "types/widget";
+import Icon from "components/Icon/Icon";
 import { DonationDetails, FormStep } from "slices/donation";
+import { DonaterConfigFromWidget } from "types/widget";
 import Crypto from "./Crypto";
 import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";
@@ -30,7 +31,7 @@ const tabClasses = (selected: boolean) =>
     selected
       ? "font-semibold bg-blue @md:bg-white text-white @md:text-black"
       : "border border-prim @md:border-none"
-  } text-sm text-left p-2 @md:p-4 focus:outline-none @md:w-28 rounded @md:rounded-none`;
+  } text-sm flex items-center gap-2 p-2 @md:px-3 @md:py-4 focus:outline-none @md:w-28 rounded @md:rounded-none`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {
   return (
@@ -41,11 +42,26 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       defaultIndex={tabIdx(state.details?.method)}
     >
       <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-1 content-start @md:bg-blue-l4 @md:divide-y @md:divide-white">
-        <Tab className={({ selected }) => tabClasses(selected)}>Card</Tab>
-        <Tab className={({ selected }) => tabClasses(selected)}>Crypto</Tab>
-        <Tab className={({ selected }) => tabClasses(selected)}>Stocks</Tab>
-        <Tab className={({ selected }) => tabClasses(selected)}>DAF</Tab>
-        <Tab className={({ selected }) => tabClasses(selected)}>PayPal</Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>
+          <Icon type="CreditCard" size={16} />
+          <span>Card</span>
+        </Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>
+          <Icon type="Bitcoin" size={18} />
+          <span>Crypto</span>
+        </Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>
+          <Icon type="Stocks" size={18} />
+          <span>Stocks</span>
+        </Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>
+          <Icon type="Advisor" size={19} />
+          <span>DAF</span>
+        </Tab>
+        <Tab className={({ selected }) => tabClasses(selected)}>
+          <Icon type="Paypal" size={16} />
+          <span>Paypal</span>
+        </Tab>
       </Tab.List>
       <Tab.Panels as="div" className="p-4 @md:p-8 pt-0 @md:pt-4 ">
         <Tab.Panel>
