@@ -49,7 +49,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <span>Card</span>
         </Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>
-          <Icon type="Paypal" size={16} />
+          <Icon type="Paypal" size={17} />
           <span>Paypal</span>
         </Tab>
 
@@ -62,13 +62,23 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <span>DAF</span>
         </Tab>
 
-        {/** more options */}
-        <div className="contents">
+        {/** more options: applies up to @md */}
+        <div className={`${isExpanded ? "contents" : "hidden"} @md:contents`}>
           <Tab className={({ selected }) => tabClasses(selected)}>
-            <Icon type="Bitcoin" size={18} />
+            <Icon type="Bitcoin" size={17} />
             <span>Crypto</span>
           </Tab>
         </div>
+        {!isExpanded && (
+          //expand only once: collapses when user refreshes browser (state is lost)
+          <button
+            onClick={() => setIsExpanded(true)}
+            type="button"
+            className="col-span-full text-sm font-semibold mt-2 @md:hidden text-blue"
+          >
+            More options
+          </button>
+        )}
       </Tab.List>
       <Tab.Panels as="div" className="p-4 @md:p-8 pt-0 @md:pt-4 ">
         <Tab.Panel>

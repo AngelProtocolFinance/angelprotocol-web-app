@@ -66,7 +66,7 @@ export default function Form({
         <CurrencySelector
           currencies={currencies}
           disabled={methods.formState.isSubmitting}
-          label="Currency:"
+          label="Currency"
           onChange={onCurrencyChange}
           value={currency}
           classes={{ label: "font-semibold" }}
