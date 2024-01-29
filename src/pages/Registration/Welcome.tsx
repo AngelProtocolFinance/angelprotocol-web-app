@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { InitReg } from "./types";
-import { useNewApplicationMutation } from "services/aws/registration";
-import { useAuthenticatedUser } from "contexts/Auth";
-import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
-import { storeRegistrationReference } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
+import { useAuthenticatedUser } from "contexts/Auth";
+import { useErrorContext } from "contexts/ErrorContext";
+import { storeRegistrationReference } from "helpers";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useNewApplicationMutation } from "services/aws/registration";
 import { steps } from "./routes";
+import { InitReg } from "./types";
 
 export default function Welcome({ classes = "" }: { classes?: string }) {
   const [isLoading, setLoading] = useState(true);

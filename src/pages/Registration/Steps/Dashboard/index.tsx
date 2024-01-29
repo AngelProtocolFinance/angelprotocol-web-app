@@ -1,10 +1,10 @@
-import { Navigate } from "react-router-dom";
-import { CompleteRegistration } from "pages/Registration/types";
-import { useSubmitMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { regRoutes } from "constants/routes";
+import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
+import { CompleteRegistration } from "pages/Registration/types";
+import { Navigate } from "react-router-dom";
+import { useSubmitMutation } from "services/aws/registration";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";

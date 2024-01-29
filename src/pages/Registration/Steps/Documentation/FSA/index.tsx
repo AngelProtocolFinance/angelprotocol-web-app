@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormValues, Props } from "./types";
-import { FileObject, FSADocumentation as TFSADocumentation } from "types/aws";
+import { FSADocumentation as TFSADocumentation, FileObject } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import Form from "./Form";
 import { schema } from "./schema";
+import { FormValues, Props } from "./types";
 
 export default function FSADocumentation(props: Props) {
   const { doc } = props;

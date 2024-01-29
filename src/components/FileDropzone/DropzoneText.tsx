@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { FileDropzoneAsset } from "types/components";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { isEmpty } from "helpers";
+import { FileDropzoneAsset } from "types/components";
 
 const filesKey: keyof FileDropzoneAsset = "files";
 

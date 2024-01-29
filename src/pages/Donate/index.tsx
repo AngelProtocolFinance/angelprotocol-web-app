@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
-import { useEndowment } from "services/aws/useEndowment";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
-import { idParamToNum } from "helpers";
 import { APP_NAME, DAPP_URL } from "constants/env";
+import { idParamToNum } from "helpers";
+import { useParams } from "react-router-dom";
+import { useEndowment } from "services/aws/useEndowment";
 import Content from "./Content";
 
 export default function Donate() {

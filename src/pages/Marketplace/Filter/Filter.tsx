@@ -1,8 +1,8 @@
-import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
-import { useSetter } from "store/accessors";
+import { useModalContext } from "contexts/ModalContext";
 import { reset } from "slices/components/marketFilter";
+import { useSetter } from "store/accessors";
 import Categories from "./Categories";
 import Countries from "./Countries";
 import Designations from "./Designations";

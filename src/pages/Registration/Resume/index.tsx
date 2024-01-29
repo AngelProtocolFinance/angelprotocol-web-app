@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { getSavedRegistrationReference } from "helpers";
 import { FormProvider, useForm } from "react-hook-form";
 import { object, string } from "yup";
-import { FormValues } from "./types";
-import { getSavedRegistrationReference } from "helpers";
 import Form from "./Form";
+import { FormValues } from "./types";
 
 export default function Resume({ classes = "" }: { classes?: string }) {
   const methods = useForm<FormValues>({

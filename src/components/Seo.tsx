@@ -1,5 +1,5 @@
-import { Helmet } from "react-helmet";
 import { APP_NAME, DAPP_URL, SEO_IMAGE } from "constants/env";
+import { Helmet } from "react-helmet";
 
 type Props = {
   title?: string;

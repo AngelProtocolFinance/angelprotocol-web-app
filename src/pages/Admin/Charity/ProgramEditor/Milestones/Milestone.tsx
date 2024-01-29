@@ -1,11 +1,11 @@
 import { Disclosure } from "@headlessui/react";
-import { Path, useFormContext } from "react-hook-form";
-import { FV, FormMilestone } from "../types";
 import { DrawerIcon } from "components/Icon";
 import ImgEditor from "components/ImgEditor/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
+import { Path, useFormContext } from "react-hook-form";
 import { MAX_CHARS, VALID_MIME_TYPES } from "../schema";
+import { FV, FormMilestone } from "../types";
 
 export default function Milestone({
   idx,

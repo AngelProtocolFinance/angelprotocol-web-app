@@ -1,5 +1,5 @@
-import { PropsWithChildren } from "react";
 import { humanize } from "helpers";
+import { PropsWithChildren } from "react";
 
 type Props = {
   type: "Sustainability Fund" | "Donations";

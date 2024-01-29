@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { CryptoResultStep } from "slices/donation";
-import { getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
+import { getTxUrl, humanize } from "helpers";
+import { Link } from "react-router-dom";
+import { CryptoResultStep } from "slices/donation";
 import Share, { SocialMedia } from "./Share";
 
 export default function Success({

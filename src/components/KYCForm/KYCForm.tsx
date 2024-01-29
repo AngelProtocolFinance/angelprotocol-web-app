@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
-import { FormValues, Props } from "./types";
 import { placeHolderCountryOption } from "components/CountrySelector";
 import Modal from "components/Modal";
+import { FormProvider, useForm } from "react-hook-form";
 import Form, { formStyle } from "./Form";
 import { schema } from "./schema";
+import { FormValues, Props } from "./types";
 
 export default function KYCForm(props: Props) {
   const isOnDonation = props.type === "on-donation";

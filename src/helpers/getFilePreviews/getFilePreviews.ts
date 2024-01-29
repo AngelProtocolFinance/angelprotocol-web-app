@@ -1,6 +1,6 @@
+import { isEmpty } from "helpers/isEmpty";
 import { FileObject } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
-import { isEmpty } from "helpers/isEmpty";
 import { getFullURL, uploadFiles } from "../uploadFiles";
 
 export async function getFilePreviews<

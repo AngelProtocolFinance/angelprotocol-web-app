@@ -6,9 +6,9 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { Props } from "./types";
 import { TokenWithAmount } from "types/tx";
 import TokenSelector from "./TokenSelector";
+import { Props } from "./types";
 
 const amountKey: keyof TokenWithAmount = "amount";
 const tokenIDkey: keyof TokenWithAmount = "token_id";

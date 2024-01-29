@@ -1,5 +1,6 @@
 import { Tab } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
+import { useState } from "react";
 import { DonationDetails, FormStep } from "slices/donation";
 import { DonaterConfigFromWidget } from "types/widget";
 import Crypto from "./Crypto";
@@ -7,7 +8,6 @@ import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
-import { useState } from "react";
 
 type Props = {
   donaterConfig: DonaterConfigFromWidget | null;

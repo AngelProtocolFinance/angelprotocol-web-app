@@ -1,7 +1,7 @@
 import { Combobox } from "@headlessui/react";
+import QueryLoader from "components/QueryLoader";
 import { Currency } from "types/components";
 import { QueryState } from "types/third-party/redux";
-import QueryLoader from "components/QueryLoader";
 
 type Props = {
   classes?: string;

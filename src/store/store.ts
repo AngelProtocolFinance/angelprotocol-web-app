@@ -1,6 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { Amplify } from "aws-amplify";
 import { Hub } from "aws-amplify/utils";
+import amplifyConfig from "constants/aws";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
 import auth, { loadSession, reset } from "slices/auth";
@@ -8,7 +9,6 @@ import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
 import gift from "slices/gift";
 import widget from "slices/widget";
-import amplifyConfig from "constants/aws";
 
 export const store = configureStore({
   reducer: {

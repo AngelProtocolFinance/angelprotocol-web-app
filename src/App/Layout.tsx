@@ -1,7 +1,7 @@
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import { CHARITY_LINKS } from "./constants";

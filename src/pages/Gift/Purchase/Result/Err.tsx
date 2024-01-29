@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { useSetter } from "store/accessors";
-import { TError, setStep } from "slices/gift";
-import { getTxUrl } from "helpers";
 import { appRoutes } from "constants/routes";
+import { getTxUrl } from "helpers";
+import { Link } from "react-router-dom";
+import { TError, setStep } from "slices/gift";
+import { useSetter } from "store/accessors";
 
 export default function Err({ error, hash }: TError) {
   const dispatch = useSetter();

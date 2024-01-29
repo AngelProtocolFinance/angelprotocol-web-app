@@ -1,9 +1,9 @@
 import { Popover } from "@headlessui/react";
-import { Link } from "react-router-dom";
-import { AuthenticatedUser } from "types/auth";
 import Icon from "components/Icon";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
+import { AuthenticatedUser } from "types/auth";
 import EndowmentLink from "./EndowmentLink";
 
 type Props = {

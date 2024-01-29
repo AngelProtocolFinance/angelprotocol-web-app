@@ -1,5 +1,5 @@
-import { afterEach, describe, expect, test, vi } from "vitest";
 import { APIs } from "constants/urls";
+import { afterEach, describe, expect, test, vi } from "vitest";
 import { Bucket, bucketURL, uploadFiles } from "./uploadFiles";
 
 const TIME_STAMP = 123456789;

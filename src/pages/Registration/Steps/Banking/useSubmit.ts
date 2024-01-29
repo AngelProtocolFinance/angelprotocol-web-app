@@ -1,9 +1,9 @@
+import type { OnSubmit } from "components/BankDetails";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { useErrorContext } from "contexts/ErrorContext";
+import { getFilePreviews } from "helpers";
 import { useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import type { OnSubmit } from "components/BankDetails";
-import { getFilePreviews } from "helpers";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 

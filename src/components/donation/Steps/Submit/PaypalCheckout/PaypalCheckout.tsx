@@ -1,8 +1,8 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { usePaypalOrderQuery } from "services/apes";
-import { useSetter } from "store/accessors";
-import { PaypalCheckoutStep, setStep } from "slices/donation";
 import { PAYPAL_CLIENT_ID } from "constants/env";
+import { usePaypalOrderQuery } from "services/apes";
+import { PaypalCheckoutStep, setStep } from "slices/donation";
+import { useSetter } from "store/accessors";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";

@@ -1,8 +1,8 @@
 import { Combobox } from "@headlessui/react";
-import { useState } from "react";
-import { ChainID } from "types/chain";
-import { useTokensQuery } from "services/apes";
 import { isEmpty } from "helpers";
+import { useState } from "react";
+import { useTokensQuery } from "services/apes";
+import { ChainID } from "types/chain";
 import Icon from "../Icon";
 import Image from "../Image";
 import { ErrorStatus, LoadingStatus } from "../Status";

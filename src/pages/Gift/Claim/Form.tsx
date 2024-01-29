@@ -1,15 +1,15 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { useFormContext } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { FormValues as FV } from "./types";
-import { ConnectedWallet } from "types/wallet";
-import { useModalContext } from "contexts/ModalContext";
-import { isConnected, useWalletContext } from "contexts/WalletContext";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
+import { useModalContext } from "contexts/ModalContext";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
+import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { ConnectedWallet } from "types/wallet";
+import { FormValues as FV } from "./types";
 
 export default function Form({ classes = "" }) {
   const {
