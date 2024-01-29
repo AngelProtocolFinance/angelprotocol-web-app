@@ -1,3 +1,4 @@
+import { DonationSource } from "types/lists";
 import { ChainID } from "../../chain";
 
 export type KYCData = {
@@ -55,19 +56,18 @@ export type DonationsQueryParams = {
   limit?: number; // Number of items to be returned per request
 };
 
-export type TxLogPayload = {
+export type CryptoDonation = {
   amount: number;
-  chainId: string;
-  destinationChainId: string;
-  chainName: string;
-  charityName: string;
   denomination: string;
-  splitLiq: string; //"50"
-  transactionId: string;
-  transactionDate: string;
   endowmentId: number;
+  chainId: string;
+  transactionId: string;
   walletAddress: string;
-  kycData?: KYCData;
+  /** 1 - 100 */
+  splitLiq: number;
+  chainName: string;
+  appUsed: DonationSource;
+  kyc?: KYCData;
 };
 
 export type FiatCurrencyData = {
