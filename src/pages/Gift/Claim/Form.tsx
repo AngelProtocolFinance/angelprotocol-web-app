@@ -90,8 +90,8 @@ export default function Form({ classes = "" }) {
         {isSubmitting
           ? "Redeeming..."
           : !isConnected(walletState)
-          ? "Connect wallet to redeem"
-          : "Redeem your giftcard"}
+            ? "Connect wallet to redeem"
+            : "Redeem your giftcard"}
       </button>
       <Link
         aria-disabled={isSubmitting}

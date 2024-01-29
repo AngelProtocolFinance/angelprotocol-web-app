@@ -75,8 +75,8 @@ export default function BookmarkBtn({ endowId, children }: Props) {
             isLoading
               ? "Loading"
               : isBookmarked || isHovered
-              ? "HeartFill"
-              : "HeartOutline"
+                ? "HeartFill"
+                : "HeartOutline"
           }
           className={isLoading ? "animate-spin" : ""}
           size={20}

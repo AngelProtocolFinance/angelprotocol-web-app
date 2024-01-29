@@ -35,11 +35,11 @@ export default function Loaded(props: BankingApplicationDetails) {
       isDefault && isWithHeir
         ? [false, "Kindly set another payout method as default before deleting"]
         : isDefault
-        ? [
-            true,
-            "Your Nonprofit must have at least one banking connection approved in order to receive payouts. Banking connections that are 'Under Review' do not count towards this and are not eligible to receive payouts until approved. Do you want to proceed with this deletion?",
-          ]
-        : [true, "Are you sure you want to delete this payment method?"];
+          ? [
+              true,
+              "Your Nonprofit must have at least one banking connection approved in order to receive payouts. Banking connections that are 'Under Review' do not count towards this and are not eligible to receive payouts until approved. Do you want to proceed with this deletion?",
+            ]
+          : [true, "Are you sure you want to delete this payment method?"];
 
     showModal(DeletePrompt, {
       canProceed,
