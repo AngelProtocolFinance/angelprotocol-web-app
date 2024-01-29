@@ -98,23 +98,9 @@ export default function Form({ configFromWidget }: Props) {
         }
       />
 
-      <div
-        className={`flex gap-3 md:gap-5 ${
-          isInsideWidget ? "justify-center" : "justify-between"
-        } font-body mt-8 md:mt-12`}
-      >
-        {!isInsideWidget && (
-          <Link
-            className="btn-outline-filled btn-donate w-1/2"
-            to={`${appRoutes.marketplace}/${endowId}`}
-          >
-            Cancel
-          </Link>
-        )}
-        <button className="btn-orange btn-donate w-1/2" type="submit">
-          Continue
-        </button>
-      </div>
+      <button className="btn-orange btn-donate mt-6" type="submit">
+        Continue
+      </button>
     </form>
   );
 }
