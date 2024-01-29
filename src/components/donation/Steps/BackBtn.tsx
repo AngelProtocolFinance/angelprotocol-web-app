@@ -3,9 +3,8 @@ import { ButtonHTMLAttributes } from "react";
 
 export default function BackBtn({
   className,
-  children,
   ...props
-}: ButtonHTMLAttributes<HTMLButtonElement>) {
+}: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children">) {
   return (
     <button
       {...props}

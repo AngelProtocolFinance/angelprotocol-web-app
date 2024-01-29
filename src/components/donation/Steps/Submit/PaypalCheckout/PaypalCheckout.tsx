@@ -7,6 +7,7 @@ import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
 import Icon from "components/Icon";
+import BackBtn from "../../BackBtn";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
@@ -40,7 +41,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
 
   return (
     <div className="grid grid-rows-[auto_1fr] min-h-[16rem] isolate p-4 @md:p-8">
-      <button
+      <BackBtn
         onClick={() => {
           const action = details.userOptForKYC
             ? setStep("kyc-form")
@@ -48,11 +49,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
           dispatch(action);
         }}
         type="button"
-        className="flex items-center gap-1 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
-      >
-        <Icon type="ArrowBack" strokeWidth={20} />
-        <span>Back</span>
-      </button>
+      />
 
       {isLoading ? (
         <Loader msg="Loading payment form..." />
