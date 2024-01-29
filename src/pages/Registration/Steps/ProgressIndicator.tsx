@@ -62,7 +62,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
 
   const topStep =
     isOtherStepsShown || currPath === 1 ? (
-      <Step isDone={step >= 1} isCurr={currPath === 1}>
+      <Step isDone={currPath > 1 || step > 1} isCurr={currPath === 1}>
         Contact Details
       </Step>
     ) : (
@@ -116,7 +116,7 @@ function Step({
       {/** line */}
       <div
         className={`h-[22px] border-l ${
-          isDone ? "border-orange" : "border-prim"
+          isDone || isCurr ? "border-orange" : "border-prim"
         } my-2 group-first:hidden`}
       />
       <div className="flex items-center">
