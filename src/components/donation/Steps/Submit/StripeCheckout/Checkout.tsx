@@ -12,7 +12,7 @@ import Loader from "../Loader";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ onBack }: { onBack: () => void }) {
+export default function Checkout() {
   const stripe = useStripe();
   const elements = useElements();
   const { handleError } = useErrorContext();
@@ -59,10 +59,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="grid grid-[1fr_auto] gap-8 p-4 @md:p-8"
-    >
+    <form onSubmit={handleSubmit} className="contents">
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setLoading(false)}
@@ -74,33 +71,16 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
       />
       {showLoader ? (
         <Loader />
-      ) : isLoading ? (
-        <button
-          className="btn-outline-filled btn-donate w-1/2"
-          onClick={onBack}
-          type="button"
-        >
-          Back
-        </button>
       ) : (
-        <div className="grid grid-cols-2 gap-5 w-full">
-          <button
-            className="btn-outline-filled btn-donate"
-            onClick={onBack}
-            type="button"
-          >
-            Back
-          </button>
-          <button
-            className="btn-orange btn-donate"
-            disabled={!stripe || !elements || isSubmitting}
-            type="submit"
-          >
-            <LoadText text="Processing..." isLoading={isSubmitting}>
-              Pay Now
-            </LoadText>
-          </button>
-        </div>
+        <button
+          className="btn-orange btn-donate w-full"
+          disabled={!stripe || !elements || isSubmitting || isLoading}
+          type="submit"
+        >
+          <LoadText text="Processing..." isLoading={isSubmitting}>
+            Pay Now
+          </LoadText>
+        </button>
       )}
     </form>
   );
