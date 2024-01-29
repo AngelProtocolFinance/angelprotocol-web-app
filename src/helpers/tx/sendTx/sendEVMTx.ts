@@ -1,7 +1,7 @@
+import { EIPMethods } from "constants/evm";
 import { EVMChainID } from "types/chain";
 import { EVMTx, Requester, TxReceipt } from "types/evm";
 import { TxResult } from "types/tx";
-import { EIPMethods } from "constants/evm";
 import { logger } from "../../logger";
 
 export async function sendEVMTx(

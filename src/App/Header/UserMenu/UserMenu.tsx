@@ -1,11 +1,11 @@
 import { Popover } from "@headlessui/react";
+import Icon from "components/Icon";
+import { appRoutes } from "constants/routes";
 import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { SignInRouteState } from "types/routeStates";
-import Icon from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
 import { logout } from "slices/auth";
-import { appRoutes } from "constants/routes";
+import { useGetter, useSetter } from "store/accessors";
+import { SignInRouteState } from "types/routeStates";
 import Menu from "./Menu";
 
 export default function UserMenu() {

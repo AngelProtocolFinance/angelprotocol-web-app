@@ -1,6 +1,6 @@
-import { FormValues as FV } from "./types";
 import { Selector } from "components/Selector";
 import { chains } from "constants/chains";
+import { FormValues as FV } from "./types";
 
 export default function NetworkDropdown({ classes = "" }) {
   return (

@@ -1,12 +1,12 @@
+import Image from "components/Image";
+import { TxPrompt } from "components/Prompt";
+import { adminRoutes } from "constants/routes";
+import { useModalContext } from "contexts/ModalContext";
+import { logger } from "helpers";
+import { useAdminContext } from "pages/Admin/Context";
 import { Link } from "react-router-dom";
 import { ProgramDeleteMsg } from "services/types";
 import { Program as TProgram } from "types/aws";
-import { useAdminContext } from "pages/Admin/Context";
-import { useModalContext } from "contexts/ModalContext";
-import Image from "components/Image";
-import { TxPrompt } from "components/Prompt";
-import { logger } from "helpers";
-import { adminRoutes } from "constants/routes";
 import { useUpdateEndowmentProfile } from "../common";
 
 export function Program(props: TProgram) {

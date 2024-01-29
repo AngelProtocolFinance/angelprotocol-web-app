@@ -1,12 +1,12 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import LoaderRing from "components/LoaderRing";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { appRoutes } from "constants/routes";
+import { useErrorContext } from "contexts/ErrorContext";
+import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCapturePayPalOrderMutation } from "services/apes";
-import { useErrorContext } from "contexts/ErrorContext";
-import LoaderRing from "components/LoaderRing";
-import { isEmpty } from "helpers";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { appRoutes } from "constants/routes";
 
 type Props = {
   orderId: string;

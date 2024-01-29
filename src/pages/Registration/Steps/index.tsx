@@ -1,8 +1,8 @@
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { InitReg } from "../types";
-import { useRegQuery } from "services/aws/registration";
 import { ErrorStatus, LoadingStatus } from "components/Status";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useRegQuery } from "services/aws/registration";
 import { steps } from "../routes";
+import { InitReg } from "../types";
 import Banking from "./Banking";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";

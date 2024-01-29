@@ -1,7 +1,7 @@
-import type { CreateTxOptions, Msg } from "@terra-money/terra.js";
-import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { Keplr } from "@keplr-wallet/types";
+import type { CreateTxOptions, Msg } from "@terra-money/terra.js";
+import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import { Token } from "./aws";
 import { ChainID, CosmosChainID, EVMChainID, TerraChainID } from "./chain";
 import { Allowance, Transfer } from "./contracts/erc20";

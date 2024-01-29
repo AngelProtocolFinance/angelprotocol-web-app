@@ -1,9 +1,9 @@
 import { Popover } from "@headlessui/react";
-import { FC, FormEventHandler } from "react";
-import { FormValues } from "./types";
 import Icon from "components/Icon";
 import { Field } from "components/form";
+import { FC, FormEventHandler } from "react";
 import StatusDropdown from "./StatusDropdown";
+import { FormValues } from "./types";
 
 type Props = {
   submit: FormEventHandler<HTMLFormElement>;

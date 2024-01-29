@@ -1,5 +1,5 @@
-import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
+import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { AmountProps } from ".";
 

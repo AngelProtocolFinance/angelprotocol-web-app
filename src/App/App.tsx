@@ -1,9 +1,9 @@
 import * as Sentry from "@sentry/react";
-import { lazy } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { appRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
-import { appRoutes } from "constants/routes";
+import { lazy } from "react";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("pages/Admin"));

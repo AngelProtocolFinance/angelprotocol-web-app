@@ -1,6 +1,6 @@
+import { isEmpty } from "helpers";
 import { createContext, useContext } from "react";
 import { EndowmentProfile } from "types/aws";
-import { isEmpty } from "helpers";
 
 const ProfileContext = createContext<EndowmentProfile>({} as EndowmentProfile);
 

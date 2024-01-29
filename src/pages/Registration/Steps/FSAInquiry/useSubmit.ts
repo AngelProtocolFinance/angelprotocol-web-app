@@ -1,10 +1,10 @@
+import { useErrorContext } from "contexts/ErrorContext";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { useUpdateRegMutation } from "services/aws/registration";
+import { steps } from "../../routes";
 import { Step3Data } from "../../types";
 import { FV } from "./types";
-import { useUpdateRegMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
-import { steps } from "../../routes";
 
 export default function useSubmit(data: Step3Data, form: UseFormReturn<FV>) {
   const {

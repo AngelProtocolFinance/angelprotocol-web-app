@@ -1,8 +1,8 @@
-import { useParams } from "react-router-dom";
-import { useAdminContext } from "pages/Admin/Context";
-import { useBankingApplicationQuery } from "services/aws/banking-applications";
 import QueryLoader from "components/QueryLoader";
 import { ErrorStatus, LoadingStatus } from "components/Status";
+import { useAdminContext } from "pages/Admin/Context";
+import { useParams } from "react-router-dom";
+import { useBankingApplicationQuery } from "services/aws/banking-applications";
 import Loaded from "./Loaded";
 
 export default function PayoutMethod() {

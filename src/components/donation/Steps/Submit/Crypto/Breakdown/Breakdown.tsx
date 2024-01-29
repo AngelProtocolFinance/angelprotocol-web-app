@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { EstimateStatus } from "../types";
 import { ErrorStatus, LoadingStatus } from "components/Status";
-import { CryptoSubmitStep } from "slices/donation";
 import { humanize } from "helpers";
+import { useEffect } from "react";
+import { CryptoSubmitStep } from "slices/donation";
 import { Row } from "../Row";
+import { EstimateStatus } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { tokenBalance } from "./tokenBalance";
 

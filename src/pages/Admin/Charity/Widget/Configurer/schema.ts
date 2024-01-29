@@ -1,6 +1,6 @@
+import { SchemaShape } from "schemas/types";
 import { ObjectSchema, number, object } from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "schemas/types";
 
 export const schema = object<any, SchemaShape<FormValues>>({
   endowment: object<any, SchemaShape<FormValues["endowment"]>>({

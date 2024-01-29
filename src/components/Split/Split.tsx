@@ -1,7 +1,7 @@
 import { FieldValues, Path, useFormContext } from "react-hook-form";
-import { Token } from "./types";
 import Portion from "./Portion";
 import Slider from "./Slider";
+import { Token } from "./types";
 
 type Props<FV extends FieldValues, P extends Path<FV>> = {
   className?: string;

@@ -1,6 +1,6 @@
-import withAuth from "contexts/Auth";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import withAuth from "contexts/Auth";
 import Filter from "./Filter";
 import Table from "./Table";
 import usePaginatedApplications from "./usePaginatedApplications";

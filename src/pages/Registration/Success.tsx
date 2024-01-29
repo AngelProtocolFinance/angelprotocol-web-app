@@ -1,8 +1,8 @@
+import Icon from "components/Icon";
+import { adminRoutes, appRoutes } from "constants/routes";
 import { Navigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { CompleteRegistration } from "./types";
-import Icon from "components/Icon";
-import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function Success({ classes = "" }: { classes?: string }) {
   const { state } = useLocation();

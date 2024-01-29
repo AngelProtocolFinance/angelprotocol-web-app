@@ -1,11 +1,11 @@
-import { FormProvider, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { FV } from "./types";
 import LoadText from "components/LoadText";
 import { Label, Radio } from "components/form";
 import { APP_NAME } from "constants/env";
+import { FormProvider, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { steps } from "../../routes";
 import { useRegState, withStepGuard } from "../StepGuard";
+import { FV } from "./types";
 import useSubmit from "./useSubmit";
 
 const countryWhiteList = ["United States"]; //will add more in the future;

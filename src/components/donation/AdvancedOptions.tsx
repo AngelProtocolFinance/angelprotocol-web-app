@@ -1,5 +1,5 @@
-import { ReactNode, useState } from "react";
 import Icon from "components/Icon";
+import { ReactNode, useState } from "react";
 
 export type AdvancedOptionsDisplay = "hidden" | "expanded" | "collapsed";
 type Props = {

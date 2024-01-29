@@ -1,5 +1,5 @@
-import withAuth from "contexts/Auth";
 import QueryLoader from "components/QueryLoader";
+import withAuth from "contexts/Auth";
 import Filter from "./Filter";
 import Table from "./Table";
 import usePagination from "./usePagination";

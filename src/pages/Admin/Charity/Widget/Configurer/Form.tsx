@@ -1,9 +1,9 @@
-import { FormHTMLAttributes } from "react";
-import { useFormContext } from "react-hook-form";
-import { FormValues as FV } from "./types";
 import Split from "components/Split";
 import { CheckField } from "components/form";
+import { FormHTMLAttributes } from "react";
+import { useFormContext } from "react-hook-form";
 import EndowmentSelector from "./EndowmentSelector";
+import { FormValues as FV } from "./types";
 
 export default function Form({
   className = "",

@@ -1,12 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import LoadText from "components/LoadText";
+import { Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { object, string } from "yup";
-import { FormValues as FV, Props } from "./types";
-import LoadText from "components/LoadText";
-import { Field } from "components/form";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
+import { FormValues as FV, Props } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function NonFSA(props: Props) {
