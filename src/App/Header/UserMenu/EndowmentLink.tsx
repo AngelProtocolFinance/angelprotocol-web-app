@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
-import { useEndowment } from "services/aws/useEndowment";
 import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
+import { useEndowment } from "services/aws/useEndowment";
 
 type Props = { endowId: number };
 export default function EndowmentLink({ endowId }: Props) {

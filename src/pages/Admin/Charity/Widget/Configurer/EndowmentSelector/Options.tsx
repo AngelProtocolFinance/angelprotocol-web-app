@@ -1,8 +1,8 @@
 import { Combobox } from "@headlessui/react";
-import { Fragment } from "react";
-import { useEndowmentOptionsQuery } from "services/aws/aws";
 import QueryLoader from "components/QueryLoader";
 import { unsdgs } from "constants/unsdgs";
+import { Fragment } from "react";
+import { useEndowmentOptionsQuery } from "services/aws/aws";
 
 type Props = {
   searchText: string;

@@ -1,11 +1,11 @@
 import { Dialog } from "@headlessui/react";
-import { NavLink } from "react-router-dom";
-import { Link } from "../../types";
-import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { DappLogo } from "components/Image";
+import { useModalContext } from "contexts/ModalContext";
 import { createNavLinkStyler } from "helpers";
+import { NavLink } from "react-router-dom";
+import { Link } from "../../types";
 
 export default function Menu({ links }: { links: Link[] }) {
   const { closeModal } = useModalContext();

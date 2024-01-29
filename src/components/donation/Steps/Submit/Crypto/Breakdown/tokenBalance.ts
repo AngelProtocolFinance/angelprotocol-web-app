@@ -1,11 +1,11 @@
 import type { BigNumber } from "@ethersproject/bignumber";
+import { chains } from "constants/chains";
+import { EIPMethods } from "constants/evm";
+import { erc20 } from "contracts/evm/ERC20";
+import { condenseToNum, objToBase64, request } from "helpers";
 import { Token } from "types/aws";
 import { ChainID } from "types/chain";
 import { CW20Balance } from "types/contracts";
-import { erc20 } from "contracts/evm/ERC20";
-import { condenseToNum, objToBase64, request } from "helpers";
-import { chains } from "constants/chains";
-import { EIPMethods } from "constants/evm";
 
 type CosmosBalance = { balance: { denom: string; amount: string } };
 export const tokenBalance = async (

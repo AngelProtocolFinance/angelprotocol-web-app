@@ -1,6 +1,6 @@
-import { StatusProps } from "./types";
 import Icon, { IconType } from "../Icon";
 import Status from "./Status";
+import { StatusProps } from "./types";
 
 export function ErrorStatus({
   classes = "",

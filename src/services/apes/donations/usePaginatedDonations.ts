@@ -1,18 +1,18 @@
+import { chainIds } from "constants/chainIds";
+import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
-import {
-  DonationMadeByDonor,
-  DonationReceivedByEndow,
-  DonationsQueryParams,
-  PaginatedAWSQueryRes,
-} from "types/aws";
 import {
   updateDonationsQueryData,
   useDonationsQuery,
   useLazyDonationsQuery,
 } from "services/apes";
 import { useSetter } from "store/accessors";
-import useDebouncer from "hooks/useDebouncer";
-import { chainIds } from "constants/chainIds";
+import {
+  DonationMadeByDonor,
+  DonationReceivedByEndow,
+  DonationsQueryParams,
+  PaginatedAWSQueryRes,
+} from "types/aws";
 
 type DonorOwner = { email: string };
 type EndowmentOwner = { endowmentId: string };

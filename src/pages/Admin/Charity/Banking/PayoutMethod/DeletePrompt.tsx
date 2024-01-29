@@ -1,11 +1,11 @@
-import { useNavigate } from "react-router-dom";
-import { useDeleteBankingApplicationMutation } from "services/aws/banking-applications";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import Prompt from "components/Prompt";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
+import { useNavigate } from "react-router-dom";
+import { useDeleteBankingApplicationMutation } from "services/aws/banking-applications";
 
 type Props = {
   endowID: number;

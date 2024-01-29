@@ -1,7 +1,7 @@
 import { Switch } from "@headlessui/react";
-import { useState } from "react";
 import Icon, { IconType } from "components/Icon";
 import { isPrevDark, setToDarkMode, setToLightMode } from "helpers";
+import { useState } from "react";
 
 export default function ThemeToggle({ classes = "" }: { classes?: string }) {
   const [isDark, setIsDark] = useState(isPrevDark());

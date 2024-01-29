@@ -1,7 +1,3 @@
-import { Link } from "react-router-dom";
-import { FV } from "./types";
-import { EndowDesignation } from "types/aws";
-import { UNSDG_NUMS } from "types/lists";
 import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
@@ -14,8 +10,12 @@ import Toggle from "components/Toggle";
 import { Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { Link } from "react-router-dom";
+import { EndowDesignation } from "types/aws";
+import { UNSDG_NUMS } from "types/lists";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
+import { FV } from "./types";
 import useEditProfile from "./useEditProfile";
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>

@@ -1,10 +1,10 @@
-import { ObjectSchema, object, string } from "yup";
-import { FormValues } from "./types";
+import { optionType } from "schemas/shape";
+import { requiredString } from "schemas/string";
 import { SchemaShape } from "schemas/types";
 import { ContactRoles, ReferralMethods } from "types/aws";
 import { OptionType } from "types/components";
-import { optionType } from "schemas/shape";
-import { requiredString } from "schemas/string";
+import { ObjectSchema, object, string } from "yup";
+import { FormValues } from "./types";
 
 type Key = keyof FormValues;
 const roleKey: Key = "Role";

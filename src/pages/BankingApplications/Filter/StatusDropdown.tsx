@@ -1,6 +1,6 @@
-import { FormValues as FV } from "./types";
 import { Selector } from "components/Selector";
 import { statuses } from "./constants";
+import { FormValues as FV } from "./types";
 
 export default function StatusDropdown({ classes = "" }) {
   return (

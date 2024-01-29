@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { adminRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
 import List from "./List";
 
 export default function Programs() {

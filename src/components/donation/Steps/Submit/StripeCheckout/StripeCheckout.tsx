@@ -1,9 +1,9 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { useStripePaymentIntentQuery } from "services/apes";
-import { useSetter } from "store/accessors";
-import { StripeCheckoutStep, setStep } from "slices/donation";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
+import { useStripePaymentIntentQuery } from "services/apes";
+import { StripeCheckoutStep, setStep } from "slices/donation";
+import { useSetter } from "store/accessors";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";

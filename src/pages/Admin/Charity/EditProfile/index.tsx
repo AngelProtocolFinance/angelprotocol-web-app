@@ -1,20 +1,20 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
-import { FV } from "./types";
-import {
-  EndowmentProfileUpdate,
-  EndowmentProfile as TProfile,
-} from "types/aws";
-import { useEndowment } from "services/aws/useEndowment";
 import { country } from "components/CountrySelector";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { FormProvider, useForm } from "react-hook-form";
+import { useEndowment } from "services/aws/useEndowment";
+import {
+  EndowmentProfile as TProfile,
+  EndowmentProfileUpdate,
+} from "types/aws";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
+import { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {

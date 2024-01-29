@@ -44,7 +44,7 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import { FaFileCsv, FaMoneyBills } from "react-icons/fa6";
-import { FiMenu, FiMoon, FiCreditCard } from "react-icons/fi";
+import { FiCreditCard, FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
@@ -57,6 +57,7 @@ import {
   IoWalletSharp,
   IoWarning,
 } from "react-icons/io5";
+import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import {
   MdCardGiftcard,
   MdDelete,
@@ -71,6 +72,7 @@ import {
   MdSpaceDashboard,
   MdWidgets,
 } from "react-icons/md";
+import { PiPaypalLogo } from "react-icons/pi";
 import {
   RiFundsBoxLine,
   RiMapPin2Line,
@@ -80,8 +82,6 @@ import { RxMixerHorizontal } from "react-icons/rx";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
-import { LiaChalkboardTeacherSolid } from "react-icons/lia";
-import { PiPaypalLogo } from "react-icons/pi";
 
 export const icons = {
   Advisor: LiaChalkboardTeacherSolid,

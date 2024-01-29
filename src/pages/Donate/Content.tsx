@@ -1,15 +1,15 @@
-import { memo, useEffect, useRef } from "react";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import { Steps } from "components/donation";
-import { useGetter, useSetter } from "store/accessors";
+import { appRoutes } from "constants/routes";
+import { TERMS_OF_USE_DONOR } from "constants/urls";
+import { memo, useEffect, useRef } from "react";
 import {
   DonationRecipient,
   DonationState,
   setRecipient,
 } from "slices/donation";
-import { appRoutes } from "constants/routes";
-import { TERMS_OF_USE_DONOR } from "constants/urls";
+import { useGetter, useSetter } from "store/accessors";
 
 function Content(props: DonationRecipient) {
   const dispatch = useSetter();

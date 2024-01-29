@@ -3,11 +3,11 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { FormEventHandler, useState } from "react";
-import { useErrorContext } from "contexts/ErrorContext";
 import LoadText from "components/LoadText";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
+import { useErrorContext } from "contexts/ErrorContext";
+import { FormEventHandler, useState } from "react";
 import Loader from "../Loader";
 
 // Code inspired by React Stripe.js docs, see:

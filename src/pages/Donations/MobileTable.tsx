@@ -1,10 +1,10 @@
 import { Disclosure } from "@headlessui/react";
-import { PropsWithChildren } from "react";
-import { TableProps } from "./types";
 import Icon, { DrawerIcon } from "components/Icon";
-import useSort from "hooks/useSort";
 import { humanize } from "helpers";
+import useSort from "hooks/useSort";
+import { PropsWithChildren } from "react";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
 
 export default function MobileTable({

@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
-import { FormValues } from "./types";
 import Form from "./Form";
 import { schema } from "./schema";
+import { FormValues } from "./types";
 
 export default function Mailer({ classes = "" }) {
   const { state } = useLocation();

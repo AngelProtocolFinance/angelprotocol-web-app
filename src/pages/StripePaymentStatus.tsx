@@ -1,13 +1,13 @@
 import { PaymentIntent } from "@stripe/stripe-js";
-import { useCallback, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
-import { useGetStripePaymentStatusQuery } from "services/apes";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
-import { useGetter } from "store/accessors";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { useCallback, useEffect } from "react";
+import { Link, Navigate } from "react-router-dom";
+import { useGetStripePaymentStatusQuery } from "services/apes";
+import { useGetter } from "store/accessors";
 
 export default function StripePaymentStatus() {
   const paymentIntentId =

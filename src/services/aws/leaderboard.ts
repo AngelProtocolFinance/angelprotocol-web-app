@@ -1,5 +1,5 @@
-import { AWSQueryRes, LeaderboardEntry, Update } from "types/aws";
 import { apiEnv } from "services/constants";
+import { AWSQueryRes, LeaderboardEntry, Update } from "types/aws";
 import { aws } from "./aws";
 
 interface LeaderBoardQueryRes<T> extends AWSQueryRes<T> {

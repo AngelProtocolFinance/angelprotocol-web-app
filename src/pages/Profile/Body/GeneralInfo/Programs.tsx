@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { Program as TProgram } from "types/aws";
 import Image from "components/Image";
 import RichText from "components/RichText";
+import { Link } from "react-router-dom";
+import { Program as TProgram } from "types/aws";
 import { useProfileContext } from "../../ProfileContext";
 
 export default function Programs() {

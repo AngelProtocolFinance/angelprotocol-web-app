@@ -1,7 +1,7 @@
-import { useLeaderboardsQuery } from "services/aws/leaderboard";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
+import { useLeaderboardsQuery } from "services/aws/leaderboard";
 import DonationMetrics from "./DonationMetrics";
 import Table from "./Table";
 

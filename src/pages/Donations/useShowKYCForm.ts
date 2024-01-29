@@ -1,7 +1,7 @@
-import { useRequestReceiptMutation } from "services/apes";
-import { useModalContext } from "contexts/ModalContext";
 import { FormValues, useKYCForm } from "components/KYCForm";
 import Prompt from "components/Prompt";
+import { useModalContext } from "contexts/ModalContext";
+import { useRequestReceiptMutation } from "services/apes";
 
 export default function useShowKYCForm() {
   const [submitRequest] = useRequestReceiptMutation();

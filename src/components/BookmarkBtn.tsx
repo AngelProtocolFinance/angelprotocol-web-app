@@ -1,13 +1,13 @@
+import Icon from "components/Icon";
+import Tooltip from "components/Tooltip";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { useModalContext } from "contexts/ModalContext";
 import { PropsWithChildren, useRef, useState } from "react";
-import { EndowmentBookmark } from "types/aws";
 import {
   useToggleBookmarkMutation,
   useWalletProfileQuery,
 } from "services/aws/aws";
-import { useModalContext } from "contexts/ModalContext";
-import Icon from "components/Icon";
-import Tooltip from "components/Tooltip";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { EndowmentBookmark } from "types/aws";
 import Prompt from "./Prompt";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;

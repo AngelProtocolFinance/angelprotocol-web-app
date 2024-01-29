@@ -1,5 +1,5 @@
-import { PropsWithChildren, useEffect, useState } from "react";
 import Icon from "components/Icon";
+import { PropsWithChildren, useEffect, useState } from "react";
 
 type Props = { liquidPercentage: number; expanded: boolean; classes?: string };
 

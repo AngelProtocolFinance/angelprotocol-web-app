@@ -1,5 +1,5 @@
-import { useGetter, useSetter } from "store/accessors";
 import { setKYCOnly } from "slices/components/marketFilter";
+import { useGetter, useSetter } from "store/accessors";
 import { FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<boolean>[] = [

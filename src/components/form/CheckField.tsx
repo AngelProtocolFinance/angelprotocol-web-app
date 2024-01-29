@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { PropsWithChildren } from "react";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
-import { Classes } from "./types";
 import { unpack } from "./helpers";
+import { Classes } from "./types";
 
 export function CheckField<T extends FieldValues>({
   name,
