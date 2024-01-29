@@ -3,19 +3,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCapturePayPalOrderMutation } from "services/apes";
 import { useErrorContext } from "contexts/ErrorContext";
-import LoaderRing from "components/LoaderRing";
 import { isEmpty } from "helpers";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
+import ContentLoader from "components/ContentLoader";
 
 type Props = {
   orderId: string;
-  onBack: () => void;
 };
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ orderId, onBack }: Props) {
+export default function Checkout({ orderId }: Props) {
   const navigate = useNavigate();
 
   const [isSubmitting, setSubmitting] = useState(false);
@@ -25,60 +24,51 @@ export default function Checkout({ orderId, onBack }: Props) {
   const { handleError } = useErrorContext();
 
   return (
-    <div className="grid place-items-center min-h-[16rem] isolate p-4 @md:p-8">
-      {isPending && <LoaderRing thickness={10} classes="w-8" />}
+    <>
+      {isPending && <ContentLoader className="rounded h-14 w-full" />}
       {!isPending && (
-        <div className="grid gap-5 w-full">
-          <PayPalButtons
-            disabled={isSubmitting}
-            onCancel={() => setSubmitting(false)}
-            onError={(error) => {
-              setSubmitting(false);
-              handleError(error);
-            }}
-            onApprove={async (data, actions) => {
-              try {
-                const order = await captureOrder({
-                  orderId: data.orderID,
-                }).unwrap();
+        <PayPalButtons
+          className="w-full py-4"
+          disabled={isSubmitting}
+          onCancel={() => setSubmitting(false)}
+          onError={(error) => {
+            setSubmitting(false);
+            handleError(error);
+          }}
+          onApprove={async (data, actions) => {
+            try {
+              const order = await captureOrder({
+                orderId: data.orderID,
+              }).unwrap();
 
-                if ("details" in order) {
-                  if (order.details[0]?.issue === "INSTRUMENT_DECLINED") {
-                    // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-                    // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
-                    return actions.restart();
-                  } else if ("debug_id" in order) {
-                    // (2) Other non-recoverable errors -> Show a failure message
-                    throw new Error(
-                      `${order.details[0]?.description} (${order.debug_id})`
-                    );
-                  }
-                } else if (isEmpty(order.purchase_units ?? [])) {
-                  throw new Error(JSON.stringify(order));
-                } else {
-                  navigate(appRoutes.donate_fiat_thanks);
+              if ("details" in order) {
+                if (order.details[0]?.issue === "INSTRUMENT_DECLINED") {
+                  // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+                  // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+                  return actions.restart();
+                } else if ("debug_id" in order) {
+                  // (2) Other non-recoverable errors -> Show a failure message
+                  throw new Error(
+                    `${order.details[0]?.description} (${order.debug_id})`
+                  );
                 }
-              } catch (error) {
-                handleError(error, GENERIC_ERROR_MESSAGE);
-              } finally {
-                setSubmitting(false);
+              } else if (isEmpty(order.purchase_units ?? [])) {
+                throw new Error(JSON.stringify(order));
+              } else {
+                navigate(appRoutes.donate_fiat_thanks);
               }
-            }}
-            createOrder={async () => {
-              setSubmitting(true);
-              return orderId;
-            }}
-          />
-          <button
-            className="btn-outline-filled btn-donate"
-            onClick={onBack}
-            type="button"
-            disabled={isSubmitting}
-          >
-            Back
-          </button>
-        </div>
+            } catch (error) {
+              handleError(error, GENERIC_ERROR_MESSAGE);
+            } finally {
+              setSubmitting(false);
+            }
+          }}
+          createOrder={async () => {
+            setSubmitting(true);
+            return orderId;
+          }}
+        />
       )}
-    </div>
+    </>
   );
 }

@@ -6,6 +6,7 @@ import { PAYPAL_CLIENT_ID } from "constants/env";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
+import Icon from "components/Icon";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
@@ -37,28 +38,41 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
 
   const dispatch = useSetter();
 
-  if (isLoading) return <Loader msg="Loading payment form..." />;
-  if (isError || !orderId) return <Err />;
-
   return (
-    <PayPalScriptProvider
-      options={{
-        clientId: PAYPAL_CLIENT_ID,
-        commit: true,
-        currency: "USD",
-        enableFunding: "paylater",
-        disableFunding: "card,venmo",
-      }}
-    >
-      <Checkout
-        orderId={orderId}
-        onBack={() => {
+    <div className="grid grid-rows-[auto_1fr] min-h-[16rem] isolate p-4 @md:p-8">
+      <button
+        onClick={() => {
           const action = details.userOptForKYC
             ? setStep("kyc-form")
             : setStep("donate-form");
           dispatch(action);
         }}
-      />
-    </PayPalScriptProvider>
+        type="button"
+        className="flex items-center gap-1 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
+      >
+        <Icon type="ArrowBack" strokeWidth={20} />
+        <span>Back</span>
+      </button>
+
+      {isLoading ? (
+        <Loader msg="Loading payment form..." />
+      ) : isError || !orderId ? (
+        <Err />
+      ) : (
+        <PayPalScriptProvider
+          options={{
+            clientId: PAYPAL_CLIENT_ID,
+            commit: true,
+            currency: "USD",
+            enableFunding: "paylater",
+            disableFunding: "card,venmo",
+          }}
+        >
+          <div className="grid gap-5 w-full place-items-center">
+            <Checkout orderId={orderId} />
+          </div>
+        </PayPalScriptProvider>
+      )}
+    </div>
   );
 }
