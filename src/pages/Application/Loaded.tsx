@@ -1,10 +1,10 @@
-import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
-import { ApplicationDetails } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
+import { useModalContext } from "contexts/ModalContext";
+import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
+import { ApplicationDetails } from "types/aws";
 import Container from "./Container";
 import Prompt from "./Prompt";
 

@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
-import { TableProps } from "./types";
-import { RegistrationStatus } from "types/aws";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import useSort from "hooks/useSort";
 import { appRoutes } from "constants/routes";
+import useSort from "hooks/useSort";
+import { Link } from "react-router-dom";
+import { RegistrationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { TableProps } from "./types";
 
 export default function Table({
   applications,

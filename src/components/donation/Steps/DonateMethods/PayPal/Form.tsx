@@ -1,18 +1,18 @@
-import { FormProvider, useController, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { FormValues, Props } from "./types";
-import { userIsSignedIn } from "types/auth";
-import { Currency } from "types/components";
-import { usePaypalCurrenciesQuery } from "services/apes";
 import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { useGetter, useSetter } from "store/accessors";
-import { setDetails } from "slices/donation";
-import { requiredString } from "schemas/string";
 import { appRoutes } from "constants/routes";
+import { FormProvider, useController, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { requiredString } from "schemas/string";
+import { usePaypalCurrenciesQuery } from "services/apes";
+import { setDetails } from "slices/donation";
+import { useGetter, useSetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
+import { Currency } from "types/components";
 import AdvancedOptions from "../../../AdvancedOptions";
+import { FormValues, Props } from "./types";
 
 const USD_CODE = "usd";
 

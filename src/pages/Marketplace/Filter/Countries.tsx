@@ -1,10 +1,10 @@
 import { Combobox } from "@headlessui/react";
-import { useState } from "react";
 import countries from "assets/countries/all.json";
 import Icon from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
-import { setCountries } from "slices/components/marketFilter";
 import { isEmpty } from "helpers";
+import { useState } from "react";
+import { setCountries } from "slices/components/marketFilter";
+import { useGetter, useSetter } from "store/accessors";
 
 export default function Countries() {
   const dispatch = useSetter();

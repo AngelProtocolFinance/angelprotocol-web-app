@@ -1,5 +1,5 @@
-import { FormStep } from "slices/donation";
 import { appRoutes } from "constants/routes";
+import { FormStep } from "slices/donation";
 import BuildEmailForm from "./BuildEmailForm";
 
 type Props = { state: FormStep };

@@ -1,11 +1,11 @@
 import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { useState } from "react";
-import { useController, useFormContext } from "react-hook-form";
-import { FormValues as FV } from "../types";
-import { EndowmentOption } from "types/aws";
 import { DrawerIcon } from "components/Icon";
 import useDebouncer from "hooks/useDebouncer";
+import { useState } from "react";
+import { useController, useFormContext } from "react-hook-form";
+import { EndowmentOption } from "types/aws";
+import { FormValues as FV } from "../types";
 import Options from "./Options";
 
 export default function EndowmentSelector() {

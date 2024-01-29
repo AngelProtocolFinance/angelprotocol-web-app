@@ -1,10 +1,8 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import {
-  ProfileUpdateMsg,
-  ProgramDeleteMsg,
-  VersionSpecificWalletProfile,
-  isDeleteMsg,
-} from "../types";
+import { TEMP_JWT } from "constants/auth";
+import { APIs } from "constants/urls";
+import { apiEnv } from "services/constants";
+import { RootState } from "store/store";
 import { userIsSignedIn } from "types/auth";
 import {
   Application,
@@ -21,11 +19,13 @@ import {
   Program,
   WalletProfile,
 } from "types/aws";
-import { apiEnv } from "services/constants";
-import { RootState } from "store/store";
-import { TEMP_JWT } from "constants/auth";
-import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
+import {
+  ProfileUpdateMsg,
+  ProgramDeleteMsg,
+  VersionSpecificWalletProfile,
+  isDeleteMsg,
+} from "../types";
 
 const getWalletProfileQuery = (walletAddr: string) =>
   `/${v(2)}/profile/${apiEnv}/user/${walletAddr}`;

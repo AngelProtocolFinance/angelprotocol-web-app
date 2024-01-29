@@ -1,14 +1,14 @@
 import { Authenticator } from "@aws-amplify/ui-react";
-import { useEffect, useState } from "react";
-import { Navigate, useLocation } from "react-router-dom";
-import { SignInRouteState } from "types/routeStates";
 import ExtLink from "components/ExtLink";
 import LoaderRing from "components/LoaderRing";
-import { useGetter } from "store/accessors";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { BASE_URL } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
+import { useEffect, useState } from "react";
+import { Navigate, useLocation } from "react-router-dom";
+import { useGetter } from "store/accessors";
+import { SignInRouteState } from "types/routeStates";
 
 export default function Signin() {
   const { state } = useLocation();

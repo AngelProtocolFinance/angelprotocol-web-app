@@ -1,12 +1,12 @@
+import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
-import { ApplicationsQueryParams } from "types/aws";
 import {
   updateAWSQueryData,
   useApplicationsQuery,
   useLazyApplicationsQuery,
 } from "services/aws/aws";
 import { useSetter } from "store/accessors";
-import useDebouncer from "hooks/useDebouncer";
+import { ApplicationsQueryParams } from "types/aws";
 
 export default function usePaginatedApplications() {
   const dispatch = useSetter();

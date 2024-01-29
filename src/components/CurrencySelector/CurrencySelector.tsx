@@ -1,8 +1,8 @@
 import { Combobox } from "@headlessui/react";
+import Icon from "components/Icon/Icon";
 import { useState } from "react";
 import { Currency } from "types/components";
 import { QueryState, isQuery } from "types/third-party/redux";
-import Icon from "components/Icon/Icon";
 import { DrawerIcon } from "../Icon";
 import { Label } from "../form";
 import CurrencyOptions from "./CurrencyOptions";

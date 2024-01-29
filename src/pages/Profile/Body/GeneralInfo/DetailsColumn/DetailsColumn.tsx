@@ -1,5 +1,5 @@
-import { PropsWithChildren } from "react";
 import { isEmpty } from "helpers";
+import { PropsWithChildren } from "react";
 import { useProfileContext } from "../../../ProfileContext";
 import DonateButton from "../../DonateButton";
 import Balances from "./Balances";

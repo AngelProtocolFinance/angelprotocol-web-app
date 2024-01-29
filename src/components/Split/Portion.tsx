@@ -1,6 +1,6 @@
+import { humanize } from "helpers";
 import { PropsWithChildren } from "react";
 import { Token } from "./types";
-import { humanize } from "helpers";
 
 type Props = PropsWithChildren<{
   action: string;

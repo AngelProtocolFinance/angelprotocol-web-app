@@ -7,9 +7,9 @@ import {
   get,
   useFormContext,
 } from "react-hook-form";
-import { Classes } from "./types";
 import { Label } from ".";
 import { unpack } from "./helpers";
+import { Classes } from "./types";
 
 const textarea = "textarea" as const;
 type TextArea = typeof textarea;

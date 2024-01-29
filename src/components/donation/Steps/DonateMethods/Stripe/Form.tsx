@@ -1,16 +1,16 @@
-import { FormProvider, useController, useForm } from "react-hook-form";
-import { FormValues, Props } from "./types";
-import { userIsSignedIn } from "types/auth";
-import { Currency } from "types/components";
-import { useStripeCurrenciesQuery } from "services/apes";
 import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { useGetter, useSetter } from "store/accessors";
-import { setDetails } from "slices/donation";
+import { FormProvider, useController, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
+import { useStripeCurrenciesQuery } from "services/apes";
+import { setDetails } from "slices/donation";
+import { useGetter, useSetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
+import { Currency } from "types/components";
 import AdvancedOptions from "../../../AdvancedOptions";
+import { FormValues, Props } from "./types";
 
 const USD_CODE = "usd";
 

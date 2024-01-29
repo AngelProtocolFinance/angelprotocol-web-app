@@ -1,12 +1,12 @@
-import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
-import { BankingApplicationDetails } from "services/types";
-import { useAdminContext } from "pages/Admin/Context";
-import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
-import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { adminRoutes } from "constants/routes";
+import { useModalContext } from "contexts/ModalContext";
+import { useAdminContext } from "pages/Admin/Context";
+import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
+import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
+import { BankingApplicationDetails } from "services/types";
 import DeletePrompt from "./DeletePrompt";
 
 export default function Loaded(props: BankingApplicationDetails) {

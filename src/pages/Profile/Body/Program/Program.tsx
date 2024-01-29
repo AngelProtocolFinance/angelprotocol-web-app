@@ -1,9 +1,9 @@
-import { useParams } from "react-router-dom";
-import { useProfileContext } from "pages/Profile/ProfileContext";
-import { useProgramQuery } from "services/aws/aws";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import RichText from "components/RichText";
+import { useProfileContext } from "pages/Profile/ProfileContext";
+import { useParams } from "react-router-dom";
+import { useProgramQuery } from "services/aws/aws";
 import Container from "../common/Container";
 import Milestones from "./Milestones";
 

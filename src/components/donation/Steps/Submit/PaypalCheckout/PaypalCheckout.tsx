@@ -1,13 +1,13 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import { usePaypalOrderQuery } from "services/apes";
-import { useSetter } from "store/accessors";
-import { PaypalCheckoutStep, setStep } from "slices/donation";
+import Icon from "components/Icon";
 import { PAYPAL_CLIENT_ID } from "constants/env";
+import { usePaypalOrderQuery } from "services/apes";
+import { PaypalCheckoutStep, setStep } from "slices/donation";
+import { useSetter } from "store/accessors";
+import BackBtn from "../../BackBtn";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
-import Icon from "components/Icon";
-import BackBtn from "../../BackBtn";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart

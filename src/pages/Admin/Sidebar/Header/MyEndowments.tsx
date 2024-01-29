@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import { EndowmentBookmark } from "types/aws";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
+import { EndowmentBookmark } from "types/aws";
 
 type Props = { endowments: EndowmentBookmark[]; showEndowments: boolean };
 

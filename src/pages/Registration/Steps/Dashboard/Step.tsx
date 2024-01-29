@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { RegStep } from "pages/Registration/types";
+import { Link } from "react-router-dom";
 import { useRegState } from "../StepGuard";
 
 type TStep = Exclude<RegStep, 6>; // exclude summary step

@@ -1,7 +1,7 @@
 import {
   ConnectType,
-  Installation,
   Connection as TerraConnection,
+  Installation,
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";

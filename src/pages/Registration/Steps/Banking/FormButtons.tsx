@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
 import { FormButtonsProps } from "components/BankDetails/types";
 import LoadText from "components/LoadText";
+import { Link } from "react-router-dom";
 import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
 

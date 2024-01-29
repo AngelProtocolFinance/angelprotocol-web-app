@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { isConnected, useWalletContext } from "contexts/WalletContext";
 import { ErrorStatus, LoadingStatus } from "components/Status";
-import { useGetter, useSetter } from "store/accessors";
-import { GiftState, resetDetails } from "slices/gift";
 import { APP_NAME } from "constants/env";
+import { isConnected, useWalletContext } from "contexts/WalletContext";
+import { useEffect } from "react";
+import { GiftState, resetDetails } from "slices/gift";
+import { useGetter, useSetter } from "store/accessors";
 import Progress from "./Progress";
 import Purchaser from "./Purchaser";
 import Result from "./Result";

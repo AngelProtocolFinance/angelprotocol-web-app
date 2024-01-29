@@ -1,14 +1,14 @@
-import { useFormContext } from "react-hook-form";
-import { FormValues as FV, Props } from "../types";
 import countries from "assets/countries/all.json";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
+import Icon from "components/Icon";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
+import { useFormContext } from "react-hook-form";
+import { FormValues as FV, Props } from "../types";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
-import Icon from "components/Icon";
 
 export const formStyle = "w-full text-gray-d2 dark:text-white font-work p-3";
 

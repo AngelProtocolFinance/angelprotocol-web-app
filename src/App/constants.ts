@@ -1,4 +1,3 @@
-import { Link, LinkGroup, SocialMediaLink } from "./types";
 import { BASE_URL, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import {
@@ -6,6 +5,7 @@ import {
   TERMS_OF_USE_DONOR,
   TERMS_OF_USE_NPO,
 } from "constants/urls";
+import { Link, LinkGroup, SocialMediaLink } from "./types";
 
 type LINKS = {
   HEADER_LINKS: Link[];

@@ -1,7 +1,7 @@
 import { Coin, Fee, LCDClient, Msg } from "@terra-money/terra.js";
+import { chains } from "constants/chains";
 import { TerraChainID } from "types/chain";
 import { EstimateResult } from "types/tx";
-import { chains } from "constants/chains";
 import { condenseToNum } from "../../decimal";
 
 export default async function estimateTerraFee(

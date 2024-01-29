@@ -1,9 +1,9 @@
-import { Suspense, lazy } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-import withAuth from "contexts/Auth";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { regRoutes } from "constants/routes";
+import withAuth from "contexts/Auth";
+import { Suspense, lazy } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import SignResult from "./SigningResult";
 import Signup from "./Signup";
 
