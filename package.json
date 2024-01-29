@@ -8,24 +8,11 @@
     "build": "tsc && rsbuild build",
     "start": "rsbuild dev",
     "test": "vitest",
-    "lint": "eslint 'src/**/*.{ts,tsx}'",
-    "lint-staged": "lint-staged --config lint-staged.cjs",
-    "preview": "rsbuild preview",
-    "format": "yarn run prettier --write 'src/**/*.{ts,tsx}'",
-    "prepare": "husky install"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest",
-      "prettier"
-    ],
-    "plugins": [
-      "prettier"
-    ],
-    "rules": {
-      "prettier/prettier": "error"
-    }
+    "format": "biome format --write src",
+    "lint": "biome lint ./src",
+    "check": "biome check --apply src",
+    "check-unsafe": "biome check --apply-unsafe src",
+    "preview": "rsbuild preview"
   },
   "browserslist": {
     "production": [
@@ -81,6 +68,7 @@
     "yup": "1.3.0"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@keplr-wallet/types": "0.12.23",
     "@rsbuild/core": "0.2.8",
     "@rsbuild/plugin-node-polyfill": "0.2.8",
@@ -90,7 +78,6 @@
     "@testing-library/jest-dom": "6.1.2",
     "@testing-library/react": "14.1.2",
     "@testing-library/user-event": "14.4.3",
-    "@trivago/prettier-plugin-sort-imports": "4.2.0",
     "@types/node": "18.18.13",
     "@types/quill": "2.0.14",
     "@types/react": "18.2.39",
@@ -99,18 +86,10 @@
     "@types/react-router-dom": "5.3.3",
     "@types/react-test-renderer": "18.0.0",
     "@walletconnect/types": "2.10.5",
-    "eslint": "8.56.0",
-    "eslint-config-prettier": "9.1.0",
-    "eslint-config-react-app": "7.0.1",
-    "eslint-plugin-prettier": "5.1.1",
-    "husky": "8.0.3",
     "jsdom": "23.0.1",
-    "lint-staged": "15.0.2",
     "postcss-import": "15.1.0",
-    "prettier": "3.0.1",
     "react-test-renderer": "18.2.0",
     "tailwindcss": "3.4.0",
-    "tsc-files": "1.1.4",
     "typescript": "<5.2.0",
     "vite-tsconfig-paths": "4.2.2",
     "vitest": "1.1.0"

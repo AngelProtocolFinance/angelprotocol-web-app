@@ -30,8 +30,8 @@ export default function Configurer({ classes = "" }) {
         display: fv.isAdvancedOptionsHidden
           ? "hidden"
           : fv.isAdvancedOptionsExpanded
-          ? "expanded"
-          : "collapsed",
+            ? "expanded"
+            : "collapsed",
       },
     };
     dispatch(updateWidgetConfig(newConfig));

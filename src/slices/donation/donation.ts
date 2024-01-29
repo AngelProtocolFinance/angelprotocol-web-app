@@ -31,8 +31,8 @@ const donation = createSlice({
           kyc: kyc
             ? kyc
             : payload.method === "stripe" && payload.email
-            ? { kycEmail: payload.email }
-            : undefined,
+              ? { kycEmail: payload.email }
+              : undefined,
         };
       }
       return {

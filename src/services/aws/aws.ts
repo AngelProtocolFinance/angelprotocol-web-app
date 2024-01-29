@@ -216,6 +216,7 @@ const endowCardObj: {
   active_in_countries: "",
   sdgs: "",
   id: "",
+  card_img: "",
   logo: "",
   kyc_donors_only: "",
   name: "",

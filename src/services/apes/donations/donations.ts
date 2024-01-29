@@ -16,8 +16,7 @@ export const donations_api = apes.injectEndpoints({
       query: (receiptPayload) => {
         const { transactionId, ...restOfPayload } = receiptPayload;
         return {
-          url: `${v(3)}/donation`,
-          params: { transactionId },
+          url: `crypto-donation/${transactionId}`,
           method: "PUT",
           body: restOfPayload,
         };

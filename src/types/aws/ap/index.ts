@@ -52,6 +52,7 @@ export type Endowment = {
   kyc_donors_only: boolean;
   logo: string;
   name: string;
+  card_img?: string;
   /** empty string by default */
   overview: string;
   program: Program[];
@@ -71,6 +72,7 @@ export type EndowmentCard = Pick<
   Endowment,
   | "id"
   | "active_in_countries"
+  | "card_img"
   | "endow_designation"
   | "hq_country"
   | "kyc_donors_only"
@@ -101,7 +103,6 @@ export type EndowmentsQueryParams = {
   sdgs?: string; // comma separated sdg values.
   kyc_only?: string; // comma separated boolean values
   countries?: string; //comma separated country names
-  hits?: number; // Number of items to be returned per request. If not provided, API defaults to return all
   published: "true";
 };
 

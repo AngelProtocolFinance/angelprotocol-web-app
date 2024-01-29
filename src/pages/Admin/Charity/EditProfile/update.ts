@@ -11,7 +11,7 @@ type Arg =
   | {
       type: "final";
       data: Except<FV, "id" | "initial"> & RequiredFields;
-      urls: { image: string; logo: string };
+      urls: { image: string; logo: string; card_img: string };
     };
 
 export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
@@ -20,6 +20,7 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
     return {
       id: d.id,
       active_in_countries: d.active_in_countries,
+      card_img: d.card_img,
       endow_designation: d.endow_designation,
       hq_country: d.hq_country,
       image: d.image,
@@ -51,6 +52,7 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
   return {
     ...fv,
     program: [], //program is updated in /create-program
+    card_img: urls.card_img,
     image: urls.image,
     logo: urls.logo,
     hq_country: fv.hq_country.name,

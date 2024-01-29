@@ -1,0 +1,59 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "suspicious": {
+        "noExplicitAny": "off",
+        "noArrayIndexKey": "off",
+        "noPrototypeBuiltins": "off",
+        "noImplicitAnyLet": "off",
+        "noGlobalIsNan": "off"
+      },
+      "complexity": {
+        "noBannedTypes": "off",
+        "noExtraBooleanCast": "off",
+        "useOptionalChain": "off",
+        "noUselessFragments": "off"
+      },
+      "style": {
+        "useTemplate": "off",
+        "noNonNullAssertion": "off",
+        "noUselessElse": "off",
+        "noUnusedTemplateLiteral": "off",
+        "useExponentiationOperator": "off",
+        "useSelfClosingElements": "off",
+        "useConst": "off",
+        "noVar": "off"
+      },
+      "performance": {
+        "noAccumulatingSpread": "off"
+      },
+      "correctness": {
+        "useExhaustiveDependencies": "off",
+        "noPrecisionLoss": "off",
+        "noSwitchDeclarations": "off",
+        "noChildrenProp": "off"
+      },
+      "a11y": {
+        "useButtonType": "off",
+        "useAltText": "off",
+        "useKeyWithMouseEvents": "off",
+        "useKeyWithClickEvents": "off",
+        "noSvgWithoutTitle": "off"
+      }
+    }
+  },
+  "formatter": {
+    "indentStyle": "space"
+  },
+  "javascript": {
+    "formatter": {
+      "trailingComma": "es5"
+    }
+  }
+}

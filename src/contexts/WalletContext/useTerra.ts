@@ -39,15 +39,15 @@ export default function useTerra() {
       status === WalletStatus.INITIALIZING
         ? { status: "loading" }
         : WalletStatus.WALLET_CONNECTED && wallets[0]
-        ? {
-            id: (c.identifier || c.type.toLowerCase) as TerraWalletID,
-            status: "connected",
-            isSwitching: false,
-            address: wallets[0].terraAddress,
-            chainId: network.chainID,
-            post,
-          }
-        : { status: "disconnected" };
+          ? {
+              id: (c.identifier || c.type.toLowerCase) as TerraWalletID,
+              status: "connected",
+              isSwitching: false,
+              address: wallets[0].terraAddress,
+              chainId: network.chainID,
+              post,
+            }
+          : { status: "disconnected" };
 
     return {
       ...state,

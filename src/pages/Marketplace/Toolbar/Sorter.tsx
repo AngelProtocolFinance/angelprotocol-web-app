@@ -30,7 +30,10 @@ export default function Sorter() {
 
   function toggleDirection(sort: Sort) {
     dispatch(
-      setSort({ ...sort, direction: sort.direction === "asc" ? "desc" : "asc" })
+      setSort({
+        ...sort,
+        direction: sort.direction === "asc" ? "desc" : "asc",
+      })
     );
   }
 
