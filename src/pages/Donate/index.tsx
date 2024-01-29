@@ -17,36 +17,38 @@ export default function Donate() {
     "logo",
     "name",
     "overview",
+    "tagline",
+    "card_img",
   ]);
 
   return (
-    <section className="grid px-4 content-start w-full font-work min-h-screen sm:min-h-[900px]">
-      <QueryLoader
-        queryState={queryState}
-        messages={{
-          loading: "Getting nonprofit info..",
-          error: "Failed to get nonprofit info",
-        }}
-        classes={{ container: "justify-self-center text-center mt-8" }}
-      >
-        {(profile) => (
-          <>
-            <Seo
-              title={`Donate to ${profile.name} - ${APP_NAME}`}
-              description={profile.overview.slice(0, 140)}
-              name={`${profile.name}`}
-              image={`${profile.logo}`}
-              url={`${DAPP_URL}/donate/${profile.id}`}
-            />
-            <Content
-              name={profile.name}
-              id={numId}
-              isKYCRequired={profile.kyc_donors_only ?? false}
-              isFiscalSponsored={profile.fiscal_sponsored ?? false}
-            />
-          </>
-        )}
-      </QueryLoader>
-    </section>
+    <QueryLoader
+      queryState={queryState}
+      messages={{
+        loading: "Getting nonprofit info..",
+        error: "Failed to get nonprofit info",
+      }}
+      classes={{ container: "justify-self-center text-center mt-8" }}
+    >
+      {(profile) => (
+        <>
+          <Seo
+            title={`Donate to ${profile.name} - ${APP_NAME}`}
+            description={profile.overview.slice(0, 140)}
+            name={`${profile.name}`}
+            image={`${profile.logo}`}
+            url={`${DAPP_URL}/donate/${profile.id}`}
+          />
+          <Content
+            tagline={profile.tagline}
+            logo={profile.card_img || profile.logo}
+            name={profile.name}
+            id={numId}
+            isKYCRequired={profile.kyc_donors_only ?? false}
+            isFiscalSponsored={profile.fiscal_sponsored ?? false}
+          />
+        </>
+      )}
+    </QueryLoader>
   );
 }

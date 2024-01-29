@@ -1,17 +1,20 @@
-import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import { Steps } from "components/donation";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
 import { memo, useEffect, useRef } from "react";
-import {
-  DonationRecipient,
-  DonationState,
-  setRecipient,
-} from "slices/donation";
+import { Link } from "react-router-dom";
+import { DonationRecipient, setRecipient } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
+import FAQ from "./FAQ";
+import OrgCard from "./OrgCard";
 
-function Content(props: DonationRecipient) {
+type Props = DonationRecipient & {
+  logo: string;
+  tagline: string;
+};
+
+function Content(props: Props) {
   const dispatch = useSetter();
   const state = useGetter((state) => state.donation);
   useEffect(() => {
@@ -32,33 +35,20 @@ function Content(props: DonationRecipient) {
 
   return (
     <div
-      className="justify-self-center grid w-full sm:w-[35rem] py-4 @sm:py-10"
+      className="grid grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full padded-container py-4 @sm:py-10 font-work"
       id={CONTAINER_ID}
     >
-      <Breadcrumbs
-        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-6"
-        items={[
-          { title: "Marketplace", to: `${appRoutes.marketplace}/` },
-          {
-            title: props.name,
-            to: `${appRoutes.marketplace}/${props.id}`,
-          },
-          {
-            title: "Donate",
-            to: `${appRoutes.donate}/${props.id}`,
-          },
-        ]}
-      />
+      <Link
+        to={`${appRoutes.marketplace}/${props.id}`}
+        className="col-span-full justify-self-end mb-4 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
+      >
+        Cancel
+      </Link>
+      <OrgCard name={props.name} tagline={props.tagline} logo={props.logo} />
+      <Steps className="justify-self-center w-full" donaterConfig={null} />
+      <FAQ />
 
-      {!isFinalized(state) && (
-        <h3 className="sm:text-center text-xl sm:text-3xl leading-snug mb-4">
-          {state.recipient?.name}
-        </h3>
-      )}
-
-      <Steps className="justify-self-center" donaterConfig={null} />
-
-      <p className="text-sm text-gray-d1 dark:text-gray mt-2 text-center">
+      <p className="text-sm text-gray-d1 dark:text-gray mt-2 text-center col-span-full">
         By making a donation, you agree to our{" "}
         <ExtLink
           className="hover:underline text-gray-d2 "
@@ -68,12 +58,6 @@ function Content(props: DonationRecipient) {
         </ExtLink>
       </p>
     </div>
-  );
-}
-
-function isFinalized(state: DonationState): boolean {
-  return (
-    state.step === "tx" && (state.status === "error" || "hash" in state.status)
   );
 }
 
