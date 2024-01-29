@@ -30,7 +30,7 @@ const donation = createSlice({
           details: payload,
           kyc: kyc
             ? kyc
-            : payload.method === "stripe" && payload.email
+            : (payload.method === "stripe" || payload.method === "paypal") && payload.email
               ? { kycEmail: payload.email }
               : undefined,
         };
