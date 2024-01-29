@@ -19,7 +19,7 @@ const tabIdx = (method?: DonationDetails["method"]) => {
     case "crypto":
       return 4;
     case "paypal":
-      return 2;
+      return 1;
     case "stripe":
       return 0;
     //other methods doesn't have donate methods yet
