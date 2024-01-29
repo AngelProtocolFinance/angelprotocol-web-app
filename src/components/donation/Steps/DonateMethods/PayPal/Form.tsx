@@ -29,6 +29,7 @@ export default function Form({
   const currencies = usePaypalCurrenciesQuery(null);
 
   const initial: FormValues = {
+    source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: { code: USD_CODE, min: 1 },
     email: authUserEmail,
