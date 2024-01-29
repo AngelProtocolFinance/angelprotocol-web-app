@@ -20,15 +20,7 @@ export default function Donate() {
   ]);
 
   return (
-    <section className="grid content-start w-full font-work min-h-screen sm:min-h-[900px] pb-20">
-      <div
-        style={{
-          backgroundImage: `url('${
-            queryState.data?.image || "/images/hero.png"
-          }')`,
-        }}
-        className="relative overlay w-full object-cover h-72 bg-center bg-cover"
-      />
+    <section className="grid px-4 content-start w-full font-work min-h-screen sm:min-h-[900px]">
       <QueryLoader
         queryState={queryState}
         messages={{

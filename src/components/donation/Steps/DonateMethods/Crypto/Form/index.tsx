@@ -9,11 +9,11 @@ import { setDetails } from "slices/donation";
 import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { Selector } from "../../../../Selector";
-import Split from "../../../../Split";
-import TokenField from "../../../../TokenField";
-import { CheckField } from "../../../../form";
-import AdvancedOptions from "../../../AdvancedOptions";
+import { Selector } from "../../../../../Selector";
+import Split from "../../../../../Split";
+import TokenField from "../../../../../TokenField";
+import { CheckField, Label } from "../../../../../form";
+import AdvancedOptions from "../../../../AdvancedOptions";
 import { initToken } from "../constants";
 
 type Props = {
@@ -45,9 +45,9 @@ export default function Form({ configFromWidget }: Props) {
       className="grid rounded-md w-full"
       autoComplete="off"
     >
-      <label htmlFor="chainId" className="mb-1 font-bold text-lg">
-        Select network :
-      </label>
+      <Label htmlFor="chainId" className="mb-1 font-semibold" required>
+        Network
+      </Label>
       <Selector<DonateValues, "chainId", ChainID>
         name="chainId"
         options={chainList
@@ -67,8 +67,8 @@ export default function Form({ configFromWidget }: Props) {
         name="token"
         selectedChainId={chainId.value}
         withBalance
-        label={`Enter the donation amount :`}
-        classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
+        label={`Donation amount`}
+        classes={{ label: "text-sm", inputContainer: "dark:bg-blue-d6" }}
         withMininum
       />
 

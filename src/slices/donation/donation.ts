@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import {
+  CryptoResultStep,
   DonationDetails,
   DonationRecipient,
   DonationState,
@@ -22,17 +23,22 @@ const donation = createSlice({
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
       if (state.recipient?.isKYCRequired || payload.userOptForKYC) {
+        const { kyc, ...rest } = state as KYCStep;
         return {
-          ...(state as KYCStep),
+          ...rest,
           step: "kyc-form",
           details: payload,
+          kyc: kyc
+            ? kyc
+            : payload.method === "stripe" && payload.email
+              ? { kycEmail: payload.email }
+              : undefined,
         };
       }
       return {
         ...(state as SubmitStep),
         step: "submit",
         details: payload,
-        kyc: undefined,
       };
     },
     resetDetails: (state) => {
@@ -52,7 +58,7 @@ const donation = createSlice({
 
     setTxStatus(state, { payload }: PayloadAction<TxStatus>) {
       return {
-        ...(state as SubmitStep),
+        ...(state as CryptoResultStep),
         step: "tx",
         status: payload,
       };

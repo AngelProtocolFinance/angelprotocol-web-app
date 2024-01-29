@@ -28,6 +28,7 @@ import {
 } from "react-icons/bs";
 import { CgUndo } from "react-icons/cg";
 import {
+  FaBitcoin,
   FaChurch,
   FaDiscord,
   FaDonate,
@@ -43,7 +44,7 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import { FaFileCsv, FaMoneyBills } from "react-icons/fa6";
-import { FiMenu, FiMoon } from "react-icons/fi";
+import { FiMenu, FiMoon, FiCreditCard } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
@@ -70,17 +71,25 @@ import {
   MdSpaceDashboard,
   MdWidgets,
 } from "react-icons/md";
-import { RiMapPin2Line, RiMoneyDollarCircleFill } from "react-icons/ri";
+import {
+  RiFundsBoxLine,
+  RiMapPin2Line,
+  RiMoneyDollarCircleFill,
+} from "react-icons/ri";
 import { RxMixerHorizontal } from "react-icons/rx";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
+import { LiaChalkboardTeacherSolid } from "react-icons/lia";
+import { PiPaypalLogo } from "react-icons/pi";
 
 export const icons = {
+  Advisor: LiaChalkboardTeacherSolid,
   AdminPanel: MdOutlineAdminPanelSettings,
   ArrowDown: BiChevronDown,
   ArrowRight: BiChevronRight,
   Back: MdOutlineArrowBackIosNew,
+  Bitcoin: FaBitcoin,
   Blockchain: SiHiveBlockchain,
   Charity: FaDonate,
   Check: BiCheck,
@@ -89,6 +98,7 @@ export const icons = {
   Close: IoClose,
   CloseCircle: IoCloseCircle,
   Copy: MdOutlineContentCopy,
+  CreditCard: FiCreditCard,
   Crop: IoCrop,
   Dash: GoDash,
   Dashboard: MdSpaceDashboard,
@@ -110,6 +120,7 @@ export const icons = {
   FilterLeft: BsFilterLeft,
   FilterMixer: RxMixerHorizontal,
   Folder: MdOutlineFolder,
+  Stocks: RiFundsBoxLine,
   Giftcard: MdCardGiftcard,
   Globe: BiGlobe,
   HeartFill: AiFillHeart,
@@ -127,6 +138,7 @@ export const icons = {
   Menu: FiMenu,
   Money: FaMoneyBills,
   Moon: FiMoon,
+  Paypal: PiPaypalLogo,
   Picture: ImFilePicture,
   Plus: AiOutlinePlus,
   Question: AiOutlineQuestionCircle,

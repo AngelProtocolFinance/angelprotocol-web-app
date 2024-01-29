@@ -1,18 +1,10 @@
 import { DonaterConfigFromWidget } from "types/widget";
-import { Currency } from "components/CurrencySelector";
-import { FormStep } from "slices/donation";
+import { PaypalDonationDetails, PaypalFormStep } from "slices/donation";
 import { type AdvancedOptionsDisplay } from "../../../AdvancedOptions";
 
 export type Props = {
   advanceOptDisplay: AdvancedOptionsDisplay;
   widgetConfig: DonaterConfigFromWidget | null;
-  state: FormStep;
-};
+} & PaypalFormStep;
 
-export type FormValues = {
-  amount: string;
-  currency: Currency;
-  email: string;
-  pctLiquidSplit: number;
-  userOptForKYC: boolean;
-};
+export type FormValues = Omit<PaypalDonationDetails, "method">;

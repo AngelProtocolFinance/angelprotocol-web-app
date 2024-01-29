@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 import { TxPackage } from "types/tx";
 import { ConnectedWallet } from "types/wallet";
 import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/donation";
+import { CryptoSubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { maskAddress } from "helpers";
 import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
-import Image from "../../../Image";
+import Image from "../../../../Image";
 import { Row } from "./Row";
 
 type Props = PropsWithChildren<
-  SubmitStep & { txPackage?: TxPackage; wallet?: ConnectedWallet }
+  CryptoSubmitStep & { txPackage?: TxPackage; wallet?: ConnectedWallet }
 >;
 
 export default function Container({ children, txPackage, ...props }: Props) {
@@ -25,7 +25,7 @@ export default function Container({ children, txPackage, ...props }: Props) {
   }
 
   return (
-    <div className="grid content-start">
+    <div className="grid content-start p-4 @md:p-8">
       {props.wallet && (
         <Row
           title={maskAddress(props.wallet.address)}

@@ -1,5 +1,5 @@
 import { ChainID } from "types/chain";
-import { OptionType } from "types/components";
+import { Currency, OptionType } from "types/components";
 import { Country } from "types/components";
 import { DonationSource } from "types/lists";
 import { TokenWithAmount, TxPackage } from "types/tx";
@@ -11,14 +11,36 @@ export type DonationRecipient = {
   isFiscalSponsored: boolean;
 };
 
-export type DonationDetails = {
-  source: DonationSource;
-  method: "stripe" | "crypto"; //use to preserve selected method
-  token: TokenWithAmount;
+type BaseDonationDetais = {
   pctLiquidSplit: number; // <input range value transformed to number via onChange
-  chainId: OptionType<ChainID>;
   userOptForKYC: boolean;
+  source: DonationSource;
 };
+
+export type CryptoDonationDetails = BaseDonationDetais & {
+  method: "crypto"; //use to preserve selected method
+  token: TokenWithAmount;
+  chainId: OptionType<ChainID>;
+};
+
+type FiatDonationDetails = BaseDonationDetais & {
+  amount: string;
+  currency: Currency;
+  email: string;
+};
+
+export type StripeDonationDetails = {
+  method: "stripe";
+} & FiatDonationDetails;
+
+export type PaypalDonationDetails = {
+  method: "paypal";
+} & FiatDonationDetails;
+
+export type DonationDetails =
+  | StripeDonationDetails
+  | PaypalDonationDetails
+  | CryptoDonationDetails;
 
 export type KYC = {
   name: { first: string; last: string };
@@ -36,29 +58,43 @@ type InitStep = {
   recipient?: DonationRecipient;
 };
 
-export type FormStep = {
+export type FormStep<T extends DonationDetails = DonationDetails> = {
   step: "donate-form";
-  details?: DonationDetails;
+  details?: T;
 } & Omit<Required<InitStep>, "step">;
+export type StripeFormStep = FormStep<StripeDonationDetails>;
+export type CryptoFormStep = FormStep<CryptoDonationDetails>;
+export type PaypalFormStep = FormStep<PaypalDonationDetails>;
 
+//KYC step need not know donation details
 export type KYCStep = {
   step: "kyc-form";
-  kyc?: KYC;
-} & Omit<Required<FormStep>, "step">;
+  recipient: DonationRecipient;
+  kyc?: Partial<KYC>;
+} & Omit<Required<FormStep<DonationDetails>>, "step">;
 
-export type SubmitStep = {
+export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-  //donation can be submitted without KYC
-} & Omit<KYCStep, "step">;
+} & Omit<KYCStep, "step" | "details" | "kyc"> & { details: T; kyc?: KYC }; //either skipped or complete
 
-export type DonationState = InitStep | FormStep | KYCStep | SubmitStep | TxStep;
+export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
+export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
+export type PaypalCheckoutStep = SubmitStep<PaypalDonationDetails>;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
-export type TxStep = {
+export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;
-} & Omit<SubmitStep, "step">;
+} & Omit<CryptoSubmitStep, "step">;
 
-export type DonateArgs = { donation: SubmitStep } & TxPackage;
+export type DonationState =
+  | InitStep
+  | FormStep
+  | SubmitStep
+  | KYCStep
+  | SubmitStep
+  | CryptoResultStep;
+
+export type DonateArgs = { donation: CryptoSubmitStep } & TxPackage;
 
 export type DonationStep = DonationState["step"];

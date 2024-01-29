@@ -1,1 +1,1 @@
-export { default } from "./PayPal";
+export { default } from "./Form";

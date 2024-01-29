@@ -6,9 +6,9 @@ import {
 import { FormEventHandler, useState } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
 import LoadText from "components/LoadText";
-import LoaderRing from "components/LoaderRing";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
+import Loader from "../Loader";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
@@ -59,7 +59,10 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-8">
+    <form
+      onSubmit={handleSubmit}
+      className="grid grid-[1fr_auto] gap-8 p-4 @md:p-8"
+    >
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setLoading(false)}
@@ -70,7 +73,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
         onLoaderStart={() => setShowLoader(false)}
       />
       {showLoader ? (
-        <LoaderRing thickness={10} classes="w-24 justify-self-center" />
+        <Loader />
       ) : isLoading ? (
         <button
           className="btn-outline-filled btn-donate w-1/2"

@@ -12,34 +12,34 @@ export default function CurrentStep({ config }: Props) {
   const state = useGetter((state) => state.donation);
   const dispatch = useSetter();
 
+  if (state.step === "init") return <></>; // <Steps /> sets to step 1 onMount
+
   if (state.step === "tx") {
-    return <Result {...state} classes="justify-self-center mt-16" />;
+    return <Result {...state} classes="justify-self-center p-4 @md:p-8" />;
   }
 
-  switch (state.step) {
-    case "submit":
-      return <Submit {...state} />;
-    case "kyc-form":
-      return (
-        <KYCForm
-          type="on-donation"
-          classes="grid gap-5 sm:grid-cols-2"
-          recipient={state.recipient}
-          onBack={() => {
-            //kyc is always after donate form
-            dispatch(setStep("donate-form"));
-          }}
-          onSubmit={(data) => {
-            dispatch(setKYC(data));
-          }}
-        />
-      );
-    case "donate-form": {
-      return <DonateMethods donaterConfig={config} state={state} />;
-    }
-    //init
-    default: {
-      return <></>; // <Steps /> sets to step 1 onMount
-    }
+  if (state.step === "submit") {
+    return <Submit {...state} />;
   }
+
+  if (state.step === "kyc-form") {
+    return (
+      <KYCForm
+        type="on-donation"
+        classes="grid gap-5 sm:grid-cols-2 p-4 @md:p-8"
+        defaultValues={state.kyc}
+        recipient={state.recipient}
+        onBack={() => {
+          //kyc is always after donate form
+          dispatch(setStep("donate-form"));
+        }}
+        onSubmit={(data) => {
+          dispatch(setKYC(data));
+        }}
+      />
+    );
+  }
+
+  state.step satisfies "donate-form";
+  return <DonateMethods donaterConfig={config} state={state} />;
 }

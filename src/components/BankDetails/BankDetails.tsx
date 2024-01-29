@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { IFormButtons, OnSubmit } from "./types";
+import { Currency } from "types/components";
 import { useCurrencisQuery } from "services/aws/wise";
 import Divider from "components/Divider";
 import useDebouncer from "hooks/useDebouncer";
-import CurrencySelector, { Currency } from "../CurrencySelector";
+import CurrencySelector from "../CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 
@@ -44,7 +45,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
     }
   };
 
-  const { data: currencies = [], isLoading } = useCurrencisQuery({});
+  const currencies = useCurrencisQuery({});
 
   return (
     <div className="grid gap-6">
@@ -53,7 +54,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
         onChange={(c) => setCurrency(c)}
         value={currency}
         classes={{ combobox: "w-full md:w-80" }}
-        disabled={isSubmitting || isLoading}
+        disabled={isSubmitting}
         label="Select your bank account currency:"
         required
       />

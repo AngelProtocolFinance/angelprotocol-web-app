@@ -1,5 +1,6 @@
 import { memo, useEffect, useRef } from "react";
 import Breadcrumbs from "components/Breadcrumbs";
+import ExtLink from "components/ExtLink";
 import { Steps } from "components/donation";
 import { useGetter, useSetter } from "store/accessors";
 import {
@@ -8,6 +9,7 @@ import {
   setRecipient,
 } from "slices/donation";
 import { appRoutes } from "constants/routes";
+import { TERMS_OF_USE_DONOR } from "constants/urls";
 
 function Content(props: DonationRecipient) {
   const dispatch = useSetter();
@@ -30,11 +32,11 @@ function Content(props: DonationRecipient) {
 
   return (
     <div
-      className="justify-self-center grid padded-container max-w-2xl py-8 @sm:py-20 scroll-mt-6"
+      className="justify-self-center grid w-full sm:w-[35rem] py-4 @sm:py-10"
       id={CONTAINER_ID}
     >
       <Breadcrumbs
-        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-10 sm:mb-12"
+        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-6"
         items={[
           { title: "Marketplace", to: `${appRoutes.marketplace}/` },
           {
@@ -49,12 +51,22 @@ function Content(props: DonationRecipient) {
       />
 
       {!isFinalized(state) && (
-        <h3 className="text-center text-xl sm:text-3xl leading-snug mb-4">
-          You're about to make a donation to {state.recipient?.name}
+        <h3 className="sm:text-center text-xl sm:text-3xl leading-snug mb-4">
+          {state.recipient?.name}
         </h3>
       )}
 
       <Steps className="justify-self-center" donaterConfig={null} />
+
+      <p className="text-sm text-gray-d1 dark:text-gray mt-2 text-center">
+        By making a donation, you agree to our{" "}
+        <ExtLink
+          className="hover:underline text-gray-d2 "
+          href={TERMS_OF_USE_DONOR}
+        >
+          Terms & Conditions
+        </ExtLink>
+      </p>
     </div>
   );
 }

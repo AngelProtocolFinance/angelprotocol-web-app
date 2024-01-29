@@ -8,6 +8,7 @@ import {
   Token,
 } from "types/aws";
 import { ChainID } from "types/chain";
+import { Currency } from "types/components";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { apiEnv } from "../constants";
@@ -51,26 +52,22 @@ export const apes = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    createPayPalOrder: builder.mutation<
-      { orderId: string },
-      CreatePayPalOrderParams
-    >({
+    paypalOrder: builder.query<string, CreatePayPalOrderParams>({
       query: (params) => ({
         url: `v1/fiat/paypal/${apiEnv}/orders`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
       }),
+      transformResponse: (res: { orderId: string }) => res.orderId,
     }),
-    createStripePaymentIntent: builder.mutation<
-      { clientSecret: string },
-      StripePaymentIntentParams
-    >({
+    stripePaymentIntent: builder.query<string, StripePaymentIntentParams>({
       query: (data) => ({
         url: `v2/fiat/stripe-proxy/${apiEnv}`,
         method: "POST",
         body: JSON.stringify(data),
       }),
+      transformResponse: (res: { clientSecret: string }) => res.clientSecret,
     }),
     endowBalance: builder.query<EndowmentBalances, number>({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
@@ -83,12 +80,17 @@ export const apes = createApi({
         url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
-    paypalCurrencies: builder.query<FiatCurrencyData, null>({
+    paypalCurrencies: builder.query<Currency[], null>({
       query: () => ({
         url: `v1/fiat/paypal/currencies`,
       }),
+      transformResponse: (res: FiatCurrencyData) =>
+        res.currencies.map((c) => ({
+          code: c.currency_code,
+          min: c.minimum_amount,
+        })),
     }),
-    stripeCurrencies: builder.query<FiatCurrencyData, null>({
+    stripeCurrencies: builder.query<Currency[], null>({
       async queryFn(_args, _api, _extraOptions, baseQuery) {
         return await fetch("https://ipapi.co/json/")
           .then<{
@@ -103,9 +105,14 @@ export const apes = createApi({
             if (response.error) {
               return response;
             }
+
+            const data = response.data as FiatCurrencyData;
+
             return {
-              ...response,
-              data: response.data as FiatCurrencyData,
+              data: data.currencies.map((c) => ({
+                code: c.currency_code,
+                min: c.minimum_amount,
+              })),
             };
           });
       },
@@ -118,8 +125,8 @@ export const apes = createApi({
 
 export const {
   useCapturePayPalOrderMutation,
-  useCreateStripePaymentIntentMutation,
-  useCreatePayPalOrderMutation,
+  useStripePaymentIntentQuery,
+  usePaypalOrderQuery,
   useEndowBalanceQuery,
   useGetStripePaymentStatusQuery,
   usePaypalCurrenciesQuery,

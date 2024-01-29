@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
-import { TxStep } from "slices/donation";
+import { CryptoResultStep } from "slices/donation";
 import { getTxUrl, humanize } from "helpers";
 import { appRoutes } from "constants/routes";
 import Share, { SocialMedia } from "./Share";
@@ -9,7 +9,7 @@ import Share, { SocialMedia } from "./Share";
 export default function Success({
   classes,
   ...state
-}: Omit<TxStep, "status"> & { classes?: string; hash: string }) {
+}: Omit<CryptoResultStep, "status"> & { classes?: string; hash: string }) {
   const {
     hash,
     details: { chainId, token },
