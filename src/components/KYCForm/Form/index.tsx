@@ -6,9 +6,9 @@ import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import Controls from "./Controls";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
+import Icon from "components/Icon";
 
 export const formStyle = "w-full text-gray-d2 dark:text-white font-work p-3";
 
@@ -31,9 +31,19 @@ export default function Form({ classes = "", ...props }: Props) {
       autoComplete="off"
       autoSave="off"
     >
+      {!isPostKyc && (
+        <button
+          onClick={props.onBack}
+          type="button"
+          className="flex items-center gap-1 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
+        >
+          <Icon type="ArrowBack" strokeWidth={20} />
+          <span>Back</span>
+        </button>
+      )}
       <Tooltip
         {...props}
-        classes={`${isPostKyc ? "" : "mb-12"} col-span-full`}
+        classes={`${isPostKyc ? "" : "mb-4"} col-span-full`}
       />
       <Field<FV>
         classes="field-kyc"
@@ -144,7 +154,13 @@ export default function Form({ classes = "", ...props }: Props) {
           {isSubmitting ? "Processing..." : "Submit"}
         </button>
       ) : (
-        <Controls {...props} classes="col-span-full" />
+        <button
+          className="btn-orange btn-donate col-span-full"
+          disabled={isSubmitting}
+          type="submit"
+        >
+          Continue
+        </button>
       )}
     </form>
   );

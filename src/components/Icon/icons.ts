@@ -48,7 +48,7 @@ import { FiMenu, FiMoon, FiCreditCard } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
-import { IoMdDownload, IoMdListBox } from "react-icons/io";
+import { IoMdDownload, IoMdListBox, IoMdArrowBack } from "react-icons/io";
 import {
   IoClose,
   IoCloseCircle,
@@ -86,6 +86,7 @@ import { PiPaypalLogo } from "react-icons/pi";
 export const icons = {
   Advisor: LiaChalkboardTeacherSolid,
   AdminPanel: MdOutlineAdminPanelSettings,
+  ArrowBack: IoMdArrowBack,
   ArrowDown: BiChevronDown,
   ArrowRight: BiChevronRight,
   Back: MdOutlineArrowBackIosNew,
