@@ -1,5 +1,4 @@
 import { FormProvider, useController, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { FormValues, Props } from "./types";
 import { userIsSignedIn } from "types/auth";
 import { Currency } from "types/components";
@@ -11,7 +10,6 @@ import { CheckField, Field } from "components/form";
 import { useGetter, useSetter } from "store/accessors";
 import { setDetails } from "slices/donation";
 import { requiredString } from "schemas/string";
-import { appRoutes } from "constants/routes";
 import AdvancedOptions from "../../../AdvancedOptions";
 
 const USD_CODE = "usd";
