@@ -10,6 +10,7 @@ import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import Image from "../../../../Image";
 import { Row } from "./Row";
+import BackBtn from "../../BackBtn";
 
 type Props = PropsWithChildren<
   CryptoSubmitStep & { txPackage?: TxPackage; wallet?: ConnectedWallet }
@@ -26,6 +27,7 @@ export default function Container({ children, txPackage, ...props }: Props) {
 
   return (
     <div className="grid content-start p-4 @md:p-8">
+      <BackBtn type="button" onClick={goBack} className="mb-4" />
       {props.wallet && (
         <Row
           title={maskAddress(props.wallet.address)}
@@ -59,29 +61,14 @@ export default function Container({ children, txPackage, ...props }: Props) {
       </Row>
 
       {children}
-      <div className="mt-14 grid grid-cols-2 gap-5">
-        <button
-          className="btn-outline-filled btn-donate"
-          onClick={goBack}
-          type="button"
-        >
-          Back
-        </button>
-        <button
-          className="btn-orange btn-donate"
-          onClick={!txPackage ? undefined : () => submit(txPackage)}
-          disabled={!txPackage}
-          type="submit"
-        >
-          Complete
-        </button>
-        <Link
-          to={appRoutes.marketplace + `/${props.recipient.id}`}
-          className="col-span-full btn-outline btn-donate"
-        >
-          Cancel
-        </Link>
-      </div>
+      <button
+        className="btn-orange btn-donate mt-14"
+        onClick={!txPackage ? undefined : () => submit(txPackage)}
+        disabled={!txPackage}
+        type="submit"
+      >
+        Complete
+      </button>
     </div>
   );
 }
