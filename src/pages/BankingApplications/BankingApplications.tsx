@@ -20,7 +20,7 @@ function BankingApplications() {
 
   return (
     <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
-      <h1 className="text-center text-3xl max-lg:font-work col-span-full max-lg:mb-4">
+      <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Banking Applications
       </h1>
 

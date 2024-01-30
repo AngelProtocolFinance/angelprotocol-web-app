@@ -40,7 +40,7 @@ export default function Container({ children, txPackage, ...props }: Props) {
             disabled={props.wallet.isSwitching}
             onClick={props.wallet.disconnect}
             type="button"
-            className="ml-2 btn-outline-filled text-2xs px-1 py-0.5 rounded-sm font-normal font-work"
+            className="ml-2 btn-outline-filled text-2xs px-1 py-0.5 rounded-sm font-normal"
           >
             change
           </button>

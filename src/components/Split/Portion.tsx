@@ -22,9 +22,7 @@ export default function Portion({
         {title}
       </p>
       <p className="text-xs sm:text-sm mb-2 font-bold">{percentage}%</p>
-      <p className="uppercase text-xs sm:text-sm text-center font-body">
-        {action}
-      </p>
+      <p className="uppercase text-xs sm:text-sm text-center">{action}</p>
       {children}
       {token && (
         <p className="mt-auto font-bold md:text-lg text-center">

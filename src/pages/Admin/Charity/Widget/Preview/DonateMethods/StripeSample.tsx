@@ -19,7 +19,7 @@ export default function StripeSample({
         complete your donation
       </p>
 
-      <div className="flex gap-3 md:gap-5 justify-center font-body mt-4">
+      <div className="flex gap-3 md:gap-5 justify-center mt-4">
         <button className="btn-orange btn-donate w-1/2" type="button">
           Pay with card
         </button>

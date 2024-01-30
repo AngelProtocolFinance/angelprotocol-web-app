@@ -9,7 +9,7 @@ export default function Leaderboard() {
   const queryState = useLeaderboardsQuery(null);
 
   return (
-    <section className="padded-container grid content-start mt-8 pb-16 font-work">
+    <section className="padded-container grid content-start mt-8 pb-16">
       <Seo title={`Leaderboad - ${APP_NAME}`} url={`${DAPP_URL}/leaderboard`} />
       <DonationMetrics />
       <h3 className="mt-6 uppercase text-3xl">Impact board</h3>

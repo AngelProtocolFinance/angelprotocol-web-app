@@ -14,7 +14,7 @@ export default function Group({
     <div
       className={`grid w-full gap-6 p-6 border border-prim rounded bg-white dark:bg-blue-d6 ${className}`}
     >
-      {title && <h3 className="text-2xl font-body">{title}</h3>}
+      {title && <h3 className="text-2xl">{title}</h3>}
       {description && (
         <p className="-mt-4 text-lg font-semibold">{description}</p>
       )}

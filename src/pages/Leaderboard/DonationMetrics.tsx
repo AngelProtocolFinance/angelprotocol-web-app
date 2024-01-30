@@ -12,7 +12,7 @@ export default function DonationMetrics() {
 
   return (
     <div className="text-center">
-      <h2 className="my-3 text-3xl font-extrabold">
+      <h2 className="my-3 text-3xl font-bold">
         Total Donations: ${" "}
         {`${Number(
           metrics.donations_total_amount.toFixed(2)

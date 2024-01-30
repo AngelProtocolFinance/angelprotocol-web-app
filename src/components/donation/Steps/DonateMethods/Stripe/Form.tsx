@@ -136,7 +136,7 @@ export default function Form({
         <div
           className={`flex gap-3 md:gap-5 ${
             isInsideWidget ? "justify-center" : "justify-between"
-          } font-body mt-4`}
+          } mt-4`}
         >
           {!isInsideWidget && (
             <Link

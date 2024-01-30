@@ -20,7 +20,7 @@ export default function Donate() {
   ]);
 
   return (
-    <section className="grid px-4 content-start w-full font-work min-h-screen sm:min-h-[900px]">
+    <section className="grid px-4 content-start w-full min-h-screen sm:min-h-[900px]">
       <QueryLoader
         queryState={queryState}
         messages={{

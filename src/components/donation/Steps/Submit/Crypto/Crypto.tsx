@@ -40,7 +40,7 @@ export default function Crypto(props: CryptoSubmitStep) {
           Connected wallet doesn't support this chain.
         </Info>
         <button
-          className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
+          className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal justify-self-center"
           type="button"
           onClick={wallet.disconnect}
         >
@@ -62,7 +62,7 @@ export default function Crypto(props: CryptoSubmitStep) {
               disabled={wallet.isSwitching}
               type="button"
               onClick={() => wallet.switchChain?.(chainID)}
-              className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
+              className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal justify-self-center"
             >
               Switch to {chains[chainID].name}
             </button>

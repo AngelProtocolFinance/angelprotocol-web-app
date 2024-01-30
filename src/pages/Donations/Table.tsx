@@ -113,7 +113,7 @@ export default function Table({
               </Link>
               <>{new Date(row.date).toLocaleDateString()}</>
               <>{row.chainName}</>
-              <span className="font-body text-sm">{row.symbol}</span>
+              <span className="text-sm">{row.symbol}</span>
               <>{humanize(row.amount, 3)}</>
               <>{`$${humanize(row.usdValue, 2)}`}</>
               {row.chainId === "fiat" || row.chainId === "staging" ? (
@@ -132,7 +132,7 @@ export default function Table({
                     row.donationFinalized
                       ? "bg-green"
                       : "bg-gray-d1 dark:bg-gray"
-                  } font-body px-2 py-0.5 rounded`}
+                  } px-2 py-0.5 rounded`}
                 >
                   {row.donationFinalized ? "RECEIVED" : "PENDING"}
                 </span>

@@ -17,11 +17,11 @@ export default function Widget() {
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">
         Accept donations from your website today!
       </h1>
-      <p className="text-center @4xl/widget:text-left font-body text-sm @4xl/widget:text-base @4xl/widget:col-span-2">
+      <p className="text-center @4xl/widget:text-left text-sm @4xl/widget:text-base @4xl/widget:col-span-2">
         Just configure your widget below, copy & paste the code on your website
         and you're ready to go!
       </p>
-      <p className="text-center @4xl/widget:text-left font-body text-sm @4xl/widget:text-base mb-10 @4xl/widget:col-span-2">
+      <p className="text-center @4xl/widget:text-left text-sm @4xl/widget:text-base mb-10 @4xl/widget:col-span-2">
         Your donors will be able to connect their crypto wallets and use them to{" "}
         donate directly.
       </p>

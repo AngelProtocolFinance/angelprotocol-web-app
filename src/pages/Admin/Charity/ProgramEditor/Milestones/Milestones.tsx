@@ -16,7 +16,7 @@ export default function Milestones() {
   return (
     <div className="@container grid gap-6 p-4 @lg:p-6 border border-prim rounded bg-white dark:bg-blue-d6">
       <div className="flex flex-col @md:flex-row items-center gap-3 justify-between">
-        <h4 className="text-2xl font-body">Milestones</h4>
+        <h4 className="text-2xl">Milestones</h4>
         <button
           onClick={() =>
             append({

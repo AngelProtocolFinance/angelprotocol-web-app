@@ -10,7 +10,7 @@ import Controls from "./Controls";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
 
-export const formStyle = "w-full text-gray-d2 dark:text-white font-work p-3";
+export const formStyle = "w-full text-gray-d2 dark:text-white p-3";
 
 export default function Form({ classes = "", ...props }: Props) {
   const {

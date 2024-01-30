@@ -3,7 +3,7 @@ import Image from "components/Image";
 export default function NoDonations({ classes = "" }) {
   return (
     <div
-      className={`${classes} max-sm:text-center grid sm:grid-cols-[1fr_auto] font-work max-w-md gap-y-2 gap-x-4`}
+      className={`${classes} max-sm:text-center grid sm:grid-cols-[1fr_auto] max-w-md gap-y-2 gap-x-4`}
     >
       <Image
         alt="someone looking for an object"

@@ -23,7 +23,7 @@ export default function Menu({ links }: { links: Link[] }) {
           <Icon type="Close" size={32} />
         </button>
       </div>
-      <nav className="mt-8 grid gap-y-4 w-full px-6 font-extrabold font-heading text-blue text-3xl">
+      <nav className="mt-8 grid gap-y-4 w-full px-6 font-bold font-heading text-blue text-3xl">
         {links.map((link) =>
           link.external ? (
             <ExtLink

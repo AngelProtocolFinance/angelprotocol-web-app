@@ -17,7 +17,7 @@ export default function Form({
     <form
       onSubmit={onSubmit}
       onReset={onReset}
-      className={`${className} grid content-start gap-6 text-sm font-body`}
+      className={`${className} grid content-start gap-6 text-sm`}
     >
       <label className="-mb-4">nonprofit name:</label>
       <EndowmentSelector />

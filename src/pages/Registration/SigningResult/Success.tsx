@@ -50,9 +50,7 @@ export default function Success({
           size={18}
           className="inline bottom-px relative mr-1"
         />
-        <span className="uppercase text-sm font-semibold font-work">
-          download
-        </span>
+        <span className="uppercase text-sm font-semibold">download</span>
       </a>
       <button
         disabled={isLoading}

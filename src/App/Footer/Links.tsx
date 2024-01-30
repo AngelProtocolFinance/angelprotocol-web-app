@@ -1,6 +1,6 @@
 import { LinkGroup } from "../types";
 
-const linkStyles = "font-body font-semibold text-xs";
+const linkStyles = "font-semibold text-xs";
 
 export default function Links({ groups }: { groups: LinkGroup[] }) {
   return (

@@ -137,7 +137,7 @@ export default function RecipientDetailsForm({
                 className="field-input"
               >
                 {f.valuesAllowed?.map((v) => (
-                  <option key={v.key} value={v.key} className="font-work">
+                  <option key={v.key} value={v.key}>
                     {v.name}
                   </option>
                 ))}

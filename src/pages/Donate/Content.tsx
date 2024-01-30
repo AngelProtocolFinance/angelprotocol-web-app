@@ -36,7 +36,7 @@ function Content(props: DonationRecipient) {
       id={CONTAINER_ID}
     >
       <Breadcrumbs
-        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-6"
+        className="font-normal text-sm justify-self-start sm:justify-self-auto mb-6"
         items={[
           { title: "Marketplace", to: `${appRoutes.marketplace}/` },
           {

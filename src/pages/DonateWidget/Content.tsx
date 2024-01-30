@@ -58,12 +58,12 @@ export default function Content({
       )}
       {donaterConfig.isDescriptionTextShown && (
         <>
-          <p className="font-body text-xs text-center sm:text-base mb-3">
+          <p className="text-xs text-center sm:text-base mb-3">
             Donate today to {profile.name}. Your donation will be protected and
             compounded in perpetuity to provide {profile.name} with a long-term,
             sustainable runway. Give once, give forever!
           </p>
-          <p className="font-body text-xs text-center sm:text-base">
+          <p className="text-xs text-center sm:text-base">
             Make sure to check out the many crypto and fiat donation options.
             You will be given the chance to provide your personal details to
             receive an immediate tax receipt.

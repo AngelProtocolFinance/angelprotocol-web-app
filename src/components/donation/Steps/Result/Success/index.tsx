@@ -21,11 +21,11 @@ export default function Success({
       <Icon type="CheckCircle" size={96} className="text-green mb-8" />
       <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-12 text-center leading-relaxed">
         Thank you for your donation of{" "}
-        <span className="font-extrabold">
+        <span className="font-bold">
           {token.symbol}{" "}
           {humanize(token.amount, parseFloat(token.amount) < 0.01 ? 4 : 2)}
         </span>{" "}
-        to <span className="font-extrabold">{name}</span>!
+        to <span className="font-bold">{name}</span>!
       </h3>
 
       <ExtLink

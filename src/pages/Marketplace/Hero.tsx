@@ -5,7 +5,7 @@ export default function Hero({ classes = "" }: { classes?: string }) {
     <div
       className={`${classes} grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 padded-container justify-items-center lg:content-start text-white`}
     >
-      <h1 className="order-1 font-extrabold w-full text-[1.63rem] md:text-3xl lg:text-[2.75rem] text-center lg:text-left lg:self-end">
+      <h1 className="order-1 font-bold w-full text-[1.63rem] md:text-3xl lg:text-[2.75rem] text-center lg:text-left lg:self-end">
         <div className="leading-tight">BETTER GIVING REDEFINES</div>
         <div className="leading-tight text-orange">
           GLOBAL NONPROFIT FINANCING.

@@ -84,7 +84,7 @@ export default function Form({ classes = "" }) {
         }}
         charLimit={500}
       />
-      <div className="grid grid-cols-2 gap-5 font-body mt-3">
+      <div className="grid grid-cols-2 gap-5 mt-3">
         <button
           type="button"
           className="btn-outline-filled btn-gift"
