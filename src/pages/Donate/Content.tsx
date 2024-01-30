@@ -48,7 +48,7 @@ function Content(props: Props) {
         name={props.name}
         tagline={props.tagline}
         logo={props.logo}
-        classes="md:col-start-1 md:row-start-2 w-72 md:h-full"
+        classes="md:col-start-1 md:row-start-2 w-72 md:h-full lg:h-auto"
       />
       <Steps
         className="md:row-span-2 md:row-start-2 md:col-start-2"
