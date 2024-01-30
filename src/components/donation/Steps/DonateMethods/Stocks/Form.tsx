@@ -47,7 +47,7 @@ export default function Form(props: StockFormStep) {
         <Field<FV>
           required
           name="symbol"
-          label="Stock Symbol (Ticker)"
+          label="Stock symbol (Ticker)"
           placeholder="AAPL"
           classes={{ label: "font-semibold" }}
         />
@@ -56,15 +56,19 @@ export default function Form(props: StockFormStep) {
           required
           name="numShares"
           label="Number of Shares to donate"
-          classes={{ label: "font-semibold", container: "mt-4" }}
+          classes={{
+            label: "font-semibold",
+            container: "mt-4",
+            error: "left-0",
+          }}
         />
 
-        <h4 className="mt-6 mb-2">Benefits of Donating Appreciated stock</h4>
+        <h4 className="mt-6 mb-2">Benefits of donating appreciated stock</h4>
         <p className="text-sm">
           You can enjoy significant tax advantages and maximize the size of your
           contributions when you transfer securities through Better.Giving:
         </p>
-        <div className="grid rounded bg-gray-l6 dark:bg-bluegray-d1 p-2 my-2">
+        <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-2 my-4">
           <span className="text-sm text-gray">
             NOTE: This is not financial advice! Please speak to your tax advisor
             or broker about your specific situation and country's tax laws.
@@ -75,7 +79,7 @@ export default function Form(props: StockFormStep) {
           deduction for the full value of the stock at the time of donation (not
           just the amount you paid for the stock).
         </p>
-        <p className="text-sm mt-2">
+        <p className="text-sm mt-4">
           You avoid paying both capital gains tax and stock sales commissions.
           When you give appreciated stocks directly to a nonprofit, your gift
           can be up to 20% larger because you avoid the taxes you'd incur from

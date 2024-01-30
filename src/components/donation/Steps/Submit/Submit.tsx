@@ -20,5 +20,6 @@ export default function Submit(props: SubmitStep) {
     return <StripeCheckout details={details} {...rest} />;
   }
 
-  return <Stocks />;
+  const { details, ...rest } = props;
+  return <Stocks details={details} {...rest} />;
 }
