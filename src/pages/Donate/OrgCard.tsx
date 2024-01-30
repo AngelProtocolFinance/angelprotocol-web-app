@@ -15,7 +15,9 @@ export default function OrgCard({
   banner,
 }: Props) {
   return (
-    <div className={`rounded overflow-clip border border-prim ${classes}`}>
+    <div
+      className={`md:rounded md:overflow-clip md:border border-prim ${classes}`}
+    >
       <Image src={banner} className="h-24 object-cover w-full" />
       <div className="flex items-center w-full overflow-visible h-0">
         <Image

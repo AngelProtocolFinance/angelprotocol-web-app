@@ -5,7 +5,8 @@ export default function FAQ({ classes = "" }) {
   return (
     <div
       className={
-        classes + " border border-prim p-4 rounded font-work grid gap-4"
+        classes +
+        " md:border md:border-prim md:p-4 rounded font-work grid md:gap-4"
       }
     >
       {faqs.map((faq) => (
@@ -21,7 +22,10 @@ export default function FAQ({ classes = "" }) {
                   >
                     {faq.question}
                   </span>
-                  <DrawerIcon isOpen={open} className="shrink-0" size={25} />
+                  <DrawerIcon
+                    isOpen={open}
+                    className="shrink-0 -mt-0.5 text-xl"
+                  />
                 </Disclosure.Button>
                 {open && (
                   <Disclosure.Panel

@@ -37,7 +37,7 @@ function Content(props: Props) {
 
   return (
     <div
-      className="grid md:grid-cols-[auto_1fr] md:gap-y-4 lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full padded-container py-4 @sm:py-10 font-work"
+      className="grid md:grid-cols-[auto_1fr] gap-6 lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full padded-container py-4 @sm:py-10 font-work"
       id={CONTAINER_ID}
     >
       <Link
@@ -76,10 +76,10 @@ function Content(props: Props) {
         </ExtLink>
       </p>
       <p className="text-sm text-left text-gray-d1 dark:text-gray col-start-1  md:col-start-2 md:row-start-5  lg:row-start-4">
-        <span className="block mb-1">
+        <span className="block mb-0.5">
           Need help? See FAQs or contact us at our <B>Help Center</B>.
         </span>
-        <span className="block mb-1">
+        <span className="block mb-0.5">
           Have ideas for how we can build a better donation experience?{" "}
           <B>Send us feedback</B>.
         </span>
