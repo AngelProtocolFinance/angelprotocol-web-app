@@ -37,10 +37,17 @@ export type PaypalDonationDetails = {
   method: "paypal";
 } & FiatDonationDetails;
 
+export type StocksDonationDetails = {
+  method: "stocks";
+  symbol: string;
+  numShares: number;
+};
+
 export type DonationDetails =
   | StripeDonationDetails
   | PaypalDonationDetails
-  | CryptoDonationDetails;
+  | CryptoDonationDetails
+  | StocksDonationDetails;
 
 export type KYC = {
   name: { first: string; last: string };
@@ -80,6 +87,7 @@ export type SubmitStep<T extends DonationDetails = DonationDetails> = {
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 export type PaypalCheckoutStep = SubmitStep<PaypalDonationDetails>;
+export type StockCheckoutStep = SubmitStep<StocksDonationDetails>;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
 export type CryptoResultStep = {
