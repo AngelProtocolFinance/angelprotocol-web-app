@@ -37,6 +37,18 @@ type CreatePayPalOrderParams = {
   splitLiq: string;
 };
 
+type ChariotGrantIntentParams = {
+  /** Denominated in USD. */
+  amount: number;
+  /**ISO 3166-1 alpha-3 code. */
+  currency: string;
+  email: string;
+  endowmentId: number;
+  kycData?: KYCData;
+  splitLiq: string;
+  transactionId?: string;
+};
+
 export const apes = createApi({
   reducerPath: "apes",
   baseQuery: fetchBaseQuery({
@@ -51,6 +63,14 @@ export const apes = createApi({
         method: "POST",
         headers: { authorization: TEMP_JWT },
       }),
+    }),
+    chariotGrantIntent: builder.mutation<string, ChariotGrantIntentParams>({
+      query: (data) => ({
+        url: `v1/fiat/chariot-connect/${apiEnv}`,
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+      transformResponse: (res: { clientSecret: string }) => res.clientSecret,
     }),
     paypalOrder: builder.query<string, CreatePayPalOrderParams>({
       query: (params) => ({
@@ -125,6 +145,7 @@ export const apes = createApi({
 
 export const {
   useCapturePayPalOrderMutation,
+  useChariotGrantIntentMutation,
   useStripePaymentIntentQuery,
   usePaypalOrderQuery,
   useEndowBalanceQuery,
