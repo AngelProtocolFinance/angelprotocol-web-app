@@ -7,7 +7,7 @@ import { DonaterConfigFromWidget } from "types/widget";
 import Crypto from "./Crypto";
 import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";
-import Stocks from "./Stocks";
+import Stocks from "./Stocks/Form";
 import Stripe from "./Stripe";
 
 type Props = {
@@ -113,7 +113,13 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           />
         </Tab.Panel>
         <Tab.Panel>
-          <Stocks state={state} />
+          <Stocks
+            recipient={state.recipient}
+            step={state.step}
+            details={
+              state.details?.method === "stocks" ? state.details : undefined
+            }
+          />
         </Tab.Panel>
         <Tab.Panel>
           <DAFDirect />

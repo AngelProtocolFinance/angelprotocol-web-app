@@ -72,6 +72,7 @@ export type FormStep<T extends DonationDetails = DonationDetails> = {
 export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type PaypalFormStep = FormStep<PaypalDonationDetails>;
+export type StockFormStep = FormStep<StocksDonationDetails>;
 
 //KYC step need not know donation details
 export type KYCStep = {
