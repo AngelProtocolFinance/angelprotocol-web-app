@@ -1,10 +1,8 @@
-import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
 import { FormProvider, useController, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
-import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
@@ -23,8 +21,6 @@ export default function Form({
   const authUser = useGetter((state) => state.auth.user);
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
-
-  const currencies = useStripeCurrenciesQuery(null);
 
   const initial: FormValues = {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
@@ -46,8 +42,6 @@ export default function Form({
     name: "currency",
   });
 
-  const isInsideWidget = widgetConfig !== null;
-
   return (
     <FormProvider {...methods}>
       <form
@@ -61,15 +55,6 @@ export default function Form({
         )}
         className="grid gap-4"
       >
-        <CurrencySelector
-          currencies={currencies}
-          disabled={methods.formState.isSubmitting}
-          label="Currency"
-          onChange={onCurrencyChange}
-          value={currency}
-          classes={{ label: "font-semibold" }}
-          required
-        />
         <Field<FormValues>
           name="amount"
           label="Donation amount"
