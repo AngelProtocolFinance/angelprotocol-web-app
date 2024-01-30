@@ -33,7 +33,7 @@ export default function Form(props: StockFormStep) {
   return (
     <FormProvider {...methods}>
       <form
-        className="grid gap-4"
+        className="grid"
         onSubmit={methods.handleSubmit((fv) => {
           dispatch(
             setDetails({
@@ -56,11 +56,34 @@ export default function Form(props: StockFormStep) {
           required
           name="numShares"
           label="Number of Shares to donate"
-          classes={{ label: "font-semibold" }}
+          classes={{ label: "font-semibold", container: "mt-4" }}
         />
+
+        <h4 className="mt-6 mb-2">Benefits of Donating Appreciated stock</h4>
+        <p className="text-sm">
+          You can enjoy significant tax advantages and maximize the size of your
+          contributions when you transfer securities through Better.Giving:
+        </p>
+        <div className="grid rounded bg-gray-l6 dark:bg-bluegray-d1 p-2 my-2">
+          <span className="text-sm text-gray">
+            NOTE: This is not financial advice! Please speak to your tax advisor
+            or broker about your specific situation and country's tax laws.
+          </span>
+        </div>
+        <p className="text-sm">
+          If you held the stock for at least one year, you receive a tax
+          deduction for the full value of the stock at the time of donation (not
+          just the amount you paid for the stock).
+        </p>
+        <p className="text-sm mt-2">
+          You avoid paying both capital gains tax and stock sales commissions.
+          When you give appreciated stocks directly to a nonprofit, your gift
+          can be up to 20% larger because you avoid the taxes you'd incur from
+          selling and donating the cash.
+        </p>
         <button
           disabled={methods.formState.isSubmitting}
-          className="btn-orange btn-donate mt-2"
+          className="btn-orange btn-donate mt-6"
           type="submit"
         >
           Continue

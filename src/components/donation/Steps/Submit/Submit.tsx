@@ -1,6 +1,7 @@
 import { SubmitStep } from "slices/donation";
 import Crypto from "./Crypto";
 import PaypalCheckout from "./PaypalCheckout";
+import Stocks from "./Stocks";
 import StripeCheckout from "./StripeCheckout";
 
 export default function Submit(props: SubmitStep) {
@@ -19,6 +20,5 @@ export default function Submit(props: SubmitStep) {
     return <StripeCheckout details={details} {...rest} />;
   }
 
-  //TODO: stocks
-  return <></>;
+  return <Stocks />;
 }

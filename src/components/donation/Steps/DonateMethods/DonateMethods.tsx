@@ -23,6 +23,8 @@ const tabIdx = (method?: DonationDetails["method"]) => {
       return 1;
     case "stripe":
       return 0;
+    case "stocks":
+      return 2;
     //other methods doesn't have donate methods yet
     default:
       return 0;
