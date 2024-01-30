@@ -80,7 +80,7 @@ function Content(props: Props) {
           See Terms.
         </ExtLink>
       </p>
-      <p className="max-md:px-4 max-md:mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-5  lg:row-start-4">
+      <p className="max-md:px-4 mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-5  lg:row-start-4">
         <span className="block mb-0.5">
           Need help? See FAQs or contact us at our <Bold>Help Center</Bold>.
         </span>
