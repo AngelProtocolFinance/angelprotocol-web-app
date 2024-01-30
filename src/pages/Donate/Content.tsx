@@ -11,6 +11,7 @@ import OrgCard from "./OrgCard";
 
 type Props = DonationRecipient & {
   logo: string;
+  banner: string;
   tagline: string;
 };
 
@@ -45,6 +46,7 @@ function Content(props: Props) {
         Cancel
       </Link>
       <OrgCard
+        banner={props.banner}
         name={props.name}
         tagline={props.tagline}
         logo={props.logo}

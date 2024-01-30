@@ -43,6 +43,7 @@ export default function Donate() {
             tagline={profile.tagline}
             logo={profile.card_img || profile.logo}
             name={profile.name}
+            banner={profile.image}
             id={numId}
             isKYCRequired={profile.kyc_donors_only ?? false}
             isFiscalSponsored={profile.fiscal_sponsored ?? false}
