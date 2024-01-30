@@ -48,6 +48,8 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
         <ChariotConnect
           cid={CHARIOT_CONNECT_ID}
           onDonationRequest={onDonationRequest}
+          // This hook should be used to update our internal donation DB
+          // see https://givechariot.readme.io/reference/integrating-connect#capture-your-grant-intent
           onSuccess={async (r: { workflowSessionId: string }) => {
             try {
               await createGrant({
