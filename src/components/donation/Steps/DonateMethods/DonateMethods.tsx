@@ -44,7 +44,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       className="grid @md:grid-cols-[auto_1fr]"
       defaultIndex={tabIdx(state.details?.method)}
     >
-      <Label className="px-4 pt-2 -mb-2 col-span-full @md:hidden font-bold">
+      <Label className="p-4 pb-0 col-span-full @md:hidden font-bold">
         Payment method
       </Label>
       <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-1 content-start @md:bg-blue-l4 @md:divide-y @md:divide-white">

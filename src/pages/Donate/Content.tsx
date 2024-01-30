@@ -54,7 +54,7 @@ function Content(props: Props) {
         logo={props.logo}
         classes="mb-4 md:mb-0 md:col-start-1 md:w-64 xl:w-80 md:h-full lg:h-auto"
       />
-      {/** small screen but space is still enough to render */}
+      {/** small screen but space is still enough to render sidebar */}
       <div className="mx-0 md:contents min-[445px]:border min-[445px]:mx-4 rounded border-prim">
         <Steps
           className="max-md:mt-2 md:border border-prim col-start-1 md:col-start-2 md:row-start-2 md:row-span-2 lg:row-span-1"
@@ -66,13 +66,13 @@ function Content(props: Props) {
 
       <p className="max-md:px-4 mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-4 lg:row-start-3">
         By making a donation to {APP_NAME}, you agree to our{" "}
-        <B>Terms of Service</B>, <B>Privacy Policy</B>, and{" "}
-        <B>Nonprofit Support Fee</B>. 100% of your donation is tax-deductible to
-        the extent allowed by US law. Your donation is made to {APP_NAME}, a
-        tax-exempt US 501(c)(3) charity that grants unrestricted funds to{" "}
-        {props.name} on your behalf. As a legal matter, {APP_NAME} must provide
-        any donations to {props.name} on an unrestricted basis, regardless of
-        any designations or restrictions made by you.{" "}
+        <Bold>Terms of Service</Bold>, <Bold>Privacy Policy</Bold>, and{" "}
+        <Bold>Nonprofit Support Fee</Bold>. 100% of your donation is
+        tax-deductible to the extent allowed by US law. Your donation is made to{" "}
+        {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants unrestricted
+        funds to {props.name} on your behalf. As a legal matter, {APP_NAME} must
+        provide any donations to {props.name} on an unrestricted basis,
+        regardless of any designations or restrictions made by you.{" "}
         <ExtLink
           className="hover:underline font-medium"
           href={TERMS_OF_USE_DONOR}
@@ -82,15 +82,15 @@ function Content(props: Props) {
       </p>
       <p className="max-md:px-4 max-md:mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-5  lg:row-start-4">
         <span className="block mb-0.5">
-          Need help? See FAQs or contact us at our <B>Help Center</B>.
+          Need help? See FAQs or contact us at our <Bold>Help Center</Bold>.
         </span>
         <span className="block mb-0.5">
           Have ideas for how we can build a better donation experience?{" "}
-          <B>Send us feedback</B>.
+          <Bold>Send us feedback</Bold>.
         </span>
         <span className="block">
           We respect your privacy. To learn more, check out our{" "}
-          <B>Privacy Policy</B>.
+          <Bold>Privacy Policy</Bold>.
         </span>
       </p>
     </div>
@@ -100,6 +100,6 @@ function Content(props: Props) {
 //memoize to prevent useEffect ( based on props ) from running when parent re-renders with the same props
 export default memo(Content);
 
-function B(props: PropsWithChildren) {
+function Bold(props: PropsWithChildren) {
   return <span className="font-medium">{props.children}</span>;
 }
