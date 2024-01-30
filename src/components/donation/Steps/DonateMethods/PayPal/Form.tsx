@@ -2,9 +2,7 @@ import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { appRoutes } from "constants/routes";
 import { FormProvider, useController, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { requiredString } from "schemas/string";
 import { usePaypalCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
@@ -46,8 +44,6 @@ export default function Form({
     control: methods.control,
     name: "currency",
   });
-
-  const isInsideWidget = widgetConfig !== null;
 
   return (
     <FormProvider {...methods}>

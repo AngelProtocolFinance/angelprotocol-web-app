@@ -10,17 +10,6 @@ export default function Stocks({ state }: Props) {
 
   return (
     <div className="grid gap-5">
-      <h3 className="text-2xl sm:text-3xl text-center leading-relaxed">
-        Stocks
-      </h3>
-      {/* contact broker info */}
-      <h4 className="text-lg sm:text-xl leading-relaxed">
-        Step 1: Contact Your Broker
-      </h4>
-      <p>
-        To donate stock, please email or provide your broker with the following
-        information:
-      </p>
       <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-2">
         <p>Please transfer [X] shares of [ABC] to:</p>
         <p>Deliver to: Fidelity Investments</p>

@@ -46,8 +46,6 @@ export default function Form({
     name: "currency",
   });
 
-  const isInsideWidget = widgetConfig !== null;
-
   return (
     <FormProvider {...methods}>
       <form

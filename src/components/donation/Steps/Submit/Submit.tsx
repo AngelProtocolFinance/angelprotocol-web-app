@@ -14,6 +14,11 @@ export default function Submit(props: SubmitStep) {
     return <PaypalCheckout details={details} {...rest} />;
   }
 
-  const { details, ...rest } = props;
-  return <StripeCheckout details={details} {...rest} />;
+  if (props.details.method === "stripe") {
+    const { details, ...rest } = props;
+    return <StripeCheckout details={details} {...rest} />;
+  }
+
+  //TODO: stocks
+  return <></>;
 }
