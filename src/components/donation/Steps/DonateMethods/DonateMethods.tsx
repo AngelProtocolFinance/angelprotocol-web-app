@@ -18,11 +18,12 @@ type Props = {
 const tabIdx = (method?: DonationDetails["method"]) => {
   switch (method) {
     case "crypto":
-      return 1;
-    case "paypal":
       return 4;
+    case "paypal":
+      return 1;
     case "stripe":
       return 0;
+    //other methods doesn't have donate methods yet
     default:
       return 0;
   }
