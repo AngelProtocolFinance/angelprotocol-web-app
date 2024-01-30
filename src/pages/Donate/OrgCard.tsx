@@ -33,7 +33,7 @@ export default function OrgCard({
         />
       </div>
       <div className="md:p-4 md:pt-11">
-        <div className="text-lg md:mb-2 flex items-center gap-2">
+        <div className="text-lg md:mb-2 grid grid-cols-[auto_1fr_auto] items-center gap-2">
           <Image
             src={logo}
             className="size-10 object-cover rounded-full md:hidden"
@@ -43,7 +43,7 @@ export default function OrgCard({
           </h4>
           <Link
             to={`${appRoutes.marketplace}/${id}`}
-            className="md:hidden ml-auto text-sm font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
+            className="md:hidden text-sm font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
           >
             Cancel
           </Link>
