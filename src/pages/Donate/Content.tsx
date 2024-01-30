@@ -55,7 +55,7 @@ function Content(props: Props) {
         classes="mb-4 md:mb-0 md:col-start-1 md:w-64 xl:w-80 md:h-full lg:h-auto"
       />
       {/** small screen but space is still enough to render sidebar */}
-      <div className="mx-0 md:contents min-[445px]:border min-[445px]:mx-4 rounded border-prim">
+      <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded border-prim">
         <Steps
           className="md:border border-prim col-start-1 md:col-start-2 md:row-start-2 md:row-span-2 lg:row-span-1"
           donaterConfig={null}
