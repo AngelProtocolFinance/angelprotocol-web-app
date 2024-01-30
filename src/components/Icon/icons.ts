@@ -80,6 +80,7 @@ import {
 } from "react-icons/ri";
 import { RxMixerHorizontal } from "react-icons/rx";
 import { SiHiveBlockchain } from "react-icons/si";
+import { TbHexagonLetterC } from "react-icons/tb";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
@@ -93,6 +94,7 @@ export const icons = {
   Bitcoin: FaBitcoin,
   Blockchain: SiHiveBlockchain,
   Charity: FaDonate,
+  ChariotConnect: TbHexagonLetterC,
   Check: BiCheck,
   CheckCircle: BsCheckCircle,
   CircleMinus: AiOutlineMinusCircle,

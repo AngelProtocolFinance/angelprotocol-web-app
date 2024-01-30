@@ -5,10 +5,10 @@ import { useState } from "react";
 import { DonationDetails, FormStep } from "slices/donation";
 import { DonaterConfigFromWidget } from "types/widget";
 import Crypto from "./Crypto";
-import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
+import ChariotConnect from "./ChariotConnect";
 
 type Props = {
   donaterConfig: DonaterConfigFromWidget | null;
@@ -21,6 +21,8 @@ const tabIdx = (method?: DonationDetails["method"]) => {
       return 4;
     case "paypal":
       return 1;
+    case "chariot":
+      return 3;
     case "stripe":
       return 0;
     //other methods doesn't have donate methods yet
@@ -63,8 +65,8 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <span>Stocks</span>
         </Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>
-          <Icon type="Advisor" size={19} />
-          <span>DAF</span>
+          <Icon type="ChariotConnect" size={19} />
+          <span>Chariot</span>
         </Tab>
 
         {/** more options: applies up to @md */}
@@ -116,7 +118,17 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <Stocks state={state} />
         </Tab.Panel>
         <Tab.Panel>
-          <DAFDirect />
+          <ChariotConnect
+            recipient={state.recipient}
+            step={state.step}
+            details={
+              state.details?.method === "chariot" ? state.details : undefined
+            }
+            widgetConfig={donaterConfig}
+            advanceOptDisplay={
+              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
+            }
+          />
         </Tab.Panel>
         <Tab.Panel>
           <Crypto
