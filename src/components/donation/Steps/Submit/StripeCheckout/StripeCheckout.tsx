@@ -4,6 +4,7 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import { useStripePaymentIntentQuery } from "services/apes";
 import { StripeCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
+import BackBtn from "../../BackBtn";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
@@ -39,25 +40,33 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   const dispatch = useSetter();
 
-  if (isLoading) return <Loader msg="Loading payment form.." />;
-  if (isError) return <Err />;
-
   return (
-    <Elements
-      options={{
-        clientSecret,
-        appearance: { theme: "stripe" },
-      }}
-      stripe={stripePromise}
-    >
-      <Checkout
-        onBack={() => {
+    <div className="grid content-start gap-8 p-4 @md:p-8">
+      <BackBtn
+        type="button"
+        onClick={() => {
           const action = details.userOptForKYC
             ? setStep("kyc-form")
             : setStep("donate-form");
           dispatch(action);
         }}
       />
-    </Elements>
+
+      {isLoading ? (
+        <Loader msg="Loading payment form.." />
+      ) : isError || !clientSecret ? (
+        <Err />
+      ) : (
+        <Elements
+          options={{
+            clientSecret,
+            appearance: { theme: "stripe" },
+          }}
+          stripe={stripePromise}
+        >
+          <Checkout />
+        </Elements>
+      )}
+    </div>
   );
 }

@@ -1,17 +1,22 @@
-import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import { Steps } from "components/donation";
+import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { TERMS_OF_USE_DONOR } from "constants/urls";
-import { memo, useEffect, useRef } from "react";
-import {
-  DonationRecipient,
-  DonationState,
-  setRecipient,
-} from "slices/donation";
+import { PropsWithChildren, memo, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import { DonationRecipient, setRecipient } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
+import FAQ from "./FAQ";
+import OrgCard from "./OrgCard";
 
-function Content(props: DonationRecipient) {
+type Props = DonationRecipient & {
+  logo: string;
+  banner: string;
+  tagline: string;
+};
+
+function Content(props: Props) {
   const dispatch = useSetter();
   const state = useGetter((state) => state.donation);
   useEffect(() => {
@@ -32,50 +37,69 @@ function Content(props: DonationRecipient) {
 
   return (
     <div
-      className="justify-self-center grid w-full sm:w-[35rem] py-4 @sm:py-10"
+      className="max-sm:fixed max-sm:inset-0 overflow-y-auto grid md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full max-md:z-20 bg-white md:padded-container py-4 @sm:py-10 font-work"
       id={CONTAINER_ID}
     >
-      <Breadcrumbs
-        className="font-body font-normal text-sm justify-self-start sm:justify-self-auto mb-6"
-        items={[
-          { title: "Marketplace", to: `${appRoutes.marketplace}/` },
-          {
-            title: props.name,
-            to: `${appRoutes.marketplace}/${props.id}`,
-          },
-          {
-            title: "Donate",
-            to: `${appRoutes.donate}/${props.id}`,
-          },
-        ]}
+      <Link
+        to={`${appRoutes.marketplace}/${props.id}`}
+        className="hidden md:block max-md:px-4 col-span-full justify-self-end mb-4 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
+      >
+        Cancel
+      </Link>
+      <OrgCard
+        id={props.id}
+        banner={props.banner}
+        name={props.name}
+        tagline={props.tagline}
+        logo={props.logo}
+        classes="mb-4 md:mb-0 md:col-start-1 md:w-64 xl:w-80 md:h-full lg:h-auto"
       />
+      {/** small screen but space is still enough to render sidebar */}
+      <div className="mx-0 md:contents min-[445px]:border min-[445px]:mx-4 rounded border-prim">
+        <Steps
+          className="max-md:mt-2 md:border border-prim col-start-1 md:col-start-2 md:row-start-2 md:row-span-2 lg:row-span-1"
+          donaterConfig={null}
+        />
+      </div>
 
-      {!isFinalized(state) && (
-        <h3 className="sm:text-center text-xl sm:text-3xl leading-snug mb-4">
-          {state.recipient?.name}
-        </h3>
-      )}
+      <FAQ classes="max-md:px-4 mt-4 col-start-1 md:row-start-3 md:row-span-4 md:col-start-1 md:w-64 xl:w-80 lg:row-start-2 lg:col-start-3 lg:mt-0 " />
 
-      <Steps className="justify-self-center" donaterConfig={null} />
-
-      <p className="text-sm text-gray-d1 dark:text-gray mt-2 text-center">
-        By making a donation, you agree to our{" "}
+      <p className="max-md:px-4 mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-4 lg:row-start-3">
+        By making a donation to {APP_NAME}, you agree to our{" "}
+        <Bold>Terms of Service</Bold>, <Bold>Privacy Policy</Bold>, and{" "}
+        <Bold>Nonprofit Support Fee</Bold>. 100% of your donation is
+        tax-deductible to the extent allowed by US law. Your donation is made to{" "}
+        {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants unrestricted
+        funds to {props.name} on your behalf. As a legal matter, {APP_NAME} must
+        provide any donations to {props.name} on an unrestricted basis,
+        regardless of any designations or restrictions made by you.{" "}
         <ExtLink
-          className="hover:underline text-gray-d2 "
+          className="hover:underline font-medium"
           href={TERMS_OF_USE_DONOR}
         >
-          Terms & Conditions
+          See Terms.
         </ExtLink>
+      </p>
+      <p className="max-md:px-4 max-md:mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-5  lg:row-start-4">
+        <span className="block mb-0.5">
+          Need help? See FAQs or contact us at our <Bold>Help Center</Bold>.
+        </span>
+        <span className="block mb-0.5">
+          Have ideas for how we can build a better donation experience?{" "}
+          <Bold>Send us feedback</Bold>.
+        </span>
+        <span className="block">
+          We respect your privacy. To learn more, check out our{" "}
+          <Bold>Privacy Policy</Bold>.
+        </span>
       </p>
     </div>
   );
 }
 
-function isFinalized(state: DonationState): boolean {
-  return (
-    state.step === "tx" && (state.status === "error" || "hash" in state.status)
-  );
-}
-
 //memoize to prevent useEffect ( based on props ) from running when parent re-renders with the same props
 export default memo(Content);
+
+function Bold(props: PropsWithChildren) {
+  return <span className="font-medium">{props.children}</span>;
+}

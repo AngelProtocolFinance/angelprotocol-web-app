@@ -1,8 +1,10 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import Icon from "components/Icon";
 import { PAYPAL_CLIENT_ID } from "constants/env";
 import { usePaypalOrderQuery } from "services/apes";
 import { PaypalCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
+import BackBtn from "../../BackBtn";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
@@ -37,28 +39,37 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
 
   const dispatch = useSetter();
 
-  if (isLoading) return <Loader msg="Loading payment form..." />;
-  if (isError || !orderId) return <Err />;
-
   return (
-    <PayPalScriptProvider
-      options={{
-        clientId: PAYPAL_CLIENT_ID,
-        commit: true,
-        currency: "USD",
-        enableFunding: "paylater",
-        disableFunding: "card,venmo",
-      }}
-    >
-      <Checkout
-        orderId={orderId}
-        onBack={() => {
+    <div className="grid grid-rows-[auto_1fr] min-h-[16rem] isolate p-4 @md:p-8">
+      <BackBtn
+        onClick={() => {
           const action = details.userOptForKYC
             ? setStep("kyc-form")
             : setStep("donate-form");
           dispatch(action);
         }}
+        type="button"
       />
-    </PayPalScriptProvider>
+
+      {isLoading ? (
+        <Loader msg="Loading payment form..." />
+      ) : isError || !orderId ? (
+        <Err />
+      ) : (
+        <PayPalScriptProvider
+          options={{
+            clientId: PAYPAL_CLIENT_ID,
+            commit: true,
+            currency: "USD",
+            enableFunding: "paylater",
+            disableFunding: "card,venmo",
+          }}
+        >
+          <div className="grid gap-5 w-full place-items-center">
+            <Checkout orderId={orderId} />
+          </div>
+        </PayPalScriptProvider>
+      )}
+    </div>
   );
 }

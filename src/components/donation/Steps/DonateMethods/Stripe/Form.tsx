@@ -2,9 +2,7 @@ import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { appRoutes } from "constants/routes";
 import { FormProvider, useController, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { requiredString } from "schemas/string";
 import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
@@ -133,32 +131,18 @@ export default function Form({
           complete your donation
         </p>
 
-        <div
-          className={`flex gap-3 md:gap-5 ${
-            isInsideWidget ? "justify-center" : "justify-between"
-          } font-body mt-4`}
+        <button
+          disabled={methods.formState.isSubmitting}
+          className="btn-orange btn-donate mt-2"
+          type="submit"
         >
-          {!isInsideWidget && (
-            <Link
-              className="btn-outline-filled btn-donate w-1/2"
-              to={`${appRoutes.marketplace}/${recipient.id}`}
-            >
-              Cancel
-            </Link>
-          )}
-          <button
-            disabled={methods.formState.isSubmitting}
-            className="btn-orange btn-donate w-1/2"
-            type="submit"
+          <LoadText
+            text="Processing..."
+            isLoading={methods.formState.isSubmitting}
           >
-            <LoadText
-              text="Processing..."
-              isLoading={methods.formState.isSubmitting}
-            >
-              Continue
-            </LoadText>
-          </button>
-        </div>
+            Continue
+          </LoadText>
+        </button>
       </form>
     </FormProvider>
   );

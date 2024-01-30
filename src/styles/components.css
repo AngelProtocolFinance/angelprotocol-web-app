@@ -167,7 +167,7 @@
     @apply text-base sm:text-sm;
   }
   .btn-donate {
-    @apply text-sm md:text-base;
+    @apply text-sm md:text-base font-work;
   }
 
   .btn-reg {
