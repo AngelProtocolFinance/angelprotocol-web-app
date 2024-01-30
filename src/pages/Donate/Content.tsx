@@ -37,7 +37,7 @@ function Content(props: Props) {
 
   return (
     <div
-      className="grid md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full max-md:z-20 bg-white md:padded-container py-4 @sm:py-10 font-work"
+      className="max-sm:fixed max-sm:inset-0 overflow-y-auto grid md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full max-md:z-20 bg-white md:padded-container py-4 @sm:py-10 font-work"
       id={CONTAINER_ID}
     >
       <Link
@@ -47,11 +47,12 @@ function Content(props: Props) {
         Cancel
       </Link>
       <OrgCard
+        id={props.id}
         banner={props.banner}
         name={props.name}
         tagline={props.tagline}
         logo={props.logo}
-        classes="md:col-start-1 md:w-64 xl:w-80 md:h-full lg:h-auto"
+        classes="mb-4 md:mb-0 md:col-start-1 md:w-64 xl:w-80 md:h-full lg:h-auto"
       />
       {/** small screen but space is still enough to render */}
       <div className="mx-0 md:contents min-[445px]:border min-[445px]:mx-4 rounded border-prim">
