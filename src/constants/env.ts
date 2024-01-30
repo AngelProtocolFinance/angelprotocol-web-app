@@ -19,3 +19,5 @@ export const IS_TEST = ENVIRONMENT === "dev";
 export const PUBLIC_STRIPE_KEY = process.env.PUBLIC_STRIPE_KEY || "";
 
 export const PAYPAL_CLIENT_ID = process.env.PUBLIC_PAYPAL_CLIENT_ID || "";
+
+export const CHARIOT_CONNECT_ID = process.env.PUBLIC_CHARIOT_CONNECT_ID || "";
