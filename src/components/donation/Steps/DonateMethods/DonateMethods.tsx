@@ -7,7 +7,7 @@ import { DonaterConfigFromWidget } from "types/widget";
 import Crypto from "./Crypto";
 import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";
-import Stocks from "./Stocks/Form";
+import Stocks from "./Stocks";
 import Stripe from "./Stripe";
 
 type Props = {
