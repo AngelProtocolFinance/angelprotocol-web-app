@@ -6,38 +6,35 @@ export default function FAQ({ classes = "" }) {
     <div
       className={
         classes +
-        " md:border md:border-prim md:p-4 rounded font-work grid md:gap-4"
+        " md:border md:border-prim md:p-4 rounded font-work grid gap-2 md:gap-4"
       }
     >
       {faqs.map((faq) => (
-        <Disclosure>
+        <Disclosure as="div" key={faq.id}>
           {({ open }) => (
             <>
-              <div key={faq.id}>
-                <Disclosure.Button className="flex items-start justify-between gap-2 mb-2 w-full">
-                  <span
-                    className={`text-left text-sm ${
-                      open ? "font-semibold" : ""
-                    }`}
-                  >
-                    {faq.question}
-                  </span>
-                  <DrawerIcon
-                    isOpen={open}
-                    className="shrink-0 -mt-0.5 text-xl"
-                  />
-                </Disclosure.Button>
-                {open && (
-                  <Disclosure.Panel
-                    static
-                    className="text-sm grid gap-3 text-gray-d1"
-                  >
-                    {faq.paragraphs.map((p, idx) => (
-                      <p key={idx}>{p}</p>
-                    ))}
-                  </Disclosure.Panel>
-                )}
-              </div>
+              <Disclosure.Button className="flex items-start justify-between gap-2 mb-2 w-full">
+                <span
+                  className={`text-left text-sm ${open ? "font-semibold" : ""}`}
+                >
+                  {faq.question}
+                </span>
+                <DrawerIcon
+                  isOpen={open}
+                  className="shrink-0 -mt-0.5 text-xl"
+                />
+              </Disclosure.Button>
+              {open && (
+                <Disclosure.Panel
+                  as="div"
+                  static
+                  className="text-sm grid gap-3 text-gray-d1 mb-6"
+                >
+                  {faq.paragraphs.map((p, idx) => (
+                    <p key={idx}>{p}</p>
+                  ))}
+                </Disclosure.Panel>
+              )}
             </>
           )}
         </Disclosure>

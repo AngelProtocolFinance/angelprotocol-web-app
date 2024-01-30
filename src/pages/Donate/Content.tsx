@@ -37,12 +37,12 @@ function Content(props: Props) {
 
   return (
     <div
-      className="grid md:grid-cols-[auto_1fr] gap-6 lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full padded-container py-4 @sm:py-10 font-work"
+      className="grid md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full max-md:z-20 bg-white md:padded-container py-4 @sm:py-10 font-work"
       id={CONTAINER_ID}
     >
       <Link
         to={`${appRoutes.marketplace}/${props.id}`}
-        className="col-span-full justify-self-end mb-4 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
+        className="hidden md:block max-md:px-4 col-span-full justify-self-end mb-4 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
       >
         Cancel
       </Link>
@@ -51,15 +51,19 @@ function Content(props: Props) {
         name={props.name}
         tagline={props.tagline}
         logo={props.logo}
-        classes="md:col-start-1 md:row-start-2 md:w-64 xl:w-80 md:h-full lg:h-auto"
+        classes="md:col-start-1 md:w-64 xl:w-80 md:h-full lg:h-auto"
       />
-      <Steps
-        className="col-start-1 md:col-start-2 md:row-start-2 md:row-span-2 lg:row-span-1"
-        donaterConfig={null}
-      />
-      <FAQ classes="col-start-1 md:row-start-3 md:col-start-1 md:w-64 xl:w-80 lg:row-start-2 lg:col-start-3 row-span-4" />
+      {/** small screen but space is still enough to render */}
+      <div className="mx-0 md:contents min-[445px]:border min-[445px]:mx-4 rounded border-prim">
+        <Steps
+          className="max-md:mt-2 md:border border-prim col-start-1 md:col-start-2 md:row-start-2 md:row-span-2 lg:row-span-1"
+          donaterConfig={null}
+        />
+      </div>
 
-      <p className="text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-4 lg:row-start-3">
+      <FAQ classes="max-md:px-4 mt-4 col-start-1 md:row-start-3 md:row-span-4 md:col-start-1 md:w-64 xl:w-80 lg:row-start-2 lg:col-start-3 lg:mt-0 " />
+
+      <p className="max-md:px-4 mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-4 lg:row-start-3">
         By making a donation to {APP_NAME}, you agree to our{" "}
         <B>Terms of Service</B>, <B>Privacy Policy</B>, and{" "}
         <B>Nonprofit Support Fee</B>. 100% of your donation is tax-deductible to
@@ -75,7 +79,7 @@ function Content(props: Props) {
           See Terms.
         </ExtLink>
       </p>
-      <p className="text-sm text-left text-gray-d1 dark:text-gray col-start-1  md:col-start-2 md:row-start-5  lg:row-start-4">
+      <p className="max-md:px-4 max-md:mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-5  lg:row-start-4">
         <span className="block mb-0.5">
           Need help? See FAQs or contact us at our <B>Help Center</B>.
         </span>

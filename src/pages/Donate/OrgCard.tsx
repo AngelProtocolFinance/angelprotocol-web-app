@@ -16,16 +16,19 @@ export default function OrgCard({
 }: Props) {
   return (
     <div
-      className={`md:rounded md:overflow-clip md:border border-prim ${classes}`}
+      className={`p-4 md:p-0 md:rounded md:overflow-clip md:border border-prim ${classes}`}
     >
-      <Image src={banner} className="h-24 object-cover w-full" />
-      <div className="flex items-center w-full overflow-visible h-0">
+      <Image
+        src={banner}
+        className="h-24 object-cover w-full hidden md:block"
+      />
+      <div className="hidden md:flex items-center w-full overflow-visible h-0">
         <Image
           src={logo}
           className="h-14 w-14 border border-prim rounded-full object-cover bg-white ml-6"
         />
       </div>
-      <div className="px-4 pb-4 pt-11">
+      <div className="md:p-4 md:pt-11">
         <h4 className="text-lg text-ellipsis overflow-hidden text-balance mb-2">
           {name}
         </h4>

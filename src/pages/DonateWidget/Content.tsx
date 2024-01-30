@@ -71,7 +71,10 @@ export default function Content({
         </>
       )}
 
-      <Steps className="mt-5 w-full md:w-3/4" donaterConfig={donaterConfig} />
+      <Steps
+        className="mt-5 w-full md:w-3/4 border border-prim"
+        donaterConfig={donaterConfig}
+      />
     </div>
   );
 }
