@@ -48,13 +48,13 @@ function Content(props: Props) {
         name={props.name}
         tagline={props.tagline}
         logo={props.logo}
-        classes="md:col-start-1 md:row-start-2 w-72 md:h-full lg:h-auto"
+        classes="md:col-start-1 md:row-start-2 w-80 md:h-full lg:h-auto"
       />
       <Steps
         className="md:row-span-2 md:row-start-2 md:col-start-2"
         donaterConfig={null}
       />
-      <FAQ classes="md:row-start-3 md:col-start-1 w-72 lg:row-start-2 lg:col-start-3" />
+      <FAQ classes="md:row-start-3 md:col-start-1 w-80 lg:row-start-2 lg:col-start-3" />
 
       <p className="text-sm text-gray-d1 dark:text-gray mt-2 text-center col-span-full">
         By making a donation, you agree to our{" "}
