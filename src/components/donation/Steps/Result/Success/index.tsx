@@ -1,10 +1,10 @@
 import char from "assets/images/celebrating-character.png";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
+import { confetti } from "helpers/confetti";
 import { Link } from "react-router-dom";
 import { CryptoResultStep } from "slices/donation";
 import Share, { SocialMedia } from "./Share";
-import { confetti } from "./confetti";
 
 export default function Success({
   classes,
