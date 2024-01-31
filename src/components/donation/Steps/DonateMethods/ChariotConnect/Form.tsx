@@ -85,7 +85,7 @@ export default function Form({
             },
             shouldUnregister: true,
           }}
-          tooltip="The minimum donation amount is 1 USD"
+          tooltip="The minimum donation amount will depend on which DAF provider you select."
         />
         {!authUserEmail && (
           <Field<FormValues>
