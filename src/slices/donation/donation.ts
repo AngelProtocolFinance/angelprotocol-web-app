@@ -22,7 +22,7 @@ const donation = createSlice({
       return { step: "donate-form", recipient: payload };
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
-      //no KYC for stocks
+      //skip KYC for stocks, as not being saved in DB
       if (payload.method === "stocks") {
         return {
           ...(state as SubmitStep),
