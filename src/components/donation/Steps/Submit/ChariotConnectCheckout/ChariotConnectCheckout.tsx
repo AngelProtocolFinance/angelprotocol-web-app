@@ -5,7 +5,6 @@ import { ChariotCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../../BackBtn";
 import Err from "../Err";
-import Loader from "../Loader";
 import { useErrorContext } from "contexts/ErrorContext";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 
@@ -40,12 +39,11 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
         }}
       />
 
-      {isLoading ? (
-        <Loader msg="Loading payment form.." />
-      ) : isError ? (
+      {isError ? (
         <Err />
       ) : (
         <ChariotConnect
+          disabled={isLoading}
           cid={CHARIOT_CONNECT_ID}
           onDonationRequest={onDonationRequest}
           // This hook should be used to update our internal donation DB
