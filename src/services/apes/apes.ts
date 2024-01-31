@@ -66,7 +66,7 @@ export const apes = createApi({
     }),
     chariotGrantIntent: builder.mutation<string, ChariotGrantIntentParams>({
       query: (data) => ({
-        url: `v1/fiat/chariot-connect/${apiEnv}`,
+        url: `v1/fiat/chariot-connect`,
         method: "POST",
         body: JSON.stringify(data),
       }),
