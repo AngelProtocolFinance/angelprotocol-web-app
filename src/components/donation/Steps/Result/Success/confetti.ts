@@ -56,7 +56,7 @@ export function confetti(trigger: HTMLElement) {
   trigger.style.perspective = "none";
 
   //create and append particles to trigger
-  const COUNT = 100;
+  const COUNT = 50;
   const COLORS = [
     "#F93F79", //red
     "#9BDD00", //green
@@ -88,7 +88,7 @@ export function confetti(trigger: HTMLElement) {
   let startTime: number;
 
   //explode confetti
-  const DURATION_MS = 7000;
+  const DURATION_MS = 5000;
   const STAGGER = 0.0001;
   return new Promise<void>((resolve) => {
     function update(time: number) {

@@ -1,60 +1,53 @@
-import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
+import char from "assets/images/celebrating-character.png";
+import Image from "components/Image";
 import { appRoutes } from "constants/routes";
-import { getTxUrl, humanize } from "helpers";
 import { Link } from "react-router-dom";
 import { CryptoResultStep } from "slices/donation";
 import Share, { SocialMedia } from "./Share";
+import { confetti } from "./confetti";
 
 export default function Success({
   classes,
   ...state
 }: Omit<CryptoResultStep, "status"> & { classes?: string; hash: string }) {
-  const {
-    hash,
-    details: { chainId, token },
-    recipient,
-  } = state;
-  const { name, id } = recipient;
+  const { recipient } = state;
+  const { id } = recipient;
   return (
     <div className={`grid justify-items-center ${classes}`}>
-      <Icon type="CheckCircle" size={96} className="text-green mb-8" />
-      <h3 className="text-2xl sm:text-3xl mb-4 sm:mb-12 text-center leading-relaxed">
-        Thank you for your donation of{" "}
-        <span className="font-extrabold">
-          {token.symbol}{" "}
-          {humanize(token.amount, parseFloat(token.amount) < 0.01 ? 4 : 2)}
-        </span>{" "}
-        to <span className="font-extrabold">{name}</span>!
-      </h3>
-
-      <ExtLink
-        href={getTxUrl(chainId.value, hash)}
-        className="gap-3.5 w-full sm:w-auto btn-outline-filled btn-donate"
+      <div
+        className="mb-6"
+        ref={async (node) => {
+          if (!node) return;
+          await confetti(node);
+        }}
       >
-        <Icon type="ExternalLink" size={22} />
-        <span>View transaction</span>
-      </ExtLink>
+        <Image src={char} />
+      </div>
 
-      <div className="p-5 flex flex-col sm:flex-row items-center my-12 dark:bg-blue-d7 rounded border border-prim w-full gap-2">
-        <span className="uppercase font-bold mb-6 mt-1 sm:my-0 sm:mr-auto">
-          Share on social media
-        </span>
-        <div className="flex items-center gap-2">
-          {socials.map(([type, size]) => (
-            <Share
-              key={type}
-              iconSize={size}
-              type={type}
-              recipient={recipient}
-            />
-          ))}
-        </div>
+      <p className="uppercase mb-2 text-xs text-blue-d1">Donation successful</p>
+      <h3 className="text-xl sm:text-2xl mb-2 text-center leading-relaxed text-balance">
+        Your generosity knows no bounds! Thank you for making a difference!
+      </h3>
+      <p className="text-center text-gray-d1">
+        The donation process is complete, and we are grateful for your support.{" "}
+      </p>
+
+      <h2 className="mt-16 border-t border-prim w-full pt-2 text-center font-medium">
+        Spread the word!
+      </h2>
+      <p className="text-center text-gray-d1 text-sm max-w-sm">
+        Encourage your friends to join in and contribute, making a collective
+        impact through donations.
+      </p>
+      <div className="flex items-center gap-2 mt-1">
+        {socials.map(([type, size]) => (
+          <Share key={type} iconSize={size} type={type} recipient={recipient} />
+        ))}
       </div>
 
       <Link
         to={appRoutes.marketplace + `/${id}`}
-        className="w-full sm:w-auto btn-orange btn-donate"
+        className="w-full btn-orange btn-donate normal-case mt-8"
       >
         Back to the platform
       </Link>
@@ -63,8 +56,8 @@ export default function Success({
 }
 
 const socials: [SocialMedia, number][] = [
-  ["Twitter", 24],
+  ["Twitter", 21],
   ["Telegram", 21],
-  ["Linkedin", 22],
-  ["Facebook", 16],
+  ["Linkedin", 21],
+  ["FacebookCircle", 22],
 ];
