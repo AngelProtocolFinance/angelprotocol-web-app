@@ -8,8 +8,11 @@ import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import AdvancedOptions from "../../../AdvancedOptions";
 import { FormValues, Props } from "./types";
+import CurrencySelector from "components/CurrencySelector";
 
-const USD_CODE = "usd";
+// Chariot accepts only USD
+// see https://givechariot.readme.io/reference/integrating-connect#response-objects
+const USD_CURRENCY = { code: "usd", min: 1 };
 
 export default function Form({
   advanceOptDisplay,
@@ -24,7 +27,7 @@ export default function Form({
   const initial: FormValues = {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
-    currency: { code: USD_CODE, min: 1 },
+    currency: USD_CURRENCY,
     email: authUserEmail,
     pctLiquidSplit: 50,
     userOptForKYC: false,
@@ -49,6 +52,16 @@ export default function Form({
         )}
         className="grid gap-4"
       >
+        <CurrencySelector
+          currencies={[USD_CURRENCY]}
+          disabled={methods.formState.isSubmitting}
+          label="Currency"
+          // only one currency available, so can't change it
+          onChange={() => {}}
+          value={currency}
+          classes={{ label: "font-semibold" }}
+          required
+        />
         <Field<FormValues>
           name="amount"
           label="Donation amount"
