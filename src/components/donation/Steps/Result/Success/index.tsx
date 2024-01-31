@@ -29,7 +29,7 @@ export default function Success({
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>
       <p className="text-center text-gray-d1">
-        The donation process is complete, and we are grateful for your support.{" "}
+        The donation process is complete, and we are grateful for your support.
       </p>
 
       <h2 className="mt-16 border-t border-prim w-full pt-2 text-center font-medium">
