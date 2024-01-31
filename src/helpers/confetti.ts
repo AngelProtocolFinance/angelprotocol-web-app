@@ -53,15 +53,13 @@ function moveFetti(fetti: Fetti, progress: number) {
  * from library: https://github.com/daniel-lundin/dom-confetti/tree/master
  */
 export function confetti(trigger: HTMLElement) {
-  trigger.style.perspective = "none";
-
   //create and append particles to trigger
   const COUNT = 50;
   const COLORS = [
     "#F93F79", //red
     "#9BDD00", //green
     "#1a6ae0", //blue
-    "#fce22a", //yello
+    "#fce22a", //yellow
   ];
   const randomInt = (min: number, max: number) =>
     Math.floor(Math.random() * (max - min + 1)) + min;
