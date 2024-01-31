@@ -1,12 +1,12 @@
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { CHARIOT_CONNECT_ID } from "constants/env";
+import { useErrorContext } from "contexts/ErrorContext";
 import ChariotConnect from "react-chariot-connect";
 import { useChariotGrantIntentMutation } from "services/apes";
 import { ChariotCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
-import BackBtn from "../../BackBtn";
-import Err from "../Err";
-import { useErrorContext } from "contexts/ErrorContext";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import BackBtn from "../BackBtn";
+import Err from "./Err";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
