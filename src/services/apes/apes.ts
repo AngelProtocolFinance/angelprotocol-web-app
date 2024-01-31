@@ -70,7 +70,7 @@ export const apes = createApi({
         method: "POST",
         body: JSON.stringify(data),
       }),
-      transformResponse: (res: { clientSecret: string }) => res.clientSecret,
+      transformResponse: (res: { grantId: string }) => res.grantId,
     }),
     paypalOrder: builder.query<string, CreatePayPalOrderParams>({
       query: (params) => ({
