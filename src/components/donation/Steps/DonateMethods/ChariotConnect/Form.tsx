@@ -10,9 +10,12 @@ import AdvancedOptions from "../../../AdvancedOptions";
 import { FormValues, Props } from "./types";
 import CurrencySelector from "components/CurrencySelector";
 
-// Chariot accepts only USD
-// see https://givechariot.readme.io/reference/integrating-connect#response-objects
-const USD_CURRENCY = { code: "usd", min: 1 };
+// Chariot accepts only USD.
+// See https://givechariot.readme.io/reference/integrating-connect#response-objects
+//
+// The minimum amount should not be hardcoded as it differs depending on which provider is selected.
+// See https://givechariot.readme.io/reference/create-grant
+const USD_CURRENCY = { code: "usd" };
 
 export default function Form({
   advanceOptDisplay,
