@@ -1,29 +1,19 @@
 import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
-import { appRoutes } from "constants/routes";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 import { setDetails } from "slices/donation";
 import { useGetter } from "store/accessors";
 import { ChainID } from "types/chain";
-import { DonaterConfigFromWidget } from "types/widget";
 import { Selector } from "../../../../../Selector";
-import Split from "../../../../../Split";
 import TokenField from "../../../../../TokenField";
 import { CheckField, Label } from "../../../../../form";
-import AdvancedOptions from "../../../../AdvancedOptions";
 import { initToken } from "../constants";
 import { DonateValues } from "../types";
 
-type Props = {
-  configFromWidget: DonaterConfigFromWidget | null;
-};
-
-export default function Form({ configFromWidget }: Props) {
+export default function Form() {
   const { watch, reset, setValue, handleSubmit } =
     useFormContext<DonateValues>();
-  const endowId = useGetter((state) => state.donation.recipient?.id);
   const isKYCRequired = useGetter(
     (state) => state.donation.recipient?.isKYCRequired
   );
@@ -35,9 +25,7 @@ export default function Form({ configFromWidget }: Props) {
     reset();
   }
 
-  const token = watch("token");
   const chainId = watch("chainId");
-  const isInsideWidget = configFromWidget !== null;
 
   return (
     <form
