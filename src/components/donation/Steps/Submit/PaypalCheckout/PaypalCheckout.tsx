@@ -1,5 +1,4 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import Icon from "components/Icon";
 import { PAYPAL_CLIENT_ID } from "constants/env";
 import { usePaypalOrderQuery } from "services/apes";
 import { PaypalCheckoutStep, setStep } from "slices/donation";
@@ -41,15 +40,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
 
   return (
     <div className="grid grid-rows-[auto_1fr] min-h-[16rem] isolate p-4 @md:p-8">
-      <BackBtn
-        onClick={() => {
-          const action = details.userOptForKYC
-            ? setStep("kyc-form")
-            : setStep("donate-form");
-          dispatch(action);
-        }}
-        type="button"
-      />
+      <BackBtn onClick={() => dispatch(setStep("splits"))} type="button" />
 
       {isLoading ? (
         <Loader msg="Loading payment form..." />

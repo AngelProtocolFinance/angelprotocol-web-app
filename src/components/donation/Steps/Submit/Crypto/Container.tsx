@@ -19,7 +19,7 @@ type Props = PropsWithChildren<
 export default function Container({ children, txPackage, ...props }: Props) {
   const dispatch = useSetter();
   function goBack() {
-    dispatch(setStep(props.kyc ? "kyc-form" : "donate-form"));
+    dispatch(setStep("splits"));
   }
   function submit(txPackage: TxPackage) {
     dispatch(sendDonation({ donation: props, ...txPackage }));

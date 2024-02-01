@@ -42,15 +42,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   return (
     <div className="grid content-start gap-8 p-4 @md:p-8">
-      <BackBtn
-        type="button"
-        onClick={() => {
-          const action = details.userOptForKYC
-            ? setStep("kyc-form")
-            : setStep("donate-form");
-          dispatch(action);
-        }}
-      />
+      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
 
       {isLoading ? (
         <Loader msg="Loading payment form.." />
