@@ -1,5 +1,4 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
-import Icon from "components/Icon";
 import { PAYPAL_CLIENT_ID } from "constants/env";
 import { usePaypalOrderQuery } from "services/apes";
 import { PaypalCheckoutStep, setStep } from "slices/donation";

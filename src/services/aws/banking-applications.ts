@@ -74,7 +74,7 @@ const bankingApplications = aws.injectEndpoints({
       )
     >({
       providesTags: ["banking-application"],
-      async queryFn({ uuid, ...params }, api, extraOptions, baseQuery) {
+      async queryFn({ uuid, ...params }, api, _extraOptions, baseQuery) {
         const {
           auth: { user },
         } = api.getState() as RootState;

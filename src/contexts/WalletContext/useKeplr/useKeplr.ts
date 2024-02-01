@@ -42,7 +42,7 @@ export default function useKeplr(): Wallet {
         isSwitching: false,
       });
       saveUserAction(actionKey, "connect");
-    } catch (err) {
+    } catch (_) {
       if (isUserInitiated) {
         return alert("Failed to connect to wallet.");
       }

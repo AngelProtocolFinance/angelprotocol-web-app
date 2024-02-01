@@ -68,7 +68,7 @@ export const wise = aws.injectEndpoints({
       { requirements: AccountRequirements[]; quoteId: string },
       { amount: number; currency: string }
     >({
-      async queryFn(arg, api, extraOptions, baseQuery) {
+      async queryFn(arg, _api, _extraOptions, baseQuery) {
         const quoteRes = await baseQuery({
           url: `${baseURL}/v3/profiles/{{profileId}}/quotes`,
           method: "POST",
