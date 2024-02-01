@@ -65,8 +65,8 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <span>Stocks</span>
         </Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>
-          <Icon type="ChariotConnect" size={19} />
-          <span>Chariot</span>
+          <Icon type="Advisor" size={19} />
+          <span>DAF</span>
         </Tab>
 
         {/** more options: applies up to @md */}
