@@ -5,13 +5,18 @@ import { useDispatch } from "react-redux";
 import { setDetails } from "slices/donation";
 import { useGetter } from "store/accessors";
 import { ChainID } from "types/chain";
+import { DonaterConfigFromWidget } from "types/widget";
 import { Selector } from "../../../../../Selector";
 import TokenField from "../../../../../TokenField";
 import { CheckField, Label } from "../../../../../form";
 import { initToken } from "../constants";
 import { DonateValues } from "../types";
 
-export default function Form() {
+type Props = {
+  configFromWidget: DonaterConfigFromWidget | null;
+};
+
+export default function Form({ configFromWidget }: Props) {
   const { watch, reset, setValue, handleSubmit } =
     useFormContext<DonateValues>();
   const isKYCRequired = useGetter(
@@ -21,7 +26,13 @@ export default function Form() {
   const dispatch = useDispatch();
 
   function submit(data: DonateValues) {
-    dispatch(setDetails({ ...data, method: "crypto" }));
+    dispatch(
+      setDetails({
+        ...data,
+        method: "crypto",
+        source: configFromWidget ? "bg-widget" : "bg-marketplace",
+      })
+    );
     reset();
   }
 
