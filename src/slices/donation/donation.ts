@@ -38,8 +38,8 @@ const donation = createSlice({
         };
       }
       return {
-        ...(state as SubmitStep),
-        step: "submit",
+        ...(state as SplitsStep),
+        step: "splits",
         details: payload,
       };
     },
