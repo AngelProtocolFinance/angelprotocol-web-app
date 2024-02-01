@@ -26,28 +26,6 @@
     @apply xl:container xl:mx-auto px-5;
   }
 
-  /** set default for input range */
-  .range {
-    @apply focus:outline-none appearance-none bg-transparent w-full;
-  }
-  .range::-webkit-slider-thumb {
-    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer -mt-[5px];
-  }
-  .range:disabled::-webkit-slider-thumb {
-    @apply bg-gray-l2;
-  }
-  .range::-moz-range-thumb {
-    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer;
-  }
-  .range:disabled::-moz-range-thumb {
-    @apply bg-gray-l2;
-  }
-  .range::-ms-track {
-    @apply w-full cursor-pointer bg-transparent border-transparent;
-  }
-  .range::-webkit-slider-runnable-track {
-    @apply w-full h-1 cursor-pointer bg-gray-l3 dark:bg-bluegray rounded-full;
-  }
 
   /** applicable to button and <a/> */
   .btn {
