@@ -12,10 +12,7 @@ import { states } from "./us-states";
 
 export const formStyle = "w-full text-gray-d2 dark:text-white font-work p-3";
 
-export default function Form({
-  classes = "",
-  ...props
-}: Props & { isEmailFixed: boolean }) {
+export default function Form({ classes = "", ...props }: Props) {
   const {
     watch,
     handleSubmit,
@@ -133,7 +130,6 @@ export default function Form({
         placeholder="e.g. johndoe@mail.com"
         classes={{ container: "col-span-full field-kyc" }}
         required
-        disabled={props.isEmailFixed}
       />
       <p className="text-sm col-span-full">
         By submitting this information, you agree to our{" "}
