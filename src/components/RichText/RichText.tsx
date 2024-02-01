@@ -23,7 +23,7 @@ export default function RichText(props: Props) {
 
     try {
       quill.setContents(JSON.parse(props.content));
-    } catch (err) {
+    } catch (_) {
       //previous rich text format based on draft-js will throw parse error
       //in this case just set it to blank
       quill.setContents(quill.getContents());

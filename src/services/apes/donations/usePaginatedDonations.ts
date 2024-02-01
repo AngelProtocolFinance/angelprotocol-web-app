@@ -41,7 +41,7 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
         return { data, ...rest };
       }
 
-      const filtered = data?.Items.filter(({ kycData, ...flatFields }) =>
+      const filtered = data?.Items.filter(({ kycData: _, ...flatFields }) =>
         Object.values(flatFields)
           .reduce<string>((result, val) => `${val}` + result, "")
           .toLocaleLowerCase()

@@ -29,7 +29,7 @@ export default function Success({
       navigate(`${appRoutes.register}/${regRoutes.steps}/${nextStep}`, {
         state: state.data.init,
       });
-    } catch (err) {
+    } catch (_) {
       navigate(appRoutes.register);
     }
   };

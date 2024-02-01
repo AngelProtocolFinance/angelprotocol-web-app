@@ -65,7 +65,7 @@ export default function AddForm({ added, endowID }: Props) {
           </p>
         ),
       });
-    } catch (err) {
+    } catch (_) {
       showModal(Prompt, {
         headline: "Error.",
         children: (
