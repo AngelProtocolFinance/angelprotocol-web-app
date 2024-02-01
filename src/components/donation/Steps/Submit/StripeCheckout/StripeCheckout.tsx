@@ -14,7 +14,7 @@ const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, kyc } = props;
+  const { details, recipient, kyc, liquidSplitPct } = props;
   const {
     data: clientSecret,
     isLoading,
@@ -24,7 +24,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     currency: details.currency.code,
     endowmentId: recipient.id,
     email: details.email,
-    splitLiq: details.pctLiquidSplit.toString(),
+    splitLiq: liquidSplitPct.toString(),
     kycData: kyc
       ? {
           city: kyc.city,

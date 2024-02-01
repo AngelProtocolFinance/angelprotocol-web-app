@@ -31,7 +31,6 @@ export default function Form({
     amount: "",
     currency: { code: USD_CODE, min: 1 },
     email: authUserEmail,
-    pctLiquidSplit: 50,
     userOptForKYC: false,
   };
 
@@ -117,15 +116,7 @@ export default function Form({
             Please send me a tax receipt
           </CheckField>
         )}
-        <AdvancedOptions
-          display={advanceOptDisplay}
-          splitComponent={
-            <Split<FormValues, "pctLiquidSplit">
-              className="mb-6"
-              liqPctField="pctLiquidSplit"
-            />
-          }
-        />
+
         <p className="text-sm text-gray-d2 dark:text-gray mt-4">
           Please click the button below and follow the instructions provided to
           complete your donation

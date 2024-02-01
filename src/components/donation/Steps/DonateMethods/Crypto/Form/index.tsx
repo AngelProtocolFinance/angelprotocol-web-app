@@ -85,27 +85,9 @@ export default function Form({ configFromWidget }: Props) {
         </CheckField>
       )}
 
-      <AdvancedOptions
-        classes="mt-10"
-        display={configFromWidget?.advancedOptionsDisplay ?? "collapsed"}
-        splitComponent={
-          <Split<DonateValues, "pctLiquidSplit">
-            className="mb-6"
-            liqPctField="pctLiquidSplit"
-            token={{ amount: toNumber(token.amount), symbol: token.symbol }}
-            fixLiquidSplitPct={configFromWidget?.liquidSplitPct}
-          />
-        }
-      />
-
       <button className="btn-orange btn-donate mt-6" type="submit">
         Continue
       </button>
     </form>
   );
 }
-
-const toNumber = (input: string) => {
-  const num = Number(input);
-  return isNaN(num) ? 0 : num;
-};

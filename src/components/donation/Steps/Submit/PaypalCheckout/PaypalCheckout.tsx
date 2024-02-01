@@ -12,7 +12,7 @@ import Checkout from "./Checkout";
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function PaypalCheckout(props: PaypalCheckoutStep) {
-  const { details, recipient, kyc } = props;
+  const { details, recipient, kyc, liquidSplitPct } = props;
 
   const {
     data: orderId,
@@ -23,7 +23,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
     currency: details.currency.code,
     endowmentId: recipient.id,
     email: details.email,
-    splitLiq: details.pctLiquidSplit.toString(),
+    splitLiq: liquidSplitPct.toString(),
     kycData: kyc
       ? {
           city: kyc.city,
