@@ -105,7 +105,7 @@ export default function Split({
         onClick={() => {
           dispatch(setSplit(liqSplitPct));
         }}
-        className="btn-orange btn-donate mt-2"
+        className="btn-orange btn-donate mt-6"
       >
         Continue
       </button>
