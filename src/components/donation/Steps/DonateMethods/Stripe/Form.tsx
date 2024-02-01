@@ -1,6 +1,5 @@
 import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
-import Split from "components/Split";
 import { CheckField, Field } from "components/form";
 import { FormProvider, useController, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
@@ -9,17 +8,11 @@ import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import { Currency } from "types/components";
-import AdvancedOptions from "../../../AdvancedOptions";
 import { FormValues, Props } from "./types";
 
 const USD_CODE = "usd";
 
-export default function Form({
-  advanceOptDisplay,
-  recipient,
-  widgetConfig,
-  details,
-}: Props) {
+export default function Form({ recipient, widgetConfig, details }: Props) {
   const authUser = useGetter((state) => state.auth.user);
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";

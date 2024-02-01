@@ -29,7 +29,7 @@ export default function Crypto({ config, ...state }: Props) {
   });
   return (
     <FormProvider {...methods}>
-      <Form configFromWidget={config} />
+      <Form />
     </FormProvider>
   );
 }

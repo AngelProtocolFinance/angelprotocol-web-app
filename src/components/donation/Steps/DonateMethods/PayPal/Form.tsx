@@ -1,27 +1,18 @@
 import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
-import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { appRoutes } from "constants/routes";
 import { FormProvider, useController, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { requiredString } from "schemas/string";
 import { usePaypalCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import { Currency } from "types/components";
-import AdvancedOptions from "../../../AdvancedOptions";
 import { FormValues, Props } from "./types";
 
 const USD_CODE = "usd";
 
-export default function Form({
-  advanceOptDisplay,
-  recipient,
-  details,
-  widgetConfig,
-}: Props) {
+export default function Form({ recipient, details, widgetConfig }: Props) {
   const user = useGetter((state) => state.auth.user);
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(user) ? user.email : "";
