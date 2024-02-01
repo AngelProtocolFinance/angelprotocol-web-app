@@ -4,6 +4,7 @@ import { useGetter, useSetter } from "store/accessors";
 import { DonaterConfigFromWidget } from "types/widget";
 import DonateMethods from "./DonateMethods";
 import Result from "./Result";
+import Splits from "./Splits";
 import Submit from "./Submit";
 
 type Props = { config: DonaterConfigFromWidget | null };
@@ -38,6 +39,9 @@ export default function CurrentStep({ config }: Props) {
         }}
       />
     );
+  }
+  if (state.step === "splits") {
+    return <Splits {...state} />;
   }
 
   state.step satisfies "donate-form";

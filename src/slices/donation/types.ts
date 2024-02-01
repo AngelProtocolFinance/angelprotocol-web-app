@@ -97,8 +97,8 @@ export type CryptoResultStep = {
 export type DonationState =
   | InitStep
   | FormStep
-  | SubmitStep
   | KYCStep
+  | SplitsStep
   | SubmitStep
   | CryptoResultStep;
 
