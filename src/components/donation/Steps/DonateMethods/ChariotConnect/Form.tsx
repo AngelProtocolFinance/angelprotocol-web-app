@@ -85,7 +85,7 @@ export default function Form({
             },
             shouldUnregister: true,
           }}
-          tooltip="The minimum donation amount will depend on which DAF provider you select."
+          tooltip="The minimum donation amount will depend on which DAF provider you select in the next step."
         />
         {!authUserEmail && (
           <Field<FormValues>
