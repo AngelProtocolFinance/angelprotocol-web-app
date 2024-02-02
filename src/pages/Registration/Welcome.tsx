@@ -46,7 +46,7 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
           Continue registration
         </LoadText>
       </Link>
-      {true && (
+      {isError && (
         <span className="text-xs text-red mt-2 text-center">
           {GENERIC_ERROR_MESSAGE}
         </span>
