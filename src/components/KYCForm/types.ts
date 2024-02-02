@@ -5,6 +5,8 @@ export type FormValues = KYC;
 export type OnDonation = {
   type: "on-donation";
   recipient: DonationRecipient;
+  /** provided in donate step */
+  donationEmail?: string;
   onBack: () => void;
 }; //receipt received immediately after donation
 
@@ -16,6 +18,6 @@ type PostDonation = {
 
 export type Props = (OnDonation | PostDonation) & {
   classes?: string;
-  defaultValues?: Partial<FormValues>;
+  defaultValues?: FormValues;
   onSubmit: (formValues: FormValues) => void | Promise<void>;
 };

@@ -24,17 +24,10 @@ const donation = createSlice({
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
       if (state.recipient?.isKYCRequired || payload.userOptForKYC) {
-        const { kyc, ...rest } = state as KYCStep;
         return {
-          ...rest,
+          ...(state as KYCStep),
           step: "kyc-form",
           details: payload,
-          kyc: kyc
-            ? kyc
-            : (payload.method === "stripe" || payload.method === "paypal") &&
-                payload.email
-              ? { kycEmail: payload.email }
-              : undefined,
         };
       }
       return {

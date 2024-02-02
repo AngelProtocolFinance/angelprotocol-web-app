@@ -78,7 +78,7 @@ export function useKeplrWC(): Wallet {
       if (uri) {
         QRModal.close();
       }
-    } catch (err) {
+    } catch (_) {
       setState({ status: "disconnected" });
     } finally {
       qrModalRef.current?.close();

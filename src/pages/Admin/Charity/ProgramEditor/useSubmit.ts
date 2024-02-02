@@ -43,7 +43,7 @@ export default function useSubmit() {
         program_id: initial ? initial.program_id : window.crypto.randomUUID(),
         program_description: fv.description,
         program_banner: imageURL,
-        program_milestones: fv.milestones.map(({ idx, ...m }, i) => ({
+        program_milestones: fv.milestones.map(({ idx: _, ...m }, i) => ({
           ...m,
           milestone_date: new Date(m.milestone_date).toISOString(),
           milestone_media: milestoneMediaURLs[i],

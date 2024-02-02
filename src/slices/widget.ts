@@ -16,7 +16,7 @@ const widget = createSlice({
   name: "widget",
   initialState,
   reducers: {
-    update: (state, { payload }: PayloadAction<State>) => payload,
+    update: (_, { payload }: PayloadAction<State>) => payload,
     reset: () => initialState,
   },
 });

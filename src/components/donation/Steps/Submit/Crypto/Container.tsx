@@ -1,8 +1,6 @@
 import { chains } from "constants/chains";
-import { appRoutes } from "constants/routes";
 import { maskAddress } from "helpers";
 import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
 import { CryptoSubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { useSetter } from "store/accessors";

@@ -52,7 +52,7 @@ function Banner() {
   const { image = "/images/placeholder-banner.png" } = useProfileContext();
   return (
     <div
-      className="relative overlay w-full h-52 sm:h-72 bg-cover bg-center"
+      className="relative w-full h-52 sm:h-72 bg-cover bg-center"
       style={{
         backgroundImage: `url('${image}')`,
       }}
