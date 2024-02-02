@@ -8,7 +8,7 @@ import { DonationRecipient } from "slices/donation";
 
 export type SocialMedia = Extract<
   IconType,
-  "Facebook" | "Twitter" | "Telegram" | "Linkedin"
+  "FacebookCircle" | "Twitter" | "Telegram" | "Linkedin"
 >;
 
 type Props = {
@@ -26,7 +26,7 @@ export default function Share(props: Props) {
       onClick={() => {
         showModal(Prompt, props);
       }}
-      className="relative w-10 h-10 grid place-items-center border dark:border-white rounded"
+      className="relative size-10 grid place-items-center"
     >
       <Icon type={type} size={iconSize} className="absolute-center" />
     </button>
@@ -47,7 +47,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
   return (
     <Modal className="grid content-start fixed-center z-20 border border-prim bg-gray-l6 dark:bg-blue-d5 font-work text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
       <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5 dark:bg-blue-d7 border-b border-prim">
-        Share on {type}
+        Share on {type === "FacebookCircle" ? "Facebook" : type}
         <button
           onClick={closeModal}
           className="absolute top-1/2 transform -translate-y-1/2 right-4 w-10 h-10 border border-prim rounded "
@@ -90,7 +90,7 @@ function generateShareLink(rawText: string, type: SocialMedia) {
      * https://developers.facebook.com/docs/sharing/reference/feed-dialog#response
      * must rely on OpenGraph metadata
      */
-    case "Facebook":
+    case "FacebookCircle":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
         DAPP_URL
       )}&quote=${encodedText}`;
