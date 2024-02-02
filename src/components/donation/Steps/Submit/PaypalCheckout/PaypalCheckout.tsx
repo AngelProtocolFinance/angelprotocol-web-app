@@ -57,7 +57,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
           }}
         >
           <div className="grid gap-5 w-full place-items-center">
-            <Checkout orderId={orderId} />
+            <Checkout orderId={orderId} isInWidget={details.isInWidget} />
           </div>
         </PayPalScriptProvider>
       )}

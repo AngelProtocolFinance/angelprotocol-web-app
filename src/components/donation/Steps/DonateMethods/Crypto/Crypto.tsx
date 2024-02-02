@@ -21,6 +21,7 @@ export default function Crypto({ config, ...state }: Props) {
       ? { label: mumbai.name, value: mumbai.id }
       : { label: polygon.name, value: polygon.id },
     userOptForKYC: false,
+    isInWidget: !!config,
   };
 
   const methods = useForm<DonateValues>({

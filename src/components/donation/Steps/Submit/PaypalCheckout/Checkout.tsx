@@ -9,12 +9,13 @@ import { useNavigate } from "react-router-dom";
 import { useCapturePayPalOrderMutation } from "services/apes";
 
 type Props = {
+  isInWidget: boolean;
   orderId: string;
 };
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ orderId }: Props) {
+export default function Checkout({ isInWidget, orderId }: Props) {
   const navigate = useNavigate();
 
   const [isSubmitting, setSubmitting] = useState(false);
@@ -55,7 +56,13 @@ export default function Checkout({ orderId }: Props) {
               } else if (isEmpty(order.purchase_units ?? [])) {
                 throw new Error(JSON.stringify(order));
               } else {
-                navigate(appRoutes.donate_fiat_thanks);
+                if (isInWidget) {
+                  navigate(
+                    `${appRoutes.donate_widget}${appRoutes.donate_fiat_thanks}`
+                  );
+                } else {
+                  navigate(appRoutes.donate_fiat_thanks);
+                }
               }
             } catch (error) {
               handleError(error, GENERIC_ERROR_MESSAGE);

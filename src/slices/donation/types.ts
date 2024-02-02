@@ -12,6 +12,7 @@ export type DonationRecipient = {
 };
 
 type BaseDonationDetais = {
+  isInWidget: boolean;
   userOptForKYC: boolean;
   source: DonationSource;
 };
