@@ -62,6 +62,7 @@ export const aws = createApi({
     "application",
     "banking-applications",
     "banking-application",
+    "registration",
     "users",
   ],
   reducerPath: "aws",
@@ -94,7 +95,7 @@ export const aws = createApi({
     walletProfile: builder.query<VersionSpecificWalletProfile, string>({
       providesTags: ["walletProfile"],
       query: getWalletProfileQuery,
-      transformResponse(res: WalletProfile, meta, walletAddr) {
+      transformResponse(res: WalletProfile, _meta, walletAddr) {
         return {
           ...res,
           version: walletAddr.startsWith("juno") ? "legacy" : "latest",

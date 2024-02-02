@@ -63,7 +63,7 @@ export default function useTerra() {
           }
           try {
             connect(c.type, c.identifier);
-          } catch (err) {
+          } catch (_) {
             alert("Failed to connect to wallet");
           }
         },

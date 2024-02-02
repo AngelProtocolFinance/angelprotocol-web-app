@@ -8,8 +8,8 @@ import { schema } from "./schema";
 import { FormValues } from "./types";
 
 export default function Purchaser({
-  classes = "",
-  wallet,
+  classes: _c = "",
+  wallet: _w,
   ...state
 }: WithWallet<FormStep> & { classes?: string }) {
   const _tokens: TokenWithAmount[] = []; //FUTURE: load tokens

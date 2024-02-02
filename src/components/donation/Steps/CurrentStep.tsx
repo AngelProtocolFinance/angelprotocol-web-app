@@ -1,5 +1,5 @@
 import KYCForm from "components/KYCForm";
-import { setKYC, setStep } from "slices/donation";
+import { hasEmail, setKYC, setStep } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { DonaterConfigFromWidget } from "types/widget";
 import DonateMethods from "./DonateMethods";
@@ -29,6 +29,9 @@ export default function CurrentStep({ config }: Props) {
         classes="grid gap-5 sm:grid-cols-2 p-4 @md:p-8"
         defaultValues={state.kyc}
         recipient={state.recipient}
+        donationEmail={
+          hasEmail(state.details) ? state.details.email : undefined
+        }
         onBack={() => {
           //kyc is always after donate form
           dispatch(setStep("donate-form"));

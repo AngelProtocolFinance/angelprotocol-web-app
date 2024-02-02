@@ -9,14 +9,21 @@ import { FormValues, Props } from "./types";
 export default function KYCForm(props: Props) {
   const isOnDonation = props.type === "on-donation";
 
+  const init: FormValues = {
+    name: { first: "", last: "" },
+    address: { street: "", complement: "" },
+    city: "",
+    postalCode: "",
+    country: placeHolderCountryOption,
+    usState: { label: "", value: "" },
+    state: "",
+    kycEmail: (props.type === "on-donation" && props.donationEmail) || "",
+  };
+
   const methods = useForm<FormValues>({
     mode: "onSubmit",
     reValidateMode: "onChange",
-    defaultValues: {
-      ...(props.defaultValues ?? {}),
-      country: props.defaultValues?.country ?? placeHolderCountryOption,
-      usState: props.defaultValues?.usState ?? { label: "", value: "" },
-    },
+    defaultValues: props.defaultValues || init,
     resolver: yupResolver(schema),
   });
 

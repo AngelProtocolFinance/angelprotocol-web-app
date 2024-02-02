@@ -4,8 +4,8 @@ import { Label } from "components/form";
 import { useState } from "react";
 import { DonationDetails, FormStep } from "slices/donation";
 import { DonaterConfigFromWidget } from "types/widget";
+import ChariotConnect from "./ChariotConnect";
 import Crypto from "./Crypto";
-import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
@@ -17,14 +17,16 @@ type Props = {
 
 const tabIdx = (method?: DonationDetails["method"]) => {
   switch (method) {
-    case "crypto":
-      return 4;
-    case "paypal":
-      return 1;
     case "stripe":
       return 0;
+    case "paypal":
+      return 1;
     case "stocks":
       return 2;
+    case "chariot":
+      return 3;
+    case "crypto":
+      return 4;
     //other methods doesn't have donate methods yet
     default:
       return 0;
@@ -124,7 +126,17 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           />
         </Tab.Panel>
         <Tab.Panel>
-          <DAFDirect />
+          <ChariotConnect
+            recipient={state.recipient}
+            step={state.step}
+            details={
+              state.details?.method === "chariot" ? state.details : undefined
+            }
+            widgetConfig={donaterConfig}
+            advanceOptDisplay={
+              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
+            }
+          />
         </Tab.Panel>
         <Tab.Panel>
           <Crypto
