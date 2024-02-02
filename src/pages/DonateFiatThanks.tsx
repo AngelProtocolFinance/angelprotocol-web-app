@@ -4,7 +4,7 @@ import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link } from "react-router-dom";
 
-export default function DonateFiatThanks({ hideBackButton = false }) {
+export default function DonateFiatThanks({ widgetVersion = false }) {
   return (
     <div className="grid justify-self-center m-auto max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6 font-work">
       <div
@@ -32,7 +32,7 @@ export default function DonateFiatThanks({ hideBackButton = false }) {
         for this transaction on your{" "}
         <Link to={appRoutes.donations}>My donations</Link> page.
       </p>
-      {!hideBackButton && (
+      {!widgetVersion && (
         <Link
           to={appRoutes.marketplace}
           className="w-full btn-orange btn-donate normal-case mt-8"

@@ -37,7 +37,7 @@ export default function App() {
           <Route path=":id" element={<DonateWidget />} />
           <Route
             path={appRoutes.donate_fiat_thanks.substring(1)}
-            element={<DonateFiatThanks hideBackButton />}
+            element={<DonateFiatThanks widgetVersion />}
           />
         </Route>
 
