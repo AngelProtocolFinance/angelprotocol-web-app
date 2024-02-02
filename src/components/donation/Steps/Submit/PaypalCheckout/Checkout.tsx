@@ -1,7 +1,7 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { appRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { useState } from "react";
@@ -58,7 +58,7 @@ export default function Checkout({ isInWidget, orderId }: Props) {
               } else {
                 if (isInWidget) {
                   navigate(
-                    `${appRoutes.donate_widget}${appRoutes.donate_fiat_thanks}`
+                    `${appRoutes.donate_widget}${donateWidgetRoutes.donate_fiat_thanks}`
                   );
                 } else {
                   navigate(appRoutes.donate_fiat_thanks);

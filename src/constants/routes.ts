@@ -27,6 +27,11 @@ export const adminRoutes = {
   members: "members",
 } as const;
 
+export enum donateWidgetRoutes {
+  donate_fiat_thanks = "donate-fiat-thanks",
+  stripe_payment_status = "stripe-payment-status",
+}
+
 export enum regRoutes {
   index = "",
   resume = "resume",
