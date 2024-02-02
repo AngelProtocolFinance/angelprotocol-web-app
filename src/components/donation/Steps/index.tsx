@@ -6,7 +6,7 @@ import CurrentStep from "./CurrentStep";
 
 type Props = {
   className?: string;
-  donaterConfig: DonaterConfigFromWidget | null;
+  donaterConfig?: DonaterConfigFromWidget;
 };
 
 export function Steps({ className = "", donaterConfig }: Props) {

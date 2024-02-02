@@ -11,7 +11,7 @@ import Stocks from "./Stocks";
 import Stripe from "./Stripe";
 
 type Props = {
-  donaterConfig: DonaterConfigFromWidget | null;
+  donaterConfig?: DonaterConfigFromWidget;
   state: FormStep;
 };
 
