@@ -62,6 +62,7 @@ export const aws = createApi({
     "application",
     "banking-applications",
     "banking-application",
+    "registration",
     "users",
   ],
   reducerPath: "aws",
