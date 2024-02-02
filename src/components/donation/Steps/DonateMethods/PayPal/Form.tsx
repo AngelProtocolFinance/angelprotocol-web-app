@@ -1,5 +1,4 @@
 import CurrencySelector from "components/CurrencySelector";
-import LoadText from "components/LoadText";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
 import { FormProvider, useController, useForm } from "react-hook-form";
@@ -38,7 +37,7 @@ export default function Form({
   const methods = useForm<FormValues>({
     defaultValues: details || initial,
   });
-  const { control, formState, handleSubmit } = methods;
+  const { control, handleSubmit } = methods;
 
   const {
     field: { value: currency, onChange: onCurrencyChange },
@@ -62,7 +61,6 @@ export default function Form({
       >
         <CurrencySelector
           currencies={currencies}
-          disabled={formState.isSubmitting}
           classes={{ label: "font-semibold" }}
           label="Currency"
           onChange={onCurrencyChange}
@@ -130,14 +128,8 @@ export default function Form({
           complete your donation
         </p>
 
-        <button
-          disabled={formState.isSubmitting}
-          className="btn-orange btn-donate mt-2"
-          type="submit"
-        >
-          <LoadText text="Processing..." isLoading={formState.isSubmitting}>
-            Continue
-          </LoadText>
+        <button className="btn-orange btn-donate mt-2" type="submit">
+          Continue
         </button>
       </form>
     </FormProvider>
