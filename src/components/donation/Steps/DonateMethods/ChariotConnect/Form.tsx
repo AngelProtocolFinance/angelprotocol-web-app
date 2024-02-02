@@ -1,3 +1,4 @@
+import CurrencySelector from "components/CurrencySelector";
 import LoadText from "components/LoadText";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
@@ -8,7 +9,6 @@ import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import AdvancedOptions from "../../../AdvancedOptions";
 import { FormValues, Props } from "./types";
-import CurrencySelector from "components/CurrencySelector";
 
 // Chariot accepts only USD.
 // See https://givechariot.readme.io/reference/integrating-connect#response-objects
@@ -39,13 +39,14 @@ export default function Form({
   const methods = useForm<FormValues>({
     defaultValues: details || initial,
   });
+  const { formState, handleSubmit, watch } = methods;
 
-  const currency = methods.watch("currency");
+  const currency = watch("currency");
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit((fv) =>
+        onSubmit={handleSubmit((fv) =>
           dispatch(
             setDetails({
               ...fv,
@@ -57,7 +58,7 @@ export default function Form({
       >
         <CurrencySelector
           currencies={[USD_CURRENCY]}
-          disabled={methods.formState.isSubmitting}
+          disabled={formState.isSubmitting}
           label="Currency"
           // only one currency available, so can't change it
           onChange={() => {}}
@@ -127,14 +128,11 @@ export default function Form({
         </p>
 
         <button
-          disabled={methods.formState.isSubmitting}
+          disabled={formState.isSubmitting}
           className="btn-orange btn-donate mt-2"
           type="submit"
         >
-          <LoadText
-            text="Processing..."
-            isLoading={methods.formState.isSubmitting}
-          >
+          <LoadText text="Processing..." isLoading={formState.isSubmitting}>
             Continue
           </LoadText>
         </button>
