@@ -33,6 +33,14 @@ export default function App() {
   return (
     <ModalContext>
       <SentryRoutes>
+        <Route path={appRoutes.donate_widget}>
+          <Route path=":id" element={<DonateWidget />} />
+          <Route
+            path={appRoutes.donate_fiat_thanks.substring(1)}
+            element={<DonateFiatThanks hideBackButton />}
+          />
+        </Route>
+
         <Route
           path={`${appRoutes.donate_widget}/:id`}
           element={<DonateWidget />}
