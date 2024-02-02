@@ -15,6 +15,7 @@ frontend:
         - PUBLIC_SENTRY_DSN=${SENTRY_DSN}
         - PUBLIC_STRIPE_KEY=${PUBLIC_STRIPE_KEY}
         - PUBLIC_PAYPAL_CLIENT_ID=${PUBLIC_PAYPAL_CLIENT_ID}
+        - PUBLIC_CHARIOT_CONNECT_ID=${PUBLIC_CHARIOT_CONNECT_ID}
         - export NODE_OPTIONS="--max-old-space-size=8192"
         - yarn run build
   artifacts:

@@ -37,9 +37,14 @@ export type PaypalDonationDetails = {
   method: "paypal";
 } & FiatDonationDetails;
 
+export type ChariotDonationDetails = {
+  method: "chariot";
+} & FiatDonationDetails;
+
 export type DonationDetails =
   | StripeDonationDetails
   | PaypalDonationDetails
+  | ChariotDonationDetails
   | CryptoDonationDetails;
 
 export type KYC = {
@@ -65,6 +70,7 @@ export type FormStep<T extends DonationDetails = DonationDetails> = {
 export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type PaypalFormStep = FormStep<PaypalDonationDetails>;
+export type ChariotFormStep = FormStep<ChariotDonationDetails>;
 
 //KYC step need not know donation details
 export type KYCStep = {
@@ -80,6 +86,7 @@ export type SubmitStep<T extends DonationDetails = DonationDetails> = {
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 export type PaypalCheckoutStep = SubmitStep<PaypalDonationDetails>;
+export type ChariotCheckoutStep = SubmitStep<ChariotDonationDetails>;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
 export type CryptoResultStep = {

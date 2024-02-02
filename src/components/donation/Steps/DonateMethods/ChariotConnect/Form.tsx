@@ -1,17 +1,20 @@
 import CurrencySelector from "components/CurrencySelector";
 import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { FormProvider, useController, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
-import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
-import { Currency } from "types/components";
 import AdvancedOptions from "../../../AdvancedOptions";
 import { FormValues, Props } from "./types";
 
-const USD_CODE = "usd";
+// Chariot accepts only USD.
+// See https://givechariot.readme.io/reference/integrating-connect#response-objects
+//
+// The minimum amount should not be hardcoded as it differs depending on which provider is selected.
+// See https://givechariot.readme.io/reference/create-grant
+const USD_CURRENCY = { code: "usd" };
 
 export default function Form({
   advanceOptDisplay,
@@ -23,12 +26,10 @@ export default function Form({
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
 
-  const currencies = useStripeCurrenciesQuery(null);
-
   const initial: FormValues = {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
-    currency: { code: USD_CODE, min: 1 },
+    currency: USD_CURRENCY,
     email: authUserEmail,
     pctLiquidSplit: 50,
     userOptForKYC: false,
@@ -37,14 +38,9 @@ export default function Form({
   const methods = useForm<FormValues>({
     defaultValues: details || initial,
   });
-  const { control, handleSubmit } = methods;
+  const { handleSubmit, watch } = methods;
 
-  const {
-    field: { value: currency, onChange: onCurrencyChange },
-  } = useController({
-    control: control,
-    name: "currency",
-  });
+  const currency = watch("currency");
 
   return (
     <FormProvider {...methods}>
@@ -53,16 +49,17 @@ export default function Form({
           dispatch(
             setDetails({
               ...fv,
-              method: "stripe",
+              method: "chariot",
             })
           )
         )}
         className="grid gap-4"
       >
         <CurrencySelector
-          currencies={currencies}
+          currencies={[USD_CURRENCY]}
           label="Currency"
-          onChange={onCurrencyChange}
+          // only one currency available, so can't change it
+          onChange={() => {}}
           value={currency}
           classes={{ label: "font-semibold" }}
           required
@@ -87,7 +84,7 @@ export default function Form({
             },
             shouldUnregister: true,
           }}
-          tooltip={createTooltip(currency)}
+          tooltip="The minimum donation amount will depend on which DAF provider you select in the next step."
         />
         {!authUserEmail && (
           <Field<FormValues>
@@ -134,11 +131,4 @@ export default function Form({
       </form>
     </FormProvider>
   );
-}
-
-function createTooltip({ code, min }: Currency): string | undefined {
-  if (!min) return undefined;
-  return code === USD_CODE
-    ? "The minimum donation amount is 1 USD"
-    : `The minimum donation amount is 1 USD or ${min} ${code.toUpperCase()}`;
 }

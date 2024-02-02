@@ -10,7 +10,7 @@ import CurrencyOptions from "./CurrencyOptions";
 type Props = {
   classes?: { combobox?: string; label?: string };
   currencies: Currency[] | QueryState<Currency[]>;
-  disabled: boolean;
+  disabled?: boolean;
   required?: boolean;
   value: Currency;
   label: string;
@@ -34,7 +34,7 @@ export default function CurrencySelector({ currencies, ...props }: Props) {
         {props.label}
       </Label>
       <Combobox
-        aria-disabled={props.disabled || isCurrencyError}
+        aria-disabled={!!props.disabled || isCurrencyLoading || isCurrencyError}
         by="code"
         value={props.value}
         onChange={props.onChange}
