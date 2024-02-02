@@ -1,7 +1,6 @@
 import { TEMP_JWT } from "constants/auth";
 import { EMAIL_SUPPORT } from "constants/env";
 import { logger } from "helpers";
-import { adminTags } from "services/aws/tags";
 import { apiEnv } from "services/constants";
 import {
   ContactUpdateResult,
@@ -16,11 +15,10 @@ import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    newApplication: builder.mutation<
+    newApplication: builder.query<
       Pick<InitApplication, "Registration" | "ContactPerson">,
       { email: string }
     >({
-      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
       query: ({ email }) => ({
         url: `${v(5)}/registration`,
         method: "POST",
@@ -29,7 +27,7 @@ const registration_api = aws.injectEndpoints({
       }),
     }),
     reg: builder.query<SavedRegistration, string>({
-      providesTags: [{ type: "admin", id: adminTags.registration }],
+      providesTags: ["registration"],
       query: (uuid) => {
         return {
           url: `v5/registration/${apiEnv}`,
@@ -121,7 +119,7 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     submit: builder.mutation<SubmitResult, string>({
-      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
+      invalidatesTags: ["registration"],
       query: (referenceID) => ({
         url: `${v(5)}/registration/${referenceID}/submit`,
         method: "POST",
@@ -143,6 +141,6 @@ export const {
 
   //mutations
   useUpdateRegMutation,
-  useNewApplicationMutation,
+  useNewApplicationQuery,
   useSubmitMutation,
 } = registration_api;
