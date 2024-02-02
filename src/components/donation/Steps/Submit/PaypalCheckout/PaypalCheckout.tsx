@@ -17,6 +17,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
     data: orderId,
     isLoading,
     isError,
+    error,
   } = usePaypalOrderQuery({
     amount: +details.amount,
     currency: details.currency.code,
@@ -45,7 +46,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
       {isLoading ? (
         <Loader msg="Loading payment form..." />
       ) : isError || !orderId ? (
-        <Err />
+        <Err error={error} />
       ) : (
         <PayPalScriptProvider
           options={{
