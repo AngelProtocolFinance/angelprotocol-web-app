@@ -55,16 +55,16 @@ function Content(props: Props) {
         classes="mb-4 md:mb-0 md:col-start-1 md:w-64 xl:w-80 md:h-full lg:h-auto"
       />
       {/** small screen but space is still enough to render sidebar */}
-      <div className="mx-0 md:contents min-[445px]:border min-[445px]:mx-4 rounded border-prim">
+      <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded border-prim">
         <Steps
-          className="max-md:mt-2 md:border border-prim col-start-1 md:col-start-2 md:row-start-2 md:row-span-2 lg:row-span-1"
+          className="md:border border-prim col-start-1 md:col-start-2 md:row-start-2 md:row-span-2 lg:row-span-1"
           donaterConfig={null}
         />
       </div>
 
       <FAQ classes="max-md:px-4 mt-4 col-start-1 md:row-start-3 md:row-span-4 md:col-start-1 md:w-64 xl:w-80 lg:row-start-2 lg:col-start-3 lg:mt-0 " />
 
-      <p className="max-md:px-4 mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-4 lg:row-start-3">
+      <p className="max-md:px-4 mt-4 text-xs leading-normal text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-4 lg:row-start-3">
         By making a donation to {APP_NAME}, you agree to our{" "}
         <Bold>Terms of Service</Bold>, <Bold>Privacy Policy</Bold>, and{" "}
         <Bold>Nonprofit Support Fee</Bold>. 100% of your donation is
@@ -80,7 +80,7 @@ function Content(props: Props) {
           See Terms.
         </ExtLink>
       </p>
-      <p className="max-md:px-4 max-md:mt-4 text-sm text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-5  lg:row-start-4">
+      <p className="max-md:px-4 mt-4 text-xs leading-normal text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-5 lg:row-start-4">
         <span className="block mb-0.5">
           Need help? See FAQs or contact us at our <Bold>Help Center</Bold>.
         </span>

@@ -37,6 +37,11 @@ export type PaypalDonationDetails = {
   method: "paypal";
 } & FiatDonationDetails;
 
+export type StocksDonationDetails = {
+  method: "stocks";
+  symbol: string;
+  numShares: number;
+};
 export type ChariotDonationDetails = {
   method: "chariot";
 } & FiatDonationDetails;
@@ -44,8 +49,22 @@ export type ChariotDonationDetails = {
 export type DonationDetails =
   | StripeDonationDetails
   | PaypalDonationDetails
-  | ChariotDonationDetails
-  | CryptoDonationDetails;
+  | CryptoDonationDetails
+  | StocksDonationDetails
+  | ChariotDonationDetails;
+
+export function hasEmail(
+  details: DonationDetails
+): details is
+  | StripeDonationDetails
+  | PaypalDonationDetails
+  | ChariotDonationDetails {
+  return (
+    details.method === "stripe" ||
+    details.method === "paypal" ||
+    details.method === "chariot"
+  );
+}
 
 export type KYC = {
   name: { first: string; last: string };
@@ -70,6 +89,7 @@ export type FormStep<T extends DonationDetails = DonationDetails> = {
 export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type PaypalFormStep = FormStep<PaypalDonationDetails>;
+export type StockFormStep = FormStep<StocksDonationDetails>;
 export type ChariotFormStep = FormStep<ChariotDonationDetails>;
 
 //KYC step need not know donation details
@@ -86,6 +106,7 @@ export type SubmitStep<T extends DonationDetails = DonationDetails> = {
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 export type PaypalCheckoutStep = SubmitStep<PaypalDonationDetails>;
+export type StockCheckoutStep = SubmitStep<StocksDonationDetails>;
 export type ChariotCheckoutStep = SubmitStep<ChariotDonationDetails>;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
