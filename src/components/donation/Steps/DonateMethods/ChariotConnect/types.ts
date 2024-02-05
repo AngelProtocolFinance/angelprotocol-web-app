@@ -4,7 +4,7 @@ import { type AdvancedOptionsDisplay } from "../../../AdvancedOptions";
 
 export type Props = {
   advanceOptDisplay: AdvancedOptionsDisplay;
-  widgetConfig?: DonaterConfigFromWidget;
+  widgetConfig: DonaterConfigFromWidget | null;
 } & ChariotFormStep;
 
 export type FormValues = Omit<ChariotDonationDetails, "method">;

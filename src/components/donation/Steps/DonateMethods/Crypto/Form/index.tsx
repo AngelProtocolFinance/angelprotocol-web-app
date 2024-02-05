@@ -13,7 +13,7 @@ import { initToken } from "../constants";
 import { DonateValues } from "../types";
 
 type Props = {
-  configFromWidget?: DonaterConfigFromWidget;
+  configFromWidget: DonaterConfigFromWidget | null;
 };
 
 export default function Form({ configFromWidget }: Props) {

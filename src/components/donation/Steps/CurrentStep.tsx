@@ -7,7 +7,7 @@ import Result from "./Result";
 import Splits from "./Splits";
 import Submit from "./Submit";
 
-type Props = { config?: DonaterConfigFromWidget };
+type Props = { config: DonaterConfigFromWidget | null };
 
 export default function CurrentStep({ config }: Props) {
   const state = useGetter((state) => state.donation);

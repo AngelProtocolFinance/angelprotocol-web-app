@@ -10,7 +10,7 @@ import { schema } from "./schema";
 import { DonateValues } from "./types";
 
 type Props = CryptoFormStep & {
-  config?: DonaterConfigFromWidget;
+  config: DonaterConfigFromWidget | null;
 };
 
 export default function Crypto({ config, ...state }: Props) {
