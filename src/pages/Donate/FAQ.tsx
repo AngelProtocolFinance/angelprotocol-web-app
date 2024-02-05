@@ -2,7 +2,7 @@ import { Disclosure } from "@headlessui/react";
 import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
-import { PropsWithChildren } from "react";
+import { Fragment, PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 
 export default function FAQ({ classes = "" }) {
@@ -36,7 +36,7 @@ export default function FAQ({ classes = "" }) {
                   className="text-sm grid gap-3 text-gray-d1 mb-6"
                 >
                   {faq.paragraphs.map((p, idx) => (
-                    <p key={idx}>{p}</p>
+                    <Fragment key={idx}>{p}</Fragment>
                   ))}
                 </Disclosure.Panel>
               )}
