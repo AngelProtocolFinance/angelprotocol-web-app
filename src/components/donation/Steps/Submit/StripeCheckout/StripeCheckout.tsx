@@ -57,7 +57,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
           }}
           stripe={stripePromise}
         >
-          <Checkout isInWidget={details.isInWidget} />
+          <Checkout source={details.source} />
         </Elements>
       )}
     </div>

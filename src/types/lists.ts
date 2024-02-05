@@ -1,5 +1,6 @@
 export type APIEnvironment = "staging" | "production";
 export type UserTypes = "charity-owner" | "angelprotocol-web-app" | "app-user";
+/** Designates the parent component within which the given component is being rendered */
 export type DonationSource = "bg-marketplace" | "bg-widget";
 export type Chains =
   | "terra"

@@ -25,7 +25,6 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
     currency: USD_CURRENCY,
     email: authUserEmail,
     userOptForKYC: false,
-    isInWidget: !!widgetConfig,
   };
 
   const methods = useForm<FormValues>({

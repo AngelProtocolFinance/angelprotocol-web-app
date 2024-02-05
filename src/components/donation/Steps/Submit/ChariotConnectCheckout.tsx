@@ -79,7 +79,7 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
               });
 
               navigate(
-                details.isInWidget
+                details.source === "bg-widget"
                   ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
                   : appRoutes.donate_fiat_thanks
               );
