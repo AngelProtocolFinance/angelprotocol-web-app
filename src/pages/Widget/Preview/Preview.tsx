@@ -8,7 +8,7 @@ export default function Preview({ classes = "" }) {
   const endowName = endowment.name ?? "nonprofit name";
   return (
     <section className={classes + " @container/preview pb-4"}>
-      <h2 className="text-lg @4xl:text-2xl text-center @4xl:text-left mb-3">
+      <h2 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3">
         That's what our widget looks like:
       </h2>
       <div className="pt-6 flex flex-col @xl/preview:pt-10 h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-gray-d2 bg-white">

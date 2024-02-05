@@ -42,7 +42,7 @@ export default function Configurer({ classes = "" }) {
   return (
     <FormProvider {...methods}>
       <div className={classes + " @container/configurer"}>
-        <h2 className="text-lg @4xl:text-2xl text-center @4xl:text-left mb-3">
+        <h2 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3">
           Configure your widget
         </h2>
         <Form
