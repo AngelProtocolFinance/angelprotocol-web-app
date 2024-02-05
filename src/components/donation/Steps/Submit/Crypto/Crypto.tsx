@@ -1,19 +1,14 @@
 import { Info, LoadingStatus } from "components/Status";
 import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
-import { useState } from "react";
 import { CryptoSubmitStep } from "slices/donation";
-import { TxPackage } from "types/tx";
-import { ConnectedWallet, isCosmos, isEVM, isTerra } from "types/wallet";
 import Breakdown from "./Breakdown";
 import Container from "./Container";
 import WalletSelection from "./WalletSelection";
-import { EstimateStatus, isSuccess } from "./types";
 
 export default function Crypto(props: CryptoSubmitStep) {
   const wallet = useWalletContext();
   const chainID = props.details.chainId.value;
-  const [estimate, setEstimate] = useState<EstimateStatus>("loading");
 
   if (wallet === "loading") {
     return (
@@ -77,52 +72,8 @@ export default function Crypto(props: CryptoSubmitStep) {
   }
 
   return (
-    <Container
-      {...props}
-      txPackage={txPackage(estimate, wallet)}
-      wallet={wallet}
-    >
-      <Breakdown
-        submitStep={props}
-        estimate={estimate}
-        setEstimate={setEstimate}
-        sender={wallet.address}
-      />
+    <Container {...props} wallet={wallet}>
+      <Breakdown {...props} />
     </Container>
   );
 }
-
-const txPackage = (
-  estimate: EstimateStatus,
-  wallet: ConnectedWallet
-): TxPackage | undefined => {
-  if (!isSuccess(estimate)) return undefined;
-
-  const { items: _, ...rest } = estimate;
-  const { address: sender } = wallet;
-
-  switch (rest.chainID) {
-    case "phoenix-1":
-    case "pisco-1": {
-      if (!isTerra(wallet)) throw new Error("User selected wrong wallet");
-      const { toSend, chainID } = rest;
-      return { toSend, chainID, sender, post: wallet.post };
-    }
-    case "juno-1":
-    case "uni-6": {
-      const { toSend, chainID } = rest;
-      if (!isCosmos(wallet)) throw new Error("User selected wrong wallet");
-      return {
-        chainID,
-        sender,
-        sign: wallet.sign,
-        toSend,
-      };
-    }
-    default: {
-      if (!isEVM(wallet)) throw new Error("User selected wrong wallet");
-      const { toSend, chainID } = rest;
-      return { toSend, chainID, sender, request: wallet.request };
-    }
-  }
-};
