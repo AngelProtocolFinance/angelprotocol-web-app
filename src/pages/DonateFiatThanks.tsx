@@ -26,8 +26,10 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
       </h3>
       <p className="text-center text-gray-d1">
         We'll process your donation to the nonprofit you specified as soon as
-        the payment has cleared. You can safely navigate away using the button
-        below.
+        the payment has cleared.
+        {widgetVersion
+          ? ""
+          : " You can safely navigate away using the button below."}
       </p>
       <p className="text-center text-gray-d1 mt-8 text-[15px]">
         If you need a receipt for your donation, please fill out the KYC form
