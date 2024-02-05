@@ -5,7 +5,6 @@ import useScrollTop from "hooks/useScrollTop";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Layout from "./Layout";
-import Widget from "pages/Admin/Charity/Widget";
 
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
@@ -24,6 +23,7 @@ const BankingApplications = lazy(() => import("pages/BankingApplications"));
 const BankingApplication = lazy(() => import("pages/BankingApplication"));
 const OAuthRedirector = lazy(() => import("pages/OAuthRedirector"));
 const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
+const Widget = lazy(() => import("pages/Widget"));
 
 export default function App() {
   const location = useLocation();
@@ -80,7 +80,17 @@ export default function App() {
             <Route path=":id/*" element={<Profile />} />
             <Route index element={<Marketplace />} />
           </Route>
-          <Route path={appRoutes.widget_config} element={<Widget />} />
+          <Route
+            path={appRoutes.widget_config}
+            element={
+              // Widget.tsx is also used as one of the Admin pages and so
+              // where its styles depend on the width of the parent component
+              // so we add an @container here so that styles apply correctly
+              <div className="@container">
+                <Widget />
+              </div>
+            }
+          />
         </Route>
         <Route
           path="*"
