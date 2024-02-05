@@ -64,7 +64,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           id="amount"
           type="text"
           placeholder="0.0000"
-          className="text-sm py-3 dark:text-gray"
+          className="text-sm py-3.5 dark:text-gray"
         />
         <TokenSelector
           selectedChainId={selectedChainId}

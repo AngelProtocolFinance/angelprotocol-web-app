@@ -14,7 +14,7 @@ const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, kyc } = props;
+  const { details, recipient, kyc, liquidSplitPct } = props;
   const {
     data: clientSecret,
     isLoading,
@@ -24,7 +24,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     currency: details.currency.code,
     endowmentId: recipient.id,
     email: details.email,
-    splitLiq: details.pctLiquidSplit.toString(),
+    splitLiq: liquidSplitPct.toString(),
     kycData: kyc
       ? {
           city: kyc.city,
@@ -42,15 +42,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   return (
     <div className="grid content-start gap-8 p-4 @md:p-8">
-      <BackBtn
-        type="button"
-        onClick={() => {
-          const action = details.userOptForKYC
-            ? setStep("kyc-form")
-            : setStep("donate-form");
-          dispatch(action);
-        }}
-      />
+      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
 
       {isLoading ? (
         <Loader msg="Loading payment form.." />

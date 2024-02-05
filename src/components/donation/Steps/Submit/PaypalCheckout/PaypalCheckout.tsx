@@ -11,7 +11,7 @@ import Checkout from "./Checkout";
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function PaypalCheckout(props: PaypalCheckoutStep) {
-  const { details, recipient, kyc } = props;
+  const { details, recipient, kyc, liquidSplitPct } = props;
 
   const {
     data: orderId,
@@ -22,7 +22,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
     currency: details.currency.code,
     endowmentId: recipient.id,
     email: details.email,
-    splitLiq: details.pctLiquidSplit.toString(),
+    splitLiq: liquidSplitPct.toString(),
     kycData: kyc
       ? {
           city: kyc.city,
@@ -40,15 +40,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
 
   return (
     <div className="grid grid-rows-[auto_1fr] min-h-[16rem] isolate p-4 @md:p-8">
-      <BackBtn
-        onClick={() => {
-          const action = details.userOptForKYC
-            ? setStep("kyc-form")
-            : setStep("donate-form");
-          dispatch(action);
-        }}
-        type="button"
-      />
+      <BackBtn onClick={() => dispatch(setStep("splits"))} type="button" />
 
       {isLoading ? (
         <Loader msg="Loading payment form..." />

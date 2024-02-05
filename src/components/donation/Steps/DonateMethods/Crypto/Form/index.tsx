@@ -7,10 +7,8 @@ import { useGetter } from "store/accessors";
 import { ChainID } from "types/chain";
 import { DonaterConfigFromWidget } from "types/widget";
 import { Selector } from "../../../../../Selector";
-import Split from "../../../../../Split";
 import TokenField from "../../../../../TokenField";
 import { CheckField, Label } from "../../../../../form";
-import AdvancedOptions from "../../../../AdvancedOptions";
 import { initToken } from "../constants";
 import { DonateValues } from "../types";
 
@@ -28,20 +26,25 @@ export default function Form({ configFromWidget }: Props) {
   const dispatch = useDispatch();
 
   function submit(data: DonateValues) {
-    dispatch(setDetails({ ...data, method: "crypto" }));
+    dispatch(
+      setDetails({
+        ...data,
+        method: "crypto",
+        source: configFromWidget ? "bg-widget" : "bg-marketplace",
+      })
+    );
     reset();
   }
 
-  const token = watch("token");
   const chainId = watch("chainId");
 
   return (
     <form
       onSubmit={handleSubmit(submit)}
-      className="grid rounded-md w-full"
+      className="flex flex-col gap-4 rounded-md min-h-full"
       autoComplete="off"
     >
-      <Label htmlFor="chainId" className="mb-1 font-semibold" required>
+      <Label htmlFor="chainId" className="-mb-2 font-semibold" required>
         Network
       </Label>
       <Selector<DonateValues, "chainId", ChainID>
@@ -56,15 +59,20 @@ export default function Form({ configFromWidget }: Props) {
           setValue("token", initToken);
           setValue("token.amount", "0");
         }}
-        classes={{ container: "bg-white dark:bg-blue-d6 mb-8" }}
+        classes={{
+          container: "bg-white dark:bg-blue-d6",
+          button: "py-3 pl-4 pr-2",
+        }}
       />
-
       <TokenField<DonateValues, "token">
         name="token"
         selectedChainId={chainId.value}
         withBalance
         label={`Donation amount`}
-        classes={{ label: "text-sm", inputContainer: "dark:bg-blue-d6" }}
+        classes={{
+          label: "text-sm mb-1",
+          inputContainer: "dark:bg-blue-d6",
+        }}
         withMininum
       />
 
@@ -81,27 +89,9 @@ export default function Form({ configFromWidget }: Props) {
         </CheckField>
       )}
 
-      <AdvancedOptions
-        classes="mt-10"
-        display={configFromWidget?.advancedOptionsDisplay ?? "collapsed"}
-        splitComponent={
-          <Split<DonateValues, "pctLiquidSplit">
-            className="mb-6"
-            liqPctField="pctLiquidSplit"
-            token={{ amount: toNumber(token.amount), symbol: token.symbol }}
-            fixLiquidSplitPct={configFromWidget?.liquidSplitPct}
-          />
-        }
-      />
-
-      <button className="btn-orange btn-donate mt-6" type="submit">
+      <button className="btn-orange btn-donate mt-auto" type="submit">
         Continue
       </button>
     </form>
   );
 }
-
-const toNumber = (input: string) => {
-  const num = Number(input);
-  return isNaN(num) ? 0 : num;
-};

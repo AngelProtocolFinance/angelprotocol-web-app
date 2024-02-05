@@ -26,28 +26,6 @@
     @apply xl:container xl:mx-auto px-5;
   }
 
-  /** set default for input range */
-  .range {
-    @apply focus:outline-none appearance-none bg-transparent w-full;
-  }
-  .range::-webkit-slider-thumb {
-    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer -mt-[5px];
-  }
-  .range:disabled::-webkit-slider-thumb {
-    @apply bg-gray-l2;
-  }
-  .range::-moz-range-thumb {
-    @apply appearance-none border-none h-3.5 w-3.5 rounded-full bg-orange cursor-pointer;
-  }
-  .range:disabled::-moz-range-thumb {
-    @apply bg-gray-l2;
-  }
-  .range::-ms-track {
-    @apply w-full cursor-pointer bg-transparent border-transparent;
-  }
-  .range::-webkit-slider-runnable-track {
-    @apply w-full h-1 cursor-pointer bg-gray-l3 dark:bg-bluegray rounded-full;
-  }
 
   /** applicable to button and <a/> */
   .btn {
@@ -205,32 +183,4 @@
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
 
-  .range-min,
-  .range-max {
-    @apply appearance-none focus:outline-none;
-  }
-  .range-min::-webkit-slider-thumb {
-    @apply cursor-pointer mt-[14px] appearance-none bg-orange w-5 h-5 rounded-full;
-  }
-  .range-min::-moz-range-thumb {
-    @apply cursor-pointer mt-[14px] appearance-none bg-orange w-5 h-5 rounded-full;
-  }
-  .range-max::-webkit-slider-thumb {
-    @apply cursor-pointer -mt-[14px] appearance-none bg-orange w-5 h-5 rounded-full;
-  }
-  .range-max::-moz-range-thumb {
-    @apply cursor-pointer -mt-[14px] appearance-none bg-orange w-5 h-5 rounded-full;
-  }
-  .range-min:disabled::-webkit-slider-thumb {
-    @apply bg-gray;
-  }
-  .range-min:disabled::-moz-range-thumb {
-    @apply bg-gray;
-  }
-  .range-max:disabled::-webkit-slider-thumb {
-    @apply bg-gray;
-  }
-  .range-max:disabled::-moz-range-thumb {
-    @apply bg-gray;
-  }
 }

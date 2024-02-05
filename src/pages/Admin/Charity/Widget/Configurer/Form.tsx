@@ -1,4 +1,3 @@
-import Split from "components/Split";
 import { CheckField } from "components/form";
 import { FormHTMLAttributes } from "react";
 import { useFormContext } from "react-hook-form";
@@ -37,10 +36,6 @@ export default function Form({
       </CheckField>
 
       <span className="-mb-4">Define split value by default:</span>
-      <Split<FV, "liquidPercentage">
-        className="mb-6 xl:w-96"
-        liqPctField="liquidPercentage"
-      />
 
       <div className="flex gap-3 w-full max-xl:justify-center -mt-4">
         <button

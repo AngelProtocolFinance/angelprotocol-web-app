@@ -12,7 +12,6 @@ export type DonationRecipient = {
 };
 
 type BaseDonationDetais = {
-  pctLiquidSplit: number; // <input range value transformed to number via onChange
   userOptForKYC: boolean;
   source: DonationSource;
 };
@@ -99,9 +98,14 @@ export type KYCStep = {
   kyc?: KYC;
 } & Omit<Required<FormStep<DonationDetails>>, "step">;
 
+export type SplitsStep = {
+  step: "splits";
+  liquidSplitPct?: number;
+} & Omit<KYCStep, "step">;
+
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<KYCStep, "step" | "details"> & { details: T };
+} & Omit<Required<SplitsStep>, "step" | "kyc"> & { details: T; kyc?: KYC };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
@@ -118,8 +122,8 @@ export type CryptoResultStep = {
 export type DonationState =
   | InitStep
   | FormStep
-  | SubmitStep
   | KYCStep
+  | SplitsStep
   | SubmitStep
   | CryptoResultStep;
 

@@ -89,7 +89,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           </button>
         )}
       </Tab.List>
-      <Tab.Panels as="div" className="p-4 @md:p-8 pt-0 @md:pt-4 ">
+      <Tab.Panels as="div" className="grid p-4 @md:p-8 pt-0 @md:pt-4 ">
         <Tab.Panel>
           <Stripe
             recipient={state.recipient}
@@ -98,9 +98,6 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
               state.details?.method === "stripe" ? state.details : undefined
             }
             widgetConfig={donaterConfig}
-            advanceOptDisplay={
-              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
-            }
           />
         </Tab.Panel>
         <Tab.Panel>
@@ -111,9 +108,6 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
               state.details?.method === "paypal" ? state.details : undefined
             }
             widgetConfig={donaterConfig}
-            advanceOptDisplay={
-              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
-            }
           />
         </Tab.Panel>
         <Tab.Panel>

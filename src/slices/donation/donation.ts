@@ -8,6 +8,7 @@ import {
   FormStep,
   KYC,
   KYCStep,
+  SplitsStep,
   SubmitStep,
   TxStatus,
 } from "./types";
@@ -39,8 +40,8 @@ const donation = createSlice({
         };
       }
       return {
-        ...(state as SubmitStep),
-        step: "submit",
+        ...(state as SplitsStep),
+        step: "splits",
         details: payload,
       };
     },
@@ -53,9 +54,16 @@ const donation = createSlice({
     },
     setKYC: (state, { payload }: PayloadAction<KYC>) => {
       return {
+        ...(state as SplitsStep),
+        step: "splits",
+        kyc: payload,
+      };
+    },
+    setSplit: (state, { payload }: PayloadAction<number>) => {
+      return {
         ...(state as SubmitStep),
         step: "submit",
-        kyc: payload,
+        liquidSplitPct: payload,
       };
     },
 
@@ -80,5 +88,6 @@ export const {
   setDetails,
   resetDetails,
   setKYC,
+  setSplit,
   setTxStatus,
 } = donation.actions;

@@ -10,7 +10,7 @@ import Loader from "./Loader";
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
-  const { details, recipient, kyc } = props;
+  const { details, recipient, kyc, liquidSplitPct } = props;
   const [createGrant, { isLoading, isError }] = useChariotGrantIntentMutation();
 
   const dispatch = useSetter();
@@ -54,7 +54,7 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
               currency: details.currency.code,
               endowmentId: recipient.id,
               email: details.email,
-              splitLiq: details.pctLiquidSplit.toString(),
+              splitLiq: liquidSplitPct.toString(),
               kycData: kyc
                 ? {
                     city: kyc.city,

@@ -1,12 +1,10 @@
 import CurrencySelector from "components/CurrencySelector";
-import Split from "components/Split";
 import { CheckField, Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
-import AdvancedOptions from "../../../AdvancedOptions";
 import { FormValues, Props } from "./types";
 
 // Chariot accepts only USD.
@@ -16,12 +14,7 @@ import { FormValues, Props } from "./types";
 // See https://givechariot.readme.io/reference/create-grant
 const USD_CURRENCY = { code: "usd" };
 
-export default function Form({
-  advanceOptDisplay,
-  recipient,
-  widgetConfig,
-  details,
-}: Props) {
+export default function Form({ recipient, widgetConfig, details }: Props) {
   const authUser = useGetter((state) => state.auth.user);
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
@@ -31,7 +24,6 @@ export default function Form({
     amount: "",
     currency: USD_CURRENCY,
     email: authUserEmail,
-    pctLiquidSplit: 50,
     userOptForKYC: false,
   };
 
@@ -111,15 +103,6 @@ export default function Form({
             Please send me a tax receipt
           </CheckField>
         )}
-        <AdvancedOptions
-          display={advanceOptDisplay}
-          splitComponent={
-            <Split<FormValues, "pctLiquidSplit">
-              className="mb-6"
-              liqPctField="pctLiquidSplit"
-            />
-          }
-        />
         <p className="text-sm text-gray-d2 dark:text-gray mt-4">
           Please click the button below and follow the instructions provided to
           complete your donation
