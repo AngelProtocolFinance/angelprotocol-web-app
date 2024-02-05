@@ -24,6 +24,10 @@ export default function Split({
         const { amount, symbol } = details.token;
         return [amount, symbol];
       }
+      case "stocks": {
+        const { numShares, symbol } = details;
+        return [numShares, symbol];
+      }
       default:
         const { amount, currency } = details;
         return [amount, currency.code.toUpperCase()];
