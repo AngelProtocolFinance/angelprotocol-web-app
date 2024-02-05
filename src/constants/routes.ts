@@ -14,6 +14,7 @@ export enum appRoutes {
   stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",
   gift = "/gift",
+  widget_config = "/widget-config",
 }
 
 export const adminRoutes = {

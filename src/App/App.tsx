@@ -5,6 +5,7 @@ import useScrollTop from "hooks/useScrollTop";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Layout from "./Layout";
+import Widget from "pages/Admin/Charity/Widget";
 
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
@@ -79,6 +80,7 @@ export default function App() {
             <Route path=":id/*" element={<Profile />} />
             <Route index element={<Marketplace />} />
           </Route>
+          <Route path={appRoutes.widget_config} element={<Widget />} />
         </Route>
         <Route
           path="*"
