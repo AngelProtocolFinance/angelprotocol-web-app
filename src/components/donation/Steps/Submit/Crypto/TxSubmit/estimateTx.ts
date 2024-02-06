@@ -7,8 +7,10 @@ import { humanize, logger, scale, scaleToStr } from "helpers";
 import { USD } from "helpers/coin-gecko";
 import { estimateTx } from "helpers/tx";
 import { CryptoSubmitStep } from "slices/donation";
+import { ChainID } from "types/chain";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
-import { EstimateInput, EstimateResult } from "types/tx";
+import { EstimateInput, EstimateResult, TokenWithAmount } from "types/tx";
+import { EstimateStatus } from "../types";
 
 const BASE_FEE_RATE_PCT = 1.5;
 const CRYPTO_FEE_RATE_PCT = 1.4;
@@ -22,20 +24,19 @@ const _fiscalSponsorShipFeeFn =
 
 const prettyDollar = (amount: Decimal) => `$${humanize(amount, 4)}`;
 
+type SimulInput = {
+  sender: string;
+  token: TokenWithAmount;
+  chainID: ChainID;
+};
+
 export async function estimateDonation({
+  token,
+  chainID,
   sender,
-  recipient,
-  details: {
-    token,
-    chainId: { value: chainID },
-  },
-}: CryptoSubmitStep & { sender: string }): Promise<DonationEstimate | null> {
+}: SimulInput): Promise<Exclude<EstimateStatus, "loading">> {
   let toEstimate: EstimateInput;
   // ///////////// GET TX CONTENT ///////////////
-
-  const fiscalSponsorShipFeeFn = _fiscalSponsorShipFeeFn(
-    recipient.isFiscalSponsored
-  );
 
   try {
     switch (chainID) {
@@ -106,48 +107,11 @@ export async function estimateDonation({
 
     // ///////////// ESTIMATE TX ///////////////
     const estimate = await estimateTx(toEstimate, { address: sender });
-    if (!estimate) return null;
-
-    // ///////////// Sucessful simulation ///////////////
-    const amountUSDRate = await USD(token.coingecko_denom);
-
-    const amountUSDDec = new Decimal(amountUSDRate).mul(token.amount);
-    const amountItem: EstimateItem = {
-      name: "Amount",
-      cryptoAmount: {
-        value: token.amount,
-        symbol: token.symbol,
-      },
-      fiatAmount: amountUSDDec.toNumber(),
-      prettyFiatAmount: `$${humanize(amountUSDDec, 4)}`,
-    };
-
-    const baseFee = amountUSDDec.mul(BASE_FEE_RATE_PCT).div(100);
-    const cryptoFee = amountUSDDec.mul(CRYPTO_FEE_RATE_PCT).div(100);
-    const fiscalSponsorShipFee = fiscalSponsorShipFeeFn(amountUSDDec);
-
-    const totalFeeDec = baseFee.add(cryptoFee).add(fiscalSponsorShipFee);
-    const totalPct = totalFeeDec.div(amountUSDDec).mul(100).toFixed(2);
-
-    const totalFeeItem: EstimateItem = {
-      name: `Platform Fee (${totalPct}) %`,
-      fiatAmount: totalFeeDec.toNumber(),
-      prettyFiatAmount: prettyDollar(totalFeeDec),
-    };
-
-    const totalDec = amountUSDDec.sub(totalFeeDec);
-    const totalItem: EstimateItem = {
-      name: "Estimated proceeds",
-      fiatAmount: totalDec.toNumber(),
-      prettyFiatAmount: prettyDollar(totalDec),
-    };
-
-    return {
-      ...estimate,
-      items: [amountItem, totalFeeItem, totalItem],
-    };
+    if (!estimate) {
+      return { error: "Simulation failed: transaction likely to fail" };
+    }
   } catch (err) {
     logger.error(err);
-    return null;
+    return { error: "Simulation failed: transaction likely to fail" };
   }
 }
