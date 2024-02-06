@@ -45,7 +45,7 @@ import {
 } from "react-icons/fa";
 import { FaFileCsv, FaMoneyBills } from "react-icons/fa6";
 import { FiCreditCard, FiMenu, FiMoon } from "react-icons/fi";
-import { GoDash, GoDotFill, GoLinkExternal, GoSync } from "react-icons/go";
+import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdArrowBack, IoMdDownload, IoMdListBox } from "react-icons/io";
@@ -108,7 +108,6 @@ export const icons = {
   Delete: MdDelete,
   Discord: FaDiscord,
   DollarCircle: RiMoneyDollarCircleFill,
-  Dot: GoDotFill,
   Down: VscTriangleDown,
   Email: MdOutlineEmail,
   Exclamation: FaExclamation,
