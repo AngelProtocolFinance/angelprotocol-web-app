@@ -15,8 +15,9 @@ export default function Split({
 }: SplitsStep) {
   const dispatch = useSetter();
 
-  const [liqSplitPct, setLitSplitPct] = useState(persistedLiqSplit);
-  const lockSplitPct = 100 - liqSplitPct;
+  //locked(sustainable) is on the left, increasing to the right - slider value represents locked
+  const [lockedSplitPct, setLockedSplitPct] = useState(100 - persistedLiqSplit);
+  const liqSplitPct = 100 - lockedSplitPct;
 
   const [amount, symbol] = (() => {
     switch (details.method) {
@@ -34,8 +35,8 @@ export default function Split({
     }
   })();
 
-  const liq = +amount * (liqSplitPct / 100);
-  const locked = +amount - liq;
+  const locked = +amount * (lockedSplitPct / 100);
+  const liq = +amount - locked;
 
   return (
     <div className="grid content-start p-4 @md:p-8">
@@ -52,7 +53,7 @@ export default function Split({
       <div className="flex justify-between mt-6 mb-3">
         <div className="grid gap-1 grid-cols-[auto_1fr] items-center">
           <Image src={leaf} className="mr-1" />
-          <p className="text-xl">{lockSplitPct}%</p>
+          <p className="text-xl">{lockedSplitPct}%</p>
           <p className="uppercase text-xs col-span-full">Sustainable fund</p>
         </div>
         <div className="grid gap-1 grid-cols-[1fr_auto] items-center">
@@ -64,9 +65,9 @@ export default function Split({
 
       {/** slider */}
       <Slider.Root
-        defaultValue={[liqSplitPct]}
-        value={[liqSplitPct]}
-        onValueChange={([pct]) => setLitSplitPct(pct)}
+        defaultValue={[lockedSplitPct]}
+        value={[lockedSplitPct]}
+        onValueChange={([pct]) => setLockedSplitPct(pct)}
         className="relative flex items-center select-none touch-none my-2"
       >
         <Slider.Track className="bg-[#F5C828] relative grow rounded-full h-1.5">
@@ -85,14 +86,14 @@ export default function Split({
           <dt className="text-gray-d1 text-xs">Compounded Forever</dt>
           <dd>
             <span className="text-xs font-medium mr-1">{symbol}</span>
-            <span>{humanize(liq, 4)}</span>
+            <span>{humanize(locked, 4)}</span>
           </dd>
         </dl>
         <dl>
           <dt className="text-gray-d1 text-xs">Instantly Available</dt>
           <dd className="text-right">
             <span className="text-xs font-medium mr-1">{symbol}</span>
-            <span>{humanize(locked, 4)}</span>
+            <span>{humanize(liq, 4)}</span>
           </dd>
         </dl>
       </div>
