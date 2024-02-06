@@ -13,7 +13,7 @@ export default function TxSubmit({ simulInput, classes = "" }: Props) {
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
   useEffect(() => {
-    if (!simulInput) return;
+    if (!simulInput) return setEstimate(undefined);
     setEstimate("loading");
     estimateDonation(simulInput).then((estimate) => setEstimate(estimate));
   }, [simulInput]);
@@ -28,8 +28,10 @@ export default function TxSubmit({ simulInput, classes = "" }: Props) {
           </LoadingStatus>
         ) : isSuccess(estimate) ? (
           <p className="text-sm text-gray-d1 flex items-center gap-1">
-            <Icon type="GasStation" />
-            <span> {humanize(estimate.fee.amount, 6)}</span>
+            <Icon type="GasStation" className="text-base" />
+            <span>
+              {humanize(estimate.fee.amount, 6)} {estimate.fee.symbol}
+            </span>
           </p>
         ) : (
           <ErrorStatus classes="text-sm">{estimate.error}</ErrorStatus>
