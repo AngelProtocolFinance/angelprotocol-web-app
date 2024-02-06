@@ -1,79 +1,77 @@
-import { Info, LoadingStatus } from "components/Status";
+import Icon from "components/Icon";
 import { chains } from "constants/chains";
-import { isDisconnected, useWalletContext } from "contexts/WalletContext";
-import { CryptoSubmitStep } from "slices/donation";
-import Breakdown from "./Breakdown";
-import Container from "./Container";
-import WalletSelection from "./WalletSelection";
+import { maskAddress } from "helpers";
+import { PropsWithChildren } from "react";
+import { CryptoSubmitStep, setStep } from "slices/donation";
+import { useSetter } from "store/accessors";
+import { ConnectedWallet } from "types/wallet";
+import Image from "../../../../Image";
+import BackBtn from "../../BackBtn";
+import { Row } from "./Row";
 
-export default function Crypto(props: CryptoSubmitStep) {
-  const wallet = useWalletContext();
-  const chainID = props.details.chainId.value;
+type Props = PropsWithChildren<CryptoSubmitStep & { wallet?: ConnectedWallet }>;
 
-  if (wallet === "loading") {
-    return (
-      <Container {...props}>
-        <LoadingStatus classes="justify-self-center mt-6">
-          Connecting wallet..
-        </LoadingStatus>
-      </Container>
-    );
-  }
-
-  if (isDisconnected(wallet)) {
-    return (
-      <Container {...props}>
-        <WalletSelection chainID={chainID} wallets={wallet} />
-      </Container>
-    );
-  }
-
-  if (!wallet.supportedChains.includes(chainID)) {
-    return (
-      <Container {...props} wallet={wallet}>
-        <Info classes="justify-self-center mt-6">
-          Connected wallet doesn't support this chain.
-        </Info>
-        <button
-          className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
-          type="button"
-          onClick={wallet.disconnect}
-        >
-          change wallet
-        </button>
-      </Container>
-    );
-  }
-
-  if (chainID !== wallet.chainId) {
-    return (
-      <Container {...props} wallet={wallet}>
-        {wallet.switchChain ? (
-          <>
-            <Info classes="justify-self-center mt-6">
-              Your wallet is not connected to your selected chain.
-            </Info>
-            <button
-              disabled={wallet.isSwitching}
-              type="button"
-              onClick={() => wallet.switchChain?.(chainID)}
-              className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
-            >
-              Switch to {chains[chainID].name}
-            </button>
-          </>
-        ) : (
-          <Info classes="justify-self-center mt-6">
-            Kindly set your wallet network to your selected chain.
-          </Info>
-        )}
-      </Container>
-    );
+export default function Container({ children, ...props }: Props) {
+  const dispatch = useSetter();
+  function goBack() {
+    dispatch(setStep("splits"));
   }
 
   return (
-    <Container {...props} wallet={wallet}>
-      <Breakdown {...props} />
-    </Container>
+    <div className="grid content-start p-4 @md:p-8">
+      <div className="flex items-center justify-between">
+        <BackBtn type="button" onClick={goBack} className="mb-4" />
+        {props.wallet && (
+          <div className="grid grid-cols-[auto_auto_1fr] items-center text-sm">
+            <Image
+              className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
+              src={props.wallet.logo}
+            />
+            <span>{props.wallet.name}</span>
+            <button
+              disabled={props.wallet.isSwitching}
+              onClick={props.wallet.disconnect}
+              type="button"
+              className="ml-2 btn-outline-filled text-2xs px-1 py-0.5 rounded-sm font-normal font-work"
+            >
+              change
+            </button>
+            <p className="col-span-full text-xs text-right border-t border-prim mt-1 pt-1">
+              {maskAddress(props.wallet.address)}
+            </p>
+          </div>
+        )}
+      </div>
+
+      <h4 className="flex items-center text-lg gap-2 mt-6">
+        <Icon type="StickyNote" />
+        <span className="font-semibold">Your donation summary</span>
+      </h4>
+
+      <div>
+        <Row>
+          <p className="mr-auto">Currency</p>
+          <Image
+            className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
+            src={props.details.token.logo}
+          />
+          <span className="text-gray-d2">{props.details.token.symbol}</span>
+        </Row>
+
+        <Row>
+          <p className="mr-auto">Blockchain</p>
+          <span className="text-gray-d2">
+            {chains[props.details.chainId.value].name}
+          </span>
+        </Row>
+
+        <Row>
+          <p className="mr-auto">Donation for {props.recipient.name}</p>
+          <div></div>
+        </Row>
+      </div>
+
+      {children}
+    </div>
   );
 }
