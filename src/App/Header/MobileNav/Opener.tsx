@@ -23,8 +23,8 @@ export function Opener({ links }: Props) {
       onClick={() => showModal(Menu, { links })}
       className="flex items-center justify-center"
     >
-      <Icon type="Menu" size={24} className="md:hidden text-gray" />
-      <Icon type="ArrowDown" size={24} className="max-md:hidden text-blue-d7" />
+      <Icon type="Menu" size={24} className="sm:hidden text-gray" />
+      <Icon type="ArrowDown" size={24} className="max-sm:hidden text-blue-d7" />
     </button>
   );
 }
