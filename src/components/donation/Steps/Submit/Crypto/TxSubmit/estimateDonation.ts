@@ -93,7 +93,7 @@ export async function estimateDonation({
     // ///////////// ESTIMATE TX ///////////////
     const estimate = await estimateTx(toEstimate, { address: sender });
     return (
-      estimate || { error: "Simulation failed: transaction likely to fail" }
+      estimate || { error: "Simulation result: transaction likely to fail" }
     );
   } catch (err) {
     logger.error(err);

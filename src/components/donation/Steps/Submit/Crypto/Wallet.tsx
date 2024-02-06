@@ -9,7 +9,7 @@ export default function Wallet({ connect, logo, name }: DisconnectedWallet) {
       <button
         type="button"
         onClick={connect}
-        className="ml-auto px-6 py-2 rounded-full bg-gray-l5 text-sm hover:bg-gray-l4"
+        className="ml-auto px-6 py-2 rounded-full bg-gray-l5 text-xs hover:bg-gray-l4"
       >
         Connect
       </button>
