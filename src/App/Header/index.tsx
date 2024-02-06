@@ -33,9 +33,9 @@ export default function Header({ classes, links }: Props) {
         isScrolled ? "shadow-lg bg-white dark:bg-blue-d3" : ""
       } transition-shadow ease-in-out duration-300 w-full h-20 mb-0`}
     >
-      <div className="grid place-items-center gap-4 px-5 grid-cols-3 h-full w-full max-w-6xl mx-auto rounded-full bg-white">
+      <div className="grid place-items-center gap-4 pl-5 pr-10 grid-cols-3 h-full w-full max-w-6xl mx-auto rounded-full bg-white">
         <div className="w-80">{/** placeholder for search bar */}</div>
-        <DappLogo classes="w-32 sm:w-48" />
+        <DappLogo classes="w-32 sm:w-48 h-12 sm:h-20" />
         <div className="flex gap-4 justify-self-end items-center">
           {!(
             location.pathname === appRoutes.signin ||
