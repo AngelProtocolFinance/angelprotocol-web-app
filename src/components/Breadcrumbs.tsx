@@ -6,6 +6,7 @@ type Props = {
   items: {
     title: string;
     to: string;
+    end?: boolean;
   }[];
 };
 
@@ -16,6 +17,7 @@ export default function Breadcrumbs({ items, className = "" }: Props) {
         <Fragment key={i}>
           <NavLink
             to={item.to}
+            end={item.end}
             className={({ isActive }) =>
               `max-w-xs truncate ${
                 isActive
