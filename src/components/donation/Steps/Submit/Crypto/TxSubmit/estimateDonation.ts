@@ -5,16 +5,17 @@ import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
+import { ChainID } from "types/chain";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
-import { EstimateInput } from "types/tx";
-import { EstimateStatus, SimulInput } from "../types";
+import { EstimateInput, TokenWithAmount } from "types/tx";
+import { EstimateStatus } from "../types";
 import { tokenBalance } from "./tokenBalance";
 
-export async function estimateDonation({
-  token,
-  chainID,
-  sender,
-}: SimulInput): Promise<Exclude<EstimateStatus, "loading">> {
+export async function estimateDonation(
+  token: TokenWithAmount,
+  chainID: ChainID,
+  sender: string
+): Promise<Exclude<EstimateStatus, "loading">> {
   try {
     const balance = await tokenBalance(token, chainID, sender);
     if (balance < +token.amount) {

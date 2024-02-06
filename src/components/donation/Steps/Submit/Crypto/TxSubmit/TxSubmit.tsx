@@ -2,21 +2,32 @@ import Icon from "components/Icon/Icon";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { humanize } from "helpers";
 import { useEffect, useState } from "react";
-import { EstimateStatus, SimulInput, isSuccess } from "../types";
+import { CryptoSubmitStep } from "slices/donation";
+import { sendDonation } from "slices/donation/sendDonation";
+import { useSetter } from "store/accessors";
+import { ConnectedWallet } from "types/wallet";
+import { EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
+import { txPackage } from "./txPackage";
 
 type Props = {
   classes?: string;
-  simulInput?: SimulInput;
+  donation: CryptoSubmitStep;
+  wallet?: ConnectedWallet;
 };
-export default function TxSubmit({ simulInput, classes = "" }: Props) {
+export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
+  const dispatch = useSetter();
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
+  const { details } = donation;
+  const sender = wallet?.address;
   useEffect(() => {
-    if (!simulInput) return setEstimate(undefined);
+    if (!sender) return setEstimate(undefined);
     setEstimate("loading");
-    estimateDonation(simulInput).then((estimate) => setEstimate(estimate));
-  }, [simulInput]);
+    estimateDonation(details.token, details.chainId.value, sender).then(
+      (estimate) => setEstimate(estimate)
+    );
+  }, [sender, details]);
 
   return (
     <div className={classes + " grid w-full gap-y-2"}>
@@ -38,8 +49,20 @@ export default function TxSubmit({ simulInput, classes = "" }: Props) {
         ))}
 
       <button
+        type="button"
+        onClick={
+          wallet && estimate && isSuccess(estimate)
+            ? () => {
+                const action = sendDonation({
+                  donation,
+                  ...txPackage(estimate, wallet),
+                });
+                dispatch(action);
+              }
+            : undefined
+        }
         className="btn-orange"
-        disabled={!simulInput || !estimate || !isSuccess(estimate)}
+        disabled={!wallet || !estimate || !isSuccess(estimate)}
       >
         Continue
       </button>

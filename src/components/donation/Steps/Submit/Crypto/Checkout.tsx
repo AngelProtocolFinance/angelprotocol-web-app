@@ -4,25 +4,20 @@ import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { maskAddress } from "helpers";
 import { PropsWithChildren } from "react";
-import { ChainID } from "types/chain";
-import { TokenWithAmount } from "types/tx";
+import { CryptoSubmitStep } from "slices/donation";
+import { ConnectedWallet } from "types/wallet";
 import TxSubmit from "./TxSubmit";
 import WalletSelection from "./WalletSelection";
-import { SimulInput } from "./types";
 
-type Props = {
-  chainID: ChainID;
-  token: TokenWithAmount;
-  classes?: string;
-};
+type Props = CryptoSubmitStep & { classes?: string };
 
 export default function Checkout({ classes = "", ...props }: Props) {
   const wallet = useWalletContext();
-  const chainID = props.chainID;
+  const chainID = props.details.chainId.value;
 
   if (wallet === "loading") {
     return (
-      <Container classes={classes}>
+      <Container classes={classes} donation={props}>
         <LoadingStatus classes="py-2 mb-6 text-sm text-gray-d1">
           Connecting wallet..
         </LoadingStatus>
@@ -32,7 +27,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
 
   if (isDisconnected(wallet)) {
     return (
-      <Container classes={classes}>
+      <Container classes={classes} donation={props}>
         <WalletSelection chainID={chainID} wallets={wallet} classes="mt-2" />
       </Container>
     );
@@ -40,7 +35,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
 
   if (!wallet.supportedChains.includes(chainID)) {
     return (
-      <Container classes={classes}>
+      <Container classes={classes} donation={props}>
         <Info classes="mt-2">Connected wallet doesn't support this chain.</Info>
         <button
           className="btn-outline-filled px-4 py-2 mt-2 text-xs font-normal font-work justify-self-center"
@@ -55,7 +50,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
 
   if (chainID !== wallet.chainId) {
     return (
-      <Container classes={classes}>
+      <Container classes={classes} donation={props}>
         {wallet.switchChain ? (
           <>
             <Info classes="mt-2">
@@ -80,14 +75,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
   }
 
   return (
-    <Container
-      simulInput={{
-        sender: wallet.address,
-        token: props.token,
-        chainID: props.chainID,
-      }}
-      classes={classes}
-    >
+    <Container donation={props} wallet={wallet} classes={classes}>
       <div className="flex items-center gap-2 mt-2">
         <div className="size-2 rounded-full bg-green drop-shadow-[0_0_3px_rgba(126,198,130,0.9)]" />
         <Image src={wallet.logo} className="size-5 rounded-full" />
@@ -106,14 +94,20 @@ export default function Checkout({ classes = "", ...props }: Props) {
 
 type ContainerProps = PropsWithChildren<{
   classes?: string;
-  simulInput?: SimulInput;
+  wallet?: ConnectedWallet;
+  donation: CryptoSubmitStep;
 }>;
-function Container({ classes = "", simulInput, children }: ContainerProps) {
+function Container({
+  classes = "",
+  wallet,
+  children,
+  donation,
+}: ContainerProps) {
   return (
     <div className={classes}>
       <p>Select a wallet to continue:</p>
       {children}
-      <TxSubmit simulInput={simulInput} classes="mt-8" />
+      <TxSubmit wallet={wallet} donation={donation} classes="mt-8" />
     </div>
   );
 }

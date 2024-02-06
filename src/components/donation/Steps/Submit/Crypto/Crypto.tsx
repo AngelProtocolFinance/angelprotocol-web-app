@@ -62,11 +62,7 @@ export default function Crypto(props: CryptoSubmitStep) {
 
       <WalletProvider {...chainOptions}>
         <WalletContext>
-          <Checkout
-            chainID={props.details.chainId.value}
-            token={props.details.token}
-            classes="mt-4"
-          />
+          <Checkout {...props} classes="mt-4" />
         </WalletContext>
       </WalletProvider>
     </div>
