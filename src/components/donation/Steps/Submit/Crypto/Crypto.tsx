@@ -1,5 +1,8 @@
+import { WalletProvider } from "@terra-money/wallet-provider";
 import Icon from "components/Icon";
+import { chainOptions } from "constants/chainOptions";
 import { chains } from "constants/chains";
+import WalletContext from "contexts/WalletContext/WalletContext";
 import { CryptoSubmitStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import Image from "../../../../Image";
@@ -45,7 +48,12 @@ export default function Crypto(props: CryptoSubmitStep) {
           <div></div>
         </Row>
       </div>
-      <Checkout {...props} classes="mt-4" />
+
+      <WalletProvider {...chainOptions}>
+        <WalletContext>
+          <Checkout {...props} classes="mt-4" />
+        </WalletContext>
+      </WalletProvider>
     </div>
   );
 }
