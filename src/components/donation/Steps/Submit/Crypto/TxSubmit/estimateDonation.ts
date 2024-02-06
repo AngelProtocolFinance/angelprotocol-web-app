@@ -10,17 +10,6 @@ import { CryptoSubmitStep } from "slices/donation";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import { EstimateInput, EstimateResult } from "types/tx";
 
-type EstimateItem = {
-  name: string;
-  cryptoAmount?: { value: string; symbol: string };
-  fiatAmount: number;
-  prettyFiatAmount: string; //$, AUD, ETC
-};
-
-export type DonationEstimate = EstimateResult & {
-  items: EstimateItem[];
-};
-
 const BASE_FEE_RATE_PCT = 1.5;
 const CRYPTO_FEE_RATE_PCT = 1.4;
 const FISCAL_SPONSOR_FEE_RATE_PCT = 2.9;
