@@ -17,14 +17,24 @@ export default function UserMenu() {
   if (!user || user === "loading") {
     const state: SignInRouteState = { from: location.pathname };
     return (
-      <Link
-        to={appRoutes.signin}
-        state={state}
-        className="btn-orange px-3 h-10 rounded-lg text-sm"
-        aria-disabled={user === "loading"}
-      >
-        Sign-up / Login
-      </Link>
+      <>
+        <Link
+          to={appRoutes.signin}
+          state={state}
+          className="btn rounded-lg text-base normal-case hover:underline"
+          aria-disabled={user === "loading"}
+        >
+          Login
+        </Link>
+        <Link
+          to={appRoutes.signin}
+          state={state}
+          className="btn bg-blue-d1 text-white px-6 lg:px-7 py-3 rounded-full text-base normal-case"
+          aria-disabled={user === "loading"}
+        >
+          Sign up
+        </Link>
+      </>
     );
   }
 
