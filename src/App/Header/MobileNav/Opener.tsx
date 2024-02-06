@@ -4,9 +4,9 @@ import useHandleScreenResize, { SCREEN_LG } from "hooks/useHandleScreenResize";
 import { Link } from "../../types";
 import Menu from "./Menu";
 
-type Props = { classes: string; links: Link[] };
+type Props = { links: Link[] };
 
-export function Opener({ classes, links }: Props) {
+export function Opener({ links }: Props) {
   const { showModal, closeModal, isModalOpen } = useModalContext();
 
   useHandleScreenResize(
@@ -21,9 +21,10 @@ export function Opener({ classes, links }: Props) {
   return (
     <button
       onClick={() => showModal(Menu, { links })}
-      className={`${classes} items-center text-blue justify-center`}
+      className="flex items-center justify-center"
     >
-      <Icon type="Menu" size={24} />
+      <Icon type="Menu" size={24} className="md:hidden text-gray" />
+      <Icon type="ArrowDown" size={24} className="max-md:hidden text-blue-d7" />
     </button>
   );
 }

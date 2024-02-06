@@ -3,7 +3,6 @@ import { appRoutes } from "constants/routes";
 import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "../types";
-import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import UserMenu from "./UserMenu";
 
@@ -36,17 +35,13 @@ export default function Header({ classes, links }: Props) {
     >
       <div className="grid items-center gap-4 px-5 grid-cols-[auto_1fr_auto] w-full max-w-6xl mx-auto h-full bg-white">
         <DappLogo />
-        <DesktopNav
-          classes="hidden lg:flex font-heading font-bold uppercase"
-          links={links}
-        />
         <div className="flex gap-4 justify-self-end items-center">
           {!(
             location.pathname === appRoutes.signin ||
             location.pathname === appRoutes.auth_redirector
           ) && <UserMenu />}
         </div>
-        <MobileNavOpener classes="flex ml-2 lg:hidden" links={links} />
+        <MobileNavOpener links={links} />
       </div>
     </header>
   );
