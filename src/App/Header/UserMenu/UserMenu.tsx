@@ -29,7 +29,7 @@ export default function UserMenu() {
         <Link
           to={appRoutes.signin}
           state={state}
-          className="btn text-base normal-case max-sm:hidden bg-blue-d1 text-white text-nowrap px-5 sm:px-6 lg:px-7 py-3 rounded-full"
+          className="btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-5 sm:px-6 lg:px-7 py-3 rounded-full"
           aria-disabled={user === "loading"}
         >
           Sign up
