@@ -1,4 +1,4 @@
-import dappLogo from "assets/images/bettergiving-logo.svg";
+import dappLogo from "assets/images/bettergiving-logo-with-name-all-blue.svg";
 import { BASE_URL } from "constants/env";
 import Image from "./Image";
 
