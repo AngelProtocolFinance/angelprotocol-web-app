@@ -5,8 +5,9 @@ import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { maskAddress } from "helpers";
 import { PropsWithChildren } from "react";
 import { CryptoSubmitStep } from "slices/donation";
-import { ConnectedWallet } from "types/wallet";
+import TxSubmit from "./TxSubmit";
 import WalletSelection from "./WalletSelection";
+import { SimulInput } from "./types";
 
 export default function Checkout({
   classes = "",
@@ -75,7 +76,14 @@ export default function Checkout({
   }
 
   return (
-    <Container wallet={wallet} classes={classes}>
+    <Container
+      simulInput={{
+        sender: wallet.address,
+        token: props.details.token,
+        chainID: props.details.chainId.value,
+      }}
+      classes={classes}
+    >
       <div className="flex items-center gap-2 mt-2">
         <div className="size-2 rounded-full bg-green drop-shadow-[0_0_3px_rgba(126,198,130,0.9)]" />
         <Image src={wallet.logo} className="size-5 rounded-full" />
@@ -94,16 +102,14 @@ export default function Checkout({
 
 type ContainerProps = PropsWithChildren<{
   classes?: string;
-  wallet?: ConnectedWallet;
+  simulInput?: SimulInput;
 }>;
-function Container({ classes = "", wallet, children }: ContainerProps) {
+function Container({ classes = "", simulInput, children }: ContainerProps) {
   return (
     <div className={classes}>
       <p>Select a wallet to continue:</p>
       {children}
-      <button className="btn-orange w-full mt-8" disabled={!wallet}>
-        Continue
-      </button>
+      <TxSubmit simulInput={simulInput} classes="mt-8" />
     </div>
   );
 }

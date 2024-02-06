@@ -1,44 +1,29 @@
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
 import { apWallets } from "constants/ap-wallets";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
-import Decimal from "decimal.js";
-import { humanize, logger, scale, scaleToStr } from "helpers";
-import { USD } from "helpers/coin-gecko";
+import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
-import { CryptoSubmitStep } from "slices/donation";
-import { ChainID } from "types/chain";
 import { SimulContractTx, SimulSendNativeTx } from "types/evm";
-import { EstimateInput, EstimateResult, TokenWithAmount } from "types/tx";
-import { EstimateStatus } from "../types";
-
-const BASE_FEE_RATE_PCT = 1.5;
-const CRYPTO_FEE_RATE_PCT = 1.4;
-const FISCAL_SPONSOR_FEE_RATE_PCT = 2.9;
-
-const _fiscalSponsorShipFeeFn =
-  (isFiscalSponsored: boolean) => (amount: Decimal) =>
-    isFiscalSponsored
-      ? amount.mul(FISCAL_SPONSOR_FEE_RATE_PCT).div(100)
-      : new Decimal(0);
-
-const prettyDollar = (amount: Decimal) => `$${humanize(amount, 4)}`;
-
-type SimulInput = {
-  sender: string;
-  token: TokenWithAmount;
-  chainID: ChainID;
-};
+import { EstimateInput } from "types/tx";
+import { EstimateStatus, SimulInput } from "../types";
+import { tokenBalance } from "./tokenBalance";
 
 export async function estimateDonation({
   token,
   chainID,
   sender,
 }: SimulInput): Promise<Exclude<EstimateStatus, "loading">> {
-  let toEstimate: EstimateInput;
-  // ///////////// GET TX CONTENT ///////////////
-
   try {
+    const balance = await tokenBalance(token, chainID, sender);
+    if (balance < +token.amount) {
+      return { error: "Not enough balance" };
+    }
+
+    let toEstimate: EstimateInput;
+    // ///////////// GET TX CONTENT ///////////////
+
     switch (chainID) {
       case "juno-1":
       case "uni-6": {
@@ -107,11 +92,11 @@ export async function estimateDonation({
 
     // ///////////// ESTIMATE TX ///////////////
     const estimate = await estimateTx(toEstimate, { address: sender });
-    if (!estimate) {
-      return { error: "Simulation failed: transaction likely to fail" };
-    }
+    return (
+      estimate || { error: "Simulation failed: transaction likely to fail" }
+    );
   } catch (err) {
     logger.error(err);
-    return { error: "Simulation failed: transaction likely to fail" };
+    return { error: GENERIC_ERROR_MESSAGE };
   }
 }

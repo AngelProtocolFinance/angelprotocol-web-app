@@ -1,4 +1,11 @@
-import { EstimateResult } from "types/tx";
+import { ChainID } from "types/chain";
+import { EstimateResult, TokenWithAmount } from "types/tx";
+
+export type SimulInput = {
+  sender: string;
+  token: TokenWithAmount;
+  chainID: ChainID;
+};
 
 export type EstimateStatus = EstimateResult | "loading" | { error: string };
 
