@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 // To account for this slowness, we set a timeout and navigate to the desired page afterwards.
 const DELAY = 700;
 
-export default function OAUTHRedirector() {
+export default function OAuthRedirector() {
   const navigate = useNavigate();
 
   useEffect(() => {
