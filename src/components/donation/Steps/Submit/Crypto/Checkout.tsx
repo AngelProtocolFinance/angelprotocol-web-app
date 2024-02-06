@@ -2,35 +2,33 @@ import { Info, LoadingStatus } from "components/Status";
 import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { CryptoSubmitStep } from "slices/donation";
-import Breakdown from "./Breakdown";
-import Container from "./Crypto";
 import WalletSelection from "./WalletSelection";
 
-export default function Crypto(props: CryptoSubmitStep) {
+export default function Checkout(props: CryptoSubmitStep) {
   const wallet = useWalletContext();
   const chainID = props.details.chainId.value;
 
   if (wallet === "loading") {
     return (
-      <Container {...props}>
+      <div>
         <LoadingStatus classes="justify-self-center mt-6">
           Connecting wallet..
         </LoadingStatus>
-      </Container>
+      </div>
     );
   }
 
   if (isDisconnected(wallet)) {
     return (
-      <Container {...props}>
+      <div>
         <WalletSelection chainID={chainID} wallets={wallet} />
-      </Container>
+      </div>
     );
   }
 
   if (!wallet.supportedChains.includes(chainID)) {
     return (
-      <Container {...props} wallet={wallet}>
+      <div>
         <Info classes="justify-self-center mt-6">
           Connected wallet doesn't support this chain.
         </Info>
@@ -41,13 +39,13 @@ export default function Crypto(props: CryptoSubmitStep) {
         >
           change wallet
         </button>
-      </Container>
+      </div>
     );
   }
 
   if (chainID !== wallet.chainId) {
     return (
-      <Container {...props} wallet={wallet}>
+      <div>
         {wallet.switchChain ? (
           <>
             <Info classes="justify-self-center mt-6">
@@ -67,13 +65,9 @@ export default function Crypto(props: CryptoSubmitStep) {
             Kindly set your wallet network to your selected chain.
           </Info>
         )}
-      </Container>
+      </div>
     );
   }
 
-  return (
-    <Container {...props} wallet={wallet}>
-      <Breakdown {...props} />
-    </Container>
-  );
+  return <div>connected wallet</div>;
 }
