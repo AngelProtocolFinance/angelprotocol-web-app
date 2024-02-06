@@ -6,7 +6,7 @@ export function Row({
 }: PropsWithChildren<{ classes?: string }>) {
   return (
     <div
-      className={`${classes} text-gray-d1 py-3 flex items-center justify-between w-full border-b border-prim last:border-none`}
+      className={`${classes} text-gray-d1 flex items-center justify-between w-full`}
     >
       {children}
     </div>
