@@ -7,27 +7,30 @@ import { CryptoSubmitStep } from "slices/donation";
 import { ConnectedWallet } from "types/wallet";
 import WalletSelection from "./WalletSelection";
 
-export default function Checkout(props: CryptoSubmitStep) {
+export default function Checkout({
+  classes = "",
+  ...props
+}: CryptoSubmitStep & { classes?: string }) {
   const wallet = useWalletContext();
   const chainID = props.details.chainId.value;
 
   if (wallet === "loading") {
     return (
-      <div>
-        <LoadingStatus classes="justify-self-center mt-6">
-          Connecting wallet..
-        </LoadingStatus>
-      </div>
+      <LoadingStatus classes={`justify-self-center ${classes}`}>
+        Connecting wallet..
+      </LoadingStatus>
     );
   }
 
   if (isDisconnected(wallet)) {
-    return <WalletSelection chainID={chainID} wallets={wallet} />;
+    return (
+      <WalletSelection chainID={chainID} wallets={wallet} classes={classes} />
+    );
   }
 
   if (!wallet.supportedChains.includes(chainID)) {
     return (
-      <div>
+      <div className={classes}>
         <Info classes="justify-self-center mt-6">
           Connected wallet doesn't support this chain.
         </Info>
@@ -44,10 +47,10 @@ export default function Checkout(props: CryptoSubmitStep) {
 
   if (chainID !== wallet.chainId) {
     return (
-      <div>
+      <div className={classes}>
         {wallet.switchChain ? (
           <>
-            <Info classes="justify-self-center mt-6">
+            <Info classes="justify-self-center">
               Your wallet is not connected to your selected chain.
             </Info>
             <button
@@ -60,7 +63,7 @@ export default function Checkout(props: CryptoSubmitStep) {
             </button>
           </>
         ) : (
-          <Info classes="justify-self-center mt-6">
+          <Info classes="justify-self-center">
             Kindly set your wallet network to your selected chain.
           </Info>
         )}
