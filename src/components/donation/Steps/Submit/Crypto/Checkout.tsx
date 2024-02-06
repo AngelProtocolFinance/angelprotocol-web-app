@@ -3,6 +3,7 @@ import { Info, LoadingStatus } from "components/Status";
 import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { maskAddress } from "helpers";
+import { PropsWithChildren } from "react";
 import { CryptoSubmitStep } from "slices/donation";
 import { ConnectedWallet } from "types/wallet";
 import WalletSelection from "./WalletSelection";
@@ -16,71 +17,67 @@ export default function Checkout({
 
   if (wallet === "loading") {
     return (
-      <LoadingStatus classes={`justify-self-center ${classes}`}>
-        Connecting wallet..
-      </LoadingStatus>
+      <Container classes={classes}>
+        <LoadingStatus classes="py-2 mb-6 text-sm text-gray-d1">
+          Connecting wallet..
+        </LoadingStatus>
+      </Container>
     );
   }
 
   if (isDisconnected(wallet)) {
     return (
-      <WalletSelection chainID={chainID} wallets={wallet} classes={classes} />
+      <Container classes={classes}>
+        <WalletSelection chainID={chainID} wallets={wallet} classes="mt-2" />
+      </Container>
     );
   }
 
   if (!wallet.supportedChains.includes(chainID)) {
     return (
-      <div className={classes}>
-        <Info classes="justify-self-center mt-6">
-          Connected wallet doesn't support this chain.
-        </Info>
+      <Container classes={classes}>
+        <Info classes="mt-2">Connected wallet doesn't support this chain.</Info>
         <button
-          className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
+          className="btn-outline-filled px-4 py-2 mt-2 text-xs font-normal font-work justify-self-center"
           type="button"
           onClick={wallet.disconnect}
         >
           change wallet
         </button>
-      </div>
+      </Container>
     );
   }
 
   if (chainID !== wallet.chainId) {
     return (
-      <div className={classes}>
+      <Container classes={classes}>
         {wallet.switchChain ? (
           <>
-            <Info classes="justify-self-center">
+            <Info classes="mt-2">
               Your wallet is not connected to your selected chain.
             </Info>
             <button
               disabled={wallet.isSwitching}
               type="button"
               onClick={() => wallet.switchChain?.(chainID)}
-              className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal font-work justify-self-center"
+              className="btn-outline-filled px-4 py-2 mt-2 text-xs font-normal font-work"
             >
               Switch to {chains[chainID].name}
             </button>
           </>
         ) : (
-          <Info classes="justify-self-center">
+          <Info classes="mt-2">
             Kindly set your wallet network to your selected chain.
           </Info>
         )}
-      </div>
+      </Container>
     );
   }
 
-  return <CheckoutBtn wallet={wallet} />;
-}
-
-type Props = {
-  wallet: ConnectedWallet;
-};
-function CheckoutBtn({ wallet }: Props) {
   return (
-    <div>
-      <div className="flex items-center justify-center gap-2 mb-1">
+    <Container wallet={wallet} classes={classes}>
+      <div className="flex items-center gap-2 mt-2">
+        <div className="size-2 rounded-full bg-green drop-shadow-[0_0_3px_rgba(126,198,130,0.9)]" />
         <Image src={wallet.logo} className="size-5 rounded-full" />
         <span className="text-sm">{maskAddress(wallet.address)}</span>
         <button
@@ -91,7 +88,22 @@ function CheckoutBtn({ wallet }: Props) {
           change
         </button>
       </div>
-      <button className="btn-orange w-full">Continue</button>
+    </Container>
+  );
+}
+
+type ContainerProps = PropsWithChildren<{
+  classes?: string;
+  wallet?: ConnectedWallet;
+}>;
+function Container({ classes = "", wallet, children }: ContainerProps) {
+  return (
+    <div className={classes}>
+      <p>Select a wallet to continue:</p>
+      {children}
+      <button className="btn-orange w-full mt-8" disabled={!wallet}>
+        Continue
+      </button>
     </div>
   );
 }

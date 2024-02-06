@@ -45,7 +45,7 @@ export default function Crypto(props: CryptoSubmitStep) {
           <div></div>
         </Row>
       </div>
-      <Checkout {...props} />
+      <Checkout {...props} classes="mt-4" />
     </div>
   );
 }

@@ -13,15 +13,12 @@ export default function WalletSelection({
   classes = "",
 }: Props) {
   return (
-    <div className={classes}>
-      <p className="">Select a wallet to continue:</p>
-      <div className="grid gap-y-2 mt-2">
-        {wallets
-          .filter((w) => w.supportedChains.includes(chainID))
-          .map((w) => (
-            <Wallet key={w.name} {...w} />
-          ))}
-      </div>
+    <div className={`grid gap-y-2 ${classes}`}>
+      {wallets
+        .filter((w) => w.supportedChains.includes(chainID))
+        .map((w) => (
+          <Wallet key={w.name} {...w} />
+        ))}
     </div>
   );
 }
