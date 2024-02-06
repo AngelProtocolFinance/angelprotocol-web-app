@@ -1,7 +1,7 @@
 import { DappLogo } from "components/Image";
 import { appRoutes } from "constants/routes";
 import { useEffect, useRef, useState } from "react";
-import { Location, matchRoutes, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { Link } from "../types";
 import DesktopNav from "./DesktopNav";
 import { Opener as MobileNavOpener } from "./MobileNav";
@@ -28,12 +28,11 @@ export default function Header({ classes, links }: Props) {
     };
   }, []);
 
-  const bg =
-    !hasBanner(location) || isScrolled ? "bg-white dark:bg-blue-d3" : "";
   return (
     <header
-      className={`${classes} ${isScrolled ? "shadow-lg" : ""} ${bg}
-    transition-shadow ease-in-out duration-300 w-full h-[90px] mb-0`}
+      className={`${classes} ${
+        isScrolled ? "shadow-lg bg-white dark:bg-blue-d3" : ""
+      } transition-shadow ease-in-out duration-300 w-full h-20 mb-0`}
     >
       <div className="grid items-center gap-4 px-5 grid-cols-[auto_1fr_auto] h-full bg-white">
         <DappLogo />
@@ -50,19 +49,5 @@ export default function Header({ classes, links }: Props) {
         <MobileNavOpener classes="flex ml-2 lg:hidden" links={links} />
       </div>
     </header>
-  );
-}
-
-function hasBanner(location: Location): boolean {
-  return !!matchRoutes(
-    [
-      /**routes with banner */
-      appRoutes.marketplace,
-      appRoutes.gift + "/*",
-      appRoutes.donate + "/:id",
-      appRoutes.profile + "/:id",
-      appRoutes.marketplace + "/:id",
-    ].map((r) => ({ path: r })),
-    location
   );
 }
