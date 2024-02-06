@@ -3,12 +3,16 @@ import { DisconnectedWallet } from "types/wallet";
 
 export default function Wallet({ connect, logo, name }: DisconnectedWallet) {
   return (
-    <button
-      className="flex flex-col items-center justify-center gap-1 h-28 p-5 border border-gray-l3 rounded bg-white hover:bg-orange-l5 dark:bg-blue/50 hover:dark:bg-blue-d3 dark:border-none"
-      onClick={connect}
-    >
-      <Image src={logo} className="w-12 h-12 rounded-full" />
-      <span className="font-heading font-bold text-sm capitalize">{name}</span>
-    </button>
+    <div className="flex items-center gap-2 border border-prim rounded p-3">
+      <Image src={logo} className="size-7 rounded-full" />
+      <span className="capitalize">{name}</span>
+      <button
+        type="button"
+        onClick={connect}
+        className="ml-auto px-6 py-2 rounded-full bg-gray-l5 text-sm hover:bg-gray-l4"
+      >
+        Connect
+      </button>
+    </div>
   );
 }

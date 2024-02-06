@@ -1,7 +1,10 @@
+import Image from "components/Image/Image";
 import { Info, LoadingStatus } from "components/Status";
 import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
+import { maskAddress } from "helpers";
 import { CryptoSubmitStep } from "slices/donation";
+import { ConnectedWallet } from "types/wallet";
 import WalletSelection from "./WalletSelection";
 
 export default function Checkout(props: CryptoSubmitStep) {
@@ -19,11 +22,7 @@ export default function Checkout(props: CryptoSubmitStep) {
   }
 
   if (isDisconnected(wallet)) {
-    return (
-      <div>
-        <WalletSelection chainID={chainID} wallets={wallet} />
-      </div>
-    );
+    return <WalletSelection chainID={chainID} wallets={wallet} />;
   }
 
   if (!wallet.supportedChains.includes(chainID)) {
@@ -69,5 +68,27 @@ export default function Checkout(props: CryptoSubmitStep) {
     );
   }
 
-  return <div>connected wallet</div>;
+  return <CheckoutBtn wallet={wallet} />;
+}
+
+type Props = {
+  wallet: ConnectedWallet;
+};
+function CheckoutBtn({ wallet }: Props) {
+  return (
+    <div>
+      <div className="flex items-center justify-center gap-2 mb-1">
+        <Image src={wallet.logo} className="size-5 rounded-full" />
+        <span className="text-sm">{maskAddress(wallet.address)}</span>
+        <button
+          type="button"
+          onClick={wallet.disconnect}
+          className="bg-gray-l5 hover:bg-gray-l4 text-xs uppercase px-2 py-0.5"
+        >
+          change
+        </button>
+      </div>
+      <button className="btn-orange w-full">Continue</button>
+    </div>
+  );
 }
