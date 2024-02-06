@@ -76,6 +76,7 @@ import {
 import { PiPaypalLogo } from "react-icons/pi";
 import {
   RiFundsBoxLine,
+  RiGasStationFill,
   RiMapPin2Line,
   RiMoneyDollarCircleFill,
 } from "react-icons/ri";
@@ -124,6 +125,7 @@ export const icons = {
   FilterMixer: RxMixerHorizontal,
   Folder: MdOutlineFolder,
   Stocks: RiFundsBoxLine,
+  GasStation: RiGasStationFill,
   Giftcard: MdCardGiftcard,
   Globe: BiGlobe,
   HeartFill: AiFillHeart,

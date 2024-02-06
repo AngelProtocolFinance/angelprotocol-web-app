@@ -1,4 +1,6 @@
+import Icon from "components/Icon/Icon";
 import { ErrorStatus, LoadingStatus } from "components/Status";
+import { humanize } from "helpers";
 import { useEffect, useState } from "react";
 import { EstimateStatus, SimulInput, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
@@ -18,13 +20,17 @@ export default function TxSubmit({ simulInput, classes = "" }: Props) {
 
   return (
     <div className={classes + " grid w-full gap-y-2"}>
+      {/** estimate tooltip */}
       {estimate &&
         (estimate === "loading" ? (
           <LoadingStatus classes="text-sm text-gray-d1">
             Simulating tx..
           </LoadingStatus>
         ) : isSuccess(estimate) ? (
-          estimate.fee.amount
+          <p className="text-sm text-gray-d1 flex items-center gap-1">
+            <Icon type="GasStation" />
+            <span> {humanize(estimate.fee.amount, 6)}</span>
+          </p>
         ) : (
           <ErrorStatus classes="text-sm">{estimate.error}</ErrorStatus>
         ))}
