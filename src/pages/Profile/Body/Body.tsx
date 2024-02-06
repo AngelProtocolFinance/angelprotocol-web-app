@@ -18,7 +18,11 @@ export default function Body() {
         <Breadcrumbs
           className="font-body font-normal text-xs sm:text-sm lg:ml-52"
           items={[
-            { title: "Marketplace", to: `${appRoutes.marketplace}/` },
+            {
+              title: "Marketplace",
+              to: `${appRoutes.marketplace}/`,
+              end: true,
+            },
             { title: p.name, to: `${appRoutes.marketplace}/${p.id}` },
           ]}
         />
