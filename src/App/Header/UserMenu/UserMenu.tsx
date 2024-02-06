@@ -21,7 +21,7 @@ export default function UserMenu() {
         <Link
           to={appRoutes.signin}
           state={state}
-          className="btn rounded-lg text-base normal-case hover:underline"
+          className="btn text-base normal-case max-sm:hidden hover:underline"
           aria-disabled={user === "loading"}
         >
           Login
@@ -29,7 +29,7 @@ export default function UserMenu() {
         <Link
           to={appRoutes.signin}
           state={state}
-          className="btn bg-blue-d1 text-white px-6 lg:px-7 py-3 rounded-full text-base normal-case"
+          className="btn text-base normal-case max-sm:hidden bg-blue-d1 text-white px-6 lg:px-7 py-3 rounded-full"
           aria-disabled={user === "loading"}
         >
           Sign up
