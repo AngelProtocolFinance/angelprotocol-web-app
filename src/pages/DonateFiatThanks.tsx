@@ -1,10 +1,12 @@
 import char from "assets/images/celebrating-character.png";
+import ExtLink from "components/ExtLink";
 import Image from "components/Image";
+import { DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link } from "react-router-dom";
 
-export default function DonateFiatThanks() {
+export default function DonateFiatThanks({ widgetVersion = false }) {
   return (
     <div className="grid justify-self-center m-auto max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6 font-work">
       <div
@@ -24,20 +26,31 @@ export default function DonateFiatThanks() {
       </h3>
       <p className="text-center text-gray-d1">
         We'll process your donation to the nonprofit you specified as soon as
-        the payment has cleared. You can safely navigate away using the button
-        below.
+        the payment has cleared.
+        {widgetVersion
+          ? ""
+          : " You can safely navigate away using the button below."}
       </p>
       <p className="text-center text-gray-d1 mt-8 text-[15px]">
         If you need a receipt for your donation, please fill out the KYC form
         for this transaction on your{" "}
-        <Link to={appRoutes.donations}>My donations</Link> page.
+        {widgetVersion ? (
+          <ExtLink href={`${DAPP_URL}${appRoutes.donations}`}>
+            My donations
+          </ExtLink>
+        ) : (
+          <Link to={appRoutes.donations}>My donations</Link>
+        )}{" "}
+        page.
       </p>
-      <Link
-        to={appRoutes.marketplace}
-        className="w-full btn-orange btn-donate normal-case mt-8"
-      >
-        Back to the platform
-      </Link>
+      {!widgetVersion && (
+        <Link
+          to={appRoutes.marketplace}
+          className="w-full btn-orange btn-donate normal-case mt-8"
+        >
+          Back to the platform
+        </Link>
+      )}
     </div>
   );
 }

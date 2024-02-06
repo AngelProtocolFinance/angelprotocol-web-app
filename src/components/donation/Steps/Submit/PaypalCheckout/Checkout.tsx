@@ -1,20 +1,22 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { appRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCapturePayPalOrderMutation } from "services/apes";
+import { DonationSource } from "types/lists";
 
 type Props = {
   orderId: string;
+  source: DonationSource;
 };
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ orderId }: Props) {
+export default function Checkout({ orderId, source }: Props) {
   const navigate = useNavigate();
 
   const [isSubmitting, setSubmitting] = useState(false);
@@ -55,7 +57,13 @@ export default function Checkout({ orderId }: Props) {
               } else if (isEmpty(order.purchase_units ?? [])) {
                 throw new Error(JSON.stringify(order));
               } else {
-                navigate(appRoutes.donate_fiat_thanks);
+                if (source === "bg-widget") {
+                  navigate(
+                    `${appRoutes.donate_widget}${donateWidgetRoutes.donate_fiat_thanks}`
+                  );
+                } else {
+                  navigate(appRoutes.donate_fiat_thanks);
+                }
               }
             } catch (error) {
               handleError(error, GENERIC_ERROR_MESSAGE);

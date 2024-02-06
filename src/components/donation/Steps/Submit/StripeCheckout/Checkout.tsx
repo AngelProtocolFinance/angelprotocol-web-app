@@ -5,14 +5,15 @@ import {
 } from "@stripe/react-stripe-js";
 import LoadText from "components/LoadText";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { appRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FormEventHandler, useState } from "react";
 import Loader from "../Loader";
+import { DonationSource } from "types/lists";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout() {
+export default function Checkout({ source }: { source: DonationSource }) {
   const stripe = useStripe();
   const elements = useElements();
   const { handleError } = useErrorContext();
@@ -37,10 +38,15 @@ export default function Checkout() {
 
     setSubmitting(true);
 
+    const return_url =
+      source === "bg-widget"
+        ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
+        : `${window.location.origin}${appRoutes.stripe_payment_status}`;
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}${appRoutes.stripe_payment_status}`,
+        return_url,
       },
     });
 

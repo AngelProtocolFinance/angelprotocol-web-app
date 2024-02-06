@@ -19,6 +19,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     data: clientSecret,
     isLoading,
     isError,
+    error,
   } = useStripePaymentIntentQuery({
     amount: +details.amount,
     currency: details.currency.code,
@@ -47,7 +48,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       {isLoading ? (
         <Loader msg="Loading payment form.." />
       ) : isError || !clientSecret ? (
-        <Err />
+        <Err error={error} />
       ) : (
         <Elements
           options={{
@@ -56,7 +57,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
           }}
           stripe={stripePromise}
         >
-          <Checkout />
+          <Checkout source={details.source} />
         </Elements>
       )}
     </div>

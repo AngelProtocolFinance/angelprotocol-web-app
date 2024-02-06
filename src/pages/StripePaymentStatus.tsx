@@ -3,7 +3,7 @@ import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import { EMAIL_SUPPORT } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useCallback, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useGetStripePaymentStatusQuery } from "services/apes";
@@ -22,6 +22,8 @@ export default function StripePaymentStatus() {
 
   const handleProcessing = useCallback(() => refetch(), [refetch]);
 
+  const isInWidget = window.location.pathname.includes(appRoutes.donate_widget);
+
   return (
     <QueryLoader
       queryState={queryState}
@@ -31,15 +33,28 @@ export default function StripePaymentStatus() {
       }}
       classes={{ container: "place-self-center" }}
     >
-      {({ status }) => <Content status={status} onMount={handleProcessing} />}
+      {({ status }) => (
+        <Content
+          status={status}
+          onMount={handleProcessing}
+          isInWidget={isInWidget}
+        />
+      )}
     </QueryLoader>
   );
 }
 
-function Content(props: { status: PaymentIntent.Status; onMount: () => void }) {
+function Content(props: {
+  status: PaymentIntent.Status;
+  onMount: () => void;
+  isInWidget: boolean;
+}) {
   switch (props.status) {
     case "succeeded":
-      return <Navigate to={appRoutes.donate_fiat_thanks} />;
+      const to = props.isInWidget
+        ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
+        : appRoutes.donate_fiat_thanks;
+      return <Navigate to={to} />;
     case "processing":
       return <Processing onMount={props.onMount} />;
     case "canceled":
