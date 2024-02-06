@@ -2,34 +2,27 @@ import { WalletProvider } from "@terra-money/wallet-provider";
 import Icon from "components/Icon";
 import { chainOptions } from "constants/chainOptions";
 import { chains } from "constants/chains";
-import { donationFees } from "constants/common";
 import WalletContext from "contexts/WalletContext/WalletContext";
 import { humanize } from "helpers";
+import { useUsdRateQuery } from "services/coingecko";
 import { CryptoSubmitStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
-import { TokenWithAmount } from "types/tx";
 import Image from "../../../../Image";
 import BackBtn from "../../BackBtn";
 import Checkout from "./Checkout";
-import { Row } from "./Row";
 
 export default function Crypto(props: CryptoSubmitStep) {
   const dispatch = useSetter();
   function goBack() {
     dispatch(setStep("splits"));
   }
-  const { details, recipient } = props;
+  const { details } = props;
 
-  const tokenAmount = +details.token.amount;
-  const liq = tokenAmount * (props.liquidSplitPct / 100);
-  const locked = tokenAmount - liq;
+  const total = +details.token.amount;
+  const liq = total * (props.liquidSplitPct / 100);
+  const locked = total - liq;
 
-  const feeRate =
-    donationFees.base +
-    donationFees.crypto +
-    (recipient.isFiscalSponsored ? 0 : donationFees.fsa);
-
-  const platFormFee = (feeRate / 100) * tokenAmount;
+  const Amount = withUSD(details.token.coingecko_denom);
 
   return (
     <div className="grid content-start p-4 @md:p-8">
@@ -55,33 +48,44 @@ export default function Crypto(props: CryptoSubmitStep) {
       </dl>
 
       <dl className="text-gray-d1 py-3 gap-y-2 grid grid-cols-[1fr_auto] justify-between border-y border-prim">
-        <dt className="mr-auto">Donation for {recipient.name}</dt>
-        <dd>{humanize(tokenAmount, 3)}</dd>
+        <dt className="mr-auto">Total donation</dt>
+        <Amount classes="text-gray-d2" amount={total} />
         <div className="flex items-center justify-between col-span-full">
           <dt className="mr-auto text-sm">Sustainable Fund</dt>
-          <dd className="text-sm">{humanize(locked, 3)}</dd>
+          <Amount classes="text-sm" amount={locked} />
         </div>
         <div className="flex items-center justify-between col-span-full">
           <dt className="mr-auto text-sm">Instantly Available</dt>
-          <dd className="text-sm">{humanize(liq, 3)}</dd>
+          <Amount classes="text-sm" amount={liq} />
         </div>
       </dl>
-      <dl className="text-gray-d1 py-3 flex items-center justify-between">
-        <dt className="mr-auto">
-          Platform fee <span className="text-sm">({feeRate}%)</span>
-        </dt>
-        <dd>{humanize(platFormFee, 3)}</dd>
-      </dl>
 
-      <dl className="py-3 flex items-center justify-between font-semibold border-y border-prim">
-        <dt className="mr-auto">Total donation</dt>
-        <dd>{humanize(platFormFee, 3)}</dd>
-      </dl>
       <WalletProvider {...chainOptions}>
         <WalletContext>
-          {/* <Checkout {...props} classes="mt-4" /> */}
+          <Checkout
+            chainID={props.details.chainId.value}
+            token={props.details.token}
+            classes="mt-4"
+          />
         </WalletContext>
       </WalletProvider>
     </div>
   );
 }
+
+const withUSD = (coinGeckoId: string) =>
+  function Amount(props: { amount: string | number; classes?: string }) {
+    const { data: rate, isLoading, isError } = useUsdRateQuery(coinGeckoId);
+    return (
+      <dd className={props.classes}>
+        {humanize(props.amount, 4)}{" "}
+        {isLoading ? (
+          "($--)"
+        ) : isError || !rate ? (
+          <span className="text-red">"($--)"</span>
+        ) : (
+          `($${humanize(+props.amount * rate, 2)})`
+        )}
+      </dd>
+    );
+  };

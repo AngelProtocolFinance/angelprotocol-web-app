@@ -4,17 +4,21 @@ import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { maskAddress } from "helpers";
 import { PropsWithChildren } from "react";
-import { CryptoSubmitStep } from "slices/donation";
+import { ChainID } from "types/chain";
+import { TokenWithAmount } from "types/tx";
 import TxSubmit from "./TxSubmit";
 import WalletSelection from "./WalletSelection";
 import { SimulInput } from "./types";
 
-export default function Checkout({
-  classes = "",
-  ...props
-}: CryptoSubmitStep & { classes?: string }) {
+type Props = {
+  chainID: ChainID;
+  token: TokenWithAmount;
+  classes?: string;
+};
+
+export default function Checkout({ classes = "", ...props }: Props) {
   const wallet = useWalletContext();
-  const chainID = props.details.chainId.value;
+  const chainID = props.chainID;
 
   if (wallet === "loading") {
     return (
@@ -79,8 +83,8 @@ export default function Checkout({
     <Container
       simulInput={{
         sender: wallet.address,
-        token: props.details.token,
-        chainID: props.details.chainId.value,
+        token: props.token,
+        chainID: props.chainID,
       }}
       classes={classes}
     >

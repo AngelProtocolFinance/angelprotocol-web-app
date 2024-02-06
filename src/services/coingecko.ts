@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 type Quotation = {
   [index: string]: {
@@ -18,3 +18,5 @@ export const coingecko = createApi({
     }),
   }),
 });
+
+export const { useUsdRateQuery } = coingecko;

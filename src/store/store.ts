@@ -23,7 +23,11 @@ export const store = configureStore({
     [coingecko.reducerPath]: coingecko.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([aws.middleware, apes.middleware]),
+    getDefaultMiddleware().concat([
+      aws.middleware,
+      apes.middleware,
+      coingecko.middleware,
+    ]),
 });
 
 Amplify.configure(amplifyConfig);
