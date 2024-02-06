@@ -6,19 +6,29 @@ import Logo from "./Logo";
 import { Opener as MobileNavOpener } from "./MobileNav";
 import UserMenu from "./UserMenu";
 
+const NAVBAR_ID = "navbar";
+
 type Props = { classes: string; links: Link[] };
 
 export default function Header({ classes, links }: Props) {
   const location = useLocation();
-  const isScrolledRef = useRef<boolean>(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  // The ref is used to compare the current and previous bool value
+  // instead of the state (for the previous value); the reason is that
+  // this makes it unnecessary to add the state value to the below useEffect's
+  // dependency array.
+  const isStickyRef = useRef<boolean>(false);
+  const [isSticky, setSticky] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
-      const _isScrolled = window.scrollY > 0;
-      if (_isScrolled !== isScrolledRef.current) {
-        setIsScrolled(_isScrolled);
-        isScrolledRef.current = _isScrolled;
+      const navbar = document.getElementById(NAVBAR_ID);
+      if (!navbar) {
+        return;
+      }
+      const _isSticky = window.scrollY >= navbar.offsetTop;
+      if (_isSticky !== isStickyRef.current) {
+        setSticky(_isSticky);
+        isStickyRef.current = _isSticky;
       }
     }
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -29,9 +39,10 @@ export default function Header({ classes, links }: Props) {
 
   return (
     <header
+      id={NAVBAR_ID}
       className={`${classes} ${
-        isScrolled ? "shadow-lg bg-white dark:bg-blue-d3" : ""
-      } transition-shadow ease-in-out duration-300 w-full h-20 mb-0`}
+        isSticky ? "shadow-lg bg-white dark:bg-blue-d3" : ""
+      } transition ease-in-out duration-100 w-full h-20 mt-9 mb-0`}
     >
       <div className="grid place-items-center gap-4 pl-5 pr-10 grid-cols-3 h-full w-full max-w-6xl mx-auto rounded-full bg-white">
         <div className="w-80">{/** placeholder for search bar */}</div>
