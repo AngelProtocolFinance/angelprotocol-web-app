@@ -33,15 +33,16 @@ export default function Header({ classes, links }: Props) {
         isScrolled ? "shadow-lg bg-white dark:bg-blue-d3" : ""
       } transition-shadow ease-in-out duration-300 w-full h-20 mb-0`}
     >
-      <div className="grid items-center gap-4 px-5 grid-cols-[auto_1fr_auto] w-full max-w-6xl mx-auto h-full bg-white">
-        <DappLogo />
+      <div className="grid place-items-center gap-4 px-5 grid-cols-3 w-full max-w-6xl mx-auto h-full bg-white">
+        <div className="w-80"></div>
+        <DappLogo classes="w-32 sm:w-48" />
         <div className="flex gap-4 justify-self-end items-center">
           {!(
             location.pathname === appRoutes.signin ||
             location.pathname === appRoutes.auth_redirector
           ) && <UserMenu />}
+          <MobileNavOpener links={links} />
         </div>
-        <MobileNavOpener links={links} />
       </div>
     </header>
   );
