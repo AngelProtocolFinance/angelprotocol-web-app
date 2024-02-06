@@ -1,5 +1,9 @@
 import { Disclosure } from "@headlessui/react";
+import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
+import { appRoutes } from "constants/routes";
+import { Fragment, PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 
 export default function FAQ({ classes = "" }) {
   return (
@@ -9,6 +13,7 @@ export default function FAQ({ classes = "" }) {
         " md:border md:border-prim md:p-4 rounded font-work grid gap-2 md:gap-4"
       }
     >
+      <h2 className="text-sm">Frequently asked questions</h2>
       {faqs.map((faq) => (
         <Disclosure as="div" key={faq.id}>
           {({ open }) => (
@@ -31,7 +36,7 @@ export default function FAQ({ classes = "" }) {
                   className="text-sm grid gap-3 text-gray-d1 mb-6"
                 >
                   {faq.paragraphs.map((p, idx) => (
-                    <p key={idx}>{p}</p>
+                    <Fragment key={idx}>{p}</Fragment>
                   ))}
                 </Disclosure.Panel>
               )}
@@ -46,30 +51,128 @@ export default function FAQ({ classes = "" }) {
 const faqs = [
   {
     id: 1,
-    question: "How does Better Giving accept my donation?",
+    question: "How does my donation work to benefit nonprofits?",
     paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed consequat, mauris ut bibendum ultricies, turpis nisi fermentum massa, at commodo odio velit nec ligula. Nunc aliquet nisl eu risus hendrerit, nec vehicula justo pharetra. Sed nec odio vel turpis luctus fringilla. Aliquam erat volutpat. Ut suscipit, lectus vitae ultrices eleifend, ligula nulla fermentum libero, vel efficitur odio lacus eu lectus. Vivamus tincidunt justo sed massa scelerisque, ac aliquam arcu auctor. Integer nec nunc quis nisl semper egestas id vel purus.",
-      "Proin fringilla nisi vitae ligula bibendum cursus. Nullam eget nunc vitae mi ullamcorper malesuada vel id libero. Quisque scelerisque, nisi vel eleifend congue, augue neque dapibus lectus, vitae laoreet augue justo id felis. Praesent nec mauris ac nisl consequat ullamcorper. In hac habitasse platea dictumst. Fusce in sagittis dui. Morbi vestibulum dui ut elit volutpat, ac suscipit odio suscipit.",
-      "Nam vel dapibus elit. In hac habitasse platea dictumst. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Ut in felis sit amet quam venenatis congue eu in elit. Sed nec metus ut nisl semper cursus. Proin in justo justo. Mauris vitae lacus a libero eleifend cursus. Sed nec enim et elit laoreet scelerisque. Sed congue ultricies tortor, vel ultricies arcu cursus vitae. Vivamus a libero ac dolor semper cursus a id odio.",
+      <p>
+        Donations are made to Altruistic Partners Empowering Society, DBA Better
+        Giving. This is a US 501(c) (3) non profit.
+      </p>,
+      <p>
+        <Em intensity={2}>For immediate donations</Em>, Better Giving grants out
+        the donations to the chosen nonprofit on a weekly basis.
+      </p>,
+      <p>
+        <Em intensity={2}>For Sustainability Fund donations</Em>, these are
+        invested as a Board Managed quasi-endowment, and Better Giving grants
+        out 75% of the yield every quarter to the nonprofit, investing the other
+        25% of the yield into the sustainability fund to mitigate against such
+        as inflation. In this way, donors can give today, but see the impact
+        continue into the future.
+      </p>,
     ],
   },
   {
     id: 2,
-    question: "Are there any fees?",
+    question: "Can I receive a tax receipt?",
     paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus sagittis, libero eu eleifend dictum, felis odio iaculis odio, vel tincidunt justo neque id ex. Fusce a justo eget justo malesuada aliquet.",
-      "Proin accumsan volutpat justo, in vulputate nulla efficitur id. Integer at ullamcorper justo, ut mattis sapien. Suspendisse cursus, libero a vehicula facilisis, augue justo tincidunt ante, nec tincidunt mi ex eu felis.",
-      "Donec tincidunt, risus at aliquam consequat, odio tortor fringilla nisl, a scelerisque turpis ligula id purus. Fusce vel justo euismod, tincidunt ligula ac, lacinia justo. Nullam commodo, risus nec euismod volutpat, est velit laoreet leo, vel elementum justo dui non ipsum.",
+      <p>Yes, you can!</p>,
+      <p>
+        To the extent permitted by law in their own country or state, Donors are
+        entitled to a tax receipt for the full amount of their donation, which
+        includes any transaction fee they have incurred. For example, if a donor
+        makes a donation of $100, and incurs an additional $5 fee to make the
+        transaction, they will receive a tax receipt for $105, as that is the
+        amount they are able to claim as a charitable deduction. All Donors are
+        encouraged to consult with their tax preparer regarding the specific
+        deductibility of their contribution(s).
+      </p>,
+      <p>
+        Donors will need to provide KYD (know your donor) information including
+        name and address, and can download an annualized cumulative report of
+        all donations provided to nonprofits within Better Giving through their
+        'my donation' page. Donors can also request further copies of their tax
+        receipt.
+      </p>,
+      <p>
+        To keep a permanent record of all your donations and print tax receipts,
+        create your own personal user account&nbsp;
+        <Link to={appRoutes.signin} className="text-blue hover:text-blue-l1">
+          here
+        </Link>
+        .
+      </p>,
+      <p>
+        Here's a short video showing how to do that:{" "}
+        <ExtLink
+          href="https://youtu.be/74kEk7aQauA"
+          className="text-blue hover:text-blue-l1"
+        >
+          https://youtu.be/74kEk7aQauA
+        </ExtLink>
+      </p>,
     ],
   },
   {
     id: 3,
-    question: "Will I receive a tax-deductible receipt for my donation?",
+    question: "How much does Better Giving charge?",
     paragraphs: [
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis. Ut ante elit, commodo non ligula at, scelerisque tincidunt nulla. Nulla auctor, mauris eu euismod cursus, erat dui venenatis lacus, vel gravida purus ipsum nec augue. Sed vel risus a felis vulputate cursus. In hac habitasse platea dictumst.",
-      "Vivamus gravida, turpis nec ultrices malesuada, odio libero venenatis purus, a facilisis lacus justo vel risus. Donec aliquam ligula nec ante efficitur hendrerit. Sed at tellus non dolor pharetra vulputate. Integer euismod ullamcorper ante, at aliquet justo suscipit non. Vestibulum tincidunt libero sed dolor ultricies facilisis.",
-      "Proin vel nisi eu urna fermentum eleifend sit amet vitae ex. Sed at justo at nulla tempus interdum. Curabitur efficitur nisl ut est tristique, eu rhoncus nisi scelerisque. Quisque et luctus libero. Suspendisse potenti. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.",
-      "Nunc non dolor vel tellus dictum efficitur nec vitae lacus. Fusce fermentum purus ut justo bibendum, ac aliquet nisl luctus. Etiam vel efficitur velit. Integer et urna eget ex lacinia sodales. Duis ultrices arcu at accumsan vulputate. Vivamus aliquet fringilla risus, vel interdum augue rhoncus vel.",
+      <p>
+        It is free to set up and start using a Better Giving account. Better
+        Giving only receives fees after donations have been received. There are
+        NO ongoing fees to any nonprofits.
+      </p>,
+      <p>
+        The fees are as follows and are charged at the point of donation. They
+        are very competitive in comparison with other routes, and the Fiscal
+        Sponsorship fee compares to a market standard of 4-10% !
+      </p>,
+      <p>
+        <Em intensity={3} classes="block mb-2">
+          For donations to US registered 501c3 accounts:
+        </Em>
+        <Em>Crypto donations</Em> - 2.9% of each donation
+        <div className="mb-2" />
+        <Em>Fiat donations</Em> (dollars, pounds, euros etc) - 1.5% (plus
+        external processing fees of 2.9% +$0.30 per donation)
+      </p>,
+      <p>
+        <Em intensity={3} classes="block mb-2">
+          For fiscally sponsored accounts (mainly non-US charities):
+        </Em>
+        <Em>Fiscal Sponsorship fee</Em> - 2.9%
+        <div className="mb-2" />
+        <Em>Crypto donations</Em> - 2.9% of each donation
+        <div className="mb-2" />
+        <Em>Fiat donations</Em> (dollars, pounds, euros etc) - 1.5% (plus
+        external processing fees of 2.9% +$0.30 per donation)
+      </p>,
+      <p>
+        Blockchain transaction fees may apply, but these can be fractions of a
+        cent depending on the chain.
+      </p>,
+      <p className="font-semibold">
+        All fees applied are shown before any donation is made.
+      </p>,
     ],
   },
 ];
+
+function Em({
+  classes = "",
+  children,
+  intensity = 1,
+}: PropsWithChildren & { intensity?: 1 | 2 | 3; classes?: string }) {
+  return (
+    <span
+      className={`${
+        intensity === 1
+          ? "font-medium"
+          : intensity === 2
+            ? "font-semibold"
+            : "font-semibold text-gray-d2"
+      } ${classes}`}
+    >
+      {children}
+    </span>
+  );
+}
