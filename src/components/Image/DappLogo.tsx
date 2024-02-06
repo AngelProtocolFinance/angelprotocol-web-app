@@ -5,7 +5,7 @@ import Image from "./Image";
 export default function DappLogo({ classes = "" }) {
   return (
     <Image
-      className={classes + " w-[200px]"}
+      className={classes}
       src={dappLogo}
       title="Go to Marketing page"
       href={BASE_URL}
