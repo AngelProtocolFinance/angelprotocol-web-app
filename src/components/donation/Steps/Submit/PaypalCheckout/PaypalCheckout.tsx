@@ -48,7 +48,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
   const locked = total - liq;
 
   return (
-    <div className="flex flex-col min-h-[16rem] isolate p-4 @md:p-8">
+    <div className="flex flex-col isolate p-4 @md:p-8">
       <BackBtn onClick={() => dispatch(setStep("splits"))} type="button" />
 
       <Heading classes="my-4" />
