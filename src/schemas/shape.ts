@@ -1,6 +1,14 @@
 import { OptionType } from "types/components";
 import type { TokenWithAmount as TWA } from "types/tx";
-import { NumberSchema, StringSchema, lazy, number, object, string } from "yup";
+import {
+  NumberSchema,
+  ObjectSchema,
+  StringSchema,
+  lazy,
+  number,
+  object,
+  string,
+} from "yup";
 import { requiredString } from "./string";
 import { testTokenDigits } from "./tests";
 import { SchemaShape } from "./types";
@@ -10,8 +18,16 @@ export const stringNumber = (
   num: (schema: NumberSchema) => NumberSchema
 ) =>
   lazy((v) =>
-    !v ? str(string()) : num(number().typeError("must be a number"))
+    !v && typeof v !== "number"
+      ? str(string())
+      : num(number().typeError("must be a number"))
   );
+
+export function schema<T extends object>(shape: SchemaShape<T>) {
+  return object<any, SchemaShape<object /** internal */>>(
+    shape
+  ) as ObjectSchema<T>;
+}
 
 type Key = keyof TWA;
 type Min = TWA["min_donation_amnt"];
