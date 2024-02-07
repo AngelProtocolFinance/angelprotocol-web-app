@@ -7,6 +7,7 @@ import { requiredString } from "schemas/string";
 import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
+import { Currency } from "types/components";
 import { FormValues as FV, Props } from "./types";
 
 // Chariot accepts only USD.
@@ -14,7 +15,7 @@ import { FormValues as FV, Props } from "./types";
 //
 // The minimum amount should not be hardcoded as it differs depending on which provider is selected.
 // See https://givechariot.readme.io/reference/create-grant
-const USD_CURRENCY = { code: "usd" };
+const USD_CURRENCY: Currency = { code: "usd", rate: 1 };
 
 export default function Form({ recipient, widgetConfig, details }: Props) {
   const authUser = useGetter((state) => state.auth.user);

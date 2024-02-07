@@ -23,7 +23,7 @@ export default function Form({ recipient, details, widgetConfig }: Props) {
   const initial: FV = {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
-    currency: { code: USD_CODE, min: 1 },
+    currency: { code: USD_CODE, min: 1, rate: 1 },
     email: authUserEmail,
     userOptForKYC: false,
   };

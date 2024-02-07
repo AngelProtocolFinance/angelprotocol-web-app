@@ -18,4 +18,9 @@ export type Country = {
 };
 
 //currency selector
-export type Currency = { code: string; name?: string; min?: number };
+export type Currency = {
+  code: string;
+  name?: string;
+  min?: number;
+  rate: number | null;
+};
