@@ -1,6 +1,6 @@
-import { DonationEstimate } from "./Breakdown/estimateDonation";
+import { EstimateResult } from "types/tx";
 
-export type EstimateStatus = DonationEstimate | "loading" | { error: string };
+export type EstimateStatus = EstimateResult | "loading" | { error: string };
 
-export const isSuccess = (status: EstimateStatus): status is DonationEstimate =>
-  !!(status as DonationEstimate).fee;
+export const isSuccess = (status: EstimateStatus): status is EstimateResult =>
+  !!(status as EstimateResult).fee;
