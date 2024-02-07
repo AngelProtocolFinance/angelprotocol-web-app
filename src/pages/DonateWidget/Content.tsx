@@ -58,18 +58,10 @@ export default function Content({
         </ErrorStatus>
       )}
       {donaterConfig.isDescriptionTextShown && (
-        <>
-          <p className="text-xs text-center sm:text-base mb-3">
-            Donate today to {profile.name}. Your donation will be protected and
-            compounded in perpetuity to provide {profile.name} with a long-term,
-            sustainable runway. Give once, give forever!
-          </p>
-          <p className="text-xs text-center sm:text-base">
-            Make sure to check out the many crypto and fiat donation options.
-            You will be given the chance to provide your personal details to
-            receive an immediate tax receipt.
-          </p>
-        </>
+        <p className="text-xs text-center sm:text-base">
+          Check out the many crypto and fiat donation options. Provide your
+          personal details to receive an immediate tax receipt.
+        </p>
       )}
 
       <Steps

@@ -14,18 +14,10 @@ export default function Preview({ classes = "" }) {
       <div className="pt-6 flex flex-col @xl/preview:pt-10 h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-gray-d2 bg-white">
         <h1 className="mb-10 px-10 w-full text-xl">{endowName}</h1>
         {isDescriptionTextShown && (
-          <>
-            <p className="px-6 @xl/preview:px-10 text-sm mb-4 text-center @xl/preview:text-left">
-              Donate today to {endowName}. Your donation will be protected and
-              compounded in perpetuity to provide {endowName} with a long-term,
-              sustainable runway. Give once, give forever!
-            </p>
-            <p className="px-6 @xl/preview:px-10 text-sm mb-10 text-center @xl/preview:text-left">
-              Make sure to check out the many crypto and fiat donation options.
-              You will be given the chance to provide your personal details to
-              receive an immediate tax receipt.
-            </p>
-          </>
+          <p className="px-6 @xl/preview:px-10 text-sm mb-10 text-center @xl/preview:text-left">
+            Check out the many crypto and fiat donation options. Provide your
+            personal details to receive an immediate tax receipt.
+          </p>
         )}
 
         <DonateMethods classes="mb-10 px-6 @xl/preview:px-10" />
