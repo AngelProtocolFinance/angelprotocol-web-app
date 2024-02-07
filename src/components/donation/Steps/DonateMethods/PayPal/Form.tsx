@@ -74,8 +74,8 @@ export default function Form({ recipient, details, widgetConfig }: Props) {
                 }
               : undefined,
             pattern: {
-              value: /[0-9]+/,
-              message: "must be a number",
+              value: /^[1-9]\d*$/,
+              message: "invalid",
             },
             shouldUnregister: true,
           }}

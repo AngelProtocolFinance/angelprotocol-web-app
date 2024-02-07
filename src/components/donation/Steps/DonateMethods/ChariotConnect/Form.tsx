@@ -1,11 +1,15 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import { CheckField, Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
+import { stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
+import { SchemaShape } from "schemas/types";
 import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
-import { FormValues, Props } from "./types";
+import { ObjectSchema, object, string } from "yup";
+import { FormValues as FV, Props } from "./types";
 
 // Chariot accepts only USD.
 // See https://givechariot.readme.io/reference/integrating-connect#response-objects
@@ -19,7 +23,7 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
 
-  const initial: FormValues = {
+  const initial: FV = {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: USD_CURRENCY,
@@ -27,17 +31,23 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
     userOptForKYC: false,
   };
 
-  const methods = useForm<FormValues>({
-    defaultValues: details || initial,
-  });
-  const { handleSubmit, watch } = methods;
+  const schema = object<any, SchemaShape<FV>>({
+    amount: stringNumber(
+      (s) => s.required("required"),
+      (n) => n.positive("must be greater than 0")
+    ),
+    email: string().required("required").email("invalid"),
+  }) as ObjectSchema<FV>;
 
-  const currency = watch("currency");
+  const methods = useForm<FV>({
+    defaultValues: details || initial,
+    resolver: yupResolver(schema),
+  });
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={handleSubmit((fv) =>
+        onSubmit={methods.handleSubmit((fv) =>
           dispatch(
             setDetails({
               ...fv,
@@ -56,30 +66,17 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
           classes={{ label: "font-semibold" }}
           required
         />
-        <Field<FormValues>
+        <Field<FV>
           name="amount"
           label="Donation amount"
           classes={{ label: "font-semibold" }}
           required
           // validation must be dynamicly set depending on which exact currency is selected
-          registerOptions={{
-            required: "required",
-            min: currency.min
-              ? {
-                  value: currency.min,
-                  message: `must be greater than ${currency.min}`,
-                }
-              : undefined,
-            pattern: {
-              value: /[0-9]+/,
-              message: "must be a number",
-            },
-            shouldUnregister: true,
-          }}
+
           tooltip="The minimum donation amount will depend on which DAF provider you select in the next step."
         />
         {!authUserEmail && (
-          <Field<FormValues>
+          <Field<FV>
             name="email"
             label="Email"
             required
