@@ -1,10 +1,10 @@
+import Seo from "components/Seo";
+import { APP_NAME, DAPP_URL } from "constants/env";
+import { useLocation } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
-import { useLocation } from "react-router-dom";
-import Seo from "components/Seo";
-import { APP_NAME, DAPP_URL } from "constants/env";
 
 export default function Widget({ endowId }: { endowId?: number }) {
   const location = useLocation();

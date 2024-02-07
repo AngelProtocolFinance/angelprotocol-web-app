@@ -2,11 +2,12 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { mumbai, polygon } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { FormProvider, useForm } from "react-hook-form";
+import { schema, tokenShape } from "schemas/shape";
 import { CryptoFormStep } from "slices/donation";
 import { DonaterConfigFromWidget } from "types/widget";
+import { object } from "yup";
 import Form from "./Form";
 import { initToken } from "./constants";
-import { schema } from "./schema";
 import { DonateValues } from "./types";
 
 type Props = CryptoFormStep & {
@@ -25,7 +26,12 @@ export default function Crypto({ config, ...state }: Props) {
 
   const methods = useForm<DonateValues>({
     values: state.details || initial,
-    resolver: yupResolver(schema),
+    resolver: yupResolver(
+      schema<DonateValues>({
+        token: object(tokenShape()),
+        //no need to validate split, restricted by slider
+      })
+    ),
   });
   return (
     <FormProvider {...methods}>

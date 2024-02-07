@@ -1,5 +1,7 @@
 import { adminRoutes } from "constants/routes";
 import { Navigate, Route, Routes } from "react-router-dom";
+import Widget from "../../Widget";
+import { useAdminContext } from "../Context";
 import Layout from "../Layout";
 import { LINKS } from "../constants";
 import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";
@@ -9,8 +11,6 @@ import EditProfile from "./EditProfile";
 import Members from "./Members/Members";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
-import Widget from "../../Widget";
-import { useAdminContext } from "../Context";
 
 export default function Charity() {
   //widget configurer is used in admin

@@ -1,128 +1,87 @@
-import { Info, LoadingStatus } from "components/Status";
+import { WalletProvider } from "@terra-money/wallet-provider";
+import Icon from "components/Icon";
+import { chainOptions } from "constants/chainOptions";
 import { chains } from "constants/chains";
-import { isDisconnected, useWalletContext } from "contexts/WalletContext";
-import { useState } from "react";
-import { CryptoSubmitStep } from "slices/donation";
-import { TxPackage } from "types/tx";
-import { ConnectedWallet, isCosmos, isEVM, isTerra } from "types/wallet";
-import Breakdown from "./Breakdown";
-import Container from "./Container";
-import WalletSelection from "./WalletSelection";
-import { EstimateStatus, isSuccess } from "./types";
+import WalletContext from "contexts/WalletContext/WalletContext";
+import { humanize } from "helpers";
+import { useUsdRateQuery } from "services/coingecko";
+import { CryptoSubmitStep, setStep } from "slices/donation";
+import { useSetter } from "store/accessors";
+import Image from "../../../../Image";
+import BackBtn from "../../BackBtn";
+import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
-  const wallet = useWalletContext();
-  const chainID = props.details.chainId.value;
-  const [estimate, setEstimate] = useState<EstimateStatus>("loading");
-
-  if (wallet === "loading") {
-    return (
-      <Container {...props}>
-        <LoadingStatus classes="justify-self-center mt-6">
-          Connecting wallet..
-        </LoadingStatus>
-      </Container>
-    );
+  const dispatch = useSetter();
+  function goBack() {
+    dispatch(setStep("splits"));
   }
+  const { details } = props;
 
-  if (isDisconnected(wallet)) {
-    return (
-      <Container {...props}>
-        <WalletSelection chainID={chainID} wallets={wallet} />
-      </Container>
-    );
-  }
+  const total = +details.token.amount;
+  const liq = total * (props.liquidSplitPct / 100);
+  const locked = total - liq;
 
-  if (!wallet.supportedChains.includes(chainID)) {
-    return (
-      <Container {...props} wallet={wallet}>
-        <Info classes="justify-self-center mt-6">
-          Connected wallet doesn't support this chain.
-        </Info>
-        <button
-          className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal justify-self-center"
-          type="button"
-          onClick={wallet.disconnect}
-        >
-          change wallet
-        </button>
-      </Container>
-    );
-  }
-
-  if (chainID !== wallet.chainId) {
-    return (
-      <Container {...props} wallet={wallet}>
-        {wallet.switchChain ? (
-          <>
-            <Info classes="justify-self-center mt-6">
-              Your wallet is not connected to your selected chain.
-            </Info>
-            <button
-              disabled={wallet.isSwitching}
-              type="button"
-              onClick={() => wallet.switchChain?.(chainID)}
-              className="btn-outline-filled px-4 py-2 mt-4 text-xs font-normal justify-self-center"
-            >
-              Switch to {chains[chainID].name}
-            </button>
-          </>
-        ) : (
-          <Info classes="justify-self-center mt-6">
-            Kindly set your wallet network to your selected chain.
-          </Info>
-        )}
-      </Container>
-    );
-  }
+  const Amount = withUSD(details.token.coingecko_denom);
 
   return (
-    <Container
-      {...props}
-      txPackage={txPackage(estimate, wallet)}
-      wallet={wallet}
-    >
-      <Breakdown
-        submitStep={props}
-        estimate={estimate}
-        setEstimate={setEstimate}
-        sender={wallet.address}
-      />
-    </Container>
+    <div className="grid content-start p-4 @md:p-8">
+      <BackBtn type="button" onClick={goBack} className="mb-4" />
+
+      <h4 className="flex items-center text-lg gap-2 mb-2">
+        <Icon type="StickyNote" />
+        <span className="font-semibold">Your donation summary</span>
+      </h4>
+
+      <dl className="text-gray-d1 py-3 flex items-center justify-between border-b border-prim">
+        <dt className="mr-auto">Currency</dt>
+        <Image
+          className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
+          src={details.token.logo}
+        />
+        <dd className="text-gray-d2">{details.token.symbol}</dd>
+      </dl>
+
+      <dl className="text-gray-d1 py-3 flex items-center justify-between">
+        <dt className="mr-auto">Blockchain</dt>
+        <dd className="text-gray-d2">{chains[details.chainId.value].name}</dd>
+      </dl>
+
+      <dl className="text-gray-d1 py-3 gap-y-2 grid grid-cols-[1fr_auto] justify-between border-y border-prim">
+        <dt className="mr-auto">Total donation</dt>
+        <Amount classes="text-gray-d2" amount={total} />
+        <div className="flex items-center justify-between col-span-full">
+          <dt className="mr-auto text-sm">Sustainable Fund</dt>
+          <Amount classes="text-sm" amount={locked} />
+        </div>
+        <div className="flex items-center justify-between col-span-full">
+          <dt className="mr-auto text-sm">Instantly Available</dt>
+          <Amount classes="text-sm" amount={liq} />
+        </div>
+      </dl>
+
+      <WalletProvider {...chainOptions}>
+        <WalletContext>
+          <Checkout {...props} classes="mt-4" />
+        </WalletContext>
+      </WalletProvider>
+    </div>
   );
 }
 
-const txPackage = (
-  estimate: EstimateStatus,
-  wallet: ConnectedWallet
-): TxPackage | undefined => {
-  if (!isSuccess(estimate)) return undefined;
-
-  const { items: _, ...rest } = estimate;
-  const { address: sender } = wallet;
-
-  switch (rest.chainID) {
-    case "phoenix-1":
-    case "pisco-1": {
-      if (!isTerra(wallet)) throw new Error("User selected wrong wallet");
-      const { toSend, chainID } = rest;
-      return { toSend, chainID, sender, post: wallet.post };
-    }
-    case "juno-1":
-    case "uni-6": {
-      const { toSend, chainID } = rest;
-      if (!isCosmos(wallet)) throw new Error("User selected wrong wallet");
-      return {
-        chainID,
-        sender,
-        sign: wallet.sign,
-        toSend,
-      };
-    }
-    default: {
-      if (!isEVM(wallet)) throw new Error("User selected wrong wallet");
-      const { toSend, chainID } = rest;
-      return { toSend, chainID, sender, request: wallet.request };
-    }
-  }
-};
+const withUSD = (coinGeckoId: string) =>
+  function Amount(props: { amount: string | number; classes?: string }) {
+    const { data: rate, isLoading, isError } = useUsdRateQuery(coinGeckoId);
+    return (
+      <dd className={props.classes}>
+        {humanize(props.amount, 4)}{" "}
+        {isLoading ? (
+          "($--)"
+        ) : isError || !rate ? (
+          <span className="text-red">"($--)"</span>
+        ) : (
+          `($${humanize(+props.amount * rate, 2)})`
+        )}
+      </dd>
+    );
+  };

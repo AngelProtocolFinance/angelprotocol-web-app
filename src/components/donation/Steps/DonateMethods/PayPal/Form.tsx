@@ -1,13 +1,15 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import { CheckField, Field } from "components/form";
 import { FormProvider, useController, useForm } from "react-hook-form";
+import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { usePaypalCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import { Currency } from "types/components";
-import { FormValues, Props } from "./types";
+import { FormValues as FV, Props } from "./types";
 
 const USD_CODE = "usd";
 
@@ -18,7 +20,7 @@ export default function Form({ recipient, details, widgetConfig }: Props) {
 
   const currencies = usePaypalCurrenciesQuery(null);
 
-  const initial: FormValues = {
+  const initial: FV = {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: { code: USD_CODE, min: 1 },
@@ -26,14 +28,31 @@ export default function Form({ recipient, details, widgetConfig }: Props) {
     userOptForKYC: false,
   };
 
-  const methods = useForm<FormValues>({
+  const currencyKey: keyof FV = "currency";
+  const methods = useForm<FV>({
     defaultValues: details || initial,
+    resolver: yupResolver(
+      schema<FV>({
+        email: requiredString.email("invalid email"),
+        amount: stringNumber(
+          (s) => s.required("required"),
+          (n) =>
+            n
+              .positive("must be greater than 0")
+              .when(currencyKey, (values, schema) => {
+                const [currency] = values as [Currency | undefined];
+                return currency?.min
+                  ? schema.min(currency.min, "less than min")
+                  : schema;
+              })
+        ),
+      })
+    ),
   });
   const { control, handleSubmit } = methods;
-
   const {
     field: { value: currency, onChange: onCurrencyChange },
-  } = useController({
+  } = useController<FV, "currency">({
     control: control,
     name: "currency",
   });
@@ -59,44 +78,24 @@ export default function Form({ recipient, details, widgetConfig }: Props) {
           value={currency}
           required
         />
-        <Field<FormValues>
+        <Field<FV>
           name="amount"
           label="Donation amount"
           classes={{ label: "font-semibold" }}
           required
-          // validation must be dynamicly set depending on which exact currency is selected
-          registerOptions={{
-            required: "required",
-            min: currency.min
-              ? {
-                  value: currency.min,
-                  message: `must be greater than ${currency.min}`,
-                }
-              : undefined,
-            pattern: {
-              value: /[0-9]+/,
-              message: "must be a number",
-            },
-            shouldUnregister: true,
-          }}
           tooltip={createTooltip(currency)}
         />
         {!authUserEmail && (
-          <Field<FormValues>
+          <Field<FV>
             name="email"
             label="Email"
             classes={{ label: "font-semibold" }}
             required
-            registerOptions={{
-              required: "required",
-              validate: (value) =>
-                requiredString.email().isValidSync(value) || "invalid email",
-            }}
           />
         )}
         {!recipient.isKYCRequired && (
           // if KYC is required, the checkbox is redundant
-          <CheckField<FormValues>
+          <CheckField<FV>
             name="userOptForKYC"
             classes={{
               container: "text-sm",

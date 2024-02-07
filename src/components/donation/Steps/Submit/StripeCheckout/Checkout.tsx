@@ -8,8 +8,8 @@ import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FormEventHandler, useState } from "react";
-import Loader from "../Loader";
 import { DonationSource } from "types/lists";
+import Loader from "../Loader";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
