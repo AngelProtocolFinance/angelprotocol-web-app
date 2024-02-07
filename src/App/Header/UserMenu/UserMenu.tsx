@@ -7,6 +7,7 @@ import { logout } from "slices/auth";
 import { useGetter, useSetter } from "store/accessors";
 import { SignInRouteState } from "types/routeStates";
 import Menu from "./Menu";
+import LoaderRing from "components/LoaderRing";
 
 export default function UserMenu() {
   const user = useGetter((state) => state.auth.user);
@@ -14,7 +15,7 @@ export default function UserMenu() {
 
   const location = useLocation();
 
-  if (!user || user === "loading") {
+  if (!user) {
     const state: SignInRouteState = { from: location.pathname };
     return (
       <>
@@ -36,6 +37,10 @@ export default function UserMenu() {
         </Link>
       </>
     );
+  }
+
+  if (user === "loading") {
+    return <LoaderRing thickness={10} classes="w-6" />;
   }
 
   return (
