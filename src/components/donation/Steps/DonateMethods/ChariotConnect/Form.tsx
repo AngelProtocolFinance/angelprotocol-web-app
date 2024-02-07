@@ -3,10 +3,10 @@ import CurrencySelector from "components/CurrencySelector";
 import { CheckField, Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
+import { requiredString } from "schemas/string";
 import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
-import { string } from "yup";
 import { FormValues as FV, Props } from "./types";
 
 // Chariot accepts only USD.
@@ -37,7 +37,7 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
           (s) => s.required("required"),
           (n) => n.positive("must be greater than 0")
         ),
-        email: string().required("required").email("invalid"),
+        email: requiredString.email("invalid email"),
       })
     ),
   });
