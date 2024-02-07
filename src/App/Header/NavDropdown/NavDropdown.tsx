@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { useModalContext } from "contexts/ModalContext";
 import useHandleScreenResize, {
-  SCREEN_WIDTHS,
+  SCREEN_WIDTH_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
 import { Link } from "../../types";
 import Menu from "./Menu";
@@ -13,7 +13,7 @@ export default function NavDropdown({ links }: Props) {
 
   useHandleScreenResize(
     (screenSize) => {
-      if (screenSize >= SCREEN_WIDTHS.lg) {
+      if (screenSize >= SCREEN_WIDTH_BREAKPOINTS.lg) {
         closeModal();
       }
     },
