@@ -1,5 +1,5 @@
 import useHandleScreenResize, {
-  SCREEN_WIDTH_BREAKPOINTS,
+  SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
 import { useRef, useState } from "react";
 import { useGetter } from "store/accessors";
@@ -14,7 +14,7 @@ export default function useHeaderLinks() {
 
   useHandleScreenResize(
     (screenSize) => {
-      const _isMobile = screenSize < SCREEN_WIDTH_BREAKPOINTS.sm;
+      const _isMobile = screenSize < SCREEN_BREAKPOINTS.sm;
       if (_isMobile !== isMobileRef.current) {
         setMobile(_isMobile);
         isMobileRef.current = _isMobile;

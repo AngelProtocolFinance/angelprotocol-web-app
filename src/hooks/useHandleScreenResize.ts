@@ -4,7 +4,7 @@ import { useEffect } from "react";
  * tailwind screen sizes
  * @see {@link https://tailwindcss.com/docs/responsive-design}
  */
-export const SCREEN_WIDTH_BREAKPOINTS = {
+export const SCREEN_BREAKPOINTS = {
   sm: 640,
   md: 768,
   lg: 1024,
