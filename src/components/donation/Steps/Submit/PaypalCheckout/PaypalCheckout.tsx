@@ -61,7 +61,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
       />
 
       {isLoading ? (
-        <ContentLoader className="rounded h-14 w-full mt-auto" />
+        <ContentLoader className="rounded h-14 w-full" />
       ) : isError || !orderId ? (
         <Err error={error} />
       ) : (

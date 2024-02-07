@@ -1,3 +1,4 @@
+import ContentLoader from "components/ContentLoader";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
@@ -9,7 +10,9 @@ import { ChariotCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../BackBtn";
 import Err from "./Err";
-import Loader from "./Loader";
+import Currency from "./common/Currrency";
+import Heading from "./common/Heading";
+import SplitSummary from "./common/SplitSummary";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
@@ -33,8 +36,13 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
     };
   };
 
+  const currency = details.currency;
+  const total = +details.amount;
+  const liq = total * (liquidSplitPct / 100);
+  const locked = total - liq;
+
   return (
-    <div className="grid content-start gap-8 p-4 @md:p-8">
+    <div className="flex flex-col content-start p-4 @md:p-8 group">
       <BackBtn
         type="button"
         onClick={() => {
@@ -45,8 +53,20 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
         }}
       />
 
+      <Heading classes="my-4" />
+
+      <SplitSummary
+        classes="mb-auto"
+        total={<Currency {...currency} amount={total} classes="text-gray-d2" />}
+        liquid={<Currency {...currency} amount={liq} classes="text-sm" />}
+        locked={<Currency {...currency} amount={locked} classes="text-sm" />}
+      />
+
+      {/** <CharioConnect/> is not yet rendered */}
+      <ContentLoader className="rounded h-14 w-full group-has-[chariot-connect]:hidden" />
+
       {isLoading ? (
-        <Loader msg="Processing donation..." />
+        <ContentLoader className="rounded h-12 w-full" />
       ) : isError ? (
         <Err error={error} />
       ) : (
