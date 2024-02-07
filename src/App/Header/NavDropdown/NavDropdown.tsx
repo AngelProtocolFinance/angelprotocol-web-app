@@ -22,6 +22,7 @@ export default function NavDropdown({ links }: Props) {
 
   return (
     <button
+      data-testid="nav_dropdown"
       onClick={() => showModal(Menu, { links })}
       className="flex items-center justify-center"
     >
