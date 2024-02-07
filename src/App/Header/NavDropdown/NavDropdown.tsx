@@ -6,7 +6,7 @@ import Menu from "./Menu";
 
 type Props = { links: Link[] };
 
-export function Opener({ links }: Props) {
+export default function NavDropdown({ links }: Props) {
   const { showModal, closeModal, isModalOpen } = useModalContext();
 
   useHandleScreenResize(

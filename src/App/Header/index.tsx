@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Link } from "../types";
 import Logo from "./Logo";
-import { Opener as MobileNavOpener } from "./MobileNav";
+import NavDropdown from "./NavDropdown";
 import UserMenu from "./UserMenu";
 
 const NAVBAR_ID = "navbar";
@@ -52,7 +52,7 @@ export default function Header({ classes, links }: Props) {
             location.pathname === appRoutes.signin ||
             location.pathname === appRoutes.auth_redirector
           ) && <UserMenu />}
-          <MobileNavOpener links={links} />
+          <NavDropdown links={links} />
         </div>
       </div>
     </header>
