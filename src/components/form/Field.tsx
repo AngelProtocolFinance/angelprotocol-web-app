@@ -1,12 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { HTMLInputTypeAttribute, createElement } from "react";
-import {
-  FieldValues,
-  Path,
-  RegisterOptions,
-  get,
-  useFormContext,
-} from "react-hook-form";
+import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { Label } from ".";
 import { unpack } from "./helpers";
 import { Classes } from "./types";
@@ -26,7 +20,6 @@ type FieldProps<T extends FieldValues, K extends InputType> = Omit<
   tooltip?: string;
   label: string;
   type?: K;
-  registerOptions?: RegisterOptions<FieldValues, Path<T>> | undefined;
 };
 
 export function Field<T extends FieldValues, K extends InputType = InputType>({
@@ -37,10 +30,6 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
   tooltip,
   required,
   disabled,
-  registerOptions = {
-    valueAsNumber: type === "number",
-    required: required ? "required" : undefined,
-  },
   ...props
 }: FieldProps<T, K>) {
   const {
@@ -60,7 +49,7 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
 
       {createElement(type === textarea ? textarea : "input", {
         ...props,
-        ...register(name, registerOptions),
+        ...register(name, { valueAsNumber: type === "number" }),
         ...(type === textarea ? {} : { type }),
         id,
         "aria-invalid": !!get(errors, name)?.message,
