@@ -1,6 +1,8 @@
 import { DrawerIcon } from "components/Icon";
 import { idParamToNum } from "helpers";
-import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
+import useHandleScreenResize, {
+  SCREEN_WIDTHS,
+} from "hooks/useHandleScreenResize";
 import { PropsWithChildren, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RegStep } from "../types";
@@ -16,11 +18,13 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   const currPath = idParamToNum(paths.at(-1));
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
-  const [isDesktop, setDesktop] = useState(window.innerWidth >= SCREEN_MD);
+  const [isDesktop, setDesktop] = useState(
+    window.innerWidth >= SCREEN_WIDTHS.md
+  );
 
   useHandleScreenResize(
     (screen, ref) => {
-      const isOnDesktop = screen >= SCREEN_MD; /** tailwind md screen size */
+      const isOnDesktop = screen >= SCREEN_WIDTHS.md;
       if ((isOnDesktop && !ref.isOpen) || (!isOnDesktop && ref.isOpen)) {
         setIsOtherStepsShown(isOnDesktop);
         ref.isOpen = isOnDesktop;

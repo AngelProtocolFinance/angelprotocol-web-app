@@ -1,4 +1,6 @@
-import useHandleScreenResize, { SCREEN_SM } from "hooks/useHandleScreenResize";
+import useHandleScreenResize, {
+  SCREEN_WIDTHS,
+} from "hooks/useHandleScreenResize";
 import { useRef, useState } from "react";
 import { useGetter } from "store/accessors";
 import { CHARITY_LINKS } from "./constants";
@@ -12,7 +14,7 @@ export default function useHeaderLinks() {
 
   useHandleScreenResize(
     (screenSize) => {
-      const _isMobile = screenSize < SCREEN_SM;
+      const _isMobile = screenSize < SCREEN_WIDTHS.sm;
       if (_isMobile !== isMobileRef.current) {
         setMobile(_isMobile);
         isMobileRef.current = _isMobile;

@@ -1,9 +1,14 @@
 import { useEffect } from "react";
 
-/**tailwind screen sizes*/
-export const SCREEN_SM = 640;
-export const SCREEN_MD = 768;
-export const SCREEN_LG = 1024;
+/**
+ * tailwind screen sizes
+ * @see {@link https://tailwindcss.com/docs/responsive-design}
+ */
+export const SCREEN_WIDTHS = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+};
 
 type Options<T extends object> = {
   shouldCallOnResizeOnLoad?: boolean;
