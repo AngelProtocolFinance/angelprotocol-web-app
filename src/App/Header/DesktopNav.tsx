@@ -10,7 +10,7 @@ const styles = "px-4 transition ease-in-out duration-300 hover:text-orange-l1";
 export default function DesktopNav({ classes, links }: Props) {
   return (
     <nav
-      className={`${classes} items-center justify-end font-body text-blue text-sm bg-white`}
+      className={`${classes} items-center justify-end text-blue text-sm bg-white`}
     >
       {links.map((link) =>
         link.external ? (

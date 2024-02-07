@@ -56,13 +56,13 @@ export default function Loaded(props: BankingApplicationDetails) {
           <div
             className={`${
               isApproved ? "bg-green" : "bg-red"
-            } text-white px-2 py-1 text-xs font-work uppercase rounded inline-block`}
+            } text-white px-2 py-1 text-xs uppercase rounded inline-block`}
           >
             {isApproved ? "Approved" : "Rejected"}
           </div>
         )}
         {isDefault && (
-          <div className="bg-blue text-white px-2 py-1 text-xs font-work uppercase rounded inline-block">
+          <div className="bg-blue text-white px-2 py-1 text-xs uppercase rounded inline-block">
             Default
           </div>
         )}
@@ -105,14 +105,14 @@ export default function Loaded(props: BankingApplicationDetails) {
       <div className="flex max-sm:flex-col gap-1 sm:gap-3 mt-4 sm:justify-self-end">
         <Link
           to={`../${adminRoutes.banking}`}
-          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-outline"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back
         </Link>
         <button
           onClick={() => deleteMethod()}
           type="button"
-          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
         >
           delete
         </button>
@@ -120,7 +120,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           disabled={isLoading || isDefault || !isApproved}
           onClick={() => setDefault()}
           type="button"
-          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-orange"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-orange"
         >
           set default
         </button>

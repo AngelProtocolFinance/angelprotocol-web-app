@@ -77,7 +77,7 @@ function Portion(
     <div className="flex flex-col items-center p-6 bg-orange-l6 border border-gray-l2 rounded">
       <p className="uppercase font-bold text-sm">{props.title}</p>
       <p className="text-xs mb-2 font-bold">{props.percentage}%</p>
-      <p className="uppercase text-xs text-center font-body">{props.action}</p>
+      <p className="uppercase text-xs text-center">{props.action}</p>
       {props.children}
       <p className="mt-auto font-bold text-center">TOKEN 0.00000</p>
     </div>
