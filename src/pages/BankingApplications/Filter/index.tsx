@@ -4,9 +4,9 @@ import Icon, { DrawerIcon } from "components/Icon";
 import { cleanObject } from "helpers/cleanObject";
 import { FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { optionType, schema, stringNumber } from "schemas/shape";
 import { BankingApplicationsQueryParams } from "types/aws";
 import Form from "./Form";
-import { schema } from "./schema";
 import { FormValues as FV } from "./types";
 
 type Props = {
@@ -23,7 +23,15 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
   const methods = useForm<FV>({
     mode: "onChange",
     reValidateMode: "onChange",
-    resolver: yupResolver(schema),
+    resolver: yupResolver(
+      schema<FV>({
+        endowmentID: stringNumber(
+          (s) => s,
+          (n) => n.positive("must be greater than 0").integer("invalid id")
+        ),
+        status: optionType(),
+      })
+    ),
     defaultValues: {
       endowmentID: "",
       status: { label: "Under Review", value: "under-review" },
