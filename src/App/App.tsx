@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/react";
-import { appRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { lazy } from "react";
@@ -23,6 +23,7 @@ const BankingApplications = lazy(() => import("pages/BankingApplications"));
 const BankingApplication = lazy(() => import("pages/BankingApplication"));
 const OAuthRedirector = lazy(() => import("pages/OAuthRedirector"));
 const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
+const Widget = lazy(() => import("pages/Widget"));
 
 export default function App() {
   const location = useLocation();
@@ -33,6 +34,18 @@ export default function App() {
   return (
     <ModalContext>
       <SentryRoutes>
+        <Route path={appRoutes.donate_widget}>
+          <Route path=":id" element={<DonateWidget />} />
+          <Route
+            path={donateWidgetRoutes.donate_fiat_thanks}
+            element={<DonateFiatThanks widgetVersion />}
+          />
+          <Route
+            path={donateWidgetRoutes.stripe_payment_status}
+            element={<StripePaymentStatus />}
+          />
+        </Route>
+
         <Route
           path={`${appRoutes.donate_widget}/:id`}
           element={<DonateWidget />}
@@ -79,6 +92,18 @@ export default function App() {
             <Route path=":id/*" element={<Profile />} />
             <Route index element={<Marketplace />} />
           </Route>
+          <Route
+            path={appRoutes.widget_config}
+            element={
+              // Widget.tsx is also used as one of the Admin pages and so
+              // where its styles depend on the width of the parent component;
+              // We copy/paste src/pages/Admin/Layout.tsx container styles here
+              // so that Widget.tsx styles are applied correctly on both pages.
+              <div className="px-6 py-8 md:p-10 @container">
+                <Widget />
+              </div>
+            }
+          />
         </Route>
         <Route
           path="*"

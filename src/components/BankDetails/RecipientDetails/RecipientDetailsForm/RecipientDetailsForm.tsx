@@ -49,7 +49,7 @@ export default function RecipientDetailsForm({
   const [createRecipient] = useCreateRecipientMutation();
 
   async function refresh() {
-    const { accountHolderName, bankStatement, ...details } = getValues();
+    const { accountHolderName, bankStatement: _, ...details } = getValues();
     await updateRequirements({
       quoteId,
       amount,

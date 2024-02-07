@@ -17,7 +17,6 @@ export default function Crypto({ config, ...state }: Props) {
   const initial: DonateValues = {
     source: config ? "bg-widget" : "bg-marketplace",
     token: initToken,
-    pctLiquidSplit: config?.liquidSplitPct ?? 50,
     chainId: IS_TEST
       ? { label: mumbai.name, value: mumbai.id }
       : { label: polygon.name, value: polygon.id },

@@ -5,14 +5,15 @@ import {
 } from "@stripe/react-stripe-js";
 import LoadText from "components/LoadText";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { appRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FormEventHandler, useState } from "react";
 import Loader from "../Loader";
+import { DonationSource } from "types/lists";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ onBack }: { onBack: () => void }) {
+export default function Checkout({ source }: { source: DonationSource }) {
   const stripe = useStripe();
   const elements = useElements();
   const { handleError } = useErrorContext();
@@ -37,10 +38,15 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
 
     setSubmitting(true);
 
+    const return_url =
+      source === "bg-widget"
+        ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
+        : `${window.location.origin}${appRoutes.stripe_payment_status}`;
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${window.location.origin}${appRoutes.stripe_payment_status}`,
+        return_url,
       },
     });
 
@@ -59,10 +65,7 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="grid grid-[1fr_auto] gap-8 p-4 @md:p-8"
-    >
+    <form onSubmit={handleSubmit} className="contents">
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setLoading(false)}
@@ -74,33 +77,16 @@ export default function Checkout({ onBack }: { onBack: () => void }) {
       />
       {showLoader ? (
         <Loader />
-      ) : isLoading ? (
-        <button
-          className="btn-outline-filled btn-donate w-1/2"
-          onClick={onBack}
-          type="button"
-        >
-          Back
-        </button>
       ) : (
-        <div className="grid grid-cols-2 gap-5 w-full">
-          <button
-            className="btn-outline-filled btn-donate"
-            onClick={onBack}
-            type="button"
-          >
-            Back
-          </button>
-          <button
-            className="btn-orange btn-donate"
-            disabled={!stripe || !elements || isSubmitting}
-            type="submit"
-          >
-            <LoadText text="Processing..." isLoading={isSubmitting}>
-              Pay Now
-            </LoadText>
-          </button>
-        </div>
+        <button
+          className="btn-orange btn-donate w-full"
+          disabled={!stripe || !elements || isSubmitting || isLoading}
+          type="submit"
+        >
+          <LoadText text="Processing..." isLoading={isSubmitting}>
+            Pay Now
+          </LoadText>
+        </button>
       )}
     </form>
   );

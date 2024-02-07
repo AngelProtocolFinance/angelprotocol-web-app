@@ -98,7 +98,7 @@ const txPackage = (
 ): TxPackage | undefined => {
   if (!isSuccess(estimate)) return undefined;
 
-  const { items, ...rest } = estimate;
+  const { items: _, ...rest } = estimate;
   const { address: sender } = wallet;
 
   switch (rest.chainID) {

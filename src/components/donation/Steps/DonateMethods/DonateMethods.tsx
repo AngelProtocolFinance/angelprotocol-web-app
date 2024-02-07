@@ -1,10 +1,11 @@
 import { Tab } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
+import { Label } from "components/form";
 import { useState } from "react";
 import { DonationDetails, FormStep } from "slices/donation";
 import { DonaterConfigFromWidget } from "types/widget";
+import ChariotConnect from "./ChariotConnect";
 import Crypto from "./Crypto";
-import DAFDirect from "./DAFDirect";
 import PayPal from "./PayPal";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
@@ -16,12 +17,16 @@ type Props = {
 
 const tabIdx = (method?: DonationDetails["method"]) => {
   switch (method) {
-    case "crypto":
-      return 4;
-    case "paypal":
-      return 1;
     case "stripe":
       return 0;
+    case "paypal":
+      return 1;
+    case "stocks":
+      return 2;
+    case "chariot":
+      return 3;
+    case "crypto":
+      return 4;
     //other methods doesn't have donate methods yet
     default:
       return 0;
@@ -44,6 +49,9 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       className="grid @md:grid-cols-[auto_1fr]"
       defaultIndex={tabIdx(state.details?.method)}
     >
+      <Label className="p-4 pb-0 col-span-full @md:hidden font-bold">
+        Payment method
+      </Label>
       <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-1 content-start @md:bg-blue-l4 @md:divide-y @md:divide-white">
         <Tab className={({ selected }) => tabClasses(selected)}>
           <Icon type="CreditCard" size={16} />
@@ -81,7 +89,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           </button>
         )}
       </Tab.List>
-      <Tab.Panels as="div" className="p-4 @md:p-8 pt-0 @md:pt-4 ">
+      <Tab.Panels as="div" className="grid p-4 @md:p-8 pt-0 @md:pt-4 ">
         <Tab.Panel>
           <Stripe
             recipient={state.recipient}
@@ -90,9 +98,6 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
               state.details?.method === "stripe" ? state.details : undefined
             }
             widgetConfig={donaterConfig}
-            advanceOptDisplay={
-              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
-            }
           />
         </Tab.Panel>
         <Tab.Panel>
@@ -103,16 +108,29 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
               state.details?.method === "paypal" ? state.details : undefined
             }
             widgetConfig={donaterConfig}
-            advanceOptDisplay={
-              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
+          />
+        </Tab.Panel>
+        <Tab.Panel>
+          <Stocks
+            recipient={state.recipient}
+            step={state.step}
+            details={
+              state.details?.method === "stocks" ? state.details : undefined
             }
           />
         </Tab.Panel>
         <Tab.Panel>
-          <Stocks state={state} />
-        </Tab.Panel>
-        <Tab.Panel>
-          <DAFDirect />
+          <ChariotConnect
+            recipient={state.recipient}
+            step={state.step}
+            details={
+              state.details?.method === "chariot" ? state.details : undefined
+            }
+            widgetConfig={donaterConfig}
+            advanceOptDisplay={
+              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
+            }
+          />
         </Tab.Panel>
         <Tab.Panel>
           <Crypto

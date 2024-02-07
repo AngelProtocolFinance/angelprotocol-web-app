@@ -1,18 +1,29 @@
-import { adminRoutes } from "constants/routes";
-import { useAdminContext } from "pages/Admin/Context";
-import Seo from "../Seo";
+import { useEndowment } from "services/aws/useEndowment";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
+import { useLocation } from "react-router-dom";
+import Seo from "components/Seo";
+import { APP_NAME, DAPP_URL } from "constants/env";
 
-export default function Widget() {
-  //widget configurer is used in admin
-  const { id } = useAdminContext();
+export default function Widget({ endowId }: { endowId?: number }) {
+  const location = useLocation();
+  const { data: profile } = useEndowment(
+    endowId ?? 0,
+    ["logo", "name", "overview"],
+    { skip: !endowId }
+  );
+
   return (
     <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
       <Seo
-        title={`Widget Configuration for nonprofit ${id}`}
-        url={`${adminRoutes.widget_config}`}
+        title={`Widget Configuration${
+          endowId ? ` for nonprofit ${endowId}` : ""
+        } - ${APP_NAME}`}
+        description={profile?.overview.slice(0, 140)}
+        name={profile?.name}
+        image={profile?.logo}
+        url={`${DAPP_URL}${location.pathname}`}
       />
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">
         Accept donations from your website today!

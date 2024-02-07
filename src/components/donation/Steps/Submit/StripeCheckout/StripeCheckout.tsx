@@ -4,6 +4,7 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import { useStripePaymentIntentQuery } from "services/apes";
 import { StripeCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
+import BackBtn from "../../BackBtn";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
@@ -13,17 +14,18 @@ const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, kyc } = props;
+  const { details, recipient, kyc, liquidSplitPct } = props;
   const {
     data: clientSecret,
     isLoading,
     isError,
+    error,
   } = useStripePaymentIntentQuery({
     amount: +details.amount,
     currency: details.currency.code,
     endowmentId: recipient.id,
     email: details.email,
-    splitLiq: details.pctLiquidSplit.toString(),
+    splitLiq: liquidSplitPct.toString(),
     kycData: kyc
       ? {
           city: kyc.city,
@@ -39,25 +41,25 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   const dispatch = useSetter();
 
-  if (isLoading) return <Loader msg="Loading payment form.." />;
-  if (isError) return <Err />;
-
   return (
-    <Elements
-      options={{
-        clientSecret,
-        appearance: { theme: "stripe" },
-      }}
-      stripe={stripePromise}
-    >
-      <Checkout
-        onBack={() => {
-          const action = details.userOptForKYC
-            ? setStep("kyc-form")
-            : setStep("donate-form");
-          dispatch(action);
-        }}
-      />
-    </Elements>
+    <div className="grid content-start gap-8 p-4 @md:p-8">
+      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
+
+      {isLoading ? (
+        <Loader msg="Loading payment form.." />
+      ) : isError || !clientSecret ? (
+        <Err error={error} />
+      ) : (
+        <Elements
+          options={{
+            clientSecret,
+            appearance: { theme: "stripe" },
+          }}
+          stripe={stripePromise}
+        >
+          <Checkout source={details.source} />
+        </Elements>
+      )}
+    </div>
   );
 }

@@ -1,14 +1,13 @@
 import { chains } from "constants/chains";
-import { appRoutes } from "constants/routes";
 import { maskAddress } from "helpers";
 import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
 import { CryptoSubmitStep, setStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { useSetter } from "store/accessors";
 import { TxPackage } from "types/tx";
 import { ConnectedWallet } from "types/wallet";
 import Image from "../../../../Image";
+import BackBtn from "../../BackBtn";
 import { Row } from "./Row";
 
 type Props = PropsWithChildren<
@@ -18,7 +17,7 @@ type Props = PropsWithChildren<
 export default function Container({ children, txPackage, ...props }: Props) {
   const dispatch = useSetter();
   function goBack() {
-    dispatch(setStep(props.kyc ? "kyc-form" : "donate-form"));
+    dispatch(setStep("splits"));
   }
   function submit(txPackage: TxPackage) {
     dispatch(sendDonation({ donation: props, ...txPackage }));
@@ -26,6 +25,7 @@ export default function Container({ children, txPackage, ...props }: Props) {
 
   return (
     <div className="grid content-start p-4 @md:p-8">
+      <BackBtn type="button" onClick={goBack} className="mb-4" />
       {props.wallet && (
         <Row
           title={maskAddress(props.wallet.address)}
@@ -59,29 +59,14 @@ export default function Container({ children, txPackage, ...props }: Props) {
       </Row>
 
       {children}
-      <div className="mt-14 grid grid-cols-2 gap-5">
-        <button
-          className="btn-outline-filled btn-donate"
-          onClick={goBack}
-          type="button"
-        >
-          Back
-        </button>
-        <button
-          className="btn-orange btn-donate"
-          onClick={!txPackage ? undefined : () => submit(txPackage)}
-          disabled={!txPackage}
-          type="submit"
-        >
-          Complete
-        </button>
-        <Link
-          to={appRoutes.marketplace + `/${props.recipient.id}`}
-          className="col-span-full btn-outline btn-donate"
-        >
-          Cancel
-        </Link>
-      </div>
+      <button
+        className="btn-orange btn-donate mt-14"
+        onClick={!txPackage ? undefined : () => submit(txPackage)}
+        disabled={!txPackage}
+        type="submit"
+      >
+        Complete
+      </button>
     </div>
   );
 }

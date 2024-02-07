@@ -2,6 +2,7 @@ import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
 import { Steps } from "components/donation";
 import { APP_NAME, DAPP_URL } from "constants/env";
+import { appRoutes } from "constants/routes";
 import { useEffect } from "react";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { useSetter } from "store/accessors";
@@ -46,7 +47,7 @@ export default function Content({
         description={profile.overview.slice(0, 140)}
         name={profile.name}
         image={`${profile.logo}`}
-        url={`${DAPP_URL}/donate_widget/${profile.id}`}
+        url={`${DAPP_URL}/${appRoutes.donate_widget}/${profile.id}`}
       />
       <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg sm:text-3xl">
         Donate to {profile.name}
@@ -71,7 +72,10 @@ export default function Content({
         </>
       )}
 
-      <Steps className="mt-5 w-full md:w-3/4" donaterConfig={donaterConfig} />
+      <Steps
+        className="mt-5 w-full md:w-3/4 border border-prim"
+        donaterConfig={donaterConfig}
+      />
     </div>
   );
 }

@@ -141,7 +141,7 @@ export default function useInjectedWallet(
       });
 
       saveUserAction(actionKey, "connect");
-    } catch (err) {
+    } catch (_) {
       if (isUserInitiated) {
         alert("Failed to connect to wallet.");
       }

@@ -1,27 +1,17 @@
 import CurrencySelector from "components/CurrencySelector";
-import LoadText from "components/LoadText";
-import Split from "components/Split";
 import { CheckField, Field } from "components/form";
-import { appRoutes } from "constants/routes";
 import { FormProvider, useController, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { requiredString } from "schemas/string";
 import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import { Currency } from "types/components";
-import AdvancedOptions from "../../../AdvancedOptions";
 import { FormValues, Props } from "./types";
 
 const USD_CODE = "usd";
 
-export default function Form({
-  advanceOptDisplay,
-  recipient,
-  widgetConfig,
-  details,
-}: Props) {
+export default function Form({ recipient, widgetConfig, details }: Props) {
   const authUser = useGetter((state) => state.auth.user);
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
@@ -33,27 +23,25 @@ export default function Form({
     amount: "",
     currency: { code: USD_CODE, min: 1 },
     email: authUserEmail,
-    pctLiquidSplit: 50,
     userOptForKYC: false,
   };
 
   const methods = useForm<FormValues>({
     defaultValues: details || initial,
   });
+  const { control, handleSubmit } = methods;
 
   const {
     field: { value: currency, onChange: onCurrencyChange },
   } = useController({
-    control: methods.control,
+    control: control,
     name: "currency",
   });
-
-  const isInsideWidget = widgetConfig !== null;
 
   return (
     <FormProvider {...methods}>
       <form
-        onSubmit={methods.handleSubmit((fv) =>
+        onSubmit={handleSubmit((fv) =>
           dispatch(
             setDetails({
               ...fv,
@@ -65,7 +53,6 @@ export default function Form({
       >
         <CurrencySelector
           currencies={currencies}
-          disabled={methods.formState.isSubmitting}
           label="Currency"
           onChange={onCurrencyChange}
           value={currency}
@@ -119,46 +106,15 @@ export default function Form({
             Please send me a tax receipt
           </CheckField>
         )}
-        <AdvancedOptions
-          display={advanceOptDisplay}
-          splitComponent={
-            <Split<FormValues, "pctLiquidSplit">
-              className="mb-6"
-              liqPctField="pctLiquidSplit"
-            />
-          }
-        />
+
         <p className="text-sm text-gray-d2 dark:text-gray mt-4">
           Please click the button below and follow the instructions provided to
           complete your donation
         </p>
 
-        <div
-          className={`flex gap-3 md:gap-5 ${
-            isInsideWidget ? "justify-center" : "justify-between"
-          } mt-4`}
-        >
-          {!isInsideWidget && (
-            <Link
-              className="btn-outline-filled btn-donate w-1/2"
-              to={`${appRoutes.marketplace}/${recipient.id}`}
-            >
-              Cancel
-            </Link>
-          )}
-          <button
-            disabled={methods.formState.isSubmitting}
-            className="btn-orange btn-donate w-1/2"
-            type="submit"
-          >
-            <LoadText
-              text="Processing..."
-              isLoading={methods.formState.isSubmitting}
-            >
-              Continue
-            </LoadText>
-          </button>
-        </div>
+        <button className="btn-orange btn-donate mt-2" type="submit">
+          Continue
+        </button>
       </form>
     </FormProvider>
   );

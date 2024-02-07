@@ -8,6 +8,7 @@ import {
   FormStep,
   KYC,
   KYCStep,
+  SplitsStep,
   SubmitStep,
   TxStatus,
 } from "./types";
@@ -22,23 +23,25 @@ const donation = createSlice({
       return { step: "donate-form", recipient: payload };
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
-      if (state.recipient?.isKYCRequired || payload.userOptForKYC) {
-        const { kyc, ...rest } = state as KYCStep;
+      //skip KYC for stocks, as not being saved in DB
+      if (payload.method === "stocks") {
         return {
-          ...rest,
+          ...(state as SubmitStep),
+          step: "submit",
+          details: payload,
+        };
+      }
+
+      if (state.recipient?.isKYCRequired || payload.userOptForKYC) {
+        return {
+          ...(state as KYCStep),
           step: "kyc-form",
           details: payload,
-          kyc: kyc
-            ? kyc
-            : (payload.method === "stripe" || payload.method === "paypal") &&
-                payload.email
-              ? { kycEmail: payload.email }
-              : undefined,
         };
       }
       return {
-        ...(state as SubmitStep),
-        step: "submit",
+        ...(state as SplitsStep),
+        step: "splits",
         details: payload,
       };
     },
@@ -51,9 +54,16 @@ const donation = createSlice({
     },
     setKYC: (state, { payload }: PayloadAction<KYC>) => {
       return {
+        ...(state as SplitsStep),
+        step: "splits",
+        kyc: payload,
+      };
+    },
+    setSplit: (state, { payload }: PayloadAction<number>) => {
+      return {
         ...(state as SubmitStep),
         step: "submit",
-        kyc: payload,
+        liquidSplitPct: payload,
       };
     },
 
@@ -78,5 +88,6 @@ export const {
   setDetails,
   resetDetails,
   setKYC,
+  setSplit,
   setTxStatus,
 } = donation.actions;

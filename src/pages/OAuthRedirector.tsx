@@ -6,9 +6,9 @@ import { useNavigate } from "react-router-dom";
 // redirect causes the final URL to be of this page even though the rendered page is
 // completely different (Marketplace, Register etc.).
 // To account for this slowness, we set a timeout and navigate to the desired page afterwards.
-const DELAY = 300;
+const DELAY = 700;
 
-export default function OAUTHRedirector() {
+export default function OAuthRedirector() {
   const navigate = useNavigate();
 
   useEffect(() => {

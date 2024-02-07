@@ -1,9 +1,10 @@
 import KYCForm from "components/KYCForm";
-import { setKYC, setStep } from "slices/donation";
+import { hasEmail, setKYC, setStep } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { DonaterConfigFromWidget } from "types/widget";
 import DonateMethods from "./DonateMethods";
 import Result from "./Result";
+import Splits from "./Splits";
 import Submit from "./Submit";
 
 type Props = { config: DonaterConfigFromWidget | null };
@@ -29,6 +30,9 @@ export default function CurrentStep({ config }: Props) {
         classes="grid gap-5 sm:grid-cols-2 p-4 @md:p-8"
         defaultValues={state.kyc}
         recipient={state.recipient}
+        donationEmail={
+          hasEmail(state.details) ? state.details.email : undefined
+        }
         onBack={() => {
           //kyc is always after donate form
           dispatch(setStep("donate-form"));
@@ -38,6 +42,9 @@ export default function CurrentStep({ config }: Props) {
         }}
       />
     );
+  }
+  if (state.step === "splits") {
+    return <Splits {...state} />;
   }
 
   state.step satisfies "donate-form";

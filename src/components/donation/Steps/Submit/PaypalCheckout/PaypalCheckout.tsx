@@ -3,6 +3,7 @@ import { PAYPAL_CLIENT_ID } from "constants/env";
 import { usePaypalOrderQuery } from "services/apes";
 import { PaypalCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
+import BackBtn from "../../BackBtn";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
@@ -10,18 +11,19 @@ import Checkout from "./Checkout";
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function PaypalCheckout(props: PaypalCheckoutStep) {
-  const { details, recipient, kyc } = props;
+  const { details, recipient, kyc, liquidSplitPct } = props;
 
   const {
     data: orderId,
     isLoading,
     isError,
+    error,
   } = usePaypalOrderQuery({
     amount: +details.amount,
     currency: details.currency.code,
     endowmentId: recipient.id,
     email: details.email,
-    splitLiq: details.pctLiquidSplit.toString(),
+    splitLiq: liquidSplitPct.toString(),
     kycData: kyc
       ? {
           city: kyc.city,
@@ -37,28 +39,29 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
 
   const dispatch = useSetter();
 
-  if (isLoading) return <Loader msg="Loading payment form..." />;
-  if (isError || !orderId) return <Err />;
-
   return (
-    <PayPalScriptProvider
-      options={{
-        clientId: PAYPAL_CLIENT_ID,
-        commit: true,
-        currency: "USD",
-        enableFunding: "paylater",
-        disableFunding: "card,venmo",
-      }}
-    >
-      <Checkout
-        orderId={orderId}
-        onBack={() => {
-          const action = details.userOptForKYC
-            ? setStep("kyc-form")
-            : setStep("donate-form");
-          dispatch(action);
-        }}
-      />
-    </PayPalScriptProvider>
+    <div className="grid grid-rows-[auto_1fr] min-h-[16rem] isolate p-4 @md:p-8">
+      <BackBtn onClick={() => dispatch(setStep("splits"))} type="button" />
+
+      {isLoading ? (
+        <Loader msg="Loading payment form..." />
+      ) : isError || !orderId ? (
+        <Err error={error} />
+      ) : (
+        <PayPalScriptProvider
+          options={{
+            clientId: PAYPAL_CLIENT_ID,
+            commit: true,
+            currency: "USD",
+            enableFunding: "paylater",
+            disableFunding: "card,venmo",
+          }}
+        >
+          <div className="grid gap-5 w-full place-items-center">
+            <Checkout orderId={orderId} source={details.source} />
+          </div>
+        </PayPalScriptProvider>
+      )}
+    </div>
   );
 }

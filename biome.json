@@ -37,7 +37,8 @@
         "useExhaustiveDependencies": "off",
         "noPrecisionLoss": "off",
         "noSwitchDeclarations": "off",
-        "noChildrenProp": "off"
+        "noChildrenProp": "off",
+        "noUnusedVariables": "error"
       },
       "a11y": {
         "useButtonType": "off",

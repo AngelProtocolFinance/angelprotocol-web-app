@@ -26,7 +26,7 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@4.0.2",
+  "packageManager": "yarn@4.1.0",
   "engines": {
     "node": "18.16.1"
   },
@@ -44,7 +44,7 @@
     "@reduxjs/toolkit": "1.9.7",
     "@sentry/react": "7.81.0",
     "@stripe/react-stripe-js": "2.4.0",
-    "@stripe/stripe-js": "2.3.0",
+    "@stripe/stripe-js": "2.4.0",
     "@terra-money/terra.js": "3.1.10",
     "@terra-money/wallet-provider": "3.11.2",
     "@types/react-helmet": "6.1.9",
@@ -56,6 +56,7 @@
     "is-mobile": "4.0.0",
     "quill": "1.3.7",
     "react": "18.2.0",
+    "react-chariot-connect": "1.0.8",
     "react-csv": "2.2.2",
     "react-dom": "18.2.0",
     "react-dropzone": "14.2.3",
@@ -70,6 +71,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.5.3",
     "@keplr-wallet/types": "0.12.23",
+    "@radix-ui/react-slider": "1.1.2",
     "@rsbuild/core": "0.2.8",
     "@rsbuild/plugin-node-polyfill": "0.2.8",
     "@rsbuild/plugin-react": "0.2.8",

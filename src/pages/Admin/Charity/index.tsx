@@ -9,9 +9,12 @@ import EditProfile from "./EditProfile";
 import Members from "./Members/Members";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
-import Widget from "./Widget";
+import Widget from "../../Widget";
+import { useAdminContext } from "../Context";
 
 export default function Charity() {
+  //widget configurer is used in admin
+  const { id: endowId } = useAdminContext();
   return (
     <Routes>
       <Route
@@ -47,7 +50,10 @@ export default function Charity() {
           path={adminRoutes.banking + "/:id"}
           element={<PayoutMethodDetails />}
         />
-        <Route path={adminRoutes.widget_config} element={<Widget />} />
+        <Route
+          path={adminRoutes.widget_config}
+          element={<Widget endowId={endowId} />}
+        />
         <Route index element={<Dashboard />} />
         <Route
           path="*"

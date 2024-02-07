@@ -13,7 +13,7 @@ import { DonateArgs, TxStatus } from "../types";
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,
   async (
-    { donation: { details, kyc, recipient }, ...txPackage },
+    { donation: { details, kyc, recipient, liquidSplitPct }, ...txPackage },
     { dispatch }
   ) => {
     const chain = chains[details.chainId.value];
@@ -21,7 +21,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       dispatch(setTxStatus(status));
     };
     try {
-      const { token, pctLiquidSplit } = details;
+      const { token } = details;
       updateTx({ loadingMsg: "Payment is being processed..." });
 
       const result = await sendTx(txPackage);
@@ -54,7 +54,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         chainId: chain.id,
         chainName: chain.name,
         denomination: token.symbol,
-        splitLiq: pctLiquidSplit,
+        splitLiq: liquidSplitPct,
         transactionId: hash,
         walletAddress: txPackage.sender,
         endowmentId: recipient.id,
