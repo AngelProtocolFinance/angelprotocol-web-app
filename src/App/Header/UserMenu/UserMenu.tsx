@@ -1,13 +1,12 @@
 import { Popover } from "@headlessui/react";
 import Icon from "components/Icon";
+import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { logout } from "slices/auth";
 import { useGetter, useSetter } from "store/accessors";
 import { SignInRouteState } from "types/routeStates";
 import Menu from "./Menu";
-import LoaderRing from "components/LoaderRing";
 
 export default function UserMenu() {
   const user = useGetter((state) => state.auth.user);

@@ -1,6 +1,6 @@
 import dappLogo from "assets/images/bettergiving-logo-no-name-all-blue.svg";
-import { BASE_URL } from "constants/env";
 import Image, { DappLogo } from "components/Image";
+import { BASE_URL } from "constants/env";
 
 const COMMON_CLASSES = "w-32 sm:w-48 h-12 sm:h-20";
 
