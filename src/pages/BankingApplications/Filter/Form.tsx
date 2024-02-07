@@ -42,7 +42,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
         </button>
         <button
           type="submit"
-          className="btn btn-orange px-6 py-2 rounded-sm text-xs font-work font-bold uppercase"
+          className="btn btn-orange px-6 py-2 rounded-sm text-xs font-bold uppercase"
         >
           Apply filters
         </button>

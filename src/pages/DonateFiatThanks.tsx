@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 export default function DonateFiatThanks({ widgetVersion = false }) {
   return (
-    <div className="grid justify-self-center m-auto max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6 font-work">
+    <div className="grid justify-self-center m-auto max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {

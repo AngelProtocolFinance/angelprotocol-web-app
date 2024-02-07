@@ -122,9 +122,8 @@ module.exports = {
         "4.5xl": "2.625rem",
       },
       fontFamily: {
-        heading: ["Montserrat", "serif"],
-        body: ["Open Sans", "sans-serif"],
-        work: "Work Sans",
+        heading: ["Quicksand", "serif"],
+        body: ["DM Sans", "sans-serif"],
       },
       width: {
         "3/4": "75%",

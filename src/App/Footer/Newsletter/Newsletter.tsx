@@ -8,7 +8,7 @@ export default function Newsletter() {
         <p className="font-heading text-sm font-bold uppercase leading-6">
           Subscribe to our newsletter
         </p>
-        <p className="font-body font-normal text-xs text-center lg:text-left">
+        <p className="font-normal text-xs text-center lg:text-left">
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}
           <a

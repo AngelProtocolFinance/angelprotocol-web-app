@@ -34,7 +34,7 @@ function Footer({ linkGroups, socials }: Props) {
 
       <section className="padded-container flex flex-col items-center gap-2 w-full pt-6 pb-12">
         <Socials links={socials} />
-        <p className="font-body font-normal text-white text-center text-2xs uppercase">
+        <p className="font-normal text-white text-center text-2xs uppercase">
           {`Copyright ${new Date().getFullYear()} ${APP_NAME}. All rights reserved.`}
         </p>
       </section>

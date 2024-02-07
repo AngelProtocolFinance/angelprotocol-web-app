@@ -39,7 +39,7 @@ export default function Form({ classes = "" }) {
 
       <Recipient classes="mt-8" />
 
-      <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
+      <div className="grid grid-cols-2 gap-5 mt-8 md:mt-12">
         <Link
           className="btn-outline btn-gift"
           to={`${appRoutes.marketplace}/1`}

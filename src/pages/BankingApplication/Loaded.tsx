@@ -23,7 +23,7 @@ export default function Loaded(props: BankingApplicationDetails) {
         <div
           className={`${
             isApproved ? "bg-green" : "bg-red"
-          } text-white px-2 py-1 text-xs font-work uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
+          } text-white px-2 py-1 text-xs uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
         >
           {isApproved ? "Approved" : "Rejected"}
         </div>
@@ -33,11 +33,11 @@ export default function Loaded(props: BankingApplicationDetails) {
       )}
       <div className="flex max-sm:flex-col gap-x-4">
         <span className="text-sm font-semibold uppercase">Account ID:</span>
-        <span className="uppercase text-sm font-work">{props.id}</span>
+        <span className="uppercase text-sm">{props.id}</span>
       </div>
       <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
         <span className="text-sm font-semibold uppercase">Date submitted:</span>
-        <span className="uppercase text-sm font-work">
+        <span className="uppercase text-sm">
           {new Date(props.dateCreated).toLocaleDateString()}
         </span>
       </div>
@@ -72,7 +72,7 @@ export default function Loaded(props: BankingApplicationDetails) {
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <Link
           to={appRoutes.banking_applications}
-          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-outline"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back
         </Link>
@@ -80,7 +80,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           disabled={!!prevVerdict}
           onClick={verdict("reject")}
           type="button"
-          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
         >
           reject
         </button>
@@ -88,7 +88,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           disabled={!!prevVerdict}
           onClick={verdict("approve")}
           type="button"
-          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-green"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-green"
         >
           approve
         </button>

@@ -37,7 +37,7 @@ function Content(props: Props) {
 
   return (
     <div
-      className="max-sm:fixed max-sm:inset-0 overflow-y-auto grid md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full max-md:z-20 bg-white md:padded-container py-4 @sm:py-10 font-work"
+      className="max-sm:fixed max-sm:inset-0 overflow-y-auto grid md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6 w-full max-md:z-20 bg-white md:padded-container py-4 @sm:py-10"
       id={CONTAINER_ID}
     >
       <Link

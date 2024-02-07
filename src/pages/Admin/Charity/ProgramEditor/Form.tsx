@@ -18,7 +18,7 @@ export default function Form() {
         e.preventDefault();
         reset();
       }}
-      className="@container w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
+      className="@container w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <Group title="Program information">
         <Field<FV>

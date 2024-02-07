@@ -58,7 +58,7 @@ export default function Content({
         </ErrorStatus>
       )}
       {donaterConfig.isDescriptionTextShown && (
-        <p className="font-body text-xs text-center sm:text-base">
+        <p className="text-xs text-center sm:text-base">
           Check out the many crypto and fiat donation options. Provide your
           personal details to receive an immediate tax receipt.
         </p>

@@ -59,7 +59,7 @@ export default function MobileTable({
                   {new Date(row.date).toLocaleDateString()}
                 </div>
               </Disclosure.Button>
-              <Disclosure.Panel className="w-full font-work divide-y divide-prim">
+              <Disclosure.Panel className="w-full divide-y divide-prim">
                 <Row title="Network">{row.chainName}</Row>
                 <Row title="Currency">{row.symbol}</Row>
                 <Row title="Amount">{humanize(row.amount, 3)}</Row>
@@ -71,7 +71,7 @@ export default function MobileTable({
                       row.donationFinalized
                         ? "bg-green"
                         : "bg-gray-d1 dark:bg-gray"
-                    } font-body text-white px-2 py-0.5 rounded`}
+                    }text-white px-2 py-0.5 rounded`}
                   >
                     {row.donationFinalized ? "RECEIVED" : "PENDING"}
                   </div>

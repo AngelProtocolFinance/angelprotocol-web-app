@@ -6,7 +6,7 @@ import { AmountProps } from ".";
 export default function Summary({ locked, liquid, type }: AmountProps) {
   const { closeModal } = useModalContext();
   return (
-    <Modal className="grid content-start bg-gray-l6 dark:bg-blue-d5 text-gray-d2 border border-prim dark:text-white font-work fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
+    <Modal className="grid content-start bg-gray-l6 dark:bg-blue-d5 text-gray-d2 border border-prim dark:text-white fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
       <Amount title="principal" value={locked} />
       <Amount title="impact" value={liquid} />
       <button
