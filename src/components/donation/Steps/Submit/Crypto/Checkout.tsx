@@ -83,9 +83,9 @@ export default function Checkout({ classes = "", ...props }: Props) {
         <button
           type="button"
           onClick={wallet.disconnect}
-          className="bg-gray-l5 hover:bg-gray-l4 text-xs uppercase px-2 py-0.5"
+          className="bg-gray-l5 hover:bg-gray-l4 text-xs px-2 py-1 rounded"
         >
-          change
+          Change
         </button>
       </div>
     </Container>
