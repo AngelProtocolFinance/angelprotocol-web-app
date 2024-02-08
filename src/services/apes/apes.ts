@@ -108,6 +108,7 @@ export const apes = createApi({
         res.currencies.map((c) => ({
           code: c.currency_code,
           min: c.minimum_amount,
+          rate: c.rate,
         })),
     }),
     stripeCurrencies: builder.query<Currency[], null>({
@@ -132,6 +133,7 @@ export const apes = createApi({
               data: data.currencies.map((c) => ({
                 code: c.currency_code,
                 min: c.minimum_amount,
+                rate: c.rate,
               })),
             };
           });

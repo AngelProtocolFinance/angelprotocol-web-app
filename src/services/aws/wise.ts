@@ -6,6 +6,7 @@ import {
   V2RecipientAccount,
   WiseCurrency,
 } from "types/aws";
+import { Currency } from "types/components";
 import { aws } from "../aws/aws";
 import { version as v } from "../helpers";
 
@@ -29,8 +30,10 @@ export const wise = aws.injectEndpoints({
     recipient: builder.query<V2RecipientAccount, string>({
       query: (id: string) => `${baseURL}/v2/accounts/${id}`,
     }),
-    currencis: builder.query<WiseCurrency[], unknown>({
+    wiseCurrencies: builder.query<Currency[], unknown>({
       query: () => `${baseURL}/v1/currencies`,
+      transformResponse: (res: WiseCurrency[]) =>
+        res.map((r) => ({ rate: null, code: r.code, name: r.name })),
     }),
 
     newRequirements: builder.mutation<
@@ -104,7 +107,7 @@ export const wise = aws.injectEndpoints({
 export const {
   useCreateRecipientMutation,
   useRecipientQuery,
-  useCurrencisQuery,
+  useWiseCurrenciesQuery,
   useRequirementsQuery,
   useNewRequirementsMutation,
 } = wise;

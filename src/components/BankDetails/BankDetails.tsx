@@ -1,7 +1,7 @@
 import Divider from "components/Divider";
 import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
-import { useCurrencisQuery } from "services/aws/wise";
+import { useWiseCurrenciesQuery } from "services/aws/wise";
 import { Currency } from "types/components";
 import CurrencySelector from "../CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
@@ -24,6 +24,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
   const [currency, setCurrency] = useState<Currency>({
     code: "USD",
     name: "United States Dollar",
+    rate: 1,
   });
   const [amount, setAmount] = useState(
     DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
@@ -45,7 +46,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
     }
   };
 
-  const currencies = useCurrencisQuery({});
+  const currencies = useWiseCurrenciesQuery({});
 
   return (
     <div className="grid gap-6">

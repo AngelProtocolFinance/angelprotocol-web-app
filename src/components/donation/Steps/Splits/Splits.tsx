@@ -35,8 +35,10 @@ export default function Split({
     }
   })();
 
-  const locked = +amount * (lockedSplitPct / 100);
-  const liq = +amount - locked;
+  const liq = +amount * ((100 - lockedSplitPct) / 100);
+  //derive locked from liquid to be consistent with checkout
+  const locked = +amount - liq;
+  const DECIMALS = details.method === "crypto" ? 4 : 2;
 
   return (
     <div className="grid content-start p-4 @md:p-8">
@@ -86,14 +88,14 @@ export default function Split({
           <dt className="text-gray-d1 text-xs">Compounded Forever</dt>
           <dd>
             <span className="text-xs font-medium mr-1">{symbol}</span>
-            <span>{humanize(locked, 4)}</span>
+            <span>{humanize(locked, DECIMALS)}</span>
           </dd>
         </dl>
         <dl>
           <dt className="text-gray-d1 text-xs">Instantly Available</dt>
           <dd className="text-right">
             <span className="text-xs font-medium mr-1">{symbol}</span>
-            <span>{humanize(liq, 4)}</span>
+            <span>{humanize(liq, DECIMALS)}</span>
           </dd>
         </dl>
       </div>
