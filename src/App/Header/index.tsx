@@ -17,8 +17,7 @@ export default function Header({ classes, links }: Props) {
 
   return (
     <header id={HEADER_ID} className={`${classes} ${headerClassNames}`}>
-      <div className="grid place-items-center gap-4 pl-5 pr-10 grid-cols-3 h-full w-full max-w-6xl mx-auto rounded-full bg-white">
-        <div className="w-80">{/** placeholder for search bar */}</div>
+      <div className="grid gap-4 pl-5 pr-10 grid-cols-2 h-full w-full max-w-6xl mx-auto rounded-full bg-white">
         <Logo />
         <div className="flex gap-2 md:gap-4 justify-self-end items-center">
           {!(
