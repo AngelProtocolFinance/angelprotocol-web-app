@@ -3,7 +3,7 @@ import { Steps } from "components/donation";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import { PropsWithChildren, memo, useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
@@ -68,13 +68,13 @@ function Content(props: Props) {
         By making a donation to {APP_NAME}, you agree to our{" "}
         <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
         <A href={PRIVACY_POLICY}>Privacy Policy</A>, and{" "}
-        <Bold>Nonprofit Support Fee</Bold>. 100% of your donation is
-        tax-deductible to the extent allowed by US law. Your donation is made to{" "}
-        {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants unrestricted
-        funds to {props.name} on your behalf. As a legal matter, {APP_NAME} must
-        provide any donations to {props.name} on an unrestricted basis,
-        regardless of any designations or restrictions made by you.{" "}
-        <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
+        <span className="font-medium">Nonprofit Support Fee</span>. 100% of your
+        donation is tax-deductible to the extent allowed by US law. Your
+        donation is made to {APP_NAME}, a tax-exempt US 501(c)(3) charity that
+        grants unrestricted funds to {props.name} on your behalf. As a legal
+        matter, {APP_NAME} must provide any donations to {props.name} on an
+        unrestricted basis, regardless of any designations or restrictions made
+        by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
       </p>
       <p className="max-md:px-4 mt-4 text-xs leading-normal text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-5 lg:row-start-4">
         <span className="block mb-0.5">
@@ -99,10 +99,6 @@ function Content(props: Props) {
 
 //memoize to prevent useEffect ( based on props ) from running when parent re-renders with the same props
 export default memo(Content);
-
-function Bold(props: PropsWithChildren) {
-  return <span className="font-medium">{props.children}</span>;
-}
 
 const A: typeof ExtLink = ({ className, ...props }) => {
   return (
