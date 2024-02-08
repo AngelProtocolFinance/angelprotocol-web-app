@@ -28,5 +28,5 @@ export default function useHeaderClassNames(headerId: string) {
 
   return `${
     isSticky ? "shadow-lg bg-white dark:bg-blue-d3" : ""
-  } transition ease-in-out duration-100 w-full h-20 mt-9 px-4 sm:px-6`;
+  } transition ease-in-out duration-100 w-full h-12 sm:h-20 mt-9 px-4 sm:px-6`;
 }
