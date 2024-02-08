@@ -1,4 +1,4 @@
-import { BASE_URL, DAPP_URL } from "constants/env";
+import { BASE_URL, DAPP_URL, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import {
   PRIVACY_POLICY,
@@ -52,7 +52,7 @@ export const CHARITY_LINKS: LINKS = {
       title: "Resources",
       links: [
         { text: "About us", href: `${BASE_URL}/about-better-giving/` },
-        { text: "FAQs", href: "https://intercom.help/angel-protocol/en" },
+        { text: "FAQs", href: INTERCOM_HELP },
         { text: "News", href: `${BASE_URL}/news/` },
       ],
     },
