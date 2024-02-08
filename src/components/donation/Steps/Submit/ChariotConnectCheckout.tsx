@@ -43,18 +43,8 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
 
   return (
     <div className="flex flex-col content-start p-4 @md:p-8 group">
-      <BackBtn
-        type="button"
-        onClick={() => {
-          const action = details.userOptForKYC
-            ? setStep("kyc-form")
-            : setStep("donate-form");
-          dispatch(action);
-        }}
-      />
-
+      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
       <Heading classes="my-4" />
-
       <SplitSummary
         classes="mb-auto"
         total={<Currency {...currency} amount={total} classes="text-gray-d2" />}
