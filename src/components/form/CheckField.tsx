@@ -1,45 +1,35 @@
-import { PropsWithChildren, forwardRef } from "react";
-import {
-  FieldValues,
-  Path,
-  UseFormRegisterReturn,
-  get,
-  useFormContext,
-} from "react-hook-form";
+import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
+import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { unpack } from "./helpers";
 import { Classes } from "./types";
 
-type Common = PropsWithChildren<{
+type Custom = {
   classes?: Classes;
-  disabled?: boolean;
-  required?: boolean;
-}>;
+  children?: ReactNode;
+  error?: string;
+};
+
+type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "className" | "type"> &
+  Custom;
 
 function _CheckField(
-  {
-    classes,
-    disabled,
-    required,
-    children,
-    error,
-    ...registerReturn
-  }: Common & UseFormRegisterReturn & { error?: string },
+  { classes, required, children, error, ...props }: Props,
   ref: any
 ) {
   const { container, input: int, lbl, error: errClass } = unpack(classes);
-  const name = registerReturn.name;
+  const name = props.name;
   const id = `__${name}`;
 
   return (
     <div className={`check-field ${container}`}>
       <input
-        {...registerReturn}
+        {...props}
         ref={ref}
         className={int + " peer"}
         type="checkbox"
         id={id}
-        disabled={disabled}
-        aria-disabled={disabled}
+        disabled={props.disabled}
+        aria-disabled={props.disabled}
         aria-invalid={!!error}
       />
       {children && (
@@ -60,9 +50,8 @@ function _CheckField(
 export const NativeCheckField = forwardRef(_CheckField) as typeof _CheckField;
 export function CheckField<T extends FieldValues>({
   name,
-  disabled,
   ...rest
-}: Common & {
+}: Omit<Props, "name"> & {
   name: Path<T>;
 }) {
   const {
@@ -74,7 +63,7 @@ export function CheckField<T extends FieldValues>({
     <NativeCheckField
       {...register(name)}
       {...rest}
-      disabled={disabled || isSubmitting}
+      disabled={rest.disabled || isSubmitting}
       error={get(errors, name)?.message}
     />
   );
