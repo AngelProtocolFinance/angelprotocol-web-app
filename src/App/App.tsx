@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/react";
-import { appRoutes, donateWidgetRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes, wpRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { lazy } from "react";
@@ -24,6 +24,10 @@ const BankingApplication = lazy(() => import("pages/BankingApplication"));
 const OAuthRedirector = lazy(() => import("pages/OAuthRedirector"));
 const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const Widget = lazy(() => import("pages/Widget"));
+const WpPosts = lazy(() => import("pages/WP/Blog/Posts"));
+const WpPost = lazy(() => import("pages/WP/Blog/Post"));
+const WpPages = lazy(() => import("pages/WP/Pages/Pages"));
+const WpPage = lazy(() => import("pages/WP/Pages/Page"));
 
 export default function App() {
   const location = useLocation();
@@ -45,7 +49,6 @@ export default function App() {
             element={<StripePaymentStatus />}
           />
         </Route>
-
         <Route
           path={`${appRoutes.donate_widget}/:id`}
           element={<DonateWidget />}
@@ -104,6 +107,11 @@ export default function App() {
               </div>
             }
           />
+          <Route path={wpRoutes.blog}>
+            <Route path=":slug" element={<WpPost />} />
+            <Route index element={<WpPosts />} />
+          </Route>
+          <Route path={`${wpRoutes.pages}:slug`} element={<WpPage />} />
         </Route>
         <Route
           path="*"

@@ -1,5 +1,5 @@
 import { BASE_URL, DAPP_URL } from "constants/env";
-import { appRoutes } from "constants/routes";
+import { appRoutes, wpRoutes } from "constants/routes";
 import {
   PRIVACY_POLICY,
   TERMS_OF_USE_DONOR,
@@ -25,6 +25,10 @@ export const CHARITY_LINKS: LINKS = {
       title: "Giving Partners (CSR)",
       href: `${BASE_URL}/giving-partners-csr/`,
       external: true,
+    },
+    {
+      title: "Blog",
+      href: wpRoutes.blog,
     },
     {
       title: "About",

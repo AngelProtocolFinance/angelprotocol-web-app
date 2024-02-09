@@ -17,6 +17,11 @@ export enum appRoutes {
   widget_config = "/widget-config",
 }
 
+export const wpRoutes = {
+  blog: "/blog",
+  pages: "/pages",
+};
+
 export const adminRoutes = {
   index: "",
   edit_profile: "edit-profile",
