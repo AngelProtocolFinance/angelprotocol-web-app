@@ -165,7 +165,7 @@ export default function RecipientDetailsForm({
                     classes="flex items-center gap-1.5"
                     key={v.key}
                     value={v.key}
-                    {...register(f.key, {
+                    registerReturn={register(f.key, {
                       required: f.required ? "required" : false,
                       onChange: f.refreshRequirementsOnChange
                         ? refresh

@@ -27,9 +27,9 @@ export function Radio<T extends FieldValues, K extends Path<T>>({
 
   return (
     <NativeRadio
-      {...register(name as any)}
-      {...rest}
+      registerReturn={register(name as any)}
       disabled={isSubmitting || disabled}
+      {...rest}
     />
   );
 }
@@ -39,15 +39,15 @@ export function NativeRadio<T extends FieldValues, K extends Path<T>>({
   classes,
   value,
   disabled,
-  ...props
-}: Common<T, K> & UseFormRegisterReturn) {
-  const id = `__${props.name}-${value}`;
+  registerReturn,
+}: Common<T, K> & { registerReturn: UseFormRegisterReturn }) {
+  const id = `__${registerReturn.name}-${value}`;
   const { container, input } = unpack(classes);
 
   return (
     <label className={`radio ${container}`} htmlFor={id}>
       <input
-        {...props}
+        {...registerReturn}
         id={id}
         type="radio"
         className={`peer ${input}`}
