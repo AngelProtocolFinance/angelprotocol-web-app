@@ -41,7 +41,7 @@ export function NativeRadio<T extends FieldValues, K extends Path<T>>({
   disabled,
   ...props
 }: Common<T, K> & UseFormRegisterReturn) {
-  const id = `__${name}-${value}`;
+  const id = `__${props.name}-${value}`;
   const { container, input } = unpack(classes);
 
   return (

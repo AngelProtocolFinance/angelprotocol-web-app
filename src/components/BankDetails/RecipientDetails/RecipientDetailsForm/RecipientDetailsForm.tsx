@@ -1,10 +1,11 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { Label } from "components/form";
+import { Label, NativeField } from "components/form";
+import { NativeRadio } from "components/form/Radio";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { useForm } from "react-hook-form";
+import { get, useForm } from "react-hook-form";
 import {
   useCreateRecipientMutation,
   useNewRequirementsMutation,
@@ -158,31 +159,21 @@ export default function RecipientDetailsForm({
               <Label required={labelRequired} className="mb-1">
                 {f.name}
               </Label>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-4">
                 {f.valuesAllowed?.map((v) => (
-                  <div
+                  <NativeRadio
+                    classes="flex items-center gap-1.5"
                     key={v.key}
-                    className="relative border border-prim rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1"
+                    value={v.key}
+                    {...register(f.key, {
+                      required: f.required ? "required" : false,
+                      onChange: f.refreshRequirementsOnChange
+                        ? refresh
+                        : undefined,
+                    })}
                   >
-                    <input
-                      className="appearance none w-0 h-0"
-                      id={`radio__${v.key}`}
-                      type="radio"
-                      value={v.key}
-                      {...register(f.key, {
-                        required: f.required ? "required" : false,
-                        onChange: f.refreshRequirementsOnChange
-                          ? refresh
-                          : undefined,
-                      })}
-                    />
-                    <label
-                      htmlFor={`radio__${v.key}`}
-                      className="absolute inset-0 w-full grid place-items-center"
-                    >
-                      {v.name}
-                    </label>
-                  </div>
+                    <span className="capitalize">{v.key.toLowerCase()}</span>
+                  </NativeRadio>
                 ))}
               </div>
               <ErrorMessage
@@ -197,53 +188,44 @@ export default function RecipientDetailsForm({
 
         if (f.type === "text") {
           return (
-            <div key={f.key} className="grid gap-1">
-              <Label required={labelRequired} htmlFor={f.key}>
-                {f.name}
-              </Label>
-              <input
-                className="field-input"
-                type="text"
-                placeholder={f.example}
-                {...register(f.key, {
-                  required: f.required ? "required" : false,
-                  maxLength: f.maxLength
-                    ? {
-                        value: f.maxLength,
-                        message: `max ${f.maxLength} chars`,
-                      }
-                    : undefined,
-                  minLength: f.minLength
-                    ? {
-                        value: f.minLength,
-                        message: `min ${f.minLength} chars`,
-                      }
-                    : undefined,
-                  pattern: f.validationRegexp
-                    ? {
-                        value: new RegExp(f.validationRegexp),
-                        message: "invalid",
-                      }
-                    : undefined,
+            <NativeField
+              required={f.required ? true : undefined}
+              error={get(errors, f.key)?.message}
+              label={f.name}
+              type="text"
+              placeholder={f.example}
+              registerReturn={register(f.key, {
+                required: f.required ? "required" : false,
+                maxLength: f.maxLength
+                  ? {
+                      value: f.maxLength,
+                      message: `max ${f.maxLength} chars`,
+                    }
+                  : undefined,
+                minLength: f.minLength
+                  ? {
+                      value: f.minLength,
+                      message: `min ${f.minLength} chars`,
+                    }
+                  : undefined,
+                pattern: f.validationRegexp
+                  ? {
+                      value: new RegExp(f.validationRegexp),
+                      message: "invalid",
+                    }
+                  : undefined,
 
-                  validate: f.validationAsync
-                    ? async (v: string) => {
-                        const { params, url } = f.validationAsync!;
-                        const res = await fetch(`${url}?${params[0].key}=${v}`);
-                        return res.ok || "invalid";
-                      }
-                    : undefined,
-                  //onBlur only as text input changes rapidly
-                  onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
-                })}
-              />
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs justify-self-end -mb-5"
-              />
-            </div>
+                validate: f.validationAsync
+                  ? async (v: string) => {
+                      const { params, url } = f.validationAsync!;
+                      const res = await fetch(`${url}?${params[0].key}=${v}`);
+                      return res.ok || "invalid";
+                    }
+                  : undefined,
+                //onBlur only as text input changes rapidly
+                onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
+              })}
+            />
           );
         }
 
