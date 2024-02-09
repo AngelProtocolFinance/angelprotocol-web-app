@@ -1,6 +1,11 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { HTMLInputTypeAttribute, createElement } from "react";
-import { FieldValues, Path, get, useFormContext } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  UseFormRegisterReturn,
+  get,
+  useFormContext,
+} from "react-hook-form";
 import { Label } from ".";
 import { unpack } from "./helpers";
 import { Classes } from "./types";
@@ -9,35 +14,45 @@ const textarea = "textarea" as const;
 type TextArea = typeof textarea;
 type InputType = HTMLInputTypeAttribute | TextArea;
 
-type FieldProps<T extends FieldValues, K extends InputType> = Omit<
-  K extends TextArea
+type Common<T extends InputType> = Omit<
+  T extends TextArea
     ? React.TextareaHTMLAttributes<HTMLTextAreaElement>
     : React.InputHTMLAttributes<HTMLInputElement>,
   "autoComplete" | "className" | "name" | "id" | "spellCheck" | "type"
-> & {
-  name: Path<T>;
-  classes?: Classes | string;
-  tooltip?: string;
-  label: string;
-  type?: K;
-};
+> & { type?: T; classes?: Classes | string; tooltip?: string; label: string };
 
 export function Field<T extends FieldValues, K extends InputType = InputType>({
-  type = "text" as K,
-  label,
   name,
-  classes,
-  tooltip,
-  required,
   disabled,
-  ...props
-}: FieldProps<T, K>) {
+  ...rest
+}: Common<K> & { name: Path<T> }) {
   const {
     register,
     formState: { errors, isSubmitting },
   } = useFormContext();
 
-  const { container, input, lbl, error } = unpack(classes);
+  return (
+    <NativeField
+      registerReturn={register(name)}
+      error={get(errors, name)}
+      disabled={disabled || isSubmitting}
+      {...rest}
+    />
+  );
+}
+
+export function NativeField<T extends InputType = InputType>({
+  type = "text" as T,
+  label,
+  classes,
+  tooltip,
+  required,
+  disabled,
+  error,
+  registerReturn,
+  ...props
+}: Common<T> & { error?: string; registerReturn: UseFormRegisterReturn }) {
+  const { container, input, lbl, error: errClass } = unpack(classes);
 
   const id = "__" + String(name);
 
@@ -49,12 +64,12 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
 
       {createElement(type === textarea ? textarea : "input", {
         ...props,
-        ...register(name, { valueAsNumber: type === "number" }),
+        ...registerReturn,
         ...(type === textarea ? {} : { type }),
         id,
-        "aria-invalid": !!get(errors, name)?.message,
-        disabled: isSubmitting || disabled,
-        "aria-disabled": isSubmitting || disabled,
+        "aria-invalid": !error,
+        disabled,
+        "aria-disabled": disabled,
         className: `${input}`,
         autoComplete: "off",
         spellCheck: false,
@@ -63,22 +78,18 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
       {(tooltip && ( //tooltip in normal flow
         <p className={error + " text-left mt-2 left-0 text-xs"}>
           <span className="text-gray-d1 dark:text-gray">{tooltip}</span>{" "}
-          <ErrorMessage
-            errors={errors}
-            name={name}
-            as="span"
-            className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
-          />
+          {error && (
+            <span className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden">
+              {error}
+            </span>
+          )}
         </p>
-      )) || (
-        <ErrorMessage
-          data-error
-          errors={errors}
-          name={name}
-          as="span"
-          className={error}
-        />
-      )}
+      )) ||
+        (error && (
+          <span data-error className={errClass}>
+            {error}
+          </span>
+        ))}
     </div>
   );
 }

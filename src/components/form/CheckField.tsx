@@ -19,9 +19,8 @@ type NativeProps = UseFormRegisterReturn & Common & { error?: string };
 
 export function CheckField<T extends FieldValues>({
   name,
-  classes,
   disabled,
-  required,
+  ...rest
 }: Common & {
   name: Path<T>;
 }) {
@@ -32,10 +31,9 @@ export function CheckField<T extends FieldValues>({
   return (
     <NativeCheckField
       {...register(name)}
-      classes={classes}
-      required={required}
       disabled={disabled || isSubmitting}
       error={get(errors, name)}
+      {...rest}
     />
   );
 }
