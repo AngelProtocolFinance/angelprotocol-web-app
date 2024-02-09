@@ -1,29 +1,54 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { PropsWithChildren } from "react";
-import { FormState, UseFormRegisterReturn, get } from "react-hook-form";
+import {
+  FieldValues,
+  Path,
+  UseFormRegisterReturn,
+  get,
+  useFormContext,
+} from "react-hook-form";
 import { unpack } from "./helpers";
 import { Classes } from "./types";
 
-type Custom = PropsWithChildren<{
+type Common = PropsWithChildren<{
   classes?: Classes;
   disabled?: boolean;
   required?: boolean;
-  invalid?: boolean;
-  formState?: FormState<any>;
 }>;
 
-type Props = UseFormRegisterReturn & Custom;
+type NativeProps = UseFormRegisterReturn & Common & { error?: string };
 
-export function CheckField({
+export function CheckField<T extends FieldValues>({
+  name,
   classes,
   disabled,
   required,
+}: Common & {
+  name: Path<T>;
+}) {
+  const {
+    register,
+    formState: { isSubmitting, errors },
+  } = useFormContext<T>();
+  return (
+    <NativeCheckField
+      {...register(name)}
+      classes={classes}
+      required={required}
+      disabled={disabled || isSubmitting}
+      error={get(errors, name)}
+    />
+  );
+}
+
+export function NativeCheckField({
+  classes,
+  disabled,
+  required,
+  error,
   children,
-  invalid,
-  formState,
   ...registerReturn
-}: Props) {
-  const { container, input: int, lbl, error } = unpack(classes);
+}: NativeProps) {
+  const { container, input: int, lbl, error: errClass } = unpack(classes);
   const name = registerReturn.name;
   const id = `__${name}`;
 
@@ -34,24 +59,20 @@ export function CheckField({
         className={int + " peer"}
         type="checkbox"
         id={id}
-        disabled={formState?.isSubmitting || disabled}
-        aria-disabled={formState?.isSubmitting || disabled}
-        aria-invalid={!!get(formState?.errors, name) || invalid}
+        disabled={disabled}
+        aria-disabled={disabled}
+        aria-invalid={!!error}
       />
-      {!!children && (
+      {children && (
         <label data-required={required} className={lbl} htmlFor={id}>
           {children}
         </label>
       )}
 
-      {formState?.errors && (
-        <ErrorMessage
-          data-error
-          errors={formState.errors}
-          name={name as any}
-          as="p"
-          className={error}
-        />
+      {error && (
+        <p data-error className={errClass}>
+          {error}
+        </p>
       )}
     </div>
   );
