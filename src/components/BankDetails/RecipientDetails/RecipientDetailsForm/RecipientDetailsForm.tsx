@@ -189,6 +189,7 @@ export default function RecipientDetailsForm({
         if (f.type === "text") {
           return (
             <NativeField
+              key={f.key}
               required={f.required ? true : undefined}
               error={get(errors, f.key)?.message}
               label={f.name}
