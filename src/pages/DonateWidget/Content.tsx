@@ -1,15 +1,15 @@
 import Seo from "components/Seo";
+import { ErrorStatus } from "components/Status";
 import { Steps } from "components/donation";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useEffect } from "react";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { EndowmentProfile } from "types/aws";
-import donaterConfigFn from "./donaterConfig";
-import { useErrorContext } from "contexts/ErrorContext";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { ErrorStatus } from "components/Status";
+import parseConfig from "./parseConfig";
 
 type Props = {
   profile: EndowmentProfile;
@@ -34,7 +34,7 @@ export default function Content({
     dispatch(setRecipient(donationRecipient));
   }, [dispatch, profile]);
 
-  const configResult = donaterConfigFn(searchParams);
+  const configResult = parseConfig(searchParams);
 
   return "error" in configResult ? (
     <Err error={configResult.error} />

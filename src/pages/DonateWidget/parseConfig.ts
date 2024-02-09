@@ -10,7 +10,7 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   liquidSplitPct: number().required().min(0).max(100),
 });
 
-export default function donaterConfig(
+export default function parseConfig(
   searchParams: URLSearchParams
 ): { error: unknown } | { config: DonaterConfigFromWidget } {
   try {
