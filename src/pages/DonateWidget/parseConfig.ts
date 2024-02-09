@@ -18,8 +18,13 @@ export default function parseConfig(
       searchParams.entries()
     ) as WidgetURLSearchParams;
 
-    if (!schema.isValidSync(parsedConfig)) {
-      return { error: "Invalid widget configuration" };
+    try {
+      schema.validateSync(parsedConfig);
+    } catch (err: any) {
+      if ("message" in err) {
+        throw `Invalid search parameters: ${err.message}`;
+      }
+      throw err;
     }
 
     return {

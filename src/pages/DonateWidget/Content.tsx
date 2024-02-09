@@ -72,7 +72,7 @@ function Err({ error }: { error: unknown }) {
   const { handleError } = useErrorContext();
 
   useEffect(() => {
-    handleError(error, GENERIC_ERROR_MESSAGE);
+    handleError(error);
   }, [handleError, error]);
 
   return <ErrorStatus classes="h-full">{GENERIC_ERROR_MESSAGE}</ErrorStatus>;
