@@ -28,7 +28,6 @@ function _CheckField(
         className={int + " peer"}
         type="checkbox"
         id={id}
-        disabled={props.disabled}
         aria-disabled={props.disabled}
         aria-invalid={!!error}
       />

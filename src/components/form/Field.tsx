@@ -8,7 +8,7 @@ const textarea = "textarea" as const;
 type TextArea = typeof textarea;
 type InputType = HTMLInputTypeAttribute | TextArea;
 
-type Common<T extends InputType> = Omit<
+type Props<T extends InputType> = Omit<
   T extends TextArea
     ? React.TextareaHTMLAttributes<HTMLTextAreaElement>
     : React.InputHTMLAttributes<HTMLInputElement>,
@@ -24,7 +24,7 @@ function _Field<T extends InputType = InputType>(
     error,
     required, //extract from props to disable native validation
     ...props
-  }: Common<T> & { error?: string },
+  }: Props<T> & { error?: string },
   ref: any
 ) {
   const { container, input, lbl, error: errClass } = unpack(classes);
@@ -33,7 +33,7 @@ function _Field<T extends InputType = InputType>(
 
   return (
     <div className={container + " field"} aria-required={required}>
-      <Label className={lbl} required={props.disabled} htmlFor={id}>
+      <Label className={lbl} required={required} htmlFor={id}>
         {label}
       </Label>
 
@@ -74,7 +74,7 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
   name,
   disabled,
   ...rest
-}: Omit<Common<K>, "name"> & { name: Path<T> }) {
+}: Omit<Props<K>, "name"> & { name: Path<T> }) {
   const {
     register,
     formState: { errors, isSubmitting },

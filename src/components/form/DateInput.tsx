@@ -28,10 +28,13 @@ export const NativeDateInput = forwardRef(_Date) as typeof _Date;
 
 export default function DateInput<T extends FieldValues>({
   name,
+  ...rest
 }: Omit<Props, "name"> & { name: Path<T> }) {
   const {
     register,
     formState: { errors },
   } = useFormContext<T>();
-  return <NativeDateInput {...register(name)} error={get(errors, name)} />;
+  return (
+    <NativeDateInput {...register(name)} {...rest} error={get(errors, name)} />
+  );
 }
