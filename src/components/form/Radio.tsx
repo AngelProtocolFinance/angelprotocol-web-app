@@ -1,4 +1,4 @@
-import { InputHTMLAttributes, ReactNode } from "react";
+import { InputHTMLAttributes, ReactNode, forwardRef } from "react";
 import { FieldValues, Path, PathValue, useFormContext } from "react-hook-form";
 import { unpack } from "./helpers";
 import { Classes } from "./types";
@@ -11,6 +11,30 @@ type Common<T extends FieldValues, K extends Path<T>> = Omit<
   classes?: Classes;
   value: PathValue<T, K> extends string ? PathValue<T, K> : never;
 };
+
+export function _Radio<T extends FieldValues, K extends Path<T>>(
+  { children, classes, ...rest }: Common<T, K>,
+  ref: any
+) {
+  const id = `__${rest.name}-${rest.value}`;
+  const { container, input } = unpack(classes);
+
+  return (
+    <label className={`radio ${container}`} htmlFor={id}>
+      <input
+        {...rest}
+        ref={ref}
+        id={id}
+        type="radio"
+        className={`peer ${input}`}
+        disabled={rest.disabled}
+      />
+      {children || rest.value}
+    </label>
+  );
+}
+
+export const NativeRadio = forwardRef(_Radio) as typeof _Radio;
 
 export function Radio<T extends FieldValues, K extends Path<T>>({
   name,
@@ -28,27 +52,5 @@ export function Radio<T extends FieldValues, K extends Path<T>>({
       {...register(name as any)}
       {...rest}
     />
-  );
-}
-
-export function NativeRadio<T extends FieldValues, K extends Path<T>>({
-  children,
-  classes,
-  ...rest
-}: Common<T, K>) {
-  const id = `__${rest.name}-${rest.value}`;
-  const { container, input } = unpack(classes);
-
-  return (
-    <label className={`radio ${container}`} htmlFor={id}>
-      <input
-        {...rest}
-        id={id}
-        type="radio"
-        className={`peer ${input}`}
-        disabled={rest.disabled}
-      />
-      {children || rest.value}
-    </label>
   );
 }

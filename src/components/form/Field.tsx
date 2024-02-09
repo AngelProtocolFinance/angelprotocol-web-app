@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute, createElement } from "react";
+import { HTMLInputTypeAttribute, createElement, forwardRef } from "react";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { Label } from ".";
 import { unpack } from "./helpers";
@@ -15,40 +15,24 @@ type Common<T extends InputType> = Omit<
   "autoComplete" | "className" | "spellCheck" | "type"
 > & { type?: T; classes?: Classes | string; tooltip?: string; label: string };
 
-export function Field<T extends FieldValues, K extends InputType = InputType>({
-  name,
-  disabled,
-  ...rest
-}: Omit<Common<K>, "name"> & { name: Path<T> }) {
-  const {
-    register,
-    formState: { errors, isSubmitting },
-  } = useFormContext();
-
-  return (
-    <NativeField
-      {...register(name)}
-      {...rest} //native properties override that from register
-      disabled={disabled || isSubmitting}
-      error={get(errors, name)?.message}
-    />
-  );
-}
-
-export function NativeField<T extends InputType = InputType>({
-  type = "text" as T,
-  label,
-  classes,
-  tooltip,
-  error,
-  ...props
-}: Common<T> & { error?: string }) {
+function _Field<T extends InputType = InputType>(
+  {
+    type = "text" as T,
+    label,
+    classes,
+    tooltip,
+    error,
+    required,
+    ...props
+  }: Common<T> & { error?: string },
+  ref: any
+) {
   const { container, input, lbl, error: errClass } = unpack(classes);
 
   const id = "__" + props.name;
 
   return (
-    <div className={container + " field"} aria-required={props.required}>
+    <div className={container + " field"} aria-required={required}>
       <Label className={lbl} required={props.disabled} htmlFor={id}>
         {label}
       </Label>
@@ -56,6 +40,7 @@ export function NativeField<T extends InputType = InputType>({
       {createElement(type === textarea ? textarea : "input", {
         ...props,
         ...(type === textarea ? {} : { type }),
+        ref,
         id,
         "aria-invalid": !!error,
         "aria-disabled": props.disabled,
@@ -80,5 +65,27 @@ export function NativeField<T extends InputType = InputType>({
           </span>
         ))}
     </div>
+  );
+}
+
+export const NativeField = forwardRef(_Field) as typeof _Field;
+
+export function Field<T extends FieldValues, K extends InputType = InputType>({
+  name,
+  disabled,
+  ...rest
+}: Omit<Common<K>, "name"> & { name: Path<T> }) {
+  const {
+    register,
+    formState: { errors, isSubmitting },
+  } = useFormContext();
+
+  return (
+    <NativeField
+      {...register(name)}
+      {...rest} //native properties override that from register
+      disabled={disabled || isSubmitting}
+      error={get(errors, name)?.message}
+    />
   );
 }

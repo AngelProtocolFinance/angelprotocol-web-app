@@ -1,4 +1,4 @@
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, forwardRef } from "react";
 import {
   FieldValues,
   Path,
@@ -15,36 +15,17 @@ type Common = PropsWithChildren<{
   required?: boolean;
 }>;
 
-export function CheckField<T extends FieldValues>({
-  name,
-  disabled,
-  ...rest
-}: Common & {
-  name: Path<T>;
-}) {
-  const {
-    register,
-    formState: { isSubmitting, errors },
-  } = useFormContext<T>();
-
-  return (
-    <NativeCheckField
-      {...register(name)}
-      {...rest}
-      disabled={disabled || isSubmitting}
-      error={get(errors, name)?.message}
-    />
-  );
-}
-
-export function NativeCheckField({
-  classes,
-  disabled,
-  required,
-  children,
-  error,
-  ...registerReturn
-}: Common & UseFormRegisterReturn & { error?: string }) {
+function _CheckField(
+  {
+    classes,
+    disabled,
+    required,
+    children,
+    error,
+    ...registerReturn
+  }: Common & UseFormRegisterReturn & { error?: string },
+  ref: any
+) {
   const { container, input: int, lbl, error: errClass } = unpack(classes);
   const name = registerReturn.name;
   const id = `__${name}`;
@@ -53,6 +34,7 @@ export function NativeCheckField({
     <div className={`check-field ${container}`}>
       <input
         {...registerReturn}
+        ref={ref}
         className={int + " peer"}
         type="checkbox"
         id={id}
@@ -72,5 +54,28 @@ export function NativeCheckField({
         </p>
       )}
     </div>
+  );
+}
+
+export const NativeCheckField = forwardRef(_CheckField) as typeof _CheckField;
+export function CheckField<T extends FieldValues>({
+  name,
+  disabled,
+  ...rest
+}: Common & {
+  name: Path<T>;
+}) {
+  const {
+    register,
+    formState: { isSubmitting, errors },
+  } = useFormContext<T>();
+
+  return (
+    <NativeCheckField
+      {...register(name)}
+      {...rest}
+      disabled={disabled || isSubmitting}
+      error={get(errors, name)?.message}
+    />
   );
 }
