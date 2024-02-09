@@ -163,14 +163,14 @@ export default function RecipientDetailsForm({
                 {f.valuesAllowed?.map((v) => (
                   <NativeRadio
                     classes="flex items-center gap-1.5"
-                    key={v.key}
-                    value={v.key}
-                    registerReturn={register(f.key, {
+                    {...register(f.key, {
                       required: f.required ? "required" : false,
                       onChange: f.refreshRequirementsOnChange
                         ? refresh
                         : undefined,
                     })}
+                    key={v.key}
+                    value={v.key}
                   >
                     <span className="capitalize">{v.key.toLowerCase()}</span>
                   </NativeRadio>

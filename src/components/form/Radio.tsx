@@ -1,19 +1,16 @@
-import { PropsWithChildren } from "react";
-import {
-  FieldValues,
-  Path,
-  PathValue,
-  UseFormRegisterReturn,
-  useFormContext,
-} from "react-hook-form";
+import { InputHTMLAttributes, ReactNode } from "react";
+import { FieldValues, Path, PathValue, useFormContext } from "react-hook-form";
 import { unpack } from "./helpers";
 import { Classes } from "./types";
 
-type Common<T extends FieldValues, K extends Path<T>> = PropsWithChildren<{
-  disabled?: boolean;
+type Common<T extends FieldValues, K extends Path<T>> = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "type" | "className" | "value"
+> & {
+  children?: ReactNode;
   classes?: Classes;
   value: PathValue<T, K> extends string ? PathValue<T, K> : never;
-}>;
+};
 
 export function Radio<T extends FieldValues, K extends Path<T>>({
   name,
@@ -27,8 +24,8 @@ export function Radio<T extends FieldValues, K extends Path<T>>({
 
   return (
     <NativeRadio
-      registerReturn={register(name as any)}
       disabled={isSubmitting || disabled}
+      {...register(name as any)}
       {...rest}
     />
   );
@@ -37,24 +34,21 @@ export function Radio<T extends FieldValues, K extends Path<T>>({
 export function NativeRadio<T extends FieldValues, K extends Path<T>>({
   children,
   classes,
-  value,
-  disabled,
-  registerReturn,
-}: Common<T, K> & { registerReturn: UseFormRegisterReturn }) {
-  const id = `__${registerReturn.name}-${value}`;
+  ...rest
+}: Common<T, K>) {
+  const id = `__${rest.name}-${rest.value}`;
   const { container, input } = unpack(classes);
 
   return (
     <label className={`radio ${container}`} htmlFor={id}>
       <input
-        {...registerReturn}
+        {...rest}
         id={id}
         type="radio"
         className={`peer ${input}`}
-        disabled={disabled}
-        value={value}
+        disabled={rest.disabled}
       />
-      {children || value}
+      {children || rest.value}
     </label>
   );
 }

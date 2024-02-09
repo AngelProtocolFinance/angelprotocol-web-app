@@ -1,5 +1,6 @@
 import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
+import { NativeRadio } from "components/form/Radio";
 import { isEmpty } from "helpers";
 import { memo, useState } from "react";
 import { useRequirementsQuery } from "services/aws/wise";
@@ -63,18 +64,19 @@ function RecipientDetails({
         <Label className="mb-2" required>
           Transfer type
         </Label>
-        <select
-          value={reqIdx}
-          onChange={(e) => setSelectedIdx(+e.target.value)}
-          disabled={disabled || isFetching}
-          className="field-input"
-        >
+        <div className="flex items-center gap-6">
           {requirements.map((v, i) => (
-            <option key={v.type} value={i}>
+            <NativeRadio
+              classes="flex items-center gap-1.5"
+              onChange={(e) => setSelectedIdx(+e.target.value)}
+              checked={selectedIdx === i}
+              key={v.type}
+              value={i}
+            >
               {v.title}
-            </option>
+            </NativeRadio>
           ))}
-        </select>
+        </div>
       </div>
 
       <RecipientDetailsForm
