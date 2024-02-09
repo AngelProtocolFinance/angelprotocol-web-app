@@ -65,7 +65,7 @@ export function NativeField<T extends InputType = InputType>({
         ...props,
         ...(type === textarea ? {} : { type }),
         id,
-        "aria-invalid": !error,
+        "aria-invalid": !!error,
         disabled,
         "aria-disabled": disabled,
         className: `${input}`,
