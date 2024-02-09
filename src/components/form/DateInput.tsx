@@ -1,16 +1,11 @@
-import { forwardRef } from "react";
-import {
-  FieldValues,
-  Path,
-  UseFormRegisterReturn,
-  get,
-  useFormContext,
-} from "react-hook-form";
+import { InputHTMLAttributes, forwardRef } from "react";
+import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 
-function _Date(
-  { error, ...props }: UseFormRegisterReturn & { error?: string },
-  ref: any
-) {
+type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & {
+  error?: string;
+};
+
+function _Date({ error, ...props }: Props, ref: any) {
   return (
     <div>
       <input
@@ -33,9 +28,7 @@ export const NativeDateInput = forwardRef(_Date) as typeof _Date;
 
 export default function DateInput<T extends FieldValues>({
   name,
-}: {
-  name: Path<T>;
-}) {
+}: Omit<Props, "name"> & { name: Path<T> }) {
   const {
     register,
     formState: { errors },
