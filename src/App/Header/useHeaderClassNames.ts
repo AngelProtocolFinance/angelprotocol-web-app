@@ -10,10 +10,7 @@ export default function useHeaderClassNames(headerId: string) {
 
   useEffect(() => {
     const header = document.getElementById(headerId);
-    if (!header) {
-      return;
-    }
-    const headerOffsetTop = header.offsetTop;
+    const headerOffsetTop = header!.offsetTop;
 
     function handleScroll() {
       const _isSticky = window.scrollY >= headerOffsetTop;
@@ -30,7 +27,7 @@ export default function useHeaderClassNames(headerId: string) {
 
   return `${
     isSticky
-      ? "shadow-lg bg-white dark:bg-blue-d3 top-0 fixed"
-      : "top-9 absolute"
-  } transition ease-in-out duration-100 w-full h-12 sm:h-20 px-4 sm:px-6`;
+      ? "fixed top-0 shadow-lg bg-white dark:bg-blue-d3"
+      : "absolute top-9"
+  } transition ease-in-out duration-100 z-20 w-full h-12 sm:h-20 px-4 sm:px-6`;
 }

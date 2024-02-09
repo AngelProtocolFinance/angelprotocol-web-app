@@ -14,7 +14,7 @@ export default function Layout() {
   return (
     <div className="grid grid-rows-[1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header classes="z-20" links={headerLinks} />
+      <Header links={headerLinks} /> {/* sticky component, not part of grid */}
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>
