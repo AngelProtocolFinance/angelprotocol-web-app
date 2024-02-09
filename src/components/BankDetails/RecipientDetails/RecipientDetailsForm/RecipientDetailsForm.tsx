@@ -155,9 +155,17 @@ export default function RecipientDetailsForm({
         if (f.type === "radio") {
           return (
             <div key={f.key} className="grid gap-1">
-              <Label required={labelRequired} className="mb-1">
-                {f.name}
-              </Label>
+              <div className="flex gap-3 items-center">
+                <Label required={labelRequired} className="mb-1">
+                  {f.name}
+                </Label>
+                <ErrorMessage
+                  errors={errors}
+                  name={f.key}
+                  as="p"
+                  className="text-red text-xs"
+                />
+              </div>
               <div className="flex items-center gap-2">
                 {f.valuesAllowed?.map((v) => (
                   <div
@@ -185,12 +193,6 @@ export default function RecipientDetailsForm({
                   </div>
                 ))}
               </div>
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs justify-self-end -mb-5"
-              />
             </div>
           );
         }
