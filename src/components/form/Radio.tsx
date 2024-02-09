@@ -19,7 +19,7 @@ export function Radio<T extends FieldValues, K extends Path<T>>({
   name,
   disabled,
   ...rest
-}: Common<T, K> & UseFormRegisterReturn & { error?: string }) {
+}: Common<T, K> & { name?: Path<T> }) {
   const {
     register,
     formState: { isSubmitting },
