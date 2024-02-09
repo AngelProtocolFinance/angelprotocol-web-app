@@ -15,8 +15,6 @@ type Common = PropsWithChildren<{
   required?: boolean;
 }>;
 
-type NativeProps = UseFormRegisterReturn & Common & { error?: string };
-
 export function CheckField<T extends FieldValues>({
   name,
   disabled,
@@ -28,12 +26,13 @@ export function CheckField<T extends FieldValues>({
     register,
     formState: { isSubmitting, errors },
   } = useFormContext<T>();
+
   return (
     <NativeCheckField
       {...register(name)}
       {...rest}
       disabled={disabled || isSubmitting}
-      error={get(errors, name)}
+      error={get(errors, name)?.message}
     />
   );
 }
@@ -42,10 +41,10 @@ export function NativeCheckField({
   classes,
   disabled,
   required,
-  error,
   children,
+  error,
   ...registerReturn
-}: NativeProps) {
+}: Common & UseFormRegisterReturn & { error?: string }) {
   const { container, input: int, lbl, error: errClass } = unpack(classes);
   const name = registerReturn.name;
   const id = `__${name}`;

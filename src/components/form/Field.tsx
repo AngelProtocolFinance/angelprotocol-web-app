@@ -34,9 +34,9 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
   return (
     <NativeField
       {...rest}
-      {...register(name)}
-      error={get(errors, name)}
+      registerReturn={register(name)}
       disabled={disabled || isSubmitting}
+      error={get(errors, name)?.message}
     />
   );
 }
@@ -49,11 +49,12 @@ export function NativeField<T extends InputType = InputType>({
   required,
   disabled,
   error,
+  registerReturn,
   ...props
-}: Common<T> & UseFormRegisterReturn & { error?: string }) {
+}: Common<T> & { error?: string; registerReturn: UseFormRegisterReturn }) {
   const { container, input, lbl, error: errClass } = unpack(classes);
 
-  const id = "__" + String(props.name);
+  const id = "__" + String(registerReturn.name);
 
   return (
     <div className={container + " field"} aria-required={required}>
@@ -62,6 +63,7 @@ export function NativeField<T extends InputType = InputType>({
       </Label>
 
       {createElement(type === textarea ? textarea : "input", {
+        ...registerReturn,
         ...props,
         ...(type === textarea ? {} : { type }),
         id,
@@ -74,7 +76,7 @@ export function NativeField<T extends InputType = InputType>({
       })}
 
       {(tooltip && ( //tooltip in normal flow
-        <p className={error + " text-left mt-2 left-0 text-xs"}>
+        <p className={errClass + " text-left mt-2 left-0 text-xs"}>
           <span className="text-gray-d1 dark:text-gray">{tooltip}</span>{" "}
           {error && (
             <span className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden">
