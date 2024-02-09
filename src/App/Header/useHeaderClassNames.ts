@@ -9,12 +9,14 @@ export default function useHeaderClassNames(headerId: string) {
   const [isSticky, setSticky] = useState(false);
 
   useEffect(() => {
+    const header = document.getElementById(headerId);
+    if (!header) {
+      return;
+    }
+    const headerOffsetTop = header.offsetTop;
+
     function handleScroll() {
-      const header = document.getElementById(headerId);
-      if (!header) {
-        return;
-      }
-      const _isSticky = window.scrollY >= header.offsetTop;
+      const _isSticky = window.scrollY >= headerOffsetTop;
       if (_isSticky !== isStickyRef.current) {
         setSticky(_isSticky);
         isStickyRef.current = _isSticky;
@@ -27,6 +29,8 @@ export default function useHeaderClassNames(headerId: string) {
   }, []);
 
   return `${
-    isSticky ? "shadow-lg bg-white dark:bg-blue-d3" : ""
-  } transition ease-in-out duration-100 w-full h-12 sm:h-20 mt-9 px-4 sm:px-6`;
+    isSticky
+      ? "shadow-lg bg-white dark:bg-blue-d3 top-0 fixed"
+      : "top-9 absolute"
+  } transition ease-in-out duration-100 w-full h-12 sm:h-20 px-4 sm:px-6`;
 }
