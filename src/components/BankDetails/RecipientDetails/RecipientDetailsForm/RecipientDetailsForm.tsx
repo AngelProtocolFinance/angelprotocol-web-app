@@ -194,7 +194,7 @@ export default function RecipientDetailsForm({
               label={f.name}
               type="text"
               placeholder={f.example}
-              registerReturn={register(f.key, {
+              {...register(f.key, {
                 required: f.required ? "required" : false,
                 maxLength: f.maxLength
                   ? {
