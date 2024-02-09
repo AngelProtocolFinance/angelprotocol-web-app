@@ -3,14 +3,14 @@ import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { unpack } from "./helpers";
 import { Classes } from "./types";
 
-type Custom = {
+type Props = Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "className" | "type"
+> & {
   classes?: Classes;
   children?: ReactNode;
   error?: string;
 };
-
-type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "className" | "type"> &
-  Custom;
 
 function _CheckField(
   { classes, required, children, error, ...props }: Props,
@@ -50,6 +50,7 @@ function _CheckField(
 export const NativeCheckField = forwardRef(_CheckField) as typeof _CheckField;
 export function CheckField<T extends FieldValues>({
   name,
+  disabled,
   ...rest
 }: Omit<Props, "name"> & {
   name: Path<T>;
@@ -63,7 +64,7 @@ export function CheckField<T extends FieldValues>({
     <NativeCheckField
       {...register(name)}
       {...rest}
-      disabled={rest.disabled || isSubmitting}
+      disabled={disabled || isSubmitting}
       error={get(errors, name)?.message}
     />
   );

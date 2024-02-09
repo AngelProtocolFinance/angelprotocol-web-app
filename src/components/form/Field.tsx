@@ -22,7 +22,7 @@ function _Field<T extends InputType = InputType>(
     classes,
     tooltip,
     error,
-    required,
+    required, //extract from props to disable native validation
     ...props
   }: Common<T> & { error?: string },
   ref: any
