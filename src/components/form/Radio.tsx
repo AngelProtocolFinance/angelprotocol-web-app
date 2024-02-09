@@ -3,7 +3,7 @@ import { FieldValues, Path, PathValue, useFormContext } from "react-hook-form";
 import { unpack } from "./helpers";
 import { Classes } from "./types";
 
-type Common<T extends FieldValues, K extends Path<T>> = Omit<
+type Props<T extends FieldValues, K extends Path<T>> = Omit<
   InputHTMLAttributes<HTMLInputElement>,
   "type" | "className" | "value"
 > & {
@@ -13,7 +13,7 @@ type Common<T extends FieldValues, K extends Path<T>> = Omit<
 };
 
 export function _Radio<T extends FieldValues, K extends Path<T>>(
-  { children, classes, ...rest }: Common<T, K>,
+  { children, classes, ...rest }: Props<T, K>,
   ref: any
 ) {
   const id = `__${rest.name}-${rest.value}`;
@@ -40,7 +40,7 @@ export function Radio<T extends FieldValues, K extends Path<T>>({
   name,
   disabled,
   ...rest
-}: Common<T, K> & { name?: Path<T> }) {
+}: Omit<Props<T, K>, "name"> & { name?: Path<T> }) {
   const {
     register,
     formState: { isSubmitting },
