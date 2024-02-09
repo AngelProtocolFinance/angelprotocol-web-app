@@ -31,9 +31,9 @@ export function CheckField<T extends FieldValues>({
   return (
     <NativeCheckField
       {...register(name)}
+      {...rest}
       disabled={disabled || isSubmitting}
       error={get(errors, name)}
-      {...rest}
     />
   );
 }

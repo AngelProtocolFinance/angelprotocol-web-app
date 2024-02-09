@@ -33,10 +33,10 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
 
   return (
     <NativeField
-      registerReturn={register(name)}
+      {...rest}
+      {...register(name)}
       error={get(errors, name)}
       disabled={disabled || isSubmitting}
-      {...rest}
     />
   );
 }
@@ -49,12 +49,11 @@ export function NativeField<T extends InputType = InputType>({
   required,
   disabled,
   error,
-  registerReturn,
   ...props
-}: Common<T> & { error?: string; registerReturn: UseFormRegisterReturn }) {
+}: Common<T> & UseFormRegisterReturn & { error?: string }) {
   const { container, input, lbl, error: errClass } = unpack(classes);
 
-  const id = "__" + String(name);
+  const id = "__" + String(props.name);
 
   return (
     <div className={container + " field"} aria-required={required}>
@@ -64,7 +63,6 @@ export function NativeField<T extends InputType = InputType>({
 
       {createElement(type === textarea ? textarea : "input", {
         ...props,
-        ...registerReturn,
         ...(type === textarea ? {} : { type }),
         id,
         "aria-invalid": !error,
