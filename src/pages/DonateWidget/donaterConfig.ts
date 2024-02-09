@@ -10,34 +10,28 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   liquidSplitPct: number().required().min(0).max(100),
 });
 
-const fallbackConfig: DonaterConfigFromWidget = {
-  isFallback: true,
-  isDescriptionTextShown: true,
-  advancedOptionsDisplay: "expanded",
-  liquidSplitPct: 50,
-};
-
 export default function donaterConfig(
   searchParams: URLSearchParams
-): DonaterConfigFromWidget {
+): { error: unknown } | { config: DonaterConfigFromWidget } {
   try {
     const parsedConfig = Object.fromEntries(
       searchParams.entries()
     ) as WidgetURLSearchParams;
 
     if (!schema.isValidSync(parsedConfig)) {
-      return fallbackConfig;
+      return { error: "Invalid widget configuration" };
     }
 
     return {
-      isFallback: false,
-      isDescriptionTextShown: parsedConfig.isDescriptionTextShown === "true",
-      advancedOptionsDisplay:
-        parsedConfig.advancedOptionsDisplay as DonaterConfigFromWidget["advancedOptionsDisplay"],
-      liquidSplitPct: +parsedConfig.liquidSplitPct,
+      config: {
+        isFallback: false,
+        isDescriptionTextShown: parsedConfig.isDescriptionTextShown === "true",
+        advancedOptionsDisplay:
+          parsedConfig.advancedOptionsDisplay as DonaterConfigFromWidget["advancedOptionsDisplay"],
+        liquidSplitPct: +parsedConfig.liquidSplitPct,
+      },
     };
-  } catch (err) {
-    console.error(err);
-    return fallbackConfig;
+  } catch (error) {
+    return { error };
   }
 }
