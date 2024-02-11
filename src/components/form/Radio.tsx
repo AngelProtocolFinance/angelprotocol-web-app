@@ -12,7 +12,7 @@ type Props<T extends FieldValues, K extends Path<T>> = Omit<
   value: PathValue<T, K> extends string ? PathValue<T, K> : never;
 };
 
-export function _Radio<T extends FieldValues, K extends Path<T>>(
+function _Radio<T extends FieldValues, K extends Path<T>>(
   { children, classes, ...props }: Props<T, K>,
   ref: any
 ) {

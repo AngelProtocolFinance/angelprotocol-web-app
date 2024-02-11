@@ -73,6 +73,7 @@ export const NativeField = forwardRef(_Field) as typeof _Field;
 export function Field<T extends FieldValues, K extends InputType = InputType>({
   name,
   disabled,
+  type,
   ...rest
 }: Omit<Props<K>, "name"> & { name: Path<T> }) {
   const {
@@ -82,7 +83,7 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
 
   return (
     <NativeField
-      {...register(name)}
+      {...register(name, { valueAsNumber: type === "number" })}
       {...rest} //native properties override that from register
       disabled={disabled || isSubmitting}
       error={get(errors, name)?.message}
