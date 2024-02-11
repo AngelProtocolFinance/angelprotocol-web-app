@@ -12,40 +12,38 @@ type Props = Omit<
   error?: string;
 };
 
-function _CheckField(
-  { classes, required, children, error, ...props }: Props,
-  ref: any
-) {
-  const { container, input: int, lbl, error: errClass } = unpack(classes);
-  const id = `__${props.name}`;
+const NativeCheckField = forwardRef<HTMLInputElement, Props>(
+  ({ classes, required, children, error, ...props }, ref) => {
+    const { container, input: int, lbl, error: errClass } = unpack(classes);
+    const id = `__${props.name}`;
 
-  return (
-    <div className={`check-field ${container}`}>
-      <input
-        {...props}
-        ref={ref}
-        className={int + " peer"}
-        type="checkbox"
-        id={id}
-        aria-disabled={props.disabled}
-        aria-invalid={!!error}
-      />
-      {children && (
-        <label data-required={required} className={lbl} htmlFor={id}>
-          {children}
-        </label>
-      )}
+    return (
+      <div className={`check-field ${container}`}>
+        <input
+          {...props}
+          ref={ref}
+          className={int + " peer"}
+          type="checkbox"
+          id={id}
+          aria-disabled={props.disabled}
+          aria-invalid={!!error}
+        />
+        {children && (
+          <label data-required={required} className={lbl} htmlFor={id}>
+            {children}
+          </label>
+        )}
 
-      {error && (
-        <p data-error className={errClass}>
-          {error}
-        </p>
-      )}
-    </div>
-  );
-}
+        {error && (
+          <p data-error className={errClass}>
+            {error}
+          </p>
+        )}
+      </div>
+    );
+  }
+);
 
-export const NativeCheckField = forwardRef(_CheckField) as typeof _CheckField;
 export function CheckField<T extends FieldValues>({
   name,
   disabled,

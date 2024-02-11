@@ -1,4 +1,9 @@
-import { HTMLInputTypeAttribute, createElement, forwardRef } from "react";
+import {
+  HTMLInputTypeAttribute,
+  LegacyRef,
+  createElement,
+  forwardRef,
+} from "react";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { Label } from ".";
 import { unpack } from "./helpers";
@@ -25,7 +30,7 @@ function _Field<T extends InputType = InputType>(
     required, //extract from props to disable native validation
     ...props
   }: Props<T> & { error?: string },
-  ref: any
+  ref: LegacyRef<HTMLInputElement | HTMLTextAreaElement>
 ) {
   const { container, input, lbl, error: errClass } = unpack(classes);
 

@@ -1,11 +1,12 @@
 import { InputHTMLAttributes, forwardRef } from "react";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 
+type Ref = HTMLInputElement;
 type Props = Omit<InputHTMLAttributes<HTMLInputElement>, "type"> & {
   error?: string;
 };
 
-function _Date({ error, ...props }: Props, ref: any) {
+const NativeDateInput = forwardRef<Ref, Props>(({ error, ...props }, ref) => {
   return (
     <div>
       <input
@@ -22,9 +23,7 @@ function _Date({ error, ...props }: Props, ref: any) {
       )}
     </div>
   );
-}
-
-export const NativeDateInput = forwardRef(_Date) as typeof _Date;
+});
 
 export default function DateInput<T extends FieldValues>({
   name,
