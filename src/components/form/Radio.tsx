@@ -13,23 +13,23 @@ type Props<T extends FieldValues, K extends Path<T>> = Omit<
 };
 
 export function _Radio<T extends FieldValues, K extends Path<T>>(
-  { children, classes, ...rest }: Props<T, K>,
+  { children, classes, ...props }: Props<T, K>,
   ref: any
 ) {
-  const id = `__${rest.name}-${rest.value}`;
+  const id = `__${props.name}-${props.value}`;
   const { container, input } = unpack(classes);
 
   return (
     <label className={`radio ${container}`} htmlFor={id}>
       <input
-        {...rest}
+        {...props}
         ref={ref}
         id={id}
         type="radio"
         className={`peer ${input}`}
-        disabled={rest.disabled}
+        disabled={props.disabled}
       />
-      {children || rest.value}
+      {children || props.value}
     </label>
   );
 }

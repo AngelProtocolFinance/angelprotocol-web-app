@@ -17,8 +17,7 @@ function _CheckField(
   ref: any
 ) {
   const { container, input: int, lbl, error: errClass } = unpack(classes);
-  const name = props.name;
-  const id = `__${name}`;
+  const id = `__${props.name}`;
 
   return (
     <div className={`check-field ${container}`}>
@@ -50,7 +49,7 @@ export const NativeCheckField = forwardRef(_CheckField) as typeof _CheckField;
 export function CheckField<T extends FieldValues>({
   name,
   disabled,
-  ...rest
+  ...props
 }: Omit<Props, "name"> & {
   name: Path<T>;
 }) {
@@ -62,7 +61,7 @@ export function CheckField<T extends FieldValues>({
   return (
     <NativeCheckField
       {...register(name)}
-      {...rest}
+      {...props}
       disabled={disabled || isSubmitting}
       error={get(errors, name)?.message}
     />
