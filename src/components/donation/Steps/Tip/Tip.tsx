@@ -9,7 +9,7 @@ export default function Tip() {
 
   return (
     <div className="grid content-start p-4 @md:p-8">
-      <BackBtn type="button" onClick={() => dispatch(setStep("tip"))} />
+      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
       <h4 className="mt-4">
         Choose a Donation for <Image src={bgIcon} /> Better.giving
       </h4>
