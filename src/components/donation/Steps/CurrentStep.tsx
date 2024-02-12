@@ -49,7 +49,7 @@ export default function CurrentStep({ config }: Props) {
   }
 
   if (state.step === "tip") {
-    return <Tip />;
+    return <Tip {...state} />;
   }
 
   state.step satisfies "donate-form";
