@@ -1,4 +1,5 @@
 import bgIcon from "assets/favicon.png";
+import character from "assets/images/waving-character.png";
 import Image from "components/Image/Image";
 import { TipStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
@@ -38,10 +39,17 @@ export default function Tip({ details }: TipStep) {
         <span className="uppercase">{symbol}</span>
       </div>
 
+      <div className="rounded bg-blue-l5 h-[4.5rem] mt-16 relative">
+        <Image src={character} className="absolute left-1 bottom-0" />
+        <p className="px-[5.32rem] grid place-items-center text-center h-full text-[0.94rem]">
+          Thank you for keeping Better giving free for everyone!
+        </p>
+      </div>
+
       <p className="text-sm text-gray-d1 mt-6">
         Assist us in advancing our mission to connect with global organizations
         and propagate our timeless message:{" "}
-        <span className="font-medium">Give today, give forever.</span>
+        <span className="font-medium block">Give today, give forever.</span>
       </p>
 
       <button
