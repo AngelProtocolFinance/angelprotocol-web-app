@@ -47,6 +47,10 @@ export default function CurrentStep({ config }: Props) {
     return <Splits {...state} />;
   }
 
+  if (state.step === "tip") {
+    return <>tip</>;
+  }
+
   state.step satisfies "donate-form";
   return <DonateMethods donaterConfig={config} state={state} />;
 }

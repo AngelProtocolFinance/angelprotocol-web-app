@@ -4,6 +4,11 @@ import { Country } from "types/components";
 import { DonationSource } from "types/lists";
 import { TokenWithAmount, TxPackage } from "types/tx";
 
+type From<T extends { step: string }, U extends keyof T = never> = Omit<
+  Required<T>,
+  "step" | U
+> & { [key in U]?: T[key] };
+
 export type DonationRecipient = {
   id: number;
   name: string;
@@ -84,7 +89,8 @@ type InitStep = {
 export type FormStep<T extends DonationDetails = DonationDetails> = {
   step: "donate-form";
   details?: T;
-} & Omit<Required<InitStep>, "step">;
+} & From<InitStep>;
+
 export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type PaypalFormStep = FormStep<PaypalDonationDetails>;
@@ -96,16 +102,21 @@ export type KYCStep = {
   step: "kyc-form";
   recipient: DonationRecipient;
   kyc?: KYC;
-} & Omit<Required<FormStep<DonationDetails>>, "step">;
+} & From<FormStep<DonationDetails>>;
 
 export type SplitsStep = {
   step: "splits";
   liquidSplitPct?: number;
-} & Omit<KYCStep, "step">;
+} & From<KYCStep, "kyc">;
+
+export type TipStep = {
+  step: "tip";
+  amount?: string;
+} & From<SplitsStep, "kyc">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<Required<SplitsStep>, "step" | "kyc"> & { details: T; kyc?: KYC };
+} & Omit<From<TipStep, "kyc" | "amount">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
@@ -117,13 +128,14 @@ export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
 export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;
-} & Omit<CryptoSubmitStep, "step">;
+} & From<CryptoSubmitStep>;
 
 export type DonationState =
   | InitStep
   | FormStep
   | KYCStep
   | SplitsStep
+  | TipStep
   | SubmitStep
   | CryptoResultStep;
 
