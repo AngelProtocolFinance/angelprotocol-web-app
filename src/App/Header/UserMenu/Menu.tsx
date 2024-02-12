@@ -70,7 +70,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
         onClick={signOut}
         className="btn-orange rounded-none w-full p-3 text-sm mt-4"
       >
-        Sign out
+        Log out
       </button>
     </Popover.Panel>
   );

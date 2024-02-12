@@ -9,29 +9,37 @@ import { Link, LinkGroup, SocialMediaLink } from "./types";
 
 type LINKS = {
   HEADER_LINKS: Link[];
+  HEADER_LINKS_WITH_AUTH: Link[];
   GROUPS_DATA: LinkGroup[];
   SOCIAL_MEDIA_LINKS: SocialMediaLink[];
 };
 
+const HEADER_LINKS: Link[] = [
+  { title: "For Nonprofits", href: BASE_URL, external: true },
+  {
+    title: "Marketplace",
+    href: appRoutes.marketplace,
+    end: true,
+  },
+  {
+    title: "Giving Partners (CSR)",
+    href: `${BASE_URL}/giving-partners-csr/`,
+    external: true,
+  },
+  {
+    title: "About",
+    href: `${BASE_URL}/better-giving-about/`,
+    external: true,
+  },
+  { title: "Register NPO", href: appRoutes.register },
+];
+
 export const CHARITY_LINKS: LINKS = {
-  HEADER_LINKS: [
-    { title: "For Nonprofits", href: BASE_URL, external: true },
-    {
-      title: "Marketplace",
-      href: appRoutes.marketplace,
-      end: true,
-    },
-    {
-      title: "Giving Partners (CSR)",
-      href: `${BASE_URL}/giving-partners-csr/`,
-      external: true,
-    },
-    {
-      title: "About",
-      href: `${BASE_URL}/better-giving-about/`,
-      external: true,
-    },
-    { title: "Register NPO", href: appRoutes.register },
+  HEADER_LINKS,
+  HEADER_LINKS_WITH_AUTH: [
+    ...HEADER_LINKS,
+    { title: "Login", href: appRoutes.signin },
+    { title: "Sign up", href: appRoutes.signin },
   ],
   GROUPS_DATA: [
     {

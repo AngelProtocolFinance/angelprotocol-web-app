@@ -39,6 +39,7 @@ export default function Menu({ links }: { links: Link[] }) {
               className={styler}
               to={link.href}
               end={link.end}
+              onClick={closeModal}
             >
               {link.title}
             </NavLink>
