@@ -23,7 +23,7 @@ export default function UserMenu() {
           state={state}
           className="btn text-base normal-case max-sm:hidden hover:underline"
         >
-          Login
+          Log in
         </Link>
         <Link
           to={appRoutes.signin}
