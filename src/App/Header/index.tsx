@@ -1,7 +1,7 @@
+import { DappLogo } from "components/Image";
 import { appRoutes } from "constants/routes";
 import { useLocation } from "react-router-dom";
 import { Link } from "../types";
-import Logo from "./Logo";
 import NavDropdown from "./NavDropdown";
 import UserMenu from "./UserMenu";
 import useHeaderClassNames from "./useHeaderClassNames";
@@ -19,7 +19,7 @@ export default function Header({ links }: Props) {
     <header id={HEADER_ID} className={headerClassNames}>
       <div className="padded-container">
         <div className="grid gap-4 px-8 grid-cols-2 h-full w-full rounded-full bg-white">
-          <Logo />
+          <DappLogo classes="w-32 sm:w-48 h-12 sm:h-20" />
           <div className="flex gap-2 md:gap-4 justify-self-end items-center">
             {!(
               location.pathname === appRoutes.signin ||
