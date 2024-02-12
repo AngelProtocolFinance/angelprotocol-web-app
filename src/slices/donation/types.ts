@@ -111,7 +111,7 @@ export type SplitsStep = {
 
 export type TipStep = {
   step: "tip";
-  amount?: string;
+  amount?: number;
 } & From<SplitsStep, "kyc">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {

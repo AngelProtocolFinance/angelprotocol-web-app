@@ -6,6 +6,7 @@ import DonateMethods from "./DonateMethods";
 import Result from "./Result";
 import Splits from "./Splits";
 import Submit from "./Submit";
+import Tip from "./Tip";
 
 type Props = { config: DonaterConfigFromWidget | null };
 
@@ -48,7 +49,7 @@ export default function CurrentStep({ config }: Props) {
   }
 
   if (state.step === "tip") {
-    return <>tip</>;
+    return <Tip />;
   }
 
   state.step satisfies "donate-form";
