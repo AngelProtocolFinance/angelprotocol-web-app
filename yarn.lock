@@ -174,11 +174,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@aws-amplify/ui-react-core@npm:3.0.2":
-  version: 3.0.2
-  resolution: "@aws-amplify/ui-react-core@npm:3.0.2"
+"@aws-amplify/ui-react-core@npm:3.0.9":
+  version: 3.0.9
+  resolution: "@aws-amplify/ui-react-core@npm:3.0.9"
   dependencies:
-    "@aws-amplify/ui": 6.0.2
+    "@aws-amplify/ui": 6.0.9
     "@xstate/react": ^3.2.2
     lodash: 4.17.21
     react-hook-form: ^7.43.5
@@ -186,16 +186,16 @@ __metadata:
   peerDependencies:
     aws-amplify: ^6.0.2
     react: ^16.14.0 || ^17.0 || ^18.0
-  checksum: d2cc5ef10e45730a42b1d2eb6fd6118d2714d5c4fef67dc057cfd202c1dc8418ed0a2ca8e2706351d6394bc14c32a1e561c4c9094c878942085ebf6e4618c5be
+  checksum: 49bfcfca541129e9c5d570824e88503bef4dcfb4d49f613d5c151852a2064415f01c66e492840a242fdea5ecd6f4d69e7e0b702b12ef2863da7dd8054d02c0b3
   languageName: node
   linkType: hard
 
-"@aws-amplify/ui-react@npm:6.0.3":
-  version: 6.0.3
-  resolution: "@aws-amplify/ui-react@npm:6.0.3"
+"@aws-amplify/ui-react@npm:6.1.3":
+  version: 6.1.3
+  resolution: "@aws-amplify/ui-react@npm:6.1.3"
   dependencies:
-    "@aws-amplify/ui": 6.0.2
-    "@aws-amplify/ui-react-core": 3.0.2
+    "@aws-amplify/ui": 6.0.9
+    "@aws-amplify/ui-react-core": 3.0.9
     "@radix-ui/react-direction": 1.0.0
     "@radix-ui/react-dropdown-menu": 1.0.0
     "@radix-ui/react-slider": 1.0.0
@@ -210,17 +210,17 @@ __metadata:
   peerDependenciesMeta:
     aws-amplify:
       optional: true
-  checksum: e4eca4a0e53853c6fff551dd6c9daa050260f029aa52c604dd15b4b0a5a888808908df2f6694ac5f4595df0b988e5c4fe3798ff771c2a73c82cba6a8517a6f58
+  checksum: 10f580b111db0bc155537ce1a942b237807cff5a9653df49ab2209ce62db172ea3add8ca3cd3f2125f3e28c30ff2f009c025302f584b3e5f4e5d95e49cc10daa
   languageName: node
   linkType: hard
 
-"@aws-amplify/ui@npm:6.0.2":
-  version: 6.0.2
-  resolution: "@aws-amplify/ui@npm:6.0.2"
+"@aws-amplify/ui@npm:6.0.9":
+  version: 6.0.9
+  resolution: "@aws-amplify/ui@npm:6.0.9"
   dependencies:
     csstype: ^3.1.1
     lodash: 4.17.21
-    style-dictionary: 3.7.1
+    style-dictionary: 3.9.1
     tslib: ^2.5.2
   peerDependencies:
     aws-amplify: ^6.0.2
@@ -228,7 +228,7 @@ __metadata:
   peerDependenciesMeta:
     xstate:
       optional: true
-  checksum: ef6296e6991ddcb2295d9c8c87e72866766781a9d6748eec2fa8b25393dadacc2692f5b75c8d2f681cd19bb2f196886866d0d7f7c5c36f2c7dfcdc0c691401e0
+  checksum: 2270e77640cc929f58fddc6d90a189ac35e996d7546c6a01e520b66ff5f7fc3e72411e481f14bae3498c828d39889e41351cc0c3167c36e8a4d037885522bb47
   languageName: node
   linkType: hard
 
@@ -7049,7 +7049,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "angelprotocol-web-app@workspace:."
   dependencies:
-    "@aws-amplify/ui-react": 6.0.3
+    "@aws-amplify/ui-react": 6.1.3
     "@babel/core": 7.23.0
     "@babel/plugin-syntax-flow": ^7.18.6
     "@babel/plugin-transform-react-jsx": 7.23.4
@@ -11273,7 +11273,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6, glob@npm:^7.2.0":
+"glob@npm:^7.1.1, glob@npm:^7.1.2, glob@npm:^7.1.3, glob@npm:^7.1.4, glob@npm:^7.1.6":
   version: 7.2.3
   resolution: "glob@npm:7.2.3"
   dependencies:
@@ -13351,7 +13351,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"json5@npm:^2.1.2, json5@npm:^2.2.0, json5@npm:^2.2.3":
+"json5@npm:^2.1.2, json5@npm:^2.2.0, json5@npm:^2.2.2, json5@npm:^2.2.3":
   version: 2.2.3
   resolution: "json5@npm:2.2.3"
   bin:
@@ -18285,22 +18285,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"style-dictionary@npm:3.7.1":
-  version: 3.7.1
-  resolution: "style-dictionary@npm:3.7.1"
+"style-dictionary@npm:3.9.1":
+  version: 3.9.1
+  resolution: "style-dictionary@npm:3.9.1"
   dependencies:
     chalk: ^4.0.0
     change-case: ^4.1.2
     commander: ^8.3.0
     fs-extra: ^10.0.0
-    glob: ^7.2.0
-    json5: ^2.2.0
+    glob: ^10.3.10
+    json5: ^2.2.2
     jsonc-parser: ^3.0.0
     lodash: ^4.17.15
     tinycolor2: ^1.4.1
   bin:
     style-dictionary: bin/style-dictionary
-  checksum: f2793b51d4c91625d1ee3385a2438c3fb0723183812c47f0fcea96703fc3a8a433ba4b496a3ab3d793c9827229d74483b4d8916d624d7d9bde5d36e8b18831fe
+  checksum: e2ab0c39beb9acda3998b09176bd1537af9a00e883f7bb4fcd1e0f6e2560afd881cee4cdb97a67c2a935ab04767c11ced78eabbd38c246fb5ff3ff970c52c8c4
   languageName: node
   linkType: hard
 
