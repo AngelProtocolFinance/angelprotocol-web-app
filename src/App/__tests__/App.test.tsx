@@ -36,7 +36,7 @@ vi.mock("services/aws/leaderboard", () => ({
 
 const heroText = /BETTER GIVING REDEFINES/i;
 const marketLink = /marketplace/i;
-const loginLink = /login/i;
+const loginLink = /log in/i;
 const signupLink = /sign up/i;
 // const leadLink = /leaderboard/i;
 const loaderTestId = "loader";
