@@ -17,14 +17,13 @@ export function Selector<
   options,
   children,
   classes,
-  rules,
   onOptionChange,
 }: Props<T, K, V>) {
   const { container = "", button = "" } = classes || {};
   const {
     formState: { isSubmitting, errors },
     field: { value: selected, onChange, ref },
-  } = useController<{ [index: string]: OptionType<V> }>({ name, rules });
+  } = useController<{ [index: string]: OptionType<V> }>({ name });
 
   const valuePath = `${name}.${valueKey}`;
 

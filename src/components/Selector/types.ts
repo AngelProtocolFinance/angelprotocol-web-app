@@ -1,10 +1,5 @@
 import { ReactNode } from "react";
-import {
-  FieldValues,
-  Path,
-  PathValue,
-  UseControllerProps,
-} from "react-hook-form";
+import { FieldValues, Path, PathValue } from "react-hook-form";
 import { OptionType, ValKey } from "types/components";
 
 type Classes = {
@@ -27,12 +22,6 @@ export interface Props<
   placeholder?: string;
   options: OptionType<V>[];
   classes?: Classes;
-  rules?: UseControllerProps<
-    {
-      [index: string]: OptionType<V>;
-    },
-    string
-  >["rules"];
   onOptionChange?(): void;
   children?: (selected: OptionType<V>) => ReactNode;
 }
