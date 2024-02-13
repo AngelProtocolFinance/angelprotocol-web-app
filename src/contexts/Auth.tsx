@@ -1,4 +1,3 @@
-import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
 import { ComponentType, createContext, useContext } from "react";
@@ -28,14 +27,14 @@ export default function withAuth<Props>(
       return <Navigate to={appRoutes.signin} state={state} replace />;
     }
 
-    if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {
-      return (
-        <div className="grid content-start place-items-center py-20">
-          <Icon type="ExclamationCircleFill" size={80} className="text-red" />
-          <p className="text-xl mt-8">Unauthorized</p>
-        </div>
-      );
-    }
+    // if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {
+    //   return (
+    //     <div className="grid content-start place-items-center py-20">
+    //       <Icon type="ExclamationCircleFill" size={80} className="text-red" />
+    //       <p className="text-xl mt-8">Unauthorized</p>
+    //     </div>
+    //   );
+    // }
 
     /**
      * if wish to access user via props wrap component:
