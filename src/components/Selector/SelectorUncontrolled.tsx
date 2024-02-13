@@ -7,6 +7,7 @@ import { styles } from "./constants";
 
 type Props<V extends ValKey> = {
   "aria-invalid"?: boolean;
+  disabled?: boolean;
   id?: string;
   options: OptionType<V>[];
   value?: OptionType<V>;
@@ -18,6 +19,7 @@ export const SelectorUncontrolled = forwardRef(function Select<
 >(props: Props<V>, ref: React.Ref<HTMLInputElement>) {
   return (
     <Listbox
+      disabled={props.disabled}
       onChange={props.onChange}
       value={props.value}
       as="div"
@@ -26,6 +28,7 @@ export const SelectorUncontrolled = forwardRef(function Select<
       <FocusableInput ref={ref} />
       <Listbox.Button
         aria-invalid={props["aria-invalid"]}
+        aria-disabled={props.disabled}
         id={props.id}
         as="button"
         className={`${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
