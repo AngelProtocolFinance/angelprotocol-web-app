@@ -23,7 +23,7 @@ export default function Menu({ links }: { links: Link[] }) {
           <Icon type="Close" size={32} />
         </button>
       </div>
-      <nav className="mt-8 grid gap-y-4 w-full px-6 font-bold font-heading text-blue text-3xl">
+      <nav className="mt-8 grid gap-y-4 w-full px-6">
         {links.map((link) =>
           link.external ? (
             <ExtLink
@@ -51,5 +51,5 @@ export default function Menu({ links }: { links: Link[] }) {
 }
 
 const styles =
-  "text-blue font-heading font-bold w-full text-3xl hover:text-orange transition ease-in-out duration-300";
+  "text-blue font-body font-bold w-full text-3xl hover:text-orange transition ease-in-out duration-300";
 const styler = createNavLinkStyler(styles, "pointer-events-none text-orange");
