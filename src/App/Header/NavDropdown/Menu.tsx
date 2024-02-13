@@ -51,5 +51,5 @@ export default function Menu({ links }: { links: Link[] }) {
 }
 
 const styles =
-  "text-blue font-body font-bold w-full text-3xl hover:text-orange transition ease-in-out duration-300";
+  "text-blue font-body font-semibold w-full text-3xl hover:text-orange transition ease-in-out duration-300";
 const styler = createNavLinkStyler(styles, "pointer-events-none text-orange");
