@@ -1,10 +1,14 @@
+import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { DrawerIcon } from "components/Icon";
+import { FocusableInput } from "components/Selector";
+import { styles } from "components/Selector/constants";
 import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { useForm } from "react-hook-form";
+import { Controller, get, useForm } from "react-hook-form";
 import {
   useCreateRecipientMutation,
   useNewRequirementsMutation,
@@ -36,6 +40,7 @@ export default function RecipientDetailsForm({
   FormButtons,
 }: Props) {
   const {
+    control,
     register,
     handleSubmit,
     getValues,
@@ -123,30 +128,67 @@ export default function RecipientDetailsForm({
         const labelRequired = f.required ? true : undefined;
         if (f.type === "select") {
           return (
-            <div key={f.key}>
-              <Label required={labelRequired} htmlFor={f.key} className="mb-1">
+            <div key={f.key} className="field">
+              <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
-              <select
-                {...register(f.key, {
+              <Controller
+                defaultValue={f.valuesAllowed?.at(0)?.key}
+                control={control}
+                name={f.key}
+                rules={{
                   required: f.required ? "required" : false,
                   onChange: f.refreshRequirementsOnChange ? refresh : undefined,
-                })}
-                aria-required={f.required}
-                id={f.key}
-                className="field-input"
-              >
-                {f.valuesAllowed?.map((v) => (
-                  <option key={v.key} value={v.key}>
-                    {v.name}
-                  </option>
-                ))}
-              </select>
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs -mb-5"
+                }}
+                render={({ field: { name, value, onChange, ref } }) => (
+                  <Listbox
+                    onChange={onChange}
+                    value={value}
+                    as="div"
+                    className="relative"
+                  >
+                    <FocusableInput ref={ref} />
+                    <Listbox.Button
+                      aria-invalid={!!get(errors, name)?.message}
+                      aria-required={f.required}
+                      id={name}
+                      as="button"
+                      className={`${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
+                    >
+                      {({ open, value: key }) => (
+                        <>
+                          <span>
+                            {f.valuesAllowed?.find((o) => o.key === key)?.name}
+                          </span>
+                          <DrawerIcon
+                            isOpen={open}
+                            size={25}
+                            className="justify-self-end dark:text-gray shrink-0"
+                          />
+                        </>
+                      )}
+                    </Listbox.Button>
+                    <Listbox.Options className={styles.options}>
+                      {f.valuesAllowed?.map((o) => (
+                        <Listbox.Option
+                          key={o.key}
+                          value={o.key}
+                          className={({ active, selected }) =>
+                            styles.option(selected, active)
+                          }
+                        >
+                          {o.name}
+                        </Listbox.Option>
+                      ))}
+                    </Listbox.Options>
+                    <ErrorMessage
+                      name={name}
+                      errors={errors}
+                      as="p"
+                      className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
+                    />
+                  </Listbox>
+                )}
               />
             </div>
           );
