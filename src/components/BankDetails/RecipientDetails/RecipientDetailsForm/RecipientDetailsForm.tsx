@@ -123,7 +123,7 @@ export default function RecipientDetailsForm({
         const labelRequired = f.required ? true : undefined;
         if (f.type === "select") {
           return (
-            <div key={f.key} className="">
+            <div key={f.key}>
               <Label required={labelRequired} htmlFor={f.key} className="mb-1">
                 {f.name}
               </Label>
