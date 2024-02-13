@@ -1,5 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { SelectorUncontrolled } from "components/Selector/SelectorUncontrolled";
 import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -12,7 +13,6 @@ import {
 import { Group, ValidationContent } from "types/aws";
 import { ApplicationMIMEType } from "types/lists";
 import { IFormButtons, OnSubmit } from "../../types";
-import SelectorUncontrolled from "../SelectorUncontrolled";
 import Form from "./Form";
 
 type Props = {

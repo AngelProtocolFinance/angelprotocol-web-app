@@ -1,9 +1,9 @@
 import { Listbox } from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
-import { FocusableInput } from "components/Selector";
-import { styles } from "components/Selector/constants";
 import { forwardRef } from "react";
 import { OptionType, ValKey } from "types/components";
+import FocusableInput from "./FocusableInput";
+import { styles } from "./constants";
 
 type Props<V extends ValKey> = {
   "aria-invalid"?: boolean;
@@ -13,10 +13,9 @@ type Props<V extends ValKey> = {
   onChange: (value: OptionType<V>) => void;
 };
 
-const SelectorUncontrolled = forwardRef(function Select<V extends ValKey>(
-  props: Props<V>,
-  ref: React.Ref<HTMLInputElement>
-) {
+export const SelectorUncontrolled = forwardRef(function Select<
+  V extends ValKey,
+>(props: Props<V>, ref: React.Ref<HTMLInputElement>) {
   return (
     <Listbox
       onChange={props.onChange}
@@ -58,5 +57,3 @@ const SelectorUncontrolled = forwardRef(function Select<V extends ValKey>(
     </Listbox>
   );
 });
-
-export default SelectorUncontrolled;
