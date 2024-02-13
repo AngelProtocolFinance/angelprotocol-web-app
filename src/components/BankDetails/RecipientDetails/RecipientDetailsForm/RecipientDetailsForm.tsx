@@ -130,8 +130,8 @@ export default function RecipientDetailsForm({
                 {f.name}
               </Label>
               <Controller
-                defaultValue={undefined}
                 control={control}
+                defaultValue={f.valuesAllowed?.at(0)?.key}
                 name={f.key}
                 rules={{
                   required: f.required ? "required" : false,
@@ -153,9 +153,7 @@ export default function RecipientDetailsForm({
                       }
                       ref={ref}
                       value={(() => {
-                        const val =
-                          f.valuesAllowed?.find((v) => v.key === key) ??
-                          f.valuesAllowed?.at(0);
+                        const val = f.valuesAllowed?.find((v) => v.key === key);
                         return val
                           ? { label: val.name, value: val.key }
                           : undefined;
