@@ -1,9 +1,5 @@
-import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { DrawerIcon } from "components/Icon";
-import { FocusableInput } from "components/Selector";
-import { styles } from "components/Selector/constants";
 import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -16,6 +12,7 @@ import {
 import { Group, ValidationContent } from "types/aws";
 import { ApplicationMIMEType } from "types/lists";
 import { IFormButtons, OnSubmit } from "../../types";
+import SelectorUncontrolled from "../SelectorUncontrolled";
 import Form from "./Form";
 
 type Props = {
@@ -133,63 +130,41 @@ export default function RecipientDetailsForm({
                 {f.name}
               </Label>
               <Controller
-                defaultValue={f.valuesAllowed?.at(0)?.key}
+                defaultValue={undefined}
                 control={control}
                 name={f.key}
                 rules={{
                   required: f.required ? "required" : false,
-                  onChange: f.refreshRequirementsOnChange ? refresh : undefined,
                 }}
-                render={({ field: { name, value, onChange, ref } }) => (
-                  <Listbox
-                    onChange={onChange}
-                    value={value}
-                    as="div"
-                    className="relative"
-                  >
-                    <FocusableInput ref={ref} />
-                    <Listbox.Button
+                render={({ field: { name, value: key, onChange, ref } }) => (
+                  <>
+                    <SelectorUncontrolled
                       aria-invalid={!!get(errors, name)?.message}
-                      aria-required={f.required}
                       id={name}
-                      as="button"
-                      className={`${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
-                    >
-                      {({ open, value: key }) => (
-                        <>
-                          <span>
-                            {f.valuesAllowed?.find((o) => o.key === key)?.name}
-                          </span>
-                          <DrawerIcon
-                            isOpen={open}
-                            size={25}
-                            className="justify-self-end dark:text-gray shrink-0"
-                          />
-                        </>
-                      )}
-                    </Listbox.Button>
-                    <Listbox.Options className={styles.options}>
-                      {f.valuesAllowed?.map((o) => (
-                        <Listbox.Option
-                          key={o.key}
-                          value={o.key}
-                          className={({ active, selected }) =>
-                            styles.option(selected, active)
-                          }
-                        >
-                          {o.name}
-                        </Listbox.Option>
-                      ))}
-                    </Listbox.Options>
-                    <ErrorMessage
-                      name={name}
-                      errors={errors}
-                      as="p"
-                      className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
+                      onChange={(optValue) => {
+                        onChange(optValue.value);
+                        if (f.refreshRequirementsOnChange) refresh();
+                      }}
+                      options={
+                        f.valuesAllowed?.map((v) => ({
+                          label: v.name,
+                          value: v.key,
+                        })) ?? []
+                      }
+                      ref={ref}
+                      value={(() => {
+                        const val =
+                          f.valuesAllowed?.find((v) => v.key === key) ??
+                          f.valuesAllowed?.at(0);
+                        return val
+                          ? { label: val.name, value: val.key }
+                          : undefined;
+                      })()}
                     />
-                  </Listbox>
+                  </>
                 )}
               />
+              <ErrorMessage name={f.key} errors={errors} as="p" data-error />
             </div>
           );
         }
