@@ -1,4 +1,4 @@
-import { SelectorUncontrolled } from "components/Selector";
+import { NativeSelect } from "components/Selector";
 import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
 import { isEmpty } from "helpers";
@@ -62,7 +62,7 @@ function RecipientDetails({
       )}
       <div className="field">
         <Label required>Transfer type</Label>
-        <SelectorUncontrolled
+        <NativeSelect
           value={{
             label: requirements.at(selectedIdx)!.title,
             value: selectedIdx,

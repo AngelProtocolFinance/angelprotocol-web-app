@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
-import { SelectorUncontrolled } from "components/Selector/SelectorUncontrolled";
+import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -138,7 +138,7 @@ export default function RecipientDetailsForm({
                 }}
                 render={({ field: { name, value: key, onChange, ref } }) => (
                   <>
-                    <SelectorUncontrolled
+                    <NativeSelect
                       aria-invalid={!!get(errors, name)?.message}
                       id={name}
                       onChange={(optValue) => {

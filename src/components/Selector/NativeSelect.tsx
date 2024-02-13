@@ -14,9 +14,10 @@ type Props<V extends ValKey> = {
   onChange: (value: OptionType<V>) => void;
 };
 
-export const SelectorUncontrolled = forwardRef(function Select<
-  V extends ValKey,
->(props: Props<V>, ref: React.Ref<HTMLInputElement>) {
+export const NativeSelect = forwardRef(function Select<V extends ValKey>(
+  props: Props<V>,
+  ref: React.Ref<HTMLInputElement>
+) {
   return (
     <Listbox
       disabled={props.disabled}
