@@ -145,12 +145,10 @@ export default function RecipientDetailsForm({
                         onChange(optValue.value);
                         if (f.refreshRequirementsOnChange) refresh();
                       }}
-                      options={
-                        f.valuesAllowed?.map((v) => ({
-                          label: v.name,
-                          value: v.key,
-                        })) ?? []
-                      }
+                      options={f.valuesAllowed?.map((v) => ({
+                        label: v.name,
+                        value: v.key,
+                      }))}
                       ref={ref}
                       value={(() => {
                         const val = f.valuesAllowed?.find((v) => v.key === key);

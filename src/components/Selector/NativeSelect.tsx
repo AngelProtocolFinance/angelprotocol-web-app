@@ -9,7 +9,7 @@ type Props<V extends ValKey> = {
   "aria-invalid"?: AriaAttributes["aria-invalid"];
   disabled?: boolean;
   id?: string;
-  options: OptionType<V>[];
+  options?: OptionType<V>[];
   value?: OptionType<V>;
   onChange: (value: OptionType<V>) => void;
 };
@@ -46,7 +46,7 @@ export const NativeSelect = forwardRef(function Select<V extends ValKey>(
         )}
       </Listbox.Button>
       <Listbox.Options className={styles.options}>
-        {props.options.map((o) => (
+        {(props.options ?? []).map((o) => (
           <Listbox.Option
             key={o.value}
             value={o}
