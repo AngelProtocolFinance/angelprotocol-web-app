@@ -13,14 +13,14 @@ export function Context({
 }: PropsWithChildren<{ user: AuthenticatedUser }>) {
   const { id } = useParams<AdminParams>();
 
-  // if (!user.endowments.includes(idParamToNum(id))) {
-  //   return (
-  //     <div className="grid content-start place-items-center py-20">
-  //       <Icon type="ExclamationCircleFill" size={80} className="text-red" />
-  //       <p className="text-xl mt-8">Unauthorized</p>
-  //     </div>
-  //   );
-  // }
+  if (!user.endowments.includes(idParamToNum(id))) {
+    return (
+      <div className="grid content-start place-items-center py-20">
+        <Icon type="ExclamationCircleFill" size={80} className="text-red" />
+        <p className="text-xl mt-8">Unauthorized</p>
+      </div>
+    );
+  }
 
   return (
     <context.Provider value={{ id: idParamToNum(id), user }}>
