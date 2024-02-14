@@ -278,14 +278,15 @@ export default function RecipientDetailsForm({
         );
       })}
 
-      <div className="grid gap-1">
+      <div className="field">
         <Label htmlFor="bank__statement" required>
           Bank statement
         </Label>
         <input
+          aria-invalid={!!getFieldState("bankStatement").error}
           id="bank__statement"
           type="file"
-          className="disabled:bg-gray-l5 text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
+          className="!py-0 !pl-0 file:border-none file:border-r file:border-prim file:py-3.5 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
           {...register("bankStatement", {
             validate(value?: FileList) {
               //multile:false
@@ -308,12 +309,7 @@ export default function RecipientDetailsForm({
           })}
         />
 
-        <ErrorMessage
-          errors={errors}
-          name="bankStatement"
-          as="p"
-          className="text-red text-xs justify-self-end -mb-5"
-        />
+        <ErrorMessage as="p" data-error errors={errors} name="bankStatement" />
       </div>
 
       <FormButtons disabled={disabled} isSubmitting={isSubmitting} />
