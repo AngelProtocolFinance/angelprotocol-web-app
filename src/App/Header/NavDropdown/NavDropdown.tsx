@@ -46,28 +46,31 @@ export default function NavDropdown({ links }: Props) {
             leaveTo="opacity-0 translate-y-1"
           >
             <Popover.Panel className="absolute right-0 z-10 mt-3 w-screen max-w-56 shadow-[0px_8px_20px] shadow-gray-d1 rounded-lg bg-gray-l6 dark:bg-blue-d6 transform">
-              <nav className="overflow-hidden grid gap-y-2 w-full p-6">
-                {links.map((link) =>
-                  link.external ? (
-                    <ExtLink
-                      key={`header-link-${link.title}`}
-                      className={styles}
-                      href={link.href}
-                    >
-                      {link.title}
-                    </ExtLink>
-                  ) : (
-                    <NavLink
-                      key={`header-link-${link.title}`}
-                      className={styler}
-                      to={link.href}
-                      end={link.end}
-                    >
-                      {link.title}
-                    </NavLink>
-                  )
-                )}
-              </nav>
+              {({ close }) => (
+                <nav className="overflow-hidden grid gap-y-2 w-full p-6">
+                  {links.map((link) =>
+                    link.external ? (
+                      <ExtLink
+                        key={`header-link-${link.title}`}
+                        className={styles}
+                        href={link.href}
+                      >
+                        {link.title}
+                      </ExtLink>
+                    ) : (
+                      <NavLink
+                        key={`header-link-${link.title}`}
+                        className={styler}
+                        to={link.href}
+                        end={link.end}
+                        onClick={() => close()}
+                      >
+                        {link.title}
+                      </NavLink>
+                    )
+                  )}
+                </nav>
+              )}
             </Popover.Panel>
           </Transition>
         </>
@@ -77,5 +80,5 @@ export default function NavDropdown({ links }: Props) {
 }
 
 const styles =
-  "text-blue font-body font-semibold w-full hover:underline transition ease-in-out duration-300";
-const styler = createNavLinkStyler(styles, "pointer-events-none text-orange");
+  "text-blue font-body font-semibold w-full hover:underline hover:text-blue-d1 transition ease-in-out duration-300";
+const styler = createNavLinkStyler(styles, "text-orange hover:text-orange");
