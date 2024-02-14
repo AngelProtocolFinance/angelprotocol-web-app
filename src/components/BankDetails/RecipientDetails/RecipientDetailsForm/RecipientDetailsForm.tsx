@@ -167,12 +167,10 @@ export default function RecipientDetailsForm({
               </div>
               <div className="flex items-center gap-2">
                 {f.valuesAllowed?.map((v) => (
-                  <div
-                    key={v.key}
-                    className="relative border border-prim rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1"
-                  >
+                  <div key={v.key}>
                     <input
-                      className="appearance none w-0 h-0"
+                      aria-invalid={!!getFieldState(f.key).error}
+                      className="opacity-0 fixed w-0 peer"
                       id={`radio__${v.key}`}
                       type="radio"
                       value={v.key}
@@ -185,7 +183,7 @@ export default function RecipientDetailsForm({
                     />
                     <label
                       htmlFor={`radio__${v.key}`}
-                      className="absolute inset-0 w-full grid place-items-center cursor-pointer"
+                      className="border border-prim rounded text-sm peer-checked:border-orange peer-disabled:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1 grid place-items-center cursor-pointer"
                     >
                       {v.name}
                     </label>
