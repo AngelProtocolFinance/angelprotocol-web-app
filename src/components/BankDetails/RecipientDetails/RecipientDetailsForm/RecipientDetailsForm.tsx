@@ -187,7 +187,7 @@ export default function RecipientDetailsForm({
                     />
                     <label
                       htmlFor={`radio__${v.key}`}
-                      className="absolute inset-0 w-full grid place-items-center"
+                      className="absolute inset-0 w-full grid place-items-center cursor-pointer"
                     >
                       {v.name}
                     </label>
