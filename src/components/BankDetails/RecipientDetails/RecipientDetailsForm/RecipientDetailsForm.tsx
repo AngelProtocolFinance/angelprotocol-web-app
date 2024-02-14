@@ -136,13 +136,13 @@ export default function RecipientDetailsForm({
                 rules={{
                   required: f.required ? "required" : false,
                 }}
-                render={({ field: { name, value: key, onChange, ref } }) => (
+                render={({ field: { name, value, onChange, ref } }) => (
                   <>
                     <NativeSelect
                       aria-invalid={!!get(errors, name)?.message}
                       id={name}
-                      onChange={(optValue) => {
-                        onChange(optValue.value);
+                      onChange={(value) => {
+                        onChange(value);
                         if (f.refreshRequirementsOnChange) refresh();
                       }}
                       options={f.valuesAllowed?.map((v) => ({
@@ -150,12 +150,7 @@ export default function RecipientDetailsForm({
                         value: v.key,
                       }))}
                       ref={ref}
-                      value={(() => {
-                        const val = f.valuesAllowed?.find((v) => v.key === key);
-                        return val
-                          ? { label: val.name, value: val.key }
-                          : undefined;
-                      })()}
+                      value={value}
                     />
                   </>
                 )}

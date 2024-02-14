@@ -63,11 +63,8 @@ function RecipientDetails({
       <div className="field">
         <Label required>Transfer type</Label>
         <NativeSelect
-          value={{
-            label: requirements.at(selectedIdx)!.title,
-            value: selectedIdx,
-          }}
-          onChange={(optVal) => setSelectedIdx(+optVal.value)}
+          value={selectedIdx}
+          onChange={(value) => setSelectedIdx(+value)}
           options={requirements.map((x, i) => ({ label: x.title, value: i }))}
           disabled={disabled || isFetching}
         />

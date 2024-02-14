@@ -10,8 +10,8 @@ type Props<V extends ValKey> = {
   disabled?: boolean;
   id?: string;
   options?: OptionType<V>[];
-  value?: OptionType<V>;
-  onChange: (value: OptionType<V>) => void;
+  value?: V;
+  onChange: (value: V) => void;
 };
 
 export const NativeSelect = forwardRef(function Select<V extends ValKey>(
@@ -36,7 +36,7 @@ export const NativeSelect = forwardRef(function Select<V extends ValKey>(
       >
         {({ open, value }) => (
           <>
-            <span>{value?.label}</span>
+            <span>{props.options?.find((o) => o.value === value)?.label}</span>
             <DrawerIcon
               isOpen={open}
               size={25}
@@ -49,7 +49,7 @@ export const NativeSelect = forwardRef(function Select<V extends ValKey>(
         {(props.options ?? []).map((o) => (
           <Listbox.Option
             key={o.value}
-            value={o}
+            value={o.value}
             className={({ active, selected }) =>
               styles.option(selected, active)
             }
