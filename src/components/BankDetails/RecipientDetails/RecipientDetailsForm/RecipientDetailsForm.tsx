@@ -4,7 +4,6 @@ import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import {
   useCreateRecipientMutation,
@@ -168,9 +167,16 @@ export default function RecipientDetailsForm({
               </div>
               <div className="flex items-center gap-2">
                 {f.valuesAllowed?.map((v) => (
-                  <Fragment key={v.key}>
+                  <div
+                    key={v.key}
+                    className={`relative border ${
+                      !!getFieldState(f.key).error
+                        ? "border-red"
+                        : "border-prim"
+                    } rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1`}
+                  >
                     <input
-                      className="opacity-0 fixed w-0 peer"
+                      className="appearance none w-0 h-0"
                       id={`radio__${v.key}`}
                       type="radio"
                       value={v.key}
@@ -183,15 +189,11 @@ export default function RecipientDetailsForm({
                     />
                     <label
                       htmlFor={`radio__${v.key}`}
-                      className={`border ${
-                        !!getFieldState(f.key).error
-                          ? "border-red"
-                          : "border-prim"
-                      } rounded text-sm peer-checked:border-orange peer-disabled:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1 grid place-items-center cursor-pointer`}
+                      className="absolute inset-0 w-full grid place-items-center"
                     >
                       {v.name}
                     </label>
-                  </Fragment>
+                  </div>
                 ))}
               </div>
             </div>
