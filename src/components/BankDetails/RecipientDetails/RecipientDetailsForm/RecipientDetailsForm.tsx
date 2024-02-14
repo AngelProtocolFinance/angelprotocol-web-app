@@ -43,7 +43,7 @@ export default function RecipientDetailsForm({
     getValues,
     setError,
     setFocus,
-    formState: { isValid, errors, isSubmitting },
+    formState: { errors, isSubmitting },
   } = useForm({ disabled, shouldUnregister: true });
 
   const { handleError } = useErrorContext();
@@ -51,9 +51,6 @@ export default function RecipientDetailsForm({
   const [createRecipient] = useCreateRecipientMutation();
 
   async function refresh() {
-    if (!isValid) {
-      return;
-    }
     const { accountHolderName, bankStatement: _, ...details } = getValues();
     await updateRequirements({
       quoteId,
