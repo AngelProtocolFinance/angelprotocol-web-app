@@ -155,11 +155,9 @@ export default function RecipientDetailsForm({
 
         if (f.type === "radio") {
           return (
-            <div key={f.key} className="grid gap-1">
+            <div key={f.key} className="grid gap-2">
               <div className="flex gap-3 items-center">
-                <Label required={labelRequired} className="mb-1">
-                  {f.name}
-                </Label>
+                <Label required={labelRequired}>{f.name}</Label>
                 <ErrorMessage
                   errors={errors}
                   name={f.key}
