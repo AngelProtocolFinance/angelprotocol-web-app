@@ -131,7 +131,7 @@ export default function RecipientDetailsForm({
               </Label>
               <Controller
                 control={control}
-                defaultValue={f.valuesAllowed?.at(0)?.key}
+                defaultValue=""
                 name={f.key}
                 rules={{
                   required: f.required ? "required" : false,

@@ -71,7 +71,6 @@ function RecipientDetails({
       </div>
 
       <RecipientDetailsForm
-        key={requirements[reqIdx].type}
         disabled={disabled || isFetching}
         quoteId={data?.quoteId ?? ""}
         type={requirements[reqIdx].type}
