@@ -200,13 +200,12 @@ export default function RecipientDetailsForm({
 
         if (f.type === "text") {
           return (
-            <div key={f.key} className="grid gap-1">
+            <div key={f.key} className="field">
               <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
               <input
                 aria-invalid={!!getFieldState(f.key).error}
-                className="field-input"
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {
@@ -241,12 +240,7 @@ export default function RecipientDetailsForm({
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs justify-self-end -mb-5"
-              />
+              <ErrorMessage data-error errors={errors} name={f.key} as="p" />
             </div>
           );
         }
