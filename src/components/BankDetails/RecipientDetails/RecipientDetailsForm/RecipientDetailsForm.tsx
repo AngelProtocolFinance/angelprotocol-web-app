@@ -4,6 +4,7 @@ import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
+import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 import {
   useCreateRecipientMutation,
@@ -167,9 +168,8 @@ export default function RecipientDetailsForm({
               </div>
               <div className="flex items-center gap-2">
                 {f.valuesAllowed?.map((v) => (
-                  <div key={v.key}>
+                  <Fragment key={v.key}>
                     <input
-                      aria-invalid={!!getFieldState(f.key).error}
                       className="opacity-0 fixed w-0 peer"
                       id={`radio__${v.key}`}
                       type="radio"
@@ -183,11 +183,15 @@ export default function RecipientDetailsForm({
                     />
                     <label
                       htmlFor={`radio__${v.key}`}
-                      className="border border-prim rounded text-sm peer-checked:border-orange peer-disabled:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1 grid place-items-center cursor-pointer"
+                      className={`border ${
+                        !!getFieldState(f.key).error
+                          ? "border-red"
+                          : "border-prim"
+                      } rounded text-sm peer-checked:border-orange peer-disabled:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1 grid place-items-center cursor-pointer`}
                     >
                       {v.name}
                     </label>
-                  </div>
+                  </Fragment>
                 ))}
               </div>
             </div>
