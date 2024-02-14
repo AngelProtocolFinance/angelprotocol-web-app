@@ -4,7 +4,7 @@ import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
-import { Link } from "../../types";
+import { Link } from "../types";
 
 type Props = { links: Link[] };
 
