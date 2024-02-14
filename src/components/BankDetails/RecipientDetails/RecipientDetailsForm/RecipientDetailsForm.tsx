@@ -42,6 +42,7 @@ export default function RecipientDetailsForm({
     setError,
     setFocus,
     formState: { errors, isSubmitting },
+    getFieldState,
   } = useForm({ disabled, shouldUnregister: true });
 
   const { handleError } = useErrorContext();
@@ -204,6 +205,7 @@ export default function RecipientDetailsForm({
                 {f.name}
               </Label>
               <input
+                aria-invalid={!!getFieldState(f.key).error}
                 className="field-input"
                 type="text"
                 placeholder={f.example}
