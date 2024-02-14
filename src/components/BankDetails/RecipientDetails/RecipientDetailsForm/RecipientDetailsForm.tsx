@@ -52,6 +52,9 @@ export default function RecipientDetailsForm({
 
   async function refresh() {
     const { accountHolderName, bankStatement: _, ...details } = getValues();
+    // the following is expected to throw for example when the country code
+    // is not yet set (all initial values are empty strings); the error is
+    // logged in the browser console, but we can ignore it.
     await updateRequirements({
       quoteId,
       amount,
