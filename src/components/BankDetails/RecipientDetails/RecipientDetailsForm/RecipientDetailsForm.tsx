@@ -240,19 +240,19 @@ export default function RecipientDetailsForm({
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
-              <ErrorMessage data-error errors={errors} name={f.key} as="p" />
+              <ErrorMessage as="p" data-error errors={errors} name={f.key} />
             </div>
           );
         }
 
         if (f.type === "date") {
           return (
-            <div key={f.key} className="grid gap-1">
+            <div key={f.key} className="field">
               <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
               <input
-                className="w-full p-3 rounded border border-prim"
+                aria-invalid={!!getFieldState(f.key).error}
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {
@@ -266,12 +266,7 @@ export default function RecipientDetailsForm({
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs justify-self-end -mb-5"
-              />
+              <ErrorMessage as="p" data-error errors={errors} name={f.key} />
             </div>
           );
         }
