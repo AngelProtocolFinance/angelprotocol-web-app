@@ -34,7 +34,7 @@ export default function Signin() {
   }
 
   return (
-    <div className="grid place-items-center pt-32 sm:pt-44 pb-14 empty:after:content-['Loading_credentials..']">
+    <div className="grid place-items-center pt-20 sm:pt-32 pb-14 empty:after:content-['Loading_credentials..']">
       <h3 className="text-3xl text-center p-5">
         Welcome! Sign in or create your new personal user account
       </h3>
