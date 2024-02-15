@@ -81,4 +81,4 @@ export default function NavDropdown({ links }: Props) {
 
 const styles =
   "text-blue font-body font-semibold w-full hover:underline hover:text-blue-d1 transition ease-in-out duration-300";
-const styler = createNavLinkStyler(styles, "text-orange hover:text-orange");
+const styler = createNavLinkStyler(styles, "pointer-events-none text-orange");
