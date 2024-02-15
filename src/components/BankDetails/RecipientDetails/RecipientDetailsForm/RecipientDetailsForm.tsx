@@ -1,10 +1,11 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { useForm } from "react-hook-form";
+import { Controller, get, useForm } from "react-hook-form";
 import {
   useCreateRecipientMutation,
   useNewRequirementsMutation,
@@ -36,6 +37,7 @@ export default function RecipientDetailsForm({
   FormButtons,
 }: Props) {
   const {
+    control,
     register,
     handleSubmit,
     getValues,
@@ -51,6 +53,9 @@ export default function RecipientDetailsForm({
 
   async function refresh() {
     const { accountHolderName, bankStatement: _, ...details } = getValues();
+    // the following is expected to throw for example when the country code
+    // is not yet set (all initial values are empty strings); the error is
+    // logged in the browser console, but we can ignore it.
     await updateRequirements({
       quoteId,
       amount,
@@ -124,31 +129,37 @@ export default function RecipientDetailsForm({
         const labelRequired = f.required ? true : undefined;
         if (f.type === "select") {
           return (
-            <div key={f.key} className="">
-              <Label required={labelRequired} htmlFor={f.key} className="mb-1">
+            <div key={f.key} className="field">
+              <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
-              <select
-                {...register(f.key, {
-                  required: f.required ? "required" : false,
-                  onChange: f.refreshRequirementsOnChange ? refresh : undefined,
-                })}
-                aria-required={f.required}
-                id={f.key}
-                className="field-input"
-              >
-                {f.valuesAllowed?.map((v) => (
-                  <option key={v.key} value={v.key}>
-                    {v.name}
-                  </option>
-                ))}
-              </select>
-              <ErrorMessage
-                errors={errors}
+              <Controller
+                control={control}
+                defaultValue=""
                 name={f.key}
-                as="p"
-                className="text-red text-xs -mb-5"
+                rules={{
+                  required: f.required ? "required" : false,
+                }}
+                render={({ field: { name, value, onChange, ref } }) => (
+                  <>
+                    <NativeSelect
+                      aria-invalid={!!get(errors, name)?.message}
+                      id={name}
+                      onChange={(value) => {
+                        onChange(value);
+                        if (f.refreshRequirementsOnChange) refresh();
+                      }}
+                      options={f.valuesAllowed?.map((v) => ({
+                        label: v.name,
+                        value: v.key,
+                      }))}
+                      ref={ref}
+                      value={value}
+                    />
+                  </>
+                )}
               />
+              <ErrorMessage name={f.key} errors={errors} as="p" data-error />
             </div>
           );
         }
