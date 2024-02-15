@@ -14,7 +14,7 @@ const Success = lazy(() => import("./Success"));
 
 function Registration() {
   return (
-    <div className="flex flex-col justify-center items-center mt-20">
+    <div className="flex justify-center items-center mt-20">
       <Suspense fallback="Loading page...">
         <Seo
           title={`Registration Portal - ${APP_NAME}`}
