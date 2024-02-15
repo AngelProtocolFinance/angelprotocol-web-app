@@ -26,7 +26,6 @@
     @apply xl:container xl:mx-auto px-5;
   }
 
-
   /** applicable to button and <a/> */
   .btn {
     @apply flex items-center justify-center uppercase font-bold p-3 rounded focus:outline-none focus-visible:ring-2;
@@ -182,5 +181,24 @@
   .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
+}
 
+/* WORDPRESS-ONLY Components */
+@layer components {
+  .wp-post > h5,
+  .wp-post > h6 {
+    @apply font-heading font-bold py-4 mb-2;
+  }
+
+  .wp-post > div {
+    @apply py-4;
+  }
+
+  .wp-post > p {
+    @apply mt-0 mb-4;
+  }
+
+  .wp-post a {
+    @apply text-orange transition ease-in-out duration-300 hover:text-orange-l1;
+  }
 }

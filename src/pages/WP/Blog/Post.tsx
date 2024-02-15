@@ -5,12 +5,21 @@ import { APIs } from "constants/urls";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-function PostBanner({ image }) {
+const getFeaturedImage = async (id) => {
+  const res = await fetch(`${APIs.wp}/media/${id}`);
+  const media = await res.json();
+  if (!res.ok) {
+    return "/images/placeholder-banner.png";
+  }
+  return media.guid.rendered.toString();
+};
+
+function PostBanner({ media }) {
   return (
     <div
       className="relative w-full h-52 sm:h-72 bg-cover bg-center"
       style={{
-        backgroundImage: `url('${image})`,
+        backgroundImage: `url(${media})`,
       }}
     />
   );
@@ -27,10 +36,13 @@ export default function Post() {
           const postsData = await res.json();
           // should only get a single post item from slug query
           if (postsData.length === 1) {
-            postsData[0].jetpack_featured_media_url =
-              postsData[0].jetpack_featured_media_url ??
-              "/images/placeholder-banner.png";
-            setPost(postsData[0]);
+            let post = postsData[0];
+            if (post.featured_media) {
+              post.featured_media_url = await getFeaturedImage(
+                post.featured_media,
+              );
+            }
+            setPost(post);
           }
         }
       } catch {
@@ -41,8 +53,10 @@ export default function Post() {
   }, []);
   return post.title ? (
     <>
-      <PostBanner id={post.id} image={post.jetpack_featured_media_url} />
-      <div className="padded-container">
+      {post.featured_media_url && (
+        <PostBanner image={post.featured_media_url} />
+      )}
+      <div className="padded-container px-[15%]">
         <div className="grid justify-center items-center text-center py-5">
           <Breadcrumbs
             className="text-xs sm:text-sm justify-start"
@@ -72,10 +86,10 @@ export default function Post() {
             </p>
           </div>
         </div>
-        <span
-          className="grid justify-center items-center text-center"
+        <div
+          className="grid padded-container px-2 wp-post"
           dangerouslySetInnerHTML={{ __html: post.content.rendered }}
-        ></span>
+        ></div>
       </div>
     </>
   ) : (
