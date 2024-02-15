@@ -6,22 +6,19 @@ import { useErrorContext } from "contexts/ErrorContext";
 import ChariotConnect from "react-chariot-connect";
 import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
-import { ChariotCheckoutStep, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
-import BackBtn from "../BackBtn";
-import Err from "./Err";
-import Currency from "./common/Currrency";
-import Heading from "./common/Heading";
-import SplitSummary from "./common/SplitSummary";
+import { ChariotCheckoutStep } from "slices/donation";
+import Err from "../Err";
+import Currency from "../common/Currrency";
+import Heading from "../common/Heading";
+import SplitSummary from "../common/SplitSummary";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
+export default function ChariotCheckout(props: ChariotCheckoutStep) {
   const { details, recipient, kyc, liquidSplitPct } = props;
   const [createGrant, { isLoading, isError, error }] =
     useChariotGrantIntentMutation();
 
-  const dispatch = useSetter();
   const navigate = useNavigate();
 
   const { handleError } = useErrorContext();
@@ -42,9 +39,8 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
   const locked = total - liq;
 
   return (
-    <div className="flex flex-col content-start p-4 @md:p-8 group">
-      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
-      <Heading classes="my-4" />
+    <div className="flex flex-col content-start group">
+      <Heading classes="mb-4" />
       <SplitSummary
         classes="mb-auto"
         total={<Currency {...currency} amount={total} classes="text-gray-d2" />}
