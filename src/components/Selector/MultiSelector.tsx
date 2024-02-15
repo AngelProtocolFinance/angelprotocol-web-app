@@ -2,7 +2,7 @@ import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import Icon, { DrawerIcon } from "components/Icon";
 import { isEmpty } from "helpers";
-import { PropsWithChildren, useState } from "react";
+import { Key, PropsWithChildren, useState } from "react";
 import {
   FieldValues,
   Path,
@@ -10,7 +10,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { OptionType, ValKey } from "types/components";
+import { OptionType } from "types/components";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
 import { MultiselectorProps } from "./types";
@@ -18,7 +18,7 @@ import { MultiselectorProps } from "./types";
 export function MultiSelector<
   T extends FieldValues,
   K extends Path<T>,
-  V extends ValKey,
+  V extends Key,
 >({
   name,
   disabled,

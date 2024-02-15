@@ -1,11 +1,11 @@
 import { Listbox } from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
-import { AriaAttributes, forwardRef } from "react";
-import { OptionType, ValKey } from "types/components";
+import { AriaAttributes, Key, forwardRef } from "react";
+import { OptionType } from "types/components";
 import FocusableInput from "./FocusableInput";
 import { styles } from "./constants";
 
-type Props<V extends ValKey> = {
+type Props<V extends Key> = {
   "aria-invalid"?: AriaAttributes["aria-invalid"];
   disabled?: boolean;
   id?: string;
@@ -14,7 +14,7 @@ type Props<V extends ValKey> = {
   onChange: (value: V) => void;
 };
 
-export const NativeSelect = forwardRef(function Select<V extends ValKey>(
+export const NativeSelect = forwardRef(function Select<V extends Key>(
   props: Props<V>,
   ref: React.Ref<HTMLInputElement>
 ) {

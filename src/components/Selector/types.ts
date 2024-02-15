@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import { Key, ReactNode } from "react";
 import { FieldValues, Path, PathValue } from "react-hook-form";
-import { OptionType, ValKey } from "types/components";
+import { OptionType } from "types/components";
 
 type Classes = {
   container?: string;
@@ -13,11 +13,8 @@ type BaseProps = {
   classes?: Classes;
 };
 
-export interface Props<
-  T extends FieldValues,
-  K extends Path<T>,
-  V extends ValKey,
-> extends BaseProps {
+export interface Props<T extends FieldValues, K extends Path<T>, V extends Key>
+  extends BaseProps {
   name: PathValue<T, K> extends OptionType<V> ? K : never;
   placeholder?: string;
   options: OptionType<V>[];
@@ -29,7 +26,7 @@ export interface Props<
 export interface MultiselectorProps<
   T extends FieldValues,
   K extends Path<T>,
-  V extends ValKey,
+  V extends Key,
 > extends BaseProps {
   name: PathValue<T, K> extends OptionType<V>[] ? K : never;
   options: OptionType<V>[];
