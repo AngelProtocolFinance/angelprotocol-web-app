@@ -2,6 +2,7 @@ import { Key } from "react";
 import { FileObject } from "./aws";
 
 //selector
+export type ValKey = string | number;
 export type OptionType<V extends Key | symbol> = { label: string; value: V };
 
 //dropzone
