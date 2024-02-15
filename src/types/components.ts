@@ -1,7 +1,8 @@
+import { Key } from "react";
 import { FileObject } from "./aws";
 
 //selector
-export type OptionType<V> = { label: string; value: V };
+export type OptionType<V extends Key | symbol> = { label: string; value: V };
 
 //dropzone
 export type FileDropzoneAsset = {
