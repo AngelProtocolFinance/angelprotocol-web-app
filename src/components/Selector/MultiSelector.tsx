@@ -156,13 +156,13 @@ export function MultiSelector<
   );
 }
 
-type SelectedProps<T extends Key> = {
+type SelectedProps<T extends ValKey> = {
   option: OptionType<T>;
   selected: OptionType<T>[];
   onChange(value: OptionType<T>[]): void;
 };
 
-function SelectedOption<T extends Key>({
+function SelectedOption<T extends ValKey>({
   selected,
   onChange,
   option,
