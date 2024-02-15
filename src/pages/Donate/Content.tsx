@@ -1,9 +1,9 @@
 import ExtLink from "components/ExtLink";
 import { Steps } from "components/donation";
-import { APP_NAME } from "constants/env";
+import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { TERMS_OF_USE_DONOR } from "constants/urls";
-import { PropsWithChildren, memo, useEffect, useRef } from "react";
+import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
+import { memo, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
@@ -62,35 +62,35 @@ function Content(props: Props) {
         />
       </div>
 
-      <FAQ classes="max-md:px-4 mt-4 col-start-1 md:row-start-3 md:row-span-4 md:col-start-1 md:w-64 xl:w-80 lg:row-start-2 lg:col-start-3 lg:mt-0 " />
+      <FAQ classes="max-md:px-4 mt-4 col-start-1 md:row-start-3 md:row-span-4 md:col-start-1 md:w-64 xl:w-80 lg:row-start-2 lg:col-start-3 lg:mt-0" />
 
       <p className="max-md:px-4 mt-4 text-xs leading-normal text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-4 lg:row-start-3">
         By making a donation to {APP_NAME}, you agree to our{" "}
-        <Bold>Terms of Service</Bold>, <Bold>Privacy Policy</Bold>, and{" "}
-        <Bold>Nonprofit Support Fee</Bold>. 100% of your donation is
-        tax-deductible to the extent allowed by US law. Your donation is made to{" "}
-        {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants unrestricted
-        funds to {props.name} on your behalf. As a legal matter, {APP_NAME} must
-        provide any donations to {props.name} on an unrestricted basis,
-        regardless of any designations or restrictions made by you.{" "}
-        <ExtLink
-          className="hover:underline font-medium"
-          href={TERMS_OF_USE_DONOR}
-        >
-          See Terms.
-        </ExtLink>
+        <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
+        <A href={PRIVACY_POLICY}>Privacy Policy</A>, and{" "}
+        <span className="font-medium">Nonprofit Support Fee</span>. 100% of your
+        donation is tax-deductible to the extent allowed by US law. Your
+        donation is made to {APP_NAME}, a tax-exempt US 501(c)(3) charity that
+        grants unrestricted funds to {props.name} on your behalf. As a legal
+        matter, {APP_NAME} must provide any donations to {props.name} on an
+        unrestricted basis, regardless of any designations or restrictions made
+        by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
       </p>
       <p className="max-md:px-4 mt-4 text-xs leading-normal text-left text-gray-d1 dark:text-gray col-start-1 md:col-start-2 md:row-start-5 lg:row-start-4">
         <span className="block mb-0.5">
-          Need help? See FAQs or contact us at our <Bold>Help Center</Bold>.
+          Need help? See{" "}
+          <Link to="./#faqs" className="hover:underline font-medium">
+            FAQs
+          </Link>{" "}
+          or contact us at our <A href={INTERCOM_HELP}>Help Center</A>.
         </span>
         <span className="block mb-0.5">
           Have ideas for how we can build a better donation experience?{" "}
-          <Bold>Send us feedback</Bold>.
+          <A href={INTERCOM_HELP}>Send us feedback</A>.
         </span>
         <span className="block">
           We respect your privacy. To learn more, check out our{" "}
-          <Bold>Privacy Policy</Bold>.
+          <A href={PRIVACY_POLICY}>Privacy Policy</A>.
         </span>
       </p>
     </div>
@@ -100,6 +100,11 @@ function Content(props: Props) {
 //memoize to prevent useEffect ( based on props ) from running when parent re-renders with the same props
 export default memo(Content);
 
-function Bold(props: PropsWithChildren) {
-  return <span className="font-medium">{props.children}</span>;
-}
+const A: typeof ExtLink = ({ className, ...props }) => {
+  return (
+    <ExtLink
+      {...props}
+      className={className + " font-medium hover:underline"}
+    />
+  );
+};

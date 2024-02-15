@@ -1,10 +1,11 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { useForm } from "react-hook-form";
+import { Controller, get, useForm } from "react-hook-form";
 import {
   useCreateRecipientMutation,
   useNewRequirementsMutation,
@@ -36,12 +37,14 @@ export default function RecipientDetailsForm({
   FormButtons,
 }: Props) {
   const {
+    control,
     register,
     handleSubmit,
     getValues,
     setError,
     setFocus,
     formState: { errors, isSubmitting },
+    getFieldState,
   } = useForm({ disabled, shouldUnregister: true });
 
   const { handleError } = useErrorContext();
@@ -50,6 +53,9 @@ export default function RecipientDetailsForm({
 
   async function refresh() {
     const { accountHolderName, bankStatement: _, ...details } = getValues();
+    // the following is expected to throw for example when the country code
+    // is not yet set (all initial values are empty strings); the error is
+    // logged in the browser console, but we can ignore it.
     await updateRequirements({
       quoteId,
       amount,
@@ -123,46 +129,62 @@ export default function RecipientDetailsForm({
         const labelRequired = f.required ? true : undefined;
         if (f.type === "select") {
           return (
-            <div key={f.key} className="">
-              <Label required={labelRequired} htmlFor={f.key} className="mb-1">
+            <div key={f.key} className="field">
+              <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
-              <select
-                {...register(f.key, {
-                  required: f.required ? "required" : false,
-                  onChange: f.refreshRequirementsOnChange ? refresh : undefined,
-                })}
-                aria-required={f.required}
-                id={f.key}
-                className="field-input"
-              >
-                {f.valuesAllowed?.map((v) => (
-                  <option key={v.key} value={v.key}>
-                    {v.name}
-                  </option>
-                ))}
-              </select>
-              <ErrorMessage
-                errors={errors}
+              <Controller
+                control={control}
+                defaultValue=""
                 name={f.key}
-                as="p"
-                className="text-red text-xs -mb-5"
+                rules={{
+                  required: f.required ? "required" : false,
+                }}
+                render={({ field: { name, value, onChange, ref } }) => (
+                  <>
+                    <NativeSelect
+                      aria-invalid={!!get(errors, name)?.message}
+                      id={name}
+                      onChange={(value) => {
+                        onChange(value);
+                        if (f.refreshRequirementsOnChange) refresh();
+                      }}
+                      options={f.valuesAllowed?.map((v) => ({
+                        label: v.name,
+                        value: v.key,
+                      }))}
+                      ref={ref}
+                      value={value}
+                    />
+                  </>
+                )}
               />
+              <ErrorMessage name={f.key} errors={errors} as="p" data-error />
             </div>
           );
         }
 
         if (f.type === "radio") {
           return (
-            <div key={f.key} className="grid gap-1">
-              <Label required={labelRequired} className="mb-1">
-                {f.name}
-              </Label>
+            <div key={f.key} className="grid gap-2">
+              <div className="flex gap-3 items-center">
+                <Label required={labelRequired}>{f.name}</Label>
+                <ErrorMessage
+                  errors={errors}
+                  name={f.key}
+                  as="p"
+                  className="text-red text-xs"
+                />
+              </div>
               <div className="flex items-center gap-2">
                 {f.valuesAllowed?.map((v) => (
                   <div
                     key={v.key}
-                    className="relative border border-prim rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1"
+                    className={`relative border ${
+                      !!getFieldState(f.key).error
+                        ? "border-red"
+                        : "border-prim"
+                    } rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1`}
                   >
                     <input
                       className="appearance none w-0 h-0"
@@ -178,31 +200,25 @@ export default function RecipientDetailsForm({
                     />
                     <label
                       htmlFor={`radio__${v.key}`}
-                      className="absolute inset-0 w-full grid place-items-center"
+                      className="absolute inset-0 w-full grid place-items-center cursor-pointer"
                     >
                       {v.name}
                     </label>
                   </div>
                 ))}
               </div>
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs justify-self-end -mb-5"
-              />
             </div>
           );
         }
 
         if (f.type === "text") {
           return (
-            <div key={f.key} className="grid gap-1">
+            <div key={f.key} className="field">
               <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
               <input
-                className="field-input"
+                aria-invalid={!!getFieldState(f.key).error}
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {
@@ -237,24 +253,19 @@ export default function RecipientDetailsForm({
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs justify-self-end -mb-5"
-              />
+              <ErrorMessage as="p" data-error errors={errors} name={f.key} />
             </div>
           );
         }
 
         if (f.type === "date") {
           return (
-            <div key={f.key} className="grid gap-1">
+            <div key={f.key} className="field">
               <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
               <input
-                className="w-full p-3 rounded border border-prim"
+                aria-invalid={!!getFieldState(f.key).error}
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {
@@ -268,12 +279,7 @@ export default function RecipientDetailsForm({
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs justify-self-end -mb-5"
-              />
+              <ErrorMessage as="p" data-error errors={errors} name={f.key} />
             </div>
           );
         }
@@ -285,14 +291,15 @@ export default function RecipientDetailsForm({
         );
       })}
 
-      <div className="grid gap-1">
+      <div className="field">
         <Label htmlFor="bank__statement" required>
           Bank statement
         </Label>
         <input
+          aria-invalid={!!getFieldState("bankStatement").error}
           id="bank__statement"
           type="file"
-          className="disabled:bg-gray-l5 text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
+          className="!py-0 !pl-0 file:border-none file:border-r file:border-prim file:py-3.5 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
           {...register("bankStatement", {
             validate(value?: FileList) {
               //multile:false
@@ -315,12 +322,7 @@ export default function RecipientDetailsForm({
           })}
         />
 
-        <ErrorMessage
-          errors={errors}
-          name="bankStatement"
-          as="p"
-          className="text-red text-xs justify-self-end -mb-5"
-        />
+        <ErrorMessage as="p" data-error errors={errors} name="bankStatement" />
       </div>
 
       <FormButtons disabled={disabled} isSubmitting={isSubmitting} />

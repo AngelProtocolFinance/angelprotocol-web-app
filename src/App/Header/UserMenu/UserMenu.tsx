@@ -1,8 +1,8 @@
 import { Popover } from "@headlessui/react";
 import Icon from "components/Icon";
+import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
-import { useLocation } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { logout } from "slices/auth";
 import { useGetter, useSetter } from "store/accessors";
 import { SignInRouteState } from "types/routeStates";
@@ -14,18 +14,30 @@ export default function UserMenu() {
 
   const location = useLocation();
 
-  if (!user || user === "loading") {
+  if (!user) {
     const state: SignInRouteState = { from: location.pathname };
     return (
-      <Link
-        to={appRoutes.signin}
-        state={state}
-        className="btn-orange px-3 h-10 rounded-lg text-sm"
-        aria-disabled={user === "loading"}
-      >
-        Sign-up / Login
-      </Link>
+      <>
+        <Link
+          to={appRoutes.signin}
+          state={state}
+          className="btn text-base normal-case max-sm:hidden hover:underline"
+        >
+          Log in
+        </Link>
+        <Link
+          to={appRoutes.signin}
+          state={state}
+          className="btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-5 sm:px-6 lg:px-7 py-3 rounded-full"
+        >
+          Sign up
+        </Link>
+      </>
     );
+  }
+
+  if (user === "loading") {
+    return <LoaderRing thickness={10} classes="w-6" />;
   }
 
   return (
