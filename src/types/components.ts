@@ -2,7 +2,7 @@ import { FileObject } from "./aws";
 
 //selector
 export type ValKey = string | number;
-export type OptionType<V extends ValKey | symbol> = { label: string; value: V };
+export type OptionType<V extends ValKey> = { label: string; value: V };
 
 //dropzone
 export type FileDropzoneAsset = {
