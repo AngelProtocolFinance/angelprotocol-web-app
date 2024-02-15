@@ -42,6 +42,7 @@ export default function RecipientDetailsForm({
     setError,
     setFocus,
     formState: { errors, isSubmitting },
+    getFieldState,
   } = useForm({ disabled, shouldUnregister: true });
 
   const { handleError } = useErrorContext();
@@ -154,11 +155,9 @@ export default function RecipientDetailsForm({
 
         if (f.type === "radio") {
           return (
-            <div key={f.key} className="grid gap-1">
+            <div key={f.key} className="grid gap-2">
               <div className="flex gap-3 items-center">
-                <Label required={labelRequired} className="mb-1">
-                  {f.name}
-                </Label>
+                <Label required={labelRequired}>{f.name}</Label>
                 <ErrorMessage
                   errors={errors}
                   name={f.key}
@@ -170,7 +169,11 @@ export default function RecipientDetailsForm({
                 {f.valuesAllowed?.map((v) => (
                   <div
                     key={v.key}
-                    className="relative border border-prim rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1"
+                    className={`relative border ${
+                      !!getFieldState(f.key).error
+                        ? "border-red"
+                        : "border-prim"
+                    } rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1`}
                   >
                     <input
                       className="appearance none w-0 h-0"
@@ -186,7 +189,7 @@ export default function RecipientDetailsForm({
                     />
                     <label
                       htmlFor={`radio__${v.key}`}
-                      className="absolute inset-0 w-full grid place-items-center"
+                      className="absolute inset-0 w-full grid place-items-center cursor-pointer"
                     >
                       {v.name}
                     </label>
@@ -199,12 +202,12 @@ export default function RecipientDetailsForm({
 
         if (f.type === "text") {
           return (
-            <div key={f.key} className="grid gap-1">
+            <div key={f.key} className="field">
               <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
               <input
-                className="field-input"
+                aria-invalid={!!getFieldState(f.key).error}
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {
@@ -239,24 +242,19 @@ export default function RecipientDetailsForm({
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs justify-self-end -mb-5"
-              />
+              <ErrorMessage as="p" data-error errors={errors} name={f.key} />
             </div>
           );
         }
 
         if (f.type === "date") {
           return (
-            <div key={f.key} className="grid gap-1">
+            <div key={f.key} className="field">
               <Label required={labelRequired} htmlFor={f.key}>
                 {f.name}
               </Label>
               <input
-                className="w-full p-3 rounded border border-prim"
+                aria-invalid={!!getFieldState(f.key).error}
                 type="text"
                 placeholder={f.example}
                 {...register(f.key, {
@@ -270,12 +268,7 @@ export default function RecipientDetailsForm({
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}
               />
-              <ErrorMessage
-                errors={errors}
-                name={f.key}
-                as="p"
-                className="text-red text-xs justify-self-end -mb-5"
-              />
+              <ErrorMessage as="p" data-error errors={errors} name={f.key} />
             </div>
           );
         }
@@ -287,14 +280,15 @@ export default function RecipientDetailsForm({
         );
       })}
 
-      <div className="grid gap-1">
+      <div className="field">
         <Label htmlFor="bank__statement" required>
           Bank statement
         </Label>
         <input
+          aria-invalid={!!getFieldState("bankStatement").error}
           id="bank__statement"
           type="file"
-          className="disabled:bg-gray-l5 text-sm rounded w-full border border-prim file:border-none file:border-r file:border-prim file:py-3 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
+          className="!py-0 !pl-0 file:border-none file:border-r file:border-prim file:py-3.5 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
           {...register("bankStatement", {
             validate(value?: FileList) {
               //multile:false
@@ -317,12 +311,7 @@ export default function RecipientDetailsForm({
           })}
         />
 
-        <ErrorMessage
-          errors={errors}
-          name="bankStatement"
-          as="p"
-          className="text-red text-xs justify-self-end -mb-5"
-        />
+        <ErrorMessage as="p" data-error errors={errors} name="bankStatement" />
       </div>
 
       <FormButtons disabled={disabled} isSubmitting={isSubmitting} />
