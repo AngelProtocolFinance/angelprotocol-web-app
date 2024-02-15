@@ -31,7 +31,7 @@ export default function StripePaymentStatus() {
         loading: "Loading donation status",
         error: "Failed to load donation status",
       }}
-      classes={{ container: "place-self-center" }}
+      classes={{ container: "place-self-center pt-20 sm:pt-32" }}
     >
       {({ status }) => (
         <Content
@@ -66,7 +66,7 @@ function Content(props: {
 function Processing({ onMount = () => {} }) {
   useEffect(() => onMount(), [onMount]);
   return (
-    <div className="justify-self-center display-block m-auto max-w-[35rem] h-full scroll-mt-6 grid place-items-center text-lg sm:text-xl">
+    <div className="justify-self-center display-block m-auto max-w-[35rem] h-full pt-20 sm:pt-32 scroll-mt-6 grid place-items-center text-lg sm:text-xl">
       <LoadText
         isLoading
         text="Your donation is still processing, please wait..."
@@ -78,7 +78,7 @@ function Processing({ onMount = () => {} }) {
 function Unsuccessful() {
   const state = useGetter((state) => state.donation);
   return (
-    <div className="justify-self-center display-block m-auto max-w-[35rem] py-8 sm:py-20 scroll-mt-6">
+    <div className="justify-self-center display-block m-auto max-w-[35rem] pt-28 sm:pt-52 pb-8 sm:pb-20 scroll-mt-6">
       <Icon type="CloseCircle" size={96} className="text-green mb-4 mx-auto" />
       <h3 className="text-2xl sm:text-3xl mb-8 sm:mb-12 text-center">
         Donation unsuccessful
@@ -99,7 +99,7 @@ function Unsuccessful() {
 function SomethingWentWrong() {
   const state = useGetter((state) => state.donation);
   return (
-    <div className="justify-self-center display-block m-auto max-w-[35rem] py-8 sm:py-20 scroll-mt-6">
+    <div className="justify-self-center display-block m-auto max-w-[35rem] pt-28 sm:pt-52 pb-8 sm:pb-20 scroll-mt-6">
       <Icon type="CloseCircle" size={96} className="text-green mb-4 mx-auto" />
       <h3 className="text-2xl sm:text-3xl mb-8 sm:mb-12 text-center">
         Something went wrong
