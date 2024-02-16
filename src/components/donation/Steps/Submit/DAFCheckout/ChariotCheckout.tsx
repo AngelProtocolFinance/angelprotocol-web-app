@@ -12,11 +12,11 @@ import Currency from "../common/Currrency";
 import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
 
+type Props = ChariotCheckoutStep & { onBack: () => void };
+
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function ChariotCheckout(
-  props: ChariotCheckoutStep & { onBack: () => void }
-) {
+export default function ChariotCheckout(props: Props) {
   const { details, recipient, kyc, liquidSplitPct, onBack } = props;
   const [createGrant, { isLoading }] = useChariotGrantIntentMutation();
 
