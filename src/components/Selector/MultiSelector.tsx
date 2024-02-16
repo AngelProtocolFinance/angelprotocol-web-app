@@ -156,13 +156,17 @@ export function MultiSelector<
   );
 }
 
-type SelectedProps<T> = {
+type SelectedProps<T extends ValKey> = {
   option: OptionType<T>;
   selected: OptionType<T>[];
   onChange(value: OptionType<T>[]): void;
 };
 
-function SelectedOption<T>({ selected, onChange, option }: SelectedProps<T>) {
+function SelectedOption<T extends ValKey>({
+  selected,
+  onChange,
+  option,
+}: SelectedProps<T>) {
   const handleRemove = (value: T) =>
     onChange(selected.filter((s) => s.value !== value));
 

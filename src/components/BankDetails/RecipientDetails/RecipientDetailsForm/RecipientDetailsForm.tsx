@@ -299,6 +299,7 @@ export default function RecipientDetailsForm({
           aria-invalid={!!getFieldState("bankStatement").error}
           id="bank__statement"
           type="file"
+          // `!py-0 !pl-0` removes padding added by `field > field-input`
           className="!py-0 !pl-0 file:border-none file:border-r file:border-prim file:py-3.5 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
           {...register("bankStatement", {
             validate(value?: FileList) {
