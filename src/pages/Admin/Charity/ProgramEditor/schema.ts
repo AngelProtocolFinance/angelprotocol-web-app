@@ -24,10 +24,9 @@ const fileObj = object().shape<SchemaShape<ImgLink>>({
 
 const milesStoneSchema = object<any, SchemaShape<FormMilestone>>({
   milestone_date: date().typeError("invalid date"),
-  milestone_description: string().max(
-    MAX_CHARS,
-    `max length is ${MAX_CHARS} chars`
-  ),
+  milestone_description: string()
+    .trim()
+    .max(MAX_CHARS, `max length is ${MAX_CHARS} chars`),
   milestone_title: requiredString,
   milestone_media: fileObj,
 });

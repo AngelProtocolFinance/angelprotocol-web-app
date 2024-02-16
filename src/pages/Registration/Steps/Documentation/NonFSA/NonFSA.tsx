@@ -13,7 +13,9 @@ export default function NonFSA(props: Props) {
   const { data } = useRegState<4>();
   const { doc } = props;
   const methods = useForm<FV>({
-    resolver: yupResolver(object({ EIN: string().required("required") })),
+    resolver: yupResolver(
+      object({ EIN: string().required("required").trim() })
+    ),
     defaultValues: doc
       ? doc
       : {

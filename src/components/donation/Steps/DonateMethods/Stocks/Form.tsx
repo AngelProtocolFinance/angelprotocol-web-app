@@ -20,9 +20,10 @@ export default function Form(props: StockFormStep) {
         },
     resolver: yupResolver(
       object({
-        symbol: string().required("required"),
+        symbol: string().required("required").trim(),
         numShares: string()
           .required("required")
+          .trim()
           .matches(/^[1-9]\d*$/, "invalid"),
       })
     ),

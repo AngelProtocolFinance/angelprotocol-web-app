@@ -11,13 +11,13 @@ export const walletAddr = (chainId: ChainID) =>
   Yup.lazy((val) =>
     val === ""
       ? Yup.string()
-      : Yup.string().matches(
-          walletAddrPatten(chainId),
-          "wallet address not valid"
-        )
+      : Yup.string()
+          .trim()
+          .matches(walletAddrPatten(chainId), "wallet address not valid")
   );
 
 export const url = Yup.string()
+  .trim()
   /** though our validation library also supports http and ftp,
    * Our use case is fairly limited to user giving us links to their social media or website
    * which is widespread to be on https.

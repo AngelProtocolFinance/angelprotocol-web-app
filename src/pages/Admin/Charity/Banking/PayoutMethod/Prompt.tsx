@@ -29,7 +29,9 @@ export default function Prompt({ verdict, uuid }: Props) {
     resolver: yupResolver(
       object({
         reason:
-          verdict === "approve" ? string() : string().required("required"),
+          verdict === "approve"
+            ? string().trim()
+            : string().required("required").trim(),
       })
     ),
     defaultValues: { reason: "" },

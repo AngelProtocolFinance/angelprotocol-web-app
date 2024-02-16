@@ -12,7 +12,7 @@ export default function Resume({ classes = "" }: { classes?: string }) {
     },
     resolver: yupResolver(
       object({
-        reference: string().required("required"),
+        reference: string().required("required").trim(),
       })
     ),
   });
