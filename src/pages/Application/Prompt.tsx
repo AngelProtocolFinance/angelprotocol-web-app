@@ -12,6 +12,7 @@ import {
   UseFormReturn,
   useForm,
 } from "react-hook-form";
+import { requiredString } from "schemas/string";
 import { useReviewApplicationMutation } from "services/aws/aws";
 import { object, string } from "yup";
 
@@ -29,10 +30,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
   const methods = useForm({
     resolver: yupResolver(
       object({
-        reason:
-          verdict === "approve"
-            ? string().trim()
-            : string().required("required").trim(),
+        reason: verdict === "approve" ? string().trim() : requiredString.trim(),
       })
     ),
     defaultValues: { reason: "" },
