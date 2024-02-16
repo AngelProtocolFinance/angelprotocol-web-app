@@ -43,7 +43,7 @@ export default function ChariotCheckout(
 
   return (
     <div className="flex flex-col content-start p-4 @md:p-8 group">
-      <BackBtn type="button" onClick={onBack} />
+      <BackBtn type="button" disabled={isLoading} onClick={onBack} />
       <Heading classes="my-4" />
       <SplitSummary
         classes="mb-auto"
