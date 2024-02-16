@@ -86,7 +86,7 @@ export default function ChariotCheckout(
                     }
                   : undefined,
                 transactionId: r.detail.workflowSessionId,
-              });
+              }).unwrap();
 
               navigate(
                 details.source === "bg-widget"
