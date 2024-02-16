@@ -14,12 +14,7 @@ export default function DAFCheckout(props: ChariotCheckoutStep) {
 
   switch (action) {
     case "chariot":
-      return (
-        <div className="grid gap-4 p-4 @md:p-8">
-          <BackBtn type="button" onClick={() => setAction(undefined)} />
-          <ChariotCheckout {...props} />
-        </div>
-      );
+      return <ChariotCheckout {...props} onBack={() => setAction(undefined)} />;
     case "manual":
       return (
         <div className="grid gap-4 p-4 @md:p-8">
