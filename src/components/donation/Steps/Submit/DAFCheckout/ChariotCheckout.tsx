@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
 import { ChariotCheckoutStep } from "slices/donation";
 import BackBtn from "../../BackBtn";
-import Err from "../Err";
 import Currency from "../common/Currrency";
 import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
@@ -19,8 +18,7 @@ export default function ChariotCheckout(
   props: ChariotCheckoutStep & { onBack: () => void }
 ) {
   const { details, recipient, kyc, liquidSplitPct, onBack } = props;
-  const [createGrant, { isLoading, isError, error }] =
-    useChariotGrantIntentMutation();
+  const [createGrant, { isLoading }] = useChariotGrantIntentMutation();
 
   const navigate = useNavigate();
 
@@ -53,14 +51,10 @@ export default function ChariotCheckout(
       />
 
       {/** <CharioConnect/> is not yet rendered */}
-      {!isError && (
-        <ContentLoader className="rounded h-14 w-full group-has-[chariot-connect]:hidden" />
-      )}
+      <ContentLoader className="rounded h-14 w-full group-has-[chariot-connect]:hidden" />
 
       {isLoading ? (
         <ContentLoader className="rounded h-12 w-full" />
-      ) : isError ? (
-        <Err error={error} />
       ) : (
         <ChariotConnect
           disabled={isLoading}
