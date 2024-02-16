@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { ChariotCheckoutStep, setStep } from "slices/donation";
+import { useSetter } from "store/accessors";
 import BackBtn from "../../BackBtn";
 import ChariotCheckout from "./ChariotCheckout";
 import ChariotLogo from "./ChariotLogo";
 import ManualDonation from "./ManualDonation";
-import { useSetter } from "store/accessors";
 
 type Method = "chariot" | "manual" | undefined;
 

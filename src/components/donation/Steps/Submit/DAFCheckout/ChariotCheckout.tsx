@@ -7,11 +7,11 @@ import ChariotConnect from "react-chariot-connect";
 import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
 import { ChariotCheckoutStep } from "slices/donation";
+import BackBtn from "../../BackBtn";
 import Err from "../Err";
 import Currency from "../common/Currrency";
 import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
-import BackBtn from "../../BackBtn";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
