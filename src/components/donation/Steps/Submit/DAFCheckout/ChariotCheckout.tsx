@@ -53,7 +53,9 @@ export default function ChariotCheckout(
       />
 
       {/** <CharioConnect/> is not yet rendered */}
-      <ContentLoader className="rounded h-14 w-full group-has-[chariot-connect]:hidden" />
+      {!isError && (
+        <ContentLoader className="rounded h-14 w-full group-has-[chariot-connect]:hidden" />
+      )}
 
       {isLoading ? (
         <ContentLoader className="rounded h-12 w-full" />
