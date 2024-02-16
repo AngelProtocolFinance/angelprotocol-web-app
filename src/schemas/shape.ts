@@ -13,6 +13,12 @@ import { requiredString } from "./string";
 import { testTokenDigits } from "./tests";
 import { SchemaShape } from "./types";
 
+/**
+ * No need to trim the value, as Yup's cast when calling `number()`
+ * parses the value ignoring leading/trailing whitespaces,
+ *
+ * See https://github.com/jquense/yup?tab=readme-ov-file#number
+ */
 export const stringNumber = (
   str: (schema: StringSchema) => StringSchema,
   num: (schema: NumberSchema) => NumberSchema
