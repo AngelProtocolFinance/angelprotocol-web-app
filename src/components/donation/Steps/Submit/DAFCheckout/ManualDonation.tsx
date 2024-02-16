@@ -13,10 +13,7 @@ export default function ManualDonation(props: ChariotCheckoutStep) {
         following information:
       </p>
       <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-3 text-sm leading-relaxed mt-6">
-        <p>
-          Please transfer [&nbsp;{props.details.amount}&nbsp;] [&nbsp;
-          {props.details.currency.code}&nbsp;] to:
-        </p>
+        <p>Please make a one-time grant of ${props.details.amount} to:</p>
         <p>Deliver to: Fidelity Investments</p>
         <p>DTC number: 0226</p>
         <p>Account number: Z40390069</p>
@@ -36,22 +33,17 @@ export default function ManualDonation(props: ChariotCheckoutStep) {
 
       <p className="mt-8 text-sm">
         For your gift to be recognized when it comes into our account, please
-        email us details of the shares you are donating and which project or
+        email us details of the amount you are donating and which project or
         projects to designate your donation to. Please send this email to
         support@better.giving.
       </p>
 
       <p className="mt-6 text-sm text-right text-balance">
-        You may also generate an email that automatically include needed
+        You may also generate an email that automatically includes needed
         information.
       </p>
       <a
-        href={emailLink(
-          props.recipient.name,
-          profileUrl,
-          props.details.amount,
-          props.details.currency.code
-        )}
+        href={emailLink(props.recipient.name, profileUrl, props.details.amount)}
         className="btn btn-orange px-4 py-2 justify-self-end mt-2 text-xs font-normal"
       >
         Generate email
@@ -62,25 +54,18 @@ export default function ManualDonation(props: ChariotCheckoutStep) {
 
 const NEW_LINE = "%0D%0A";
 
-const emailLink = (
-  charityName: string,
-  profileUrl: string,
-  amount: string,
-  currency: string
-) => `
+const emailLink = (charityName: string, profileUrl: string, amount: string) => `
 mailto:${"[ Your broker's email ]"}
   ?cc=${EMAIL_SUPPORT}
-  &subject=Stock donation to Better.Giving supporting ${charityName}
+  &subject=Grant donation to Better.Giving supporting ${charityName}
   &body=
 Hi,${NEW_LINE}
 ${NEW_LINE}
-I would like to donate stock to support ${charityName} (${profileUrl}). 
+I would like to make a one-time grant to support ${charityName} (${profileUrl}). 
 I have CCed better.giving (EIN 87-3758939) to ensure this tax-deductible donation gets accounted for correctly, 
 please ask them if you have any technical questions.${NEW_LINE}
 ${NEW_LINE}
-Please transfer ${amount || "[AMOUNT]"} ${
-  currency || "[STOCK_SYMBOL]"
-} to:${NEW_LINE}
+Please transfer $${amount || "[AMOUNT]"} to:${NEW_LINE}
 Deliver to: Fidelity Investments${NEW_LINE}
 DTC number: 0226${NEW_LINE}
 Account number: Z40390069${NEW_LINE}
