@@ -1,9 +1,10 @@
+import chariotLogo from "assets/images/chariot-logo-with-name.svg";
+import Image from "components/Image";
 import { useState } from "react";
 import { ChariotCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../../BackBtn";
 import ChariotCheckout from "./ChariotCheckout";
-import ChariotLogo from "./ChariotLogo";
 import ManualDonation from "./ManualDonation";
 
 type Method = "chariot" | "manual" | undefined;
@@ -37,7 +38,7 @@ export default function DAFCheckout(props: ChariotCheckoutStep) {
             type="button"
             onClick={() => setAction("chariot")}
           >
-            Donate with <ChariotLogo />
+            Donate with <Image src={chariotLogo} />
           </button>
           <button
             className="font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
