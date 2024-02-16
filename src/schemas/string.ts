@@ -9,7 +9,7 @@ export const requiredString = Yup.string().required("required");
 
 export const walletAddr = (chainId: ChainID) =>
   Yup.lazy((val) =>
-    val === ""
+    !val || (typeof val === "string" && val.trim() === "")
       ? Yup.string()
       : Yup.string()
           .trim()
