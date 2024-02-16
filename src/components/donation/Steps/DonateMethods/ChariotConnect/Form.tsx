@@ -38,7 +38,7 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
           (s) => s.required("required"),
           (n) => n.positive("must be greater than 0")
         ),
-        email: requiredString.email("invalid email"),
+        email: requiredString.trim().email("invalid email"),
       })
     ),
   });

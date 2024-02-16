@@ -27,18 +27,17 @@ const milesStoneSchema = object<any, SchemaShape<FormMilestone>>({
   milestone_description: string()
     .trim()
     .max(MAX_CHARS, `max length is ${MAX_CHARS} chars`),
-  milestone_title: requiredString,
+  milestone_title: requiredString.trim(),
   milestone_media: fileObj,
 });
 
 //construct strict shape to avoid hardcoding shape keys
 
 export const schema = object<any, SchemaShape<FV>>({
-  title: requiredString,
-  description: requiredString.max(
-    MAX_CHARS,
-    `max length is ${MAX_CHARS} chars`
-  ),
+  title: requiredString.trim(),
+  description: requiredString
+    .trim()
+    .max(MAX_CHARS, `max length is ${MAX_CHARS} chars`),
   image: fileObj,
   milestones: array(milesStoneSchema),
 }) as ObjectSchema<FV>;

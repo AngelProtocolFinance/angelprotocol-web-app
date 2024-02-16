@@ -19,7 +19,7 @@ export const stringNumber = (
 ) =>
   lazy((v) =>
     !v && typeof v !== "number"
-      ? str(string().trim())
+      ? str(string())
       : num(number().typeError("must be a number"))
   );
 

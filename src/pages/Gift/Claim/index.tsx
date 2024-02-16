@@ -12,7 +12,7 @@ export default function Claim({ classes = "" }) {
     },
     resolver: yupResolver(
       object({
-        secret: requiredString,
+        secret: requiredString.trim(),
       })
     ),
   });
