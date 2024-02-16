@@ -46,7 +46,7 @@ export default function ManualDonation(props: Props) {
       </p>
 
       <p className="mt-2 text-sm text-right text-balance">
-        You may also generate an email that automatically includes needed
+        You may also generate an email that automatically includes the needed
         information.
       </p>
       <a
