@@ -1,18 +1,19 @@
+import { ErrorMessage } from "@hookform/error-message";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as Slider from "@radix-ui/react-slider";
 import bgIcon from "assets/favicon.png";
 import character from "assets/images/waving-character.png";
 import Image from "components/Image/Image";
 import { humanize } from "helpers";
 import { useState } from "react";
+import { useController, useForm } from "react-hook-form";
+import { stringNumber } from "schemas/shape";
 import { TipStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
+import { object } from "yup";
 import BackBtn from "../BackBtn";
 
-type TipObj = {
-  amount: number;
-  pct: number;
-};
-const DEFAULT_PCT = 17;
+const DEFAULT_PCT = "17";
 
 export default function Tip({ details }: TipStep) {
   const dispatch = useSetter();
@@ -31,14 +32,43 @@ export default function Tip({ details }: TipStep) {
     }
   })();
 
-  const [isPct, setIsPct] = useState(true);
-  const [tip, setTip] = useState<TipObj>({
-    amount: amount * (DEFAULT_PCT / 100),
-    pct: DEFAULT_PCT,
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(
+      object({
+        tip: object({
+          amount: stringNumber(
+            (s) => s,
+            (n) => n.min(0, "can't be negative")
+          ),
+          pct: stringNumber(
+            (s) => s,
+            (n) => n
+          ),
+        }),
+      })
+    ),
+    defaultValues: {
+      tip: {
+        amount: `${amount * (+DEFAULT_PCT / 100)}`,
+        pct: DEFAULT_PCT,
+      },
+    },
   });
+  const {
+    field: { value: tip, onChange: onTipChange },
+  } = useController({ name: "tip", control });
+
+  const [isPct, setIsPct] = useState(true);
 
   return (
-    <form className="grid content-start p-4 @md:p-8">
+    <form
+      onSubmit={handleSubmit((v) => dispatch(setSplit(Number(v.tip.amount))))}
+      className="grid content-start p-4 @md:p-8"
+    >
       <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
       <h4 className="mt-4 text-lg">
         Choose a Donation for{" "}
@@ -51,9 +81,12 @@ export default function Tip({ details }: TipStep) {
       {isPct && (
         <Slider.Root
           step={1}
-          value={[tip.pct]}
+          value={[Number(tip.pct)]}
           onValueChange={([pct]) =>
-            setTip({ amount: amount * (pct / 100), pct })
+            onTipChange({
+              amount: humanize(amount * (pct / 100), decimals),
+              pct,
+            })
           }
           className="relative flex items-center select-none touch-none mt-16"
         >
@@ -66,7 +99,9 @@ export default function Tip({ details }: TipStep) {
             <span className="w-px h-2.5 bg-[#D9D9D9]" />
             <div className="absolute -top-9 px-2 py-0.5 rounded text-sm">
               <span className="text-xs uppercase mr-0.5">{symbol}</span>
-              <span className="mr-0.5">{humanize(tip.amount, decimals)}</span>
+              <span className="mr-0.5">
+                {humanize(tip.amount || "0", decimals)}
+              </span>
               <span className="text-gray-d1 text-xs">({tip.pct}%)</span>
             </div>
           </Slider.Thumb>
@@ -85,9 +120,28 @@ export default function Tip({ details }: TipStep) {
       {!isPct && (
         <>
           <label className="mb-2 mt-6">Your donation amount</label>
-          <div className="field-container grid grid-cols-[1fr_auto] px-4 py-3">
-            <input type="text" placeholder="$ Enter amount" />
+          <div className="relative field-container grid grid-cols-[1fr_auto] px-4 py-3">
+            <input
+              type="text"
+              value={tip.amount}
+              onChange={(e) =>
+                onTipChange({
+                  amount: e.target.value,
+                  pct: (+e.target.value / amount) * 100,
+                })
+              }
+              placeholder="$ Enter amount"
+            />
             <span className="uppercase">{symbol}</span>
+          </div>
+          <div className="empty:mb-4">
+            <ErrorMessage
+              data-error
+              className="static field-error text-right my-1"
+              errors={errors}
+              name="tip.amount"
+              as="p"
+            />
           </div>
         </>
       )}
@@ -105,13 +159,7 @@ export default function Tip({ details }: TipStep) {
         <span className="font-medium block">Give today, give forever.</span>
       </p>
 
-      <button
-        type="button"
-        onClick={() => {
-          dispatch(setSplit(50));
-        }}
-        className="btn-orange btn-donate mt-6"
-      >
+      <button type="submit" className="btn-orange btn-donate mt-6">
         Continue
       </button>
     </form>
