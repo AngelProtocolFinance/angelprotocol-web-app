@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
 import { ChariotCheckoutStep } from "slices/donation";
 import BackBtn from "../../BackBtn";
-import Currency from "../common/Currrency";
+import currency from "../common/Currrency";
 import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
 
@@ -34,20 +34,29 @@ export default function ChariotCheckout(props: Props) {
     };
   };
 
-  const currency = details.currency;
-  const total = +details.amount;
-  const liq = total * (liquidSplitPct / 100);
-  const locked = total - liq;
+  const Amount = currency(details.currency);
 
   return (
     <div className="flex flex-col content-start p-4 @md:p-8 group">
       <BackBtn type="button" disabled={isLoading} onClick={onBack} />
       <Heading classes="my-4" />
       <SplitSummary
+        amount={+details.amount}
+        splitLiq={props.liquidSplitPct}
         classes="mb-auto"
-        total={<Currency {...currency} amount={total} classes="text-gray-d2" />}
-        liquid={<Currency {...currency} amount={liq} classes="text-sm" />}
-        locked={<Currency {...currency} amount={locked} classes="text-sm" />}
+        Donation={(n) => <Amount amount={n} classes="text-gray-d2" />}
+        Liquid={(n) => <Amount amount={n} classes="text-sm" />}
+        Locked={(n) => <Amount amount={n} classes="text-sm" />}
+        tip={
+          props.tip
+            ? {
+                charityName: props.recipient.name,
+                value: props.tip,
+                Tip: (n) => <Amount classes="text-gray-d2" amount={n} />,
+                Total: (n) => <Amount classes="text-gray-d2" amount={n} />,
+              }
+            : undefined
+        }
       />
 
       {/** <CharioConnect/> is not yet rendered */}

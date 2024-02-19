@@ -19,10 +19,6 @@ export default function Crypto(props: CryptoSubmitStep) {
   }
   const { details } = props;
 
-  const total = +details.token.amount;
-  const liq = total * (props.liquidSplitPct / 100);
-  const locked = total - liq;
-
   const Amount = withUSD(details.token.coingecko_denom);
 
   return (
@@ -46,9 +42,21 @@ export default function Crypto(props: CryptoSubmitStep) {
       </dl>
 
       <SplitSummary
-        total={<Amount classes="text-gray-d2" amount={total} />}
-        liquid={<Amount classes="text-sm" amount={liq} />}
-        locked={<Amount classes="text-sm" amount={locked} />}
+        amount={+details.token.amount}
+        splitLiq={props.liquidSplitPct}
+        Donation={(n) => <Amount classes="text-gray-d2" amount={n} />}
+        Liquid={(n) => <Amount classes="text-sm" amount={n} />}
+        Locked={(n) => <Amount classes="text-sm" amount={n} />}
+        tip={
+          props.tip
+            ? {
+                charityName: props.recipient.name,
+                value: props.tip,
+                Tip: (n) => <Amount classes="text-gray-d2" amount={n} />,
+                Total: (n) => <Amount classes="text-gray-d2" amount={n} />,
+              }
+            : undefined
+        }
       />
 
       <WalletProvider {...chainOptions}>
@@ -64,7 +72,7 @@ const withUSD = (coinGeckoId: string) =>
   function Amount(props: { amount: string | number; classes?: string }) {
     const { data: rate, isLoading, isError } = useUsdRateQuery(coinGeckoId);
     return (
-      <dd className={props.classes}>
+      <dd className={props.classes + " text-right"}>
         {humanize(props.amount, 4)}{" "}
         {isLoading ? (
           "($--)"

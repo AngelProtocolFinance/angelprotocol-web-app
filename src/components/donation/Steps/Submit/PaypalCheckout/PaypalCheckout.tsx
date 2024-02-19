@@ -6,7 +6,7 @@ import { PaypalCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../../BackBtn";
 import Err from "../Err";
-import Currency from "../common/Currrency";
+import currency from "../common/Currrency";
 import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
 import Checkout from "./Checkout";
@@ -42,10 +42,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
 
   const dispatch = useSetter();
 
-  const currency = details.currency;
-  const total = +details.amount;
-  const liq = total * (liquidSplitPct / 100);
-  const locked = total - liq;
+  const Amount = currency(details.currency);
 
   return (
     <div className="flex flex-col isolate p-4 @md:p-8">
@@ -54,10 +51,22 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
       <Heading classes="my-4" />
 
       <SplitSummary
+        amount={+details.amount}
+        splitLiq={props.liquidSplitPct}
         classes="mb-auto"
-        total={<Currency {...currency} amount={total} classes="text-gray-d2" />}
-        liquid={<Currency {...currency} amount={liq} classes="text-sm" />}
-        locked={<Currency {...currency} amount={locked} classes="text-sm" />}
+        Donation={(n) => <Amount amount={n} classes="text-gray-d2" />}
+        Liquid={(n) => <Amount amount={n} classes="text-sm" />}
+        Locked={(n) => <Amount amount={n} classes="text-sm" />}
+        tip={
+          props.tip
+            ? {
+                charityName: props.recipient.name,
+                value: props.tip,
+                Tip: (n) => <Amount classes="text-gray-d2" amount={n} />,
+                Total: (n) => <Amount classes="text-gray-d2" amount={n} />,
+              }
+            : undefined
+        }
       />
 
       {isLoading ? (
