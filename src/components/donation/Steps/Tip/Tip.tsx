@@ -31,6 +31,7 @@ export default function Tip({ details }: TipStep) {
     }
   })();
 
+  const [isPct, setIsPct] = useState(true);
   const [tip, setTip] = useState<TipObj>({
     amount: amount * (DEFAULT_PCT / 100),
     pct: DEFAULT_PCT,
@@ -47,32 +48,49 @@ export default function Tip({ details }: TipStep) {
         We are completely free, and rely on donations
       </p>
 
-      <Slider.Root
-        step={1}
-        value={[tip.pct]}
-        onValueChange={([pct]) => setTip({ amount: amount * (pct / 100), pct })}
-        className="relative flex items-center select-none touch-none mt-16"
-      >
-        <Slider.Track className="relative grow rounded-full h-1.5 bg-[#EAECEB]">
-          <Slider.Range className="absolute bg-blue-d1 rounded-full h-full" />
-        </Slider.Track>
-        <Slider.Thumb className="flex gap-[2.5px] justify-center items-center w-9 h-5 bg-white border border-[#EAECEB] shadow-lg shadow-black/15 rounded-[6px] relative">
-          <span className="w-px h-2.5 bg-[#D9D9D9]" />
-          <span className="w-px h-2.5 bg-[#D9D9D9]" />
-          <span className="w-px h-2.5 bg-[#D9D9D9]" />
-          <div className="absolute -top-9 px-2 py-0.5 rounded text-sm">
-            <span className="text-xs uppercase mr-0.5">{symbol}</span>
-            <span className="mr-0.5">{humanize(tip.amount, decimals)}</span>
-            <span className="text-gray-d1 text-xs">({tip.pct}%)</span>
-          </div>
-        </Slider.Thumb>
-      </Slider.Root>
+      {isPct && (
+        <Slider.Root
+          step={1}
+          value={[tip.pct]}
+          onValueChange={([pct]) =>
+            setTip({ amount: amount * (pct / 100), pct })
+          }
+          className="relative flex items-center select-none touch-none mt-16"
+        >
+          <Slider.Track className="relative grow rounded-full h-1.5 bg-[#EAECEB]">
+            <Slider.Range className="absolute bg-blue-d1 rounded-full h-full" />
+          </Slider.Track>
+          <Slider.Thumb className="flex gap-[2.5px] justify-center items-center w-9 h-5 bg-white border border-[#EAECEB] shadow-lg shadow-black/15 rounded-[6px] relative">
+            <span className="w-px h-2.5 bg-[#D9D9D9]" />
+            <span className="w-px h-2.5 bg-[#D9D9D9]" />
+            <span className="w-px h-2.5 bg-[#D9D9D9]" />
+            <div className="absolute -top-9 px-2 py-0.5 rounded text-sm">
+              <span className="text-xs uppercase mr-0.5">{symbol}</span>
+              <span className="mr-0.5">{humanize(tip.amount, decimals)}</span>
+              <span className="text-gray-d1 text-xs">({tip.pct}%)</span>
+            </div>
+          </Slider.Thumb>
+        </Slider.Root>
+      )}
+      {isPct && (
+        <button
+          type="button"
+          onClick={() => setIsPct(false)}
+          className="justify-self-center text-sm mt-4 underline hover:text-blue"
+        >
+          Enter custom tip
+        </button>
+      )}
 
-      <label className="mb-2 mt-6">Your donation amount</label>
-      <div className="field-container grid grid-cols-[1fr_auto] px-4 py-3">
-        <input type="text" placeholder="$ Enter amount" />
-        <span className="uppercase">{symbol}</span>
-      </div>
+      {!isPct && (
+        <>
+          <label className="mb-2 mt-6">Your donation amount</label>
+          <div className="field-container grid grid-cols-[1fr_auto] px-4 py-3">
+            <input type="text" placeholder="$ Enter amount" />
+            <span className="uppercase">{symbol}</span>
+          </div>
+        </>
+      )}
 
       <div className="rounded bg-blue-l5 h-[4.5rem] mt-16 relative">
         <Image src={character} className="absolute left-1 bottom-0" />
