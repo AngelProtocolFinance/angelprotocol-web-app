@@ -13,7 +13,7 @@ import { useSetter } from "store/accessors";
 import { object } from "yup";
 import BackBtn from "../BackBtn";
 
-const DEFAULT_PCT = "17";
+const DEFAULT_PCT = "0.17";
 
 export default function Tip({
   details,
@@ -59,10 +59,10 @@ export default function Tip({
       tip: persistedTip
         ? {
             amount: persistedTip,
-            pct: (persistedTip / amount) * 100,
+            pct: persistedTip / amount,
           }
         : {
-            amount: amount * (+DEFAULT_PCT / 100),
+            amount: amount * +DEFAULT_PCT,
             pct: DEFAULT_PCT,
           },
     },
@@ -97,11 +97,13 @@ export default function Tip({
 
       {isPct && (
         <Slider.Root
-          step={1}
+          min={0}
+          max={1}
+          step={0.01}
           value={[Number(tip.pct)]}
           onValueChange={([pct]) =>
             onTipChange({
-              amount: humanize(amount * (pct / 100), decimals),
+              amount: humanize(amount * pct, decimals),
               pct,
             })
           }
@@ -119,7 +121,9 @@ export default function Tip({
               <span className="mr-0.5">
                 {humanize(tip.amount || "0", decimals)}
               </span>
-              <span className="text-gray-d1 text-xs">({tip.pct}%)</span>
+              <span className="text-gray-d1 text-xs">
+                ({(Number(tip.pct) * 100).toFixed(0)}%)
+              </span>
             </div>
           </Slider.Thumb>
         </Slider.Root>
@@ -144,7 +148,7 @@ export default function Tip({
               onChange={(e) =>
                 onTipChange({
                   amount: e.target.value,
-                  pct: (+e.target.value / amount) * 100,
+                  pct: +e.target.value / amount,
                 })
               }
               placeholder="$ Enter amount"
