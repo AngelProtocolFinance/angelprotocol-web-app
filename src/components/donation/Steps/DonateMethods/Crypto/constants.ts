@@ -9,5 +9,5 @@ export const initToken: TokenWithAmount = {
   token_id: "",
   coingecko_denom: "",
   type: "erc20",
-  amount: "0",
+  amount: "",
 };

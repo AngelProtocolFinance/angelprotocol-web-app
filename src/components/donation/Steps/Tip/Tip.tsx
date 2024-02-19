@@ -15,7 +15,11 @@ import BackBtn from "../BackBtn";
 
 const DEFAULT_PCT = "17";
 
-export default function Tip({ details }: TipStep) {
+export default function Tip({
+  details,
+  tip: persistedTip,
+  format = "pct",
+}: TipStep) {
   const dispatch = useSetter();
 
   const [symbol, amount, decimals = 2] = (() => {
@@ -52,21 +56,34 @@ export default function Tip({ details }: TipStep) {
       })
     ),
     defaultValues: {
-      tip: {
-        amount: `${amount * (+DEFAULT_PCT / 100)}`,
-        pct: DEFAULT_PCT,
-      },
+      tip: persistedTip
+        ? {
+            amount: persistedTip,
+            pct: (persistedTip / amount) * 100,
+          }
+        : {
+            amount: amount * (+DEFAULT_PCT / 100),
+            pct: DEFAULT_PCT,
+          },
     },
   });
   const {
     field: { value: tip, onChange: onTipChange },
   } = useController({ name: "tip", control });
 
-  const [isPct, setIsPct] = useState(true);
+  //if user selects custom, can't go back to %
+  const [isPct, setIsPct] = useState(format === "pct");
 
   return (
     <form
-      onSubmit={handleSubmit((v) => dispatch(setTip(Number(v.tip.amount))))}
+      onSubmit={handleSubmit((v) =>
+        dispatch(
+          setTip({
+            tip: Number(v.tip.amount),
+            format: isPct ? "pct" : "amount",
+          })
+        )
+      )}
       className="grid content-start p-4 @md:p-8"
     >
       <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
@@ -111,7 +128,7 @@ export default function Tip({ details }: TipStep) {
         <button
           type="button"
           onClick={() => setIsPct(false)}
-          className="justify-self-center text-sm mt-4 underline hover:text-blue"
+          className="justify-self-center text-sm mt-6 underline hover:text-blue"
         >
           Enter custom tip
         </button>

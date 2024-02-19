@@ -109,14 +109,17 @@ export type SplitsStep = {
   liquidSplitPct?: number;
 } & From<KYCStep, "kyc">;
 
+/** edge case: custom tip > donation  */
+export type TipFormat = "pct" | "amount";
 export type TipStep = {
   step: "tip";
-  amount?: number;
+  tip?: number;
+  format?: TipFormat;
 } & From<SplitsStep, "kyc">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<From<TipStep, "kyc" | "amount">, "details"> & { details: T };
+} & Omit<From<TipStep, "kyc" | "tip">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
