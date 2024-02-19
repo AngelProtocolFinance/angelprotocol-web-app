@@ -1,6 +1,6 @@
 import { SubmitStep } from "slices/donation";
-import ChariotConnectCheckout from "./ChariotConnectCheckout";
 import Crypto from "./Crypto";
+import DAFCheckout from "./DAFCheckout";
 import PaypalCheckout from "./PaypalCheckout";
 import Stocks from "./Stocks";
 import StripeCheckout from "./StripeCheckout";
@@ -23,7 +23,7 @@ export default function Submit(props: SubmitStep) {
 
   if (props.details.method === "chariot") {
     const { details, ...rest } = props;
-    return <ChariotConnectCheckout details={details} {...rest} />;
+    return <DAFCheckout details={details} {...rest} />;
   }
 
   const { details, ...rest } = props;

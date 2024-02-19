@@ -71,7 +71,7 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
           label="Donation amount"
           classes={{ label: "font-semibold" }}
           required
-          tooltip="The minimum donation amount will depend on which DAF provider you select in the next step."
+          tooltip="The minimum donation amount will depend on your DAF provider."
         />
         {!authUserEmail && (
           <Field<FV>
