@@ -8,7 +8,7 @@ import { humanize } from "helpers";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { stringNumber } from "schemas/shape";
-import { TipStep, setSplit, setStep } from "slices/donation";
+import { TipStep, setStep, setTip } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { object } from "yup";
 import BackBtn from "../BackBtn";
@@ -66,7 +66,7 @@ export default function Tip({ details }: TipStep) {
 
   return (
     <form
-      onSubmit={handleSubmit((v) => dispatch(setSplit(Number(v.tip.amount))))}
+      onSubmit={handleSubmit((v) => dispatch(setTip(Number(v.tip.amount))))}
       className="grid content-start p-4 @md:p-8"
     >
       <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
