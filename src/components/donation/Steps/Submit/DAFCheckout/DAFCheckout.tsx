@@ -21,7 +21,7 @@ export default function DAFCheckout(props: ChariotCheckoutStep) {
     default:
       return (
         <div className="grid gap-6 p-4 @md:p-8">
-          <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
+          <BackBtn type="button" onClick={() => dispatch(setStep("tip"))} />
           <h3 className="text-xl">Instant DAF donation</h3>
           <p>
             We use Chariot to verify your account info and automatically

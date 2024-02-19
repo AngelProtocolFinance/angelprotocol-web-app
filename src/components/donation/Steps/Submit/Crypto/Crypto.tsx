@@ -15,7 +15,7 @@ import Checkout from "./Checkout";
 export default function Crypto(props: CryptoSubmitStep) {
   const dispatch = useSetter();
   function goBack() {
-    dispatch(setStep("splits"));
+    dispatch(setStep("tip"));
   }
   const { details } = props;
 
@@ -69,7 +69,7 @@ const withUSD = (coinGeckoId: string) =>
         {isLoading ? (
           "($--)"
         ) : isError || !rate ? (
-          <span className="text-red">"($--)"</span>
+          <span className="text-red">($--)</span>
         ) : (
           `($${humanize(+props.amount * rate, 2)})`
         )}

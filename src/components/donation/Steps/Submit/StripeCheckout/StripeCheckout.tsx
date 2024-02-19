@@ -51,7 +51,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   return (
     <div className="grid content-start p-4 @md:p-8">
-      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
+      <BackBtn type="button" onClick={() => dispatch(setStep("tip"))} />
       <Heading classes="my-4" />
 
       <SplitSummary

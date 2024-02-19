@@ -49,7 +49,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
 
   return (
     <div className="flex flex-col isolate p-4 @md:p-8">
-      <BackBtn onClick={() => dispatch(setStep("splits"))} type="button" />
+      <BackBtn onClick={() => dispatch(setStep("tip"))} type="button" />
 
       <Heading classes="my-4" />
 
