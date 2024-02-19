@@ -38,7 +38,7 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
           (s) => s.required("required"),
           (n) => n.positive("must be greater than 0")
         ),
-        email: requiredString.email("invalid email"),
+        email: requiredString.trim().email("invalid email"),
       })
     ),
   });
@@ -71,7 +71,7 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
           label="Donation amount"
           classes={{ label: "font-semibold" }}
           required
-          tooltip="The minimum donation amount will depend on which DAF provider you select in the next step."
+          tooltip="The minimum donation amount will depend on your DAF provider."
         />
         {!authUserEmail && (
           <Field<FV>

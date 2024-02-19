@@ -1,6 +1,8 @@
 import { appRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
-import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
+import useHandleScreenResize, {
+  SCREEN_BREAKPOINTS,
+} from "hooks/useHandleScreenResize";
 import { matchPath, useLocation } from "react-router-dom";
 import { Link, LinkGroup } from "../types";
 import ToggleableSidebar from "./ToggleableSidebar";
@@ -36,7 +38,7 @@ export default function useSidebarOpener(linkGroups: LinkGroup[]) {
   const { showModal, closeModal, isModalOpen } = useModalContext();
 
   useHandleScreenResize(
-    (screenSize) => screenSize >= SCREEN_MD && closeModal(),
+    (screenSize) => screenSize >= SCREEN_BREAKPOINTS.md && closeModal(),
     {
       debounceTime: 50,
       shouldAttachListener: isModalOpen,

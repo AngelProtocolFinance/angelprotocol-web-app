@@ -26,9 +26,10 @@ export default function AddForm({ added, endowID }: Props) {
   const methods = useForm({
     resolver: yupResolver(
       object({
-        firstName: requiredString,
-        lastName: requiredString,
+        firstName: requiredString.trim(),
+        lastName: requiredString.trim(),
         email: requiredString
+          .trim()
           .email("invalid email")
           .notOneOf(added, "already a member"),
       })

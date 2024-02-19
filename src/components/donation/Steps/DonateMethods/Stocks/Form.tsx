@@ -2,8 +2,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Field } from "components/form";
 import { FormProvider, UseFormReturn, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import { requiredString } from "schemas/string";
 import { StockFormStep, setDetails } from "slices/donation";
-import { object, string } from "yup";
+import { object } from "yup";
 
 export default function Form(props: StockFormStep) {
   const dispatch = useDispatch();
@@ -20,10 +21,8 @@ export default function Form(props: StockFormStep) {
         },
     resolver: yupResolver(
       object({
-        symbol: string().required("required"),
-        numShares: string()
-          .required("required")
-          .matches(/^[1-9]\d*$/, "invalid"),
+        symbol: requiredString.trim(),
+        numShares: requiredString.trim().matches(/^[1-9]\d*$/, "invalid"),
       })
     ),
   });

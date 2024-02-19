@@ -21,6 +21,7 @@ export default function SubscriptionForm() {
     resolver: yupResolver(
       object({
         email: string()
+          .trim()
           .email("Invalid email format")
           .required("Please enter your email."),
       })

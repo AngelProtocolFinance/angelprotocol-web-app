@@ -79,7 +79,7 @@
     @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l3 dark:border-bluegray  enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
   }
   .btn-blue {
-    @apply btn bg-blue disabled:bg-gray enabled:hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
+    @apply btn bg-blue disabled:bg-gray text-white enabled:hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
   }
   .btn-red {
     @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;

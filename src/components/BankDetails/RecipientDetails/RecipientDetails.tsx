@@ -1,3 +1,4 @@
+import { NativeSelect } from "components/Selector";
 import { Info, LoadingStatus } from "components/Status";
 import { Label } from "components/form";
 import { isEmpty } from "helpers";
@@ -59,22 +60,14 @@ function RecipientDetails({
           Refreshing requirements..
         </LoadingStatus>
       )}
-      <div>
-        <Label className="mb-2" required>
-          Transfer type
-        </Label>
-        <select
-          value={reqIdx}
-          onChange={(e) => setSelectedIdx(+e.target.value)}
+      <div className="field">
+        <Label required>Transfer type</Label>
+        <NativeSelect
+          value={selectedIdx}
+          onChange={(value) => setSelectedIdx(+value)}
+          options={requirements.map((x, i) => ({ label: x.title, value: i }))}
           disabled={disabled || isFetching}
-          className="field-input"
-        >
-          {requirements.map((v, i) => (
-            <option key={v.type} value={i}>
-              {v.title}
-            </option>
-          ))}
-        </select>
+        />
       </div>
 
       <RecipientDetailsForm

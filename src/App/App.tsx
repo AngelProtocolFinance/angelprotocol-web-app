@@ -38,7 +38,9 @@ export default function App() {
           <Route path=":id" element={<DonateWidget />} />
           <Route
             path={donateWidgetRoutes.donate_fiat_thanks}
-            element={<DonateFiatThanks widgetVersion />}
+            element={
+              <DonateFiatThanks widgetVersion className="py-8 sm:py-20" />
+            }
           />
           <Route
             path={donateWidgetRoutes.stripe_payment_status}
@@ -74,7 +76,9 @@ export default function App() {
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
             path={appRoutes.donate_fiat_thanks}
-            element={<DonateFiatThanks />}
+            element={
+              <DonateFiatThanks className="pt-28 sm:pt-44 pb-8 sm:pb-20" />
+            }
           />
           <Route
             path={appRoutes.stripe_payment_status}
@@ -97,10 +101,12 @@ export default function App() {
             element={
               // Widget.tsx is also used as one of the Admin pages and so
               // where its styles depend on the width of the parent component;
-              // We copy/paste src/pages/Admin/Layout.tsx container styles here
-              // so that Widget.tsx styles are applied correctly on both pages.
-              <div className="px-6 py-8 md:p-10 @container">
-                <Widget />
+              // We copy/paste src/pages/Admin/Layout.tsx container setup & styles
+              // here so that Widget.tsx styles are applied correctly on both pages.
+              <div className="pt-20 sm:pt-32">
+                <div className="px-6 py-8 md:p-10 @container">
+                  <Widget />
+                </div>
               </div>
             }
           />

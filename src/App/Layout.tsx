@@ -5,14 +5,16 @@ import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import { CHARITY_LINKS } from "./constants";
+import useHeaderLinks from "./useHeaderLinks";
 
-const { HEADER_LINKS, GROUPS_DATA, SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
+const { GROUPS_DATA, SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
 
 export default function Layout() {
+  const headerLinks = useHeaderLinks();
   return (
-    <div className="grid grid-rows-[auto_1fr_auto]">
+    <div className="grid grid-rows-[1fr_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header classes="top-0 sticky z-20" links={HEADER_LINKS} />
+      <Header links={headerLinks} /> {/* sticky component, not part of grid */}
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>

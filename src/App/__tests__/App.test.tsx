@@ -13,6 +13,12 @@ const mockMetrics: DonationsMetricList = {
   donations_total_amount: 0,
 };
 
+global.ResizeObserver = vi.fn().mockImplementation(() => ({
+  observe: vi.fn(),
+  unobserve: vi.fn(),
+  disconnect: vi.fn(),
+}));
+
 vi.mock("services/aws/business_metrics", () => ({
   __esModule: true,
   useMetricsListQuery: () => ({
@@ -30,7 +36,8 @@ vi.mock("services/aws/leaderboard", () => ({
 
 const heroText = /BETTER GIVING REDEFINES/i;
 const marketLink = /marketplace/i;
-const regLink = /register/i;
+const loginLink = /log in/i;
+const signupLink = /sign up/i;
 // const leadLink = /leaderboard/i;
 const loaderTestId = "loader";
 
@@ -54,21 +61,7 @@ describe("App.tsx tests", () => {
     const footer = screen.getByRole("contentinfo");
     expect(footer).toBeInTheDocument();
 
-    expect(
-      screen.getByRole("link", {
-        name: marketLink,
-      })
-    ).toBeInTheDocument();
-    // expect(
-    //   screen.getByRole("link", {
-    //     name: leadLink,
-    //   })
-    // ).toBeInTheDocument();
-    expect(
-      screen.getByRole("link", {
-        name: regLink,
-      })
-    ).toBeInTheDocument();
+    expect(screen.getByTestId("nav_dropdown")).toBeInTheDocument();
 
     //marketplace is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
@@ -77,6 +70,13 @@ describe("App.tsx tests", () => {
       await screen.findByRole("heading", { name: heroText }, { timeout: 3000 })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
+
+    expect(
+      await screen.findByRole("link", { name: loginLink })
+    ).toBeInTheDocument();
+    expect(
+      await screen.findByRole("link", { name: signupLink })
+    ).toBeInTheDocument();
 
     //user goes to leaderboards
     // fireEvent.click(
@@ -92,20 +92,6 @@ describe("App.tsx tests", () => {
     // ).toBeInTheDocument();
     // expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
-    //user goes to registration
-    fireEvent.click(
-      screen.getByRole("link", {
-        name: regLink,
-      })
-    );
-    //registration is being lazy loaded
-    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-    //registration auth is loaded
-    expect(
-      await screen.findByRole("tab", { name: /sign in/i })
-    ).toBeInTheDocument();
-    expect(screen.queryByTestId(loaderTestId)).toBeNull();
-
     //user goes back to leaderboard
     // fireEvent.click(
     //   screen.getByRole("link", {
@@ -117,6 +103,7 @@ describe("App.tsx tests", () => {
     // expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     //user goes back to Marketplace
+    fireEvent.click(screen.getByTestId("nav_dropdown"));
     fireEvent.click(
       screen.getByRole("link", {
         name: marketLink,

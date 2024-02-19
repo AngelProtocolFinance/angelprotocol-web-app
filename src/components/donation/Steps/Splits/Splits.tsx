@@ -31,7 +31,7 @@ export default function Split({
       }
       default:
         const { amount, currency } = details;
-        return [amount, currency.code.toUpperCase()];
+        return [amount, currency.code];
     }
   })();
 
@@ -87,14 +87,18 @@ export default function Split({
         <dl>
           <dt className="text-gray-d1 text-xs">Compounded Forever</dt>
           <dd>
-            <span className="text-xs font-medium mr-1">{symbol}</span>
+            <span className="text-xs font-medium mr-1">
+              {symbol.toUpperCase()}
+            </span>
             <span>{humanize(locked, DECIMALS)}</span>
           </dd>
         </dl>
         <dl>
           <dt className="text-gray-d1 text-xs">Instantly Available</dt>
           <dd className="text-right">
-            <span className="text-xs font-medium mr-1">{symbol}</span>
+            <span className="text-xs font-medium mr-1">
+              {symbol.toUpperCase()}
+            </span>
             <span>{humanize(liq, DECIMALS)}</span>
           </dd>
         </dl>

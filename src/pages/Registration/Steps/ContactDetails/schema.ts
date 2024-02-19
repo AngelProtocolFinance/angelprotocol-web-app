@@ -10,25 +10,29 @@ type Key = keyof FormValues;
 const roleKey: Key = "Role";
 const referralMethodKey: Key = "ReferralMethod";
 
-const otherRole = string().when(roleKey, ([option], schema) =>
-  (option as OptionType<ContactRoles>).value === "other"
-    ? schema.required("required")
-    : schema
-);
-
-const otherReferralMethod = (referralMethod: ReferralMethods) =>
-  string().when(referralMethodKey, ([option], schema) =>
-    (option as OptionType<ReferralMethods>).value === referralMethod
+const otherRole = string()
+  .trim()
+  .when(roleKey, ([option], schema) =>
+    (option as OptionType<ContactRoles>).value === "other"
       ? schema.required("required")
       : schema
   );
 
+const otherReferralMethod = (referralMethod: ReferralMethods) =>
+  string()
+    .trim()
+    .when(referralMethodKey, ([option], schema) =>
+      (option as OptionType<ReferralMethods>).value === referralMethod
+        ? schema.required("required")
+        : schema
+    );
+
 export const schema = object<any, SchemaShape<FormValues>>({
-  OrganizationName: requiredString,
-  FirstName: requiredString,
-  LastName: requiredString,
+  OrganizationName: requiredString.trim(),
+  FirstName: requiredString.trim(),
+  LastName: requiredString.trim(),
   //email: disabled: already validated at signup
-  Goals: requiredString,
+  Goals: requiredString.trim(),
   Role: optionType({ required: true }),
   ReferralMethod: optionType({ required: true }),
   OtherReferralMethod: otherReferralMethod("other"),

@@ -1,3 +1,4 @@
+import * as Sentry from "@sentry/react";
 import Prompt from "components/Prompt";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
@@ -21,6 +22,7 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
 
   const handleError = useCallback(
     (error: any, displayMessage?: string) => {
+      Sentry.captureException(error);
       logger.error(error);
 
       if (displayMessage) {
