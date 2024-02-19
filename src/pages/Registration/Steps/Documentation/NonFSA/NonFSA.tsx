@@ -3,7 +3,8 @@ import LoadText from "components/LoadText";
 import { Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { object, string } from "yup";
+import { requiredString } from "schemas/string";
+import { object } from "yup";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import { FormValues as FV, Props } from "./types";
@@ -13,7 +14,7 @@ export default function NonFSA(props: Props) {
   const { data } = useRegState<4>();
   const { doc } = props;
   const methods = useForm<FV>({
-    resolver: yupResolver(object({ EIN: string().required("required") })),
+    resolver: yupResolver(object({ EIN: requiredString.trim() })),
     defaultValues: doc
       ? doc
       : {

@@ -22,12 +22,11 @@ const assetShape = fileDropzoneAssetShape(
 );
 
 export const schema = object<any, SchemaShape<FormValues>>({
-  RegistrationNumber: requiredString,
+  RegistrationNumber: requiredString.trim(),
   ProofOfIdentity: assetShape,
   ProofOfRegistration: assetShape,
-  LegalEntityType: requiredString,
-  ProjectDescription: requiredString.max(
-    4000,
-    "maximum 4000 characters allowed"
-  ),
+  LegalEntityType: requiredString.trim(),
+  ProjectDescription: requiredString
+    .trim()
+    .max(4000, "maximum 4000 characters allowed"),
 }) as ObjectSchema<FormValues>;
