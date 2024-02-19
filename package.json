@@ -59,7 +59,7 @@
     "@keplr-wallet/proto-types": "0.12.23",
     "@keplr-wallet/wc-qrcode-modal": "0.12.23",
     "@reduxjs/toolkit": "^1.9.0",
-    "@sentry/react": "7.81.0",
+    "@sentry/react": "7.101.1",
     "@terra-money/terra.js": "^3.1.7",
     "@terra-money/wallet-provider": "^3.11.1",
     "@types/react-helmet": "^6.1.6",
