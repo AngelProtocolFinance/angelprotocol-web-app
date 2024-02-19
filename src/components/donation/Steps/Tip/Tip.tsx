@@ -1,26 +1,40 @@
+import * as Slider from "@radix-ui/react-slider";
 import bgIcon from "assets/favicon.png";
 import character from "assets/images/waving-character.png";
 import Image from "components/Image/Image";
+import { humanize } from "helpers";
+import { useState } from "react";
 import { TipStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../BackBtn";
 
+type TipObj = {
+  amount: number;
+  pct: number;
+};
+const DEFAULT_PCT = 17;
+
 export default function Tip({ details }: TipStep) {
   const dispatch = useSetter();
 
-  const symbol = (() => {
+  const [symbol, amount, decimals = 2] = (() => {
     switch (details.method) {
       case "stripe":
       case "paypal":
-        return details.currency.code;
+        return [details.currency.code, +details.amount];
       case "chariot":
-        return "usd";
+        return ["usd", +details.amount];
       case "stocks":
-        return details.symbol;
+        return [details.symbol, details.numShares];
       case "crypto":
-        return details.token.symbol;
+        return [details.token.symbol, +details.token.amount, 4];
     }
   })();
+
+  const [tip, setTip] = useState<TipObj>({
+    amount: amount * (DEFAULT_PCT / 100),
+    pct: DEFAULT_PCT,
+  });
 
   return (
     <form className="grid content-start p-4 @md:p-8">
@@ -32,6 +46,27 @@ export default function Tip({ details }: TipStep) {
       <p className="text-gray-d1">
         We are completely free, and rely on donations
       </p>
+
+      <Slider.Root
+        step={1}
+        value={[tip.pct]}
+        onValueChange={([pct]) => setTip({ amount: amount * (pct / 100), pct })}
+        className="relative flex items-center select-none touch-none mt-16"
+      >
+        <Slider.Track className="relative grow rounded-full h-1.5 bg-[#EAECEB]">
+          <Slider.Range className="absolute bg-blue-d1 rounded-full h-full" />
+        </Slider.Track>
+        <Slider.Thumb className="flex gap-[2.5px] justify-center items-center w-9 h-5 bg-white border border-[#EAECEB] shadow-lg shadow-black/15 rounded-[6px] relative">
+          <span className="w-px h-2.5 bg-[#D9D9D9]" />
+          <span className="w-px h-2.5 bg-[#D9D9D9]" />
+          <span className="w-px h-2.5 bg-[#D9D9D9]" />
+          <div className="absolute -top-9 px-2 py-0.5 rounded text-sm">
+            <span className="text-xs uppercase mr-0.5">{symbol}</span>
+            <span className="mr-0.5">{humanize(tip.amount, decimals)}</span>
+            <span className="text-gray-d1 text-xs">({tip.pct}%)</span>
+          </div>
+        </Slider.Thumb>
+      </Slider.Root>
 
       <label className="mb-2 mt-6">Your donation amount</label>
       <div className="field-container grid grid-cols-[1fr_auto] px-4 py-3">

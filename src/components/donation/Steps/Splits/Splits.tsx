@@ -67,7 +67,6 @@ export default function Split({
 
       {/** slider */}
       <Slider.Root
-        defaultValue={[lockedSplitPct]}
         value={[lockedSplitPct]}
         onValueChange={([pct]) => setLockedSplitPct(pct)}
         className="relative flex items-center select-none touch-none my-2"
