@@ -6,8 +6,6 @@ import {
   DonationState,
   DonationStep,
   FormStep,
-  KYC,
-  KYCStep,
   SplitsStep,
   SubmitStep,
   TxStatus,
@@ -32,13 +30,6 @@ const donation = createSlice({
         };
       }
 
-      if (state.recipient?.isKYCRequired || payload.userOptForKYC) {
-        return {
-          ...(state as KYCStep),
-          step: "kyc-form",
-          details: payload,
-        };
-      }
       return {
         ...(state as SplitsStep),
         step: "splits",
@@ -52,13 +43,7 @@ const donation = createSlice({
         details: undefined,
       };
     },
-    setKYC: (state, { payload }: PayloadAction<KYC>) => {
-      return {
-        ...(state as SplitsStep),
-        step: "splits",
-        kyc: payload,
-      };
-    },
+
     setSplit: (state, { payload }: PayloadAction<number>) => {
       return {
         ...(state as SubmitStep),
@@ -87,7 +72,6 @@ export const {
   setStep,
   setDetails,
   resetDetails,
-  setKYC,
   setSplit,
   setTxStatus,
 } = donation.actions;

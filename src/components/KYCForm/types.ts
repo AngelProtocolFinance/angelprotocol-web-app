@@ -1,22 +1,18 @@
-import { DonationRecipient, KYC } from "slices/donation";
+import { Country, OptionType } from "types/components";
 
-export type FormValues = KYC;
-
-export type OnDonation = {
-  type: "on-donation";
-  recipient: DonationRecipient;
-  /** provided in donate step */
-  donationEmail?: string;
-  onBack: () => void;
-}; //receipt received immediately after donation
-
-//receipt requested in donation logs
-type PostDonation = {
-  type: "post-donation";
-  txHash: string;
+export type FormValues = {
+  name: { first: string; last: string };
+  address: { street: string; complement: string };
+  city: string;
+  postalCode: string;
+  country: Country;
+  state: string;
+  usState: OptionType<string>;
+  kycEmail: string;
 };
 
-export type Props = (OnDonation | PostDonation) & {
+export type Props = {
+  txHash: string;
   classes?: string;
   defaultValues?: FormValues;
   onSubmit: (formValues: FormValues) => void | Promise<void>;

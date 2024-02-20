@@ -1,6 +1,5 @@
 import { ChainID } from "types/chain";
 import { Currency, OptionType } from "types/components";
-import { Country } from "types/components";
 import { DonationSource } from "types/lists";
 import { TokenWithAmount, TxPackage } from "types/tx";
 
@@ -65,17 +64,6 @@ export function hasEmail(
   );
 }
 
-export type KYC = {
-  name: { first: string; last: string };
-  address: { street: string; complement: string };
-  city: string;
-  postalCode: string;
-  country: Country;
-  state: string;
-  usState: OptionType<string>;
-  kycEmail: string;
-};
-
 type InitStep = {
   step: "init";
   recipient?: DonationRecipient;
@@ -91,21 +79,14 @@ export type PaypalFormStep = FormStep<PaypalDonationDetails>;
 export type StockFormStep = FormStep<StocksDonationDetails>;
 export type ChariotFormStep = FormStep<ChariotDonationDetails>;
 
-//KYC step need not know donation details
-export type KYCStep = {
-  step: "kyc-form";
-  recipient: DonationRecipient;
-  kyc?: KYC;
-} & Omit<Required<FormStep<DonationDetails>>, "step">;
-
 export type SplitsStep = {
   step: "splits";
   liquidSplitPct?: number;
-} & Omit<KYCStep, "step">;
+} & Omit<Required<FormStep>, "step">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<Required<SplitsStep>, "step" | "kyc"> & { details: T; kyc?: KYC };
+} & Omit<Required<SplitsStep>, "step"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
@@ -122,7 +103,6 @@ export type CryptoResultStep = {
 export type DonationState =
   | InitStep
   | FormStep
-  | KYCStep
   | SplitsStep
   | SubmitStep
   | CryptoResultStep;
