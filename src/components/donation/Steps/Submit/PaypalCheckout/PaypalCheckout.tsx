@@ -40,6 +40,10 @@ export default function PaypalCheckout(
 
   return (
     <Summary
+      classes={{
+        container: "flex flex-col isolate p-4 @md:p-8",
+        split: "mb-auto",
+      }}
       Amount={currency(details.currency)}
       amount={+details.amount}
       splitLiq={liquidSplitPct}

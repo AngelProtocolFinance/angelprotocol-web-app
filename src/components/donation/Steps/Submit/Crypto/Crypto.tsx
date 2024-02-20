@@ -21,6 +21,7 @@ export default function Crypto(props: CryptoSubmitStep) {
 
   return (
     <Summary
+      classes="grid content-start p-4 @md:p-8"
       onBack={goBack}
       Amount={Amount}
       amount={+details.token.amount}

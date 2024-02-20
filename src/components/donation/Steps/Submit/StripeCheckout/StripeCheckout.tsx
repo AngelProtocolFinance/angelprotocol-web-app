@@ -38,6 +38,7 @@ export default function StripeCheckout(
 
   return (
     <Summary
+      classes={{ container: "grid content-start p-4 @md:p-8", split: "mb-4" }}
       onBack={() => dispatch(setStep("splits"))}
       Amount={currency(details.currency)}
       amount={+details.amount}
