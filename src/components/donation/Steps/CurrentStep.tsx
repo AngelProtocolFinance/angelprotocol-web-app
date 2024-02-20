@@ -24,6 +24,10 @@ export default function CurrentStep({ config }: Props) {
     return <Splits {...state} />;
   }
 
+  if (state.step === "summary") {
+    return <div>summary</div>;
+  }
+
   state.step satisfies "donate-form";
   return <DonateMethods donaterConfig={config} state={state} />;
 }

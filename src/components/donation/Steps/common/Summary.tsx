@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import BackBtn from "../../BackBtn";
-import Heading from "./Heading";
+import Icon from "../../../Icon";
+import BackBtn from "./BackBtn";
 import SplitSummary from "./SplitSummary";
 
 type Classes =
@@ -27,7 +27,10 @@ export default function Summary({ Amount, ...props }: Props) {
   return (
     <div className={container}>
       <BackBtn type="button" onClick={props.onBack} />
-      <Heading classes="my-4" />
+      <h4 className="flex items-center text-lg gap-2 my-4">
+        <Icon type="StickyNote" />
+        <span className="font-semibold">Your donation summary</span>
+      </h4>
       {props.preSplitContent}
       <SplitSummary
         classes={split}

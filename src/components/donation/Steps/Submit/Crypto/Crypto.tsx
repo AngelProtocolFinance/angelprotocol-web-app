@@ -7,7 +7,7 @@ import { useUsdRateQuery } from "services/coingecko";
 import { CryptoSubmitStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import Image from "../../../../Image";
-import Summary from "../common/Summary";
+import Summary from "../../common/Summary";
 import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {

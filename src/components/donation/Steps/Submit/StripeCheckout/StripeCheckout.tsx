@@ -4,10 +4,10 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import { useStripePaymentIntentQuery } from "services/apes";
 import { StripeCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
+import currency from "../../common/Currrency";
+import Summary from "../../common/Summary";
 import Err from "../Err";
 import Loader from "../Loader";
-import currency from "../common/Currrency";
-import Summary from "../common/Summary";
 import { Donor } from "../types";
 import Checkout from "./Checkout";
 

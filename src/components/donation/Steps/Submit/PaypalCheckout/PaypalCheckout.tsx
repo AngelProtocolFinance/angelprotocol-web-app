@@ -4,9 +4,9 @@ import { PAYPAL_CLIENT_ID } from "constants/env";
 import { usePaypalOrderQuery } from "services/apes";
 import { PaypalCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
+import currency from "../../common/Currrency";
+import Summary from "../../common/Summary";
 import Err from "../Err";
-import currency from "../common/Currrency";
-import Summary from "../common/Summary";
 import Checkout from "./Checkout";
 
 type Donor = {

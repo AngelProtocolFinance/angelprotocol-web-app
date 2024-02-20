@@ -6,7 +6,7 @@ import { humanize } from "helpers";
 import { useState } from "react";
 import { SplitsStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
-import BackBtn from "../BackBtn";
+import BackBtn from "../common/BackBtn";
 
 export default function Split({
   details,

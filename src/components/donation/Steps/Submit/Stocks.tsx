@@ -2,7 +2,7 @@ import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { StockCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
-import BackBtn from "../BackBtn";
+import BackBtn from "../common/BackBtn";
 
 export default function Stocks(props: StockCheckoutStep) {
   const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;

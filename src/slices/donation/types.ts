@@ -8,6 +8,12 @@ export type DonationRecipient = {
   name: string;
 };
 
+export type Donor = {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
 type BaseDonationDetais = {
   source: DonationSource;
 };
@@ -80,6 +86,11 @@ export type SplitsStep = {
   liquidSplitPct?: number;
 } & Omit<Required<FormStep>, "step">;
 
+export type SummaryStep = {
+  step: "summary";
+  donor?: Donor;
+} & Omit<Required<SplitsStep>, "step">;
+
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
 } & Omit<Required<SplitsStep>, "step"> & { details: T };
@@ -100,6 +111,7 @@ export type DonationState =
   | InitStep
   | FormStep
   | SplitsStep
+  | SummaryStep
   | SubmitStep
   | CryptoResultStep;
 
