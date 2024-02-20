@@ -4,11 +4,9 @@ import { PAYPAL_CLIENT_ID } from "constants/env";
 import { usePaypalOrderQuery } from "services/apes";
 import { PaypalCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
-import BackBtn from "../../BackBtn";
 import Err from "../Err";
-import Currency from "../common/Currrency";
-import Heading from "../common/Heading";
-import SplitSummary from "../common/SplitSummary";
+import currency from "../common/Currrency";
+import Summary from "../common/Summary";
 import Checkout from "./Checkout";
 
 type Donor = {
@@ -40,24 +38,13 @@ export default function PaypalCheckout(
 
   const dispatch = useSetter();
 
-  const currency = details.currency;
-  const total = +details.amount;
-  const liq = total * (liquidSplitPct / 100);
-  const locked = total - liq;
-
   return (
-    <div className="flex flex-col isolate p-4 @md:p-8">
-      <BackBtn onClick={() => dispatch(setStep("splits"))} type="button" />
-
-      <Heading classes="my-4" />
-
-      <SplitSummary
-        classes="mb-auto"
-        total={<Currency {...currency} amount={total} classes="text-gray-d2" />}
-        liquid={<Currency {...currency} amount={liq} classes="text-sm" />}
-        locked={<Currency {...currency} amount={locked} classes="text-sm" />}
-      />
-
+    <Summary
+      Amount={currency(details.currency)}
+      amount={+details.amount}
+      splitLiq={liquidSplitPct}
+      onBack={() => dispatch(setStep("splits"))}
+    >
       {isLoading ? (
         <ContentLoader className="rounded h-14 w-full" />
       ) : isError || !orderId ? (
@@ -77,6 +64,6 @@ export default function PaypalCheckout(
           </div>
         </PayPalScriptProvider>
       )}
-    </div>
+    </Summary>
   );
 }
