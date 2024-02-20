@@ -15,7 +15,13 @@ export default function DAFCheckout(props: ChariotCheckoutStep) {
 
   switch (action) {
     case "chariot":
-      return <ChariotCheckout {...props} onBack={() => setAction(undefined)} />;
+      return (
+        <ChariotCheckout
+          {...props}
+          onBack={() => setAction(undefined)}
+          donor={{ firstName: "", lastName: "", email: "" }}
+        />
+      );
     case "manual":
       return <ManualDonation {...props} onBack={() => setAction(undefined)} />;
     default:

@@ -1,22 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
-import { CheckField, Field } from "components/form";
+import { Field } from "components/form";
 import { FormProvider, useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import { requiredString } from "schemas/string";
 import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
-import { useGetter, useSetter } from "store/accessors";
-import { userIsSignedIn } from "types/auth";
+import { useSetter } from "store/accessors";
 import { Currency } from "types/components";
 import { FormValues as FV, Props } from "./types";
 
 const USD_CODE = "usd";
 
-export default function Form({ recipient, widgetConfig, details }: Props) {
-  const authUser = useGetter((state) => state.auth.user);
+export default function Form({ widgetConfig, details }: Props) {
   const dispatch = useSetter();
-  const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
 
   const currencies = useStripeCurrenciesQuery(null);
 
@@ -24,8 +20,6 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: { code: USD_CODE, min: 1, rate: 1 },
-    email: authUserEmail,
-    userOptForKYC: false,
   };
 
   const currencyKey: keyof FV = "currency";
@@ -33,7 +27,6 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
     defaultValues: details || initial,
     resolver: yupResolver(
       schema<FV>({
-        email: requiredString.trim().email("invalid email"),
         amount: stringNumber(
           (s) => s.required("required"),
           (n) =>
@@ -87,26 +80,6 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
           // validation must be dynamicly set depending on which exact currency is selected
           tooltip={createTooltip(currency)}
         />
-        {!authUserEmail && (
-          <Field<FV>
-            name="email"
-            label="Email"
-            required
-            classes={{ label: "font-semibold" }}
-          />
-        )}
-        {!recipient.isKYCRequired && (
-          // if KYC is required, the checkbox is redundant
-          <CheckField<FV>
-            name="userOptForKYC"
-            classes={{
-              container: "text-sm",
-              error: "mt-2",
-            }}
-          >
-            Please send me a tax receipt
-          </CheckField>
-        )}
 
         <p className="text-sm text-gray-d2 dark:text-gray mt-4">
           Please click the button below and follow the instructions provided to

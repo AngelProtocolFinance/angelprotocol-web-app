@@ -12,12 +12,21 @@ import Currency from "../common/Currrency";
 import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
 
-type Props = ChariotCheckoutStep & { onBack: () => void };
+type DonorInfo = {
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
+type Props = ChariotCheckoutStep & {
+  onBack: () => void;
+  donor: DonorInfo;
+};
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function ChariotCheckout(props: Props) {
-  const { details, recipient, kyc, liquidSplitPct, onBack } = props;
+  const { details, recipient, liquidSplitPct, onBack } = props;
   const [createGrant, { isLoading }] = useChariotGrantIntentMutation();
 
   const navigate = useNavigate();
@@ -28,9 +37,9 @@ export default function ChariotCheckout(props: Props) {
   const onDonationRequest = () => {
     return {
       amount: +details.amount * 100, // in cents
-      firstName: kyc?.name.first,
-      lastName: kyc?.name.last,
-      email: kyc?.kycEmail,
+      firstName: props.donor.firstName,
+      lastName: props.donor.lastName,
+      email: props.donor.email,
     };
   };
 
@@ -68,19 +77,9 @@ export default function ChariotCheckout(props: Props) {
                 amount: +details.amount,
                 currency: details.currency.code,
                 endowmentId: recipient.id,
-                email: details.email,
+                email: props.donor.email,
                 splitLiq: liquidSplitPct.toString(),
-                kycData: kyc
-                  ? {
-                      city: kyc.city,
-                      country: kyc.country.name,
-                      fullName: `${kyc.name.first} ${kyc.name.last}`,
-                      kycEmail: kyc.kycEmail,
-                      streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
-                      state: kyc.usState.value || kyc.state,
-                      zipCode: kyc.postalCode,
-                    }
-                  : undefined,
+                donorFullName: `${props.donor.firstName} ${props.donor.lastName}`,
                 transactionId: r.detail.workflowSessionId,
               }).unwrap();
 

@@ -12,12 +12,20 @@ import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
 import Checkout from "./Checkout";
 
+type Donor = {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, kyc, liquidSplitPct } = props;
+export default function StripeCheckout(
+  props: StripeCheckoutStep & { donor: Donor }
+) {
+  const { details, recipient, liquidSplitPct } = props;
   const {
     data: clientSecret,
     isLoading,
@@ -27,19 +35,9 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     amount: +details.amount,
     currency: details.currency.code,
     endowmentId: recipient.id,
-    email: details.email,
+    email: props.donor.email,
     splitLiq: liquidSplitPct.toString(),
-    kycData: kyc
-      ? {
-          city: kyc.city,
-          country: kyc.country.name,
-          fullName: `${kyc.name.first} ${kyc.name.last}`,
-          kycEmail: kyc.kycEmail,
-          streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
-          state: kyc.usState.value || kyc.state,
-          zipCode: kyc.postalCode,
-        }
-      : undefined,
+    donorFullName: `${props.donor.firstName} ${props.donor.lastName}`,
   });
 
   const dispatch = useSetter();

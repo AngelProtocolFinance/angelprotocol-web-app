@@ -45,8 +45,6 @@ export default function Donate() {
             name={profile.name}
             banner={profile.image}
             id={numId}
-            isKYCRequired={profile.kyc_donors_only ?? false}
-            isFiscalSponsored={profile.fiscal_sponsored ?? false}
           />
         </>
       )}

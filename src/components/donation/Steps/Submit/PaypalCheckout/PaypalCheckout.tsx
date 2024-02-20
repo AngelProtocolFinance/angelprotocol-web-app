@@ -11,10 +11,18 @@ import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
 import Checkout from "./Checkout";
 
+type Donor = {
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function PaypalCheckout(props: PaypalCheckoutStep) {
-  const { details, recipient, kyc, liquidSplitPct } = props;
+export default function PaypalCheckout(
+  props: PaypalCheckoutStep & { donor: Donor }
+) {
+  const { details, recipient, liquidSplitPct } = props;
 
   const {
     data: orderId,
@@ -25,19 +33,9 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
     amount: +details.amount,
     currency: details.currency.code,
     endowmentId: recipient.id,
-    email: details.email,
+    email: props.donor.email,
+    donorFullName: `${props.donor.firstName} ${props.donor.lastName}`,
     splitLiq: liquidSplitPct.toString(),
-    kycData: kyc
-      ? {
-          city: kyc.city,
-          country: kyc.country.name,
-          fullName: `${kyc.name.first} ${kyc.name.last}`,
-          kycEmail: kyc.kycEmail,
-          streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
-          state: kyc.usState.value || kyc.state,
-          zipCode: kyc.postalCode,
-        }
-      : undefined,
   });
 
   const dispatch = useSetter();

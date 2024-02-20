@@ -6,12 +6,9 @@ import { TokenWithAmount, TxPackage } from "types/tx";
 export type DonationRecipient = {
   id: number;
   name: string;
-  isKYCRequired: boolean;
-  isFiscalSponsored: boolean;
 };
 
 type BaseDonationDetais = {
-  userOptForKYC: boolean;
   source: DonationSource;
 };
 
@@ -24,7 +21,6 @@ export type CryptoDonationDetails = BaseDonationDetais & {
 type FiatDonationDetails = BaseDonationDetais & {
   amount: string;
   currency: Currency;
-  email: string;
 };
 
 export type StripeDonationDetails = {
