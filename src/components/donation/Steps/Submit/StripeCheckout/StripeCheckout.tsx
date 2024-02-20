@@ -1,19 +1,40 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { PUBLIC_STRIPE_KEY } from "constants/env";
+import { useStripePaymentIntentQuery } from "services/apes";
 import { StripeCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../../BackBtn";
-
-import { useState } from "react";
+import Err from "../Err";
+import Loader from "../Loader";
 import Currency from "../common/Currrency";
-import DonorInfoForm from "../common/DonorInfoForm";
 import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
-import { DonorState } from "../types";
+import { Donor } from "../types";
+import Checkout from "./Checkout";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function StripeCheckout(props: StripeCheckoutStep) {
-  const [donor, setDonor] = useState<DonorState>({ render: "new" });
-  const { details, liquidSplitPct } = props;
+
+const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
+
+export default function StripeCheckout(
+  props: StripeCheckoutStep & { donor: Donor }
+) {
+  const { details, recipient, liquidSplitPct } = props;
+  const {
+    data: clientSecret,
+    isLoading,
+    isError,
+    error,
+  } = useStripePaymentIntentQuery({
+    amount: +details.amount,
+    currency: details.currency.code,
+    endowmentId: recipient.id,
+    email: props.donor.email,
+    splitLiq: liquidSplitPct.toString(),
+    donorFullName: `${props.donor.firstName} ${props.donor.lastName}`,
+  });
 
   const dispatch = useSetter();
 
@@ -24,29 +45,29 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   return (
     <div className="grid content-start p-4 @md:p-8">
-      <BackBtn
-        type="button"
-        onClick={() =>
-          donor.render === "new" && donor.donor
-            ? setDonor({ donor: donor.donor, render: "update" })
-            : dispatch(setStep("splits"))
-        }
-      />
+      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
       <Heading classes="my-4" />
-      ``
+
       <SplitSummary
         classes="mb-4"
         total={<Currency {...currency} amount={total} classes="text-gray-d2" />}
         liquid={<Currency {...currency} amount={liq} classes="text-sm" />}
         locked={<Currency {...currency} amount={locked} classes="text-sm" />}
       />
-      {donor.render === "update" || (donor.render === "new" && !donor.donor) ? (
-        <DonorInfoForm
-          render="new"
-          onSubmit={(fv) => setDonor({ render: "new", donor: fv })}
-        />
+      {isLoading ? (
+        <Loader msg="Loading payment form.." />
+      ) : isError || !clientSecret ? (
+        <Err error={error} />
       ) : (
-        <>done donor</>
+        <Elements
+          options={{
+            clientSecret,
+            appearance: { theme: "stripe" },
+          }}
+          stripe={stripePromise}
+        >
+          <Checkout source={details.source} />
+        </Elements>
       )}
     </div>
   );
