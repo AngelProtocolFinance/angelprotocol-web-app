@@ -4,12 +4,10 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import { useStripePaymentIntentQuery } from "services/apes";
 import { StripeCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
-import BackBtn from "../../BackBtn";
 import Err from "../Err";
 import Loader from "../Loader";
-import Currency from "../common/Currrency";
-import Heading from "../common/Heading";
-import SplitSummary from "../common/SplitSummary";
+import currency from "../common/Currrency";
+import Summary from "../common/Summary";
 import { Donor } from "../types";
 import Checkout from "./Checkout";
 
@@ -38,22 +36,13 @@ export default function StripeCheckout(
 
   const dispatch = useSetter();
 
-  const currency = details.currency;
-  const total = +details.amount;
-  const liq = total * (liquidSplitPct / 100);
-  const locked = total - liq;
-
   return (
-    <div className="grid content-start p-4 @md:p-8">
-      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
-      <Heading classes="my-4" />
-
-      <SplitSummary
-        classes="mb-4"
-        total={<Currency {...currency} amount={total} classes="text-gray-d2" />}
-        liquid={<Currency {...currency} amount={liq} classes="text-sm" />}
-        locked={<Currency {...currency} amount={locked} classes="text-sm" />}
-      />
+    <Summary
+      onBack={() => dispatch(setStep("splits"))}
+      Amount={currency(details.currency)}
+      amount={+details.amount}
+      splitLiq={liquidSplitPct}
+    >
       {isLoading ? (
         <Loader msg="Loading payment form.." />
       ) : isError || !clientSecret ? (
@@ -69,6 +58,6 @@ export default function StripeCheckout(
           <Checkout source={details.source} />
         </Elements>
       )}
-    </div>
+    </Summary>
   );
 }
