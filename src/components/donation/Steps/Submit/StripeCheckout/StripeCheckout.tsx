@@ -10,7 +10,7 @@ import Loader from "../Loader";
 import Currency from "../common/Currrency";
 import Heading from "../common/Heading";
 import SplitSummary from "../common/SplitSummary";
-import Checkout from "./Checkout";
+import CheckoutForm from "./CheckoutForm";
 
 type Donor = {
   firstName: string;
@@ -71,7 +71,7 @@ export default function StripeCheckout(
           }}
           stripe={stripePromise}
         >
-          <Checkout source={details.source} />
+          <CheckoutForm source={details.source} />
         </Elements>
       )}
     </div>

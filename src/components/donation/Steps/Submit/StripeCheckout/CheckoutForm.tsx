@@ -13,7 +13,7 @@ import Loader from "../Loader";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ source }: { source: DonationSource }) {
+export default function CheckoutForm({ source }: { source: DonationSource }) {
   const stripe = useStripe();
   const elements = useElements();
   const { handleError } = useErrorContext();
