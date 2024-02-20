@@ -7,9 +7,7 @@ import { useUsdRateQuery } from "services/coingecko";
 import { CryptoSubmitStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import Image from "../../../../Image";
-import BackBtn from "../../BackBtn";
-import Heading from "../common/Heading";
-import SplitSummary from "../common/SplitSummary";
+import Summary from "../common/Summary";
 import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
@@ -19,44 +17,40 @@ export default function Crypto(props: CryptoSubmitStep) {
   }
   const { details } = props;
 
-  const total = +details.token.amount;
-  const liq = total * (props.liquidSplitPct / 100);
-  const locked = total - liq;
-
   const Amount = withUSD(details.token.coingecko_denom);
 
   return (
-    <div className="grid content-start p-4 @md:p-8">
-      <BackBtn type="button" onClick={goBack} className="mb-4" />
+    <Summary
+      onBack={goBack}
+      Amount={Amount}
+      amount={+details.token.amount}
+      splitLiq={props.liquidSplitPct}
+      preSplitContent={
+        <>
+          <dl className="text-gray-d1 py-3 flex items-center justify-between border-b border-prim">
+            <dt className="mr-auto">Currency</dt>
+            <Image
+              className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
+              src={details.token.logo}
+            />
+            <dd className="text-gray-d2">{details.token.symbol}</dd>
+          </dl>
 
-      <Heading classes="mb-2" />
-
-      <dl className="text-gray-d1 py-3 flex items-center justify-between border-b border-prim">
-        <dt className="mr-auto">Currency</dt>
-        <Image
-          className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
-          src={details.token.logo}
-        />
-        <dd className="text-gray-d2">{details.token.symbol}</dd>
-      </dl>
-
-      <dl className="text-gray-d1 py-3 flex items-center justify-between">
-        <dt className="mr-auto">Blockchain</dt>
-        <dd className="text-gray-d2">{chains[details.chainId.value].name}</dd>
-      </dl>
-
-      <SplitSummary
-        total={<Amount classes="text-gray-d2" amount={total} />}
-        liquid={<Amount classes="text-sm" amount={liq} />}
-        locked={<Amount classes="text-sm" amount={locked} />}
-      />
-
+          <dl className="text-gray-d1 py-3 flex items-center justify-between">
+            <dt className="mr-auto">Blockchain</dt>
+            <dd className="text-gray-d2">
+              {chains[details.chainId.value].name}
+            </dd>
+          </dl>
+        </>
+      }
+    >
       <WalletProvider {...chainOptions}>
         <WalletContext>
           <Checkout {...props} classes="mt-4" />
         </WalletContext>
       </WalletProvider>
-    </div>
+    </Summary>
   );
 }
 
