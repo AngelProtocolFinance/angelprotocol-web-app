@@ -28,6 +28,6 @@ export default function useHeaderClassNames(headerId: string) {
   return `${
     isSticky
       ? "fixed top-0 shadow-lg bg-white dark:bg-blue-d3"
-      : "absolute top-9"
+      : "absolute top-0"
   } transition ease-in-out duration-100 z-20 w-full`;
 }

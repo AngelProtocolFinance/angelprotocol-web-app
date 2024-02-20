@@ -17,16 +17,14 @@ export default function Header({ links }: Props) {
 
   return (
     <header id={HEADER_ID} className={headerClassNames}>
-      <div className="padded-container">
-        <div className="grid gap-4 px-8 md:py-2 grid-cols-2 h-full w-full rounded-full bg-white">
-          <DappLogo classes="w-32 sm:w-48 h-12" />
-          <div className="flex gap-2 md:gap-4 justify-self-end items-center">
-            {!(
-              location.pathname === appRoutes.signin ||
-              location.pathname === appRoutes.auth_redirector
-            ) && <UserMenu />}
-            <NavDropdown links={links} />
-          </div>
+      <div className="grid gap-4 px-8 md:py-2 grid-cols-2 h-full w-full bg-white">
+        <DappLogo classes="w-32 sm:w-48 h-12" />
+        <div className="flex gap-2 md:gap-4 justify-self-end items-center">
+          {!(
+            location.pathname === appRoutes.signin ||
+            location.pathname === appRoutes.auth_redirector
+          ) && <UserMenu />}
+          <NavDropdown links={links} />
         </div>
       </div>
     </header>
