@@ -1,5 +1,6 @@
 import { SummaryStep, setDonor, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
 import { currency } from "../common/Currrency";
 import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
@@ -11,6 +12,7 @@ export default function Summary({
   donor,
 }: SummaryStep) {
   const dispatch = useSetter();
+  const user = useGetter((state) => state.auth.user);
 
   const [amount, Amount] = (() => {
     switch (details.method) {
@@ -36,7 +38,16 @@ export default function Summary({
       onBack={() => dispatch(setStep("splits"))}
     >
       <DonorForm
-        donor={donor}
+        donor={
+          donor ||
+          (userIsSignedIn(user)
+            ? {
+                lastName: user.lastName ?? "",
+                firstName: user.firstName ?? "",
+                email: user.email,
+              }
+            : undefined)
+        }
         onSubmit={(donor) => dispatch(setDonor(donor))}
         classes="mt-4"
       />
