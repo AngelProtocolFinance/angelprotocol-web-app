@@ -8,11 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
 import { ChariotCheckoutStep } from "slices/donation";
 
-import { Donor } from "../types";
-
-type Props = ChariotCheckoutStep & {
-  donor: Donor;
-};
+type Props = ChariotCheckoutStep;
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
@@ -55,7 +51,6 @@ export default function ChariotCheckout(props: Props) {
                 endowmentId: recipient.id,
                 email: props.donor.email,
                 splitLiq: liquidSplitPct.toString(),
-                donorFullName: `${props.donor.firstName} ${props.donor.lastName}`,
                 transactionId: r.detail.workflowSessionId,
               }).unwrap();
 

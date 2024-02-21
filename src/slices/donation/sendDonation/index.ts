@@ -37,7 +37,6 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 
       /** SAVE DONATION */
       const payload: CryptoDonation = {
-        kyc: undefined /** receipt is sent to user if kyc is provider upfront */,
         amount: +token.amount,
         chainId: chain.id,
         chainName: chain.name,

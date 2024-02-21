@@ -1,3 +1,4 @@
+import { Donor } from "types/aws";
 import { ChainID } from "types/chain";
 import { Currency, OptionType } from "types/components";
 import { DonationSource } from "types/lists";
@@ -6,12 +7,6 @@ import { TokenWithAmount, TxPackage } from "types/tx";
 export type DonationRecipient = {
   id: number;
   name: string;
-};
-
-export type Donor = {
-  firstName: string;
-  lastName: string;
-  email: string;
 };
 
 type BaseDonationDetais = {

@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
-import { Donor, Donor as FV } from "slices/donation";
+import { Donor, Donor as FV } from "types/aws";
 import { object, string } from "yup";
 
 type Props = {

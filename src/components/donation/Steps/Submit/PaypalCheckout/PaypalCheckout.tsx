@@ -32,7 +32,6 @@ export default function PaypalCheckout(
     currency: details.currency.code,
     endowmentId: recipient.id,
     email: props.donor.email,
-    donorFullName: `${props.donor.firstName} ${props.donor.lastName}`,
     splitLiq: liquidSplitPct.toString(),
   });
 

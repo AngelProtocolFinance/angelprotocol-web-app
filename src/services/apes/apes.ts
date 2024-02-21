@@ -20,7 +20,6 @@ type StripePaymentIntentParams = {
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
   email: string;
-  donorFullName: string;
   endowmentId: number;
   splitLiq: string;
 };
@@ -31,7 +30,6 @@ type CreatePayPalOrderParams = {
   /**ISO 3166-1 alpha-3 code */
   currency: string;
   email: string;
-  donorFullName: string;
   endowmentId: number;
   splitLiq: string;
 };
@@ -42,7 +40,6 @@ type ChariotGrantIntentParams = {
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
   email: string;
-  donorFullName: string;
   endowmentId: number;
   splitLiq: string;
   transactionId?: string;

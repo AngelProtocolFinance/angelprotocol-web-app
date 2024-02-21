@@ -1,11 +1,11 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Donor } from "types/aws";
 import {
   CryptoResultStep,
   DonationDetails,
   DonationRecipient,
   DonationState,
   DonationStep,
-  Donor,
   FormStep,
   SplitsStep,
   SubmitStep,
@@ -87,5 +87,6 @@ export const {
   setDetails,
   resetDetails,
   setSplit,
+  setDonor,
   setTxStatus,
 } = donation.actions;

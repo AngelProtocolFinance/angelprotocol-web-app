@@ -31,7 +31,6 @@ export default function StripeCheckout(
     endowmentId: recipient.id,
     email: props.donor.email,
     splitLiq: liquidSplitPct.toString(),
-    donorFullName: `${props.donor.firstName} ${props.donor.lastName}`,
   });
 
   const dispatch = useSetter();

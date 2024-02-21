@@ -1,4 +1,4 @@
-import { SummaryStep, setStep } from "slices/donation";
+import { SummaryStep, setDonor, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { currency } from "../common/Currrency";
 import SummaryContainer from "../common/Summary";
@@ -31,7 +31,10 @@ export default function Summary({ details, liquidSplitPct }: SummaryStep) {
       splitLiq={liquidSplitPct}
       onBack={() => dispatch(setStep("splits"))}
     >
-      <DonorForm onSubmit={() => {}} classes="mt-4" />
+      <DonorForm
+        onSubmit={(donor) => dispatch(setDonor(donor))}
+        classes="mt-4"
+      />
     </SummaryContainer>
   );
 }
