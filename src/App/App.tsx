@@ -103,10 +103,8 @@ export default function App() {
               // where its styles depend on the width of the parent component;
               // We copy/paste src/pages/Admin/Layout.tsx container setup & styles
               // here so that Widget.tsx styles are applied correctly on both pages.
-              <div className="pt-20 sm:pt-32">
-                <div className="px-6 py-8 md:p-10 @container">
-                  <Widget />
-                </div>
+              <div className="px-6 py-8 md:p-10 @container">
+                <Widget />
               </div>
             }
           />

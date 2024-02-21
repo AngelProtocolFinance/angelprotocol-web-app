@@ -17,7 +17,7 @@ export default function withAuth<Props>(
 
     if (user === "loading" || user?.isSigningOut) {
       return (
-        <div className="grid content-start place-items-center pt-28 sm:pt-40 pb-20">
+        <div className="grid content-start place-items-center py-8">
           <LoaderRing thickness={12} classes="w-32 mt-8" />
         </div>
       );
@@ -30,7 +30,7 @@ export default function withAuth<Props>(
 
     if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {
       return (
-        <div className="grid content-start place-items-center pt-40 sm:pt-52 pb-20">
+        <div className="grid content-start place-items-center py-20">
           <Icon type="ExclamationCircleFill" size={80} className="text-red" />
           <p className="text-xl mt-8">Unauthorized</p>
         </div>
