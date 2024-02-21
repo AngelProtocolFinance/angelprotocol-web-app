@@ -6,7 +6,6 @@ import { useErrorContext } from "contexts/ErrorContext";
 import ChariotConnect from "react-chariot-connect";
 import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
-import { DafCheckoutStep } from "slices/donation";
 import BackBtn from "../../BackBtn";
 import Currency from "../common/Currrency";
 import Heading from "../common/Heading";
@@ -87,7 +86,7 @@ export default function ChariotDonation(props: Props) {
               navigate(
                 details.source === "bg-widget"
                   ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
-                  : appRoutes.donate_fiat_thanks,
+                  : appRoutes.donate_fiat_thanks
               );
             } catch (error) {
               handleError(error, GENERIC_ERROR_MESSAGE);

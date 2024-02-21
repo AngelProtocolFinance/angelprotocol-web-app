@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
-import { Field } from "components/form";
+import { CheckField, Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
@@ -17,7 +17,7 @@ import { FormValues as FV, Props } from "./types";
 // See https://givechariot.readme.io/reference/create-grant
 const USD_CURRENCY: Currency = { code: "usd", rate: 1 };
 
-export default function Form({ widgetConfig, details }: Props) {
+export default function Form({ recipient, widgetConfig, details }: Props) {
   const authUser = useGetter((state) => state.auth.user);
   const dispatch = useSetter();
   const authUserEmail = userIsSignedIn(authUser) ? authUser.email : "";
@@ -80,6 +80,18 @@ export default function Form({ widgetConfig, details }: Props) {
             required
             classes={{ label: "font-semibold" }}
           />
+        )}
+        {!recipient.isKYCRequired && (
+          // if KYC is required, the checkbox is redundant
+          <CheckField<FV>
+            name="userOptForKYC"
+            classes={{
+              container: "text-sm",
+              error: "mt-2",
+            }}
+          >
+            Please send me a tax receipt
+          </CheckField>
         )}
         <p className="text-sm text-gray-d2 dark:text-gray mt-4">
           Please click the button below and follow the instructions provided to
