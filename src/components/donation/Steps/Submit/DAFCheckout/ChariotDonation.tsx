@@ -6,22 +6,20 @@ import { useErrorContext } from "contexts/ErrorContext";
 import ChariotConnect from "react-chariot-connect";
 import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
-import { ChariotCheckoutStep, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
-import BackBtn from "../BackBtn";
-import Err from "./Err";
-import Currency from "./common/Currrency";
-import Heading from "./common/Heading";
-import SplitSummary from "./common/SplitSummary";
+import { DafCheckoutStep } from "slices/donation";
+import BackBtn from "../../BackBtn";
+import Currency from "../common/Currrency";
+import Heading from "../common/Heading";
+import SplitSummary from "../common/SplitSummary";
+
+type Props = DafCheckoutStep & { onBack: () => void };
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
-  const { details, recipient, kyc, liquidSplitPct } = props;
-  const [createGrant, { isLoading, isError, error }] =
-    useChariotGrantIntentMutation();
+export default function ChariotDonation(props: Props) {
+  const { details, recipient, kyc, liquidSplitPct, onBack } = props;
+  const [createGrant, { isLoading }] = useChariotGrantIntentMutation();
 
-  const dispatch = useSetter();
   const navigate = useNavigate();
 
   const { handleError } = useErrorContext();
@@ -43,7 +41,7 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
 
   return (
     <div className="flex flex-col content-start p-4 @md:p-8 group">
-      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
+      <BackBtn type="button" disabled={isLoading} onClick={onBack} />
       <Heading classes="my-4" />
       <SplitSummary
         classes="mb-auto"
@@ -57,8 +55,6 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
 
       {isLoading ? (
         <ContentLoader className="rounded h-12 w-full" />
-      ) : isError ? (
-        <Err error={error} />
       ) : (
         <ChariotConnect
           disabled={isLoading}
@@ -86,7 +82,7 @@ export default function ChariotConnectCheckout(props: ChariotCheckoutStep) {
                     }
                   : undefined,
                 transactionId: r.detail.workflowSessionId,
-              });
+              }).unwrap();
 
               navigate(
                 details.source === "bg-widget"

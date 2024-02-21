@@ -4,10 +4,10 @@ import { ObjectSchema, object, string } from "yup";
 import { FormValues as FV } from "./types";
 
 export const schema = object<any, SchemaShape<FV>>({
-  purchaser: requiredString,
+  purchaser: requiredString.trim(),
   recipient: object<any, SchemaShape<FV["recipient"]>>({
-    name: requiredString,
-    email: requiredString.email("invalid email"),
+    name: requiredString.trim(),
+    email: requiredString.trim().email("invalid email"),
   }),
-  message: string(),
+  message: string().trim(),
 }) as ObjectSchema<FV>;

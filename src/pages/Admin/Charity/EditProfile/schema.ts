@@ -28,14 +28,14 @@ export const schema = object<any, SchemaShape<FV>>({
   sdgs: array()
     .min(1, "required")
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
-  tagline: requiredString.max(140, "max length is 140 chars"),
+  tagline: requiredString.trim().max(140, "max length is 140 chars"),
   image: fileObj,
   card_img: fileObj,
   logo: fileObj,
   url: url,
   // registration_number: no need to validate,
   endow_designation: optionType({ required: true }),
-  name: requiredString,
+  name: requiredString.trim(),
   active_in_countries: array(),
   social_media_urls: object().shape<SchemaShape<FV["social_media_urls"]>>({
     facebook: url,

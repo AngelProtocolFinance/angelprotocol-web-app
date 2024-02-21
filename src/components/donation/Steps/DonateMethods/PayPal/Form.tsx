@@ -33,7 +33,7 @@ export default function Form({ recipient, details, widgetConfig }: Props) {
     defaultValues: details || initial,
     resolver: yupResolver(
       schema<FV>({
-        email: requiredString.email("invalid email"),
+        email: requiredString.trim().email("invalid email"),
         amount: stringNumber(
           (s) => s.required("required"),
           (n) =>

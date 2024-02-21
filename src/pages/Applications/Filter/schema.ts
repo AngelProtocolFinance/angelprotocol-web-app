@@ -23,6 +23,6 @@ export const schema = object<any, SchemaShape<FormValues>>({
             ? schema.min(ref(startKey), "can't be earlier than start date")
             : schema
         )
-      : string().required("invalid")
+      : string().required("invalid").trim()
   ),
 }) as ObjectSchema<FormValues>;

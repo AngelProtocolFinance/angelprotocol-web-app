@@ -48,7 +48,7 @@ export default function Stocks(props: StockCheckoutStep) {
       </p>
 
       <p className="mt-6 text-sm text-right text-balance">
-        You may also generate an email that automatically include needed
+        You may also generate an email that automatically includes the needed
         information.
       </p>
       <a

@@ -6,9 +6,19 @@ import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link } from "react-router-dom";
 
-export default function DonateFiatThanks({ widgetVersion = false }) {
+type Props = {
+  className?: string;
+  widgetVersion?: boolean;
+};
+
+export default function DonateFiatThanks({
+  widgetVersion = false,
+  className = "",
+}: Props) {
   return (
-    <div className="grid justify-self-center m-auto max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
+    <div
+      className={`grid justify-self-center m-auto max-w-[35rem] px-4 scroll-mt-6 ${className}`}
+    >
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {

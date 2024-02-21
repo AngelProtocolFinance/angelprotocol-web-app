@@ -5,18 +5,18 @@ import { FormValues as FV } from "./types";
 
 export const schema = object<any, SchemaShape<FV>>({
   name: object<any, SchemaShape<FV["name"]>>({
-    first: requiredString,
-    last: requiredString,
+    first: requiredString.trim(),
+    last: requiredString.trim(),
   }),
   address: object<any, SchemaShape<FV["address"]>>({
-    street: requiredString,
+    street: requiredString.trim(),
     //complement: optional
   }),
-  city: requiredString,
-  postalCode: requiredString,
+  city: requiredString.trim(),
+  postalCode: requiredString.trim(),
   country: object<any, SchemaShape<FV["country"]>>({
-    name: requiredString,
+    name: requiredString.trim(),
   }),
   //  usState: no need to validate, optional and preselected
-  kycEmail: requiredString.email("invalid"),
+  kycEmail: requiredString.trim().email("invalid"),
 }) as ObjectSchema<FV>;

@@ -12,7 +12,7 @@ export const schema = object<any, SchemaShape<FormValues>>({
     .min(1, "required")
     .max(MAX_SDGS, `maximum ${MAX_SDGS} selections allowed`),
   HqCountry: object<any, SchemaShape<Country>>({
-    name: requiredString,
+    name: requiredString.trim(),
   }),
   EndowDesignation: optionType({ required: true }),
 }) as ObjectSchema<FormValues>;
