@@ -42,7 +42,7 @@ export type StocksDonationDetails = {
   numShares: number;
 };
 export type DafDonationDetails = {
-  method: "chariot";
+  method: "daf";
 } & FiatDonationDetails;
 
 export type DonationDetails =
@@ -53,7 +53,7 @@ export type DonationDetails =
   | DafDonationDetails;
 
 export function hasEmail(
-  details: DonationDetails
+  details: DonationDetails,
 ): details is
   | StripeDonationDetails
   | PaypalDonationDetails
