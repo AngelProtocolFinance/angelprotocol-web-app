@@ -8,7 +8,6 @@ import { currency } from "../../common/Currrency";
 import Summary from "../../common/Summary";
 import Err from "../Err";
 import Loader from "../Loader";
-import { Donor } from "../types";
 import Checkout from "./Checkout";
 
 // Followed Stripe's custom flow docs
@@ -16,9 +15,7 @@ import Checkout from "./Checkout";
 
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
-export default function StripeCheckout(
-  props: StripeCheckoutStep & { donor: Donor }
-) {
+export default function StripeCheckout(props: StripeCheckoutStep) {
   const { details, recipient, liquidSplitPct } = props;
   const {
     data: clientSecret,

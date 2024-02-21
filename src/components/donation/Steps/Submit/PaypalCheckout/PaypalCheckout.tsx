@@ -9,17 +9,9 @@ import Summary from "../../common/Summary";
 import Err from "../Err";
 import Checkout from "./Checkout";
 
-type Donor = {
-  firstName: string;
-  lastName: string;
-  email: string;
-};
-
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function PaypalCheckout(
-  props: PaypalCheckoutStep & { donor: Donor }
-) {
+export default function PaypalCheckout(props: PaypalCheckoutStep) {
   const { details, recipient, liquidSplitPct } = props;
 
   const {
