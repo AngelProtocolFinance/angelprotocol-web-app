@@ -10,7 +10,7 @@ export const token = (coinGeckoId: string) =>
         {isLoading ? (
           "($--)"
         ) : isError || !rate ? (
-          <span className="text-red">"($--)"</span>
+          <span className="text-red">($--)</span>
         ) : (
           `($${humanize(+props.amount * rate, 2)})`
         )}
