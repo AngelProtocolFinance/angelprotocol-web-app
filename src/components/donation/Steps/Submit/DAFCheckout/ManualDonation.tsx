@@ -2,9 +2,7 @@ import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ChariotCheckoutStep } from "slices/donation";
 
-type Props = ChariotCheckoutStep;
-
-export default function ManualDonation(props: Props) {
+export default function ManualDonation(props: ChariotCheckoutStep) {
   const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;
 
   return (

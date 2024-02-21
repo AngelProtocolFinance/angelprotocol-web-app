@@ -13,24 +13,12 @@ export default function Submit(props: SubmitStep) {
 
   if (props.details.method === "paypal") {
     const { details, ...rest } = props;
-    return (
-      <PaypalCheckout
-        details={details}
-        {...rest}
-        donor={{ firstName: "", lastName: "", email: "" }}
-      />
-    );
+    return <PaypalCheckout details={details} {...rest} />;
   }
 
   if (props.details.method === "stripe") {
     const { details, ...rest } = props;
-    return (
-      <StripeCheckout
-        details={details}
-        {...rest}
-        donor={{ firstName: "", lastName: "", email: "" }}
-      />
-    );
+    return <StripeCheckout details={details} {...rest} />;
   }
 
   if (props.details.method === "chariot") {

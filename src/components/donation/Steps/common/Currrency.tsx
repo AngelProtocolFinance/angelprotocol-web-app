@@ -1,8 +1,7 @@
 import { humanize } from "helpers";
-import { Currency as TCurrency } from "types/components";
+import { Currency } from "types/components";
 
-type Props = TCurrency;
-export function currency({ code, rate }: Props) {
+export function currency({ code, rate }: Currency) {
   const CODE = code.toUpperCase();
   return function Amount({
     classes = "",
