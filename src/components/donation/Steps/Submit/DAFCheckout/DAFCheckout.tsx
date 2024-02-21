@@ -3,7 +3,7 @@ import Image from "components/Image";
 import { useState } from "react";
 import { ChariotCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
-import currency from "../../common/Currrency";
+import { currency } from "../../common/Currrency";
 import Summary from "../../common/Summary";
 import ChariotCheckout from "./ChariotCheckout";
 import ManualDonation from "./ManualDonation";

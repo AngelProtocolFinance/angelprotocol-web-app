@@ -2,12 +2,11 @@ import { WalletProvider } from "@terra-money/wallet-provider";
 import { chainOptions } from "constants/chainOptions";
 import { chains } from "constants/chains";
 import WalletContext from "contexts/WalletContext/WalletContext";
-import { humanize } from "helpers";
-import { useUsdRateQuery } from "services/coingecko";
 import { CryptoSubmitStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import Image from "../../../../Image";
 import Summary from "../../common/Summary";
+import { token } from "../../common/Token";
 import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
@@ -17,7 +16,7 @@ export default function Crypto(props: CryptoSubmitStep) {
   }
   const { details } = props;
 
-  const Amount = withUSD(details.token.coingecko_denom);
+  const Amount = token(details.token.coingecko_denom);
 
   return (
     <Summary
@@ -54,20 +53,3 @@ export default function Crypto(props: CryptoSubmitStep) {
     </Summary>
   );
 }
-
-const withUSD = (coinGeckoId: string) =>
-  function Amount(props: { amount: string | number; classes?: string }) {
-    const { data: rate, isLoading, isError } = useUsdRateQuery(coinGeckoId);
-    return (
-      <dd className={props.classes}>
-        {humanize(props.amount, 4)}{" "}
-        {isLoading ? (
-          "($--)"
-        ) : isError || !rate ? (
-          <span className="text-red">"($--)"</span>
-        ) : (
-          `($${humanize(+props.amount * rate, 2)})`
-        )}
-      </dd>
-    );
-  };

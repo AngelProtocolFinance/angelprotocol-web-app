@@ -2,7 +2,7 @@ import { humanize } from "helpers";
 import { Currency as TCurrency } from "types/components";
 
 type Props = TCurrency;
-export default function currency({ code, rate }: Props) {
+export function currency({ code, rate }: Props) {
   const CODE = code.toUpperCase();
   return function Amount({
     classes = "",

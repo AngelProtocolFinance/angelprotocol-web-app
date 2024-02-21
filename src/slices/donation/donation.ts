@@ -5,9 +5,11 @@ import {
   DonationRecipient,
   DonationState,
   DonationStep,
+  Donor,
   FormStep,
   SplitsStep,
   SubmitStep,
+  SummaryStep,
   TxStatus,
 } from "./types";
 
@@ -51,9 +53,16 @@ const donation = createSlice({
 
     setSplit: (state, { payload }: PayloadAction<number>) => {
       return {
+        ...(state as SummaryStep),
+        step: "summary",
+        liquidSplitPct: payload,
+      };
+    },
+    setDonor: (state, { payload }: PayloadAction<Donor>) => {
+      return {
         ...(state as SubmitStep),
         step: "submit",
-        liquidSplitPct: payload,
+        donor: payload,
       };
     },
 

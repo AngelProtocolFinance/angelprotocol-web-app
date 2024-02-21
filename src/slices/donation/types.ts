@@ -93,7 +93,7 @@ export type SummaryStep = {
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<Required<SplitsStep>, "step"> & { details: T };
+} & Omit<Required<SummaryStep>, "step"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;

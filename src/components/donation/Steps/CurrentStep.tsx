@@ -4,6 +4,7 @@ import DonateMethods from "./DonateMethods";
 import Result from "./Result";
 import Splits from "./Splits";
 import Submit from "./Submit";
+import Summary from "./Summary";
 
 type Props = { config: DonaterConfigFromWidget | null };
 
@@ -25,7 +26,7 @@ export default function CurrentStep({ config }: Props) {
   }
 
   if (state.step === "summary") {
-    return <div>summary</div>;
+    return <Summary {...state} />;
   }
 
   state.step satisfies "donate-form";

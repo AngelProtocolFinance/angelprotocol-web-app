@@ -1,24 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
-import { Donor as FV } from "slices/donation";
+import { Donor, Donor as FV } from "slices/donation";
 import { object, string } from "yup";
 
 type Props = {
   onSubmit(donor: FV): void;
   classes?: string;
-} & ({ render: "update"; donor: FV } | { render: "new"; donor?: never });
+  donor?: Donor;
+};
 
-export default function DonorInfoForm({
-  classes = "",
-  onSubmit,
-  ...props
-}: Props) {
+export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
   const methods = useForm<FV>({
-    defaultValues:
-      props.render === "update"
-        ? props.donor
-        : { firstName: "", lastName: "", email: "" },
+    defaultValues: donor || { firstName: "", lastName: "", email: "" },
     resolver: yupResolver(
       object({
         firstName: string().required("required"),
