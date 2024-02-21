@@ -5,7 +5,11 @@ import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
 import DonorForm from "./DonorForm";
 
-export default function Summary({ details, liquidSplitPct }: SummaryStep) {
+export default function Summary({
+  details,
+  liquidSplitPct,
+  donor,
+}: SummaryStep) {
   const dispatch = useSetter();
 
   const [amount, Amount] = (() => {
@@ -32,6 +36,7 @@ export default function Summary({ details, liquidSplitPct }: SummaryStep) {
       onBack={() => dispatch(setStep("splits"))}
     >
       <DonorForm
+        donor={donor}
         onSubmit={(donor) => dispatch(setDonor(donor))}
         classes="mt-4"
       />

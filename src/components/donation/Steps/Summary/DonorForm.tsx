@@ -46,7 +46,7 @@ export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
           }}
           required
         />
-        <button className="btn-blue normal-case px-4 col-span-full rounded-full mt-6">
+        <button className="btn-orange px-4 col-span-full rounded mt-6">
           Checkout
         </button>
       </form>

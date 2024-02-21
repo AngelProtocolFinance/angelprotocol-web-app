@@ -38,7 +38,7 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
       Amount={currency(details.currency)}
       amount={+details.amount}
       splitLiq={liquidSplitPct}
-      onBack={() => dispatch(setStep("splits"))}
+      onBack={() => dispatch(setStep("summary"))}
     >
       {isLoading ? (
         <ContentLoader className="rounded h-14 w-full" />

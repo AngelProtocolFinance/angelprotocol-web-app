@@ -19,7 +19,7 @@ export default function DAFCheckout(props: ChariotCheckoutStep) {
       Amount={currency({ code: "USD", rate: 1 })}
       amount={+props.details.amount}
       splitLiq={props.liquidSplitPct}
-      onBack={() => dispatch(setStep("splits"))}
+      onBack={() => dispatch(setStep("summary"))}
       classes={{
         container: "flex flex-col p-4 @md:p-8 group",
         split: "mb-auto",
