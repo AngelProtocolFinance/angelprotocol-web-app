@@ -5,15 +5,15 @@ export default function useHeaderClassNames() {
   // instead of the state (for the previous value); the reason is that
   // this makes it unnecessary to add the state value to the below useEffect's
   // dependency array.
-  const isStickyRef = useRef<boolean>(false);
-  const [isSticky, setSticky] = useState(false);
+  const isScrolledRef = useRef<boolean>(false);
+  const [isScrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     function handleScroll() {
-      const _isSticky = window.scrollY > 0;
-      if (_isSticky !== isStickyRef.current) {
-        setSticky(_isSticky);
-        isStickyRef.current = _isSticky;
+      const _isScrolled = window.scrollY > 0;
+      if (_isScrolled !== isScrolledRef.current) {
+        setScrolled(_isScrolled);
+        isScrolledRef.current = _isScrolled;
       }
     }
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -22,9 +22,7 @@ export default function useHeaderClassNames() {
     };
   }, []);
 
-  return `${
-    isSticky
-      ? "fixed top-0 shadow-lg bg-white dark:bg-blue-d3"
-      : "absolute top-0"
-  } transition ease-in-out duration-100 z-20 w-full`;
+  return `transition ease-in-out duration-100 z-20 w-full ${
+    isScrolled ? "shadow-lg" : ""
+  }`;
 }

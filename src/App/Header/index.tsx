@@ -13,7 +13,7 @@ export default function Header({ links }: Props) {
   const headerClassNames = useHeaderClassNames();
 
   return (
-    <header id="navbar" className={headerClassNames}>
+    <header className={headerClassNames}>
       <div className="px-0 md:py-2 h-full w-full bg-white">
         <div className="grid grid-cols-2 gap-4 padded-container">
           <DappLogo classes="w-48 h-12" />
