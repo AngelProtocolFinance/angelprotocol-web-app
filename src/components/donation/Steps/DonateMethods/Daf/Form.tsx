@@ -51,7 +51,7 @@ export default function Form({ recipient, widgetConfig, details }: Props) {
           dispatch(
             setDetails({
               ...fv,
-              method: "chariot",
+              method: "daf",
             })
           )
         )}

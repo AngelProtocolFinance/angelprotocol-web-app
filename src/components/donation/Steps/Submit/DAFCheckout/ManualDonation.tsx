@@ -1,17 +1,14 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { ChariotCheckoutStep } from "slices/donation";
-import BackBtn from "../../BackBtn";
+import { DafCheckoutStep } from "slices/donation";
 
-type Props = ChariotCheckoutStep & { onBack: () => void };
+type Props = DafCheckoutStep;
 
 export default function ManualDonation(props: Props) {
   const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;
 
   return (
     <div className="grid gap-4 p-4 @md:p-8 content-start">
-      <BackBtn type="button" onClick={props.onBack} />
-      <p className="text-center text-gray-d1 uppercase">Manual DAF donation</p>
       <p className="text-center">
         To complete this donation, please email your provider with the following
         information:

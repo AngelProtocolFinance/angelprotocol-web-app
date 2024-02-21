@@ -21,7 +21,7 @@ export default function Submit(props: SubmitStep) {
     return <StripeCheckout details={details} {...rest} />;
   }
 
-  if (props.details.method === "chariot") {
+  if (props.details.method === "daf") {
     const { details, ...rest } = props;
     return <DAFCheckout details={details} {...rest} />;
   }
