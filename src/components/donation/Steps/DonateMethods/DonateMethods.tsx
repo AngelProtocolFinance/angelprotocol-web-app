@@ -4,8 +4,8 @@ import { Label } from "components/form";
 import { useState } from "react";
 import { DonationDetails, FormStep } from "slices/donation";
 import { DonaterConfigFromWidget } from "types/widget";
-import ChariotConnect from "./ChariotConnect";
 import Crypto from "./Crypto";
+import Daf from "./Daf";
 import PayPal from "./PayPal";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
@@ -23,7 +23,7 @@ const tabIdx = (method?: DonationDetails["method"]) => {
       return 1;
     case "stocks":
       return 2;
-    case "chariot":
+    case "daf":
       return 3;
     case "crypto":
       return 4;
@@ -120,11 +120,11 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           />
         </Tab.Panel>
         <Tab.Panel>
-          <ChariotConnect
+          <Daf
             recipient={state.recipient}
             step={state.step}
             details={
-              state.details?.method === "chariot" ? state.details : undefined
+              state.details?.method === "daf" ? state.details : undefined
             }
             widgetConfig={donaterConfig}
             advanceOptDisplay={
