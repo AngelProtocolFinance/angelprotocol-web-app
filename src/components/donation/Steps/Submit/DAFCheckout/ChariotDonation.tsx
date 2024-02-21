@@ -6,11 +6,11 @@ import { useErrorContext } from "contexts/ErrorContext";
 import ChariotConnect from "react-chariot-connect";
 import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
-import { ChariotCheckoutStep } from "slices/donation";
+import { DafCheckoutStep } from "slices/donation";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function ChariotCheckout(props: ChariotCheckoutStep) {
+export default function ChariotCheckout(props: DafCheckoutStep) {
   const { details, recipient, liquidSplitPct } = props;
   const [createGrant, { isLoading }] = useChariotGrantIntentMutation();
 

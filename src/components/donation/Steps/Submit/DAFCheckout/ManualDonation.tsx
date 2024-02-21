@@ -1,8 +1,8 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { ChariotCheckoutStep } from "slices/donation";
+import { DafCheckoutStep } from "slices/donation";
 
-export default function ManualDonation(props: ChariotCheckoutStep) {
+export default function ManualDonation(props: DafCheckoutStep) {
   const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;
 
   return (
@@ -51,7 +51,7 @@ export default function ManualDonation(props: ChariotCheckoutStep) {
       </p>
       <a
         href={emailLink(props.recipient.name, profileUrl, props.details.amount)}
-        className="mt-1.5 btn btn-orange px-4 py-2 self-end text-xs font-normal"
+        className="mt-1.5 btn btn-orange px-4 py-2 justify-self-end text-xs font-normal"
       >
         Generate email
       </a>

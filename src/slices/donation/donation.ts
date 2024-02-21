@@ -28,12 +28,15 @@ const donation = createSlice({
           ? { step: "donate-form", recipient: state.recipient }
           : state;
 
-      //skip KYC for stocks, as not being saved in DB
-      if (payload.method === "stocks") {
+      //skip donor,splits for stocks,daf, as not being used
+      if (payload.method === "stocks" || payload.method === "daf") {
         return {
-          ...(curr as SubmitStep),
+          ...(curr as SplitsStep),
           step: "submit",
           details: payload,
+          //these steps where skipped so provide placeholders
+          donor: { firstName: "", lastName: "", email: "" },
+          liquidSplitPct: 50,
         };
       }
 

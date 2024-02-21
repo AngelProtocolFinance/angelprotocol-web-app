@@ -22,7 +22,7 @@ function Applications() {
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
-    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-28 lg:pt-52 pb-8">
+    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-28 pb-8">
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Dashboard
       </h1>

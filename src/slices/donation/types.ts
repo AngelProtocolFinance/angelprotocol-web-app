@@ -37,8 +37,8 @@ export type StocksDonationDetails = {
   symbol: string;
   numShares: number;
 };
-export type ChariotDonationDetails = {
-  method: "chariot";
+export type DafDonationDetails = {
+  method: "daf";
 } & FiatDonationDetails;
 
 export type DonationDetails =
@@ -46,18 +46,18 @@ export type DonationDetails =
   | PaypalDonationDetails
   | CryptoDonationDetails
   | StocksDonationDetails
-  | ChariotDonationDetails;
+  | DafDonationDetails;
 
 export function hasEmail(
   details: DonationDetails
 ): details is
   | StripeDonationDetails
   | PaypalDonationDetails
-  | ChariotDonationDetails {
+  | DafDonationDetails {
   return (
     details.method === "stripe" ||
     details.method === "paypal" ||
-    details.method === "chariot"
+    details.method === "daf"
   );
 }
 
@@ -74,7 +74,7 @@ export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type PaypalFormStep = FormStep<PaypalDonationDetails>;
 export type StockFormStep = FormStep<StocksDonationDetails>;
-export type ChariotFormStep = FormStep<ChariotDonationDetails>;
+export type DafFormStep = FormStep<DafDonationDetails>;
 
 export type SplitsStep = {
   step: "splits";
@@ -94,7 +94,7 @@ export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 export type PaypalCheckoutStep = SubmitStep<PaypalDonationDetails>;
 export type StockCheckoutStep = SubmitStep<StocksDonationDetails>;
-export type ChariotCheckoutStep = SubmitStep<ChariotDonationDetails>;
+export type DafCheckoutStep = SubmitStep<DafDonationDetails>;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
 export type CryptoResultStep = {
