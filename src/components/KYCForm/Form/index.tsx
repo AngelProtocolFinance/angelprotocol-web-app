@@ -1,7 +1,6 @@
 import countries from "assets/countries/all.json";
 import CountrySelector from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
@@ -19,7 +18,6 @@ export default function Form({ classes = "", ...props }: Props) {
     resetField,
     formState: { isSubmitting },
   } = useFormContext<FV>();
-  const isPostKyc = props.type === "post-donation";
 
   const country = watch("country.name");
   const isUS = /united states/i.test(country);
@@ -31,20 +29,7 @@ export default function Form({ classes = "", ...props }: Props) {
       autoComplete="off"
       autoSave="off"
     >
-      {!isPostKyc && (
-        <button
-          onClick={props.onBack}
-          type="button"
-          className="flex items-center gap-1 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
-        >
-          <Icon type="ArrowBack" strokeWidth={20} />
-          <span>Back</span>
-        </button>
-      )}
-      <Tooltip
-        {...props}
-        classes={`${isPostKyc ? "" : "mb-4"} col-span-full`}
-      />
+      <Tooltip {...props} classes="col-span-full" />
       <Field<FV>
         classes="field-kyc"
         name="name.first"
@@ -145,23 +130,14 @@ export default function Form({ classes = "", ...props }: Props) {
         </ExtLink>
         .
       </p>
-      {props.type === "post-donation" ? (
-        <button
-          className="col-span-full btn-orange text-sm"
-          disabled={isSubmitting}
-          type="submit"
-        >
-          {isSubmitting ? "Processing..." : "Submit"}
-        </button>
-      ) : (
-        <button
-          className="btn-orange btn-donate col-span-full"
-          disabled={isSubmitting}
-          type="submit"
-        >
-          Continue
-        </button>
-      )}
+
+      <button
+        className="col-span-full btn-orange text-sm"
+        disabled={isSubmitting}
+        type="submit"
+      >
+        {isSubmitting ? "Processing..." : "Submit"}
+      </button>
     </form>
   );
 }

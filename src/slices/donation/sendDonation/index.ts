@@ -5,7 +5,7 @@ import { LogDonationFail } from "errors/errors";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { invalidateApesTags } from "services/apes";
-import { CryptoDonation, KYCData } from "types/aws";
+import { CryptoDonation } from "types/aws";
 import { isTxResultError } from "types/tx";
 import donation, { setTxStatus } from "../donation";
 import { DonateArgs, TxStatus } from "../types";
@@ -13,7 +13,7 @@ import { DonateArgs, TxStatus } from "../types";
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,
   async (
-    { donation: { details, kyc, recipient, liquidSplitPct }, ...txPackage },
+    { donation: { details, recipient, liquidSplitPct }, ...txPackage },
     { dispatch }
   ) => {
     const chain = chains[details.chainId.value];
@@ -31,25 +31,12 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       }
       const { hash } = result;
 
-      const kycData: KYCData | undefined = kyc
-        ? {
-            fullName: `${kyc.name.first} ${kyc.name.last}`,
-            kycEmail: kyc.kycEmail,
-            streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
-            city: kyc.city,
-            state: kyc.usState.value || kyc.state,
-            zipCode: kyc.postalCode,
-            country: kyc.country.name,
-          }
-        : undefined;
-
       updateTx({
-        loadingMsg: kyc ? "Requesting receipt.." : "Saving donation details",
+        loadingMsg: "Saving donation details",
       });
 
       /** SAVE DONATION */
       const payload: CryptoDonation = {
-        kyc: kycData /** receipt is sent to user if kyc is provider upfront */,
         amount: +token.amount,
         chainId: chain.id,
         chainName: chain.name,

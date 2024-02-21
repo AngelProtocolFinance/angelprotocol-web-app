@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from "react";
-import Icon from "../../Icon";
+import Icon from "../../../Icon";
 
 export default function BackBtn({
   className,

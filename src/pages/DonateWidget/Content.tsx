@@ -28,8 +28,6 @@ export default function Content({
     const donationRecipient: DonationRecipient = {
       id: profile.id,
       name: profile.name,
-      isKYCRequired: profile.kyc_donors_only ?? false,
-      isFiscalSponsored: profile.fiscal_sponsored ?? false,
     };
     dispatch(setRecipient(donationRecipient));
   }, [dispatch, profile]);

@@ -1,18 +1,15 @@
+import { Donor } from "types/aws";
 import { ChainID } from "types/chain";
 import { Currency, OptionType } from "types/components";
-import { Country } from "types/components";
 import { DonationSource } from "types/lists";
 import { TokenWithAmount, TxPackage } from "types/tx";
 
 export type DonationRecipient = {
   id: number;
   name: string;
-  isKYCRequired: boolean;
-  isFiscalSponsored: boolean;
 };
 
 type BaseDonationDetais = {
-  userOptForKYC: boolean;
   source: DonationSource;
 };
 
@@ -25,7 +22,6 @@ export type CryptoDonationDetails = BaseDonationDetais & {
 type FiatDonationDetails = BaseDonationDetais & {
   amount: string;
   currency: Currency;
-  email: string;
 };
 
 export type StripeDonationDetails = {
@@ -65,17 +61,6 @@ export function hasEmail(
   );
 }
 
-export type KYC = {
-  name: { first: string; last: string };
-  address: { street: string; complement: string };
-  city: string;
-  postalCode: string;
-  country: Country;
-  state: string;
-  usState: OptionType<string>;
-  kycEmail: string;
-};
-
 type InitStep = {
   step: "init";
   recipient?: DonationRecipient;
@@ -91,21 +76,19 @@ export type PaypalFormStep = FormStep<PaypalDonationDetails>;
 export type StockFormStep = FormStep<StocksDonationDetails>;
 export type DafFormStep = FormStep<DafDonationDetails>;
 
-//KYC step need not know donation details
-export type KYCStep = {
-  step: "kyc-form";
-  recipient: DonationRecipient;
-  kyc?: KYC;
-} & Omit<Required<FormStep<DonationDetails>>, "step">;
-
 export type SplitsStep = {
   step: "splits";
   liquidSplitPct?: number;
-} & Omit<KYCStep, "step">;
+} & Omit<Required<FormStep>, "step">;
+
+export type SummaryStep = {
+  step: "summary";
+  donor?: Donor;
+} & Omit<Required<SplitsStep>, "step">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<Required<SplitsStep>, "step" | "kyc"> & { details: T; kyc?: KYC };
+} & Omit<Required<SummaryStep>, "step"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
@@ -122,8 +105,8 @@ export type CryptoResultStep = {
 export type DonationState =
   | InitStep
   | FormStep
-  | KYCStep
   | SplitsStep
+  | SummaryStep
   | SubmitStep
   | CryptoResultStep;
 
