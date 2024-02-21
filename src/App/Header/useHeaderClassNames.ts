@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function useHeaderClassNames(headerId: string) {
+export default function useHeaderClassNames() {
   // The ref is used to compare the current and previous bool value
   // instead of the state (for the previous value); the reason is that
   // this makes it unnecessary to add the state value to the below useEffect's
@@ -9,11 +9,8 @@ export default function useHeaderClassNames(headerId: string) {
   const [isSticky, setSticky] = useState(false);
 
   useEffect(() => {
-    const header = document.getElementById(headerId);
-    const headerOffsetTop = header!.offsetTop;
-
     function handleScroll() {
-      const _isSticky = window.scrollY >= headerOffsetTop;
+      const _isSticky = window.scrollY > 0;
       if (_isSticky !== isStickyRef.current) {
         setSticky(_isSticky);
         isStickyRef.current = _isSticky;

@@ -52,7 +52,7 @@ function Banner() {
   const { image = "/images/placeholder-banner.png" } = useProfileContext();
   return (
     <div
-      className="relative w-full h-72 sm:h-96 bg-cover bg-center"
+      className="relative w-full h-52 sm:h-72 bg-cover bg-center"
       style={{
         backgroundImage: `url('${image}')`,
       }}
@@ -63,7 +63,7 @@ function Banner() {
 function Logo() {
   const { logo = "" } = useProfileContext();
   return (
-    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start ">
+    <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
       <Image
         src={logo}
         className="h-48 w-48 border border-prim rounded-full object-cover bg-white"
