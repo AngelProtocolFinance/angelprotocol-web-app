@@ -3,7 +3,10 @@ import { usePaginatedDonationRecords } from "services/apes";
 import DonationsSection from "./DonationsSection";
 
 export default withAuth(function Donations({ user }) {
-  const onHoldDonations = usePaginatedDonationRecords({ email: user.email });
+  const onHoldDonations = usePaginatedDonationRecords({
+    email: user.email,
+    type: "on-hold",
+  });
   const completeDonations = usePaginatedDonationRecords({ email: user.email });
 
   return (

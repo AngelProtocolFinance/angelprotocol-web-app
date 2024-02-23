@@ -40,6 +40,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
     setParams((prev) => ({
       id: prev.id,
       chain_id: prev.chain_id,
+      type: prev.type,
       ...cleanObject({
         afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
         beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
@@ -53,7 +54,11 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams((prev) => ({ id: prev.id, chain_id: prev.chain_id }));
+    setParams((prev) => ({
+      id: prev.id,
+      chain_id: prev.chain_id,
+      type: prev.type,
+    }));
     buttonRef.current?.click();
   };
   return (
