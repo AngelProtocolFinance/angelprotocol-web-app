@@ -17,28 +17,25 @@ import {
 type DonorOwner = { email: string };
 type EndowmentOwner = { endowmentId: string };
 
-type Params = (DonorOwner | EndowmentOwner) & {
+type Args = (DonorOwner | EndowmentOwner) & {
   type?: DonationsQueryParams["type"];
 };
 
-export default function usePaginatedDonationRecords<T extends Params>(
-  params: T
-) {
+export default function usePaginatedDonationRecords<T extends Args>(args: T) {
   const dispatch = useSetter();
 
   const [query, setQuery] = useState<string>("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
-  const id: string =
-    "endowmentId" in params ? params.endowmentId : params.email;
+  const id: string = "endowmentId" in args ? args.endowmentId : args.email;
 
-  const [args, setArgs] = useState<DonationsQueryParams>({
+  const [params, setParams] = useState<DonationsQueryParams>({
     id,
     chain_id: chainIds.polygon,
-    type: params.type ?? "finalized",
+    type: args.type ?? "finalized",
   });
 
-  const queryState = useDonationsQuery(args, {
+  const queryState = useDonationsQuery(params, {
     skip: !id,
     selectFromResult({ data, ...rest }) {
       if (!data?.Items) {
@@ -101,6 +98,6 @@ export default function usePaginatedDonationRecords<T extends Params>(
     query,
     loadNextPage,
     onQueryChange: setQuery,
-    setParams: setArgs,
+    setParams,
   };
 }
