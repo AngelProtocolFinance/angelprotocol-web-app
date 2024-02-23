@@ -10,7 +10,9 @@ import NoDonations from "./NoDonations";
 import Table from "./Table";
 
 export default function DonationsSection(
-  props: ReturnType<typeof usePaginatedDonationRecords<{ email: string }>>
+  props: ReturnType<typeof usePaginatedDonationRecords<{ email: string }>> & {
+    title: string;
+  }
 ) {
   const {
     data,
@@ -20,6 +22,7 @@ export default function DonationsSection(
     isFetching,
     isLoadingNextPage,
     query,
+    title,
     loadNextPage,
     onQueryChange,
     setParams,
@@ -28,9 +31,9 @@ export default function DonationsSection(
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
-    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
+    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container">
       <h1 className="text-3xl max-lg:text-center max-lg:col-span-full max-lg:mb-4">
-        My Donations
+        {title}
       </h1>
       <CsvExporter
         aria-disabled={isLoadingOrError || !data?.Items || isEmpty(data.Items)}
