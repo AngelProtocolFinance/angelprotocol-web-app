@@ -7,8 +7,6 @@ import { schema } from "./schema";
 import { FormValues, Props } from "./types";
 
 export default function KYCForm(props: Props) {
-  const isOnDonation = props.type === "on-donation";
-
   const init: FormValues = {
     name: { first: "", last: "" },
     address: { street: "", complement: "" },
@@ -17,7 +15,7 @@ export default function KYCForm(props: Props) {
     country: placeHolderCountryOption,
     usState: { label: "", value: "" },
     state: "",
-    kycEmail: (props.type === "on-donation" && props.donationEmail) || "",
+    kycEmail: "",
   };
 
   const methods = useForm<FormValues>({
@@ -26,14 +24,6 @@ export default function KYCForm(props: Props) {
     defaultValues: props.defaultValues || init,
     resolver: yupResolver(schema),
   });
-
-  if (isOnDonation) {
-    return (
-      <FormProvider {...methods}>
-        <Form {...props} />
-      </FormProvider>
-    );
-  }
 
   return (
     <FormProvider {...methods}>

@@ -49,7 +49,6 @@ export default function useShowKYCForm() {
 
   return (txId: string) =>
     showKYC({
-      type: "post-donation",
       txHash: txId,
       classes: "grid gap-5",
       onSubmit: (fv) => submitKYC(fv, txId),

@@ -1,6 +1,6 @@
+import { Donor } from "types/aws";
 import { ChainID } from "types/chain";
 import { Currency, OptionType } from "types/components";
-import { Country } from "types/components";
 import { DonationSource } from "types/lists";
 import { TokenWithAmount, TxPackage } from "types/tx";
 
@@ -12,12 +12,9 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
 export type DonationRecipient = {
   id: number;
   name: string;
-  isKYCRequired: boolean;
-  isFiscalSponsored: boolean;
 };
 
 type BaseDonationDetais = {
-  userOptForKYC: boolean;
   source: DonationSource;
 };
 
@@ -30,7 +27,6 @@ export type CryptoDonationDetails = BaseDonationDetais & {
 type FiatDonationDetails = BaseDonationDetais & {
   amount: string;
   currency: Currency;
-  email: string;
 };
 
 export type StripeDonationDetails = {
@@ -46,8 +42,8 @@ export type StocksDonationDetails = {
   symbol: string;
   numShares: number;
 };
-export type ChariotDonationDetails = {
-  method: "chariot";
+export type DafDonationDetails = {
+  method: "daf";
 } & FiatDonationDetails;
 
 export type DonationDetails =
@@ -55,31 +51,20 @@ export type DonationDetails =
   | PaypalDonationDetails
   | CryptoDonationDetails
   | StocksDonationDetails
-  | ChariotDonationDetails;
+  | DafDonationDetails;
 
 export function hasEmail(
   details: DonationDetails
 ): details is
   | StripeDonationDetails
   | PaypalDonationDetails
-  | ChariotDonationDetails {
+  | DafDonationDetails {
   return (
     details.method === "stripe" ||
     details.method === "paypal" ||
-    details.method === "chariot"
+    details.method === "daf"
   );
 }
-
-export type KYC = {
-  name: { first: string; last: string };
-  address: { street: string; complement: string };
-  city: string;
-  postalCode: string;
-  country: Country;
-  state: string;
-  usState: OptionType<string>;
-  kycEmail: string;
-};
 
 type InitStep = {
   step: "init";
@@ -95,19 +80,12 @@ export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type PaypalFormStep = FormStep<PaypalDonationDetails>;
 export type StockFormStep = FormStep<StocksDonationDetails>;
-export type ChariotFormStep = FormStep<ChariotDonationDetails>;
-
-//KYC step need not know donation details
-export type KYCStep = {
-  step: "kyc-form";
-  recipient: DonationRecipient;
-  kyc?: KYC;
-} & From<FormStep<DonationDetails>>;
+export type DafFormStep = FormStep<DafDonationDetails>;
 
 export type SplitsStep = {
   step: "splits";
   liquidSplitPct?: number;
-} & From<KYCStep, "kyc">;
+} & From<FormStep>;
 
 /** edge case: custom tip > donation  */
 export type TipFormat = "pct" | "amount";
@@ -115,17 +93,22 @@ export type TipStep = {
   step: "tip";
   tip?: number;
   format?: TipFormat;
-} & From<SplitsStep, "kyc">;
+} & From<SplitsStep>;
+
+export type SummaryStep = {
+  step: "summary";
+  donor?: Donor;
+} & From<TipStep>;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<From<TipStep, "kyc" | "tip">, "details"> & { details: T };
+} & Omit<From<SummaryStep>, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 export type PaypalCheckoutStep = SubmitStep<PaypalDonationDetails>;
 export type StockCheckoutStep = SubmitStep<StocksDonationDetails>;
-export type ChariotCheckoutStep = SubmitStep<ChariotDonationDetails>;
+export type DafCheckoutStep = SubmitStep<DafDonationDetails>;
 
 export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
 export type CryptoResultStep = {
@@ -136,9 +119,9 @@ export type CryptoResultStep = {
 export type DonationState =
   | InitStep
   | FormStep
-  | KYCStep
   | SplitsStep
   | TipStep
+  | SummaryStep
   | SubmitStep
   | CryptoResultStep;
 

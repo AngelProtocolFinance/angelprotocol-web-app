@@ -28,7 +28,7 @@ export default function Donate() {
         loading: "Getting nonprofit info..",
         error: "Failed to get nonprofit info",
       }}
-      classes={{ container: "justify-self-center text-center mt-28 sm:mt-40" }}
+      classes={{ container: "justify-self-center text-center mt-8" }}
     >
       {(profile) => (
         <>
@@ -45,8 +45,6 @@ export default function Donate() {
             name={profile.name}
             banner={profile.image}
             id={numId}
-            isKYCRequired={profile.kyc_donors_only ?? false}
-            isFiscalSponsored={profile.fiscal_sponsored ?? false}
           />
         </>
       )}

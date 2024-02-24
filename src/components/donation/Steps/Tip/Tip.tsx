@@ -7,13 +7,32 @@ import Image from "components/Image/Image";
 import { humanize } from "helpers";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
-import { stringNumber } from "schemas/shape";
+import { schema, stringNumber } from "schemas/shape";
 import { TipStep, setStep, setTip } from "slices/donation";
 import { useSetter } from "store/accessors";
-import { object } from "yup";
-import BackBtn from "../BackBtn";
+import BackBtn from "../common/BackBtn";
 
 const DEFAULT_PCT = "0.17";
+
+interface ITip {
+  pct: string;
+  amount: string;
+}
+
+type FV = {
+  tip: ITip;
+};
+
+const tipSchema = schema<ITip>({
+  amount: stringNumber(
+    (s) => s,
+    (n) => n.min(0, "can't be negative")
+  ),
+});
+
+const shape = schema<FV>({
+  tip: tipSchema,
+});
 
 export default function Tip({
   details,
@@ -27,7 +46,7 @@ export default function Tip({
       case "stripe":
       case "paypal":
         return [details.currency.code, +details.amount];
-      case "chariot":
+      case "daf":
         return ["usd", +details.amount];
       case "stocks":
         return [details.symbol, details.numShares];
@@ -36,40 +55,29 @@ export default function Tip({
     }
   })();
 
+  const initial: ITip = {
+    amount: `${amount * +DEFAULT_PCT}`,
+    pct: DEFAULT_PCT,
+  };
+
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(
-      object({
-        tip: object({
-          amount: stringNumber(
-            (s) => s,
-            (n) => n.min(0, "can't be negative")
-          ),
-          pct: stringNumber(
-            (s) => s,
-            (n) => n
-          ),
-        }),
-      })
-    ),
+  } = useForm<FV>({
+    resolver: yupResolver(shape),
     defaultValues: {
       tip: persistedTip
         ? {
-            amount: persistedTip,
-            pct: persistedTip / amount,
+            amount: persistedTip.toString(),
+            pct: `${persistedTip / amount}`,
           }
-        : {
-            amount: amount * +DEFAULT_PCT,
-            pct: DEFAULT_PCT,
-          },
+        : initial,
     },
   });
   const {
     field: { value: tip, onChange: onTipChange },
-  } = useController({ name: "tip", control });
+  } = useController<FV, "tip">({ name: "tip", control });
 
   //if user selects custom, can't go back to %
   const [isPct, setIsPct] = useState(format === "pct");

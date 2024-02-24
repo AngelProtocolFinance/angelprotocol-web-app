@@ -6,11 +6,10 @@ import { humanize } from "helpers";
 import { useState } from "react";
 import { SplitsStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
-import BackBtn from "../BackBtn";
+import BackBtn from "../common/BackBtn";
 
 export default function Split({
   details,
-  kyc,
   liquidSplitPct: persistedLiqSplit = 50,
 }: SplitsStep) {
   const dispatch = useSetter();
@@ -42,10 +41,7 @@ export default function Split({
 
   return (
     <div className="grid content-start p-4 @md:p-8">
-      <BackBtn
-        type="button"
-        onClick={() => dispatch(setStep(kyc ? "kyc-form" : "donate-form"))}
-      />
+      <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
       <h4 className="mt-4">Split donation</h4>
       <p className="text-gray-d1">
         Create a sustainable impact by dividing funds

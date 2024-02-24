@@ -6,18 +6,12 @@ import { useErrorContext } from "contexts/ErrorContext";
 import ChariotConnect from "react-chariot-connect";
 import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
-import { ChariotCheckoutStep } from "slices/donation";
-import BackBtn from "../../BackBtn";
-import currency from "../common/Currrency";
-import Heading from "../common/Heading";
-import SplitSummary from "../common/SplitSummary";
-
-type Props = ChariotCheckoutStep & { onBack: () => void };
+import { DafCheckoutStep } from "slices/donation";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function ChariotCheckout(props: Props) {
-  const { details, recipient, kyc, liquidSplitPct, onBack } = props;
+export default function ChariotCheckout(props: DafCheckoutStep) {
+  const { details, recipient, liquidSplitPct } = props;
   const [createGrant, { isLoading }] = useChariotGrantIntentMutation();
 
   const navigate = useNavigate();
@@ -28,38 +22,14 @@ export default function ChariotCheckout(props: Props) {
   const onDonationRequest = () => {
     return {
       amount: +details.amount * 100, // in cents
-      firstName: kyc?.name.first,
-      lastName: kyc?.name.last,
-      email: kyc?.kycEmail,
+      firstName: props.donor.firstName,
+      lastName: props.donor.lastName,
+      email: props.donor.email,
     };
   };
 
-  const Amount = currency(details.currency);
-
   return (
-    <div className="flex flex-col content-start p-4 @md:p-8 group">
-      <BackBtn type="button" disabled={isLoading} onClick={onBack} />
-      <Heading classes="my-4" />
-      <SplitSummary
-        amount={+details.amount}
-        splitLiq={props.liquidSplitPct}
-        classes="mb-auto"
-        Donation={(n) => <Amount amount={n} classes="text-gray-d2" />}
-        Liquid={(n) => <Amount amount={n} classes="text-sm" />}
-        Locked={(n) => <Amount amount={n} classes="text-sm" />}
-        tip={
-          props.tip
-            ? {
-                charityName: props.recipient.name,
-                value: props.tip,
-                Tip: (n) => <Amount classes="text-gray-d2" amount={n} />,
-                Total: (n) => <Amount classes="text-gray-d2" amount={n} />,
-              }
-            : undefined
-        }
-      />
-
-      {/** <CharioConnect/> is not yet rendered */}
+    <>
       <ContentLoader className="rounded h-14 w-full group-has-[chariot-connect]:hidden" />
 
       {isLoading ? (
@@ -77,19 +47,8 @@ export default function ChariotCheckout(props: Props) {
                 amount: +details.amount,
                 currency: details.currency.code,
                 endowmentId: recipient.id,
-                email: details.email,
+                email: props.donor.email,
                 splitLiq: liquidSplitPct.toString(),
-                kycData: kyc
-                  ? {
-                      city: kyc.city,
-                      country: kyc.country.name,
-                      fullName: `${kyc.name.first} ${kyc.name.last}`,
-                      kycEmail: kyc.kycEmail,
-                      streetAddress: `${kyc.address.street} ${kyc.address.complement}`,
-                      state: kyc.usState.value || kyc.state,
-                      zipCode: kyc.postalCode,
-                    }
-                  : undefined,
                 transactionId: r.detail.workflowSessionId,
               }).unwrap();
 
@@ -104,6 +63,6 @@ export default function ChariotCheckout(props: Props) {
           }}
         />
       )}
-    </div>
+    </>
   );
 }

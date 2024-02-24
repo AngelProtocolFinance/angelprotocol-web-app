@@ -5,7 +5,6 @@ import { APIs } from "constants/urls";
 import {
   EndowmentBalances,
   FiatCurrencyData,
-  KYCData,
   PayPalOrder,
   Token,
 } from "types/aws";
@@ -22,7 +21,6 @@ type StripePaymentIntentParams = {
   currency: string;
   email: string;
   endowmentId: number;
-  kycData?: KYCData;
   splitLiq: string;
 };
 
@@ -33,7 +31,6 @@ type CreatePayPalOrderParams = {
   currency: string;
   email: string;
   endowmentId: number;
-  kycData?: KYCData;
   splitLiq: string;
 };
 
@@ -44,7 +41,6 @@ type ChariotGrantIntentParams = {
   currency: string;
   email: string;
   endowmentId: number;
-  kycData?: KYCData;
   splitLiq: string;
   transactionId?: string;
 };

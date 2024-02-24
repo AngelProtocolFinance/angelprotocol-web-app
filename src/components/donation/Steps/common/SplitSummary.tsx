@@ -29,7 +29,7 @@ export default function SplitSummary(props: Props) {
         props.classes ?? ""
       }`}
     >
-      <dt className="mr-auto">
+      <dt className="mr-auto text-gray-d2">
         {props.tip ? `Donation for ${props.tip.charityName}` : "Total donation"}
       </dt>
       {props.Donation(props.amount)}
@@ -49,7 +49,7 @@ export default function SplitSummary(props: Props) {
       )}
       {props.tip && (
         <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
-          <dt className="mr-auto">Total charge</dt>
+          <dt className="mr-auto text-gray-d2">Total charge</dt>
           {props.tip.Total(props.amount + props.tip.value)}
         </div>
       )}
