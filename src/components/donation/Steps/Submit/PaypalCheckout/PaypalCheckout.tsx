@@ -12,20 +12,25 @@ import Checkout from "./Checkout";
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function PaypalCheckout(props: PaypalCheckoutStep) {
-  const { details, recipient, liquidSplitPct } = props;
+  const { details, recipient, liquidSplitPct, tip = 0 } = props;
 
   const {
     data: orderId,
     isLoading,
     isError,
     error,
-  } = usePaypalOrderQuery({
-    amount: +details.amount,
-    currency: details.currency.code,
-    endowmentId: recipient.id,
-    email: props.donor.email,
-    splitLiq: liquidSplitPct.toString(),
-  });
+  } = usePaypalOrderQuery(
+    {
+      amount: +details.amount,
+      tipAmount: tip,
+      usdRate: details.currency.rate || 0, //skipped if not present
+      currency: details.currency.code,
+      endowmentId: recipient.id,
+      email: props.donor.email,
+      splitLiq: liquidSplitPct.toString(),
+    },
+    { skip: !details.currency.rate }
+  );
 
   const dispatch = useSetter();
 

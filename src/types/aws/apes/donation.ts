@@ -64,6 +64,7 @@ export type DonationsQueryParams = {
 
 export type CryptoDonation = {
   amount: number;
+  tipAmount: number;
   denomination: string;
   endowmentId: number;
   chainId: string;

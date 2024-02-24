@@ -11,7 +11,7 @@ import { DafCheckoutStep } from "slices/donation";
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function ChariotCheckout(props: DafCheckoutStep) {
-  const { details, recipient, liquidSplitPct } = props;
+  const { details, recipient, liquidSplitPct, tip = 0 } = props;
   const [createGrant, { isLoading }] = useChariotGrantIntentMutation();
 
   const navigate = useNavigate();
@@ -42,9 +42,12 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           // This hook should be used to update our internal donation DB
           // see https://givechariot.readme.io/reference/integrating-connect#capture-your-grant-intent
           onSuccess={async (r: { detail: { workflowSessionId: string } }) => {
+            if (!details.currency.rate) throw "currency rate must be set.";
             try {
               await createGrant({
                 amount: +details.amount,
+                tipAmount: tip,
+                usdRate: details.currency.rate,
                 currency: details.currency.code,
                 endowmentId: recipient.id,
                 email: props.donor.email,

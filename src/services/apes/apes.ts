@@ -17,6 +17,8 @@ import { tags } from "./tags";
 type StripePaymentIntentParams = {
   /** Denominated in USD. */
   amount: number;
+  tipAmount: number;
+  usdRate: number;
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
   email: string;
@@ -27,6 +29,8 @@ type StripePaymentIntentParams = {
 type CreatePayPalOrderParams = {
   /** Denominated in USD. */
   amount: number;
+  tipAmount: number;
+  usdRate: number;
   /**ISO 3166-1 alpha-3 code */
   currency: string;
   email: string;
@@ -37,6 +41,8 @@ type CreatePayPalOrderParams = {
 type ChariotGrantIntentParams = {
   /** Denominated in USD. */
   amount: number;
+  tipAmount: number;
+  usdRate: number;
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
   email: string;
