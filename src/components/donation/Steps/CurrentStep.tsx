@@ -14,12 +14,8 @@ export default function CurrentStep({ config }: Props) {
 
   if (state.step === "init") return <></>; // <Steps /> sets to step 1 onMount
 
-  if (state.step === "tx") {
-    return <Result {...state} classes="justify-self-center p-4 @md:p-8" />;
-  }
-
-  if (state.step === "submit") {
-    return <Submit {...state} />;
+  if (state.step === "donate-form") {
+    return <DonateMethods donaterConfig={config} state={state} />;
   }
 
   if (state.step === "splits") {
@@ -34,6 +30,10 @@ export default function CurrentStep({ config }: Props) {
     return <Summary {...state} />;
   }
 
-  state.step satisfies "donate-form";
-  return <DonateMethods donaterConfig={config} state={state} />;
+  if (state.step === "submit") {
+    return <Submit {...state} />;
+  }
+
+  state.step satisfies "tx";
+  return <Result {...state} classes="justify-self-center p-4 @md:p-8" />;
 }

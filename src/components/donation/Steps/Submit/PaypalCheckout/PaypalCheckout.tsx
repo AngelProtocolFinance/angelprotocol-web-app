@@ -39,6 +39,14 @@ export default function PaypalCheckout(props: PaypalCheckoutStep) {
       amount={+details.amount}
       splitLiq={liquidSplitPct}
       onBack={() => dispatch(setStep("summary"))}
+      tip={
+        props.tip
+          ? {
+              value: props.tip,
+              charityName: props.recipient.name,
+            }
+          : undefined
+      }
     >
       {isLoading ? (
         <ContentLoader className="rounded h-14 w-full" />

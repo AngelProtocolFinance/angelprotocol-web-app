@@ -91,7 +91,7 @@ export type SplitsStep = {
 export type TipFormat = "pct" | "amount";
 export type TipStep = {
   step: "tip";
-  tip?: number;
+  tip: number;
   format?: TipFormat;
 } & From<SplitsStep>;
 
@@ -102,7 +102,7 @@ export type SummaryStep = {
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<From<SummaryStep>, "details"> & { details: T };
+} & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;

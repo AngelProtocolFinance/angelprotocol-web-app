@@ -11,6 +11,7 @@ export default function Summary({
   liquidSplitPct,
   donor,
   tip,
+  recipient,
 }: SummaryStep) {
   const dispatch = useSetter();
   const user = useGetter((state) => state.auth.user);
@@ -37,6 +38,14 @@ export default function Summary({
       amount={amount}
       splitLiq={liquidSplitPct}
       onBack={() => dispatch(setStep("tip"))}
+      tip={
+        tip
+          ? {
+              value: tip,
+              charityName: recipient.name,
+            }
+          : undefined
+      }
     >
       <DonorForm
         donor={
@@ -50,7 +59,7 @@ export default function Summary({
             : undefined)
         }
         onSubmit={(donor) => dispatch(setDonor(donor))}
-        classes="mt-4"
+        classes="mt-6"
       />
     </SummaryContainer>
   );

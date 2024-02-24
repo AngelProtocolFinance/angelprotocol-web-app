@@ -10,16 +10,17 @@ type Classes =
     };
 
 type Props = {
-  classes?: Classes;
-  tip?: { value: number; charityName: string };
-  Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
-  onBack(): void;
   amount: number;
   splitLiq: number;
+  tip?: { value: number; charityName: string };
 
+  Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
+  onBack(): void;
+  classes?: Classes;
   children?: ReactNode;
   preSplitContent?: ReactNode;
 };
+
 export default function Summary({ Amount, ...props }: Props) {
   const { container, split: splitClass } = unpack(props.classes);
   const liq = props.amount * (props.splitLiq / 100);

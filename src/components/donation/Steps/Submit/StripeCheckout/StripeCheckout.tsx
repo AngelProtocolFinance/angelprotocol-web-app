@@ -39,6 +39,14 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       Amount={currency(details.currency)}
       amount={+details.amount}
       splitLiq={liquidSplitPct}
+      tip={
+        props.tip
+          ? {
+              value: props.tip,
+              charityName: props.recipient.name,
+            }
+          : undefined
+      }
     >
       {isLoading ? (
         <Loader msg="Loading payment form.." />
