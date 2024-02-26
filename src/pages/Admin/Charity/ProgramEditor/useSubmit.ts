@@ -47,6 +47,7 @@ export default function useSubmit() {
 					...m,
 					milestone_date: new Date(m.milestone_date).toISOString(),
 					milestone_media: milestoneMediaURLs[i],
+					milestone_description: m.milestone_description.value,
 				})),
 			};
 

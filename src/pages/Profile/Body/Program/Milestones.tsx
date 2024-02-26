@@ -64,7 +64,7 @@ function Milestone({
 			</h6>
 			<div className="pl-6 sm:pl-8">
 				<RichText
-					content={{ value: milestone_description, length: 0 }}
+					content={{ value: milestone_description }}
 					readOnly
 					classes={{
 						container: "text-gray-d1 dark:text-gray text-sm w-full",

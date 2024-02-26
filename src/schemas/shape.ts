@@ -29,18 +29,23 @@ export const optionType = ({ required } = { required: false }) =>
 		value: required ? requiredString : string(),
 	});
 
-export function richTextContent(options: {
-	maxChars: number;
-	required?: boolean;
-}) {
+export function richTextContent(
+	options: {
+		maxChars?: number;
+		required?: boolean;
+	} = {},
+) {
 	const { maxChars, required = false } = options;
 
-	let schema = mixed<RichTextContent>().test({
-		name: "must be below character limit",
-		message: `max length is ${maxChars} chars`,
-		test: (descr) => (descr?.length || 0) <= maxChars,
-	});
+	let schema = mixed<RichTextContent>();
 
+	if (maxChars != null) {
+		schema = schema.test({
+			name: "must be below character limit",
+			message: `max length is ${maxChars} chars`,
+			test: (descr) => (descr?.length || 0) <= maxChars,
+		});
+	}
 	if (required) {
 		schema = schema.test({
 			name: "required",

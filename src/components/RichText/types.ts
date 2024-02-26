@@ -7,7 +7,7 @@ type ReadOnly = {
 
 export type Editable = {
 	readOnly?: never;
-	onChange(content: RichTextContent): void;
+	onChange(content: Required<RichTextContent>): void;
 	onError(error: string): void;
 	placeHolder?: string;
 	charLimit?: number;

@@ -1,8 +1,10 @@
-export type FormValues = {
-  purchaser: string;
-  recipient: { name: string; email: string };
-  message: string;
+import { RichTextContent } from "types/components";
 
-  //meta
-  secret: string;
+export type FormValues = {
+	purchaser: string;
+	recipient: { name: string; email: string };
+	message: RichTextContent;
+
+	//meta
+	secret: string;
 };

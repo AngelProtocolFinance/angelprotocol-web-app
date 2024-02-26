@@ -24,7 +24,7 @@ export default function Program({ className = "" }) {
 				>
 					<Container title={p.program_title} expanded>
 						<RichText
-							content={{ value: p.program_description, length: 0 }}
+							content={{ value: p.program_description }}
 							readOnly
 							classes={{ container: "m-6" }}
 						/>

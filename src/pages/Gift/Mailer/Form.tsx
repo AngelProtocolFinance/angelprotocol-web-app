@@ -31,7 +31,7 @@ export default function Form({ classes = "" }) {
         body: JSON.stringify({
           email: recipient.email,
           secret,
-          note: richTextToHTML(message),
+          note: richTextToHTML(message.value),
         }),
       });
 

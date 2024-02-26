@@ -19,5 +19,5 @@ export type Country = {
 
 export type RichTextContent = {
 	value: string;
-	length: number;
+	length?: number;
 };

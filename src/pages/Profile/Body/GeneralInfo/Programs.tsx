@@ -26,7 +26,7 @@ function Program(props: TProgram) {
 			<div className="p-5">
 				<p className="text-lg font-bold mb-3 block">{props.program_title}</p>
 				<RichText
-					content={{ value: props.program_description, length: 0 }}
+					content={{ value: props.program_description }}
 					readOnly
 					classes={{ container: "overflow-hidden h-32" }}
 				/>
