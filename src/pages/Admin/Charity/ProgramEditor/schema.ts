@@ -1,11 +1,11 @@
-import { ObjectSchema, array, date, mixed, object, string } from "yup";
-import { FV, FormMilestone } from "./types";
+import { ImgLink } from "components/ImgEditor";
+import { genFileSchema } from "schemas/file";
+import { richTextContent } from "schemas/shape";
+import { requiredString } from "schemas/string";
 import { SchemaShape } from "schemas/types";
 import { ImageMIMEType } from "types/lists";
-import { ImgLink } from "components/ImgEditor";
-import { RichTextContent } from "components/RichText/types";
-import { genFileSchema } from "schemas/file";
-import { requiredString } from "schemas/string";
+import { ObjectSchema, array, date, object } from "yup";
+import { FV, FormMilestone } from "./types";
 
 export const VALID_MIME_TYPES: ImageMIMEType[] = [
 	"image/jpeg",
@@ -25,10 +25,7 @@ const fileObj = object().shape<SchemaShape<ImgLink>>({
 
 const milesStoneSchema = object<any, SchemaShape<FormMilestone>>({
 	milestone_date: date().typeError("invalid date"),
-	milestone_description: string().max(
-		MAX_CHARS,
-		`max length is ${MAX_CHARS} chars`,
-	),
+	milestone_description: richTextContent({ maxChars: MAX_CHARS }),
 	milestone_title: requiredString,
 	milestone_media: fileObj,
 });
@@ -37,17 +34,7 @@ const milesStoneSchema = object<any, SchemaShape<FormMilestone>>({
 
 export const schema = object<any, SchemaShape<FV>>({
 	title: requiredString.trim(),
-	description: mixed<RichTextContent>()
-		.test({
-			name: "required",
-			message: "required",
-			test: (descr) => !!descr?.value,
-		})
-		.test({
-			name: "must be below character limit",
-			message: `max length is ${MAX_CHARS} chars`,
-			test: (descr) => (descr?.length || 0) <= MAX_CHARS,
-		}),
+	description: richTextContent({ maxChars: MAX_CHARS, required: true }),
 	image: fileObj,
 	milestones: array(milesStoneSchema),
 }) as ObjectSchema<FV>;

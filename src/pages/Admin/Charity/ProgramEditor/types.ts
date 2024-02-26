@@ -1,7 +1,7 @@
 import { ImgLink } from "components/ImgEditor";
-import { RichTextContent } from "components/RichText/types";
 import { OverrideProperties } from "type-fest";
 import { MileStone, Program } from "types/aws";
+import { RichTextContent } from "types/components";
 
 export type FormMilestone = OverrideProperties<
 	MileStone,
