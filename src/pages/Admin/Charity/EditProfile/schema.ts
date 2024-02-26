@@ -1,12 +1,12 @@
+import { ObjectSchema, array, object } from "yup";
+import { FV } from "./types";
+import { SchemaShape } from "schemas/types";
+import { ImageMIMEType } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
-import { MAX_SDGS } from "constants/unsdgs";
 import { genFileSchema } from "schemas/file";
 import { optionType, richTextContent } from "schemas/shape";
 import { requiredString, url } from "schemas/string";
-import { SchemaShape } from "schemas/types";
-import { ImageMIMEType } from "types/lists";
-import { ObjectSchema, array, object } from "yup";
-import { FV } from "./types";
+import { MAX_SDGS } from "constants/unsdgs";
 
 export const VALID_MIME_TYPES: ImageMIMEType[] = [
   "image/jpeg",

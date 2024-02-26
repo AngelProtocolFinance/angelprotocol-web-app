@@ -1,9 +1,9 @@
+import { lazy, mixed, object, string } from "yup";
+import { SchemaShape } from "./types";
 import { OptionType, RichTextContent } from "types/components";
 import type { TokenWithAmount as TWA } from "types/tx";
-import { lazy, mixed, object, string } from "yup";
 import { tokenConstraint } from "./number";
 import { requiredString } from "./string";
-import { SchemaShape } from "./types";
 
 type Key = keyof TWA;
 type Min = TWA["min_donation_amnt"];
@@ -33,7 +33,7 @@ export function richTextContent(
   options: {
     maxChars?: number;
     required?: boolean;
-  } = {},
+  } = {}
 ) {
   const { maxChars, required = false } = options;
 
