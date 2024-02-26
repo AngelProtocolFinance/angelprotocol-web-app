@@ -1,9 +1,9 @@
 import { SubmitStep } from "slices/donation";
 import Crypto from "./Crypto";
 import DAFCheckout from "./DAFCheckout";
-import PaypalCheckout from "./PaypalCheckout";
 import Stocks from "./Stocks";
 import StripeCheckout from "./StripeCheckout";
+import PaypalCheckout from "./StripeCheckout/Paypal";
 
 export default function Submit(props: SubmitStep) {
   if (props.details.method === "crypto") {

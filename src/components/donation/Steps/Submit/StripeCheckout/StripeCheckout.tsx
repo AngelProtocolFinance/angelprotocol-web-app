@@ -40,6 +40,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       amount={+details.amount}
       splitLiq={liquidSplitPct}
     >
+      <div>Express checkout</div>
       {isLoading ? (
         <Loader msg="Loading payment form.." />
       ) : isError || !clientSecret ? (
