@@ -17,21 +17,22 @@ import {
 type DonorOwner = { email: string };
 type EndowmentOwner = { endowmentId: string };
 
-type RecordOwner = DonorOwner | EndowmentOwner;
+type Args = (DonorOwner | EndowmentOwner) & {
+  type?: DonationsQueryParams["type"];
+};
 
-export default function usePaginatedDonationRecords<T extends RecordOwner>(
-  owner: T
-) {
+export default function usePaginatedDonationRecords<T extends Args>(args: T) {
   const dispatch = useSetter();
 
   const [query, setQuery] = useState<string>("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
-  const id: string = "endowmentId" in owner ? owner.endowmentId : owner.email;
+  const id: string = "endowmentId" in args ? args.endowmentId : args.email;
 
   const [params, setParams] = useState<DonationsQueryParams>({
     id,
     chain_id: chainIds.polygon,
+    type: args.type ?? "finalized",
   });
 
   const queryState = useDonationsQuery(params, {
