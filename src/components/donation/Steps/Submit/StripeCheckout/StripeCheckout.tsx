@@ -9,6 +9,7 @@ import Summary from "../../common/Summary";
 import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
+import Paypal from "./Paypal";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
@@ -40,7 +41,10 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       amount={+details.amount}
       splitLiq={liquidSplitPct}
     >
-      <div>Express checkout</div>
+      <div className="flex items-center">
+        <span>Express checkout:</span>
+        <Paypal {...props} />
+      </div>
       {isLoading ? (
         <Loader msg="Loading payment form.." />
       ) : isError || !clientSecret ? (
