@@ -6,7 +6,6 @@ import { DonationDetails, FormStep } from "slices/donation";
 import { DonaterConfigFromWidget } from "types/widget";
 import Crypto from "./Crypto";
 import Daf from "./Daf";
-import PayPal from "./PayPal";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
 
@@ -19,14 +18,12 @@ const tabIdx = (method?: DonationDetails["method"]) => {
   switch (method) {
     case "stripe":
       return 0;
-    case "paypal":
-      return 1;
     case "stocks":
-      return 2;
+      return 1;
     case "daf":
-      return 3;
+      return 2;
     case "crypto":
-      return 4;
+      return 3;
     //other methods doesn't have donate methods yet
     default:
       return 0;
@@ -96,16 +93,6 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
             step={state.step}
             details={
               state.details?.method === "stripe" ? state.details : undefined
-            }
-            widgetConfig={donaterConfig}
-          />
-        </Tab.Panel>
-        <Tab.Panel>
-          <PayPal
-            recipient={state.recipient}
-            step={state.step}
-            details={
-              state.details?.method === "paypal" ? state.details : undefined
             }
             widgetConfig={donaterConfig}
           />
