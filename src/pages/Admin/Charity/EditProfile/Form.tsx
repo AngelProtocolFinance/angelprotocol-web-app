@@ -15,7 +15,7 @@ import { Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
+import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import useEditProfile from "./useEditProfile";
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
@@ -95,7 +95,7 @@ export default function Form() {
         <RichTextEditor<FV>
           fieldName="overview"
           placeHolder="A short overview of your organization"
-          charLimit={4000}
+          charLimit={MAX_CHARS}
           classes={{
             container:
               "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
