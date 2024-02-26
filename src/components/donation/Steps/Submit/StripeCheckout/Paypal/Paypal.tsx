@@ -11,7 +11,7 @@ import Checkout from "./Checkout";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-export default function PaypalCheckout(props: PaypalCheckoutStep) {
+export default function Paypal(props: PaypalCheckoutStep) {
   const { details, recipient, liquidSplitPct } = props;
 
   const {
