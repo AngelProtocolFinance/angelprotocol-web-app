@@ -5,7 +5,7 @@ import { Props } from "./types";
 import "./richtext.css";
 
 export default function RichText(props: Props) {
-  const [numChars, setNumChars] = useState(props.content.length ?? 0);
+  const [numChars, setNumChars] = useState(0);
 
   const containerRef = useCallback((container: HTMLDivElement | null) => {
     if (!container) return;

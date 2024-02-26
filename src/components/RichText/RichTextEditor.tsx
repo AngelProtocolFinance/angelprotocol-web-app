@@ -14,7 +14,7 @@ export function RichTextEditor<T extends FieldValues>(
   props: {
     fieldName: Path<T>;
     classes?: EditorClasses & { error?: string };
-  } & Pick<Editable, "charLimit" | "placeHolder">,
+  } & Pick<Editable, "charLimit" | "placeHolder">
 ) {
   const {
     setError,

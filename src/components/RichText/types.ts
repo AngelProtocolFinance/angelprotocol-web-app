@@ -18,6 +18,6 @@ export type Editable = {
 export type EditorClasses = { container?: string; charCounter?: string };
 
 export type Props = (ReadOnly | Editable) & {
-  content: RichTextContent;
+  content: Pick<RichTextContent, "value">;
   classes?: EditorClasses;
 };
