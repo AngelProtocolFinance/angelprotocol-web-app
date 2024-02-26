@@ -23,7 +23,7 @@ export default function ProgramEditor() {
       <Context
         {...{
           title: "",
-          description: "",
+          description: { length: 0, value: "" },
           image: {
             name: "",
             publicUrl: "",
@@ -43,7 +43,7 @@ export default function ProgramEditor() {
         <Context
           {...{
             title: p.program_title,
-            description: p.program_description,
+            description: { value: p.program_description, length: 0 },
             image: {
               name: "",
               publicUrl: p.program_banner,

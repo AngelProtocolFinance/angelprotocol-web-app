@@ -5,7 +5,7 @@ type ReadOnly = {
 
 export type Editable = {
   readOnly?: never;
-  onChange(...event: any[]): void;
+  onChange(content: RichTextContent): void;
   onError(error: string): void;
   placeHolder?: string;
   charLimit?: number;
@@ -16,6 +16,11 @@ export type Editable = {
 export type EditorClasses = { container?: string; charCounter?: string };
 
 export type Props = (ReadOnly | Editable) & {
-  content: string;
+  content: RichTextContent;
   classes?: EditorClasses;
+};
+
+export type RichTextContent = {
+  value: string;
+  length: number;
 };
