@@ -2,8 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { FV } from "./types";
 import {
-	EndowmentProfileUpdate,
-	EndowmentProfile as TProfile,
+  EndowmentProfileUpdate,
+  EndowmentProfile as TProfile,
 } from "types/aws";
 import { useEndowment } from "services/aws/useEndowment";
 import { country } from "components/CountrySelector";
@@ -18,64 +18,64 @@ import { schema } from "./schema";
 import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
-	const { id } = useAdminContext();
-	const { data: profile, isLoading, isError, isFetching } = useEndowment(id);
+  const { id } = useAdminContext();
+  const { data: profile, isLoading, isError, isFetching } = useEndowment(id);
 
-	const content =
-		isLoading || isFetching ? (
-			<FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
-		) : isError || !profile ? (
-			<FormError errorMessage="Failed to load profile" />
-		) : (
-			<FormWithContext {...profile} />
-		);
+  const content =
+    isLoading || isFetching ? (
+      <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
+    ) : isError || !profile ? (
+      <FormError errorMessage="Failed to load profile" />
+    ) : (
+      <FormWithContext {...profile} />
+    );
 
-	return (
-		<>
-			<Seo title="Edit Profile" url={`${adminRoutes.edit_profile}/${id}`} />
-			{content}
-		</>
-	);
+  return (
+    <>
+      <Seo title="Edit Profile" url={`${adminRoutes.edit_profile}/${id}`} />
+      {content}
+    </>
+  );
 }
 
 function FormWithContext(props: TProfile & { id: number }) {
-	//
-	const init: EndowmentProfileUpdate = toProfileUpdate({
-		type: "initial",
-		data: { ...props, id: props.id },
-	});
+  //
+  const init: EndowmentProfileUpdate = toProfileUpdate({
+    type: "initial",
+    data: { ...props, id: props.id },
+  });
 
-	const defaults: FV = {
-		...init,
-		image: {
-			name: "",
-			publicUrl: props.image ?? "",
-			preview: props.image ?? "",
-		},
-		logo: { name: "", publicUrl: props.logo, preview: props.logo },
-		endow_designation: init.endow_designation
-			? { label: init.endow_designation, value: init.endow_designation }
-			: { label: "", value: "" },
-		hq_country: country(props.hq_country),
-		sdgs: init.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
-		active_in_countries: init.active_in_countries.map((x) => ({
-			label: x,
-			value: x,
-		})),
-		overview: { value: props.overview },
+  const defaults: FV = {
+    ...init,
+    image: {
+      name: "",
+      publicUrl: props.image ?? "",
+      preview: props.image ?? "",
+    },
+    logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    endow_designation: init.endow_designation
+      ? { label: init.endow_designation, value: init.endow_designation }
+      : { label: "", value: "" },
+    hq_country: country(props.hq_country),
+    sdgs: init.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
+    active_in_countries: init.active_in_countries.map((x) => ({
+      label: x,
+      value: x,
+    })),
+    overview: { value: props.overview },
 
-		//meta
-		initial: init,
-	};
+    //meta
+    initial: init,
+  };
 
-	const methods = useForm<FV>({
-		defaultValues: defaults,
-		resolver: yupResolver(schema),
-	});
+  const methods = useForm<FV>({
+    defaultValues: defaults,
+    resolver: yupResolver(schema),
+  });
 
-	return (
-		<FormProvider {...methods}>
-			<Form />
-		</FormProvider>
-	);
+  return (
+    <FormProvider {...methods}>
+      <Form />
+    </FormProvider>
+  );
 }

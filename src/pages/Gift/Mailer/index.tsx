@@ -6,24 +6,24 @@ import Form from "./Form";
 import { schema } from "./schema";
 
 export default function Mailer({ classes = "" }) {
-	const { state } = useLocation();
-	const _state = state as { secret: string } | null;
+  const { state } = useLocation();
+  const _state = state as { secret: string } | null;
 
-	const methods = useForm<FormValues>({
-		defaultValues: {
-			recipient: { name: "", email: "" },
-			message: { value: "" },
-			secret: _state?.secret,
-		},
-		resolver: yupResolver(schema),
-	});
+  const methods = useForm<FormValues>({
+    defaultValues: {
+      recipient: { name: "", email: "" },
+      message: { value: "" },
+      secret: _state?.secret,
+    },
+    resolver: yupResolver(schema),
+  });
 
-	// if (!_state) {
-	//   return <Navigate to={`../${routes.index}`} />;
-	// }
-	return (
-		<FormProvider {...methods}>
-			<Form classes={classes} />
-		</FormProvider>
-	);
+  // if (!_state) {
+  //   return <Navigate to={`../${routes.index}`} />;
+  // }
+  return (
+    <FormProvider {...methods}>
+      <Form classes={classes} />
+    </FormProvider>
+  );
 }
