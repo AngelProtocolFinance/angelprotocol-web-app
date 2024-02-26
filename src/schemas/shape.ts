@@ -19,7 +19,7 @@ export const tokenShape = (withMin = true): SchemaShape<TWA> => ({
           return withMin && !!minAmount
             ? schema.min(minAmount || 0, `amount must be at least ${minAmount}`)
             : schema;
-        }),
+        })
   ),
 });
 

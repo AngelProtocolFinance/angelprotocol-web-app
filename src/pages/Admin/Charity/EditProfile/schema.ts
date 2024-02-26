@@ -16,7 +16,7 @@ export const VALID_MIME_TYPES: ImageMIMEType[] = [
 ];
 
 export const MAX_SIZE_IN_BYTES = 1e6;
-export const MAX_CHARS = 4000
+export const MAX_CHARS = 4000;
 
 // we only need to validate the pre-crop image and if we confirm it is valid
 // we can be sure that the cropped image is valid too
@@ -46,5 +46,5 @@ export const schema = object<any, SchemaShape<FV>>({
     youtube: url,
     tiktok: url,
   }),
-  overview: richTextContent({ maxChars: MAX_CHARS })
+  overview: richTextContent({ maxChars: MAX_CHARS }),
 }) as ObjectSchema<FV>;

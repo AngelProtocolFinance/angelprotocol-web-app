@@ -7,7 +7,7 @@ import { schema } from "./schema";
 
 export default function Mailer({ classes = "" }) {
   const { state } = useLocation();
-  const _state = state as { secret: string } | null;
+  let _state = state as { secret: string } | null;
 
   const methods = useForm<FormValues>({
     defaultValues: {
