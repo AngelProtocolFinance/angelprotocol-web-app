@@ -41,9 +41,14 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       amount={+details.amount}
       splitLiq={liquidSplitPct}
     >
-      <div className="flex items-center">
-        <span>Express checkout:</span>
-        <Paypal {...props} />
+      <div className="mb-2">
+        <p className="mb-2 font-medium">Express checkout</p>
+        <div className="flex items-center">
+          <Paypal {...props} />
+        </div>
+      </div>
+      <div className="relative border border-gray-l4 h-px w-full mb-8 mt-4 grid place-items-center">
+        <span className="absolute bg-white px-4 text-gray text-xs">OR</span>
       </div>
       {isLoading ? (
         <Loader msg="Loading payment form.." />

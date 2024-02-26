@@ -27,9 +27,9 @@ export default function Paypal(props: StripeCheckoutStep) {
   return (
     <>
       {isLoading ? (
-        <ContentLoader className="rounded h-14 w-full" />
+        <ContentLoader className="rounded h-10 w-40" />
       ) : isError || !orderId ? (
-        <Err error={error} />
+        <div className="rounded h-10 w-40 border border-red bg-red-l5" />
       ) : (
         <PayPalScriptProvider
           options={{
@@ -40,7 +40,7 @@ export default function Paypal(props: StripeCheckoutStep) {
             disableFunding: "card,venmo",
           }}
         >
-          <div className="grid gap-5 place-items-center">
+          <div className="flex items-center gap-2">
             <Checkout orderId={orderId} source={details.source} />
           </div>
         </PayPalScriptProvider>
