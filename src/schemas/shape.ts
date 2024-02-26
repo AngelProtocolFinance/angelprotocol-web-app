@@ -43,14 +43,14 @@ export function richTextContent(
     schema = schema.test({
       name: "must be below character limit",
       message: `max length is ${maxChars} chars`,
-      test: (descr) => (descr?.length || 0) <= maxChars,
+      test: (content) => (content?.length || 0) <= maxChars,
     });
   }
   if (required) {
     schema = schema.test({
       name: "required",
       message: "required",
-      test: (descr) => !!descr?.value,
+      test: (content) => !!content?.value,
     });
   }
 
