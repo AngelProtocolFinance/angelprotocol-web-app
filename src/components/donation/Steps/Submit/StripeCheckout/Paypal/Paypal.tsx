@@ -3,7 +3,6 @@ import ContentLoader from "components/ContentLoader";
 import { PAYPAL_CLIENT_ID } from "constants/env";
 import { usePaypalOrderQuery } from "services/apes";
 import { StripeCheckoutStep } from "slices/donation";
-import Err from "../../Err";
 import Checkout from "./Checkout";
 
 // Followed Stripe's custom flow docs
@@ -15,7 +14,6 @@ export default function Paypal(props: StripeCheckoutStep) {
     data: orderId,
     isLoading,
     isError,
-    error,
   } = usePaypalOrderQuery({
     amount: +details.amount,
     currency: details.currency.code,
