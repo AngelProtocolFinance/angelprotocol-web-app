@@ -55,11 +55,6 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <span>Card</span>
         </Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>
-          <Icon type="Paypal" size={17} />
-          <span>Paypal</span>
-        </Tab>
-
-        <Tab className={({ selected }) => tabClasses(selected)}>
           <Icon type="Stocks" size={18} />
           <span>Stocks</span>
         </Tab>
