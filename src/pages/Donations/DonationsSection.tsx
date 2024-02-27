@@ -61,7 +61,7 @@ export default function DonationsSection(
         />
       </div>
       <Filter
-        isDisabled={isLoadingOrError}
+        isDisabled={isLoading || isLoadingNextPage}
         setParams={setParams}
         classes="max-lg:col-span-full max-lg:w-full"
       />
