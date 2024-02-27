@@ -18,6 +18,11 @@ export type Editable = {
 export type EditorClasses = { container?: string; charCounter?: string };
 
 export type Props = (ReadOnly | Editable) & {
+  /**
+   * Setting this type to be compatible with RichTextContent makes it
+   * unnecessary for RichTextEditor to define complicated type to make
+   * its value content value compatible with type of RichText.content.
+   */
   content: Pick<RichTextContent, "value">;
   classes?: EditorClasses;
 };
