@@ -55,7 +55,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
     setParams((prev) => ({
       id: prev.id,
       chain_id: prev.chain_id,
-      status: prev.status
+      status: prev.status,
     }));
     buttonRef.current?.click();
   };

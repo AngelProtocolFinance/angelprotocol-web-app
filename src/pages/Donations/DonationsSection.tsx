@@ -10,7 +10,7 @@ import NoDonations from "./NoDonations";
 import Table from "./Table";
 
 export default function DonationsSection(
-  props: ReturnType<typeof usePaginatedDonationRecords<{ email: string; }>> & {
+  props: ReturnType<typeof usePaginatedDonationRecords<{ email: string }>> & {
     title: string;
   }
 ) {
@@ -104,7 +104,7 @@ export default function DonationsSection(
   );
 }
 
-const csvHeaders: { key: keyof DonationMadeByDonor; label: string; }[] = [
+const csvHeaders: { key: keyof DonationMadeByDonor; label: string }[] = [
   { key: "amount", label: "Amount" },
   { key: "usdValue", label: "USD Value" },
   { key: "symbol", label: "Currency" },
