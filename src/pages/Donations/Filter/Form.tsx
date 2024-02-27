@@ -1,17 +1,17 @@
-import { Popover } from "@headlessui/react"
-import Icon from "components/Icon"
-import { DateInput } from "components/form"
-import { FC, FormEventHandler } from "react"
-import { FormValues as FV } from "./types"
+import { Popover } from "@headlessui/react";
+import Icon from "components/Icon";
+import { DateInput } from "components/form";
+import { FC, FormEventHandler } from "react";
+import { FormValues as FV } from "./types";
 
 // import CurrencyDropdown from "./CurrencyDropdown";
 // import NetworkDropdown from "./NetworkDropdown";
 
 type Props = {
-  submit: FormEventHandler<HTMLFormElement>
-  onReset: FormEventHandler<HTMLFormElement>
-  classes?: string
-}
+  submit: FormEventHandler<HTMLFormElement>;
+  onReset: FormEventHandler<HTMLFormElement>;
+  classes?: string;
+};
 
 const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
   return (
@@ -53,6 +53,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
         </button>
       </div>
     </Popover.Panel>
-  )
-}
-export default Form
+  );
+};
+
+export default Form;

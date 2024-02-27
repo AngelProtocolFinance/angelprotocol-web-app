@@ -1,24 +1,24 @@
-import { Popover } from "@headlessui/react"
-import { yupResolver } from "@hookform/resolvers/yup"
-import Icon, { DrawerIcon } from "components/Icon"
-import { dateToFormFormat } from "components/form"
-import { cleanObject } from "helpers/cleanObject"
-import { weeksAgo } from "helpers/weeksAgo"
-import { FormEventHandler, useRef } from "react"
-import { FormProvider, useForm } from "react-hook-form"
-import { DonationsQueryParams } from "types/aws"
-import Form from "./Form"
-import { schema } from "./schema"
-import { FormValues as FV } from "./types"
+import { Popover } from "@headlessui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
+import Icon, { DrawerIcon } from "components/Icon";
+import { dateToFormFormat } from "components/form";
+import { cleanObject } from "helpers/cleanObject";
+import { weeksAgo } from "helpers/weeksAgo";
+import { FormEventHandler, useRef } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { DonationsQueryParams } from "types/aws";
+import Form from "./Form";
+import { schema } from "./schema";
+import { FormValues as FV } from "./types";
 
 type Props = {
-  classes?: string
-  setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>
-  isDisabled: boolean
-}
+  classes?: string;
+  setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
+  isDisabled: boolean;
+};
 
 export default function Filter({ setParams, classes = "", isDisabled }: Props) {
-  const buttonRef = useRef<HTMLButtonElement | null>(null)
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
     mode: "onChange",
@@ -31,9 +31,9 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
     },
-  })
+  });
 
-  const { handleSubmit, reset } = methods
+  const { handleSubmit, reset } = methods;
 
   async function submit(data: FV) {
     setParams((prev) => ({
@@ -46,19 +46,19 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
         chainName: data.network.value,
         denomination: data.currency.value,
       }),
-    }))
-    buttonRef.current?.click()
+    }));
+    buttonRef.current?.click();
   }
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
-    reset()
+    reset();
     setParams((prev) => ({
       id: prev.id,
       chain_id: prev.chain_id,
       status: prev.status
-    }))
-    buttonRef.current?.click()
-  }
+    }));
+    buttonRef.current?.click();
+  };
   return (
     <Popover className={`${classes} flex relative items-center`}>
       <Popover.Button
@@ -85,5 +85,5 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
         />
       </FormProvider>
     </Popover>
-  )
+  );
 }

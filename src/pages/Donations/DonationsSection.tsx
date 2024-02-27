@@ -1,17 +1,17 @@
-import CsvExporter from "components/CsvExporter"
-import Icon from "components/Icon"
-import QueryLoader from "components/QueryLoader"
-import { isEmpty } from "helpers"
-import { usePaginatedDonationRecords } from "services/apes"
-import { DonationMadeByDonor } from "types/aws"
-import Filter from "./Filter"
-import MobileTable from "./MobileTable"
-import NoDonations from "./NoDonations"
-import Table from "./Table"
+import CsvExporter from "components/CsvExporter";
+import Icon from "components/Icon";
+import QueryLoader from "components/QueryLoader";
+import { isEmpty } from "helpers";
+import { usePaginatedDonationRecords } from "services/apes";
+import { DonationMadeByDonor } from "types/aws";
+import Filter from "./Filter";
+import MobileTable from "./MobileTable";
+import NoDonations from "./NoDonations";
+import Table from "./Table";
 
 export default function DonationsSection(
-  props: ReturnType<typeof usePaginatedDonationRecords<{ email: string }>> & {
-    title: string
+  props: ReturnType<typeof usePaginatedDonationRecords<{ email: string; }>> & {
+    title: string;
   }
 ) {
   const {
@@ -27,9 +27,9 @@ export default function DonationsSection(
     loadNextPage,
     onQueryChange,
     setParams,
-  } = props
+  } = props;
 
-  const isLoadingOrError = isLoading || isLoadingNextPage || isError
+  const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container">
@@ -101,13 +101,13 @@ export default function DonationsSection(
         )}
       </QueryLoader>
     </div>
-  )
+  );
 }
 
-const csvHeaders: { key: keyof DonationMadeByDonor; label: string }[] = [
+const csvHeaders: { key: keyof DonationMadeByDonor; label: string; }[] = [
   { key: "amount", label: "Amount" },
   { key: "usdValue", label: "USD Value" },
   { key: "symbol", label: "Currency" },
   { key: "date", label: "Date" },
   { key: "hash", label: "Transaction Hash" },
-]
+];
