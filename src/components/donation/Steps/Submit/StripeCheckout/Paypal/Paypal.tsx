@@ -22,27 +22,25 @@ export default function Paypal(props: StripeCheckoutStep) {
     splitLiq: liquidSplitPct.toString(),
   });
 
-  return (
-    <>
-      {isLoading ? (
-        <ContentLoader className="rounded h-10 w-40" />
-      ) : isError || !orderId ? (
-        <div className="rounded h-10 w-40 border border-red bg-red-l5" />
-      ) : (
-        <PayPalScriptProvider
-          options={{
-            clientId: PAYPAL_CLIENT_ID,
-            commit: true,
-            currency: "USD",
-            enableFunding: "paylater",
-            disableFunding: "card,venmo",
-          }}
-        >
-          <div className="flex items-center gap-2">
-            <Checkout orderId={orderId} source={details.source} />
-          </div>
-        </PayPalScriptProvider>
-      )}
-    </>
+  return isLoading ? (
+    <ContentLoader className="rounded h-10 w-40" />
+  ) : isError || !orderId ? (
+    <div className="rounded h-10 w-40 border border-red bg-red-l5 text-xs grid place-items-center text-red-d1">
+      Failed to load Paypal
+    </div>
+  ) : (
+    <PayPalScriptProvider
+      options={{
+        clientId: PAYPAL_CLIENT_ID,
+        commit: true,
+        currency: "USD",
+        enableFunding: "paylater",
+        disableFunding: "card,venmo",
+      }}
+    >
+      <div className="flex items-center gap-2">
+        <Checkout orderId={orderId} source={details.source} />
+      </div>
+    </PayPalScriptProvider>
   );
 }
