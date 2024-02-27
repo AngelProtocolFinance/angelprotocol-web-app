@@ -20,6 +20,10 @@ type EndowmentOwner = { endowmentId: string };
 type Args = (DonorOwner | EndowmentOwner) &
   Pick<DonationsQueryParams, "status">;
 
+/**
+ * By default loads finalized donations, unless the `status` field is
+ * explicitly set to "PENDING"
+ */
 export default function usePaginatedDonationRecords<T extends Args>(args: T) {
   const dispatch = useSetter();
 
