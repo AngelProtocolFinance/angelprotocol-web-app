@@ -48,10 +48,6 @@ export default function RichText(props: Props) {
         const numChars = quill.getLength() - 1;
         setNumChars(numChars);
 
-        if (props.charLimit && numChars > props.charLimit) {
-          return props.onError(`character limit reached`);
-        }
-
         props.onChange({
           //quill clean state has residual `\n`
           value: numChars <= 0 ? "" : JSON.stringify(quill.getContents()),
