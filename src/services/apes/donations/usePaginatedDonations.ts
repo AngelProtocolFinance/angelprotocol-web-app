@@ -55,7 +55,8 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
     },
   });
 
-  const { isLoading, isFetching, isError, data, originalArgs } = queryState;
+  const { isLoading, isFetching, isError, error, data, originalArgs } =
+    queryState;
 
   const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
     useLazyDonationsQuery();
@@ -91,6 +92,7 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
       : PaginatedAWSQueryRes<DonationMadeByDonor[]>,
     hasMore,
     isError: isError || isErrorNextPage,
+    error: error,
     isLoading: isLoading || isDebouncing,
     isFetching,
     isLoadingNextPage,
