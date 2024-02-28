@@ -25,9 +25,7 @@ export default function Paypal(props: StripeCheckoutStep) {
   return isLoading ? (
     <ContentLoader className="rounded h-10 w-40" />
   ) : isError || !orderId ? (
-    <div className="rounded h-10 w-40 border border-red bg-red-l5 text-xs grid place-items-center text-red-d1">
-      Failed to load Paypal
-    </div>
+    <div id="paypal-failure-fallback" className="hidden" />
   ) : (
     <PayPalScriptProvider
       options={{
