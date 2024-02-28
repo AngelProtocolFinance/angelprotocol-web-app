@@ -1,7 +1,7 @@
 import { ImgLink } from "components/ImgEditor";
 import { MAX_SDGS } from "constants/unsdgs";
 import { genFileSchema } from "schemas/file";
-import { optionType } from "schemas/shape";
+import { optionType, richTextContent } from "schemas/shape";
 import { url, requiredString } from "schemas/string";
 import { SchemaShape } from "schemas/types";
 import { ImageMIMEType } from "types/lists";
@@ -16,6 +16,7 @@ export const VALID_MIME_TYPES: ImageMIMEType[] = [
 ];
 
 export const MAX_SIZE_IN_BYTES = 1e6;
+export const MAX_CHARS = 4000;
 
 // we only need to validate the pre-crop image and if we confirm it is valid
 // we can be sure that the cropped image is valid too
@@ -46,4 +47,5 @@ export const schema = object<any, SchemaShape<FV>>({
     youtube: url,
     tiktok: url,
   }),
+  overview: richTextContent({ maxChars: MAX_CHARS }),
 }) as ObjectSchema<FV>;

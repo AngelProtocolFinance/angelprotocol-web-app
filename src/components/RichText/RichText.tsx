@@ -22,7 +22,7 @@ export default function RichText(props: Props) {
     });
 
     try {
-      quill.setContents(JSON.parse(props.content));
+      quill.setContents(JSON.parse(props.content.value));
     } catch (_) {
       //previous rich text format based on draft-js will throw parse error
       //in this case just set it to blank
@@ -38,7 +38,7 @@ export default function RichText(props: Props) {
       will be blocked by validation on re-submit
       */
       if (quill.getLength() <= 1) {
-        props.onChange("");
+        props.onChange({ value: "", length: 0 });
       }
 
       quill.on("editor-change", function handleChange() {
@@ -46,14 +46,11 @@ export default function RichText(props: Props) {
         const numChars = quill.getLength() - 1;
         setNumChars(numChars);
 
-        if (props.charLimit && numChars > props.charLimit) {
-          return props.onError(`character limit reached`);
-        }
-
-        props.onChange(
+        props.onChange({
           //quill clean state has residual `\n`
-          numChars <= 0 ? "" : JSON.stringify(quill.getContents())
-        );
+          value: numChars <= 0 ? "" : JSON.stringify(quill.getContents()),
+          length: numChars,
+        });
       });
     }
     //eslint-disable-next-line
