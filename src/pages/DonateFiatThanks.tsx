@@ -1,7 +1,7 @@
 import char from "assets/images/celebrating-character.png";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import SignupForm from "components/SignupForm/SignupForm";
+import SignupForm from "components/Signup/SignupForm";
 import { DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
