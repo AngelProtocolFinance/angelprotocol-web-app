@@ -1,6 +1,6 @@
-import { lazy, object, string } from "yup";
+import { lazy, mixed, object, string } from "yup";
 import { SchemaShape } from "./types";
-import { OptionType } from "types/components";
+import { OptionType, RichTextContent } from "types/components";
 import type { TokenWithAmount as TWA } from "types/tx";
 import { tokenConstraint } from "./number";
 import { requiredString } from "./string";
@@ -28,3 +28,31 @@ export const optionType = ({ required } = { required: false }) =>
     label: required ? requiredString : string(),
     value: required ? requiredString : string(),
   });
+
+export function richTextContent(
+  options: {
+    maxChars?: number;
+    required?: boolean;
+  } = {}
+) {
+  const { maxChars, required = false } = options;
+
+  let schema = mixed<RichTextContent>();
+
+  if (maxChars != null) {
+    schema = schema.test({
+      name: "must be below character limit",
+      message: `max length is ${maxChars} chars`,
+      test: (content) => (content?.length || 0) <= maxChars,
+    });
+  }
+  if (required) {
+    schema = schema.test({
+      name: "required",
+      message: "required",
+      test: (content) => !!content?.value,
+    });
+  }
+
+  return schema;
+}

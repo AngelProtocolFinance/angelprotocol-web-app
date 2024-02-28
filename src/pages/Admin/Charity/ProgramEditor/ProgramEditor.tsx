@@ -23,7 +23,7 @@ export default function ProgramEditor() {
       <Context
         {...{
           title: "",
-          description: "",
+          description: { value: "" },
           image: {
             name: "",
             publicUrl: "",
@@ -43,7 +43,7 @@ export default function ProgramEditor() {
         <Context
           {...{
             title: p.program_title,
-            description: p.program_description,
+            description: { value: p.program_description },
             image: {
               name: "",
               publicUrl: p.program_banner,
@@ -58,6 +58,7 @@ export default function ProgramEditor() {
                 preview: m.milestone_media,
                 publicUrl: m.milestone_media,
               },
+              milestone_description: { value: m.milestone_description },
               idx,
             })),
           }}

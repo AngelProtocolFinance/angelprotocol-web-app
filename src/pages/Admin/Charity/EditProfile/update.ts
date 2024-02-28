@@ -58,5 +58,6 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
     endow_designation: fv.endow_designation.value,
     sdgs: fv.sdgs.map((opt) => opt.value),
     active_in_countries: fv.active_in_countries.map((opt) => opt.value),
+    overview: fv.overview.value,
   };
 }
