@@ -30,8 +30,14 @@ export default function Checkout({ orderId, source }: Props) {
       {isPending && <ContentLoader className="rounded h-10 w-40" />}
       {!isPending && (
         <PayPalButtons
-          style={{ color: "white", height: 40 }}
-          className="w-40"
+          style={{
+            color: "gold",
+            layout: "horizontal",
+            shape: "rect",
+            label: "paypal",
+            height: 40,
+          }}
+          className="w-40 flex gap-2"
           disabled={isSubmitting}
           onCancel={() => setSubmitting(false)}
           onError={(error) => {
