@@ -17,7 +17,6 @@ export function RichTextEditor<T extends FieldValues>(
   } & Pick<Editable, "charLimit" | "placeHolder">
 ) {
   const {
-    setError,
     formState: { isSubmitting },
   } = useFormContext<T>();
   const {
@@ -32,9 +31,6 @@ export function RichTextEditor<T extends FieldValues>(
       <RichText
         content={value}
         onChange={onChange}
-        onError={(error) => {
-          setError(props.fieldName, { message: error });
-        }}
         placeHolder={props.placeHolder}
         charLimit={props.charLimit}
         classes={props.classes}
