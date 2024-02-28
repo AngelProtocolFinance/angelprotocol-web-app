@@ -39,12 +39,13 @@ export default function SignupForm(props: Props) {
 
   return (
     <Form
+      className="grid w-96 mt-4"
       disabled={isSubmitting}
       onSubmit={handleSubmit(async (fv) => {
         console.log({ fv });
         try {
           const { nextStep } = await signUp({
-            username: "justin@better.giving",
+            username: "testhello123@better.giving",
             password: fv.password,
             options: {
               userAttributes: {
@@ -69,7 +70,6 @@ export default function SignupForm(props: Props) {
           handleError(message);
         }
       })}
-      className="grid w-96 mt-4"
     >
       <div className='grid grid-cols-[auto_1fr_auto] border border-prim rounded items-center px-3 has-[:focus]:ring-2 ring-blue ring-offset-1  has-[input[aria-invalid="true"]]:border-red has-[:disabled]:bg-gray-l3'>
         <Icon type="Padlock" className="mr-3 text-gray" />

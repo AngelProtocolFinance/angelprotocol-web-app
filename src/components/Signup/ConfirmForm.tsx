@@ -28,6 +28,7 @@ export default function ConfirmForm(props: Props) {
 
   return (
     <Form
+      className="grid w-96 mt-4"
       disabled={isSubmitting || isRequestingNewCode}
       methods={methods}
       onSubmit={handleSubmit(async (fv) => {
@@ -55,18 +56,19 @@ export default function ConfirmForm(props: Props) {
       <p>We emailed you a confirmation code.</p>
       <p className="text-sm text-gray-d1 mt-1 mb-4">
         To continue, enter the code we emailed to{" "}
-        {obscured(props.codeRecipientEmail)}
-        <span>{props.codeRecipientEmail}</span>. It may take a couple of minutes
-        to arrive.
+        <span className="font-medium">{props.codeRecipientEmail}</span>. It may
+        take a couple of minutes to arrive.
       </p>
-      <Field<FV> name="code" label="Confirmation code" />
+      <Field<FV> name="code" label="Confirmation code" required />
       <button
         type="submit"
-        className="btn-blue px-4 py-2 rounded-full normal-case"
+        className="btn-blue px-4 py-2 rounded-full normal-case mt-6"
       >
-        confirm
+        Confirm
       </button>
       <button
+        type="button"
+        className="btn-outline px-4 py-2 rounded-full normal-case mt-3"
         onClick={async () => {
           try {
             setIsRequestingNewCode(true);
@@ -82,8 +84,6 @@ export default function ConfirmForm(props: Props) {
             setIsRequestingNewCode(false);
           }
         }}
-        type="button"
-        className="btn-outline px-4 py-2 rounded-full normal-case"
       >
         Resend code
       </button>
