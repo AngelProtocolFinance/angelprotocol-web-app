@@ -55,7 +55,7 @@ export default function DonateFiatThanks({
         page.
       </p>
 
-      <Signup />
+      <Signup classes="w-96 mt-4" />
       {!widgetVersion && (
         <Link
           to={appRoutes.marketplace}

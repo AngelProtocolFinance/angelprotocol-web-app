@@ -12,6 +12,7 @@ import { CodeRecipientEmail, StateSetter } from "./types";
 type Props = {
   codeRecipientEmail: CodeRecipientEmail;
   setSignupState: StateSetter;
+  classes?: string;
 };
 export default function ConfirmForm(props: Props) {
   const { handleError } = useErrorContext();
@@ -28,7 +29,7 @@ export default function ConfirmForm(props: Props) {
 
   return (
     <Form
-      className="grid w-96 mt-4"
+      className={`${props.classes ?? ""} grid`}
       disabled={isSubmitting || isRequestingNewCode}
       methods={methods}
       onSubmit={handleSubmit(async (fv) => {

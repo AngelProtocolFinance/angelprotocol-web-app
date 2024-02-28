@@ -15,6 +15,7 @@ type Props = {
   firstName: string;
   lastName: string;
   setSignupState: StateSetter;
+  classes?: string;
 };
 
 export default function SignupForm(props: Props) {
@@ -42,10 +43,9 @@ export default function SignupForm(props: Props) {
 
   return (
     <Form
-      className="grid w-96 mt-4"
+      className={`${props.classes ?? ""} grid`}
       disabled={isSubmitting}
       onSubmit={handleSubmit(async (fv) => {
-        console.log({ fv });
         try {
           const { nextStep } = await signUp({
             username: props.email,
