@@ -2,7 +2,7 @@ import { FormHTMLAttributes, forwardRef } from "react";
 import { FormProvider, UseFormReturn } from "react-hook-form";
 
 type Props = FormHTMLAttributes<HTMLFormElement> & {
-  methods?: UseFormReturn;
+  methods?: UseFormReturn<any, any, any>;
   disabled?: boolean;
 };
 export default forwardRef<HTMLFormElement, Props>(function Form(

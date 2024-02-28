@@ -8,8 +8,13 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
+import { StateSetter } from "./types";
 
-export default function SignupForm() {
+type Props = {
+  setSignupState: StateSetter;
+};
+
+export default function SignupForm(props: Props) {
   const { handleError } = useErrorContext();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
@@ -38,7 +43,7 @@ export default function SignupForm() {
       onSubmit={handleSubmit(async (fv) => {
         console.log({ fv });
         try {
-          await signUp({
+          const { nextStep } = await signUp({
             username: "justin@better.giving",
             password: fv.password,
             options: {
@@ -46,7 +51,17 @@ export default function SignupForm() {
                 family_name: "testfamily",
                 given_name: "testgiven",
               },
+              autoSignIn: false,
             },
+          });
+
+          //per cognito config
+          if (nextStep.signUpStep !== "CONFIRM_SIGN_UP") throw "";
+          if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL") throw "";
+          if (!nextStep.codeDeliveryDetails.destination) throw "";
+
+          props.setSignupState({
+            codeRecipientEmail: nextStep.codeDeliveryDetails.destination,
           });
         } catch (err) {
           const message =
@@ -80,7 +95,7 @@ export default function SignupForm() {
 
       <button
         type="submit"
-        className="btn-blue rounded-full text-lg normal-case px-4 w-full mt-4"
+        className="btn-blue rounded-full normal-case px-4 w-full mt-4"
       >
         {isSubmitting ? "Submitting..." : "Create account"}
       </button>
