@@ -6,7 +6,15 @@ import { SignupState } from "./types";
 export default function Signup() {
   const [state, setState] = useState<SignupState>("init");
 
-  if (state === "init") return <SignupForm setSignupState={setState} />;
+  if (state === "init")
+    return (
+      <SignupForm
+        setSignupState={setState}
+        firstName="testfirst"
+        lastName="testlast"
+        email="testttestx123@gmail.com"
+      />
+    );
   if (state === "success") return <p>login!!</p>;
 
   return (

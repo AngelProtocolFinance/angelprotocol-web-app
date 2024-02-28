@@ -12,7 +12,9 @@ export default forwardRef<HTMLFormElement, Props>(function Form(
   const form = (
     <form ref={ref} {...props}>
       {disabled ? (
-        <fieldset disabled={disabled}>{children}</fieldset>
+        <fieldset disabled={disabled} className="contents">
+          {children}
+        </fieldset>
       ) : (
         children
       )}

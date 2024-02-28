@@ -11,6 +11,9 @@ import { object } from "yup";
 import { StateSetter } from "./types";
 
 type Props = {
+  email: string;
+  firstName: string;
+  lastName: string;
   setSignupState: StateSetter;
 };
 
@@ -45,12 +48,12 @@ export default function SignupForm(props: Props) {
         console.log({ fv });
         try {
           const { nextStep } = await signUp({
-            username: "testhello123@better.giving",
+            username: props.email,
             password: fv.password,
             options: {
               userAttributes: {
-                family_name: "testfamily",
-                given_name: "testgiven",
+                given_name: props.firstName,
+                family_name: props.lastName,
               },
               autoSignIn: false,
             },
@@ -62,7 +65,10 @@ export default function SignupForm(props: Props) {
           if (!nextStep.codeDeliveryDetails.destination) throw "";
 
           props.setSignupState({
-            codeRecipientEmail: nextStep.codeDeliveryDetails.destination,
+            codeRecipientEmail: {
+              raw: props.email,
+              obscured: nextStep.codeDeliveryDetails.destination,
+            },
           });
         } catch (err) {
           const message =

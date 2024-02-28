@@ -7,10 +7,10 @@ import { useState } from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
-import { StateSetter } from "./types";
+import { CodeRecipientEmail, StateSetter } from "./types";
 
 type Props = {
-  codeRecipientEmail: string;
+  codeRecipientEmail: CodeRecipientEmail;
   setSignupState: StateSetter;
 };
 export default function ConfirmForm(props: Props) {
@@ -34,7 +34,7 @@ export default function ConfirmForm(props: Props) {
       onSubmit={handleSubmit(async (fv) => {
         try {
           const result = await confirmSignUp({
-            username: props.codeRecipientEmail,
+            username: props.codeRecipientEmail.raw,
             confirmationCode: fv.code,
           });
 
@@ -56,8 +56,8 @@ export default function ConfirmForm(props: Props) {
       <p>We emailed you a confirmation code.</p>
       <p className="text-sm text-gray-d1 mt-1 mb-4">
         To continue, enter the code we emailed to{" "}
-        <span className="font-medium">{props.codeRecipientEmail}</span>. It may
-        take a couple of minutes to arrive.
+        <span className="font-medium">{props.codeRecipientEmail.obscured}</span>
+        . It may take a couple of minutes to arrive.
       </p>
       <Field<FV> name="code" label="Confirmation code" required />
       <button
@@ -74,8 +74,10 @@ export default function ConfirmForm(props: Props) {
             setIsRequestingNewCode(true);
             //no need to inspect result
             await resendSignUpCode({
-              username: props.codeRecipientEmail,
+              username: props.codeRecipientEmail.raw,
             });
+
+            return alert("New code has been sent to your email.");
           } catch (err) {
             const message =
               err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
@@ -89,17 +91,4 @@ export default function ConfirmForm(props: Props) {
       </button>
     </Form>
   );
-}
-
-function obscured(email: string) {
-  let [local, domain] = email.split("@");
-
-  const localLength = local.length;
-
-  const obscuredLocalPart =
-    local.charAt(0) +
-    "*".repeat(localLength - 2) +
-    local.charAt(localLength - 1);
-
-  return `${obscuredLocalPart}@${domain}`;
 }
