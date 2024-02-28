@@ -1,15 +1,20 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { AuthError, signUp } from "aws-amplify/auth";
 import Icon from "components/Icon";
+import { Form } from "components/form";
+import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
 
 export default function SignupForm() {
+  const { handleError } = useErrorContext();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     handleSubmit,
   } = useForm({
     resolver: yupResolver(
@@ -28,16 +33,35 @@ export default function SignupForm() {
   });
 
   return (
-    <form
-      onSubmit={handleSubmit((fv) => console.log({ fv }))}
+    <Form
+      disabled={isSubmitting}
+      onSubmit={handleSubmit(async (fv) => {
+        console.log({ fv });
+        try {
+          await signUp({
+            username: "justin@better.giving",
+            password: fv.password,
+            options: {
+              userAttributes: {
+                family_name: "testfamily",
+                given_name: "testgiven",
+              },
+            },
+          });
+        } catch (err) {
+          const message =
+            err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
+          handleError(message);
+        }
+      })}
       className="grid w-96 mt-4"
     >
-      <div className='grid grid-cols-[auto_1fr_auto] border border-prim rounded items-center px-3 has-[:focus]:ring-2 ring-blue ring-offset-1  has-[input[aria-invalid="true"]]:border-red'>
+      <div className='grid grid-cols-[auto_1fr_auto] border border-prim rounded items-center px-3 has-[:focus]:ring-2 ring-blue ring-offset-1  has-[input[aria-invalid="true"]]:border-red has-[:disabled]:bg-gray-l3'>
         <Icon type="Padlock" className="mr-3 text-gray" />
         <input
           {...register("password")}
           type={isPasswordShown ? "text" : "password"}
-          className="h-full focus:outline-none"
+          className="h-full focus:outline-none bg-transparent"
           placeholder="Create password"
           aria-invalid={!!errors.password?.message}
         />
@@ -58,8 +82,8 @@ export default function SignupForm() {
         type="submit"
         className="btn-blue rounded-full text-lg normal-case px-4 w-full mt-4"
       >
-        Create account
+        {isSubmitting ? "Submitting..." : "Create account"}
       </button>
-    </form>
+    </Form>
   );
 }
