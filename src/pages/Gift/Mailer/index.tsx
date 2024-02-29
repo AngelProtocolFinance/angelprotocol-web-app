@@ -12,7 +12,7 @@ export default function Mailer({ classes = "" }) {
   const methods = useForm<FormValues>({
     defaultValues: {
       recipient: { name: "", email: "" },
-      message: "",
+      message: { value: "" },
       secret: _state?.secret,
     },
     resolver: yupResolver(schema),

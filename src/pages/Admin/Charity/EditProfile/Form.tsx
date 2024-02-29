@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 import { EndowDesignation } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
+import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import { FV } from "./types";
 import useEditProfile from "./useEditProfile";
 
@@ -107,7 +107,7 @@ export default function Form() {
         <RichTextEditor<FV>
           fieldName="overview"
           placeHolder="A short overview of your organization"
-          charLimit={4000}
+          charLimit={MAX_CHARS}
           classes={{
             container:
               "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
