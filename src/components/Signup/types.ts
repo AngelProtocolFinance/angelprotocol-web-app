@@ -1,3 +1,5 @@
+export type Donor = { email: string; firstName: string; lastName: string };
+
 export type CodeRecipientEmail = {
   raw: string;
   obscured: string;

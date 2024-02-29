@@ -8,12 +8,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
-import { StateSetter } from "./types";
+import { Donor, StateSetter } from "./types";
 
 type Props = {
-  email: string;
-  firstName: string;
-  lastName: string;
+  donor: Donor;
   setSignupState: StateSetter;
   classes?: string;
 };
@@ -48,12 +46,12 @@ export default function SignupForm(props: Props) {
       onSubmit={handleSubmit(async (fv) => {
         try {
           const { nextStep } = await signUp({
-            username: props.email,
+            username: props.donor.email,
             password: fv.password,
             options: {
               userAttributes: {
-                given_name: props.firstName,
-                family_name: props.lastName,
+                given_name: props.donor.firstName,
+                family_name: props.donor.lastName,
               },
               autoSignIn: false,
             },
@@ -66,7 +64,7 @@ export default function SignupForm(props: Props) {
 
           props.setSignupState({
             codeRecipientEmail: {
-              raw: props.email,
+              raw: props.donor.email,
               obscured: nextStep.codeDeliveryDetails.destination,
             },
           });
@@ -95,7 +93,7 @@ export default function SignupForm(props: Props) {
           <Icon type={isPasswordShown ? "EyeSlashed" : "Eye"} />
         </button>
       </div>
-      <p className="text-xs text-red text-right empty:mb-4 mt-1">
+      <p className="text-xs text-red text-right mt-1">
         {errors.password?.message}
       </p>
 
