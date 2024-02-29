@@ -30,7 +30,7 @@ export const donations_api = apes.injectEndpoints({
       query: ({ id, chain_id, status, ...rest }) => {
         return {
           url:
-            status === "PENDING"
+            status === "ON-HOLD"
               ? `v1/donations/on-hold/${id}`
               : `${v(3)}/donation/${chain_id}/${id}`,
           params: rest,

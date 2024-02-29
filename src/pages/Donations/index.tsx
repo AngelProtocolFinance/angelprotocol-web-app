@@ -5,7 +5,7 @@ import DonationsSection from "./DonationsSection";
 export default withAuth(function Donations({ user }) {
   const onHoldDonations = usePaginatedDonationRecords({
     email: user.email,
-    status: "PENDING",
+    status: "ON-HOLD",
   });
   const completeDonations = usePaginatedDonationRecords({ email: user.email });
 
