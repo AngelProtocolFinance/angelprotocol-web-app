@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Donor } from "types/aws";
 import {
   CryptoResultStep,
   DonationDetails,
@@ -6,10 +7,9 @@ import {
   DonationState,
   DonationStep,
   FormStep,
-  KYC,
-  KYCStep,
   SplitsStep,
   SubmitStep,
+  SummaryStep,
   TxStatus,
 } from "./types";
 
@@ -28,22 +28,18 @@ const donation = createSlice({
           ? { step: "donate-form", recipient: state.recipient }
           : state;
 
-      //skip KYC for stocks, as not being saved in DB
-      if (payload.method === "stocks") {
+      //skip donor,splits for stocks,daf, as not being used
+      if (payload.method === "stocks" || payload.method === "daf") {
         return {
-          ...(curr as SubmitStep),
+          ...(curr as SplitsStep),
           step: "submit",
           details: payload,
+          //these steps where skipped so provide placeholders
+          donor: { firstName: "", lastName: "", email: "" },
+          liquidSplitPct: 50,
         };
       }
 
-      if (state.recipient?.isKYCRequired || payload.userOptForKYC) {
-        return {
-          ...(curr as KYCStep),
-          step: "kyc-form",
-          details: payload,
-        };
-      }
       return {
         ...(curr as SplitsStep),
         step: "splits",
@@ -57,18 +53,19 @@ const donation = createSlice({
         details: undefined,
       };
     },
-    setKYC: (state, { payload }: PayloadAction<KYC>) => {
+
+    setSplit: (state, { payload }: PayloadAction<number>) => {
       return {
-        ...(state as SplitsStep),
-        step: "splits",
-        kyc: payload,
+        ...(state as SummaryStep),
+        step: "summary",
+        liquidSplitPct: payload,
       };
     },
-    setSplit: (state, { payload }: PayloadAction<number>) => {
+    setDonor: (state, { payload }: PayloadAction<Donor>) => {
       return {
         ...(state as SubmitStep),
         step: "submit",
-        liquidSplitPct: payload,
+        donor: payload,
       };
     },
 
@@ -92,7 +89,7 @@ export const {
   setStep,
   setDetails,
   resetDetails,
-  setKYC,
   setSplit,
+  setDonor,
   setTxStatus,
 } = donation.actions;

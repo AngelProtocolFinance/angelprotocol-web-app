@@ -1,14 +1,13 @@
+import { Label } from "components/form";
 import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setDetails } from "slices/donation";
-import { useGetter } from "store/accessors";
 import { ChainID } from "types/chain";
 import { DonaterConfigFromWidget } from "types/widget";
 import { Selector } from "../../../../../Selector";
 import TokenField from "../../../../../TokenField";
-import { CheckField, Label } from "../../../../../form";
 import { initToken } from "../constants";
 import { DonateValues } from "../types";
 
@@ -19,9 +18,6 @@ type Props = {
 export default function Form({ configFromWidget }: Props) {
   const { watch, reset, setValue, handleSubmit } =
     useFormContext<DonateValues>();
-  const isKYCRequired = useGetter(
-    (state) => state.donation.recipient?.isKYCRequired
-  );
 
   const dispatch = useDispatch();
 
@@ -75,19 +71,6 @@ export default function Form({ configFromWidget }: Props) {
         }}
         withMininum
       />
-
-      {!isKYCRequired && (
-        // if KYC is required, KYC form is automatically shown on next step
-        <CheckField<DonateValues>
-          name="userOptForKYC"
-          classes={{
-            container: "text-sm",
-            error: "mt-2",
-          }}
-        >
-          Please send me a tax receipt
-        </CheckField>
-      )}
 
       <button className="btn-orange btn-donate mt-auto" type="submit">
         Continue

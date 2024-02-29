@@ -1,6 +1,12 @@
 import { DonationSource } from "types/lists";
 import { ChainID } from "../../chain";
 
+export type Donor = {
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
 export type KYCData = {
   fullName: string; // "John Doe"
   kycEmail: string; // "john@doe.email.com"
@@ -54,6 +60,7 @@ export type DonationsQueryParams = {
   status?: string;
   start?: number; //to load next page, set start to ItemCutOff + 1
   limit?: number; // Number of items to be returned per request
+  type: "on-hold" | "finalized";
 };
 
 export type CryptoDonation = {
@@ -67,7 +74,6 @@ export type CryptoDonation = {
   splitLiq: number;
   chainName: string;
   appUsed: DonationSource;
-  kyc?: KYCData;
 };
 
 export type FiatCurrencyData = {
