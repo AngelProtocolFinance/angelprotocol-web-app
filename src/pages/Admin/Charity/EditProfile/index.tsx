@@ -67,6 +67,7 @@ function FormWithContext(props: TProfile & { id: number }) {
       label: x,
       value: x,
     })),
+    overview: { value: props.overview },
 
     //meta
     initial: init,
