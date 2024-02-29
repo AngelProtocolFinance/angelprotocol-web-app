@@ -54,7 +54,9 @@ export default function ConfirmForm(props: Props) {
         }
       })}
     >
-      <p>We emailed you a confirmation code.</p>
+      <p className="text-blue-d2 font-medium">
+        We emailed you a confirmation code.
+      </p>
       <p className="text-sm text-gray-d1 mt-1 mb-4">
         To continue, enter the code we emailed to{" "}
         <span className="font-medium">{props.codeRecipientEmail.obscured}</span>
