@@ -50,7 +50,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 
       const response = await fetch(APIs.apes + "/crypto-donation", {
         method: "POST",
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, tipAmount: 0, splitLiq: 50 }),
       });
 
       if (!response.ok) {
