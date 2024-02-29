@@ -47,7 +47,7 @@ export default function DonateFiatThanks({
           ? ""
           : " You can safely navigate away using the button below."}
       </p>
-      <p className="text-center text-gray-d1 mt-8 text-[15px]">
+      <p className="text-center text-gray-d1 mt-8 mb-2 text-[15px]">
         If you need a receipt for your donation, please fill out the KYC form
         for this transaction on your{" "}
         {widgetVersion ? (
@@ -62,9 +62,19 @@ export default function DonateFiatThanks({
 
       {!userIsSignedIn(user) && donor && (
         <Signup
-          classes="max-w-96 w-full mt-8 justify-self-center"
+          classes="max-w-96 w-full mt-6 justify-self-center"
           donor={donor}
         />
+      )}
+
+      {!userIsSignedIn(user) && !donor && (
+        //fallback when pesisted donor can't be found or not valid
+        <Link
+          to={appRoutes.signin}
+          className="btn-blue max-w-96 w-full justify-self-center normal-case rounded-full mt-4"
+        >
+          Create account
+        </Link>
       )}
 
       {!widgetVersion && (
