@@ -16,7 +16,7 @@ import Checkout from "./Checkout";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, liquidSplitPct } = props;
+  const { details, recipient, liquidSplitPct, donor } = props;
   const {
     data: clientSecret,
     isLoading,
@@ -52,7 +52,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
           }}
           stripe={stripePromise}
         >
-          <Checkout source={details.source} />
+          <Checkout source={details.source} donor={donor} />
         </Elements>
       )}
     </Summary>

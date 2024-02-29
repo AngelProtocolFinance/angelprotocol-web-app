@@ -7,13 +7,20 @@ import LoadText from "components/LoadText";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import { persistDonor } from "helpers/donation";
 import { FormEventHandler, useState } from "react";
+import { Donor } from "types/aws";
 import { DonationSource } from "types/lists";
 import Loader from "../Loader";
 
+type Props = {
+  source: DonationSource;
+  donor: Donor;
+};
+
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ source }: { source: DonationSource }) {
+export default function Checkout({ source, donor }: Props) {
   const stripe = useStripe();
   const elements = useElements();
   const { handleError } = useErrorContext();
@@ -60,6 +67,9 @@ export default function Checkout({ source }: { source: DonationSource }) {
     } else {
       handleError("An unexpected error occurred.");
     }
+
+    //save donor to storage so redirect page can access it
+    persistDonor(donor);
 
     setSubmitting(false);
   };
