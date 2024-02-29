@@ -44,7 +44,6 @@ export default function Tip({
   const [symbol, amount, decimals = 2] = (() => {
     switch (details.method) {
       case "stripe":
-      case "paypal":
         return [details.currency.code, +details.amount];
       case "daf":
         return ["usd", +details.amount];
