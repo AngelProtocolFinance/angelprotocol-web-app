@@ -8,7 +8,7 @@ import Checkout from "./Checkout";
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function Paypal(props: StripeCheckoutStep) {
-  const { details, recipient, liquidSplitPct } = props;
+  const { details, recipient, liquidSplitPct, donor } = props;
 
   const {
     data: orderId,
@@ -37,7 +37,7 @@ export default function Paypal(props: StripeCheckoutStep) {
       }}
     >
       <div className="flex items-center gap-2">
-        <Checkout orderId={orderId} source={details.source} />
+        <Checkout orderId={orderId} source={details.source} donor={donor} />
       </div>
     </PayPalScriptProvider>
   );

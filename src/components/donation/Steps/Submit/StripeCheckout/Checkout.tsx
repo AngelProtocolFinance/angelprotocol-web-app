@@ -50,6 +50,9 @@ export default function Checkout({ source, donor }: Props) {
         ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
         : `${window.location.origin}${appRoutes.stripe_payment_status}`;
 
+    //save donor to storage so redirect page can access it
+    persistDonor(donor);
+
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -67,9 +70,6 @@ export default function Checkout({ source, donor }: Props) {
     } else {
       handleError("An unexpected error occurred.");
     }
-
-    //save donor to storage so redirect page can access it
-    persistDonor(donor);
 
     setSubmitting(false);
   };

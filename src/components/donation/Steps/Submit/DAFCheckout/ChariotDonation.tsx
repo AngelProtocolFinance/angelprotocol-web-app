@@ -3,6 +3,7 @@ import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import { persistDonor } from "helpers/donation";
 import ChariotConnect from "react-chariot-connect";
 import { useNavigate } from "react-router-dom";
 import { useChariotGrantIntentMutation } from "services/apes";
@@ -51,6 +52,9 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 splitLiq: liquidSplitPct.toString(),
                 transactionId: r.detail.workflowSessionId,
               }).unwrap();
+
+              //accessed by fiat redirect page
+              persistDonor(props.donor);
 
               navigate(
                 details.source === "bg-widget"
