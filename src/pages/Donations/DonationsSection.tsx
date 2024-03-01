@@ -18,6 +18,7 @@ export default function DonationsSection(
     data,
     hasMore,
     isError,
+    error,
     isLoading,
     isFetching,
     isLoadingNextPage,
@@ -60,7 +61,7 @@ export default function DonationsSection(
         />
       </div>
       <Filter
-        isDisabled={isLoadingOrError}
+        isDisabled={isLoading || isLoadingNextPage}
         setParams={setParams}
         classes="max-lg:col-span-full max-lg:w-full"
       />
@@ -69,6 +70,7 @@ export default function DonationsSection(
           data: data?.Items,
           isLoading,
           isFetching,
+          error: error,
           isError: isError,
         }}
         messages={{

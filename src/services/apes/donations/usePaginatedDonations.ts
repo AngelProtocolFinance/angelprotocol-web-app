@@ -17,14 +17,17 @@ import {
 type DonorOwner = { email: string };
 type EndowmentOwner = { endowmentId: string };
 
-type Args = (DonorOwner | EndowmentOwner) & {
-  type?: DonationsQueryParams["type"];
-};
+type Args = (DonorOwner | EndowmentOwner) &
+  Pick<DonationsQueryParams, "status">;
 
+/**
+ * By default loads finalized donations, unless the `status` field is
+ * explicitly set to "PENDING"
+ */
 export default function usePaginatedDonationRecords<T extends Args>(args: T) {
   const dispatch = useSetter();
 
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
   const id: string = "endowmentId" in args ? args.endowmentId : args.email;
@@ -32,7 +35,7 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
   const [params, setParams] = useState<DonationsQueryParams>({
     id,
     chain_id: chainIds.polygon,
-    type: args.type ?? "finalized",
+    status: args.status,
   });
 
   const queryState = useDonationsQuery(params, {
@@ -56,7 +59,8 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
     },
   });
 
-  const { isLoading, isFetching, isError, data, originalArgs } = queryState;
+  const { isLoading, isFetching, isError, error, data, originalArgs } =
+    queryState;
 
   const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
     useLazyDonationsQuery();
@@ -92,6 +96,7 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
       : PaginatedAWSQueryRes<DonationMadeByDonor[]>,
     hasMore,
     isError: isError || isErrorNextPage,
+    error: error,
     isLoading: isLoading || isDebouncing,
     isFetching,
     isLoadingNextPage,

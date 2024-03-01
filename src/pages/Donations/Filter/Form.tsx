@@ -2,7 +2,6 @@ import { Popover } from "@headlessui/react";
 import Icon from "components/Icon";
 import { DateInput } from "components/form";
 import { FC, FormEventHandler } from "react";
-import DonationStatusDropdown from "./DonationStatusDropdown";
 import { FormValues as FV } from "./types";
 
 // import CurrencyDropdown from "./CurrencyDropdown";
@@ -37,7 +36,6 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
 
       {/*<NetworkDropdown classes="px-4 lg:px-6" />*/}
       {/*<CurrencyDropdown classes="px-4 lg:px-6" />*/}
-      <DonationStatusDropdown classes="px-4 lg:px-6 max-lg:mb-4" />
 
       <div className="max-lg:row-start-2 flex gap-x-4 items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-orange-l6 dark:bg-blue-d7 border-y lg:border-t border-prim">
         <h3 className="uppercase lg:hidden">Filter by</h3>
@@ -57,4 +55,5 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
     </Popover.Panel>
   );
 };
+
 export default Form;

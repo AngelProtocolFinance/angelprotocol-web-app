@@ -27,12 +27,12 @@ export const donations_api = apes.injectEndpoints({
       DonationsQueryParams
     >({
       providesTags: ["donations"],
-      query: ({ id, chain_id, type, ...rest }) => {
+      query: ({ id, chain_id, status, ...rest }) => {
         return {
           url:
-            type === "finalized"
-              ? `${v(3)}/donation/${chain_id}/${id}`
-              : `v1/donations/on-hold/${id}`,
+            status === "PENDING"
+              ? `v1/donations/on-hold/${id}`
+              : `${v(3)}/donation/${chain_id}/${id}`,
           params: rest,
         };
       },
