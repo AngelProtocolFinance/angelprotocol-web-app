@@ -10,17 +10,17 @@ module.exports = {
       inherit: colors.inherit,
 
       orange: {
-        d4: "#3D2600",
-        d3: "#6A4100",
-        d2: "#995E00",
-        d1: "#C77B00",
+        d4: "#7c330b",
+        d3: "#983d08",
+        d2: "#bb5002",
+        d1: "#e27500",
         DEFAULT: "#F59700",
-        l1: "#F9A320",
-        l2: "#FFC86F",
-        l3: "#FFD798",
-        l4: "#FFEFD5",
-        l5: "#F9F4EC",
-        l6: "#FCFAF7",
+        l1: "#ffc01b",
+        l2: "#ffd546",
+        l3: "#ffe885",
+        l4: "#fff3c5",
+        l5: "#fffcea",
+        l6: "#ffffff",
       },
 
       blue: {
