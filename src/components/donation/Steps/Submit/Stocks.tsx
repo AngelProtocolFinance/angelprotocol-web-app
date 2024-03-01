@@ -18,7 +18,7 @@ export default function Stocks(props: StockCheckoutStep) {
         To complete this donation, please email or provide your broker with the
         following information:
       </p>
-      <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-3 text-sm leading-relaxed mt-6">
+      <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed mt-6">
         <p>
           Please transfer [&nbsp;{props.details.numShares}&nbsp;] share(s) of
           [&nbsp;{props.details.symbol}&nbsp;] to:
@@ -35,7 +35,7 @@ export default function Stocks(props: StockCheckoutStep) {
       <p className="text-sm mt-3 mb-1">
         You may also need the following information:
       </p>
-      <span className="rounded bg-gray-l5 dark:bg-bluegray-d1 p-3 text-sm leading-relaxed ">
+      <span className="rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed ">
         Better.Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>

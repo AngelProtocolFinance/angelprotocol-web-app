@@ -7,15 +7,15 @@
   }
 
   .border-prim {
-    @apply border-gray-l3 dark:border-bluegray;
+    @apply border-gray-l3 dark:border-navy;
   }
 
   .divide-prim {
-    @apply divide-gray-l3 dark:divide-bluegray;
+    @apply divide-gray-l3 dark:divide-navy;
   }
 
   .outline-prim {
-    @apply outline-gray-l3 dark:outline-bluegray;
+    @apply outline-gray-l3 dark:outline-navy;
   }
 
   .box-delay-1 {

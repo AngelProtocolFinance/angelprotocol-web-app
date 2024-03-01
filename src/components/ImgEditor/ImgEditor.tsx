@@ -45,7 +45,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
     isDragActive
       ? "before:bg-orange-l5/95 before:dark:bg-blue-d6/95"
       : isSubmitting
-        ? "before:bg-gray-l5/95 before:dark:bg-bluegray-d1/95"
+        ? "before:bg-gray-l5/95 before:dark:bg-navy-d3/95"
         : ""
   }`;
 
@@ -61,7 +61,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
                 : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
             isSubmitting
-              ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
+              ? "cursor-default bg-gray-l5 dark:bg-navy-d3"
               : "bg-gray-l6 dark:bg-blue-d5 cursor-pointer"
           } ${classes?.dropzone ?? ""}`,
           ref,
