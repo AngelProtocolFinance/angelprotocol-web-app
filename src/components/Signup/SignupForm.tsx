@@ -26,14 +26,22 @@ export default function SignupForm(props: Props) {
   } = useForm({
     resolver: yupResolver(
       object({
+        //rules from https://github.com/aws-amplify/amplify-ui/blob/main/packages/ui/src/machines/authenticator/defaultServices.ts
         password: requiredString
           .min(8, ({ min }) => `must have at least ${min} characters`)
           .matches(/[a-z]/, "must have lowercase letters")
           .matches(/[A-Z]/, "must have uppercase letters")
-          .matches(/\d/, "must have numbers")
-          .matches(
-            /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/,
-            "must have special characters"
+          .matches(/0-9/, "must have numbers")
+          .test("_", "must have special characters", (pw) =>
+            //biome-ignore format:
+            [
+            '^', '$', '*', '.', '[', ']',
+            '{', '}', '(', ')', '?', '"',
+            '!', '@', '#', '%', '&', '/',
+            '\\', ',', '>', '<', "'", ':',
+            ';', '|', '_', '~', '`', '=',
+            '+', '-', ' '
+        ].some((c) => pw.includes(c))
           ),
       })
     ),
