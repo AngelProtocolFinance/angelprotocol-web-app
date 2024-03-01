@@ -38,9 +38,7 @@ export default function App() {
           <Route path=":id" element={<DonateWidget />} />
           <Route
             path={donateWidgetRoutes.donate_fiat_thanks}
-            element={
-              <DonateFiatThanks widgetVersion className="py-8 sm:py-20" />
-            }
+            element={<DonateFiatThanks widgetVersion />}
           />
           <Route
             path={donateWidgetRoutes.stripe_payment_status}
@@ -76,9 +74,7 @@ export default function App() {
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
             path={appRoutes.donate_fiat_thanks}
-            element={
-              <DonateFiatThanks className="pt-28 sm:pt-44 pb-8 sm:pb-20" />
-            }
+            element={<DonateFiatThanks />}
           />
           <Route
             path={appRoutes.stripe_payment_status}

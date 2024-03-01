@@ -10,21 +10,11 @@ import { Link } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 
-type Props = {
-  className?: string;
-  widgetVersion?: boolean;
-};
-
-export default function DonateFiatThanks({
-  widgetVersion = false,
-  className = "",
-}: Props) {
+export default function DonateFiatThanks({ widgetVersion = false }) {
   const user = useGetter((state) => state.auth.user);
   const donor = persistedDonor();
   return (
-    <div
-      className={`grid justify-self-center m-auto max-w-[35rem] px-4 scroll-mt-6 ${className}`}
-    >
+    <div className="grid justify-self-center m-auto max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {

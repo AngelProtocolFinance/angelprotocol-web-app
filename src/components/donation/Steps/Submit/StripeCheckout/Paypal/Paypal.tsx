@@ -1,6 +1,8 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
 import { PAYPAL_CLIENT_ID } from "constants/env";
+import { logger } from "helpers";
+import { useEffect } from "react";
 import { usePaypalOrderQuery } from "services/apes";
 import { StripeCheckoutStep } from "slices/donation";
 import Checkout from "./Checkout";
@@ -14,6 +16,7 @@ export default function Paypal(props: StripeCheckoutStep) {
     data: orderId,
     isLoading,
     isError,
+    error,
   } = usePaypalOrderQuery({
     amount: +details.amount,
     currency: details.currency.code,
@@ -21,6 +24,12 @@ export default function Paypal(props: StripeCheckoutStep) {
     email: props.donor.email,
     splitLiq: liquidSplitPct.toString(),
   });
+
+  useEffect(() => {
+    if (error) {
+      logger.error(error);
+    }
+  }, [error]);
 
   return isLoading ? (
     <ContentLoader className="rounded h-10 w-40" />
