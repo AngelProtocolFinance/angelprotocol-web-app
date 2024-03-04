@@ -51,7 +51,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 currency: details.currency.code,
                 endowmentId: recipient.id,
                 email: props.donor.email,
-                splitLiq: liquidSplitPct.toString(),
+                splitLiq: liquidSplitPct,
                 transactionId: r.detail.workflowSessionId,
               }).unwrap();
 

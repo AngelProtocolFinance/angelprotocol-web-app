@@ -21,7 +21,7 @@ export default function Paypal(props: StripeCheckoutStep) {
     currency: details.currency.code,
     endowmentId: recipient.id,
     email: props.donor.email,
-    splitLiq: liquidSplitPct.toString(),
+    splitLiq: liquidSplitPct,
   });
 
   return isLoading ? (

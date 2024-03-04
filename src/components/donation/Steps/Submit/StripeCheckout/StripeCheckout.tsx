@@ -30,7 +30,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     currency: details.currency.code,
     endowmentId: recipient.id,
     email: props.donor.email,
-    splitLiq: liquidSplitPct.toString(),
+    splitLiq: liquidSplitPct,
   });
 
   const dispatch = useSetter();

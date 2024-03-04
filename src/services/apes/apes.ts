@@ -23,7 +23,7 @@ type StripePaymentIntentParams = {
   currency: string;
   email: string;
   endowmentId: number;
-  splitLiq: string;
+  splitLiq: number;
 };
 
 type CreatePayPalOrderParams = {
@@ -35,7 +35,7 @@ type CreatePayPalOrderParams = {
   currency: string;
   email: string;
   endowmentId: number;
-  splitLiq: string;
+  splitLiq: number;
 };
 
 type ChariotGrantIntentParams = {
@@ -47,7 +47,7 @@ type ChariotGrantIntentParams = {
   currency: string;
   email: string;
   endowmentId: number;
-  splitLiq: string;
+  splitLiq: number;
   transactionId?: string;
 };
 
