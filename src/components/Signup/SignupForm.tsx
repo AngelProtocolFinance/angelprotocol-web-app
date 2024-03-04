@@ -31,7 +31,7 @@ export default function SignupForm(props: Props) {
           .min(8, ({ min }) => `must have at least ${min} characters`)
           .matches(/[a-z]/, "must have lowercase letters")
           .matches(/[A-Z]/, "must have uppercase letters")
-          .matches(/0-9/, "must have numbers")
+          .matches(/[0-9]/, "must have numbers")
           .test("_", "must have special characters", (pw) =>
             //biome-ignore format:
             [
