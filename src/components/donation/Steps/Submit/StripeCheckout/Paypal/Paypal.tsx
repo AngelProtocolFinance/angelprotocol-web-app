@@ -14,18 +14,15 @@ export default function Paypal(props: StripeCheckoutStep) {
     data: orderId,
     isLoading,
     isError,
-  } = usePaypalOrderQuery(
-    {
-      amount: +details.amount,
-      tipAmount: tip,
-      usdRate: details.currency.rate || 0, //skipped if not present
-      currency: details.currency.code,
-      endowmentId: recipient.id,
-      email: props.donor.email,
-      splitLiq: liquidSplitPct.toString(),
-    },
-    { skip: !details.currency.rate }
-  );
+  } = usePaypalOrderQuery({
+    amount: +details.amount,
+    tipAmount: tip,
+    usdRate: details.currency.rate,
+    currency: details.currency.code,
+    endowmentId: recipient.id,
+    email: props.donor.email,
+    splitLiq: liquidSplitPct.toString(),
+  });
 
   return isLoading ? (
     <ContentLoader className="rounded h-10 w-40" />

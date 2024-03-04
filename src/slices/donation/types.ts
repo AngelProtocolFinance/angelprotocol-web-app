@@ -1,6 +1,6 @@
 import { Donor } from "types/aws";
 import { ChainID } from "types/chain";
-import { Currency, OptionType } from "types/components";
+import { DetailedCurrency, OptionType } from "types/components";
 import { DonationSource } from "types/lists";
 import { TokenWithAmount, TxPackage } from "types/tx";
 
@@ -26,7 +26,7 @@ export type CryptoDonationDetails = BaseDonationDetais & {
 
 type FiatDonationDetails = BaseDonationDetais & {
   amount: string;
-  currency: Currency;
+  currency: DetailedCurrency;
 };
 
 export type StripeDonationDetails = {

@@ -9,7 +9,7 @@ import {
   Token,
 } from "types/aws";
 import { ChainID } from "types/chain";
-import { Currency } from "types/components";
+import { DetailedCurrency } from "types/components";
 import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
@@ -102,7 +102,7 @@ export const apes = createApi({
         url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
-    paypalCurrencies: builder.query<Currency[], null>({
+    paypalCurrencies: builder.query<DetailedCurrency[], null>({
       query: () => ({
         url: `v1/fiat/paypal/currencies`,
       }),
@@ -113,7 +113,7 @@ export const apes = createApi({
           rate: c.rate,
         })),
     }),
-    stripeCurrencies: builder.query<Currency[], null>({
+    stripeCurrencies: builder.query<DetailedCurrency[], null>({
       async queryFn(_args, _api, _extraOptions, baseQuery) {
         return await fetch("https://ipapi.co/json/")
           .then<{

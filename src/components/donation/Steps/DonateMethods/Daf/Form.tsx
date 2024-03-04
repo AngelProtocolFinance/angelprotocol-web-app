@@ -5,7 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
-import { Currency } from "types/components";
+import { DetailedCurrency } from "types/components";
 import { FormValues as FV, Props } from "./types";
 
 // Chariot accepts only USD.
@@ -13,7 +13,7 @@ import { FormValues as FV, Props } from "./types";
 //
 // The minimum amount should not be hardcoded as it differs depending on which provider is selected.
 // See https://givechariot.readme.io/reference/create-grant
-const USD_CURRENCY: Currency = { code: "usd", rate: 1 };
+const USD_CURRENCY: DetailedCurrency = { code: "usd", rate: 1, min: 1 };
 
 export default function Form({ widgetConfig, details }: Props) {
   const dispatch = useSetter();
