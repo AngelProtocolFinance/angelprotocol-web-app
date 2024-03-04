@@ -18,6 +18,7 @@ export default function DonationsSection(
     data,
     hasMore,
     isError,
+    error,
     isLoading,
     isFetching,
     isLoadingNextPage,
@@ -52,7 +53,7 @@ export default function DonationsSection(
         />
         <input
           disabled={isError}
-          className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-bluegray-d1"
+          className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
           type="text"
           placeholder="Search donations..."
           value={query}
@@ -60,7 +61,7 @@ export default function DonationsSection(
         />
       </div>
       <Filter
-        isDisabled={isLoadingOrError}
+        isDisabled={isLoading || isLoadingNextPage}
         setParams={setParams}
         classes="max-lg:col-span-full max-lg:w-full"
       />
@@ -69,6 +70,7 @@ export default function DonationsSection(
           data: data?.Items,
           isLoading,
           isFetching,
+          error: error,
           isError: isError,
         }}
         messages={{

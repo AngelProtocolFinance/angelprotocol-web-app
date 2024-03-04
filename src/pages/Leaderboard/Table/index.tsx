@@ -29,7 +29,7 @@ export default function Table({ classes = "", endowments }: Props) {
         </TableSection>
         <TableSection
           type="tbody"
-          rowClass="border-b border-gray-l4 dark:border-bluegray/70"
+          rowClass="border-b border-gray-l4 dark:border-navy/70"
         >
           {endowments.map((endowment) => (
             <Row key={endowment.endowment_id} {...endowment} />

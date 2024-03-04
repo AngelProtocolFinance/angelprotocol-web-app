@@ -30,7 +30,6 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       endDate: dateToFormFormat(new Date()),
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
-      status: { label: "Select status...", value: "" },
     },
   });
 
@@ -40,13 +39,12 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
     setParams((prev) => ({
       id: prev.id,
       chain_id: prev.chain_id,
-      type: prev.type,
+      status: prev.status,
       ...cleanObject({
         afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
         beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
         chainName: data.network.value,
         denomination: data.currency.value,
-        status: data.status.value,
       }),
     }));
     buttonRef.current?.click();
@@ -57,7 +55,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
     setParams((prev) => ({
       id: prev.id,
       chain_id: prev.chain_id,
-      type: prev.type,
+      status: prev.status,
     }));
     buttonRef.current?.click();
   };
@@ -66,7 +64,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       <Popover.Button
         ref={buttonRef}
         disabled={isDisabled}
-        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-orange text-white lg:dark:text-gray lg:text-gray-d1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-bluegray-d1 lg:border lg:border-prim"
+        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-orange text-white lg:dark:text-gray lg:text-gray-d1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-navy-d3 lg:border lg:border-prim"
       >
         {({ open }) => (
           <>

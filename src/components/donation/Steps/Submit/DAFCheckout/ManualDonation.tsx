@@ -14,7 +14,7 @@ export default function ManualDonation(props: DafCheckoutStep) {
         To complete this donation, please email your provider with the following
         information:
       </p>
-      <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-3 text-sm leading-relaxed my-4">
+      <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed my-4">
         <p>Please make a one-time grant of ${props.details.amount} to:</p>
         <br />
         <p>Altruistic Partners Empowering Society Inc (EIN: 87-3758939)</p>
@@ -33,7 +33,7 @@ export default function ManualDonation(props: DafCheckoutStep) {
       <p className="text-sm mb-1">
         You may also need the following information:
       </p>
-      <span className="rounded bg-gray-l5 dark:bg-bluegray-d1 p-3 text-sm leading-relaxed">
+      <span className="rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed">
         Better.Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>
