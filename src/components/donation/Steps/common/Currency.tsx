@@ -1,14 +1,12 @@
 import { humanize } from "helpers";
-import { Currency } from "types/components";
+import { Currency as TCurrency } from "types/components";
 
-export function currency({ code, rate }: Currency) {
+type Props = { classes?: string; amount: string | number };
+export function currency({ rate, code }: TCurrency) {
   const CODE = code.toUpperCase();
-  return function Amount({
-    classes = "",
-    amount,
-  }: { classes?: string; amount: string | number }) {
+  return function Amount({ classes = "", amount }: Props) {
     return (
-      <dd className={classes}>
+      <dd className={classes + " text-right"}>
         {CODE === "USD"
           ? `$${humanize(amount, 2)}`
           : rate
