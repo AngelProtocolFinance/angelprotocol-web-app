@@ -50,7 +50,7 @@ export default function FileDropzone<
                 : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
             disabled
-              ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
+              ? "cursor-default bg-gray-l5 dark:bg-navy-d3"
               : "bg-gray-l6 dark:bg-blue-d5 cursor-pointer"
           } ${props.className ?? ""}`,
           ref,

@@ -15,7 +15,7 @@ export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
         To donate stock, please email or provide your broker with the following
         information:
       </p>
-      <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-2">
+      <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-2">
         <p>Please transfer [X] shares of [ABC] to:</p>
         <p>Deliver to: Fidelity Investments</p>
         <p>DTC number: 0226</p>
@@ -27,7 +27,7 @@ export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
         </p>
       </div>
       <p> You may also need the following information:</p>
-      <span className="rounded bg-gray-l5 dark:bg-bluegray-d1 p-2">
+      <span className="rounded bg-gray-l5 dark:bg-navy-d3 p-2">
         Better.Giving is a non-profit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>
@@ -66,7 +66,7 @@ export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
         You can enjoy significant tax advantages and maximize the size of your
         contributions when you transfer securities through Better.Giving:
       </p>
-      <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-2">
+      <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-2">
         <span className="text-sm text-gray">
           NOTE: This is not financial advice! Please speak to your tax advisor
           or broker about your specific situation and country's tax laws.
