@@ -6,7 +6,7 @@ import character from "assets/images/waving-character.png";
 import Image from "components/Image/Image";
 import { humanize } from "helpers";
 import { useState } from "react";
-import { useController, useForm } from "react-hook-form";
+import { get, useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { TipStep, setStep, setTip } from "slices/donation";
 import { useSetter } from "store/accessors";
@@ -148,7 +148,10 @@ export default function Tip({
       {!isPct && (
         <>
           <label className="mb-2 mt-6">Your donation amount</label>
-          <div className="relative field-container grid grid-cols-[1fr_auto] px-4 py-3">
+          <div
+            aria-invalid={!!get(errors, "tip.amount")?.message}
+            className="relative field-container grid grid-cols-[1fr_auto] px-4 py-3"
+          >
             <input
               type="text"
               value={tip.amount}
