@@ -42,7 +42,6 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           // This hook should be used to update our internal donation DB
           // see https://givechariot.readme.io/reference/integrating-connect#capture-your-grant-intent
           onSuccess={async (r: { detail: { workflowSessionId: string } }) => {
-            if (!details.currency.rate) throw "currency rate must be set.";
             try {
               await createGrant({
                 amount: +details.amount,
