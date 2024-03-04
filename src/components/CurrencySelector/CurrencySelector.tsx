@@ -49,7 +49,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
         <Combobox.Input
           id="wise__currency"
           className="w-full border-r border-gray-l3 dark:border-bluegray px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
-          displayValue={(currency: CurrencyOption) =>
+          displayValue={(currency: T) =>
             !!currency.name
               ? `${currency.code.toUpperCase()} - ${currency.name}`
               : currency.code.toUpperCase()
