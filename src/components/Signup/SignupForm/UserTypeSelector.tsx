@@ -4,7 +4,7 @@ import { FormValues } from "../types";
 const btnClass = (isSelected: boolean) =>
   `flex items-center justify-center btn-outline-2 h-[42px] ${
     isSelected
-      ? "bg-[#EAF3FA] border-[1.25px] border-blue-d1 enabled:hover:border-blue-d1 hover:cursor-default text-blue-d1 font-bold"
+      ? "bg-[#EAF3FA] border-[1.25px] enabled:border-blue-d1 enabled:hover:border-blue-d1 hover:cursor-default enabled:text-blue-d1 font-bold"
       : "font-medium"
   }`;
 
