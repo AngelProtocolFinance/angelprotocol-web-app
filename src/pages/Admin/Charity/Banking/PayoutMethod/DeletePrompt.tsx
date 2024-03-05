@@ -54,7 +54,7 @@ export default function DeletePrompt({
           <button
             onClick={closeModal}
             disabled={isLoading}
-            className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l3 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
+            className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
           >
             <Icon type="Close" className="text-lg sm:text-2xl" />
           </button>
@@ -62,7 +62,7 @@ export default function DeletePrompt({
       </div>
       <Icon type="ExclamationCircleFill" size={80} className="mt-6 text-red" />
 
-      <div className="p-6 text-center text-navy-l1 dark:text-gray-l3">
+      <div className="p-6 text-center text-navy-l1 dark:text-navy-l5">
         {message}
       </div>
 

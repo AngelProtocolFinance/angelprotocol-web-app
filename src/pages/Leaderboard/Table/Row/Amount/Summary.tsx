@@ -44,7 +44,7 @@ function Text(props: {
   }
 
   return (
-    <p className="text-xs leading-snug mb-2 text-navy-l1 dark:text-gray-l4">
+    <p className="text-xs leading-snug mb-2 text-navy-l1 dark:text-navy-l5">
       <span className="font-bold">{props.title} :</span> {textBlob}
     </p>
   );

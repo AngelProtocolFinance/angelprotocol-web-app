@@ -21,7 +21,7 @@ export default function Prompt({
         {isDismissible && (
           <button
             onClick={closeModal}
-            className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l3 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
+            className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
           >
             <Icon type="Close" size={24} />
           </button>

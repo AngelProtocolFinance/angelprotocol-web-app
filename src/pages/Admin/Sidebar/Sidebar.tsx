@@ -26,7 +26,7 @@ export default function Sidebar({
         {linkGroups.map((group) => (
           <React.Fragment key={`link_group-${group.title}`}>
             {group.title && (
-              <h6 className="pt-5 px-5 pb-1 font-bold text-xs uppercase text-gray-l1 tracking-wide">
+              <h6 className="pt-5 px-5 pb-1 font-bold text-xs uppercase text-navy-l3 tracking-wide">
                 {group.title}
               </h6>
             )}
