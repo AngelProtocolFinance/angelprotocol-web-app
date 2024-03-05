@@ -9,7 +9,7 @@ export default function Info({ classes = "", children }: Props) {
   return (
     <Status
       inline
-      classes={classes + " text-sm text-navy-l1 dark:text-gray mr-2"}
+      classes={classes + " text-sm text-navy-l1 dark:text-navy-l2 mr-2"}
       icon="Info"
       iconOptions={{
         size: 16,

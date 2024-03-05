@@ -129,7 +129,7 @@ function Row({
 }: PropsWithChildren<{ classes?: string; title: string }>) {
   return (
     <div
-      className={`${classes} py-3 text-navy-l1 dark:text-gray flex items-center justify-between w-full border-b border-gray-l4 last:border-none`}
+      className={`${classes} py-3 text-navy-l1 dark:text-navy-l2 flex items-center justify-between w-full border-b border-gray-l4 last:border-none`}
     >
       <p className="text-gray-d2 dark:text-white">{title}</p>
       {children}

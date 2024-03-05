@@ -89,7 +89,7 @@ function Loaded({ members, classes = "" }: LoadedProps) {
                 disabled={isLoading}
                 onClick={() => handleRemove(member)}
                 type="button"
-                className=" disabled:text-gray hover:text-red active:text-red absolute-center"
+                className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
               >
                 <Icon type="Delete" size={16} />
               </button>

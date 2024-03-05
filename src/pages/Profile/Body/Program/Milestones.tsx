@@ -50,7 +50,7 @@ function Milestone({
         </div>
       )}
 
-      <p className="mt-4 pl-6 sm:pl-8 mb-3 text-navy-l1 dark:text-gray text-xs">
+      <p className="mt-4 pl-6 sm:pl-8 mb-3 text-navy-l1 dark:text-navy-l2 text-xs">
         {new Date(milestone_date).toLocaleDateString()}
       </p>
       <h6 className="pl-6 sm:pl-8 font-bold mb-3 relative">
@@ -67,7 +67,7 @@ function Milestone({
           content={{ value: milestone_description }}
           readOnly
           classes={{
-            container: "text-navy-l1 dark:text-gray text-sm w-full",
+            container: "text-navy-l1 dark:text-navy-l2 text-sm w-full",
           }}
         />
       </div>

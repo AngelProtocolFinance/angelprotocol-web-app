@@ -59,7 +59,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
         </div>
       </div>
       <div className="relative border border-gray-l4 h-px w-full mb-8 mt-6 grid place-items-center peer-has-[.hidden]:hidden">
-        <span className="absolute bg-white px-4 text-gray text-xs">OR</span>
+        <span className="absolute bg-white px-4 text-navy-l2 text-xs">OR</span>
       </div>
       {isLoading ? (
         <Loader msg="Loading payment form.." />

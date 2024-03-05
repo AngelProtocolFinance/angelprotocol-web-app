@@ -62,7 +62,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
             isCurrencyLoading ? (
               <Icon
                 type="Loading"
-                className="text-gray animate-spin"
+                className="text-navy-l2 animate-spin"
                 size={20}
               />
             ) : (

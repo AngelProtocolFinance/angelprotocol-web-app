@@ -59,7 +59,7 @@ export default function FileDropzone<
         <input {...getInputProps({ id: props.name })} />
         <DropzoneText {...value} fieldName={props.name} formErrors={errors} />
       </div>
-      <p className="text-xs text-navy-l1 dark:text-gray mt-2">
+      <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
         Valid types are:
         {props.specs.mimeTypes
           .map((m) => m.split("/")[1].toUpperCase())

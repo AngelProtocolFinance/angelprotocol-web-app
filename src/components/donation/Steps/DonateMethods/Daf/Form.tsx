@@ -67,7 +67,7 @@ export default function Form({ widgetConfig, details }: Props) {
           tooltip="The minimum donation amount will depend on your DAF provider."
         />
 
-        <p className="text-sm text-gray-d2 dark:text-gray mt-4">
+        <p className="text-sm text-gray-d2 dark:text-navy-l2 mt-4">
           Please click the button below and follow the instructions provided to
           complete your donation
         </p>

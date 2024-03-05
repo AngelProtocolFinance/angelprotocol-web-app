@@ -51,7 +51,7 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
           {GENERIC_ERROR_MESSAGE}
         </span>
       )}
-      <p className="text-sm italic text-navy-l1 dark:text-gray mt-8 text-center">
+      <p className="text-sm italic text-navy-l1 dark:text-navy-l2 mt-8 text-center">
         Note: Registration is quick, but we've sent an email link if you need to
         pause and resume at any point.
       </p>

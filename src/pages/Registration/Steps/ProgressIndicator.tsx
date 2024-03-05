@@ -88,7 +88,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
     </>
   );
 
-  const classNames = `py-4 max-md:pr-10 pl-12 md:pl-14 md:mr-14 ${classes} dark:text-gray`;
+  const classNames = `py-4 max-md:pr-10 pl-12 md:pl-14 md:mr-14 ${classes} dark:text-navy-l2`;
 
   if (isDesktop) {
     return <div className={classNames}>{children}</div>;
@@ -132,7 +132,7 @@ function Step({
         />
         <span
           className={`text-sm ${
-            isCurr ? "text-orange" : "text-navy-l1 dark:text-gray"
+            isCurr ? "text-orange" : "text-navy-l1 dark:text-navy-l2"
           }`}
         >
           {children}

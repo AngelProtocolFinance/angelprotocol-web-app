@@ -49,11 +49,11 @@ export default function DonationsSection(
         <Icon
           type="Search"
           size={24}
-          className="text-gray-d2 dark:text-gray absolute top-1/2 -translate-y-1/2 left-3"
+          className="text-gray-d2 dark:text-navy-l2 absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
           disabled={isError}
-          className="p-3 pl-10 placeholder:text-navy-l1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
+          className="p-3 pl-10 placeholder:text-navy-l1 dark:placeholder:text-navy-l2 bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
           type="text"
           placeholder="Search donations..."
           value={query}

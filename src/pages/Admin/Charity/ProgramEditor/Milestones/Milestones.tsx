@@ -40,7 +40,7 @@ export default function Milestones() {
       </div>
       {!isEmpty(fields) ? (
         <>
-          <span className="text-sm text-navy-l1 dark:text-gray">
+          <span className="text-sm text-navy-l1 dark:text-navy-l2">
             Milestones will be publicly displayed in descending order by their
             date.
           </span>

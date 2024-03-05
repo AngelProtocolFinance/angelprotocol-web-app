@@ -28,7 +28,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           <Icon type="Money" className="text-lg" />
           <span>My Donations</span>
         </Link>
-        {/*<div className="mt-2 text-sm flex items-center gap-2 text-gray">
+        {/*<div className="mt-2 text-sm flex items-center gap-2 text-navy-l2">
           <Icon type="User" className="text-lg" />
           <span>My profile (coming soon!)</span>
         </div>*/}

@@ -63,7 +63,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           autoComplete="off"
           id="amount"
           type="text"
-          className="text-sm py-3.5 dark:text-gray"
+          className="text-sm py-3.5 dark:text-navy-l2"
         />
         <TokenSelector
           selectedChainId={selectedChainId}
