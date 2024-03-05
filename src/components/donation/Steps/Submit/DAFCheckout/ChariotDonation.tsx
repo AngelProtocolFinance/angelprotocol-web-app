@@ -12,7 +12,7 @@ import { DafCheckoutStep } from "slices/donation";
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
 export default function ChariotCheckout(props: DafCheckoutStep) {
-  const { details, recipient, liquidSplitPct } = props;
+  const { details, recipient, liquidSplitPct, tip = 0, donor } = props;
   const [createGrant, { isLoading }] = useChariotGrantIntentMutation();
 
   const navigate = useNavigate();
@@ -46,11 +46,13 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
             try {
               await createGrant({
                 amount: +details.amount,
+                tipAmount: tip,
+                usdRate: details.currency.rate,
                 currency: details.currency.code,
                 endowmentId: recipient.id,
-                email: props.donor.email,
-                splitLiq: liquidSplitPct.toString(),
+                splitLiq: liquidSplitPct,
                 transactionId: r.detail.workflowSessionId,
+                donor,
               }).unwrap();
 
               //accessed by fiat redirect page

@@ -18,13 +18,23 @@ export type Country = {
 };
 
 //currency selector
-export type Currency = {
-  code: string;
+
+type BaseCurrency = {
   name?: string;
+  code: string;
+};
+
+export type DetailedCurrency = BaseCurrency & {
+  rate: number;
+  min: number;
+};
+
+export type Currency = BaseCurrency & {
   min?: number;
   rate: number | null;
 };
 
+export type CurrencyOption = Currency | DetailedCurrency;
 /**
  * Rich text strings contain not only the user input itself, but is a
  * stringified object that describes the styling of particular parts of

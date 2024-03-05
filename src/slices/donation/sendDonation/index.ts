@@ -13,7 +13,10 @@ import { DonateArgs, TxStatus } from "../types";
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,
   async (
-    { donation: { details, recipient, liquidSplitPct }, ...txPackage },
+    {
+      donation: { details, recipient, liquidSplitPct, tip = 0, donor },
+      ...txPackage
+    },
     { dispatch }
   ) => {
     const chain = chains[details.chainId.value];
@@ -38,6 +41,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       /** SAVE DONATION */
       const payload: CryptoDonation = {
         amount: +token.amount,
+        tipAmount: tip,
         chainId: chain.id,
         chainName: chain.name,
         denomination: token.symbol,
@@ -46,6 +50,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         walletAddress: txPackage.sender,
         endowmentId: recipient.id,
         appUsed: details.source,
+        donor,
       };
 
       const response = await fetch(APIs.apes + "/crypto-donation", {

@@ -4,7 +4,7 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import { useStripePaymentIntentQuery } from "services/apes";
 import { StripeCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
-import { currency } from "../../common/Currrency";
+import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
 import Err from "../Err";
 import Loader from "../Loader";
@@ -17,18 +17,21 @@ import Paypal from "./Paypal";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, liquidSplitPct, donor } = props;
+  const { details, recipient, liquidSplitPct, tip = 0, donor } = props;
   const {
     data: clientSecret,
     isLoading,
     isError,
     error,
   } = useStripePaymentIntentQuery({
+    type: "one-time",
     amount: +details.amount,
+    tipAmount: tip,
+    usdRate: details.currency.rate,
     currency: details.currency.code,
     endowmentId: recipient.id,
-    email: props.donor.email,
-    splitLiq: liquidSplitPct.toString(),
+    splitLiq: liquidSplitPct,
+    donor: props.donor,
   });
 
   const dispatch = useSetter();
@@ -40,6 +43,14 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       Amount={currency(details.currency)}
       amount={+details.amount}
       splitLiq={liquidSplitPct}
+      tip={
+        props.tip
+          ? {
+              value: props.tip,
+              charityName: props.recipient.name,
+            }
+          : undefined
+      }
     >
       <div className="has-[#paypal-failure-fallback]:hidden peer">
         <p className="mb-2 font-medium">Express checkout</p>

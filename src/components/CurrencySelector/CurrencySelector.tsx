@@ -1,23 +1,26 @@
 import { Combobox } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { useState } from "react";
-import { Currency } from "types/components";
+import { CurrencyOption } from "types/components";
 import { QueryState, isQuery } from "types/third-party/redux";
 import { DrawerIcon } from "../Icon";
 import { Label } from "../form";
 import CurrencyOptions from "./CurrencyOptions";
 
-type Props = {
+type Props<T extends CurrencyOption> = {
   classes?: { combobox?: string; label?: string };
-  currencies: Currency[] | QueryState<Currency[]>;
+  currencies: T[] | QueryState<T[]>;
   disabled?: boolean;
   required?: boolean;
-  value: Currency;
+  value: T;
   label: string;
-  onChange: (currency: Currency) => void;
+  onChange: (currency: T) => void;
 };
 
-export default function CurrencySelector({ currencies, ...props }: Props) {
+export default function CurrencySelector<T extends CurrencyOption>({
+  currencies,
+  ...props
+}: Props<T>) {
   const [query, setQuery] = useState("");
 
   const isCurrencyLoading = isQuery(currencies) && currencies.isLoading;
@@ -35,7 +38,7 @@ export default function CurrencySelector({ currencies, ...props }: Props) {
       </Label>
       <Combobox
         aria-disabled={!!props.disabled || isCurrencyLoading || isCurrencyError}
-        by="code"
+        by={"code" as any}
         value={props.value}
         onChange={props.onChange}
         as="div"
@@ -45,8 +48,8 @@ export default function CurrencySelector({ currencies, ...props }: Props) {
       >
         <Combobox.Input
           id="wise__currency"
-          className="w-full border-r border-gray-l3 dark:border-bluegray px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
-          displayValue={(currency: Currency) =>
+          className="w-full border-r border-gray-l3 dark:border-navy px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
+          displayValue={(currency: T) =>
             !!currency.name
               ? `${currency.code.toUpperCase()} - ${currency.name}`
               : currency.code.toUpperCase()

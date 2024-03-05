@@ -3,46 +3,54 @@ import { PaymentIntent } from "@stripe/stripe-js";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import {
+  Donor,
   EndowmentBalances,
   FiatCurrencyData,
   PayPalOrder,
   Token,
 } from "types/aws";
 import { ChainID } from "types/chain";
-import { Currency } from "types/components";
+import { DetailedCurrency } from "types/components";
 import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
 
 type StripePaymentIntentParams = {
+  type: "one-time" | "subscription";
   /** Denominated in USD. */
   amount: number;
+  tipAmount: number;
+  usdRate: number;
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
-  email: string;
   endowmentId: number;
-  splitLiq: string;
+  splitLiq: number;
+  donor: Donor;
 };
 
 type CreatePayPalOrderParams = {
   /** Denominated in USD. */
   amount: number;
+  tipAmount: number;
+  usdRate: number;
   /**ISO 3166-1 alpha-3 code */
   currency: string;
-  email: string;
   endowmentId: number;
-  splitLiq: string;
+  splitLiq: number;
+  donor: Donor;
 };
 
 type ChariotGrantIntentParams = {
   /** Denominated in USD. */
   amount: number;
+  tipAmount: number;
+  usdRate: number;
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
-  email: string;
   endowmentId: number;
-  splitLiq: string;
+  splitLiq: number;
   transactionId?: string;
+  donor: Donor;
 };
 
 export const apes = createApi({
@@ -79,7 +87,7 @@ export const apes = createApi({
     }),
     stripePaymentIntent: builder.query<string, StripePaymentIntentParams>({
       query: (data) => ({
-        url: `v2/fiat/stripe-proxy/${apiEnv}`,
+        url: "fiat-donation/stripe",
         method: "POST",
         body: JSON.stringify(data),
       }),
@@ -96,7 +104,7 @@ export const apes = createApi({
         url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
-    paypalCurrencies: builder.query<Currency[], null>({
+    paypalCurrencies: builder.query<DetailedCurrency[], null>({
       query: () => ({
         url: `v1/fiat/paypal/currencies`,
       }),
@@ -107,7 +115,7 @@ export const apes = createApi({
           rate: c.rate,
         })),
     }),
-    stripeCurrencies: builder.query<Currency[], null>({
+    stripeCurrencies: builder.query<DetailedCurrency[], null>({
       async queryFn(_args, _api, _extraOptions, baseQuery) {
         return await fetch("https://ipapi.co/json/")
           .then<{

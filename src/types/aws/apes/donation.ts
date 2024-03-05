@@ -64,6 +64,7 @@ export type DonationsQueryParams = {
 
 export type CryptoDonation = {
   amount: number;
+  tipAmount: number;
   denomination: string;
   endowmentId: number;
   chainId: string;
@@ -73,6 +74,7 @@ export type CryptoDonation = {
   splitLiq: number;
   chainName: string;
   appUsed: DonationSource;
+  donor: Donor;
 };
 
 export type FiatCurrencyData = {

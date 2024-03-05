@@ -11,7 +11,7 @@ import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
   const dispatch = useSetter();
-  const { details } = props;
+  const { details, tip } = props;
   const Amount = token(details.token.coingecko_denom);
 
   return (
@@ -21,6 +21,14 @@ export default function Crypto(props: CryptoSubmitStep) {
       Amount={Amount}
       amount={+details.token.amount}
       splitLiq={props.liquidSplitPct}
+      tip={
+        tip
+          ? {
+              value: tip,
+              charityName: props.recipient.name,
+            }
+          : undefined
+      }
       preSplitContent={
         <>
           <dl className="text-gray-d1 py-3 flex items-center justify-between border-b border-prim">
