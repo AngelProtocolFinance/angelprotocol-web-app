@@ -75,7 +75,7 @@ export default function ConfirmForm(props: Props) {
 
   return (
     <Form
-      className="grid text-[#1D3C51] w-full max-w-md px-7 py-8 bg-white border border-gray-l4 rounded-2xl"
+      className="grid w-full max-w-md px-7 py-8 bg-white border border-gray-l4 rounded-2xl"
       disabled={isSubmitting || isRequestingNewCode}
       methods={methods}
       onSubmit={handleSubmit(submit)}

@@ -25,5 +25,9 @@ export default function SignUp() {
     );
   })();
 
-  return <div className="grid place-items-center py-14">{content}</div>;
+  return (
+    <div className="grid place-items-center py-14 text-[#1D3C51]/80">
+      {content}
+    </div>
+  );
 }

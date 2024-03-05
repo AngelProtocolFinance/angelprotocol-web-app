@@ -42,7 +42,7 @@ export default function FormFields({ submit }: Props) {
   }
 
   return (
-    <div className="grid justify-items-center gap-3.5 text-[#1D3C51]">
+    <div className="grid justify-items-center gap-3.5">
       <Form
         className="grid w-full max-w-md px-7 py-8 bg-white border border-gray-l4 rounded-2xl"
         disabled={isSubmitting}
