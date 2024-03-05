@@ -29,7 +29,7 @@ function Amount({
 }: PropsWithChildren<{ classes?: string; title: string }>) {
   return (
     <div className={classes}>
-      <p className="text-2xs @xs:text-xs text-gray-d1 dark:text-gray @xs:mb-1 uppercase">
+      <p className="text-2xs @xs:text-xs text-navy-l1 dark:text-gray @xs:mb-1 uppercase">
         {props.title}
       </p>
       <span className="font-bold text-sm @xs:text-xl font-heading">

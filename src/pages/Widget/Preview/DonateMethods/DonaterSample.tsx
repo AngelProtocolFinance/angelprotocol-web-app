@@ -14,7 +14,7 @@ export default function DonaterSample({
       </div>
 
       <div className="flex items-center gap-2 py-3 px-4 border border-gray-l2 rounded mb-1">
-        <span className="text-gray-d1 dark:text-gray">0.00000</span>
+        <span className="text-navy-l1 dark:text-gray">0.00000</span>
         <span className="text-sm ml-auto">TOKEN</span>
       </div>
       <p className="text-xs mt-1">Minimal amount: Token 0.0000</p>

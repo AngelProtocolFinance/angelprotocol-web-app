@@ -48,7 +48,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
       >
         <Combobox.Input
           id="wise__currency"
-          className="w-full border-r border-gray-l3 dark:border-navy px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
+          className="w-full border-r border-gray-l3 dark:border-navy px-4 py-3.5 text-sm leading-5 focus:ring-0"
           displayValue={(currency: T) =>
             !!currency.name
               ? `${currency.code.toUpperCase()} - ${currency.name}`
@@ -69,9 +69,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
               <DrawerIcon
                 isOpen={open}
                 size={25}
-                className={`h-full w-full text-gray-400 ${
-                  isCurrencyError ? "text-red" : "text-gray-400"
-                }`}
+                className={`h-full w-full ${isCurrencyError ? "text-red" : ""}`}
                 aria-hidden
               />
             )

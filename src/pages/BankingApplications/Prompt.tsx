@@ -80,12 +80,12 @@ export default function Prompt({ verdict, uuid }: Props) {
           </button>
         )}
       </div>
-      <p className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3 mt-4 font-semibold">
+      <p className="px-6 pb-4 text-center text-navy-l1 dark:text-gray-l3 mt-4 font-semibold">
         You are about to {verdict} this banking application.
       </p>
 
       {verdict === "approve" ? (
-        <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3">
+        <div className="px-6 pb-4 text-center text-navy-l1 dark:text-gray-l3">
           This will immediately payout all pending funds to newly linked bank
           account and is irreversible.
         </div>

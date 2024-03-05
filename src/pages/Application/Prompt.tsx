@@ -88,7 +88,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
         <div>Nonprofit</div>
       </h3>
 
-      <p className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3 mt-4">
+      <p className="px-6 pb-4 text-center text-navy-l1 dark:text-gray-l3 mt-4">
         <span className="block">
           You are about to {verdict} the Application for
         </span>
@@ -96,13 +96,13 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
       </p>
 
       {verdict === "approve" ? (
-        <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3">
+        <div className="px-6 pb-4 text-center text-navy-l1 dark:text-gray-l3">
           This will immediately payout all pending funds to newly linked bank
           account and is irreversible.
         </div>
       ) : null}
 
-      <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray-l3 font-bold">
+      <div className="px-6 pb-4 text-center text-navy-l1 dark:text-gray-l3 font-bold">
         Please ensure you have confirmed all submitted details and supporting
         documentation before proceeding!
       </div>

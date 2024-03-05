@@ -46,12 +46,12 @@ export default function Card({
           <h3 className="text-ellipsis line-clamp-2">{name}</h3>
           {/* TAGLINE */}
           {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
-            <p className="peer text-gray-d1 dark:text-gray text-sm -mt-2">
+            <p className="peer text-navy-l1 dark:text-gray text-sm -mt-2">
               {tagline}
             </p>
           ) : null}
           {/* HQ & ACTIVE-IN COUNTRIES */}
-          <div className="text-gray-d1 dark:text-gray text-sm">
+          <div className="text-navy-l1 dark:text-gray text-sm">
             <p>
               <span className="font-semibold">HQ:</span> {hq_country}
             </p>

@@ -76,7 +76,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
         {noneUploaded ? (
           <button
             type="button"
-            className="absolute-center grid justify-items-center text-sm text-gray-d1 dark:text-gray"
+            className="absolute-center grid justify-items-center text-sm text-navy-l1 dark:text-gray"
             tabIndex={-1}
           >
             <Icon type="FileUpload" size={24} className="mb-[1.125rem]" />
@@ -110,7 +110,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
           </div>
         )}
       </div>
-      <p className="text-xs text-gray-d1 dark:text-gray mt-2">
+      <p className="text-xs text-navy-l1 dark:text-gray mt-2">
         <span>
           Valid types are:{" "}
           {accept.map((m) => m.split("/")[1].toUpperCase()).join(", ")}.{" "}

@@ -34,7 +34,7 @@ function Applications() {
         />
         <input
           disabled={isError}
-          className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
+          className="p-3 pl-10 placeholder:text-navy-l1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
           type="text"
           placeholder="Search applications"
           value={query}

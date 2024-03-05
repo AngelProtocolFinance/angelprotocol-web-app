@@ -43,7 +43,7 @@ function Detail(props: PropsWithChildren<{ title: string }>) {
       <p className="font-heading font-bold text-xs tracking-wider uppercase">
         {props.title}
       </p>
-      <span className="font-normal text-base text-gray-d1 dark:text-gray">
+      <span className="font-normal text-base text-navy-l1 dark:text-gray">
         {props.children || "-"}
       </span>
     </div>

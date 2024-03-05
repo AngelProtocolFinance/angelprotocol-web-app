@@ -49,7 +49,7 @@ function FSAInquiry() {
             </div>
           </>
         ) : (
-          <p className="text-sm text-gray-d1 dark:text-gray leading-relaxed">
+          <p className="text-sm text-navy-l1 dark:text-gray leading-relaxed">
             Great news: Nonprofit Organizations in{" "}
             <span className="font-semibold">{data.orgDetails.HqCountry}</span>{" "}
             can now take advantage of {APP_NAME}’s Fiscal Sponsorship service.
@@ -57,7 +57,7 @@ function FSAInquiry() {
         )}
 
         {!possiblyTaxExempt || answer === "No" ? (
-          <p className="text-sm text-gray-d1 dark:text-gray leading-relaxed mt-4">
+          <p className="text-sm text-navy-l1 dark:text-gray leading-relaxed mt-4">
             {APP_NAME} provides fiscal sponsorship services at market-leading
             cost (2.9%) for our partner organizations worldwide to enable them
             to receive tax efficient donations from the USA. Continue to setup

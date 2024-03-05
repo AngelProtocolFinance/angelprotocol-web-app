@@ -300,7 +300,7 @@ export default function RecipientDetailsForm({
           id="bank__statement"
           type="file"
           // `!py-0 !pl-0` removes padding added by `field > field-input`
-          className="!py-0 !pl-0 file:border-none file:border-r file:border-gray-l4 file:py-3.5 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
+          className="!py-0 !pl-0 file:border-none file:border-r file:border-gray-l4 file:py-3.5 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-navy-l1"
           {...register("bankStatement", {
             validate(value?: FileList) {
               //multile:false

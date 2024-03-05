@@ -22,7 +22,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
           type="button"
           title="Reset all filters to their default values."
           onClick={() => dispatch(reset())}
-          className="text-gray-d1 dark:text-gray-l3 text-sm mr-4"
+          className="text-navy-l1 dark:text-gray-l3 text-sm mr-4"
         >
           Clear Filters
         </button>

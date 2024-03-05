@@ -43,7 +43,7 @@ export default function Split({
     <div className="grid content-start p-4 @md:p-8">
       <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
       <h4 className="mt-4">Split donation</h4>
-      <p className="text-gray-d1">
+      <p className="text-navy-l1">
         Create a sustainable impact by dividing funds
       </p>
 
@@ -80,7 +80,7 @@ export default function Split({
       {/** amount breakdown */}
       <div className="flex justify-between mt-1">
         <dl>
-          <dt className="text-gray-d1 text-xs">Compounded Forever</dt>
+          <dt className="text-navy-l1 text-xs">Compounded Forever</dt>
           <dd>
             <span className="text-xs font-medium mr-1">
               {symbol.toUpperCase()}
@@ -89,7 +89,7 @@ export default function Split({
           </dd>
         </dl>
         <dl>
-          <dt className="text-gray-d1 text-xs">Instantly Available</dt>
+          <dt className="text-navy-l1 text-xs">Instantly Available</dt>
           <dd className="text-right">
             <span className="text-xs font-medium mr-1">
               {symbol.toUpperCase()}
@@ -99,7 +99,7 @@ export default function Split({
         </dl>
       </div>
 
-      <p className="text-sm text-gray-d1 mt-6">
+      <p className="text-sm text-navy-l1 mt-6">
         With splitting your donation into sustainable funds, you align
         investments with personal values, improving long-term financial
         performance, reducing risk exposure, and contributing to global

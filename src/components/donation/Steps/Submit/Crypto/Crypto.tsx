@@ -31,7 +31,7 @@ export default function Crypto(props: CryptoSubmitStep) {
       }
       preSplitContent={
         <>
-          <dl className="text-gray-d1 py-3 flex items-center justify-between border-b border-gray-l4">
+          <dl className="text-navy-l1 py-3 flex items-center justify-between border-b border-gray-l4">
             <dt className="mr-auto">Currency</dt>
             <Image
               className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
@@ -40,7 +40,7 @@ export default function Crypto(props: CryptoSubmitStep) {
             <dd className="text-gray-d2">{details.token.symbol}</dd>
           </dl>
 
-          <dl className="text-gray-d1 py-3 flex items-center justify-between">
+          <dl className="text-navy-l1 py-3 flex items-center justify-between">
             <dt className="mr-auto">Blockchain</dt>
             <dd className="text-gray-d2">
               {chains[details.chainId.value].name}

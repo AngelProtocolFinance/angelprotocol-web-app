@@ -132,7 +132,7 @@ function Step({
         />
         <span
           className={`text-sm ${
-            isCurr ? "text-orange" : "text-gray-d1 dark:text-gray"
+            isCurr ? "text-orange" : "text-navy-l1 dark:text-gray"
           }`}
         >
           {children}

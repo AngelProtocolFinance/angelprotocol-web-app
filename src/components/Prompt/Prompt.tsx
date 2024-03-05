@@ -33,7 +33,7 @@ export default function Prompt({
           {title}
         </h3>
       )}
-      <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray">
+      <div className="px-6 pb-4 text-center text-navy-l1 dark:text-gray">
         {children}
       </div>
       <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-orange-l6 dark:bg-blue-d7 border-t border-gray-l4">

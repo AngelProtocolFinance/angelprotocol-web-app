@@ -34,7 +34,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
         </div>*/}
 
         <div className="hidden [&:has(a)]:grid mt-6 gap-2">
-          <h5 className="uppercase text-xs text-gray-d1 -mb-1">
+          <h5 className="uppercase text-xs text-navy-l1 -mb-1">
             My Organizations
           </h5>
           {user.endowments.map((endowId) => (
@@ -43,7 +43,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
         </div>
 
         <div className="hidden [&:has(a)]:block mt-6">
-          <h5 className="uppercase text-xs text-gray-d1 mb-1">BG Admin</h5>
+          <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
           {user.groups.includes(groups["ap-admin"]) && (
             <Link
               to={appRoutes.applications}

@@ -11,7 +11,7 @@ export default function NoDonations({ classes = "" }) {
         className="max-sm:place-self-center sm:col-start-2 sm:row-start-1 sm:row-span-2 rounded-full w-48 object-cover object-center"
       />
       <h3 className="text-lg self-end">No donations found.</h3>
-      <p className="self-start text-gray-d1 dark:text-gray">
+      <p className="self-start text-navy-l1 dark:text-gray">
         Sorry! We couldn't find any donations. Try to adjust any filters applied
         or connect with a different user.
       </p>

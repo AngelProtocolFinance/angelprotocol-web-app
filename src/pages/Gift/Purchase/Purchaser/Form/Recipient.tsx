@@ -12,7 +12,7 @@ export default function Recipient({ classes = "" }: { classes?: string }) {
     <div className={`grid field field-gift ${classes}`}>
       <label htmlFor={fieldName} className="font-bold font-heading mb-3">
         Enter recipient address:{" "}
-        <p className="text-sm font-normal text-gray-d1 dark:text-gray w-[90%] mt-1">
+        <p className="text-sm font-normal text-navy-l1 dark:text-gray w-[90%] mt-1">
           You may leave this blank and receive a gift card code - which you can
           send to your recipient.
         </p>

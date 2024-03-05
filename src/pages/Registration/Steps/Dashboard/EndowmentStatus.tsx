@@ -50,7 +50,7 @@ export default function EndowmentStatus({
     case "Under Review":
       return (
         <div
-          className={`max-sm:grid justify-items-center gap-2 text-gray-d1 dark:text-gray ${classes}`}
+          className={`max-sm:grid justify-items-center gap-2 text-navy-l1 dark:text-gray ${classes}`}
         >
           <Icon
             type="HourglassSplit"

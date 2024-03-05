@@ -36,7 +36,7 @@ export default function Summary({ Amount, ...props }: Props) {
       {props.preSplitContent}
 
       <dl
-        className={`text-gray-d1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 ${splitClass}`}
+        className={`text-navy-l1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 ${splitClass}`}
       >
         <dt className="mr-auto text-gray-d2">
           {props.tip

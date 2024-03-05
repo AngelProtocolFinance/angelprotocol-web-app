@@ -36,7 +36,7 @@
     @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
   }
   .field-input {
-    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l3 dark:border-navy focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l5 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-navy-d3 aria-disabled:bg-gray-l5 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:dark:bg-navy-d3 aria-disabled:pointer-events-none;
+    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-navy-l1 dark:placeholder:text-gray border border-gray-l3 dark:border-navy focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l5 disabled:text-navy-l1 disabled:dark:text-gray disabled:dark:bg-navy-d3 aria-disabled:bg-gray-l5 aria-disabled:text-navy-l1 aria-disabled:dark:text-gray aria-disabled:dark:bg-navy-d3 aria-disabled:pointer-events-none;
   }
 
   .field-input[aria-invalid="true"] {
@@ -92,7 +92,7 @@
   }
 
   .field-container {
-    @apply rounded border border-gray-l3 dark:border-navy focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-navy-d3 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
+    @apply rounded border border-gray-l3 dark:border-navy focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-navy-d3 aria-disabled:text-navy-l1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
   }
 
   .field-container[aria-invalid="true"] {

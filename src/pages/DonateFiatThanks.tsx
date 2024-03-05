@@ -24,14 +24,14 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
       <h3 className="text-xl sm:text-2xl mb-2 text-center leading-relaxed text-balance">
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>
-      <p className="text-center text-gray-d1">
+      <p className="text-center text-navy-l1">
         We'll process your donation to the nonprofit you specified as soon as
         the payment has cleared.
         {widgetVersion
           ? ""
           : " You can safely navigate away using the button below."}
       </p>
-      <p className="text-center text-gray-d1 mt-8 text-[15px]">
+      <p className="text-center text-navy-l1 mt-8 text-[15px]">
         If you need a receipt for your donation, please fill out the KYC form
         for this transaction on your{" "}
         {widgetVersion ? (

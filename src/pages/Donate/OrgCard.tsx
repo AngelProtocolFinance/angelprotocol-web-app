@@ -48,7 +48,7 @@ export default function OrgCard({
             Cancel
           </Link>
         </div>
-        <p className="text-gray-d1 text-sm max-md:hidden">{tagline}</p>
+        <p className="text-navy-l1 text-sm max-md:hidden">{tagline}</p>
       </div>
     </div>
   );

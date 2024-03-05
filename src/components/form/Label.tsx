@@ -19,7 +19,7 @@ export function Label({
         required !== undefined
           ? required
             ? "after:content-['*'] after:text-red"
-            : "after:content-['(optional)'] after:text-gray-d1 after:dark:text-gray"
+            : "after:content-['(optional)'] after:text-navy-l1 after:dark:text-gray"
           : ""
       }`}
     >
