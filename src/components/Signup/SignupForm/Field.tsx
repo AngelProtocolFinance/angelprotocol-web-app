@@ -33,7 +33,7 @@ export default function Field(props: Props) {
           aria-invalid={!!error}
         />
       </div>
-      {error && <p className="text-xs text-red mt-1.5">{error}</p>}
+      {error && <p className="text-xs text-[#C52828] mt-1.5">{error}</p>}
     </div>
   );
 }

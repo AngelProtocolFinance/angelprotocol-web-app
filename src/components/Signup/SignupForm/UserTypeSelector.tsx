@@ -37,7 +37,7 @@ export default function UserTypeSelector() {
           Non-profit
         </button>
       </div>
-      {error && <p className="text-xs text-red mt-1">{error.message}</p>}
+      {error && <p className="text-xs text-[#C52828] mt-1">{error.message}</p>}
     </div>
   );
 }
