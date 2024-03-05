@@ -5,16 +5,15 @@ import LoaderRing from "components/LoaderRing";
 import { Form } from "components/form";
 import { Separator } from "components/registration";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
-import { useAuthRedirectPath } from "helpers";
+import { appRoutes } from "constants/routes";
+import { determineAuthRedirectPath } from "helpers";
 import { useFormContext } from "react-hook-form";
-import { Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
+import { FormValues } from "../types";
 import Field from "./Field";
 import PasswordField from "./PasswordField";
 import UserTypeSelector from "./UserTypeSelector";
-import { FormValues } from "../types";
-import { Link } from "react-router-dom";
-import { appRoutes } from "constants/routes";
 
 type Props = {
   className?: string;
@@ -23,7 +22,7 @@ type Props = {
 
 export default function FullForm({ className = "", submit }: Props) {
   const { state } = useLocation();
-  const redirectPath = useAuthRedirectPath();
+  const redirectPath = determineAuthRedirectPath(state);
   const currUser = useGetter((state) => state.auth.user);
 
   const {
