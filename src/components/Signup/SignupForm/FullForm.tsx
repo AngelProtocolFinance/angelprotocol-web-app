@@ -69,7 +69,7 @@ export default function FullForm({ className = "", submit }: Props) {
         </span>
       </button>
 
-      <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-[#466072]/20 after:bg-[#466072]/20 font-medium text-[13px] text-[#1D3C51]/60">
+      <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
         OR
       </Separator>
 

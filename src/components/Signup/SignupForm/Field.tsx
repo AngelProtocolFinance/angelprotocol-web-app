@@ -26,7 +26,7 @@ export default function Field(props: Props) {
         <input
           {...register(props.name)}
           type="text"
-          className={`w-full h-full placeholder:font-medium placeholder:text-navy-l3 focus:outline-none bg-transparent py-4 ${
+          className={`w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 focus:outline-none bg-transparent py-4 ${
             props.icon ? "pr-5" : "px-5"
           }`}
           placeholder={props.placeholder}
