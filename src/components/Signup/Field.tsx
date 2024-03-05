@@ -1,25 +1,28 @@
 import Icon, { IconType } from "components/Icon";
-import { Path, get, useFormContext } from "react-hook-form";
-import { FormValues } from "../types";
+import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { fieldClasses } from "./constants";
 
-type Props = {
-  name: Path<FormValues>;
+type Props<T extends FieldValues> = {
+  name: Path<T>;
   placeholder: string;
   icon?: IconType;
 };
 
-export default function Field(props: Props) {
+export default function Field<T extends FieldValues>(props: Props<T>) {
   const {
     register,
     formState: { errors },
-  } = useFormContext<FormValues>();
+  } = useFormContext<T>();
 
   const error = get(errors, props.name)?.message;
 
   return (
     <div>
-      <div className={`grid grid-cols-[auto_1fr] ${fieldClasses}`}>
+      <div
+        className={`grid ${
+          props.icon ? "grid-cols-[auto_1fr]" : ""
+        } ${fieldClasses}`}
+      >
         {props.icon && (
           <Icon type={props.icon} className="ml-5 text-navy-l3" size={20} />
         )}
