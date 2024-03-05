@@ -15,7 +15,7 @@ export default function PasswordField() {
   return (
     <div>
       <div className={`grid grid-cols-[auto_1fr_auto] px-5 ${fieldClasses}`}>
-        <Icon type="Padlock" className="text-navy-l3" size={20} />
+        <Icon type="Padlock" className="text-navy-l3" />
         <input
           {...register("password")}
           type={isPasswordShown ? "text" : "password"}
@@ -25,7 +25,7 @@ export default function PasswordField() {
         />
         <button
           type="button"
-          className="text-navy-l3 focus:text-navy-d4 hover:text-[#1D3C51] rounded focus:outline focus:outline-2"
+          className="text-navy-l3 hover:text-navy-l2 active:text-navy rounded focus-visible:outline focus-visible:outline-2"
           onClick={() => setIsPasswordShown((prev) => !prev)}
         >
           <Icon type={isPasswordShown ? "EyeSlashed" : "Eye"} size={20} />
