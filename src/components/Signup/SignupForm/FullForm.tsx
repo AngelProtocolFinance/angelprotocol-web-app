@@ -101,7 +101,7 @@ export default function FullForm({ className = "", submit }: Props) {
         <Link
           to={appRoutes.signin}
           state={state}
-          className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:bg-gray font-medium underline"
+          className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray font-medium underline"
         >
           Sign in
         </Link>
