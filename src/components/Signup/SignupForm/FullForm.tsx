@@ -87,7 +87,7 @@ export default function FullForm({ className = "", submit }: Props) {
 
       <button
         type="submit"
-        className="btn-blue bg-blue-d1 rounded-full normal-case px-4 w-full my-8"
+        className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 py-3 rounded-full normal-case text-lg font-bold w-full my-8"
       >
         {isSubmitting ? "Submitting..." : "Sign up"}
       </button>
