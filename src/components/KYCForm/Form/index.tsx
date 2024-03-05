@@ -9,7 +9,7 @@ import { FormValues as FV, Props } from "../types";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
 
-export const formStyle = "w-full text-gray-d2 dark:text-white p-3";
+export const formStyle = "w-full text-navy-d4 dark:text-white p-3";
 
 export default function Form({ classes = "", ...props }: Props) {
   const {

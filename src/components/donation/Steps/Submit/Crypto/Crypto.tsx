@@ -37,12 +37,12 @@ export default function Crypto(props: CryptoSubmitStep) {
               className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
               src={details.token.logo}
             />
-            <dd className="text-gray-d2">{details.token.symbol}</dd>
+            <dd className="text-navy-d4">{details.token.symbol}</dd>
           </dl>
 
           <dl className="text-navy-l1 py-3 flex items-center justify-between">
             <dt className="mr-auto">Blockchain</dt>
-            <dd className="text-gray-d2">
+            <dd className="text-navy-d4">
               {chains[details.chainId.value].name}
             </dd>
           </dl>

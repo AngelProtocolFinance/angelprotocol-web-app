@@ -33,7 +33,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   if (isLoading || isFetching) {
     return (
       <Combobox.Options className={`${classes} ${container}`}>
-        <LoadingStatus classes="text-sm text-gray-d2 dark:text-navy-l2 p-2">
+        <LoadingStatus classes="text-sm text-navy-d4 dark:text-navy-l2 p-2">
           Loading..
         </LoadingStatus>
       </Combobox.Options>

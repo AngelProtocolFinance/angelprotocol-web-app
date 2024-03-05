@@ -171,7 +171,7 @@ function Em({
           ? "font-medium"
           : intensity === 2
             ? "font-semibold"
-            : "font-semibold text-gray-d2"
+            : "font-semibold text-navy-d4"
       } ${classes}`}
     >
       {children}

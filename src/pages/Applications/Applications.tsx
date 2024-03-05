@@ -30,7 +30,7 @@ function Applications() {
         <Icon
           type="Search"
           size={24}
-          className="text-gray-d2 dark:text-navy-l2 absolute top-1/2 -translate-y-1/2 left-3"
+          className="text-navy-d4 dark:text-navy-l2 absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
           disabled={isError}

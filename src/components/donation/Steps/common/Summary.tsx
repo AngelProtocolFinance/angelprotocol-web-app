@@ -38,12 +38,12 @@ export default function Summary({ Amount, ...props }: Props) {
       <dl
         className={`text-navy-l1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 ${splitClass}`}
       >
-        <dt className="mr-auto text-gray-d2">
+        <dt className="mr-auto text-navy-d4">
           {props.tip
             ? `Donation for ${props.tip.charityName}`
             : "Total donation"}
         </dt>
-        <Amount amount={props.amount} classes="text-gray-d2" />
+        <Amount amount={props.amount} classes="text-navy-d4" />
         <div className="flex items-center justify-between col-span-full">
           <dt className="mr-auto text-sm">Sustainable Fund</dt>
           <Amount classes="text-sm" amount={locked} />
@@ -60,7 +60,7 @@ export default function Summary({ Amount, ...props }: Props) {
         )}
         {props.tip && (
           <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
-            <dt className="mr-auto text-gray-d2">Total charge</dt>
+            <dt className="mr-auto text-navy-d4">Total charge</dt>
             <Amount amount={props.amount + props.tip.value} />
           </div>
         )}

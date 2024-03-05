@@ -64,7 +64,7 @@ export default function Prompt({ verdict, uuid }: Props) {
     <Modal
       as="form"
       onSubmit={methods.handleSubmit(onSubmit)}
-      className="fixed-center z-10 grid content-start justify-items-center text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+      className="fixed-center z-10 grid content-start justify-items-center text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-gray-l4 p-5">
