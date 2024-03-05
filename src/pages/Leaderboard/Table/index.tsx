@@ -10,12 +10,12 @@ type Props = {
 export default function Table({ classes = "", endowments }: Props) {
   return (
     <div
-      className={`${classes} h-[50rem] overflow-y-scroll scroller border border-prim rounded`}
+      className={`${classes} h-[50rem] overflow-y-scroll scroller border border-gray-l4 rounded`}
     >
       <table className="border-collapse table-auto w-full">
         <TableSection
           type="thead"
-          rowClass="border-b border-prim bg-orange-l6 dark:bg-blue-d6"
+          rowClass="border-b border-gray-l4 bg-orange-l6 dark:bg-blue-d6"
         >
           <Cells
             type="th"

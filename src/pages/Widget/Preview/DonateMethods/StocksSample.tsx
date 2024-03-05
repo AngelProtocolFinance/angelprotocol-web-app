@@ -67,7 +67,7 @@ export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
         contributions when you transfer securities through Better.Giving:
       </p>
       <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-2">
-        <span className="text-sm text-gray">
+        <span className="text-sm text-navy-l2">
           NOTE: This is not financial advice! Please speak to your tax advisor
           or broker about your specific situation and country's tax laws.
         </span>

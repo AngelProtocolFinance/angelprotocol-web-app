@@ -98,7 +98,7 @@ export default function Tip({
         Choose a Donation for{" "}
         <Image src={bgIcon} className="inline-block size-5" /> Better.giving
       </h4>
-      <p className="text-gray-d1">
+      <p className="text-navy-l1">
         We are completely free, and rely on donations
       </p>
 
@@ -128,7 +128,7 @@ export default function Tip({
               <span className="mr-0.5">
                 {humanize(tip.amount || "0", decimals)}
               </span>
-              <span className="text-gray-d1 text-xs">
+              <span className="text-navy-l1 text-xs">
                 ({(Number(tip.pct) * 100).toFixed(0)}%)
               </span>
             </div>
@@ -184,7 +184,7 @@ export default function Tip({
         </p>
       </div>
 
-      <p className="text-sm text-gray-d1 mt-6">
+      <p className="text-sm text-navy-l1 mt-6">
         Assist us in advancing our mission to connect with global organizations
         and propagate our timeless message:{" "}
         <span className="font-medium block">Give today, give forever.</span>

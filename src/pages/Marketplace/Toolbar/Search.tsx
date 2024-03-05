@@ -23,7 +23,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`${classes} flex gap-2 items-center  dark:text-gray-l3 border border-prim rounded-lg overflow-clip`}
+      className={`${classes} flex gap-2 items-center  dark:text-navy-l5 border border-gray-l4 rounded-lg overflow-clip`}
     >
       <Icon
         type={isLoading ? "Loading" : "Search"}
@@ -33,7 +33,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
       <input
         value={query}
         onChange={({ target: { value } }) => setQuery(value)}
-        className="focus:outline-none w-full py-2 pr-3 bg-transparent dark:placeholder:text-gray-l3"
+        className="focus:outline-none w-full py-2 pr-3 bg-transparent dark:placeholder:text-navy-l5"
         placeholder="Search organizations..."
       />
     </div>

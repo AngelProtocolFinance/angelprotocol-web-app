@@ -23,7 +23,7 @@ export default function Leaderboard() {
       >
         {(update) => (
           <>
-            <p className="justify-self-end flex gap-2 text-sm font-light text-gray-d1 dark:text-gray">
+            <p className="justify-self-end flex gap-2 text-sm font-light text-navy-l1 dark:text-navy-l2">
               last updated:{" "}
               {new Date(update.last_update).toLocaleString([], {
                 dateStyle: "short",

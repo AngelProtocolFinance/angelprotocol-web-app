@@ -147,14 +147,14 @@ function Row(props: Props) {
       </dt>
       <div
         aria-hidden={true}
-        className="max-sm:hidden w-px border-r border-prim last:border-none"
+        className="max-sm:hidden w-px border-r border-gray-l4 last:border-none"
       />
       <dd className="px-3 max-sm:pb-3 sm:p-3 flex items-center text-sm">
         {props.children}
       </dd>
       <div
         aria-hidden={true}
-        className="h-px col-span-full border-b border-prim last:border-none"
+        className="h-px col-span-full border-b border-gray-l4 last:border-none"
       />
     </>
   );

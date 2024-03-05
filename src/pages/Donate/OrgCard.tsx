@@ -20,7 +20,7 @@ export default function OrgCard({
 }: Props) {
   return (
     <div
-      className={`p-4 max-md:bg-blue-l4 md:p-0 md:rounded md:overflow-clip md:border border-prim ${classes}`}
+      className={`p-4 bg-white max-md:bg-blue-l4 md:p-0 md:rounded md:overflow-clip md:border border-gray-l4 ${classes}`}
     >
       <Image
         src={banner}
@@ -29,7 +29,7 @@ export default function OrgCard({
       <div className="hidden md:flex items-center w-full overflow-visible h-0">
         <Image
           src={logo}
-          className="size-14 border border-prim rounded-full object-cover bg-white ml-6"
+          className="size-14 border border-gray-l4 rounded-full object-cover bg-white ml-6"
         />
       </div>
       <div className="md:p-4 md:pt-11">
@@ -48,7 +48,7 @@ export default function OrgCard({
             Cancel
           </Link>
         </div>
-        <p className="text-gray-d1 text-sm max-md:hidden">{tagline}</p>
+        <p className="text-navy-l1 text-sm max-md:hidden">{tagline}</p>
       </div>
     </div>
   );

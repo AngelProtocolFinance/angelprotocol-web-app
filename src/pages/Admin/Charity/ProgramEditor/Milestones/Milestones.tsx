@@ -14,7 +14,7 @@ export default function Milestones() {
   const onRemove = (idx: number) => remove(idx);
 
   return (
-    <div className="@container grid gap-6 p-4 @lg:p-6 border border-prim rounded bg-white dark:bg-blue-d6">
+    <div className="@container grid gap-6 p-4 @lg:p-6 border border-gray-l4 rounded bg-white dark:bg-blue-d6">
       <div className="flex flex-col @md:flex-row items-center gap-3 justify-between">
         <h4 className="text-2xl">Milestones</h4>
         <button
@@ -40,7 +40,7 @@ export default function Milestones() {
       </div>
       {!isEmpty(fields) ? (
         <>
-          <span className="text-sm text-gray-d1 dark:text-gray">
+          <span className="text-sm text-navy-l1 dark:text-navy-l2">
             Milestones will be publicly displayed in descending order by their
             date.
           </span>

@@ -47,7 +47,7 @@ export default function FileDropzone<
               ? "border-gray-d1 dark:border-gray"
               : invalid
                 ? "border-red focus:shadow-focus"
-                : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
+                : "border-gray-l4 focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
             disabled
               ? "cursor-default bg-gray-l5 dark:bg-navy-d3"
@@ -59,7 +59,7 @@ export default function FileDropzone<
         <input {...getInputProps({ id: props.name })} />
         <DropzoneText {...value} fieldName={props.name} formErrors={errors} />
       </div>
-      <p className="text-xs text-gray-d1 dark:text-gray mt-2">
+      <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
         Valid types are:
         {props.specs.mimeTypes
           .map((m) => m.split("/")[1].toUpperCase())

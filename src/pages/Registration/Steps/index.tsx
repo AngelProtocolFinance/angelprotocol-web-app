@@ -56,7 +56,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`w-full md:w-[90%] max-w-[62.5rem] pt-8 grid md:grid-cols-[auto_1fr] md:border border-prim rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
+      className={`w-full md:w-[90%] max-w-[62.5rem] pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l4 rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
     >
       <ProgressIndicator
         step={regState.step}

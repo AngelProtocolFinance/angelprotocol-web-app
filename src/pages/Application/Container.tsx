@@ -11,12 +11,12 @@ export default function Container({ title, children, classes = "" }: Props) {
 
   return (
     <div
-      className={`w-full border border-prim rounded dark:bg-blue-d6 divide-y divide-prim ${classes}`}
+      className={`w-full border border-gray-l4 rounded dark:bg-blue-d6 divide-y divide-prim ${classes}`}
     >
       <div className="flex items-center gap-x-3 p-3">
         <button
           onClick={() => setOpen((prev) => !prev)}
-          className="flex items-center justify-center p-px w-6 h-6 border border-prim rounded"
+          className="flex items-center justify-center p-px w-6 h-6 border border-gray-l4 rounded"
           aria-label="toggle section content's visibility"
         >
           <Icon type={isOpen ? "Dash" : "Plus"} />

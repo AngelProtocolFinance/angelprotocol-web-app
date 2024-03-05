@@ -58,7 +58,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
               ? "border-gray-d1 dark:border-gray"
               : invalid
                 ? ""
-                : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
+                : "border-gray-l4 focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
             isSubmitting
               ? "cursor-default bg-gray-l5 dark:bg-navy-d3"
@@ -76,7 +76,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
         {noneUploaded ? (
           <button
             type="button"
-            className="absolute-center grid justify-items-center text-sm text-gray-d1 dark:text-gray"
+            className="absolute-center grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2"
             tabIndex={-1}
           >
             <Icon type="FileUpload" size={24} className="mb-[1.125rem]" />
@@ -110,7 +110,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
           </div>
         )}
       </div>
-      <p className="text-xs text-gray-d1 dark:text-gray mt-2">
+      <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
         <span>
           Valid types are:{" "}
           {accept.map((m) => m.split("/")[1].toUpperCase()).join(", ")}.{" "}

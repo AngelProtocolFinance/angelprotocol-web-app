@@ -11,7 +11,7 @@ type Props = {
 export default function Table({ methods, classes = "" }: Props) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-gray-l4`}
     >
       <TableSection
         type="thead"
@@ -37,7 +37,7 @@ export default function Table({ methods, classes = "" }: Props) {
           <Cells
             key={row.wiseRecipientID}
             type="td"
-            cellClass="p-3 border-t border-prim max-w-[256px] truncate first:rounded-bl last:rounded-br"
+            cellClass="p-3 border-t border-gray-l4 max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
             <>{new Date(row.dateCreated).toLocaleDateString()}</>
             <>{row.bankSummary}</>

@@ -28,7 +28,7 @@ export default function Table({
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-gray-l4`}
     >
       <TableSection
         type="thead"
@@ -94,7 +94,7 @@ export default function Table({
             <Cells
               key={row.hash}
               type="td"
-              cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+              cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
@@ -150,7 +150,7 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-prim rounded-b"
+                className="border-t border-gray-l4 rounded-b"
               >
                 <LoadMoreBtn
                   onLoadMore={onLoadMore}

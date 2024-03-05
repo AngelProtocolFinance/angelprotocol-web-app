@@ -10,7 +10,7 @@ type Props = {
 
 export default function Balance({ type, current, pending, paidOut }: Props) {
   return (
-    <div className="@container rounded border border-prim bg-orange-l6 dark:bg-blue-d6 p-4">
+    <div className="@container rounded border border-gray-l4 bg-orange-l6 dark:bg-blue-d6 p-4">
       <h4 className="uppercase text-sm @xs:text-xl font-bold mb-5">{type}</h4>
       <div className="grid @xs:grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-2 @xs:gap-x-8">
         <Amount title="Total Contributions" classes="col-span-full @xs:mr-auto">
@@ -29,7 +29,7 @@ function Amount({
 }: PropsWithChildren<{ classes?: string; title: string }>) {
   return (
     <div className={classes}>
-      <p className="text-2xs @xs:text-xs text-gray-d1 dark:text-gray @xs:mb-1 uppercase">
+      <p className="text-2xs @xs:text-xs text-navy-l1 dark:text-navy-l2 @xs:mb-1 uppercase">
         {props.title}
       </p>
       <span className="font-bold text-sm @xs:text-xl font-heading">

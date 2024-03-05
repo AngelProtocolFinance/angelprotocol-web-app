@@ -17,7 +17,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       as="form"
       onSubmit={submit}
       onReset={onReset}
-      className={`${classes} grid content-start gap-4 w-full rounded border border-prim bg-white dark:bg-blue-d5`}
+      className={`${classes} grid content-start gap-4 w-full rounded border border-gray-l4 bg-white dark:bg-blue-d5`}
     >
       <div className="lg:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
         <span className="text-orange">Filters</span>
@@ -32,7 +32,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       />
       <StatusDropdown classes="px-4 lg:px-6 max-lg:mb-4" />
 
-      <div className="max-lg:row-start-2 flex gap-x-4 items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-orange-l6 dark:bg-blue-d7 border-y lg:border-t border-prim">
+      <div className="max-lg:row-start-2 flex gap-x-4 items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-orange-l6 dark:bg-blue-d7 border-y lg:border-t border-gray-l4">
         <h3 className="uppercase lg:hidden">Filter by</h3>
         <button
           type="reset"

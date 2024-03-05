@@ -28,14 +28,14 @@ export default function Success({
       <h3 className="text-xl sm:text-2xl mb-2 text-center leading-relaxed text-balance">
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>
-      <p className="text-center text-gray-d1">
+      <p className="text-center text-navy-l1">
         The donation process is complete, and we are grateful for your support.
       </p>
 
-      <h2 className="mt-16 border-t border-prim w-full pt-2 text-center font-medium">
+      <h2 className="mt-16 border-t border-gray-l4 w-full pt-2 text-center font-medium">
         Spread the word!
       </h2>
-      <p className="text-center text-gray-d1 text-sm max-w-sm">
+      <p className="text-center text-navy-l1 text-sm max-w-sm">
         Encourage your friends to join in and contribute, making a collective
         impact through donations.
       </p>
