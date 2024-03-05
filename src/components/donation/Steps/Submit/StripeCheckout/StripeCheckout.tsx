@@ -24,13 +24,14 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     isError,
     error,
   } = useStripePaymentIntentQuery({
+    type: "one-time",
     amount: +details.amount,
     tipAmount: tip,
     usdRate: details.currency.rate,
     currency: details.currency.code,
     endowmentId: recipient.id,
-    email: props.donor.email,
     splitLiq: liquidSplitPct,
+    donor: props.donor,
   });
 
   const dispatch = useSetter();
