@@ -94,8 +94,8 @@ export default function ConfirmForm(props: Props) {
         Verify account
       </button>
 
-      <span className="flex-center gap-1 text-sm font-medium mt-5">
-        Resend code in
+      <span className="grid grid-cols-[4fr_3fr] items-center justify-items-start gap-1 text-sm font-medium mt-5">
+        <span className="justify-self-end">Resend code in</span>
         <ResendOTPTimer onClick={resendOTP} />
       </span>
     </Form>
