@@ -56,7 +56,7 @@ export default function FullForm({ className = "", submit }: Props) {
       </h4>
 
       <button
-        className="flex-center btn-outline-2 gap-2 h-[52px] mt-6"
+        className="flex-center btn-outline-2 gap-2 h-[52px] mt-6 border-[0.8px]"
         type="button"
         onClick={() => {
           localStorage.setItem(OAUTH_PATH_STORAGE_KEY, redirectPath.pathname);
