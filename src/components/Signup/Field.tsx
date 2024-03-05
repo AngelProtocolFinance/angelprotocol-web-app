@@ -1,8 +1,11 @@
 import Icon, { IconType } from "components/Icon";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { fieldClasses } from "./constants";
+import { Classes } from "components/form/types";
+import { unpack } from "components/form/helpers";
 
 type Props<T extends FieldValues> = {
+  classes?: Classes;
   name: Path<T>;
   placeholder: string;
   icon?: IconType;
@@ -14,10 +17,12 @@ export default function Field<T extends FieldValues>(props: Props<T>) {
     formState: { errors },
   } = useFormContext<T>();
 
-  const error = get(errors, props.name)?.message;
+  const errorMsg = get(errors, props.name)?.message;
+
+  const { container, input, error } = unpack(props.classes);
 
   return (
-    <div>
+    <div className={container}>
       <div
         className={`grid ${
           props.icon ? "grid-cols-[auto_1fr]" : ""
@@ -29,14 +34,16 @@ export default function Field<T extends FieldValues>(props: Props<T>) {
         <input
           {...register(props.name)}
           type="text"
-          className={`w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 focus:outline-none bg-transparent py-4 ${
+          className={`w-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 focus:outline-none bg-transparent ${
             props.icon ? "pr-5" : "px-5"
-          }`}
+          } ${input}`}
           placeholder={props.placeholder}
-          aria-invalid={!!error}
+          aria-invalid={!!errorMsg}
         />
       </div>
-      {error && <p className="text-xs text-[#C52828] mt-1.5">{error}</p>}
+      {errorMsg && (
+        <p className={`text-xs text-[#C52828] mt-1.5 ${error}`}>{errorMsg}</p>
+      )}
     </div>
   );
 }
