@@ -74,6 +74,7 @@ export type CryptoDonation = {
   splitLiq: number;
   chainName: string;
   appUsed: DonationSource;
+  donor: Donor;
 };
 
 export type FiatCurrencyData = {

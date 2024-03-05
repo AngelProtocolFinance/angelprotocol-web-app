@@ -3,6 +3,7 @@ import { PaymentIntent } from "@stripe/stripe-js";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import {
+  Donor,
   EndowmentBalances,
   FiatCurrencyData,
   PayPalOrder,
@@ -15,15 +16,16 @@ import { version as v } from "../helpers";
 import { tags } from "./tags";
 
 type StripePaymentIntentParams = {
+  type: "one-time" | "subscription";
   /** Denominated in USD. */
   amount: number;
   tipAmount: number;
   usdRate: number;
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
-  email: string;
   endowmentId: number;
   splitLiq: number;
+  donor: Donor;
 };
 
 type CreatePayPalOrderParams = {
@@ -33,9 +35,9 @@ type CreatePayPalOrderParams = {
   usdRate: number;
   /**ISO 3166-1 alpha-3 code */
   currency: string;
-  email: string;
   endowmentId: number;
   splitLiq: number;
+  donor: Donor;
 };
 
 type ChariotGrantIntentParams = {
@@ -45,10 +47,10 @@ type ChariotGrantIntentParams = {
   usdRate: number;
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
-  email: string;
   endowmentId: number;
   splitLiq: number;
   transactionId?: string;
+  donor: Donor;
 };
 
 export const apes = createApi({
@@ -85,7 +87,7 @@ export const apes = createApi({
     }),
     stripePaymentIntent: builder.query<string, StripePaymentIntentParams>({
       query: (data) => ({
-        url: `v2/fiat/stripe-proxy/${apiEnv}`,
+        url: "/fiat-donation/stripe",
         method: "POST",
         body: JSON.stringify(data),
       }),
