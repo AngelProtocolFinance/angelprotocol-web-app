@@ -1,4 +1,4 @@
-import { QueryStatus } from "@reduxjs/toolkit/dist/query";
+import { QueryStatus } from "@reduxjs/toolkit/query";
 import Icon from "components/Icon";
 import useDebouncer from "hooks/useDebouncer";
 import { useEffect, useState } from "react";
