@@ -19,7 +19,7 @@ export default function PasswordField() {
         <input
           {...register("password")}
           type={isPasswordShown ? "text" : "password"}
-          className="w-full h-full placeholder:font-medium focus:outline-none bg-transparent py-4"
+          className="w-full h-full placeholder:font-medium focus:outline-none bg-transparent"
           placeholder="Create password"
           aria-invalid={!!errors.password?.message}
         />
