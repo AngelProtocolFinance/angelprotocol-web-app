@@ -7,6 +7,7 @@ export enum appRoutes {
   banking_applications = "/banking-applications",
   register = "/register",
   signin = "/signin",
+  signup = "/signup",
   profile = "/profile",
   donations = "/donations",
   donate = "/donate",
