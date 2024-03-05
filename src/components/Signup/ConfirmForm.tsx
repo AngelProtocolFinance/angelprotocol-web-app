@@ -3,13 +3,15 @@ import { AuthError, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
 import { Form } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
+import useCounter from "hooks/useCounter";
 import { useState } from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
-import Field from "../Field";
-import { CodeRecipientEmail, StateSetter, UserType } from "../types";
-import ResendOTPTimer from "./ResendOTPTimer";
+import Field from "./Field";
+import { CodeRecipientEmail, StateSetter, UserType } from "./types";
+
+const MAX_TIME = 30;
 
 type Props = {
   codeRecipientEmail: CodeRecipientEmail;
@@ -30,6 +32,8 @@ export default function ConfirmForm(props: Props) {
   } = methods;
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
+
+  const { counter, resetCounter } = useCounter(MAX_TIME);
 
   const submit = async (fv: FV) => {
     try {
@@ -53,12 +57,14 @@ export default function ConfirmForm(props: Props) {
   const resendOTP = async () => {
     try {
       setIsRequestingNewCode(true);
+
       //no need to inspect result
       await resendSignUpCode({
         username: props.codeRecipientEmail.raw,
       });
+      resetCounter();
 
-      return alert("New code has been sent to your email.");
+      alert("New code has been sent to your email.");
     } catch (err) {
       const message =
         err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
@@ -96,7 +102,14 @@ export default function ConfirmForm(props: Props) {
 
       <span className="grid grid-cols-[4fr_3fr] items-center justify-items-start gap-1 text-sm font-medium mt-5">
         <span className="justify-self-end">Resend code in</span>
-        <ResendOTPTimer onClick={resendOTP} />
+        <button
+          type="button"
+          className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray font-bold underline"
+          onClick={resendOTP}
+          disabled={counter > 0}
+        >
+          00:{String(counter).padStart(2, "0")}
+        </button>
       </span>
     </Form>
   );
