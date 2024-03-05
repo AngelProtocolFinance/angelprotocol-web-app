@@ -1,13 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthError, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
-import { Field, Form } from "components/form";
+import { Form } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
 import { CodeRecipientEmail, StateSetter, UserType } from "./types";
+import Field from "./Field";
 
 type Props = {
   codeRecipientEmail: CodeRecipientEmail;
@@ -29,9 +30,26 @@ export default function ConfirmForm(props: Props) {
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
 
+  const [remainingTime, setRemainingTime] = useState(2);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRemainingTime((prev) => {
+        if (prev === 1) {
+          clearInterval(interval);
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <Form
-      className={`${props.classes ?? ""} grid`}
+      className={`${props.classes ?? ""} grid text-[#1D3C51]`}
       disabled={isSubmitting || isRequestingNewCode}
       methods={methods}
       onSubmit={handleSubmit(async (fv) => {
@@ -56,44 +74,51 @@ export default function ConfirmForm(props: Props) {
         }
       })}
     >
-      <p className="text-blue-d2 font-medium">
-        We emailed you a confirmation code.
-      </p>
-      <p className="text-sm text-gray-d1 mt-1 mb-4">
-        To continue, enter the code we emailed to{" "}
+      <h3 className="text-center text-2xl font-bold text-navy-d4">
+        Verify your account
+      </h3>
+      <p className="text-center font-normal mt-2">
+        You’re almost there! 6-digit security code has been sent to{" "}
         <span className="font-medium">{props.codeRecipientEmail.obscured}</span>
-        . It may take a couple of minutes to arrive.
       </p>
-      <Field<FV> name="code" label="Confirmation code" required />
+      <Field<FV>
+        name="code"
+        placeholder="Enter 6-digit code"
+        classes={{ container: "my-6" }}
+      />
       <button
         type="submit"
-        className="btn-blue px-4 py-2 rounded-full normal-case mt-6"
+        className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-[52px] rounded-full normal-case text-lg font-bold w-full"
       >
-        Confirm
+        Verify account
       </button>
-      <button
-        type="button"
-        className="btn-outline px-4 py-2 rounded-full normal-case mt-3"
-        onClick={async () => {
-          try {
-            setIsRequestingNewCode(true);
-            //no need to inspect result
-            await resendSignUpCode({
-              username: props.codeRecipientEmail.raw,
-            });
 
-            return alert("New code has been sent to your email.");
-          } catch (err) {
-            const message =
-              err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-            handleError(message);
-          } finally {
-            setIsRequestingNewCode(false);
-          }
-        }}
-      >
-        Resend code
-      </button>
+      <span className="flex-center gap-1 text-sm font-medium mt-5">
+        Resend code in
+        <button
+          type="button"
+          className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:bg-gray font-bold underline"
+          onClick={async () => {
+            try {
+              setIsRequestingNewCode(true);
+              //no need to inspect result
+              await resendSignUpCode({
+                username: props.codeRecipientEmail.raw,
+              });
+
+              return alert("New code has been sent to your email.");
+            } catch (err) {
+              const message =
+                err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
+              handleError(message);
+            } finally {
+              setIsRequestingNewCode(false);
+            }
+          }}
+        >
+          00:{String(remainingTime).padStart(2, "0")}
+        </button>
+      </span>
     </Form>
   );
 }

@@ -1,8 +1,8 @@
 import Icon from "components/Icon";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
+import { fieldClasses } from "../constants";
 import { FormValues } from "../types";
-import { fieldClasses } from "./constants";
 
 export default function PasswordField() {
   const [isPasswordShown, setIsPasswordShown] = useState(false);

@@ -9,18 +9,18 @@ type Props = { classes?: string; donor?: Donor };
 export default function Signup({ classes = "", donor }: Props) {
   const [state, setState] = useState<SignupState>({ type: "init" });
 
-  if (state.type === "init")
-    return (
-      <SignupForm setSignupState={setState} donor={donor} classes={classes} />
-    );
+  // if (state.type === "init")
+  //   return (
+  //     <SignupForm setSignupState={setState} donor={donor} classes={classes} />
+  //   );
 
-  if (state.type === "success")
-    return <Success classes={classes} userType={state.userType} />;
+  // if (state.type === "success")
+  //   return <Success classes={classes} userType={state.userType} />;
 
   return (
     <ConfirmForm
-      userType={state.userType}
-      codeRecipientEmail={state.codeRecipientEmail}
+      userType={"donor"}
+      codeRecipientEmail={{ obscured: "...@sdf.com", raw: "sdf@asdf.com" }}
       setSignupState={setState}
       classes={classes}
     />

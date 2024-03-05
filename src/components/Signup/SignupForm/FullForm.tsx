@@ -10,8 +10,8 @@ import { determineAuthRedirectPath } from "helpers";
 import { useFormContext } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
+import Field from "../Field";
 import { FormValues } from "../types";
-import Field from "./Field";
 import PasswordField from "./PasswordField";
 import UserTypeSelector from "./UserTypeSelector";
 
@@ -75,10 +75,14 @@ export default function FullForm({ className = "", submit }: Props) {
 
       <div className="grid gap-3">
         <div className="flex gap-3">
-          <Field name="firstName" placeholder="First Name" />
-          <Field name="lastName" placeholder="Last Name" />
+          <Field<FormValues> name="firstName" placeholder="First Name" />
+          <Field<FormValues> name="lastName" placeholder="Last Name" />
         </div>
-        <Field name="email" placeholder="Email address" icon="Email" />
+        <Field<FormValues>
+          name="email"
+          placeholder="Email address"
+          icon="Email"
+        />
         <PasswordField />
       </div>
 
@@ -87,7 +91,7 @@ export default function FullForm({ className = "", submit }: Props) {
 
       <button
         type="submit"
-        className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 py-3 rounded-full normal-case text-lg font-bold w-full my-8"
+        className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-[52px] rounded-full normal-case text-lg font-bold w-full my-8"
       >
         {isSubmitting ? "Submitting..." : "Sign up"}
       </button>
