@@ -25,7 +25,7 @@ export default function PasswordField() {
         />
         <button
           type="button"
-          className="text-navy-l3 focus:text-navy-d4 hover:text-[#1D3C51] rounded focus:outline focus:outline-2 focus:outline-blue-d1"
+          className="text-navy-l3 focus:text-navy-d4 hover:text-[#1D3C51] rounded focus:outline focus:outline-2"
           onClick={() => setIsPasswordShown((prev) => !prev)}
         >
           <Icon type={isPasswordShown ? "EyeSlashed" : "Eye"} size={20} />
