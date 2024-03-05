@@ -37,7 +37,7 @@ function Content(props: Props) {
 
   return (
     <div
-      className="max-sm:fixed max-sm:inset-0 overflow-y-auto w-full z-20 bg-white py-4 sm:py-10"
+      className="max-sm:fixed max-sm:inset-0 overflow-y-auto w-full z-20 bg-[#F6F7F8] py-4 sm:py-10"
       id={CONTAINER_ID}
     >
       <div className="md:padded-container grid md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6">

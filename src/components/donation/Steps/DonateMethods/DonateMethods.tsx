@@ -33,7 +33,7 @@ const tabIdx = (method?: DonationDetails["method"]) => {
 const tabClasses = (selected: boolean) =>
   `${
     selected
-      ? "font-semibold bg-blue @md:bg-white text-white @md:text-black"
+      ? "font-semibold bg-blue-l4 text-navy-d4"
       : "border border-gray-l4 @md:border-none"
   } text-sm flex items-center gap-2 p-2 @md:px-3 @md:py-4 focus:outline-none @md:w-28 rounded @md:rounded-none`;
 
@@ -49,7 +49,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       <Label className="p-4 pb-0 col-span-full @md:hidden font-bold">
         Payment method
       </Label>
-      <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-1 content-start @md:bg-blue-l4 @md:divide-y @md:divide-white">
+      <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-1 content-start @md:divide-y @md:divide-white @md:border-r border-gray-l4">
         <Tab className={({ selected }) => tabClasses(selected)}>
           <Icon type="CreditCard" size={16} />
           <span>Card</span>
