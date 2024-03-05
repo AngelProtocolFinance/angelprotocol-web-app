@@ -16,7 +16,6 @@ const MAX_TIME = 30;
 type Props = {
   codeRecipientEmail: CodeRecipientEmail;
   setSignupState: StateSetter;
-  classes?: string;
   userType: UserType;
 };
 
@@ -76,7 +75,7 @@ export default function ConfirmForm(props: Props) {
 
   return (
     <Form
-      className={`${props.classes ?? ""} grid text-[#1D3C51]`}
+      className="grid text-[#1D3C51] w-full max-w-md px-7 py-8 bg-white border border-gray-l4 rounded-2xl"
       disabled={isSubmitting || isRequestingNewCode}
       methods={methods}
       onSubmit={handleSubmit(submit)}

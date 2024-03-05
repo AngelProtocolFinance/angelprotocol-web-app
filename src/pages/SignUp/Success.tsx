@@ -5,9 +5,9 @@ import { Link, useLocation } from "react-router-dom";
 import { SignInRouteState } from "types/routeStates";
 import { UserType } from "./types";
 
-type Props = { classes?: string; userType: UserType };
+type Props = { userType: UserType };
 
-export default function Success({ classes = "", userType }: Props) {
+export default function Success({ userType }: Props) {
   const { state } = useLocation();
   const redirectPath = determineAuthRedirectPath(state);
   // donors get redirected to the route which they originally attempted to
@@ -17,7 +17,7 @@ export default function Success({ classes = "", userType }: Props) {
   };
 
   return (
-    <div className={`grid pt-8 place-items-center ${classes}`}>
+    <div className="w-full max-w-md px-7 py-8 bg-white border border-gray-l4 rounded-2xl">
       <Icon type="CheckCircle" className="text-blue-d1 h-20 w-20" />
 
       <h3 className="text-center text-2xl font-bold text-navy-d4 mt-6">

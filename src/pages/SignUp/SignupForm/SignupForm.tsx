@@ -5,12 +5,10 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { FormProvider, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { mixed, object } from "yup";
-import FullForm from "./FullForm";
-import OnlyPasswordForm from "./OnlyPasswordForm";
-import { Donor, FormValues, StateSetter, UserType } from "../types";
+import { FormValues, StateSetter, UserType } from "../types";
+import FormFields from "./FormFields";
 
 type Props = {
-  donor?: Donor;
   setSignupState: StateSetter;
   classes?: string;
 };
@@ -37,7 +35,6 @@ export default function SignupForm(props: Props) {
           ),
       })
     ),
-    defaultValues: { ...props.donor },
   });
 
   async function submit(fv: FormValues) {
@@ -76,11 +73,7 @@ export default function SignupForm(props: Props) {
 
   return (
     <FormProvider {...methods}>
-      {props.donor ? (
-        <OnlyPasswordForm className={props.classes} submit={submit} />
-      ) : (
-        <FullForm className={props.classes} submit={submit} />
-      )}
+      <FormFields submit={submit} />
     </FormProvider>
   );
 }
