@@ -60,10 +60,12 @@ export default function SignupForm(props: Props) {
       if (!nextStep.codeDeliveryDetails.destination) throw "";
 
       props.setSignupState({
+        type: "confirm",
         codeRecipientEmail: {
           raw: fv.email,
           obscured: nextStep.codeDeliveryDetails.destination,
         },
+        userType: fv.userType,
       });
     } catch (err) {
       const message =

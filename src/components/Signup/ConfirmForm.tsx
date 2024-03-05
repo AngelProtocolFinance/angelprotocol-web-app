@@ -7,13 +7,15 @@ import { useState } from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
-import { CodeRecipientEmail, StateSetter } from "./types";
+import { CodeRecipientEmail, StateSetter, UserType } from "./types";
 
 type Props = {
   codeRecipientEmail: CodeRecipientEmail;
   setSignupState: StateSetter;
   classes?: string;
+  userType: UserType;
 };
+
 export default function ConfirmForm(props: Props) {
   const { handleError } = useErrorContext();
   const [isRequestingNewCode, setIsRequestingNewCode] = useState(false);
@@ -46,7 +48,7 @@ export default function ConfirmForm(props: Props) {
             return handleError("Code confirmation failed");
           }
 
-          props.setSignupState("success");
+          props.setSignupState({ type: "success", userType: props.userType });
         } catch (err) {
           const message =
             err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
