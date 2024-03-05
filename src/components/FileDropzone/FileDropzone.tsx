@@ -47,7 +47,7 @@ export default function FileDropzone<
               ? "border-gray-d1 dark:border-gray"
               : invalid
                 ? "border-red focus:shadow-focus"
-                : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
+                : "border-gray-l4 focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
             disabled
               ? "cursor-default bg-gray-l5 dark:bg-navy-d3"

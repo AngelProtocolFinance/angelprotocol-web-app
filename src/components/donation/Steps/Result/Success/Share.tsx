@@ -45,19 +45,19 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
   }, []);
 
   return (
-    <Modal className="grid content-start fixed-center z-20 border border-prim bg-gray-l6 dark:bg-blue-d5 text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
-      <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5 dark:bg-blue-d7 border-b border-prim">
+    <Modal className="grid content-start fixed-center z-20 border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 text-gray-d2 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
+      <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5 dark:bg-blue-d7 border-b border-gray-l4">
         Share on {type === "FacebookCircle" ? "Facebook" : type}
         <button
           onClick={closeModal}
-          className="absolute top-1/2 transform -translate-y-1/2 right-4 w-10 h-10 border border-prim rounded "
+          className="absolute top-1/2 transform -translate-y-1/2 right-4 w-10 h-10 border border-gray-l4 rounded "
         >
           <Icon type="Close" className="absolute-center" size={28} />
         </button>
       </div>
       <p
         ref={msgRef}
-        className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-prim rounded"
+        className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l4 rounded"
       >
         I just donated to <span className="font-bold">{name}</span> on{" "}
         <span className="font-bold">"@angelgiving_</span>!{" "}

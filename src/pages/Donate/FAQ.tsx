@@ -9,7 +9,8 @@ export default function FAQ({ classes = "" }) {
   return (
     <div
       className={
-        classes + " md:border md:border-prim md:p-4 rounded grid gap-2 md:gap-4"
+        classes +
+        " md:border md:border-gray-l4 md:p-4 rounded grid gap-2 md:gap-4"
       }
     >
       <h2 className="text-sm" id="faqs">

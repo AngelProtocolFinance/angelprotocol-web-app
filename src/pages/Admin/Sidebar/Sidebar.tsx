@@ -18,7 +18,7 @@ export default function Sidebar({
 }: Props) {
   return (
     <div
-      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${className}`}
+      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-gray-l4 ${className}`}
     >
       <Header />
 

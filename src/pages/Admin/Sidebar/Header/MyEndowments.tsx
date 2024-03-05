@@ -24,7 +24,7 @@ export default function MyEndowments({ endowments, showEndowments }: Props) {
             >
               <Image
                 src={endowment.logo}
-                className="w-10 h-10 border border-prim rounded-full"
+                className="w-10 h-10 border border-gray-l4 rounded-full"
               />
               <Link
                 to={`${appRoutes.admin}/${endowment.endowId}`}

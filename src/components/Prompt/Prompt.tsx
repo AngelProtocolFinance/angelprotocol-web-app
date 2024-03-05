@@ -15,13 +15,13 @@ export default function Prompt({
   return (
     <Modal className="fixed-center z-10 grid text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden">
       <div className="relative">
-        <p className="empty:h-16 text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-prim p-5">
+        <p className="empty:h-16 text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-gray-l4 p-5">
           {headline}
         </p>
         {isDismissible && (
           <button
             onClick={closeModal}
-            className="border border-prim p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l3 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
+            className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l3 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
           >
             <Icon type="Close" size={24} />
           </button>
@@ -36,7 +36,7 @@ export default function Prompt({
       <div className="px-6 pb-4 text-center text-gray-d1 dark:text-gray">
         {children}
       </div>
-      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-orange-l6 dark:bg-blue-d7 border-t border-prim">
+      <div className="p-3 sm:px-8 sm:py-4 empty:h-12 w-full text-center sm:text-right bg-orange-l6 dark:bg-blue-d7 border-t border-gray-l4">
         {isDismissible && (
           <button
             type="button"

@@ -51,7 +51,7 @@ export default function Countries() {
           </div>
         </div>
       </Combobox.Button>
-      <Combobox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
+      <Combobox.Options className="rounded-sm text-sm border border-gray-l4 absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
         {!isEmpty(filteredOptions) &&
           filteredOptions.map((name) => (
             <Combobox.Option
@@ -90,7 +90,7 @@ function SelectedOption({ selected, onChange, option }: SelectedProps) {
     onChange(selected.filter((s) => s !== value));
 
   return (
-    <div className="flex gap-2 items-center text-xs pt-1 pb-[.3rem] px-2 border-orange text-orange-d4 bg-orange-l5 border border-prim rounded-sm">
+    <div className="flex gap-2 items-center text-xs pt-1 pb-[.3rem] px-2 border-orange text-orange-d4 bg-orange-l5 border border-gray-l4 rounded-sm">
       <span className="max-w-[200px] truncate">{option}</span>
       <button
         type="button"

@@ -183,7 +183,7 @@ export default function RecipientDetailsForm({
                     className={`relative border ${
                       !!getFieldState(f.key).error
                         ? "border-red"
-                        : "border-prim"
+                        : "border-gray-l4"
                     } rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1`}
                   >
                     <input
@@ -300,7 +300,7 @@ export default function RecipientDetailsForm({
           id="bank__statement"
           type="file"
           // `!py-0 !pl-0` removes padding added by `field > field-input`
-          className="!py-0 !pl-0 file:border-none file:border-r file:border-prim file:py-3.5 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
+          className="!py-0 !pl-0 file:border-none file:border-r file:border-gray-l4 file:py-3.5 file:px-4 file:bg-blue-l4 file:text-gray-d2 text-gray-d1"
           {...register("bankStatement", {
             validate(value?: FileList) {
               //multile:false

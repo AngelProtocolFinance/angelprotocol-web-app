@@ -171,7 +171,7 @@ function SelectedOption<T extends ValKey>({
     onChange(selected.filter((s) => s.value !== value));
 
   return (
-    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase">
+    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-gray-l4 rounded font-semibold text-gray-d1 dark:text-gray uppercase">
       <span className="max-w-[200px] truncate">{option.label}</span>
       <button
         type="button"

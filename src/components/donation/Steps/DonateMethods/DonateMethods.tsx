@@ -34,7 +34,7 @@ const tabClasses = (selected: boolean) =>
   `${
     selected
       ? "font-semibold bg-blue @md:bg-white text-white @md:text-black"
-      : "border border-prim @md:border-none"
+      : "border border-gray-l4 @md:border-none"
   } text-sm flex items-center gap-2 p-2 @md:px-3 @md:py-4 focus:outline-none @md:w-28 rounded @md:rounded-none`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {

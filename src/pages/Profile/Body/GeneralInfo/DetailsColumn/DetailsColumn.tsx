@@ -14,7 +14,7 @@ export default function DetailsColumn({ className = "" }) {
       <Balances />
 
       <div
-        className={`${className} flex flex-col gap-8 w-full lg:w-96 p-8 border border-prim rounded text-gray-d2 dark:bg-blue-d6  dark:text-white`}
+        className={`${className} flex flex-col gap-8 w-full lg:w-96 p-8 border border-gray-l4 rounded text-gray-d2 dark:bg-blue-d6  dark:text-white`}
       >
         {p.registration_number && (
           <Detail title="registration no.">{p.registration_number}</Detail>

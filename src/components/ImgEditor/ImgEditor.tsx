@@ -58,7 +58,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
               ? "border-gray-d1 dark:border-gray"
               : invalid
                 ? ""
-                : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
+                : "border-gray-l4 focus:border-orange-l2 focus:dark:border-blue-d1"
           } ${
             isSubmitting
               ? "cursor-default bg-gray-l5 dark:bg-navy-d3"

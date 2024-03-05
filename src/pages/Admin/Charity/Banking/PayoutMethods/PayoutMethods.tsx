@@ -26,7 +26,7 @@ export default function PayoutMethods() {
 
       <QueryLoader
         queryState={queryState}
-        classes={{ container: "mt-4 border-t pt-4 border-prim" }}
+        classes={{ container: "mt-4 border-t pt-4 border-gray-l4" }}
         messages={{
           loading: <Skeleton />,
           error: "Failed to get payout methods",

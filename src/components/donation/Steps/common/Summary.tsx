@@ -36,7 +36,7 @@ export default function Summary({ Amount, ...props }: Props) {
       {props.preSplitContent}
 
       <dl
-        className={`text-gray-d1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-prim ${splitClass}`}
+        className={`text-gray-d1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 ${splitClass}`}
       >
         <dt className="mr-auto text-gray-d2">
           {props.tip
@@ -53,7 +53,7 @@ export default function Summary({ Amount, ...props }: Props) {
           <Amount classes="text-sm" amount={liq} />
         </div>
         {props.tip && (
-          <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-prim py-3">
+          <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
             <dt className="mr-auto">Donation for Better.giving</dt>
             <Amount classes="text-sm" amount={props.tip.value} />
           </div>

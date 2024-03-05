@@ -32,7 +32,7 @@ export default function Success({
         The donation process is complete, and we are grateful for your support.
       </p>
 
-      <h2 className="mt-16 border-t border-prim w-full pt-2 text-center font-medium">
+      <h2 className="mt-16 border-t border-gray-l4 w-full pt-2 text-center font-medium">
         Spread the word!
       </h2>
       <p className="text-center text-gray-d1 text-sm max-w-sm">

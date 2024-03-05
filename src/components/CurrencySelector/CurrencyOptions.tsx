@@ -44,7 +44,7 @@ export default function CurrencyOptions({
       classes={{
         container:
           classes +
-          " bg-white w-full rounded border border-prim p-2 text-sm text-gray-d1 shadow-lg",
+          " bg-white w-full rounded border border-gray-l4 p-2 text-sm text-gray-d1 shadow-lg",
       }}
     >
       {(currencies) => (

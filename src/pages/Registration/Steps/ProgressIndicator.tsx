@@ -120,7 +120,7 @@ function Step({
       {/** line */}
       <div
         className={`h-[22px] border-l ${
-          isDone || isCurr ? "border-orange" : "border-prim"
+          isDone || isCurr ? "border-orange" : "border-gray-l4"
         } my-2 group-first:hidden`}
       />
       <div className="flex items-center">

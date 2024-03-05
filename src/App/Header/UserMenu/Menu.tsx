@@ -16,7 +16,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
     <Popover.Panel
       className={`${classes} shadow-xl bg-gray-l6 dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
-      <p className="text-sm p-3 bg-orange-l6 border-b border-prim">
+      <p className="text-sm p-3 bg-orange-l6 border-b border-gray-l4">
         Welcome, {user.firstName || user.email}!
       </p>
 

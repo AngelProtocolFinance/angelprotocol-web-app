@@ -11,7 +11,7 @@ export default function Reference({ id, classes = "" }: Props) {
 
   return (
     <div
-      className={`${classes} w-full py-4 px-6 text-sm text-left md:text-center bg-gray-l6 dark:bg-blue-d5 text-gray-d2 dark:text-white md:text-gray-d1 md:dark:text-gray md:border-t border-prim rounded-b-lg`}
+      className={`${classes} w-full py-4 px-6 text-sm text-left md:text-center bg-gray-l6 dark:bg-blue-d5 text-gray-d2 dark:text-white md:text-gray-d1 md:dark:text-gray md:border-t border-gray-l4 rounded-b-lg`}
     >
       <div className="relative">
         <span className="font-semibold mr-2">Your registration number:</span>
@@ -51,6 +51,6 @@ function WithTooltip(props: {
     className:
       props.children.props.className +
       ` ${props.classes ?? "" /** control position */} relative before:w-48 before:z-10 before:content-[attr(data-before-content)] hover:before:block before:hidden before:absolute  
-      before:text-xs before:bg-gray-l6 before:dark:bg-blue-d6 before:text-gray-d1 before:dark:text-gray before:border before:border-prim before:p-2 before:rounded`,
+      before:text-xs before:bg-gray-l6 before:dark:bg-blue-d6 before:text-gray-d1 before:dark:text-gray before:border before:border-gray-l4 before:p-2 before:rounded`,
   });
 }

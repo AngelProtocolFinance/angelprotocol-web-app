@@ -23,7 +23,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`${classes} flex gap-2 items-center  dark:text-gray-l3 border border-prim rounded-lg overflow-clip`}
+      className={`${classes} flex gap-2 items-center  dark:text-gray-l3 border border-gray-l4 rounded-lg overflow-clip`}
     >
       <Icon
         type={isLoading ? "Loading" : "Search"}

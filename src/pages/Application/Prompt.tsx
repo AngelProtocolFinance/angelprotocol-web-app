@@ -68,14 +68,14 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
       className="fixed-center z-10 grid content-start justify-items-center text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <div className="relative w-full">
-        <p className="sm:text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-prim p-5">
+        <p className="sm:text-xl font-bold text-center border-b bg-orange-l6 dark:bg-blue-d7 border-gray-l4 p-5">
           Changing Application Status
         </p>
         {isDismissible && (
           <button
             onClick={closeModal}
             disabled={isLoading}
-            className="border border-prim p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l3 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
+            className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-gray-l3 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
           >
             <Icon type="Close" className="text-lg sm:text-2xl" />
           </button>
@@ -130,7 +130,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
         </FormProvider>
       )}
 
-      <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-orange-l6 dark:bg-blue-d7 border-t border-prim">
+      <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-orange-l6 dark:bg-blue-d7 border-t border-gray-l4">
         <button
           disabled={isLoading}
           type="button"
