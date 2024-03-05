@@ -92,7 +92,7 @@ export default function FullForm({ className = "", submit }: Props) {
         {isSubmitting ? "Submitting..." : "Sign up"}
       </button>
 
-      <span className="flex justify-center items-center gap-1 text-base font-normal">
+      <span className="flex-center gap-1 text-base font-normal">
         Already have an account?
         <Link
           to={appRoutes.signin}
