@@ -51,9 +51,9 @@ export default function FullForm({ className = "", submit }: Props) {
       <h3 className="text-center text-2xl font-bold text-navy-d4">
         Philanthropy for Everyone
       </h3>
-      <h4 className="text-center font-body font-normal mt-2">
+      <p className="text-center font-body font-normal mt-2">
         Sign up to support from 18000+ causes
-      </h4>
+      </p>
 
       <button
         className="flex-center btn-outline-2 gap-2 h-[52px] mt-6 border-[0.8px]"
