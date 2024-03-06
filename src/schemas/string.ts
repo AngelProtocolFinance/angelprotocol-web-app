@@ -54,3 +54,10 @@ export function walletAddrPatten(chainId: ChainID) {
       throw new Error(`unhandled ${x}`);
   }
 }
+
+export const password = requiredString
+  .min(8, ({ min }) => `must have at least ${min} characters`)
+  .matches(/[a-z]/, "must have lowercase letters")
+  .matches(/[A-Z]/, "must have uppercase letters")
+  .matches(/\d/, "must have numbers")
+  .matches(/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/, "must have special characters");

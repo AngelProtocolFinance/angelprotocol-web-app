@@ -3,7 +3,7 @@ import { AuthError, signUp } from "aws-amplify/auth";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FormProvider, useForm } from "react-hook-form";
-import { requiredString } from "schemas/string";
+import { password, requiredString } from "schemas/string";
 import { mixed, object } from "yup";
 import { FormValues, StateSetter, UserType } from "../types";
 import FormFields from "./FormFields";
@@ -24,15 +24,7 @@ export default function SignupForm(props: Props) {
         userType: mixed<UserType>()
           .required("required")
           .oneOf(["donor", "non-profit"]),
-        password: requiredString
-          .min(8, ({ min }) => `must have at least ${min} characters`)
-          .matches(/[a-z]/, "must have lowercase letters")
-          .matches(/[A-Z]/, "must have uppercase letters")
-          .matches(/\d/, "must have numbers")
-          .matches(
-            /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/,
-            "must have special characters"
-          ),
+        password: password,
       })
     ),
   });
