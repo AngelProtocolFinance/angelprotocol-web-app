@@ -101,7 +101,7 @@ export default function SignupForm(props: Props) {
   return (
     <div className="grid justify-items-center gap-3.5">
       <Form
-        className="grid w-full max-w-md px-7 py-8 bg-white border border-gray-l4 rounded-2xl"
+        className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
         methods={methods}
         disabled={isSubmitting}
         onSubmit={handleSubmit(submit)}
@@ -109,7 +109,7 @@ export default function SignupForm(props: Props) {
         <h3 className="text-center text-2xl font-bold text-navy-d4">
           Philanthropy for Everyone
         </h3>
-        <p className="text-center font-body font-normal mt-2">
+        <p className="text-center font-normal max-sm:text-sm mt-2">
           Sign up to support from 18000+ causes
         </p>
         <button
@@ -140,15 +140,17 @@ export default function SignupForm(props: Props) {
           />
           <PasswordField />
         </div>
-        <span className="mt-7 mb-3 font-normal">You are signing up as</span>
+        <span className="mt-7 mb-3 font-normal max-sm:text-sm">
+          You are signing up as
+        </span>
         <UserTypeSelector />
         <button
           type="submit"
-          className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case text-lg font-bold w-full my-8"
+          className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full my-8"
         >
           {isSubmitting ? "Submitting..." : "Sign up"}
         </button>
-        <span className="flex-center gap-1 text-base font-normal">
+        <span className="flex-center gap-1 max-sm:text-sm font-normal">
           Already have an account?
           <Link
             to={appRoutes.signin}
@@ -160,7 +162,7 @@ export default function SignupForm(props: Props) {
           </Link>
         </span>
       </Form>
-      <span className="text-sm text-center w-80">
+      <span className="text-xs sm:text-sm text-center w-80">
         By signing up, you agree to our{" "}
         <ExtLink href={PRIVACY_POLICY} className="text-blue hover:text-blue-l2">
           Privacy Policy
