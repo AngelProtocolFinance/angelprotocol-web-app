@@ -110,6 +110,7 @@ export default function SignupForm(props: Props) {
         <p className="text-center font-normal max-sm:text-sm mt-2">
           Sign up to support from 18000+ causes
         </p>
+
         <button
           className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
           type="button"
@@ -123,9 +124,11 @@ export default function SignupForm(props: Props) {
             Sign Up with Google
           </span>
         </button>
+
         <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
           OR
         </Separator>
+
         <div className="grid gap-3">
           <div className="flex gap-3">
             <Input<FormValues> name="firstName" placeholder="First Name" />
@@ -141,16 +144,19 @@ export default function SignupForm(props: Props) {
             placeholder="Create password"
           />
         </div>
+
         <span className="mt-7 mb-3 font-normal max-sm:text-sm">
           You are signing up as
         </span>
         <UserTypeSelector />
+
         <button
           type="submit"
           className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full my-8"
         >
           {isSubmitting ? "Submitting..." : "Sign up"}
         </button>
+
         <span className="flex-center gap-1 max-sm:text-sm font-normal">
           Already have an account?
           <Link
@@ -163,6 +169,7 @@ export default function SignupForm(props: Props) {
           </Link>
         </span>
       </Form>
+
       <span className="text-xs sm:text-sm text-center w-80">
         By signing up, you agree to our{" "}
         <ExtLink href={PRIVACY_POLICY} className="text-blue hover:text-blue-l2">
