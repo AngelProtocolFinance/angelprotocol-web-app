@@ -1,13 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
 import { AuthError, signInWithRedirect, signUp } from "aws-amplify/auth";
+import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { Form } from "components/form";
 import { Separator } from "components/registration";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
 import { determineAuthRedirectPath } from "helpers";
 import { useForm } from "react-hook-form";
@@ -158,8 +161,25 @@ export default function SignupForm(props: Props) {
           </Link>
         </span>
       </Form>
-      <span className="text-sm text-center w-72">
-        By signing up, you agree to our Terms, Data Policy and Cookies Policy.
+      <span className="text-sm text-center w-80">
+        By signing up, you agree to our{" "}
+        <ExtLink href={PRIVACY_POLICY} className="text-blue hover:text-blue-l2">
+          Privacy Policy
+        </ExtLink>
+        ,{" "}
+        <ExtLink
+          href={`${BASE_URL}/cookie-policy/`}
+          className="text-blue hover:text-blue-l2"
+        >
+          Cookie Policy
+        </ExtLink>
+        , and{" "}
+        <ExtLink
+          href={TERMS_OF_USE_NPO}
+          className="text-blue hover:text-blue-l2"
+        >
+          Terms of Use
+        </ExtLink>
       </span>
     </div>
   );
