@@ -75,9 +75,12 @@ export default function SignupForm(props: Props) {
       });
 
       //per cognito config
-      if (nextStep.signUpStep !== "CONFIRM_SIGN_UP") throw "";
-      if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL") throw "";
-      if (!nextStep.codeDeliveryDetails.destination) throw "";
+      if (nextStep.signUpStep !== "CONFIRM_SIGN_UP")
+        throw `Unexpected next step: ${nextStep.signUpStep}`;
+      if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL")
+        throw `Unexpected code delivery medium: ${nextStep.codeDeliveryDetails.deliveryMedium}`;
+      if (!nextStep.codeDeliveryDetails.destination)
+        throw `Missing code delivery destination`;
 
       props.setSignupState({
         type: "confirm",
