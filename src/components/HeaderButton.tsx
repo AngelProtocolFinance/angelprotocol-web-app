@@ -32,8 +32,8 @@ export function HeaderButton<T>(
         }
         className={`w-4 h-4 shrink-0 ${
           _activeSortKey === _sortKey
-            ? "text-gray-d2 dark:text-white"
-            : "text-gray dark:text-white"
+            ? "text-navy-d4 dark:text-white"
+            : "text-navy-l2 dark:text-white"
         }`}
       />
     </button>

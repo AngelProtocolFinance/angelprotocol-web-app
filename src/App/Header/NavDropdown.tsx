@@ -23,8 +23,8 @@ export default function NavDropdown({ links }: Props) {
               type="Menu"
               size={24}
               className={`${
-                open ? "text-gray" : "text-gray/70"
-              } sm:hidden transition duration-150 ease-in-out group-hover:text-gray/80`}
+                open ? "text-navy-l2" : "text-navy-l2/70"
+              } sm:hidden transition duration-150 ease-in-out group-hover:text-navy-l2/80`}
               aria-hidden="true"
             />
             <Icon

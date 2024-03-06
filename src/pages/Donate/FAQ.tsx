@@ -9,7 +9,8 @@ export default function FAQ({ classes = "" }) {
   return (
     <div
       className={
-        classes + " md:border md:border-prim md:p-4 rounded grid gap-2 md:gap-4"
+        classes +
+        " md:bg-white md:border md:border-gray-l4 md:p-4 rounded grid gap-2 md:gap-4"
       }
     >
       <h2 className="text-sm" id="faqs">
@@ -34,7 +35,7 @@ export default function FAQ({ classes = "" }) {
                 <Disclosure.Panel
                   as="div"
                   static
-                  className="text-sm grid gap-3 text-gray-d1 mb-6"
+                  className="text-sm grid gap-3 text-navy-l1 mb-6"
                 >
                   {faq.paragraphs.map((p, idx) => (
                     <Fragment key={idx}>{p}</Fragment>
@@ -170,7 +171,7 @@ function Em({
           ? "font-medium"
           : intensity === 2
             ? "font-semibold"
-            : "font-semibold text-gray-d2"
+            : "font-semibold text-navy-d4"
       } ${classes}`}
     >
       {children}

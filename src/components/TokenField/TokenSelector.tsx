@@ -13,7 +13,7 @@ export default function TokenSelector({
       value={selectedToken}
       onChange={onChange}
       as="div"
-      className="flex items-center gap-1 w-full dark:text-gray"
+      className="flex items-center gap-1 w-full dark:text-navy-l2"
     >
       <span className="text-sm">{selectedToken.symbol}</span>
 

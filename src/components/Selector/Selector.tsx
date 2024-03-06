@@ -54,7 +54,7 @@ export function Selector<
               <DrawerIcon
                 isOpen={open}
                 size={25}
-                className="justify-self-end dark:text-gray shrink-0"
+                className="justify-self-end dark:text-navy-l2 shrink-0"
               />
             </>
           )}

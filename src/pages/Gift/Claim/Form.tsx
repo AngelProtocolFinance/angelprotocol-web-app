@@ -63,8 +63,8 @@ export default function Form({ classes = "" }) {
       <h3 className="text-center text-3xl leading-snug">
         {`Redeem ${APP_NAME} Giftcard`}
       </h3>
-      <div className="relative grid w-full border border-prim rounded-lg overflow-clip">
-        <p className="text-xs text-center uppercase text-gray-d1 dark:text-gray p-4 border-b border-prim">
+      <div className="relative grid w-full border border-gray-l4 rounded-lg overflow-clip">
+        <p className="text-xs text-center uppercase text-navy-l1 dark:text-navy-l2 p-4 border-b border-gray-l4">
           Type your giftcard code here:
         </p>
         <textarea

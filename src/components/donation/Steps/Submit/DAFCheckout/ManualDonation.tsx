@@ -7,7 +7,7 @@ export default function ManualDonation(props: DafCheckoutStep) {
 
   return (
     <>
-      <p className="text-center text-gray-d1 uppercase mt-4">
+      <p className="text-center text-navy-l1 uppercase mt-4">
         Manual DAF donation
       </p>
       <p className="text-center">

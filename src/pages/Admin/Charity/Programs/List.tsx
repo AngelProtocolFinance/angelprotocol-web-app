@@ -19,7 +19,7 @@ export default function List() {
       }}
     >
       {(programs) => (
-        <div className="@container grid gap-3 p-4 @lg:p-8 border border-prim rounded bg-white dark:bg-blue-d6">
+        <div className="@container grid gap-3 p-4 @lg:p-8 border border-gray-l4 rounded bg-white dark:bg-blue-d6">
           {programs.map((p) => (
             <Program {...p} key={p.program_id} />
           ))}
@@ -31,7 +31,7 @@ export default function List() {
 
 function Skeleton() {
   return (
-    <div className="grid gap-3 p-8 mt-8 border border-prim">
+    <div className="grid gap-3 p-8 mt-8 border border-gray-l4">
       <ContentLoader className="h-24 w-full rounded" />
       <ContentLoader className="h-24 w-full rounded" />
       <ContentLoader className="h-24 w-full rounded" />

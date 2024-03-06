@@ -22,7 +22,7 @@ function Banking() {
 
         <p className="mt-6 mb-1">
           <span className="uppercase text-sm font-semibold">account id: </span>
-          <span className="text-gray-d1 ">
+          <span className="text-navy-l1 ">
             {data.banking.wise_recipient_id}
           </span>
         </p>

@@ -30,7 +30,7 @@ export default function Form({
       <CheckField<FV>
         name="isAdvancedOptionsExpanded"
         disabled={isAdvancedOptionsHidden}
-        classes={{ label: "peer-disabled:text-gray" }}
+        classes={{ label: "peer-disabled:text-navy-l2" }}
       >
         Unfold "advanced options" by default
       </CheckField>

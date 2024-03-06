@@ -16,7 +16,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
     <Popover.Panel
       className={`${classes} shadow-xl bg-gray-l6 dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
-      <p className="text-sm p-3 bg-orange-l6 border-b border-prim">
+      <p className="text-sm p-3 bg-orange-l6 border-b border-gray-l4">
         Welcome, {user.firstName || user.email}!
       </p>
 
@@ -28,13 +28,13 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           <Icon type="Money" className="text-lg" />
           <span>My Donations</span>
         </Link>
-        {/*<div className="mt-2 text-sm flex items-center gap-2 text-gray">
+        {/*<div className="mt-2 text-sm flex items-center gap-2 text-navy-l2">
           <Icon type="User" className="text-lg" />
           <span>My profile (coming soon!)</span>
         </div>*/}
 
         <div className="hidden [&:has(a)]:grid mt-6 gap-2">
-          <h5 className="uppercase text-xs text-gray-d1 -mb-1">
+          <h5 className="uppercase text-xs text-navy-l1 -mb-1">
             My Organizations
           </h5>
           {user.endowments.map((endowId) => (
@@ -43,7 +43,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
         </div>
 
         <div className="hidden [&:has(a)]:block mt-6">
-          <h5 className="uppercase text-xs text-gray-d1 mb-1">BG Admin</h5>
+          <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
           {user.groups.includes(groups["ap-admin"]) && (
             <Link
               to={appRoutes.applications}

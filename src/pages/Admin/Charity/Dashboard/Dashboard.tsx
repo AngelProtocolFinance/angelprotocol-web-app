@@ -103,7 +103,7 @@ function LoaderSkeleton() {
 
 function DataPart({ children }: PropsWithChildren<{}>) {
   return (
-    <div className="flex justify-center items-center gap-5 p-4 rounded border border-prim bg-orange-l6 dark:bg-blue-d6 font-bold text-sm @sm:text-base font-heading">
+    <div className="flex justify-center items-center gap-5 p-4 rounded border border-gray-l4 bg-orange-l6 dark:bg-blue-d6 font-bold text-sm @sm:text-base font-heading">
       {children}
     </div>
   );

@@ -18,7 +18,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
   if (wallet === "loading") {
     return (
       <Container classes={classes} donation={props}>
-        <LoadingStatus classes="py-2 mb-6 text-sm text-gray-d1">
+        <LoadingStatus classes="py-2 mb-6 text-sm text-navy-l1">
           Connecting wallet..
         </LoadingStatus>
       </Container>

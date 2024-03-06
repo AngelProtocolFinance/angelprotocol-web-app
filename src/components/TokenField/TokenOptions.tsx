@@ -13,7 +13,7 @@ type Props = {
 };
 
 const container =
-  "border border-prim p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
+  "border border-gray-l4 p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
 export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   const [searchText, setSearchText] = useState("");
   const {
@@ -33,7 +33,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   if (isLoading || isFetching) {
     return (
       <Combobox.Options className={`${classes} ${container}`}>
-        <LoadingStatus classes="text-sm text-gray-d2 dark:text-gray p-2">
+        <LoadingStatus classes="text-sm text-navy-d4 dark:text-navy-l2 p-2">
           Loading..
         </LoadingStatus>
       </Combobox.Options>
@@ -50,7 +50,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
 
   return (
     <Combobox.Options className={`${classes} ${container}`}>
-      <div className="flex p-2 gap-2 border border-prim rounded mb-1">
+      <div className="flex p-2 gap-2 border border-gray-l4 rounded mb-1">
         <Icon type="Search" size={20} />
         <Combobox.Input
           placeholder="Search..."

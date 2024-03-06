@@ -85,7 +85,7 @@ export function MultiSelector<
                   />
                 ))}
                 {searchable ? (
-                  <div className="inline-flex items-center gap-2 text-gray-d1 dark:text-gray pl-3 bg-white/5 rounded">
+                  <div className="inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 bg-white/5 rounded">
                     <Icon type="Search" size={20} />
                     <Combobox.Input
                       className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
@@ -104,7 +104,7 @@ export function MultiSelector<
               <DrawerIcon
                 isOpen={open}
                 size={25}
-                className="justify-self-end dark:text-gray shrink-0"
+                className="justify-self-end dark:text-navy-l2 shrink-0"
               />
             </>
           )}
@@ -139,7 +139,7 @@ export function MultiSelector<
               </Combobox.Option>
             ))}
           {!optionsAvailable && (
-            <p className="text-gray-d1 dark:text-gray text-sm px-4 py-2">
+            <p className="text-navy-l1 dark:text-navy-l2 text-sm px-4 py-2">
               No options found
             </p>
           )}
@@ -171,7 +171,7 @@ function SelectedOption<T extends ValKey>({
     onChange(selected.filter((s) => s.value !== value));
 
   return (
-    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase">
+    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-gray-l4 rounded font-semibold text-navy-l1 dark:text-navy-l2 uppercase">
       <span className="max-w-[200px] truncate">{option.label}</span>
       <button
         type="button"

@@ -11,7 +11,7 @@ export default function Stocks(props: StockCheckoutStep) {
   return (
     <div className="grid content-start p-4 @md:p-8">
       <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
-      <p className="mt-4 text-center text-gray-d1 uppercase">
+      <p className="mt-4 text-center text-navy-l1 uppercase">
         Donation pending
       </p>
       <p className="mt-4 text-center">

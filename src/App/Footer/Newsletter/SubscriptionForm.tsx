@@ -52,7 +52,7 @@ export default function SubscriptionForm() {
         <input
           {...register("email")}
           id="email"
-          className="flex items-center border border-gray-l3 rounded-sm text-xs text-black outline-none w-full h-10 px-3 bg-white placeholder:text-gray-d1 disabled:bg-gray-100 disabled:text-gray-800 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:placeholder:text-gray xl:text-sm"
+          className="flex items-center border border-gray-l3 rounded-sm text-xs text-black outline-none w-full h-10 px-3 bg-white placeholder:text-navy-l1 disabled:bg-gray disabled:text-navy-l2 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:placeholder:text-navy-l2 xl:text-sm"
           placeholder="Enter your email address here"
           disabled={isSubmitting}
         />

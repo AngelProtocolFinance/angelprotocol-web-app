@@ -26,7 +26,7 @@ export function Program(props: TProgram) {
   };
 
   return (
-    <div className="p-6 border border-prim rounded bg-gray-l6 dark:bg-blue-d5 grid @lg:flex items-center gap-x-4 gap-y-8">
+    <div className="p-6 border border-gray-l4 rounded bg-gray-l6 dark:bg-blue-d5 grid @lg:flex items-center gap-x-4 gap-y-8">
       <div className="flex items-center gap-x-4 @lg:contents">
         <Image
           src={props.program_banner}
