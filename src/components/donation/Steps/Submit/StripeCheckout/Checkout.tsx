@@ -8,18 +8,16 @@ import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FormEventHandler, useState } from "react";
-import { Donor } from "types/aws";
 import { DonationSource } from "types/lists";
 import Loader from "../Loader";
 
 type Props = {
   source: DonationSource;
-  donor: Donor;
 };
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ source, donor }: Props) {
+export default function Checkout({ source }: Props) {
   const stripe = useStripe();
   const elements = useElements();
   const { handleError } = useErrorContext();

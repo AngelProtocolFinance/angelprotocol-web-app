@@ -4,17 +4,19 @@ import Signup from "components/Signup";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link } from "react-router-dom";
-import { CryptoResultStep } from "slices/donation";
+import { DonationRecipient } from "slices/donation";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
+import { GuestDonor } from "types/aws";
 import Share, { SocialMedia } from "./Share";
 
-export default function Success({
-  classes,
-  ...state
-}: Omit<CryptoResultStep, "status"> & { classes?: string; hash: string }) {
-  const { recipient, donor } = state;
-  const { id } = recipient;
+type Props = {
+  classes?: string;
+  recipient: DonationRecipient;
+  guestDonor: GuestDonor | undefined;
+};
+
+export default function Success({ classes, guestDonor, recipient }: Props) {
   const user = useGetter((state) => state.auth.user);
   return (
     <div className={`grid justify-items-center ${classes}`}>
@@ -49,15 +51,18 @@ export default function Success({
         ))}
       </div>
 
-      {!userIsSignedIn(user) && (
+      {!userIsSignedIn(user) && guestDonor && (
         <Signup
           classes="max-w-96 w-full mt-6 justify-self-center"
-          donor={donor}
+          donor={((d) => {
+            const [firstName, lastName] = d.fullName.split(" ");
+            return { firstName, lastName, email: d.email };
+          })(guestDonor)}
         />
       )}
 
       <Link
-        to={appRoutes.marketplace + `/${id}`}
+        to={appRoutes.marketplace + `/${recipient.id}`}
         className="w-full max-w-96 rounded-full btn-outline normal-case mt-4"
       >
         Back to the platform

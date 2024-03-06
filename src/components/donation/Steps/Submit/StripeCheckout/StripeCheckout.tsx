@@ -17,7 +17,7 @@ import Paypal from "./Paypal";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, liquidSplitPct, tip = 0, donor } = props;
+  const { details, recipient, liquidSplitPct, tip = 0 } = props;
   const {
     data: clientSecret,
     isLoading,
@@ -73,7 +73,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
           }}
           stripe={stripePromise}
         >
-          <Checkout source={details.source} donor={donor} />
+          <Checkout source={details.source} />
         </Elements>
       )}
     </Summary>

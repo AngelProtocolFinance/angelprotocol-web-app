@@ -5,7 +5,7 @@ import { LogDonationFail } from "errors/errors";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { invalidateApesTags } from "services/apes";
-import { CryptoDonation } from "types/aws";
+import { CryptoDonation, GuestDonor } from "types/aws";
 import { isTxResultError } from "types/tx";
 import donation, { setTxStatus } from "../donation";
 import { DonateArgs, TxStatus } from "../types";
@@ -62,7 +62,9 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         throw new LogDonationFail(payload.chainId, payload.transactionId);
       }
 
-      updateTx({ hash });
+      const { guestDonor }: { guestDonor?: GuestDonor } = await response.json();
+
+      updateTx({ hash, guestDonor });
       //invalidate cache entries
       dispatch(invalidateApesTags(["tokens", "donations"]));
     } catch (err) {

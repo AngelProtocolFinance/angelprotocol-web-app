@@ -7,18 +7,16 @@ import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCapturePayPalOrderMutation } from "services/apes";
-import { Donor } from "types/aws";
 import { DonationSource } from "types/lists";
 
 type Props = {
   orderId: string;
   source: DonationSource;
-  donor: Donor;
 };
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ orderId, source, donor }: Props) {
+export default function Checkout({ orderId, source }: Props) {
   const navigate = useNavigate();
 
   const [isSubmitting, setSubmitting] = useState(false);

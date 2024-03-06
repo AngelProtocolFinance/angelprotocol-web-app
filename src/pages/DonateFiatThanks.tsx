@@ -55,12 +55,10 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
       {!userIsSignedIn(user) && guestDonor && (
         <Signup
           classes="max-w-96 w-full mt-6 justify-self-center"
-          donor={{
-            ...(({ fullName, email }) => {
-              const [firstName, lastName] = fullName.split(" ");
-              return { firstName, lastName, email };
-            })(guestDonor),
-          }}
+          donor={((d) => {
+            const [firstName, lastName] = d.fullName.split(" ");
+            return { firstName, lastName, email: d.email };
+          })(guestDonor)}
         />
       )}
 

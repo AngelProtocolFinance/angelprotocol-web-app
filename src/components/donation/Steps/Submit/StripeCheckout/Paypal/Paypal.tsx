@@ -48,7 +48,7 @@ export default function Paypal(props: StripeCheckoutStep) {
       }}
     >
       <div className="flex items-center gap-2">
-        <Checkout orderId={orderId} source={details.source} donor={donor} />
+        <Checkout orderId={orderId} source={details.source} />
       </div>
     </PayPalScriptProvider>
   );
