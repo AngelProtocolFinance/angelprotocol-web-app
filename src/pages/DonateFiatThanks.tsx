@@ -5,14 +5,16 @@ import Signup from "components/Signup";
 import { DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
-import { persistedDonor } from "helpers/donation";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
+import { GuestDonor } from "types/aws";
 
 export default function DonateFiatThanks({ widgetVersion = false }) {
+  const location = useLocation();
+  const guestDonor: GuestDonor | undefined = location.state;
   const user = useGetter((state) => state.auth.user);
-  const donor = persistedDonor();
+
   return (
     <div className="grid justify-self-center m-auto max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
       <div
@@ -50,21 +52,16 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         page.
       </p>
 
-      {!userIsSignedIn(user) && donor && (
+      {!userIsSignedIn(user) && guestDonor && (
         <Signup
           classes="max-w-96 w-full mt-6 justify-self-center"
-          donor={donor}
+          donor={{
+            ...(({ fullName, email }) => {
+              const [firstName, lastName] = fullName.split(" ");
+              return { firstName, lastName, email };
+            })(guestDonor),
+          }}
         />
-      )}
-
-      {!userIsSignedIn(user) && !donor && (
-        //fallback when pesisted donor can't be found or not valid
-        <Link
-          to={appRoutes.signin}
-          className="btn-blue max-w-96 w-full justify-self-center normal-case rounded-full mt-4"
-        >
-          Create account
-        </Link>
       )}
 
       {!widgetVersion && (

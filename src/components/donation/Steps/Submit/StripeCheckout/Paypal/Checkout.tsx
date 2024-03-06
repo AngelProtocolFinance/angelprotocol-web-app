@@ -4,7 +4,6 @@ import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { persistDonor } from "helpers/donation";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCapturePayPalOrderMutation } from "services/apes";
@@ -68,13 +67,15 @@ export default function Checkout({ orderId, source, donor }: Props) {
                 throw new Error(JSON.stringify(order));
               } else {
                 //accessed by redirect page
-                persistDonor(donor);
                 if (source === "bg-widget") {
                   navigate(
-                    `${appRoutes.donate_widget}${donateWidgetRoutes.donate_fiat_thanks}`
+                    `${appRoutes.donate_widget}${donateWidgetRoutes.donate_fiat_thanks}`,
+                    { state: order.guestDonor }
                   );
                 } else {
-                  navigate(appRoutes.donate_fiat_thanks);
+                  navigate(appRoutes.donate_fiat_thanks, {
+                    state: order.guestDonor,
+                  });
                 }
               }
             } catch (error) {
