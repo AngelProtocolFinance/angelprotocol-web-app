@@ -49,11 +49,7 @@ export default function SignupForm(props: Props) {
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
-    return (
-      <div className="grid content-start place-items-center py-14">
-        <LoaderRing thickness={12} classes="w-32 mt-8" />
-      </div>
-    );
+    return <LoaderRing thickness={12} classes="w-32 mt-8" />;
   }
 
   if (currUser) {
