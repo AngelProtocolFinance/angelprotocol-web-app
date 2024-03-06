@@ -7,7 +7,6 @@ import LoadText from "components/LoadText";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { persistDonor } from "helpers/donation";
 import { FormEventHandler, useState } from "react";
 import { Donor } from "types/aws";
 import { DonationSource } from "types/lists";
@@ -49,9 +48,6 @@ export default function Checkout({ source, donor }: Props) {
       source === "bg-widget"
         ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
         : `${window.location.origin}${appRoutes.stripe_payment_status}`;
-
-    //save donor to storage so redirect page can access it
-    persistDonor(donor);
 
     const { error } = await stripe.confirmPayment({
       elements,
