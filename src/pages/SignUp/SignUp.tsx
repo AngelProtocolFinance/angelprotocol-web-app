@@ -8,21 +8,21 @@ export default function SignUp() {
   const [state, setState] = useState<SignupState>({ type: "init" });
 
   const content = (() => {
-    // if (state.type === "init") {
-    //   return <SignupForm setSignupState={setState} />;
-    // }
+    if (state.type === "init") {
+      return <SignupForm setSignupState={setState} />;
+    }
 
-    // if (state.type === "success") {
-    return <Success userType={"donor"} />;
-    // }
+    if (state.type === "success") {
+      return <Success userType={state.userType} />;
+    }
 
-    // return (
-    //   <ConfirmForm
-    //     userType={state.userType}
-    //     codeRecipientEmail={state.codeRecipientEmail}
-    //     setSignupState={setState}
-    //   />
-    // );
+    return (
+      <ConfirmForm
+        userType={state.userType}
+        codeRecipientEmail={state.codeRecipientEmail}
+        setSignupState={setState}
+      />
+    );
   })();
 
   return (

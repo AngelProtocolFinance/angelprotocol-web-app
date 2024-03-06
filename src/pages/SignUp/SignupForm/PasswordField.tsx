@@ -32,9 +32,7 @@ export default function PasswordField() {
         </button>
       </div>
       {errors.password?.message && (
-        <p className="text-xs text-[#C52828] mt-1.5">
-          {errors.password.message}
-        </p>
+        <p className="text-xs text-red mt-1.5">{errors.password.message}</p>
       )}
     </div>
   );

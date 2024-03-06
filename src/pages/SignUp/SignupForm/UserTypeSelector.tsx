@@ -4,7 +4,7 @@ import { FormValues } from "../types";
 const btnClass = (isSelected: boolean) =>
   `flex items-center justify-center btn-outline-2 h-[42px] ${
     isSelected
-      ? "bg-[#EAF3FA] border-[1.25px] enabled:border-blue-d1 enabled:hover:border-blue-d1 hover:cursor-default enabled:text-blue-d1 font-bold"
+      ? "bg-blue-l4 border-[1.25px] enabled:border-blue-d1 enabled:hover:border-blue-d1 hover:cursor-default enabled:text-blue-d1 font-bold"
       : "font-medium"
   }`;
 
@@ -37,7 +37,7 @@ export default function UserTypeSelector() {
           Non-profit
         </button>
       </div>
-      {error && <p className="text-xs text-[#C52828] mt-1">{error.message}</p>}
+      {error && <p className="text-xs text-red mt-1">{error.message}</p>}
     </div>
   );
 }

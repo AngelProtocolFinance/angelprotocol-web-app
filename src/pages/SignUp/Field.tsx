@@ -34,7 +34,7 @@ export default function Field<T extends FieldValues>(props: Props<T>) {
         <input
           {...register(props.name)}
           type="text"
-          className={`w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 focus:outline-none bg-transparent ${
+          className={`w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 max-sm:placeholder:text-sm focus:outline-none bg-transparent ${
             props.icon ? "pr-5" : "px-5"
           } ${input}`}
           placeholder={props.placeholder}
@@ -42,7 +42,7 @@ export default function Field<T extends FieldValues>(props: Props<T>) {
         />
       </div>
       {errorMsg && (
-        <p className={`text-xs text-[#C52828] mt-1.5 ${error}`}>{errorMsg}</p>
+        <p className={`text-xs text-red-d3 mt-1.5 ${error}`}>{errorMsg}</p>
       )}
     </div>
   );

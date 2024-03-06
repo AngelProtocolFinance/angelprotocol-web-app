@@ -114,7 +114,7 @@ export default function SignupForm(props: Props) {
           Sign up to support from 18000+ causes
         </p>
         <button
-          className="flex-center btn-outline-2 gap-2 h-[52px] mt-6 border-[0.8px]"
+          className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
           type="button"
           onClick={() => {
             localStorage.setItem(OAUTH_PATH_STORAGE_KEY, redirectPath.pathname);
@@ -145,7 +145,7 @@ export default function SignupForm(props: Props) {
         <UserTypeSelector />
         <button
           type="submit"
-          className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-[52px] rounded-full normal-case text-lg font-bold w-full my-8"
+          className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case text-lg font-bold w-full my-8"
         >
           {isSubmitting ? "Submitting..." : "Sign up"}
         </button>
