@@ -17,7 +17,7 @@ export default function Success({ userType }: Props) {
   };
 
   return (
-    <div className="grid justify-items-center w-full max-w-xs sm:max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
+    <div className="grid justify-items-center w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
       <Icon
         type="CheckCircle"
         className="text-blue-d1 h-16 sm:h-20 w-16 sm:w-20"
