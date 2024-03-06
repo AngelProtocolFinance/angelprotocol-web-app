@@ -4,7 +4,7 @@ import { AuthError, signInWithRedirect, signUp } from "aws-amplify/auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
-import { Form, Input } from "components/form";
+import { Form, Input, PasswordInput } from "components/form";
 import { Separator } from "components/registration";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
@@ -19,7 +19,6 @@ import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
 import { mixed, object } from "yup";
 import { FormValues, StateSetter, UserType } from "../types";
-import PasswordField from "./PasswordField";
 import UserTypeSelector from "./UserTypeSelector";
 
 type Props = {
@@ -137,7 +136,10 @@ export default function SignupForm(props: Props) {
             placeholder="Email address"
             icon="Email"
           />
-          <PasswordField />
+          <PasswordInput<FormValues>
+            name="password"
+            placeholder="Create password"
+          />
         </div>
         <span className="mt-7 mb-3 font-normal max-sm:text-sm">
           You are signing up as

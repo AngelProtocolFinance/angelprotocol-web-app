@@ -2,7 +2,7 @@ import googleIcon from "assets/icons/google.svg";
 import { signInWithRedirect } from "aws-amplify/auth";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
-import { Form, Input } from "components/form";
+import { Form, Input, PasswordInput } from "components/form";
 import { Separator } from "components/registration";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { appRoutes } from "constants/routes";
@@ -11,7 +11,6 @@ import { useFormContext } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { FormValues } from "../types";
-import PasswordField from "./PasswordField";
 import UserTypeSelector from "./UserTypeSelector";
 
 type Props = {
@@ -79,7 +78,10 @@ export default function FormFields({ submit }: Props) {
             placeholder="Email address"
             icon="Email"
           />
-          <PasswordField />
+          <PasswordInput<FormValues>
+            name="password"
+            placeholder="Create password"
+          />
         </div>
         <span className="mt-7 mb-3 font-normal">You are signing up as</span>
         <UserTypeSelector />
