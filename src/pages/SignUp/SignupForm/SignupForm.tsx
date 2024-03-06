@@ -4,7 +4,7 @@ import { AuthError, signInWithRedirect, signUp } from "aws-amplify/auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
-import { Form } from "components/form";
+import { Form, Input } from "components/form";
 import { Separator } from "components/registration";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
@@ -18,7 +18,6 @@ import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
 import { mixed, object } from "yup";
-import Field from "../Field";
 import { FormValues, StateSetter, UserType } from "../types";
 import PasswordField from "./PasswordField";
 import UserTypeSelector from "./UserTypeSelector";
@@ -130,10 +129,10 @@ export default function SignupForm(props: Props) {
         </Separator>
         <div className="grid gap-3">
           <div className="flex gap-3">
-            <Field<FormValues> name="firstName" placeholder="First Name" />
-            <Field<FormValues> name="lastName" placeholder="Last Name" />
+            <Input<FormValues> name="firstName" placeholder="First Name" />
+            <Input<FormValues> name="lastName" placeholder="Last Name" />
           </div>
-          <Field<FormValues>
+          <Input<FormValues>
             name="email"
             placeholder="Email address"
             icon="Email"

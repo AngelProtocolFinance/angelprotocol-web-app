@@ -2,7 +2,7 @@ import Icon, { IconType } from "components/Icon";
 import { unpack } from "components/form/helpers";
 import { Classes } from "components/form/types";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
-import { fieldClasses } from "./constants";
+import { fieldClasses } from "../../pages/SignUp/constants";
 
 type Props<T extends FieldValues> = {
   classes?: Classes;
@@ -11,7 +11,7 @@ type Props<T extends FieldValues> = {
   icon?: IconType;
 };
 
-export default function Field<T extends FieldValues>(props: Props<T>) {
+export function Input<T extends FieldValues>(props: Props<T>) {
   const {
     register,
     formState: { errors },

@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthError, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
-import { Form } from "components/form";
+import { Form, Input } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import useCounter from "hooks/useCounter";
@@ -8,7 +8,6 @@ import { useState } from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
-import Field from "./Field";
 import { CodeRecipientEmail, StateSetter, UserType } from "./types";
 
 const MAX_TIME = 30;
@@ -89,7 +88,7 @@ export default function ConfirmForm(props: Props) {
         You’re almost there! 6-digit security code has been sent to{" "}
         <span className="font-medium">{props.codeRecipientEmail.obscured}</span>
       </p>
-      <Field<FV>
+      <Input<FV>
         name="code"
         placeholder="Enter 6-digit code"
         classes={{ container: "my-6" }}
