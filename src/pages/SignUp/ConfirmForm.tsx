@@ -42,14 +42,16 @@ export default function ConfirmForm(props: Props) {
       });
 
       if (result.nextStep.signUpStep !== "DONE" || !result.isSignUpComplete) {
-        return handleError("Code confirmation failed");
+        return handleError("Code confirmation failed", undefined, {
+          log: false,
+        });
       }
 
       props.setSignupState({ type: "success", userType: props.userType });
     } catch (err) {
       const message =
         err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-      handleError(message);
+      handleError(err, message, { log: !(err instanceof AuthError) });
     }
   };
 
@@ -67,7 +69,7 @@ export default function ConfirmForm(props: Props) {
     } catch (err) {
       const message =
         err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-      handleError(message);
+      handleError(err, message, { log: !(err instanceof AuthError) });
     } finally {
       setIsRequestingNewCode(false);
     }

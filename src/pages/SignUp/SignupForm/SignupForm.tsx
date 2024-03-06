@@ -59,7 +59,7 @@ export default function SignupForm(props: Props) {
     } catch (err) {
       const message =
         err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-      handleError(message);
+      handleError(err, message, { log: !(err instanceof AuthError) });
     }
   }
 
