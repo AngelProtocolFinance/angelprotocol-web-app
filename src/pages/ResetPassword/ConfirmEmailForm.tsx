@@ -74,7 +74,7 @@ export default function ConfirmEmailForm(props: Props) {
       <Input<FV>
         name="email"
         placeholder="Email address"
-        classes={{ container: "my-6" }}
+        classes={{ container: "mt-6" }}
         icon="Email"
       />
 
