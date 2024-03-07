@@ -40,8 +40,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
   });
 
   const invalid = !!get(errors, name);
-  const overlay = `before:content-[''] before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 `
-
+  const overlay = `before:content-[''] before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 `;
 
   return (
     <div className={`${classes?.container ?? ""} grid grid-rows-[1fr_auto]`}>
@@ -50,10 +49,10 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
         data-drag={isDragActive}
         data-disabled={isSubmitting}
         {...getRootProps({
-          className: `relative ${overlay} ${classes?.dropzone ?? ""} group rounded border border-gray-l4 border-dashed 
+          className: `relative ${overlay} ${classes?.dropzone ?? ""} group rounded border border-gray-l2 border-dashed 
           focus:outline-none focus:ring-2 data-[drag="true"]:ring-2 has-[:active]:ring-2 ring-blue-d1 ring-offset-2 
           hover:bg-blue-l5
-          data-[disabled="true"]:bg-gray-l4 data-[disabled="true"]:pointer-events-none
+          data-[disabled="true"]:bg-gray-l5 data-[disabled="true"]:pointer-events-none
           data-[invalid="true"]:border-red
           `,
           ref,

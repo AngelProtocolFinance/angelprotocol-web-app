@@ -42,16 +42,18 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
       <div className="flex max-sm:flex-col max-sm:items-start items-center mb-1">
         <label
           htmlFor="amount"
-          className={`font-semibold mr-auto max-sm:mb-2 after:content-['_*'] after:text-red ${classes?.label ?? ""
-            }`}
+          className={`font-semibold mr-auto max-sm:mb-2 after:content-['_*'] after:text-red ${
+            classes?.label ?? ""
+          }`}
         >
           {label}
         </label>
       </div>
 
       <div
-        className={`${classes?.inputContainer ?? ""
-          } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container peer`}
+        className={`${
+          classes?.inputContainer ?? ""
+        } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container peer`}
       >
         <input
           {...register(amountField)}

@@ -29,11 +29,11 @@ export default function CurrencyOptions({
       queryState={
         Array.isArray(currencies)
           ? {
-              isLoading: false,
-              isFetching: false,
-              isError: false,
-              data: currencies,
-            }
+            isLoading: false,
+            isFetching: false,
+            isError: false,
+            data: currencies,
+          }
           : currencies
       }
       messages={{
@@ -44,7 +44,7 @@ export default function CurrencyOptions({
       classes={{
         container:
           classes +
-          " bg-white w-full rounded border border-gray-l4 p-2 text-sm text-navy-l1 shadow-lg",
+          " font-heading bg-white w-full rounded border border-gray-l4 p-2 text-sm text-navy-l1 shadow-lg",
       }}
     >
       {(currencies) => (
@@ -55,9 +55,8 @@ export default function CurrencyOptions({
             <Combobox.Option key={code} value={{ code, name, min, rate }}>
               {({ active, selected }) => (
                 <div
-                  className={`${active ? "bg-blue-l2 dark:bg-blue-d1" : ""} ${
-                    selected ? "font-semibold" : "font-normal"
-                  } flex items-center gap-2 p-2 text-sm cursor-pointer truncate`}
+                  className={`${active ? "bg-blue-l2 dark:bg-blue-d1" : ""} ${selected ? "font-semibold" : "font-normal"
+                    } flex items-center gap-2 p-2 text-sm cursor-pointer truncate`}
                 >
                   {!!name
                     ? `${code.toUpperCase()} - ${name}`

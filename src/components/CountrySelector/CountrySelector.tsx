@@ -49,8 +49,9 @@ export default function CountrySelector<
       value={country}
       onChange={onCountryChange}
       as="div"
-      className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${props.classes?.container || ""
-        }`}
+      className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${
+        props.classes?.container || ""
+      }`}
     >
       <span className="mr-1 empty:hidden text-3xl relative -bottom-0.5">
         {country.flag || null}

@@ -68,9 +68,9 @@ export default function Tip({
     defaultValues: {
       tip: persistedTip
         ? {
-          amount: persistedTip.toString(),
-          pct: `${persistedTip / amount}`,
-        }
+            amount: persistedTip.toString(),
+            pct: `${persistedTip / amount}`,
+          }
         : initial,
     },
   });

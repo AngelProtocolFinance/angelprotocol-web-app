@@ -35,11 +35,18 @@
     @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
   }
   .field-input {
-    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-navy-l1 dark:placeholder:text-navy-l2 border border-gray-l3 dark:border-navy focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l5 disabled:text-navy-l1 disabled:dark:text-navy-l2 disabled:dark:bg-navy-d3 aria-disabled:bg-gray-l5 aria-disabled:text-navy-l1 aria-disabled:dark:text-navy-l2 aria-disabled:dark:bg-navy-d3 aria-disabled:pointer-events-none;
+    @apply w-full font-heading rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3;
+  }
+  .field-input:disabled,
+  .field-input[aria-disabled="true"] {
+    @apply pointer-events-none bg-gray-l5 text-navy-l1;
+  }
+  .field-input:enabled:focus {
+    @apply outline-none ring-2 ring-offset-1 ring-blue-d1;
   }
 
   .field-input[aria-invalid="true"] {
-    @apply border-red focus:shadow-focus focus-within:shadow-focus;
+    @apply border-red;
   }
 
   .radio {

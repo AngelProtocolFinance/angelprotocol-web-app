@@ -42,8 +42,9 @@ export default function CurrencySelector<T extends CurrencyOption>({
         value={props.value}
         onChange={props.onChange}
         as="div"
-        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${props.classes?.combobox || ""
-          }`}
+        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${
+          props.classes?.combobox || ""
+        }`}
       >
         <Combobox.Input
           id="wise__currency"

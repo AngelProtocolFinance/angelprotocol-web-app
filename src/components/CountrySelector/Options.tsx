@@ -31,7 +31,7 @@ export default function Options({ query, options }: Props) {
               <li
                 className={`${
                   active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                } flex items-center gap-2 p-2 text-sm`}
+                } flex items-center gap-2 p-2 text-sm font-heading`}
               >
                 <span className="text-2xl">{country.flag}</span>
                 <span>{country.name}</span>
