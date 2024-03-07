@@ -119,7 +119,7 @@ export default function SetPasswordForm(props: Props) {
           autoComplete="one-time-code"
         />
 
-        <span className="mb-3 flex items-center justify-between text-sm font-medium">
+        <span className="mb-3 flex items-center justify-between text-xs sm:text-sm font-medium">
           <span>Time remaining: 00:{String(counter).padStart(2, "0")}</span>
           <button
             type="button"

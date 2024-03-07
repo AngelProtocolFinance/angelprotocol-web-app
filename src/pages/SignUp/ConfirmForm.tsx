@@ -95,7 +95,7 @@ export default function ConfirmForm(props: Props) {
         autoComplete="one-time-code"
       />
 
-      <span className="flex items-center justify-between text-sm font-medium">
+      <span className="flex items-center justify-between text-xs sm:text-sm font-medium">
         <span>Time remaining: 00:{String(counter).padStart(2, "0")}</span>
         <button
           type="button"
