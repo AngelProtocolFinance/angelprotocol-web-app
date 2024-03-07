@@ -9,7 +9,7 @@ import Icon from "components/Icon";
 type Freq = FV["frequency"]
 
 
-export default function Frequency({ classes = "" }) {
+export default function Frequency() {
   const { control } = useFormContext<FV>();
 
   const {
@@ -20,7 +20,7 @@ export default function Frequency({ classes = "" }) {
   });
 
   return (
-    <RG value={value} onChange={onChange} className={`grid grid-cols-[auto_auto] ${classes} justify-items-start justify-self-start gap-2`}>
+    <RG value={value} onChange={onChange} className="grid grid-cols-[auto_auto] justify-items-start justify-self-start gap-2">
       <RG.Label className="col-span-2">Frequency <span className="text-red">*</span></RG.Label>
       <RG.Option value={"monthly" satisfies Freq} className="group border-gray-l3 rounded pl-6 pr-7 border h-[2.625rem] flex items-center aria-checked:bg-blue-d1 aria-checked:text-white aria-checked:border-none">
         <span>Give Monthly</span>
