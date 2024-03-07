@@ -11,6 +11,7 @@ export default function ResetPassword() {
     if (step.type === "init") {
       return <InitForm setStep={setStep} />;
     }
+
     if (step.type === "set-password") {
       return (
         <SetPasswordForm
