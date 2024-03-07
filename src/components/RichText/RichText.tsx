@@ -60,8 +60,9 @@ export default function RichText(props: Props) {
     <div
       aria-invalid={props.invalid}
       aria-disabled={props.disabled}
-      className={`relative has-[:focus-within]:ring-2 ring-blue-d1 ring-offset-1 ${props.classes?.container || ""} ${props.readOnly ? "toolbar-hidden" : ""
-        }`}
+      className={`relative has-[:focus-within]:ring-2 ring-blue-d1 ring-offset-1 ${
+        props.classes?.container || ""
+      } ${props.readOnly ? "toolbar-hidden" : ""}`}
     >
       <div
         style={{ fontFamily: "inherit", fontSize: "inherit" }}
@@ -70,8 +71,9 @@ export default function RichText(props: Props) {
       />
       {!props.readOnly && (
         <span
-          className={`absolute top-4 right-4 text-xs uppercase ${props.classes?.charCounter ?? ""
-            }`}
+          className={`absolute top-4 right-4 text-xs uppercase ${
+            props.classes?.charCounter ?? ""
+          }`}
         >
           chars : {numChars}
           {props.charLimit && ` /${props.charLimit}`}
