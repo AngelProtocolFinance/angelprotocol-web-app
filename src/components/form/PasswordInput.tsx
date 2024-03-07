@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { useState } from "react";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
-import { fieldClasses } from "../../pages/SignUp/constants";
+import { fieldClasses } from "./constants";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;

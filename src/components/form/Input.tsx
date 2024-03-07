@@ -1,9 +1,9 @@
 import Icon, { IconType } from "components/Icon";
 import { unpack } from "components/form/helpers";
 import { Classes } from "components/form/types";
-import { fieldClasses } from "pages/SignUp/constants";
 import { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
+import { fieldClasses } from "./constants";
 
 type Props<T extends FieldValues> = {
   classes?: Classes;
