@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { useState } from "react";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
-import { fieldClasses } from "../../pages/SignUp/constants";
+import { fieldClasses } from "./constants";
 
 type Props<T extends FieldValues> = {
   name: Path<T>;
@@ -21,11 +21,11 @@ export function PasswordInput<T extends FieldValues>(props: Props<T>) {
   return (
     <div>
       <div className={`grid grid-cols-[auto_1fr_auto] px-5 ${fieldClasses}`}>
-        <Icon type="Padlock" className="text-navy-l3" />
+        <Icon type="Padlock" className="text-navy-l3" size={20} />
         <input
           {...register(props.name)}
           type={isPasswordShown ? "text" : "password"}
-          className="w-full h-full placeholder:font-medium focus:outline-none bg-transparent"
+          className="w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 max-sm:placeholder:text-sm focus:outline-none bg-transparent"
           placeholder={props.placeholder}
           aria-invalid={!!errorMsg}
         />

@@ -92,12 +92,11 @@ export default function ConfirmForm(props: Props) {
         name="code"
         placeholder="Enter 6-digit code"
         classes={{ container: "my-6" }}
+        autoComplete="one-time-code"
       />
 
-      <span className="flex items-center justify-between text-sm font-medium">
-        <span className="justify-self-end">
-          Time remaining: 00:{String(counter).padStart(2, "0")}
-        </span>
+      <span className="flex items-center justify-between text-xs sm:text-sm font-medium">
+        <span>Time remaining: 00:{String(counter).padStart(2, "0")}</span>
         <button
           type="button"
           className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline"
