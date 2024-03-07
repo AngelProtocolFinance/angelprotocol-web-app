@@ -39,7 +39,7 @@ export const CHARITY_LINKS: LINKS = {
   HEADER_LINKS_WITH_AUTH: [
     ...HEADER_LINKS,
     { title: "Login", href: appRoutes.signin },
-    { title: "Sign up", href: appRoutes.signin },
+    { title: "Sign up", href: appRoutes.signup },
   ],
   GROUPS_DATA: [
     {

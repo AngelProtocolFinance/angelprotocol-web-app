@@ -10,18 +10,26 @@ import {
 } from "react";
 import { useModalContext } from "../ModalContext";
 
-type State = { handleError: (error: any, displayMessage?: string) => void };
+type State = {
+  handleError: (
+    error: any,
+    displayMessage?: string,
+    options?: { log: boolean }
+  ) => void;
+};
 
 const Context = createContext<State>({
-  handleError: (_: any, __?: string) => {},
+  handleError: (_: any, _1?: string, _2?: { log: boolean }) => {},
 });
 
 export default function ErrorContext(props: PropsWithChildren<{}>) {
   const { showModal } = useModalContext();
 
-  const handleError = useCallback(
-    (error: any, displayMessage?: string) => {
-      logger.error(error);
+  const handleError: State["handleError"] = useCallback(
+    (error: any, displayMessage?: string, options = { log: true }) => {
+      if (options.log) {
+        logger.error(error);
+      }
 
       if (displayMessage) {
         showModal(Prompt, {

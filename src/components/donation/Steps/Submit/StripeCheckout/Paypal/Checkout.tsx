@@ -64,12 +64,16 @@ export default function Checkout({ orderId, source }: Props) {
               } else if (isEmpty(order.purchase_units ?? [])) {
                 throw new Error(JSON.stringify(order));
               } else {
+                //accessed by redirect page
                 if (source === "bg-widget") {
                   navigate(
-                    `${appRoutes.donate_widget}${donateWidgetRoutes.donate_fiat_thanks}`
+                    `${appRoutes.donate_widget}${donateWidgetRoutes.donate_fiat_thanks}`,
+                    { state: order.guestDonor }
                   );
                 } else {
-                  navigate(appRoutes.donate_fiat_thanks);
+                  navigate(appRoutes.donate_fiat_thanks, {
+                    state: order.guestDonor,
+                  });
                 }
               }
             } catch (error) {

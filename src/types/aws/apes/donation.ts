@@ -7,6 +7,11 @@ export type Donor = {
   lastName: string;
 };
 
+export type GuestDonor = {
+  email: string;
+  fullName: string;
+};
+
 export type KYCData = {
   fullName: string; // "John Doe"
   kycEmail: string; // "john@doe.email.com"
