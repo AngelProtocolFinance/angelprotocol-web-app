@@ -120,7 +120,7 @@ export default function SignupForm(props: Props) {
           }}
         >
           <Image src={googleIcon} height={18} width={18} />
-          <span className="normal-case font-heading font-semibold">
+          <span className="normal-case font-heading font-semibold text-navy-d4">
             Sign Up with Google
           </span>
         </button>

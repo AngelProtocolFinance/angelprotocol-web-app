@@ -69,7 +69,7 @@ export default function Signin() {
   } = methods;
 
   return (
-    <div className="grid justify-items-center gap-3.5">
+    <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
       <Form
         className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
         methods={methods}
@@ -91,7 +91,7 @@ export default function Signin() {
           }}
         >
           <Image src={googleIcon} height={18} width={18} />
-          <span className="normal-case font-heading font-semibold">
+          <span className="normal-case font-heading font-semibold text-navy-d4">
             Continue with Google
           </span>
         </button>
