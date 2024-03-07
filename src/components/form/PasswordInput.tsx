@@ -25,7 +25,7 @@ export function PasswordInput<T extends FieldValues>(props: Props<T>) {
         <input
           {...register(props.name)}
           type={isPasswordShown ? "text" : "password"}
-          className="w-full h-full placeholder:font-medium focus:outline-none bg-transparent"
+          className="w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 max-sm:placeholder:text-sm focus:outline-none bg-transparent"
           placeholder={props.placeholder}
           aria-invalid={!!errorMsg}
         />
