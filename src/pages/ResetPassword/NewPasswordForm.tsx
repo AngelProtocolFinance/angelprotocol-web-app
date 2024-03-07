@@ -102,6 +102,27 @@ export default function NewPasswordForm(props: Props) {
       <p className="mt-2 text-center font-normal max-sm:text-sm">
         Reset your password to a new one
       </p>
+      <p className="text-center font-normal max-sm:text-sm mt-2">
+        6-digit security code has been sent to{" "}
+        <span className="font-medium">{props.codeRecipientEmail.obscured}</span>{" "}
+        <button
+          type="button"
+          className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline hover:cursor-pointer"
+          onClick={() => props.setStep({ type: "init" })}
+        >
+          Edit email
+        </button>
+      </p>
+
+      <div className="mt-6 grid gap-3">
+        <Input<FV> name="code" placeholder="Enter 6-digit code" />
+
+        <PasswordInput<FV> name="password" placeholder="New Password" />
+        <PasswordInput<FV>
+          name="passwordConfirmation"
+          placeholder="Confirm New Password"
+        />
+      </div>
 
       <p className="mt-6 font-normal text-xs sm:text-[13px]">
         In order to protect your account, make sure your password:
@@ -115,15 +136,12 @@ export default function NewPasswordForm(props: Props) {
         <li>Is not a member of this list of common passwords</li>
       </ul>
 
-      <div className="mt-6 grid gap-3">
-        <Input<FV> name="code" placeholder="Enter 6-digit code" />
-
-        <PasswordInput<FV> name="password" placeholder="New Password" />
-        <PasswordInput<FV>
-          name="passwordConfirmation"
-          placeholder="Confirm New Password"
-        />
-      </div>
+      <button
+        type="submit"
+        className="mt-6 w-full h-12 sm:h-[52px] flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 rounded-full normal-case sm:text-lg font-bold"
+      >
+        Confirm
+      </button>
 
       <span className="mt-6 flex items-center justify-between text-sm font-medium">
         <span>Time remaining: 00:{String(counter).padStart(2, "0")}</span>
@@ -136,13 +154,6 @@ export default function NewPasswordForm(props: Props) {
           Resend code
         </button>
       </span>
-
-      <button
-        type="submit"
-        className="mt-6 w-full h-12 sm:h-[52px] flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 rounded-full normal-case sm:text-lg font-bold"
-      >
-        Confirm
-      </button>
     </Form>
   );
 }
