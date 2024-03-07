@@ -30,7 +30,7 @@ export default function SetPasswordForm(props: Props) {
         code: requiredString,
         password: password,
         passwordConfirmation: requiredString.oneOf(
-          [ref("password")],
+          [ref("password"), ""],
           "Passwords must match"
         ),
       })
