@@ -7,8 +7,8 @@ import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { Currency } from "types/components";
-import { FormValues as FV, Props } from "./types";
 import Frequency from "./Frequency";
+import { FormValues as FV, Props } from "./types";
 
 const USD_CODE = "usd";
 
@@ -21,7 +21,7 @@ export default function Form({ widgetConfig, details }: Props) {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: { code: USD_CODE, min: 1, rate: 1 },
-    frequency: "monthly"
+    frequency: "monthly",
   };
 
   const currencyKey: keyof FV = "currency";
@@ -55,7 +55,8 @@ export default function Form({ widgetConfig, details }: Props) {
   });
 
   return (
-    <FormContainer methods={methods}
+    <FormContainer
+      methods={methods}
       onSubmit={handleSubmit((fv) =>
         dispatch(
           setDetails({
@@ -66,7 +67,6 @@ export default function Form({ widgetConfig, details }: Props) {
       )}
       className="grid gap-4"
     >
-
       <Frequency />
       <CurrencySelector
         currencies={currencies}
