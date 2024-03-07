@@ -37,14 +37,13 @@ export default function CurrencySelector<T extends CurrencyOption>({
         {props.label}
       </Label>
       <Combobox
-        aria-disabled={!!props.disabled || isCurrencyLoading || isCurrencyError}
+        disabled={props.disabled || isCurrencyLoading || isCurrencyError}
         by={"code" as any}
         value={props.value}
         onChange={props.onChange}
         as="div"
-        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${
-          props.classes?.combobox || ""
-        }`}
+        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${props.classes?.combobox || ""
+          }`}
       >
         <Combobox.Input
           id="wise__currency"

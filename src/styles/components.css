@@ -26,7 +26,6 @@
     @apply xl:container xl:mx-auto px-5;
   }
 
-
   /** applicable to button and <a/> */
   .btn {
     @apply flex items-center justify-center uppercase font-bold font-heading p-3 rounded focus:outline-none focus-visible:ring-2;
@@ -92,13 +91,19 @@
   }
 
   .field-container {
-    @apply rounded border border-gray-l3 dark:border-navy focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-navy-d3 aria-disabled:text-navy-l1 aria-disabled:dark:text-navy-l2 aria-disabled:pointer-events-none;
+    @apply rounded border border-gray-l3;
   }
-
-  .field-container[aria-invalid="true"] {
-    @apply border-red focus-within:shadow-focus;
+  .field-container:has(:focus) {
+    @apply ring-2 ring-offset-1 ring-blue-d1;
   }
-
+  .field-container:has(:disabled),
+  .field-container:has([aria-disabled="true"]) {
+    @apply text-navy-l1 bg-gray-l5 pointer-events-none;
+  }
+  .field-container:has([data-error]),
+  .field-container:has([aria-invalid="true"]) {
+    @apply border-red;
+  }
   .field-container > input {
     @apply bg-transparent focus:outline-none w-full;
   }
@@ -182,5 +187,4 @@
   .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
-
 }

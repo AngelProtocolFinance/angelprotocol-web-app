@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   FieldValues,
   Path,
-  get,
   useController,
   useFormContext,
 } from "react-hook-form";
@@ -46,15 +45,12 @@ export default function CountrySelector<
 
   return (
     <Combobox
-      aria-invalid={!!get(errors, `${props.fieldName}.name`)?.message}
-      aria-disabled={props.disabled || isSubmitting}
       disabled={props.disabled || isSubmitting}
       value={country}
       onChange={onCountryChange}
       as="div"
-      className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${
-        props.classes?.container || ""
-      }`}
+      className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${props.classes?.container || ""
+        }`}
     >
       <span className="mr-1 empty:hidden text-3xl relative -bottom-0.5">
         {country.flag || null}
@@ -88,6 +84,7 @@ export default function CountrySelector<
       <Options query={query} options={props.countries} />
 
       <ErrorMessage
+        data-error
         errors={errors}
         name={`${props.fieldName}.${nameKey}`}
         as="span"
