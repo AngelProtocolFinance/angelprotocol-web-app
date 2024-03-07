@@ -58,7 +58,7 @@ module.exports = {
         d2: "#273f52",
         d1: "#314c5d",
         DEFAULT: "#3c5667",
-        l1: "#496273", //navy-blue-400
+        l1: "#496273", //navy-blue-400, #1D3C51/80
         l2: "#5b6f7f",
         l3: "#72828D", //navy-blue-200
         l4: "#9dabb5",
