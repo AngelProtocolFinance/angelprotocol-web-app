@@ -17,11 +17,11 @@ export default function DropzoneText({
 
   if (isFilesEmpty && isPreviewsEmpty) {
     return (
-      <span className="grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2">
+      <div className="grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none">
         <Icon type="FileUpload" size={24} className="mb-[1.125rem]" />
         <p className="font-semibold mb-1">Upload file</p>
         <span>Click to Browse or Drag &amp; Drop</span>
-      </span>
+      </div>
     );
   }
 
