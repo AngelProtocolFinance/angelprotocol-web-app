@@ -92,6 +92,7 @@ export default function ConfirmForm(props: Props) {
         name="code"
         placeholder="Enter 6-digit code"
         classes={{ container: "my-6" }}
+        autoComplete="one-time-code"
       />
 
       <span className="flex items-center justify-between text-sm font-medium">
