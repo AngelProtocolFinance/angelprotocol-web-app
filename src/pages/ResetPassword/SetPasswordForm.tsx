@@ -99,9 +99,6 @@ export default function SetPasswordForm(props: Props) {
       <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4">
         Set new password
       </h3>
-      <p className="mt-2 text-center font-normal max-sm:text-sm">
-        Reset your password to a new one
-      </p>
       <p className="text-center font-normal max-sm:text-sm mt-2">
         6-digit security code has been sent to{" "}
         <span className="font-medium">{props.codeRecipientEmail.obscured}</span>{" "}
@@ -116,6 +113,18 @@ export default function SetPasswordForm(props: Props) {
 
       <div className="mt-6 grid gap-3">
         <Input<FV> name="code" placeholder="Enter 6-digit code" />
+
+        <span className="mb-3 flex items-center justify-between text-sm font-medium">
+          <span>Time remaining: 00:{String(counter).padStart(2, "0")}</span>
+          <button
+            type="button"
+            className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline"
+            onClick={resendOTP}
+            disabled={counter > 0}
+          >
+            Resend code
+          </button>
+        </span>
 
         <PasswordInput<FV> name="password" placeholder="New Password" />
         <PasswordInput<FV>
@@ -141,18 +150,6 @@ export default function SetPasswordForm(props: Props) {
       >
         Confirm
       </button>
-
-      <span className="mt-6 flex items-center justify-between text-sm font-medium">
-        <span>Time remaining: 00:{String(counter).padStart(2, "0")}</span>
-        <button
-          type="button"
-          className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline"
-          onClick={resendOTP}
-          disabled={counter > 0}
-        >
-          Resend code
-        </button>
-      </span>
     </Form>
   );
 }
