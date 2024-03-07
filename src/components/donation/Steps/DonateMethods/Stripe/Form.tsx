@@ -8,6 +8,7 @@ import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { Currency } from "types/components";
 import { FormValues as FV, Props } from "./types";
+import Frequency from "./Frequency";
 
 const USD_CODE = "usd";
 
@@ -65,6 +66,8 @@ export default function Form({ widgetConfig, details }: Props) {
       )}
       className="grid gap-4"
     >
+
+      <Frequency />
       <CurrencySelector
         currencies={currencies}
         label="Currency"
