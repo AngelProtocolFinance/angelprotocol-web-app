@@ -15,7 +15,7 @@ export enum appRoutes {
   stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",
   gift = "/gift",
-  recover_password = "/signin/recover",
+  reset_password = "/signin/reset",
   widget_config = "/widget-config",
 }
 

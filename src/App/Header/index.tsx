@@ -21,7 +21,7 @@ export default function Header({ links }: Props) {
             {!(
               location.pathname === appRoutes.signin ||
               location.pathname === appRoutes.signup ||
-              location.pathname === appRoutes.recover_password ||
+              location.pathname === appRoutes.reset_password ||
               location.pathname === appRoutes.auth_redirector
             ) && <UserMenu />}
             <NavDropdown links={links} />

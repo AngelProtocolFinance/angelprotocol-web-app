@@ -87,10 +87,7 @@ export default function App() {
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
           <Route path={appRoutes.signin} element={<Signin />} />
           <Route path={appRoutes.signup} element={<SignUp />} />
-          <Route
-            path={appRoutes.recover_password}
-            element={<ResetPassword />}
-          />
+          <Route path={appRoutes.reset_password} element={<ResetPassword />} />
           <Route
             path={appRoutes.auth_redirector}
             element={<OAuthRedirector />}

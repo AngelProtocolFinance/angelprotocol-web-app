@@ -110,7 +110,7 @@ export default function Signin() {
           />
           <PasswordInput<FormValues> name="password" placeholder="Password" />
           <Link
-            to={appRoutes.recover_password}
+            to={appRoutes.reset_password}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"
             state={state}
           >
