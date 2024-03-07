@@ -1,5 +1,6 @@
 import { useState } from "react";
 import ConfirmEmailForm from "./ConfirmEmailForm";
+import NewPasswordForm from "./NewPasswordForm";
 import Success from "./Success";
 import { Steps } from "./types";
 
@@ -10,18 +11,16 @@ export default function ResetPassword() {
     if (step.type === "init") {
       return <ConfirmEmailForm setStep={setStep} />;
     }
-
-    if (step.type === "success") {
-      return <Success />;
+    if (step.type === "new-password") {
+      return (
+        <NewPasswordForm
+          setStep={setStep}
+          codeRecipientEmail={step.codeRecipientEmail}
+        />
+      );
     }
 
-    return (
-      <ConfirmForm
-        userType={step.userType}
-        codeRecipientEmail={step.codeRecipientEmail}
-        setSignupState={setStep}
-      />
-    );
+    return <Success />;
   })();
 
   return (

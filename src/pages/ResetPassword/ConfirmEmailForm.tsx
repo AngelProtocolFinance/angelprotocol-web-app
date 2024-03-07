@@ -44,7 +44,7 @@ export default function ConfirmEmailForm(props: Props) {
         throw `Missing code delivery destination`;
 
       props.setStep({
-        type: "confirm-otp",
+        type: "new-password",
         codeRecipientEmail: {
           raw: fv.email,
           obscured: nextStep.codeDeliveryDetails.destination,
