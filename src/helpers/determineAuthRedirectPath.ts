@@ -7,7 +7,7 @@ import { SignInRouteState } from "types/routeStates";
  */
 export function determineAuthRedirectPath(
   signInRouteState: SignInRouteState | undefined,
-  isSigningUp = true
+  { isSigningUp } = { isSigningUp: true }
 ): {
   pathname: string;
   search: string;

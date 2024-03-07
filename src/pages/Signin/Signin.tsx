@@ -36,7 +36,7 @@ export default function Signin() {
   });
 
   const { state } = useLocation();
-  const redirectPath = determineAuthRedirectPath(state);
+  const redirectPath = determineAuthRedirectPath(state, { isSigningUp: false });
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
