@@ -21,7 +21,7 @@ export function PasswordInput<T extends FieldValues>(props: Props<T>) {
   return (
     <div>
       <div className={`grid grid-cols-[auto_1fr_auto] px-5 ${fieldClasses}`}>
-        <Icon type="Padlock" className="text-navy-l3" />
+        <Icon type="Padlock" className="text-navy-l3" size={20} />
         <input
           {...register(props.name)}
           type={isPasswordShown ? "text" : "password"}
