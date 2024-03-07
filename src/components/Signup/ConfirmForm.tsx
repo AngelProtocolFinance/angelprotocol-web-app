@@ -50,7 +50,7 @@ export default function ConfirmForm(props: Props) {
         } catch (err) {
           const message =
             err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-          handleError(message);
+          handleError(err, message);
         }
       })}
     >
@@ -84,7 +84,7 @@ export default function ConfirmForm(props: Props) {
           } catch (err) {
             const message =
               err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-            handleError(message);
+            handleError(err, message);
           } finally {
             setIsRequestingNewCode(false);
           }

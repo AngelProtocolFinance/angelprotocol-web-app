@@ -66,9 +66,11 @@ export default function SignupForm(props: Props) {
           });
 
           //per cognito config
-          if (nextStep.signUpStep !== "CONFIRM_SIGN_UP") throw "";
-          if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL") throw "";
-          if (!nextStep.codeDeliveryDetails.destination) throw "";
+            throw "Auth config error: next step after signup should be confirm signup";
+          if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL")
+            throw "Auth config error: code confirmation must be sent to email";
+          if (!nextStep.codeDeliveryDetails.destination)
+            throw "Auth error: code delivery details was not included";
 
           props.setSignupState({
             codeRecipientEmail: {
@@ -79,7 +81,7 @@ export default function SignupForm(props: Props) {
         } catch (err) {
           const message =
             err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-          handleError(message);
+          handleError(err, message);
         }
       })}
     >
