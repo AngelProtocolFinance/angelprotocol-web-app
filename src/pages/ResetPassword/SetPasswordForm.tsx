@@ -138,16 +138,16 @@ export default function SetPasswordForm(props: Props) {
         />
       </div>
 
-      <p className="mt-6 font-normal text-xs sm:text-[13px]">
+      <p className="mt-6 font-normal text-xs sm:text-[13px] leading-5">
         In order to protect your account, make sure your password:
+        <ul className="list-disc list-inside">
+          <li className="ml-2">Has at least 8 characters</li>
+          <li className="ml-2">Contains at least 1 number</li>
+          <li className="ml-2">Contains at least 1 special character</li>
+          <li className="ml-2">Contains at least 1 uppercase letter</li>
+          <li className="ml-2">Contains at least 1 lowercase letter</li>
+        </ul>
       </p>
-      <ul>
-        <li>Has at least 8 characters</li>
-        <li>Contains at least 1 number</li>
-        <li>Contains at least 1 special character</li>
-        <li>Contains at least 1 uppercase letter</li>
-        <li>Contains at least 1 lowercase letter</li>
-      </ul>
 
       <button
         type="submit"
