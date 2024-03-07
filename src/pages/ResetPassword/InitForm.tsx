@@ -88,7 +88,7 @@ export default function InitForm(props: Props) {
       <Link
         to={appRoutes.signin}
         state={state}
-        className="mt-5 text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline text-center"
+        className="mt-5 text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray max-sm:text-sm font-medium underline text-center"
         aria-disabled={isSubmitting}
       >
         Back to Sign in
