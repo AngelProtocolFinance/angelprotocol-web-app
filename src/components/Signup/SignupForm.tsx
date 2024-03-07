@@ -66,6 +66,7 @@ export default function SignupForm(props: Props) {
           });
 
           //per cognito config
+          if (nextStep.signUpStep !== "CONFIRM_SIGN_UP")
             throw "Auth config error: next step after signup should be confirm signup";
           if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL")
             throw "Auth config error: code confirmation must be sent to email";
@@ -85,12 +86,12 @@ export default function SignupForm(props: Props) {
         }
       })}
     >
-      <div className='grid grid-cols-[auto_1fr_auto] border border-prim rounded items-center px-3 has-[:focus]:ring-2 ring-blue ring-offset-1  has-[input[aria-invalid="true"]]:border-red has-[:disabled]:bg-gray-l3'>
-        <Icon type="Padlock" className="mr-3 text-gray" />
+      <div className='grid grid-cols-[auto_1fr_auto] h-[3.25rem] bg-gray-l5 px-5 border border-gray-l4 rounded items-center has-[:focus]:ring-2 ring-blue-d1 ring-offset-1  has-[input[aria-invalid="true"]]:border-red has-[:disabled]:bg-gray-l3'>
+        <Icon type="Padlock" className="mr-3 text-gray" size={20} />
         <input
           {...register("password")}
           type={isPasswordShown ? "text" : "password"}
-          className="h-full focus:outline-none bg-transparent"
+          className="h-full focus:outline-none bg-transparent font-heading placeholder:text-navy-l3 font-medium"
           placeholder="Create password"
           aria-invalid={!!errors.password?.message}
         />
@@ -100,7 +101,7 @@ export default function SignupForm(props: Props) {
           className="py-3 focus:outline-none focus:text-black text-gray"
           onClick={() => setIsPasswordShown((prev) => !prev)}
         >
-          <Icon type={isPasswordShown ? "EyeSlashed" : "Eye"} />
+          <Icon type={isPasswordShown ? "EyeSlashed" : "Eye"} size={18.5} />
         </button>
       </div>
       <p className="text-xs text-red text-right mt-1">
@@ -109,7 +110,7 @@ export default function SignupForm(props: Props) {
 
       <button
         type="submit"
-        className="btn-blue rounded-full normal-case px-4 w-full mt-4"
+        className="btn-blue rounded-full normal-case w-full mt-4 h-[3.25rem] font-heading"
       >
         {isSubmitting ? "Submitting..." : "Create account"}
       </button>

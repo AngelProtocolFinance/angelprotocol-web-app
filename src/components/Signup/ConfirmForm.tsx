@@ -65,13 +65,13 @@ export default function ConfirmForm(props: Props) {
       <Field<FV> name="code" label="Confirmation code" required />
       <button
         type="submit"
-        className="btn-blue px-4 py-2 rounded-full normal-case mt-6"
+        className="btn-blue h-[3.25rem] font-heading rounded-full normal-case mt-6"
       >
         Confirm
       </button>
       <button
         type="button"
-        className="btn-outline px-4 py-2 rounded-full normal-case mt-3"
+        className="btn-outline rounded-full normal-case mt-3 h-[3.25rem] font-heading"
         onClick={async () => {
           try {
             setIsRequestingNewCode(true);

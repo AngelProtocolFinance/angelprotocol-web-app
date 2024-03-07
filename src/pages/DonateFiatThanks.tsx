@@ -65,7 +65,7 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
       {!widgetVersion && (
         <Link
           to={appRoutes.marketplace}
-          className="btn-outline max-w-96 w-full justify-self-center normal-case mt-4 rounded-full"
+          className="btn-outline h-[3.25rem] font-heading max-w-96 w-full justify-self-center normal-case mt-4 rounded-full"
         >
           Back to the platform
         </Link>
