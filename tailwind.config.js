@@ -114,9 +114,6 @@ module.exports = {
     },
 
     extend: {
-      boxShadow: (theme) => ({
-        focus: `0 0 5px ${theme("colors.red.DEFAULT")}`,
-      }),
       fontSize: {
         "2xs": "0.625rem",
         "3xs": ["0.56rem", "0.7rem"],
