@@ -128,12 +128,11 @@ export default function NewPasswordForm(props: Props) {
         In order to protect your account, make sure your password:
       </p>
       <ul>
-        <li>Is longer than 7 characters</li>
-        <li>
-          Does not match or significantly contain your username, e.g. do not use
-          'username123'
-        </li>
-        <li>Is not a member of this list of common passwords</li>
+        <li>Has at least 8 characters</li>
+        <li>Contains at least 1 number</li>
+        <li>Contains at least 1 special character</li>
+        <li>Contains at least 1 uppercase letter</li>
+        <li>Contains at least 1 lowercase letter</li>
       </ul>
 
       <button
