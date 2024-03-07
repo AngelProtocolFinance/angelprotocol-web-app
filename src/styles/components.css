@@ -5,7 +5,7 @@
   }
 
   .rich-text-toolbar[aria-invalid="true"] {
-    @apply border-red focus-within:shadow-focus;
+    @apply border-red;
   }
 
   .date-input::-webkit-calendar-picker-indicator {

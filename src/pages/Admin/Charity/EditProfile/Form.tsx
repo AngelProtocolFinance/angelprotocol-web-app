@@ -130,7 +130,7 @@ export default function Form() {
         <MultiSelector<FV, "sdgs", UNSDG_NUMS>
           name="sdgs"
           options={sdgOptions}
-          classes={{ button: "field-input" }}
+          classes={{ button: "field-input-admin" }}
         />
         <Label className="-mb-4" required>
           Organization Designation
