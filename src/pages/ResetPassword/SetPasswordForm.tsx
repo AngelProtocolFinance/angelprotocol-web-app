@@ -101,7 +101,8 @@ export default function SetPasswordForm(props: Props) {
       </h3>
       <p className="text-center font-normal max-sm:text-sm mt-2">
         6-digit security code has been sent to{" "}
-        <span className="font-medium">{props.codeRecipientEmail.obscured}</span>{" "}
+        <span className="font-medium">{props.codeRecipientEmail.obscured}</span>
+        .{" "}
         <button
           type="button"
           className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline hover:cursor-pointer"
@@ -112,7 +113,11 @@ export default function SetPasswordForm(props: Props) {
       </p>
 
       <div className="mt-6 grid gap-3">
-        <Input<FV> name="code" placeholder="Enter 6-digit code" />
+        <Input<FV>
+          name="code"
+          placeholder="Enter 6-digit code"
+          autoComplete="one-time-code"
+        />
 
         <span className="mb-3 flex items-center justify-between text-sm font-medium">
           <span>Time remaining: 00:{String(counter).padStart(2, "0")}</span>

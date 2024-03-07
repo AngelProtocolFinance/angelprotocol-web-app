@@ -1,14 +1,16 @@
 import Icon, { IconType } from "components/Icon";
 import { unpack } from "components/form/helpers";
 import { Classes } from "components/form/types";
+import { fieldClasses } from "pages/SignUp/constants";
+import { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
-import { fieldClasses } from "../../pages/SignUp/constants";
 
 type Props<T extends FieldValues> = {
   classes?: Classes;
   name: Path<T>;
   placeholder: string;
   icon?: IconType;
+  autoComplete?: InputHTMLAttributes<HTMLInputTypeAttribute>["autoComplete"];
 };
 
 export function Input<T extends FieldValues>(props: Props<T>) {
@@ -39,6 +41,7 @@ export function Input<T extends FieldValues>(props: Props<T>) {
           } ${input}`}
           placeholder={props.placeholder}
           aria-invalid={!!errorMsg}
+          autoComplete={props.autoComplete}
         />
       </div>
       {errorMsg && (
