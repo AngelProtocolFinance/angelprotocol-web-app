@@ -18,6 +18,7 @@ const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
 const SignUp = lazy(() => import("pages/SignUp"));
+const ResetPassword = lazy(() => import("pages/ResetPassword"));
 const Applications = lazy(() => import("pages/Applications"));
 const Application = lazy(() => import("pages/Application"));
 const BankingApplications = lazy(() => import("pages/BankingApplications"));
@@ -86,6 +87,10 @@ export default function App() {
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
           <Route path={appRoutes.signin} element={<Signin />} />
           <Route path={appRoutes.signup} element={<SignUp />} />
+          <Route
+            path={appRoutes.recover_password}
+            element={<ResetPassword />}
+          />
           <Route
             path={appRoutes.auth_redirector}
             element={<OAuthRedirector />}

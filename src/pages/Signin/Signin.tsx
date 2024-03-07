@@ -108,6 +108,7 @@ export default function Signin() {
           <Link
             to={appRoutes.recover_password}
             className="font-medium text-navy-l1 hover:text-navy-l2 active:text-navy text-xs sm:text-sm justify-self-end hover:underline"
+            state={state}
           >
             Forgot password?
           </Link>
