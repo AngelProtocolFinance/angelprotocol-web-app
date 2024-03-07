@@ -10,7 +10,7 @@ export default function Success({ classes = "" }: Props) {
         to={appRoutes.signin}
         className="text-blue hover:text-blue-l1 underline mt-1"
       >
-        Signin
+        Log in
       </Link>
     </div>
   );
