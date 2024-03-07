@@ -40,7 +40,11 @@ export default function Signin() {
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
-    return <LoaderRing thickness={12} classes="w-32 mt-8" />;
+    return (
+      <div className="grid content-start place-items-center py-14">
+        <LoaderRing thickness={12} classes="w-32 mt-8" />
+      </div>
+    );
   }
 
   if (currUser) {
