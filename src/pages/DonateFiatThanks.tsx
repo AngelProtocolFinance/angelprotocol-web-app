@@ -1,12 +1,20 @@
 import char from "assets/images/celebrating-character.png";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
+import Signup from "components/Signup";
 import { DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useGetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
+import { GuestDonor } from "types/aws";
 
 export default function DonateFiatThanks({ widgetVersion = false }) {
+  const location = useLocation();
+  const guestDonor: GuestDonor | undefined = location.state;
+  const user = useGetter((state) => state.auth.user);
+
   return (
     <div className="grid justify-self-center m-auto max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
       <div
@@ -31,7 +39,7 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
           ? ""
           : " You can safely navigate away using the button below."}
       </p>
-      <p className="text-center text-navy-l1 mt-8 text-[15px]">
+      <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
         If you need a receipt for your donation, please fill out the KYC form
         for this transaction on your{" "}
         {widgetVersion ? (
@@ -43,10 +51,21 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         )}{" "}
         page.
       </p>
+
+      {!userIsSignedIn(user) && guestDonor && (
+        <Signup
+          classes="max-w-96 w-full mt-6 justify-self-center"
+          donor={((d) => {
+            const [firstName, lastName] = d.fullName.split(" ");
+            return { firstName, lastName, email: d.email };
+          })(guestDonor)}
+        />
+      )}
+
       {!widgetVersion && (
         <Link
           to={appRoutes.marketplace}
-          className="w-full btn-orange btn-donate normal-case mt-8"
+          className="btn-outline h-[3.25rem] font-heading max-w-96 w-full justify-self-center normal-case mt-4 rounded-full"
         >
           Back to the platform
         </Link>

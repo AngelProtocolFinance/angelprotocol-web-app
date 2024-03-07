@@ -1,4 +1,4 @@
-import { Donor } from "types/aws";
+import { Donor, GuestDonor } from "types/aws";
 import { ChainID } from "types/chain";
 import { DetailedCurrency, OptionType } from "types/components";
 import { DonationSource } from "types/lists";
@@ -96,7 +96,10 @@ export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 export type StockCheckoutStep = SubmitStep<StocksDonationDetails>;
 export type DafCheckoutStep = SubmitStep<DafDonationDetails>;
 
-export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
+export type TxStatus =
+  | { loadingMsg: string }
+  | "error"
+  | { hash: string; guestDonor: GuestDonor | undefined };
 export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;

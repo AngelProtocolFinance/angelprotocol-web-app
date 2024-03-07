@@ -1,17 +1,23 @@
 import char from "assets/images/celebrating-character.png";
 import Image from "components/Image";
+import Signup from "components/Signup";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link } from "react-router-dom";
-import { CryptoResultStep } from "slices/donation";
+import { DonationRecipient } from "slices/donation";
+import { useGetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
+import { GuestDonor } from "types/aws";
 import Share, { SocialMedia } from "./Share";
 
-export default function Success({
-  classes,
-  ...state
-}: Omit<CryptoResultStep, "status"> & { classes?: string; hash: string }) {
-  const { recipient } = state;
-  const { id } = recipient;
+type Props = {
+  classes?: string;
+  recipient: DonationRecipient;
+  guestDonor: GuestDonor | undefined;
+};
+
+export default function Success({ classes, guestDonor, recipient }: Props) {
+  const user = useGetter((state) => state.auth.user);
   return (
     <div className={`grid justify-items-center ${classes}`}>
       <div
@@ -32,22 +38,32 @@ export default function Success({
         The donation process is complete, and we are grateful for your support.
       </p>
 
-      <h2 className="mt-16 border-t border-gray-l4 w-full pt-2 text-center font-medium">
+      <h2 className="mt-2 w-full pt-2 text-center font-medium text-blue-d2">
         Spread the word!
       </h2>
       <p className="text-center text-navy-l1 text-sm max-w-sm">
         Encourage your friends to join in and contribute, making a collective
         impact through donations.
       </p>
-      <div className="flex items-center gap-2 mt-1">
+      <div className="flex items-center gap-2 mt-1 mb-2">
         {socials.map(([type, size]) => (
           <Share key={type} iconSize={size} type={type} recipient={recipient} />
         ))}
       </div>
 
+      {!userIsSignedIn(user) && guestDonor && (
+        <Signup
+          classes="max-w-96 w-full mt-6 justify-self-center"
+          donor={((d) => {
+            const [firstName, lastName] = d.fullName.split(" ");
+            return { firstName, lastName, email: d.email };
+          })(guestDonor)}
+        />
+      )}
+
       <Link
-        to={appRoutes.marketplace + `/${id}`}
-        className="w-full btn-orange btn-donate normal-case mt-8"
+        to={appRoutes.marketplace + `/${recipient.id}`}
+        className="w-full max-w-96 rounded-full btn-outline normal-case mt-4"
       >
         Back to the platform
       </Link>

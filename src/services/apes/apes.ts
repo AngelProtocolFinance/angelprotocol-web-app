@@ -6,6 +6,7 @@ import {
   Donor,
   EndowmentBalances,
   FiatCurrencyData,
+  GuestDonor,
   PayPalOrder,
   Token,
 } from "types/aws";
@@ -97,7 +98,7 @@ export const apes = createApi({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
     getStripePaymentStatus: builder.query<
-      Pick<PaymentIntent, "status">,
+      Pick<PaymentIntent, "status"> & { guestDonor?: GuestDonor },
       { paymentIntentId: string }
     >({
       query: ({ paymentIntentId }) => ({

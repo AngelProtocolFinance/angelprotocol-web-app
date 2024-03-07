@@ -11,9 +11,13 @@ import { FormEventHandler, useState } from "react";
 import { DonationSource } from "types/lists";
 import Loader from "../Loader";
 
+type Props = {
+  source: DonationSource;
+};
+
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ source }: { source: DonationSource }) {
+export default function Checkout({ source }: Props) {
   const stripe = useStripe();
   const elements = useElements();
   const { handleError } = useErrorContext();
