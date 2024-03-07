@@ -21,7 +21,7 @@ type Props = {
   setStep: StepSetter;
 };
 
-export default function NewPasswordForm(props: Props) {
+export default function SetPasswordForm(props: Props) {
   const { handleError } = useErrorContext();
   const [isRequestingNewCode, setIsRequestingNewCode] = useState(false);
   const methods = useForm({

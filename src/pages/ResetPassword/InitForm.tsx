@@ -14,7 +14,7 @@ type Props = {
   setStep: StepSetter;
 };
 
-export default function ConfirmEmailForm(props: Props) {
+export default function InitForm(props: Props) {
   const { handleError } = useErrorContext();
   const methods = useForm({
     resolver: yupResolver(
@@ -44,7 +44,7 @@ export default function ConfirmEmailForm(props: Props) {
         throw `Missing code delivery destination`;
 
       props.setStep({
-        type: "new-password",
+        type: "set-password",
         codeRecipientEmail: {
           raw: fv.email,
           obscured: nextStep.codeDeliveryDetails.destination,

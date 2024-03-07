@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ConfirmEmailForm from "./ConfirmEmailForm";
-import NewPasswordForm from "./NewPasswordForm";
+import InitForm from "./InitForm";
+import SetPasswordForm from "./SetPasswordForm";
 import Success from "./Success";
 import { Steps } from "./types";
 
@@ -9,11 +9,11 @@ export default function ResetPassword() {
 
   const content = (() => {
     if (step.type === "init") {
-      return <ConfirmEmailForm setStep={setStep} />;
+      return <InitForm setStep={setStep} />;
     }
-    if (step.type === "new-password") {
+    if (step.type === "set-password") {
       return (
-        <NewPasswordForm
+        <SetPasswordForm
           setStep={setStep}
           codeRecipientEmail={step.codeRecipientEmail}
         />
