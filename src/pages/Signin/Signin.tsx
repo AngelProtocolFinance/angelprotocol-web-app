@@ -3,18 +3,17 @@ import ExtLink from "components/ExtLink";
 import LoaderRing from "components/LoaderRing";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { BASE_URL } from "constants/env";
-import { appRoutes, regRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
+import { determineAuthRedirectPath } from "helpers";
 import { useEffect, useState } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
-import { SignInRouteState } from "types/routeStates";
 
 export default function Signin() {
-  const { state } = useLocation();
   const [isSigningUp, setSigningUp] = useState(false);
 
-  const to = determineTo(state as SignInRouteState | undefined, isSigningUp);
+  const { state } = useLocation();
+  const to = determineAuthRedirectPath(state, isSigningUp);
 
   const currUser = useGetter((state) => state.auth.user);
   useEffect(() => {
@@ -124,16 +123,4 @@ export default function Signin() {
       />
     </div>
   );
-}
-
-function determineTo(
-  signInRouteState: SignInRouteState | undefined,
-  isSigningUp: boolean
-): { pathname: string; search: string } {
-  const search = signInRouteState?.search || "";
-  const pathname =
-    isSigningUp && signInRouteState?.from === appRoutes.register
-      ? `${appRoutes.register}/${regRoutes.welcome}`
-      : signInRouteState?.from || "/";
-  return { pathname, search };
 }

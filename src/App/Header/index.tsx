@@ -20,6 +20,7 @@ export default function Header({ links }: Props) {
           <div className="flex gap-2 md:gap-4 justify-self-end items-center">
             {!(
               location.pathname === appRoutes.signin ||
+              location.pathname === appRoutes.signup ||
               location.pathname === appRoutes.auth_redirector
             ) && <UserMenu />}
             <NavDropdown links={links} />

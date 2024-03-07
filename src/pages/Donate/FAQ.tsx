@@ -98,7 +98,7 @@ const faqs = [
       <p>
         To keep a permanent record of all your donations and print tax receipts,
         create your own personal user account&nbsp;
-        <Link to={appRoutes.signin} className="text-blue hover:text-blue-l1">
+        <Link to={appRoutes.signup} className="text-blue hover:text-blue-l1">
           here
         </Link>
         .

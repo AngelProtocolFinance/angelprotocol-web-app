@@ -29,7 +29,7 @@
 
   /** applicable to button and <a/> */
   .btn {
-    @apply flex items-center justify-center uppercase font-bold p-3 rounded focus:outline-none focus-visible:ring-2;
+    @apply flex-center uppercase font-bold p-3 rounded focus:outline-none focus-visible:ring-2;
   }
 
   .field-error {
@@ -76,7 +76,10 @@
     @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
   }
   .btn-outline {
-    @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy border border-gray-l3 dark:border-navy  enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
+    @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy border border-gray-l3 dark:border-navy enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
+  }
+  .btn-outline-2 {
+    @apply rounded-lg normal-case text-sm border border-gray-l4 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
   }
   .btn-blue {
     @apply btn bg-blue disabled:bg-gray text-white enabled:hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
