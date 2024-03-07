@@ -2,7 +2,6 @@ import { useState } from "react";
 import ConfirmEmailForm from "./ConfirmEmailForm";
 import Success from "./Success";
 import { Steps } from "./types";
-import ConfirmEmailForm from "./ConfirmEmailForm";
 
 export default function ResetPassword() {
   const [step, setStep] = useState<Steps>({ type: "init" });
