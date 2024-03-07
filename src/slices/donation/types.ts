@@ -31,6 +31,7 @@ type FiatDonationDetails = BaseDonationDetais & {
 
 export type StripeDonationDetails = {
   method: "stripe";
+  frequency: "once" | "monthly";
 } & FiatDonationDetails;
 
 export type StocksDonationDetails = {
