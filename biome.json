@@ -3,6 +3,9 @@
   "organizeImports": {
     "enabled": true
   },
+  "files":{
+    "ignore":["./package.json"]
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -50,7 +53,7 @@
     }
   },
   "formatter": {
-    "indentStyle": "space"
+    "indentStyle": "space",
   },
   "javascript": {
     "formatter": {
