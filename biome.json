@@ -53,7 +53,7 @@
     }
   },
   "formatter": {
-    "indentStyle": "space",
+    "indentStyle": "space"
   },
   "javascript": {
     "formatter": {
