@@ -202,7 +202,7 @@
   }
 
   .field-container-donate {
-    @apply text-base font-semibold bg-gray-l5 rounded-l-lg
+    @apply text-base font-semibold bg-gray-l5 rounded-lg
   }
   .field-container-donate > input {
     @apply py-4 px-5 text-base
