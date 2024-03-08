@@ -24,7 +24,7 @@ export default function EndowmentSelector() {
 
   return (
     <Combobox
-      aria-disabled={isSubmitting}
+      disabled={isSubmitting}
       value={endowment}
       onChange={onEndowmentChange}
       as="div"
@@ -47,10 +47,11 @@ export default function EndowmentSelector() {
 
       <Options searchText={debouncedQuery} isDebouncing={isDebouncing} />
       <ErrorMessage
+        data-error
         errors={errors}
         name="endowment.id"
         as="span"
-        className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
+        className="field-error"
       />
     </Combobox>
   );

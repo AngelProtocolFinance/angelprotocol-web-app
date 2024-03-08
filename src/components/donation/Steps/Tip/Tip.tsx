@@ -164,11 +164,9 @@ export default function Tip({
               placeholder="$ Enter amount"
             />
             <span className="uppercase">{symbol}</span>
-          </div>
-          <div className="empty:mb-4">
             <ErrorMessage
               data-error
-              className="static field-error text-right my-1"
+              className="field-error text-right mt-2"
               errors={errors}
               name="tip.amount"
               as="p"

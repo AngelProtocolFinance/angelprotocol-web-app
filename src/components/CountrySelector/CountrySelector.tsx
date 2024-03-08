@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   FieldValues,
   Path,
-  get,
   useController,
   useFormContext,
 } from "react-hook-form";
@@ -46,8 +45,6 @@ export default function CountrySelector<
 
   return (
     <Combobox
-      aria-invalid={!!get(errors, `${props.fieldName}.name`)?.message}
-      aria-disabled={props.disabled || isSubmitting}
       disabled={props.disabled || isSubmitting}
       value={country}
       onChange={onCountryChange}
@@ -88,6 +85,7 @@ export default function CountrySelector<
       <Options query={query} options={props.countries} />
 
       <ErrorMessage
+        data-error
         errors={errors}
         name={`${props.fieldName}.${nameKey}`}
         as="span"

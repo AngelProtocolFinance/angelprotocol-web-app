@@ -37,7 +37,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
         {props.label}
       </Label>
       <Combobox
-        aria-disabled={!!props.disabled || isCurrencyLoading || isCurrencyError}
+        disabled={props.disabled || isCurrencyLoading || isCurrencyError}
         by={"code" as any}
         value={props.value}
         onChange={props.onChange}

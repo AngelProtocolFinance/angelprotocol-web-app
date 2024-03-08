@@ -2,7 +2,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import {
   FieldValues,
   Path,
-  get,
   useController,
   useFormContext,
 } from "react-hook-form";
@@ -52,14 +51,13 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
       </div>
 
       <div
-        aria-invalid={!!get(errors[name], "amount")?.message}
-        aria-disabled={isSubmitting || disabled}
         className={`${
           classes?.inputContainer ?? ""
-        } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container`}
+        } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container peer`}
       >
         <input
           {...register(amountField)}
+          disabled={disabled || isSubmitting}
           autoComplete="off"
           id="amount"
           type="text"
@@ -73,25 +71,23 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
             onChange({ ...token, [amountKey]: getValues(amountField) });
           }}
         />
-      </div>
-      <div className="empty:mb-2">
         <ErrorMessage
           data-error
           errors={errors}
           name={amountField}
           as="p"
-          className="static field-error text-left my-1"
+          className="field-error left-0 text-left"
         />
         <ErrorMessage
           data-error
           errors={errors}
           name={tokenIDField}
           as="p"
-          className="static field-error text-left my-1"
+          className="field-error"
         />
       </div>
       {withMininum && token.min_donation_amnt !== 0 && (
-        <p className="text-xs mb-3">
+        <p className="text-xs mt-2 peer-has-[[data-error]]:mt-5">
           Minimal amount: {token.symbol} {token.min_donation_amnt}
         </p>
       )}
