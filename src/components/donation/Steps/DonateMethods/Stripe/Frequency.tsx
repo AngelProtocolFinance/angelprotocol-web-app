@@ -6,7 +6,7 @@ import { FormValues as FV } from "./types";
 type Freq = FV["frequency"];
 
 const styles = {
-  icon: "hidden @[21rem]:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-[1px]",
+  icon: "hidden @[21rem]:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
   option:
     "group border-gray-l3 rounded text-sm px-2 @[21rem]:px-6 border h-[2.625rem] flex items-center justify-center @[21rem]:justify-start aria-checked:bg-blue-d1 aria-checked:text-white aria-checked:border-none select-none",
 };
