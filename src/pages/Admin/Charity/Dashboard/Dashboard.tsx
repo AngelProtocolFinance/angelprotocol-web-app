@@ -1,10 +1,12 @@
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
+import { Separator } from "components/Separator";
 import { useAdminContext } from "pages/Admin/Context";
 import { PropsWithChildren } from "react";
 import { useEndowBalanceQuery } from "services/apes";
 import Seo from "../Seo";
 import Balance from "./Balance";
+import HideBGTipCheckbox from "./HideBGTipCheckbox";
 
 export default function Dashboard() {
   const { id } = useAdminContext();
@@ -80,6 +82,10 @@ export default function Dashboard() {
                     <span>{contributionsCount}</span>
                   </DataPart>
                 </div>
+
+                <Separator classes="col-span-2 my-4 before:bg-gray-l3 after:bg-gray-l3" />
+
+                <HideBGTipCheckbox />
               </div>
             </>
           );
