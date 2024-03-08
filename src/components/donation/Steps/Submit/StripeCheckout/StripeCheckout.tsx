@@ -43,6 +43,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       Amount={currency(details.currency)}
       amount={+details.amount}
       splitLiq={liquidSplitPct}
+      frequency={details.frequency}
       tip={
         props.tip
           ? {

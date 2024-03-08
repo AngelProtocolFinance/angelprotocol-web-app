@@ -16,12 +16,17 @@ type Props = {
 
   Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
   onBack(): void;
+  frequency?: "once" | "monthly";
   classes?: Classes;
   children?: ReactNode;
   preSplitContent?: ReactNode;
 };
 
-export default function Summary({ Amount, ...props }: Props) {
+export default function Summary({
+  Amount,
+  frequency = "once",
+  ...props
+}: Props) {
   const { container, split: splitClass } = unpack(props.classes);
   const liq = props.amount * (props.splitLiq / 100);
   const locked = props.amount - liq;
@@ -60,7 +65,9 @@ export default function Summary({ Amount, ...props }: Props) {
         )}
         {props.tip && (
           <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
-            <dt className="mr-auto text-navy-d4">Total charge</dt>
+            <dt className="mr-auto text-navy-d4">
+              Total {frequency === "monthly" ? "monthly " : ""}charge
+            </dt>
             <Amount amount={props.amount + props.tip.value} />
           </div>
         )}
