@@ -6,9 +6,6 @@
 
 @import "../node_modules/cropperjs/dist/cropper.min.css";
 
-@import "../node_modules/@aws-amplify/ui-react/dist/styles.css";
-@import "./styles/amplify.css";
-
 @import "tailwindcss/components";
 @import "./styles/components.css";
 
