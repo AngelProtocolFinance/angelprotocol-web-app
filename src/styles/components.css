@@ -194,6 +194,20 @@
     @apply bg-gray-l6 dark:bg-blue-d5;
   }
 
+  .field-donate > input {
+    @apply bg-gray-l5 rounded-lg text-base py-[13px] px-5 font-semibold
+  }
+  .field-donate > label {
+    @apply font-heading font-semibold text-base
+  }
+
+  .field-container-donate {
+    @apply text-base font-semibold bg-gray-l5 rounded-l-lg
+  }
+  .field-container-donate > input {
+    @apply py-4 px-5 text-base
+  }
+
   .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }

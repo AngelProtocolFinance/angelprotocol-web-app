@@ -75,13 +75,14 @@ export default function Form({ widgetConfig, details }: Props) {
         label="Currency"
         onChange={onCurrencyChange}
         value={currency}
-        classes={{ label: "font-semibold" }}
+        classes={{ label: "font-semibold", combobox: "field-container-donate rounded-lg", container: "field-donate" }}
         required
       />
       <Field<FV>
         name="amount"
         label="Donation amount"
-        classes={{ label: "font-semibold" }}
+        placeholder="Enter amount"
+        classes={{ label: "font-semibold", container: "field-donate" }}
         required
         // validation must be dynamicly set depending on which exact currency is selected
         tooltip={createTooltip(currency)}

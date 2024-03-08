@@ -8,7 +8,7 @@ type Freq = FV["frequency"];
 const styles = {
   icon: "hidden @[21rem]:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
   option:
-    "group border-gray-l3 rounded text-sm px-2 @[21rem]:px-6 border h-[2.625rem] flex items-center justify-center @[21rem]:justify-start aria-checked:bg-blue-d1 aria-checked:text-white aria-checked:border-none select-none",
+    "group border-gray-l3 rounded-lg px-2 @[21rem]:px-6 border h-[2.625rem] flex items-center justify-center @[21rem]:justify-start aria-checked:bg-blue-d1 aria-checked:text-white aria-checked:border-none select-none",
 };
 
 export default function Frequency() {
@@ -24,7 +24,7 @@ export default function Frequency() {
 
   return (
     <RG value={value} onChange={onChange} className="@container">
-      <RG.Label className="mb-2 block text-sm font-semibold">
+      <RG.Label className="mb-2 block font-semibold">
         Frequency <span className="text-red">*</span>
       </RG.Label>
       <div className="grid grid-cols-2 gap-2 @[21rem]:flex">
@@ -40,7 +40,7 @@ export default function Frequency() {
       {error?.message && (
         <p className="field-error static text-left mt-1">{error.message}</p>
       )}
-      <p className="text-navy-l1 text-sm mt-3">
+      <p className="text-navy-l1 mt-3">
         <span className="text-navy-d4 font-medium">Monthly donations</span> help
         nonprofits focus on mission and long-term impact, not fundraising.
         Cancel anytime.
