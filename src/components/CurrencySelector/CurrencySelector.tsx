@@ -5,10 +5,13 @@ import { CurrencyOption } from "types/components";
 import { QueryState, isQuery } from "types/third-party/redux";
 import { DrawerIcon } from "../Icon";
 import { Label } from "../form";
+import { unpack } from "../form/helpers";
 import CurrencyOptions from "./CurrencyOptions";
 
+type Classes = { combobox?: string; label?: string, container?: string, options?: string }
+
 type Props<T extends CurrencyOption> = {
-  classes?: { combobox?: string; label?: string };
+  classes?: Classes;
   currencies: T[] | QueryState<T[]>;
   disabled?: boolean;
   required?: boolean;
@@ -26,11 +29,13 @@ export default function CurrencySelector<T extends CurrencyOption>({
   const isCurrencyLoading = isQuery(currencies) && currencies.isLoading;
   const isCurrencyError = isQuery(currencies) && currencies.isError;
 
+  const style = unpack(props.classes)
+
   return (
-    <div className="field">
+    <div className={`field ${style.container}`}>
       <Label
         htmlFor="wise__currency"
-        className={props.classes?.label ?? ""}
+        className={style.label}
         required={props.required}
         aria-required={props.required}
       >
@@ -42,9 +47,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
         value={props.value}
         onChange={props.onChange}
         as="div"
-        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${
-          props.classes?.combobox || ""
-        }`}
+        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${style.combobox}`}
       >
         <Combobox.Input
           id="wise__currency"
@@ -78,7 +81,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
 
         <CurrencyOptions
           query={query}
-          classes="absolute top-full mt-2 z-10"
+          classes={`absolute top-full mt-2 z-10 ${style.options}`}
           currencies={currencies}
         />
       </Combobox>
