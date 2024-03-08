@@ -1,4 +1,4 @@
-import { Separator } from "components/registration";
+import { Separator } from "components/Separator";
 import { APP_NAME } from "constants/env";
 import { regRoutes } from "constants/routes";
 import { Link, useNavigate } from "react-router-dom";
