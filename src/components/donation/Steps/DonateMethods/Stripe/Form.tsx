@@ -3,6 +3,7 @@ import CurrencySelector from "components/CurrencySelector";
 import { Field, Form as FormContainer } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
+import { requiredString } from "schemas/string";
 import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
@@ -21,7 +22,7 @@ export default function Form({ widgetConfig, details }: Props) {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: { code: USD_CODE, min: 1, rate: 1 },
-    frequency: "monthly",
+    frequency: "",
   };
 
   const currencyKey: keyof FV = "currency";
@@ -29,7 +30,7 @@ export default function Form({ widgetConfig, details }: Props) {
     defaultValues: details || initial,
     resolver: yupResolver(
       schema<FV>({
-        //frequency, no need to validate: constrained by selector
+        frequency: requiredString,
         amount: stringNumber(
           (s) => s.required("required"),
           (n) =>
@@ -57,14 +58,15 @@ export default function Form({ widgetConfig, details }: Props) {
   return (
     <FormContainer
       methods={methods}
-      onSubmit={handleSubmit((fv) =>
+      onSubmit={handleSubmit((fv) => {
         dispatch(
           setDetails({
             ...fv,
+            frequency: fv.frequency as Exclude<FV["frequency"], "">, //validated by schema
             method: "stripe",
           })
-        )
-      )}
+        );
+      })}
       className="grid gap-4"
     >
       <Frequency />
