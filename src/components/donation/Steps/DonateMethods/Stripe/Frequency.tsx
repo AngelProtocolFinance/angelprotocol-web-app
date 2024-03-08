@@ -5,6 +5,12 @@ import { FormValues as FV } from "./types";
 
 type Freq = FV["frequency"];
 
+const styles = {
+  icon: "hidden @sm:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-[1px]",
+  option:
+    "group border-gray-l3 rounded text-sm @sm:text-base px-2 @sm:px-6 border h-[2.625rem] flex items-center justify-center @sm:justify-start aria-checked:bg-blue-d1 aria-checked:text-white aria-checked:border-none select-none",
+};
+
 export default function Frequency() {
   const { control } = useFormContext<FV>();
 
@@ -16,34 +22,21 @@ export default function Frequency() {
   });
 
   return (
-    <RG
-      value={value}
-      onChange={onChange}
-      className="grid grid-cols-[auto_auto] justify-items-start justify-self-start gap-2"
-    >
-      <RG.Label className="col-span-2">
+    <RG value={value} onChange={onChange} className="@container">
+      <RG.Label className="mb-2 block text-sm font-medium">
         Frequency <span className="text-red">*</span>
       </RG.Label>
-      <RG.Option
-        value={"monthly" satisfies Freq}
-        className="group border-gray-l3 rounded pl-6 pr-7 border h-[2.625rem] flex items-center aria-checked:bg-blue-d1 aria-checked:text-white aria-checked:border-none"
-      >
-        <span>Give Monthly</span>
-        <Icon
-          type="Check"
-          className="hidden text-[1.3rem] ml-1 group-aria-checked:inline-block relative bottom-[1px]"
-        />
-      </RG.Option>
-      <RG.Option
-        value={"once" satisfies Freq}
-        className="group border-gray-l3 rounded pl-6 pr-7 border h-[2.625rem] flex items-center aria-checked:bg-blue-d1 aria-checked:text-white aria-checked:border-none"
-      >
-        <span>Give Once</span>
-        <Icon
-          type="Check"
-          className="hidden text-[1.3rem] ml-1 group-aria-checked:inline-block relative bottom-[1px]"
-        />
-      </RG.Option>
+
+      <div className="grid grid-cols-2 gap-2 @sm:flex">
+        <RG.Option value={"monthly" satisfies Freq} className={styles.option}>
+          <span>Give Monthly</span>
+          <Icon type="Check" className={styles.icon} />
+        </RG.Option>
+        <RG.Option value={"once" satisfies Freq} className={styles.option}>
+          <span>Give Once</span>
+          <Icon type="Check" className={styles.icon} />
+        </RG.Option>
+      </div>
     </RG>
   );
 }
