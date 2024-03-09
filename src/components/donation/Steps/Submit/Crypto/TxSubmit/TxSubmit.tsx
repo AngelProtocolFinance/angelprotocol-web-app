@@ -61,7 +61,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
               }
             : undefined
         }
-        className="btn-orange"
+        className="btn-blue btn-donate"
         disabled={!wallet || !estimate || !isSuccess(estimate)}
       >
         Continue

@@ -87,7 +87,7 @@ export default function Form(props: StockFormStep) {
       </p>
       <button
         disabled={methods.formState.isSubmitting}
-        className="btn-orange btn-donate mt-6"
+        className="btn-blue btn-donate mt-6"
         type="submit"
       >
         Continue

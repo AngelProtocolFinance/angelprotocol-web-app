@@ -8,7 +8,7 @@ export default function BackBtn({
   return (
     <button
       {...props}
-      className={`flex items-center gap-1 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1 disabled:text-navy-l5 aria-disabled:text-navy-l5 ${className}`}
+      className={`flex items-center gap-1 font-medium text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-navy-l5 aria-disabled:text-navy-l5 ${className}`}
     >
       <Icon type="ArrowBack" strokeWidth={20} />
       <span>Back</span>

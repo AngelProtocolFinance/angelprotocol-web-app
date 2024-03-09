@@ -91,7 +91,7 @@ function Unsuccessful() {
       </p>
       <Link
         to={`${appRoutes.donate}/${state.recipient?.id}`}
-        className="w-full sm:w-auto btn-orange btn-donate h-10 rounded-lg"
+        className="w-full sm:w-auto btn-blue btn-donate h-10 rounded-lg"
       >
         Back to the donation page
       </Link>
@@ -113,7 +113,7 @@ function SomethingWentWrong() {
       </p>
       <Link
         to={`${appRoutes.donate}/${state.recipient?.id}`}
-        className="w-full sm:w-auto btn-orange btn-donate h-10 rounded-lg"
+        className="w-full sm:w-auto btn-blue btn-donate h-10 rounded-lg"
       >
         Back to the donation page
       </Link>

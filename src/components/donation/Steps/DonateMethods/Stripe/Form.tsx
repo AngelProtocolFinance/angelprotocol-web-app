@@ -97,7 +97,7 @@ export default function Form({ widgetConfig, details }: Props) {
         complete your donation
       </p>
 
-      <button className="btn-orange btn-donate mt-2" type="submit">
+      <button className="btn-blue btn-donate mt-2" type="submit">
         Continue
       </button>
     </FormContainer>

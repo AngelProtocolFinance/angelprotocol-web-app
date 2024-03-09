@@ -190,7 +190,7 @@ export default function Tip({
         <span className="font-medium block">Give today, give forever.</span>
       </p>
 
-      <button type="submit" className="btn-orange btn-donate mt-6">
+      <button type="submit" className="btn-blue btn-donate mt-6">
         Continue
       </button>
     </form>

@@ -83,7 +83,7 @@ export default function Checkout({ source }: Props) {
         <Loader />
       ) : (
         <button
-          className="btn-orange btn-donate w-full mt-6"
+          className="btn-blue btn-donate w-full mt-6"
           disabled={!stripe || !elements || isSubmitting || isLoading}
           type="submit"
         >

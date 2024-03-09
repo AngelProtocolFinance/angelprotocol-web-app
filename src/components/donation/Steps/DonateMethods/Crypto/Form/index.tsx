@@ -77,7 +77,7 @@ export default function Form({ configFromWidget }: Props) {
         withMininum
       />
 
-      <button className="btn-orange btn-donate mt-auto" type="submit">
+      <button className="btn-blue btn-donate mt-auto" type="submit">
         Continue
       </button>
     </form>

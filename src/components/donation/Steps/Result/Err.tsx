@@ -29,7 +29,7 @@ export default function Err({
       <div className="grid sm:grid-cols-2 mt-12 gap-5 w-full sm:w-auto">
         <Link
           to={appRoutes.marketplace + `/${endowId}`}
-          className="btn-outline-filled btn-donate w-full text-center"
+          className="btn-outline-filled w-full text-center"
         >
           Back to the platform
         </Link>
@@ -38,7 +38,7 @@ export default function Err({
           onClick={() => {
             dispatch(setStep("donate-form"));
           }}
-          className="w-full btn-orange btn-donate"
+          className="w-full btn-orange"
         >
           Change payment details
         </button>

@@ -39,7 +39,7 @@ export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
         now the less editing will be needed before sending.
       </p>
 
-      <div className="btn-orange btn-donate my-4 w-1/2 justify-self-center">
+      <div className="btn-blue btn-donate my-4 w-1/2 justify-self-center">
         Build Email
       </div>
 
