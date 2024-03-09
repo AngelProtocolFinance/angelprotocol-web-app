@@ -147,10 +147,12 @@ export default function Tip({
 
       {!isPct && (
         <>
-          <label className="mb-2 mt-6">Your donation amount</label>
+          <label className="mb-2 mt-6 font-heading font-semibold">
+            Your Donation Amount
+          </label>
           <div
             aria-invalid={!!errors.tip?.amount}
-            className="relative field-container grid grid-cols-[1fr_auto] px-4 py-3"
+            className="relative field-container field-container-donate grid grid-cols-[1fr_auto] items-center pr-5"
           >
             <input
               type="text"
@@ -161,9 +163,9 @@ export default function Tip({
                   pct: +e.target.value / amount,
                 })
               }
-              placeholder="$ Enter amount"
+              placeholder="Enter amount"
             />
-            <span className="uppercase">{symbol}</span>
+            <span className="text-blue-d1">{symbol}</span>
             <ErrorMessage
               data-error
               className="field-error text-right mt-2"
