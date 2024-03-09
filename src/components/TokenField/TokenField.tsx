@@ -58,6 +58,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           autoComplete="off"
           id="amount"
           type="text"
+          placeholder="Enter amount"
           className="text-sm py-3.5 dark:text-navy-l2"
         />
         <TokenSelector

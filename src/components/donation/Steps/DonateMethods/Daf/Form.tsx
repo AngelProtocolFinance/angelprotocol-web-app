@@ -66,6 +66,7 @@ export default function Form({ widgetConfig, details }: Props) {
       <Field<FV>
         name="amount"
         label="Donation amount"
+        placeholder="Enter amount"
         classes={{ label: "font-semibold", container: "field-donate mt-1" }}
         required
         tooltip="The minimum donation amount will depend on your DAF provider."
