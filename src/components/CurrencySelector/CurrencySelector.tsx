@@ -8,7 +8,12 @@ import { Label } from "../form";
 import { unpack } from "../form/helpers";
 import CurrencyOptions from "./CurrencyOptions";
 
-type Classes = { combobox?: string; label?: string, container?: string, options?: string }
+type Classes = {
+  combobox?: string;
+  label?: string;
+  container?: string;
+  options?: string;
+};
 
 type Props<T extends CurrencyOption> = {
   classes?: Classes;
@@ -29,7 +34,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
   const isCurrencyLoading = isQuery(currencies) && currencies.isLoading;
   const isCurrencyError = isQuery(currencies) && currencies.isError;
 
-  const style = unpack(props.classes)
+  const style = unpack(props.classes);
 
   return (
     <div className={`field ${style.container}`}>

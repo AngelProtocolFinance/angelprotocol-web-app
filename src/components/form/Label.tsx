@@ -13,11 +13,7 @@ export function Label({
   required?: boolean;
 }) {
   return (
-    <label
-      data-required={required}
-      {...props}
-      className={`${className} label`}
-    >
+    <label data-required={required} {...props} className={`${className} label`}>
       {props.children}
     </label>
   );

@@ -12,13 +12,13 @@ export default function Form(props: StockFormStep) {
   const methods = useForm({
     defaultValues: props.details
       ? {
-        symbol: props.details.symbol,
-        numShares: props.details.numShares.toString(),
-      }
+          symbol: props.details.symbol,
+          numShares: props.details.numShares.toString(),
+        }
       : {
-        symbol: "",
-        numShares: "",
-      },
+          symbol: "",
+          numShares: "",
+        },
     resolver: yupResolver(
       object({
         symbol: requiredString.trim(),
@@ -30,7 +30,8 @@ export default function Form(props: StockFormStep) {
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
 
   return (
-    <FormContainer methods={methods}
+    <FormContainer
+      methods={methods}
       className="grid"
       onSubmit={methods.handleSubmit((fv) => {
         dispatch(
@@ -74,15 +75,15 @@ export default function Form(props: StockFormStep) {
         </span>
       </div>
       <p className="text-sm">
-        If you held the stock for at least one year, you receive a tax
-        deduction for the full value of the stock at the time of donation (not
-        just the amount you paid for the stock).
+        If you held the stock for at least one year, you receive a tax deduction
+        for the full value of the stock at the time of donation (not just the
+        amount you paid for the stock).
       </p>
       <p className="text-sm mt-4">
         You avoid paying both capital gains tax and stock sales commissions.
-        When you give appreciated stocks directly to a nonprofit, your gift
-        can be up to 20% larger because you avoid the taxes you'd incur from
-        selling and donating the cash.
+        When you give appreciated stocks directly to a nonprofit, your gift can
+        be up to 20% larger because you avoid the taxes you'd incur from selling
+        and donating the cash.
       </p>
       <button
         disabled={methods.formState.isSubmitting}

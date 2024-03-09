@@ -38,8 +38,8 @@ export default function Form({ widgetConfig, details }: Props) {
   const { handleSubmit } = methods;
 
   return (
-    <FormContainer methods={methods}
-
+    <FormContainer
+      methods={methods}
       onSubmit={handleSubmit((fv) =>
         dispatch(
           setDetails({
@@ -54,9 +54,13 @@ export default function Form({ widgetConfig, details }: Props) {
         currencies={[USD_CURRENCY]}
         label="Currency"
         // only one currency available, so can't change it
-        onChange={() => { }}
+        onChange={() => {}}
         value={USD_CURRENCY}
-        classes={{ label: "font-semibold", combobox: "field-container-donate", container: "field-donate" }}
+        classes={{
+          label: "font-semibold",
+          combobox: "field-container-donate",
+          container: "field-donate",
+        }}
         required
       />
       <Field<FV>

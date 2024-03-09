@@ -11,8 +11,8 @@ type InputType = HTMLInputTypeAttribute | TextArea;
 
 type FieldProps<T extends FieldValues, K extends InputType> = Omit<
   K extends TextArea
-  ? React.TextareaHTMLAttributes<HTMLTextAreaElement>
-  : React.InputHTMLAttributes<HTMLInputElement>,
+    ? React.TextareaHTMLAttributes<HTMLTextAreaElement>
+    : React.InputHTMLAttributes<HTMLInputElement>,
   "autoComplete" | "className" | "name" | "id" | "spellCheck" | "type"
 > & {
   name: Path<T>;
@@ -71,14 +71,14 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
           />
         </p>
       )) || (
-          <ErrorMessage
-            data-error
-            errors={errors}
-            name={name}
-            as="span"
-            className={style.error}
-          />
-        )}
+        <ErrorMessage
+          data-error
+          errors={errors}
+          name={name}
+          as="span"
+          className={style.error}
+        />
+      )}
     </div>
   );
 }

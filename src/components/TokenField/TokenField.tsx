@@ -38,18 +38,16 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   const amountField: any = `${name}.${amountKey}`;
   const tokenIDField: any = `${name}.${tokenIDkey}`;
 
-  const style = unpack(classes)
+  const style = unpack(classes);
 
   return (
     <div className={`grid ${style.container}`}>
-
       <label
         htmlFor="amount"
         className={`font-semibold mr-auto mb-2 after:content-['_*'] after:text-red ${style.label}`}
       >
         {label}
       </label>
-
 
       <div
         className={`${style.inputContainer} relative grid grid-cols-[1fr_auto] items-center gap-2 field-container peer`}

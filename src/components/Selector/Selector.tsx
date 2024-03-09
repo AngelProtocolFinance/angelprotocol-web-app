@@ -20,7 +20,7 @@ export function Selector<
   classes,
   onOptionChange,
 }: Props<T, K, V>) {
-  const cls = unpack(classes)
+  const cls = unpack(classes);
   const {
     formState: { isSubmitting, errors },
     field: { value: selected, onChange, ref },

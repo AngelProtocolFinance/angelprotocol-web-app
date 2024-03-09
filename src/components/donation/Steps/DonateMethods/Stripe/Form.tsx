@@ -75,7 +75,11 @@ export default function Form({ widgetConfig, details }: Props) {
         label="Currency"
         onChange={onCurrencyChange}
         value={currency}
-        classes={{ label: "font-semibold", combobox: "field-container-donate rounded-lg", container: "field-donate" }}
+        classes={{
+          label: "font-semibold",
+          combobox: "field-container-donate rounded-lg",
+          container: "field-donate",
+        }}
         required
       />
       <Field<FV>
