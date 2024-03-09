@@ -33,16 +33,26 @@ export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
         <Field<FV>
           name="firstName"
           label="Your name"
+          placeholder="First Name"
           required
-          classes={{ label: "font-medium text-base" }}
+          classes={{
+            label: "font-semibold text-base font-heading",
+            container: "field-donate",
+          }}
         />
-        <Field<FV> name="lastName" label="" />
+        <Field<FV>
+          name="lastName"
+          label=""
+          placeholder="Last Name"
+          classes={{ container: "field-donate" }}
+        />
         <Field<FV>
           name="email"
           label="Your email"
+          placeholder="Email address"
           classes={{
             label: "font-medium text-base",
-            container: "col-span-full",
+            container: "col-span-full field-donate",
           }}
           required
         />
