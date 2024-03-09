@@ -3,6 +3,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { DrawerIcon } from "components/Icon";
 import { FieldValues, Path, get, useController } from "react-hook-form";
 import { OptionType, ValKey } from "types/components";
+import { unpack } from "../form/helpers";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
 import { Props } from "./types";
@@ -19,7 +20,7 @@ export function Selector<
   classes,
   onOptionChange,
 }: Props<T, K, V>) {
-  const { container = "", button = "" } = classes || {};
+  const cls = unpack(classes)
   const {
     formState: { isSubmitting, errors },
     field: { value: selected, onChange, ref },
@@ -39,14 +40,14 @@ export function Selector<
           onChange(option);
         }}
         as="div"
-        className={`relative ${container}`}
+        className={`relative ${cls.container}`}
       >
         <FocusableInput ref={ref} />
         <Listbox.Button
           aria-invalid={!!get(errors, valuePath)?.message}
           aria-disabled={isDisabled}
           as="button"
-          className={`${button} ${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
+          className={`${cls.button} ${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
         >
           {({ open }) => (
             <>

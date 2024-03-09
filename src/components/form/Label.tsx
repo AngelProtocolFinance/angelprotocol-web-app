@@ -14,14 +14,9 @@ export function Label({
 }) {
   return (
     <label
+      data-required={required}
       {...props}
-      className={`${className} block text-sm after:ml-1 ${
-        required !== undefined
-          ? required
-            ? "after:content-['*'] after:text-red"
-            : "after:content-['(optional)'] after:text-navy-l1 after:dark:text-navy-l2"
-          : ""
-      }`}
+      className={`${className} label`}
     >
       {props.children}
     </label>

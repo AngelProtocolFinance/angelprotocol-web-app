@@ -40,7 +40,7 @@ export default function Form({ configFromWidget }: Props) {
       className="flex flex-col gap-4 rounded-md min-h-full"
       autoComplete="off"
     >
-      <Label htmlFor="chainId" className="-mb-2 font-semibold" required>
+      <Label htmlFor="chainId" className="-mb-2 font-semibold font-heading text-base" required>
         Network
       </Label>
       <Selector<DonateValues, "chainId", ChainID>
@@ -57,17 +57,18 @@ export default function Form({ configFromWidget }: Props) {
         }}
         classes={{
           container: "bg-white dark:bg-blue-d6",
-          button: "py-3 pl-4 pr-2",
+          button: "field-input-donate",
+          options: "text-sm"
         }}
       />
       <TokenField<DonateValues, "token">
         name="token"
         selectedChainId={chainId.value}
         withBalance
-        label={`Donation amount`}
+        label="Donation amount"
         classes={{
-          label: "text-sm mb-1",
-          inputContainer: "dark:bg-blue-d6",
+          label: "font-heading mb-1",
+          inputContainer: "field-container-donate pr-5",
         }}
         withMininum
       />

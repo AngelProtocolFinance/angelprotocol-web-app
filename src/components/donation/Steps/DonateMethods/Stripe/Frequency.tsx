@@ -24,7 +24,7 @@ export default function Frequency() {
 
   return (
     <RG value={value} onChange={onChange} className="@container">
-      <RG.Label className="mb-2 block font-semibold">
+      <RG.Label className="mb-2 block font-semibold font-heading">
         Frequency <span className="text-red">*</span>
       </RG.Label>
       <div className="grid grid-cols-2 gap-2 @[21rem]:flex">

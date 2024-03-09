@@ -15,10 +15,10 @@ export default function TokenSelector({
       as="div"
       className="flex items-center gap-1 w-full dark:text-navy-l2"
     >
-      <span className="text-sm">{selectedToken.symbol}</span>
+      <span>{selectedToken.symbol}</span>
 
       <Combobox.Button>
-        {({ open }) => <DrawerIcon isOpen={open} size={20} />}
+        {({ open }) => <DrawerIcon isOpen={open} size={24} />}
       </Combobox.Button>
 
       <TokenOptions

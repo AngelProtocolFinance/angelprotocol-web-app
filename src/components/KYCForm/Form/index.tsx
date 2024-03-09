@@ -96,7 +96,7 @@ export default function Form({ classes = "", ...props }: Props) {
           <Selector<FV, "usState", string>
             name="usState"
             options={states}
-            classes={{ container: "bg-white dark:bg-blue-d6" }}
+            classes={{ container: "bg-white dark:bg-blue-d6", options: "text-sm" }}
           />
         </div>
       ) : (

@@ -55,7 +55,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         What's your role within the organization?
       </Label>
-      <Selector<FV, "Role", ContactRoles> name="Role" options={roleOptions}>
+      <Selector<FV, "Role", ContactRoles> name="Role" options={roleOptions} classes={{ options: "text-sm" }}>
         {({ value }) =>
           value === "other" && (
             <Field<FV>
@@ -75,6 +75,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Selector<FV, "ReferralMethod", ReferralMethods>
         name="ReferralMethod"
         options={referralOptions}
+        classes={{ options: "text-sm" }}
       >
         {({ value }) => (
           <>
