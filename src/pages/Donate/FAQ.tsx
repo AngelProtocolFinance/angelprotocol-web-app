@@ -13,9 +13,7 @@ export default function FAQ({ classes = "" }) {
         " md:bg-white md:border md:border-gray-l4 md:p-4 rounded grid gap-2 md:gap-4"
       }
     >
-      <h2 className="text-sm" id="faqs">
-        Frequently asked questions
-      </h2>
+      <h2 id="faqs">Frequently asked questions</h2>
       {faqs.map((faq) => (
         <Disclosure as="div" key={faq.id}>
           {({ open }) => (
