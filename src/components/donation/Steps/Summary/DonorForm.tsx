@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Field } from "components/form";
-import { FormProvider, useForm } from "react-hook-form";
+import { Field, Form } from "components/form";
+import { useForm } from "react-hook-form";
 import { Donor, Donor as FV } from "types/aws";
 import { object, string } from "yup";
 
@@ -25,41 +25,40 @@ export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
   const { handleSubmit } = methods;
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className={`grid grid-cols-2 gap-4 ${classes}`}
-      >
-        <Field<FV>
-          name="firstName"
-          label="Your name"
-          placeholder="First Name"
-          required
-          classes={{
-            label: "font-semibold text-base font-heading",
-            container: "field-donate",
-          }}
-        />
-        <Field<FV>
-          name="lastName"
-          label=""
-          placeholder="Last Name"
-          classes={{ container: "field-donate" }}
-        />
-        <Field<FV>
-          name="email"
-          label="Your email"
-          placeholder="Email address"
-          classes={{
-            label: "font-medium text-base",
-            container: "col-span-full field-donate",
-          }}
-          required
-        />
-        <button className="btn-orange px-4 col-span-full rounded mt-6">
-          Checkout
-        </button>
-      </form>
-    </FormProvider>
+    <Form
+      methods={methods}
+      onSubmit={handleSubmit(onSubmit)}
+      className={`grid grid-cols-2 gap-4 ${classes}`}
+    >
+      <Field<FV>
+        name="firstName"
+        label="Your name"
+        placeholder="First Name"
+        required
+        classes={{
+          label: "font-semibold text-base font-heading",
+          container: "field-donate",
+        }}
+      />
+      <Field<FV>
+        name="lastName"
+        label=""
+        placeholder="Last Name"
+        classes={{ container: "field-donate" }}
+      />
+      <Field<FV>
+        name="email"
+        label="Your email"
+        placeholder="Email address"
+        classes={{
+          label: "font-medium text-base",
+          container: "col-span-full field-donate",
+        }}
+        required
+      />
+      <button className="btn-donate btn-orange px-4 col-span-full mt-6">
+        Checkout
+      </button>
+    </Form>
   );
 }

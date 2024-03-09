@@ -174,7 +174,7 @@
     @apply text-base sm:text-sm;
   }
   .btn-donate {
-    @apply text-sm md:text-base;
+    @apply rounded-full;
   }
 
   .btn-reg {
