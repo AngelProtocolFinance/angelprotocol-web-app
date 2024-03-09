@@ -33,9 +33,9 @@ const tabIdx = (method?: DonationDetails["method"]) => {
 const tabClasses = (selected: boolean) =>
   `${
     selected
-      ? "font-semibold bg-blue-l4 text-navy-d4"
-      : "border border-gray-l4 @md:border-none"
-  } text-sm flex items-center gap-2 p-2 @md:px-3 @md:py-4 focus:outline-none @md:w-28 rounded @md:rounded-none`;
+      ? "font-medium bg-blue-l4 text-navy-d4"
+      : "border border-gray-l4 @md:border-none text-navy-l1"
+  }  flex items-center gap-2 p-2 @md:px-3 @md:py-[1.15rem] @md:grid @md:grid-cols-subgrid @md:col-span-2 focus:outline-none @md:w-28 rounded @md:rounded-none`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -49,25 +49,25 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       <Label className="p-4 pb-0 col-span-full @md:hidden font-bold">
         Payment method
       </Label>
-      <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-1 content-start @md:divide-y @md:divide-white @md:border-r border-gray-l4">
+      <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-[auto_1fr] content-start @md:divide-y @md:divide-white @md:border-r border-gray-l4">
         <Tab className={({ selected }) => tabClasses(selected)}>
-          <Icon type="CreditCard" size={16} />
-          <span>Card</span>
+          <Icon type="CreditCard" className="shrink-0" size={16} />
+          <span className="text-left">Card</span>
         </Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>
-          <Icon type="Stocks" size={18} />
-          <span>Stocks</span>
+          <Icon type="Stocks" className="shrink-0" size={18} />
+          <span className="text-left">Stocks</span>
         </Tab>
         <Tab className={({ selected }) => tabClasses(selected)}>
-          <Icon type="Advisor" size={19} />
-          <span>DAF</span>
+          <Icon type="Advisor" className="shrink-0" size={19} />
+          <span className="text-left">DAF</span>
         </Tab>
 
         {/** more options: applies up to @md */}
         <div className={`${isExpanded ? "contents" : "hidden"} @md:contents`}>
           <Tab className={({ selected }) => tabClasses(selected)}>
-            <Icon type="Bitcoin" size={17} />
-            <span>Crypto</span>
+            <Icon type="Bitcoin" className="shrink-0" size={17} />
+            <span className="text-left">Crypto</span>
           </Tab>
         </div>
         {!isExpanded && (
