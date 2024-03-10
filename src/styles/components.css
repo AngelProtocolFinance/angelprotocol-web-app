@@ -226,10 +226,4 @@
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
 
-  .selector > button {
-    @apply flex items-center field-input min-h-[3rem] justify-between cursor-pointer
-  }
-  .selector > [data-error] {
-    @apply absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2
-  }
 }
