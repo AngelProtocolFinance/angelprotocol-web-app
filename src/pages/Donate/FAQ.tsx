@@ -10,7 +10,7 @@ export default function FAQ({ classes = "" }) {
     <div
       className={
         classes +
-        " md:bg-white md:border md:border-gray-l4 md:p-4 rounded grid gap-2 md:gap-4"
+        " md:bg-white md:border md:border-gray-l4 md:p-4 md:rounded-lg grid gap-2 md:gap-4"
       }
     >
       <h2 id="faqs">Frequently asked questions</h2>

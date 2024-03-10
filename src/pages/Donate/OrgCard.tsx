@@ -20,7 +20,7 @@ export default function OrgCard({
 }: Props) {
   return (
     <div
-      className={`p-4 bg-white max-md:bg-blue-l4 md:p-0 md:rounded md:overflow-clip md:border border-gray-l4 ${classes}`}
+      className={`p-4 bg-white max-md:bg-blue-l4 md:p-0 md:rounded-lg md:overflow-clip md:border border-gray-l4 ${classes}`}
     >
       <Image
         src={banner}
