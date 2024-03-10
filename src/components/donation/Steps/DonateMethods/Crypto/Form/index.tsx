@@ -8,9 +8,9 @@ import { ChainID } from "types/chain";
 import { DonaterConfigFromWidget } from "types/widget";
 import { Selector } from "../../../../../Selector";
 import TokenField from "../../../../../TokenField";
-import { DonateValues } from "../types";
-import { initToken } from "../constants";
 import ContinueBtn from "../../../common/ContinueBtn";
+import { initToken } from "../constants";
+import { DonateValues } from "../types";
 
 type Props = {
   configFromWidget: DonaterConfigFromWidget | null;

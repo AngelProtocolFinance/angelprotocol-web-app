@@ -6,8 +6,8 @@ import { schema, stringNumber } from "schemas/shape";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { DetailedCurrency } from "types/components";
-import { FormValues as FV, Props } from "./types";
 import ContinueBtn from "../../common/ContinueBtn";
+import { FormValues as FV, Props } from "./types";
 
 // Chariot accepts only USD.
 // See https://givechariot.readme.io/reference/integrating-connect#response-objects

@@ -6,10 +6,10 @@ import { CryptoSubmitStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { useSetter } from "store/accessors";
 import { ConnectedWallet } from "types/wallet";
+import ContinueBtn from "../../../common/ContinueBtn";
 import { EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";
-import ContinueBtn from "../../../common/ContinueBtn";
 
 type Props = {
   classes?: string;
