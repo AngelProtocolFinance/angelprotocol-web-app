@@ -49,7 +49,7 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       <Label className="p-4 pb-0 col-span-full @md:hidden font-bold">
         Payment method
       </Label>
-      <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-[auto_1fr] @md:w-32 content-start @md:divide-y @md:divide-white @md:border-r border-gray-l4">
+      <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-[auto_1fr] @[42rem]:min-w-48 content-start @md:divide-y @md:divide-white @md:border-r border-gray-l4">
         <Tab className={({ selected }) => tabClasses(selected)}>
           <Icon type="CreditCard" className="shrink-0" size={16} />
           <span className="text-left">Card</span>
