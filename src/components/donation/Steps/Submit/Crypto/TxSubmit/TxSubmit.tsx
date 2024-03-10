@@ -9,6 +9,7 @@ import { ConnectedWallet } from "types/wallet";
 import { EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";
+import ContinueBtn from "../../../common/ContinueBtn";
 
 type Props = {
   classes?: string;
@@ -48,7 +49,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
           <ErrorStatus classes="text-sm">{estimate.error}</ErrorStatus>
         ))}
 
-      <button
+      <ContinueBtn
         type="button"
         onClick={
           wallet && estimate && isSuccess(estimate)
@@ -61,11 +62,8 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
               }
             : undefined
         }
-        className="btn-blue btn-donate"
         disabled={!wallet || !estimate || !isSuccess(estimate)}
-      >
-        Continue
-      </button>
+      />
     </div>
   );
 }

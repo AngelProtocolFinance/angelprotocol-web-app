@@ -7,6 +7,7 @@ import { useState } from "react";
 import { SplitsStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
+import ContinueBtn from "../common/ContinueBtn";
 
 export default function Split({
   details,
@@ -106,15 +107,13 @@ export default function Split({
         sustainability goals.
       </p>
 
-      <button
+      <ContinueBtn
         type="button"
         onClick={() => {
           dispatch(setSplit(liqSplitPct));
         }}
-        className="btn-blue btn-donate mt-6"
-      >
-        Continue
-      </button>
+        className="mt-6"
+      />
     </div>
   );
 }

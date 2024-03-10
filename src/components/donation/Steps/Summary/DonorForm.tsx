@@ -3,6 +3,7 @@ import { Field, Form } from "components/form";
 import { useForm } from "react-hook-form";
 import { Donor, Donor as FV } from "types/aws";
 import { object, string } from "yup";
+import ContinueBtn from "../common/ContinueBtn";
 
 type Props = {
   onSubmit(donor: FV): void;
@@ -56,9 +57,7 @@ export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
         }}
         required
       />
-      <button className="btn-blue btn-donate px-4 col-span-full mt-6">
-        Checkout
-      </button>
+      <ContinueBtn className="px-4 col-span-full mt-6" text="Checkout" />
     </Form>
   );
 }

@@ -11,6 +11,7 @@ import { schema, stringNumber } from "schemas/shape";
 import { TipStep, setStep, setTip } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
+import ContinueBtn from "../common/ContinueBtn";
 
 const DEFAULT_PCT = "0.17";
 
@@ -190,9 +191,7 @@ export default function Tip({
         <span className="font-medium block">Give today, give forever.</span>
       </p>
 
-      <button type="submit" className="btn-blue btn-donate mt-6">
-        Continue
-      </button>
+      <ContinueBtn type="submit" className="mt-6" />
     </form>
   );
 }

@@ -7,6 +7,7 @@ import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { DetailedCurrency } from "types/components";
 import { FormValues as FV, Props } from "./types";
+import ContinueBtn from "../../common/ContinueBtn";
 
 // Chariot accepts only USD.
 // See https://givechariot.readme.io/reference/integrating-connect#response-objects
@@ -77,9 +78,7 @@ export default function Form({ widgetConfig, details }: Props) {
         complete your donation
       </p>
 
-      <button className="btn-blue btn-donate mt-2" type="submit">
-        Continue
-      </button>
+      <ContinueBtn className="mt-2" type="submit" />
     </FormContainer>
   );
 }
