@@ -3,8 +3,10 @@ var APP_ID = "fh3v40sb";
 
 window.intercomSettings = {
   app_id: APP_ID,
+  background_color: "#2D89C8",
+  action_color: "#2D89C8",
 };
-(function () {
+(() => {
   var w = window;
   var ic = w.Intercom;
   if (typeof ic === "function") {
@@ -12,15 +14,15 @@ window.intercomSettings = {
     ic("update", w.intercomSettings);
   } else {
     var d = document;
-    var i = function () {
+    var i = () => {
       i.c(arguments);
     };
     i.q = [];
-    i.c = function (args) {
+    i.c = (args) => {
       i.q.push(args);
     };
     w.Intercom = i;
-    var l = function () {
+    var l = () => {
       var s = d.createElement("script");
       s.type = "text/javascript";
       s.async = true;
