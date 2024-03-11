@@ -37,17 +37,17 @@ export default function Body() {
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             {p.hq_country && (
               <span className="flex items-center gap-2 uppercase">
-                <Icon type="MapPin" className="h-6 w-6 text-orange" />
+                <Icon type="MapPin" className="h-6 w-6 text-blue-d1" />
                 {p.hq_country}
               </span>
             )}
 
             <span className="flex items-center gap-2">
-              <Icon type="Globe" className="h-6 w-6 text-orange" />
+              <Icon type="Globe" className="h-6 w-6 text-blue-d1" />
               <ExtLink
                 href={p.url}
                 title="organization website"
-                className="cursor-pointer underline decoration-1 hover:text-orange hover:decoration-2"
+                className="cursor-pointer underline decoration-1 hover:text-blue-d1 hover:decoration-2"
               >
                 {p.url.replace(/^https?:\/\//i, "")}
               </ExtLink>

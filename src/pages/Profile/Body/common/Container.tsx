@@ -42,7 +42,7 @@ type HeaderProps = {
 function StaticHeader({ title, classes = "", children }: HeaderProps) {
   return (
     <div
-      className={`flex items-center justify-between px-8 py-5 w-full bg-orange-l5 border-gray-l4 rounded dark:bg-blue-d7 ${classes}`}
+      className={`flex items-center justify-between px-8 py-5 w-full bg-blue-l4 border-gray-l4 rounded dark:bg-blue-d7 ${classes}`}
     >
       <span className="font-heading font-bold text-xl">{title}</span>
       {children}

@@ -20,9 +20,9 @@ function Program(props: TProgram) {
     <div className="border border-gray-l4 rounded relative group overflow-hidden">
       <Link
         to={`program/${props.program_id}`}
-        className="absolute inset-0 group-hover:border group-hover:border-orange dark:group-hover:border-blue"
+        className="absolute inset-0 group-hover:border group-hover:border-blue-d1 dark:group-hover:border-blue"
       />
-      <Image src={props.program_banner} className="h-64 w-full object-cover " />
+      <Image src={props.program_banner} className="h-64 w-full object-cover" />
       <div className="p-5">
         <p className="text-lg font-bold mb-3 block">{props.program_title}</p>
         <RichText
