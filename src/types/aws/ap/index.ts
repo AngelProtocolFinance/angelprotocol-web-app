@@ -1,5 +1,6 @@
 import { Except } from "type-fest";
 import { APIEnvironment, UNSDG_NUMS } from "../../lists";
+import { Ensure } from "types/utils";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
@@ -86,7 +87,7 @@ export type EndowmentOption = Pick<Endowment, "id" | "name">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
-  Endowment,
+  Ensure<Endowment, "hide_bg_tip">,
   "endow_designation" | "fiscal_sponsored"
 > & {
   endow_designation: EndowDesignation | "";

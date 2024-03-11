@@ -7,3 +7,5 @@ export type Diff = [string, PrimitiveValue, PrimitiveValue];
 export type SemiPartial<T, K extends keyof T> = { [key in K]: T[key] } & {
   [key in Exclude<keyof T, K>]?: T[key];
 };
+
+export type Ensure<T, K extends keyof T> = T & Required<{ [key in K]: T[key] }>;
