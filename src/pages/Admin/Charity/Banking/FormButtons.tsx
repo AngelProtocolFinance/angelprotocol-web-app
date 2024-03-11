@@ -10,7 +10,7 @@ export default function FormButtons({
       <button
         disabled={disabled || isSubmitting}
         type="submit"
-        className="px-6 btn-orange gap-1 text-sm w-full md:w-80"
+        className="px-6 btn-blue gap-1 text-sm w-full md:w-80"
       >
         <LoadText isLoading={isSubmitting}>Submit</LoadText>
       </button>
