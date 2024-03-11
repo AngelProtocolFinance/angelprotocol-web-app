@@ -6,6 +6,7 @@ import { CryptoSubmitStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { useSetter } from "store/accessors";
 import { ConnectedWallet } from "types/wallet";
+import ContinueBtn from "../../../common/ContinueBtn";
 import { EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";
@@ -48,7 +49,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
           <ErrorStatus classes="text-sm">{estimate.error}</ErrorStatus>
         ))}
 
-      <button
+      <ContinueBtn
         type="button"
         onClick={
           wallet && estimate && isSuccess(estimate)
@@ -61,11 +62,8 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
               }
             : undefined
         }
-        className="btn-orange"
         disabled={!wallet || !estimate || !isSuccess(estimate)}
-      >
-        Continue
-      </button>
+      />
     </div>
   );
 }

@@ -93,7 +93,7 @@ export default function Prompt({ verdict, uuid }: Props) {
 
       <div className="flex items-center gap-2 mb-6">
         <Status classes="bg-gray-d2">Under review</Status>
-        <Icon type="ArrowRight" />
+        <Icon type="ChevronRight" />
         {verdict === "approve" ? (
           <Status classes="bg-green">Approved</Status>
         ) : (

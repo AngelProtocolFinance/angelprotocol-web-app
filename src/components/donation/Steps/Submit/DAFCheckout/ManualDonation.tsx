@@ -51,7 +51,7 @@ export default function ManualDonation(props: DafCheckoutStep) {
       </p>
       <a
         href={emailLink(props.recipient.name, profileUrl, props.details.amount)}
-        className="mt-1.5 btn btn-orange px-4 py-2 justify-self-end text-xs font-normal"
+        className="mt-1.5 btn btn-blue rounded-full px-4 py-2 justify-self-end text-xs font-normal"
       >
         Generate email
       </a>

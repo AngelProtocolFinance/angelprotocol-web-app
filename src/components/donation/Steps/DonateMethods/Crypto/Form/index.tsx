@@ -8,6 +8,7 @@ import { ChainID } from "types/chain";
 import { DonaterConfigFromWidget } from "types/widget";
 import { Selector } from "../../../../../Selector";
 import TokenField from "../../../../../TokenField";
+import ContinueBtn from "../../../common/ContinueBtn";
 import { initToken } from "../constants";
 import { DonateValues } from "../types";
 
@@ -77,9 +78,7 @@ export default function Form({ configFromWidget }: Props) {
         withMininum
       />
 
-      <button className="btn-orange btn-donate mt-auto" type="submit">
-        Continue
-      </button>
+      <ContinueBtn className="mt-auto" type="submit" />
     </form>
   );
 }

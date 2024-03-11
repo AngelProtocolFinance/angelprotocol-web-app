@@ -15,7 +15,7 @@ export default function TokenSelector({
       as="div"
       className="flex items-center gap-1 w-full dark:text-navy-l2"
     >
-      <span>{selectedToken.symbol}</span>
+      <span className="font-medium">{selectedToken.symbol}</span>
 
       <Combobox.Button>
         {({ open }) => <DrawerIcon isOpen={open} size={24} />}

@@ -8,6 +8,7 @@ import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { Currency } from "types/components";
+import ContinueBtn from "../../common/ContinueBtn";
 import Frequency from "./Frequency";
 import { FormValues as FV, Props } from "./types";
 
@@ -97,9 +98,7 @@ export default function Form({ widgetConfig, details }: Props) {
         complete your donation
       </p>
 
-      <button className="btn-orange btn-donate mt-2" type="submit">
-        Continue
-      </button>
+      <ContinueBtn className="mt-2" type="submit" />
     </FormContainer>
   );
 }

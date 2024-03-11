@@ -9,7 +9,7 @@ export function DrawerIcon({
   return (
     <Icon
       {...props}
-      type="ArrowDown"
+      type="ChevronDown"
       className={`transition transform ease-in-out ${
         isOpen ? "rotate-180" : "rotate-0"
       } ${className}`}

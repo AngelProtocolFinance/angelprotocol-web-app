@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { requiredString } from "schemas/string";
 import { StockFormStep, setDetails } from "slices/donation";
 import { object } from "yup";
+import ContinueBtn from "../../common/ContinueBtn";
 
 export default function Form(props: StockFormStep) {
   const dispatch = useDispatch();
@@ -85,13 +86,11 @@ export default function Form(props: StockFormStep) {
         be up to 20% larger because you avoid the taxes you'd incur from selling
         and donating the cash.
       </p>
-      <button
+      <ContinueBtn
         disabled={methods.formState.isSubmitting}
-        className="btn-orange btn-donate mt-6"
+        className="mt-6"
         type="submit"
-      >
-        Continue
-      </button>
+      />
     </FormContainer>
   );
 }

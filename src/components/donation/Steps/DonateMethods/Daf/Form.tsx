@@ -6,6 +6,7 @@ import { schema, stringNumber } from "schemas/shape";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { DetailedCurrency } from "types/components";
+import ContinueBtn from "../../common/ContinueBtn";
 import { FormValues as FV, Props } from "./types";
 
 // Chariot accepts only USD.
@@ -66,6 +67,7 @@ export default function Form({ widgetConfig, details }: Props) {
       <Field<FV>
         name="amount"
         label="Donation amount"
+        placeholder="Enter amount"
         classes={{ label: "font-semibold", container: "field-donate mt-1" }}
         required
         tooltip="The minimum donation amount will depend on your DAF provider."
@@ -76,9 +78,7 @@ export default function Form({ widgetConfig, details }: Props) {
         complete your donation
       </p>
 
-      <button className="btn-orange btn-donate mt-2" type="submit">
-        Continue
-      </button>
+      <ContinueBtn className="mt-2" type="submit" />
     </FormContainer>
   );
 }

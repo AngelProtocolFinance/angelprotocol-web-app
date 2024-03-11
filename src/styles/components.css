@@ -129,7 +129,7 @@
   }
 
   .field-input-donate {
-    @apply bg-gray-l5 rounded-lg text-base py-[13px] px-5 font-semibold
+    @apply bg-gray-l5 rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium
   }
 
   .field {
@@ -174,7 +174,7 @@
     @apply text-base sm:text-sm;
   }
   .btn-donate {
-    @apply text-sm md:text-base;
+    @apply rounded-full normal-case;
   }
 
   .btn-reg {
@@ -219,17 +219,11 @@
     @apply text-base font-semibold bg-gray-l5 rounded-lg
   }
   .field-container-donate > input {
-    @apply py-3.5 px-5 text-base
+    @apply py-3.5 px-5 text-base placeholder:font-medium
   }
 
   .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
 
-  .selector > button {
-    @apply flex items-center field-input min-h-[3rem] justify-between cursor-pointer
-  }
-  .selector > [data-error] {
-    @apply absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2
-  }
 }
