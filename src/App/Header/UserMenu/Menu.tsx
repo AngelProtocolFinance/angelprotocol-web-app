@@ -16,14 +16,14 @@ export default function Menu({ classes = "", user, signOut }: Props) {
     <Popover.Panel
       className={`${classes} shadow-xl bg-gray-l6 dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
-      <p className="text-sm p-3 bg-orange-l6 border-b border-gray-l4">
+      <p className="text-sm p-3 bg-blue-l4">
         Welcome, {user.firstName || user.email}!
       </p>
 
       <div className="w-64 min-h-[5rem] p-3">
         <Link
           to={appRoutes.donations}
-          className=" hover:text-orange text-sm flex items-center gap-2"
+          className=" hover:text-blue-d1 text-sm flex items-center gap-2"
         >
           <Icon type="Money" className="text-lg" />
           <span>My Donations</span>
