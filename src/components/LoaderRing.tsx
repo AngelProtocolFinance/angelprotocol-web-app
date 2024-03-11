@@ -1,9 +1,9 @@
 type Classes =
   | string
   | {
-    container?: string;
-    ringToColor?: "to-blue-d1" | "to-white";
-  };
+      container?: string;
+      ringToColor?: "to-blue-d1" | "to-white";
+    };
 
 export default function LoaderRing({
   thickness,

@@ -15,21 +15,24 @@ export default function NavDropdown({ links }: Props) {
         <>
           <Popover.Button
             data-testid="nav_dropdown"
-            className={`${open ? "text-white" : "text-white/90"
-              } group flex justify-center items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
+            className={`${
+              open ? "text-white" : "text-white/90"
+            } group flex justify-center items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}
           >
             <Icon
               type="Menu"
               size={24}
-              className={`${open ? "text-navy-l2" : "text-navy-l2/70"
-                } sm:hidden transition duration-150 ease-in-out group-hover:text-navy-l2/80`}
+              className={`${
+                open ? "text-navy-l2" : "text-navy-l2/70"
+              } sm:hidden transition duration-150 ease-in-out group-hover:text-navy-l2/80`}
               aria-hidden="true"
             />
             <Icon
               type="ChevronDown"
               size={24}
-              className={`${open ? "text-blue-d7" : "text-blue-d7/70"
-                } max-sm:hidden transition duration-150 ease-in-out group-hover:text-blue-d7/80`}
+              className={`${
+                open ? "text-blue-d7" : "text-blue-d7/70"
+              } max-sm:hidden transition duration-150 ease-in-out group-hover:text-blue-d7/80`}
               aria-hidden="true"
             />
           </Popover.Button>

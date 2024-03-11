@@ -23,10 +23,7 @@ export default function Links({ groups }: { groups: LinkGroup[] }) {
 
 function Link(props: { text: string; href?: string }) {
   return props.href ? (
-    <a
-      href={props.href}
-      className={`${linkStyles} hover:underline`}
-    >
+    <a href={props.href} className={`${linkStyles} hover:underline`}>
       {props.text}
     </a>
   ) : (

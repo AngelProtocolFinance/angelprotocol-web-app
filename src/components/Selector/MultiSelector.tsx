@@ -28,7 +28,7 @@ export function MultiSelector<
   classes,
   searchable,
 }: MultiselectorProps<T, K, V>) {
-  const cls = unpack(classes)
+  const cls = unpack(classes);
 
   ///// ***HOOK FORM*** /////
   const {
@@ -42,8 +42,8 @@ export function MultiSelector<
   const filteredOptions =
     searchable && searchText
       ? options.filter((o) =>
-        o.label.toLowerCase().includes(searchText.toLowerCase())
-      )
+          o.label.toLowerCase().includes(searchText.toLowerCase())
+        )
       : options;
 
   const optionsAvailable = !searchText || !isEmpty(filteredOptions);

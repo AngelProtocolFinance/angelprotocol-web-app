@@ -86,8 +86,9 @@ export default function Table({
               <Cells
                 key={hash}
                 type="td"
-                cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${hasMore ? "" : "first:rounded-bl last:rounded-br"
-                  }`}
+                cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
+                  hasMore ? "" : "first:rounded-bl last:rounded-br"
+                }`}
               >
                 <span className="text-sm">
                   {new Date(date).toLocaleDateString()}

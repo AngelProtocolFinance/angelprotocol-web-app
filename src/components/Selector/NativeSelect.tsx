@@ -5,14 +5,14 @@ import { OptionType, ValKey } from "types/components";
 import { unpack } from "../form/helpers";
 import FocusableInput from "./FocusableInput";
 import { styles } from "./constants";
-import { Classes } from "./types"
+import { Classes } from "./types";
 
 type Props<V extends ValKey> = {
   "aria-invalid"?: AriaAttributes["aria-invalid"];
   disabled?: boolean;
   id?: string;
   options?: OptionType<V>[];
-  classes?: Classes
+  classes?: Classes;
   value?: V;
   onChange: (value: V) => void;
 };
@@ -21,7 +21,7 @@ export const NativeSelect = forwardRef(function Select<V extends ValKey>(
   props: Props<V>,
   ref: React.Ref<HTMLInputElement>
 ) {
-  const cls = unpack(props.classes)
+  const cls = unpack(props.classes);
   return (
     <Listbox
       disabled={props.disabled}

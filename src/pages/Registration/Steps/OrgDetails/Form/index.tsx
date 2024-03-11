@@ -44,7 +44,11 @@ export default function Form() {
         Select the Sustainable Development Goals your organization is the most
         aligned with
       </Label>
-      <MultiSelector<FV, "UN_SDG", number> name="UN_SDG" options={sdgOptions} classes={{ options: "text-sm" }} />
+      <MultiSelector<FV, "UN_SDG", number>
+        name="UN_SDG"
+        options={sdgOptions}
+        classes={{ options: "text-sm" }}
+      />
       <Label className="mb-2 mt-6" required>
         Nonprofit Designation
       </Label>
@@ -73,7 +77,10 @@ export default function Form() {
       <Label className="mt-6 mb-2">
         Select the countries your organization is active in
       </Label>
-      <ActivityCountries<FV, "ActiveInCountries"> name="ActiveInCountries" classes={{ options: "text-sm" }} />
+      <ActivityCountries<FV, "ActiveInCountries">
+        name="ActiveInCountries"
+        classes={{ options: "text-sm" }}
+      />
 
       <Label className="mt-6">
         Are you happy to accept anonymous donations? If not, ALL donors will be

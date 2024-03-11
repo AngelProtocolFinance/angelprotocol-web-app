@@ -18,8 +18,8 @@ export default function NonFSA(props: Props) {
     defaultValues: doc
       ? doc
       : {
-        EIN: "",
-      },
+          EIN: "",
+        },
   });
   const { submit, isSubmitting } = useSubmit({ props, form: methods });
 

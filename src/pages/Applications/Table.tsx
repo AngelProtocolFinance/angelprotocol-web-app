@@ -80,8 +80,9 @@ export default function Table({
             <Cells
               key={row.PK}
               type="td"
-              cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${hasMore ? "" : "first:rounded-bl last:rounded-br"
-                }`}
+              cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
+                hasMore ? "" : "first:rounded-bl last:rounded-br"
+              }`}
             >
               <>{row.OrganizationName}</>
               <>{new Date(row.RegistrationDate).toLocaleDateString()}</>

@@ -160,7 +160,7 @@ export default function Form() {
           classes={{
             container: "bg-white dark:bg-blue-d6",
             button: "field-input-admin",
-            options: "text-sm"
+            options: "text-sm",
           }}
         />
         <Field<FV>
