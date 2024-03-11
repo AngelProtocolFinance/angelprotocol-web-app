@@ -90,7 +90,7 @@
     @apply rounded-lg normal-case text-sm border border-gray-l4 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
   }
   .btn-blue {
-    @apply btn bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l2;
+    @apply btn bg-blue-d1 disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l2;
   }
   .btn-red {
     @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
