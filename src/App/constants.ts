@@ -108,7 +108,7 @@ export const CHARITY_LINKS: LINKS = {
       title: "Facebook",
       icon: {
         type: "FacebookCircle",
-        size: 24,
+        size: 21,
       },
       href: "https://www.facebook.com/BetterGivingFB/",
     },
@@ -116,7 +116,7 @@ export const CHARITY_LINKS: LINKS = {
       title: "Linkedin",
       icon: {
         type: "Linkedin",
-        size: 24,
+        size: 20,
       },
       href: "https://www.linkedin.com/company/better-giving/",
     },
