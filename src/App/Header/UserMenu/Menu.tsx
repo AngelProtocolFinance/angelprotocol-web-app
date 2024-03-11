@@ -47,7 +47,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           {user.groups.includes(groups["ap-admin"]) && (
             <Link
               to={appRoutes.applications}
-              className="hover:text-orange text-sm flex items-center gap-1"
+              className="hover:text-blue-d1 text-sm flex items-center gap-1"
             >
               <Icon type="SecurityScan" size={22} />
               <span>Applications Dashboard</span>
@@ -56,7 +56,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           {user.groups.includes(groups["ap-admin"]) && (
             <Link
               to={appRoutes.banking_applications}
-              className="hover:text-orange text-sm flex items-center gap-1 mt-1"
+              className="hover:text-blue-d1 text-sm flex items-center gap-1 mt-1"
             >
               <Icon type="SecurityScan" size={22} />
               <span>Banking applications</span>
@@ -68,7 +68,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
         disabled={user.isSigningOut}
         type="button"
         onClick={signOut}
-        className="btn-orange rounded-none w-full p-3 text-sm mt-4"
+        className="btn-blue rounded-none w-full p-3 text-sm mt-4"
       >
         Log out
       </button>
