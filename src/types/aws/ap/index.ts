@@ -51,6 +51,7 @@ export type Endowment = {
   hq_country: string;
   image: string;
   kyc_donors_only: boolean;
+  /** optional as older endowments don't have it set */
   hide_bg_tip?: boolean;
   logo: string;
   name: string;
