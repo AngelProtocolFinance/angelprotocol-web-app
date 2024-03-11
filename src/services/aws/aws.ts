@@ -153,6 +153,7 @@ export const aws = createApi({
       EndowmentProfile,
       Pick<EndowmentProfile, "id"> & { hide_bg_tip: boolean }
     >({
+      invalidatesTags: (_, error) => (error ? [] : ["profile"]),
       query: ({ id, hide_bg_tip }) => {
         return {
           url: `/${v(1)}/endowments/${id}`,
