@@ -66,7 +66,7 @@ export default function SubscriptionForm() {
       </div>
       <button
         type="submit"
-        className="btn-blue enabled:hover:bg-blue-l4  enabled:hover:text-navy-d4 px-4 text-xs h-10 w-[80vw] lg:w-full xl:w-min"
+        className="btn-blue enabled:hover:bg-blue-l4 enabled:hover:text-navy-d4 px-4 text-xs h-10 w-[80vw] lg:w-full xl:w-min"
         disabled={isSubmitting}
       >
         Subscribe
