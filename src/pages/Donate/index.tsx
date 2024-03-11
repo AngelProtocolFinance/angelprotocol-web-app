@@ -19,6 +19,7 @@ export default function Donate() {
     "overview",
     "tagline",
     "card_img",
+    "hide_bg_tip",
   ]);
 
   return (
@@ -43,6 +44,7 @@ export default function Donate() {
             tagline={profile.tagline}
             logo={profile.card_img || profile.logo}
             name={profile.name}
+            hide_bg_tip={!!profile.hide_bg_tip}
             banner={profile.image}
             id={numId}
           />

@@ -60,6 +60,13 @@ const donation = createSlice({
     },
 
     setSplit: (state, { payload }: PayloadAction<number>) => {
+      if (state.recipient?.hide_bg_tip) {
+        return {
+          ...(state as SummaryStep),
+          step: "summary",
+          liquidSplitPct: payload,
+        };
+      }
       return {
         ...(state as TipStep),
         step: "tip",

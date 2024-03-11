@@ -37,7 +37,11 @@ export default function Summary({
       Amount={Amount}
       amount={amount}
       splitLiq={liquidSplitPct}
-      onBack={() => dispatch(setStep("tip"))}
+      onBack={() =>
+        recipient.hide_bg_tip
+          ? dispatch(setStep("splits"))
+          : dispatch(setStep("tip"))
+      }
       tip={
         tip
           ? {

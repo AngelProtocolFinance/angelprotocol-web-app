@@ -28,6 +28,7 @@ export default function Content({
     const donationRecipient: DonationRecipient = {
       id: profile.id,
       name: profile.name,
+      hide_bg_tip: !!profile.hide_bg_tip,
     };
     dispatch(setRecipient(donationRecipient));
   }, [dispatch, profile]);
