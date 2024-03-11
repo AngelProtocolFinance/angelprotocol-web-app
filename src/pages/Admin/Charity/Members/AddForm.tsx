@@ -88,7 +88,7 @@ export default function AddForm({ added, endowID }: Props) {
         <Field<FV> name="firstName" label="First name" required />
         <Field<FV> name="lastName" label="Last name" required />
       </FormProvider>
-      <button disabled={isSubmitting} type="submit" className="btn-orange mt-6">
+      <button disabled={isSubmitting} type="submit" className="btn-blue mt-6">
         Add member
       </button>
     </Modal>
