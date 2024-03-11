@@ -31,7 +31,7 @@ export default function Table({
     <table className="w-full text-sm rounded border border-separate border-spacing-0 border-gray-l4">
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-gray-l4"
       >
         <Cells
           type="th"
@@ -69,7 +69,7 @@ export default function Table({
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
+        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-gray-l4"
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
         {sorted
@@ -86,9 +86,8 @@ export default function Table({
               <Cells
                 key={hash}
                 type="td"
-                cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
-                  hasMore ? "" : "first:rounded-bl last:rounded-br"
-                }`}
+                cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${hasMore ? "" : "first:rounded-bl last:rounded-br"
+                  }`}
               >
                 <span className="text-sm">
                   {new Date(date).toLocaleDateString()}

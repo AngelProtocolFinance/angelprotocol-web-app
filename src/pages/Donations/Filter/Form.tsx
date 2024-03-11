@@ -19,10 +19,10 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       as="form"
       onSubmit={submit}
       onReset={onReset}
-      className={`${classes} grid content-start gap-4 w-full rounded border border-gray-l4 bg-white dark:bg-blue-d5`}
+      className={`${classes} grid content-start gap-4 w-full rounded border border-gray-l4 bg-white dark:bg-blue-d5 max-lg:pb-6 max-lg:shadow-lg`}
     >
       <div className="lg:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
-        <span className="text-orange">Filters</span>
+        <span className="text-blue-d1">Filters</span>
         <Popover.Button className="absolute top-1/2 -translate-y-1/2 right-2">
           <Icon type="Close" size={33} />
         </Popover.Button>
@@ -41,13 +41,13 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
         <h3 className="uppercase lg:hidden">Filter by</h3>
         <button
           type="reset"
-          className="text-orange underline text-sm max-lg:ml-auto"
+          className="text-blue-d1 underline text-sm max-lg:ml-auto"
         >
           Reset filters
         </button>
         <button
           type="submit"
-          className="btn btn-orange px-6 py-2 rounded-sm text-xs font-bold uppercase"
+          className="btn btn-blue px-6 py-2 rounded-sm text-xs font-bold uppercase"
         >
           Submit
         </button>

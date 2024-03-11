@@ -16,7 +16,7 @@
     @apply w-1;
   }
   .scroller::-webkit-scrollbar-thumb {
-    @apply bg-orange;
+    @apply bg-blue-d1;
   }
   .scroller::-webkit-scrollbar-track {
     @apply bg-gray-l3 dark:bg-navy;

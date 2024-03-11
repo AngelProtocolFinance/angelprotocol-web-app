@@ -32,7 +32,7 @@ export default function Table({
     >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
+        rowClass="bg-blue-l4 divide-x divide-gray-l4"
       >
         <Cells
           type="th"
@@ -86,24 +86,22 @@ export default function Table({
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
-        selectedClass="bg-orange-l5 dark:bg-blue-d4"
+        rowClass="even:bg-blue-l5 divide-x divide-gray-l4"
+        selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {sorted
           .map((row) => (
             <Cells
               key={row.hash}
               type="td"
-              cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
-                hasMore ? "" : "first:rounded-bl last:rounded-br"
-              }`}
+              cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${hasMore ? "" : "first:rounded-bl last:rounded-br"
+                }`}
             >
               <Link
-                to={`${
-                  appRoutes[
-                    row.chainId === chainIds.juno ? "profile" : "marketplace"
-                  ]
-                }/${row.id}`}
+                to={`${appRoutes[
+                  row.chainId === chainIds.juno ? "profile" : "marketplace"
+                ]
+                  }/${row.id}`}
                 className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
                 <span className="truncate max-w-[12rem]">
@@ -128,11 +126,10 @@ export default function Table({
               )}
               <div className="text-center text-white">
                 <span
-                  className={`${
-                    row.donationFinalized
-                      ? "bg-green"
-                      : "bg-gray-d1 dark:bg-gray"
-                  } px-2 py-0.5 rounded`}
+                  className={`${row.donationFinalized
+                    ? "bg-green"
+                    : "bg-gray-d1 dark:bg-gray"
+                    } px-2 py-0.5 rounded`}
                 >
                   {row.donationFinalized ? "RECEIVED" : "PENDING"}
                 </span>

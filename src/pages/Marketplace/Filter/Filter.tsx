@@ -38,7 +38,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         <Countries />
       </div>
 
-      <div className="px-2 divide-y divide-prim">
+      <div className="px-2 divide-y divide-gray-l3">
         <Designations />
         <KYCFilter />
         <Categories />

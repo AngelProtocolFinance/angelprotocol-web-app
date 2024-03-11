@@ -54,7 +54,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
         <h3 className="uppercase lg:hidden">Filter by</h3>
         <button
           type="reset"
-          className="text-orange underline text-sm max-lg:ml-auto"
+          className="text-blue-d1 underline text-sm max-lg:ml-auto"
         >
           Reset filters
         </button>

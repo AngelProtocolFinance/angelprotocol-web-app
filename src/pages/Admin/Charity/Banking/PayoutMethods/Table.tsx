@@ -15,7 +15,7 @@ export default function Table({ methods, classes = "" }: Props) {
     >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
+        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-gray-l4"
       >
         <Cells
           type="th"
@@ -30,7 +30,7 @@ export default function Table({ methods, classes = "" }: Props) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
+        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-gray-l4"
         selectedClass="bg-orange-l5 dark:bg-blue-d4"
       >
         {methods.map((row) => (
