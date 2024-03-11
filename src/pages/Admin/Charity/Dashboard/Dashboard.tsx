@@ -82,15 +82,15 @@ export default function Dashboard() {
                     <span>{contributionsCount}</span>
                   </DataPart>
                 </div>
-
-                <Separator classes="col-span-2 my-4 before:bg-gray-l3 after:bg-gray-l3" />
-
-                <HideBGTipCheckbox />
               </div>
             </>
           );
         }}
       </QueryLoader>
+
+      <Separator classes="my-8 before:bg-gray-l3 after:bg-gray-l3" />
+
+      <HideBGTipCheckbox />
     </div>
   );
 }
