@@ -25,7 +25,7 @@ function Link(props: { text: string; href?: string }) {
   return props.href ? (
     <a
       href={props.href}
-      className={`${linkStyles} cursor-pointer hover:text-blue-l1 active:text-blue transition ease-in-out duration-300`}
+      className={`${linkStyles} hover:underline`}
     >
       {props.text}
     </a>
