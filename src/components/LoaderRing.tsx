@@ -1,9 +1,9 @@
 type Classes =
   | string
   | {
-      container?: string;
-      ringToColor?: "to-orange" | "to-white";
-    };
+    container?: string;
+    ringToColor?: "to-blue-d1" | "to-white";
+  };
 
 export default function LoaderRing({
   thickness,
@@ -43,6 +43,6 @@ function unpack(classes?: Classes) {
   const _classes: Classes =
     typeof classes === "string" ? { container: classes } : classes || {};
 
-  const { container = "", ringToColor = "to-orange" } = _classes;
+  const { container = "", ringToColor = "to-blue-d1" } = _classes;
   return { container, ringToColor };
 }

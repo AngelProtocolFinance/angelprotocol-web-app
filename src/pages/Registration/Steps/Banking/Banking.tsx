@@ -52,7 +52,7 @@ function Banking() {
           <Link
             to={`../${steps.summary}`}
             state={data.init}
-            className="py-3 min-w-[8rem] btn-orange btn-reg"
+            className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             Continue
           </Link>

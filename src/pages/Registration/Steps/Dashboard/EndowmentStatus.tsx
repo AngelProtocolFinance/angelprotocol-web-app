@@ -77,7 +77,7 @@ export default function EndowmentStatus({
             type="button"
             disabled={isSubmitting}
             onClick={onSubmit}
-            className="py-3 min-w-[8rem] btn-orange btn-reg"
+            className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             <LoadText isLoading={isSubmitting}>Continue</LoadText>
           </button>

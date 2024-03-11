@@ -35,7 +35,7 @@ function FSAInquiry() {
               Is your organization recognized by the Internal Revenue Service as
               a nonprofit organization exempt under IRC 501(c)(3)?{" "}
             </Label>
-            <div className="flex gap-4 mt-4 accent-orange text-sm">
+            <div className="flex gap-4 mt-4 accent-blue-d1 text-sm">
               <Radio<FV, "AuthorizedToReceiveTaxDeductibleDonations">
                 name="AuthorizedToReceiveTaxDeductibleDonations"
                 value="Yes"
@@ -77,7 +77,7 @@ function FSAInquiry() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="py-3 min-w-[8rem] btn-orange btn-reg"
+            className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             <LoadText isLoading={isSubmitting}>Continue</LoadText>
           </button>

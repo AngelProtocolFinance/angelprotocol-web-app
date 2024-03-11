@@ -63,7 +63,7 @@
     @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
   }
   .radio > input {
-    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l2 disabled:checked:before:dark:bg-navy focus:outline-none focus:ring-1 focus:ring-orange;
+    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-blue-d1 disabled:checked:before:bg-gray-l2 disabled:checked:before:dark:bg-navy focus:outline-none focus:ring-1 focus:ring-blue-d1;
   }
 
   .checkbox {
@@ -165,7 +165,7 @@
 /** page components */
 @layer components {
   .btn-outline-filled {
-    @apply btn-outline bg-orange-l5 dark:bg-blue-d4 enabled:hover:bg-orange-l4 dark:enabled:hover:bg-blue-d3;
+    @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-orange-l4 dark:enabled:hover:bg-blue-d3;
   }
   .btn-outline-gray {
     @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-navy-d3 dark:enabled:hover:bg-navy dark:active:bg-navy-d4;

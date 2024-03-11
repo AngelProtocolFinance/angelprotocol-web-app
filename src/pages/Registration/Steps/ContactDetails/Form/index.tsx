@@ -111,7 +111,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       />
       <button
         type="submit"
-        className="mt-8 py-3 px-8 w-full sm:w-auto btn-orange btn-reg"
+        className="mt-8 py-3 px-8 w-full sm:w-auto btn-blue btn-reg"
         disabled={isSubmitting}
       >
         <LoadText isLoading={isSubmitting}>Continue</LoadText>

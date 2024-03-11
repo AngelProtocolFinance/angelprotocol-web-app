@@ -155,6 +155,7 @@ export default function RecipientDetailsForm({
                       }))}
                       ref={ref}
                       value={value}
+                      classes={{ options: "text-sm" }}
                     />
                   </>
                 )}
@@ -180,11 +181,10 @@ export default function RecipientDetailsForm({
                 {f.valuesAllowed?.map((v) => (
                   <div
                     key={v.key}
-                    className={`relative border ${
-                      !!getFieldState(f.key).error
-                        ? "border-red"
-                        : "border-gray-l4"
-                    } rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1`}
+                    className={`relative border ${!!getFieldState(f.key).error
+                      ? "border-red"
+                      : "border-gray-l4"
+                      } rounded px-4 py-3.5 text-sm has-[:checked]:border-blue-d1 has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-blue-l2`}
                   >
                     <input
                       className="appearance none w-0 h-0"
@@ -225,29 +225,29 @@ export default function RecipientDetailsForm({
                   required: f.required ? "required" : false,
                   maxLength: f.maxLength
                     ? {
-                        value: f.maxLength,
-                        message: `max ${f.maxLength} chars`,
-                      }
+                      value: f.maxLength,
+                      message: `max ${f.maxLength} chars`,
+                    }
                     : undefined,
                   minLength: f.minLength
                     ? {
-                        value: f.minLength,
-                        message: `min ${f.minLength} chars`,
-                      }
+                      value: f.minLength,
+                      message: `min ${f.minLength} chars`,
+                    }
                     : undefined,
                   pattern: f.validationRegexp
                     ? {
-                        value: new RegExp(f.validationRegexp),
-                        message: "invalid",
-                      }
+                      value: new RegExp(f.validationRegexp),
+                      message: "invalid",
+                    }
                     : undefined,
 
                   validate: f.validationAsync
                     ? async (v: string) => {
-                        const { params, url } = f.validationAsync!;
-                        const res = await fetch(`${url}?${params[0].key}=${v}`);
-                        return res.ok || "invalid";
-                      }
+                      const { params, url } = f.validationAsync!;
+                      const res = await fetch(`${url}?${params[0].key}=${v}`);
+                      return res.ok || "invalid";
+                    }
                     : undefined,
                   //onBlur only as text input changes rapidly
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
@@ -272,9 +272,9 @@ export default function RecipientDetailsForm({
                   required: f.required ? "required" : false,
                   pattern: f.validationRegexp
                     ? {
-                        value: new RegExp(f.validationRegexp),
-                        message: `format ${f.example}`,
-                      }
+                      value: new RegExp(f.validationRegexp),
+                      message: `format ${f.example}`,
+                    }
                     : undefined,
                   onBlur: f.refreshRequirementsOnChange ? refresh : undefined,
                 })}

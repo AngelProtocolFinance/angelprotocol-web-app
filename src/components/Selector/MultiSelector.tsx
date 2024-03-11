@@ -11,6 +11,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { OptionType, ValKey } from "types/components";
+import { unpack } from "../form/helpers";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
 import { MultiselectorProps } from "./types";
@@ -27,7 +28,7 @@ export function MultiSelector<
   classes,
   searchable,
 }: MultiselectorProps<T, K, V>) {
-  const { container = "", button = "" } = classes || {};
+  const cls = unpack(classes)
 
   ///// ***HOOK FORM*** /////
   const {
@@ -41,8 +42,8 @@ export function MultiSelector<
   const filteredOptions =
     searchable && searchText
       ? options.filter((o) =>
-          o.label.toLowerCase().includes(searchText.toLowerCase())
-        )
+        o.label.toLowerCase().includes(searchText.toLowerCase())
+      )
       : options;
 
   const optionsAvailable = !searchText || !isEmpty(filteredOptions);
@@ -59,7 +60,7 @@ export function MultiSelector<
         by={valueKey}
         onChange={onSelectedChange}
         as="div"
-        className={`relative ${container}`}
+        className={`relative ${cls.container}`}
         multiple
       >
         <FocusableInput ref={ref} />
@@ -67,7 +68,7 @@ export function MultiSelector<
           aria-invalid={invalid}
           aria-disabled={isDisabled}
           as="div"
-          className={`${button} ${styles.selectorButton} focus-within:ring-2 ring-blue-d1 ring-offset-1 aria-invalid:border-red p-1`}
+          className={`${cls.button} ${styles.selectorButton} focus-within:ring-2 ring-blue-d1 ring-offset-1 aria-invalid:border-red p-1`}
         >
           {({ open }) => (
             <>
@@ -105,7 +106,7 @@ export function MultiSelector<
             </>
           )}
         </Combobox.Button>
-        <Combobox.Options className={styles.options}>
+        <Combobox.Options className={`${styles.options} ${cls.options}`}>
           {optionsAvailable && (
             <div className="flex justify-between p-4">
               {isAllSelected ? (

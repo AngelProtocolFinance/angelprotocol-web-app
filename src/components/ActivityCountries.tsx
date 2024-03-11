@@ -8,6 +8,7 @@ type Props<T extends FieldValues, K extends Path<T>> = {
   classes?: {
     container?: string;
     button?: string;
+    options?: string
   };
 };
 
@@ -18,7 +19,7 @@ export default function ActivityCountries<
   return (
     <MultiSelector<T, K, string>
       name={name}
-      classes={{ button: classes?.button, container: classes?.container }}
+      classes={{ button: classes?.button, container: classes?.container, options: classes?.options }}
       options={countries.map((c) => ({
         label: c.name,
         value: c.name,
