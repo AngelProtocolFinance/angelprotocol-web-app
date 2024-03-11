@@ -14,7 +14,7 @@ type Props = {
 export default function Sidebar({
   className = "",
   linkGroups,
-  onChange = () => {},
+  onChange = () => { },
 }: Props) {
   return (
     <div
@@ -51,6 +51,6 @@ export default function Sidebar({
 }
 
 const linkClassName = createNavLinkStyler(
-  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-orange-l1 active:text-orange transition ease-in-out duration-300 aria-disabled:text-navy-l2 aria-disabled:pointer-events-none",
-  "pointer-events-none text-orange"
+  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-blue-d1 transition ease-in-out duration-300 aria-disabled:text-navy-l2 aria-disabled:pointer-events-none",
+  "pointer-events-none text-blue-d1"
 );
