@@ -43,7 +43,7 @@ export default function Form() {
     >
       <Link
         to={`${appRoutes.marketplace}/${id}`}
-        className="text-blue hover:text-orange text-sm flex items-center gap-1"
+        className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
       >
         <Icon type="Back" />
         <span>Back to profile</span>
@@ -226,7 +226,7 @@ export default function Form() {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="px-6 btn-orange text-sm"
+          className="px-6 btn-blue text-sm"
         >
           Submit changes
         </button>

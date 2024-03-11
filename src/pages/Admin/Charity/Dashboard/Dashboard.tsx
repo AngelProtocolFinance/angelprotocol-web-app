@@ -37,7 +37,9 @@ export default function Dashboard() {
           const donationsPaidOut = payoutsMade - earningsPayoutsMade;
           return (
             <>
-              <h3 className="uppercase mb-2 font-black mt-6">Account Balances</h3>
+              <h3 className="uppercase mb-2 font-black mt-6">
+                Account Balances
+              </h3>
               <div className="grid gap-4 @lg:grid-cols-2">
                 {/** Balances */}
                 <Balance

@@ -91,14 +91,16 @@ export default function Table({
             <Cells
               key={row.hash}
               type="td"
-              cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${hasMore ? "" : "first:rounded-bl last:rounded-br"
-                }`}
+              cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
+                hasMore ? "" : "first:rounded-bl last:rounded-br"
+              }`}
             >
               <Link
-                to={`${appRoutes[
-                  row.chainId === chainIds.juno ? "profile" : "marketplace"
-                ]
-                  }/${row.id}`}
+                to={`${
+                  appRoutes[
+                    row.chainId === chainIds.juno ? "profile" : "marketplace"
+                  ]
+                }/${row.id}`}
                 className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
                 <span className="truncate max-w-[12rem]">
@@ -123,10 +125,11 @@ export default function Table({
               )}
               <div className="text-center text-white">
                 <span
-                  className={`${row.donationFinalized
-                    ? "bg-green"
-                    : "bg-gray-d1 dark:bg-gray"
-                    } px-2 py-0.5 rounded`}
+                  className={`${
+                    row.donationFinalized
+                      ? "bg-green"
+                      : "bg-gray-d1 dark:bg-gray"
+                  } px-2 py-0.5 rounded`}
                 >
                   {row.donationFinalized ? "RECEIVED" : "PENDING"}
                 </span>

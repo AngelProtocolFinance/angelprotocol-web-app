@@ -14,7 +14,7 @@ type Props = {
 export default function Sidebar({
   className = "",
   linkGroups,
-  onChange = () => { },
+  onChange = () => {},
 }: Props) {
   return (
     <div
