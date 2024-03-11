@@ -4426,79 +4426,105 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry-internal/tracing@npm:7.81.0":
-  version: 7.81.0
-  resolution: "@sentry-internal/tracing@npm:7.81.0"
+"@sentry-internal/feedback@npm:7.106.1":
+  version: 7.106.1
+  resolution: "@sentry-internal/feedback@npm:7.106.1"
   dependencies:
-    "@sentry/core": 7.81.0
-    "@sentry/types": 7.81.0
-    "@sentry/utils": 7.81.0
-  checksum: 955a40403063cb163d55d9ebd17cbf5f6c1e6a7ab4af11da3391fa49043b697a3e74c735b00428ad5b7b433a55ec16b58e1996f493f61b455022c9a05ee5e0a9
+    "@sentry/core": 7.106.1
+    "@sentry/types": 7.106.1
+    "@sentry/utils": 7.106.1
+  checksum: be9ae7b83d82a2afb63b93de1a92b302b5d25895faa74ecfcbfb91b422307ef22de75706080dbbaedf807dd8dd5bafb524aae64b5182ddc43b8712681076e5de
   languageName: node
   linkType: hard
 
-"@sentry/browser@npm:7.81.0":
-  version: 7.81.0
-  resolution: "@sentry/browser@npm:7.81.0"
+"@sentry-internal/replay-canvas@npm:7.106.1":
+  version: 7.106.1
+  resolution: "@sentry-internal/replay-canvas@npm:7.106.1"
   dependencies:
-    "@sentry-internal/tracing": 7.81.0
-    "@sentry/core": 7.81.0
-    "@sentry/replay": 7.81.0
-    "@sentry/types": 7.81.0
-    "@sentry/utils": 7.81.0
-  checksum: bfd8dcdc0e9d1810cfaed1c5cc082ce9e8dccf7e115991e4e31cd9048415d39a45255edd5a74504e59b70033898cefe96bc26de2a1f0f89af359c2c223cdba5a
+    "@sentry/core": 7.106.1
+    "@sentry/replay": 7.106.1
+    "@sentry/types": 7.106.1
+    "@sentry/utils": 7.106.1
+  checksum: b08693f41fb1e753d9b46734e04ff7b5947058d2c32dc6466758c420331444b225b2bbdb64bc38e011999e33e4214d009735f1902c5af15010b33a4796fe6db7
   languageName: node
   linkType: hard
 
-"@sentry/core@npm:7.81.0":
-  version: 7.81.0
-  resolution: "@sentry/core@npm:7.81.0"
+"@sentry-internal/tracing@npm:7.106.1":
+  version: 7.106.1
+  resolution: "@sentry-internal/tracing@npm:7.106.1"
   dependencies:
-    "@sentry/types": 7.81.0
-    "@sentry/utils": 7.81.0
-  checksum: 7d9b3f9915cc6d47889c39a399a37761eaa55f1168b450334e3df44c10269c4a0f779a381f01950b6d3db269eb34f5c670b34bc8173c972104f123ead8130dc5
+    "@sentry/core": 7.106.1
+    "@sentry/types": 7.106.1
+    "@sentry/utils": 7.106.1
+  checksum: 61c9ba5aef283727f6ecbef8701a5143c10d666a1db3aba10d691d461534ae6d945748a3182d29148cd89b48423b4776d9ceff4f78e03dc543280e6a21e6d86b
   languageName: node
   linkType: hard
 
-"@sentry/react@npm:7.81.0":
-  version: 7.81.0
-  resolution: "@sentry/react@npm:7.81.0"
+"@sentry/browser@npm:7.106.1":
+  version: 7.106.1
+  resolution: "@sentry/browser@npm:7.106.1"
   dependencies:
-    "@sentry/browser": 7.81.0
-    "@sentry/types": 7.81.0
-    "@sentry/utils": 7.81.0
+    "@sentry-internal/feedback": 7.106.1
+    "@sentry-internal/replay-canvas": 7.106.1
+    "@sentry-internal/tracing": 7.106.1
+    "@sentry/core": 7.106.1
+    "@sentry/replay": 7.106.1
+    "@sentry/types": 7.106.1
+    "@sentry/utils": 7.106.1
+  checksum: 60c35e268c20b1fdecda9775057e09e3e4c349f7d1934bfca14dc8143cdb196edb6d26bd6579c766dfb92d22de232a29a908e3688441331ad157479554c639aa
+  languageName: node
+  linkType: hard
+
+"@sentry/core@npm:7.106.1":
+  version: 7.106.1
+  resolution: "@sentry/core@npm:7.106.1"
+  dependencies:
+    "@sentry/types": 7.106.1
+    "@sentry/utils": 7.106.1
+  checksum: c9110b25a94f798c08c260ff5c6bbca6f315fe04e10ee42cefdd06c27c0780c32c5b90672d5da92bcdd25048bcdcede810c2c217156dd9d3ec41ac5fe38ea363
+  languageName: node
+  linkType: hard
+
+"@sentry/react@npm:7.106.1":
+  version: 7.106.1
+  resolution: "@sentry/react@npm:7.106.1"
+  dependencies:
+    "@sentry/browser": 7.106.1
+    "@sentry/core": 7.106.1
+    "@sentry/types": 7.106.1
+    "@sentry/utils": 7.106.1
     hoist-non-react-statics: ^3.3.2
   peerDependencies:
     react: 15.x || 16.x || 17.x || 18.x
-  checksum: 738a8c649238e0996a3e37a8dce0418ccb18471cba32b3a3b39121f1e72331f02ae981ec3c421f91e7cc6ad99e2363482f1659ed87d60f90412f515f29af481d
+  checksum: 39e492a7d8432eae04a33acec80ad05a14dad605b185ab49c9f3c2606039303e117fa730bcc516e70d4babcc0966b536ce0e5dbbf35f489f054c8387af513307
   languageName: node
   linkType: hard
 
-"@sentry/replay@npm:7.81.0":
-  version: 7.81.0
-  resolution: "@sentry/replay@npm:7.81.0"
+"@sentry/replay@npm:7.106.1":
+  version: 7.106.1
+  resolution: "@sentry/replay@npm:7.106.1"
   dependencies:
-    "@sentry-internal/tracing": 7.81.0
-    "@sentry/core": 7.81.0
-    "@sentry/types": 7.81.0
-    "@sentry/utils": 7.81.0
-  checksum: 5ee298e1a2aa966ad23f165ae4168118b6614f8d54c73537099ea99405cd4673ce792c3959e7471af4d50c30c677fa7d23447b7b3354abf8abe67d646d9e10ea
+    "@sentry-internal/tracing": 7.106.1
+    "@sentry/core": 7.106.1
+    "@sentry/types": 7.106.1
+    "@sentry/utils": 7.106.1
+  checksum: ee6714b75966a923f5bda54ade9046d083a87da4066ab59c5f8aae8de95a413b7df8be0af3a5c551b040b7b07e1be6c75625485a7cf27e15c5ef62eb3b37d094
   languageName: node
   linkType: hard
 
-"@sentry/types@npm:7.81.0":
-  version: 7.81.0
-  resolution: "@sentry/types@npm:7.81.0"
-  checksum: 555216f90885b02873520061f0d1a2b01bb4d1b41f3ee97448aa598431d4eaff1ef063b3c78fcaa7d01445828d34d55cc38cfd8d4b4fa0ea0b0a64dc440adac4
+"@sentry/types@npm:7.106.1":
+  version: 7.106.1
+  resolution: "@sentry/types@npm:7.106.1"
+  checksum: 565d103db296d9bb4b9b6b9b7aa0d5ed5fb2414d0b09b3f8a296da293515c15f8978701c26cd18567f5b07dde9df406145fe7b9b39a9b13f26a31f23a31eb49d
   languageName: node
   linkType: hard
 
-"@sentry/utils@npm:7.81.0":
-  version: 7.81.0
-  resolution: "@sentry/utils@npm:7.81.0"
+"@sentry/utils@npm:7.106.1":
+  version: 7.106.1
+  resolution: "@sentry/utils@npm:7.106.1"
   dependencies:
-    "@sentry/types": 7.81.0
-  checksum: e72b691baa8b46d9f84827d991ccdae138657e4c03c9eb98ab9932dd81077ae10137f72d033ffb3e09c115a105547f681007bf2fda38bc8c846f2551aa387437
+    "@sentry/types": 7.106.1
+  checksum: 983e9f73b1912709cee544867b40ad769df15b4dc95015976a525c9313ea9a8218ce2557ffb13b4f66fb88b4ef11f71618c16e78d01c60274dfdcd69a6979588
   languageName: node
   linkType: hard
 
@@ -7064,7 +7090,7 @@ __metadata:
     "@keplr-wallet/wc-qrcode-modal": 0.12.23
     "@peculiar/webcrypto": ^1.4.0
     "@reduxjs/toolkit": ^1.9.0
-    "@sentry/react": 7.81.0
+    "@sentry/react": 7.106.1
     "@tailwindcss/container-queries": ^0.1.0
     "@terra-money/terra.js": ^3.1.7
     "@terra-money/wallet-provider": ^3.11.1
