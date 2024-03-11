@@ -52,7 +52,7 @@ export default function SubscriptionForm() {
         <input
           {...register("email")}
           id="email"
-          className="text-xs field-input enabled:focus:ring-blue-d2 border-none w-full h-10 px-3 bg-white"
+          className="text-xs field-input rounded-lg enabled:focus:ring-blue-d2 border-none w-full h-10 px-3 bg-white"
           placeholder="Enter your email address here"
           disabled={isSubmitting}
         />
@@ -60,7 +60,7 @@ export default function SubscriptionForm() {
           errors={errors}
           as="p"
           name="email"
-          className="w-full text-xs text-red-l3 text-center"
+          className="w-full text-xs text-white text-center"
         />
         {isSuccess && !errors.email && <SuccessMessage />}
       </div>
