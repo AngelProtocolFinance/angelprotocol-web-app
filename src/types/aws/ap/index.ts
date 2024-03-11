@@ -1,6 +1,6 @@
 import { Except } from "type-fest";
-import { APIEnvironment, UNSDG_NUMS } from "../../lists";
 import { Ensure } from "types/utils";
+import { APIEnvironment, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
