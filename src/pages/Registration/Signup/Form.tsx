@@ -27,18 +27,18 @@ export default function Form({ classes = "" }: { classes?: string }) {
         Register your new {APP_NAME} nonprofit account
       </h3>
 
-      <button type="submit" className="btn-orange btn-reg">
+      <button type="submit" className="btn-blue btn-reg">
         Start a new application
       </button>
       <Separator classes="before:mr-2 after:ml-2">OR</Separator>
 
-      <Link className="btn-outline-filled btn-reg" to={regRoutes.resume}>
+      <Link className="btn-outline-filled  btn-reg" to={regRoutes.resume}>
         Resume your registration
       </Link>
 
       <button
         type="button"
-        className="underline text-orange-l1 justify-self-center text-sm"
+        className="underline text-blue-d1 justify-self-center text-sm"
         onClick={openIntercomHelp}
       >
         Need Help?
