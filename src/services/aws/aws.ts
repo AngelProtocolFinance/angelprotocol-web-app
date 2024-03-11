@@ -24,7 +24,6 @@ import {
   ProfileUpdateMsg,
   ProgramDeleteMsg,
   VersionSpecificWalletProfile,
-  isDeleteMsg,
 } from "../types";
 
 const getWalletProfileQuery = (walletAddr: string) =>
@@ -134,32 +133,25 @@ export const aws = createApi({
       query: ({ endowId, programId }) =>
         `/${v(1)}/profile/${apiEnv}/program/${endowId}/${programId}`,
     }),
-    editProfile: builder.mutation<
-      EndowmentProfile,
-      ProfileUpdateMsg | ProgramDeleteMsg
-    >({
+    editProfile: builder.mutation<EndowmentProfile, ProfileUpdateMsg>({
       invalidatesTags: (_, error) =>
         error ? [] : ["endowments", "profile", "walletProfile"],
-      query: (payload) => {
+      query: ({ id, ...payload }) => {
         return {
-          url: `/${v(1)}/profile/endowment`,
-          method: isDeleteMsg(payload) ? "DELETE" : "PUT",
+          url: `/${v(1)}/endowments/${id}`,
+          method: "PATCH",
           headers: { authorization: TEMP_JWT },
           body: payload,
         };
       },
     }),
-    toggleBgTipScreen: builder.mutation<
-      EndowmentProfile,
-      Pick<EndowmentProfile, "id"> & { hide_bg_tip: boolean }
-    >({
+    deleteProgram: builder.mutation<EndowmentProfile, ProgramDeleteMsg>({
       invalidatesTags: (_, error) => (error ? [] : ["profile"]),
-      query: ({ id, hide_bg_tip }) => {
+      query: ({ id, program_id }) => {
         return {
-          url: `/${v(1)}/endowments/${id}`,
-          method: "PATCH",
+          url: `/${v(1)}/endowments/${id}/programs/${program_id}`,
+          method: "DELETE",
           headers: { authorization: TEMP_JWT },
-          body: { hide_bg_tip },
         };
       },
     }),
@@ -199,6 +191,7 @@ export const aws = createApi({
 });
 
 export const {
+  useDeleteProgramMutation,
   useWalletProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentQuery,
@@ -209,7 +202,6 @@ export const {
   useApplicationsQuery,
   useApplicationQuery,
   useReviewApplicationMutation,
-  useToggleBgTipScreenMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },

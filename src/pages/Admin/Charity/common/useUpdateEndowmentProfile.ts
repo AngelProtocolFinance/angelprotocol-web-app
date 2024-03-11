@@ -3,13 +3,13 @@ import { appRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
 import { useEditProfileMutation } from "services/aws/aws";
-import { ProfileUpdateMsg, ProgramDeleteMsg } from "services/types";
+import { ProfileUpdateMsg } from "services/types";
 
 export function useUpdateEndowmentProfile() {
   const { showModal } = useModalContext();
   const [submit] = useEditProfileMutation();
 
-  const updateProfile = async (msg: ProfileUpdateMsg | ProgramDeleteMsg) => {
+  const updateProfile = async (msg: ProfileUpdateMsg) => {
     try {
       const cleanUpdates = cleanObject(msg);
 

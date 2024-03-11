@@ -5,18 +5,18 @@ import { useModalContext } from "contexts/ModalContext";
 import { logger } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
 import { Link } from "react-router-dom";
+import { useDeleteProgramMutation } from "services/aws/aws";
 import { ProgramDeleteMsg } from "services/types";
 import { Program as TProgram } from "types/aws";
-import { useUpdateEndowmentProfile } from "../common";
 
 export function Program(props: TProgram) {
   const { id } = useAdminContext();
   const { showModal } = useModalContext();
-  const updateProfile = useUpdateEndowmentProfile();
+  const [deleteProgram] = useDeleteProgramMutation();
 
-  const deleteProgram = async (msg: ProgramDeleteMsg) => {
+  const handleDeleteProgram = async (msg: ProgramDeleteMsg) => {
     try {
-      await updateProfile(msg);
+      await deleteProgram(msg);
     } catch (err) {
       logger.error(err);
       showModal(TxPrompt, {
@@ -41,7 +41,7 @@ export function Program(props: TProgram) {
           className="btn-outline-filled w-24 py-2 text-sm @lg:ml-auto"
           type="button"
           onClick={() =>
-            deleteProgram({
+            handleDeleteProgram({
               id,
               program_id: props.program_id,
             })
