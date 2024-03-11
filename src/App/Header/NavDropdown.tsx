@@ -28,7 +28,7 @@ export default function NavDropdown({ links }: Props) {
               aria-hidden="true"
             />
             <Icon
-              type="ArrowDown"
+              type="ChevronDown"
               size={24}
               className={`${
                 open ? "text-blue-d7" : "text-blue-d7/70"

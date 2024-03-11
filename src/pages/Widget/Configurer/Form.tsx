@@ -38,16 +38,10 @@ export default function Form({
       <span className="-mb-4">Define split value by default:</span>
 
       <div className="flex gap-3 w-full max-xl:justify-center -mt-4">
-        <button
-          type="reset"
-          className="btn-outline-filled btn-donate max-sm:mx-auto w-40"
-        >
+        <button type="reset" className="btn-outline-filled max-sm:mx-auto w-40">
           Reset Changes
         </button>
-        <button
-          type="submit"
-          className="btn-orange btn-donate max-sm:mx-auto w-40"
-        >
+        <button type="submit" className="btn-orange max-sm:mx-auto w-40">
           Update Snippet
         </button>
       </div>

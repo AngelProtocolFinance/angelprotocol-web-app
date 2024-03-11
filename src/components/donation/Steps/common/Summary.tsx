@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import Icon from "../../../Icon";
+import { unpack } from "../../../form/helpers";
 import BackBtn from "./BackBtn";
 
 type Classes =
@@ -76,12 +77,4 @@ export default function Summary({
       {props.children}
     </div>
   );
-}
-
-export function unpack(classes?: Classes) {
-  const _classes: Classes =
-    typeof classes === "string" ? { container: classes } : classes || {};
-
-  const { container = "", split = "" } = _classes;
-  return { container, split };
 }

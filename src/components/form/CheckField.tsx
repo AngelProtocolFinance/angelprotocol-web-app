@@ -22,7 +22,7 @@ export function CheckField<T extends FieldValues>({
   } = useFormContext<T>();
 
   const id = `__${name}`;
-  const { container, input: int, lbl, error } = unpack(classes);
+  const { container, input: int, label: lbl, error } = unpack(classes);
 
   const invalid = !!get(errors, name);
 

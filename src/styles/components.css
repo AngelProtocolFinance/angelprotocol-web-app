@@ -49,6 +49,16 @@
     @apply border-red;
   }
 
+  .label {
+    @apply block text-sm after:ml-1
+  }
+  .label[data-required="true"]{
+    @apply after:content-['*'] after:text-red
+  }
+  .label[data-required="false"]{
+    @apply after:content-['(optional)'] after:text-navy-l1  after:dark:text-navy-l2 after:font-normal after:text-[0.8em]
+  }
+
   .radio {
     @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
   }
@@ -118,6 +128,10 @@
     @apply bg-transparent focus:outline-none w-full;
   }
 
+  .field-input-donate {
+    @apply bg-gray-l5 rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium
+  }
+
   .field {
     @apply relative;
   }
@@ -160,7 +174,7 @@
     @apply text-base sm:text-sm;
   }
   .btn-donate {
-    @apply text-sm md:text-base;
+    @apply rounded-full normal-case;
   }
 
   .btn-reg {
@@ -194,7 +208,22 @@
     @apply bg-gray-l6 dark:bg-blue-d5;
   }
 
+  .field-donate > input {
+    @apply field-input-donate
+  }
+  .field-donate > label {
+    @apply font-heading font-semibold text-base
+  }
+
+  .field-container-donate {
+    @apply text-base font-semibold bg-gray-l5 rounded-lg
+  }
+  .field-container-donate > input {
+    @apply py-3.5 px-5 text-base placeholder:font-medium
+  }
+
   .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
+
 }

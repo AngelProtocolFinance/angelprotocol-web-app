@@ -5,6 +5,7 @@ import { OptionType, ValKey } from "types/components";
 type Classes = {
   container?: string;
   button?: string;
+  options?: string;
 };
 
 type BaseProps = {

@@ -11,6 +11,7 @@ import { schema, stringNumber } from "schemas/shape";
 import { TipStep, setStep, setTip } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
+import ContinueBtn from "../common/ContinueBtn";
 
 const DEFAULT_PCT = "0.17";
 
@@ -147,10 +148,12 @@ export default function Tip({
 
       {!isPct && (
         <>
-          <label className="mb-2 mt-6">Your donation amount</label>
+          <label className="mb-2 mt-6 font-heading font-semibold">
+            Your Donation Amount
+          </label>
           <div
             aria-invalid={!!errors.tip?.amount}
-            className="relative field-container grid grid-cols-[1fr_auto] px-4 py-3"
+            className="relative field-container field-container-donate grid grid-cols-[1fr_auto] items-center pr-5"
           >
             <input
               type="text"
@@ -161,9 +164,9 @@ export default function Tip({
                   pct: +e.target.value / amount,
                 })
               }
-              placeholder="$ Enter amount"
+              placeholder="Enter amount"
             />
-            <span className="uppercase">{symbol}</span>
+            <span className="uppercase text-blue-d1">{symbol}</span>
             <ErrorMessage
               data-error
               className="field-error text-right mt-2"
@@ -188,9 +191,7 @@ export default function Tip({
         <span className="font-medium block">Give today, give forever.</span>
       </p>
 
-      <button type="submit" className="btn-orange btn-donate mt-6">
-        Continue
-      </button>
+      <ContinueBtn type="submit" className="mt-6" />
     </form>
   );
 }

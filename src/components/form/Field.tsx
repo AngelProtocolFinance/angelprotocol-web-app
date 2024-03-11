@@ -37,13 +37,13 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
     formState: { errors, isSubmitting },
   } = useFormContext();
 
-  const { container, input, lbl, error } = unpack(classes);
+  const style = unpack(classes);
 
   const id = "__" + String(name);
 
   return (
-    <div className={container + " field"} aria-required={required}>
-      <Label className={lbl} required={required} htmlFor={id}>
+    <div className={style.container + " field"} aria-required={required}>
+      <Label className={style.label} required={required} htmlFor={id}>
         {label}
       </Label>
 
@@ -55,13 +55,13 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
         "aria-invalid": !!get(errors, name)?.message,
         disabled: isSubmitting || disabled,
         "aria-disabled": isSubmitting || disabled,
-        className: `${input}`,
+        className: style.input,
         autoComplete: "off",
         spellCheck: false,
       })}
 
       {(tooltip && ( //tooltip in normal flow
-        <p className={error + " text-left mt-2 left-0 text-xs"}>
+        <p className={style.error + " text-left mt-2 left-0 text-xs"}>
           <span className="text-navy-l1 dark:text-navy-l2">{tooltip}</span>{" "}
           <ErrorMessage
             errors={errors}
@@ -76,7 +76,7 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
           errors={errors}
           name={name}
           as="span"
-          className={error}
+          className={style.error}
         />
       )}
     </div>

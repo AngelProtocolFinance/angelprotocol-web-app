@@ -67,9 +67,9 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
       </p>
       <ExtLink
         href={generateShareLink(shareText, type)}
-        className="btn-orange btn-donate gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
+        className="btn-blue btn-donate gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
-        <div className="relative w-8 h-8 grid place-items-center border border-white rounded">
+        <div className="relative w-8 h-8 grid place-items-center">
           <Icon type={type} className="absolute-center" size={iconSize} />
         </div>
         <span>Share now</span>

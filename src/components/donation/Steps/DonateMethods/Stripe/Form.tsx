@@ -8,6 +8,7 @@ import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { Currency } from "types/components";
+import ContinueBtn from "../../common/ContinueBtn";
 import Frequency from "./Frequency";
 import { FormValues as FV, Props } from "./types";
 
@@ -75,13 +76,18 @@ export default function Form({ widgetConfig, details }: Props) {
         label="Currency"
         onChange={onCurrencyChange}
         value={currency}
-        classes={{ label: "font-semibold" }}
+        classes={{
+          label: "font-semibold",
+          combobox: "field-container-donate rounded-lg",
+          container: "field-donate",
+        }}
         required
       />
       <Field<FV>
         name="amount"
         label="Donation amount"
-        classes={{ label: "font-semibold" }}
+        placeholder="Enter amount"
+        classes={{ label: "font-semibold", container: "field-donate" }}
         required
         // validation must be dynamicly set depending on which exact currency is selected
         tooltip={createTooltip(currency)}
@@ -92,9 +98,7 @@ export default function Form({ widgetConfig, details }: Props) {
         complete your donation
       </p>
 
-      <button className="btn-orange btn-donate mt-2" type="submit">
-        Continue
-      </button>
+      <ContinueBtn className="mt-2" type="submit" />
     </FormContainer>
   );
 }

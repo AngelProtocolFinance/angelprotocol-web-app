@@ -20,7 +20,7 @@ export default function StripeSample({
       </p>
 
       <div className="flex gap-3 md:gap-5 justify-center mt-4">
-        <button className="btn-orange btn-donate w-1/2" type="button">
+        <button className="btn-orange w-1/2" type="button">
           Pay with card
         </button>
       </div>

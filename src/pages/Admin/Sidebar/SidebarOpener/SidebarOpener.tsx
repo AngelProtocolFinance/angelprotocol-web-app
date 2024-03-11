@@ -15,7 +15,7 @@ export function SidebarOpener({ className = "", linkGroups }: Props) {
     >
       <Icon {...activeLink.icon} />
       {activeLink.title}
-      <Icon type="ArrowRight" size={24} className="ml-auto" />
+      <Icon type="ChevronRight" size={24} className="ml-auto" />
     </button>
   );
 }

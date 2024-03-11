@@ -1,11 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
-import { Field } from "components/form";
-import { FormProvider, useForm } from "react-hook-form";
+import { Field, Form as FormContainer } from "components/form";
+import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { DetailedCurrency } from "types/components";
+import ContinueBtn from "../../common/ContinueBtn";
 import { FormValues as FV, Props } from "./types";
 
 // Chariot accepts only USD.
@@ -38,44 +39,46 @@ export default function Form({ widgetConfig, details }: Props) {
   const { handleSubmit } = methods;
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit((fv) =>
-          dispatch(
-            setDetails({
-              ...fv,
-              method: "daf",
-            })
-          )
-        )}
-        className="grid gap-4"
-      >
-        <CurrencySelector
-          currencies={[USD_CURRENCY]}
-          label="Currency"
-          // only one currency available, so can't change it
-          onChange={() => {}}
-          value={USD_CURRENCY}
-          classes={{ label: "font-semibold" }}
-          required
-        />
-        <Field<FV>
-          name="amount"
-          label="Donation amount"
-          classes={{ label: "font-semibold" }}
-          required
-          tooltip="The minimum donation amount will depend on your DAF provider."
-        />
+    <FormContainer
+      methods={methods}
+      onSubmit={handleSubmit((fv) =>
+        dispatch(
+          setDetails({
+            ...fv,
+            method: "daf",
+          })
+        )
+      )}
+      className="grid gap-4"
+    >
+      <CurrencySelector
+        currencies={[USD_CURRENCY]}
+        label="Currency"
+        // only one currency available, so can't change it
+        onChange={() => {}}
+        value={USD_CURRENCY}
+        classes={{
+          label: "font-semibold",
+          combobox: "field-container-donate",
+          container: "field-donate",
+        }}
+        required
+      />
+      <Field<FV>
+        name="amount"
+        label="Donation amount"
+        placeholder="Enter amount"
+        classes={{ label: "font-semibold", container: "field-donate mt-1" }}
+        required
+        tooltip="The minimum donation amount will depend on your DAF provider."
+      />
 
-        <p className="text-sm text-navy-d4 dark:text-navy-l2 mt-4">
-          Please click the button below and follow the instructions provided to
-          complete your donation
-        </p>
+      <p className="text-sm text-navy-d4 dark:text-navy-l2 mt-4">
+        Please click the button below and follow the instructions provided to
+        complete your donation
+      </p>
 
-        <button className="btn-orange btn-donate mt-2" type="submit">
-          Continue
-        </button>
-      </form>
-    </FormProvider>
+      <ContinueBtn className="mt-2" type="submit" />
+    </FormContainer>
   );
 }

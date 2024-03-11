@@ -137,6 +137,7 @@ export default function Form() {
         </Label>
         <Selector<FV, "endow_designation", string>
           name="endow_designation"
+          classes={{ options: "text-sm" }}
           options={endowDesignations.map((designation) => ({
             label: designation,
             value: designation,

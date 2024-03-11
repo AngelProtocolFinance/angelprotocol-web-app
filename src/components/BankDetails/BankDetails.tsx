@@ -54,7 +54,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
         currencies={currencies}
         onChange={(c) => setCurrency(c)}
         value={currency}
-        classes={{ combobox: "w-full md:w-80" }}
+        classes={{ combobox: "w-full md:w-80", options: "text-sm" }}
         disabled={isSubmitting}
         label="Select your bank account currency:"
         required

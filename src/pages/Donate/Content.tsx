@@ -1,4 +1,5 @@
 import ExtLink from "components/ExtLink";
+import { DappLogo } from "components/Image";
 import { Steps } from "components/donation";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -37,33 +38,34 @@ function Content(props: Props) {
 
   return (
     <div
-      className="max-sm:fixed max-sm:inset-0 overflow-y-auto w-full z-20 bg-[#F6F7F8] py-4 sm:py-10"
+      className="fixed inset-0 overflow-y-auto w-full z-20 bg-[#F6F7F8]"
       id={CONTAINER_ID}
     >
-      <div className="md:padded-container grid md:grid-cols-[auto_1fr] lg:grid-cols-[auto_1fr_auto] items-start content-start gap-x-6">
+      <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
+        <DappLogo classes="h-[2.036rem]" />
         <Link
           to={`${appRoutes.marketplace}/${props.id}`}
-          className="hidden md:block max-md:px-4 col-span-full justify-self-end mb-4 font-semibold text-blue hover:text-blue-l1 active:text-blue-d1"
+          className="font-semibold font-heading hover:text-blue-d1"
         >
           Cancel
         </Link>
+      </div>
+      <div className="md:px-4 max-w-[68.625rem] mx-auto grid md:grid-cols-[1fr_auto] items-start content-start gap-4">
         <OrgCard
-          id={props.id}
-          banner={props.banner}
           name={props.name}
           tagline={props.tagline}
           logo={props.logo}
-          classes="mb-4 md:mb-0 md:col-start-1 md:w-64 xl:w-80 md:h-full lg:h-auto"
+          classes="col-start-1 row-start-1"
         />
         {/** small screen but space is still enough to render sidebar */}
-        <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded border-gray-l4">
+        <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps
-            className="md:border border-gray-l4 col-start-1 md:col-start-2 md:row-start-2 md:row-span-2 lg:row-span-1"
+            className="md:border border-gray-l4 rounded-lg row-start-2"
             donaterConfig={null}
           />
         </div>
-        <FAQ classes="max-md:px-4 mt-4 col-start-1 md:row-start-3 md:row-span-4 md:col-start-1 md:w-64 xl:w-80 lg:row-start-2 lg:col-start-3 lg:mt-0" />
-        <p className="max-md:px-4 mt-4 text-xs leading-normal text-left text-navy-l1 dark:text-navy-l2 col-start-1 md:col-start-2 md:row-start-4 lg:row-start-3">
+        <FAQ classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]" />
+        <p className="max-md:border-t max-md:border-gray-l3 max-md:px-4 max-md:pt-4 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
           By making a donation to {APP_NAME}, you agree to our{" "}
           <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
           <A href={PRIVACY_POLICY}>Privacy Policy</A>, and{" "}
@@ -75,7 +77,7 @@ function Content(props: Props) {
           unrestricted basis, regardless of any designations or restrictions
           made by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
         </p>
-        <p className="max-md:px-4 mt-4 text-xs leading-normal text-left text-navy-l1 dark:text-navy-l2 col-start-1 md:col-start-2 md:row-start-5 lg:row-start-4">
+        <p className="max-md:px-4 mb-4 max-mbcol-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
           <span className="block mb-0.5">
             Need help? See{" "}
             <Link to="./#faqs" className="hover:underline font-medium">

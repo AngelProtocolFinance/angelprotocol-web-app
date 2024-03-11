@@ -49,7 +49,7 @@ export default function CurrencyOptions({
     >
       {(currencies) => (
         <Combobox.Options
-          className={`${classes} w-full bg-white dark:bg-blue-d6 shadow-lg rounded max-h-52 overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`}
+          className={`${classes} w-full bg-white dark:bg-blue-d6 shadow-lg rounded max-h-52 overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
           {currencies.map(({ code, name, min, rate }) => (
             <Combobox.Option key={code} value={{ code, name, min, rate }}>
@@ -57,7 +57,7 @@ export default function CurrencyOptions({
                 <div
                   className={`${active ? "bg-blue-l2 dark:bg-blue-d1" : ""} ${
                     selected ? "font-semibold" : "font-normal"
-                  } flex items-center gap-2 p-2 text-sm cursor-pointer truncate`}
+                  } flex items-center gap-2 p-2 cursor-pointer truncate`}
                 >
                   {!!name
                     ? `${code.toUpperCase()} - ${name}`

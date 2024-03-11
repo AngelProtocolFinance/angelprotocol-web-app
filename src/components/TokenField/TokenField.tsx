@@ -6,6 +6,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { TokenWithAmount } from "types/tx";
+import { unpack } from "../form/helpers";
 import TokenSelector from "./TokenSelector";
 import { Props } from "./types";
 
@@ -37,23 +38,19 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
   const amountField: any = `${name}.${amountKey}`;
   const tokenIDField: any = `${name}.${tokenIDkey}`;
 
+  const style = unpack(classes);
+
   return (
-    <div className={`grid ${classes?.container ?? ""}`}>
-      <div className="flex max-sm:flex-col max-sm:items-start items-center mb-1">
-        <label
-          htmlFor="amount"
-          className={`font-semibold mr-auto max-sm:mb-2 after:content-['_*'] after:text-red ${
-            classes?.label ?? ""
-          }`}
-        >
-          {label}
-        </label>
-      </div>
+    <div className={`grid ${style.container}`}>
+      <label
+        htmlFor="amount"
+        className={`font-semibold mr-auto mb-2 after:content-['_*'] after:text-red ${style.label}`}
+      >
+        {label}
+      </label>
 
       <div
-        className={`${
-          classes?.inputContainer ?? ""
-        } relative grid grid-cols-[1fr_auto] items-center gap-2 px-4 field-container peer`}
+        className={`${style.inputContainer} relative grid grid-cols-[1fr_auto] items-center gap-2 field-container peer`}
       >
         <input
           {...register(amountField)}
@@ -61,6 +58,7 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
           autoComplete="off"
           id="amount"
           type="text"
+          placeholder="Enter amount"
           className="text-sm py-3.5 dark:text-navy-l2"
         />
         <TokenSelector
