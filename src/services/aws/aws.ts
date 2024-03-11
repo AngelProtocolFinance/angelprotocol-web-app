@@ -155,7 +155,7 @@ export const aws = createApi({
     >({
       query: ({ id, hide_bg_tip }) => {
         return {
-          url: `/v1/endowments/${id}`,
+          url: `/${v(1)}/endowments/${id}`,
           method: "PATCH",
           headers: { authorization: TEMP_JWT },
           body: { hide_bg_tip },
