@@ -21,12 +21,12 @@
 
 .ql-toolbar button.ql-active .ql-stroke {
   fill: none;
-  stroke: orange !important;
+  stroke: #2D89C8 !important;
 }
 
 .ql-toolbar button:hover .ql-stroke {
   fill: none;
-  stroke: orange !important;
+  stroke: #2D89C8 !important;
 }
 
 .ql-toolbar .ql-stroke {

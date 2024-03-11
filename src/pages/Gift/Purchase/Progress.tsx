@@ -13,7 +13,7 @@ export default function Progress({ classes = "" }: { classes?: string }) {
       <div className="mt-3 relative h-2 w-full col-span-full bg-gray-l3 dark:bg-navy rounded-full overflow-hidden">
         <div
           style={{ width: `${(step / NUM_STEPS) * 100}%` }}
-          className="h-full bg-orange rounded-full"
+          className="h-full bg-blue rounded-full"
         />
       </div>
     </div>

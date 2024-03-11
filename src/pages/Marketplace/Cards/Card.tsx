@@ -102,7 +102,7 @@ function KYCIcon({ className = "" }) {
         <Icon
           type="AdminPanel"
           size={20}
-          className="text-white hover:text-orange cursor-pointer"
+          className="text-white hover:text-blue-d1 cursor-pointer"
         />
       </div>
     </>

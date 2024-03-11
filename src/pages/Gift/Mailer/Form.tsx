@@ -95,7 +95,7 @@ export default function Form({ classes = "" }) {
           Reset
         </button>
         <button
-          className="btn-orange btn-gift"
+          className="btn-blue btn-gift"
           type="submit"
           disabled={isSubmitting}
         >

@@ -37,7 +37,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       {/*<NetworkDropdown classes="px-4 lg:px-6" />*/}
       {/*<CurrencyDropdown classes="px-4 lg:px-6" />*/}
 
-      <div className="max-lg:row-start-2 flex gap-x-4 items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-orange-l6 dark:bg-blue-d7 border-y lg:border-t border-gray-l4">
+      <div className="max-lg:row-start-2 flex gap-x-4 items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-blue-l5 dark:bg-blue-d7 border-y lg:border-t border-gray-l4">
         <h3 className="uppercase lg:hidden">Filter by</h3>
         <button
           type="reset"

@@ -187,7 +187,7 @@ function Action(props: PropsWithChildren<{ onClick: () => void }>) {
   return (
     <button
       type="button"
-      className="cursor-pointer text-blue hover:text-orange hover:underline"
+      className="cursor-pointer text-blue-d1 hover:text-blue hover:underline"
       onClick={props.onClick}
     >
       {props.children}

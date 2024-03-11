@@ -9,7 +9,7 @@ type Props = {
 export default function CompleteBtn({ estimate }: Props) {
   return (
     <button
-      className="btn-orange btn-gift"
+      className="btn-blue btn-gift"
       disabled={!isEstimated(estimate)}
       type="button"
     >

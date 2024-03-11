@@ -47,7 +47,7 @@ export default function Form({ classes = "" }) {
           Cancel
         </Link>
         <button
-          className="btn-orange btn-gift"
+          className="btn-blue btn-gift"
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }

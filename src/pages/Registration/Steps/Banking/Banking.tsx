@@ -65,7 +65,7 @@ function Banking() {
     <div className="flex flex-col items-start max-sm:items-center">
       {isChanging && (
         <button
-          className="btn-orange px-2 py-1 rounded text-xs mt-2 mb-4"
+          className="btn-blue px-2 py-1 rounded text-xs mt-2 mb-4"
           type="button"
           onClick={() => setIsChanging(false)}
         >

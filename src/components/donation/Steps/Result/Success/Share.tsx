@@ -46,7 +46,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
 
   return (
     <Modal className="grid content-start fixed-center z-20 border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 text-navy-d4 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
-      <div className="grid place-items-center relative h-16 font-heading font-bold bg-orange-l5 dark:bg-blue-d7 border-b border-gray-l4">
+      <div className="grid place-items-center relative h-16 font-heading font-bold bg-blue-l5 dark:bg-blue-d7 border-b border-gray-l4">
         Share on {type === "FacebookCircle" ? "Facebook" : type}
         <button
           onClick={closeModal}

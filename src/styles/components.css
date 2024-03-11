@@ -78,19 +78,11 @@
   .checkbox[aria-invalid="true"] {
     @apply border-red;
   }
-  .checkbox-orange {
-    @apply checkbox focus:ring-orange-l2 disabled:border-gray-l3 disabled:dark:border-gray;
-  }
-  .checkbox-orange:checked {
-    @apply border-none bg-orange text-white disabled:bg-gray-l3 disabled:dark:bg-navy;
-  }
 }
 
 /** Layer 2 components */
 @layer components {
-  .btn-orange {
-    @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
-  }
+
   .btn-outline {
     @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy border border-gray-l3 dark:border-navy enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
   }
@@ -180,16 +172,8 @@
   .btn-reg {
     @apply text-sm;
   }
-  .check-field-reg > input {
-    @apply checked:bg-orange before:hidden;
-  }
-  .check-field-kyc > input {
-    @apply w-6 h-6 before:text-lg;
-  }
 
-  .checkbox-marketplace {
-    @apply inline-block border-gray-d1 dark:border-gray-l3 rounded-sm before:text-sm checked:bg-blue-l2 checked:text-white checked:border-blue-l2 dark:checked:bg-blue dark:checked:border-blue focus:ring-blue;
-  }
+
 
   .field-gift > input {
     @apply bg-white dark:bg-blue-d6;

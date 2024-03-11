@@ -22,7 +22,7 @@ export default function AdvancedOptions({
     <div
       className={`grid ${classes} border border-gray-l4 rounded overflow-clip`}
     >
-      <div className="flex items-center justify-between px-4 py-2 bg-orange-l6 dark:bg-blue-d7">
+      <div className="flex items-center justify-between px-4 py-2 bg-blue-l5 dark:bg-blue-d7">
         <span className="font-bold py-2">
           {isOpen && "Hide"} Advanced Options
         </span>

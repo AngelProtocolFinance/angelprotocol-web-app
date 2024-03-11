@@ -20,15 +20,13 @@ export default function StripeSample({
       </p>
 
       <div className="flex gap-3 md:gap-5 justify-center mt-4">
-        <button className="btn-orange w-1/2" type="button">
+        <button className="btn-blue w-1/2" type="button">
           Pay with card
         </button>
       </div>
       <p className="text-sm italic text-navy-d4 dark:text-navy-l2 mt-4">
         By making a donation, you agree to our{" "}
-        <span className="underline text-orange hover:text-orange-l2">
-          Terms & Conditions
-        </span>
+        <span className="underline text-blue-d1">Terms & Conditions</span>
       </p>
     </div>
   );
