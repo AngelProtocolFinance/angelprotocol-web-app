@@ -2,30 +2,36 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CheckField, Form } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useAdminContext } from "pages/Admin/Context";
 import { UseFormReturn, useForm } from "react-hook-form";
+import { useToggleBgTipScreenMutation } from "services/aws/aws";
 import { bool, object } from "yup";
 
 export default function HideBGTipCheckbox() {
+  const { id } = useAdminContext();
   const { handleError } = useErrorContext();
+  const [toggleBgTipScreen] = useToggleBgTipScreenMutation();
+
   const methods = useForm({
-    resolver: yupResolver(object({ hideBgTip: bool() })),
+    resolver: yupResolver(object({ hideBgTip: bool().required() })),
     defaultValues: { hideBgTip: false },
     mode: "onChange",
   });
-  const {
-    handleSubmit,
-    formState: { isSubmitting, dirtyFields },
-  } = methods;
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
 
   const submit = async (fv: FV) => {
     try {
-      throw "unimplemented";
+      await toggleBgTipScreen({ id, hide_bg_tip: fv.hideBgTip }).unwrap();
     } catch (err) {
       handleError(err, GENERIC_ERROR_MESSAGE);
     }
   };
+
+  const {
+    handleSubmit,
+    formState: { isSubmitting, dirtyFields },
+  } = methods;
 
   return (
     <Form

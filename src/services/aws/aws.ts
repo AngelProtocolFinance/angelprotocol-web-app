@@ -149,6 +149,19 @@ export const aws = createApi({
         };
       },
     }),
+    toggleBgTipScreen: builder.mutation<
+      EndowmentProfile,
+      Pick<EndowmentProfile, "id"> & { hide_bg_tip: boolean }
+    >({
+      query: ({ id, hide_bg_tip }) => {
+        return {
+          url: `/v1/endowments/${id}`,
+          method: "PATCH",
+          headers: { authorization: TEMP_JWT },
+          body: { hide_bg_tip },
+        };
+      },
+    }),
     applications: builder.query<
       PaginatedAWSQueryRes<Application[]>,
       ApplicationsQueryParams
@@ -195,6 +208,7 @@ export const {
   useApplicationsQuery,
   useApplicationQuery,
   useReviewApplicationMutation,
+  useToggleBgTipScreenMutation,
 
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
