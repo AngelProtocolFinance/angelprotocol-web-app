@@ -50,6 +50,7 @@ export type Endowment = {
   hq_country: string;
   image: string;
   kyc_donors_only: boolean;
+  hide_bg_tip?: boolean;
   logo: string;
   name: string;
   card_img?: string;
