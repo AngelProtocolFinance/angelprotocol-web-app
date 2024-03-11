@@ -21,7 +21,7 @@
 
 .ql-toolbar button.ql-active .ql-stroke {
   fill: none;
-  stroke: #2D89C8 !important;
+  @apply !stroke-blue-d1
 }
 
 .ql-toolbar button:hover .ql-stroke {
