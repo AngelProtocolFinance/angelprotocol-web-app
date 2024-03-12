@@ -77,7 +77,7 @@ export const apes = createApi({
       }),
       transformResponse: (res: { grantId: string }) => res.grantId,
     }),
-    fiatCurrencies: builder.query<DetailedCurrency[], null>({
+    fiatCurrencies: builder.query<DetailedCurrency[], void>({
       query: () => ({
         url: `v1/fiat/currencies`,
       }),

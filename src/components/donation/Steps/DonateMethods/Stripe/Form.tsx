@@ -17,7 +17,7 @@ const USD_CODE = "usd";
 export default function Form({ widgetConfig, details }: Props) {
   const dispatch = useSetter();
 
-  const currencies = useFiatCurrenciesQuery(null);
+  const currencies = useFiatCurrenciesQuery();
 
   const initial: FV = {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
