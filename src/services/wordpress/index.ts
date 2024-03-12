@@ -32,10 +32,14 @@ export const wordpress = createApi({
     page: builder.query<Page, string>({
       query: (slug) => {
         return {
-          url: `/pages?slug=${slug}`,
+          url: `pages?slug=${slug}`,
           params: {},
         };
       },
+    }),
+    media: builder.query<any, any>({
+      query: (id) => `media/${id}`,
+      transformResponse: (res: any) => res.guid.rendered.toString(),
     }),
     // categories: builder.query<Category[], WpQueryParams>({
     //   query: () => {
@@ -56,5 +60,10 @@ export const wordpress = createApi({
   }),
 });
 
-export const { usePagesQuery, usePageQuery, usePostsQuery, usePostQuery } =
-  wordpress;
+export const {
+  usePagesQuery,
+  usePageQuery,
+  usePostsQuery,
+  usePostQuery,
+  useMediaQuery,
+} = wordpress;
