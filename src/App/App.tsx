@@ -26,10 +26,10 @@ const BankingApplication = lazy(() => import("pages/BankingApplication"));
 const OAuthRedirector = lazy(() => import("pages/OAuthRedirector"));
 const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const Widget = lazy(() => import("pages/Widget"));
-const WpPosts = lazy(() => import("pages/WP/Blog/Posts"));
-const WpPost = lazy(() => import("pages/WP/Blog/Post"));
-const WpPages = lazy(() => import("pages/WP/Pages/Pages"));
-const WpPage = lazy(() => import("pages/WP/Pages/Page"));
+const WordpressPosts = lazy(() => import("pages/Wordpress/Posts/Posts"));
+const WordpressPost = lazy(() => import("pages/Wordpress/Posts/Post"));
+// const WordPressPages = lazy(() => import("pages/Wordpress/Pages/Pages"));
+const WordPressPage = lazy(() => import("pages/Wordpress/Pages/Page"));
 
 export default function App() {
   const location = useLocation();
@@ -111,11 +111,11 @@ export default function App() {
               </div>
             }
           />
-          <Route path={wpRoutes.blog}>
-            <Route path=":slug" element={<WpPost />} />
-            <Route index element={<WpPosts />} />
+          <Route path={appRoutes.blog}>
+            <Route path=":slug" element={<WordpressPost />} />
+            <Route index element={<WordpressPosts />} />
           </Route>
-          <Route path={`${wpRoutes.pages}:slug`} element={<WpPage />} />
+          <Route path={`${wpRoutes.pages}:slug`} element={<WordPressPage />} />
         </Route>
         <Route
           path="*"
