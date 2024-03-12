@@ -77,6 +77,17 @@ export const apes = createApi({
       }),
       transformResponse: (res: { grantId: string }) => res.grantId,
     }),
+    currencies: builder.query<DetailedCurrency[], null>({
+      query: () => ({
+        url: `v1/fiat/paypal/currencies`,
+      }),
+      transformResponse: (res: FiatCurrencyData) =>
+        res.currencies.map((c) => ({
+          code: c.currency_code,
+          min: c.minimum_amount,
+          rate: c.rate,
+        })),
+    }),
     paypalOrder: builder.query<string, CreatePayPalOrderParams>({
       query: (params) => ({
         url: `v1/fiat/paypal/${apiEnv}/orders`,
@@ -105,17 +116,6 @@ export const apes = createApi({
         url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
-    paypalCurrencies: builder.query<DetailedCurrency[], null>({
-      query: () => ({
-        url: `v1/fiat/paypal/currencies`,
-      }),
-      transformResponse: (res: FiatCurrencyData) =>
-        res.currencies.map((c) => ({
-          code: c.currency_code,
-          min: c.minimum_amount,
-          rate: c.rate,
-        })),
-    }),
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
     }),
@@ -125,11 +125,11 @@ export const apes = createApi({
 export const {
   useCapturePayPalOrderMutation,
   useChariotGrantIntentMutation,
+  useCurrenciesQuery,
   useStripePaymentIntentQuery,
   usePaypalOrderQuery,
   useEndowBalanceQuery,
   useGetStripePaymentStatusQuery,
-  usePaypalCurrenciesQuery,
   useTokensQuery,
   util: {
     invalidateTags: invalidateApesTags,
