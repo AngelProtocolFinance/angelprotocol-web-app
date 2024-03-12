@@ -56,4 +56,5 @@ export const wordpress = createApi({
   }),
 });
 
-export const { usePagesQuery } = wordpress;
+export const { usePagesQuery, usePageQuery, usePostsQuery, usePostQuery } =
+  wordpress;
