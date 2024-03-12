@@ -9,10 +9,10 @@ export default function HideBGTipCheckbox() {
       </CheckField>
       <span className="text-xs sm:text-sm italic text-navy-l1">
         During the donation flow, there is a step in which users can choose to
-        tip us any amount they desire alongside their donation to you - the
-        amount they tip will not affect the donation amount you receive. You may
-        choose to turn this step off in the donation flow by ticking the
-        checkbox below and we will instead apply a fixed 1.5% fee to any
+        tip Better Giving any amount they desire alongside their donation to you
+        - the amount they tip will not affect the donation amount you receive.
+        You may choose to turn this step off in the donation flow by ticking the
+        checkbox above and we will instead apply a fixed 1.5% fee to any
         donation amount you receive.
       </span>
     </div>
