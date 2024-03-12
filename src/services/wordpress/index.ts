@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { APIs } from "constants/urls";
-import { Page, Post, WpQueryParams } from "types/wordpress";
+import { Wordpress } from "types/wordpress";
 
 export const wordpress = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: APIs.wordpress }),
   reducerPath: "wordpress",
   endpoints: (builder) => ({
-    posts: builder.query<Post[], WpQueryParams>({
+    posts: builder.query<Wordpress.Post[], Wordpress.Post.QueryParams>({
       query: (_params) => {
         return {
           url: "posts",
@@ -14,16 +14,16 @@ export const wordpress = createApi({
         };
       },
     }),
-    post: builder.query<Post, string>({
+    post: builder.query<Wordpress.Post, string>({
       query: (slug) => {
         return {
           url: "posts",
           params: { slug },
         };
       },
-      transformResponse: ([post]: [Post]) => post,
+      transformResponse: ([post]: [Wordpress.Post]) => post,
     }),
-    pages: builder.query<Page[], WpQueryParams>({
+    pages: builder.query<Wordpress.Page[], Wordpress.Post.QueryParams>({
       query: (_params) => {
         return {
           url: "pages",
@@ -31,7 +31,7 @@ export const wordpress = createApi({
         };
       },
     }),
-    page: builder.query<Page, string>({
+    page: builder.query<Wordpress.Page, string>({
       query: (slug) => {
         return {
           url: `pages?slug=${slug}`,
