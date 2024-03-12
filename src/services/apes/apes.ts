@@ -79,7 +79,7 @@ export const apes = createApi({
     }),
     currencies: builder.query<DetailedCurrency[], null>({
       query: () => ({
-        url: `v1/fiat/paypal/currencies`,
+        url: `v1/fiat/currencies`,
       }),
       transformResponse: (res: FiatCurrencyData) =>
         res.currencies.map((c) => ({
