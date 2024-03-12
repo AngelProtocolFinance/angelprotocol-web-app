@@ -9,7 +9,7 @@ export const wordpress = createApi({
     posts: builder.query<Post[], WpQueryParams>({
       query: (_params) => {
         return {
-          url: "post",
+          url: "posts",
           params: {},
         };
       },

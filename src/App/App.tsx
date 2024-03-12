@@ -112,8 +112,8 @@ export default function App() {
             }
           />
           <Route path={appRoutes.blog}>
-            <Route path=":slug" element={<BlogPosts />} />
-            <Route index element={<BlogPost />} />
+            <Route path=":slug" element={<BlogPost />} />
+            <Route index element={<BlogPosts />} />
           </Route>
           <Route path={`${wpRoutes.pages}:slug`} element={<WordPressPage />} />
         </Route>

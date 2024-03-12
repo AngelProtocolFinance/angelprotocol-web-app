@@ -5,7 +5,7 @@ import { useMediaQuery, usePostsQuery } from "services/wordpress";
 
 export default function Posts() {
   const { data: _posts = [], isLoading, isError } = usePostsQuery({});
-  if (!isLoading) return <p>Loading...TODO: create skeleton</p>;
+  if (isLoading) return <p>Loading...TODO: create skeleton</p>;
   if (isError) return <p>Error loading posts...</p>;
   if (_posts.length <= 0) return <p>No posts found</p>;
 
