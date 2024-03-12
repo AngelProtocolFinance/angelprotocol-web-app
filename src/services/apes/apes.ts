@@ -116,34 +116,6 @@ export const apes = createApi({
           rate: c.rate,
         })),
     }),
-    stripeCurrencies: builder.query<DetailedCurrency[], null>({
-      async queryFn(_args, _api, _extraOptions, baseQuery) {
-        return await fetch("https://ipapi.co/json/")
-          .then<{
-            country_code: string; // ISO 3166-1 alpha-2 code
-          }>((response) => response.json())
-          .then(({ country_code }) =>
-            baseQuery({
-              url: `v2/fiat/stripe-proxy/${apiEnv}/currencies/${country_code}`,
-            })
-          )
-          .then((response) => {
-            if (response.error) {
-              return response;
-            }
-
-            const data = response.data as FiatCurrencyData;
-
-            return {
-              data: data.currencies.map((c) => ({
-                code: c.currency_code,
-                min: c.minimum_amount,
-                rate: c.rate,
-              })),
-            };
-          });
-      },
-    }),
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
     }),
@@ -158,7 +130,6 @@ export const {
   useEndowBalanceQuery,
   useGetStripePaymentStatusQuery,
   usePaypalCurrenciesQuery,
-  useStripeCurrenciesQuery,
   useTokensQuery,
   util: {
     invalidateTags: invalidateApesTags,

@@ -4,7 +4,7 @@ import { Field, Form as FormContainer } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
-import { useStripeCurrenciesQuery } from "services/apes";
+import { usePaypalCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { Currency } from "types/components";
@@ -17,7 +17,7 @@ const USD_CODE = "usd";
 export default function Form({ widgetConfig, details }: Props) {
   const dispatch = useSetter();
 
-  const currencies = useStripeCurrenciesQuery(null);
+  const currencies = usePaypalCurrenciesQuery(null);
 
   const initial: FV = {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
