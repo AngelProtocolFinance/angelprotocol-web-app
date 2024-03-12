@@ -215,7 +215,11 @@
 @layer components {
   .wp-post > h5,
   .wp-post > h6 {
-    @apply font-heading font-bold py-4 mb-2;
+    @apply font-heading font-bold py-4 mb-2 text-balance !leading-relaxed;
+  }
+
+  .wp-post p {
+    @apply my-3
   }
 
   .wp-post > div {

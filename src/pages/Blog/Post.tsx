@@ -24,16 +24,19 @@ export default function Post() {
           <Breadcrumbs
             className="text-xs sm:text-sm justify-start"
             items={[
-              { title: "Blog", to: appRoutes.blog },
+              { title: "Blog", to: appRoutes.blog, end: true },
               {
                 title: post.title.rendered,
                 to: `${wpRoutes.blog}/${slug}`,
               },
             ]}
           />
-          <h1 className="font-header text-[1.63rem] md:text-3xl lg:text-[2.75rem] break-words my-5">
-            {post.title.rendered}
-          </h1>
+          <h1
+            className="font-heading text-[1.63rem]/tight md:text-3xl/tight lg:text-[2.75rem]/tight break-words my-5"
+            //biome-ignore lint: trusted html
+            dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+          />
+
           <div className="text-center">
             <p className="font-bold text-xs tracking-wider uppercase">
               Updated on:{" "}
@@ -49,7 +52,7 @@ export default function Post() {
         </div>
         <div
           className="grid padded-container px-2 wp-post"
-          // biome-ignore lint: <explanation>
+          //biome-ignore lint: trusted html
           dangerouslySetInnerHTML={{ __html: post.content.rendered }}
         />
       </div>

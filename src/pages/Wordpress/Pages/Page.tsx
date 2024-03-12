@@ -17,7 +17,7 @@ export default function Page() {
       </div>
       <span
         className="grid justify-center items-center text-center"
-        // biome-ignore lint: <explanation>
+        // biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: _page.content.rendered }}
       ></span>
     </div>

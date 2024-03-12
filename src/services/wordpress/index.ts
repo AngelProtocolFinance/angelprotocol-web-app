@@ -17,9 +17,11 @@ export const wordpress = createApi({
     post: builder.query<Post, string>({
       query: (slug) => {
         return {
-          url: `posts?slug=${slug}`,
+          url: "posts",
+          params: { slug },
         };
       },
+      transformResponse: ([post]: [Post]) => post,
     }),
     pages: builder.query<Page[], WpQueryParams>({
       query: (_params) => {

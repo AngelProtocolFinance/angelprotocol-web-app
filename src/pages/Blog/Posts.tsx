@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 import { useMediaQuery, usePostsQuery } from "services/wordpress";
 
 export default function Posts() {
-  const { data: _posts = [], isLoading, isError } = usePostsQuery({});
+  const { data: _posts, isLoading, isError } = usePostsQuery({});
   if (isLoading) return <p>Loading...TODO: create skeleton</p>;
-  if (isError) return <p>Error loading posts...</p>;
-  if (_posts.length <= 0) return <p>No posts found</p>;
+  if (!_posts || isError) return <p>Error loading posts..</p>;
 
   return (
     <div className="grid gap-y-4 content-start padded-container min-h-screen">
@@ -25,7 +24,7 @@ export default function Posts() {
               <h2 className="text-pretty">{post.title.rendered}</h2>
               <p
                 className="text-navy-l1"
-                // biome-ignore lint: <explanation>
+                // biome-ignore lint: trusted html
                 dangerouslySetInnerHTML={{
                   __html: post.excerpt.rendered,
                 }}

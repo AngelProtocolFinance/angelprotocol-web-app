@@ -36,7 +36,7 @@ export default function Pages() {
                     </h2>
                     <p
                       className="justify text-gray-d1 dark:text-gray text-md -mt-2"
-                      // biome-ignore lint: TODO: any other method to set this
+                      // biome-ignore lint: trusted html
                       dangerouslySetInnerHTML={{
                         __html: page.excerpt.rendered,
                       }}
