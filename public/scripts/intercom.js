@@ -6,7 +6,7 @@ window.intercomSettings = {
   background_color: "#2D89C8",
   action_color: "#2D89C8",
 };
-(() => {
+(function () {
   var w = window;
   var ic = w.Intercom;
   if (typeof ic === "function") {
@@ -18,7 +18,7 @@ window.intercomSettings = {
       i.c(arguments);
     };
     i.q = [];
-    i.c = (args) => {
+    i.c = function (args) {
       i.q.push(args);
     };
     w.Intercom = i;
