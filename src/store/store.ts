@@ -5,6 +5,7 @@ import amplifyConfig from "constants/aws";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
 import { coingecko } from "services/coingecko";
+import { wordpress } from "services/wordpress";
 import auth, { loadSession, reset } from "slices/auth";
 import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
@@ -21,12 +22,14 @@ export const store = configureStore({
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,
     [coingecko.reducerPath]: coingecko.reducer,
+    [wordpress.reducerPath]: wordpress.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat([
       aws.middleware,
       apes.middleware,
       coingecko.middleware,
+      wordpress.middleware,
     ]),
 });
 
