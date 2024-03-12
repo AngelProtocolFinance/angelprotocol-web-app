@@ -64,4 +64,5 @@ export type Page = Post & {
   parent: number;
   jetpack_featured_media_url: any; //TODO: type
   excerpt: { rendered: any }; //TODO: type
+  content: { rendered: any }; //TODO: type
 };

@@ -26,8 +26,8 @@ const BankingApplication = lazy(() => import("pages/BankingApplication"));
 const OAuthRedirector = lazy(() => import("pages/OAuthRedirector"));
 const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const Widget = lazy(() => import("pages/Widget"));
-const WordpressPosts = lazy(() => import("pages/Wordpress/Posts/Posts"));
-const WordpressPost = lazy(() => import("pages/Wordpress/Posts/Post"));
+const BlogPosts = lazy(() => import("pages/Blog/Posts"));
+const BlogPost = lazy(() => import("pages/Blog/Post"));
 // const WordPressPages = lazy(() => import("pages/Wordpress/Pages/Pages"));
 const WordPressPage = lazy(() => import("pages/Wordpress/Pages/Page"));
 
@@ -112,8 +112,8 @@ export default function App() {
             }
           />
           <Route path={appRoutes.blog}>
-            <Route path=":slug" element={<WordpressPost />} />
-            <Route index element={<WordpressPosts />} />
+            <Route path=":slug" element={<BlogPosts />} />
+            <Route index element={<BlogPost />} />
           </Route>
           <Route path={`${wpRoutes.pages}:slug`} element={<WordPressPage />} />
         </Route>
