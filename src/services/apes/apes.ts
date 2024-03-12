@@ -77,7 +77,7 @@ export const apes = createApi({
       }),
       transformResponse: (res: { grantId: string }) => res.grantId,
     }),
-    currencies: builder.query<DetailedCurrency[], null>({
+    fiatCurrencies: builder.query<DetailedCurrency[], null>({
       query: () => ({
         url: `v1/fiat/currencies`,
       }),
@@ -125,7 +125,7 @@ export const apes = createApi({
 export const {
   useCapturePayPalOrderMutation,
   useChariotGrantIntentMutation,
-  useCurrenciesQuery,
+  useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
   usePaypalOrderQuery,
   useEndowBalanceQuery,
