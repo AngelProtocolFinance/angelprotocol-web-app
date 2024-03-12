@@ -213,14 +213,28 @@
 
 /* WORDPRESS-ONLY Components */
 @layer components {
-  .wp-post > h5,
-  .wp-post > h6 {
-    @apply font-heading font-bold py-4 mb-2 text-balance !leading-relaxed;
+  .wp-post h5,
+  .wp-post h6 {
+    @apply my-4 mb-2 text-pretty;
   }
 
   .wp-post p {
     @apply my-3
   }
+
+  .wp-post figure {
+    @apply my-6
+  }
+
+  .wp-post img:not(figure img) {
+    @apply my-6
+  }
+
+  .wp-post figure figcaption {
+    @apply text-sm mt-2
+  }
+
+
 
   .wp-post > div {
     @apply py-4;

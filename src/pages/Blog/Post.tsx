@@ -26,7 +26,7 @@ export default function Post() {
             items={[
               { title: "Blog", to: appRoutes.blog, end: true },
               {
-                title: post.title.rendered,
+                title: { __html: post.title.rendered },
                 to: `${wpRoutes.blog}/${slug}`,
               },
             ]}

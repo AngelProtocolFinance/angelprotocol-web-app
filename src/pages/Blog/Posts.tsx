@@ -21,14 +21,20 @@ export default function Posts() {
           >
             <Media id={post.featured_media} />
             <div className="flex flex-col p-3 pb-4 gap-3">
-              <h2 className="text-pretty">{post.title.rendered}</h2>
+              <h2
+                className="text-pretty"
+                // biome-ignore lint: trusted html
+                dangerouslySetInnerHTML={{
+                  __html: post.title.rendered,
+                }}
+              />
               <p
                 className="text-navy-l1"
                 // biome-ignore lint: trusted html
                 dangerouslySetInnerHTML={{
                   __html: post.excerpt.rendered,
                 }}
-              ></p>
+              />
             </div>
           </Link>
         ))}
