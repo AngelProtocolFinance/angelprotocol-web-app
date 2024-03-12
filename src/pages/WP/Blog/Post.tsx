@@ -39,7 +39,7 @@ export default function Post() {
             let post = postsData[0];
             if (post.featured_media) {
               post.featured_media_url = await getFeaturedImage(
-                post.featured_media,
+                post.featured_media
               );
             }
             setPost(post);

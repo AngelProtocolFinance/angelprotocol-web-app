@@ -27,8 +27,8 @@ const HEADER_LINKS: Link[] = [
     external: true,
   },
   {
-      title: "Blog",
-      href: wpRoutes.blog,
+    title: "Blog",
+    href: wpRoutes.blog,
   },
   {
     title: "About",
