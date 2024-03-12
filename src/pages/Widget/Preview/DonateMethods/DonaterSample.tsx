@@ -25,10 +25,7 @@ export default function DonaterSample({
           expanded={display === "expanded"}
         />
       )}
-      <button
-        type="button"
-        className="btn-orange justify-self-center w-44 mt-8"
-      >
+      <button type="button" className="btn-blue justify-self-center w-44 mt-8">
         Continue
       </button>
     </div>

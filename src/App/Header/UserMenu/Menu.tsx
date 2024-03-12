@@ -16,14 +16,14 @@ export default function Menu({ classes = "", user, signOut }: Props) {
     <Popover.Panel
       className={`${classes} shadow-xl bg-gray-l6 dark:bg-blue-d6 w-max rounded overflow-hidden`}
     >
-      <p className="text-sm p-3 bg-orange-l6 border-b border-gray-l4">
+      <p className="text-sm p-3 bg-blue-l4">
         Welcome, {user.firstName || user.email}!
       </p>
 
       <div className="w-64 min-h-[5rem] p-3">
         <Link
           to={appRoutes.donations}
-          className=" hover:text-orange text-sm flex items-center gap-2"
+          className=" hover:text-blue-d1 text-sm flex items-center gap-2"
         >
           <Icon type="Money" className="text-lg" />
           <span>My Donations</span>
@@ -47,7 +47,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           {user.groups.includes(groups["ap-admin"]) && (
             <Link
               to={appRoutes.applications}
-              className="hover:text-orange text-sm flex items-center gap-1"
+              className="hover:text-blue-d1 text-sm flex items-center gap-1"
             >
               <Icon type="SecurityScan" size={22} />
               <span>Applications Dashboard</span>
@@ -56,7 +56,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           {user.groups.includes(groups["ap-admin"]) && (
             <Link
               to={appRoutes.banking_applications}
-              className="hover:text-orange text-sm flex items-center gap-1 mt-1"
+              className="hover:text-blue-d1 text-sm flex items-center gap-1 mt-1"
             >
               <Icon type="SecurityScan" size={22} />
               <span>Banking applications</span>
@@ -68,7 +68,7 @@ export default function Menu({ classes = "", user, signOut }: Props) {
         disabled={user.isSigningOut}
         type="button"
         onClick={signOut}
-        className="btn-orange rounded-none w-full p-3 text-sm mt-4"
+        className="btn-blue rounded-none w-full p-3 text-sm mt-4"
       >
         Log out
       </button>

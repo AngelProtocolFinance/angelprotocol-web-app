@@ -12,7 +12,7 @@ export default function Socials({ links }: Props) {
           <ExtLink
             key={`social-link-${icon.type}`}
             href={href}
-            className="hover:text-blue-l1 active:text-blue transition ease-in-out duration-300"
+            className="hover:scale-110 active:scale-110"
           >
             <Icon type={icon.type} size={icon.size} title={title} />
           </ExtLink>

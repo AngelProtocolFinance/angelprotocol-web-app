@@ -11,7 +11,7 @@ export default function Container({ title, children, classes = "" }: Props) {
 
   return (
     <div
-      className={`w-full border border-gray-l4 rounded dark:bg-blue-d6 divide-y divide-prim ${classes}`}
+      className={`w-full border border-gray-l4 rounded dark:bg-blue-d6 divide-y divide-gray-l4 ${classes}`}
     >
       <div className="flex items-center gap-x-3 p-3">
         <button

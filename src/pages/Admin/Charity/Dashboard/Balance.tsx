@@ -10,7 +10,7 @@ type Props = {
 
 export default function Balance({ type, current, pending, paidOut }: Props) {
   return (
-    <div className="@container rounded border border-gray-l4 bg-orange-l6 dark:bg-blue-d6 p-4">
+    <div className="@container rounded border border-blue-l2 bg-blue-l5 dark:bg-blue-d6 p-4">
       <h4 className="uppercase text-sm @xs:text-xl font-bold mb-5">{type}</h4>
       <div className="grid @xs:grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-2 @xs:gap-x-8">
         <Amount title="Total Contributions" classes="col-span-full @xs:mr-auto">

@@ -27,7 +27,7 @@ export function TxPrompt(props: TxState) {
       {(isTxError(props) || isTxSuccess(props)) && props.tx && (
         <ExtLink
           href={getTxUrl(props.tx.chainID, props.tx.hash)}
-          className="text-blue dark:text-blue-l2 text-xs block mt-4 uppercase hover:text-blue-l2 hover:dark:text-orange-l2"
+          className="text-blue dark:text-blue-l2 text-xs block mt-4 uppercase hover:text-blue-l2"
         >
           transaction details
         </ExtLink>

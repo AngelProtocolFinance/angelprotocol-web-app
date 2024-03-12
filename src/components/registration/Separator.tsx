@@ -6,7 +6,7 @@ export function Separator({
 }: PropsWithChildren<{ classes?: string }>) {
   return (
     <p
-      className={`flex items-center text-navy-l1 dark:text-navy-l2 text-sm before:content-[''] before:h-px before:w-full after:content-[''] after:h-px after:w-full before:bg-gray-d1 after:bg-gray-d1 before:dark:bg-gray after:dark:bg-gray ${classes}`}
+      className={`flex items-center text-navy-l3 text-sm before:content-[''] before:h-px before:w-full after:content-[''] after:h-px after:w-full before:bg-gray-l2 after:bg-gray-l2  ${classes}`}
     >
       {children}
     </p>

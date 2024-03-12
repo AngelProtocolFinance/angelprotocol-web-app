@@ -60,7 +60,7 @@ export function Selector<
             </>
           )}
         </Listbox.Button>
-        <Listbox.Options className={styles.options}>
+        <Listbox.Options className={`${styles.options} ${cls.options}`}>
           {options
             .filter((o) => !!o.value)
             .map((o) => (

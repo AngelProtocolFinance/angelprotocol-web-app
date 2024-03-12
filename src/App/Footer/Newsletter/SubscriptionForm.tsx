@@ -52,7 +52,7 @@ export default function SubscriptionForm() {
         <input
           {...register("email")}
           id="email"
-          className="flex items-center border border-gray-l3 rounded-sm text-xs text-black outline-none w-full h-10 px-3 bg-white placeholder:text-navy-l1 disabled:bg-gray disabled:text-navy-l2 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:placeholder:text-navy-l2 xl:text-sm"
+          className="text-xs field-input enabled:focus:ring-blue-d2 border-none w-full h-10 px-3 bg-white"
           placeholder="Enter your email address here"
           disabled={isSubmitting}
         />
@@ -60,13 +60,13 @@ export default function SubscriptionForm() {
           errors={errors}
           as="p"
           name="email"
-          className="w-full text-xs text-red-l4 dark:text-red-l2 text-center"
+          className="w-full text-xs text-white text-center"
         />
         {isSuccess && !errors.email && <SuccessMessage />}
       </div>
       <button
         type="submit"
-        className="btn-orange px-3 rounded-sm text-xs h-10 w-[80vw] lg:w-full xl:w-min"
+        className="btn-blue enabled:hover:bg-blue-l4 enabled:hover:text-navy-d4 px-4 text-xs h-10 w-[80vw] lg:w-full xl:w-min"
         disabled={isSubmitting}
       >
         Subscribe

@@ -135,7 +135,7 @@ export default function Form({ classes = "", ...props }: Props) {
       </p>
 
       <button
-        className="col-span-full btn-orange text-sm"
+        className="col-span-full btn-blue text-sm"
         disabled={isSubmitting}
         type="submit"
       >

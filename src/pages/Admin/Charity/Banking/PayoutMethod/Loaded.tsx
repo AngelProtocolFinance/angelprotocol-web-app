@@ -120,7 +120,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           disabled={isLoading || isDefault || !isApproved}
           onClick={() => setDefault()}
           type="button"
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-orange"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-blue"
         >
           set default
         </button>

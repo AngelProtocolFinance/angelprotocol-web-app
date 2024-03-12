@@ -120,19 +120,19 @@ function Step({
       {/** line */}
       <div
         className={`h-[22px] border-l ${
-          isDone || isCurr ? "border-orange" : "border-gray-l4"
+          isDone || isCurr ? "border-blue-d1" : "border-gray-l4"
         } my-2 group-first:hidden`}
       />
       <div className="flex items-center">
         {/** circle */}
         <div
           className={`w-4 aspect-square ${
-            isDone ? "bg-orange" : "bg-gray-l3 dark:bg-navy"
+            isDone ? "bg-blue-d1" : "bg-gray-l3 dark:bg-navy"
           } rounded-full transform -translate-x-1/2`}
         />
         <span
           className={`text-sm ${
-            isCurr ? "text-orange" : "text-navy-l1 dark:text-navy-l2"
+            isCurr ? "text-blue-d1" : "text-navy-l1 dark:text-navy-l2"
           }`}
         >
           {children}

@@ -15,7 +15,7 @@ export default function Table({ classes = "", endowments }: Props) {
       <table className="border-collapse table-auto w-full">
         <TableSection
           type="thead"
-          rowClass="border-b border-gray-l4 bg-orange-l6 dark:bg-blue-d6"
+          rowClass="border-b border-gray-l4 bg-blue-l5 dark:bg-blue-d6"
         >
           <Cells
             type="th"

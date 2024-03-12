@@ -13,7 +13,7 @@ export default function Newsletter() {
           agree with our{" "}
           <a
             href={`${BASE_URL}/privacy-policy/`}
-            className="font-bold cursor-pointer underline hover:text-orange-l1 active:text-orange transition ease-in-out duration-300"
+            className="font-bold cursor-pointer hover:underline"
           >
             Privacy Policy
           </a>

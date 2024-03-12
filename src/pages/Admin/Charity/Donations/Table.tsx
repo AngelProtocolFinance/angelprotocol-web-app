@@ -28,10 +28,10 @@ export default function Table({
   );
 
   return (
-    <table className="w-full text-sm rounded border border-separate border-spacing-0 border-gray-l4">
+    <table className="w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2">
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
+        rowClass="bg-blue-l4 dark:bg-blue-d7 divide-x divide-blue-l2"
       >
         <Cells
           type="th"
@@ -69,8 +69,8 @@ export default function Table({
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
-        selectedClass="bg-orange-l5 dark:bg-blue-d4"
+        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-blue-l2"
+        selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {sorted
           .map(
@@ -104,7 +104,7 @@ export default function Table({
                   <ExtLink
                     //default to ethereum for staging
                     href={getTxUrl(chainId, hash)}
-                    className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
+                    className="text-center text-blue-d1 hover:text-navy uppercase text-sm"
                   >
                     {maskAddress(hash)}
                   </ExtLink>
@@ -134,13 +134,13 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-gray-l4 rounded-b"
+                className="border-t border-blue-l2 rounded-b"
               >
                 <button
                   type="button"
                   onClick={onLoadMore}
                   disabled={disabled}
-                  className="flex items-center justify-center gap-3 uppercase text-sm font-bold rounded-b w-full h-12 enabled:hover:bg-orange-l5 enabled:dark:hover:bg-blue-d3 active:bg-orange-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-navy-l2 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy"
+                  className="flex items-center justify-center gap-3 uppercase text-sm font-bold rounded-b w-full h-12 enabled:hover:bg-blue-l4 enabled:dark:hover:bg-blue-d3 active:bg-blue-l4 dark:active:bg-blue-d2 disabled:bg-gray-l3 disabled:text-navy-l2 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy"
                 >
                   {isLoading ? "Loading..." : "Load More"}
                 </button>

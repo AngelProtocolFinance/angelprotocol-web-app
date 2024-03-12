@@ -72,7 +72,7 @@ export default function Form() {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="px-6 btn-orange text-sm"
+          className="px-6 btn-blue text-sm"
         >
           {initial ? "Submit changes" : "Create program"}
         </button>

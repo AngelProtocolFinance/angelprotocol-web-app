@@ -11,11 +11,11 @@ type Props = {
 export default function Table({ methods, classes = "" }: Props) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-gray-l4`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
+        rowClass="bg-blue-l4 dark:bg-blue-d7 divide-x divide-blue-l2"
       >
         <Cells
           type="th"
@@ -30,14 +30,14 @@ export default function Table({ methods, classes = "" }: Props) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
-        selectedClass="bg-orange-l5 dark:bg-blue-d4"
+        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-blue-l2"
+        selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {methods.map((row) => (
           <Cells
             key={row.wiseRecipientID}
             type="td"
-            cellClass="p-3 border-t border-gray-l4 max-w-[256px] truncate first:rounded-bl last:rounded-br"
+            cellClass="p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
             <>{new Date(row.dateCreated).toLocaleDateString()}</>
             <>{row.bankSummary}</>
@@ -51,7 +51,7 @@ export default function Table({ methods, classes = "" }: Props) {
             </>
             <Link
               to={row.wiseRecipientID}
-              className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
+              className="text-center w-full inline-block hover:text-blue-d1"
             >
               <Icon
                 size={24}

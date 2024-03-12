@@ -18,7 +18,7 @@ export default function Success({ className = "", recipient = "" }) {
       </p>
       <Link
         to={appRoutes.marketplace}
-        className="mt-4 w-full sm:w-auto min-w-[15.6rem] btn-orange btn-gift"
+        className="mt-4 w-full sm:w-auto min-w-[15.6rem] btn-blue btn-gift"
       >
         Back to the platform
       </Link>

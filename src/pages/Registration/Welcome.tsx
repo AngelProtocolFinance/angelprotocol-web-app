@@ -32,7 +32,7 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
 
       <Link
         aria-disabled={isLoading || isError || !reg}
-        className="w-full max-w-[26.25rem] btn-orange btn-reg"
+        className="w-full max-w-[26.25rem] btn-blue btn-reg"
         to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`}
         state={
           {

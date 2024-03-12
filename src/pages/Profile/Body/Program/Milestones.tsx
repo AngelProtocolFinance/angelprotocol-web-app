@@ -41,7 +41,7 @@ function Milestone({
   return (
     <div
       className={`pb-4 pt-4 first:pt-0 last:pb-0 border-l ${
-        isComplete ? "border-orange" : "border-gray-l4"
+        isComplete ? "border-blue-d1" : "border-gray-l4"
       }`}
     >
       {milestone_media && (
@@ -58,7 +58,7 @@ function Milestone({
         <span className="bg-white dark:bg-blue-d6 w-4 h-6 absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2" />
         <span
           className={`${
-            isComplete ? "bg-orange" : "bg-gray-l3 dark:bg-navy"
+            isComplete ? "bg-blue-d1" : "bg-gray-l3 dark:bg-navy"
           } w-4 h-4 rounded-full absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2`}
         />
       </h6>

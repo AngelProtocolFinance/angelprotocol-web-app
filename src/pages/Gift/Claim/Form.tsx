@@ -74,7 +74,7 @@ export default function Form({ classes = "" }) {
           style={{ resize: "none" }}
           placeholder="e.g. ap-uni-6-821438429620466130011364269412975309697"
           {...register("secret")}
-          className="text-lg bg-orange-l6 dark:bg-blue-d6 disabled:bg-gray-l5 disabled:dark:bg-navy-d3 focus:outline-none text-center p-6 pb-4 break-all overflow-hidden"
+          className="text-lg bg-blue-l5 dark:bg-blue-d6 disabled:bg-gray-l5 disabled:dark:bg-navy-d3 focus:outline-none text-center p-6 pb-4 break-all overflow-hidden"
         />
         <ErrorMessage
           name="secret"
@@ -96,7 +96,7 @@ export default function Form({ classes = "" }) {
       <Link
         aria-disabled={isSubmitting}
         to={appRoutes.marketplace}
-        className="sm:mx-32 btn-orange btn-gift -mt-3 sm:mt-4"
+        className="sm:mx-32 btn-blue btn-gift -mt-3 sm:mt-4"
       >
         Back to the platform
       </Link>

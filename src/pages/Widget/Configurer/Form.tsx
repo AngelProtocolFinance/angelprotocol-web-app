@@ -41,7 +41,7 @@ export default function Form({
         <button type="reset" className="btn-outline-filled max-sm:mx-auto w-40">
           Reset Changes
         </button>
-        <button type="submit" className="btn-orange max-sm:mx-auto w-40">
+        <button type="submit" className="btn-blue max-sm:mx-auto w-40">
           Update Snippet
         </button>
       </div>

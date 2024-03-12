@@ -16,7 +16,7 @@
     @apply w-1;
   }
   .scroller::-webkit-scrollbar-thumb {
-    @apply bg-orange;
+    @apply bg-blue-d1;
   }
   .scroller::-webkit-scrollbar-track {
     @apply bg-gray-l3 dark:bg-navy;
@@ -63,7 +63,7 @@
     @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
   }
   .radio > input {
-    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l2 disabled:checked:before:dark:bg-navy focus:outline-none focus:ring-1 focus:ring-orange;
+    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-blue-d1 disabled:checked:before:bg-gray-l2 disabled:checked:before:dark:bg-navy focus:outline-none focus:ring-1 focus:ring-blue-d1;
   }
 
   .checkbox {
@@ -78,19 +78,11 @@
   .checkbox[aria-invalid="true"] {
     @apply border-red;
   }
-  .checkbox-orange {
-    @apply checkbox focus:ring-orange-l2 disabled:border-gray-l3 disabled:dark:border-gray;
-  }
-  .checkbox-orange:checked {
-    @apply border-none bg-orange text-white disabled:bg-gray-l3 disabled:dark:bg-navy;
-  }
 }
 
 /** Layer 2 components */
 @layer components {
-  .btn-orange {
-    @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
-  }
+
   .btn-outline {
     @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy border border-gray-l3 dark:border-navy enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
   }
@@ -98,7 +90,7 @@
     @apply rounded-lg normal-case text-sm border border-gray-l4 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
   }
   .btn-blue {
-    @apply btn bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l4;
+    @apply btn bg-blue-d1 disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l2;
   }
   .btn-red {
     @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
@@ -165,7 +157,7 @@
 /** page components */
 @layer components {
   .btn-outline-filled {
-    @apply btn-outline bg-orange-l5 dark:bg-blue-d4 enabled:hover:bg-orange-l4 dark:enabled:hover:bg-blue-d3;
+    @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3;
   }
   .btn-outline-gray {
     @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-navy-d3 dark:enabled:hover:bg-navy dark:active:bg-navy-d4;
@@ -180,16 +172,8 @@
   .btn-reg {
     @apply text-sm;
   }
-  .check-field-reg > input {
-    @apply checked:bg-orange before:hidden;
-  }
-  .check-field-kyc > input {
-    @apply w-6 h-6 before:text-lg;
-  }
 
-  .checkbox-marketplace {
-    @apply inline-block border-gray-d1 dark:border-gray-l3 rounded-sm before:text-sm checked:bg-blue-l2 checked:text-white checked:border-blue-l2 dark:checked:bg-blue dark:checked:border-blue focus:ring-blue;
-  }
+
 
   .field-gift > input {
     @apply bg-white dark:bg-blue-d6;

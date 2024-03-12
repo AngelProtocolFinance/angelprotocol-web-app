@@ -38,7 +38,7 @@ function RecipientDetails({
 
   if (isLoading) {
     return (
-      <LoadingStatus classes="text-orange text-sm">
+      <LoadingStatus classes="text-blue-d1 text-sm">
         Loading requirements...
       </LoadingStatus>
     );
@@ -56,7 +56,7 @@ function RecipientDetails({
   return (
     <>
       {isFetching && (
-        <LoadingStatus classes="text-orange text-xs">
+        <LoadingStatus classes="text-blue-d1 text-xs">
           Refreshing requirements..
         </LoadingStatus>
       )}
@@ -67,6 +67,7 @@ function RecipientDetails({
           onChange={(value) => setSelectedIdx(+value)}
           options={requirements.map((x, i) => ({ label: x.title, value: i }))}
           disabled={disabled || isFetching}
+          classes={{ options: "text-sm" }}
         />
       </div>
 

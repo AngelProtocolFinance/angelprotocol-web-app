@@ -44,7 +44,11 @@ export default function Form() {
         Select the Sustainable Development Goals your organization is the most
         aligned with
       </Label>
-      <MultiSelector<FV, "UN_SDG", number> name="UN_SDG" options={sdgOptions} />
+      <MultiSelector<FV, "UN_SDG", number>
+        name="UN_SDG"
+        options={sdgOptions}
+        classes={{ options: "text-sm" }}
+      />
       <Label className="mb-2 mt-6" required>
         Nonprofit Designation
       </Label>
@@ -73,13 +77,16 @@ export default function Form() {
       <Label className="mt-6 mb-2">
         Select the countries your organization is active in
       </Label>
-      <ActivityCountries<FV, "ActiveInCountries"> name="ActiveInCountries" />
+      <ActivityCountries<FV, "ActiveInCountries">
+        name="ActiveInCountries"
+        classes={{ options: "text-sm" }}
+      />
 
       <Label className="mt-6">
         Are you happy to accept anonymous donations? If not, ALL donors will be
         required to provide a name and address.
       </Label>
-      <div className="flex gap-4 mt-4 accent-orange text-sm">
+      <div className="flex gap-4 mt-4 accent-blue-d1 text-sm">
         <Radio<FV, "isAnonymousDonationsAllowed">
           name="isAnonymousDonationsAllowed"
           value="Yes"
@@ -96,7 +103,7 @@ export default function Form() {
         By submitting this information, you declare that you have read and
         agreed to our{" "}
         <ExtLink
-          className="underline text-orange hover:text-orange-l2"
+          className="underline text-blue-d1 hover:text-blue"
           href={TERMS_OF_USE_NPO}
         >
           Terms & Conditions
@@ -115,7 +122,7 @@ export default function Form() {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="py-3 min-w-[8rem] btn-orange btn-reg"
+          className="py-3 min-w-[8rem] btn-blue btn-reg"
         >
           <LoadText isLoading={isSubmitting}>Continue</LoadText>
         </button>

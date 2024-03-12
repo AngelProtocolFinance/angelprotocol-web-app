@@ -23,7 +23,7 @@ export default function Success({ classes = "" }: { classes?: string }) {
         {contact.orgName}’s account has been created!
       </h1>
       <Link
-        className="mt-6 text-orange hover:text-orange-l2 underline decoration-1 hover:decoration-2 text-center text-lg transition ease-in-out duration-300"
+        className="mt-6 text-blue-d1 hover:text-blue underline decoration-1 hover:decoration-2 text-center text-lg transition ease-in-out duration-300"
         to={`${appRoutes.admin}/${reg.endowId}/${adminRoutes.edit_profile}`}
       >
         Start filling out {contact.orgName}’s profile and attract donors!

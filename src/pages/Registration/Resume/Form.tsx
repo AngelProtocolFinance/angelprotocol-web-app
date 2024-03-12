@@ -25,7 +25,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
 
       <button
         type="submit"
-        className="mt-8 mx-0 sm:mx-24 btn-orange btn-reg"
+        className="mt-8 mx-0 sm:mx-24 btn-blue btn-reg"
         disabled={isSubmitting}
       >
         Resume

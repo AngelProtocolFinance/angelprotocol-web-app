@@ -155,6 +155,7 @@ export default function RecipientDetailsForm({
                       }))}
                       ref={ref}
                       value={value}
+                      classes={{ options: "text-sm" }}
                     />
                   </>
                 )}
@@ -184,7 +185,7 @@ export default function RecipientDetailsForm({
                       !!getFieldState(f.key).error
                         ? "border-red"
                         : "border-gray-l4"
-                    } rounded px-4 py-3.5 text-sm has-[:checked]:border-orange has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-gray-d1`}
+                    } rounded px-4 py-3.5 text-sm has-[:checked]:border-blue-d1 has-[:disabled]:bg-gray-l5 w-32 h-10 focus-within:ring-1 focus-within:ring-blue-l2`}
                   >
                     <input
                       className="appearance none w-0 h-0"
