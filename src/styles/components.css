@@ -227,6 +227,6 @@
   }
 
   .wp-post a {
-    @apply text-orange transition ease-in-out duration-300 hover:text-orange-l1;
+    @apply text-blue-d1 hover:underline;
   }
 }
