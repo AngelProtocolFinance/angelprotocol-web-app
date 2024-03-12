@@ -3,8 +3,8 @@
   "organizeImports": {
     "enabled": true
   },
-  "files":{
-    "ignore":["./package.json"]
+  "files": {
+    "ignore": ["./package.json", "./public/scripts/*"]
   },
   "linter": {
     "enabled": true,
