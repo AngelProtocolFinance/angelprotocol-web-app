@@ -58,11 +58,11 @@ export type Post = {
   sticky: boolean;
   categories: string[];
   tags: string[];
-  content: { rendered: any }; //TODO: type
+  content: { rendered: string };
 };
 
 export type Page = Post & {
   parent: number;
   jetpack_featured_media_url: any; //TODO: type
-  excerpt: { rendered: any }; //TODO: type
+  excerpt: { rendered: string };
 };
