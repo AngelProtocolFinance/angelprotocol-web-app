@@ -14,7 +14,7 @@ window.intercomSettings = {
     ic("update", w.intercomSettings);
   } else {
     var d = document;
-    var i = () => {
+    var i = function () {
       i.c(arguments);
     };
     i.q = [];
@@ -22,7 +22,7 @@ window.intercomSettings = {
       i.q.push(args);
     };
     w.Intercom = i;
-    var l = () => {
+    var l = function () {
       var s = d.createElement("script");
       s.type = "text/javascript";
       s.async = true;
