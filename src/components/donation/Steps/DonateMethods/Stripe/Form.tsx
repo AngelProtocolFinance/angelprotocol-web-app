@@ -1,12 +1,15 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
-import { Field } from "components/form";
-import { FormProvider, useController, useForm } from "react-hook-form";
+import { Field, Form as FormContainer } from "components/form";
+import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
+import { requiredString } from "schemas/string";
 import { useStripeCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { Currency } from "types/components";
+import ContinueBtn from "../../common/ContinueBtn";
+import Frequency from "./Frequency";
 import { FormValues as FV, Props } from "./types";
 
 const USD_CODE = "usd";
@@ -20,6 +23,7 @@ export default function Form({ widgetConfig, details }: Props) {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: { code: USD_CODE, min: 1, rate: 1 },
+    frequency: "",
   };
 
   const currencyKey: keyof FV = "currency";
@@ -27,6 +31,7 @@ export default function Form({ widgetConfig, details }: Props) {
     defaultValues: details || initial,
     resolver: yupResolver(
       schema<FV>({
+        frequency: requiredString,
         amount: stringNumber(
           (s) => s.required("required"),
           (n) =>
@@ -52,45 +57,49 @@ export default function Form({ widgetConfig, details }: Props) {
   });
 
   return (
-    <FormProvider {...methods}>
-      <form
-        onSubmit={handleSubmit((fv) =>
-          dispatch(
-            setDetails({
-              ...fv,
-              method: "stripe",
-            })
-          )
-        )}
-        className="grid gap-4"
-      >
-        <CurrencySelector
-          currencies={currencies}
-          label="Currency"
-          onChange={onCurrencyChange}
-          value={currency}
-          classes={{ label: "font-semibold" }}
-          required
-        />
-        <Field<FV>
-          name="amount"
-          label="Donation amount"
-          classes={{ label: "font-semibold" }}
-          required
-          // validation must be dynamicly set depending on which exact currency is selected
-          tooltip={createTooltip(currency)}
-        />
+    <FormContainer
+      methods={methods}
+      onSubmit={handleSubmit((fv) => {
+        dispatch(
+          setDetails({
+            ...fv,
+            frequency: fv.frequency as Exclude<FV["frequency"], "">, //validated by schema
+            method: "stripe",
+          })
+        );
+      })}
+      className="grid gap-4"
+    >
+      <Frequency />
+      <CurrencySelector
+        currencies={currencies}
+        label="Currency"
+        onChange={onCurrencyChange}
+        value={currency}
+        classes={{
+          label: "font-semibold",
+          combobox: "field-container-donate rounded-lg",
+          container: "field-donate",
+        }}
+        required
+      />
+      <Field<FV>
+        name="amount"
+        label="Donation amount"
+        placeholder="Enter amount"
+        classes={{ label: "font-semibold", container: "field-donate" }}
+        required
+        // validation must be dynamicly set depending on which exact currency is selected
+        tooltip={createTooltip(currency)}
+      />
 
-        <p className="text-sm text-gray-d2 dark:text-gray mt-4">
-          Please click the button below and follow the instructions provided to
-          complete your donation
-        </p>
+      <p className="text-sm dark:text-navy-l2 mt-4">
+        Please click the button below and follow the instructions provided to
+        complete your donation
+      </p>
 
-        <button className="btn-orange btn-donate mt-2" type="submit">
-          Continue
-        </button>
-      </form>
-    </FormProvider>
+      <ContinueBtn className="mt-2" type="submit" />
+    </FormContainer>
   );
 }
 

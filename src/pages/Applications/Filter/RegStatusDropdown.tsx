@@ -8,7 +8,7 @@ export default function RegStatusDropdown({ classes = "" }) {
       <label className="text-sm">Application Status</label>
       <Selector<FV, "status", string>
         name="status"
-        classes={{ button: "dark:bg-blue-d6" }}
+        classes={{ button: "dark:bg-blue-d6", options: "text-sm" }}
         options={statuses}
       />
     </div>

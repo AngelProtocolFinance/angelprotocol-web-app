@@ -39,7 +39,7 @@ export default function CurrencyDropdown({ classes = "" }) {
         {(tokens) => (
           <Selector<FV, "currency", string>
             name="currency"
-            classes={{ button: "dark:bg-blue-d6" }}
+            classes={{ button: "dark:bg-blue-d6", options: "text-sm" }}
             options={tokens.map((c) => ({ label: c.symbol, value: c.symbol }))}
           />
         )}

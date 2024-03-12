@@ -7,6 +7,7 @@ export enum appRoutes {
   banking_applications = "/banking-applications",
   register = "/register",
   signin = "/signin",
+  signup = "/signup",
   profile = "/profile",
   donations = "/donations",
   donate = "/donate",
@@ -14,6 +15,7 @@ export enum appRoutes {
   stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",
   gift = "/gift",
+  reset_password = "/signin/reset",
   widget_config = "/widget-config",
 }
 

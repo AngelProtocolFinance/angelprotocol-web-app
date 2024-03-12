@@ -9,12 +9,11 @@ export default function FAQ({ classes = "" }) {
   return (
     <div
       className={
-        classes + " md:border md:border-prim md:p-4 rounded grid gap-2 md:gap-4"
+        classes +
+        " md:bg-white md:border md:border-gray-l4 md:p-4 md:rounded-lg grid gap-2 md:gap-4"
       }
     >
-      <h2 className="text-sm" id="faqs">
-        Frequently asked questions
-      </h2>
+      <h2 id="faqs">Frequently asked questions</h2>
       {faqs.map((faq) => (
         <Disclosure as="div" key={faq.id}>
           {({ open }) => (
@@ -34,7 +33,7 @@ export default function FAQ({ classes = "" }) {
                 <Disclosure.Panel
                   as="div"
                   static
-                  className="text-sm grid gap-3 text-gray-d1 mb-6"
+                  className="text-sm grid gap-3 text-navy-l1 mb-6"
                 >
                   {faq.paragraphs.map((p, idx) => (
                     <Fragment key={idx}>{p}</Fragment>
@@ -97,7 +96,7 @@ const faqs = [
       <p>
         To keep a permanent record of all your donations and print tax receipts,
         create your own personal user account&nbsp;
-        <Link to={appRoutes.signin} className="text-blue hover:text-blue-l1">
+        <Link to={appRoutes.signup} className="text-blue hover:text-blue-l1">
           here
         </Link>
         .
@@ -170,7 +169,7 @@ function Em({
           ? "font-medium"
           : intensity === 2
             ? "font-semibold"
-            : "font-semibold text-gray-d2"
+            : "font-semibold text-navy-d4"
       } ${classes}`}
     >
       {children}

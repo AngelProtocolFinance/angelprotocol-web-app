@@ -18,7 +18,7 @@ export default function Sidebar({
 }: Props) {
   return (
     <div
-      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-prim ${className}`}
+      className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-gray-l4 ${className}`}
     >
       <Header />
 
@@ -26,7 +26,7 @@ export default function Sidebar({
         {linkGroups.map((group) => (
           <React.Fragment key={`link_group-${group.title}`}>
             {group.title && (
-              <h6 className="pt-5 px-5 pb-1 font-bold text-xs uppercase text-gray-l1 tracking-wide">
+              <h6 className="pt-5 px-5 pb-1 font-bold text-xs uppercase text-navy-l3 tracking-wide">
                 {group.title}
               </h6>
             )}
@@ -51,6 +51,6 @@ export default function Sidebar({
 }
 
 const linkClassName = createNavLinkStyler(
-  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-orange-l1 active:text-orange transition ease-in-out duration-300 aria-disabled:text-gray aria-disabled:pointer-events-none",
-  "pointer-events-none text-orange"
+  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-blue-d1 transition ease-in-out duration-300 aria-disabled:text-navy-l2 aria-disabled:pointer-events-none",
+  "pointer-events-none text-blue-d1"
 );

@@ -12,7 +12,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       className={`${classes} grid padded-container w-full max-w-[37.5rem]`}
     >
       <h3 className="text-3xl text-center">Resume registration</h3>
-      <p className="text-center mt-2 text-gray-d1 dark:text-gray-l2 text-lg">
+      <p className="text-center mt-2 text-navy-l1 dark:text-navy-l4 text-lg">
         Enter your registration reference to resume where you left off
       </p>
 
@@ -25,7 +25,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
 
       <button
         type="submit"
-        className="mt-8 mx-0 sm:mx-24 btn-orange btn-reg"
+        className="mt-8 mx-0 sm:mx-24 btn-blue btn-reg"
         disabled={isSubmitting}
       >
         Resume

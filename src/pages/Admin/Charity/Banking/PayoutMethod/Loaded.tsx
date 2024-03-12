@@ -75,7 +75,7 @@ export default function Loaded(props: BankingApplicationDetails) {
         </p>
       )}
 
-      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-prim rounded mt-2">
+      <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l4 rounded mt-2">
         <Row label="Currency">{props.currency}</Row>
         <Row label="Country">{props.country}</Row>
         <Row label="Recipient name">{props.name.fullName}</Row>
@@ -120,7 +120,7 @@ export default function Loaded(props: BankingApplicationDetails) {
           disabled={isLoading || isDefault || !isApproved}
           onClick={() => setDefault()}
           type="button"
-          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-orange"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-blue"
         >
           set default
         </button>
@@ -140,14 +140,14 @@ function Row(props: Props) {
       </dt>
       <div
         aria-hidden={true}
-        className="max-sm:hidden w-px border-r border-prim last:border-none"
+        className="max-sm:hidden w-px border-r border-gray-l4 last:border-none"
       />
       <dd className="px-3 max-sm:pb-3 sm:p-3 flex items-center text-sm">
         {props.children}
       </dd>
       <div
         aria-hidden={true}
-        className="h-px col-span-full border-b border-prim last:border-none"
+        className="h-px col-span-full border-b border-gray-l4 last:border-none"
       />
     </>
   );

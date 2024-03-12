@@ -1,11 +1,11 @@
 import { Combobox } from "@headlessui/react";
 import QueryLoader from "components/QueryLoader";
-import { Currency } from "types/components";
+import { CurrencyOption } from "types/components";
 import { QueryState } from "types/third-party/redux";
 
 type Props = {
   classes?: string;
-  currencies: Currency[] | QueryState<Currency[]>;
+  currencies: CurrencyOption[] | QueryState<CurrencyOption[]>;
   query: string;
 };
 
@@ -44,12 +44,12 @@ export default function CurrencyOptions({
       classes={{
         container:
           classes +
-          " bg-white w-full rounded border border-prim p-2 text-sm text-gray-d1 shadow-lg",
+          " font-heading bg-white w-full rounded border border-gray-l4 p-2 text-sm text-navy-l1 shadow-lg",
       }}
     >
       {(currencies) => (
         <Combobox.Options
-          className={`${classes} w-full bg-white dark:bg-blue-d6 shadow-lg rounded max-h-52 overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm`}
+          className={`${classes} w-full bg-white dark:bg-blue-d6 shadow-lg rounded max-h-52 overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
           {currencies.map(({ code, name, min, rate }) => (
             <Combobox.Option key={code} value={{ code, name, min, rate }}>
@@ -57,7 +57,7 @@ export default function CurrencyOptions({
                 <div
                   className={`${active ? "bg-blue-l2 dark:bg-blue-d1" : ""} ${
                     selected ? "font-semibold" : "font-normal"
-                  } flex items-center gap-2 p-2 text-sm cursor-pointer truncate`}
+                  } flex items-center gap-2 p-2 cursor-pointer truncate`}
                 >
                   {!!name
                     ? `${code.toUpperCase()} - ${name}`

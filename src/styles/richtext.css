@@ -18,14 +18,15 @@
   border-bottom: 1px solid rgba(200, 200, 200, 0.5);
 }
 
+
 .ql-toolbar button.ql-active .ql-stroke {
   fill: none;
-  stroke: orange !important;
+  @apply !stroke-blue-d1
 }
 
 .ql-toolbar button:hover .ql-stroke {
   fill: none;
-  stroke: orange !important;
+  @apply !stroke-blue-d1
 }
 
 .ql-toolbar .ql-stroke {

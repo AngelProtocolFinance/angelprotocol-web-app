@@ -1,3 +1,5 @@
+import { GuestDonor } from "./donation";
+
 /**
  * Note: if an error occurs, the `PayPalOrder.details` array is always sure to have
  * only one item, because we treat a donation as a single "purchase unit"
@@ -8,7 +10,7 @@
  * - error handling in integration guide -> https://developer.paypal.com/docs/checkout/standard/integrate/#link-integratefrontend
  * - all possible errors -> https://developer.paypal.com/api/rest/reference/orders/v2/errors/#capture-order
  */
-export type PayPalOrder =
+export type PayPalOrder = { guestDonor?: GuestDonor } & (
   | {
       id: string;
       status: Status;
@@ -32,7 +34,8 @@ export type PayPalOrder =
           description: string;
         },
       ];
-    };
+    }
+);
 
 type Status =
   | "CREATED"

@@ -3,7 +3,7 @@ import { DisconnectedWallet } from "types/wallet";
 
 export default function Wallet({ connect, logo, name }: DisconnectedWallet) {
   return (
-    <div className="flex items-center gap-2 border border-prim rounded p-3">
+    <div className="flex items-center gap-2 border border-gray-l4 rounded p-3">
       <Image src={logo} className="size-7 rounded-full" />
       <span className="capitalize">{name}</span>
       <button

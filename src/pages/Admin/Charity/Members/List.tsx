@@ -18,7 +18,7 @@ export default function List() {
       <button
         type="button"
         disabled={queryState.isLoading}
-        className="justify-self-end btn-orange px-4 py-1.5 text-sm gap-2 mb-2"
+        className="justify-self-end btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
         onClick={() =>
           showModal(AddForm, { added: queryState.data || [], endowID: id })
         }
@@ -59,11 +59,11 @@ function Loaded({ members, classes = "" }: LoadedProps) {
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
+        rowClass="bg-blue-l4 dark:bg-blue-d7 divide-x divide-blue-l2"
       >
         <Cells
           type="th"
@@ -75,21 +75,21 @@ function Loaded({ members, classes = "" }: LoadedProps) {
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
-        selectedClass="bg-orange-l5 dark:bg-blue-d4"
+        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-blue-l2"
+        selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {members.map((member) => (
           <Cells
             key={member}
             type="td"
-            cellClass="p-3 border-t border-prim max-w-[256px] truncate first:rounded-bl last:rounded-br"
+            cellClass="p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
             <td className="relative">
               <button
                 disabled={isLoading}
                 onClick={() => handleRemove(member)}
                 type="button"
-                className=" disabled:text-gray hover:text-red active:text-red absolute-center"
+                className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
               >
                 <Icon type="Delete" size={16} />
               </button>

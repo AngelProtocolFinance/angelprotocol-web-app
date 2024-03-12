@@ -20,7 +20,7 @@ export default function Snippet({ classes = "" }) {
         <div className="w-full text-sm sm:text-base font-mono break-all py-4">
           {iframeURL}
         </div>
-        <Copier classes="w-10 h-10 hover:text-orange" text={iframeURL} />
+        <Copier classes="w-10 h-10 hover:text-blue-d1" text={iframeURL} />
       </div>
     </div>
   );

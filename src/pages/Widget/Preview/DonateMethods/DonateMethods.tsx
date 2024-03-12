@@ -7,10 +7,8 @@ import StripeSample from "./StripeSample";
 
 const tabClasses = (selected: boolean) =>
   `${
-    selected
-      ? "border-orange text-orange"
-      : "border-gray-l3 dark:border-bluegray"
-  } uppercase p-2 border-b-4 hover:text-orange-l1 hover:border-orange-l1`;
+    selected ? "border-blue-d1 text-blue-d1" : "border-gray-l3 dark:border-navy"
+  } uppercase p-2 border-b-4 hover:text-blue hover:border-blue`;
 
 export default function DonateMethods({ classes = "" }) {
   const widgetConfig = useGetter((state) => state.widget);

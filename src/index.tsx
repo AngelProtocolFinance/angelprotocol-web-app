@@ -1,4 +1,3 @@
-import { Authenticator } from "@aws-amplify/ui-react";
 import * as Sentry from "@sentry/react";
 import Loader from "components/Loader";
 import ErrorBoundary from "errors/ErrorBoundary";
@@ -32,9 +31,7 @@ root.render(
       <Provider store={store}>
         <BrowserRouter>
           <Suspense fallback={<LoaderComponent />}>
-            <Authenticator.Provider>
-              <App />
-            </Authenticator.Provider>
+            <App />
           </Suspense>
         </BrowserRouter>
       </Provider>

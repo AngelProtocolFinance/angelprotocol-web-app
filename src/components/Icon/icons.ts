@@ -48,11 +48,16 @@ import { FiCreditCard, FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
-import { IoMdArrowBack, IoMdDownload, IoMdListBox } from "react-icons/io";
+import { IoMdDownload, IoMdListBox } from "react-icons/io";
 import {
+  IoArrowBackOutline,
+  IoArrowForwardOutline,
+  IoChevronBack,
   IoClose,
   IoCloseCircle,
   IoCrop,
+  IoEyeOffOutline,
+  IoEyeOutline,
   IoPeople,
   IoWalletSharp,
   IoWarning,
@@ -61,6 +66,7 @@ import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import {
   MdCardGiftcard,
   MdDelete,
+  MdLockOutline,
   MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
   MdOutlineContentCopy,
@@ -88,15 +94,17 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 export const icons = {
   Advisor: LiaChalkboardTeacherSolid,
   AdminPanel: MdOutlineAdminPanelSettings,
-  ArrowBack: IoMdArrowBack,
-  ArrowDown: BiChevronDown,
-  ArrowRight: BiChevronRight,
+  ArrowLeft: IoArrowBackOutline,
+  ArrowRight: IoArrowForwardOutline,
   Back: MdOutlineArrowBackIosNew,
   Bitcoin: FaBitcoin,
   Blockchain: SiHiveBlockchain,
   Charity: FaDonate,
   Check: BiCheck,
   CheckCircle: BsCheckCircle,
+  ChevronDown: BiChevronDown,
+  ChevronLeft: IoChevronBack,
+  ChevronRight: BiChevronRight,
   CircleMinus: AiOutlineMinusCircle,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
@@ -113,6 +121,8 @@ export const icons = {
   Exclamation: FaExclamation,
   ExclamationCircleFill: BsExclamationCircleFill,
   ExternalLink: GoLinkExternal,
+  Eye: IoEyeOutline,
+  EyeSlashed: IoEyeOffOutline,
   Facebook: GrFacebookOption,
   FacebookCircle: FaFacebook,
   FatArrowDownload: IoMdDownload,
@@ -142,6 +152,7 @@ export const icons = {
   Menu: FiMenu,
   Money: FaMoneyBills,
   Moon: FiMoon,
+  Padlock: MdLockOutline,
   Paypal: PiPaypalLogo,
   Picture: ImFilePicture,
   Plus: AiOutlinePlus,

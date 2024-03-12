@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import Icon from "../../../Icon";
+import { unpack } from "../../../form/helpers";
 import BackBtn from "./BackBtn";
-import SplitSummary from "./SplitSummary";
 
 type Classes =
   | string
@@ -11,19 +11,27 @@ type Classes =
     };
 
 type Props = {
-  classes?: Classes;
-  Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
-  onBack(): void;
   amount: number;
   splitLiq: number;
+  tip?: { value: number; charityName: string };
 
+  Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
+  onBack(): void;
+  frequency?: "once" | "monthly";
+  classes?: Classes;
   children?: ReactNode;
   preSplitContent?: ReactNode;
 };
-export default function Summary({ Amount, ...props }: Props) {
+
+export default function Summary({
+  Amount,
+  frequency = "once",
+  ...props
+}: Props) {
+  const { container, split: splitClass } = unpack(props.classes);
   const liq = props.amount * (props.splitLiq / 100);
   const locked = props.amount - liq;
-  const { container, split } = unpack(props.classes);
+
   return (
     <div className={container}>
       <BackBtn type="button" onClick={props.onBack} />
@@ -32,21 +40,41 @@ export default function Summary({ Amount, ...props }: Props) {
         <span className="font-semibold">Your donation summary</span>
       </h4>
       {props.preSplitContent}
-      <SplitSummary
-        classes={split}
-        total={<Amount amount={props.amount} classes="text-gray-d2" />}
-        liquid={<Amount amount={liq} classes="text-sm" />}
-        locked={<Amount amount={locked} classes="text-sm" />}
-      />
+
+      <dl
+        className={`text-navy-l1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 ${splitClass}`}
+      >
+        <dt className="mr-auto text-navy-d4">
+          {props.tip
+            ? `Donation for ${props.tip.charityName}`
+            : "Total donation"}
+        </dt>
+        <Amount amount={props.amount} classes="text-navy-d4" />
+        <div className="flex items-center justify-between col-span-full">
+          <dt className="mr-auto text-sm">Sustainable Fund</dt>
+          <Amount classes="text-sm" amount={locked} />
+        </div>
+        <div className="flex items-center justify-between col-span-full">
+          <dt className="mr-auto text-sm">Instantly Available</dt>
+          <Amount classes="text-sm" amount={liq} />
+        </div>
+        {props.tip && (
+          <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
+            <dt className="mr-auto">Donation for Better.giving</dt>
+            <Amount classes="text-sm" amount={props.tip.value} />
+          </div>
+        )}
+        {props.tip && (
+          <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
+            <dt className="mr-auto text-navy-d4">
+              Total {frequency === "monthly" ? "monthly " : ""}charge
+            </dt>
+            <Amount amount={props.amount + props.tip.value} />
+          </div>
+        )}
+      </dl>
+
       {props.children}
     </div>
   );
-}
-
-export function unpack(classes?: Classes) {
-  const _classes: Classes =
-    typeof classes === "string" ? { container: classes } : classes || {};
-
-  const { container = "", split = "" } = _classes;
-  return { container, split };
 }

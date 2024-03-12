@@ -1,7 +1,7 @@
 import { SummaryStep, setDonor, setStep } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
-import { currency } from "../common/Currrency";
+import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
 import DonorForm from "./DonorForm";
@@ -10,6 +10,8 @@ export default function Summary({
   details,
   liquidSplitPct,
   donor,
+  tip,
+  recipient,
 }: SummaryStep) {
   const dispatch = useSetter();
   const user = useGetter((state) => state.auth.user);
@@ -35,7 +37,15 @@ export default function Summary({
       Amount={Amount}
       amount={amount}
       splitLiq={liquidSplitPct}
-      onBack={() => dispatch(setStep("splits"))}
+      onBack={() => dispatch(setStep("tip"))}
+      tip={
+        tip
+          ? {
+              value: tip,
+              charityName: recipient.name,
+            }
+          : undefined
+      }
     >
       <DonorForm
         donor={
@@ -49,7 +59,7 @@ export default function Summary({
             : undefined)
         }
         onSubmit={(donor) => dispatch(setDonor(donor))}
-        classes="mt-4"
+        classes="mt-6"
       />
     </SummaryContainer>
   );

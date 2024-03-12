@@ -80,7 +80,7 @@ export default function AddForm({ added, endowID }: Props) {
     <Modal
       onSubmit={handleSubmit(submit)}
       as="form"
-      className="p-6 fixed-center z-10 grid gap-4 text-gray-d2 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+      className="p-6 fixed-center z-10 grid gap-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <h4 className="text-center text-xl font-bold mb-4">Invite User</h4>
       <FormProvider {...methods}>
@@ -88,7 +88,7 @@ export default function AddForm({ added, endowID }: Props) {
         <Field<FV> name="firstName" label="First name" required />
         <Field<FV> name="lastName" label="Last name" required />
       </FormProvider>
-      <button disabled={isSubmitting} type="submit" className="btn-orange mt-6">
+      <button disabled={isSubmitting} type="submit" className="btn-blue mt-6">
         Add member
       </button>
     </Modal>

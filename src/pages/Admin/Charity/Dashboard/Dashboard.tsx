@@ -13,7 +13,7 @@ export default function Dashboard() {
   return (
     <div className="@container w-full max-w-4xl grid content-start mt-6">
       <Seo title="Nonprofit Dashboard" />
-      <h3 className="uppercase font-bold text-2xl mb-4">Dashboard</h3>
+      <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -37,7 +37,9 @@ export default function Dashboard() {
           const donationsPaidOut = payoutsMade - earningsPayoutsMade;
           return (
             <>
-              <h3 className="uppercase text-xl mb-2">Account Balances</h3>
+              <h3 className="uppercase mb-2 font-black mt-6">
+                Account Balances
+              </h3>
               <div className="grid gap-4 @lg:grid-cols-2">
                 {/** Balances */}
                 <Balance
@@ -103,7 +105,7 @@ function LoaderSkeleton() {
 
 function DataPart({ children }: PropsWithChildren<{}>) {
   return (
-    <div className="flex justify-center items-center gap-5 p-4 rounded border border-prim bg-orange-l6 dark:bg-blue-d6 font-bold text-sm @sm:text-base font-heading">
+    <div className="flex justify-center items-center gap-5 p-4 rounded border border-blue-l2 bg-blue-l5 dark:bg-blue-d6 font-bold text-sm @sm:text-base font-heading">
       {children}
     </div>
   );

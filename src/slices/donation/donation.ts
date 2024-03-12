@@ -10,6 +10,8 @@ import {
   SplitsStep,
   SubmitStep,
   SummaryStep,
+  TipFormat,
+  TipStep,
   TxStatus,
 } from "./types";
 
@@ -23,6 +25,7 @@ const donation = createSlice({
       return { step: "donate-form", recipient: payload };
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
+      //when changing donation method, reset
       const curr: DonationState =
         state.step === "donate-form" && state.details?.method !== payload.method
           ? { step: "donate-form", recipient: state.recipient }
@@ -35,6 +38,8 @@ const donation = createSlice({
           step: "submit",
           details: payload,
           //these steps where skipped so provide placeholders
+          tip: 0,
+          format: "pct",
           donor: { firstName: "", lastName: "", email: "" },
           liquidSplitPct: 50,
         };
@@ -56,11 +61,24 @@ const donation = createSlice({
 
     setSplit: (state, { payload }: PayloadAction<number>) => {
       return {
-        ...(state as SummaryStep),
-        step: "summary",
+        ...(state as TipStep),
+        step: "tip",
         liquidSplitPct: payload,
       };
     },
+
+    setTip: (
+      state,
+      { payload }: PayloadAction<{ tip: number; format: TipFormat }>
+    ) => {
+      return {
+        ...(state as SummaryStep),
+        step: "summary",
+        tip: payload.tip,
+        format: payload.format,
+      };
+    },
+
     setDonor: (state, { payload }: PayloadAction<Donor>) => {
       return {
         ...(state as SubmitStep),
@@ -90,6 +108,7 @@ export const {
   setDetails,
   resetDetails,
   setSplit,
+  setTip,
   setDonor,
   setTxStatus,
 } = donation.actions;

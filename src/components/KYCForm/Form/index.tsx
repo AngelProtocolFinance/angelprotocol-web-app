@@ -9,7 +9,7 @@ import { FormValues as FV, Props } from "../types";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
 
-export const formStyle = "w-full text-gray-d2 dark:text-white p-3";
+export const formStyle = "w-full text-navy-d4 dark:text-white p-3";
 
 export default function Form({ classes = "", ...props }: Props) {
   const {
@@ -96,7 +96,10 @@ export default function Form({ classes = "", ...props }: Props) {
           <Selector<FV, "usState", string>
             name="usState"
             options={states}
-            classes={{ container: "bg-white dark:bg-blue-d6" }}
+            classes={{
+              container: "bg-white dark:bg-blue-d6",
+              options: "text-sm",
+            }}
           />
         </div>
       ) : (
@@ -132,7 +135,7 @@ export default function Form({ classes = "", ...props }: Props) {
       </p>
 
       <button
-        className="col-span-full btn-orange text-sm"
+        className="col-span-full btn-blue text-sm"
         disabled={isSubmitting}
         type="submit"
       >

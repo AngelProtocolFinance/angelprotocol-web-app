@@ -8,7 +8,7 @@ export default function NetworkDropdown({ classes = "" }) {
       <label className="text-sm">Network</label>
       <Selector<FV, "network", string>
         name="network"
-        classes={{ button: "dark:bg-blue-d6" }}
+        classes={{ button: "dark:bg-blue-d6", options: "text-sm" }}
         options={Object.entries(chains).map(([, chain]) => ({
           label: chain.name,
           value: chain.name,

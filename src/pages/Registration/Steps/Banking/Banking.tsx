@@ -22,7 +22,7 @@ function Banking() {
 
         <p className="mt-6 mb-1">
           <span className="uppercase text-sm font-semibold">account id: </span>
-          <span className="text-gray-d1 ">
+          <span className="text-navy-l1 ">
             {data.banking.wise_recipient_id}
           </span>
         </p>
@@ -52,7 +52,7 @@ function Banking() {
           <Link
             to={`../${steps.summary}`}
             state={data.init}
-            className="py-3 min-w-[8rem] btn-orange btn-reg"
+            className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             Continue
           </Link>
@@ -65,7 +65,7 @@ function Banking() {
     <div className="flex flex-col items-start max-sm:items-center">
       {isChanging && (
         <button
-          className="btn-orange px-2 py-1 rounded text-xs mt-2 mb-4"
+          className="btn-blue px-2 py-1 rounded text-xs mt-2 mb-4"
           type="button"
           onClick={() => setIsChanging(false)}
         >

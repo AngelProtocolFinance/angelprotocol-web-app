@@ -47,7 +47,7 @@ export default function Sorter() {
       as="div"
       className="relative min-w-[10rem]"
     >
-      <div className="w-full h-full flex items-center justify-between text-[0.9375rem] py-2 pl-3 dark:text-gray-l3 border border-prim rounded-lg font-bold">
+      <div className="w-full h-full flex items-center justify-between text-[0.9375rem] py-2 pl-3 dark:text-navy-l5 border border-gray-l4 rounded-lg font-bold">
         <Listbox.Button className="upppercase flex items-center justify-between w-full">
           {({ open }) => (
             <>
@@ -79,7 +79,7 @@ export default function Sorter() {
           </>
         )}
       </div>
-      <Listbox.Options className="absolute grid bg-gray-l6 dark:bg-blue-d3 w-full py-2 mt-1 z-20 rounded-md shadow-lg border-gray-l2 dark:border-bluegray">
+      <Listbox.Options className="absolute grid bg-gray-l6 dark:bg-blue-d3 w-full py-2 mt-1 z-20 rounded-md shadow-lg border-gray-l2 dark:border-navy">
         {options.map(({ key, name }) => (
           <Listbox.Option
             key={key}

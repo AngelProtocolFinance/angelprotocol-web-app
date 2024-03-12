@@ -54,7 +54,7 @@ export default function Success({
       </a>
       <button
         disabled={isLoading}
-        className="w-full max-w-[26.25rem] btn-orange btn-reg mt-4"
+        className="w-full max-w-[26.25rem] btn-blue btn-reg mt-4"
         onClick={proceed}
       >
         {isLoading ? "Loading..." : "Continue"}

@@ -43,7 +43,7 @@ export default function Form() {
     >
       <Link
         to={`${appRoutes.marketplace}/${id}`}
-        className="text-blue hover:text-orange text-sm flex items-center gap-1"
+        className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
       >
         <Icon type="Back" />
         <span>Back to profile</span>
@@ -110,9 +110,9 @@ export default function Form() {
           charLimit={MAX_CHARS}
           classes={{
             container:
-              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             error: "static field-error -mt-4",
-            charCounter: "text-gray-d1 dark:text-gray",
+            charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
         <Field<FV>
@@ -130,13 +130,14 @@ export default function Form() {
         <MultiSelector<FV, "sdgs", UNSDG_NUMS>
           name="sdgs"
           options={sdgOptions}
-          classes={{ button: "field-input-admin" }}
+          classes={{ button: "field-input-admin", options: "text-sm" }}
         />
         <Label className="-mb-4" required>
           Organization Designation
         </Label>
         <Selector<FV, "endow_designation", string>
           name="endow_designation"
+          classes={{ options: "text-sm" }}
           options={endowDesignations.map((designation) => ({
             label: designation,
             value: designation,
@@ -159,6 +160,7 @@ export default function Form() {
           classes={{
             container: "bg-white dark:bg-blue-d6",
             button: "field-input-admin",
+            options: "text-sm",
           }}
         />
         <Field<FV>
@@ -224,7 +226,7 @@ export default function Form() {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="px-6 btn-orange text-sm"
+          className="px-6 btn-blue text-sm"
         >
           Submit changes
         </button>

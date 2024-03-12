@@ -16,7 +16,7 @@ export default function Amount(props: AmountProps) {
   return (
     <div className="flex gap-2 items-center w-40">
       <button onClick={showSummary} aria-label="more information">
-        <Icon type="Info" className="block text-blue hover:text-orange" />
+        <Icon type="Info" className="block text-blue-d1 hover:text-blue" />
       </button>
       ${humanize(props.locked + props.liquid, 0)}
     </div>

@@ -14,21 +14,19 @@ export default function StripeSample({
           expanded={display === "expanded"}
         />
       )}
-      <p className="text-sm text-gray-d2 dark:text-gray mt-4">
+      <p className="text-sm text-navy-d4 dark:text-navy-l2 mt-4">
         Please click the button below and follow the instructions provided to
         complete your donation
       </p>
 
       <div className="flex gap-3 md:gap-5 justify-center mt-4">
-        <button className="btn-orange btn-donate w-1/2" type="button">
+        <button className="btn-blue w-1/2" type="button">
           Pay with card
         </button>
       </div>
-      <p className="text-sm italic text-gray-d2 dark:text-gray mt-4">
+      <p className="text-sm italic text-navy-d4 dark:text-navy-l2 mt-4">
         By making a donation, you agree to our{" "}
-        <span className="underline text-orange hover:text-orange-l2">
-          Terms & Conditions
-        </span>
+        <span className="underline text-blue-d1">Terms & Conditions</span>
       </p>
     </div>
   );

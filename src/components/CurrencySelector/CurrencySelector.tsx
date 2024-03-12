@@ -1,52 +1,63 @@
 import { Combobox } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { useState } from "react";
-import { Currency } from "types/components";
+import { CurrencyOption } from "types/components";
 import { QueryState, isQuery } from "types/third-party/redux";
 import { DrawerIcon } from "../Icon";
 import { Label } from "../form";
+import { unpack } from "../form/helpers";
 import CurrencyOptions from "./CurrencyOptions";
 
-type Props = {
-  classes?: { combobox?: string; label?: string };
-  currencies: Currency[] | QueryState<Currency[]>;
-  disabled?: boolean;
-  required?: boolean;
-  value: Currency;
-  label: string;
-  onChange: (currency: Currency) => void;
+type Classes = {
+  combobox?: string;
+  label?: string;
+  container?: string;
+  options?: string;
 };
 
-export default function CurrencySelector({ currencies, ...props }: Props) {
+type Props<T extends CurrencyOption> = {
+  classes?: Classes;
+  currencies: T[] | QueryState<T[]>;
+  disabled?: boolean;
+  required?: boolean;
+  value: T;
+  label: string;
+  onChange: (currency: T) => void;
+};
+
+export default function CurrencySelector<T extends CurrencyOption>({
+  currencies,
+  ...props
+}: Props<T>) {
   const [query, setQuery] = useState("");
 
   const isCurrencyLoading = isQuery(currencies) && currencies.isLoading;
   const isCurrencyError = isQuery(currencies) && currencies.isError;
 
+  const style = unpack(props.classes);
+
   return (
-    <div className="field">
+    <div className={`field ${style.container}`}>
       <Label
         htmlFor="wise__currency"
-        className={props.classes?.label ?? ""}
+        className={style.label}
         required={props.required}
         aria-required={props.required}
       >
         {props.label}
       </Label>
       <Combobox
-        aria-disabled={!!props.disabled || isCurrencyLoading || isCurrencyError}
-        by="code"
+        disabled={props.disabled || isCurrencyLoading || isCurrencyError}
+        by={"code" as any}
         value={props.value}
         onChange={props.onChange}
         as="div"
-        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${
-          props.classes?.combobox || ""
-        }`}
+        className={`relative items-center grid grid-cols-[1fr_auto] field-container ${style.combobox}`}
       >
         <Combobox.Input
           id="wise__currency"
-          className="w-full border-r border-gray-l3 dark:border-bluegray px-4 py-3.5 text-sm leading-5 text-gray-900 focus:ring-0"
-          displayValue={(currency: Currency) =>
+          className="w-full border-r border-gray-l3 dark:border-navy px-4 py-3.5 text-sm leading-5 focus:ring-0"
+          displayValue={(currency: T) =>
             !!currency.name
               ? `${currency.code.toUpperCase()} - ${currency.name}`
               : currency.code.toUpperCase()
@@ -59,16 +70,14 @@ export default function CurrencySelector({ currencies, ...props }: Props) {
             isCurrencyLoading ? (
               <Icon
                 type="Loading"
-                className="text-gray animate-spin"
+                className="text-navy-l2 animate-spin"
                 size={20}
               />
             ) : (
               <DrawerIcon
                 isOpen={open}
                 size={25}
-                className={`h-full w-full text-gray-400 ${
-                  isCurrencyError ? "text-red" : "text-gray-400"
-                }`}
+                className={`h-full w-full ${isCurrencyError ? "text-red" : ""}`}
                 aria-hidden
               />
             )
@@ -77,7 +86,7 @@ export default function CurrencySelector({ currencies, ...props }: Props) {
 
         <CurrencyOptions
           query={query}
-          classes="absolute top-full mt-2 z-10"
+          classes={`absolute top-full mt-2 z-10 ${style.options}`}
           currencies={currencies}
         />
       </Combobox>

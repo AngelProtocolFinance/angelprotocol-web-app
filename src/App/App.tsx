@@ -17,6 +17,8 @@ const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
+const SignUp = lazy(() => import("pages/SignUp"));
+const ResetPassword = lazy(() => import("pages/ResetPassword"));
 const Applications = lazy(() => import("pages/Applications"));
 const Application = lazy(() => import("pages/Application"));
 const BankingApplications = lazy(() => import("pages/BankingApplications"));
@@ -42,9 +44,7 @@ export default function App() {
           <Route path=":id" element={<DonateWidget />} />
           <Route
             path={donateWidgetRoutes.donate_fiat_thanks}
-            element={
-              <DonateFiatThanks widgetVersion className="py-8 sm:py-20" />
-            }
+            element={<DonateFiatThanks widgetVersion />}
           />
           <Route
             path={donateWidgetRoutes.stripe_payment_status}
@@ -79,9 +79,7 @@ export default function App() {
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
             path={appRoutes.donate_fiat_thanks}
-            element={
-              <DonateFiatThanks className="pt-28 sm:pt-44 pb-8 sm:pb-20" />
-            }
+            element={<DonateFiatThanks />}
           />
           <Route
             path={appRoutes.stripe_payment_status}
@@ -91,6 +89,8 @@ export default function App() {
           <Route path={`${appRoutes.register}/*`} element={<Registration />} />
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
           <Route path={appRoutes.signin} element={<Signin />} />
+          <Route path={appRoutes.signup} element={<SignUp />} />
+          <Route path={appRoutes.reset_password} element={<ResetPassword />} />
           <Route
             path={appRoutes.auth_redirector}
             element={<OAuthRedirector />}

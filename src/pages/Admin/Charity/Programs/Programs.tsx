@@ -9,7 +9,7 @@ export default function Programs() {
         <h2 className="text-[2rem] font-bold">Programs</h2>
         <Link
           to={`../${adminRoutes.program_editor}/new`}
-          className="btn-orange px-8 py-2"
+          className="btn-blue px-8 py-2"
         >
           Create program
         </Link>

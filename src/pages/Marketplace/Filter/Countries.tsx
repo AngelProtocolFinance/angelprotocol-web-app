@@ -41,7 +41,7 @@ export default function Countries() {
             />
           ))}
 
-          <div className="inline-flex p-1 items-center gap-2 bg-orange-l5 text-gray-d1 dark:text-gray rounded">
+          <div className="inline-flex p-1 items-center gap-2 bg-blue-l5 text-navy-l1 dark:text-navy-l2 rounded">
             <Icon type="Search" size={18} />
             <Combobox.Input
               className="appearance-none bg-transparent focus:outline-none"
@@ -51,7 +51,7 @@ export default function Countries() {
           </div>
         </div>
       </Combobox.Button>
-      <Combobox.Options className="rounded-sm text-sm border border-prim absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
+      <Combobox.Options className="rounded-sm text-sm border border-gray-l4 absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
         {!isEmpty(filteredOptions) &&
           filteredOptions.map((name) => (
             <Combobox.Option
@@ -65,7 +65,7 @@ export default function Countries() {
             </Combobox.Option>
           ))}
         {isEmpty(filteredOptions) && (
-          <p className="text-gray-d1 dark:text-gray text-sm px-4 py-2">
+          <p className="text-navy-l1 dark:text-navy-l2 text-sm px-4 py-2">
             No options found
           </p>
         )}
@@ -82,7 +82,7 @@ type SelectedProps = {
 
 const optionStyle = (selected: boolean, active: boolean) =>
   `px-4 py-2 cursor-pointer text-sm ${
-    selected ? "bg-orange-l4" : active ? "cursor-pointer bg-orange-l5" : ""
+    selected ? "bg-blue-l4" : active ? "cursor-pointer bg-blue-l5" : ""
   }`;
 
 function SelectedOption({ selected, onChange, option }: SelectedProps) {
@@ -90,7 +90,7 @@ function SelectedOption({ selected, onChange, option }: SelectedProps) {
     onChange(selected.filter((s) => s !== value));
 
   return (
-    <div className="flex gap-2 items-center text-xs pt-1 pb-[.3rem] px-2 border-orange text-orange-d4 bg-orange-l5 border border-prim rounded-sm">
+    <div className="flex gap-2 items-center text-xs pt-1 pb-[.3rem] px-2 bg-blue-l5 border border-gray-l4 rounded-sm">
       <span className="max-w-[200px] truncate">{option}</span>
       <button
         type="button"

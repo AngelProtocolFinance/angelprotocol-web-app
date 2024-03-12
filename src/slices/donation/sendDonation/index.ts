@@ -5,7 +5,7 @@ import { LogDonationFail } from "errors/errors";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { invalidateApesTags } from "services/apes";
-import { CryptoDonation } from "types/aws";
+import { CryptoDonation, GuestDonor } from "types/aws";
 import { isTxResultError } from "types/tx";
 import donation, { setTxStatus } from "../donation";
 import { DonateArgs, TxStatus } from "../types";
@@ -13,7 +13,10 @@ import { DonateArgs, TxStatus } from "../types";
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,
   async (
-    { donation: { details, recipient, liquidSplitPct }, ...txPackage },
+    {
+      donation: { details, recipient, liquidSplitPct, tip = 0, donor },
+      ...txPackage
+    },
     { dispatch }
   ) => {
     const chain = chains[details.chainId.value];
@@ -38,6 +41,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       /** SAVE DONATION */
       const payload: CryptoDonation = {
         amount: +token.amount,
+        tipAmount: tip,
         chainId: chain.id,
         chainName: chain.name,
         denomination: token.symbol,
@@ -46,6 +50,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         walletAddress: txPackage.sender,
         endowmentId: recipient.id,
         appUsed: details.source,
+        donor,
       };
 
       const response = await fetch(APIs.apes + "/crypto-donation", {
@@ -57,7 +62,9 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         throw new LogDonationFail(payload.chainId, payload.transactionId);
       }
 
-      updateTx({ hash });
+      const { guestDonor }: { guestDonor?: GuestDonor } = await response.json();
+
+      updateTx({ hash, guestDonor });
       //invalidate cache entries
       dispatch(invalidateApesTags(["tokens", "donations"]));
     } catch (err) {

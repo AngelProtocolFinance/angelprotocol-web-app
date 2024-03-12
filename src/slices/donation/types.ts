@@ -1,8 +1,13 @@
-import { Donor } from "types/aws";
+import { Donor, GuestDonor } from "types/aws";
 import { ChainID } from "types/chain";
-import { Currency, OptionType } from "types/components";
+import { DetailedCurrency, OptionType } from "types/components";
 import { DonationSource } from "types/lists";
 import { TokenWithAmount, TxPackage } from "types/tx";
+
+type From<T extends { step: string }, U extends keyof T = never> = Omit<
+  Required<T>,
+  "step" | U
+> & { [key in U]?: T[key] };
 
 export type DonationRecipient = {
   id: number;
@@ -21,11 +26,12 @@ export type CryptoDonationDetails = BaseDonationDetais & {
 
 type FiatDonationDetails = BaseDonationDetais & {
   amount: string;
-  currency: Currency;
+  currency: DetailedCurrency;
 };
 
 export type StripeDonationDetails = {
   method: "stripe";
+  frequency: "once" | "monthly";
 } & FiatDonationDetails;
 
 export type StocksDonationDetails = {
@@ -57,7 +63,8 @@ type InitStep = {
 export type FormStep<T extends DonationDetails = DonationDetails> = {
   step: "donate-form";
   details?: T;
-} & Omit<Required<InitStep>, "step">;
+} & From<InitStep>;
+
 export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type StockFormStep = FormStep<StocksDonationDetails>;
@@ -66,32 +73,44 @@ export type DafFormStep = FormStep<DafDonationDetails>;
 export type SplitsStep = {
   step: "splits";
   liquidSplitPct?: number;
-} & Omit<Required<FormStep>, "step">;
+} & From<FormStep>;
+
+/** edge case: custom tip > donation  */
+export type TipFormat = "pct" | "amount";
+export type TipStep = {
+  step: "tip";
+  tip: number;
+  format?: TipFormat;
+} & From<SplitsStep>;
 
 export type SummaryStep = {
   step: "summary";
   donor?: Donor;
-} & Omit<Required<SplitsStep>, "step">;
+} & From<TipStep>;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<Required<SummaryStep>, "step"> & { details: T };
+} & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 export type StockCheckoutStep = SubmitStep<StocksDonationDetails>;
 export type DafCheckoutStep = SubmitStep<DafDonationDetails>;
 
-export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
+export type TxStatus =
+  | { loadingMsg: string }
+  | "error"
+  | { hash: string; guestDonor: GuestDonor | undefined };
 export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;
-} & Omit<CryptoSubmitStep, "step">;
+} & From<CryptoSubmitStep>;
 
 export type DonationState =
   | InitStep
   | FormStep
   | SplitsStep
+  | TipStep
   | SummaryStep
   | SubmitStep
   | CryptoResultStep;

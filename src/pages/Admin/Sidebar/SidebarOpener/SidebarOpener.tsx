@@ -11,11 +11,11 @@ export function SidebarOpener({ className = "", linkGroups }: Props) {
     <button
       type="button"
       onClick={open}
-      className={`flex items-center gap-2 py-5 px-6 dark:bg-blue-d6 border-b border-prim font-bold text-sm text-orange ${className}`}
+      className={`flex items-center gap-2 py-5 px-6 dark:bg-blue-d6 border-b border-gray-l4 font-bold text-sm text-blue-d1 ${className}`}
     >
       <Icon {...activeLink.icon} />
       {activeLink.title}
-      <Icon type="ArrowRight" size={24} className="ml-auto" />
+      <Icon type="ChevronRight" size={24} className="ml-auto" />
     </button>
   );
 }

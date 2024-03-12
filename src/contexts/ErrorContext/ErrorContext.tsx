@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react";
 import Prompt from "components/Prompt";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
@@ -11,19 +10,26 @@ import {
 } from "react";
 import { useModalContext } from "../ModalContext";
 
-type State = { handleError: (error: any, displayMessage?: string) => void };
+type State = {
+  handleError: (
+    error: any,
+    displayMessage?: string,
+    options?: { log: boolean }
+  ) => void;
+};
 
 const Context = createContext<State>({
-  handleError: (_: any, __?: string) => {},
+  handleError: (_: any, _1?: string, _2?: { log: boolean }) => {},
 });
 
 export default function ErrorContext(props: PropsWithChildren<{}>) {
   const { showModal } = useModalContext();
 
-  const handleError = useCallback(
-    (error: any, displayMessage?: string) => {
-      Sentry.captureException(error);
-      logger.error(error);
+  const handleError: State["handleError"] = useCallback(
+    (error: any, displayMessage?: string, options = { log: true }) => {
+      if (options.log) {
+        logger.error(error);
+      }
 
       if (displayMessage) {
         showModal(Prompt, {

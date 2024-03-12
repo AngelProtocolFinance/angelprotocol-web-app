@@ -26,7 +26,7 @@ export default function UserMenu() {
           Log in
         </Link>
         <Link
-          to={appRoutes.signin}
+          to={appRoutes.signup}
           state={state}
           className="btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
         >
@@ -43,7 +43,11 @@ export default function UserMenu() {
   return (
     <Popover className="relative">
       <Popover.Button className="cursor-pointer contents">
-        <Icon size={24} type="User" className="text-blue disabled:text-gray" />
+        <Icon
+          size={24}
+          type="User"
+          className="text-blue disabled:text-navy-l2"
+        />
       </Popover.Button>
 
       <Menu

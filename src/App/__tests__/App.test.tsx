@@ -1,4 +1,3 @@
-import { Authenticator } from "@aws-amplify/ui-react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
@@ -49,11 +48,9 @@ describe("App.tsx tests", () => {
   test("Visit top level pages", async () => {
     render(
       <MemoryRouter>
-        <Authenticator.Provider>
-          <Provider store={store}>
-            <App />
-          </Provider>
-        </Authenticator.Provider>
+        <Provider store={store}>
+          <App />
+        </Provider>
       </MemoryRouter>
     );
     // footer is immediately rendered

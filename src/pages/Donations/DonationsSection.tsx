@@ -18,6 +18,7 @@ export default function DonationsSection(
     data,
     hasMore,
     isError,
+    error,
     isLoading,
     isFetching,
     isLoadingNextPage,
@@ -37,22 +38,22 @@ export default function DonationsSection(
       </h1>
       <CsvExporter
         aria-disabled={isLoadingOrError || !data?.Items || isEmpty(data.Items)}
-        classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-orange px-8 py-3"
+        classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-blue px-8 py-3"
         headers={csvHeaders}
         data={data?.Items || []}
         filename="donations.csv"
       >
         Export to CSV
       </CsvExporter>
-      <div className="relative flex gap-x-3 items-center border border-prim w-full bg-white dark:bg-blue-d6 rounded">
+      <div className="relative flex gap-x-3 items-center border border-gray-l4 w-full bg-white dark:bg-blue-d6 rounded">
         <Icon
           type="Search"
           size={24}
-          className="text-gray-d2 dark:text-gray absolute top-1/2 -translate-y-1/2 left-3"
+          className="text-navy-d4 dark:text-navy-l2 absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
           disabled={isError}
-          className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-bluegray-d1"
+          className="p-3 pl-10 placeholder:text-navy-l1 dark:placeholder:text-navy-l2 bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
           type="text"
           placeholder="Search donations..."
           value={query}
@@ -60,7 +61,7 @@ export default function DonationsSection(
         />
       </div>
       <Filter
-        isDisabled={isLoadingOrError}
+        isDisabled={isLoading || isLoadingNextPage}
         setParams={setParams}
         classes="max-lg:col-span-full max-lg:w-full"
       />
@@ -69,6 +70,7 @@ export default function DonationsSection(
           data: data?.Items,
           isLoading,
           isFetching,
+          error: error,
           isError: isError,
         }}
         messages={{

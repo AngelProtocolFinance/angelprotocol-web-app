@@ -23,12 +23,12 @@ export default function NavDropdown({ links }: Props) {
               type="Menu"
               size={24}
               className={`${
-                open ? "text-gray" : "text-gray/70"
-              } sm:hidden transition duration-150 ease-in-out group-hover:text-gray/80`}
+                open ? "text-navy-l2" : "text-navy-l2/70"
+              } sm:hidden transition duration-150 ease-in-out group-hover:text-navy-l2/80`}
               aria-hidden="true"
             />
             <Icon
-              type="ArrowDown"
+              type="ChevronDown"
               size={24}
               className={`${
                 open ? "text-blue-d7" : "text-blue-d7/70"
@@ -81,4 +81,4 @@ export default function NavDropdown({ links }: Props) {
 
 const styles =
   "text-blue font-body font-semibold w-full hover:underline hover:text-blue-d1 transition ease-in-out duration-300";
-const styler = createNavLinkStyler(styles, "pointer-events-none text-orange");
+const styler = createNavLinkStyler(styles, "pointer-events-none text-navy-d4");

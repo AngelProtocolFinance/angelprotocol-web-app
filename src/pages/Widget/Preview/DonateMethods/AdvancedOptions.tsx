@@ -16,7 +16,7 @@ export default function AdvancedOptions({
     <div
       className={`${classes} grid border border-gray-l2 rounded overflow-clip`}
     >
-      <div className="flex items-center justify-between px-4 py-2 bg-orange-l6">
+      <div className="flex items-center justify-between px-4 py-2 bg-blue-l5">
         <span className="font-bold py-2">
           {isOpen && "Hide"} Advanced Options
         </span>
@@ -74,7 +74,7 @@ function Portion(
   }>
 ) {
   return (
-    <div className="flex flex-col items-center p-6 bg-orange-l6 border border-gray-l2 rounded">
+    <div className="flex flex-col items-center p-6 bg-blue-l5 border border-gray-l2 rounded">
       <p className="uppercase font-bold text-sm">{props.title}</p>
       <p className="text-xs mb-2 font-bold">{props.percentage}%</p>
       <p className="uppercase text-xs text-center">{props.action}</p>

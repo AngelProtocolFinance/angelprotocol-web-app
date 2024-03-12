@@ -7,6 +7,7 @@ import { useState } from "react";
 import { SplitsStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
+import ContinueBtn from "../common/ContinueBtn";
 
 export default function Split({
   details,
@@ -43,7 +44,7 @@ export default function Split({
     <div className="grid content-start p-4 @md:p-8">
       <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
       <h4 className="mt-4">Split donation</h4>
-      <p className="text-gray-d1">
+      <p className="text-navy-l1">
         Create a sustainable impact by dividing funds
       </p>
 
@@ -63,7 +64,6 @@ export default function Split({
 
       {/** slider */}
       <Slider.Root
-        defaultValue={[lockedSplitPct]}
         value={[lockedSplitPct]}
         onValueChange={([pct]) => setLockedSplitPct(pct)}
         className="relative flex items-center select-none touch-none my-2"
@@ -81,7 +81,7 @@ export default function Split({
       {/** amount breakdown */}
       <div className="flex justify-between mt-1">
         <dl>
-          <dt className="text-gray-d1 text-xs">Compounded Forever</dt>
+          <dt className="text-navy-l1 text-xs">Compounded Forever</dt>
           <dd>
             <span className="text-xs font-medium mr-1">
               {symbol.toUpperCase()}
@@ -90,7 +90,7 @@ export default function Split({
           </dd>
         </dl>
         <dl>
-          <dt className="text-gray-d1 text-xs">Instantly Available</dt>
+          <dt className="text-navy-l1 text-xs">Instantly Available</dt>
           <dd className="text-right">
             <span className="text-xs font-medium mr-1">
               {symbol.toUpperCase()}
@@ -100,22 +100,20 @@ export default function Split({
         </dl>
       </div>
 
-      <p className="text-sm text-gray-d1 mt-6">
+      <p className="text-sm text-navy-l1 mt-6">
         With splitting your donation into sustainable funds, you align
         investments with personal values, improving long-term financial
         performance, reducing risk exposure, and contributing to global
         sustainability goals.
       </p>
 
-      <button
+      <ContinueBtn
         type="button"
         onClick={() => {
           dispatch(setSplit(liqSplitPct));
         }}
-        className="btn-orange btn-donate mt-6"
-      >
-        Continue
-      </button>
+        className="mt-6"
+      />
     </div>
   );
 }

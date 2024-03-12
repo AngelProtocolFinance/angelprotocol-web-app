@@ -42,7 +42,7 @@ export default function Err({ error, hash }: TError) {
         <button
           type="button"
           onClick={goToForm}
-          className="w-full btn-gift btn-orange"
+          className="w-full btn-gift btn-blue"
         >
           Change payment details
         </button>

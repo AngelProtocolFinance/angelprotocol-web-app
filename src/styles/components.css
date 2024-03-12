@@ -5,7 +5,7 @@
   }
 
   .rich-text-toolbar[aria-invalid="true"] {
-    @apply border-red focus-within:shadow-focus;
+    @apply border-red;
   }
 
   .date-input::-webkit-calendar-picker-indicator {
@@ -16,10 +16,10 @@
     @apply w-1;
   }
   .scroller::-webkit-scrollbar-thumb {
-    @apply bg-orange;
+    @apply bg-blue-d1;
   }
   .scroller::-webkit-scrollbar-track {
-    @apply bg-gray-l3 dark:bg-bluegray;
+    @apply bg-gray-l3 dark:bg-navy;
   }
 
   .padded-container {
@@ -28,29 +28,46 @@
 
   /** applicable to button and <a/> */
   .btn {
-    @apply flex items-center justify-center uppercase font-bold p-3 rounded focus:outline-none focus-visible:ring-2;
+    @apply flex items-center justify-center uppercase font-bold font-heading p-3 rounded focus:outline-none focus-visible:ring-2;
   }
 
   .field-error {
     @apply absolute -bottom-5 right-0 text-xs text-right text-red dark:text-red-l2;
   }
   .field-input {
-    @apply w-full rounded text-sm px-4 py-3.5 bg-transparent placeholder:text-gray-d1 dark:placeholder:text-gray border border-gray-l3 dark:border-bluegray focus:outline-none focus:border-gray-d1 focus:dark:border-blue-l2 disabled:bg-gray-l5 disabled:text-gray-d1 disabled:dark:text-gray disabled:dark:bg-bluegray-d1 aria-disabled:bg-gray-l5 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:dark:bg-bluegray-d1 aria-disabled:pointer-events-none;
+    @apply w-full font-heading rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3;
+  }
+  .field-input:disabled,
+  .field-input[aria-disabled="true"] {
+    @apply pointer-events-none bg-gray-l5 text-navy-l1;
+  }
+  .field-input:enabled:focus {
+    @apply outline-none ring-2 ring-offset-1 ring-blue-d1;
   }
 
   .field-input[aria-invalid="true"] {
-    @apply border-red focus:shadow-focus focus-within:shadow-focus;
+    @apply border-red;
+  }
+
+  .label {
+    @apply block text-sm after:ml-1
+  }
+  .label[data-required="true"]{
+    @apply after:content-['*'] after:text-red
+  }
+  .label[data-required="false"]{
+    @apply after:content-['(optional)'] after:text-navy-l1  after:dark:text-navy-l2 after:font-normal after:text-[0.8em]
   }
 
   .radio {
     @apply flex items-center gap-4 cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
   }
   .radio > input {
-    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-orange disabled:checked:before:bg-gray-l2 disabled:checked:before:dark:bg-bluegray focus:outline-none focus:ring-1 focus:ring-orange;
+    @apply cursor-pointer appearance-none h-4 relative aspect-square border rounded-full before:content-[''] before:h-2.5 before:aspect-square before:absolute before:top-1/2 before:left-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full checked:before:bg-blue-d1 disabled:checked:before:bg-gray-l2 disabled:checked:before:dark:bg-navy focus:outline-none focus:ring-1 focus:ring-blue-d1;
   }
 
   .checkbox {
-    @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-orange disabled:bg-gray-l5 disabled:dark:bg-bluegray;
+    @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-blue-d1 disabled:bg-gray-l5 ring-offset-1 disabled:dark:bg-navy;
   }
   .checkbox:checked::before {
     content: "✓";
@@ -59,26 +76,21 @@
     @apply text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
   }
   .checkbox[aria-invalid="true"] {
-    @apply border-red focus:shadow-focus focus:ring-0;
-  }
-  .checkbox-orange {
-    @apply checkbox focus:ring-orange-l2 disabled:border-gray-l3 disabled:dark:border-gray;
-  }
-  .checkbox-orange:checked {
-    @apply border-none bg-orange text-white disabled:bg-gray-l3 disabled:dark:bg-bluegray;
+    @apply border-red;
   }
 }
 
 /** Layer 2 components */
 @layer components {
-  .btn-orange {
-    @apply btn bg-orange disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-orange-l1 active:bg-orange-d1 focus-visible:ring-orange-l4;
-  }
+
   .btn-outline {
-    @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-bluegray disabled:dark:bg-bluegray border border-gray-l3 dark:border-bluegray  enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
+    @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy border border-gray-l3 dark:border-navy enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
+  }
+  .btn-outline-2 {
+    @apply rounded-lg normal-case text-sm border border-gray-l4 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
   }
   .btn-blue {
-    @apply btn bg-blue disabled:bg-gray text-white enabled:hover:bg-blue-l1 active:bg-blue-d1 focus-visible:ring-blue-l4;
+    @apply btn bg-blue-d1 disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l2;
   }
   .btn-red {
     @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
@@ -91,15 +103,25 @@
   }
 
   .field-container {
-    @apply rounded border border-gray-l3 dark:border-bluegray focus-within:border-gray-d1 focus-within:dark:border-blue-l2 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-bluegray-d1 aria-disabled:text-gray-d1 aria-disabled:dark:text-gray aria-disabled:pointer-events-none;
+    @apply rounded border border-gray-l3;
   }
-
-  .field-container[aria-invalid="true"] {
-    @apply border-red focus-within:shadow-focus;
+  .field-container:has(:focus) {
+    @apply ring-2 ring-offset-1 ring-blue-d1;
   }
-
+  .field-container:has(:disabled),
+  .field-container:has([aria-disabled="true"]) {
+    @apply text-navy-l1 bg-gray-l5 pointer-events-none;
+  }
+  .field-container:has([data-error]),
+  .field-container:has([aria-invalid="true"]) {
+    @apply border-red;
+  }
   .field-container > input {
     @apply bg-transparent focus:outline-none w-full;
+  }
+
+  .field-input-donate {
+    @apply bg-gray-l5 rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium
   }
 
   .field {
@@ -135,31 +157,23 @@
 /** page components */
 @layer components {
   .btn-outline-filled {
-    @apply btn-outline bg-orange-l5 dark:bg-blue-d4 enabled:hover:bg-orange-l4 dark:enabled:hover:bg-blue-d3;
+    @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3;
   }
   .btn-outline-gray {
-    @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-bluegray-d1 dark:enabled:hover:bg-bluegray dark:active:bg-bluegray-d2;
+    @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-navy-d3 dark:enabled:hover:bg-navy dark:active:bg-navy-d4;
   }
   .btn-gift {
     @apply text-base sm:text-sm;
   }
   .btn-donate {
-    @apply text-sm md:text-base;
+    @apply rounded-full normal-case;
   }
 
   .btn-reg {
     @apply text-sm;
   }
-  .check-field-reg > input {
-    @apply checked:bg-orange before:hidden;
-  }
-  .check-field-kyc > input {
-    @apply w-6 h-6 before:text-lg;
-  }
 
-  .checkbox-marketplace {
-    @apply inline-block border-gray-d1 dark:border-gray-l3 rounded-sm before:text-sm checked:bg-blue-l2 checked:text-white checked:border-blue-l2 dark:checked:bg-blue dark:checked:border-blue focus:ring-blue;
-  }
+
 
   .field-gift > input {
     @apply bg-white dark:bg-blue-d6;
@@ -176,6 +190,20 @@
   .field-admin > textarea,
   .field-admin > input {
     @apply bg-gray-l6 dark:bg-blue-d5;
+  }
+
+  .field-donate > input {
+    @apply field-input-donate
+  }
+  .field-donate > label {
+    @apply font-heading font-semibold text-base
+  }
+
+  .field-container-donate {
+    @apply text-base font-semibold bg-gray-l5 rounded-lg
+  }
+  .field-container-donate > input {
+    @apply py-3.5 px-5 text-base placeholder:font-medium
   }
 
   .field-admin-sec > input {

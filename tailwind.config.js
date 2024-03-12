@@ -9,86 +9,73 @@ module.exports = {
       current: colors.current,
       inherit: colors.inherit,
 
-      orange: {
-        d4: "#3D2600",
-        d3: "#6A4100",
-        d2: "#995E00",
-        d1: "#C77B00",
-        DEFAULT: "#F59700",
-        l1: "#F9A320",
-        l2: "#FFC86F",
-        l3: "#FFD798",
-        l4: "#FFEFD5",
-        l5: "#F9F4EC",
-        l6: "#FCFAF7",
-      },
       blue: {
-        d7: "#0D283A",
-        d6: "#0F2E43",
-        d5: "#12364F",
-        d4: "#143F5C",
-        d3: "#1E5B86",
-        d2: "#226A9A",
-        d1: "#2D89C8",
-        DEFAULT: "#54A3D9",
-        l1: "#76B2DC",
-        l2: "#97C7E8",
+        d7: "#0B1A2A",
+        d6: "#112840",
+        d5: "#1a3f60",
+        d4: "#194b73",
+        d3: "#1a578a",
+        d2: "#1e6dab",
+        d1: "#2D89C8", //blue-400
+        DEFAULT: "#54a5dc",
+        l1: "#8fc4ea",
+        l2: "#c4def3",
         l3: "#B8D9EF",
-        l4: "#E2EFF9",
-        l5: "#EAF4FA",
+        l4: "#E6F1F9", //blue-100, #EAF3FA
+        l5: "#F7FAFD", //blue-50
       },
 
       green: {
-        d4: "#1F4521",
-        d3: "#306C33",
-        d2: "#419345",
-        d1: "#57B55C",
-        DEFAULT: "#7EC682",
-        l1: "#9AD39D",
-        l2: "#B7DFB9",
-        l3: "#D3ECD4",
-        l4: "#EFF8F0",
-        l5: "#FDFEFD",
+        d4: "#092a17",
+        d3: "#1d5e35",
+        d2: "#1f763e",
+        d1: "#23964c",
+        DEFAULT: "#31b861", //green-500
+        l1: "#57d182",
+        l2: "#8fe6ae",
+        l3: "#c0f2d1",
+        l4: "#dff9e8",
+        l5: "#f1fcf4",
       },
 
-      bluegray: {
-        d2: "#243845",
-        d1: "#283E4D",
-        DEFAULT: "#3D5F76",
+      navy: {
+        d4: "#183244", //navy-blue-1000
+        d3: "#1f3648",
+        d2: "#273f52",
+        d1: "#314c5d",
+        DEFAULT: "#3c5667",
+        l1: "#496273", //navy-blue-400, #1D3C51/80
+        l2: "#5b6f7f",
+        l3: "#72828D", //navy-blue-200
+        l4: "#9dabb5",
+        l5: "#d4dee6",
       },
 
       red: {
-        d4: "#2F0F03",
-        d3: "#632006",
-        d2: "#98310A",
-        d1: "#CD420D",
-        DEFAULT: "#F15A21",
-        l1: "#F37747",
-        l2: "#F6936E",
-        l3: "#F8B094",
-        l4: "#FBCCBB",
-        l5: "#FCDACE",
-      },
-      yellow: {
-        d2: "#A16207",
-        d1: "#CA8A04",
-        DEFAULT: "#EAB308",
-        l1: "#FACC15",
-        l2: "#FDE047",
+        d4: "#9d1717",
+        d3: "#c81818", //red-100, #C52828
+        d2: "#e22020",
+        d1: "#e22020",
+        DEFAULT: "#f53e3e",
+        l1: "#fc6d6d",
+        l2: "#ffa2a2",
+        l3: "#ffc8c8",
+        l4: "#ffe1e1",
+        l5: "#fef2f2",
       },
 
       black: "#000101",
       gray: {
-        d3: "#272420",
-        d2: "#44413C",
-        d1: "#6C6760",
-        DEFAULT: "#A2A3A3",
-        l1: "#B2AFA9",
-        l2: "#C4C0BB",
-        l3: "#D6D6D6",
-        l4: "#ECEDED",
-        l5: "#F3F3F2",
-        l6: "#FDFDFC",
+        d3: "#363636",
+        d2: "#545454",
+        d1: "#676767",
+        DEFAULT: "#999999",
+        l1: "#ADADAD",
+        l2: "#C8C8C8",
+        l3: "#D7D7D7", //white-600
+        l4: "#E7E7E7", //white-500
+        l5: "#F9FBFA", //white-200
+        l6: "#FFFFFF",
       },
       white: "#FFFFFF",
 
@@ -113,9 +100,6 @@ module.exports = {
     },
 
     extend: {
-      boxShadow: (theme) => ({
-        focus: `0 0 5px ${theme("colors.red.DEFAULT")}`,
-      }),
       fontSize: {
         "2xs": "0.625rem",
         "3xs": ["0.56rem", "0.7rem"],

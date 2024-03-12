@@ -11,14 +11,14 @@ export default function Stocks(props: StockCheckoutStep) {
   return (
     <div className="grid content-start p-4 @md:p-8">
       <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
-      <p className="mt-4 text-center text-gray-d1 uppercase">
+      <p className="mt-4 text-center text-navy-l1 uppercase">
         Donation pending
       </p>
       <p className="mt-4 text-center">
         To complete this donation, please email or provide your broker with the
         following information:
       </p>
-      <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-3 text-sm leading-relaxed mt-6">
+      <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed mt-6">
         <p>
           Please transfer [&nbsp;{props.details.numShares}&nbsp;] share(s) of
           [&nbsp;{props.details.symbol}&nbsp;] to:
@@ -35,7 +35,7 @@ export default function Stocks(props: StockCheckoutStep) {
       <p className="text-sm mt-3 mb-1">
         You may also need the following information:
       </p>
-      <span className="rounded bg-gray-l5 dark:bg-bluegray-d1 p-3 text-sm leading-relaxed ">
+      <span className="rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed ">
         Better.Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>
@@ -58,7 +58,7 @@ export default function Stocks(props: StockCheckoutStep) {
           props.details.numShares,
           props.details.symbol
         )}
-        className="btn btn-orange px-4 py-2 justify-self-end mt-2 text-xs font-normal"
+        className="btn btn-blue rounded-full px-4 py-2 justify-self-end mt-2 text-xs font-normal"
       >
         Generate email
       </a>

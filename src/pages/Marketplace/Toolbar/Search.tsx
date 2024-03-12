@@ -1,4 +1,4 @@
-import { QueryStatus } from "@reduxjs/toolkit/dist/query";
+import { QueryStatus } from "@reduxjs/toolkit/query";
 import Icon from "components/Icon";
 import useDebouncer from "hooks/useDebouncer";
 import { useEffect, useState } from "react";
@@ -23,7 +23,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`${classes} flex gap-2 items-center  dark:text-gray-l3 border border-prim rounded-lg overflow-clip`}
+      className={`${classes} flex gap-2 items-center rounded-lg overflow-clip field-container`}
     >
       <Icon
         type={isLoading ? "Loading" : "Search"}
@@ -33,7 +33,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
       <input
         value={query}
         onChange={({ target: { value } }) => setQuery(value)}
-        className="focus:outline-none w-full py-2 pr-3 bg-transparent dark:placeholder:text-gray-l3"
+        className="w-full py-2 pr-3 placeholder:text-navy-l3 text-navy-d4 font-medium font-heading"
         placeholder="Search organizations..."
       />
     </div>

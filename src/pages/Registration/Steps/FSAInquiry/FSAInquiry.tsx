@@ -35,7 +35,7 @@ function FSAInquiry() {
               Is your organization recognized by the Internal Revenue Service as
               a nonprofit organization exempt under IRC 501(c)(3)?{" "}
             </Label>
-            <div className="flex gap-4 mt-4 accent-orange text-sm">
+            <div className="flex gap-4 mt-4 accent-blue-d1 text-sm">
               <Radio<FV, "AuthorizedToReceiveTaxDeductibleDonations">
                 name="AuthorizedToReceiveTaxDeductibleDonations"
                 value="Yes"
@@ -49,7 +49,7 @@ function FSAInquiry() {
             </div>
           </>
         ) : (
-          <p className="text-sm text-gray-d1 dark:text-gray leading-relaxed">
+          <p className="text-sm text-navy-l1 dark:text-navy-l2 leading-relaxed">
             Great news: Nonprofit Organizations in{" "}
             <span className="font-semibold">{data.orgDetails.HqCountry}</span>{" "}
             can now take advantage of {APP_NAME}’s Fiscal Sponsorship service.
@@ -57,7 +57,7 @@ function FSAInquiry() {
         )}
 
         {!possiblyTaxExempt || answer === "No" ? (
-          <p className="text-sm text-gray-d1 dark:text-gray leading-relaxed mt-4">
+          <p className="text-sm text-navy-l1 dark:text-navy-l2 leading-relaxed mt-4">
             {APP_NAME} provides fiscal sponsorship services at market-leading
             cost (2.9%) for our partner organizations worldwide to enable them
             to receive tax efficient donations from the USA. Continue to setup
@@ -77,7 +77,7 @@ function FSAInquiry() {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="py-3 min-w-[8rem] btn-orange btn-reg"
+            className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             <LoadText isLoading={isSubmitting}>Continue</LoadText>
           </button>

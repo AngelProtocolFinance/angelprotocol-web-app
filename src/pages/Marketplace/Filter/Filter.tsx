@@ -14,19 +14,19 @@ export default function Filter({ classes = "" }: { classes?: string }) {
 
   return (
     <Modal
-      className={`${classes} fixed-center z-10 w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-prim bg-gray-l6 dark:bg-blue-d5 dark:text-white rounded`}
+      className={`${classes} fixed-center z-10 w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 dark:text-white rounded`}
     >
-      <div className="bg-orange-l6 dark:bg-blue-d7 flex items-center p-4 border-b border-prim">
+      <div className="bg-blue-l5 dark:bg-blue-d7 flex items-center p-4 border-b border-gray-l4">
         <h3 className="uppercase mr-auto">Filters</h3>
         <button
           type="button"
           title="Reset all filters to their default values."
           onClick={() => dispatch(reset())}
-          className="text-gray-d1 dark:text-gray-l3 text-sm mr-4"
+          className="text-navy-l1 dark:text-navy-l5 text-sm mr-4"
         >
           Clear Filters
         </button>
-        <button onClick={closeModal} className="active:text-orange">
+        <button onClick={closeModal} className="active:text-blue-d1">
           <Icon type="Close" size={22} />
         </button>
       </div>
@@ -38,7 +38,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         <Countries />
       </div>
 
-      <div className="px-2 divide-y divide-prim">
+      <div className="px-2 divide-y divide-gray-l3">
         <Designations />
         <KYCFilter />
         <Categories />

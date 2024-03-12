@@ -7,6 +7,11 @@ export type Donor = {
   lastName: string;
 };
 
+export type GuestDonor = {
+  email: string;
+  fullName: string;
+};
+
 export type KYCData = {
   fullName: string; // "John Doe"
   kycEmail: string; // "john@doe.email.com"
@@ -57,14 +62,14 @@ export type DonationsQueryParams = {
   beforeDate?: string;
   chainName?: string;
   denomination?: string;
-  status?: string;
+  status?: "PENDING" | "RECEIVED";
   start?: number; //to load next page, set start to ItemCutOff + 1
   limit?: number; // Number of items to be returned per request
-  type: "on-hold" | "finalized";
 };
 
 export type CryptoDonation = {
   amount: number;
+  tipAmount: number;
   denomination: string;
   endowmentId: number;
   chainId: string;
@@ -74,6 +79,7 @@ export type CryptoDonation = {
   splitLiq: number;
   chainName: string;
   appUsed: DonationSource;
+  donor: Donor;
 };
 
 export type FiatCurrencyData = {

@@ -25,10 +25,10 @@ export default function Milestone({
       as="div"
       className={`border ${
         //helps distinguish erroneous milestone just in case user collapses dropdown with errors left
-        milestoneError ? "border-red" : "border-prim"
+        milestoneError ? "border-red" : "border-gray-l4"
       } rounded overflow-hidden`}
     >
-      <div className="relative py-3 px-4 text-center bg-orange-l6 dark:bg-blue-d7">
+      <div className="relative py-3 px-4 text-center bg-blue-l5 dark:bg-blue-d7">
         <span className="text-xl font-bold font-heading">
           {title || `Milestone ${idx + 1}`}
         </span>
@@ -41,7 +41,7 @@ export default function Milestone({
         as="div"
         className={({ open }) =>
           `${
-            open ? "border-t border-prim" : ""
+            open ? "border-t border-gray-l4" : ""
           } bg-white dark:bg-blue-d6 py-6 px-4 grid content-start gap-6`
         }
       >
@@ -77,9 +77,9 @@ export default function Milestone({
           charLimit={MAX_CHARS}
           classes={{
             container:
-              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             error: "static field-error -mt-4",
-            charCounter: "text-gray-d1 dark:text-gray",
+            charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
         <button
