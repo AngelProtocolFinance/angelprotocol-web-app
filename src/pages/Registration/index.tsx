@@ -14,7 +14,7 @@ const Success = lazy(() => import("./Success"));
 
 function Registration() {
   return (
-    <div className="flex justify-center items-center mt-20">
+    <div className="flex justify-center items-center my-20">
       <Suspense fallback="Loading page...">
         <Seo
           title={`Registration Portal - ${APP_NAME}`}
@@ -23,24 +23,16 @@ function Registration() {
         <Routes>
           <Route
             path={regRoutes.welcome}
-            element={<Welcome classes="my-10 md:my-32 mx-6" />}
+            element={<Welcome classes="mx-6" />}
           />
           <Route
             path={regRoutes.steps + "/*"}
-            element={<Steps classes="md:my-20" />}
+            element={<Steps classes="max-sm:-my-20" />}
           />
-          <Route path={regRoutes.resume} element={<Resume classes="my-20" />} />
-          <Route
-            path={regRoutes.success}
-            element={<Success classes="mt-10 sm:mt-[5.5rem] mb-6 sm:mb-20" />}
-          />
-          <Route
-            path={regRoutes.sign_result}
-            element={
-              <SignResult classes="mt-10 sm:mt-[5.5rem] mb-6 sm:mb-20" />
-            }
-          />
-          <Route index element={<Signup classes="my-20" />} />
+          <Route path={regRoutes.resume} element={<Resume />} />
+          <Route path={regRoutes.success} element={<Success />} />
+          <Route path={regRoutes.sign_result} element={<SignResult />} />
+          <Route index element={<Signup />} />
           <Route path="*" element={<Navigate to={regRoutes.index} />} />
         </Routes>
       </Suspense>
