@@ -39,9 +39,8 @@ export const wordpress = createApi({
         };
       },
     }),
-    media: builder.query<any, any>({
+    media: builder.query<Wordpress.Media, number>({
       query: (id) => `media/${id}`,
-      transformResponse: (res: any) => res.guid.rendered.toString(),
     }),
     // categories: builder.query<Category[], WpQueryParams>({
     //   query: () => {

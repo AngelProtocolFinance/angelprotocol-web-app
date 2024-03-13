@@ -1,4 +1,8 @@
 export namespace Wordpress {
+  interface Html {
+    rendered: string;
+  }
+
   export namespace Post {
     export namespace QueryParams {
       export type ContextType = "view" | "embed" | "edit";
@@ -64,12 +68,108 @@ export namespace Wordpress {
     sticky: boolean;
     categories: string[];
     tags: string[];
-    content: { rendered: string };
+    content: Html;
   };
 
   export type Page = Post & {
     parent: number;
     jetpack_featured_media_url: any; //TODO: type
-    excerpt: { rendered: string };
+    excerpt: Html;
   };
+
+  export namespace Media {
+    export interface Meta {
+      "content-type": string;
+    }
+
+    export interface Size {
+      file: string;
+      width: number;
+      height: number;
+      filesize?: number;
+      mime_type?: string;
+      source_url?: string;
+    }
+
+    interface Sizes {
+      medium: Size;
+      large: Size;
+      thumbnail: Size;
+      medium_large: Size;
+      "1536x1536": Size;
+      "2048x2048": Size;
+      "gainioz-case-details": Size;
+      tenweb_optimizer_mobile: Size;
+      tenweb_optimizer_tablet: Size;
+      full: Omit<Size, "filesize">;
+    }
+
+    interface ImageMeta {
+      aperture: string;
+      credit: string;
+      camera: string;
+      caption: string;
+      created_timestamp: string;
+      copyright: string;
+      focal_length: string;
+      iso: string;
+      shutter_speed: string;
+      title: string;
+      orientation: string;
+      keywords: unknown[];
+    }
+
+    export interface Details {
+      width: number;
+      height: number;
+      file: string;
+      filesize: number;
+      sizes: Sizes;
+      image_meta: ImageMeta;
+    }
+
+    interface Link {
+      href: string;
+    }
+
+    interface EmbeddableLink extends Link {
+      embeddable: boolean;
+    }
+
+    export interface Links {
+      self: Link[];
+      collection: Link[];
+      about: Link[];
+      author: EmbeddableLink[];
+      replies: EmbeddableLink[];
+    }
+  }
+
+  export interface Media {
+    id: number;
+    date: string;
+    date_gmt: string;
+    guid: Html;
+    modified: string;
+    modified_gmt: string;
+    slug: string;
+    status: string;
+    type: string;
+    link: string;
+    title: Html;
+    author: number;
+    comment_status: string;
+    ping_status: string;
+    template: string;
+    meta: Media.Meta;
+    description: Html;
+    caption: Html;
+    alt_text: string;
+    media_type: string;
+    mime_type: string;
+    media_details: Media.Details;
+    post: number;
+    source_url: string;
+    _links: Media.Links;
+  }
 }
