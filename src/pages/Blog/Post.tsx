@@ -1,23 +1,21 @@
+import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
+import QueryLoader from "components/QueryLoader";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { usePostQuery, useUserQuery } from "services/wordpress";
+import { Wordpress } from "types/wordpress";
 import Media from "./Media";
+
+const containerStyle = "padded-container max-w-4xl mx-auto pb-4";
 
 export default function Post() {
   const { slug = "" } = useParams<{ slug: string }>();
 
-  const {
-    data: post,
-    isLoading,
-    isError,
-  } = usePostQuery(slug, { skip: !slug });
-
-  if (isLoading) return <p>Loading... TODO: create skeleton for this</p>;
-  if (!post || isError) return <p>error</p>;
+  const query = usePostQuery(slug, { skip: !slug });
 
   return (
-    <div className="padded-container max-w-4xl mx-auto">
+    <div className={containerStyle}>
       <Link
         to={".."}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
@@ -25,7 +23,22 @@ export default function Post() {
         <Icon type="ChevronLeft" className="text-[1em]" />
         <span>Go Back</span>
       </Link>
+      <QueryLoader
+        queryState={query}
+        messages={{
+          loading: <Skeleton />,
+        }}
+        classes={{ container: containerStyle }}
+      >
+        {(post) => <Loaded {...post} />}
+      </QueryLoader>
+    </div>
+  );
+}
 
+function Loaded(post: Wordpress.Post) {
+  return (
+    <>
       <Media
         sizes="(min-width: 896px) 896px, 100vw"
         id={post.featured_media}
@@ -53,11 +66,37 @@ export default function Post() {
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: post.content.rendered }}
       />
-    </div>
+    </>
   );
 }
 
 function Author(props: { id: number }) {
   const { data } = useUserQuery(props.id);
   return data && <p className="text-navy-l1 text-sm">Author: {data.name}</p>;
+}
+
+function Skeleton() {
+  return (
+    <>
+      <ContentLoader className="h-60 w-full mt-4" />
+      <ContentLoader className="h-12 w-[90%] mt-4" />
+      <ContentLoader className="h-4 w-40 mt-4" />
+      <ContentLoader className="h-4 w-40 mt-2" />
+
+      <ContentLoader className="h-4 w-full mt-8" />
+      <ContentLoader className="h-4 w-full mt-2" />
+      <ContentLoader className="h-4 w-full mt-2" />
+      <ContentLoader className="h-4 w-full mt-2" />
+
+      <ContentLoader className="h-4 w-full mt-8" />
+      <ContentLoader className="h-4 w-full mt-2" />
+      <ContentLoader className="h-4 w-full mt-2" />
+      <ContentLoader className="h-4 w-full mt-2" />
+
+      <ContentLoader className="h-4 w-full mt-8" />
+      <ContentLoader className="h-4 w-full mt-2" />
+      <ContentLoader className="h-4 w-full mt-2" />
+      <ContentLoader className="h-4 w-full mt-2" />
+    </>
+  );
 }

@@ -218,8 +218,12 @@
     @apply my-4 mb-2 text-pretty;
   }
 
-  .wp-post p {
+  .wp-post p:not(:contain("&nbsp;")) {
     @apply my-3
+  }
+
+  .wp-post .elementor-widget-container {
+    @apply my-4
   }
 
   .wp-post ul {
