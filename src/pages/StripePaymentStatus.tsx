@@ -81,7 +81,7 @@ function Processing({ onMount = () => {} }) {
 function Unsuccessful() {
   const state = useGetter((state) => state.donation);
   return (
-    <div className="justify-self-center display-block m-auto max-w-[35rem] py-8 sm:py-20 scroll-mt-6">
+    <div className="justify-self-center display-block m-auto max-w-[35rem] pt-8 sm:pt-20 pb-20 scroll-mt-6">
       <Icon type="CloseCircle" size={96} className="text-green mb-4 mx-auto" />
       <h3 className="text-2xl sm:text-3xl mb-8 sm:mb-12 text-center">
         Donation unsuccessful
@@ -102,7 +102,7 @@ function Unsuccessful() {
 function SomethingWentWrong() {
   const state = useGetter((state) => state.donation);
   return (
-    <div className="justify-self-center display-block m-auto max-w-[35rem] py-8 sm:py-20 scroll-mt-6">
+    <div className="justify-self-center display-block m-auto max-w-[35rem] pt-8 sm:pt-20 pb-20 scroll-mt-6">
       <Icon type="CloseCircle" size={96} className="text-green mb-4 mx-auto" />
       <h3 className="text-2xl sm:text-3xl mb-8 sm:mb-12 text-center">
         Something went wrong
