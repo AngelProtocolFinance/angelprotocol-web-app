@@ -222,6 +222,13 @@
     @apply my-3
   }
 
+  .wp-post ul {
+    @apply pl-4
+  }
+  .wp-post ul li {
+    @apply my-2
+  }
+
   .wp-post figure {
     @apply my-6
   }
@@ -234,11 +241,6 @@
     @apply text-sm mt-2
   }
 
-
-
-  .wp-post > div {
-    @apply py-4;
-  }
 
   .wp-post > p {
     @apply mt-0 mb-4;

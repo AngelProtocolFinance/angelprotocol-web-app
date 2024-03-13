@@ -6,7 +6,7 @@ export namespace Wordpress {
 
   export type Post = {
     id: number;
-    modified: string;
+    date: string;
     slug: string;
     title: Html;
     author: number;
@@ -49,5 +49,9 @@ export namespace Wordpress {
     guid: Html;
     alt_text: string;
     media_details: Media.Details;
+  }
+
+  export interface User {
+    name: string;
   }
 }

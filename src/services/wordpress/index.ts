@@ -21,7 +21,11 @@ export const wordpress = createApi({
     media: builder.query<Wordpress.Media, number>({
       query: (id) => `media/${id}`,
     }),
+    user: builder.query<Wordpress.User, number>({
+      query: (id) => `users/${id}`,
+    }),
   }),
 });
 
-export const { usePostsQuery, usePostQuery, useMediaQuery } = wordpress;
+export const { usePostsQuery, usePostQuery, useMediaQuery, useUserQuery } =
+  wordpress;

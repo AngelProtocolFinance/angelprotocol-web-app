@@ -10,7 +10,7 @@ export default function Posts() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 content-start padded-container min-h-screen pb-6">
-      <h1 className="col-span-full text-xl md:text-2xl lg:text-3xl break-words mt-6">
+      <h1 className="font-bold uppercase col-span-full text-2xl lg:text-3xl break-words mt-6">
         Posts
       </h1>
 
@@ -41,7 +41,7 @@ const Cards = (props: { posts: Wordpress.Post[] }) =>
     <Link
       key={post.slug}
       to={post.slug}
-      className="grid grid-rows-[auto_1fr] h-full rounded-lg overflow-clip bg-blue-l5 hover:bg-blue-l4"
+      className="grid grid-rows-[auto_1fr] h-full rounded-lg overflow-clip bg-blue-l5 hover:bg-blue-l4 border border-blue-l2/20 group"
     >
       <Media
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
@@ -50,7 +50,7 @@ const Cards = (props: { posts: Wordpress.Post[] }) =>
       />
       <div className="flex flex-col p-4 gap-3">
         <h2
-          className="text-pretty"
+          className="text-pretty group-has-[:hover]:text-blue-d1"
           // biome-ignore lint: trusted html
           dangerouslySetInnerHTML={{
             __html: post.title.rendered,

@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { usePostQuery } from "services/wordpress";
+import { usePostQuery, useUserQuery } from "services/wordpress";
 import Media from "./Media";
 
 export default function Post() {
@@ -32,21 +32,21 @@ export default function Post() {
         classes="relative w-full object-cover object-top mt-4"
       />
       <h1
-        className="font-heading text-xl md:text-2xl lg:text-3xl break-words my-8 text-pretty text-center"
+        className="text-xl md:text-2xl lg:text-3xl my-8 text-pretty"
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: post.title.rendered }}
       />
 
-      <p className="font-bold text-xs tracking-wider uppercase text-center mt-8">
-        Updated on:{" "}
-        <span className="text-xs text-gray-d1">
-          {new Date(post.modified).toLocaleDateString(undefined, {
-            day: "numeric",
-            month: "long",
-            year: "numeric",
-          })}
-        </span>
+      <p className="text-sm mt-8 text-navy-l1">
+        Posted:{" "}
+        {new Date(post.date).toLocaleDateString(undefined, {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        })}
       </p>
+      <Author id={post.author} />
+      <div className="w-full h-px bg-gray-l4 my-4" />
 
       <div
         className="wp-post"
@@ -55,4 +55,9 @@ export default function Post() {
       />
     </div>
   );
+}
+
+function Author(props: { id: number }) {
+  const { data } = useUserQuery(props.id);
+  return data && <p className="text-navy-l1 text-sm">Author: {data.name}</p>;
 }
