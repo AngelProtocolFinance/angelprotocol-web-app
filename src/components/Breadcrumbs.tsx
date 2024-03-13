@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 type Props = {
   className?: string;
   items: {
-    title: string | { __html: string };
+    title: string;
     to: string;
     end?: boolean;
   }[];
@@ -26,15 +26,7 @@ export default function Breadcrumbs({ items, className = "" }: Props) {
               }`
             }
           >
-            {typeof item.title === "string" ? (
-              item.title
-            ) : (
-              <div
-                className="text-ellipsis overflow-hidden"
-                // biome-ignore lint: trusted html
-                dangerouslySetInnerHTML={{ __html: item.title.__html }}
-              />
-            )}
+            {item.title}
           </NavLink>
           {i < items.length - 1 && ">"}
         </Fragment>
