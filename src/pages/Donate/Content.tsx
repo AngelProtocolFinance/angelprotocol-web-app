@@ -1,4 +1,3 @@
-import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import { Steps } from "components/donation";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";

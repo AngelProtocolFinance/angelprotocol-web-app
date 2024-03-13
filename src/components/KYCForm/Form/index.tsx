@@ -1,6 +1,5 @@
 import countries from "assets/countries/all.json";
 import CountrySelector from "components/CountrySelector";
-import ExtLink from "components/ExtLink";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";

@@ -1,14 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
 import { AuthError, signInWithRedirect, signUp } from "aws-amplify/auth";
-import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { Form, Input, PasswordInput } from "components/form";
 import { Separator } from "components/registration";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";

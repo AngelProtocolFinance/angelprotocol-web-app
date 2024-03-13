@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
 import { AuthError, signIn, signInWithRedirect } from "aws-amplify/auth";
-import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { Form, Input, PasswordInput } from "components/form";
