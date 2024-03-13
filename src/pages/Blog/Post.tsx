@@ -29,7 +29,7 @@ export default function Post() {
       <Media
         sizes="(min-width: 896px) 896px, 100vw"
         id={post.featured_media}
-        classes="relative w-full object-cover object-top mt-4"
+        classes="relative w-full object-cover object-top mt-4 rounded-lg"
       />
       <h1
         className="text-xl md:text-2xl lg:text-3xl my-8 text-pretty"
