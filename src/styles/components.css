@@ -218,7 +218,7 @@
     @apply my-4 mb-2 text-pretty;
   }
 
-  .wp-post p:not(:contain("&nbsp;")) {
+  .wp-post p {
     @apply my-3
   }
 
