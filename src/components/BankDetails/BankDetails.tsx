@@ -1,4 +1,4 @@
-import Divider from "components/Divider";
+import { Separator } from "components/Separator";
 import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
 import { useWiseCurrenciesQuery } from "services/aws/wise";
@@ -66,7 +66,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
         disabled={isSubmitting}
       />
 
-      <Divider />
+      <Separator classes="before:bg-gray-l3 after:bg-gray-l3 before:dark:bg-navy after:dark:bg-navy" />
 
       <RecipientDetails
         amount={amnt}

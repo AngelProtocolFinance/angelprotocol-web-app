@@ -1,4 +1,5 @@
 import { Except } from "type-fest";
+import { Ensure } from "types/utils";
 import { APIEnvironment, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
@@ -50,6 +51,8 @@ export type Endowment = {
   hq_country: string;
   image: string;
   kyc_donors_only: boolean;
+  /** optional as older endowments don't have it set */
+  hide_bg_tip?: boolean;
   logo: string;
   name: string;
   card_img?: string;
@@ -85,7 +88,7 @@ export type EndowmentOption = Pick<Endowment, "id" | "name">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
-  Endowment,
+  Ensure<Endowment, "hide_bg_tip">,
   "endow_designation" | "fiscal_sponsored"
 > & {
   endow_designation: EndowDesignation | "";

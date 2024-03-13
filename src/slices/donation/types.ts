@@ -12,6 +12,7 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
 export type DonationRecipient = {
   id: number;
   name: string;
+  hide_bg_tip: boolean;
 };
 
 type BaseDonationDetais = {
