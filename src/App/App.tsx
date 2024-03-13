@@ -28,8 +28,6 @@ const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const Widget = lazy(() => import("pages/Widget"));
 const BlogPosts = lazy(() => import("pages/Blog/Posts"));
 const BlogPost = lazy(() => import("pages/Blog/Post"));
-// const WordPressPages = lazy(() => import("pages/Wordpress/Pages/Pages"));
-const WordPressPage = lazy(() => import("pages/Wordpress/Pages/Page"));
 
 export default function App() {
   const location = useLocation();
@@ -115,7 +113,6 @@ export default function App() {
             <Route path=":slug" element={<BlogPost />} />
             <Route index element={<BlogPosts />} />
           </Route>
-          <Route path="/pages/:slug" element={<WordPressPage />} />
         </Route>
         <Route
           path="*"
