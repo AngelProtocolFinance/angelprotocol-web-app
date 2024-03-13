@@ -20,11 +20,6 @@ export enum appRoutes {
   blog = "/blog",
 }
 
-export const wpRoutes = {
-  blog: "/blog",
-  pages: "/pages",
-};
-
 export const adminRoutes = {
   index: "",
   edit_profile: "edit-profile",

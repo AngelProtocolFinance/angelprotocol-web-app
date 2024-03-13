@@ -1,5 +1,5 @@
 import { BASE_URL, DAPP_URL, INTERCOM_HELP } from "constants/env";
-import { appRoutes, wpRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import {
   PRIVACY_POLICY,
   TERMS_OF_USE_DONOR,
@@ -28,7 +28,7 @@ const HEADER_LINKS: Link[] = [
   },
   {
     title: "Blog",
-    href: wpRoutes.blog,
+    href: appRoutes.blog,
   },
   {
     title: "About",

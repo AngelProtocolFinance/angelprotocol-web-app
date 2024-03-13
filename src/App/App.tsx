@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/react";
-import { appRoutes, donateWidgetRoutes, wpRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { lazy } from "react";
@@ -115,7 +115,7 @@ export default function App() {
             <Route path=":slug" element={<BlogPost />} />
             <Route index element={<BlogPosts />} />
           </Route>
-          <Route path={`${wpRoutes.pages}:slug`} element={<WordPressPage />} />
+          <Route path="/pages/:slug" element={<WordPressPage />} />
         </Route>
         <Route
           path="*"
