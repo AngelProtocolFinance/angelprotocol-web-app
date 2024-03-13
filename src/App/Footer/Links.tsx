@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { LinkGroup } from "../types";
 
 const linkStyles = "font-semibold text-xs";
@@ -12,7 +13,7 @@ export default function Links({ groups }: { groups: LinkGroup[] }) {
           </p>
           <div className="flex flex-col items-start h-full gap-1">
             {links.map((link) => (
-              <Link key={link.text} {...link} />
+              <_Link key={link.text} {...link} />
             ))}
           </div>
         </div>
@@ -21,11 +22,11 @@ export default function Links({ groups }: { groups: LinkGroup[] }) {
   );
 }
 
-function Link(props: { text: string; href?: string }) {
+function _Link(props: { text: string; href?: string }) {
   return props.href ? (
-    <a href={props.href} className={`${linkStyles} hover:underline`}>
+    <Link to={props.href} className={`${linkStyles} hover:underline`}>
       {props.text}
-    </a>
+    </Link>
   ) : (
     <span className={linkStyles}>{props.text}</span>
   );

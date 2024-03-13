@@ -1,4 +1,4 @@
-import { BASE_URL, DAPP_URL, INTERCOM_HELP } from "constants/env";
+import { BASE_URL, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import {
   PRIVACY_POLICY,
@@ -23,7 +23,7 @@ const HEADER_LINKS: Link[] = [
   },
   {
     title: "Giving Partners (CSR)",
-    href: `${BASE_URL}/giving-partners-csr/`,
+    href: `/wp/giving-partners-csr/`,
     external: true,
   },
   {
@@ -32,7 +32,7 @@ const HEADER_LINKS: Link[] = [
   },
   {
     title: "About",
-    href: `${BASE_URL}/better-giving-about/`,
+    href: `/wp/better-giving-about/`,
     external: true,
   },
   { title: "Register NPO", href: appRoutes.register },
@@ -55,17 +55,17 @@ export const CHARITY_LINKS: LINKS = {
         },
         {
           text: "Giving Partners (CSR)",
-          href: `${BASE_URL}/giving-partners-csr/`,
+          href: `/wp/giving-partners-csr/`,
         },
-        { text: "Impact Board", href: `${DAPP_URL}/leaderboard/` },
+        { text: "Impact Board", href: "/leaderboard/" },
       ],
     },
     {
       title: "Resources",
       links: [
-        { text: "About us", href: `${BASE_URL}/about-better-giving/` },
+        { text: "About us", href: `/wp/about-better-giving/` },
         { text: "FAQs", href: INTERCOM_HELP },
-        { text: "News", href: `${BASE_URL}/news/` },
+        { text: "News", href: "/blog" },
       ],
     },
     {
