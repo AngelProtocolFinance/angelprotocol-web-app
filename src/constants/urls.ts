@@ -7,7 +7,7 @@ export const APIs = {
 };
 
 export const LITEPAPER = `${BASE_URL}/docs/litepaper-introduction/`;
-export const PRIVACY_POLICY = `${BASE_URL}/privacy-policy/`;
+export const PRIVACY_POLICY = `/wp/privacy-policy/`;
 
-export const TERMS_OF_USE_NPO = `${BASE_URL}/terms-of-use-npo/`;
-export const TERMS_OF_USE_DONOR = `${BASE_URL}/terms-of-use/`;
+export const TERMS_OF_USE_NPO = `/wp/terms-of-use-npo/`;
+export const TERMS_OF_USE_DONOR = `/wp/terms-of-use/`;

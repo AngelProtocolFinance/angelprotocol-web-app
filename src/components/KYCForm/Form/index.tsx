@@ -5,6 +5,7 @@ import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { FormValues as FV, Props } from "../types";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
@@ -121,16 +122,13 @@ export default function Form({ classes = "", ...props }: Props) {
       />
       <p className="text-sm col-span-full">
         By submitting this information, you agree to our{" "}
-        <ExtLink href={PRIVACY_POLICY} className="text-blue hover:text-blue-l2">
+        <Link to={PRIVACY_POLICY} className="text-blue hover:text-blue-l2">
           Privacy Policy
-        </ExtLink>{" "}
+        </Link>{" "}
         and{" "}
-        <ExtLink
-          href={TERMS_OF_USE_DONOR}
-          className="text-blue hover:text-blue-l2"
-        >
+        <Link to={TERMS_OF_USE_DONOR} className="text-blue hover:text-blue-l2">
           Terms of Use
-        </ExtLink>
+        </Link>
         .
       </p>
 

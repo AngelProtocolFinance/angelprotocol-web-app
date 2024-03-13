@@ -5,7 +5,7 @@ import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { memo, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import FAQ from "./FAQ";
@@ -67,15 +67,15 @@ function Content(props: Props) {
         <FAQ classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]" />
         <p className="max-md:border-t max-md:border-gray-l3 max-md:px-4 max-md:pt-4 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
           By making a donation to {APP_NAME}, you agree to our{" "}
-          <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
-          <A href={PRIVACY_POLICY}>Privacy Policy</A>, and{" "}
+          <A to={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
+          <A to={PRIVACY_POLICY}>Privacy Policy</A>, and{" "}
           <span className="font-medium">Nonprofit Support Fee</span>. 100% of
           your donation is tax-deductible to the extent allowed by US law. Your
           donation is made to {APP_NAME}, a tax-exempt US 501(c)(3) charity that
           grants unrestricted funds to {props.name} on your behalf. As a legal
           matter, {APP_NAME} must provide any donations to {props.name} on an
           unrestricted basis, regardless of any designations or restrictions
-          made by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
+          made by you. <A to={TERMS_OF_USE_DONOR}>See Terms.</A>
         </p>
         <p className="max-md:px-4 mb-4 max-mbcol-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
           <span className="block mb-0.5">
@@ -83,15 +83,15 @@ function Content(props: Props) {
             <Link to="./#faqs" className="hover:underline font-medium">
               FAQs
             </Link>{" "}
-            or contact us at our <A href={INTERCOM_HELP}>Help Center</A>.
+            or contact us at our <A to={INTERCOM_HELP}>Help Center</A>.
           </span>
           <span className="block mb-0.5">
             Have ideas for how we can build a better donation experience?{" "}
-            <A href={INTERCOM_HELP}>Send us feedback</A>.
+            <A to={INTERCOM_HELP}>Send us feedback</A>.
           </span>
           <span className="block">
             We respect your privacy. To learn more, check out our{" "}
-            <A href={PRIVACY_POLICY}>Privacy Policy</A>.
+            <A to={PRIVACY_POLICY}>Privacy Policy</A>.
           </span>
         </p>
       </div>
@@ -102,11 +102,8 @@ function Content(props: Props) {
 //memoize to prevent useEffect ( based on props ) from running when parent re-renders with the same props
 export default memo(Content);
 
-const A: typeof ExtLink = ({ className, ...props }) => {
+const A = ({ className, ...props }: LinkProps) => {
   return (
-    <ExtLink
-      {...props}
-      className={className + " font-medium hover:underline"}
-    />
+    <Link {...props} className={className + " font-medium hover:underline"} />
   );
 };

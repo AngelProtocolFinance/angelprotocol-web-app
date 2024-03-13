@@ -137,23 +137,20 @@ export default function Signin() {
       </Form>
       <span className="text-xs sm:text-sm text-center w-80">
         By signing in, you agree to our{" "}
-        <ExtLink href={PRIVACY_POLICY} className="text-blue hover:text-blue-l2">
+        <Link to={PRIVACY_POLICY} className="text-blue hover:text-blue-l2">
           Privacy Policy
-        </ExtLink>
+        </Link>
         ,{" "}
-        <ExtLink
-          href={`${BASE_URL}/cookie-policy/`}
+        <Link
+          to={`${BASE_URL}/cookie-policy/`}
           className="text-blue hover:text-blue-l2"
         >
           Cookie Policy
-        </ExtLink>
+        </Link>
         , and{" "}
-        <ExtLink
-          href={TERMS_OF_USE_NPO}
-          className="text-blue hover:text-blue-l2"
-        >
+        <Link to={TERMS_OF_USE_NPO} className="text-blue hover:text-blue-l2">
           Terms of Use
-        </ExtLink>
+        </Link>
       </span>
     </div>
   );
