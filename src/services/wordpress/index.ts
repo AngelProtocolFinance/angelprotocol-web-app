@@ -34,6 +34,15 @@ export const wordpress = createApi({
       },
       transformResponse: ([post]: [Wordpress.Post]) => post,
     }),
+    page: builder.query<Wordpress.Page, string>({
+      query: (slug) => {
+        return {
+          url: "pages",
+          params: { slug },
+        };
+      },
+      transformResponse: ([post]: [Wordpress.Post]) => post,
+    }),
     media: builder.query<Wordpress.Media, number>({
       query: (id) => `media/${id}`,
     }),
@@ -49,5 +58,6 @@ export const {
   usePostQuery,
   useMediaQuery,
   useUserQuery,
+  usePageQuery,
   util: { updateQueryData: updateWordpressQueryData },
 } = wordpress;

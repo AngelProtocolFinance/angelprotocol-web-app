@@ -30,6 +30,10 @@ export namespace Wordpress {
     content: Html;
   };
 
+  export type Page = {
+    content: Html;
+  };
+
   /** custom type made from Post[] and response headers */
   export type PostPage = {
     posts: Post[];
