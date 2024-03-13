@@ -77,6 +77,17 @@ export const apes = createApi({
       }),
       transformResponse: (res: { grantId: string }) => res.grantId,
     }),
+    fiatCurrencies: builder.query<DetailedCurrency[], void>({
+      query: () => ({
+        url: `v1/fiat/currencies`,
+      }),
+      transformResponse: (res: FiatCurrencyData) =>
+        res.currencies.map((c) => ({
+          code: c.currency_code,
+          min: c.minimum_amount,
+          rate: c.rate,
+        })),
+    }),
     paypalOrder: builder.query<string, CreatePayPalOrderParams>({
       query: (params) => ({
         url: `v1/fiat/paypal/${apiEnv}/orders`,
@@ -105,45 +116,6 @@ export const apes = createApi({
         url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
       }),
     }),
-    paypalCurrencies: builder.query<DetailedCurrency[], null>({
-      query: () => ({
-        url: `v1/fiat/paypal/currencies`,
-      }),
-      transformResponse: (res: FiatCurrencyData) =>
-        res.currencies.map((c) => ({
-          code: c.currency_code,
-          min: c.minimum_amount,
-          rate: c.rate,
-        })),
-    }),
-    stripeCurrencies: builder.query<DetailedCurrency[], null>({
-      async queryFn(_args, _api, _extraOptions, baseQuery) {
-        return await fetch("https://ipapi.co/json/")
-          .then<{
-            country_code: string; // ISO 3166-1 alpha-2 code
-          }>((response) => response.json())
-          .then(({ country_code }) =>
-            baseQuery({
-              url: `v2/fiat/stripe-proxy/${apiEnv}/currencies/${country_code}`,
-            })
-          )
-          .then((response) => {
-            if (response.error) {
-              return response;
-            }
-
-            const data = response.data as FiatCurrencyData;
-
-            return {
-              data: data.currencies.map((c) => ({
-                code: c.currency_code,
-                min: c.minimum_amount,
-                rate: c.rate,
-              })),
-            };
-          });
-      },
-    }),
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
     }),
@@ -153,12 +125,11 @@ export const apes = createApi({
 export const {
   useCapturePayPalOrderMutation,
   useChariotGrantIntentMutation,
+  useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
   usePaypalOrderQuery,
   useEndowBalanceQuery,
   useGetStripePaymentStatusQuery,
-  usePaypalCurrenciesQuery,
-  useStripeCurrenciesQuery,
   useTokensQuery,
   util: {
     invalidateTags: invalidateApesTags,
