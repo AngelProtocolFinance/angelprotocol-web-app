@@ -6,8 +6,24 @@ export const wordpress = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: APIs.wordpress }),
   reducerPath: "wordpress",
   endpoints: (builder) => ({
-    posts: builder.query<Wordpress.Post[], any>({
-      query: () => "posts",
+    posts: builder.query<Wordpress.PostPage, Wordpress.Post.QueryParams>({
+      query: (params) => ({ url: "posts", params }),
+      transformResponse(res: Wordpress.Post[], meta, arg) {
+        /**get total */
+        const headers = meta?.response?.headers;
+        const total = Number(headers?.get("X-Wp-Total") || "0");
+
+        /** get num items */
+        const currPage = arg.page ?? 1;
+        const itemsPerPage = 10; //default
+        const currNumItems = currPage * itemsPerPage;
+
+        return {
+          pageNum: currPage,
+          posts: res,
+          nextPageNum: currNumItems < total ? currPage + 1 : undefined,
+        };
+      },
     }),
     post: builder.query<Wordpress.Post, string>({
       query: (slug) => {
@@ -27,5 +43,11 @@ export const wordpress = createApi({
   }),
 });
 
-export const { usePostsQuery, usePostQuery, useMediaQuery, useUserQuery } =
-  wordpress;
+export const {
+  usePostsQuery,
+  useLazyPostsQuery,
+  usePostQuery,
+  useMediaQuery,
+  useUserQuery,
+  util: { updateQueryData: updateWordpressQueryData },
+} = wordpress;

@@ -1,12 +1,22 @@
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { Link } from "react-router-dom";
-import { usePostsQuery } from "services/wordpress";
 import { Wordpress } from "types/wordpress";
 import Media from "./Media";
+import usePagination from "./usePagination";
 
 export default function Posts() {
-  const query = usePostsQuery({});
+  const {
+    data,
+    hasMore,
+    isError,
+    isLoading,
+    isLoadingNextPage,
+    loadNextPage,
+    isFetching,
+  } = usePagination();
+
+  const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 content-start padded-container min-h-screen pb-6">
@@ -15,7 +25,12 @@ export default function Posts() {
       </h1>
 
       <QueryLoader
-        queryState={query}
+        queryState={{
+          data: data?.posts,
+          isLoading,
+          isFetching,
+          isError: isError,
+        }}
         messages={{
           empty: "No posts found.",
           error: "Failed to load posts",
@@ -30,7 +45,21 @@ export default function Posts() {
           ),
         }}
       >
-        {(posts) => <Cards posts={posts} />}
+        {(posts) => (
+          <>
+            <Cards posts={posts} />
+            {hasMore && (
+              <button
+                type="button"
+                className="col-span-full btn-blue rounded-full justify-self-center px-4 py-2 text-sm  mt-6"
+                onClick={loadNextPage}
+                disabled={isLoadingOrError}
+              >
+                Load more
+              </button>
+            )}
+          </>
+        )}
       </QueryLoader>
     </div>
   );

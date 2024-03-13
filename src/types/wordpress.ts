@@ -4,6 +4,21 @@ export namespace Wordpress {
     rendered: string;
   }
 
+  export namespace Post {
+    export type QueryParams = {
+      page?: number;
+      /**
+       * DEFAULTS:
+       * page: 1
+       * per_page: 10
+       * context: "view"
+       * order: "desc" by date
+       * status: "publish"
+       *
+       */
+    };
+  }
+
   export type Post = {
     id: number;
     date: string;
@@ -13,6 +28,13 @@ export namespace Wordpress {
     excerpt: Html;
     featured_media: number;
     content: Html;
+  };
+
+  /** custom type made from Post[] and response headers */
+  export type PostPage = {
+    posts: Post[];
+    pageNum: number;
+    nextPageNum?: number;
   };
 
   export namespace Media {
