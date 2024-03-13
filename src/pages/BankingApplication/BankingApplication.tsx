@@ -17,7 +17,7 @@ function BankingApplication() {
   );
 
   return (
-    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
+    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
       <QueryLoader
         queryState={queryState}
         messages={{
