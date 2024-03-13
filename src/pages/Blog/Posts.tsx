@@ -36,12 +36,6 @@ export default function Posts() {
   );
 }
 
-function Media({ id }: { id: number }) {
-  //TODO: detailed image type and use src set
-  const { data: url } = useMediaQuery(id);
-  return <Image src={url} className="h-32 sm:h-60 w-full object-cover" />;
-}
-
 const Cards = (props: { posts: Wordpress.Post[] }) =>
   props.posts.map((post, _index) => (
     <Link
@@ -68,6 +62,12 @@ const Cards = (props: { posts: Wordpress.Post[] }) =>
       </div>
     </Link>
   ));
+
+function Media({ id }: { id: number }) {
+  //TODO: detailed image type and use src set
+  const { data: url } = useMediaQuery(id);
+  return <Image src={url} className="h-32 sm:h-60 w-full object-cover" />;
+}
 
 function CardSkeleton() {
   return (

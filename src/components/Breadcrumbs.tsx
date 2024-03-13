@@ -29,8 +29,11 @@ export default function Breadcrumbs({ items, className = "" }: Props) {
             {typeof item.title === "string" ? (
               item.title
             ) : (
-              // biome-ignore lint: trusted html
-              <div dangerouslySetInnerHTML={{ __html: item.title.__html }} />
+              <div
+                className="text-ellipsis overflow-hidden"
+                // biome-ignore lint: trusted html
+                dangerouslySetInnerHTML={{ __html: item.title.__html }}
+              />
             )}
           </NavLink>
           {i < items.length - 1 && ">"}
