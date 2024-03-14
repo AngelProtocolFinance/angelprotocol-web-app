@@ -22,7 +22,7 @@ export default function useHeaderClassNames() {
     };
   }, []);
 
-  return `transition ease-in-out duration-100 z-20 w-full ${
+  return `sticky top-0 transition ease-in-out duration-100 z-20 w-full ${
     isScrolled ? "shadow-lg" : ""
   }`;
 }
