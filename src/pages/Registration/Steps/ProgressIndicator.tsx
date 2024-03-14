@@ -13,7 +13,7 @@ type Props = {
 export default function ProgressIndicator({ step, classes = "" }: Props) {
   const { pathname } = useLocation();
   const paths = pathname.split("/");
-  const currPath = idParamToNum(paths[paths.length - 1]);
+  const currPath = idParamToNum(paths.at(-1));
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
 
@@ -96,12 +96,12 @@ function Step({
         {/** circle */}
         <div
           className={`w-4 aspect-square ${
-            isDone ? "bg-blue-d1" : "bg-gray-l3 dark:bg-bluegray"
+            isDone ? "bg-blue-d1" : "bg-gray-l3 dark:bg-navy"
           } rounded-full transform -translate-x-1/2`}
         />
         <span
           className={`text-sm ${
-            isCurr ? "text-blue-d1" : "text-gray-d1 dark:text-gray"
+            isCurr ? "text-blue-d1" : "text-navy-l1 dark:text-gray"
           }`}
         >
           {children}
