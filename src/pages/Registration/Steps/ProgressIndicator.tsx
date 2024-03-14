@@ -32,6 +32,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
 
       if (ref.isDesktop !== isOnDesktop) {
         setDesktop(isOnDesktop);
+        ref.isDesktop = isOnDesktop;
       }
     },
     {
