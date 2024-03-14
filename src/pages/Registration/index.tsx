@@ -27,7 +27,7 @@ function Registration() {
           />
           <Route
             path={regRoutes.steps + "/*"}
-            element={<Steps classes="max-sm:-my-20" />}
+            element={<Steps classes="max-md:-my-20" />}
           />
           <Route path={regRoutes.resume} element={<Resume />} />
           <Route path={regRoutes.success} element={<Success />} />
