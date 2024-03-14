@@ -60,7 +60,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
     >
       <ProgressIndicator
         step={regState.step}
-        classes="md:min-w-[12rem] lg:min-w-[15.5rem]"
+        classes="mx-6 md:ml-8 md:min-w-[12rem] lg:min-w-[15.5rem]"
       />
 
       <div className="grid z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l3/80 dark:shadow-blue-d7">
