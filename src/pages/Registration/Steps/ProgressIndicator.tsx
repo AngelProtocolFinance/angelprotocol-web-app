@@ -25,7 +25,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   useHandleScreenResize(
     (screen, ref) => {
       const isOnDesktop = screen >= SCREEN_BREAKPOINTS.md;
-      if ((isOnDesktop && !ref.isOpen) || (!isOnDesktop && ref.isOpen)) {
+      if (isOnDesktop !== ref.isOpen) {
         setIsOtherStepsShown(isOnDesktop);
         ref.isOpen = isOnDesktop;
       }
