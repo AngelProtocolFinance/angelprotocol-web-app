@@ -19,6 +19,14 @@ export namespace Wordpress {
     };
   }
 
+  export type Template = {
+    theme: number;
+  };
+
+  export type Theme = {
+    stylesheet: string;
+  };
+
   export type Post = {
     id: number;
     date: string;
@@ -32,6 +40,7 @@ export namespace Wordpress {
 
   export type Page = {
     content: Html;
+    template: string;
   };
 
   /** custom type made from Post[] and response headers */

@@ -34,14 +34,19 @@ export const wordpress = createApi({
       },
       transformResponse: ([post]: [Wordpress.Post]) => post,
     }),
-    page: builder.query<Wordpress.Page, string>({
-      query: (slug) => {
-        return {
+
+    page: builder.query<any, string>({
+      async queryFn(slug, api, extraOptions, baseQuery) {
+        const pageRes = await baseQuery({
           url: "pages",
-          params: { slug },
-        };
+          params: { slug: slug, _fields: "content" },
+        });
+        const [page] = pageRes.data as [Wordpress.Page];
+        const template = await baseQuery("themes");
+        console.log({ template, page });
+
+        return { data: page };
       },
-      transformResponse: ([post]: [Wordpress.Post]) => post,
     }),
     media: builder.query<Wordpress.Media, number>({
       query: (id) => `media/${id}`,
