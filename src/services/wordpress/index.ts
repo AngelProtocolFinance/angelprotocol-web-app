@@ -36,7 +36,7 @@ export const wordpress = createApi({
     }),
 
     page: builder.query<any, string>({
-      async queryFn(slug, api, extraOptions, baseQuery) {
+      async queryFn(slug, _api, _extraOptions, baseQuery) {
         const pageRes = await baseQuery({
           url: "pages",
           params: { slug: slug, _fields: "content" },
