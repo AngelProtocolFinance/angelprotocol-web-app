@@ -49,7 +49,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
         transactionId: hash,
         walletAddress: txPackage.sender,
         endowmentId: recipient.id,
-        appUsed: details.source,
+        source: details.source,
         donor,
       };
 

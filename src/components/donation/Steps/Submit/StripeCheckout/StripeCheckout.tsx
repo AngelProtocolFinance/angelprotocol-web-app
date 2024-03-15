@@ -32,6 +32,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     endowmentId: recipient.id,
     splitLiq: liquidSplitPct,
     donor: props.donor,
+    source: details.source,
   });
 
   const dispatch = useSetter();

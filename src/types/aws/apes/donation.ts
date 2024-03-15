@@ -78,7 +78,7 @@ export type CryptoDonation = {
   /** 1 - 100 */
   splitLiq: number;
   chainName: string;
-  appUsed: DonationSource;
+  source: DonationSource;
   donor: Donor;
 };
 
