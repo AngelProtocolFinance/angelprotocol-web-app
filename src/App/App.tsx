@@ -28,7 +28,7 @@ const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const Widget = lazy(() => import("pages/Widget"));
 const BlogPosts = lazy(() => import("pages/Blog/Posts"));
 const BlogPost = lazy(() => import("pages/Blog/Post"));
-const WordPressPage = lazy(() => import("pages/WordPressPage/WordPressPage"));
+const WordPressPage = lazy(() => import("pages/WordPressPage"));
 
 export default function App() {
   const location = useLocation();
