@@ -12,47 +12,30 @@ import {
 } from "types/aws";
 import { ChainID } from "types/chain";
 import { DetailedCurrency } from "types/components";
+import { DonationSource } from "types/lists";
 import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
 
-type StripePaymentIntentParams = {
+type FiatDonation = {
+  /** Denominated in USD. */
+  amount: number;
+  tipAmount: number;
+  usdRate: number;
+  /**ISO 3166-1 alpha-3 code. */
+  currency: string;
+  endowmentId: number;
+  splitLiq: number;
+  donor: Donor;
+  source: DonationSource;
+};
+
+type StripePaymentIntentParams = FiatDonation & {
   type: "one-time" | "subscription";
-  /** Denominated in USD. */
-  amount: number;
-  tipAmount: number;
-  usdRate: number;
-  /**ISO 3166-1 alpha-3 code. */
-  currency: string;
-  endowmentId: number;
-  splitLiq: number;
-  donor: Donor;
 };
 
-type CreatePayPalOrderParams = {
-  /** Denominated in USD. */
-  amount: number;
-  tipAmount: number;
-  usdRate: number;
-  /**ISO 3166-1 alpha-3 code */
-  currency: string;
-  endowmentId: number;
-  splitLiq: number;
-  donor: Donor;
-};
-
-type ChariotGrantIntentParams = {
-  /** Denominated in USD. */
-  amount: number;
-  tipAmount: number;
-  usdRate: number;
-  /**ISO 3166-1 alpha-3 code. */
-  currency: string;
-  endowmentId: number;
-  splitLiq: number;
-  transactionId?: string;
-  donor: Donor;
-};
+type CreatePayPalOrderParams = FiatDonation;
+type ChariotGrantIntentParams = FiatDonation & { transactionId?: string };
 
 export const apes = createApi({
   reducerPath: "apes",

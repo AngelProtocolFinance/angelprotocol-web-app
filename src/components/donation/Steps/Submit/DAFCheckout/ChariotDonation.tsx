@@ -52,6 +52,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 splitLiq: liquidSplitPct,
                 transactionId: r.detail.workflowSessionId,
                 donor,
+                source: details.source,
               }).unwrap();
 
               navigate(

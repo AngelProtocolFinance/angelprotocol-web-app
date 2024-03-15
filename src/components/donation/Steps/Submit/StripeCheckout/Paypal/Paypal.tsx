@@ -25,6 +25,7 @@ export default function Paypal(props: StripeCheckoutStep) {
     endowmentId: recipient.id,
     splitLiq: liquidSplitPct,
     donor,
+    source: details.source,
   });
 
   useEffect(() => {
