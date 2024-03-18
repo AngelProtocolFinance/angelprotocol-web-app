@@ -12,14 +12,15 @@ export const logger: Logger = IS_TEST
       // using console.log for .error and .info funcs as console.error and
       // console.info are undefined while testing for some reason
       error: (message) => {
-        Sentry.captureException(message);
         console.log(message);
       },
       info: (...data) => console.log(...data),
       log: (...data) => console.log(...data),
     }
   : {
-      error: (_) => {},
+      error: (message) => {
+         Sentry.captureException(message); //move sentry capture here
+      },
       info: (_) => {},
       log: (_) => {},
     };
