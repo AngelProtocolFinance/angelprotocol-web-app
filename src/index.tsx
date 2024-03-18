@@ -23,6 +23,7 @@ const root = createRoot(container as Element);
 
 Sentry.init({
   dsn: process.env.PUBLIC_SENTRY_DSN,
+  environment: process.env.PUBLIC_ENVIRONMENT,
 });
 
 root.render(
