@@ -19,7 +19,7 @@ export const logger: Logger = IS_TEST
     }
   : {
       error: (message) => {
-         Sentry.captureException(message); //move sentry capture here
+        Sentry.captureException(message);
       },
       info: (_) => {},
       log: (_) => {},
