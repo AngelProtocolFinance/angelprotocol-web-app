@@ -33,6 +33,7 @@ export default function Summary({
 
   return (
     <SummaryContainer
+      frequency={details.method === "stripe" ? details.frequency : "once"}
       classes="grid content-start p-4 @md:p-8"
       Amount={Amount}
       amount={amount}
