@@ -103,7 +103,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
         <span>
           Valid types are:{" "}
           {accept
-            .map((m) => m.split("/")[1].toUpperCase().replace(/\+xml/gi, ""))
+            .map((m) => m.split("/")[1].toUpperCase())
             .join(", ")}
           .{" "}
           {maxSize ? (
