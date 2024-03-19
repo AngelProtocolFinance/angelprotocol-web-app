@@ -10,7 +10,10 @@ export function currency({ rate, code }: TCurrency) {
         {CODE === "USD"
           ? `$${humanize(amount, 2)}`
           : rate
-            ? `${CODE} ${humanize(amount, 2)} ($${humanize(+amount * rate, 2)})`
+            ? `${CODE} ${humanize(amount, 2)} ($${humanize(
+                +amount * (1 / rate),
+                2
+              )})`
             : `${CODE} ${humanize(amount, 2)}`}
       </dd>
     );
