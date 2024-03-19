@@ -80,6 +80,7 @@ export default function Form() {
           accept={VALID_MIME_TYPES}
           aspect={[4, 1]}
           classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+          maxSize={MAX_SIZE_IN_BYTES}
         />
         <Label className="-mb-4">Logo of your organization</Label>
         <ImgEditor<FV, "logo">
@@ -103,6 +104,7 @@ export default function Form() {
             container: "mb-4",
             dropzone: "w-full aspect-[2/1]",
           }}
+          maxSize={MAX_SIZE_IN_BYTES}
         />
         <Label className="-mb-4">Description of your organization</Label>
         <RichTextEditor<FV>
