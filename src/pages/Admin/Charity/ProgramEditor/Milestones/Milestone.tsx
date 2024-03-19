@@ -4,7 +4,7 @@ import ImgEditor from "components/ImgEditor/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
 import { Path, useFormContext } from "react-hook-form";
-import { MAX_CHARS, VALID_MIME_TYPES } from "../schema";
+import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../schema";
 import { FV, FormMilestone } from "../types";
 
 export default function Milestone({
@@ -55,6 +55,7 @@ export default function Milestone({
             container: "mb-4",
             dropzone: "w-full @md:aspect-[4/1] h-36 @md:h-auto",
           }}
+          maxSize={MAX_SIZE_IN_BYTES}
         />
         <Field<FV, "date">
           type="date"
