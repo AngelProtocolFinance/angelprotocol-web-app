@@ -14,7 +14,7 @@ export const VALID_MIME_TYPES: ImageMIMEType[] = [
   "image/svg+xml",
 ];
 
-const MAX_SIZE_IN_BYTES = 1e6;
+export const MAX_SIZE_IN_BYTES = 1e6;
 export const MAX_CHARS = 500;
 
 // we only need to validate the pre-crop image and if we confirm it is valid
