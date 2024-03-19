@@ -25,12 +25,14 @@ type BaseCurrency = {
 };
 
 export type DetailedCurrency = BaseCurrency & {
+  /** unit/usd */
   rate: number;
   min: number;
 };
 
 export type Currency = BaseCurrency & {
   min?: number;
+  /** unit/usd */
   rate: number | null;
 };
 
