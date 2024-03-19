@@ -5,7 +5,7 @@ import { Field, Label } from "components/form";
 import { adminRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import Milestones from "./Milestones";
-import { MAX_CHARS, VALID_MIME_TYPES } from "./schema";
+import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import { FV } from "./types";
 import useSubmit from "./useSubmit";
 
@@ -33,6 +33,7 @@ export default function Form() {
           accept={VALID_MIME_TYPES}
           aspect={[4, 1]}
           classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+          maxSize={MAX_SIZE_IN_BYTES}
         />
 
         <Label className="-mb-4" required>
