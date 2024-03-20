@@ -20,7 +20,7 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
     return {
       id: d.id,
       active_in_countries: d.active_in_countries,
-      card_img: d.card_img,
+      card_img: d.card_img ?? "",
       endow_designation: d.endow_designation,
       hide_bg_tip: !!d.hide_bg_tip,
       hq_country: d.hq_country,
