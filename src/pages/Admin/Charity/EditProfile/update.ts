@@ -46,6 +46,7 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
       street_address: d.street_address,
       tagline: d.tagline ?? "",
       url: d.url ?? "",
+      slug: d.slug ?? "",
     };
   }
 

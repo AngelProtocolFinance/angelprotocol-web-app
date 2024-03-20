@@ -5,7 +5,7 @@ import { optionType, richTextContent } from "schemas/shape";
 import { url, requiredString } from "schemas/string";
 import { SchemaShape } from "schemas/types";
 import { ImageMIMEType } from "types/lists";
-import { ObjectSchema, array, object } from "yup";
+import { ObjectSchema, array, object, string } from "yup";
 import { FV } from "./types";
 
 export const VALID_MIME_TYPES: ImageMIMEType[] = [
@@ -48,4 +48,5 @@ export const schema = object<any, SchemaShape<FV>>({
     tiktok: url,
   }),
   overview: richTextContent({ maxChars: MAX_CHARS }),
+  slug: string().matches(/\D/, "can't use id as slug"),
 }) as ObjectSchema<FV>;

@@ -126,6 +126,13 @@ export default function Form() {
         />
 
         <HideBGTipCheckbox />
+
+        <Field<FV>
+          classes="field-admin"
+          name="slug"
+          label="Slug"
+          placeholder="your-endowment-slug"
+        />
       </Group>
 
       <Group title="Organization">
