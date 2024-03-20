@@ -26,6 +26,8 @@ const BankingApplication = lazy(() => import("pages/BankingApplication"));
 const OAuthRedirector = lazy(() => import("pages/OAuthRedirector"));
 const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const Widget = lazy(() => import("pages/Widget"));
+const BlogPosts = lazy(() => import("pages/Blog/Posts"));
+const BlogPost = lazy(() => import("pages/Blog/Post"));
 
 export default function App() {
   const location = useLocation();
@@ -47,7 +49,6 @@ export default function App() {
             element={<StripePaymentStatus />}
           />
         </Route>
-
         <Route
           path={`${appRoutes.donate_widget}/:id`}
           element={<DonateWidget />}
@@ -108,6 +109,10 @@ export default function App() {
               </div>
             }
           />
+          <Route path={appRoutes.blog}>
+            <Route path=":slug" element={<BlogPost />} />
+            <Route index element={<BlogPosts />} />
+          </Route>
         </Route>
         <Route
           path="*"

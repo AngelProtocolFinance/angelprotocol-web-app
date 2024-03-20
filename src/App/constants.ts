@@ -27,6 +27,10 @@ const HEADER_LINKS: Link[] = [
     external: true,
   },
   {
+    title: "Blog",
+    href: appRoutes.blog,
+  },
+  {
     title: "About",
     href: `${BASE_URL}/better-giving-about/`,
     external: true,

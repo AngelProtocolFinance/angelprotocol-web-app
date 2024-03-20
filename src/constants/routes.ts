@@ -17,6 +17,7 @@ export enum appRoutes {
   gift = "/gift",
   reset_password = "/signin/reset",
   widget_config = "/widget-config",
+  blog = "/blog",
 }
 
 export const adminRoutes = {
