@@ -6,7 +6,7 @@ type ArrayValues<T extends readonly unknown[]> = T[number];
 
 type K = keyof Endowment;
 export function useEndowment<T extends K[]>(
-  id: number,
+  id: number | string,
   fields?: T,
   options?: { skip: boolean }
 ) {

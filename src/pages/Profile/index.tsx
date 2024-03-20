@@ -10,10 +10,10 @@ import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
-export default function Profile({ legacy = false }) {
+export default function Profile({ legacy = false, slug = "" }) {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useEndowment(numId);
+  const { isLoading, isError, data } = useEndowment(numId || slug);
 
   if (isLoading) return <Skeleton />;
   if (isError || !data) return <PageError />;

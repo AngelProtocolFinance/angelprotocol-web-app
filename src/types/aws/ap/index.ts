@@ -45,6 +45,7 @@ type SocialMediaURLs = {
 
 export type Endowment = {
   id: number;
+  slug?: string;
   active_in_countries: string[];
   endow_designation: EndowDesignation;
   fiscal_sponsored: boolean;

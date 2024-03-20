@@ -117,13 +117,14 @@ export const aws = createApi({
     }),
     endowment: builder.query<
       Endowment,
-      { id: number; fields?: (keyof Endowment)[] }
+      { id: number | string; fields?: (keyof Endowment)[] }
     >({
       providesTags: ["profile"],
       query: ({ id, fields }) => ({
-        url: `v6/endowments/${id}`,
+        url: typeof id === "number" ? `v7/endowments/${id}` : "v7/endowments",
         params: {
           env: apiEnv,
+          ...(typeof id === "string" ? { slug: id } : {}),
           ...(fields ? { fields: fields.join(",") } : {}),
         },
       }),
