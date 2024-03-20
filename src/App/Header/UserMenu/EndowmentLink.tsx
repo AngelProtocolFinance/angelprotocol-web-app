@@ -7,7 +7,7 @@ import { useEndowment } from "services/aws/useEndowment";
 
 type Props = { endowId: number };
 export default function EndowmentLink({ endowId }: Props) {
-  const query = useEndowment(endowId, ["logo", "name"]);
+  const query = useEndowment({ id: endowId }, ["logo", "name"]);
   return (
     <QueryLoader
       queryState={query}

@@ -13,7 +13,9 @@ import Skeleton from "./Skeleton";
 export default function Profile({ legacy = false, slug = "" }) {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useEndowment(numId || slug);
+  const { isLoading, isError, data } = useEndowment(
+    numId ? { id: numId } : { slug }
+  );
 
   if (isLoading) return <Skeleton />;
   if (isError || !data) return <PageError />;

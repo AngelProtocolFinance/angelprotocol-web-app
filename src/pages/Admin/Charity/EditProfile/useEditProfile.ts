@@ -54,7 +54,7 @@ export default function useEditProfile() {
       }
 
       if (update.slug !== initial.slug) {
-        const result = await endowment({ id: update.slug });
+        const result = await endowment({ slug: update.slug });
 
         //endow is found with update.slug
         if (result.isSuccess) {

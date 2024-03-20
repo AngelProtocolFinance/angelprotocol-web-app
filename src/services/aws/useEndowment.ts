@@ -1,3 +1,4 @@
+import { IdOrSlug } from "services/types";
 import { Endowment } from "types/aws";
 import { QueryState } from "types/third-party/redux";
 import { useEndowmentQuery } from "./aws";
@@ -6,13 +7,13 @@ type ArrayValues<T extends readonly unknown[]> = T[number];
 
 type K = keyof Endowment;
 export function useEndowment<T extends K[]>(
-  id: number | string,
+  idOrSlug: IdOrSlug,
   fields?: T,
   options?: { skip: boolean }
 ) {
   const query = useEndowmentQuery(
     {
-      id,
+      ...idOrSlug,
       fields,
     },
     options

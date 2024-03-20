@@ -9,7 +9,7 @@ import Content from "./Content";
 export default function Donate() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const queryState = useEndowment(numId, [
+  const queryState = useEndowment({ id: numId }, [
     "fiscal_sponsored",
     "id",
     "image",

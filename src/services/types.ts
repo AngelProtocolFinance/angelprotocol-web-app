@@ -44,3 +44,7 @@ export type VersionSpecificWalletProfile = WalletProfile & {
 };
 
 export type BankingApplicationDetails = BankingApplication & V2RecipientAccount;
+
+export type IdOrSlug =
+  | { slug: string; id?: never }
+  | { id: number; slug?: never };

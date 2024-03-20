@@ -6,10 +6,10 @@ import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
 
-export default function Widget({ endowId }: { endowId?: number }) {
+export default function Widget({ endowId = 0 }: { endowId?: number }) {
   const location = useLocation();
   const { data: profile } = useEndowment(
-    endowId ?? 0,
+    { id: endowId },
     ["logo", "name", "overview"],
     { skip: !endowId }
   );

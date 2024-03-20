@@ -21,6 +21,7 @@ import {
 } from "types/aws";
 import { version as v } from "../helpers";
 import {
+  IdOrSlug,
   ProfileUpdateMsg,
   ProgramDeleteMsg,
   VersionSpecificWalletProfile,
@@ -117,14 +118,14 @@ export const aws = createApi({
     }),
     endowment: builder.query<
       Endowment,
-      { id: number | string; fields?: (keyof Endowment)[] }
+      IdOrSlug & { fields?: (keyof Endowment)[] }
     >({
       providesTags: ["profile"],
-      query: ({ id, fields }) => ({
-        url: typeof id === "number" ? `v7/endowments/${id}` : "v7/endowments",
+      query: ({ fields, ...args }) => ({
+        url: "id" in args ? `v7/endowments/${args.id}` : "v7/endowments",
         params: {
           env: apiEnv,
-          ...(typeof id === "string" ? { slug: id } : {}),
+          slug: args.slug,
           ...(fields ? { fields: fields.join(",") } : {}),
         },
       }),

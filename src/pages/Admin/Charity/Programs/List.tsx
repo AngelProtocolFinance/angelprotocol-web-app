@@ -7,7 +7,7 @@ import { Program } from "./Program";
 
 export default function List() {
   const { id } = useAdminContext();
-  const queryState = useEndowment(id, ["program"]);
+  const queryState = useEndowment({ id }, ["program"]);
 
   return (
     <QueryLoader
