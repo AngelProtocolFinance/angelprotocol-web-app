@@ -25,7 +25,7 @@ export default function Slug() {
         <span className="font-medium text-navy-d4">"myNonprofit"</span> would
         create a new vanity profile URL of{" "}
         <span className="text-navy-d4 font-medium">
-          {"{{baseURL}}"}/marketplace?slug=myNonProfit
+          {"{{baseURL}}"}/marketplace/myNonProfit
         </span>
       </p>
     </div>
