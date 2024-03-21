@@ -25,7 +25,7 @@ export default function DonateMethods({ classes = "" }) {
       </Tab.List>
       <Tab.Panels>
         <Tab.Panel>
-          <StripeSample {...widgetConfig.advancedOptions} />
+          <StripeSample {...widgetConfig.liquidSplitPct} />
         </Tab.Panel>
         <Tab.Panel>
           <DonaterSample {...widgetConfig.advancedOptions} />
