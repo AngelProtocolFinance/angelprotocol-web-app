@@ -7,7 +7,7 @@ export default function Slug() {
       <Field<FV>
         classes="field-admin"
         name="slug"
-        label="Slug"
+        label='"Vanity" Profile URL'
         placeholder="myNonprofit"
       />
       <p className="text-xs sm:text-sm text-navy-l1 mt-4">
