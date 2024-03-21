@@ -2,16 +2,16 @@ import { TxPrompt } from "components/Prompt";
 import { appRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
-import { useEditProfileMutation } from "services/aws/aws";
-import { ProfileUpdateMsg } from "services/types";
+import { useEditEndowmentMutation } from "services/aws/aws";
+import { EndowmentUpdate } from "services/types";
 
 export function useUpdateEndowmentProfile() {
   const { showModal } = useModalContext();
-  const [submit] = useEditProfileMutation();
+  const [submit] = useEditEndowmentMutation();
 
-  const updateProfile = async (msg: ProfileUpdateMsg) => {
+  const updateProfile = async (update: EndowmentUpdate) => {
     try {
-      const cleanUpdates = cleanObject(msg);
+      const cleanUpdates = cleanObject(update);
 
       showModal(
         TxPrompt,
@@ -19,7 +19,7 @@ export function useUpdateEndowmentProfile() {
         { isDismissible: false }
       );
 
-      const result = await submit(msg);
+      const result = await submit(update);
 
       if ("error" in result) {
         return showModal(TxPrompt, { error: "Failed to update profile" });

@@ -6,7 +6,7 @@ import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useLazyProfileQuery } from "services/aws/aws";
-import { ProfileUpdateMsg } from "services/types";
+import { EndowmentUpdate } from "services/types";
 import { useAdminContext } from "../../Context";
 import { useUpdateEndowmentProfile } from "../common";
 import { FV } from "./types";
@@ -65,9 +65,9 @@ export default function useEditProfile() {
       }
 
       //only include top level keys that appeared on diff
-      const cleanUpdate = diffs.reduce<ProfileUpdateMsg>(
+      const cleanUpdate = diffs.reduce<EndowmentUpdate>(
         (result, [path]) => {
-          const key = path.split(".")[0] as keyof ProfileUpdateMsg;
+          const key = path.split(".")[0] as keyof EndowmentUpdate;
           return { ...result, [key]: update[key] };
         },
         { id }

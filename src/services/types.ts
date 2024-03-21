@@ -1,6 +1,8 @@
 import {
   BankingApplication,
   EndowmentProfileUpdate,
+  EndowmentProgramsUpdate,
+  EndowmentSettingsUpdate,
   FSASignerDocumentation,
   V2RecipientAccount,
   WalletProfile,
@@ -12,21 +14,12 @@ export type ChainQueryArgs = {
   chainId: string;
 };
 
-export type ProfileUpdateMsg = SemiPartial<EndowmentProfileUpdate, "id">;
+export type EndowmentUpdate =
+  | SemiPartial<EndowmentProfileUpdate, "id">
+  | SemiPartial<EndowmentSettingsUpdate, "id">
+  | SemiPartial<EndowmentProgramsUpdate, "id">;
 
-export type ProgramDeleteMsg = Pick<
-  EndowmentProfileUpdate,
-  "id" | "program_id"
->;
-
-export function isDeleteMsg(
-  msg: ProfileUpdateMsg | ProgramDeleteMsg
-): msg is ProgramDeleteMsg {
-  return (
-    //for edits, program_id is accompanied by program:[]
-    Object.keys(msg).length === 2 && !!(msg as ProgramDeleteMsg).program_id
-  );
-}
+export type ProgramDeleteMsg = { id: number; program_id: string };
 
 export type FiscalSponsorhipAgreementSigner =
   | {
