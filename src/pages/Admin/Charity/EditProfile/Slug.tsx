@@ -1,5 +1,6 @@
 import { Field } from "components/form";
 import { FV } from "./types";
+import { BASE_URL } from "constants/env";
 
 export default function Slug() {
   return (
@@ -7,7 +8,7 @@ export default function Slug() {
       <Field<FV>
         classes="field-admin"
         name="slug"
-        label='"Vanity" Profile URL'
+        label='Custom Profile URL'
         placeholder="myNonprofit"
       />
       <p className="text-xs sm:text-sm text-navy-l1 italic mt-4">
@@ -19,7 +20,7 @@ export default function Slug() {
       </p>
       <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
         Example: Setting this field as "myNonprofit" would create a new vanity
-        profile URL of {"{{baseURL}}"}/marketplace/myNonProfit
+        profile URL of { BASE_URL }/marketplace/myNonProfit
       </p>
     </div>
   );
