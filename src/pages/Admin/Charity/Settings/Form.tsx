@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Field, Form as _Form } from "components/Form";
+import { Field, Form as _Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";

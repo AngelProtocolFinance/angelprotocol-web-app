@@ -11,6 +11,7 @@ import EditProfile from "./EditProfile";
 import Members from "./Members/Members";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
+import Settings from "./Settings";
 
 export default function Charity() {
   //widget configurer is used in admin
@@ -45,6 +46,7 @@ export default function Charity() {
           element={<ProgramEditor />}
         />
 
+        <Route path={adminRoutes.settings} element={<Settings />} />
         <Route path={adminRoutes.members} element={<Members />} />
         <Route path={adminRoutes.banking} element={<Banking />} />
         <Route
