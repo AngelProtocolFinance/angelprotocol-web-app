@@ -84,7 +84,7 @@ export default function Signin() {
           Philanthropy for Everyone
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
-          Sign in to support from 18000+ causes
+          Log in to support from 18000+ causes
         </p>
         <button
           className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
@@ -121,7 +121,7 @@ export default function Signin() {
           type="submit"
           className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full mt-4"
         >
-          {isSubmitting ? "Submitting..." : "Sign in"}
+          {isSubmitting ? "Submitting..." : "Log in"}
         </button>
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
