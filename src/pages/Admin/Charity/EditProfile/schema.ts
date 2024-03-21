@@ -48,5 +48,8 @@ export const schema = object<any, SchemaShape<FV>>({
     tiktok: url,
   }),
   overview: richTextContent({ maxChars: MAX_CHARS }),
-  slug: string().trim().matches(/\D|^$/, "can't use id as slug"),
+  slug: string()
+    .trim()
+    .max(30, "max 30 characters")
+    .matches(/\D|^$/, "can't use id as slug"),
 }) as ObjectSchema<FV>;
