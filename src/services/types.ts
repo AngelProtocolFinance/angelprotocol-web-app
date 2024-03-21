@@ -14,10 +14,10 @@ export type ChainQueryArgs = {
   chainId: string;
 };
 
-export type EndowmentUpdate =
-  | SemiPartial<EndowmentProfileUpdate, "id">
-  | SemiPartial<EndowmentSettingsUpdate, "id">
-  | SemiPartial<EndowmentProgramsUpdate, "id">;
+export type EndowmentUpdate = SemiPartial<
+  EndowmentProfileUpdate & EndowmentSettingsUpdate & EndowmentProgramsUpdate,
+  "id"
+>;
 
 export type ProgramDeleteMsg = { id: number; program_id: string };
 
