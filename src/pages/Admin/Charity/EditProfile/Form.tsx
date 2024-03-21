@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { EndowDesignation } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import HideBGTipCheckbox from "./HideBGTipCheckbox";
+import Slug from "./Slug";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import { FV } from "./types";
@@ -127,12 +128,7 @@ export default function Form() {
 
         <HideBGTipCheckbox />
 
-        <Field<FV>
-          classes="field-admin"
-          name="slug"
-          label="Slug"
-          placeholder="your-endowment-slug"
-        />
+        <Slug />
       </Group>
 
       <Group title="Organization">
