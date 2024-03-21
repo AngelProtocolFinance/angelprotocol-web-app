@@ -8,7 +8,7 @@ type Props = {
 
 export function Steps({
   className = "",
-  donaterConfig = { liquidSplitPct: 50 },
+  donaterConfig = { liquidSplitPct: 50, isPreview: false },
 }: Props) {
   return (
     <div
