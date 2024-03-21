@@ -24,10 +24,15 @@ export default function Form(props: Props) {
     defaultValues: { receiptMsg: props.receiptMsg ?? "" },
   });
 
-  const { reset, handleSubmit } = methods;
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitting, isDirty },
+  } = methods;
 
   return (
     <_Form
+      disabled={isSubmitting}
       methods={methods}
       onReset={(e) => {
         e.preventDefault();
@@ -50,10 +55,18 @@ export default function Form(props: Props) {
         placeholder="your message to your donor"
       />
       <div className="flex gap-3">
-        <button type="reset" className="px-6 btn-outline-filled text-sm">
+        <button
+          type="reset"
+          className="px-6 btn-outline-filled text-sm"
+          disabled={!isDirty}
+        >
           Reset changes
         </button>
-        <button type="submit" className="px-6 btn-blue text-sm">
+        <button
+          type="submit"
+          className="px-6 btn-blue text-sm"
+          disabled={!isDirty}
+        >
           Submit changes
         </button>
       </div>
