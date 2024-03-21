@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Field, Form as FormContainer } from "components/Form";
+import { Field, Form as _Form } from "components/Form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
@@ -27,7 +27,7 @@ export default function Form(props: Props) {
   const { reset, handleSubmit } = methods;
 
   return (
-    <FormContainer
+    <_Form
       methods={methods}
       onReset={(e) => {
         e.preventDefault();
@@ -57,6 +57,6 @@ export default function Form(props: Props) {
           Submit changes
         </button>
       </div>
-    </FormContainer>
+    </_Form>
   );
 }
