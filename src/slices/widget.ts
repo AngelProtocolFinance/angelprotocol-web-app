@@ -5,11 +5,7 @@ type State = WidgetConfig;
 
 const initialState: State = {
   endowment: { id: 0, name: "Nonprofit name" },
-  isDescriptionTextShown: true,
-  advancedOptions: {
-    display: "expanded",
-    liquidSplitPct: 50,
-  },
+  liquidSplitPct: 50,
 };
 
 const widget = createSlice({

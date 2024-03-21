@@ -24,15 +24,7 @@ export default function Configurer({ classes = "" }) {
   const submit: SubmitHandler<FormValues> = async (fv) => {
     const newConfig: WidgetConfig = {
       endowment: fv.endowment,
-      isDescriptionTextShown: !fv.isDescriptionTextHidden,
-      advancedOptions: {
-        liquidSplitPct: fv.liquidPercentage,
-        display: fv.isAdvancedOptionsHidden
-          ? "hidden"
-          : fv.isAdvancedOptionsExpanded
-            ? "expanded"
-            : "collapsed",
-      },
+      liquidSplitPct: fv.liquidPercentage,
     };
     dispatch(updateWidgetConfig(newConfig));
   };

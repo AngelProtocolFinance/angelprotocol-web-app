@@ -109,9 +109,6 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
               state.details?.method === "daf" ? state.details : undefined
             }
             widgetConfig={donaterConfig}
-            advanceOptDisplay={
-              donaterConfig?.advancedOptionsDisplay ?? "collapsed"
-            }
           />
         </Tab.Panel>
         <Tab.Panel>

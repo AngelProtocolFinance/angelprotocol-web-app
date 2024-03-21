@@ -19,7 +19,7 @@ export default function CurrentStep({ config }: Props) {
   }
 
   if (state.step === "splits") {
-    return <Splits {...state} />;
+    return <Splits {...state} liquidSplitPct={config?.liquidSplitPct} />;
   }
 
   if (state.step === "tip") {

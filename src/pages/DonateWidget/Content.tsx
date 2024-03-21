@@ -35,9 +35,11 @@ export default function Content({
 
   const configResult = parseConfig(searchParams);
 
-  return "error" in configResult ? (
-    <Err error={configResult.error} />
-  ) : (
+  if ("error" in configResult) {
+    return <Err error={configResult.error} />;
+  }
+
+  return (
     <div
       className={`${classes} max-w-3xl w-full h-full p-6 grid content-start justify-items-center`}
     >
@@ -51,13 +53,6 @@ export default function Content({
       <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg sm:text-3xl">
         Donate to {profile.name}
       </h1>
-
-      {configResult.config.isDescriptionTextShown && (
-        <p className="text-xs text-center sm:text-base">
-          Check out the many crypto and fiat donation options. Provide your
-          personal details to receive an immediate tax receipt.
-        </p>
-      )}
 
       <Steps
         className="mt-5 w-full md:w-3/4 border border-gray-l4"
