@@ -7,7 +7,7 @@ export default function HideBGTipCheckbox() {
       <CheckField<FV> name="hide_bg_tip" classes="text-sm">
         Opt out of tip-based donations
       </CheckField>
-      <span className="text-xs sm:text-sm text-navy-l1">
+      <span className="text-xs sm:text-sm italic text-navy-l1">
         During the donation flow, there is a step in which users can choose to
         tip Better Giving any amount they desire alongside their donation to you
         - the amount they tip will not affect the donation amount you receive.
