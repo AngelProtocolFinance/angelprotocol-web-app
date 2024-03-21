@@ -25,7 +25,12 @@ export default function Charity() {
               { title: "Profile", links: [LINKS.edit_profile, LINKS.programs] },
               {
                 title: "Manage",
-                links: [LINKS.members, LINKS.banking, LINKS.widget_config],
+                links: [
+                  LINKS.settings,
+                  LINKS.members,
+                  LINKS.banking,
+                  LINKS.widget_config,
+                ],
               },
             ]}
           />

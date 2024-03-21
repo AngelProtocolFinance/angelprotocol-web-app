@@ -28,6 +28,7 @@ export const adminRoutes = {
   banking: "banking",
   widget_config: "widget-config",
   donations: "donations",
+  settings: "settings",
   members: "members",
 } as const;
 

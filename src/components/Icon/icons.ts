@@ -43,7 +43,7 @@ import {
   FaUniversity,
   FaUserCircle,
 } from "react-icons/fa";
-import { FaFileCsv, FaMoneyBills } from "react-icons/fa6";
+import { FaFileCsv, FaGear, FaMoneyBills } from "react-icons/fa6";
 import { FiCreditCard, FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
@@ -135,6 +135,7 @@ export const icons = {
   Folder: MdOutlineFolder,
   Stocks: RiFundsBoxLine,
   GasStation: RiGasStationFill,
+  Gear: FaGear,
   Giftcard: MdCardGiftcard,
   Globe: BiGlobe,
   HeartFill: AiFillHeart,
