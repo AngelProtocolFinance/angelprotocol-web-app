@@ -88,7 +88,7 @@ export default function Checkout({ source }: Props) {
           type="submit"
         >
           <LoadText text="Processing..." isLoading={isSubmitting}>
-            Pay Now
+            Donate Now
           </LoadText>
         </button>
       )}
