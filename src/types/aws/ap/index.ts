@@ -45,6 +45,7 @@ type SocialMediaURLs = {
 
 export type Endowment = {
   id: number;
+  slug?: string;
   active_in_countries: string[];
   endow_designation: EndowDesignation;
   fiscal_sponsored: boolean;
@@ -88,7 +89,7 @@ export type EndowmentOption = Pick<Endowment, "id" | "name">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
-  Ensure<Endowment, "hide_bg_tip">,
+  Ensure<Endowment, "hide_bg_tip" | "slug" | "card_img">,
   "endow_designation" | "fiscal_sponsored"
 > & {
   endow_designation: EndowDesignation | "";

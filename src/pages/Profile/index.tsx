@@ -2,7 +2,7 @@ import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { idParamToNum } from "helpers";
+
 import { Navigate, useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import Body from "./Body";
@@ -10,10 +10,13 @@ import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
+const slug = /\D/;
 export default function Profile({ legacy = false }) {
-  const { id } = useParams<{ id: string }>();
-  const numId = idParamToNum(id);
-  const { isLoading, isError, data } = useEndowment(numId);
+  const { id = "" } = useParams<{ id: string }>();
+
+  const { isLoading, isError, data } = useEndowment(
+    slug.test(id) ? { slug: id } : { id: Number(id) }
+  );
 
   if (isLoading) return <Skeleton />;
   if (isError || !data) return <PageError />;
@@ -23,7 +26,7 @@ export default function Profile({ legacy = false }) {
       return <Navigate to={appRoutes.marketplace} />;
     }
 
-    if (data.id !== numId) {
+    if (data.id !== Number(id)) {
       return <Navigate to={`${appRoutes.marketplace}/${data.id}`} />;
     }
   }

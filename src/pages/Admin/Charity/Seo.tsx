@@ -12,7 +12,7 @@ export default function Seo({
   url?: string;
 }) {
   const { id } = useAdminContext();
-  const { data: profile } = useEndowment(id, ["logo", "name", "overview"]);
+  const { data: profile } = useEndowment({ id }, ["logo", "name", "overview"]);
 
   return (
     <CommonSEO

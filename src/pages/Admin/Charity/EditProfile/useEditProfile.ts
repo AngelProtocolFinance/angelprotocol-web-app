@@ -5,6 +5,7 @@ import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { SubmitHandler, useFormContext } from "react-hook-form";
+import { useLazyProfileQuery } from "services/aws/aws";
 import { ProfileUpdateMsg } from "services/types";
 import { useAdminContext } from "../../Context";
 import { useUpdateEndowmentProfile } from "../common";
@@ -20,6 +21,7 @@ export default function useEditProfile() {
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
+  const [endowment] = useLazyProfileQuery();
   const updateProfile = useUpdateEndowmentProfile();
 
   const editProfile: SubmitHandler<FV> = async ({ initial, ...fv }) => {
@@ -49,6 +51,17 @@ export default function useEditProfile() {
 
       if (isEmpty(diffs)) {
         return showModal(TxPrompt, { error: "No changes detected" });
+      }
+
+      if (update.slug !== initial.slug) {
+        const result = await endowment({ slug: update.slug });
+
+        //endow is found with update.slug
+        if (result.isSuccess) {
+          return showModal(TxPrompt, {
+            error: `Slug "${update.slug}" is already taken`,
+          });
+        }
       }
 
       //only include top level keys that appeared on diff
