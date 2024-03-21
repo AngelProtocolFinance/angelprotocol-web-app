@@ -9,4 +9,6 @@ export type WidgetURLSearchParams = {
   liquidSplitPct: string;
 };
 
-export type DonaterConfigFromWidget = Pick<WidgetConfig, "liquidSplitPct">;
+export type DonaterConfigFromWidget = Pick<WidgetConfig, "liquidSplitPct"> & {
+  isPreview?: boolean;
+};

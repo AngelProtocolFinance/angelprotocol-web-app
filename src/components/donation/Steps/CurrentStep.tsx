@@ -27,7 +27,7 @@ export default function CurrentStep({ config }: Props) {
   }
 
   if (state.step === "summary") {
-    return <Summary {...state} />;
+    return <Summary {...state} isPreview={config?.isPreview} />;
   }
 
   if (state.step === "submit") {
