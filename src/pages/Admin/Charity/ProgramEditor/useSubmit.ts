@@ -5,8 +5,7 @@ import { isEmpty, logger } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { SubmitHandler, useFormContext } from "react-hook-form";
-import { EndowmentUpdate } from "services/types";
-import { Program } from "types/aws";
+import { EndowmentProgramsUpdate, Program } from "types/aws";
 import { useAdminContext } from "../../Context";
 import { useUpdateEndowmentProfile } from "../common";
 import { FV } from "./types";
@@ -58,7 +57,7 @@ export default function useSubmit() {
         }
       }
 
-      const updates: EndowmentUpdate = {
+      const updates: EndowmentProgramsUpdate = {
         id,
         program: [program],
       };
