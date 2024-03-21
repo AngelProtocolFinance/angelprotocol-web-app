@@ -1,6 +1,6 @@
-import { CheckField } from "components/form";
+import { SplitSlider } from "components/donation/Steps/Splits";
 import { FormHTMLAttributes } from "react";
-import { useFormContext } from "react-hook-form";
+import { useController } from "react-hook-form";
 import EndowmentSelector from "./EndowmentSelector";
 import { FormValues as FV } from "./types";
 
@@ -9,8 +9,9 @@ export default function Form({
   onSubmit,
   onReset,
 }: FormHTMLAttributes<HTMLFormElement>) {
-  const { watch } = useFormContext<FV>();
-  const isAdvancedOptionsHidden = watch("isAdvancedOptionsHidden");
+  const {
+    field: { onChange, value },
+  } = useController<Pick<FV, "liquidPercentage">>({ name: "liquidPercentage" });
 
   return (
     <form
@@ -21,23 +22,10 @@ export default function Form({
       <label className="-mb-4">Nonprofit name:</label>
       <EndowmentSelector />
 
-      <CheckField<FV> name="isDescriptionTextHidden">Hide text</CheckField>
-
-      <CheckField<FV> name="isAdvancedOptionsHidden">
-        Hide "advanced options"
-      </CheckField>
-
-      <CheckField<FV>
-        name="isAdvancedOptionsExpanded"
-        disabled={isAdvancedOptionsHidden}
-        classes={{ label: "peer-disabled:text-navy-l2" }}
-      >
-        Unfold "advanced options" by default
-      </CheckField>
-
       <span className="-mb-4">Define split value by default:</span>
+      <SplitSlider liquidSplitPct={value} setLiquidSplitPct={onChange} />
 
-      <div className="flex gap-3 w-full max-xl:justify-center -mt-4">
+      <div className="flex gap-3 w-full max-xl:justify-center mt-4">
         <button type="reset" className="btn-outline-filled max-sm:mx-auto w-40">
           Reset Changes
         </button>

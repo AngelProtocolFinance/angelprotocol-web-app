@@ -14,9 +14,6 @@ export default function Configurer({ classes = "" }) {
     resolver: yupResolver(schema),
     defaultValues: {
       endowment: { id: 0, name: "" },
-      isDescriptionTextHidden: false,
-      isAdvancedOptionsHidden: false,
-      isAdvancedOptionsExpanded: true,
       liquidPercentage: 50,
     },
   });
