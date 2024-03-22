@@ -4,7 +4,7 @@ import { SplitsStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
-import SplitSlider from "./SplitSlider";
+import LiquidSplitSlider from "./LiquidSplitSlider";
 
 export default function Split({
   details,
@@ -43,7 +43,7 @@ export default function Split({
         Create a sustainable impact by dividing funds
       </p>
 
-      <SplitSlider
+      <LiquidSplitSlider
         liquidSplitPct={liquidSplitPct}
         setLiquidSplitPct={setLiquidSplitPct}
       />

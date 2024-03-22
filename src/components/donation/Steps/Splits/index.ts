@@ -1,2 +1,2 @@
 export { default } from "./Splits";
-export { default as SplitSlider } from "./SplitSlider";
+export { default as LiquidSplitSlider } from "./LiquidSplitSlider";
