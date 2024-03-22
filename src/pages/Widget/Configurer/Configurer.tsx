@@ -17,7 +17,7 @@ export default function Configurer({ classes = "" }) {
     resolver: yupResolver(schema),
     defaultValues: {
       endowment: widgetInitValues.endowment,
-      isDescriptionTextHidden: widgetInitValues.isDescriptionTextHidden,
+      hideDescription: widgetInitValues.hideDescription,
       isSplitFixed: widgetInitValues.isSplitFixed,
       liquidPercentage: widgetInitValues.liquidSplitPct,
     },
@@ -26,7 +26,7 @@ export default function Configurer({ classes = "" }) {
   const submit: SubmitHandler<FormValues> = async (fv) => {
     const newConfig: WidgetConfig = {
       endowment: fv.endowment,
-      isDescriptionTextHidden: fv.isDescriptionTextHidden,
+      hideDescription: fv.hideDescription,
       isSplitFixed: fv.isSplitFixed,
       liquidSplitPct: fv.liquidPercentage,
     };
@@ -61,7 +61,7 @@ export default function Configurer({ classes = "" }) {
         <label className="-mb-4">Nonprofit name:</label>
         <EndowmentSelector />
 
-        <CheckField<FormValues> name="isDescriptionTextHidden">
+        <CheckField<FormValues> name="hideDescription">
           Hide description text
         </CheckField>
 
