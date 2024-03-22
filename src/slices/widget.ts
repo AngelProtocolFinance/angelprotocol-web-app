@@ -13,11 +13,10 @@ const widget = createSlice({
   name: "widget",
   initialState,
   reducers: {
-    update: (_, { payload }: PayloadAction<State>) => payload,
-    reset: () => initialState,
+    updateWidgetConfig: (_, { payload }: PayloadAction<State>) => payload,
+    resetWidgetConfig: () => initialState,
   },
 });
 
 export default widget.reducer;
-export const { update: updateWidgetConfig, reset: resetWidgetConfig } =
-  widget.actions;
+export const { updateWidgetConfig, resetWidgetConfig } = widget.actions;
