@@ -8,7 +8,7 @@ type Props = {
   setLiquidSplitPct: (value: number) => void;
 };
 
-export default function SplitSlider({
+export default function LiquidSplitSlider({
   liquidSplitPct,
   setLiquidSplitPct,
 }: Props) {
