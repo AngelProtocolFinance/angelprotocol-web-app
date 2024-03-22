@@ -6,10 +6,7 @@ type Props = {
   donaterConfig: DonaterConfigFromWidget | null;
 };
 
-export function Steps({
-  className = "",
-  donaterConfig = { liquidSplitPct: 50, isPreview: false },
-}: Props) {
+export function Steps({ className = "", donaterConfig }: Props) {
   return (
     <div
       className={`grid ${className} w-full @container/steps overflow-clip bg-white min-h-96`}
