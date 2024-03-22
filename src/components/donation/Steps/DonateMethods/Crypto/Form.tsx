@@ -5,15 +5,15 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setDetails } from "slices/donation";
 import { ChainID } from "types/chain";
-import { DonaterConfigFromWidget } from "types/widget";
 import { Selector } from "../../../../Selector";
 import TokenField from "../../../../TokenField";
 import ContinueBtn from "../../common/ContinueBtn";
+import { Config } from "../../types";
 import { initToken } from "./constants";
 import { DonateValues } from "./types";
 
 type Props = {
-  configFromWidget: DonaterConfigFromWidget | null;
+  configFromWidget: Config | null;
 };
 
 export default function Form({ configFromWidget }: Props) {

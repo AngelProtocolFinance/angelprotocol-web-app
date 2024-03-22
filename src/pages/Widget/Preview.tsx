@@ -33,7 +33,6 @@ export default function Preview({ classes = "" }) {
             className="w-full @md/preview:w-3/4 border border-gray-l4"
             donaterConfig={{
               isPreview: true,
-              isDescriptionTextHidden: config.isDescriptionTextHidden,
               isSplitFixed: config.isSplitFixed,
               liquidSplitPct: config.liquidSplitPct,
             }}
