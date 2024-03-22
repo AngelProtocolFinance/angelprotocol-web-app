@@ -1,13 +1,13 @@
 import { useGetter } from "store/accessors";
-import { DonaterConfigFromWidget } from "types/widget";
 import DonateMethods from "./DonateMethods";
 import Result from "./Result";
 import Splits from "./Splits";
 import Submit from "./Submit";
 import Summary from "./Summary";
 import Tip from "./Tip";
+import { Config } from "./types";
 
-type Props = { config: DonaterConfigFromWidget | null };
+type Props = { config: Config | null };
 
 export default function CurrentStep({ config }: Props) {
   const state = useGetter((state) => state.donation);

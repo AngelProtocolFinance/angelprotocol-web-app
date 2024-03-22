@@ -3,14 +3,14 @@ import Icon from "components/Icon/Icon";
 import { Label } from "components/form";
 import { useState } from "react";
 import { DonationDetails, FormStep } from "slices/donation";
-import { DonaterConfigFromWidget } from "types/widget";
 import Crypto from "./Crypto";
 import Daf from "./Daf";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
+import { Config } from "../types";
 
 type Props = {
-  donaterConfig: DonaterConfigFromWidget | null;
+  donaterConfig: Config | null;
   state: FormStep;
 };
 
