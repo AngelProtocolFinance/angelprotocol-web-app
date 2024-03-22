@@ -36,7 +36,7 @@ export default function Split({
   const DECIMALS = details.method === "crypto" ? 4 : 2;
 
   return (
-    <div className="grid content-start p-4 @md:p-8">
+    <div className="grid content-start p-4 @md/steps:p-8">
       <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
       <h4 className="mt-4">Split donation</h4>
       <p className="mb-6 text-navy-l1">

@@ -34,8 +34,8 @@ const tabClasses = (selected: boolean) =>
   `${
     selected
       ? "font-medium bg-blue-l4 text-navy-d4"
-      : "border border-gray-l4 @md:border-none text-navy-l1"
-  }  flex items-center gap-2 p-2 @md:px-3 @md:py-[1.15rem] @md:grid @md:grid-cols-subgrid @md:col-span-2 focus:outline-none @md:w-28 rounded @md:rounded-none`;
+      : "border border-gray-l4 @md/steps:border-none text-navy-l1"
+  }  flex items-center gap-2 p-2 @md/steps:px-3 @md/steps:py-[1.15rem] @md/steps:grid @md/steps:grid-cols-subgrid @md/steps:col-span-2 focus:outline-none @md/steps:w-28 rounded @md/steps:rounded-none`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -43,13 +43,13 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
     <Tab.Group
       manual
       as="div"
-      className="grid @md:grid-cols-[auto_1fr]"
+      className="grid @md/steps:grid-cols-[auto_1fr]"
       defaultIndex={tabIdx(state.details?.method)}
     >
-      <Label className="p-4 pb-0 col-span-full @md:hidden font-bold">
+      <Label className="p-4 pb-0 col-span-full @md/steps:hidden font-bold">
         Payment method
       </Label>
-      <Tab.List className="grid grid-cols-2 gap-2 @md:gap-0 p-4 @md:p-0 @md:grid-cols-[auto_1fr] @[42rem]:min-w-48 content-start @md:divide-y @md:divide-white @md:border-r border-gray-l4">
+      <Tab.List className="grid grid-cols-2 gap-2 @md/steps:gap-0 p-4 @md/steps:p-0 @md/steps:grid-cols-[auto_1fr] @[42rem]/steps:min-w-48 content-start @md/steps:divide-y @md/steps:divide-white @md/steps:border-r border-gray-l4">
         <Tab className={({ selected }) => tabClasses(selected)}>
           <Icon type="CreditCard" className="shrink-0" size={16} />
           <span className="text-left">Card</span>
@@ -63,8 +63,10 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <span className="text-left">DAF</span>
         </Tab>
 
-        {/** more options: applies up to @md */}
-        <div className={`${isExpanded ? "contents" : "hidden"} @md:contents`}>
+        {/** more options: applies up to @md/steps */}
+        <div
+          className={`${isExpanded ? "contents" : "hidden"} @md/steps:contents`}
+        >
           <Tab className={({ selected }) => tabClasses(selected)}>
             <Icon type="Bitcoin" className="shrink-0" size={17} />
             <span className="text-left">Crypto</span>
@@ -75,13 +77,16 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <button
             onClick={() => setIsExpanded(true)}
             type="button"
-            className="col-span-full text-sm font-semibold mt-2 @md:hidden text-blue"
+            className="col-span-full text-sm font-semibold mt-2 @md/steps:hidden text-blue"
           >
             More options
           </button>
         )}
       </Tab.List>
-      <Tab.Panels as="div" className="grid p-4 @md:p-8 pt-0 @md:pt-4 ">
+      <Tab.Panels
+        as="div"
+        className="grid p-4 @md/steps:p-8 pt-0 @md/steps:pt-4 "
+      >
         <Tab.Panel>
           <Stripe
             recipient={state.recipient}
