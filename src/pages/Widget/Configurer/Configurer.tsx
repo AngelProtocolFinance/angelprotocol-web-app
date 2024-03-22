@@ -66,14 +66,17 @@ export default function Configurer({ classes = "" }) {
           Disable changing the split value
         </CheckField>
 
-        <div className="flex gap-3 w-full max-xl:justify-center mt-4">
+        <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-4">
           <button
             type="reset"
-            className="btn-outline-filled max-sm:mx-auto w-40"
+            className="btn-outline-filled @max-sm/configurer:mx-auto w-40"
           >
             Reset Changes
           </button>
-          <button type="submit" className="btn-blue max-sm:mx-auto w-40">
+          <button
+            type="submit"
+            className="btn-blue @max-sm/configurer:mx-auto w-40"
+          >
             Update Snippet
           </button>
         </div>
