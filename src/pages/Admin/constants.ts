@@ -49,7 +49,7 @@ export const LINKS: {
     },
   },
   widget_config: {
-    title: "Widget Configuration",
+    title: "Donation Form Builder",
     to: sidebarRoutes.widget_config,
     icon: {
       type: "Widget",
