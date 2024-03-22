@@ -3,11 +3,11 @@ import Icon from "components/Icon/Icon";
 import { Label } from "components/form";
 import { useState } from "react";
 import { DonationDetails, FormStep } from "slices/donation";
+import { Config } from "../types";
 import Crypto from "./Crypto";
 import Daf from "./Daf";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
-import { Config } from "../types";
 
 type Props = {
   donaterConfig: Config | null;
