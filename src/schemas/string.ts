@@ -3,6 +3,7 @@ import * as Yup from "yup";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
 export const terraAddrPattern = /^terra1[a-z0-9]{38}$/i;
+export const alphanumeric = /^[0-9a-zA-Z]+$/;
 const evmAddrPattern = /^0x[a-fA-F0-9]{40}$/;
 
 export const requiredString = Yup.string().required("required");
