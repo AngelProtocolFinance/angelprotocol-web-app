@@ -1,10 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { object, string } from "yup";
+import { object } from "yup";
 import { FormValues as FV, Props } from "./types";
 import { Field } from "components/form";
 import { LoadText } from "components/registration";
+import { alphanumeric, requiredString } from "schemas/string";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import useSubmit from "./useSubmit";
@@ -13,7 +14,14 @@ export default function NonFSA(props: Props) {
   const { data } = useRegState<4>();
   const { doc } = props;
   const methods = useForm<FV>({
-    resolver: yupResolver(object({ EIN: string().required("required") })),
+    resolver: yupResolver(
+      object({
+        EIN: requiredString.matches(
+          alphanumeric,
+          "must only contain numbers and letters"
+        ),
+      })
+    ),
     defaultValues: doc
       ? doc
       : {
