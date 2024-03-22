@@ -3,8 +3,9 @@ import { DonaterConfigFromWidget, WidgetURLSearchParams } from "types/widget";
 import { number, object, string } from "yup";
 
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
-  liquidSplitPct: number().required().min(0).max(100),
   fixedSplit: string().oneOf(["true", "false"]),
+  isDescriptionTextHidden: string().oneOf(["true", "false"]),
+  liquidSplitPct: number().required().min(0).max(100),
 });
 
 export default function parseConfig(
@@ -26,6 +27,8 @@ export default function parseConfig(
 
     return {
       config: {
+        isDescriptionTextHidden:
+          parsedConfig.isDescriptionTextHidden === "true",
         isSplitFixed: parsedConfig.fixedSplit === "true",
         liquidSplitPct: +parsedConfig.liquidSplitPct,
       },

@@ -54,6 +54,13 @@ export default function Content({
         Donate to {profile.name}
       </h1>
 
+      {!configResult.config.isDescriptionTextHidden && (
+        <p className="text-xs text-center sm:text-base">
+          Check out the many crypto and fiat donation options. Provide your
+          personal details to receive an immediate tax receipt.
+        </p>
+      )}
+
       <Steps
         className="mt-5 w-full md:w-3/4 border border-gray-l4"
         donaterConfig={configResult.config}

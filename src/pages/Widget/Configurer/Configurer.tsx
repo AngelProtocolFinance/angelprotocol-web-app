@@ -17,6 +17,7 @@ export default function Configurer({ classes = "" }) {
     resolver: yupResolver(schema),
     defaultValues: {
       endowment: widgetInitValues.endowment,
+      isDescriptionTextHidden: widgetInitValues.isDescriptionTextHidden,
       isSplitFixed: widgetInitValues.isSplitFixed,
       liquidPercentage: widgetInitValues.liquidSplitPct,
     },
@@ -25,6 +26,7 @@ export default function Configurer({ classes = "" }) {
   const submit: SubmitHandler<FormValues> = async (fv) => {
     const newConfig: WidgetConfig = {
       endowment: fv.endowment,
+      isDescriptionTextHidden: fv.isDescriptionTextHidden,
       isSplitFixed: fv.isSplitFixed,
       liquidSplitPct: fv.liquidPercentage,
     };
@@ -58,6 +60,10 @@ export default function Configurer({ classes = "" }) {
       <div className="grid content-start gap-6 text-sm">
         <label className="-mb-4">Nonprofit name:</label>
         <EndowmentSelector />
+
+        <CheckField<FormValues> name="isDescriptionTextHidden">
+          Hide description text
+        </CheckField>
 
         <label className="-mb-4">Define default split value:</label>
         <LiquidSplitSlider

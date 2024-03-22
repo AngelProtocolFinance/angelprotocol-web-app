@@ -5,13 +5,13 @@ import { setRecipient } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 
 export default function Preview({ classes = "" }) {
-  const widgetConfig = useGetter((state) => state.widget);
-  const endowName = widgetConfig.endowment.name ?? "nonprofit name";
+  const { endowment, ...config } = useGetter((state) => state.widget);
+  const endowName = endowment.name ?? "nonprofit name";
 
   const dispatch = useSetter();
   useEffect(() => {
-    dispatch(setRecipient(widgetConfig.endowment));
-  }, [dispatch, widgetConfig.endowment]);
+    dispatch(setRecipient(endowment));
+  }, [dispatch, endowment]);
 
   return (
     <section className={classes + " @container/preview pb-4"}>
@@ -23,12 +23,19 @@ export default function Preview({ classes = "" }) {
           <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
             Donate to {endowName}
           </h1>
+          {!config.isDescriptionTextHidden && (
+            <p className="text-xs text-center @sm/preview:text-base">
+              Check out the many crypto and fiat donation options. Provide your
+              personal details to receive an immediate tax receipt.
+            </p>
+          )}
           <Steps
             className="w-full @md/preview:w-3/4 border border-gray-l4"
             donaterConfig={{
               isPreview: true,
-              isSplitFixed: widgetConfig.isSplitFixed,
-              liquidSplitPct: widgetConfig.liquidSplitPct,
+              isDescriptionTextHidden: config.isDescriptionTextHidden,
+              isSplitFixed: config.isSplitFixed,
+              liquidSplitPct: config.liquidSplitPct,
             }}
           />
           <footer className="grid place-items-center h-20 w-full bg-blue">
