@@ -1,6 +1,6 @@
 import { BYTES_IN_MB } from "constants/common";
 import { fileDropzoneAssetShape } from "schemas/file";
-import { requiredString } from "schemas/string";
+import { alphanumeric, requiredString } from "schemas/string";
 import { SchemaShape } from "schemas/types";
 import { MIMEType } from "types/lists";
 import { ObjectSchema, object } from "yup";
@@ -22,7 +22,10 @@ const assetShape = fileDropzoneAssetShape(
 );
 
 export const schema = object<any, SchemaShape<FormValues>>({
-  RegistrationNumber: requiredString.trim(),
+  RegistrationNumber: requiredString.matches(
+    alphanumeric,
+    "must only contain numbers and letters"
+  ),
   ProofOfIdentity: assetShape,
   ProofOfRegistration: assetShape,
   LegalEntityType: requiredString.trim(),

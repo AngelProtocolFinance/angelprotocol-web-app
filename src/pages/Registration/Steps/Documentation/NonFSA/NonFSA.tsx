@@ -3,7 +3,7 @@ import LoadText from "components/LoadText";
 import { Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { requiredString } from "schemas/string";
+import { alphanumeric, requiredString } from "schemas/string";
 import { object } from "yup";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
@@ -14,7 +14,14 @@ export default function NonFSA(props: Props) {
   const { data } = useRegState<4>();
   const { doc } = props;
   const methods = useForm<FV>({
-    resolver: yupResolver(object({ EIN: requiredString.trim() })),
+    resolver: yupResolver(
+      object({
+        EIN: requiredString.matches(
+          alphanumeric,
+          "must only contain numbers and letters"
+        ),
+      })
+    ),
     defaultValues: doc
       ? doc
       : {
