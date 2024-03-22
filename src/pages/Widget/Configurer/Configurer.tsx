@@ -1,21 +1,22 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { resetWidgetConfig, updateWidgetConfig } from "slices/widget";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
 import { WidgetConfig } from "types/widget";
 import Form from "./Form";
 import { schema } from "./schema";
 import { FormValues } from "./types";
 
 export default function Configurer({ classes = "" }) {
+  const widgetInitValues = useGetter((state) => state.widget);
   const dispatch = useSetter();
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      endowment: { id: 0, name: "" },
-      isSplitFixed: false,
-      liquidPercentage: 50,
+      endowment: widgetInitValues.endowment,
+      isSplitFixed: widgetInitValues.isSplitFixed,
+      liquidPercentage: widgetInitValues.liquidSplitPct,
     },
   });
 
