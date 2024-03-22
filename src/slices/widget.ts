@@ -4,7 +4,8 @@ import { WidgetConfig } from "types/widget";
 type State = WidgetConfig;
 
 const initialState: State = {
-  endowment: { id: 0, name: "Nonprofit name" },
+  endowment: { id: 0, name: "", hide_bg_tip: false },
+  isSplitFixed: false,
   liquidSplitPct: 50,
 };
 

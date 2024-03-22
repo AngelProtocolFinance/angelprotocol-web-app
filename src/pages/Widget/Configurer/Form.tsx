@@ -3,6 +3,7 @@ import { FormHTMLAttributes } from "react";
 import { useController } from "react-hook-form";
 import EndowmentSelector from "./EndowmentSelector";
 import { FormValues as FV } from "./types";
+import { CheckField } from "components/form";
 
 export default function Form({
   className = "",
@@ -22,8 +23,12 @@ export default function Form({
       <label className="-mb-4">Nonprofit name:</label>
       <EndowmentSelector />
 
-      <span className="-mb-4">Define split value by default:</span>
+      <label className="-mb-4">Define default split value:</label>
       <SplitSlider liquidSplitPct={value} setLiquidSplitPct={onChange} />
+
+      <CheckField<FV> name="isSplitFixed" classes="mt-4">
+        Disable changing the split value
+      </CheckField>
 
       <div className="flex gap-3 w-full max-xl:justify-center mt-4">
         <button type="reset" className="btn-outline-filled max-sm:mx-auto w-40">

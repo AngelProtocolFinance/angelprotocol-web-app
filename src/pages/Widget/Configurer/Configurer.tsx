@@ -14,6 +14,7 @@ export default function Configurer({ classes = "" }) {
     resolver: yupResolver(schema),
     defaultValues: {
       endowment: { id: 0, name: "" },
+      isSplitFixed: false,
       liquidPercentage: 50,
     },
   });
@@ -21,6 +22,7 @@ export default function Configurer({ classes = "" }) {
   const submit: SubmitHandler<FormValues> = async (fv) => {
     const newConfig: WidgetConfig = {
       endowment: fv.endowment,
+      isSplitFixed: fv.isSplitFixed,
       liquidSplitPct: fv.liquidPercentage,
     };
     dispatch(updateWidgetConfig(newConfig));
