@@ -12,7 +12,7 @@ export default withAuth(function Donations({ user }) {
   return (
     <div className="grid gap-40 pt-8 lg:pt-20 pb-20">
       <DonationsSection {...onHoldDonations} title="Pending Donations" />
-      <DonationsSection {...completeDonations} title="Finalized Donations" />
+      <DonationsSection {...completeDonations} title="Completed Donations" />
     </div>
   );
 });

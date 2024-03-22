@@ -12,8 +12,9 @@ export default function NoDonations({ classes = "" }) {
       />
       <h3 className="text-lg self-end">No donations found.</h3>
       <p className="self-start text-navy-l1 dark:text-navy-l2">
-        Sorry! We couldn't find any donations. Try to adjust any filters applied
-        or connect with a different user.
+        You've not made any donations yet. Take a look at our marketplace to
+        choose from hundreds of nonprofits that are waiting for your donation.
+        Every donation makes a difference.
       </p>
     </div>
   );
