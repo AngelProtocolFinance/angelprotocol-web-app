@@ -108,7 +108,8 @@ export default function SignupForm(props: Props) {
           Philanthropy for Everyone
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
-          Sign up to support 18000+ causes or register and manage your nonprofit.
+          Sign up to support 18000+ causes or register and manage your
+          nonprofit.
         </p>
 
         <button

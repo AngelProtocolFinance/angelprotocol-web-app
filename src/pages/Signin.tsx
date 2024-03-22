@@ -84,7 +84,8 @@ export default function Signin() {
           Philanthropy for Everyone
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
-          Log in to support 18000+ causes or register and manage your nonprofit.
+          Log in to support 18000+ causes or register and manage your
+          nonprofit.
         </p>
         <button
           className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
