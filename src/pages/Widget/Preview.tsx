@@ -19,7 +19,7 @@ export default function Preview({ classes = "" }) {
         That's what our widget looks like:
       </h2>
       <div className="h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-navy-d4 bg-white">
-        <div className="grid grid-rows-[auto_1fr_auto] justify-items-center gap-10 h-full pt-6 @xl/preview:pt-10">
+        <div className="flex flex-col items-center gap-10 pt-6 @xl/preview:pt-10">
           <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
             Donate to {endowName}
           </h1>
@@ -30,7 +30,7 @@ export default function Preview({ classes = "" }) {
             </p>
           )}
           <Steps
-            className="w-full @md/preview:w-3/4 border border-gray-l4"
+            className="@md/preview:w-3/4 border border-gray-l4"
             donaterConfig={{
               isPreview: true,
               isSplitDisabled: config.isSplitDisabled,
