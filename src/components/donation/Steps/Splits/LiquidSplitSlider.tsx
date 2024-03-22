@@ -4,11 +4,13 @@ import sendMoney from "assets/icons/send-money.png";
 import Image from "components/Image";
 
 type Props = {
+  disabled?: boolean;
   liquidSplitPct: number;
   setLiquidSplitPct: (value: number) => void;
 };
 
 export default function LiquidSplitSlider({
+  disabled = false,
   liquidSplitPct,
   setLiquidSplitPct,
 }: Props) {
@@ -36,6 +38,7 @@ export default function LiquidSplitSlider({
         //locked(sustainable) is on the left, increasing to the right - slider value represents locked
         onValueChange={([pct]) => setLiquidSplitPct(100 - pct)}
         className="relative flex items-center select-none touch-none"
+        disabled={disabled}
       >
         <Slider.Track className="bg-[#F5C828] relative grow rounded-full h-1.5">
           <Slider.Range className="absolute bg-[#96C82D] rounded-full h-full" />

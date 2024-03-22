@@ -8,8 +8,9 @@ import LiquidSplitSlider from "./LiquidSplitSlider";
 
 export default function Split({
   details,
+  disabled,
   liquidSplitPct: persistedLiqSplit = 50,
-}: SplitsStep) {
+}: SplitsStep & { disabled?: boolean }) {
   const dispatch = useSetter();
 
   const [liquidSplitPct, setLiquidSplitPct] = useState(persistedLiqSplit);
@@ -44,6 +45,7 @@ export default function Split({
       </p>
 
       <LiquidSplitSlider
+        disabled={disabled}
         liquidSplitPct={liquidSplitPct}
         setLiquidSplitPct={setLiquidSplitPct}
       />
