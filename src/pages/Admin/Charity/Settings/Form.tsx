@@ -40,7 +40,7 @@ export default function Form(props: Props) {
       }}
       onSubmit={handleSubmit(async (fv) => {
         try {
-          await submit({ id: props.id, receiptMsg: fv.receiptMsg });
+          await submit({ id: props.id, receiptMsg: fv.receiptMsg }).unwrap();
         } catch (err) {
           handleError(err);
         }
