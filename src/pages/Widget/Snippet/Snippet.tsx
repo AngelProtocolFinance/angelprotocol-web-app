@@ -30,7 +30,7 @@ export default function Snippet({ classes = "" }) {
 const widgetURLfn = (config: WidgetConfig) => {
   const params: Required<WidgetURLSearchParams> = {
     hideDescription: config.hideDescription ? "true" : "false",
-    fixedSplit: config.isSplitFixed ? "true" : "false",
+    splitDisabled: config.isSplitDisabled ? "true" : "false",
     liquidSplitPct: config.liquidSplitPct.toString(),
   };
   return (

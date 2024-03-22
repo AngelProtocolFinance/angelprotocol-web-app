@@ -18,7 +18,7 @@ export default function Configurer({ classes = "" }) {
     defaultValues: {
       endowment: widgetInitValues.endowment,
       hideDescription: widgetInitValues.hideDescription,
-      isSplitFixed: widgetInitValues.isSplitFixed,
+      isSplitDisabled: widgetInitValues.isSplitDisabled,
       liquidPercentage: widgetInitValues.liquidSplitPct,
     },
   });
@@ -27,7 +27,7 @@ export default function Configurer({ classes = "" }) {
     const newConfig: WidgetConfig = {
       endowment: fv.endowment,
       hideDescription: fv.hideDescription,
-      isSplitFixed: fv.isSplitFixed,
+      isSplitDisabled: fv.isSplitDisabled,
       liquidSplitPct: fv.liquidPercentage,
     };
     dispatch(updateWidgetConfig(newConfig));
@@ -71,7 +71,7 @@ export default function Configurer({ classes = "" }) {
           setLiquidSplitPct={onChange}
         />
 
-        <CheckField<FormValues> name="isSplitFixed" classes="mt-4">
+        <CheckField<FormValues> name="isSplitDisabled" classes="mt-4">
           Disable changing the split value
         </CheckField>
 
