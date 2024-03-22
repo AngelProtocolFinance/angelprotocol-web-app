@@ -35,5 +35,5 @@ export default function CurrentStep({ config }: Props) {
   }
 
   state.step satisfies "tx";
-  return <Result {...state} classes="justify-self-center p-4 @md:p-8" />;
+  return <Result {...state} classes="justify-self-center p-4 @md/steps:p-8" />;
 }
