@@ -1,9 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Field, Form as _Form } from "components/form";
+import { Form as _Form } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import { string } from "yup";
 import { useUpdateEndowment } from "../common";
+import ReceiptMsg from "./ReceiptMsg";
+import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import { FV } from "./types";
 
 type Props = {
@@ -17,7 +19,7 @@ export default function Form(props: Props) {
   const methods = useForm({
     resolver: yupResolver(
       schema<FV>({
-        receiptMsg: string().max(100),
+        receiptMsg: string().max(MAX_RECEIPT_MSG_CHAR, "exceeds max"),
       })
     ),
     defaultValues: { receiptMsg: props.receiptMsg ?? "" },
@@ -42,13 +44,7 @@ export default function Form(props: Props) {
       })}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
-      <Field<FV, "textarea">
-        type="textarea"
-        classes="field-admin"
-        name="receiptMsg"
-        label="Receipt message"
-        placeholder="your message to your donor"
-      />
+      <ReceiptMsg />
       <div className="flex gap-3">
         <button
           type="reset"
