@@ -1,13 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Prompt from "components/Prompt";
 import { Field, Form as _Form } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
-import { useEditEndowmentMutation } from "services/aws/aws";
 import { string } from "yup";
+import { useUpdateEndowment } from "../common";
 import { FV } from "./types";
 
 type Props = {
@@ -16,9 +12,8 @@ type Props = {
 };
 
 export default function Form(props: Props) {
-  const [submit] = useEditEndowmentMutation();
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
+  const updateEndow = useUpdateEndowment();
+
   const methods = useForm({
     resolver: yupResolver(
       schema<FV>({
@@ -43,15 +38,7 @@ export default function Form(props: Props) {
         reset();
       }}
       onSubmit={handleSubmit(async (fv) => {
-        try {
-          await submit({ id: props.id, receiptMsg: fv.receiptMsg }).unwrap();
-          showModal(Prompt, {
-            type: "success",
-            children: "Settings successfully updated!",
-          });
-        } catch (err) {
-          handleError(err, GENERIC_ERROR_MESSAGE, { log: true });
-        }
+        await updateEndow({ receiptMsg: fv.receiptMsg, id: props.id });
       })}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >

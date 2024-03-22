@@ -8,7 +8,7 @@ import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useLazyProfileQuery } from "services/aws/aws";
 import { EndowmentProfileUpdate } from "types/aws";
 import { useAdminContext } from "../../Context";
-import { useUpdateEndowmentProfile } from "../common";
+import { useUpdateEndowment } from "../common";
 import { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
@@ -22,7 +22,7 @@ export default function useEditProfile() {
 
   const { showModal } = useModalContext();
   const [endowment] = useLazyProfileQuery();
-  const updateProfile = useUpdateEndowmentProfile();
+  const updateEndow = useUpdateEndowment();
 
   const editProfile: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
@@ -71,7 +71,7 @@ export default function useEditProfile() {
         return { ...result, [key]: update[key] };
       }, {});
 
-      await updateProfile({ ...cleanUpdate, id });
+      await updateEndow({ ...cleanUpdate, id });
     } catch (err) {
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",

@@ -5,11 +5,11 @@ import { cleanObject } from "helpers/cleanObject";
 import { useEditEndowmentMutation } from "services/aws/aws";
 import { EndowmentUpdate } from "services/types";
 
-export function useUpdateEndowmentProfile() {
+export function useUpdateEndowment() {
   const { showModal } = useModalContext();
   const [submit] = useEditEndowmentMutation();
 
-  const updateProfile = async (update: EndowmentUpdate) => {
+  const updateEndowment = async (update: EndowmentUpdate) => {
     try {
       const cleanUpdates = cleanObject(update);
 
@@ -22,12 +22,12 @@ export function useUpdateEndowmentProfile() {
       const result = await submit(update);
 
       if ("error" in result) {
-        return showModal(TxPrompt, { error: "Failed to update profile" });
+        return showModal(TxPrompt, { error: "Failed to update endowment" });
       }
 
       return showModal(TxPrompt, {
         success: {
-          message: "Profile successfully updated",
+          message: "Endowment successfully updated",
           link: {
             description: "View changes",
             url: `${appRoutes.marketplace}/${cleanUpdates.id}`,
@@ -41,5 +41,5 @@ export function useUpdateEndowmentProfile() {
     }
   };
 
-  return updateProfile;
+  return updateEndowment;
 }
