@@ -54,7 +54,7 @@ export default function Content({
         Donate to {profile.name}
       </h1>
 
-      {!configResult.config.isDescriptionTextHidden && (
+      {!configResult.config.hideDescription && (
         <p className="text-xs text-center sm:text-base">
           Check out the many crypto and fiat donation options. Provide your
           personal details to receive an immediate tax receipt.
