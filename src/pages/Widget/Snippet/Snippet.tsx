@@ -28,7 +28,8 @@ export default function Snippet({ classes = "" }) {
 
 //create URLSearchParams from config
 const widgetURLfn = (config: WidgetConfig) => {
-  const params: WidgetURLSearchParams = {
+  const params: Required<WidgetURLSearchParams> = {
+    isDescriptionTextHidden: config.isDescriptionTextHidden ? "true" : "false",
     fixedSplit: config.isSplitFixed ? "true" : "false",
     liquidSplitPct: config.liquidSplitPct.toString(),
   };
