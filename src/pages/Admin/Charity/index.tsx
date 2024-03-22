@@ -11,6 +11,7 @@ import EditProfile from "./EditProfile";
 import Members from "./Members/Members";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
+import Settings from "./Settings";
 
 export default function Charity() {
   //widget configurer is used in admin
@@ -25,7 +26,12 @@ export default function Charity() {
               { title: "Profile", links: [LINKS.edit_profile, LINKS.programs] },
               {
                 title: "Manage",
-                links: [LINKS.members, LINKS.banking, LINKS.widget_config],
+                links: [
+                  LINKS.settings,
+                  LINKS.members,
+                  LINKS.banking,
+                  LINKS.widget_config,
+                ],
               },
             ]}
           />
@@ -40,6 +46,7 @@ export default function Charity() {
           element={<ProgramEditor />}
         />
 
+        <Route path={adminRoutes.settings} element={<Settings />} />
         <Route path={adminRoutes.members} element={<Members />} />
         <Route path={adminRoutes.banking} element={<Banking />} />
         <Route

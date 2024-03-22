@@ -5,10 +5,9 @@ import { isEmpty, logger } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { SubmitHandler, useFormContext } from "react-hook-form";
-import { ProfileUpdateMsg } from "services/types";
-import { Program } from "types/aws";
+import { EndowmentProgramsUpdate, Program } from "types/aws";
 import { useAdminContext } from "../../Context";
-import { useUpdateEndowmentProfile } from "../common";
+import { useUpdateEndowment } from "../common";
 import { FV } from "./types";
 
 export default function useSubmit() {
@@ -21,7 +20,7 @@ export default function useSubmit() {
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
-  const updateProfile = useUpdateEndowmentProfile();
+  const updateEndow = useUpdateEndowment();
 
   const submit: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
@@ -58,11 +57,11 @@ export default function useSubmit() {
         }
       }
 
-      const updates: ProfileUpdateMsg = {
+      const updates: EndowmentProgramsUpdate = {
         id,
         program: [program],
       };
-      await updateProfile(updates);
+      await updateEndow(updates);
       if (!initial) reset(); //for new program, reset form after submit
     } catch (err) {
       logger.error(err);

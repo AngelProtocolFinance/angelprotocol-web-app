@@ -6,9 +6,9 @@ import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { SubmitHandler, useFormContext } from "react-hook-form";
 import { useLazyProfileQuery } from "services/aws/aws";
-import { ProfileUpdateMsg } from "services/types";
+import { EndowmentProfileUpdate } from "types/aws";
 import { useAdminContext } from "../../Context";
-import { useUpdateEndowmentProfile } from "../common";
+import { useUpdateEndowment } from "../common";
 import { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
@@ -22,7 +22,7 @@ export default function useEditProfile() {
 
   const { showModal } = useModalContext();
   const [endowment] = useLazyProfileQuery();
-  const updateProfile = useUpdateEndowmentProfile();
+  const updateEndow = useUpdateEndowment();
 
   const editProfile: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
@@ -64,16 +64,14 @@ export default function useEditProfile() {
         }
       }
 
+      type Cleaned = Partial<EndowmentProfileUpdate>;
       //only include top level keys that appeared on diff
-      const cleanUpdate = diffs.reduce<ProfileUpdateMsg>(
-        (result, [path]) => {
-          const key = path.split(".")[0] as keyof ProfileUpdateMsg;
-          return { ...result, [key]: update[key] };
-        },
-        { id }
-      );
+      const cleanUpdate = diffs.reduce<Cleaned>((result, [path]) => {
+        const key = path.split(".")[0] as keyof Cleaned;
+        return { ...result, [key]: update[key] };
+      }, {});
 
-      await updateProfile(cleanUpdate);
+      await updateEndow({ ...cleanUpdate, id });
     } catch (err) {
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",

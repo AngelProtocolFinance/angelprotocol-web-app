@@ -22,11 +22,11 @@ export default function Sidebar({
     >
       <Header />
 
-      <div className="flex flex-col py-3">
+      <div className="grid grid-cols-[auto_1fr] py-3 gap-x-2">
         {linkGroups.map((group) => (
           <React.Fragment key={`link_group-${group.title}`}>
             {group.title && (
-              <h6 className="pt-5 px-5 pb-1 font-bold text-xs uppercase text-navy-l3 tracking-wide">
+              <h6 className="col-span-2 pt-5 px-5 pb-1 font-bold text-xs uppercase text-navy-l3 tracking-wide">
                 {group.title}
               </h6>
             )}
@@ -51,6 +51,6 @@ export default function Sidebar({
 }
 
 const linkClassName = createNavLinkStyler(
-  "flex items-center gap-2 py-3 px-5 font-bold text-sm hover:text-blue-d1 transition ease-in-out duration-300 aria-disabled:text-navy-l2 aria-disabled:pointer-events-none",
+  "grid grid-cols-subgrid col-span-2 items-center py-3 px-5 font-bold text-sm hover:text-blue-d1 transition ease-in-out duration-300 aria-disabled:text-navy-l2 aria-disabled:pointer-events-none",
   "pointer-events-none text-blue-d1"
 );

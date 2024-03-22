@@ -1,5 +1,4 @@
 import { Except } from "type-fest";
-import { Ensure } from "types/utils";
 import { APIEnvironment, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
@@ -67,6 +66,7 @@ export type Endowment = {
   /** empty string by default */
   street_address: string;
   tagline: string;
+  receiptMsg?: string;
   url: string;
 };
 
@@ -89,12 +89,21 @@ export type EndowmentOption = Pick<Endowment, "id" | "name">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
-  Ensure<Endowment, "hide_bg_tip" | "slug" | "card_img">,
-  "endow_designation" | "fiscal_sponsored"
+  Required<Endowment>,
+  "endow_designation" | "fiscal_sponsored" | "receiptMsg" | "program"
 > & {
   endow_designation: EndowDesignation | "";
-  program_id: string;
 };
+
+export type EndowmentSettingsUpdate = Pick<
+  Required<Endowment>,
+  "id" | "receiptMsg"
+>;
+
+export type EndowmentProgramsUpdate = Pick<
+  Required<Endowment>,
+  "id" | "program"
+>;
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";

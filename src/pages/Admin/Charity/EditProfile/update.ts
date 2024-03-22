@@ -29,8 +29,6 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
       logo: d.logo,
       name: d.name,
       overview: d.overview,
-      program: [], //program is updated in /create-program
-      program_id: "",
       published: d.published,
       registration_number: d.registration_number,
       sdgs: d.sdgs,
@@ -53,7 +51,6 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
   const { data: fv, urls } = arg;
   return {
     ...fv,
-    program: [], //program is updated in /create-program
     card_img: urls.card_img,
     image: urls.image,
     logo: urls.logo,

@@ -56,6 +56,14 @@ export const LINKS: {
       size: 24,
     },
   },
+  settings: {
+    title: "Settings",
+    to: "settings",
+    icon: {
+      type: "Gear",
+      size: 21,
+    },
+  },
   members: {
     title: "Members",
     to: "members",

@@ -21,8 +21,8 @@ import {
 } from "types/aws";
 import { version as v } from "../helpers";
 import {
+  EndowmentUpdate,
   IdOrSlug,
-  ProfileUpdateMsg,
   ProgramDeleteMsg,
   VersionSpecificWalletProfile,
 } from "../types";
@@ -135,7 +135,7 @@ export const aws = createApi({
       query: ({ endowId, programId }) =>
         `/${v(1)}/profile/${apiEnv}/program/${endowId}/${programId}`,
     }),
-    editProfile: builder.mutation<EndowmentProfile, ProfileUpdateMsg>({
+    editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
       invalidatesTags: (_, error) =>
         error ? [] : ["endowments", "profile", "walletProfile"],
       query: ({ id, ...payload }) => {
@@ -200,7 +200,7 @@ export const {
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,
   useProgramQuery,
-  useEditProfileMutation,
+  useEditEndowmentMutation,
   useApplicationsQuery,
   useApplicationQuery,
   useReviewApplicationMutation,
