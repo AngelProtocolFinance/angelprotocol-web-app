@@ -5,12 +5,12 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import { setRecipient } from "slices/donation";
+import { updateWidgetConfig } from "slices/widget";
 import { useGetter, useSetter } from "store/accessors";
 import { Endowment } from "types/aws";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
-import { updateWidgetConfig } from "slices/widget";
 
 export default function Widget({ endowId = 0 }: { endowId?: number }) {
   const queryState = useEndowment(

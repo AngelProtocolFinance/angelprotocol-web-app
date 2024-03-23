@@ -4,11 +4,11 @@ import { CheckField, Form } from "components/form";
 import { SubmitHandler, useController, useForm } from "react-hook-form";
 import { resetWidgetConfig, updateWidgetConfig } from "slices/widget";
 import { useGetter, useSetter } from "store/accessors";
+import { EndowmentOption } from "types/aws";
 import { WidgetConfig } from "types/widget";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
 import { FormValues } from "./types";
-import { EndowmentOption } from "types/aws";
 
 type Props = {
   classes?: string;
