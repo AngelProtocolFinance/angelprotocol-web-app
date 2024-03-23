@@ -8,15 +8,24 @@ import { WidgetConfig } from "types/widget";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
 import { FormValues } from "./types";
+import { EndowmentOption } from "types/aws";
 
-export default function Configurer({ classes = "" }) {
+type Props = {
+  classes?: string;
+  endowment?: EndowmentOption;
+};
+
+export default function Configurer({ classes = "", endowment }: Props) {
   const widgetInitValues = useGetter((state) => state.widget);
   const dispatch = useSetter();
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     defaultValues: {
-      endowment: widgetInitValues.endowment,
+      endowment: endowment ?? {
+        ...widgetInitValues.endowment,
+        name: "", // must set name to "" so that no value is displayed by default in the EndowmentSelector input
+      },
       hideDescription: widgetInitValues.hideDescription,
       isSplitDisabled: widgetInitValues.isSplitDisabled,
       liquidPercentage: widgetInitValues.liquidSplitPct,
