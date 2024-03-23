@@ -37,16 +37,18 @@ export default function LiquidSplitSlider({
         value={[lockedSplitPct]}
         //locked(sustainable) is on the left, increasing to the right - slider value represents locked
         onValueChange={([pct]) => setLiquidSplitPct(100 - pct)}
-        className="relative flex items-center select-none touch-none"
+        className="group/slider relative flex items-center select-none touch-none"
         disabled={disabled}
       >
-        <Slider.Track className="bg-[#F5C828] relative grow rounded-full h-1.5">
-          <Slider.Range className="absolute bg-[#96C82D] rounded-full h-full" />
+        <Slider.Track
+          className={`bg-[#F5C828] group-aria-disabled/slider:bg-[#f5e09d] relative grow rounded-full h-1.5`}
+        >
+          <Slider.Range className="absolute bg-[#96C82D] group-aria-disabled/slider:bg-[#bdcc9d] rounded-full h-full" />
         </Slider.Track>
-        <Slider.Thumb className="flex gap-[2.5px] justify-center items-center w-9 h-5 bg-white border border-[#EAECEB] shadow-lg shadow-black/15 rounded-[6px]">
-          <span className="w-px h-2.5 bg-[#D9D9D9]" />
-          <span className="w-px h-2.5 bg-[#D9D9D9]" />
-          <span className="w-px h-2.5 bg-[#D9D9D9]" />
+        <Slider.Thumb className="flex gap-[2.5px] justify-center items-center w-9 h-5 bg-white border border-[#EAECEB] group-aria-disabled/slider:border-[#EAECEB]/75 shadow-lg shadow-black/15 group-aria-disabled/slider:shadow-black/5 rounded-[6px]">
+          <span className="w-px h-2.5 bg-[#D9D9D9] group-aria-disabled/slider:bg-[#D9D9D9]/75" />
+          <span className="w-px h-2.5 bg-[#D9D9D9] group-aria-disabled/slider:bg-[#D9D9D9]/75" />
+          <span className="w-px h-2.5 bg-[#D9D9D9] group-aria-disabled/slider:bg-[#D9D9D9]/75" />
         </Slider.Thumb>
       </Slider.Root>
     </div>
