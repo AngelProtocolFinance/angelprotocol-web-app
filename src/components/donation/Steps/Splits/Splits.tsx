@@ -1,5 +1,5 @@
 import { humanize } from "helpers";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SplitsStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
@@ -14,6 +14,11 @@ export default function Split({
   const dispatch = useSetter();
 
   const [liquidSplitPct, setLiquidSplitPct] = useState(persistedLiqSplit);
+
+  // update liquidSplitPct whenever a new value is passed from parent
+  useEffect(() => {
+    setLiquidSplitPct(persistedLiqSplit);
+  }, [persistedLiqSplit]);
 
   const [amount, symbol] = (() => {
     switch (details.method) {
