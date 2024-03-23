@@ -66,10 +66,7 @@ export default function Configurer({ classes = "" }) {
         </CheckField>
 
         <label className="-mb-4">Define default split value:</label>
-        <LiquidSplitSlider
-          liquidSplitPct={value}
-          setLiquidSplitPct={onChange}
-        />
+        <LiquidSplitSlider value={value} onChange={onChange} />
 
         <CheckField<FormValues> name="isSplitDisabled" classes="mt-4">
           Disable changing the split value

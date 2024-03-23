@@ -46,8 +46,8 @@ export default function Split({
 
       <LiquidSplitSlider
         disabled={disabled}
-        liquidSplitPct={liquidSplitPct}
-        setLiquidSplitPct={setLiquidSplitPct}
+        value={liquidSplitPct}
+        onChange={setLiquidSplitPct}
       />
 
       {/** amount breakdown */}
