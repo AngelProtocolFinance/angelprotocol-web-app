@@ -1,4 +1,4 @@
-import { Donor, EndowmentOption, GuestDonor } from "types/aws";
+import { Donor, Endowment, GuestDonor } from "types/aws";
 import { ChainID } from "types/chain";
 import { DetailedCurrency, OptionType } from "types/components";
 import { DonationSource } from "types/lists";
@@ -9,7 +9,7 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
   "step" | U
 > & { [key in U]?: T[key] };
 
-export type DonationRecipient = EndowmentOption;
+export type DonationRecipient = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 
 type BaseDonationDetais = {
   source: DonationSource;

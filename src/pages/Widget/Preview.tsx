@@ -1,17 +1,10 @@
 import { DappLogo } from "components/Image";
 import { Steps } from "components/donation";
-import { useEffect } from "react";
-import { setRecipient } from "slices/donation";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetter } from "store/accessors";
 
 export default function Preview({ classes = "" }) {
   const { endowment, ...config } = useGetter((state) => state.widget);
-  const endowName = endowment.name ?? "nonprofit name";
-
-  const dispatch = useSetter();
-  useEffect(() => {
-    dispatch(setRecipient(endowment));
-  }, [dispatch, endowment]);
+  const endowName = endowment.name || "nonprofit name";
 
   return (
     <section className={classes + " @container/preview pb-4"}>
