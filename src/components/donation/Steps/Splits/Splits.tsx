@@ -22,7 +22,7 @@ export default function Split({
     setLockedSplitPct(100 - persistedLiqSplit);
   }, [persistedLiqSplit]);
 
-  const liquidSplitPct = 100 - lockedSplitPct;
+  const liqSplitPct = 100 - lockedSplitPct;
 
   const [amount, symbol] = (() => {
     switch (details.method) {
@@ -40,7 +40,7 @@ export default function Split({
     }
   })();
 
-  const liq = +amount * (liquidSplitPct / 100);
+  const liq = +amount * (liqSplitPct / 100);
   //derive locked from liquid to be consistent with checkout
   const locked = +amount - liq;
   const DECIMALS = details.method === "crypto" ? 4 : 2;
@@ -91,7 +91,7 @@ export default function Split({
       <ContinueBtn
         type="button"
         onClick={() => {
-          dispatch(setSplit(liquidSplitPct));
+          dispatch(setSplit(liqSplitPct));
         }}
         className="mt-6"
       />
