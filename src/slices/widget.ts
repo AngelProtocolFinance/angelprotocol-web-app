@@ -5,7 +5,7 @@ type State = WidgetConfig & { initial: WidgetConfig };
 
 const initial: WidgetConfig = {
   endowment: { id: 0, name: "", hide_bg_tip: false },
-  hideDescription: false,
+  isDescriptionTextShown: true,
   isSplitDisabled: false,
   liquidSplitPct: 50,
 };
