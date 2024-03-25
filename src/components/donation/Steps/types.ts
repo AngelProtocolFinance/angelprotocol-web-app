@@ -1,3 +1,3 @@
 import { DonaterConfigFromWidget } from "types/widget";
 
-export type Config = Omit<DonaterConfigFromWidget, "hideDescription">;
+export type Config = Omit<DonaterConfigFromWidget, "isDescriptionTextShown">;

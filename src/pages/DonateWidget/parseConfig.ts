@@ -4,7 +4,7 @@ import { number, object, string } from "yup";
 
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   splitDisabled: string().oneOf(["true", "false"]),
-  hideDescription: string().oneOf(["true", "false"]),
+  isDescriptionTextShown: string().oneOf(["true", "false"]),
   liquidSplitPct: number().required().min(0).max(100),
 });
 
@@ -27,7 +27,7 @@ export default function parseConfig(
 
     return {
       config: {
-        hideDescription: parsedConfig.hideDescription === "true",
+        isDescriptionTextShown: parsedConfig.isDescriptionTextShown === "true",
         isSplitDisabled: parsedConfig.splitDisabled === "true",
         liquidSplitPct: +parsedConfig.liquidSplitPct,
       },

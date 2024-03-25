@@ -16,7 +16,7 @@ export default function Preview({ classes = "" }) {
           <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
             Donate to {endowName}
           </h1>
-          {!config.hideDescription && (
+          {config.isDescriptionTextShown && (
             <p className="text-xs text-center @sm/preview:text-base">
               Check out the many crypto and fiat donation options. Provide your
               personal details to receive an immediate tax receipt.
