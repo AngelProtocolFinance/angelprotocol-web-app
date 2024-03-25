@@ -4,21 +4,25 @@ import { SplitsStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
-import LiquidSplitSlider from "./LiquidSplitSlider";
+import { LockedSplitSlider } from "./LockedSplitSlider";
+
+type Props = SplitsStep & { disabled?: boolean };
 
 export default function Split({
   details,
   disabled,
   liquidSplitPct: persistedLiqSplit = 50,
-}: SplitsStep & { disabled?: boolean }) {
+}: Props) {
   const dispatch = useSetter();
 
-  const [liquidSplitPct, setLiquidSplitPct] = useState(persistedLiqSplit);
+  const [lockedSplitPct, setLockedSplitPct] = useState(100 - persistedLiqSplit);
 
-  // update liquidSplitPct whenever a new value is passed from parent
+  // update lockedSplitPct whenever a new default liquid % value is passed from parent
   useEffect(() => {
-    setLiquidSplitPct(persistedLiqSplit);
+    setLockedSplitPct(100 - persistedLiqSplit);
   }, [persistedLiqSplit]);
+
+  const liquidSplitPct = 100 - lockedSplitPct;
 
   const [amount, symbol] = (() => {
     switch (details.method) {
@@ -49,10 +53,10 @@ export default function Split({
         Create a sustainable impact by dividing funds
       </p>
 
-      <LiquidSplitSlider
+      <LockedSplitSlider
         disabled={disabled}
-        value={liquidSplitPct}
-        onChange={setLiquidSplitPct}
+        value={lockedSplitPct}
+        onChange={setLockedSplitPct}
       />
 
       {/** amount breakdown */}
