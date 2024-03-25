@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import { setRecipient } from "slices/donation";
-import { updateWidgetConfig } from "slices/widget";
+import { initialize } from "slices/widget";
 import { useGetter, useSetter } from "store/accessors";
 import { Endowment } from "types/aws";
 import Configurer from "./Configurer";
@@ -40,7 +40,7 @@ function Content({
   const dispatch = useSetter();
   useEffect(() => {
     if (endowment) {
-      dispatch(updateWidgetConfig({ ...widget, endowment }));
+      dispatch(initialize({ ...widget.initial, endowment }));
       dispatch(setRecipient(endowment));
     } else {
       dispatch(setRecipient(widget.endowment));
