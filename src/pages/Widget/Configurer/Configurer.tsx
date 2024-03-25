@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { LockedSplitSlider } from "components/donation/Steps/Splits";
 import { CheckField, Form } from "components/form";
 import { SubmitHandler, useController, useForm } from "react-hook-form";
-import { resetWidgetConfig, updateWidgetConfig } from "slices/widget";
+import { reset, update } from "slices/widget";
 import { useGetter, useSetter } from "store/accessors";
 import { EndowmentOption } from "types/aws";
 import { WidgetConfig } from "types/widget";
@@ -39,7 +39,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
       isSplitDisabled: fv.isSplitDisabled,
       liquidSplitPct: fv.liquidPercentage,
     };
-    dispatch(updateWidgetConfig(newConfig));
+    dispatch(update(newConfig));
   };
 
   const { handleSubmit, reset: hookFormReset } = methods;
@@ -58,7 +58,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
       onSubmit={handleSubmit(submit)}
       onReset={(e) => {
         e.preventDefault();
-        dispatch(resetWidgetConfig());
+        dispatch(reset());
         hookFormReset();
       }}
     >
