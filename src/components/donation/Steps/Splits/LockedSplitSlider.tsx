@@ -9,24 +9,22 @@ type Props = {
   onChange: (value: number) => void;
 };
 
-export default function LiquidSplitSlider({
+export function LockedSplitSlider({
   disabled = false,
   value,
   onChange,
 }: Props) {
-  const lockedSplitPct = 100 - value;
-
   return (
     <div className="grid gap-5">
       {/** percentages */}
       <div className="flex justify-between">
         <div className="grid gap-1 grid-cols-[auto_1fr] items-center">
           <Image src={leaf} className="mr-1" />
-          <p className="text-xl">{lockedSplitPct}%</p>
+          <p className="text-xl">{value}%</p>
           <p className="uppercase text-xs col-span-full">Sustainable fund</p>
         </div>
         <div className="grid gap-1 grid-cols-[1fr_auto] items-center">
-          <p className="text-xl text-right">{value}%</p>
+          <p className="text-xl text-right">{100 - value}%</p>
           <Image src={sendMoney} className="ml-1" />
           <p className="uppercase text-xs col-span-full">Instantly Available</p>
         </div>
@@ -34,9 +32,9 @@ export default function LiquidSplitSlider({
 
       {/** slider */}
       <Slider.Root
-        value={[lockedSplitPct]}
+        value={[value]}
         //locked(sustainable) is on the left, increasing to the right - slider value represents locked
-        onValueChange={([pct]) => onChange(100 - pct)}
+        onValueChange={([pct]) => onChange(pct)}
         className="group/slider relative flex items-center select-none touch-none"
         disabled={disabled}
       >

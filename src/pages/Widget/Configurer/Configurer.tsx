@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { LiquidSplitSlider } from "components/donation/Steps/Splits";
+import { LockedSplitSlider } from "components/donation/Steps/Splits";
 import { CheckField, Form } from "components/form";
 import { SubmitHandler, useController, useForm } from "react-hook-form";
 import { resetWidgetConfig, updateWidgetConfig } from "slices/widget";
@@ -75,7 +75,10 @@ export default function Configurer({ classes = "", endowment }: Props) {
         </CheckField>
 
         <label className="-mb-4">Define default split value:</label>
-        <LiquidSplitSlider value={value} onChange={onChange} />
+        <LockedSplitSlider
+          value={100 - value}
+          onChange={(lockedPct) => onChange(100 - lockedPct)}
+        />
 
         <CheckField<FormValues> name="isSplitDisabled" classes="mt-4">
           Disable changing the split value
