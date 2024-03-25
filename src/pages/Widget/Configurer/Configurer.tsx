@@ -26,7 +26,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
         ...widgetInitValues.endowment,
         name: "", // must set name to "" so that no value is displayed by default in the EndowmentSelector input
       },
-      isDescriptionTextShown: widgetInitValues.isDescriptionTextShown,
+      hideDescription: widgetInitValues.hideDescription,
       isSplitDisabled: widgetInitValues.isSplitDisabled,
       liquidPercentage: widgetInitValues.liquidSplitPct,
     },
@@ -35,7 +35,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
   const submit: SubmitHandler<FormValues> = async (fv) => {
     const newConfig: WidgetConfig = {
       endowment: fv.endowment,
-      isDescriptionTextShown: fv.isDescriptionTextShown,
+      hideDescription: fv.hideDescription,
       isSplitDisabled: fv.isSplitDisabled,
       liquidSplitPct: fv.liquidPercentage,
     };
@@ -70,7 +70,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
         <label className="-mb-4">Nonprofit name:</label>
         <EndowmentSelector />
 
-        <CheckField<FormValues> name="isDescriptionTextShown">
+        <CheckField<FormValues> name="hideDescription">
           Hide description text
         </CheckField>
 
