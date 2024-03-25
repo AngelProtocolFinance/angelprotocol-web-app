@@ -71,7 +71,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
         <EndowmentSelector />
 
         <CheckField<FormValues> name="isDescriptionTextShown">
-          Hide description text
+          Show description text
         </CheckField>
 
         <label className="-mb-4">Define default split value:</label>
