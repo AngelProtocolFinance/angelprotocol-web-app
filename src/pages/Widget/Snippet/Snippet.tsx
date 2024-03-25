@@ -28,16 +28,11 @@ export default function Snippet({ classes = "" }) {
 
 //create URLSearchParams from config
 const widgetURLfn = (config: WidgetConfig) => {
-  const params: WidgetURLSearchParams = {
+  const params: Required<WidgetURLSearchParams> = {
+    isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
+    splitDisabled: config.isSplitDisabled ? "true" : "false",
     liquidSplitPct: config.liquidSplitPct.toString(),
   };
-  if (config.hideDescription) {
-    params.hideDescription = "true";
-  }
-  if (config.isSplitDisabled) {
-    params.splitDisabled = "true";
-  }
-
   return (
     window.location.origin +
     appRoutes.donate_widget +

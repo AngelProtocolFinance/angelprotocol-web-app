@@ -2,13 +2,13 @@ import { EndowmentOption } from "./aws";
 
 export type WidgetConfig = {
   endowment: EndowmentOption;
-  hideDescription: boolean;
+  isDescriptionTextShown: boolean;
   isSplitDisabled: boolean;
   liquidSplitPct: number;
 };
 
 export type WidgetURLSearchParams = {
-  hideDescription?: "true" | "false";
+  isDescriptionTextShown?: "true" | "false";
   liquidSplitPct: string;
   splitDisabled?: "true" | "false";
 };
