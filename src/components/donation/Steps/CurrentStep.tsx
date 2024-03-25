@@ -22,7 +22,7 @@ export default function CurrentStep({ config }: Props) {
     return (
       <Splits
         {...state}
-        liquidSplitPct={config?.liquidSplitPct}
+        liquidSplitPct={state.liquidSplitPct ?? config?.liquidSplitPct}
         disabled={config?.isSplitDisabled}
       />
     );
