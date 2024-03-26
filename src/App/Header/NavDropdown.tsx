@@ -9,7 +9,6 @@ import { useGetter, useSetter } from "store/accessors";
 import { Link } from "../types";
 import Menu from "./UserMenu/Menu";
 
-
 type Props = { links: Link[] };
 
 export default function NavDropdown({ links }: Props) {
