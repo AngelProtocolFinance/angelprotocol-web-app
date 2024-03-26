@@ -95,7 +95,11 @@ export type EndowmentOption = Pick<Endowment, "id" | "name">;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
-  "endow_designation" | "fiscal_sponsored" | "receiptMsg" | "program"
+  | "endow_designation"
+  | "fiscal_sponsored"
+  | "receiptMsg"
+  | "program"
+  | "claimed"
 > & {
   endow_designation: EndowDesignation | "";
 };
