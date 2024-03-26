@@ -27,10 +27,10 @@ export default function Form(props: Props) {
 
       <Field<FV>
         name="RegistrationNumber"
-        label="Registration number"
+        label="Registration number (numbers and letters only)"
         required
         classes={{ container: "mb-6 mt-10", label: "font-semibold" }}
-        placeholder="e.g. xx-xxxxxxxxxx"
+        placeholder="e.g. xxxxxxxxxxxx"
       />
 
       <Label className="mb-2 mt-10 font-semibold" required>

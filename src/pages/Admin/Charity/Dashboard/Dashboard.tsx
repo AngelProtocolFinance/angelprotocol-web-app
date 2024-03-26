@@ -1,5 +1,6 @@
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
+import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
 import { PropsWithChildren } from "react";
 import { useEndowBalanceQuery } from "services/apes";
@@ -60,7 +61,7 @@ export default function Dashboard() {
                   <DataPart>
                     Pending payout:
                     <span className="flex items-center gap-1">
-                      {payoutsPending}{" "}
+                      {humanize(payoutsPending, 2)}{" "}
                       <span className="text-2xs sm:text-xs font-normal">
                         USD
                       </span>
@@ -69,7 +70,7 @@ export default function Dashboard() {
                   <DataPart>
                     Total Contributions:
                     <span className="flex items-center gap-1">
-                      {totalContributions}{" "}
+                      {humanize(totalContributions, 2)}{" "}
                       <span className="text-2xs sm:text-xs font-normal">
                         USD
                       </span>
