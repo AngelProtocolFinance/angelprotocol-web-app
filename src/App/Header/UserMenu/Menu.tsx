@@ -13,6 +13,7 @@ type Props = {
 export default function Menu({ user, signOut }: Props) {
   return (
     <>
+      <hr className="my-3 text-navy-l1" />
       <p className="text-sm p-3 bg-blue-l4">
         Welcome, {user.firstName || user.email}!
       </p>
