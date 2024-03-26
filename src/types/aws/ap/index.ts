@@ -65,9 +65,11 @@ export type Endowment = {
   social_media_urls: SocialMediaURLs;
   /** empty string by default */
   street_address: string;
-  tagline: string;
+  /** empty string by default */
+  tagline?: string;
   receiptMsg?: string;
-  url: string;
+
+  url?: string;
 };
 
 export type EndowmentProfile = Endowment;
