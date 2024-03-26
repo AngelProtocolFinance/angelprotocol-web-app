@@ -4,11 +4,19 @@ import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
+import { logout } from "slices/auth";
+import { useGetter, useSetter } from "store/accessors";
+import { SignInRouteState } from "types/routeStates";
+import Menu from "./UserMenu/Menu";
 import { Link } from "../types";
 
 type Props = { links: Link[] };
 
 export default function NavDropdown({ links }: Props) {
+  const state: SignInRouteState = { from: location.pathname };
+  const user = useGetter((state) => state.auth.user);
+  const dispatch = useSetter();
+
   return (
     <Popover className="relative">
       {({ open }) => (
@@ -69,6 +77,11 @@ export default function NavDropdown({ links }: Props) {
                       </NavLink>
                     )
                   )}
+                  {user && (<Menu
+                    user={user}
+                    signOut={() => dispatch(logout())}
+                    classes="mt-2 absolute z-10 w-max right-0"
+                  />)}
                 </nav>
               )}
             </Popover.Panel>

@@ -1,8 +1,7 @@
-import { Popover } from "@headlessui/react";
 import Icon from "components/Icon";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { AuthenticatedUser } from "types/auth";
 import EndowmentLink from "./EndowmentLink";
 
@@ -13,13 +12,10 @@ type Props = {
 };
 export default function Menu({ classes = "", user, signOut }: Props) {
   return (
-    <Popover.Panel
-      className={`${classes} shadow-xl bg-gray-l6 dark:bg-blue-d6 w-max rounded overflow-hidden`}
-    >
+    <>
       <p className="text-sm p-3 bg-blue-l4">
         Welcome, {user.firstName || user.email}!
       </p>
-
       <div className="w-64 min-h-[5rem] p-3">
         <Link
           to={appRoutes.donations}
@@ -28,11 +24,6 @@ export default function Menu({ classes = "", user, signOut }: Props) {
           <Icon type="Money" className="text-lg" />
           <span>My Donations</span>
         </Link>
-        {/*<div className="mt-2 text-sm flex items-center gap-2 text-navy-l2">
-          <Icon type="User" className="text-lg" />
-          <span>My profile (coming soon!)</span>
-        </div>*/}
-
         <div className="hidden [&:has(a)]:grid mt-6 gap-2">
           <h5 className="uppercase text-xs text-navy-l1 -mb-1">
             My Organizations
@@ -41,7 +32,6 @@ export default function Menu({ classes = "", user, signOut }: Props) {
             <EndowmentLink key={endowId} endowId={endowId} />
           ))}
         </div>
-
         <div className="hidden [&:has(a)]:block mt-6">
           <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
           {user.groups.includes(groups["ap-admin"]) && (
@@ -72,6 +62,6 @@ export default function Menu({ classes = "", user, signOut }: Props) {
       >
         Log out
       </button>
-    </Popover.Panel>
+    </>
   );
 }
