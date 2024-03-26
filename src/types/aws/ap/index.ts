@@ -71,8 +71,8 @@ export type Endowment = {
   /** empty string by default */
   tagline?: string;
   receiptMsg?: string;
-
   url?: string;
+  claimed?: boolean;
 };
 
 export type EndowmentProfile = Endowment;
