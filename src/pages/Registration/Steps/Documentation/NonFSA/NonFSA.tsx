@@ -35,10 +35,10 @@ export default function NonFSA(props: Props) {
       <form className="w-full" onSubmit={submit}>
         <Field<FV>
           name="EIN"
-          label="EIN#"
+          label="EIN# (numbers and letters only)"
           required
           classes={{ container: "mb-6 mt-1" }}
-          placeholder="e.g. xx-xxxxxxxxxx"
+          placeholder="e.g. xxxxxxxxxxxx"
         />
 
         <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
