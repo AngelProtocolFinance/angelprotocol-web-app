@@ -46,16 +46,18 @@ export default function Body() {
               </span>
             )}
 
-            <span className="flex items-center gap-2">
-              <Icon type="Globe" className="h-6 w-6 text-blue-d1" />
-              <ExtLink
-                href={p.url}
-                title="organization website"
-                className="cursor-pointer underline decoration-1 hover:text-blue-d1 hover:decoration-2"
-              >
-                {p.url.replace(/^https?:\/\//i, "")}
-              </ExtLink>
-            </span>
+            {p.url && (
+              <span className="flex items-center gap-2">
+                <Icon type="Globe" className="h-6 w-6 text-blue-d1" />
+                <ExtLink
+                  href={p.url}
+                  title="organization website"
+                  className="cursor-pointer underline decoration-1 hover:text-blue-d1 hover:decoration-2"
+                >
+                  {p.url.replace(/^https?:\/\//i, "")}
+                </ExtLink>
+              </span>
+            )}
           </div>
         </div>
 
