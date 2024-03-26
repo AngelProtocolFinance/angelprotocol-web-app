@@ -28,7 +28,6 @@ export default function useCards() {
       query: searchText,
       sort: sort ? `${sort.key}+${sort.direction}` : undefined,
       page: 1, // always starts at page 1
-      published: "true",
       sdgs: sdgs.join(","),
       ..._params,
     });

@@ -75,8 +75,12 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/${v(5)}/endowments/${apiEnv}`,
-          params: { ...params, return: endowCardFields },
+          url: "v6/endowments",
+          params: {
+            ...params,
+            return: endowCardFields,
+            env: apiEnv,
+          },
         };
       },
     }),
