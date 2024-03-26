@@ -49,12 +49,15 @@ export type Endowment = {
   endow_designation: EndowDesignation;
   fiscal_sponsored: boolean;
   hq_country: string;
+  /** empty string by default */
   image: string;
   kyc_donors_only: boolean;
   /** optional as older endowments don't have it set */
   hide_bg_tip?: boolean;
+  /** empty string by default */
   logo: string;
   name: string;
+  /** empty string by default */
   card_img?: string;
   /** empty string by default */
   overview: string;
