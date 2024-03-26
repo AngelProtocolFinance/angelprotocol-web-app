@@ -75,7 +75,7 @@ export default function NavDropdown({ links }: Props) {
                       </NavLink>
                     )
                   )}
-                  {(user && user != "loading") && (
+                  {(user && user !== "loading") && (
                     <Menu
                       user={user}
                       signOut={() => dispatch(logout())}
