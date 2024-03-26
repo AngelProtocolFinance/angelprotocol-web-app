@@ -36,15 +36,8 @@ export default function UserMenu() {
     return <LoaderRing thickness={10} classes="w-6" />;
   }
   return (
-    <Link
-      to={appRoutes.donations}
-      className="cursor-pointer contents"
-    >
-      <Icon
-        size={24}
-        type="User"
-        className="text-blue disabled:text-navy-l2"
-      />
+    <Link to={appRoutes.donations} className="cursor-pointer contents">
+      <Icon size={24} type="User" className="text-blue disabled:text-navy-l2"/>
     </Link>
   );
 }

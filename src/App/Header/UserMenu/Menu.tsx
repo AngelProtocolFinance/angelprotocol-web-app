@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthenticatedUser } from "types/auth";
 import EndowmentLink from "./EndowmentLink";
 
@@ -10,7 +10,7 @@ type Props = {
   signOut(): void;
   user: AuthenticatedUser;
 };
-export default function Menu({ classes = "", user, signOut }: Props) {
+export default function Menu({ user, signOut }: Props) {
   return (
     <>
       <p className="text-sm p-3 bg-blue-l4">
