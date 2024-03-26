@@ -89,6 +89,7 @@ export type EndowmentCard = Pick<
   | "name"
   | "sdgs"
   | "tagline"
+  | "claimed"
 >;
 export type EndowmentOption = Pick<Endowment, "id" | "name">;
 

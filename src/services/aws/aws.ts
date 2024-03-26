@@ -231,6 +231,7 @@ const endowCardObj: {
   kyc_donors_only: "",
   name: "",
   tagline: "",
+  claimed: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 
