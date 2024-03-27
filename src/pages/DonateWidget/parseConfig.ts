@@ -3,8 +3,8 @@ import { DonaterConfigFromWidget, WidgetURLSearchParams } from "types/widget";
 import { number, object, string } from "yup";
 
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
-  splitDisabled: string().oneOf(["true", "false"]),
-  isDescriptionTextShown: string().oneOf(["true", "false"]),
+  splitDisabled: string().required().oneOf(["true", "false"]),
+  isDescriptionTextShown: string().required().oneOf(["true", "false"]),
   liquidSplitPct: number().required().min(0).max(100),
 });
 
