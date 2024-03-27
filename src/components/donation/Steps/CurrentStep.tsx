@@ -6,11 +6,14 @@ import Submit from "./Submit";
 import Summary from "./Summary";
 import Tip from "./Tip";
 import { Config } from "./types";
+import useDetermineLiquidSplitPct from "./useDetermineLiquidSplitPct";
 
 type Props = { config: Config | null };
 
 export default function CurrentStep({ config }: Props) {
   const state = useGetter((state) => state.donation);
+
+  const liquidSplitPct = useDetermineLiquidSplitPct(config, state);
 
   if (state.step === "init") return <></>; // <Steps /> sets to step 1 onMount
 
@@ -22,7 +25,7 @@ export default function CurrentStep({ config }: Props) {
     return (
       <Splits
         {...state}
-        liquidSplitPct={state.liquidSplitPct ?? config?.liquidSplitPct}
+        liquidSplitPct={liquidSplitPct}
         disabled={config?.splitDisabled}
       />
     );
