@@ -1,4 +1,4 @@
-import { Except, OverrideProperties, SetNonNullable } from "type-fest";
+import { Except, SetNonNullable } from "type-fest";
 import { UNSDG_NUMS } from "types/lists";
 import { EndowDesignation } from ".";
 import { FileObject } from "../common";

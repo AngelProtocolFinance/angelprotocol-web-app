@@ -46,7 +46,7 @@ export default function Form() {
       </Label>
       <MultiSelector<FV, "UN_SDG", number> name="UN_SDG" options={sdgOptions} />
       <Label className="mb-2 mt-6" required>
-        nonprofit Designation
+        Nonprofit Designation
       </Label>
       <Selector<FV, "EndowDesignation", string>
         name="EndowDesignation"
