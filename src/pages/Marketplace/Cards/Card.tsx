@@ -22,6 +22,7 @@ export default function Card({
   tagline,
   hq_country,
   kyc_donors_only,
+  claimed = true,
 }: EndowmentCard) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l4 hover:border-blue dark:hover:border-blue">
@@ -43,7 +44,13 @@ export default function Card({
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
           {/* nonprofit NAME */}
-          <h3 className="text-ellipsis line-clamp-2">{name}</h3>
+          <h3 className="text-ellipsis line-clamp-2">
+            {claimed && (
+              <VerifiedIcon className="inline relative bottom-px mr-1" />
+            )}
+            <span className="inline">{name}</span>
+          </h3>
+
           {/* TAGLINE */}
           {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
             <p className="peer text-navy-l1 dark:text-navy-l2 text-sm -mt-2">
@@ -101,9 +108,21 @@ function KYCIcon({ className = "" }) {
       <div ref={ref} className={className}>
         <Icon
           type="AdminPanel"
-          size={20}
+          size={18}
           className="text-white hover:text-blue-d1 cursor-pointer"
         />
+      </div>
+    </>
+  );
+}
+
+function VerifiedIcon({ className = "" }) {
+  const ref = useRef<HTMLDivElement>(null);
+  return (
+    <>
+      <Tooltip anchorRef={ref} content="Verified" />
+      <div ref={ref} className={className}>
+        <Icon type="Verified" size={20} className="text-blue inline" />
       </div>
     </>
   );
