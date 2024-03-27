@@ -2,6 +2,7 @@ import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
+import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
 import { Route, Routes } from "react-router-dom";
 import { useProfileContext } from "../ProfileContext";
@@ -32,7 +33,13 @@ export default function Body() {
           <div className="flex flex-col items-center lg:items-start w-full gap-2 text-center lg:text-left">
             <div className="flex max-sm:flex-col items-center gap-3">
               <h3 className="font-header text-3xl w-full max-w-2xl break-words">
-                {p.name}
+                {p.claimed ?? (
+                  <VerifiedIcon
+                    classes="relative inline bottom-px mr-2"
+                    size={24}
+                  />
+                )}
+                <span>{p.name}</span>
               </h3>
               <BookmarkBtn endowId={p.id} />
             </div>

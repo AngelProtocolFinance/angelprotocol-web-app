@@ -1,6 +1,7 @@
 import Icon from "components/Icon";
 import Image from "components/Image";
 import Tooltip from "components/Tooltip";
+import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { isEmpty } from "helpers";
@@ -46,7 +47,10 @@ export default function Card({
           {/* nonprofit NAME */}
           <h3 className="text-ellipsis line-clamp-2">
             {claimed && (
-              <VerifiedIcon className="inline relative bottom-px mr-1" />
+              <VerifiedIcon
+                classes="inline relative bottom-px mr-1"
+                size={18}
+              />
             )}
             <span className="inline">{name}</span>
           </h3>
@@ -111,18 +115,6 @@ function KYCIcon({ className = "" }) {
           size={18}
           className="text-white hover:text-blue-d1 cursor-pointer"
         />
-      </div>
-    </>
-  );
-}
-
-function VerifiedIcon({ className = "" }) {
-  const ref = useRef<HTMLDivElement>(null);
-  return (
-    <>
-      <Tooltip anchorRef={ref} content="Verified" />
-      <div ref={ref} className={className}>
-        <Icon type="Verified" size={20} className="text-blue inline" />
       </div>
     </>
   );
