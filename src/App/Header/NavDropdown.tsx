@@ -51,7 +51,7 @@ export default function NavDropdown({ links }: Props) {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Panel className="absolute right-0 z-10 mt-3 sm:w-screen max-w-[300px] shadow-[0px_8px_20px] shadow-gray-d1 rounded-lg bg-gray-l6 dark:bg-blue-d6 transform">
+            <Popover.Panel className="absolute right-0 z-10 mt-3 sm:w-screen max-w-80 shadow-[0px_8px_20px] shadow-gray-d1 rounded-lg bg-gray-l6 dark:bg-blue-d6 transform">
               {({ close }) => (
                 <nav className="overflow-hidden grid gap-y-2 w-full p-6">
                   {links.map((link) =>
