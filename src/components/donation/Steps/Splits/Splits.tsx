@@ -4,23 +4,31 @@ import { SplitsStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
+import { Config } from "../types";
 import { LockedSplitSlider } from "./LockedSplitSlider";
 
-type Props = SplitsStep & { disabled?: boolean };
+type Props = SplitsStep & {
+  widgetConfig: Config | null;
+};
 
 export default function Split({
   details,
-  disabled,
-  liquidSplitPct: persistedLiqSplit = 50,
+
+  liquidSplitPct: donationLiquidSplit,
+  widgetConfig,
 }: Props) {
   const dispatch = useSetter();
 
-  const [lockedSplitPct, setLockedSplitPct] = useState(100 - persistedLiqSplit);
+  const initLiqSplit =
+    donationLiquidSplit || widgetConfig?.liquidSplitPct || 50;
+  const [lockedSplitPct, setLockedSplitPct] = useState(100 - initLiqSplit);
 
   // update lockedSplitPct whenever a new default liquid % value is passed from parent
   useEffect(() => {
-    setLockedSplitPct(100 - persistedLiqSplit);
-  }, [persistedLiqSplit]);
+    if (!widgetConfig) return;
+    if (!widgetConfig.isPreview) return;
+    setLockedSplitPct(100 - widgetConfig.liquidSplitPct);
+  }, [widgetConfig]);
 
   const liqSplitPct = 100 - lockedSplitPct;
 
@@ -54,7 +62,7 @@ export default function Split({
       </p>
 
       <LockedSplitSlider
-        disabled={disabled}
+        disabled={widgetConfig?.splitDisabled}
         value={lockedSplitPct}
         onChange={setLockedSplitPct}
       />
