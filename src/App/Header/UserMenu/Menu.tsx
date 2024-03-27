@@ -1,4 +1,5 @@
 import Icon from "components/Icon";
+import { Separator } from "components/Separator";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
@@ -13,7 +14,7 @@ type Props = {
 export default function Menu({ user, signOut }: Props) {
   return (
     <>
-      <hr className="my-3 text-navy-l1" />
+      <Separator classes="my-3 text-navy-l1" />
       <p className="text-sm p-3 bg-blue-l4">
         Welcome, {user.firstName || user.email}!
       </p>
