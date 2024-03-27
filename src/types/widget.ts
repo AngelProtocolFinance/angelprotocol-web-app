@@ -8,9 +8,9 @@ export type WidgetConfig = {
 };
 
 export type WidgetURLSearchParams = {
-  isDescriptionTextShown?: "true" | "false";
+  isDescriptionTextShown: "true" | "false";
   liquidSplitPct: string;
-  splitDisabled?: "true" | "false";
+  splitDisabled: "true" | "false";
 };
 
 export type DonaterConfigFromWidget = Omit<WidgetConfig, "endowment"> & {
