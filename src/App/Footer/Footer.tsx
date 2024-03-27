@@ -1,3 +1,4 @@
+import { Separator } from "components/Separator";
 import { APP_NAME } from "constants/env";
 import { memo } from "react";
 import { LinkGroup, SocialMediaLink } from "../types";
@@ -30,7 +31,7 @@ function Footer({ linkGroups, socials }: Props) {
         <Newsletter />
       </section>
 
-      <Separator />
+      <Separator classes="w-[97vw]" />
 
       <section className="padded-container flex flex-col items-center gap-2 w-full pt-6 pb-12">
         <Socials links={socials} />
@@ -43,5 +44,3 @@ function Footer({ linkGroups, socials }: Props) {
 }
 
 export default memo(Footer);
-
-const Separator = () => <div className="w-[97vw] h-px bg-gray-l3" />;

@@ -1,14 +1,21 @@
 import { Popover, Transition } from "@headlessui/react";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
+import LoaderRing from "components/LoaderRing";
 import { createNavLinkStyler } from "helpers";
 import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
+import { logout } from "slices/auth";
+import { useGetter, useSetter } from "store/accessors";
 import { Link } from "../types";
+import Menu from "./UserMenu/Menu";
 
 type Props = { links: Link[] };
 
 export default function NavDropdown({ links }: Props) {
+  const user = useGetter((state) => state.auth.user);
+  const dispatch = useSetter();
+
   return (
     <Popover className="relative">
       {({ open }) => (
@@ -45,7 +52,7 @@ export default function NavDropdown({ links }: Props) {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Panel className="absolute right-0 z-10 mt-3 w-screen max-w-56 shadow-[0px_8px_20px] shadow-gray-d1 rounded-lg bg-gray-l6 dark:bg-blue-d6 transform">
+            <Popover.Panel className="absolute right-0 z-10 mt-3 sm:w-screen max-w-80 shadow-[0px_8px_20px] shadow-gray-d1 rounded-lg bg-gray-l6 dark:bg-blue-d6 transform">
               {({ close }) => (
                 <nav className="overflow-hidden grid gap-y-2 w-full p-6">
                   {links.map((link) =>
@@ -68,6 +75,16 @@ export default function NavDropdown({ links }: Props) {
                         {link.title}
                       </NavLink>
                     )
+                  )}
+                  {user && user !== "loading" && (
+                    <Menu
+                      user={user}
+                      signOut={() => dispatch(logout())}
+                      classes="mt-2 absolute z-10 w-max right-0"
+                    />
+                  )}
+                  {user && user === "loading" && (
+                    <LoaderRing thickness={10} classes="w-6" />
                   )}
                 </nav>
               )}
