@@ -50,15 +50,15 @@ export default function Split({
 
       {/** percentages */}
       <div className="flex justify-between mt-6 mb-3">
-        <div className="grid gap-1 grid-cols-[auto_1fr] items-center">
-          <Image src={leaf} className="mr-1" />
-          <p className="text-xl">{lockedSplitPct}%</p>
-          <p className="uppercase text-xs col-span-full">Sustainable fund</p>
-        </div>
         <div className="grid gap-1 grid-cols-[1fr_auto] items-center">
           <p className="text-xl text-right">{liqSplitPct}%</p>
           <Image src={sendMoney} className="ml-1" />
           <p className="uppercase text-xs col-span-full">Instantly Available</p>
+        </div>
+        <div className="grid gap-1 grid-cols-[auto_1fr] items-center">
+          <Image src={leaf} className="mr-1" />
+          <p className="text-xl">{lockedSplitPct}%</p>
+          <p className="uppercase text-xs col-span-full">Sustainable fund</p>
         </div>
       </div>
 
@@ -81,21 +81,21 @@ export default function Split({
       {/** amount breakdown */}
       <div className="flex justify-between mt-1">
         <dl>
-          <dt className="text-navy-l1 text-xs">Compounded Forever</dt>
-          <dd>
-            <span className="text-xs font-medium mr-1">
-              {symbol.toUpperCase()}
-            </span>
-            <span>{humanize(locked, DECIMALS)}</span>
-          </dd>
-        </dl>
-        <dl>
           <dt className="text-navy-l1 text-xs">Instantly Available</dt>
           <dd className="text-right">
             <span className="text-xs font-medium mr-1">
               {symbol.toUpperCase()}
             </span>
             <span>{humanize(liq, DECIMALS)}</span>
+          </dd>
+        </dl>
+        <dl>
+          <dt className="text-navy-l1 text-xs">Compounded Forever</dt>
+          <dd>
+            <span className="text-xs font-medium mr-1">
+              {symbol.toUpperCase()}
+            </span>
+            <span>{humanize(locked, DECIMALS)}</span>
           </dd>
         </dl>
       </div>
