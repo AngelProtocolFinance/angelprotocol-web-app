@@ -50,12 +50,12 @@ export default function Split({
 
       {/** percentages */}
       <div className="flex justify-between mt-6 mb-3">
-        <div className="grid gap-1 grid-cols-[1fr_auto] items-center">
+        <div className="grid gap-1 grid-cols-[auto_1fr] items-center">
           <p className="text-xl text-right">{liqSplitPct}%</p>
           <Image src={sendMoney} className="ml-1" />
           <p className="uppercase text-xs col-span-full">Instantly Available</p>
         </div>
-        <div className="grid gap-1 grid-cols-[auto_1fr] items-center">
+        <div className="grid gap-1 grid-cols-[1fr_auto] items-center">
           <Image src={leaf} className="mr-1" />
           <p className="text-xl">{lockedSplitPct}%</p>
           <p className="uppercase text-xs col-span-full">Sustainable fund</p>
