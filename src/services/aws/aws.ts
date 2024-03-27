@@ -78,7 +78,7 @@ export const aws = createApi({
           url: "v6/endowments",
           params: {
             ...params,
-            return: endowCardFields,
+            fields: endowCardFields,
             env: apiEnv,
           },
         };
@@ -89,7 +89,7 @@ export const aws = createApi({
       query: (params) => {
         return {
           url: "v6/endowments",
-          params: { ...params, return: endowSelectorOptionFields, env: apiEnv },
+          params: { ...params, fields: endowSelectorOptionFields, env: apiEnv },
         };
       },
       transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
