@@ -12,7 +12,8 @@ export default function Summary({
   donor,
   tip,
   recipient,
-}: SummaryStep) {
+  isPreview = false,
+}: SummaryStep & { isPreview?: boolean }) {
   const dispatch = useSetter();
   const user = useGetter((state) => state.auth.user);
 
@@ -34,7 +35,7 @@ export default function Summary({
   return (
     <SummaryContainer
       frequency={details.method === "stripe" ? details.frequency : "once"}
-      classes="grid content-start p-4 @md:p-8"
+      classes="grid content-start p-4 @md/steps:p-8"
       Amount={Amount}
       amount={amount}
       splitLiq={liquidSplitPct}
@@ -63,7 +64,7 @@ export default function Summary({
               }
             : undefined)
         }
-        onSubmit={(donor) => dispatch(setDonor(donor))}
+        onSubmit={(donor) => !isPreview && dispatch(setDonor(donor))}
         classes="mt-6"
       />
     </SummaryContainer>

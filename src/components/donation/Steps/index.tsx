@@ -1,15 +1,15 @@
-import { DonaterConfigFromWidget } from "types/widget";
 import CurrentStep from "./CurrentStep";
+import { Config } from "./types";
 
 type Props = {
   className?: string;
-  donaterConfig: DonaterConfigFromWidget | null;
+  donaterConfig: Config | null;
 };
 
 export function Steps({ className = "", donaterConfig }: Props) {
   return (
     <div
-      className={`grid ${className} w-full @container overflow-clip bg-white min-h-96`}
+      className={`grid ${className} w-full @container/steps overflow-clip bg-white min-h-96`}
     >
       <CurrentStep config={donaterConfig} />
     </div>

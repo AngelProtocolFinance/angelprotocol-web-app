@@ -10,6 +10,7 @@ type Props<T> = {
     error?: string | ReactElement;
     empty?: T extends any[] ? string | ReactElement : never;
   };
+  dataRequired?: boolean;
   classes?: { container?: string };
   filterFn?: T extends (infer Item)[]
     ? (item: Item, idx: number) => boolean
@@ -21,6 +22,7 @@ export default function QueryLoader<T>({
   queryState,
   classes = {},
   messages = {},
+  dataRequired = true,
   children,
   filterFn,
 }: Props<T>) {
@@ -34,7 +36,7 @@ export default function QueryLoader<T>({
       container
     );
   }
-  if (isError || !data) {
+  if (isError || (dataRequired && !data)) {
     if (isError) logger.error(error);
     return renderMessage(
       (msg) => <ErrorStatus>{msg || "Failed to get data"}</ErrorStatus>,

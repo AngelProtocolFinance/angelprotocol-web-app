@@ -6,9 +6,9 @@ import { FormValues as FV } from "./types";
 type Freq = FV["frequency"];
 
 const styles = {
-  icon: "hidden @[21rem]:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
+  icon: "hidden @[21rem]/frequency:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
   option:
-    "group border-gray-l3 rounded-lg px-2 @[21rem]:px-6 border h-[2.625rem] flex items-center justify-center @[21rem]:justify-start aria-checked:bg-blue-d1 aria-checked:text-white aria-checked:border-none select-none",
+    "group border-gray-l3 rounded-lg px-2 @[21rem]/frequency:px-6 border h-[2.625rem] flex items-center justify-center @[21rem]/frequency:justify-start aria-checked:bg-blue-d1 aria-checked:text-white aria-checked:border-none select-none",
 };
 
 export default function Frequency() {
@@ -23,11 +23,11 @@ export default function Frequency() {
   });
 
   return (
-    <RG value={value} onChange={onChange} className="@container">
+    <RG value={value} onChange={onChange} className="@container/frequency">
       <RG.Label className="mb-2 block font-semibold font-heading">
         Frequency <span className="text-red">*</span>
       </RG.Label>
-      <div className="grid grid-cols-2 gap-2 @[21rem]:flex">
+      <div className="grid grid-cols-2 gap-2 @[21rem]/frequency:flex">
         <RG.Option value={"monthly" satisfies Freq} className={styles.option}>
           <span>Give Monthly</span>
           <Icon type="Check" className={styles.icon} />

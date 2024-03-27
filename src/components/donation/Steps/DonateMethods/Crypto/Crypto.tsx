@@ -4,14 +4,14 @@ import { IS_TEST } from "constants/env";
 import { FormProvider, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
 import { CryptoFormStep } from "slices/donation";
-import { DonaterConfigFromWidget } from "types/widget";
 import { object } from "yup";
+import { Config } from "../../types";
 import Form from "./Form";
 import { initToken } from "./constants";
 import { DonateValues } from "./types";
 
 type Props = CryptoFormStep & {
-  config: DonaterConfigFromWidget | null;
+  config: Config | null;
 };
 
 export default function Crypto({ config, ...state }: Props) {

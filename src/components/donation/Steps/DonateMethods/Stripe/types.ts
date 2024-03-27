@@ -1,8 +1,8 @@
 import { StripeDonationDetails, StripeFormStep } from "slices/donation";
-import { DonaterConfigFromWidget } from "types/widget";
+import { Config } from "../../types";
 
 export type Props = {
-  widgetConfig: DonaterConfigFromWidget | null;
+  widgetConfig: Config | null;
 } & StripeFormStep;
 
 export type FormValues = Omit<StripeDonationDetails, "method" | "frequency"> & {

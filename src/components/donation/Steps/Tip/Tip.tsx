@@ -92,7 +92,7 @@ export default function Tip({
           })
         )
       )}
-      className="grid content-start p-4 @md:p-8"
+      className="grid content-start p-4 @md/steps:p-8"
     >
       <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
       <h4 className="mt-4 text-lg">

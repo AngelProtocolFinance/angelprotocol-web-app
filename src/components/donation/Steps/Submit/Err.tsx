@@ -15,7 +15,7 @@ export default function Err({ error }: Props) {
   }, [error]);
 
   return (
-    <div className="grid place-items-center content-center gap-6 p-4 @md:p-8">
+    <div className="grid place-items-center content-center gap-6 p-4 @md/steps:p-8">
       <Icon type="ExclamationCircleFill" size={60} className="text-red" />
       <p className="text-center">{GENERIC_ERROR_MESSAGE}</p>
     </div>

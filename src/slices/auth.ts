@@ -62,7 +62,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
 );
 
 const auth = createSlice({
-  name: "widget",
+  name: "auth",
   initialState,
   reducers: {
     reset: (state) => {

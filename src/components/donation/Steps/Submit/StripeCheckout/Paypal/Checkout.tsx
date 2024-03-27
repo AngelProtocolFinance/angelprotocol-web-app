@@ -67,7 +67,7 @@ export default function Checkout({ orderId, source }: Props) {
                 //accessed by redirect page
                 if (source === "bg-widget") {
                   navigate(
-                    `${appRoutes.donate_widget}${donateWidgetRoutes.donate_fiat_thanks}`,
+                    `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`,
                     { state: order.guestDonor }
                   );
                 } else {

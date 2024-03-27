@@ -3,9 +3,7 @@ import { DonaterConfigFromWidget, WidgetURLSearchParams } from "types/widget";
 import { number, object, string } from "yup";
 
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
-  advancedOptionsDisplay: string()
-    .required()
-    .oneOf(["hidden", "collapsed", "expanded"]),
+  splitDisabled: string().required().oneOf(["true", "false"]),
   isDescriptionTextShown: string().required().oneOf(["true", "false"]),
   liquidSplitPct: number().required().min(0).max(100),
 });
@@ -29,10 +27,8 @@ export default function parseConfig(
 
     return {
       config: {
-        isFallback: false,
         isDescriptionTextShown: parsedConfig.isDescriptionTextShown === "true",
-        advancedOptionsDisplay:
-          parsedConfig.advancedOptionsDisplay as DonaterConfigFromWidget["advancedOptionsDisplay"],
+        splitDisabled: parsedConfig.splitDisabled === "true",
         liquidSplitPct: +parsedConfig.liquidSplitPct,
       },
     };
