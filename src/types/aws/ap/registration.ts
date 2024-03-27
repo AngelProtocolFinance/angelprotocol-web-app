@@ -1,4 +1,4 @@
-import { Except } from "type-fest";
+import { Except, OverrideProperties, SetNonNullable } from "type-fest";
 import { UNSDG_NUMS } from "types/lists";
 import { EndowDesignation } from ".";
 import { FileObject } from "../common";
@@ -91,7 +91,7 @@ export type OrgDetails = {
 };
 
 export type FSAInquiry = {
-  AuthorizedToReceiveTaxDeductibleDonations: boolean;
+  AuthorizedToReceiveTaxDeductibleDonations: boolean | null;
 };
 
 export type FSASignerDocumentation = {
@@ -119,7 +119,7 @@ export type FSADocumentation = Except<
 };
 
 export type TDocumentation = {
-  Documentation: FSADocumentation | NonFSADocumentation;
+  Documentation: FSADocumentation | NonFSADocumentation | null;
 };
 
 export type BankingDetails = {
@@ -205,7 +205,15 @@ type WiseRecipient = {
   bankName: string;
 };
 
-export type ApplicationDetails = InReview & { WiseRecipient?: WiseRecipient };
+export type ApplicationDetails = OverrideProperties<
+  InReview,
+  {
+    Registration: SetNonNullable<
+      InReview["Registration"],
+      "Documentation" | "AuthorizedToReceiveTaxDeductibleDonations"
+    >;
+  }
+> & { WiseRecipient?: WiseRecipient };
 
 //could be futher simplified to just {verdict: "approved" | string}
 export type ApplicationVerdict = { PK: string } & (
@@ -234,12 +242,24 @@ export function isDoneFSAInquiry(
   );
 }
 
-export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
-  return !!(data.Registration as TDocumentation).Documentation;
+export function isDoneDocs(data: SavedRegistration): data is OverrideProperties<
+  DoneDocs,
+  {
+    Registration: SetNonNullable<
+      DoneDocs["Registration"],
+      "AuthorizedToReceiveTaxDeductibleDonations" | "Documentation"
+    >;
+  }
+> {
+  const { Registration: reg } = data as DoneDocs;
+  return (
+    !!reg.Documentation && reg.AuthorizedToReceiveTaxDeductibleDonations != null
+  );
 }
 
 export function isDoneBanking(data: SavedRegistration): data is DoneBanking {
-  return !!(data.Registration as BankingDetails).BankStatementFile;
+  const { Registration: reg } = data as DoneBanking;
+  return !!reg.BankStatementFile && !!reg.Documentation;
 }
 
 export function isSubmitted(data: SavedRegistration): data is InReview {

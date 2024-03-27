@@ -159,8 +159,29 @@ function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
   };
 }
 
-function docs(reg: DoneDocs["Registration"]): TDocumentation["Documentation"] {
+const US = "United States";
+type Docs = NonNullable<TDocumentation["Documentation"]>;
+function docs(reg: DoneDocs["Registration"]): Docs {
+  const fallback: Docs =
+    reg.AuthorizedToReceiveTaxDeductibleDonations ?? reg.HqCountry === US
+      ? {
+          DocType: "Non-FSA",
+          EIN: "",
+        }
+      : {
+          DocType: "FSA",
+          ProofOfIdentity: { name: "", publicUrl: "" },
+          RegistrationNumber: "",
+          ProofOfRegistration: { name: "", publicUrl: "" },
+          LegalEntityType: "",
+          ProjectDescription: "",
+          FiscalSponsorshipAgreementSigningURL: "",
+          SignedFiscalSponsorshipAgreement: "",
+        };
+
   const doc = reg.Documentation;
+  if (!doc) return fallback;
+
   if (doc.DocType === "Non-FSA") {
     return { EIN: doc.EIN, DocType: doc.DocType };
   }
@@ -187,6 +208,6 @@ function bankDetails(reg: DoneBanking["Registration"]): BankingDetails {
 function fsaInquiry(reg: DoneFSAInquiry["Registration"]): FSAInquiry {
   return {
     AuthorizedToReceiveTaxDeductibleDonations:
-      reg.AuthorizedToReceiveTaxDeductibleDonations,
+      reg.AuthorizedToReceiveTaxDeductibleDonations ?? reg.HqCountry === US,
   };
 }
