@@ -13,14 +13,17 @@ type Props = SplitsStep & {
 
 export default function Split({
   details,
-
-  liquidSplitPct: donationLiquidSplit,
+  liquidSplitPct: donationLiquidSplit = 50,
   widgetConfig,
 }: Props) {
   const dispatch = useSetter();
 
-  const initLiqSplit =
-    donationLiquidSplit || widgetConfig?.liquidSplitPct || 50;
+  const initLiqSplit = (() => {
+    if (!widgetConfig) return donationLiquidSplit;
+    if (widgetConfig.isPreview) return widgetConfig.liquidSplitPct;
+    return donationLiquidSplit || widgetConfig.liquidSplitPct;
+  })();
+
   const [lockedSplitPct, setLockedSplitPct] = useState(100 - initLiqSplit);
 
   // update lockedSplitPct whenever a new default liquid % value is passed from parent
