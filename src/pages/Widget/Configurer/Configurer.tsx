@@ -27,7 +27,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
         name: "", // must set name to "" so that no value is displayed by default in the EndowmentSelector input
       },
       isDescriptionTextShown: widgetInitValues.isDescriptionTextShown,
-      isSplitDisabled: widgetInitValues.isSplitDisabled,
+      splitDisabled: widgetInitValues.splitDisabled,
       liquidPercentage: widgetInitValues.liquidSplitPct,
     },
   });
@@ -36,7 +36,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
     const newConfig: WidgetConfig = {
       endowment: fv.endowment,
       isDescriptionTextShown: fv.isDescriptionTextShown,
-      isSplitDisabled: fv.isSplitDisabled,
+      splitDisabled: fv.splitDisabled,
       liquidSplitPct: fv.liquidPercentage,
     };
     dispatch(update(newConfig));
@@ -80,7 +80,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
           onChange={(lockedPct) => onChange(100 - lockedPct)}
         />
 
-        <CheckField<FormValues> name="isSplitDisabled" classes="mt-4">
+        <CheckField<FormValues> name="splitDisabled" classes="mt-4">
           Disable changing the split value
         </CheckField>
 

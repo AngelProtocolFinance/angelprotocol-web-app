@@ -26,7 +26,7 @@ export default function Preview({ classes = "" }) {
             className="my-5 @md/preview:w-3/4 border border-gray-l4"
             donaterConfig={{
               isPreview: true,
-              isSplitDisabled: config.isSplitDisabled,
+              splitDisabled: config.splitDisabled,
               liquidSplitPct: config.liquidSplitPct,
             }}
           />
