@@ -9,7 +9,7 @@ import { useGetter, useSetter } from "store/accessors";
 
 export default function useCards() {
   const dispatch = useSetter();
-  const { sort, searchText, sdgGroups, ...params } = useGetter(
+  const { sort, searchText, sdgGroups, verified, ...params } = useGetter(
     (state) => state.component.marketFilter
   );
 
@@ -29,6 +29,7 @@ export default function useCards() {
       sort: sort ? `${sort.key}+${sort.direction}` : undefined,
       page: 1, // always starts at page 1
       sdgs: sdgs.join(","),
+      claimed: verified.join(","),
       ..._params,
     });
 

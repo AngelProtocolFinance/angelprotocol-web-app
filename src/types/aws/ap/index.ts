@@ -127,6 +127,8 @@ export type EndowmentsQueryParams = {
   sdgs?: string; // comma separated sdg values.
   kyc_only?: string; // comma separated boolean values
   countries?: string; //comma separated country names
+  /** boolean csv */
+  claimed?: string;
 };
 
 export interface LeaderboardEntry {
