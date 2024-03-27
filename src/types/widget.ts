@@ -3,7 +3,7 @@ import { EndowmentOption } from "./aws";
 export type WidgetConfig = {
   endowment: EndowmentOption;
   isDescriptionTextShown: boolean;
-  isSplitDisabled: boolean;
+  splitDisabled: boolean;
   liquidSplitPct: number;
 };
 

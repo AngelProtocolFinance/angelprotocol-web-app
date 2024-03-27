@@ -28,7 +28,7 @@ export default function parseConfig(
     return {
       config: {
         isDescriptionTextShown: parsedConfig.isDescriptionTextShown === "true",
-        isSplitDisabled: parsedConfig.splitDisabled === "true",
+        splitDisabled: parsedConfig.splitDisabled === "true",
         liquidSplitPct: +parsedConfig.liquidSplitPct,
       },
     };
