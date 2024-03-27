@@ -1,6 +1,7 @@
 import { Popover, Transition } from "@headlessui/react";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
+import LoaderRing from "components/LoaderRing";
 import { createNavLinkStyler } from "helpers";
 import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
@@ -81,6 +82,9 @@ export default function NavDropdown({ links }: Props) {
                       signOut={() => dispatch(logout())}
                       classes="mt-2 absolute z-10 w-max right-0"
                     />
+                  )}
+                  {user && user === "loading" && (
+                    <LoaderRing thickness={10} classes="w-6" />
                   )}
                 </nav>
               )}
