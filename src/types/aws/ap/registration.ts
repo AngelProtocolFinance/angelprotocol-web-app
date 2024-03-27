@@ -150,7 +150,7 @@ export type SavedRegistration =
   | DoneBanking
   | InReview;
 
-export type WithDocs<T extends DoneBanking | DidDocs | InReview> = Omit<
+type WithDocs<T extends DoneBanking | DidDocs | InReview> = Omit<
   T,
   "Registration"
 > & { Registration: SetNonNullable<T["Registration"]> };
