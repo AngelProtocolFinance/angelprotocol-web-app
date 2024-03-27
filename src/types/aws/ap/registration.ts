@@ -150,7 +150,7 @@ export type SavedRegistration =
   | DoneBanking
   | InReview;
 
-export type DoneDocs<T extends DoneBanking | DidDocs | InReview> = Omit<
+export type WithDocs<T extends DoneBanking | DidDocs | InReview> = Omit<
   T,
   "Registration"
 > & { Registration: SetNonNullable<T["Registration"]> };
@@ -210,7 +210,7 @@ type WiseRecipient = {
   bankName: string;
 };
 
-export type ApplicationDetails = DoneDocs<InReview> & {
+export type ApplicationDetails = WithDocs<InReview> & {
   WiseRecipient?: WiseRecipient;
 };
 
@@ -238,7 +238,7 @@ export function isDoneFSAInquiry(
   return reg.AuthorizedToReceiveTaxDeductibleDonations != null;
 }
 
-export function isDoneDocs(data: SavedRegistration): data is DoneDocs<DidDocs> {
+export function isWithDocs(data: SavedRegistration): data is WithDocs<DidDocs> {
   const { Registration: reg } = data as DidDocs;
   return (
     !!reg.Documentation && reg.AuthorizedToReceiveTaxDeductibleDonations != null
