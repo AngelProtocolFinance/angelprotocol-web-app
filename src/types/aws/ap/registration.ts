@@ -133,9 +133,9 @@ export type DoneContact = Append<
   ContactDetails
 >;
 export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
-export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
-export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
-export type DoneBanking = Append<DoneDocs, BankingDetails, {}>;
+export type DidFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
+export type DidDocs = Append<DidFSAInquiry, TDocumentation, {}>;
+export type DoneBanking = Append<DidDocs, BankingDetails, {}>;
 
 export type SubmissionDetails = { Email: string; EndowmentId?: number };
 
@@ -145,10 +145,15 @@ export type SavedRegistration =
   | InitApplication
   | DoneContact
   | DoneOrgDetails
-  | DoneFSAInquiry
-  | DoneDocs
+  | DidFSAInquiry
+  | DidDocs
   | DoneBanking
   | InReview;
+
+export type DoneDocs<T extends DoneBanking | DidDocs | InReview> = Omit<
+  T,
+  "Registration"
+> & { Registration: SetNonNullable<T["Registration"]> };
 
 type ContactUpdate = {
   type: "contact-details";
@@ -205,15 +210,9 @@ type WiseRecipient = {
   bankName: string;
 };
 
-export type ApplicationDetails = OverrideProperties<
-  InReview,
-  {
-    Registration: SetNonNullable<
-      InReview["Registration"],
-      "Documentation" | "AuthorizedToReceiveTaxDeductibleDonations"
-    >;
-  }
-> & { WiseRecipient?: WiseRecipient };
+export type ApplicationDetails = DoneDocs<InReview> & {
+  WiseRecipient?: WiseRecipient;
+};
 
 //could be futher simplified to just {verdict: "approved" | string}
 export type ApplicationVerdict = { PK: string } & (
@@ -234,24 +233,13 @@ export function isDoneOrgDetails(
 
 export function isDoneFSAInquiry(
   data: SavedRegistration
-): data is DoneFSAInquiry {
-  //could be false
-  return !(
-    (data.Registration as FSAInquiry)
-      .AuthorizedToReceiveTaxDeductibleDonations == null
-  );
+): data is DidFSAInquiry {
+  const { Registration: reg } = data as DidFSAInquiry;
+  return reg.AuthorizedToReceiveTaxDeductibleDonations != null;
 }
 
-export function isDoneDocs(data: SavedRegistration): data is OverrideProperties<
-  DoneDocs,
-  {
-    Registration: SetNonNullable<
-      DoneDocs["Registration"],
-      "AuthorizedToReceiveTaxDeductibleDonations" | "Documentation"
-    >;
-  }
-> {
-  const { Registration: reg } = data as DoneDocs;
+export function isDoneDocs(data: SavedRegistration): data is DoneDocs<DidDocs> {
+  const { Registration: reg } = data as DidDocs;
   return (
     !!reg.Documentation && reg.AuthorizedToReceiveTaxDeductibleDonations != null
   );
