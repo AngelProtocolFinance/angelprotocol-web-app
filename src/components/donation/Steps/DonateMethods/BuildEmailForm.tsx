@@ -91,12 +91,12 @@ const openEmailClient = (
   window.open(`
   mailto:${emailTo}
     ?cc=${EMAIL_SUPPORT}
-    &subject=Stock donation to Better.Giving supporting ${charityName}
+    &subject=Stock donation to Better Giving supporting ${charityName}
     &body=
 Hi,${NEW_LINE}
 ${NEW_LINE}
 I would like to donate stock to support ${charityName} (${profileUrl}). 
-I have CCed better.giving (EIN 87-3758939) to ensure this tax-deductible donation gets accounted for correctly, 
+I have CCed Better Giving (EIN 87-3758939) to ensure this tax-deductible donation gets accounted for correctly, 
 please ask them if you have any technical questions.${NEW_LINE}
 ${NEW_LINE}
 Please transfer ${numberOfShares || "[NUMBER_OF_SHARES]"} shares of ${

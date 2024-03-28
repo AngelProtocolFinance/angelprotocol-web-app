@@ -33,7 +33,7 @@ export default function Stocks({ state }: Props) {
       </div>
       <p> You may also need the following information:</p>
       <span className="rounded bg-gray-l5 dark:bg-bluegray-d1 p-2">
-        Better.Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
+        Better Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>
       {/* build email form */}
@@ -60,7 +60,7 @@ export default function Stocks({ state }: Props) {
       </h4>
       <p>
         You can enjoy significant tax advantages and maximize the size of your
-        contributions when you transfer securities through Better.Giving:
+        contributions when you transfer securities through Better Giving:
       </p>
       <div className="grid rounded bg-gray-l5 dark:bg-bluegray-d1 p-2">
         <span className="text-sm text-gray">
