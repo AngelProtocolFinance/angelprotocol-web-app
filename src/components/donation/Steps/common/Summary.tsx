@@ -60,7 +60,7 @@ export default function Summary({
         </div>
         {props.tip && (
           <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
-            <dt className="mr-auto">Donation for Better.giving</dt>
+            <dt className="mr-auto">Donation for Better Giving</dt>
             <Amount classes="text-sm" amount={props.tip.value} />
           </div>
         )}

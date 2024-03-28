@@ -181,13 +181,13 @@ export default function Tip({
       <div className="rounded bg-blue-l5 h-[4.5rem] mt-16 relative">
         <Image src={character} className="absolute left-1 bottom-0" />
         <p className="px-[5.32rem] grid place-items-center text-center h-full text-[0.94rem]">
-          Thank you for keeping Better giving free for everyone!
+          Thank you for keeping Better Giving free for everyone!
         </p>
       </div>
 
       <p className="text-sm text-navy-l1 mt-6">
         Assist us in advancing our mission to connect with global organizations
-        and propagate our timeless message:{" "}
+        and spread our timeless message:{" "}
         <span className="font-medium block">Give today, give forever.</span>
       </p>
 

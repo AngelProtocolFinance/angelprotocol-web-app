@@ -28,7 +28,7 @@ export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
       </div>
       <p> You may also need the following information:</p>
       <span className="rounded bg-gray-l5 dark:bg-navy-d3 p-2">
-        Better.Giving is a non-profit with 501(c)(3) tax-exempt status, Federal
+        Better Giving is a non-profit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>
       <p className="text-sm font-bold">
@@ -64,7 +64,7 @@ export default function StocksSample({ name, id }: WidgetConfig["endowment"]) {
       </h4>
       <p>
         You can enjoy significant tax advantages and maximize the size of your
-        contributions when you transfer securities through Better.Giving:
+        contributions when you transfer securities through Better Giving:
       </p>
       <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-2">
         <span className="text-sm text-navy-l2">

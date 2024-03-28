@@ -67,7 +67,7 @@ export default function Form(props: StockFormStep) {
       <h4 className="mt-6 mb-2">Benefits of donating appreciated stock</h4>
       <p className="text-sm">
         You can enjoy significant tax advantages and maximize the size of your
-        contributions when you transfer securities through Better.Giving:
+        contributions when you transfer securities through Better Giving:
       </p>
       <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-2 my-4">
         <span className="text-sm text-navy-l2">

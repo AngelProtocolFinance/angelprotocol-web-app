@@ -34,7 +34,7 @@ export default function ManualDonation(props: DafCheckoutStep) {
         You may also need the following information:
       </p>
       <span className="rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed">
-        Better.Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
+        Better Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>
 
@@ -64,12 +64,12 @@ const NEW_LINE = "%0D%0A";
 const emailLink = (charityName: string, profileUrl: string, amount: string) => `
 mailto:${"[ Your provider's email ]"}
   ?cc=${EMAIL_SUPPORT}
-  &subject=Grant donation to Better.Giving supporting ${charityName}
+  &subject=Grant donation to Better Giving supporting ${charityName}
   &body=
 Hi,${NEW_LINE}
 ${NEW_LINE}
 I would like to make a one-time grant to support ${charityName} (${profileUrl}). 
-I have CCed better.giving (EIN 87-3758939) to ensure this tax-deductible donation gets accounted for correctly, 
+I have CCed Better Giving (EIN 87-3758939) to ensure this tax-deductible donation gets accounted for correctly, 
 please ask them if you have any technical questions.${NEW_LINE}
 ${NEW_LINE}
 Please transfer $${amount || "[AMOUNT]"} to:${NEW_LINE}

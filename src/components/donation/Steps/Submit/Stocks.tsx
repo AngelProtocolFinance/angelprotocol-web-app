@@ -36,7 +36,7 @@ export default function Stocks(props: StockCheckoutStep) {
         You may also need the following information:
       </p>
       <span className="rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed ">
-        Better.Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
+        Better Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>
 
@@ -75,7 +75,7 @@ const emailLink = (
 ) => `
 mailto:${"[ Your broker's email ]"}
   ?cc=${EMAIL_SUPPORT}
-  &subject=Stock donation to Better.Giving supporting ${charityName}
+  &subject=Stock donation to Better Giving supporting ${charityName}
   &body=
 Hi,${NEW_LINE}
 ${NEW_LINE}
