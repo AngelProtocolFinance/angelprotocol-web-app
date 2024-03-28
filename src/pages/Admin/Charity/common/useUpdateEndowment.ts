@@ -22,12 +22,12 @@ export function useUpdateEndowment() {
       const result = await submit(update);
 
       if ("error" in result) {
-        return showModal(TxPrompt, { error: "Failed to update endowment" });
+        return showModal(TxPrompt, { error: "Failed to update Profile" });
       }
 
       return showModal(TxPrompt, {
         success: {
-          message: "Endowment successfully updated",
+          message: "Profile successfully updated",
           link: {
             description: "View changes",
             url: `${appRoutes.marketplace}/${cleanUpdates.id}`,
