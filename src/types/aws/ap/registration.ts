@@ -134,8 +134,8 @@ export type DoneContact = Append<
   ContactDetails
 >;
 export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
-export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
 
+export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
 export type ResetFSAInquiry = Append<DoneOrgDetails, Reset<FSAInquiry>, {}>;
 
 export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
@@ -213,9 +213,7 @@ type WiseRecipient = {
   bankName: string;
 };
 
-export type ApplicationDetails = InReview & {
-  WiseRecipient?: WiseRecipient;
-};
+export type ApplicationDetails = InReview & { WiseRecipient?: WiseRecipient };
 
 //could be futher simplified to just {verdict: "approved" | string}
 export type ApplicationVerdict = { PK: string } & (
