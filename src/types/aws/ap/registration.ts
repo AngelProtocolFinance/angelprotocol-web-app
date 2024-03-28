@@ -238,7 +238,7 @@ export function isDoneFSAInquiry(
   return reg.AuthorizedToReceiveTaxDeductibleDonations != null;
 }
 
-export function isWithDocs(data: SavedRegistration): data is WithDocs<DidDocs> {
+export function isDoneDocs(data: SavedRegistration): data is WithDocs<DidDocs> {
   const { Registration: reg } = data as DidDocs;
   return (
     !!reg.Documentation && reg.AuthorizedToReceiveTaxDeductibleDonations != null

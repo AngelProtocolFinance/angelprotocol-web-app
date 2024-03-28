@@ -12,10 +12,10 @@ import {
   TDocumentation,
   isDoneBanking,
   isDoneContact,
+  isDoneDocs,
   isDoneFSAInquiry,
   isDoneOrgDetails,
   isSubmitted,
-  isWithDocs,
 } from "types/aws";
 import { steps } from "../routes";
 
@@ -61,7 +61,7 @@ export function getRegistrationState(reg: SavedRegistration): {
     };
   }
 
-  if (isWithDocs(reg)) {
+  if (isDoneDocs(reg)) {
     const { ContactPerson: c, Registration: r } = reg;
     const isSignedFSA =
       r.Documentation.DocType === "FSA"
