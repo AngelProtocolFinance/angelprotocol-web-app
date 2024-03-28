@@ -26,8 +26,8 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
       >
         <Image src={char} />
       </div>
-      <p className="uppercase mb-2 text-xs text-blue-d1 text-center">
-        Donation successful
+      <p className="uppercase mb-2 font-bold text-xs text-blue-d1 text-center">
+        Donation Successful
       </p>
       <h3 className="text-xl sm:text-2xl mb-2 text-center leading-relaxed text-balance">
         Your generosity knows no bounds! Thank you for making a difference!
@@ -44,10 +44,10 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         for this transaction on your{" "}
         {widgetVersion ? (
           <ExtLink href={`${DAPP_URL}${appRoutes.donations}`}>
-            My donations
+            My Donations
           </ExtLink>
         ) : (
-          <Link to={appRoutes.donations}>My donations</Link>
+          <Link to={appRoutes.donations}>My Donations</Link>
         )}{" "}
         page.
       </p>

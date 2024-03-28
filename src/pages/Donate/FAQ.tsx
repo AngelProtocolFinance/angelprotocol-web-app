@@ -90,7 +90,7 @@ const faqs = [
         Donors will need to provide KYD (know your donor) information including
         name and address, and can download an annualized cumulative report of
         all donations provided to nonprofits within Better Giving through their
-        'my donation' page. Donors can also request further copies of their tax
+        'My Donation' page. Donors can also request further copies of their tax
         receipt.
       </p>,
       <p>

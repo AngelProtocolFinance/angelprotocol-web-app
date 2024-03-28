@@ -26,7 +26,8 @@ export default function Success({ classes = "" }: { classes?: string }) {
         className="mt-6 text-blue-d1 hover:text-blue underline decoration-1 hover:decoration-2 text-center text-lg transition ease-in-out duration-300"
         to={`${appRoutes.admin}/${reg.endowId}/${adminRoutes.edit_profile}`}
       >
-        Start filling out {contact.orgName}’s profile and attract donors!
+        Start filling out {contact.orgName}’s profile and attract donors! Thank
+        you!
       </Link>
     </div>
   );

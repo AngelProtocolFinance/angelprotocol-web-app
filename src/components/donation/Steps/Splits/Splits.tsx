@@ -43,9 +43,9 @@ export default function Split({
   return (
     <div className="grid content-start p-4 @md:p-8">
       <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
-      <h4 className="mt-4">Split donation</h4>
+      <h4 className="mt-4">Sustainability Fund Donation</h4>
       <p className="text-navy-l1">
-        Create a sustainable impact by dividing funds
+        Create a sustainable impact: Give today, give forever
       </p>
 
       {/** percentages */}
