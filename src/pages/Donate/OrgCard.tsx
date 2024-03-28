@@ -3,7 +3,7 @@ import Image from "components/Image";
 type Props = {
   name: string;
   logo: string;
-  tagline: string;
+  tagline?: string;
   classes?: string;
 };
 export default function OrgCard({ classes = "", name, logo, tagline }: Props) {
@@ -18,7 +18,7 @@ export default function OrgCard({ classes = "", name, logo, tagline }: Props) {
       <h4 className="text-ellipsis overflow-hidden text-nowrap md:text-balance col-start-2 w-full">
         {name}
       </h4>
-      <p className="text-navy-l1 text-sm w-full">{tagline}</p>
+      {tagline && <p className="text-navy-l1 text-sm w-full">{tagline}</p>}
     </div>
   );
 }

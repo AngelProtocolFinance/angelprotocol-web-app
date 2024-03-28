@@ -7,6 +7,7 @@ import Categories from "./Categories";
 import Countries from "./Countries";
 import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
+import VerificationFilter from "./VerificationFilter";
 
 export default function Filter({ classes = "" }: { classes?: string }) {
   const { closeModal } = useModalContext();
@@ -41,6 +42,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
       <div className="px-2 divide-y divide-gray-l3">
         <Designations />
         <KYCFilter />
+        <VerificationFilter />
         <Categories />
       </div>
     </Modal>

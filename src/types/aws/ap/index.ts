@@ -49,12 +49,15 @@ export type Endowment = {
   endow_designation: EndowDesignation;
   fiscal_sponsored: boolean;
   hq_country: string;
+  /** empty string by default */
   image: string;
   kyc_donors_only: boolean;
   /** optional as older endowments don't have it set */
   hide_bg_tip?: boolean;
+  /** empty string by default */
   logo: string;
   name: string;
+  /** empty string by default */
   card_img?: string;
   /** empty string by default */
   overview: string;
@@ -65,9 +68,11 @@ export type Endowment = {
   social_media_urls: SocialMediaURLs;
   /** empty string by default */
   street_address: string;
-  tagline: string;
+  /** empty string by default */
+  tagline?: string;
   receiptMsg?: string;
-  url: string;
+  url?: string;
+  claimed?: boolean;
 };
 
 export type EndowmentProfile = Endowment;
@@ -84,13 +89,18 @@ export type EndowmentCard = Pick<
   | "name"
   | "sdgs"
   | "tagline"
+  | "claimed"
 >;
 export type EndowmentOption = Pick<Endowment, "id" | "name">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
-  "endow_designation" | "fiscal_sponsored" | "receiptMsg" | "program"
+  | "endow_designation"
+  | "fiscal_sponsored"
+  | "receiptMsg"
+  | "program"
+  | "claimed"
 > & {
   endow_designation: EndowDesignation | "";
 };
@@ -109,14 +119,16 @@ export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
 export type EndowmentsQueryParams = {
-  query: string; //
+  /** can be empty string */
+  query: string;
   sort?: `${EndowmentsSortKey}+${SortDirection}`;
-  page?: number; //to load next page, set to Page + 1
+  page: number; //to load next page, set to Page + 1
   endow_designation?: string; // comma separated EndowDesignation values
   sdgs?: string; // comma separated sdg values.
   kyc_only?: string; // comma separated boolean values
   countries?: string; //comma separated country names
-  published: "true";
+  /** boolean csv */
+  claimed?: string;
 };
 
 export interface LeaderboardEntry {

@@ -6,4 +6,5 @@ export const initialState: FilterState = {
   searchText: "",
   endow_designation: [],
   kyc_only: [],
+  verified: [],
 };
