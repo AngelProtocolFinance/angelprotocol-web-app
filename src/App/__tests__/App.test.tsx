@@ -9,7 +9,7 @@ import App from "../App";
 const mockMetrics: DonationsMetricList = {
   donations_daily_count: 0,
   donations_daily_amount: 0,
-  donations_total_amount: 0,
+  donations_total_amount_v2: 0,
 };
 
 jest.mock("services/aws/business_metrics", () => ({

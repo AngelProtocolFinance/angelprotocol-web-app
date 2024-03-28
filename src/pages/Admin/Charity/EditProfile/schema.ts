@@ -1,11 +1,11 @@
-import { ObjectSchema, array, object } from "yup";
+import { ObjectSchema, array, object, string } from "yup";
 import { FV } from "./types";
 import { SchemaShape } from "schemas/types";
 import { ImageMIMEType } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
 import { genFileSchema } from "schemas/file";
 import { optionType, richTextContent } from "schemas/shape";
-import { requiredString, url } from "schemas/string";
+import { alphanumeric, requiredString, url } from "schemas/string";
 import { MAX_SDGS } from "constants/unsdgs";
 
 export const VALID_MIME_TYPES: ImageMIMEType[] = [
@@ -33,7 +33,10 @@ export const schema = object<any, SchemaShape<FV>>({
   image: fileObj,
   logo: fileObj,
   url: url,
-  // registration_number: no need to validate,
+  registration_number: string().matches(
+    alphanumeric,
+    "must only contain numbers and letters"
+  ),
   endow_designation: optionType({ required: true }),
   name: requiredString,
   active_in_countries: array(),
