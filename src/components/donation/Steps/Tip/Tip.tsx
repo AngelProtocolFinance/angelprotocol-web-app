@@ -97,7 +97,7 @@ export default function Tip({
       <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
       <h4 className="mt-4 text-lg">
         Choose a Donation for{" "}
-        <Image src={bgIcon} className="inline-block size-5" /> Better.giving
+        <Image src={bgIcon} className="inline-block size-5" /> Better Giving
       </h4>
       <p className="text-navy-l1">
         We are completely free, and rely on donations
