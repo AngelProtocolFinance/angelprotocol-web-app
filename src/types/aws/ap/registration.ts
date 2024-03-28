@@ -1,4 +1,4 @@
-import { Except, SetNonNullable } from "type-fest";
+import { Except } from "type-fest";
 import { UNSDG_NUMS } from "types/lists";
 import { EndowDesignation } from ".";
 import { FileObject } from "../common";
@@ -90,8 +90,9 @@ export type OrgDetails = {
   UN_SDG: UNSDG_NUMS[];
 };
 
+type Reset<T> = { [K in keyof T]: null };
 export type FSAInquiry = {
-  AuthorizedToReceiveTaxDeductibleDonations: boolean | null;
+  AuthorizedToReceiveTaxDeductibleDonations: boolean;
 };
 
 export type FSASignerDocumentation = {
@@ -119,7 +120,7 @@ export type FSADocumentation = Except<
 };
 
 export type TDocumentation = {
-  Documentation: FSADocumentation | NonFSADocumentation | null;
+  Documentation: FSADocumentation | NonFSADocumentation;
 };
 
 export type BankingDetails = {
@@ -133,17 +134,14 @@ export type DoneContact = Append<
   ContactDetails
 >;
 export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
-export type InitiallyCompletedFSAInquiry = Append<
-  DoneOrgDetails,
-  FSAInquiry,
-  {}
->;
-export type InitiallyCompletedDocs = Append<
-  InitiallyCompletedFSAInquiry,
-  TDocumentation,
-  {}
->;
-export type DoneBanking = Append<InitiallyCompletedDocs, BankingDetails, {}>;
+export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
+
+export type ResetFSAInquiry = Append<DoneOrgDetails, Reset<FSAInquiry>, {}>;
+
+export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
+export type ResetDocs = Append<DoneFSAInquiry, Reset<TDocumentation>, {}>;
+
+export type DoneBanking = Append<DoneDocs, BankingDetails, {}>;
 
 export type SubmissionDetails = { Email: string; EndowmentId?: number };
 
@@ -153,15 +151,12 @@ export type SavedRegistration =
   | InitApplication
   | DoneContact
   | DoneOrgDetails
-  | InitiallyCompletedFSAInquiry
-  | InitiallyCompletedDocs
+  | DoneFSAInquiry
+  | ResetFSAInquiry
+  | DoneDocs
+  | ResetDocs
   | DoneBanking
   | InReview;
-
-type WithDocs<T extends InitiallyCompletedDocs | DoneBanking | InReview> = Omit<
-  T,
-  "Registration"
-> & { Registration: SetNonNullable<T["Registration"]> };
 
 type ContactUpdate = {
   type: "contact-details";
@@ -218,7 +213,7 @@ type WiseRecipient = {
   bankName: string;
 };
 
-export type ApplicationDetails = WithDocs<InReview> & {
+export type ApplicationDetails = InReview & {
   WiseRecipient?: WiseRecipient;
 };
 
@@ -241,15 +236,13 @@ export function isDoneOrgDetails(
 
 export function isDoneFSAInquiry(
   data: SavedRegistration
-): data is InitiallyCompletedFSAInquiry {
-  const { Registration: reg } = data as InitiallyCompletedFSAInquiry;
+): data is DoneFSAInquiry {
+  const { Registration: reg } = data as DoneFSAInquiry;
   return reg.AuthorizedToReceiveTaxDeductibleDonations != null;
 }
 
-export function isDoneDocs(
-  data: SavedRegistration
-): data is WithDocs<InitiallyCompletedDocs> {
-  const { Registration: reg } = data as InitiallyCompletedDocs;
+export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
+  const { Registration: reg } = data as DoneDocs;
   return (
     !!reg.Documentation && reg.AuthorizedToReceiveTaxDeductibleDonations != null
   );

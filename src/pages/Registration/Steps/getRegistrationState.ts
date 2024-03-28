@@ -2,14 +2,13 @@ import { InitReg, RegistrationState } from "../types";
 import {
   BankingDetails,
   DoneBanking,
+  DoneDocs,
+  DoneFSAInquiry,
   DoneOrgDetails,
   FSAInquiry,
   InitContact,
-  InitiallyCompletedDocs,
-  InitiallyCompletedFSAInquiry,
   OrgDetails,
   SavedRegistration,
-  TDocumentation,
   isDoneBanking,
   isDoneContact,
   isDoneDocs,
@@ -159,29 +158,10 @@ function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
   };
 }
 
-const US = "United States";
-type Docs = NonNullable<TDocumentation["Documentation"]>;
-function docs(reg: InitiallyCompletedDocs["Registration"]): Docs {
-  const fallback: Docs =
-    reg.AuthorizedToReceiveTaxDeductibleDonations ?? reg.HqCountry === US
-      ? {
-          DocType: "Non-FSA",
-          EIN: "",
-        }
-      : {
-          DocType: "FSA",
-          ProofOfIdentity: { name: "", publicUrl: "" },
-          RegistrationNumber: "",
-          ProofOfRegistration: { name: "", publicUrl: "" },
-          LegalEntityType: "",
-          ProjectDescription: "",
-          FiscalSponsorshipAgreementSigningURL: "",
-          SignedFiscalSponsorshipAgreement: "",
-        };
-
+function docs(
+  reg: DoneDocs["Registration"]
+): DoneDocs["Registration"]["Documentation"] {
   const doc = reg.Documentation;
-  if (!doc) return fallback;
-
   if (doc.DocType === "Non-FSA") {
     return { EIN: doc.EIN, DocType: doc.DocType };
   }
@@ -205,11 +185,9 @@ function bankDetails(reg: DoneBanking["Registration"]): BankingDetails {
   };
 }
 
-function fsaInquiry(
-  reg: InitiallyCompletedFSAInquiry["Registration"]
-): FSAInquiry {
+function fsaInquiry(reg: DoneFSAInquiry["Registration"]): FSAInquiry {
   return {
     AuthorizedToReceiveTaxDeductibleDonations:
-      reg.AuthorizedToReceiveTaxDeductibleDonations ?? reg.HqCountry === US,
+      reg.AuthorizedToReceiveTaxDeductibleDonations,
   };
 }
