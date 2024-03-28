@@ -9,6 +9,7 @@ import {
   InitContact,
   OrgDetails,
   SavedRegistration,
+  TDocumentation,
   isDoneBanking,
   isDoneContact,
   isDoneDocs,
@@ -158,9 +159,7 @@ function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
   };
 }
 
-function docs(
-  reg: DoneDocs["Registration"]
-): DoneDocs["Registration"]["Documentation"] {
+function docs(reg: DoneDocs["Registration"]): TDocumentation["Documentation"] {
   const doc = reg.Documentation;
   if (doc.DocType === "Non-FSA") {
     return { EIN: doc.EIN, DocType: doc.DocType };
