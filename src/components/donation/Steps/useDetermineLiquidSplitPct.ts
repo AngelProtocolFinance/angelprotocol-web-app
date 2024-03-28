@@ -18,10 +18,10 @@ export default function useDetermineLiquidSplitPct(
       }
       return;
     }
-    if (state.step === "splits") {
+    if ("liquidSplitPct" in state && state.liquidSplitPct) {
       setLiquidSplitPct(state.liquidSplitPct);
     }
-  }, [state.step, (state as SplitsStep).liquidSplitPct]);
+  }, [state, (state as SplitsStep).liquidSplitPct]);
 
   // update liquid % value when a new config value is passed
   useEffect(() => {
