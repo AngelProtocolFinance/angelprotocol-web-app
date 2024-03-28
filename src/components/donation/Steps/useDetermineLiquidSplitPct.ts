@@ -42,7 +42,11 @@ export default function useDetermineLiquidSplitPct(
     if (config?.liquidSplitPct) {
       setLiquidSplitPct(config.liquidSplitPct);
     }
-  }, [config?.liquidSplitPct]);
+  }, [config, config?.liquidSplitPct]);
+
+  useEffect(() => {
+    console.log(liquidSplitPct);
+  }, [liquidSplitPct]);
 
   return liquidSplitPct;
 }
