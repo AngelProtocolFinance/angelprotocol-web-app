@@ -1,12 +1,12 @@
 import { InitReg, RegistrationState } from "../types";
 import {
   BankingDetails,
-  DidDocs,
-  DidFSAInquiry,
   DoneBanking,
   DoneOrgDetails,
   FSAInquiry,
   InitContact,
+  InitiallyCompletedDocs,
+  InitiallyCompletedFSAInquiry,
   OrgDetails,
   SavedRegistration,
   TDocumentation,
@@ -161,7 +161,7 @@ function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
 
 const US = "United States";
 type Docs = NonNullable<TDocumentation["Documentation"]>;
-function docs(reg: DidDocs["Registration"]): Docs {
+function docs(reg: InitiallyCompletedDocs["Registration"]): Docs {
   const fallback: Docs =
     reg.AuthorizedToReceiveTaxDeductibleDonations ?? reg.HqCountry === US
       ? {
@@ -205,7 +205,9 @@ function bankDetails(reg: DoneBanking["Registration"]): BankingDetails {
   };
 }
 
-function fsaInquiry(reg: DidFSAInquiry["Registration"]): FSAInquiry {
+function fsaInquiry(
+  reg: InitiallyCompletedFSAInquiry["Registration"]
+): FSAInquiry {
   return {
     AuthorizedToReceiveTaxDeductibleDonations:
       reg.AuthorizedToReceiveTaxDeductibleDonations ?? reg.HqCountry === US,

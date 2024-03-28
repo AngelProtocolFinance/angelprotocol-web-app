@@ -133,9 +133,17 @@ export type DoneContact = Append<
   ContactDetails
 >;
 export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
-export type DidFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
-export type DidDocs = Append<DidFSAInquiry, TDocumentation, {}>;
-export type DoneBanking = Append<DidDocs, BankingDetails, {}>;
+export type InitiallyCompletedFSAInquiry = Append<
+  DoneOrgDetails,
+  FSAInquiry,
+  {}
+>;
+export type InitiallyCompletedDocs = Append<
+  InitiallyCompletedFSAInquiry,
+  TDocumentation,
+  {}
+>;
+export type DoneBanking = Append<InitiallyCompletedDocs, BankingDetails, {}>;
 
 export type SubmissionDetails = { Email: string; EndowmentId?: number };
 
@@ -145,12 +153,12 @@ export type SavedRegistration =
   | InitApplication
   | DoneContact
   | DoneOrgDetails
-  | DidFSAInquiry
-  | DidDocs
+  | InitiallyCompletedFSAInquiry
+  | InitiallyCompletedDocs
   | DoneBanking
   | InReview;
 
-type WithDocs<T extends DoneBanking | DidDocs | InReview> = Omit<
+type WithDocs<T extends InitiallyCompletedDocs | DoneBanking | InReview> = Omit<
   T,
   "Registration"
 > & { Registration: SetNonNullable<T["Registration"]> };
@@ -233,13 +241,15 @@ export function isDoneOrgDetails(
 
 export function isDoneFSAInquiry(
   data: SavedRegistration
-): data is DidFSAInquiry {
-  const { Registration: reg } = data as DidFSAInquiry;
+): data is InitiallyCompletedFSAInquiry {
+  const { Registration: reg } = data as InitiallyCompletedFSAInquiry;
   return reg.AuthorizedToReceiveTaxDeductibleDonations != null;
 }
 
-export function isDoneDocs(data: SavedRegistration): data is WithDocs<DidDocs> {
-  const { Registration: reg } = data as DidDocs;
+export function isDoneDocs(
+  data: SavedRegistration
+): data is WithDocs<InitiallyCompletedDocs> {
+  const { Registration: reg } = data as InitiallyCompletedDocs;
   return (
     !!reg.Documentation && reg.AuthorizedToReceiveTaxDeductibleDonations != null
   );
