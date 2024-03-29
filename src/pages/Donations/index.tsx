@@ -69,30 +69,60 @@ export default withAuth(function Donations({ user }) {
         setParams={setParams}
         classes="max-lg:col-span-full max-lg:w-full"
       />
-      <QueryLoader
-        queryState={{
-          data: data?.Items,
-          isLoading,
-          isFetching,
-          error: error,
-          isError: isError,
-        }}
-        messages={{
-          loading: "Loading donations...",
-          error: "Failed to get donations",
-          empty: <NoDonations classes="mt-8 place-self-center col-span-full" />,
-        }}
-      >
-        {(donations) => (
-          <DonationsSection
-            donations={donations}
-            disabled={isLoadingOrError}
-            hasMore={hasMore}
-            isLoading={isLoadingNextPage}
-            onLoadMore={loadNextPage}
-          />
-        )}
-      </QueryLoader>
+      <div className="grid col-span-full">
+        <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+          <button
+            onClick={() => setSelectedType("RECEIVED")}
+            className={classNames(
+              "w-full rounded-lg py-2.5 text-sm font-medium leading-5",
+              "ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
+              selectedStatus === "RECEIVED"
+                ? "bg-white text-blue-700 shadow"
+                : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+            )}
+          >
+            {"RECEIVED" satisfies DonationsQueryParams["status"]}
+          </button>
+          <button
+            onClick={() => setSelectedType("PENDING")}
+            className={classNames(
+              "w-full rounded-lg py-2.5 text-sm font-medium leading-5",
+              "ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
+              selectedStatus === "PENDING"
+                ? "bg-white text-blue-700 shadow"
+                : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+            )}
+          >
+            {"PENDING" satisfies DonationsQueryParams["status"]}
+          </button>
+        </div>
+        <QueryLoader
+          queryState={{
+            data: data?.Items,
+            isLoading,
+            isFetching,
+            error: error,
+            isError: isError,
+          }}
+          messages={{
+            loading: "Loading donations...",
+            error: "Failed to get donations",
+            empty: (
+              <NoDonations classes="mt-8 place-self-center col-span-full" />
+            ),
+          }}
+        >
+          {(donations) => (
+            <DonationsSection
+              donations={donations}
+              disabled={isLoadingOrError}
+              hasMore={hasMore}
+              isLoading={isLoadingNextPage}
+              onLoadMore={loadNextPage}
+            />
+          )}
+        </QueryLoader>
+      </div>
     </div>
   );
 });
@@ -104,3 +134,7 @@ const csvHeaders: { key: keyof DonationMadeByDonor; label: string }[] = [
   { key: "date", label: "Date" },
   { key: "hash", label: "Transaction Hash" },
 ];
+
+function classNames(...classes: any[]) {
+  return classes.filter(Boolean).join(" ");
+}
