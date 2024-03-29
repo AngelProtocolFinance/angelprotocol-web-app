@@ -53,7 +53,7 @@ export default function Configurer({ classes = "", endowment }: Props) {
 
   return (
     <Form
-      className={classes + " @container/configurer"}
+      className={`${classes} @container/configurer`}
       methods={methods}
       onSubmit={handleSubmit(submit)}
       onReset={(e) => {
