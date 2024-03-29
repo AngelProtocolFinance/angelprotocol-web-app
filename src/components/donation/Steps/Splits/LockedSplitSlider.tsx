@@ -33,7 +33,6 @@ export function LockedSplitSlider({
       {/** slider */}
       <Slider.Root
         value={[value]}
-        //locked(sustainable) is on the left, increasing to the right - slider value represents locked
         onValueChange={([pct]) => onChange(pct)}
         className="group/slider relative flex items-center select-none touch-none"
         disabled={disabled}
