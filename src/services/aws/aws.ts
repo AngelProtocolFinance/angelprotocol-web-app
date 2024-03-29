@@ -235,9 +235,10 @@ const endowCardObj: {
 const endowCardFields = Object.keys(endowCardObj).join(",");
 
 const endowSelectorOptionObj: {
-  [key in keyof EndowmentOption]: "";
+  [key in keyof Required<EndowmentOption>]: "";
 } = {
   id: "",
   name: "",
+  hide_bg_tip: "",
 };
 const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");

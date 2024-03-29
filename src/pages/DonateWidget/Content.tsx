@@ -35,9 +35,11 @@ export default function Content({
 
   const configResult = parseConfig(searchParams);
 
-  return "error" in configResult ? (
-    <Err error={configResult.error} />
-  ) : (
+  if ("error" in configResult) {
+    return <Err error={configResult.error} />;
+  }
+
+  return (
     <div
       className={`${classes} max-w-3xl w-full h-full p-6 grid content-start justify-items-center`}
     >
