@@ -2,7 +2,7 @@ import { ImgLink } from "components/ImgEditor";
 import { MAX_SDGS } from "constants/unsdgs";
 import { genFileSchema } from "schemas/file";
 import { optionType, richTextContent } from "schemas/shape";
-import { url, requiredString } from "schemas/string";
+import { url, alphanumeric, requiredString } from "schemas/string";
 import { SchemaShape } from "schemas/types";
 import { ImageMIMEType } from "types/lists";
 import { ObjectSchema, array, object, string } from "yup";
@@ -34,7 +34,10 @@ export const schema = object<any, SchemaShape<FV>>({
   card_img: fileObj,
   logo: fileObj,
   url: url,
-  // registration_number: no need to validate,
+  registration_number: string().matches(
+    alphanumeric,
+    "must only contain numbers and letters"
+  ),
   endow_designation: optionType({ required: true }),
   name: requiredString.trim(),
   active_in_countries: array(),

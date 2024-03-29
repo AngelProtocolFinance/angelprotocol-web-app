@@ -90,6 +90,7 @@ export type OrgDetails = {
   UN_SDG: UNSDG_NUMS[];
 };
 
+type Reset<T> = { [K in keyof T]: null };
 export type FSAInquiry = {
   AuthorizedToReceiveTaxDeductibleDonations: boolean;
 };
@@ -133,8 +134,13 @@ export type DoneContact = Append<
   ContactDetails
 >;
 export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
+
 export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
+export type ResetFSAInquiry = Append<DoneOrgDetails, Reset<FSAInquiry>, {}>;
+
 export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
+export type ResetDocs = Append<DoneFSAInquiry, Reset<TDocumentation>, {}>;
+
 export type DoneBanking = Append<DoneDocs, BankingDetails, {}>;
 
 export type SubmissionDetails = { Email: string; EndowmentId?: number };
@@ -146,7 +152,9 @@ export type SavedRegistration =
   | DoneContact
   | DoneOrgDetails
   | DoneFSAInquiry
+  | ResetFSAInquiry
   | DoneDocs
+  | ResetDocs
   | DoneBanking
   | InReview;
 
@@ -227,19 +235,20 @@ export function isDoneOrgDetails(
 export function isDoneFSAInquiry(
   data: SavedRegistration
 ): data is DoneFSAInquiry {
-  //could be false
-  return !(
-    (data.Registration as FSAInquiry)
-      .AuthorizedToReceiveTaxDeductibleDonations == null
-  );
+  const { Registration: reg } = data as DoneFSAInquiry;
+  return reg.AuthorizedToReceiveTaxDeductibleDonations != null;
 }
 
 export function isDoneDocs(data: SavedRegistration): data is DoneDocs {
-  return !!(data.Registration as TDocumentation).Documentation;
+  const { Registration: reg } = data as DoneDocs;
+  return (
+    !!reg.Documentation && reg.AuthorizedToReceiveTaxDeductibleDonations != null
+  );
 }
 
 export function isDoneBanking(data: SavedRegistration): data is DoneBanking {
-  return !!(data.Registration as BankingDetails).BankStatementFile;
+  const { Registration: reg } = data as DoneBanking;
+  return !!reg.BankStatementFile && !!reg.Documentation;
 }
 
 export function isSubmitted(data: SavedRegistration): data is InReview {
