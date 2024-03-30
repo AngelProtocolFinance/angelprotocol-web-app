@@ -1,10 +1,8 @@
 import { isEmpty } from "helpers";
-import { debounce } from "helpers/debounce";
 import { FileObject } from "types/aws";
 import { FileDropzoneAsset } from "types/components";
 import { MIMEType } from "types/lists";
 import * as Yup from "yup";
-import { alphanumeric } from "./string";
 
 const previewsKey: keyof FileDropzoneAsset = "previews";
 
@@ -41,12 +39,3 @@ export const genFileSchema = (maxSize: number, mimeTypes: MIMEType[]) =>
       message: "exceeds file size limit",
       test: (file) => (file?.size || 0) <= maxSize,
     });
-
-const uniquenessTest: Yup.TestFunction<string | undefined, Yup.AnyObject> =
-  () => {};
-
-const debounced = debounce(uniquenessTest, 500);
-
-export const regNumSchema = Yup.string()
-  .matches(alphanumeric)
-  .test("", "", debounce(uniquenessTest, 500));
