@@ -4,6 +4,7 @@ import { logger } from "helpers";
 import { apiEnv } from "services/constants";
 import {
   ContactUpdateResult,
+  EndowClaim,
   InitApplication,
   RegistrationUpdate,
   SavedRegistration,
@@ -17,12 +18,12 @@ const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     newApplication: builder.query<
       Pick<InitApplication, "Registration" | "ContactPerson">,
-      { email: string }
+      { email: string; claim?: EndowClaim }
     >({
-      query: ({ email }) => ({
+      query: ({ email, claim }) => ({
         url: `${v(5)}/registration`,
         method: "POST",
-        body: { Email: email },
+        body: { Email: email, InitClaim: claim },
         headers: { authorization: TEMP_JWT },
       }),
     }),
