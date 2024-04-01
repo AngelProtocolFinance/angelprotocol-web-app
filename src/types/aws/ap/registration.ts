@@ -39,6 +39,12 @@ export type ContactRoles =
   | "treasurer"
   | "vice-president";
 
+export type EndowClaim = {
+  id: number;
+  name: string;
+  ein: string;
+};
+
 type InitReg = {
   PK: string;
   SK: "Registration";
@@ -47,6 +53,7 @@ type InitReg = {
   RejectionReason: string;
   UN_SDG: UNSDG_NUMS[];
   bank_verification_status: BankVerificationStatus;
+  InitClaim?: EndowClaim;
 };
 
 export type InitContact = {
