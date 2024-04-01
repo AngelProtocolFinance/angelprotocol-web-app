@@ -6,13 +6,15 @@ import { appRoutes, regRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
 import { steps } from "./routes";
 import { InitReg } from "./types";
 
 export default function Welcome({ classes = "" }: { classes?: string }) {
   const { email } = useAuthenticatedUser();
+  const { state } = useLocation();
+  console.log({ state });
   const { data: reg, isLoading, isError } = useNewApplicationQuery({ email });
 
   useEffect(() => {
