@@ -2,6 +2,7 @@ import { Except } from "type-fest";
 import {
   BankingDetails,
   ContactDetails,
+  EndowClaim,
   FSAInquiry,
   NonFSADocumentation,
   OrgDetails,
@@ -13,6 +14,7 @@ import {
 export type InitReg = {
   reference: string;
   email: string;
+  claim?: EndowClaim;
 };
 
 export type FormFSAInquiry = FSAInquiry;
