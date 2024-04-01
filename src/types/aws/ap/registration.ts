@@ -115,6 +115,7 @@ export type FSASignerDocumentation = {
 export type NonFSADocumentation = {
   DocType: "Non-FSA";
   EIN: string;
+  Claim?: EndowClaim | null;
 };
 
 export type FSADocumentation = Except<
