@@ -9,11 +9,10 @@ import { DetailedCurrency } from "types/components";
 import ContinueBtn from "../../common/ContinueBtn";
 import { FormValues as FV, Props } from "./types";
 
-// Chariot accepts only USD.
-// See https://givechariot.readme.io/reference/integrating-connect#response-objects
-//
-// The minimum amount should not be hardcoded as it differs depending on which provider is selected.
-// See https://givechariot.readme.io/reference/create-grant
+/**
+ * Only USD donations are permissible for DAF donations.
+ * The minimum amount should not be hardcoded as it differs depending on which provider is selected.
+ */
 const USD_CURRENCY: DetailedCurrency = { code: "usd", rate: 1, min: 1 };
 
 export default function Form({ widgetConfig, details }: Props) {

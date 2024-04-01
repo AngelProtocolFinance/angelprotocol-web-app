@@ -91,7 +91,7 @@ export type EndowmentCard = Pick<
   | "tagline"
   | "claimed"
 >;
-export type EndowmentOption = Pick<Endowment, "id" | "name">;
+export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<

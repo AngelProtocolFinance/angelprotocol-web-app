@@ -1,10 +1,8 @@
 import { DafDonationDetails, DafFormStep } from "slices/donation";
-import { DonaterConfigFromWidget } from "types/widget";
-import { type AdvancedOptionsDisplay } from "../../../AdvancedOptions";
+import { Config } from "../../types";
 
 export type Props = {
-  advanceOptDisplay: AdvancedOptionsDisplay;
-  widgetConfig: DonaterConfigFromWidget | null;
+  widgetConfig: Config | null;
 } & DafFormStep;
 
 export type FormValues = Omit<DafDonationDetails, "method">;

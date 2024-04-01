@@ -35,7 +35,6 @@ type StripePaymentIntentParams = FiatDonation & {
 };
 
 type CreatePayPalOrderParams = FiatDonation;
-type ChariotGrantIntentParams = FiatDonation & { transactionId?: string };
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -51,14 +50,6 @@ export const apes = createApi({
         method: "POST",
         headers: { authorization: TEMP_JWT },
       }),
-    }),
-    chariotGrantIntent: builder.mutation<string, ChariotGrantIntentParams>({
-      query: (data) => ({
-        url: `v1/fiat/chariot-connect`,
-        method: "POST",
-        body: JSON.stringify(data),
-      }),
-      transformResponse: (res: { grantId: string }) => res.grantId,
     }),
     fiatCurrencies: builder.query<DetailedCurrency[], void>({
       query: () => ({
@@ -107,7 +98,6 @@ export const apes = createApi({
 
 export const {
   useCapturePayPalOrderMutation,
-  useChariotGrantIntentMutation,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
   usePaypalOrderQuery,
