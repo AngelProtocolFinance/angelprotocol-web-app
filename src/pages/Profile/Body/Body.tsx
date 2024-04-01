@@ -3,9 +3,8 @@ import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import VerifiedIcon from "components/VerifiedIcon";
-import { appRoutes, regRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { Route, Routes } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
@@ -44,14 +43,6 @@ export default function Body() {
               </h3>
               <BookmarkBtn endowId={p.id} />
             </div>
-            <Link
-              className="btn-blue px-6 py-1 text-xs"
-              type="button"
-              to={`${appRoutes.register}/${regRoutes.welcome}`}
-              state={{ hello: "world" }}
-            >
-              claim
-            </Link>
             <p className="w-full font-normal text-lg">{p.tagline}</p>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
