@@ -23,6 +23,9 @@ const marketFilter = createSlice({
     setKYCOnly: (state, { payload }: PayloadAction<boolean[]>) => {
       state.kyc_only = payload;
     },
+    setVerified: (state, { payload }: PayloadAction<boolean[]>) => {
+      state.verified = payload;
+    },
     setSort: (state, { payload }: PayloadAction<Sort | undefined>) => {
       state.sort = payload;
     },
@@ -43,6 +46,7 @@ export const {
   setSort,
   setKYCOnly,
   setSearchText,
+  setVerified,
 } = marketFilter.actions;
 
 export default marketFilter.reducer;

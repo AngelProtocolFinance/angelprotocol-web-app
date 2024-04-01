@@ -75,8 +75,12 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/${v(5)}/endowments/${apiEnv}`,
-          params: { ...params, return: endowCardFields },
+          url: "v6/endowments",
+          params: {
+            ...params,
+            fields: endowCardFields,
+            env: apiEnv,
+          },
         };
       },
     }),
@@ -84,8 +88,8 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: `/${v(5)}/endowments/${apiEnv}`,
-          params: { ...params, return: endowSelectorOptionFields },
+          url: "v6/endowments",
+          params: { ...params, fields: endowSelectorOptionFields, env: apiEnv },
         };
       },
       transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
@@ -231,6 +235,7 @@ const endowCardObj: {
   kyc_donors_only: "",
   name: "",
   tagline: "",
+  claimed: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 

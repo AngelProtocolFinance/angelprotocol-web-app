@@ -15,7 +15,6 @@ export default function Options({ searchText, isDebouncing = false }: Props) {
     sdgs: Object.keys(unsdgs).join(","),
     kyc_only: "true,false",
     page: 1,
-    published: "true",
   });
 
   return (

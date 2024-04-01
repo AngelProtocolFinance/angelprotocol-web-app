@@ -10,4 +10,5 @@ export type FilterState = {
   sdgGroups: SDGGroup[];
   countries: string[];
   kyc_only: boolean[];
+  verified: boolean[];
 };
