@@ -14,11 +14,11 @@ export default function StatusButton({
   return (
     <button
       onClick={() => clickHandler(status)}
-      className={`w-full rounded-lg py-2.5 text-sm font-medium leading-5 ring-white/60 
+      className={`w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5 ring-white/60 
       ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2" ${
         selected
-          ? "bg-white text-blue-700 shadow"
-          : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
+          ? "bg-gray-l4 border-t border-x"
+          : "bg-gray-l5 border-t border-x text-blue-100 hover:text-white"
       }
       `}
     >

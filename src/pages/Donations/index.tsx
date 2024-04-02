@@ -71,7 +71,7 @@ export default withAuth(function Donations({ user }) {
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <div className="grid col-span-full">
-        <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+        <div className="flex rounded-t-xl bg-blue-900/20">
           <StatusButton
             clickHandler={setSelectedType}
             selected={selectedStatus === "RECEIVED"}
