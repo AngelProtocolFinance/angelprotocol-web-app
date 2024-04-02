@@ -92,6 +92,7 @@ export default withAuth(function Donations({ user }) {
             isError: isError,
           }}
           messages={{
+            fetching: "Loading donations...",
             loading: "Loading donations...",
             error: "Failed to get donations",
             empty: (
