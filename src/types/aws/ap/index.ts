@@ -72,6 +72,7 @@ export type Endowment = {
   tagline?: string;
   receiptMsg?: string;
   url?: string;
+  /** not claimed only if `false` */
   claimed?: boolean;
 };
 
