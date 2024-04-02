@@ -35,7 +35,8 @@ export default withAuth(function Donations({ user }) {
     setParams,
   } = queryState;
 
-  const isLoadingOrError = isLoading || isLoadingNextPage || isError;
+  const isLoadingOrError =
+    isLoading || isFetching || isLoadingNextPage || isError;
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-20">
