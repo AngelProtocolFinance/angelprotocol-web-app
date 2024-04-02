@@ -1,9 +1,9 @@
+import defaultLogo from "assets/images/bettergiving-logo.svg";
 import Image from "components/Image";
 import { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { LeaderboardEntry } from "types/aws";
-import defaultLogo from "assets/images/bettergiving-logo.svg";
 import Amount from "./Amount";
 import projectFunds from "./projectFunds";
 
