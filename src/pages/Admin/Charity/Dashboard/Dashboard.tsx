@@ -1,8 +1,9 @@
-import { PropsWithChildren } from "react";
-import { useAdminContext } from "pages/Admin/Context";
-import { useEndowBalanceQuery } from "services/apes";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
+import { humanize } from "helpers";
+import { useAdminContext } from "pages/Admin/Context";
+import { PropsWithChildren } from "react";
+import { useEndowBalanceQuery } from "services/apes";
 import Seo from "../Seo";
 import Balance from "./Balance";
 
@@ -13,7 +14,7 @@ export default function Dashboard() {
   return (
     <div className="@container w-full max-w-4xl grid content-start mt-6">
       <Seo title="Nonprofit Dashboard" />
-      <h3 className="uppercase font-extrabold text-2xl mb-4">Dashboard</h3>
+      <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -37,7 +38,9 @@ export default function Dashboard() {
           const donationsPaidOut = payoutsMade - earningsPayoutsMade;
           return (
             <>
-              <h3 className="uppercase text-xl mb-2">Account Balances</h3>
+              <h3 className="uppercase mb-2 font-black mt-6">
+                Account Balances
+              </h3>
               <div className="grid gap-4 @lg:grid-cols-2">
                 {/** Balances */}
                 <Balance
@@ -58,7 +61,7 @@ export default function Dashboard() {
                   <DataPart>
                     Pending payout:
                     <span className="flex items-center gap-1">
-                      {payoutsPending}{" "}
+                      {humanize(payoutsPending, 2)}{" "}
                       <span className="text-2xs sm:text-xs font-normal">
                         USD
                       </span>
@@ -67,7 +70,7 @@ export default function Dashboard() {
                   <DataPart>
                     Total Contributions:
                     <span className="flex items-center gap-1">
-                      {totalContributions}{" "}
+                      {humanize(totalContributions, 2)}{" "}
                       <span className="text-2xs sm:text-xs font-normal">
                         USD
                       </span>
@@ -103,7 +106,7 @@ function LoaderSkeleton() {
 
 function DataPart({ children }: PropsWithChildren<{}>) {
   return (
-    <div className="flex justify-center items-center gap-5 p-4 rounded border border-prim bg-orange-l6 dark:bg-blue-d6 font-bold text-sm @sm:text-base font-heading">
+    <div className="flex justify-center items-center gap-5 p-4 rounded border border-blue-l2 bg-blue-l5 dark:bg-blue-d6 font-bold text-sm @sm:text-base font-heading">
       {children}
     </div>
   );

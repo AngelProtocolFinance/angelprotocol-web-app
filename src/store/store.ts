@@ -1,14 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { Amplify } from "aws-amplify";
 import { Hub } from "aws-amplify/utils";
+import amplifyConfig from "constants/aws";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
+import { coingecko } from "services/coingecko";
+import { wordpress } from "services/wordpress";
 import auth, { loadSession, reset } from "slices/auth";
 import { componentReducer } from "slices/components";
 import { donation } from "slices/donation";
 import gift from "slices/gift";
 import widget from "slices/widget";
-import amplifyConfig from "constants/aws";
 
 export const store = configureStore({
   reducer: {
@@ -19,9 +21,16 @@ export const store = configureStore({
     widget,
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,
+    [coingecko.reducerPath]: coingecko.reducer,
+    [wordpress.reducerPath]: wordpress.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat([aws.middleware, apes.middleware]),
+    getDefaultMiddleware().concat([
+      aws.middleware,
+      apes.middleware,
+      coingecko.middleware,
+      wordpress.middleware,
+    ]),
 });
 
 Amplify.configure(amplifyConfig);

@@ -25,7 +25,7 @@ export default function GeneralInfo({ className = "" }) {
           </Container>
         )}
       </div>
-      <DetailsColumn className="self-start lg:sticky lg:top-28" />
+      <DetailsColumn className="self-start lg:sticky lg:top-5" />
     </div>
   );
 }

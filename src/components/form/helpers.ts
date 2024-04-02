@@ -1,11 +1,15 @@
-import { Classes } from "./types";
-
-export function unpack(classes?: Classes) {
-  const _classes: Classes =
-    typeof classes === "string" ? { container: classes } : classes || {};
-
-  const { container = "", input = "", label: lbl = "", error = "" } = _classes;
-  return { container, input, lbl, error };
+type Base = { container?: string };
+export function unpack<T extends string | Base>(
+  classes?: T
+): Readonly<Required<Exclude<T, string>>> {
+  return new Proxy(
+    typeof classes === "string" ? { container: classes } : classes || {},
+    {
+      get(target: any, key) {
+        return target[key] ?? "";
+      },
+    }
+  );
 }
 
 export function dateToFormFormat(date: Date) {

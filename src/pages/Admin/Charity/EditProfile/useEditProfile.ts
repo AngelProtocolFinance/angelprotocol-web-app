@@ -1,14 +1,15 @@
-import { SubmitHandler, useFormContext } from "react-hook-form";
-import { FV } from "./types";
-import { ProfileUpdateMsg } from "services/types";
-import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
+import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
+import { SubmitHandler, useFormContext } from "react-hook-form";
+import { useLazyProfileQuery } from "services/aws/aws";
+import { EndowmentProfileUpdate } from "types/aws";
 import { useAdminContext } from "../../Context";
-import { useUpdateEndowmentProfile } from "../common";
+import { useUpdateEndowment } from "../common";
+import { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
 export default function useEditProfile() {
@@ -20,7 +21,8 @@ export default function useEditProfile() {
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
-  const updateProfile = useUpdateEndowmentProfile();
+  const [endowment] = useLazyProfileQuery();
+  const updateEndow = useUpdateEndowment();
 
   const editProfile: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
@@ -28,18 +30,21 @@ export default function useEditProfile() {
        * to tx submission. Other users of useTxSender
        */
 
-      const [bannerUrl, logoUrl] = await uploadImgs([fv.image, fv.logo], () => {
-        showModal(
-          TxPrompt,
-          { loading: "Uploading images.." },
-          { isDismissible: false }
-        );
-      });
+      const [bannerUrl, logoUrl, cardImgUrl] = await uploadImgs(
+        [fv.image, fv.logo, fv.card_img],
+        () => {
+          showModal(
+            TxPrompt,
+            { loading: "Uploading images.." },
+            { isDismissible: false }
+          );
+        }
+      );
 
       const update = toProfileUpdate({
         type: "final",
         data: { ...fv, id },
-        urls: { image: bannerUrl, logo: logoUrl },
+        urls: { image: bannerUrl, logo: logoUrl, card_img: cardImgUrl },
       });
 
       const diffs = getPayloadDiff(initial, update);
@@ -48,16 +53,25 @@ export default function useEditProfile() {
         return showModal(TxPrompt, { error: "No changes detected" });
       }
 
-      //only include top level keys that appeared on diff
-      const cleanUpdate = diffs.reduce<ProfileUpdateMsg>(
-        (result, [path]) => {
-          const key = path.split(".")[0] as keyof ProfileUpdateMsg;
-          return { ...result, [key]: update[key] };
-        },
-        { id }
-      );
+      if (update.slug !== initial.slug) {
+        const result = await endowment({ slug: update.slug });
 
-      await updateProfile(cleanUpdate);
+        //endow is found with update.slug
+        if (result.isSuccess) {
+          return showModal(TxPrompt, {
+            error: `Slug "${update.slug}" is already taken`,
+          });
+        }
+      }
+
+      type Cleaned = Partial<EndowmentProfileUpdate>;
+      //only include top level keys that appeared on diff
+      const cleanUpdate = diffs.reduce<Cleaned>((result, [path]) => {
+        const key = path.split(".")[0] as keyof Cleaned;
+        return { ...result, [key]: update[key] };
+      }, {});
+
+      await updateEndow({ ...cleanUpdate, id });
     } catch (err) {
       showModal(TxPrompt, {
         error: err instanceof Error ? err.message : "Unknown error occured",

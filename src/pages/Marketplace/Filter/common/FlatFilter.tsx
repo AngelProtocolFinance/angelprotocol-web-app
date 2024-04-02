@@ -21,8 +21,8 @@ export function FlatFilter<T>(props: GroupProps<T>) {
             className={({ selected }) =>
               `${
                 selected
-                  ? "border-orange text-orange-d4 bg-orange-l5"
-                  : "border-prim"
+                  ? "border-blue-d1 text-blue-d4 bg-blue-l5"
+                  : "border-gray-l4"
               } border select-none rounded-full cursor-pointer capitalize text-xs pt-1 pb-[.3rem] px-4`
             }
           >

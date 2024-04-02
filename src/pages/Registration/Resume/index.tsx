@@ -1,9 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
-import { object, string } from "yup";
-import { FormValues } from "./types";
 import { getSavedRegistrationReference } from "helpers";
+import { FormProvider, useForm } from "react-hook-form";
+import { requiredString } from "schemas/string";
+import { object } from "yup";
 import Form from "./Form";
+import { FormValues } from "./types";
 
 export default function Resume({ classes = "" }: { classes?: string }) {
   const methods = useForm<FormValues>({
@@ -12,7 +13,7 @@ export default function Resume({ classes = "" }: { classes?: string }) {
     },
     resolver: yupResolver(
       object({
-        reference: string().required("required"),
+        reference: requiredString.trim(),
       })
     ),
   });

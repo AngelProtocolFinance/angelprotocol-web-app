@@ -1,8 +1,8 @@
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { InitReg } from "../types";
-import { useRegQuery } from "services/aws/registration";
 import { ErrorStatus, LoadingStatus } from "components/Status";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { useRegQuery } from "services/aws/registration";
 import { steps } from "../routes";
+import { InitReg } from "../types";
 import Banking from "./Banking";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
@@ -56,7 +56,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 
   return (
     <div
-      className={`w-full md:w-[90%] max-w-[62.5rem] md:pt-8 grid md:grid-cols-[auto_1fr] md:border border-prim rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
+      className={`w-full md:w-[90%] max-w-[62.5rem] pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l4 rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
     >
       <ProgressIndicator
         step={regState.step}

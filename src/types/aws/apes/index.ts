@@ -30,3 +30,5 @@ export type EndowmentBalances = {
   totalContributions: number;
   totalEarnings: number;
 };
+
+export * from "./paypal";

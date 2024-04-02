@@ -1,7 +1,7 @@
-import { useEndowment } from "services/aws/useEndowment";
 import CommonSEO from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { useEndowment } from "services/aws/useEndowment";
 import { useAdminContext } from "../Context";
 
 export default function Seo({
@@ -12,7 +12,7 @@ export default function Seo({
   url?: string;
 }) {
   const { id } = useAdminContext();
-  const { data: profile } = useEndowment(id, ["logo", "name", "overview"]);
+  const { data: profile } = useEndowment({ id }, ["logo", "name", "overview"]);
 
   return (
     <CommonSEO

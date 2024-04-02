@@ -1,9 +1,11 @@
+import { DrawerIcon } from "components/Icon";
+import { idParamToNum } from "helpers";
+import useHandleScreenResize, {
+  SCREEN_BREAKPOINTS,
+} from "hooks/useHandleScreenResize";
 import { PropsWithChildren, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { RegStep } from "../types";
-import { DrawerIcon } from "components/Icon";
-import useHandleScreenResize, { SCREEN_MD } from "hooks/useHandleScreenResize";
-import { idParamToNum } from "helpers";
 
 type Props = {
   step: RegStep;
@@ -16,18 +18,21 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   const currPath = idParamToNum(paths.at(-1));
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
-  const [isDesktop, setDesktop] = useState(window.innerWidth >= SCREEN_MD);
+  const [isDesktop, setDesktop] = useState(
+    window.innerWidth >= SCREEN_BREAKPOINTS.md
+  );
 
   useHandleScreenResize(
     (screen, ref) => {
-      const isOnDesktop = screen >= SCREEN_MD; /** tailwind md screen size */
-      if ((isOnDesktop && !ref.isOpen) || (!isOnDesktop && ref.isOpen)) {
+      const isOnDesktop = screen >= SCREEN_BREAKPOINTS.md;
+      if (isOnDesktop !== ref.isOpen) {
         setIsOtherStepsShown(isOnDesktop);
         ref.isOpen = isOnDesktop;
       }
 
       if (ref.isDesktop !== isOnDesktop) {
         setDesktop(isOnDesktop);
+        ref.isDesktop = isOnDesktop;
       }
     },
     {
@@ -62,7 +67,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
 
   const topStep =
     isOtherStepsShown || currPath === 1 ? (
-      <Step isDone={step >= 1} isCurr={currPath === 1}>
+      <Step isDone={currPath > 1 || step > 1} isCurr={currPath === 1}>
         Contact Details
       </Step>
     ) : (
@@ -84,7 +89,7 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
     </>
   );
 
-  const classNames = `py-4 max-md:pr-10 pl-12 md:pl-14 md:mr-14 ${classes} dark:text-gray`;
+  const classNames = `py-4 max-md:pr-10 pl-12 md:pl-14 md:mr-14 ${classes} dark:text-navy-l2`;
 
   if (isDesktop) {
     return <div className={classNames}>{children}</div>;
@@ -116,19 +121,19 @@ function Step({
       {/** line */}
       <div
         className={`h-[22px] border-l ${
-          isDone ? "border-orange" : "border-prim"
+          isDone || isCurr ? "border-blue-d1" : "border-gray-l4"
         } my-2 group-first:hidden`}
       />
       <div className="flex items-center">
         {/** circle */}
         <div
           className={`w-4 aspect-square ${
-            isDone ? "bg-orange" : "bg-gray-l3 dark:bg-bluegray"
+            isDone ? "bg-blue-d1" : "bg-gray-l3 dark:bg-navy"
           } rounded-full transform -translate-x-1/2`}
         />
         <span
           className={`text-sm ${
-            isCurr ? "text-orange" : "text-gray-d1 dark:text-gray"
+            isCurr ? "text-blue-d1" : "text-navy-l1 dark:text-navy-l2"
           }`}
         >
           {children}

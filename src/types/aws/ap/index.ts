@@ -44,15 +44,18 @@ type SocialMediaURLs = {
 
 export type Endowment = {
   id: number;
+  slug?: string;
   active_in_countries: string[];
-  contact_email: string;
   endow_designation: EndowDesignation;
   fiscal_sponsored: boolean;
   hq_country: string;
   image: string;
   kyc_donors_only: boolean;
+  /** optional as older endowments don't have it set */
+  hide_bg_tip?: boolean;
   logo: string;
   name: string;
+  card_img?: string;
   /** empty string by default */
   overview: string;
   program: Program[];
@@ -63,6 +66,7 @@ export type Endowment = {
   /** empty string by default */
   street_address: string;
   tagline: string;
+  receiptMsg?: string;
   url: string;
 };
 
@@ -72,6 +76,7 @@ export type EndowmentCard = Pick<
   Endowment,
   | "id"
   | "active_in_countries"
+  | "card_img"
   | "endow_designation"
   | "hq_country"
   | "kyc_donors_only"
@@ -80,16 +85,25 @@ export type EndowmentCard = Pick<
   | "sdgs"
   | "tagline"
 >;
-export type EndowmentOption = Pick<Endowment, "id" | "name">;
+export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
-  Endowment,
-  "endow_designation" | "fiscal_sponsored"
+  Required<Endowment>,
+  "endow_designation" | "fiscal_sponsored" | "receiptMsg" | "program"
 > & {
   endow_designation: EndowDesignation | "";
-  program_id: string;
 };
+
+export type EndowmentSettingsUpdate = Pick<
+  Required<Endowment>,
+  "id" | "receiptMsg"
+>;
+
+export type EndowmentProgramsUpdate = Pick<
+  Required<Endowment>,
+  "id" | "program"
+>;
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
@@ -102,20 +116,16 @@ export type EndowmentsQueryParams = {
   sdgs?: string; // comma separated sdg values.
   kyc_only?: string; // comma separated boolean values
   countries?: string; //comma separated country names
-  hits?: number; // Number of items to be returned per request. If not provided, API defaults to return all
   published: "true";
 };
 
 export interface LeaderboardEntry {
-  // chain: NetworkType;
   charity_logo: string;
   charity_name: string;
   endowment_id: number;
   total_liq: number;
   total_lock: number;
   overall: number;
-  //tier: EndowmentTier
-  //charity_owner:string
 }
 
 export interface Update {

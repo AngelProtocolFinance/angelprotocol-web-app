@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { FieldValues, Path, PathValue, useFormContext } from "react-hook-form";
-import { Classes } from "./types";
 import { unpack } from "./helpers";
+import { Classes } from "./types";
 
 type Props<T extends FieldValues, K extends Path<T>> = PropsWithChildren<{
   name: K;

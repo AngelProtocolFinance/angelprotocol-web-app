@@ -1,1 +1,1 @@
-export * from "./useUpdateEndowmentProfile";
+export * from "./useUpdateEndowment";

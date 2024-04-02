@@ -1,5 +1,5 @@
-import { Link } from "react-router-dom";
 import { RegStep } from "pages/Registration/types";
+import { Link } from "react-router-dom";
 import { useRegState } from "../StepGuard";
 
 type TStep = Exclude<RegStep, 6>; // exclude summary step
@@ -22,7 +22,7 @@ export default function Step({
     <div
       className={`py-6 pl-2 pr-4 grid grid-cols-[1fr_auto_auto] items-center border-b ${
         num === 1 ? "border-t" : ""
-      } border-prim `}
+      } border-gray-l4 `}
     >
       <p className="mr-auto text-left">{title[num]}</p>
 

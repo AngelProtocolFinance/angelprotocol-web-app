@@ -1,5 +1,5 @@
-import * as Yup from "yup";
 import { ChainID } from "types/chain";
+import * as Yup from "yup";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
 export const terraAddrPattern = /^terra1[a-z0-9]{38}$/i;
@@ -12,13 +12,13 @@ export const walletAddr = (chainId: ChainID) =>
   Yup.lazy((val) =>
     val === ""
       ? Yup.string()
-      : Yup.string().matches(
-          walletAddrPatten(chainId),
-          "wallet address not valid"
-        )
+      : Yup.string()
+          .trim()
+          .matches(walletAddrPatten(chainId), "wallet address not valid")
   );
 
 export const url = Yup.string()
+  .trim()
   /** though our validation library also supports http and ftp,
    * Our use case is fairly limited to user giving us links to their social media or website
    * which is widespread to be on https.
@@ -40,7 +40,9 @@ export function walletAddrPatten(chainId: ChainID) {
     case "56":
     case "97":
     case "137":
+    case "42161":
     case "80001":
+    case "421614":
       return evmAddrPattern;
     case "pisco-1":
     case "phoenix-1":
@@ -53,3 +55,10 @@ export function walletAddrPatten(chainId: ChainID) {
       throw new Error(`unhandled ${x}`);
   }
 }
+
+export const password = requiredString
+  .min(8, ({ min }) => `must have at least ${min} characters`)
+  .matches(/[a-z]/, "must have lowercase letters")
+  .matches(/[A-Z]/, "must have uppercase letters")
+  .matches(/\d/, "must have numbers")
+  .matches(/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/, "must have special characters");

@@ -1,10 +1,8 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import {
-  ProfileUpdateMsg,
-  ProgramDeleteMsg,
-  VersionSpecificWalletProfile,
-  isDeleteMsg,
-} from "../types";
+import { TEMP_JWT } from "constants/auth";
+import { APIs } from "constants/urls";
+import { apiEnv } from "services/constants";
+import { RootState } from "store/store";
 import { userIsSignedIn } from "types/auth";
 import {
   Application,
@@ -21,11 +19,13 @@ import {
   Program,
   WalletProfile,
 } from "types/aws";
-import { apiEnv } from "services/constants";
-import { RootState } from "store/store";
-import { TEMP_JWT } from "constants/auth";
-import { APIs } from "constants/urls";
 import { version as v } from "../helpers";
+import {
+  EndowmentUpdate,
+  IdOrSlug,
+  ProgramDeleteMsg,
+  VersionSpecificWalletProfile,
+} from "../types";
 
 const getWalletProfileQuery = (walletAddr: string) =>
   `/${v(2)}/profile/${apiEnv}/user/${walletAddr}`;
@@ -62,6 +62,8 @@ export const aws = createApi({
     "application",
     "banking-applications",
     "banking-application",
+    "registration",
+    "users",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -93,7 +95,7 @@ export const aws = createApi({
     walletProfile: builder.query<VersionSpecificWalletProfile, string>({
       providesTags: ["walletProfile"],
       query: getWalletProfileQuery,
-      transformResponse(res: WalletProfile, meta, walletAddr) {
+      transformResponse(res: WalletProfile, _meta, walletAddr) {
         return {
           ...res,
           version: walletAddr.startsWith("juno") ? "legacy" : "latest",
@@ -116,13 +118,14 @@ export const aws = createApi({
     }),
     endowment: builder.query<
       Endowment,
-      { id: number; fields?: (keyof Endowment)[] }
+      IdOrSlug & { fields?: (keyof Endowment)[] }
     >({
       providesTags: ["profile"],
-      query: ({ id, fields }) => ({
-        url: `v6/endowments/${id}`,
+      query: ({ fields, ...args }) => ({
+        url: "id" in args ? `v7/endowments/${args.id}` : "v7/endowments",
         params: {
           env: apiEnv,
+          slug: args.slug,
           ...(fields ? { fields: fields.join(",") } : {}),
         },
       }),
@@ -132,18 +135,25 @@ export const aws = createApi({
       query: ({ endowId, programId }) =>
         `/${v(1)}/profile/${apiEnv}/program/${endowId}/${programId}`,
     }),
-    editProfile: builder.mutation<
-      EndowmentProfile,
-      ProfileUpdateMsg | ProgramDeleteMsg
-    >({
+    editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
       invalidatesTags: (_, error) =>
         error ? [] : ["endowments", "profile", "walletProfile"],
-      query: (payload) => {
+      query: ({ id, ...payload }) => {
         return {
-          url: `/${v(1)}/profile/endowment`,
-          method: isDeleteMsg(payload) ? "DELETE" : "PUT",
+          url: `/${v(1)}/endowments/${id}`,
+          method: "PATCH",
           headers: { authorization: TEMP_JWT },
           body: payload,
+        };
+      },
+    }),
+    deleteProgram: builder.mutation<EndowmentProfile, ProgramDeleteMsg>({
+      invalidatesTags: (_, error) => (error ? [] : ["profile"]),
+      query: ({ id, program_id }) => {
+        return {
+          url: `/${v(1)}/endowments/${id}/programs/${program_id}`,
+          method: "DELETE",
+          headers: { authorization: TEMP_JWT },
         };
       },
     }),
@@ -172,7 +182,7 @@ export const aws = createApi({
       invalidatesTags: ["application", "applications"],
       query: (verdict) => {
         return {
-          url: `${v(1)}/applications`,
+          url: `${v(2)}/applications`,
           method: "PUT",
           headers: { authorization: TEMP_JWT },
           body: verdict,
@@ -183,13 +193,14 @@ export const aws = createApi({
 });
 
 export const {
+  useDeleteProgramMutation,
   useWalletProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentQuery,
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,
   useProgramQuery,
-  useEditProfileMutation,
+  useEditEndowmentMutation,
   useApplicationsQuery,
   useApplicationQuery,
   useReviewApplicationMutation,
@@ -215,6 +226,7 @@ const endowCardObj: {
   active_in_countries: "",
   sdgs: "",
   id: "",
+  card_img: "",
   logo: "",
   kyc_donors_only: "",
   name: "",
@@ -223,9 +235,10 @@ const endowCardObj: {
 const endowCardFields = Object.keys(endowCardObj).join(",");
 
 const endowSelectorOptionObj: {
-  [key in keyof EndowmentOption]: "";
+  [key in keyof Required<EndowmentOption>]: "";
 } = {
   id: "",
   name: "",
+  hide_bg_tip: "",
 };
 const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");

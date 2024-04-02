@@ -1,5 +1,5 @@
-import withAuth from "contexts/Auth";
 import QueryLoader from "components/QueryLoader";
+import withAuth from "contexts/Auth";
 import Filter from "./Filter";
 import Table from "./Table";
 import usePagination from "./usePagination";
@@ -19,8 +19,8 @@ function BankingApplications() {
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
-    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
-      <h1 className="text-center text-3xl max-lg:font-work col-span-full max-lg:mb-4">
+    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20 lg:pt-10">
+      <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Banking Applications
       </h1>
 

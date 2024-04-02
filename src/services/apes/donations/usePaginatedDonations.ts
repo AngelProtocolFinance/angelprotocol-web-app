@@ -1,37 +1,41 @@
+import { chainIds } from "constants/chainIds";
+import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
-import {
-  DonationMadeByDonor,
-  DonationReceivedByEndow,
-  DonationsQueryParams,
-  PaginatedAWSQueryRes,
-} from "types/aws";
 import {
   updateDonationsQueryData,
   useDonationsQuery,
   useLazyDonationsQuery,
 } from "services/apes";
 import { useSetter } from "store/accessors";
-import useDebouncer from "hooks/useDebouncer";
-import { chainIds } from "constants/chainIds";
+import {
+  DonationMadeByDonor,
+  DonationReceivedByEndow,
+  DonationsQueryParams,
+  PaginatedAWSQueryRes,
+} from "types/aws";
 
 type DonorOwner = { email: string };
 type EndowmentOwner = { endowmentId: string };
 
-type RecordOwner = DonorOwner | EndowmentOwner;
+type Args = (DonorOwner | EndowmentOwner) &
+  Pick<DonationsQueryParams, "status">;
 
-export default function usePaginatedDonationRecords<T extends RecordOwner>(
-  owner: T
-) {
+/**
+ * By default loads finalized donations, unless the `status` field is
+ * explicitly set to "PENDING"
+ */
+export default function usePaginatedDonationRecords<T extends Args>(args: T) {
   const dispatch = useSetter();
 
-  const [query, setQuery] = useState<string>("");
+  const [query, setQuery] = useState("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
-  const id: string = "endowmentId" in owner ? owner.endowmentId : owner.email;
+  const id: string = "endowmentId" in args ? args.endowmentId : args.email;
 
   const [params, setParams] = useState<DonationsQueryParams>({
     id,
     chain_id: chainIds.polygon,
+    status: args.status,
   });
 
   const queryState = useDonationsQuery(params, {
@@ -41,7 +45,7 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
         return { data, ...rest };
       }
 
-      const filtered = data?.Items.filter(({ kycData, ...flatFields }) =>
+      const filtered = data?.Items.filter(({ kycData: _, ...flatFields }) =>
         Object.values(flatFields)
           .reduce<string>((result, val) => `${val}` + result, "")
           .toLocaleLowerCase()
@@ -55,7 +59,8 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
     },
   });
 
-  const { isLoading, isFetching, isError, data, originalArgs } = queryState;
+  const { isLoading, isFetching, isError, error, data, originalArgs } =
+    queryState;
 
   const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
     useLazyDonationsQuery();
@@ -91,6 +96,7 @@ export default function usePaginatedDonationRecords<T extends RecordOwner>(
       : PaginatedAWSQueryRes<DonationMadeByDonor[]>,
     hasMore,
     isError: isError || isErrorNextPage,
+    error: error,
     isLoading: isLoading || isDebouncing,
     isFetching,
     isLoadingNextPage,

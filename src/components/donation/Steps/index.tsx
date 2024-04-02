@@ -1,22 +1,17 @@
-import { WalletProvider } from "@terra-money/wallet-provider";
-import { DonaterConfigFromWidget } from "types/widget";
-import WalletContext from "contexts/WalletContext";
-import { chainOptions } from "constants/chainOptions";
 import CurrentStep from "./CurrentStep";
+import { Config } from "./types";
 
 type Props = {
   className?: string;
-  donaterConfig: DonaterConfigFromWidget | null;
+  donaterConfig: Config | null;
 };
 
 export function Steps({ className = "", donaterConfig }: Props) {
   return (
-    <div className={`grid ${className} w-full`}>
-      <WalletProvider {...chainOptions}>
-        <WalletContext>
-          <CurrentStep config={donaterConfig} />
-        </WalletContext>
-      </WalletProvider>
+    <div
+      className={`grid ${className} w-full @container/steps overflow-clip bg-white min-h-96`}
+    >
+      <CurrentStep config={donaterConfig} />
     </div>
   );
 }

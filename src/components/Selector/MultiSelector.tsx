@@ -1,5 +1,7 @@
 import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
+import Icon, { DrawerIcon } from "components/Icon";
+import { isEmpty } from "helpers";
 import { PropsWithChildren, useState } from "react";
 import {
   FieldValues,
@@ -8,12 +10,11 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { MultiselectorProps } from "./types";
 import { OptionType, ValKey } from "types/components";
-import Icon, { DrawerIcon } from "components/Icon";
-import { isEmpty } from "helpers";
+import { unpack } from "../form/helpers";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
+import { MultiselectorProps } from "./types";
 
 export function MultiSelector<
   T extends FieldValues,
@@ -27,7 +28,7 @@ export function MultiSelector<
   classes,
   searchable,
 }: MultiselectorProps<T, K, V>) {
-  const { container = "", button = "" } = classes || {};
+  const cls = unpack(classes);
 
   ///// ***HOOK FORM*** /////
   const {
@@ -59,7 +60,7 @@ export function MultiSelector<
         by={valueKey}
         onChange={onSelectedChange}
         as="div"
-        className={`relative ${container}`}
+        className={`relative ${cls.container}`}
         multiple
       >
         <FocusableInput ref={ref} />
@@ -67,11 +68,7 @@ export function MultiSelector<
           aria-invalid={invalid}
           aria-disabled={isDisabled}
           as="div"
-          className={`${button} ${styles.selectorButton} ${
-            invalid
-              ? ""
-              : "focus-within:border-gray-d1 focus-within:dark:border-blue-l2"
-          } p-1`}
+          className={`${cls.button} ${styles.selectorButton} focus-within:ring-2 ring-blue-d1 ring-offset-1 aria-invalid:border-red p-1`}
         >
           {({ open }) => (
             <>
@@ -85,7 +82,7 @@ export function MultiSelector<
                   />
                 ))}
                 {searchable ? (
-                  <div className="inline-flex items-center gap-2 text-gray-d1 dark:text-gray pl-3 bg-white/5 rounded">
+                  <div className="inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 bg-white/5 rounded">
                     <Icon type="Search" size={20} />
                     <Combobox.Input
                       className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
@@ -104,12 +101,12 @@ export function MultiSelector<
               <DrawerIcon
                 isOpen={open}
                 size={25}
-                className="justify-self-end dark:text-gray shrink-0"
+                className="justify-self-end dark:text-navy-l2 shrink-0"
               />
             </>
           )}
         </Combobox.Button>
-        <Combobox.Options className={styles.options}>
+        <Combobox.Options className={`${styles.options} ${cls.options}`}>
           {optionsAvailable && (
             <div className="flex justify-between p-4">
               {isAllSelected ? (
@@ -139,7 +136,7 @@ export function MultiSelector<
               </Combobox.Option>
             ))}
           {!optionsAvailable && (
-            <p className="text-gray-d1 dark:text-gray text-sm px-4 py-2">
+            <p className="text-navy-l1 dark:text-navy-l2 text-sm px-4 py-2">
               No options found
             </p>
           )}
@@ -156,18 +153,22 @@ export function MultiSelector<
   );
 }
 
-type SelectedProps<T> = {
+type SelectedProps<T extends ValKey> = {
   option: OptionType<T>;
   selected: OptionType<T>[];
   onChange(value: OptionType<T>[]): void;
 };
 
-function SelectedOption<T>({ selected, onChange, option }: SelectedProps<T>) {
+function SelectedOption<T extends ValKey>({
+  selected,
+  onChange,
+  option,
+}: SelectedProps<T>) {
   const handleRemove = (value: T) =>
     onChange(selected.filter((s) => s.value !== value));
 
   return (
-    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-prim rounded font-semibold text-gray-d1 dark:text-gray uppercase">
+    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-gray-l4 rounded font-semibold text-navy-l1 dark:text-navy-l2 uppercase">
       <span className="max-w-[200px] truncate">{option.label}</span>
       <button
         type="button"
@@ -186,7 +187,7 @@ function Action(props: PropsWithChildren<{ onClick: () => void }>) {
   return (
     <button
       type="button"
-      className="cursor-pointer text-blue hover:text-orange hover:underline"
+      className="cursor-pointer text-blue-d1 hover:text-blue hover:underline"
       onClick={props.onClick}
     >
       {props.children}

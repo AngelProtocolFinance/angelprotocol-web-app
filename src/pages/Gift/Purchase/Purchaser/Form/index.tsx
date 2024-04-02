@@ -1,10 +1,10 @@
+import TokenField from "components/TokenField";
+import { appRoutes } from "constants/routes";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { FormValues as FV } from "../types";
-import TokenField from "components/TokenField";
 import { setDetails } from "slices/gift";
-import { appRoutes } from "constants/routes";
+import { FormValues as FV } from "../types";
 import Recipient from "./Recipient";
 
 export default function Form({ classes = "" }) {
@@ -39,7 +39,7 @@ export default function Form({ classes = "" }) {
 
       <Recipient classes="mt-8" />
 
-      <div className="grid grid-cols-2 gap-5 font-body mt-8 md:mt-12">
+      <div className="grid grid-cols-2 gap-5 mt-8 md:mt-12">
         <Link
           className="btn-outline btn-gift"
           to={`${appRoutes.marketplace}/1`}
@@ -47,7 +47,7 @@ export default function Form({ classes = "" }) {
           Cancel
         </Link>
         <button
-          className="btn-orange btn-gift"
+          className="btn-blue btn-gift"
           disabled={
             !isValid || (wasCompleted ? false : !isDirty) || isSubmitting
           }

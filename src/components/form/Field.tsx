@@ -1,13 +1,13 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { createElement } from "react";
+import { HTMLInputTypeAttribute, createElement } from "react";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
-import { Classes } from "./types";
 import { Label } from ".";
 import { unpack } from "./helpers";
+import { Classes } from "./types";
 
 const textarea = "textarea" as const;
 type TextArea = typeof textarea;
-type InputType = HTMLInputElement["type"] | TextArea;
+type InputType = HTMLInputTypeAttribute | TextArea;
 
 type FieldProps<T extends FieldValues, K extends InputType> = Omit<
   K extends TextArea
@@ -22,7 +22,7 @@ type FieldProps<T extends FieldValues, K extends InputType> = Omit<
   type?: K;
 };
 
-export function Field<T extends FieldValues, K extends InputType = "text">({
+export function Field<T extends FieldValues, K extends InputType = InputType>({
   type = "text" as K,
   label,
   name,
@@ -37,12 +37,13 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
     formState: { errors, isSubmitting },
   } = useFormContext();
 
-  const { container, input, lbl, error } = unpack(classes);
+  const style = unpack(classes);
 
   const id = "__" + String(name);
+
   return (
-    <div className={container + " field"}>
-      <Label className={lbl} required={required} htmlFor={id}>
+    <div className={style.container + " field"} aria-required={required}>
+      <Label className={style.label} required={required} htmlFor={id}>
         {label}
       </Label>
 
@@ -54,14 +55,14 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
         "aria-invalid": !!get(errors, name)?.message,
         disabled: isSubmitting || disabled,
         "aria-disabled": isSubmitting || disabled,
-        className: `${input}`,
+        className: style.input,
         autoComplete: "off",
         spellCheck: false,
       })}
 
       {(tooltip && ( //tooltip in normal flow
-        <p className={error + " text-left mt-2 left-0 text-xs"}>
-          <span className="text-gray-d1 dark:text-gray">{tooltip}</span>{" "}
+        <p className={style.error + " text-left mt-2 left-0 text-xs"}>
+          <span className="text-navy-l1 dark:text-navy-l2">{tooltip}</span>{" "}
           <ErrorMessage
             errors={errors}
             name={name}
@@ -75,7 +76,7 @@ export function Field<T extends FieldValues, K extends InputType = "text">({
           errors={errors}
           name={name}
           as="span"
-          className={error}
+          className={style.error}
         />
       )}
     </div>

@@ -11,8 +11,10 @@ frontend:
         - yarn install
     build:
       commands:
-        - REACT_APP_ENVIRONMENT=${REACT_APP_ENVIRONMENT}
-        - REACT_APP_SENTRY_DSN=${REACT_APP_SENTRY_DSN}
+        - PUBLIC_ENVIRONMENT=${ENVIRONMENT}
+        - PUBLIC_SENTRY_DSN=${SENTRY_DSN}
+        - PUBLIC_STRIPE_KEY=${PUBLIC_STRIPE_KEY}
+        - PUBLIC_PAYPAL_CLIENT_ID=${PUBLIC_PAYPAL_CLIENT_ID}
         - export NODE_OPTIONS="--max-old-space-size=8192"
         - yarn run build
   artifacts:

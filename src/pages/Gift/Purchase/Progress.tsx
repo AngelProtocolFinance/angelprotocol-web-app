@@ -10,10 +10,10 @@ export default function Progress({ classes = "" }: { classes?: string }) {
     >
       <p className="text-center">Donation Method</p>
       <p className="text-center">Finalize Payment</p>
-      <div className="mt-3 relative h-2 w-full col-span-full bg-gray-l3 dark:bg-bluegray rounded-full overflow-hidden">
+      <div className="mt-3 relative h-2 w-full col-span-full bg-gray-l3 dark:bg-navy rounded-full overflow-hidden">
         <div
           style={{ width: `${(step / NUM_STEPS) * 100}%` }}
-          className="h-full bg-orange rounded-full"
+          className="h-full bg-blue rounded-full"
         />
       </div>
     </div>

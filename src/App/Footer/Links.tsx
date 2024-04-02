@@ -1,6 +1,6 @@
 import { LinkGroup } from "../types";
 
-const linkStyles = "font-body font-semibold text-xs";
+const linkStyles = "font-semibold text-xs";
 
 export default function Links({ groups }: { groups: LinkGroup[] }) {
   return (
@@ -23,10 +23,7 @@ export default function Links({ groups }: { groups: LinkGroup[] }) {
 
 function Link(props: { text: string; href?: string }) {
   return props.href ? (
-    <a
-      href={props.href}
-      className={`${linkStyles} cursor-pointer hover:text-blue-l1 active:text-blue transition ease-in-out duration-300`}
-    >
+    <a href={props.href} className={`${linkStyles} hover:underline`}>
       {props.text}
     </a>
   ) : (

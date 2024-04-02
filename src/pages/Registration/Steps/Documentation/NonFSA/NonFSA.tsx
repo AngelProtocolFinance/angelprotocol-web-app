@@ -1,13 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import LoadText from "components/LoadText";
+import { Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { object } from "yup";
-import { FormValues as FV, Props } from "./types";
-import { Field } from "components/form";
-import { LoadText } from "components/registration";
 import { alphanumeric, requiredString } from "schemas/string";
+import { object } from "yup";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
+import { FormValues as FV, Props } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function NonFSA(props: Props) {
@@ -35,10 +35,10 @@ export default function NonFSA(props: Props) {
       <form className="w-full" onSubmit={submit}>
         <Field<FV>
           name="EIN"
-          label="EIN#"
+          label="EIN# (numbers and letters only)"
           required
           classes={{ container: "mb-6 mt-1" }}
-          placeholder="e.g. xx-xxxxxxxxxx"
+          placeholder="e.g. xxxxxxxxxxxx"
         />
 
         <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
@@ -53,7 +53,7 @@ export default function NonFSA(props: Props) {
           <button
             disabled={isSubmitting}
             type="submit"
-            className="py-3 min-w-[8rem] btn-orange btn-reg"
+            className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             <LoadText isLoading={isSubmitting}>Continue</LoadText>
           </button>

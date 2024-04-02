@@ -1,15 +1,16 @@
+import Status, { ErrorStatus, LoadingStatus } from "components/Status";
+import { isEmpty, logger } from "helpers";
 import { ReactElement } from "react";
 import { QueryState } from "types/third-party/redux";
-import Status, { ErrorStatus, LoadingStatus } from "components/Status";
-import { isEmpty } from "helpers";
 
 type Props<T> = {
   queryState: QueryState<T>;
-  messages: {
+  messages?: {
     loading?: string | ReactElement;
     error?: string | ReactElement;
     empty?: T extends any[] ? string | ReactElement : never;
   };
+  dataRequired?: boolean;
   classes?: { container?: string };
   filterFn?: T extends (infer Item)[]
     ? (item: Item, idx: number) => boolean
@@ -20,12 +21,13 @@ type Props<T> = {
 export default function QueryLoader<T>({
   queryState,
   classes = {},
-  messages,
+  messages = {},
+  dataRequired = true,
   children,
   filterFn,
 }: Props<T>) {
   const { container = "" } = classes;
-  const { isLoading, isError, data } = queryState;
+  const { isLoading, isError, data, error } = queryState;
 
   if (isLoading) {
     return renderMessage(
@@ -34,7 +36,8 @@ export default function QueryLoader<T>({
       container
     );
   }
-  if (isError || !data) {
+  if (isError || (dataRequired && !data)) {
+    if (isError) logger.error(error);
     return renderMessage(
       (msg) => <ErrorStatus>{msg || "Failed to get data"}</ErrorStatus>,
       messages.error,

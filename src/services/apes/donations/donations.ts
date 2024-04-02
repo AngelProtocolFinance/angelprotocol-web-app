@@ -1,3 +1,4 @@
+import { IS_TEST } from "constants/env";
 import {
   DonationRecord,
   DonationsQueryParams,
@@ -5,7 +6,6 @@ import {
   ReceiptPayload,
   Token,
 } from "types/aws";
-import { IS_TEST } from "constants/env";
 import { version as v } from "../../helpers";
 import { apes } from "../apes";
 
@@ -16,8 +16,7 @@ export const donations_api = apes.injectEndpoints({
       query: (receiptPayload) => {
         const { transactionId, ...restOfPayload } = receiptPayload;
         return {
-          url: `${v(3)}/donation`,
-          params: { transactionId },
+          url: `crypto-donation/${transactionId}`,
           method: "PUT",
           body: restOfPayload,
         };
@@ -28,9 +27,12 @@ export const donations_api = apes.injectEndpoints({
       DonationsQueryParams
     >({
       providesTags: ["donations"],
-      query: ({ id, chain_id, ...rest }) => {
+      query: ({ id, chain_id, status, ...rest }) => {
         return {
-          url: `${v(3)}/donation/${chain_id}/${id}`,
+          url:
+            status === "PENDING"
+              ? `v1/donations/on-hold/${id}`
+              : `${v(3)}/donation/${chain_id}/${id}`,
           params: rest,
         };
       },

@@ -1,15 +1,15 @@
-import { PropsWithChildren, useState } from "react";
-import { Link } from "react-router-dom";
-import { EstimateStatus } from "./types";
-import { TokenWithAmount } from "types/tx";
-import { WithWallet } from "types/wallet";
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
-import { useSetter } from "store/accessors";
-import { SubmitStep, setStep } from "slices/gift";
-import { humanize } from "helpers";
 import { appRoutes } from "constants/routes";
+import { humanize } from "helpers";
+import { PropsWithChildren, useState } from "react";
+import { Link } from "react-router-dom";
+import { SubmitStep, setStep } from "slices/gift";
+import { useSetter } from "store/accessors";
+import { TokenWithAmount } from "types/tx";
+import { WithWallet } from "types/wallet";
 import CompleteBtn from "./CompleteBtn";
+import { EstimateStatus } from "./types";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();
@@ -129,9 +129,9 @@ function Row({
 }: PropsWithChildren<{ classes?: string; title: string }>) {
   return (
     <div
-      className={`${classes} py-3 text-gray-d1 dark:text-gray flex items-center justify-between w-full border-b border-prim last:border-none`}
+      className={`${classes} py-3 text-navy-l1 dark:text-navy-l2 flex items-center justify-between w-full border-b border-gray-l4 last:border-none`}
     >
-      <p className="text-gray-d2 dark:text-white">{title}</p>
+      <p className="text-navy-d4 dark:text-white">{title}</p>
       {children}
     </div>
   );

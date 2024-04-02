@@ -8,12 +8,12 @@ export default function Newsletter() {
         <p className="font-heading text-sm font-bold uppercase leading-6">
           Subscribe to our newsletter
         </p>
-        <p className="font-body font-normal text-xs text-center lg:text-left">
+        <p className="font-normal text-xs text-center lg:text-left">
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}
           <a
             href={`${BASE_URL}/privacy-policy/`}
-            className="font-bold cursor-pointer underline hover:text-orange-l1 active:text-orange transition ease-in-out duration-300"
+            className="font-bold cursor-pointer hover:underline"
           >
             Privacy Policy
           </a>

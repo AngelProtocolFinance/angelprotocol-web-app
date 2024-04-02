@@ -1,8 +1,6 @@
 import Quill from "quill";
-import "quill/dist/quill.snow.css";
 import { useCallback, useState } from "react";
 import { Props } from "./types";
-import "./richtext.css";
 
 export default function RichText(props: Props) {
   const [numChars, setNumChars] = useState(0);
@@ -25,7 +23,7 @@ export default function RichText(props: Props) {
 
     try {
       quill.setContents(JSON.parse(props.content.value));
-    } catch (err) {
+    } catch (_) {
       //previous rich text format based on draft-js will throw parse error
       //in this case just set it to blank
       quill.setContents(quill.getContents());
@@ -62,9 +60,9 @@ export default function RichText(props: Props) {
     <div
       aria-invalid={props.invalid}
       aria-disabled={props.disabled}
-      className={`relative ${props.classes?.container || ""} ${
-        props.readOnly ? "toolbar-hidden" : ""
-      }`}
+      className={`relative has-[:focus-within]:ring-2 ring-blue-d1 ring-offset-1 ${
+        props.classes?.container || ""
+      } ${props.readOnly ? "toolbar-hidden" : ""}`}
     >
       <div
         style={{ fontFamily: "inherit", fontSize: "inherit" }}

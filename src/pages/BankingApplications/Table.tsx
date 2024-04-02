@@ -1,10 +1,10 @@
-import { Link } from "react-router-dom";
-import { TableProps } from "./types";
-import { BankingApplicationStatus } from "types/aws";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
+import { BankingApplicationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { TableProps } from "./types";
 
 export default function Table({
   applications,
@@ -16,11 +16,11 @@ export default function Table({
 }: TableProps) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
+        rowClass="bg-blue-l4 dark:bg-blue-d7 divide-x divide-blue-l2"
       >
         <Cells
           type="th"
@@ -35,15 +35,15 @@ export default function Table({
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
-        selectedClass="bg-orange-l5 dark:bg-blue-d4"
+        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-blue-l2"
+        selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {applications
           .map((row) => (
             <Cells
               key={row.wiseRecipientID}
               type="td"
-              cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+              cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
@@ -55,7 +55,7 @@ export default function Table({
               </td>
               <Link
                 to={appRoutes.banking_applications + `/${row.wiseRecipientID}`}
-                className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
+                className="text-center w-full inline-block hover:text-blue-d1"
               >
                 <Icon
                   size={24}
@@ -71,7 +71,7 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-prim rounded-b"
+                className="border-t border-blue-l2 rounded-b"
               >
                 <LoadMoreBtn
                   onLoadMore={onLoadMore}

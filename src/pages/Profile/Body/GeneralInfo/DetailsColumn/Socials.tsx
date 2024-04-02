@@ -1,6 +1,6 @@
-import { EndowmentProfile } from "types/aws";
 import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
+import { EndowmentProfile } from "types/aws";
 
 export default function Socials(
   props: Pick<EndowmentProfile, "social_media_urls">
@@ -24,7 +24,7 @@ const SocialsIcon = (props: { href: string; iconType: IconType }) => (
   <ExtLink
     href={props.href}
     aria-label={props.iconType}
-    className="flex items-center justify-center w-10 h-10 border border-gray-d2 rounded hover:text-blue-l1 hover:border-blue-l1 active:text-blue dark:border-white"
+    className="flex items-center justify-center w-10 h-10 border border-gray-d2 rounded hover:text-blue-d1 hover:border-blue-d1 active:text-blue dark:border-white"
   >
     <Icon type={props.iconType} className="w-6 h-6" />
   </ExtLink>

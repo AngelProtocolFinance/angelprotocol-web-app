@@ -1,6 +1,6 @@
 import { Except } from "type-fest";
-import { FV } from "./types";
 import { EndowmentProfile, EndowmentProfileUpdate } from "types/aws";
+import { FV } from "./types";
 
 type RequiredFields = Pick<EndowmentProfileUpdate, "id">;
 type Arg =
@@ -11,7 +11,7 @@ type Arg =
   | {
       type: "final";
       data: Except<FV, "id" | "initial"> & RequiredFields;
-      urls: { image: string; logo: string };
+      urls: { image: string; logo: string; card_img: string };
     };
 
 export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
@@ -20,16 +20,15 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
     return {
       id: d.id,
       active_in_countries: d.active_in_countries,
-      contact_email: d.contact_email,
+      card_img: d.card_img ?? "",
       endow_designation: d.endow_designation,
+      hide_bg_tip: !!d.hide_bg_tip,
       hq_country: d.hq_country,
       image: d.image,
       kyc_donors_only: d.kyc_donors_only,
       logo: d.logo,
       name: d.name,
       overview: d.overview,
-      program: [], //program is updated in /create-program
-      program_id: "",
       published: d.published,
       registration_number: d.registration_number,
       sdgs: d.sdgs,
@@ -45,13 +44,14 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
       street_address: d.street_address,
       tagline: d.tagline ?? "",
       url: d.url ?? "",
+      slug: d.slug ?? "",
     };
   }
 
   const { data: fv, urls } = arg;
   return {
     ...fv,
-    program: [], //program is updated in /create-program
+    card_img: urls.card_img,
     image: urls.image,
     logo: urls.logo,
     hq_country: fv.hq_country.name,

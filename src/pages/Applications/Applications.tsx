@@ -1,6 +1,6 @@
-import withAuth from "contexts/Auth";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import withAuth from "contexts/Auth";
 import Filter from "./Filter";
 import Table from "./Table";
 import usePaginatedApplications from "./usePaginatedApplications";
@@ -22,19 +22,19 @@ function Applications() {
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
-    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-8">
-      <h1 className="text-center text-3xl max-lg:font-work col-span-full max-lg:mb-4">
+    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
+      <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Dashboard
       </h1>
-      <div className="relative flex gap-x-3 items-center border border-prim w-full bg-white dark:bg-blue-d6 rounded">
+      <div className="relative flex gap-x-3 items-center border border-gray-l4 w-full bg-white dark:bg-blue-d6 rounded">
         <Icon
           type="Search"
           size={24}
-          className="text-gray-d2 dark:text-gray absolute top-1/2 -translate-y-1/2 left-3"
+          className="text-navy-d4 dark:text-navy-l2 absolute top-1/2 -translate-y-1/2 left-3"
         />
         <input
           disabled={isError}
-          className="p-3 pl-10 placeholder:text-gray-d1 dark:placeholder:text-gray bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-bluegray-d1"
+          className="p-3 pl-10 placeholder:text-navy-l1 dark:placeholder:text-navy-l2 bg-transparent w-full outline-none disabled:bg-gray-l3 dark:disabled:bg-navy-d3"
           type="text"
           placeholder="Search applications"
           value={query}

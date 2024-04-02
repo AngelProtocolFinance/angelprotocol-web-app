@@ -1,68 +1,33 @@
-import { useEffect, useRef, useState } from "react";
-import { Location, matchRoutes, useLocation } from "react-router-dom";
-import { Link } from "../types";
 import { DappLogo } from "components/Image";
 import { appRoutes } from "constants/routes";
-import DesktopNav from "./DesktopNav";
-import { Opener as MobileNavOpener } from "./MobileNav";
+import { useLocation } from "react-router-dom";
+import { Link } from "../types";
+import NavDropdown from "./NavDropdown";
 import UserMenu from "./UserMenu";
+import useHeaderClassNames from "./useHeaderClassNames";
 
-type Props = { classes: string; links: Link[] };
+type Props = { links: Link[] };
 
-export default function Header({ classes, links }: Props) {
+export default function Header({ links }: Props) {
   const location = useLocation();
-  const isScrolledRef = useRef<boolean>(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const headerClassNames = useHeaderClassNames();
 
-  useEffect(() => {
-    function handleScroll() {
-      const _isScrolled = window.scrollY > 0;
-      if (_isScrolled !== isScrolledRef.current) {
-        setIsScrolled(_isScrolled);
-        isScrolledRef.current = _isScrolled;
-      }
-    }
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const bg =
-    !hasBanner(location) || isScrolled ? "bg-white dark:bg-blue-d3" : "";
   return (
-    <header
-      className={`${classes} ${isScrolled ? "shadow-lg" : ""} ${bg}
-    transition-shadow ease-in-out duration-300 w-full h-[90px] mb-0`}
-    >
-      <div className="grid items-center gap-4 px-5 grid-cols-[auto_1fr_auto] h-full bg-white">
-        <DappLogo />
-        <DesktopNav
-          classes="hidden lg:flex font-heading font-bold uppercase"
-          links={links}
-        />
-        <div className="flex gap-4 justify-self-end items-center">
-          {!(
-            location.pathname === appRoutes.signin ||
-            location.pathname === appRoutes.auth_redirector
-          ) && <UserMenu />}
+    <header className={headerClassNames}>
+      <div className="px-0 md:py-2 h-full w-full bg-white">
+        <div className="grid grid-cols-2 gap-4 padded-container">
+          <DappLogo classes="w-48 h-12" />
+          <div className="flex gap-2 md:gap-4 justify-self-end items-center">
+            {!(
+              location.pathname === appRoutes.signin ||
+              location.pathname === appRoutes.signup ||
+              location.pathname === appRoutes.reset_password ||
+              location.pathname === appRoutes.auth_redirector
+            ) && <UserMenu />}
+            <NavDropdown links={links} />
+          </div>
         </div>
-        <MobileNavOpener classes="flex ml-2 lg:hidden" links={links} />
       </div>
     </header>
-  );
-}
-
-function hasBanner(location: Location): boolean {
-  return !!matchRoutes(
-    [
-      /**routes with banner */
-      appRoutes.marketplace,
-      appRoutes.gift + "/*",
-      appRoutes.donate + "/:id",
-      appRoutes.profile + "/:id",
-      appRoutes.marketplace + "/:id",
-    ].map((r) => ({ path: r })),
-    location
   );
 }

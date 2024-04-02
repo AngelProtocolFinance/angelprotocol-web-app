@@ -1,6 +1,6 @@
+import Icon, { IconType } from "components/Icon";
 import { PropsWithChildren } from "react";
 import { EndowDesignation, EndowmentProfile } from "types/aws";
-import Icon, { IconType } from "components/Icon";
 
 const icons: { [key in EndowDesignation]: IconType } = {
   Charity: "HeartFill",
@@ -25,7 +25,7 @@ export default function EndowDesignationTag({
 }
 
 const Tag = (props: PropsWithChildren<{}>) => (
-  <div className="flex items-center gap-2 px-4 py-2 bg-blue-l4 rounded-full font-body font-semibold text-sm dark:bg-blue-d4">
+  <div className="flex items-center gap-2 px-4 py-2 bg-blue-l4 rounded-full font-semibold text-sm dark:bg-blue-d4">
     {props.children}
   </div>
 );

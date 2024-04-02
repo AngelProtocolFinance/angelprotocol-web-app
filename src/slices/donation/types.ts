@@ -1,63 +1,117 @@
+import { Donor, Endowment, GuestDonor } from "types/aws";
 import { ChainID } from "types/chain";
-import { OptionType } from "types/components";
-import { Country } from "types/components";
+import { DetailedCurrency, OptionType } from "types/components";
+import { DonationSource } from "types/lists";
 import { TokenWithAmount, TxPackage } from "types/tx";
 
-export type DonationRecipient = {
-  id: number;
-  name: string;
-  isKYCRequired: boolean;
-  isFiscalSponsored: boolean;
+type From<T extends { step: string }, U extends keyof T = never> = Omit<
+  Required<T>,
+  "step" | U
+> & { [key in U]?: T[key] };
+
+export type DonationRecipient = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
+
+type BaseDonationDetais = {
+  source: DonationSource;
 };
 
-export type DonationDetails = {
-  method: "stripe" | "crypto"; //use to preserve selected method
+export type CryptoDonationDetails = BaseDonationDetais & {
+  method: "crypto"; //use to preserve selected method
   token: TokenWithAmount;
-  pctLiquidSplit: number; // <input range value transformed to number via onChange
   chainId: OptionType<ChainID>;
-  userOptForKYC: boolean;
 };
 
-export type KYC = {
-  name: { first: string; last: string };
-  address: { street: string; complement: string };
-  city: string;
-  postalCode: string;
-  country: Country;
-  state: string;
-  usState: OptionType<string>;
-  email: string;
-  agreedToGetUpdates: boolean;
+type FiatDonationDetails = BaseDonationDetais & {
+  amount: string;
+  currency: DetailedCurrency;
 };
+
+export type StripeDonationDetails = {
+  method: "stripe";
+  frequency: "once" | "monthly";
+} & FiatDonationDetails;
+
+export type StocksDonationDetails = {
+  method: "stocks";
+  symbol: string;
+  numShares: number;
+};
+export type DafDonationDetails = {
+  method: "daf";
+} & FiatDonationDetails;
+
+export type DonationDetails =
+  | StripeDonationDetails
+  | CryptoDonationDetails
+  | StocksDonationDetails
+  | DafDonationDetails;
+
+export function hasEmail(
+  details: DonationDetails
+): details is StripeDonationDetails | DafDonationDetails {
+  return details.method === "stripe" || details.method === "daf";
+}
 
 type InitStep = {
   step: "init";
   recipient?: DonationRecipient;
 };
 
-export type FormStep = {
+export type FormStep<T extends DonationDetails = DonationDetails> = {
   step: "donate-form";
-  details?: DonationDetails;
-} & Omit<Required<InitStep>, "step">;
+  details?: T;
+} & From<InitStep>;
 
-export type KYCStep = {
-  step: "kyc-form";
-  kyc?: KYC;
-} & Omit<Required<FormStep>, "step">;
+export type StripeFormStep = FormStep<StripeDonationDetails>;
+export type CryptoFormStep = FormStep<CryptoDonationDetails>;
+export type StockFormStep = FormStep<StocksDonationDetails>;
+export type DafFormStep = FormStep<DafDonationDetails>;
 
-export type SubmitStep = {
+export type SplitsStep = {
+  step: "splits";
+  liquidSplitPct?: number;
+} & From<FormStep>;
+
+/** edge case: custom tip > donation  */
+export type TipFormat = "pct" | "amount";
+export type TipStep = {
+  step: "tip";
+  tip: number;
+  format?: TipFormat;
+} & From<SplitsStep>;
+
+export type SummaryStep = {
+  step: "summary";
+  donor?: Donor;
+} & From<TipStep>;
+
+export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-  //donation can be submitted without KYC
-} & Omit<KYCStep, "step">;
+} & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
 
-export type DonationState = InitStep | FormStep | KYCStep | SubmitStep | TxStep;
+export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
+export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
+export type StockCheckoutStep = SubmitStep<StocksDonationDetails>;
+export type DafCheckoutStep = SubmitStep<DafDonationDetails>;
 
-export type TxStatus = { loadingMsg: string } | "error" | { hash: string };
-export type TxStep = {
+export type TxStatus =
+  | { loadingMsg: string }
+  | "error"
+  | { hash: string; guestDonor: GuestDonor | undefined };
+export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;
-} & Omit<SubmitStep, "step">;
+} & From<CryptoSubmitStep>;
 
-export type DonateArgs = { donation: SubmitStep } & TxPackage;
+export type DonationState =
+  | InitStep
+  | FormStep
+  | SplitsStep
+  | TipStep
+  | SummaryStep
+  | SubmitStep
+  | CryptoResultStep;
+
+export type DonateArgs = { donation: CryptoSubmitStep } & TxPackage;
 
 export type DonationStep = DonationState["step"];

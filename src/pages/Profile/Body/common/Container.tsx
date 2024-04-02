@@ -1,5 +1,5 @@
-import React, { PropsWithChildren, useState } from "react";
 import Icon from "components/Icon";
+import React, { PropsWithChildren, useState } from "react";
 
 type Props = PropsWithChildren<{
   title: string;
@@ -17,7 +17,7 @@ export default function Container({
 
   return (
     <div
-      className={`flex flex-col gap-px w-full border border-prim rounded dark:bg-blue-d6 ${classes}`}
+      className={`flex flex-col gap-px w-full border border-gray-l4 rounded dark:bg-blue-d6 ${classes}`}
     >
       {expanded ? (
         <StaticHeader title={title} />
@@ -42,7 +42,7 @@ type HeaderProps = {
 function StaticHeader({ title, classes = "", children }: HeaderProps) {
   return (
     <div
-      className={`flex items-center justify-between px-8 py-5 w-full bg-orange-l5 border-prim rounded dark:bg-blue-d7 ${classes}`}
+      className={`flex items-center justify-between px-8 py-5 w-full bg-blue-l4 border-gray-l4 rounded dark:bg-blue-d7 ${classes}`}
     >
       <span className="font-heading font-bold text-xl">{title}</span>
       {children}
@@ -59,7 +59,7 @@ function Header(props: {
     <StaticHeader classes={props.isOpen ? "border-b" : ""} title={props.title}>
       <button
         onClick={props.onClick}
-        className="flex items-center justify-center p-px w-10 h-10 border border-prim rounded"
+        className="flex items-center justify-center p-px w-10 h-10 border border-gray-l4 rounded"
         aria-label="toggle section content's visibility"
       >
         <Icon type={props.isOpen ? "Dash" : "Plus"} />

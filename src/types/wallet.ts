@@ -1,5 +1,5 @@
-import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import { Keplr } from "@keplr-wallet/types";
+import { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import { ChainID } from "./chain";
 import { RequestArguments } from "./evm";
 

@@ -1,10 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { object, string } from "yup";
-import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
-import { useErrorContext } from "contexts/ErrorContext";
 import Icon from "components/Icon";
+import { useErrorContext } from "contexts/ErrorContext";
+import { useForm } from "react-hook-form";
+import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
+import { object, string } from "yup";
 
 type FV = { email: string };
 
@@ -21,6 +21,7 @@ export default function SubscriptionForm() {
     resolver: yupResolver(
       object({
         email: string()
+          .trim()
           .email("Invalid email format")
           .required("Please enter your email."),
       })
@@ -51,7 +52,7 @@ export default function SubscriptionForm() {
         <input
           {...register("email")}
           id="email"
-          className="flex items-center border border-gray-l3 rounded-sm text-xs font-body text-black outline-none w-full h-10 px-3 bg-white placeholder:text-gray-d1 disabled:bg-gray-100 disabled:text-gray-800 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 dark:placeholder:text-gray xl:text-sm"
+          className="text-xs field-input enabled:focus:ring-blue-d2 border-none w-full h-10 px-3 bg-white"
           placeholder="Enter your email address here"
           disabled={isSubmitting}
         />
@@ -59,13 +60,13 @@ export default function SubscriptionForm() {
           errors={errors}
           as="p"
           name="email"
-          className="w-full text-xs text-red-l4 dark:text-red-l2 text-center"
+          className="w-full text-xs text-white text-center"
         />
         {isSuccess && !errors.email && <SuccessMessage />}
       </div>
       <button
         type="submit"
-        className="btn-orange px-3 rounded-sm text-xs h-10 w-[80vw] lg:w-full xl:w-min"
+        className="btn-blue enabled:hover:bg-blue-l4 enabled:hover:text-navy-d4 px-4 text-xs h-10 w-[80vw] lg:w-full xl:w-min"
         disabled={isSubmitting}
       >
         Subscribe

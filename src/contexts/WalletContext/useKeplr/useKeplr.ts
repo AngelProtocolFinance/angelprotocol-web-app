@@ -1,7 +1,7 @@
+import { juno, terraMainnet } from "constants/chains";
 import { useEffect, useState } from "react";
 import { ChainID } from "types/chain";
 import { CosmosProviderState, Wallet, WalletMeta } from "types/wallet";
-import { juno, terraMainnet } from "constants/chains";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 
 const actionKey = `keplr__pref`;
@@ -42,7 +42,7 @@ export default function useKeplr(): Wallet {
         isSwitching: false,
       });
       saveUserAction(actionKey, "connect");
-    } catch (err) {
+    } catch (_) {
       if (isUserInitiated) {
         return alert("Failed to connect to wallet.");
       }

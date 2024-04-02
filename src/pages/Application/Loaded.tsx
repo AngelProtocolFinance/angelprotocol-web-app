@@ -1,10 +1,10 @@
-import { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
-import { ApplicationDetails } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
+import { useModalContext } from "contexts/ModalContext";
+import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
+import { ApplicationDetails } from "types/aws";
 import Container from "./Container";
 import Prompt from "./Prompt";
 
@@ -31,7 +31,7 @@ export default function Loaded(props: ApplicationDetails) {
         <div
           className={`${
             prevVerdict === "Active" ? "bg-green" : "bg-red"
-          } text-white px-2 py-1 text-xs font-work uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
+          } text-white px-2 py-1 text-xs uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
         >
           {prevVerdict === "Active" ? "Approved" : "Rejected"}
         </div>
@@ -41,18 +41,16 @@ export default function Loaded(props: ApplicationDetails) {
           <span className="text-sm font-semibold uppercase">
             Rejection reason:
           </span>
-          <span className="uppercase text-sm font-work">
-            {r.RejectionReason}
-          </span>
+          <span className="uppercase text-sm">{r.RejectionReason}</span>
         </div>
       )}
       <div className="flex max-sm:flex-col gap-x-4">
         <span className="text-sm font-semibold uppercase">Application ID:</span>
-        <span className="uppercase text-sm font-work">{r.PK}</span>
+        <span className="text-sm">{r.PK}</span>
       </div>
       <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
         <span className="text-sm font-semibold uppercase">Date submitted:</span>
-        <span className="uppercase text-sm font-work">
+        <span className="uppercase text-sm">
           {new Date(r.RegistrationDate).toLocaleDateString()}
         </span>
       </div>
@@ -100,7 +98,7 @@ export default function Loaded(props: ApplicationDetails) {
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <Link
           to={appRoutes.applications}
-          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-outline"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back
         </Link>
@@ -108,7 +106,7 @@ export default function Loaded(props: ApplicationDetails) {
           disabled={!!prevVerdict}
           onClick={review("reject")}
           type="button"
-          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-red"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
         >
           reject
         </button>
@@ -116,7 +114,7 @@ export default function Loaded(props: ApplicationDetails) {
           disabled={!!prevVerdict}
           onClick={review("approve")}
           type="button"
-          className="px-4 py-1 min-w-[6rem] font-work text-sm uppercase btn-green"
+          className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-green"
         >
           approve
         </button>
@@ -149,14 +147,14 @@ function Row(props: Props) {
       </dt>
       <div
         aria-hidden={true}
-        className="max-sm:hidden w-px border-r border-prim last:border-none"
+        className="max-sm:hidden w-px border-r border-gray-l4 last:border-none"
       />
       <dd className="px-3 max-sm:pb-3 sm:p-3 flex items-center text-sm">
         {props.children}
       </dd>
       <div
         aria-hidden={true}
-        className="h-px col-span-full border-b border-prim last:border-none"
+        className="h-px col-span-full border-b border-gray-l4 last:border-none"
       />
     </>
   );

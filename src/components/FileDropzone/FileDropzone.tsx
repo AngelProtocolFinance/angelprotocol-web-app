@@ -40,26 +40,23 @@ export default function FileDropzone<
   return (
     <div>
       <div
-        aria-invalid={invalid}
+        data-invalid={invalid}
+        data-drag={isDragActive}
+        data-disabled={isSubmitting}
         {...getRootProps({
-          className: `relative grid place-items-center rounded border border-dashed w-full h-[11.375rem] focus:outline-none ${
-            isDragActive
-              ? "border-gray-d1 dark:border-gray"
-              : invalid
-              ? "border-red focus:shadow-focus"
-              : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
-          } ${
-            disabled
-              ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
-              : "bg-gray-l6 dark:bg-blue-d5 cursor-pointer"
-          } ${props.className ?? ""}`,
+          className: `relative ${props.className ?? ""} grid place-items-center rounded border border-gray-l2 border-dashed w-full h-[11.375rem]
+          focus:outline-none focus:ring-2 data-[drag="true"]:ring-2 has-[:active]:ring-2 ring-blue-d1 ring-offset-2 
+          hover:bg-blue-l5
+          data-[disabled="true"]:bg-gray-l5 data-[disabled="true"]:pointer-events-none
+          data-[invalid="true"]:border-red
+          `,
           ref,
         })}
       >
         <input {...getInputProps({ id: props.name })} />
         <DropzoneText {...value} fieldName={props.name} formErrors={errors} />
       </div>
-      <p className="text-xs text-gray-d1 dark:text-gray mt-2">
+      <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
         Valid types are:
         {props.specs.mimeTypes
           .map((m) => m.split("/")[1].toUpperCase())

@@ -1,11 +1,11 @@
-import { ObjectSchema, array, date, object } from "yup";
-import { FV, FormMilestone } from "./types";
-import { SchemaShape } from "schemas/types";
-import { ImageMIMEType } from "types/lists";
 import { ImgLink } from "components/ImgEditor";
 import { genFileSchema } from "schemas/file";
 import { richTextContent } from "schemas/shape";
 import { requiredString } from "schemas/string";
+import { SchemaShape } from "schemas/types";
+import { ImageMIMEType } from "types/lists";
+import { ObjectSchema, array, date, object } from "yup";
+import { FV, FormMilestone } from "./types";
 
 export const VALID_MIME_TYPES: ImageMIMEType[] = [
   "image/jpeg",
@@ -14,7 +14,7 @@ export const VALID_MIME_TYPES: ImageMIMEType[] = [
   "image/svg+xml",
 ];
 
-const MAX_SIZE_IN_BYTES = 1e6;
+export const MAX_SIZE_IN_BYTES = 1e6;
 export const MAX_CHARS = 500;
 
 // we only need to validate the pre-crop image and if we confirm it is valid
@@ -26,7 +26,7 @@ const fileObj = object().shape<SchemaShape<ImgLink>>({
 const milesStoneSchema = object<any, SchemaShape<FormMilestone>>({
   milestone_date: date().typeError("invalid date"),
   milestone_description: richTextContent({ maxChars: MAX_CHARS }),
-  milestone_title: requiredString,
+  milestone_title: requiredString.trim(),
   milestone_media: fileObj,
 });
 

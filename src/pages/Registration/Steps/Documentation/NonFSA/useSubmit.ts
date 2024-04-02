@@ -1,10 +1,10 @@
+import { useErrorContext } from "contexts/ErrorContext";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { FormValues as FV, Props } from "./types";
 import { useUpdateRegMutation } from "services/aws/registration";
-import { useErrorContext } from "contexts/ErrorContext";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
+import { FormValues as FV, Props } from "./types";
 
 type Args = {
   props: Props;

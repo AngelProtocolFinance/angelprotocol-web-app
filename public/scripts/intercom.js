@@ -3,6 +3,8 @@ var APP_ID = "fh3v40sb";
 
 window.intercomSettings = {
   app_id: APP_ID,
+  background_color: "#2D89C8",
+  action_color: "#2D89C8",
 };
 (function () {
   var w = window;

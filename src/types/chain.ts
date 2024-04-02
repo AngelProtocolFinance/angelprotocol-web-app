@@ -5,6 +5,9 @@ export type EVMChainID =
   //ethereum
   | "1"
   | "5"
+  // arbitrum
+  | "42161"
+  | "421614"
   //binance
   | "56"
   | "97";

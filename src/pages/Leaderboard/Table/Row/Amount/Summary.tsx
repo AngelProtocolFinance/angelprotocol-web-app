@@ -1,12 +1,12 @@
-import { useModalContext } from "contexts/ModalContext";
 import Modal from "components/Modal";
+import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { AmountProps } from ".";
 
 export default function Summary({ locked, liquid, type }: AmountProps) {
   const { closeModal } = useModalContext();
   return (
-    <Modal className="grid content-start bg-gray-l6 dark:bg-blue-d5 text-gray-d2 border border-prim dark:text-white font-work fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
+    <Modal className="grid content-start bg-gray-l6 dark:bg-blue-d5 text-navy-d4 border border-gray-l4 dark:text-white fixed-center z-20 p-8 rounded-2xl shadow-lg max-w-md">
       <Amount title="principal" value={locked} />
       <Amount title="impact" value={liquid} />
       <button
@@ -44,7 +44,7 @@ function Text(props: {
   }
 
   return (
-    <p className="text-xs leading-snug mb-2 text-gray-d1 dark:text-gray-l4">
+    <p className="text-xs leading-snug mb-2 text-navy-l1 dark:text-navy-l5">
       <span className="font-bold">{props.title} :</span> {textBlob}
     </p>
   );

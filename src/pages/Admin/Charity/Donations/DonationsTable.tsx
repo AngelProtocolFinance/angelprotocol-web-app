@@ -1,8 +1,8 @@
-import { DonationReceivedByEndow, KYCData } from "types/aws";
-import { usePaginatedDonationRecords } from "services/apes";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import { usePaginatedDonationRecords } from "services/apes";
+import { DonationReceivedByEndow, KYCData } from "types/aws";
 import { useAdminContext } from "../../Context";
 import Table from "./Table";
 
@@ -90,9 +90,7 @@ const csvHeadersDonations: {
 
 const csvHeadersReceipts: { key: keyof KYCData; label: string }[] = [
   { key: "fullName", label: "Full Name" },
-  { key: "email", label: "Email" },
-  { key: "consent_marketing", label: "Consented to Marketing" },
-  { key: "consent_tax", label: "Consented to tax" },
+  { key: "kycEmail", label: "Email" },
   { key: "streetAddress", label: "Street Address" },
   { key: "city", label: "City" },
   { key: "zipCode", label: "Zip Code" },

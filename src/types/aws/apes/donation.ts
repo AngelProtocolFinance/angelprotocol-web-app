@@ -1,15 +1,25 @@
+import { DonationSource } from "types/lists";
 import { ChainID } from "../../chain";
+
+export type Donor = {
+  email: string;
+  firstName: string;
+  lastName: string;
+};
+
+export type GuestDonor = {
+  email: string;
+  fullName: string;
+};
 
 export type KYCData = {
   fullName: string; // "John Doe"
-  email: string; // "john@doe.email.com"
+  kycEmail: string; // "john@doe.email.com"
   streetAddress: string;
   city: string;
   state: string;
   zipCode: string; //2000
   country: string;
-  consent_tax: boolean;
-  consent_marketing: boolean;
 };
 
 type DonationRecordBase = {
@@ -52,22 +62,33 @@ export type DonationsQueryParams = {
   beforeDate?: string;
   chainName?: string;
   denomination?: string;
-  status?: string;
+  status?: "PENDING" | "RECEIVED";
   start?: number; //to load next page, set start to ItemCutOff + 1
   limit?: number; // Number of items to be returned per request
 };
 
-export type TxLogPayload = {
+export type CryptoDonation = {
   amount: number;
-  chainId: string;
-  destinationChainId: string;
-  chainName: string;
-  charityName: string;
+  tipAmount: number;
   denomination: string;
-  splitLiq: string; //"50"
-  transactionId: string;
-  transactionDate: string;
   endowmentId: number;
+  chainId: string;
+  transactionId: string;
   walletAddress: string;
-  kycData?: KYCData;
+  /** 1 - 100 */
+  splitLiq: number;
+  chainName: string;
+  source: DonationSource;
+  donor: Donor;
+};
+
+export type FiatCurrencyData = {
+  currencies: {
+    /** ISO 3166-1 alpha-3 code */
+    currency_code: string;
+    minimum_amount: number;
+    /** unit/usd */
+    rate: number;
+    timestamp: string;
+  }[];
 };
