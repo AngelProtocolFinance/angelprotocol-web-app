@@ -164,7 +164,7 @@ function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
 function docs(reg: DoneDocs["Registration"]): TDocumentation["Documentation"] {
   const doc = reg.Documentation;
   if (doc.DocType === "Non-FSA") {
-    return { EIN: doc.EIN, DocType: doc.DocType };
+    return { EIN: doc.EIN, DocType: doc.DocType, Claim: doc.Claim };
   }
   return {
     DocType: doc.DocType,

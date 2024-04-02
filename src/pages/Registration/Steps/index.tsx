@@ -65,7 +65,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
       {claim && (
         <div
           data-claim
-          className="bg-blue-l2 col-span-full md:mb-8 rounded-t p-2 text-navy-l1"
+          className="bg-blue-l4 col-span-full md:mb-8 rounded-t p-2 text-navy-l1 text-sm"
         >
           Claiming{" "}
           <ExtLink
@@ -116,6 +116,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 }
 
 function getClaim(reg: RegistrationState) {
+  console.log(reg);
   /** before documentation, claim intent is determined by initial record */
   if (reg.step < 4) return reg.data.init.claim;
 
