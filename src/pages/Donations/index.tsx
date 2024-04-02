@@ -46,7 +46,9 @@ export default withAuth(function Donations({ user }) {
         classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-blue px-8 py-3"
         headers={csvHeaders}
         data={data?.Items || []}
-        filename="donations.csv"
+        filename={
+          status === "RECEIVED" ? "donations.csv" : "pending-donations.csv"
+        }
       >
         Export to CSV
       </CsvExporter>
