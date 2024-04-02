@@ -24,9 +24,19 @@ export default function Loaded(props: ApplicationDetails) {
       ? r.RegistrationStatus
       : null;
 
+  const claim = doc.DocType === "Non-FSA" ? doc.Claim : undefined;
+
   return (
     <>
       <h3 className="text-lg">{r.OrganizationName}</h3>
+      {claim && (
+        <ExtLink
+          className="-mt-7 justify-self-start text-sm rounded text-blue-d1 hover:underline"
+          href={`${appRoutes.marketplace}/${claim.id}`}
+        >
+          Claim: {claim.name}, EIN: {claim.ein}
+        </ExtLink>
+      )}
       {prevVerdict && (
         <div
           className={`${
