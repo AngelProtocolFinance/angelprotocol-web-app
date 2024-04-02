@@ -16,9 +16,7 @@ export default function DetailsColumn({ className = "" }) {
     <div className="flex flex-col gap-6 w-full">
       <Balances />
       <div className={`${className} w-full lg:w-96`}>
-        <div
-          className={`flex flex-col gap-8 w-full p-8 border border-gray-l4 rounded`}
-        >
+        <div className="flex flex-col gap-8 w-full p-8 border border-gray-l4 rounded">
           {p.registration_number && (
             <Detail title="registration no.">{p.registration_number}</Detail>
           )}
@@ -36,7 +34,7 @@ export default function DetailsColumn({ className = "" }) {
           )}
           <DonateButton className="w-full" />
         </div>
-        {!(p.claimed ?? true) && (
+        {p.claimed === false && (
           <Link
             to={`${appRoutes.register}/${regRoutes.welcome}`}
             state={
