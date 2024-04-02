@@ -36,19 +36,21 @@ export default function DetailsColumn({ className = "" }) {
           )}
           <DonateButton className="w-full" />
         </div>
-        <Link
-          to={`${appRoutes.register}/${regRoutes.welcome}`}
-          state={
-            {
-              ein: p.registration_number,
-              name: p.name,
-              id: p.id,
-            } satisfies EndowClaim
-          }
-          className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l4 rounded"
-        >
-          Claim this organization
-        </Link>
+        {!(p.claimed ?? true) && (
+          <Link
+            to={`${appRoutes.register}/${regRoutes.welcome}`}
+            state={
+              {
+                ein: p.registration_number,
+                name: p.name,
+                id: p.id,
+              } satisfies EndowClaim
+            }
+            className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l4 rounded"
+          >
+            Claim this organization
+          </Link>
+        )}
       </div>
     </div>
   );
