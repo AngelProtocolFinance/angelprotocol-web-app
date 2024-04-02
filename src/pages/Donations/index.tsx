@@ -6,10 +6,11 @@ import { isEmpty } from "helpers";
 import { useState } from "react";
 import { usePaginatedDonationRecords } from "services/apes";
 import { DonationMadeByDonor, DonationsQueryParams } from "types/aws";
-import DonationsSection from "./DonationsSection";
 import Filter from "./Filter";
+import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
 import StatusTabs from "./StatusTabs";
+import Table from "./Table";
 
 export default withAuth(function Donations({ user }) {
   const [status, setStatus] =
@@ -97,13 +98,24 @@ export default withAuth(function Donations({ user }) {
             }}
           >
             {(donations) => (
-              <DonationsSection
-                donations={donations}
-                disabled={isLoadingOrError}
-                hasMore={hasMore}
-                isLoading={isLoadingNextPage}
-                onLoadMore={loadNextPage}
-              />
+              <div className="grid">
+                <Table
+                  donations={donations}
+                  disabled={isLoadingOrError}
+                  hasMore={hasMore}
+                  isLoading={isLoadingNextPage}
+                  onLoadMore={loadNextPage}
+                  classes="hidden max-lg:mt-4 lg:table"
+                />
+                <MobileTable
+                  donations={donations}
+                  disabled={isLoadingOrError}
+                  hasMore={hasMore}
+                  isLoading={isLoadingNextPage}
+                  onLoadMore={loadNextPage}
+                  classes="lg:hidden max-lg:my-4"
+                />
+              </div>
             )}
           </QueryLoader>
         </div>
