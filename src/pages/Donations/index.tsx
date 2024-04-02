@@ -1,14 +1,15 @@
-import withAuth from "contexts/Auth";
-import { usePaginatedDonationRecords } from "services/apes";
-import DonationsSection from "./DonationsSection";
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
-import Filter from "./Filter";
-import { DonationMadeByDonor, DonationsQueryParams } from "types/aws";
-import { useState } from "react";
-import { isEmpty } from "helpers";
 import QueryLoader from "components/QueryLoader";
+import withAuth from "contexts/Auth";
+import { isEmpty } from "helpers";
+import { useState } from "react";
+import { usePaginatedDonationRecords } from "services/apes";
+import { DonationMadeByDonor, DonationsQueryParams } from "types/aws";
+import DonationsSection from "./DonationsSection";
+import Filter from "./Filter";
 import NoDonations from "./NoDonations";
+import StatusButton from "./StatusButton";
 
 export default withAuth(function Donations({ user }) {
   const [selectedStatus, setSelectedType] =
@@ -71,30 +72,16 @@ export default withAuth(function Donations({ user }) {
       />
       <div className="grid col-span-full">
         <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
-          <button
-            onClick={() => setSelectedType("RECEIVED")}
-            className={classNames(
-              "w-full rounded-lg py-2.5 text-sm font-medium leading-5",
-              "ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
-              selectedStatus === "RECEIVED"
-                ? "bg-white text-blue-700 shadow"
-                : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
-            )}
-          >
-            {"RECEIVED" satisfies DonationsQueryParams["status"]}
-          </button>
-          <button
-            onClick={() => setSelectedType("PENDING")}
-            className={classNames(
-              "w-full rounded-lg py-2.5 text-sm font-medium leading-5",
-              "ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2",
-              selectedStatus === "PENDING"
-                ? "bg-white text-blue-700 shadow"
-                : "text-blue-100 hover:bg-white/[0.12] hover:text-white"
-            )}
-          >
-            {"PENDING" satisfies DonationsQueryParams["status"]}
-          </button>
+          <StatusButton
+            clickHandler={setSelectedType}
+            selected={selectedStatus === "RECEIVED"}
+            status="RECEIVED"
+          />
+          <StatusButton
+            clickHandler={setSelectedType}
+            selected={selectedStatus === "PENDING"}
+            status="PENDING"
+          />
         </div>
         <QueryLoader
           queryState={{
@@ -134,7 +121,3 @@ const csvHeaders: { key: keyof DonationMadeByDonor; label: string }[] = [
   { key: "date", label: "Date" },
   { key: "hash", label: "Transaction Hash" },
 ];
-
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
-}
