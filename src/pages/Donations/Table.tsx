@@ -28,7 +28,7 @@ export default function Table({
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded rounded-tl-none border border-separate border-spacing-0 border-blue-l2`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection type="thead" rowClass="bg-blue-l4 divide-x divide-blue-l2">
         <Cells

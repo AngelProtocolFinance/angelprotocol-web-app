@@ -9,14 +9,15 @@ import { DonationMadeByDonor, DonationsQueryParams } from "types/aws";
 import DonationsSection from "./DonationsSection";
 import Filter from "./Filter";
 import NoDonations from "./NoDonations";
+import StatusTabs from "./StatusTabs";
 
 export default withAuth(function Donations({ user }) {
-  const [selectedStatus, setSelectedType] =
+  const [status, setStatus] =
     useState<DonationsQueryParams["status"]>("RECEIVED");
 
   const queryState = usePaginatedDonationRecords({
     email: user.email,
-    status: selectedStatus,
+    status: status,
   });
 
   const {
@@ -70,40 +71,8 @@ export default withAuth(function Donations({ user }) {
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <div className="grid col-span-full">
-        <div className="flex rounded-t-xl bg-blue-900/20">
-          <button
-            onClick={() => setSelectedType("RECEIVED")}
-            className={`relative w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
-              ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
-              border-t border-x ${
-                selectedStatus === "RECEIVED"
-                  ? "bg-gray-l5"
-                  : "bg-gray-l3 hover:bg-gray-l4"
-              }`}
-          >
-            {"RECEIVED" satisfies DonationsQueryParams["status"]}
-            {selectedStatus === "RECEIVED" && (
-              // covers part of the below content's border to make it seem they are all part of the same component
-              <div className="h-1 w-full bg-gray-l5 absolute -bottom-1" />
-            )}
-          </button>
-          <button
-            onClick={() => setSelectedType("PENDING")}
-            className={`relative w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
-              ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
-              border-t border-x ${
-                selectedStatus === "PENDING"
-                  ? "bg-gray-l5"
-                  : "bg-gray-l3 hover:bg-gray-l4"
-              }`}
-          >
-            {"PENDING" satisfies DonationsQueryParams["status"]}
-            {selectedStatus === "PENDING" && (
-              // covers part of the below content's border to make it seem they are all part of the same component
-              <div className="h-1 w-full bg-gray-l5 absolute -bottom-1" />
-            )}
-          </button>
-        </div>
+        <StatusTabs status={status} changeStatus={setStatus} />
+
         <div className="p-5 bg-gray-l5 border rounded-xl rounded-tl-none">
           <QueryLoader
             queryState={{
@@ -120,7 +89,7 @@ export default withAuth(function Donations({ user }) {
               empty: (
                 <NoDonations
                   classes="mt-8 place-self-center col-span-full"
-                  status={selectedStatus}
+                  status={status}
                 />
               ),
             }}
