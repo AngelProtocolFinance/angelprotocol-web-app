@@ -14,7 +14,7 @@ export default function StatusTabs(props: Props) {
         onClick={() => props.changeStatus("RECEIVED")}
         className={`relative group w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
         focus:outline-none border-t border-x ${
-          isReceived ? "bg-gray-l5 z-10" : "bg-gray-l3 hover:bg-gray-l4 -mr-4"
+          isReceived ? "bg-gray-l6 z-10" : "bg-gray-l4 hover:bg-gray-l5 -mr-4"
         }`}
       >
         <span
@@ -25,14 +25,14 @@ export default function StatusTabs(props: Props) {
         </span>
         {isReceived && (
           // covers part of the below content's border to make it seem they are all part of the same component
-          <div className="h-1 w-full bg-gray-l5 absolute -bottom-1" />
+          <div className="h-1 w-full bg-gray-l6 absolute -bottom-1" />
         )}
       </button>
       <button
         onClick={() => props.changeStatus("PENDING")}
         className={`relative group w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
         focus:outline-none border-t border-x ${
-          !isReceived ? "bg-gray-l5 z-10" : "bg-gray-l3 hover:bg-gray-l4 -ml-4"
+          !isReceived ? "bg-gray-l6 z-10" : "bg-gray-l4 hover:bg-gray-l5 -ml-4"
         }`}
       >
         <span
@@ -43,7 +43,7 @@ export default function StatusTabs(props: Props) {
         </span>
         {!isReceived && (
           // covers part of the below content's border to make it seem they are all part of the same component
-          <div className="h-1 w-full bg-gray-l5 absolute -bottom-1" />
+          <div className="h-1 w-full bg-gray-l6 absolute -bottom-1" />
         )}
       </button>
     </div>
