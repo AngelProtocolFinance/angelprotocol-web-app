@@ -9,7 +9,6 @@ import { DonationMadeByDonor, DonationsQueryParams } from "types/aws";
 import DonationsSection from "./DonationsSection";
 import Filter from "./Filter";
 import NoDonations from "./NoDonations";
-import StatusButton from "./StatusButton";
 
 export default withAuth(function Donations({ user }) {
   const [selectedStatus, setSelectedType] =
@@ -72,47 +71,71 @@ export default withAuth(function Donations({ user }) {
       />
       <div className="grid col-span-full">
         <div className="flex rounded-t-xl bg-blue-900/20">
-          <StatusButton
-            clickHandler={setSelectedType}
-            selected={selectedStatus === "RECEIVED"}
-            status="RECEIVED"
-          />
-          <StatusButton
-            clickHandler={setSelectedType}
-            selected={selectedStatus === "PENDING"}
-            status="PENDING"
-          />
+          <button
+            onClick={() => setSelectedType("RECEIVED")}
+            className={`relative w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
+              ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+              border-t border-x ${
+                selectedStatus === "RECEIVED"
+                  ? "bg-gray-l5"
+                  : "bg-gray-l3 hover:bg-gray-l4"
+              }`}
+          >
+            {"RECEIVED" satisfies DonationsQueryParams["status"]}
+            {selectedStatus === "RECEIVED" && (
+              // covers part of the below content's border to make it seem they are all part of the same component
+              <div className="h-1 w-full bg-gray-l5 absolute -bottom-1" />
+            )}
+          </button>
+          <button
+            onClick={() => setSelectedType("PENDING")}
+            className={`relative w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
+              ring-white/60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2"
+              border-t border-x ${
+                selectedStatus === "PENDING"
+                  ? "bg-gray-l5"
+                  : "bg-gray-l3 hover:bg-gray-l4"
+              }`}
+          >
+            {"PENDING" satisfies DonationsQueryParams["status"]}
+            {selectedStatus === "PENDING" && (
+              // covers part of the below content's border to make it seem they are all part of the same component
+              <div className="h-1 w-full bg-gray-l5 absolute -bottom-1" />
+            )}
+          </button>
         </div>
-        <QueryLoader
-          queryState={{
-            data: data?.Items,
-            isLoading,
-            isFetching,
-            error: error,
-            isError: isError,
-          }}
-          messages={{
-            fetching: "Loading donations...",
-            loading: "Loading donations...",
-            error: "Failed to get donations",
-            empty: (
-              <NoDonations
-                classes="mt-8 place-self-center col-span-full"
-                status={selectedStatus}
+        <div className="p-5 bg-gray-l5 border rounded-xl rounded-tl-none">
+          <QueryLoader
+            queryState={{
+              data: data?.Items,
+              isLoading,
+              isFetching,
+              error: error,
+              isError: isError,
+            }}
+            messages={{
+              fetching: "Loading donations...",
+              loading: "Loading donations...",
+              error: "Failed to get donations",
+              empty: (
+                <NoDonations
+                  classes="mt-8 place-self-center col-span-full"
+                  status={selectedStatus}
+                />
+              ),
+            }}
+          >
+            {(donations) => (
+              <DonationsSection
+                donations={donations}
+                disabled={isLoadingOrError}
+                hasMore={hasMore}
+                isLoading={isLoadingNextPage}
+                onLoadMore={loadNextPage}
               />
-            ),
-          }}
-        >
-          {(donations) => (
-            <DonationsSection
-              donations={donations}
-              disabled={isLoadingOrError}
-              hasMore={hasMore}
-              isLoading={isLoadingNextPage}
-              onLoadMore={loadNextPage}
-            />
-          )}
-        </QueryLoader>
+            )}
+          </QueryLoader>
+        </div>
       </div>
     </div>
   );
