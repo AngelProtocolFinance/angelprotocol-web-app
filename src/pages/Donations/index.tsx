@@ -95,7 +95,10 @@ export default withAuth(function Donations({ user }) {
             loading: "Loading donations...",
             error: "Failed to get donations",
             empty: (
-              <NoDonations classes="mt-8 place-self-center col-span-full" />
+              <NoDonations
+                classes="mt-8 place-self-center col-span-full"
+                status={selectedStatus}
+              />
             ),
           }}
         >
