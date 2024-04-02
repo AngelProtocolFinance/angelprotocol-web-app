@@ -18,7 +18,7 @@ export default withAuth(function Donations({ user }) {
 
   const queryState = usePaginatedDonationRecords({
     email: user.email,
-    status: status,
+    status,
   });
 
   const {
