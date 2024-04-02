@@ -9,18 +9,17 @@ export default function StatusTabs(props: Props) {
   const isReceived = props.status === "RECEIVED";
 
   return (
-    <div className="flex rounded-t-xl bg-blue-900/20">
+    <div className="flex">
       <button
         onClick={() => props.changeStatus("RECEIVED")}
         className={`relative group w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
-        focus:outline-none focus:ring-2"
-        border-t border-x ${
+        focus:outline-none border-t border-x ${
           isReceived ? "bg-gray-l5 z-10" : "bg-gray-l3 hover:bg-gray-l4 -mr-4"
         }`}
       >
         <span
-          className="group-focus:outline-none group-focus:rounded-sm 
-        group-focus:outline-2 group-focus:outline-offset-2 group-focus:outline-blue-d1"
+          className="group-focus-visible:outline-none group-focus-visible:rounded-sm 
+        group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-blue-d1"
         >
           {"RECEIVED" satisfies DonationsQueryParams["status"]}
         </span>
@@ -32,14 +31,13 @@ export default function StatusTabs(props: Props) {
       <button
         onClick={() => props.changeStatus("PENDING")}
         className={`relative group w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
-        focus:outline-none focus:ring-2"
-        border-t border-x ${
+        focus:outline-none border-t border-x ${
           !isReceived ? "bg-gray-l5 z-10" : "bg-gray-l3 hover:bg-gray-l4 -ml-4"
         }`}
       >
         <span
-          className="group-focus:outline-none group-focus:rounded-sm 
-        group-focus:outline-2 group-focus:outline-offset-2 group-focus:outline-blue-d1"
+          className="group-focus-visible:outline-none group-focus-visible:rounded-sm 
+        group-focus-visible:outline-2 group-focus-visible:outline-offset-2 group-focus-visible:outline-blue-d1"
         >
           {"PENDING" satisfies DonationsQueryParams["status"]}
         </span>
