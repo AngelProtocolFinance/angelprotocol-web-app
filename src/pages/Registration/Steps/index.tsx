@@ -116,7 +116,6 @@ export default function Steps({ classes = "" }: { classes?: string }) {
 }
 
 function getClaim(reg: RegistrationState) {
-  console.log(reg);
   /** before documentation, claim intent is determined by initial record */
   if (reg.step < 4) return reg.data.init.claim;
 
