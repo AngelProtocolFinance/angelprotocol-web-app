@@ -33,10 +33,10 @@ export default function Form({ widgetConfig, details }: Props) {
       schema<FV>({
         frequency: requiredString,
         amount: stringNumber(
-          (s) => s.required("required"),
+          (s) => s.required("Please enter an amount"),
           (n) =>
             n
-              .positive("must be greater than 0")
+              .positive("Amount must be greater than 0")
               .when(currencyKey, (values, schema) => {
                 const [currency] = values as [Currency | undefined];
                 return currency?.min
