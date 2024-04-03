@@ -46,7 +46,6 @@ export type DonationMadeByDonor = DonationRecordBase & {
   id: RecipientEndowId;
   chainName: string;
   charityName: string;
-  donationFinalized: boolean;
   usdValue: number;
 };
 

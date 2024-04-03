@@ -33,7 +33,7 @@ export default function Body() {
           <div className="flex flex-col items-center lg:items-start w-full gap-2 text-center lg:text-left">
             <div className="flex max-sm:flex-col items-center gap-3">
               <h3 className="font-header text-3xl w-full max-w-2xl break-words">
-                {p.claimed ?? (
+                {(p.claimed ?? true) && (
                   <VerifiedIcon
                     classes="relative inline bottom-px mr-2"
                     size={24}
