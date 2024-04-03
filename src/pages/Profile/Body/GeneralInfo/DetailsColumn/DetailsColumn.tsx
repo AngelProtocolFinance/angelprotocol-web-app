@@ -1,5 +1,8 @@
+import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
 import { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
+import { EndowClaim } from "types/aws";
 import { useProfileContext } from "../../../ProfileContext";
 import DonateButton from "../../DonateButton";
 import Balances from "./Balances";
@@ -12,26 +15,40 @@ export default function DetailsColumn({ className = "" }) {
   return (
     <div className="flex flex-col gap-6 w-full">
       <Balances />
-
-      <div
-        className={`${className} flex flex-col gap-8 w-full lg:w-96 p-8 border border-gray-l4 rounded text-navy-d4 dark:bg-blue-d6  dark:text-white`}
-      >
-        {p.registration_number && (
-          <Detail title="registration no.">{p.registration_number}</Detail>
+      <div className={`${className} w-full lg:w-96`}>
+        <div className="flex flex-col gap-8 w-full p-8 border border-gray-l4 rounded">
+          {p.registration_number && (
+            <Detail title="registration no.">{p.registration_number}</Detail>
+          )}
+          {p.street_address && (
+            <Detail title="address">{p.street_address}</Detail>
+          )}
+          <Detail title="active in">
+            {isEmpty(active_in_countries)
+              ? p.hq_country
+              : active_in_countries.join(", ")}
+          </Detail>
+          <Tags {...p} />
+          {p.social_media_urls && (
+            <Socials social_media_urls={p.social_media_urls} />
+          )}
+          <DonateButton className="w-full" />
+        </div>
+        {p.claimed === false && (
+          <Link
+            to={`${appRoutes.register}/${regRoutes.welcome}`}
+            state={
+              {
+                ein: p.registration_number,
+                name: p.name,
+                id: p.id,
+              } satisfies EndowClaim
+            }
+            className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l4 rounded"
+          >
+            Claim this organization
+          </Link>
         )}
-        {p.street_address && (
-          <Detail title="address">{p.street_address}</Detail>
-        )}
-        <Detail title="active in">
-          {isEmpty(active_in_countries)
-            ? p.hq_country
-            : active_in_countries.join(", ")}
-        </Detail>
-        <Tags {...p} />
-        {p.social_media_urls && (
-          <Socials social_media_urls={p.social_media_urls} />
-        )}
-        <DonateButton className="w-full" />
       </div>
     </div>
   );

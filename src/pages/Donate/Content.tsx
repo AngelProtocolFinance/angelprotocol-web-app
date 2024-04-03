@@ -14,7 +14,7 @@ import OrgCard from "./OrgCard";
 type Props = DonationRecipient & {
   logo: string;
   banner: string;
-  tagline: string;
+  tagline?: string;
 };
 
 function Content(props: Props) {

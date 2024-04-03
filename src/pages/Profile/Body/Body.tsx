@@ -2,6 +2,7 @@ import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
+import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
 import { Route, Routes } from "react-router-dom";
 import { useProfileContext } from "../ProfileContext";
@@ -32,7 +33,13 @@ export default function Body() {
           <div className="flex flex-col items-center lg:items-start w-full gap-2 text-center lg:text-left">
             <div className="flex max-sm:flex-col items-center gap-3">
               <h3 className="font-header text-3xl w-full max-w-2xl break-words">
-                {p.name}
+                {(p.claimed ?? true) && (
+                  <VerifiedIcon
+                    classes="relative inline bottom-px mr-2"
+                    size={24}
+                  />
+                )}
+                <span>{p.name}</span>
               </h3>
               <BookmarkBtn endowId={p.id} />
             </div>
@@ -46,16 +53,18 @@ export default function Body() {
               </span>
             )}
 
-            <span className="flex items-center gap-2">
-              <Icon type="Globe" className="h-6 w-6 text-blue-d1" />
-              <ExtLink
-                href={p.url}
-                title="organization website"
-                className="cursor-pointer underline decoration-1 hover:text-blue-d1 hover:decoration-2"
-              >
-                {p.url.replace(/^https?:\/\//i, "")}
-              </ExtLink>
-            </span>
+            {p.url && (
+              <span className="flex items-center gap-2">
+                <Icon type="Globe" className="h-6 w-6 text-blue-d1" />
+                <ExtLink
+                  href={p.url}
+                  title="organization website"
+                  className="cursor-pointer underline decoration-1 hover:text-blue-d1 hover:decoration-2"
+                >
+                  {p.url.replace(/^https?:\/\//i, "")}
+                </ExtLink>
+              </span>
+            )}
           </div>
         </div>
 

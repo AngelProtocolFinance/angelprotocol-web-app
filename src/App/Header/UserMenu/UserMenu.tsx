@@ -3,7 +3,7 @@ import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
 import { Link, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
-import { SignInRouteState } from "types/routeStates";
+import { SignInRouteState } from "types/auth";
 
 export default function UserMenu() {
   const user = useGetter((state) => state.auth.user);
