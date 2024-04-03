@@ -12,11 +12,11 @@ export default function StatusTabs(props: Props) {
     <div className="flex">
       <button
         onClick={() => props.changeStatus("RECEIVED")}
-        className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
+        className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
         focus:outline-none border-t border-x ${
           isReceived
-            ? "bg-gray-l6 border-gray-l4 z-10"
-            : "bg-gray-l3 hover:bg-gray-l5 border-gray-l3 hover:border-gray-l4 -mr-4"
+            ? "bg-blue-l4 text-navy-d4 border-gray-l4 z-10"
+            : "bg-gray-l3 hover:bg-gray-l5 text-white hover:text-current border-gray-l3 hover:border-gray-l4 -mr-4"
         }`}
       >
         <span
@@ -25,18 +25,14 @@ export default function StatusTabs(props: Props) {
         >
           {"RECEIVED" satisfies DonationsQueryParams["status"]}
         </span>
-        {isReceived && (
-          // covers part of the below content's border to make it seem they are all part of the same component
-          <div className="h-1 w-full bg-gray-l6 absolute -bottom-1" />
-        )}
       </button>
       <button
         onClick={() => props.changeStatus("PENDING")}
-        className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-medium leading-5
+        className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
         focus:outline-none border-t border-x ${
           !isReceived
-            ? "bg-gray-l6 border-gray-l4 z-10"
-            : "bg-gray-l3 hover:bg-gray-l5 border-gray-l3 hover:border-gray-l4 -ml-4"
+            ? "bg-blue-l4 text-navy-d4 border-gray-l4 z-10"
+            : "bg-gray-l3 hover:bg-gray-l5 text-white hover:text-current border-gray-l3 hover:border-gray-l4 -ml-4"
         }`}
       >
         <span
@@ -45,10 +41,6 @@ export default function StatusTabs(props: Props) {
         >
           {"PENDING" satisfies DonationsQueryParams["status"]}
         </span>
-        {!isReceived && (
-          // covers part of the below content's border to make it seem they are all part of the same component
-          <div className="h-1 w-full bg-gray-l6 absolute -bottom-1" />
-        )}
       </button>
     </div>
   );
