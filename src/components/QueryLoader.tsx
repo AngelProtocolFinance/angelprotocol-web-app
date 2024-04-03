@@ -6,6 +6,7 @@ import { QueryState } from "types/third-party/redux";
 type Props<T> = {
   queryState: QueryState<T>;
   messages?: {
+    fetching?: string | ReactElement;
     loading?: string | ReactElement;
     error?: string | ReactElement;
     empty?: T extends any[] ? string | ReactElement : never;
@@ -27,12 +28,19 @@ export default function QueryLoader<T>({
   filterFn,
 }: Props<T>) {
   const { container = "" } = classes;
-  const { isLoading, isError, data, error } = queryState;
+  const { isLoading, isFetching, isError, data, error } = queryState;
 
   if (isLoading) {
     return renderMessage(
       (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
       messages.loading,
+      container
+    );
+  }
+  if (isFetching && messages.fetching) {
+    return renderMessage(
+      (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
+      messages.fetching,
       container
     );
   }

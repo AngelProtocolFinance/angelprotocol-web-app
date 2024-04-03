@@ -77,7 +77,6 @@ export default function Table({
             USD Value
           </HeaderButton>
           <>TX Hash</>
-          <span className="flex justify-center">Status</span>
           <span className="flex justify-center">Receipt</span>
         </Cells>
       </TableSection>
@@ -123,17 +122,6 @@ export default function Table({
                   {row.hash}
                 </ExtLink>
               )}
-              <div className="text-center text-white">
-                <span
-                  className={`${
-                    row.donationFinalized
-                      ? "bg-green"
-                      : "bg-gray-d1 dark:bg-gray"
-                  } px-2 py-0.5 rounded`}
-                >
-                  {row.donationFinalized ? "RECEIVED" : "PENDING"}
-                </span>
-              </div>
               <button
                 className="w-full flex justify-center"
                 onClick={() => showKYCForm(row.hash)}

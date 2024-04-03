@@ -1,6 +1,6 @@
 import { chainIds } from "constants/chainIds";
 import useDebouncer from "hooks/useDebouncer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   updateDonationsQueryData,
   useDonationsQuery,
@@ -37,6 +37,10 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
     chain_id: chainIds.polygon,
     status: args.status,
   });
+
+  useEffect(() => {
+    setParams((prev) => ({ ...prev, status: args.status }));
+  }, [args.status]);
 
   const queryState = useDonationsQuery(params, {
     skip: !id,
