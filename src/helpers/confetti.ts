@@ -100,6 +100,7 @@ export function confetti(trigger: HTMLElement) {
       }
 
       if (time - startTime < DURATION_MS) {
+        removeOffscreenFettis(fettis, trigger);
         requestAnimationFrame(update);
         return;
       }
@@ -115,3 +116,25 @@ export function confetti(trigger: HTMLElement) {
     requestAnimationFrame(update);
   });
 }
+
+function removeOffscreenFettis(fettis: Fetti[], trigger: HTMLElement) {
+  for (const fetti of fettis) {
+    if (isElementOffscreen(fetti.element)) {
+      if (fetti.element.parentNode === trigger) {
+        trigger.removeChild(fetti.element);
+      }
+    }
+  }
+}
+
+const isElementOffscreen = (el: HTMLElement) => {
+  var rect = el.getBoundingClientRect();
+  const windowBufferPercentage = 0.025;
+  const heightBuffer = window.innerHeight * windowBufferPercentage;
+  const widthBuffer = window.innerWidth * windowBufferPercentage;
+
+  return (
+    rect.x > window.innerWidth - widthBuffer ||
+    rect.y > window.innerHeight - heightBuffer
+  );
+};
