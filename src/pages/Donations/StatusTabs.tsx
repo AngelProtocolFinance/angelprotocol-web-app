@@ -15,7 +15,7 @@ export default function StatusTabs(props: Props) {
         className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
         focus:outline-none border-t border-x ${
           isReceived
-            ? "bg-blue-l4 text-navy-d4 border-gray-l4 z-10"
+            ? "bg-blue-l4 border-gray-l4 z-10"
             : "bg-blue-l5 hover:bg-blue-l3 border-gray-l4 -mr-4"
         }`}
       >
@@ -31,7 +31,7 @@ export default function StatusTabs(props: Props) {
         className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
         focus:outline-none border-t border-x ${
           !isReceived
-            ? "bg-blue-l4 text-navy-d4 border-gray-l4 z-10"
+            ? "bg-blue-l4 border-gray-l4 z-10"
             : "bg-blue-l5 hover:bg-blue-l3 border-gray-l4 -ml-4"
         }`}
       >
