@@ -77,7 +77,7 @@ export default withAuth(function Donations({ user }) {
       <div className="grid col-span-full">
         <StatusTabs status={status} changeStatus={setStatus} />
 
-        <div className="p-5 bg-gray-l6 border border-gray-l4 rounded-b-xl sm:rounded-tr-xl grid">
+        <div className="p-5 bg-gray-l6 border border-gray-l4 rounded-b sm:rounded-tr grid">
           <QueryLoader
             queryState={{
               data: data?.Items,

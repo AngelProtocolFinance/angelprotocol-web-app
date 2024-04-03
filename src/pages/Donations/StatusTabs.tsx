@@ -12,7 +12,7 @@ export default function StatusTabs(props: Props) {
     <div className="flex">
       <button
         onClick={() => props.changeStatus("RECEIVED")}
-        className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
+        className={`relative group w-full sm:w-40 rounded-t py-2.5 text-sm font-bold leading-5
         focus:outline-none border-t border-x ${
           isReceived
             ? "bg-blue-l4 text-navy-d4 border-gray-l4 z-10"
@@ -28,7 +28,7 @@ export default function StatusTabs(props: Props) {
       </button>
       <button
         onClick={() => props.changeStatus("PENDING")}
-        className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
+        className={`relative group w-full sm:w-40 rounded-t py-2.5 text-sm font-bold leading-5
         focus:outline-none border-t border-x ${
           !isReceived
             ? "bg-blue-l4 text-navy-d4 border-gray-l4 z-10"
