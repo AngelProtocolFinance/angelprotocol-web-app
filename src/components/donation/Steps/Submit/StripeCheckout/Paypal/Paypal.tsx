@@ -43,7 +43,7 @@ export default function Paypal(props: StripeCheckoutStep) {
       options={{
         clientId: PAYPAL_CLIENT_ID,
         commit: true,
-        currency: "USD",
+        currency: details.currency.code.toUpperCase(),
         enableFunding: "paylater",
         disableFunding: "card,venmo",
       }}
