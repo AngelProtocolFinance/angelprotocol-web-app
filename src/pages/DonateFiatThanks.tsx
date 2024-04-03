@@ -16,7 +16,7 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
   const user = useGetter((state) => state.auth.user);
 
   return (
-    <div className="grid justify-self-center m-auto max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
+    <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {
