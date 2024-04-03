@@ -12,6 +12,7 @@ import useSubmit from "./useSubmit";
 
 export default function NonFSA(props: Props) {
   const { data } = useRegState<4>();
+  const claimEin = data.init.claim?.ein;
   const { doc } = props;
   const methods = useForm<FV>({
     resolver: yupResolver(
@@ -25,7 +26,7 @@ export default function NonFSA(props: Props) {
     defaultValues: doc
       ? doc
       : {
-          EIN: "",
+          EIN: claimEin ?? "",
         },
   });
   const { submit, isSubmitting } = useSubmit({ props, form: methods });
@@ -34,6 +35,8 @@ export default function NonFSA(props: Props) {
     <FormProvider {...methods}>
       <form className="w-full" onSubmit={submit}>
         <Field<FV>
+          /** claimer should not change EIN */
+          disabled={!!claimEin}
           name="EIN"
           label="EIN# (numbers and letters only)"
           required

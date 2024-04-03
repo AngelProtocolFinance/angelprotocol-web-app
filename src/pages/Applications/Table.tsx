@@ -33,6 +33,7 @@ export default function Table({
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
+          <td className="w-4">type</td>
           <HeaderButton
             onClick={handleHeaderClick("OrganizationName")}
             _activeSortKey={sortKey}
@@ -84,6 +85,12 @@ export default function Table({
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
+              <span className="text-xs font-bold upppercase">
+                {row.Documentation.DocType === "Non-FSA" &&
+                row.Documentation.Claim
+                  ? "Claim"
+                  : "New"}
+              </span>
               <>{row.OrganizationName}</>
               <>{new Date(row.RegistrationDate).toLocaleDateString()}</>
               <>{row.HqCountry}</>

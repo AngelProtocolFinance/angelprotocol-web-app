@@ -2,6 +2,7 @@ import { Except } from "type-fest";
 import {
   BankingDetails,
   ContactDetails,
+  EndowClaim,
   FSAInquiry,
   NonFSADocumentation,
   OrgDetails,
@@ -13,6 +14,7 @@ import {
 export type InitReg = {
   reference: string;
   email: string;
+  claim?: EndowClaim;
 };
 
 export type FormFSAInquiry = FSAInquiry;
@@ -48,24 +50,31 @@ type Step5Data = Data<
   "banking"
 >;
 
+/** contact details */
 type RegStep1 = {
   step: 1;
   data: Step1Data;
 };
 
+/** org details */
 type RegStep2 = {
   step: 2;
   data: Step2Data;
 };
+
+/** fsa inquiry */
 type RegStep3 = {
   step: 3;
   data: Step3Data;
 };
 
-type RegStep4 = {
+/** documentation */
+export type RegStep4 = {
   step: 4;
   data: Step4Data;
 };
+
+/** banking */
 type RegStep5 = {
   step: 5;
   data: Step5Data;

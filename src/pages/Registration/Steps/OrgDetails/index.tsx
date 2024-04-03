@@ -10,7 +10,7 @@ import { FormValues } from "./types";
 
 function OrgDetails() {
   const {
-    data: { orgDetails: org },
+    data: { orgDetails: org, init },
   } = useRegState<2>();
 
   const methods = useForm<FormValues>({
@@ -20,7 +20,10 @@ function OrgDetails() {
       : {
           Website: "",
           UN_SDG: [],
-          HqCountry: { name: "", flag: "", code: "" },
+          HqCountry: init.claim
+            ? /** all unclaimed endowments are US-based */
+              { name: "United States", flag: "🇺🇸", code: "US" }
+            : { name: "", flag: "", code: "" },
           EndowDesignation: { value: "", label: "" },
           ActiveInCountries: [],
           isAnonymousDonationsAllowed: "Yes",

@@ -5,7 +5,7 @@ import { ComponentType, createContext, useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { AuthenticatedUser, CognitoGroup } from "types/auth";
-import { SignInRouteState } from "types/routeStates";
+import { SignInRouteState } from "types/auth";
 
 export default function withAuth<Props>(
   Component: ComponentType<Props & { user: AuthenticatedUser }>,
@@ -24,7 +24,10 @@ export default function withAuth<Props>(
     }
 
     if (!user) {
-      const state: SignInRouteState = { from: location.pathname };
+      const state: SignInRouteState = {
+        from: location.pathname,
+        data: location.state,
+      };
       return <Navigate to={appRoutes.signin} state={state} replace />;
     }
 

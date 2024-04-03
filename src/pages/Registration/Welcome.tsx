@@ -6,14 +6,21 @@ import { appRoutes, regRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
+import { EndowClaim } from "types/aws";
 import { steps } from "./routes";
 import { InitReg } from "./types";
 
 export default function Welcome({ classes = "" }: { classes?: string }) {
   const { email } = useAuthenticatedUser();
-  const { data: reg, isLoading, isError } = useNewApplicationQuery({ email });
+  const { state } = useLocation();
+  const claim = state as EndowClaim | undefined;
+  const {
+    data: reg,
+    isLoading,
+    isError,
+  } = useNewApplicationQuery({ email, claim });
 
   useEffect(() => {
     if (!reg) return;
