@@ -29,8 +29,8 @@ export default function Form({ widgetConfig, details }: Props) {
     resolver: yupResolver(
       schema<FV>({
         amount: stringNumber(
-          (s) => s.required("required"),
-          (n) => n.positive("must be greater than 0")
+          (s) => s.required("Please enter an amount"),
+          (n) => n.positive("Amount must be greater than 0")
         ),
       })
     ),

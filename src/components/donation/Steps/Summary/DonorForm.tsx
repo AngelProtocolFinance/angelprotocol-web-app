@@ -16,9 +16,11 @@ export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
     defaultValues: donor || { firstName: "", lastName: "", email: "" },
     resolver: yupResolver(
       object({
-        firstName: string().required("required"),
-        lastName: string().required("required"),
-        email: string().required("required").email("invalid"),
+        firstName: string().required("Please enter your first name"),
+        lastName: string().required("Please enter your last name"),
+        email: string()
+          .required("Please enter your email")
+          .email("Please check your email for correctness"),
       })
     ),
   });
