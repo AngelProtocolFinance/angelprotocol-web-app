@@ -29,7 +29,9 @@ export default function useCards() {
       sort: sort ? `${sort.key}+${sort.direction}` : undefined,
       page: 1, // always starts at page 1
       sdgs: sdgs.join(","),
-      claimed: verified.join(","),
+      claimed:
+        /** search for both verified/unverified if user didn't explicitly narrow verified status */
+        searchText && isEmpty(verified) ? "true,false" : verified.join(","),
       ..._params,
     });
 
