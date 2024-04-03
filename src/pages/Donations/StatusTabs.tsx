@@ -13,10 +13,8 @@ export default function StatusTabs(props: Props) {
       <button
         onClick={() => props.changeStatus("RECEIVED")}
         className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
-        focus:outline-none border-t border-x ${
-          isReceived
-            ? "bg-blue-l4 border-gray-l4 z-10"
-            : "bg-blue-l5 hover:bg-blue-l3 border-gray-l4 -mr-4"
+        focus:outline-none border-t border-x border-gray-l4 ${
+          isReceived ? "bg-blue-l4 z-10" : "bg-blue-l5 hover:bg-blue-l3 -mr-4"
         }`}
       >
         <span
@@ -29,10 +27,8 @@ export default function StatusTabs(props: Props) {
       <button
         onClick={() => props.changeStatus("PENDING")}
         className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
-        focus:outline-none border-t border-x ${
-          !isReceived
-            ? "bg-blue-l4 border-gray-l4 z-10"
-            : "bg-blue-l5 hover:bg-blue-l3 border-gray-l4 -ml-4"
+        focus:outline-none border-t border-x border-gray-l4 ${
+          !isReceived ? "bg-blue-l4 z-10" : "bg-blue-l5 hover:bg-blue-l3 -ml-4"
         }`}
       >
         <span
