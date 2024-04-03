@@ -117,6 +117,8 @@ export function confetti(trigger: HTMLElement) {
   });
 }
 
+// Inspiration taken from:
+// https://github.com/daniel-lundin/dom-confetti/pull/35/files#diff-4080554e0937ffce8b737b24c50236633f05f3f4c370405f001f79db500e95d0R34
 function removeOffscreenFettis(fettis: Fetti[], trigger: HTMLElement) {
   for (const fetti of fettis) {
     if (isElementOffscreen(fetti.element)) {
