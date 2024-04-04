@@ -6,6 +6,7 @@ export type Bucket = "endow-profiles" | "endow-reg";
 export const bucketURL = "s3.amazonaws.com";
 
 const SPACES = /\s+/g;
+
 export async function uploadFiles(
   files: File[],
   bucket: Bucket
@@ -36,7 +37,7 @@ export async function uploadFiles(
 }
 
 export function getFullURL(baseURL: string, fileName: string) {
-  return `${baseURL}-${fileName.replace(SPACES, "_")}`;
+  return encodeURI(`${baseURL}-${fileName.replace(SPACES, "_")}`);
 }
 
 function toDataURL(file: File): Promise<string> {
