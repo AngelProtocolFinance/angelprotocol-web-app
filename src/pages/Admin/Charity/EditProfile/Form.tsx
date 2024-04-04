@@ -42,15 +42,18 @@ export default function Form() {
       onSubmit={editProfile}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
-      <ExtLink
-        href={`${appRoutes.marketplace}/${id}`}
-        className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
-      >
-        View Profile
-      </ExtLink>
-      <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
-        Publish profile
-      </Toggle>
+      <div className="flex justify-between items-center">
+        <ExtLink
+          href={`${appRoutes.marketplace}/${id}`}
+          className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
+        >
+          View Profile
+        </ExtLink>
+        <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
+          Publish profile
+        </Toggle>
+      </div>
+
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public
