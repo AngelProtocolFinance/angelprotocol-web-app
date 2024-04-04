@@ -105,6 +105,7 @@ export default withAuth(function Donations({ user }) {
                   disabled={isLoadingOrError}
                   hasMore={hasMore}
                   isLoading={isLoadingNextPage}
+                  status={status}
                   onLoadMore={loadNextPage}
                   classes="hidden max-lg:mt-4 lg:table"
                 />
@@ -112,6 +113,7 @@ export default withAuth(function Donations({ user }) {
                   donations={donations}
                   disabled={isLoadingOrError}
                   hasMore={hasMore}
+                  status={status}
                   isLoading={isLoadingNextPage}
                   onLoadMore={loadNextPage}
                   classes="lg:hidden max-lg:my-4"

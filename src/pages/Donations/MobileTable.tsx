@@ -13,6 +13,7 @@ export default function MobileTable({
   disabled,
   isLoading,
   hasMore,
+  status,
   onLoadMore,
 }: TableProps) {
   const { sorted } = useSort(donations, "date");
@@ -65,14 +66,16 @@ export default function MobileTable({
                 <Row title="Amount">{humanize(row.amount, 3)}</Row>
                 <Row title="USD Value">{`$${humanize(row.usdValue, 2)}`}</Row>
                 <Row title="TX Hash">{row.hash}</Row>
-                <Row title="Receipt" className="rounded-b">
-                  <button
-                    className="block"
-                    onClick={() => showKYCForm(row.hash)}
-                  >
-                    <Icon type="FatArrowDownload" className="text-2xl" />
-                  </button>
-                </Row>
+                {status === "RECEIVED" && (
+                  <Row title="Receipt" className="rounded-b">
+                    <button
+                      className="block"
+                      onClick={() => showKYCForm(row.hash)}
+                    >
+                      <Icon type="FatArrowDownload" className="text-2xl" />
+                    </button>
+                  </Row>
+                )}
               </Disclosure.Panel>
             </>
           )}
