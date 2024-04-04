@@ -17,6 +17,7 @@ export default function Table({
   disabled,
   isLoading,
   hasMore,
+  status,
   onLoadMore,
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
@@ -77,7 +78,9 @@ export default function Table({
             USD Value
           </HeaderButton>
           <>TX Hash</>
-          <span className="flex justify-center">Receipt</span>
+          {status === "RECEIVED" && (
+            <span className="flex justify-center">Receipt</span>
+          )}
         </Cells>
       </TableSection>
       <TableSection
@@ -122,12 +125,14 @@ export default function Table({
                   {row.hash}
                 </ExtLink>
               )}
-              <button
-                className="w-full flex justify-center"
-                onClick={() => showKYCForm(row.hash)}
-              >
-                <Icon type="FatArrowDownload" className="text-2xl" />
-              </button>
+              {status === "RECEIVED" && (
+                <button
+                  className="w-full flex justify-center"
+                  onClick={() => showKYCForm(row.hash)}
+                >
+                  <Icon type="FatArrowDownload" className="text-2xl" />
+                </button>
+              )}
             </Cells>
           ))
           .concat(
