@@ -59,7 +59,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     >
       {details.frequency === "once" && (
         <>
-          // we don't have subscriptions for paypal for now
+          {/* we don't have subscriptions for paypal for now */}
           <div className="has-[#paypal-failure-fallback]:hidden peer">
             <p className="mb-2 font-medium">Express checkout</p>
             <div className="flex items-center">
