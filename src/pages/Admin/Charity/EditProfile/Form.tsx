@@ -1,8 +1,8 @@
 import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
+import ExtLink from "components/ExtLink";
 import Group from "components/Group";
-import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { MultiSelector, Selector } from "components/Selector";
@@ -10,7 +10,6 @@ import Toggle from "components/Toggle";
 import { Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { Link } from "react-router-dom";
 import { EndowDesignation } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
 import HideBGTipCheckbox from "./HideBGTipCheckbox";
@@ -43,13 +42,12 @@ export default function Form() {
       onSubmit={editProfile}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
-      <Link
-        to={`${appRoutes.marketplace}/${id}`}
+      <ExtLink
+        href={`${appRoutes.marketplace}/${id}`}
         className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
       >
-        <Icon type="Back" />
-        <span>Back to profile</span>
-      </Link>
+        View Profile
+      </ExtLink>
       <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
         Publish profile
       </Toggle>
