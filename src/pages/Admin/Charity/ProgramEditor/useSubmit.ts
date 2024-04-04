@@ -9,9 +9,12 @@ import { EndowmentProgramsUpdate, Program } from "types/aws";
 import { useAdminContext } from "../../Context";
 import { useUpdateEndowment } from "../common";
 import { FV } from "./types";
+import { useNavigate } from "react-router-dom";
+import { adminRoutes, appRoutes } from "constants/routes";
 
 export default function useSubmit() {
   const { id } = useAdminContext();
+  const navigate = useNavigate();
   const {
     reset,
     handleSubmit,
@@ -62,7 +65,7 @@ export default function useSubmit() {
         program: [program],
       };
       await updateEndow(updates);
-      if (!initial) reset(); //for new program, reset form after submit
+      navigate(`${appRoutes.admin}/${id}/${adminRoutes.programs}`);
     } catch (err) {
       logger.error(err);
       showModal(TxPrompt, {
