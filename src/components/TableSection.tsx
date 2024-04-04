@@ -82,8 +82,9 @@ export function Cells(props: CellProps) {
   return <>{cells}</>;
 }
 
+type CellChild = JSX.Element | null | false;
 type CellBase = {
-  children: JSX.Element | (JSX.Element | null)[] | null;
+  children: CellChild | CellChild[];
   type: "th" | "td";
 
   cellClass: string;
