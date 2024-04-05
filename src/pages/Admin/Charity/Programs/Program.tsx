@@ -12,7 +12,7 @@ import { Program as TProgram } from "types/aws";
 export function Program(props: TProgram) {
   const { id } = useAdminContext();
   const { showModal } = useModalContext();
-  const [deleteProgram, { isLoading }] = useDeleteProgramMutation();
+  const [deleteProgram, { isLoading: isDeleting }] = useDeleteProgramMutation();
 
   const handleDeleteProgram = async (msg: ProgramDeleteMsg) => {
     try {
@@ -39,7 +39,7 @@ export function Program(props: TProgram) {
       <div className="flex items-center gap-x-4 @lg:contents">
         <button
           className="btn-outline-filled w-24 py-2 text-sm @lg:ml-auto"
-          aria-disabled={isLoading}
+          aria-disabled={isDeleting}
           type="button"
           onClick={() =>
             handleDeleteProgram({
@@ -52,7 +52,7 @@ export function Program(props: TProgram) {
         </button>
         <Link
           to={"../" + adminRoutes.program_editor + `/${props.program_id}`}
-          aria-disabled={isLoading}
+          aria-disabled={isDeleting}
           className="btn-outline-filled w-24 py-2 text-sm"
           state={props}
         >
