@@ -25,6 +25,10 @@ const Context = createContext<State>({
 export default function ErrorContext(props: PropsWithChildren<{}>) {
   const { showModal } = useModalContext();
 
+  /**
+   * biome-ignore lint/correctness/useExhaustiveDependencies: bug in Biome with recursive dependencies
+   * Created an issue on their GH, see https://github.com/biomejs/biome/issues/2361
+   */
   const handleError: State["handleError"] = useCallback(
     (error: any, displayMessage?: string, options = { log: true }) => {
       if (options.log) {
