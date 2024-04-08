@@ -5,6 +5,7 @@ import { LogDonationFail } from "errors/errors";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { invalidateApesTags } from "services/apes";
+import { invalidateAwsTags } from "services/aws/aws";
 import { CryptoDonation, GuestDonor } from "types/aws";
 import { isTxResultError } from "types/tx";
 import donation, { setTxStatus } from "../donation";
@@ -66,7 +67,8 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
 
       updateTx({ hash, guestDonor });
       //invalidate cache entries
-      dispatch(invalidateApesTags(["tokens", "donations"]));
+      dispatch(invalidateApesTags(["tokens"]));
+      dispatch(invalidateAwsTags(["donations"]));
     } catch (err) {
       logger.error(err);
       updateTx("error");
