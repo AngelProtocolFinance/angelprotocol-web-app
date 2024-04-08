@@ -1,4 +1,4 @@
-import defaultLogo from "assets/images/bettergiving-logo.svg";
+import defaultLogo from "assets/images/bettergiving-logo.png";
 import Image from "components/Image";
 import { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
