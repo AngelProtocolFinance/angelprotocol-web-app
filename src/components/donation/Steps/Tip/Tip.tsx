@@ -96,7 +96,8 @@ export default function Tip({
     >
       <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
       <h4 className="mt-4 text-lg">
-        Donation to <Image src={dappLogo} className="inline-block h-8 px-1" />
+        One-Time Donation to{" "}
+        <Image src={dappLogo} className="inline-block h-8 px-1" />
       </h4>
       <p className="text-navy-l1">
         We are completely free, and rely on donations
@@ -148,7 +149,7 @@ export default function Tip({
       {!isPct && (
         <>
           <label className="mb-2 mt-6 font-heading font-semibold">
-            Your Donation Amount
+            Your One-Time Donation Amount
           </label>
           <div
             aria-invalid={!!errors.tip?.amount}
