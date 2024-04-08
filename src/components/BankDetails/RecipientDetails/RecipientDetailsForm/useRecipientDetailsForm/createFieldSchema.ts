@@ -3,6 +3,10 @@ import { Group } from "types/aws";
 import { OptionType } from "types/components";
 import { logger } from "helpers";
 import { requiredString } from "schemas/string";
+import { IS_TEST } from "constants/env";
+import { APIs } from "constants/urls";
+
+const wiseProxy = `${APIs.aws}/${IS_TEST ? "staging" : "v1"}/wise-proxy`;
 
 export function createStringSchema(
   requirements: Group
@@ -29,13 +33,15 @@ export function createStringSchema(
   }
   if (requirements.validationAsync) {
     const { url, params } = requirements.validationAsync;
+    const path = new URL(url).pathname;
+    const proxiedURL = wiseProxy + path;
     schema = schema.test(
       "Field's remote validation",
       `Must be a valid ${requirements.name}`,
       (val) =>
         // Still waiting on some response from Wise Support on how to handle
         // cases when params.length > 1, as it's currently not clear how do this.
-        fetch(`${url}?${params[0].key}=${val}`)
+        fetch(`${proxiedURL}?${params[0].key}=${val}`)
           .then((res) => res.ok)
           .catch((err) => {
             logger.error("Error fetching accounts requirements");
