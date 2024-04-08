@@ -54,23 +54,27 @@ export default function MobileTable({
                   isOpen={open}
                 />
                 <p className="text-sm p-4 text-left h-full truncate">
-                  {row.charityName}
+                  {row.recipientName}
                 </p>
                 <div className="p-4 text-center text-sm w-28">
                   {new Date(row.date).toLocaleDateString()}
                 </div>
               </Disclosure.Button>
               <Disclosure.Panel className="w-full divide-y divide-blue-l2">
-                <Row title="Network">{row.chainName}</Row>
+                <Row title="Network">{row.viaName}</Row>
                 <Row title="Currency">{row.symbol}</Row>
-                <Row title="Amount">{humanize(row.amount, 3)}</Row>
-                <Row title="USD Value">{`$${humanize(row.usdValue, 2)}`}</Row>
-                <Row title="TX Hash">{row.hash}</Row>
-                {status === "RECEIVED" && (
+                <Row title="Amount">{humanize(row.initAmount, 3)}</Row>
+                <Row title="USD Value">
+                  {row.initAmountUsd
+                    ? `$${humanize(row.initAmountUsd, 2)}`
+                    : "--"}
+                </Row>
+                <Row title="TX Hash">{row.id}</Row>
+                {status === "final" && (
                   <Row title="Receipt" className="rounded-b">
                     <button
                       className="block"
-                      onClick={() => showKYCForm(row.hash)}
+                      onClick={() => showKYCForm(row.id)}
                     >
                       <Icon type="FatArrowDownload" className="text-2xl" />
                     </button>

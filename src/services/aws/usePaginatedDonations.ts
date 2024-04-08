@@ -1,30 +1,23 @@
-import { chainIds } from "constants/chainIds";
 import useDebouncer from "hooks/useDebouncer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useSetter } from "store/accessors";
+import { DonationsQueryParams } from "types/aws";
 import {
-  updateDonationsQueryData,
+  updateAWSQueryData,
   useDonationsQuery,
   useLazyDonationsQuery,
-} from "services/apes";
-import { useSetter } from "store/accessors";
-import {
-  DonationMadeByDonor,
-  DonationReceivedByEndow,
-  DonationsQueryParams,
-  PaginatedAWSQueryRes,
-} from "types/aws";
+} from "./aws";
 
 type DonorOwner = { email: string };
 type EndowmentOwner = { endowmentId: string };
 
-type Args = (DonorOwner | EndowmentOwner) &
-  Pick<DonationsQueryParams, "status">;
+type Args = DonorOwner | EndowmentOwner;
 
 /**
  * By default loads finalized donations, unless the `status` field is
  * explicitly set to "PENDING"
  */
-export default function usePaginatedDonationRecords<T extends Args>(args: T) {
+export default function usePaginatedDonationRecords(args: Args) {
   const dispatch = useSetter();
 
   const [query, setQuery] = useState("");
@@ -33,14 +26,8 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
   const id: string = "endowmentId" in args ? args.endowmentId : args.email;
 
   const [params, setParams] = useState<DonationsQueryParams>({
-    id,
-    chain_id: chainIds.polygon,
-    status: args.status,
+    asker: id,
   });
-
-  useEffect(() => {
-    setParams((prev) => ({ ...prev, status: args.status }));
-  }, [args.status]);
 
   const queryState = useDonationsQuery(params, {
     skip: !id,
@@ -49,15 +36,16 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
         return { data, ...rest };
       }
 
-      const filtered = data?.Items.filter(({ kycData: _, ...flatFields }) =>
-        Object.values(flatFields)
-          .reduce<string>((result, val) => `${val}` + result, "")
-          .toLocaleLowerCase()
-          .includes(debouncedQuery.toLocaleLowerCase())
+      const filtered = data?.Items.filter(
+        ({ donorDetails: _, ...flatFields }) =>
+          Object.values(flatFields)
+            .reduce<string>((result, val) => `${val}` + result, "")
+            .toLocaleLowerCase()
+            .includes(debouncedQuery.toLocaleLowerCase())
       );
 
       return {
-        data: { Items: filtered, ItemCutoff: data.ItemCutoff },
+        data: { Items: filtered, nextPage: data.nextPage },
         ...rest,
       };
     },
@@ -72,32 +60,30 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
   async function loadNextPage() {
     //button is hidden when there's no more
     if (
-      data?.ItemCutoff &&
+      data?.nextPage &&
       originalArgs /** cards won't even show if no initial query is made */
     ) {
-      const { data: newEndowRes } = await loadMore({
+      const { data: newPage } = await loadMore({
         ...originalArgs,
-        start: data.ItemCutoff + 1,
+        page: data.nextPage,
       });
 
-      if (newEndowRes) {
+      if (newPage) {
         //pessimistic update to original cache data
         dispatch(
-          updateDonationsQueryData("donations", originalArgs, (prevResult) => {
-            prevResult.Items.push(...newEndowRes.Items);
-            prevResult.ItemCutoff = newEndowRes.ItemCutoff;
+          updateAWSQueryData("donations", originalArgs, (prevResult) => {
+            prevResult.Items.push(...newPage.Items);
+            prevResult.nextPage = newPage.nextPage;
           })
         );
       }
     }
   }
 
-  const hasMore = !!data?.ItemCutoff;
+  const hasMore = !!data?.nextPage;
 
   return {
-    data: data as T extends EndowmentOwner
-      ? PaginatedAWSQueryRes<DonationReceivedByEndow[]>
-      : PaginatedAWSQueryRes<DonationMadeByDonor[]>,
+    data,
     hasMore,
     isError: isError || isErrorNextPage,
     error: error,
@@ -107,6 +93,10 @@ export default function usePaginatedDonationRecords<T extends Args>(args: T) {
     query,
     loadNextPage,
     onQueryChange: setQuery,
+    status: originalArgs?.status || "final",
+    setStatus: (status: DonationsQueryParams["status"]) =>
+      //reset page when switching status (changes table source)
+      setParams((prev) => ({ ...prev, status, page: 1 })),
     setParams,
   };
 }

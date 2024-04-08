@@ -11,7 +11,7 @@ export default function NetworkDropdown({ classes = "" }) {
         classes={{ button: "dark:bg-blue-d6", options: "text-sm" }}
         options={Object.entries(chains).map(([, chain]) => ({
           label: chain.name,
-          value: chain.name,
+          value: chain.id,
         }))}
       />
     </div>

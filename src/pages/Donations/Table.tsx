@@ -37,9 +37,9 @@ export default function Table({
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <HeaderButton
-            onClick={handleHeaderClick("charityName")}
+            onClick={handleHeaderClick("recipientName")}
             _activeSortKey={sortKey}
-            _sortKey="charityName"
+            _sortKey="recipientName"
             _sortDirection={sortDirection}
           >
             Recipient
@@ -53,7 +53,7 @@ export default function Table({
             Date
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("chainName")}
+            onClick={handleHeaderClick("viaName")}
             _activeSortKey={sortKey}
             _sortKey="chainName"
             _sortDirection={sortDirection}
@@ -62,15 +62,15 @@ export default function Table({
           </HeaderButton>
           <>Currency</>
           <HeaderButton
-            onClick={handleHeaderClick("amount")}
+            onClick={handleHeaderClick("initAmount")}
             _activeSortKey={sortKey}
-            _sortKey="amount"
+            _sortKey="initAmount"
             _sortDirection={sortDirection}
           >
             Amount
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("usdValue")}
+            onClick={handleHeaderClick("initAmountUsd")}
             _activeSortKey={sortKey}
             _sortKey="usdValue"
             _sortDirection={sortDirection}
@@ -78,7 +78,7 @@ export default function Table({
             USD Value
           </HeaderButton>
           <>TX Hash</>
-          {status === "RECEIVED" && (
+          {status === "final" && (
             <span className="flex justify-center">Receipt</span>
           )}
         </Cells>
@@ -91,7 +91,7 @@ export default function Table({
         {sorted
           .map((row) => (
             <Cells
-              key={row.hash}
+              key={row.id}
               type="td"
               cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
@@ -100,35 +100,39 @@ export default function Table({
               <Link
                 to={`${
                   appRoutes[
-                    row.chainId === chainIds.juno ? "profile" : "marketplace"
+                    row.viaId === chainIds.juno ? "profile" : "marketplace"
                   ]
                 }/${row.id}`}
                 className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
                 <span className="truncate max-w-[12rem]">
-                  {row.charityName}
+                  {row.recipientName}
                 </span>
                 <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
               <>{new Date(row.date).toLocaleDateString()}</>
-              <>{row.chainName}</>
+              <>{row.viaName}</>
               <span className="text-sm">{row.symbol}</span>
-              <>{humanize(row.amount, 3)}</>
-              <>{`$${humanize(row.usdValue, 2)}`}</>
-              {row.chainId === "fiat" || row.chainId === "staging" ? (
+              <>{humanize(row.initAmount, 3)}</>
+              <>
+                {row.initAmountUsd
+                  ? `$${humanize(row.initAmountUsd, 2)}`
+                  : "--"}
+              </>
+              {row.viaId === "fiat" || row.viaId === "staging" ? (
                 <>- - -</>
               ) : (
                 <ExtLink
-                  href={getTxUrl(row.chainId, row.hash)}
+                  href={getTxUrl(row.viaId, row.id)}
                   className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
                 >
-                  {row.hash}
+                  {row.id}
                 </ExtLink>
               )}
-              {status === "RECEIVED" && (
+              {status === "final" && (
                 <button
                   className="w-full flex justify-center"
-                  onClick={() => showKYCForm(row.hash)}
+                  onClick={() => showKYCForm(row.id)}
                 >
                   <Icon type="FatArrowDownload" className="text-2xl" />
                 </button>

@@ -3,9 +3,8 @@ import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import withAuth from "contexts/Auth";
 import { isEmpty } from "helpers";
-import { useState } from "react";
-import { usePaginatedDonationRecords } from "services/apes";
-import { DonationMadeByDonor, DonationsQueryParams } from "types/aws";
+import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
+import { DonationRecord } from "types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
@@ -13,12 +12,8 @@ import StatusTabs from "./StatusTabs";
 import Table from "./Table";
 
 export default withAuth(function Donations({ user }) {
-  const [status, setStatus] =
-    useState<DonationsQueryParams["status"]>("RECEIVED");
-
   const queryState = usePaginatedDonationRecords({
     email: user.email,
-    status,
   });
 
   const {
@@ -33,6 +28,8 @@ export default withAuth(function Donations({ user }) {
     loadNextPage,
     onQueryChange,
     setParams,
+    status,
+    setStatus,
   } = queryState;
 
   const isLoadingOrError =
@@ -49,7 +46,7 @@ export default withAuth(function Donations({ user }) {
         headers={csvHeaders}
         data={data?.Items || []}
         filename={
-          status === "RECEIVED" ? "donations.csv" : "pending-donations.csv"
+          status === "final" ? "donations.csv" : "pending-donations.csv"
         }
       >
         Export to CSV
@@ -72,6 +69,7 @@ export default withAuth(function Donations({ user }) {
       <Filter
         isDisabled={isLoading || isLoadingNextPage}
         setParams={setParams}
+        asker={user.email}
         classes="max-lg:col-span-full max-lg:w-full"
       />
       <div className="grid col-span-full">
@@ -127,10 +125,10 @@ export default withAuth(function Donations({ user }) {
   );
 });
 
-const csvHeaders: { key: keyof DonationMadeByDonor; label: string }[] = [
-  { key: "amount", label: "Amount" },
-  { key: "usdValue", label: "USD Value" },
+const csvHeaders: { key: keyof DonationRecord; label: string }[] = [
+  { key: "initAmount", label: "Amount" },
+  { key: "initAmountUsd", label: "USD Value" },
   { key: "symbol", label: "Currency" },
   { key: "date", label: "Date" },
-  { key: "hash", label: "Transaction Hash" },
+  { key: "id", label: "Transaction Hash" },
 ];
