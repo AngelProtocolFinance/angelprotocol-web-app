@@ -211,6 +211,7 @@ export const aws = createApi({
         return {
           url: `${v(1)}/donations`,
           params: params,
+          headers: { authorization: TEMP_JWT },
         };
       },
     }),
