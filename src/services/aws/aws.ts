@@ -210,7 +210,7 @@ export const aws = createApi({
       query: (params) => {
         return {
           url: `${v(1)}/donations`,
-          params: params,
+          params,
           headers: { authorization: TEMP_JWT },
         };
       },
