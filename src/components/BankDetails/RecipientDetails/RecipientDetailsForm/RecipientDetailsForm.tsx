@@ -4,7 +4,7 @@ import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
-import { isEmpty } from "helpers";
+import { isEmpty, logger } from "helpers";
 import { Controller, get, useForm } from "react-hook-form";
 import {
   useCreateRecipientMutation,
@@ -245,9 +245,16 @@ export default function RecipientDetailsForm({
 
                   validate: f.validationAsync
                     ? async (v: string) => {
-                        const { params, url } = f.validationAsync!;
-                        const res = await fetch(`${url}?${params[0].key}=${v}`);
-                        return res.ok || "invalid";
+                        try {
+                          const { params, url } = f.validationAsync!;
+                          const res = await fetch(
+                            `${url}?${params[0].key}=${v}`
+                          );
+                          return res.ok || "invalid";
+                        } catch (err) {
+                          logger.error(err);
+                          return "Validation of banking details failed unexpectedly";
+                        }
                       }
                     : undefined,
                   //onBlur only as text input changes rapidly
