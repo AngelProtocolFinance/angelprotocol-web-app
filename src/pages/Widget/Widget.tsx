@@ -38,6 +38,8 @@ function Content({
   const widget = useGetter((state) => state.widget);
 
   const dispatch = useSetter();
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   useEffect(() => {
     if (endowment) {
       dispatch(initialize({ ...widget.initial, endowment }));

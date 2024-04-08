@@ -17,6 +17,12 @@ export default function useSort<T>(donations: T[], defaultSortKey: keyof T) {
     }
   };
 
+  /**
+   * biome-ignore lint/correctness/useExhaustiveDependencies: biome wrongly assumes prev[sortKey]
+   * and next[sortKey] should be part of deps. array.
+   * This is an issue with biome@1.5.3, upgrading to 1.6.* fixes the issue.
+   * Related issue: https://github.com/biomejs/biome/issues/1871
+   */
   const sorted = useMemo(() => {
     const txs = [...donations];
     const gtSortVal = sortDirection === "asc" ? 1 : -1;

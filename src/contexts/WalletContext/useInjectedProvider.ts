@@ -27,6 +27,7 @@ export default function useInjectedWallet(
   });
 
   /** persistent connection */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   useEffect(() => {
     const lastAction = retrieveUserAction(actionKey);
     const shouldReconnect = lastAction === "connect";
@@ -39,7 +40,6 @@ export default function useInjectedWallet(
         }
       });
     };
-    //eslint-disable-next-line
   }, []);
 
   const handleChainChange: ChainChangeHandler = (hexChainId) => {

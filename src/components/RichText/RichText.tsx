@@ -5,6 +5,7 @@ import { Props } from "./types";
 export default function RichText(props: Props) {
   const [numChars, setNumChars] = useState(0);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   const containerRef = useCallback((container: HTMLDivElement | null) => {
     if (!container) return;
 
@@ -53,7 +54,6 @@ export default function RichText(props: Props) {
         });
       });
     }
-    //eslint-disable-next-line
   }, []);
 
   return (

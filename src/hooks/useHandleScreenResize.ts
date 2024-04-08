@@ -21,6 +21,7 @@ export default function useHandleScreenResize<T extends object>(
   onResize: (screenSize: number, ref: T) => void,
   options?: Options<T>
 ) {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   useEffect(() => {
     const {
       shouldAttachListener,
@@ -46,8 +47,6 @@ export default function useHandleScreenResize<T extends object>(
         };
     window.addEventListener("resize", handler);
     return () => window.removeEventListener("resize", handler);
-
-    //eslint-disable-next-line
   }, [options?.shouldAttachListener]);
 }
 

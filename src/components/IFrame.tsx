@@ -12,6 +12,7 @@ export default function IFrame({
 }: Props) {
   const [isLoading, setLoading] = useState(true);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: self-explanatory
   useEffect(() => setLoading(true), [src]);
 
   return (

@@ -21,11 +21,11 @@ export function useKeplrWC(): Wallet {
   });
   const qrModalRef = useRef<KeplrQRCodeModalV2>();
 
-  function onSessionDelete() {
+  const onSessionDelete = () => {
     setState({ status: "disconnected" });
-  }
+  };
 
-  /** persistent connection */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: persistent connection
   useEffect(() => {
     (async () => {
       setState({ status: "loading" });
@@ -38,7 +38,6 @@ export function useKeplrWC(): Wallet {
         setState({ status: "disconnected" });
       }
     })();
-    //eslint-disable-next-line
   }, []);
 
   /** new connection */

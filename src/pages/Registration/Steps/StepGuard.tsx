@@ -20,11 +20,11 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
 
     const { step: savedStep } = state;
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
     useEffect(() => {
       if (thisStep > savedStep + 1) {
         navigate(`../${savedStep}`, { state: init });
       }
-      //eslint-disable-next-line
     }, []);
 
     return (
