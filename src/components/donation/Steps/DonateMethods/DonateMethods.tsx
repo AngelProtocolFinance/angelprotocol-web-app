@@ -1,7 +1,6 @@
 import { Tab } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { Label } from "components/form";
-import { useState } from "react";
 import { DonationDetails, FormStep } from "slices/donation";
 import { Config } from "../types";
 import Crypto from "./Crypto";
@@ -38,7 +37,6 @@ const tabClasses = (selected: boolean) =>
   }  flex items-center gap-2 p-2 @md/steps:px-3 @md/steps:py-[1.15rem] @md/steps:grid @md/steps:grid-cols-subgrid @md/steps:col-span-2 focus:outline-none @md/steps:w-28 rounded @md/steps:rounded-none`;
 
 export default function DonateMethods({ donaterConfig, state }: Props) {
-  const [isExpanded, setIsExpanded] = useState(false);
   return (
     <Tab.Group
       manual
@@ -62,26 +60,10 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
           <Icon type="Advisor" className="shrink-0" size={19} />
           <span className="text-left">DAF</span>
         </Tab>
-
-        {/** more options: applies up to @md/steps */}
-        <div
-          className={`${isExpanded ? "contents" : "hidden"} @md/steps:contents`}
-        >
-          <Tab className={({ selected }) => tabClasses(selected)}>
-            <Icon type="Bitcoin" className="shrink-0" size={17} />
-            <span className="text-left">Crypto</span>
-          </Tab>
-        </div>
-        {!isExpanded && (
-          //expand only once: collapses when user refreshes browser (state is lost)
-          <button
-            onClick={() => setIsExpanded(true)}
-            type="button"
-            className="col-span-full text-sm font-semibold mt-2 @md/steps:hidden text-blue"
-          >
-            More options
-          </button>
-        )}
+        <Tab className={({ selected }) => tabClasses(selected)}>
+          <Icon type="Bitcoin" className="shrink-0" size={17} />
+          <span className="text-left">Crypto</span>
+        </Tab>
       </Tab.List>
       <Tab.Panels
         as="div"
