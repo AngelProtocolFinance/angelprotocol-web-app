@@ -253,7 +253,7 @@ export default function RecipientDetailsForm({
                           return res.ok || "invalid";
                         } catch (err) {
                           logger.error(err);
-                          return "validation failed";
+                          return "Validation of banking details failed unexpectedly";
                         }
                       }
                     : undefined,
