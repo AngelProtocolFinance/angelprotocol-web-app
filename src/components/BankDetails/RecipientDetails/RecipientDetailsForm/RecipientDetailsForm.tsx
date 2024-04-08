@@ -3,6 +3,7 @@ import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { APIs } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty, logger } from "helpers";
 import { Controller, get, useForm } from "react-hook-form";
@@ -247,8 +248,10 @@ export default function RecipientDetailsForm({
                     ? async (v: string) => {
                         try {
                           const { params, url } = f.validationAsync!;
+                          const path = new URL(url).pathname;
+                          const proxy = `${APIs.aws}/v1/wise-proxy/${path}`;
                           const res = await fetch(
-                            `${url}?${params[0].key}=${v}`
+                            `${proxy}?${params[0].key}=${v}`
                           );
                           return res.ok || "invalid";
                         } catch (err) {
