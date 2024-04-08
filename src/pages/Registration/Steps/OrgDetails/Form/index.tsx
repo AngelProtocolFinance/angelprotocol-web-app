@@ -64,6 +64,8 @@ export default function Form() {
         In what country is your organization registered in?
       </Label>
       <CountrySelector<FV, "HqCountry">
+        //endowment claims are US-based and shoudn't be changed by claimer
+        disabled={!!data.init.claim}
         fieldName="HqCountry"
         placeholder="Select a country"
         classes={{

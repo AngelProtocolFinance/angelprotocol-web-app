@@ -16,15 +16,19 @@ function FSAInquiry() {
   );
   const methods = useForm<FV>({
     defaultValues: {
-      AuthorizedToReceiveTaxDeductibleDonations: data.fsaInquiry
-        ?.AuthorizedToReceiveTaxDeductibleDonations
-        ? "Yes"
-        : "No",
+      AuthorizedToReceiveTaxDeductibleDonations:
+        data.fsaInquiry?.AuthorizedToReceiveTaxDeductibleDonations ||
+        /** US-based unclaimed endowments are authorized by default */
+        data.init.claim
+          ? "Yes"
+          : "No",
     },
   });
   const { watch } = methods;
   const answer = watch("AuthorizedToReceiveTaxDeductibleDonations");
   const { submit, isSubmitting } = useSubmit(data, methods);
+
+  const optionsDisabled = !possiblyTaxExempt || !!data.init.claim;
 
   return (
     <FormProvider {...methods}>
@@ -39,12 +43,12 @@ function FSAInquiry() {
               <Radio<FV, "AuthorizedToReceiveTaxDeductibleDonations">
                 name="AuthorizedToReceiveTaxDeductibleDonations"
                 value="Yes"
-                disabled={!possiblyTaxExempt}
+                disabled={optionsDisabled}
               />
               <Radio<FV, "AuthorizedToReceiveTaxDeductibleDonations">
                 name="AuthorizedToReceiveTaxDeductibleDonations"
                 value="No"
-                disabled={!possiblyTaxExempt}
+                disabled={optionsDisabled}
               />
             </div>
           </>

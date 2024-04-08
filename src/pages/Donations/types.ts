@@ -1,4 +1,4 @@
-import { DonationMadeByDonor } from "types/aws";
+import { DonationMadeByDonor, DonationsQueryParams } from "types/aws";
 
 export type TableProps = {
   donations: DonationMadeByDonor[];
@@ -7,4 +7,5 @@ export type TableProps = {
   hasMore: boolean;
   disabled: boolean;
   isLoading: boolean;
+  status: DonationsQueryParams["status"];
 };

@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Slider from "@radix-ui/react-slider";
-import bgIcon from "assets/favicon.png";
+import dappLogo from "assets/images/bettergiving-logo.png";
 import character from "assets/images/waving-character.png";
 import Image from "components/Image/Image";
 import { humanize } from "helpers";
@@ -96,8 +96,7 @@ export default function Tip({
     >
       <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
       <h4 className="mt-4 text-lg">
-        Choose a Donation for{" "}
-        <Image src={bgIcon} className="inline-block size-5" /> Better Giving
+        Donation to <Image src={dappLogo} className="inline-block h-8 px-1" />
       </h4>
       <p className="text-navy-l1">
         We are completely free, and rely on donations

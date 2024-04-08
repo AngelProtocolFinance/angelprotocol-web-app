@@ -33,7 +33,7 @@ describe("uploadFiles tests", () => {
     await uploadFiles([file], bucket);
     expect(global.fetch).toHaveBeenCalledTimes(1);
 
-    expect(global.fetch).toHaveBeenCalledWith(APIs.aws + "/v1/file-upload", {
+    expect(global.fetch).toHaveBeenCalledWith(APIs.aws + "/v2/file-upload", {
       method: "POST",
       body: JSON.stringify({
         bucket: bucket,

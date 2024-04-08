@@ -77,6 +77,7 @@ import {
   MdOutlineStickyNote2,
   MdOutlineUploadFile,
   MdSpaceDashboard,
+  MdVerified,
   MdWidgets,
 } from "react-icons/md";
 import { PiPaypalLogo } from "react-icons/pi";
@@ -175,6 +176,7 @@ export const icons = {
   Upload: AiOutlineUpload,
   User: FaUserCircle,
   Users: IoPeople,
+  Verified: MdVerified,
   Wallet: IoWalletSharp,
   Warning: IoWarning,
   Widget: MdWidgets,

@@ -58,17 +58,22 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       }
     >
       {details.frequency === "once" && (
-        // we don't have subscriptions for paypal for now
-        <div className="has-[#paypal-failure-fallback]:hidden peer">
-          <p className="mb-2 font-medium">Express checkout</p>
-          <div className="flex items-center">
-            <Paypal {...props} />
+        <>
+          {/* we don't have subscriptions for paypal for now */}
+          <div className="has-[#paypal-failure-fallback]:hidden peer">
+            <p className="mb-2 font-medium">Express checkout</p>
+            <div className="flex items-center">
+              <Paypal {...props} />
+            </div>
           </div>
-        </div>
+          <div className="relative border border-gray-l4 h-px w-full mb-8 mt-6 grid place-items-center peer-has-[.hidden]:hidden">
+            <span className="absolute bg-white px-4 text-navy-l2 text-xs">
+              OR
+            </span>
+          </div>
+        </>
       )}
-      <div className="relative border border-gray-l4 h-px w-full mb-8 mt-6 grid place-items-center peer-has-[.hidden]:hidden">
-        <span className="absolute bg-white px-4 text-navy-l2 text-xs">OR</span>
-      </div>
+
       {isLoading ? (
         <Loader msg="Loading payment form.." />
       ) : isError || !clientSecret ? (

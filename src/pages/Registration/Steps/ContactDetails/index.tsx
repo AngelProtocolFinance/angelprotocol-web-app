@@ -40,6 +40,7 @@ function ContactDetails() {
           },
           FirstName: firstName,
           LastName: lastName,
+          OrganizationName: init.claim?.name,
         },
   });
 

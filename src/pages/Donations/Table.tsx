@@ -17,6 +17,7 @@ export default function Table({
   disabled,
   isLoading,
   hasMore,
+  status,
   onLoadMore,
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
@@ -77,8 +78,9 @@ export default function Table({
             USD Value
           </HeaderButton>
           <>TX Hash</>
-          <span className="flex justify-center">Status</span>
-          <span className="flex justify-center">Receipt</span>
+          {status === "RECEIVED" && (
+            <span className="flex justify-center">Receipt</span>
+          )}
         </Cells>
       </TableSection>
       <TableSection
@@ -123,23 +125,14 @@ export default function Table({
                   {row.hash}
                 </ExtLink>
               )}
-              <div className="text-center text-white">
-                <span
-                  className={`${
-                    row.donationFinalized
-                      ? "bg-green"
-                      : "bg-gray-d1 dark:bg-gray"
-                  } px-2 py-0.5 rounded`}
+              {status === "RECEIVED" && (
+                <button
+                  className="w-full flex justify-center"
+                  onClick={() => showKYCForm(row.hash)}
                 >
-                  {row.donationFinalized ? "RECEIVED" : "PENDING"}
-                </span>
-              </div>
-              <button
-                className="w-full flex justify-center"
-                onClick={() => showKYCForm(row.hash)}
-              >
-                <Icon type="FatArrowDownload" className="text-2xl" />
-              </button>
+                  <Icon type="FatArrowDownload" className="text-2xl" />
+                </button>
+              )}
             </Cells>
           ))
           .concat(

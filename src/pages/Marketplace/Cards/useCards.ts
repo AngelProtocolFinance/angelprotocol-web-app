@@ -9,7 +9,7 @@ import { useGetter, useSetter } from "store/accessors";
 
 export default function useCards() {
   const dispatch = useSetter();
-  const { sort, searchText, sdgGroups, ...params } = useGetter(
+  const { sort, searchText, sdgGroups, verified, ...params } = useGetter(
     (state) => state.component.marketFilter
   );
 
@@ -28,8 +28,10 @@ export default function useCards() {
       query: searchText,
       sort: sort ? `${sort.key}+${sort.direction}` : undefined,
       page: 1, // always starts at page 1
-      published: "true",
       sdgs: sdgs.join(","),
+      claimed:
+        /** search for both verified/unverified if user didn't explicitly narrow verified status */
+        searchText && isEmpty(verified) ? "true,false" : verified.join(","),
       ..._params,
     });
 
