@@ -31,7 +31,7 @@ export default function Preview({ classes = "" }) {
             }}
           />
           <footer className="mt-auto grid place-items-center h-20 w-full bg-blue">
-            <DappLogo classes="w-20" />
+            <DappLogo classes="w-40" color="white" />
           </footer>
         </div>
       </div>

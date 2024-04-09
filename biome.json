@@ -37,7 +37,7 @@
         "noAccumulatingSpread": "off"
       },
       "correctness": {
-        "useExhaustiveDependencies": "off",
+        "useExhaustiveDependencies": "warn",
         "noPrecisionLoss": "off",
         "noSwitchDeclarations": "off",
         "noChildrenProp": "off",

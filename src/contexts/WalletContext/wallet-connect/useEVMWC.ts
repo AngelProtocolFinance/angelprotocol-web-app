@@ -41,21 +41,21 @@ export function useEVMWC(meta: WalletMeta): Wallet {
     status: "disconnected",
   });
 
-  function onSessionDelete() {
+  const onSessionDelete = () => {
     setState({ status: "disconnected" });
-  }
+  };
 
-  function onSessionUpdate({
+  const onSessionUpdate = ({
     params: { namespaces },
-  }: SignClientTypes.EventArguments["session_update"]) {
+  }: SignClientTypes.EventArguments["session_update"]) => {
     setState((prev) =>
       prev.status === "connected"
         ? { ...prev, ...account(namespaces.eip155) }
         : prev
     );
-  }
+  };
 
-  /** persistent connection */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: persistent connection
   useEffect(() => {
     (async () => {
       setState({ status: "loading" });
@@ -68,7 +68,6 @@ export function useEVMWC(meta: WalletMeta): Wallet {
         setState({ status: "disconnected" });
       }
     })();
-    //eslint-disable-next-line
   }, []);
 
   /** new connection */

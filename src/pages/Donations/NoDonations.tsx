@@ -18,7 +18,7 @@ export default function NoDonations({ classes, status }: Props) {
       />
       <h3 className="text-lg self-end">No donations found.</h3>
       <p className="self-start text-navy-l1 dark:text-navy-l2">
-        {status === "PENDING"
+        {status === "pending"
           ? "You have no donations pending"
           : "You've not made any donations yet"}
         . Take a look at our marketplace to choose from hundreds of nonprofits

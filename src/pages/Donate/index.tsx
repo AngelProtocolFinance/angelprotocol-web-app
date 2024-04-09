@@ -29,7 +29,7 @@ export default function Donate() {
         loading: "Getting nonprofit info..",
         error: "Failed to get nonprofit info",
       }}
-      classes={{ container: "justify-self-center text-center mt-8" }}
+      classes={{ container: "place-self-center text-center mt-8" }}
     >
       {(profile) => (
         <>

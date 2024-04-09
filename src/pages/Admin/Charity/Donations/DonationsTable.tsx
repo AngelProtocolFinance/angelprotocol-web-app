@@ -1,8 +1,9 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import { usePaginatedDonationRecords } from "services/apes";
-import { DonationReceivedByEndow, KYCData } from "types/aws";
+import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
+import { DonationRecord, KYCData } from "types/aws";
+import { Ensure } from "types/utils";
 import { useAdminContext } from "../../Context";
 import Table from "./Table";
 
@@ -53,8 +54,17 @@ export default function DonationsTable({ classes = "" }) {
                 classes="border border-blue text-blue-d1 hover:border-blue-l2 hover:text-blue rounded px-4 py-2 text-sm"
                 headers={csvHeadersReceipts}
                 data={donations
-                  .filter((x) => !!x.kycData)
-                  .map((x) => x.kycData!)}
+                  .filter(
+                    (d): d is Ensure<DonationRecord, "donorDetails"> =>
+                      !!d.donorDetails
+                  )
+                  .map<KYCData>(({ donorDetails: d }) =>
+                    fill({
+                      ...d.address,
+                      fullName: d.fullName,
+                      kycEmail: d.kycEmail,
+                    })
+                  )}
                 filename="receipts.csv"
               >
                 <Icon type="FileCSV" size={17} className="text-2xl" />
@@ -79,19 +89,31 @@ export default function DonationsTable({ classes = "" }) {
 }
 
 const csvHeadersDonations: {
-  key: keyof DonationReceivedByEndow;
+  key: keyof DonationRecord;
   label: string;
 }[] = [
-  { key: "amount", label: "Amount" },
+  { key: "initAmount", label: "Amount" },
   { key: "symbol", label: "Currency" },
   { key: "date", label: "Date" },
-  { key: "hash", label: "Transaction Hash" },
+  { key: "id", label: "Transaction Hash" },
 ];
+
+/** fill undefined with "" */
+function fill<T extends object>(
+  obj: T
+): { [K in keyof T]-?: NonNullable<T[K]> } {
+  return new Proxy(obj, {
+    get(target: any, key) {
+      return target[key] ?? "";
+    },
+  });
+}
 
 const csvHeadersReceipts: { key: keyof KYCData; label: string }[] = [
   { key: "fullName", label: "Full Name" },
   { key: "kycEmail", label: "Email" },
-  { key: "streetAddress", label: "Street Address" },
+  { key: "line1", label: "Address line 1" },
+  { key: "line2", label: "Address line 2" },
   { key: "city", label: "City" },
   { key: "zipCode", label: "Zip Code" },
   { key: "state", label: "State" },

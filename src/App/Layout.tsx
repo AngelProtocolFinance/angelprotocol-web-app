@@ -12,9 +12,9 @@ const { GROUPS_DATA, SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
 export default function Layout() {
   const headerLinks = useHeaderLinks();
   return (
-    <div className="grid grid-rows-[auto_1fr_auto]">
+    <div className="grid grid-rows-[4rem_minmax(calc(100dvh-4rem),1fr)_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header links={headerLinks} /> {/* sticky component, not part of grid */}
+      <Header links={headerLinks} classes="sticky top-0 z-20" />
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>

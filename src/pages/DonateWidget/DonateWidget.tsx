@@ -40,7 +40,7 @@ export default function DonateWidget() {
         {(profile) => <Content profile={profile} searchParams={searchParams} />}
       </QueryLoader>{" "}
       <footer className="grid place-items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <DappLogo classes="w-20" />
+        <DappLogo classes="w-40" color="white" />
       </footer>
     </div>
   );

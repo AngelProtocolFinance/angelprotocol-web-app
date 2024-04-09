@@ -4,10 +4,10 @@ import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 import useSort from "hooks/useSort";
-import { DonationReceivedByEndow } from "types/aws";
+import { DonationRecord } from "types/aws";
 
 type Props = {
-  donations: DonationReceivedByEndow[];
+  donations: DonationRecord[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;
@@ -54,7 +54,7 @@ export default function Table({
             Currency
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("amount")}
+            onClick={handleHeaderClick("initAmount")}
             _activeSortKey={sortKey}
             _sortKey="amount"
             _sortDirection={sortDirection}
@@ -75,16 +75,16 @@ export default function Table({
         {sorted
           .map(
             ({
-              hash,
-              amount,
+              id,
+              initAmount,
               symbol,
-              chainId,
+              viaId,
               date,
-              kycData,
-              splitLiq = "50",
+              donorDetails,
+              splitLiqPct = "50",
             }) => (
               <Cells
-                key={hash}
+                key={id}
                 type="td"
                 cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
                   hasMore ? "" : "first:rounded-bl last:rounded-br"
@@ -94,24 +94,24 @@ export default function Table({
                   {new Date(date).toLocaleDateString()}
                 </span>
                 <span className="text-sm">{symbol}</span>
-                <>{humanize(amount, 3)}</>
-                <>{humanize(amount * (+splitLiq / 100), 3)}</>
-                <>{humanize(amount * ((100 - +splitLiq) / 100), 3)}</>
+                <>{humanize(initAmount, 3)}</>
+                <>{humanize(initAmount * (+splitLiqPct / 100), 3)}</>
+                <>{humanize(initAmount * ((100 - +splitLiqPct) / 100), 3)}</>
 
-                {chainId === "staging" || chainId === "fiat" ? (
+                {viaId === "staging" || viaId === "fiat" ? (
                   <>- - -</>
                 ) : (
                   <ExtLink
                     //default to ethereum for staging
-                    href={getTxUrl(chainId, hash)}
+                    href={getTxUrl(viaId, id)}
                     className="text-center text-blue-d1 hover:text-navy uppercase text-sm"
                   >
-                    {maskAddress(hash)}
+                    {maskAddress(id)}
                   </ExtLink>
                 )}
 
                 <td className="relative">
-                  {!kycData ? (
+                  {!donorDetails ? (
                     <Icon
                       type="Close"
                       //prevent icon size from affecting row height
