@@ -27,6 +27,7 @@ export default function usePaginatedDonationRecords(args: Args) {
 
   const [params, setParams] = useState<DonationsQueryParams>({
     asker: id,
+    status: "final",
   });
 
   const queryState = useDonationsQuery(params, {
