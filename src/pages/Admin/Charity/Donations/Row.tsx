@@ -58,11 +58,7 @@ export default function Row(
 const amount = (splitLiqPct: number, amount = 0) => {
   const liq = roundDownToNum(amount * (splitLiqPct / 100), 2);
   const locked = amount - liq;
-  const amounts = {
-    total: amount,
-    liq,
-    locked,
-  };
+  const amounts = { total: amount, liq, locked };
   return ({ type }: { type: keyof typeof amounts }) => {
     const val = amounts[type];
     return val ? <>${humanize(val)}</> : <>--</>;
