@@ -99,7 +99,7 @@ const csvHeadersDonations: {
 ];
 
 /** fill undefined with "" */
-export function fill<T extends object>(
+function fill<T extends object>(
   obj: T
 ): { [K in keyof T]-?: NonNullable<T[K]> } {
   return new Proxy(obj, {
