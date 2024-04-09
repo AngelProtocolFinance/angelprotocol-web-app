@@ -36,7 +36,7 @@ export default function Paypal(props: StripeCheckoutStep) {
 
   return isLoading ? (
     <ContentLoader className="rounded h-10 w-40" />
-  ) : isError || !orderId ? (
+  ) : isError || !orderId || PAYPAL_CLIENT_ID === "" ? (
     <div id="paypal-failure-fallback" className="hidden" />
   ) : (
     <PayPalScriptProvider
