@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function useHeaderClassNames() {
+export default function useHeaderClassNames(classes = "") {
   // The ref is used to compare the current and previous bool value
   // instead of the state (for the previous value); the reason is that
   // this makes it unnecessary to add the state value to the below useEffect's
@@ -22,7 +22,7 @@ export default function useHeaderClassNames() {
     };
   }, []);
 
-  return `sticky top-0 transition ease-in-out duration-100 z-20 w-full ${
+  return `${classes} grid bg-white transition ease-in-out duration-100 w-full ${
     isScrolled ? "shadow-lg" : ""
   }`;
 }
