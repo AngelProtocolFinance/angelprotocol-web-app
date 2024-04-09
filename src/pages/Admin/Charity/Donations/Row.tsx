@@ -56,12 +56,8 @@ export default function Row(
 }
 
 const amount = (splitLiqPct: number, amount = 0) => {
-  const split = splitLiqPct / 100;
-  const amounts = {
-    total: amount,
-    liq: amount * split,
-    locked: amount * (1 - split),
-  };
+  const liq = amount * (splitLiqPct / 100);
+  const amounts = { total: amount, liq, locked: amount - liq };
   return ({ type }: { type: keyof typeof amounts }) => {
     const val = amounts[type];
     return val ? <>${humanize(val, 2)}</> : <>--</>;
