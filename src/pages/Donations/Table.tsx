@@ -102,7 +102,7 @@ export default function Table({
                   appRoutes[
                     row.viaId === chainIds.juno ? "profile" : "marketplace"
                   ]
-                }/${row.id}`}
+                }/${row.recipientId}`}
                 className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
                 <span className="truncate max-w-[12rem]">
