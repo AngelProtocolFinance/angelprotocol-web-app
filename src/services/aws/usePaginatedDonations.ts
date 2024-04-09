@@ -95,8 +95,7 @@ export default function usePaginatedDonationRecords(args: Args) {
     onQueryChange: setQuery,
     status: originalArgs?.status || "final",
     setStatus: (status: DonationsQueryParams["status"]) =>
-      //reset page when switching status (changes table source)
-      setParams((prev) => ({ ...prev, status, page: 1 })),
+      setParams((prev) => ({ ...prev, status })),
     setParams,
   };
 }
