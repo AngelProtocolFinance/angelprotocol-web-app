@@ -22,8 +22,6 @@ export default function Donate() {
     "hide_bg_tip",
   ]);
 
-  queryState.isLoading = true;
-
   return (
     <QueryLoader
       queryState={queryState}
