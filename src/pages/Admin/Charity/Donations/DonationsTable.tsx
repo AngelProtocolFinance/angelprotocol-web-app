@@ -92,8 +92,8 @@ const csvHeadersDonations: {
   key: keyof DonationRecord;
   label: string;
 }[] = [
-  { key: "initAmount", label: "Amount" },
-  { key: "symbol", label: "Currency" },
+  { key: "viaName", label: "Source" },
+  { key: "finalAmountUsd", label: "Total amount (USD)" },
   { key: "date", label: "Date" },
   { key: "id", label: "Transaction Hash" },
 ];
