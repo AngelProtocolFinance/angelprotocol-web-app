@@ -61,6 +61,6 @@ const amount = (splitLiqPct: number, amount = 0) => {
   const amounts = { total: amount, liq, locked };
   return ({ type }: { type: keyof typeof amounts }) => {
     const val = amounts[type];
-    return val ? <>${humanize(val)}</> : <>--</>;
+    return val >= 0.01 ? <>${humanize(val)}</> : <>--</>;
   };
 };
