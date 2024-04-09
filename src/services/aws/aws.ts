@@ -9,6 +9,8 @@ import {
   ApplicationDetails,
   ApplicationVerdict,
   ApplicationsQueryParams,
+  DonationRecord,
+  DonationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   Endowment,
   EndowmentCard,
@@ -64,6 +66,7 @@ export const aws = createApi({
     "banking-application",
     "registration",
     "users",
+    "donations",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -199,6 +202,19 @@ export const aws = createApi({
         };
       },
     }),
+    donations: builder.query<
+      { Items: DonationRecord[]; nextPage?: number },
+      DonationsQueryParams
+    >({
+      providesTags: ["donations"],
+      query: (params) => {
+        return {
+          url: `${v(1)}/donations`,
+          params,
+          headers: { authorization: TEMP_JWT },
+        };
+      },
+    }),
   }),
 });
 
@@ -214,6 +230,8 @@ export const {
   useApplicationsQuery,
   useApplicationQuery,
   useReviewApplicationMutation,
+  useDonationsQuery,
+  useLazyDonationsQuery,
   useLazyEndowWithEinQuery,
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },

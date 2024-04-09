@@ -1,7 +1,7 @@
-import { DonationMadeByDonor, DonationsQueryParams } from "types/aws";
+import { DonationRecord, DonationsQueryParams } from "types/aws";
 
 export type TableProps = {
-  donations: DonationMadeByDonor[];
+  donations: DonationRecord[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;

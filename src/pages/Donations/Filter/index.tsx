@@ -14,10 +14,16 @@ import { FormValues as FV } from "./types";
 type Props = {
   classes?: string;
   setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
+  asker: string;
   isDisabled: boolean;
 };
 
-export default function Filter({ setParams, classes = "", isDisabled }: Props) {
+export default function Filter({
+  setParams,
+  classes = "",
+  isDisabled,
+  asker,
+}: Props) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
@@ -37,14 +43,13 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
 
   async function submit(data: FV) {
     setParams((prev) => ({
-      id: prev.id,
-      chain_id: prev.chain_id,
+      asker,
       status: prev.status,
       ...cleanObject({
-        afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
-        beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
-        chainName: data.network.value,
-        denomination: data.currency.value,
+        startDate: data.startDate ? new Date(data.startDate).toISOString() : "",
+        endDate: data.endDate ? new Date(data.endDate).toISOString() : "",
+        viaId: data.network.value,
+        symbol: data.currency.value,
       }),
     }));
     buttonRef.current?.click();
@@ -53,8 +58,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
     setParams((prev) => ({
-      id: prev.id,
-      chain_id: prev.chain_id,
+      asker,
       status: prev.status,
     }));
     buttonRef.current?.click();
