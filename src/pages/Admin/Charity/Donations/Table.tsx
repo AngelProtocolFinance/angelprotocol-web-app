@@ -1,10 +1,8 @@
-import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
-import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import { getTxUrl, humanize, maskAddress } from "helpers";
 import useSort from "hooks/useSort";
 import { DonationRecord } from "types/aws";
+import Row from "./Row";
 
 type Props = {
   donations: DonationRecord[];
@@ -46,15 +44,15 @@ export default function Table({
             Date
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("symbol")}
+            onClick={handleHeaderClick("viaName")}
             _activeSortKey={sortKey}
-            _sortKey="symbol"
+            _sortKey="viaName"
             _sortDirection={sortDirection}
           >
-            Currency
+            Source
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("initAmount")}
+            onClick={handleHeaderClick("finalAmountUsd")}
             _activeSortKey={sortKey}
             _sortKey="amount"
             _sortDirection={sortDirection}
@@ -73,62 +71,13 @@ export default function Table({
         selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {sorted
-          .map(
-            ({
-              id,
-              initAmount,
-              symbol,
-              viaId,
-              date,
-              donorDetails,
-              splitLiqPct = "50",
-            }) => (
-              <Cells
-                key={id}
-                type="td"
-                cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
-                  hasMore ? "" : "first:rounded-bl last:rounded-br"
-                }`}
-              >
-                <span className="text-sm">
-                  {new Date(date).toLocaleDateString()}
-                </span>
-                <span className="text-sm">{symbol}</span>
-                <>{humanize(initAmount, 3)}</>
-                <>{humanize(initAmount * (+splitLiqPct / 100), 3)}</>
-                <>{humanize(initAmount * ((100 - +splitLiqPct) / 100), 3)}</>
-
-                {viaId === "staging" || viaId === "fiat" ? (
-                  <>- - -</>
-                ) : (
-                  <ExtLink
-                    //default to ethereum for staging
-                    href={getTxUrl(viaId, id)}
-                    className="text-center text-blue-d1 hover:text-navy uppercase text-sm"
-                  >
-                    {maskAddress(id)}
-                  </ExtLink>
-                )}
-
-                <td className="relative">
-                  {!donorDetails ? (
-                    <Icon
-                      type="Close"
-                      //prevent icon size from affecting row height
-                      className="left-4 absolute top-1/2 -translate-y-1/2 text-red "
-                      size={22}
-                    />
-                  ) : (
-                    <Icon
-                      type="CheckCircle"
-                      className="left-4 absolute top-1/2 -translate-y-1/2  text-green"
-                      size={20}
-                    />
-                  )}
-                </td>
-              </Cells>
-            )
-          )
+          .map((record) => (
+            <Row
+              key={record.id}
+              {...record}
+              classes={hasMore ? "" : "first:rounded-bl last:rounded-br"}
+            />
+          ))
           .concat(
             hasMore ? (
               <td
