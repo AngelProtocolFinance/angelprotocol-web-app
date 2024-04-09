@@ -1,6 +1,5 @@
-import * as Sentry from "@sentry/react";
-import { PropsWithChildren, useEffect } from "react";
 import { useErrorContext } from "contexts/ErrorContext";
+import { PropsWithChildren, useEffect } from "react";
 
 export default function ErrorHandler(
   props: PropsWithChildren<{
@@ -10,7 +9,6 @@ export default function ErrorHandler(
   const { handleError } = useErrorContext();
   useEffect(() => {
     if (props.error) {
-      Sentry.captureException(props.error);
       handleError(props.error);
     }
   }, [props.error, handleError]);

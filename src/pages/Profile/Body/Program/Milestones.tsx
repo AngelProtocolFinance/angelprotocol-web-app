@@ -1,8 +1,8 @@
-import { MileStone as TMilestone } from "types/aws";
 import Image from "components/Image";
 import RichText from "components/RichText";
 import { Info } from "components/Status";
 import { isEmpty } from "helpers";
+import { MileStone as TMilestone } from "types/aws";
 import Container from "../common/Container";
 
 type Props = {
@@ -41,7 +41,7 @@ function Milestone({
   return (
     <div
       className={`pb-4 pt-4 first:pt-0 last:pb-0 border-l ${
-        isComplete ? "border-orange" : "border-prim"
+        isComplete ? "border-blue-d1" : "border-gray-l4"
       }`}
     >
       {milestone_media && (
@@ -50,15 +50,15 @@ function Milestone({
         </div>
       )}
 
-      <p className="mt-4 pl-6 sm:pl-8 mb-3 text-gray-d1 dark:text-gray text-xs">
+      <p className="mt-4 pl-6 sm:pl-8 mb-3 text-navy-l1 dark:text-navy-l2 text-xs">
         {new Date(milestone_date).toLocaleDateString()}
       </p>
-      <h6 className="pl-6 sm:pl-8 font-bold font-work mb-3 relative">
+      <h6 className="pl-6 sm:pl-8 font-bold mb-3 relative">
         {milestone_title}
         <span className="bg-white dark:bg-blue-d6 w-4 h-6 absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2" />
         <span
           className={`${
-            isComplete ? "bg-orange" : "bg-gray-l3 dark:bg-bluegray"
+            isComplete ? "bg-blue-d1" : "bg-gray-l3 dark:bg-navy"
           } w-4 h-4 rounded-full absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2`}
         />
       </h6>
@@ -67,7 +67,7 @@ function Milestone({
           content={{ value: milestone_description }}
           readOnly
           classes={{
-            container: "text-gray-d1 dark:text-gray text-sm w-full",
+            container: "text-navy-l1 dark:text-navy-l2 text-sm w-full",
           }}
         />
       </div>

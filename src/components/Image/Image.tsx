@@ -1,11 +1,11 @@
+import ContentLoader from "components/ContentLoader";
+import ExtLink from "components/ExtLink";
 import React, {
   PropsWithChildren,
   useImperativeHandle,
   useRef,
   useState,
 } from "react";
-import ContentLoader from "components/ContentLoader";
-import ExtLink from "components/ExtLink";
 import ImagePlaceholder from "./ImagePlaceholder";
 
 export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
@@ -13,7 +13,10 @@ export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 } & ({ href: string; title: string } | { href?: never; title?: never });
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
-  ({ className, ...props }, forwardRef) => {
+  (
+    { alt = "", className, isSrcLoading, href, title, onError, ...props },
+    forwardRef
+  ) => {
     const ref = useRef<HTMLImageElement>(null);
     const [isError, setError] = useState(false);
 
@@ -23,7 +26,7 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
       () => ref.current
     );
 
-    if ((!props.src && !props.isSrcLoading) || isError) {
+    if ((!props.src && !isSrcLoading) || isError) {
       return <ImagePlaceholder className={className} />;
     }
 
@@ -45,7 +48,8 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
      * 5. Component `Image` flickers as it transitions from displaying `ContentLoader` to displaying `img`
      *
      */
-    const isLoading = !ref.current?.complete && props.isSrcLoading;
+    const isLoading = !ref.current?.complete && isSrcLoading;
+    const commonClasses = `${className} ${isLoading ? "hidden" : ""}`;
 
     return (
       <>
@@ -62,20 +66,13 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
          * wrapping the `img`.
          *
          */}
-        <WithLink
-          className={`${className} ${isLoading ? "hidden" : ""}`}
-          href={props.href}
-          title={props.title}
-        >
+        <WithLink className={commonClasses} href={href} title={title}>
           <img
             ref={ref}
-            src={props.src}
-            className={`object-contain ${
-              isLoading ? "hidden" : ""
-            } ${className}`}
-            alt={props.alt || ""}
-            loading={props.loading}
-            onError={(e) => (props.onError ? props.onError(e) : setError(true))}
+            className={`object-contain ${commonClasses}`}
+            alt={alt}
+            onError={(e) => (onError ? onError(e) : setError(true))}
+            {...props}
           />
         </WithLink>
       </>

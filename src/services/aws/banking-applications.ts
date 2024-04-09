@@ -1,4 +1,5 @@
-import { BankingApplicationDetails } from "../types";
+import { TEMP_JWT } from "constants/auth";
+import { RootState } from "store/store";
 import { userIsSignedIn } from "types/auth";
 import {
   BankingApplication,
@@ -9,9 +10,8 @@ import {
   PayoutMethod,
   V2RecipientAccount,
 } from "types/aws";
-import { RootState } from "store/store";
-import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
+import { BankingApplicationDetails } from "../types";
 import { aws } from "./aws";
 
 const bankingApplications = aws.injectEndpoints({
@@ -74,7 +74,7 @@ const bankingApplications = aws.injectEndpoints({
       )
     >({
       providesTags: ["banking-application"],
-      async queryFn({ uuid, ...params }, api, extraOptions, baseQuery) {
+      async queryFn({ uuid, ...params }, api, _extraOptions, baseQuery) {
         const {
           auth: { user },
         } = api.getState() as RootState;

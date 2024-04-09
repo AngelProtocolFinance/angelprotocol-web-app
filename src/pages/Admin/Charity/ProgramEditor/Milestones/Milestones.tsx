@@ -1,9 +1,9 @@
-import { useFieldArray } from "react-hook-form";
-import { FV } from "../types";
 import Icon from "components/Icon";
 import { Info } from "components/Status";
 import { dateToFormFormat } from "components/form";
 import { isEmpty } from "helpers";
+import { useFieldArray } from "react-hook-form";
+import { FV } from "../types";
 import Milestone from "./Milestone";
 
 export default function Milestones() {
@@ -14,9 +14,9 @@ export default function Milestones() {
   const onRemove = (idx: number) => remove(idx);
 
   return (
-    <div className="@container grid gap-6 p-4 @lg:p-6 border border-prim rounded bg-white dark:bg-blue-d6">
+    <div className="@container grid gap-6 p-4 @lg:p-6 border border-gray-l4 rounded bg-white dark:bg-blue-d6">
       <div className="flex flex-col @md:flex-row items-center gap-3 justify-between">
-        <h4 className="text-2xl font-body">Milestones</h4>
+        <h4 className="text-2xl">Milestones</h4>
         <button
           onClick={() =>
             append({
@@ -40,7 +40,7 @@ export default function Milestones() {
       </div>
       {!isEmpty(fields) ? (
         <>
-          <span className="text-sm text-gray-d1 dark:text-gray">
+          <span className="text-sm text-navy-l1 dark:text-navy-l2">
             Milestones will be publicly displayed in descending order by their
             date.
           </span>

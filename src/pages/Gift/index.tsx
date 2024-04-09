@@ -6,12 +6,12 @@ import { routes } from "./routes";
 
 export default function Gift() {
   return (
-    <div className="grid">
+    <div className="grid ">
       <div
         style={{
           backgroundImage: `url("/images/hero.png")`,
         }}
-        className="relative overlay w-full h-72 bg-center bg-cover"
+        className="relative overlay w-full h-[23rem] sm:h-[26rem] bg-center bg-cover"
       />
       <Routes>
         <Route

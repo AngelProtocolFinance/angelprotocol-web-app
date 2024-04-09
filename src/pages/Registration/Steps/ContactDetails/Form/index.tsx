@@ -1,10 +1,10 @@
-import { FormValues as FV } from "../types";
-import { ContactRoles, ReferralMethods } from "types/aws";
+import LoadText from "components/LoadText";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
-import { LoadText } from "components/registration";
 import { APP_NAME } from "constants/env";
+import { ContactRoles, ReferralMethods } from "types/aws";
 import { referralOptions, roleOptions } from "../constants";
+import { FormValues as FV } from "../types";
 import useSubmit from "./useSubmit";
 
 export default function Form({ classes = "" }: { classes?: string }) {
@@ -55,7 +55,11 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         What's your role within the organization?
       </Label>
-      <Selector<FV, "Role", ContactRoles> name="Role" options={roleOptions}>
+      <Selector<FV, "Role", ContactRoles>
+        name="Role"
+        options={roleOptions}
+        classes={{ options: "text-sm" }}
+      >
         {({ value }) =>
           value === "other" && (
             <Field<FV>
@@ -75,6 +79,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Selector<FV, "ReferralMethod", ReferralMethods>
         name="ReferralMethod"
         options={referralOptions}
+        classes={{ options: "text-sm" }}
       >
         {({ value }) => (
           <>
@@ -106,7 +111,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       />
       <button
         type="submit"
-        className="mt-8 py-3 px-8 w-full sm:w-auto btn-orange btn-reg"
+        className="mt-8 py-3 px-8 w-full sm:w-auto btn-blue btn-reg"
         disabled={isSubmitting}
       >
         <LoadText isLoading={isSubmitting}>Continue</LoadText>

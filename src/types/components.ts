@@ -2,7 +2,7 @@ import { FileObject } from "./aws";
 
 //selector
 export type ValKey = string | number;
-export type OptionType<V> = { label: string; value: V };
+export type OptionType<V extends ValKey> = { label: string; value: V };
 
 //dropzone
 export type FileDropzoneAsset = {
@@ -17,6 +17,26 @@ export type Country = {
   code: string;
 };
 
+//currency selector
+
+type BaseCurrency = {
+  name?: string;
+  code: string;
+};
+
+export type DetailedCurrency = BaseCurrency & {
+  /** unit/usd */
+  rate: number;
+  min: number;
+};
+
+export type Currency = BaseCurrency & {
+  min?: number;
+  /** unit/usd */
+  rate: number | null;
+};
+
+export type CurrencyOption = Currency | DetailedCurrency;
 /**
  * Rich text strings contain not only the user input itself, but is a
  * stringified object that describes the styling of particular parts of

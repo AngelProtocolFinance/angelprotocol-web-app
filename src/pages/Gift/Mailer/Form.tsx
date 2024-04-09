@@ -1,18 +1,18 @@
-import { useState } from "react";
-import { useFormContext } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { FormValues as FV } from "./types";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
-import { richTextToHTML } from "helpers/richTextToHtml";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
+import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
+import { richTextToHTML } from "helpers/richTextToHtml";
+import { useState } from "react";
+import { useFormContext } from "react-hook-form";
+import { Link } from "react-router-dom";
 import Success from "./Success";
+import { FormValues as FV } from "./types";
 
 export default function Form({ classes = "" }) {
   const {
@@ -78,13 +78,13 @@ export default function Form({ classes = "" }) {
         fieldName="message"
         classes={{
           container:
-            "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_10rem] rounded bg-white dark:bg-blue-d6 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-bluegray-d1 p-3 break-words",
+            "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_10rem] rounded bg-white dark:bg-blue-d6 aria-disabled:bg-gray-l5 aria-disabled:dark:bg-navy-d3 p-3 break-words",
           error: "text-right text-red dark:text-red-l1 text-xs -mt-4",
-          charCounter: "text-gray-d1 dark:text-gray",
+          charCounter: "text-navy-l1 dark:text-navy-l2",
         }}
         charLimit={500}
       />
-      <div className="grid grid-cols-2 gap-5 font-body mt-3">
+      <div className="grid grid-cols-2 gap-5 mt-3">
         <button
           type="button"
           className="btn-outline-filled btn-gift"
@@ -95,7 +95,7 @@ export default function Form({ classes = "" }) {
           Reset
         </button>
         <button
-          className="btn-orange btn-gift"
+          className="btn-blue btn-gift"
           type="submit"
           disabled={isSubmitting}
         >

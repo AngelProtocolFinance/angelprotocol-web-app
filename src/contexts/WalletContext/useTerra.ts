@@ -1,7 +1,7 @@
 import {
   ConnectType,
-  Installation,
   Connection as TerraConnection,
+  Installation,
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
@@ -39,15 +39,15 @@ export default function useTerra() {
       status === WalletStatus.INITIALIZING
         ? { status: "loading" }
         : WalletStatus.WALLET_CONNECTED && wallets[0]
-        ? {
-            id: (c.identifier || c.type.toLowerCase) as TerraWalletID,
-            status: "connected",
-            isSwitching: false,
-            address: wallets[0].terraAddress,
-            chainId: network.chainID,
-            post,
-          }
-        : { status: "disconnected" };
+          ? {
+              id: (c.identifier || c.type.toLowerCase) as TerraWalletID,
+              status: "connected",
+              isSwitching: false,
+              address: wallets[0].terraAddress,
+              chainId: network.chainID,
+              post,
+            }
+          : { status: "disconnected" };
 
     return {
       ...state,
@@ -63,7 +63,7 @@ export default function useTerra() {
           }
           try {
             connect(c.type, c.identifier);
-          } catch (err) {
+          } catch (_) {
             alert("Failed to connect to wallet");
           }
         },

@@ -1,12 +1,8 @@
-import { Link } from "react-router-dom";
-import { FV } from "./types";
-import { EndowDesignation } from "types/aws";
-import { UNSDG_NUMS } from "types/lists";
 import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
+import ExtLink from "components/ExtLink";
 import Group from "components/Group";
-import Icon from "components/Icon";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { MultiSelector, Selector } from "components/Selector";
@@ -14,8 +10,13 @@ import Toggle from "components/Toggle";
 import { Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { EndowDesignation } from "types/aws";
+import { UNSDG_NUMS } from "types/lists";
+import HideBGTipCheckbox from "./HideBGTipCheckbox";
+import Slug from "./Slug";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
+import { FV } from "./types";
 import useEditProfile from "./useEditProfile";
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
@@ -39,18 +40,20 @@ export default function Form() {
         reset();
       }}
       onSubmit={editProfile}
-      className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
+      className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
-      <Link
-        to={`${appRoutes.marketplace}/${id}`}
-        className="text-blue hover:text-orange text-sm flex items-center gap-1"
-      >
-        <Icon type="Back" />
-        <span>Back to profile</span>
-      </Link>
-      <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
-        Publish profile
-      </Toggle>
+      <div className="flex justify-between items-center">
+        <ExtLink
+          href={`${appRoutes.marketplace}/${id}`}
+          className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
+        >
+          View Profile
+        </ExtLink>
+        <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
+          Publish profile
+        </Toggle>
+      </div>
+
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public
@@ -79,6 +82,7 @@ export default function Form() {
           accept={VALID_MIME_TYPES}
           aspect={[4, 1]}
           classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+          maxSize={MAX_SIZE_IN_BYTES}
         />
         <Label className="-mb-4">Logo of your organization</Label>
         <ImgEditor<FV, "logo">
@@ -91,6 +95,19 @@ export default function Form() {
           }}
           maxSize={MAX_SIZE_IN_BYTES}
         />
+        <Label className="-mb-4">
+          Marketplace Card image for your organization
+        </Label>
+        <ImgEditor<FV, "card_img">
+          name="card_img"
+          accept={VALID_MIME_TYPES}
+          aspect={[2, 1]}
+          classes={{
+            container: "mb-4",
+            dropzone: "w-full aspect-[2/1]",
+          }}
+          maxSize={MAX_SIZE_IN_BYTES}
+        />
         <Label className="-mb-4">Description of your organization</Label>
         <RichTextEditor<FV>
           fieldName="overview"
@@ -98,9 +115,9 @@ export default function Form() {
           charLimit={MAX_CHARS}
           classes={{
             container:
-              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             error: "static field-error -mt-4",
-            charCounter: "text-gray-d1 dark:text-gray",
+            charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
         <Field<FV>
@@ -109,6 +126,10 @@ export default function Form() {
           label="Website of your organization"
           placeholder="https://website.org"
         />
+
+        <HideBGTipCheckbox />
+
+        <Slug />
       </Group>
 
       <Group title="Organization">
@@ -118,13 +139,14 @@ export default function Form() {
         <MultiSelector<FV, "sdgs", UNSDG_NUMS>
           name="sdgs"
           options={sdgOptions}
-          classes={{ button: "field-input-admin" }}
+          classes={{ button: "field-input-admin", options: "text-sm" }}
         />
         <Label className="-mb-4" required>
           Organization Designation
         </Label>
         <Selector<FV, "endow_designation", string>
           name="endow_designation"
+          classes={{ options: "text-sm" }}
           options={endowDesignations.map((designation) => ({
             label: designation,
             value: designation,
@@ -147,6 +169,7 @@ export default function Form() {
           classes={{
             container: "bg-white dark:bg-blue-d6",
             button: "field-input-admin",
+            options: "text-sm",
           }}
         />
         <Field<FV>
@@ -212,7 +235,7 @@ export default function Form() {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="px-6 btn-orange text-sm"
+          className="px-6 btn-blue text-sm"
         >
           Submit changes
         </button>

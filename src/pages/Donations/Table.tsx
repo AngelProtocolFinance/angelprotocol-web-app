@@ -1,15 +1,15 @@
-import { Link } from "react-router-dom";
-import { TableProps } from "./types";
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
-import useKYC from "components/KYC/useKYC";
 import TableSection, { Cells } from "components/TableSection";
-import useSort from "hooks/useSort";
-import { getTxUrl, humanize } from "helpers";
 import { chainIds } from "constants/chainIds";
 import { appRoutes } from "constants/routes";
+import { getTxUrl, humanize } from "helpers";
+import useSort from "hooks/useSort";
+import { Link } from "react-router-dom";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { TableProps } from "./types";
+import useShowKYCForm from "./useShowKYCForm";
 
 export default function Table({
   donations,
@@ -17,6 +17,7 @@ export default function Table({
   disabled,
   isLoading,
   hasMore,
+  status,
   onLoadMore,
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
@@ -24,24 +25,21 @@ export default function Table({
     "date"
   );
 
-  const showKYCForm = useKYC();
+  const showKYCForm = useShowKYCForm();
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
     >
-      <TableSection
-        type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
-      >
+      <TableSection type="thead" rowClass="bg-blue-l4 divide-x divide-blue-l2">
         <Cells
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <HeaderButton
-            onClick={handleHeaderClick("charityName")}
+            onClick={handleHeaderClick("recipientName")}
             _activeSortKey={sortKey}
-            _sortKey="charityName"
+            _sortKey="recipientName"
             _sortDirection={sortDirection}
           >
             Recipient
@@ -55,7 +53,7 @@ export default function Table({
             Date
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("chainName")}
+            onClick={handleHeaderClick("viaName")}
             _activeSortKey={sortKey}
             _sortKey="chainName"
             _sortDirection={sortDirection}
@@ -64,15 +62,15 @@ export default function Table({
           </HeaderButton>
           <>Currency</>
           <HeaderButton
-            onClick={handleHeaderClick("amount")}
+            onClick={handleHeaderClick("initAmount")}
             _activeSortKey={sortKey}
-            _sortKey="amount"
+            _sortKey="initAmount"
             _sortDirection={sortDirection}
           >
             Amount
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("usdValue")}
+            onClick={handleHeaderClick("initAmountUsd")}
             _activeSortKey={sortKey}
             _sortKey="usdValue"
             _sortDirection={sortDirection}
@@ -80,75 +78,65 @@ export default function Table({
             USD Value
           </HeaderButton>
           <>TX Hash</>
-          <span className="flex justify-center">Status</span>
-          <span className="flex justify-center">Receipt</span>
+          {status === "final" && (
+            <span className="flex justify-center">Receipt</span>
+          )}
         </Cells>
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
-        selectedClass="bg-orange-l5 dark:bg-blue-d4"
+        rowClass="even:bg-blue-l5 divide-x divide-blue-l2"
+        selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {sorted
           .map((row) => (
             <Cells
-              key={row.hash}
+              key={row.id}
               type="td"
-              cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+              cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
               <Link
                 to={`${
                   appRoutes[
-                    row.chainId === chainIds.juno ? "profile" : "marketplace"
+                    row.viaId === chainIds.juno ? "profile" : "marketplace"
                   ]
-                }/${row.id}`}
+                }/${row.recipientId}`}
                 className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
                 <span className="truncate max-w-[12rem]">
-                  {row.charityName}
+                  {row.recipientName}
                 </span>
                 <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
               <>{new Date(row.date).toLocaleDateString()}</>
-              <>{row.chainName}</>
-              <span className="font-body text-sm">{row.symbol}</span>
-              <>{humanize(row.amount, 3)}</>
-              <>{`$${humanize(row.usdValue, 2)}`}</>
-              {row.chainId === "fiat" || row.chainId === "staging" ? (
+              <>{row.viaName}</>
+              <span className="text-sm">{row.symbol}</span>
+              <>{humanize(row.initAmount, 3)}</>
+              <>
+                {row.initAmountUsd
+                  ? `$${humanize(row.initAmountUsd, 2)}`
+                  : "--"}
+              </>
+              {row.viaId === "fiat" || row.viaId === "staging" ? (
                 <>- - -</>
               ) : (
                 <ExtLink
-                  href={getTxUrl(row.chainId, row.hash)}
-                  className="text-center text-blue hover:text-blue-l2 cursor-pointer uppercase text-sm"
+                  href={getTxUrl(row.viaId, row.id)}
+                  className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
                 >
-                  {row.hash}
+                  {row.id}
                 </ExtLink>
               )}
-              <div className="text-center text-white">
-                <span
-                  className={`${
-                    row.donationFinalized
-                      ? "bg-green"
-                      : "bg-gray-d1 dark:bg-gray"
-                  } font-body px-2 py-0.5 rounded`}
+              {status === "final" && (
+                <button
+                  className="w-full flex justify-center"
+                  onClick={() => showKYCForm(row.id)}
                 >
-                  {row.donationFinalized ? "RECEIVED" : "PENDING"}
-                </span>
-              </div>
-              <button
-                className="w-full flex justify-center"
-                onClick={() =>
-                  showKYCForm({
-                    type: "post-donation",
-                    txHash: row.hash,
-                    classes: "grid gap-5",
-                  })
-                }
-              >
-                <Icon type="FatArrowDownload" className="text-2xl" />
-              </button>
+                  <Icon type="FatArrowDownload" className="text-2xl" />
+                </button>
+              )}
             </Cells>
           ))
           .concat(
@@ -156,7 +144,7 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-prim rounded-b"
+                className="border-t border-blue-l2 rounded-b"
               >
                 <LoadMoreBtn
                   onLoadMore={onLoadMore}

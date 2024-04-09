@@ -44,15 +44,21 @@ type SocialMediaURLs = {
 
 export type Endowment = {
   id: number;
+  slug?: string;
   active_in_countries: string[];
-  contact_email: string;
   endow_designation: EndowDesignation;
   fiscal_sponsored: boolean;
   hq_country: string;
+  /** empty string by default */
   image: string;
   kyc_donors_only: boolean;
+  /** optional as older endowments don't have it set */
+  hide_bg_tip?: boolean;
+  /** empty string by default */
   logo: string;
   name: string;
+  /** empty string by default */
+  card_img?: string;
   /** empty string by default */
   overview: string;
   program: Program[];
@@ -62,8 +68,12 @@ export type Endowment = {
   social_media_urls: SocialMediaURLs;
   /** empty string by default */
   street_address: string;
-  tagline: string;
-  url: string;
+  /** empty string by default */
+  tagline?: string;
+  receiptMsg?: string;
+  url?: string;
+  /** not claimed only if `false` */
+  claimed?: boolean;
 };
 
 export type EndowmentProfile = Endowment;
@@ -72,6 +82,7 @@ export type EndowmentCard = Pick<
   Endowment,
   | "id"
   | "active_in_countries"
+  | "card_img"
   | "endow_designation"
   | "hq_country"
   | "kyc_donors_only"
@@ -79,43 +90,55 @@ export type EndowmentCard = Pick<
   | "name"
   | "sdgs"
   | "tagline"
+  | "claimed"
 >;
-export type EndowmentOption = Pick<Endowment, "id" | "name">;
+export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
-  Endowment,
-  "endow_designation" | "fiscal_sponsored"
+  Required<Endowment>,
+  | "endow_designation"
+  | "fiscal_sponsored"
+  | "receiptMsg"
+  | "program"
+  | "claimed"
 > & {
   endow_designation: EndowDesignation | "";
-  program_id: string;
 };
+
+export type EndowmentSettingsUpdate = Pick<
+  Required<Endowment>,
+  "id" | "receiptMsg"
+>;
+
+export type EndowmentProgramsUpdate = Pick<
+  Required<Endowment>,
+  "id" | "program"
+>;
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
 export type EndowmentsQueryParams = {
-  query: string; //
+  /** can be empty string */
+  query: string;
   sort?: `${EndowmentsSortKey}+${SortDirection}`;
-  page?: number; //to load next page, set to Page + 1
+  page: number; //to load next page, set to Page + 1
   endow_designation?: string; // comma separated EndowDesignation values
   sdgs?: string; // comma separated sdg values.
   kyc_only?: string; // comma separated boolean values
   countries?: string; //comma separated country names
-  hits?: number; // Number of items to be returned per request. If not provided, API defaults to return all
-  published: "true";
+  /** boolean csv */
+  claimed?: string;
 };
 
 export interface LeaderboardEntry {
-  // chain: NetworkType;
   charity_logo: string;
   charity_name: string;
   endowment_id: number;
   total_liq: number;
   total_lock: number;
   overall: number;
-  //tier: EndowmentTier
-  //charity_owner:string
 }
 
 export interface Update {

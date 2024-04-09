@@ -1,8 +1,14 @@
 import { useEffect } from "react";
 
-/**tailwind screen sizes*/
-export const SCREEN_MD = 768;
-export const SCREEN_LG = 1024;
+/**
+ * tailwind screen sizes
+ * @see {@link https://tailwindcss.com/docs/responsive-design}
+ */
+export const SCREEN_BREAKPOINTS = {
+  sm: 640,
+  md: 768,
+  lg: 1024,
+};
 
 type Options<T extends object> = {
   shouldCallOnResizeOnLoad?: boolean;
@@ -15,6 +21,7 @@ export default function useHandleScreenResize<T extends object>(
   onResize: (screenSize: number, ref: T) => void,
   options?: Options<T>
 ) {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   useEffect(() => {
     const {
       shouldAttachListener,
@@ -40,8 +47,6 @@ export default function useHandleScreenResize<T extends object>(
         };
     window.addEventListener("resize", handler);
     return () => window.removeEventListener("resize", handler);
-
-    //eslint-disable-next-line
   }, [options?.shouldAttachListener]);
 }
 

@@ -1,7 +1,7 @@
-import { useLeaderboardsQuery } from "services/aws/leaderboard";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, DAPP_URL } from "constants/env";
+import { useLeaderboardsQuery } from "services/aws/leaderboard";
 import DonationMetrics from "./DonationMetrics";
 import Table from "./Table";
 
@@ -9,7 +9,7 @@ export default function Leaderboard() {
   const queryState = useLeaderboardsQuery(null);
 
   return (
-    <section className="padded-container grid content-start mt-8 pb-16 font-work">
+    <section className="padded-container grid content-start pt-8 sm:pt-20 pb-20">
       <Seo title={`Leaderboad - ${APP_NAME}`} url={`${DAPP_URL}/leaderboard`} />
       <DonationMetrics />
       <h3 className="mt-6 uppercase text-3xl">Impact board</h3>
@@ -23,7 +23,7 @@ export default function Leaderboard() {
       >
         {(update) => (
           <>
-            <p className="justify-self-end flex gap-2 text-sm font-light text-gray-d1 dark:text-gray">
+            <p className="justify-self-end flex gap-2 text-sm font-light text-navy-l1 dark:text-navy-l2">
               last updated:{" "}
               {new Date(update.last_update).toLocaleString([], {
                 dateStyle: "short",

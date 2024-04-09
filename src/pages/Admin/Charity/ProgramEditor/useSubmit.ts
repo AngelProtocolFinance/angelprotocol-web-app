@@ -1,18 +1,20 @@
-import { SubmitHandler, useFormContext } from "react-hook-form";
-import { FV } from "./types";
-import { ProfileUpdateMsg } from "services/types";
-import { Program } from "types/aws";
-import { useModalContext } from "contexts/ModalContext";
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
+import { adminRoutes, appRoutes } from "constants/routes";
+import { useModalContext } from "contexts/ModalContext";
 import { isEmpty, logger } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
+import { SubmitHandler, useFormContext } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { EndowmentProgramsUpdate, Program } from "types/aws";
 import { useAdminContext } from "../../Context";
-import { useUpdateEndowmentProfile } from "../common";
+import { useUpdateEndowment } from "../common";
+import { FV } from "./types";
 
 export default function useSubmit() {
   const { id } = useAdminContext();
+  const navigate = useNavigate();
   const {
     reset,
     handleSubmit,
@@ -21,7 +23,7 @@ export default function useSubmit() {
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
-  const updateProfile = useUpdateEndowmentProfile();
+  const updateEndow = useUpdateEndowment();
 
   const submit: SubmitHandler<FV> = async ({ initial, ...fv }) => {
     try {
@@ -43,7 +45,7 @@ export default function useSubmit() {
         program_id: initial ? initial.program_id : window.crypto.randomUUID(),
         program_description: fv.description.value,
         program_banner: imageURL,
-        program_milestones: fv.milestones.map(({ idx, ...m }, i) => ({
+        program_milestones: fv.milestones.map(({ idx: _, ...m }, i) => ({
           ...m,
           milestone_date: new Date(m.milestone_date).toISOString(),
           milestone_media: milestoneMediaURLs[i],
@@ -58,12 +60,12 @@ export default function useSubmit() {
         }
       }
 
-      const updates: ProfileUpdateMsg = {
+      const updates: EndowmentProgramsUpdate = {
         id,
         program: [program],
       };
-      await updateProfile(updates);
-      if (!initial) reset(); //for new program, reset form after submit
+      await updateEndow(updates);
+      navigate(`${appRoutes.admin}/${id}/${adminRoutes.programs}`);
     } catch (err) {
       logger.error(err);
       showModal(TxPrompt, {

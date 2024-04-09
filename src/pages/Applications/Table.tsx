@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
-import { TableProps } from "./types";
-import { RegistrationStatus } from "types/aws";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import useSort from "hooks/useSort";
 import { appRoutes } from "constants/routes";
+import useSort from "hooks/useSort";
+import { Link } from "react-router-dom";
+import { RegistrationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { TableProps } from "./types";
 
 export default function Table({
   applications,
@@ -23,16 +23,17 @@ export default function Table({
 
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-prim`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
     >
       <TableSection
         type="thead"
-        rowClass="bg-orange-l6 dark:bg-blue-d7 divide-x divide-prim"
+        rowClass="bg-blue-l4 dark:bg-blue-d7 divide-x divide-blue-l2"
       >
         <Cells
           type="th"
           cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
+          <td className="w-4">type</td>
           <HeaderButton
             onClick={handleHeaderClick("OrganizationName")}
             _activeSortKey={sortKey}
@@ -72,18 +73,24 @@ export default function Table({
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-orange-l6 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-prim"
-        selectedClass="bg-orange-l5 dark:bg-blue-d4"
+        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-blue-l2"
+        selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {sorted
           .map((row) => (
             <Cells
               key={row.PK}
               type="td"
-              cellClass={`p-3 border-t border-prim max-w-[256px] truncate ${
+              cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
+              <span className="text-xs font-bold upppercase">
+                {row.Documentation.DocType === "Non-FSA" &&
+                row.Documentation.Claim
+                  ? "Claim"
+                  : "New"}
+              </span>
               <>{row.OrganizationName}</>
               <>{new Date(row.RegistrationDate).toLocaleDateString()}</>
               <>{row.HqCountry}</>
@@ -92,7 +99,7 @@ export default function Table({
               </td>
               <Link
                 to={appRoutes.applications + `/${row.PK}`}
-                className="text-center w-full inline-block hover:text-orange active:text-orange-d1"
+                className="text-center w-full inline-block hover:text-blue-d1"
               >
                 <Icon
                   size={24}
@@ -108,7 +115,7 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-prim rounded-b"
+                className="border-t border-blue-l2 rounded-b"
               >
                 <LoadMoreBtn
                   onLoadMore={onLoadMore}

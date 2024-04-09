@@ -1,37 +1,37 @@
-import { FiscalSponsorhipAgreementSigner } from "../../types";
+import { TEMP_JWT } from "constants/auth";
+import { EMAIL_SUPPORT } from "constants/env";
+import { logger } from "helpers";
+import { apiEnv } from "services/constants";
 import {
   ContactUpdateResult,
+  EndowClaim,
   InitApplication,
   RegistrationUpdate,
   SavedRegistration,
   SubmitResult,
 } from "types/aws";
-import { adminTags } from "services/aws/tags";
-import { logger } from "helpers";
-import { TEMP_JWT } from "constants/auth";
-import { EMAIL_SUPPORT } from "constants/env";
 import { version as v } from "../../helpers";
+import { FiscalSponsorhipAgreementSigner } from "../../types";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    newApplication: builder.mutation<
+    newApplication: builder.query<
       Pick<InitApplication, "Registration" | "ContactPerson">,
-      { email: string }
+      { email: string; claim?: EndowClaim }
     >({
-      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
-      query: ({ email }) => ({
-        url: `${v(4)}/registration`,
+      query: ({ email, claim }) => ({
+        url: `${v(5)}/registration`,
         method: "POST",
-        body: { Email: email },
+        body: { Email: email, ...(claim && { InitClaim: claim }) },
         headers: { authorization: TEMP_JWT },
       }),
     }),
     reg: builder.query<SavedRegistration, string>({
-      providesTags: [{ type: "admin", id: adminTags.registration }],
+      providesTags: ["registration"],
       query: (uuid) => {
         return {
-          url: "v1/registration",
+          url: `v5/registration/${apiEnv}`,
           params: { uuid },
           headers: { authorization: TEMP_JWT },
         };
@@ -59,7 +59,7 @@ const registration_api = aws.injectEndpoints({
     updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ reference, ...payload }) => {
         return {
-          url: `v5/registration/${reference}`,
+          url: `v6/registration/${reference}`,
           method: "PUT",
           body: payload,
         };
@@ -120,7 +120,7 @@ const registration_api = aws.injectEndpoints({
       },
     }),
     submit: builder.mutation<SubmitResult, string>({
-      invalidatesTags: [{ type: "admin", id: adminTags.registration }],
+      invalidatesTags: ["registration"],
       query: (referenceID) => ({
         url: `${v(5)}/registration/${referenceID}/submit`,
         method: "POST",
@@ -142,6 +142,6 @@ export const {
 
   //mutations
   useUpdateRegMutation,
-  useNewApplicationMutation,
+  useNewApplicationQuery,
   useSubmitMutation,
 } = registration_api;

@@ -1,9 +1,9 @@
+import Icon from "components/Icon";
+import LoadText from "components/LoadText";
+import { steps } from "pages/Registration/routes";
 import { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
 import { RegistrationStatus } from "types/aws";
-import { steps } from "pages/Registration/routes";
-import Icon from "components/Icon";
-import { LoadText } from "components/registration";
 import { useRegState } from "../StepGuard";
 
 type Props = {
@@ -40,7 +40,7 @@ export default function EndowmentStatus({
             type="button"
             onClick={onSubmit}
             disabled={isSubmitting}
-            className="min-w-[8rem] btn-orange btn-reg"
+            className="min-w-[8rem] btn-blue btn-reg"
           >
             <LoadText isLoading={isSubmitting}>Resubmit</LoadText>
           </button>
@@ -50,7 +50,7 @@ export default function EndowmentStatus({
     case "Under Review":
       return (
         <div
-          className={`max-sm:grid justify-items-center gap-2 text-gray-d1 dark:text-gray ${classes}`}
+          className={`max-sm:grid justify-items-center gap-2 text-navy-l1 dark:text-navy-l2 ${classes}`}
         >
           <Icon
             type="HourglassSplit"
@@ -77,7 +77,7 @@ export default function EndowmentStatus({
             type="button"
             disabled={isSubmitting}
             onClick={onSubmit}
-            className="py-3 min-w-[8rem] btn-orange btn-reg"
+            className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             <LoadText isLoading={isSubmitting}>Continue</LoadText>
           </button>

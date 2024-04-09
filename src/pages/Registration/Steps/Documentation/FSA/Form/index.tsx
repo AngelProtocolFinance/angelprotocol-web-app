@@ -1,13 +1,13 @@
-import { Link } from "react-router-dom";
-import { FormValues as FV, Props } from "../types";
-import { useRegState } from "pages/Registration/Steps/StepGuard";
 import ExtLink from "components/ExtLink";
 import FileDropzone from "components/FileDropzone";
 import Icon from "components/Icon";
+import LoadText from "components/LoadText";
 import { Field, Label } from "components/form";
-import { LoadText } from "components/registration";
+import { useRegState } from "pages/Registration/Steps/StepGuard";
+import { Link } from "react-router-dom";
 import { steps } from "../../../../routes";
 import { MB_LIMIT, VALID_MIME_TYPES } from "../schema";
+import { FormValues as FV, Props } from "../types";
 import useSubmit from "./useSubmit";
 
 export default function Form(props: Props) {
@@ -27,10 +27,10 @@ export default function Form(props: Props) {
 
       <Field<FV>
         name="RegistrationNumber"
-        label="Registration number"
+        label="Registration number (numbers and letters only)"
         required
         classes={{ container: "mb-6 mt-10", label: "font-semibold" }}
-        placeholder="e.g. xx-xxxxxxxxxx"
+        placeholder="e.g. xxxxxxxxxxxx"
       />
 
       <Label className="mb-2 mt-10 font-semibold" required>
@@ -71,7 +71,7 @@ export default function Form(props: Props) {
 
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
-          aria-disabled={isSubmitting}
+          aria-disabled={isSubmitting || isRedirecting}
           to={`../${steps.fsaInquiry}`}
           state={data.init}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
@@ -81,7 +81,7 @@ export default function Form(props: Props) {
         <button
           disabled={isSubmitting || isRedirecting}
           type="submit"
-          className="py-3 min-w-[8rem] btn-orange btn-reg"
+          className="py-3 min-w-[8rem] btn-blue btn-reg"
         >
           <LoadText
             isLoading={isSubmitting || isRedirecting}

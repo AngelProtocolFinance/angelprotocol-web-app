@@ -1,9 +1,10 @@
 import { FilterState } from "./types";
 
 export const initialState: FilterState = {
-  sdgs: [],
+  sdgGroups: [],
   countries: [],
   searchText: "",
   endow_designation: [],
   kyc_only: [],
+  verified: [],
 };

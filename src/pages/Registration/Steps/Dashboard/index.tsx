@@ -1,11 +1,10 @@
-import { Navigate } from "react-router-dom";
-import { CompleteRegistration } from "pages/Registration/types";
-import { useSubmitMutation } from "services/aws/registration";
+import Prompt from "components/Prompt";
+import { regRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import Prompt from "components/Prompt";
-import { handleMutationResult } from "helpers";
-import { regRoutes } from "constants/routes";
+import { CompleteRegistration } from "pages/Registration/types";
+import { Navigate } from "react-router-dom";
+import { useSubmitMutation } from "services/aws/registration";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
@@ -18,25 +17,23 @@ function Dashboard() {
   const { handleError } = useErrorContext();
 
   const submit = async ({ init }: CompleteRegistration) => {
-    handleMutationResult(
-      await submitApplication(init.reference),
-      handleError,
-      () => {
-        if (window.hasOwnProperty("lintrk")) {
-          (window as any).lintrk("track", { conversion_id: 12807754 });
-        }
-        showModal(Prompt, {
-          type: "success",
-          headline: "Submission",
-          title: "Submitted for review",
-          children: (
-            <>
-              Your application has been submitted. We will get back to you soon!
-            </>
-          ),
-        });
-      }
-    );
+    const result = await submitApplication(init.reference);
+    if ("error" in result) {
+      return handleError(result.error);
+    }
+
+    if (window.hasOwnProperty("lintrk")) {
+      (window as any).lintrk("track", { conversion_id: 12807754 });
+    }
+
+    showModal(Prompt, {
+      type: "success",
+      headline: "Submission",
+      title: "Submitted for review",
+      children: (
+        <>Your application has been submitted. We will get back to you soon!</>
+      ),
+    });
   };
 
   const { status } = data;

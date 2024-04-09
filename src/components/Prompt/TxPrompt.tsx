@@ -1,10 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { Props as PromptProps } from "./types";
-import { TxState, isTxError, isTxLoading, isTxSuccess } from "types/tx";
-import { useModalContext } from "contexts/ModalContext";
 import ExtLink from "components/ExtLink";
+import { useModalContext } from "contexts/ModalContext";
 import { getTxUrl } from "helpers";
+import { useNavigate } from "react-router-dom";
+import { TxState, isTxError, isTxLoading, isTxSuccess } from "types/tx";
 import Prompt from "./Prompt";
+import { Props as PromptProps } from "./types";
 
 export function TxPrompt(props: TxState) {
   const { closeModal } = useModalContext();
@@ -27,7 +27,7 @@ export function TxPrompt(props: TxState) {
       {(isTxError(props) || isTxSuccess(props)) && props.tx && (
         <ExtLink
           href={getTxUrl(props.tx.chainID, props.tx.hash)}
-          className="text-blue dark:text-blue-l2 text-xs block mt-4 uppercase hover:text-blue-l2 hover:dark:text-orange-l2"
+          className="text-blue dark:text-blue-l2 text-xs block mt-4 uppercase hover:text-blue-l2"
         >
           transaction details
         </ExtLink>

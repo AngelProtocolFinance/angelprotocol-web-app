@@ -1,25 +1,30 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
-import { FV } from "./types";
-import {
-  EndowmentProfileUpdate,
-  EndowmentProfile as TProfile,
-} from "types/aws";
-import { useEndowment } from "services/aws/useEndowment";
 import { country } from "components/CountrySelector";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { FormProvider, useForm } from "react-hook-form";
+import { useEndowment } from "services/aws/useEndowment";
+import {
+  EndowmentProfile as TProfile,
+  EndowmentProfileUpdate,
+} from "types/aws";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
+import { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
   const { id } = useAdminContext();
-  const { data: profile, isLoading, isError, isFetching } = useEndowment(id);
+  const {
+    data: profile,
+    isLoading,
+    isError,
+    isFetching,
+  } = useEndowment({ id });
 
   const content =
     isLoading || isFetching ? (
@@ -42,7 +47,7 @@ function FormWithContext(props: TProfile & { id: number }) {
   //
   const init: EndowmentProfileUpdate = toProfileUpdate({
     type: "initial",
-    data: { ...props, id: props.id },
+    data: { ...props },
   });
 
   const defaults: FV = {
@@ -53,6 +58,11 @@ function FormWithContext(props: TProfile & { id: number }) {
       preview: props.image ?? "",
     },
     logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    card_img: {
+      name: "",
+      publicUrl: props.card_img ?? "",
+      preview: props.card_img ?? "",
+    },
     endow_designation: init.endow_designation
       ? { label: init.endow_designation, value: init.endow_designation }
       : { label: "", value: "" },

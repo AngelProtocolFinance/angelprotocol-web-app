@@ -1,9 +1,9 @@
-import { PropsWithChildren, createContext, useContext } from "react";
-import { useParams } from "react-router-dom";
-import { AdminParams } from "./types";
-import { AuthenticatedUser } from "types/auth";
 import Icon from "components/Icon";
 import { idParamToNum } from "helpers";
+import { PropsWithChildren, createContext, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { AuthenticatedUser } from "types/auth";
+import { AdminParams } from "./types";
 
 type AdminContext = { id: number; user: AuthenticatedUser };
 
@@ -15,9 +15,9 @@ export function Context({
 
   if (!user.endowments.includes(idParamToNum(id))) {
     return (
-      <div className="grid content-start place-items-center py-20">
+      <div className="grid content-start place-items-center pt-40 pb-20">
         <Icon type="ExclamationCircleFill" size={80} className="text-red" />
-        <p className="text-xl mt-8 font-work ">Unauthorized</p>
+        <p className="text-xl mt-8">Unauthorized</p>
       </div>
     );
   }

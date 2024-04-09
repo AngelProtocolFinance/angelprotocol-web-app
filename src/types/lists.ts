@@ -1,6 +1,14 @@
 export type APIEnvironment = "staging" | "production";
 export type UserTypes = "charity-owner" | "angelprotocol-web-app" | "app-user";
-export type Chains = "terra" | "juno" | "ethereum" | "binance" | "polygon";
+/** Designates the parent component within which the given component is being rendered */
+export type DonationSource = "bg-marketplace" | "bg-widget";
+export type Chains =
+  | "terra"
+  | "juno"
+  | "ethereum"
+  | "arbitrum"
+  | "binance"
+  | "polygon";
 export type UNSDG_NUMS =
   | 1
   | 2
@@ -19,6 +27,8 @@ export type UNSDG_NUMS =
   | 15
   | 16
   | 17;
+
+export type SDGGroup = 1 | 2 | 3 | 4 | 5 | 6;
 
 export type TransactionStatus = "open" | "approved" | "expired";
 export type EndowmentType = "charity" | "ast" | "daf";

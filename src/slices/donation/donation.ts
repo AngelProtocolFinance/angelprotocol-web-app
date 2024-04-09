@@ -1,13 +1,17 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Donor } from "types/aws";
 import {
+  CryptoResultStep,
   DonationDetails,
   DonationRecipient,
   DonationState,
   DonationStep,
   FormStep,
-  KYC,
-  KYCStep,
+  SplitsStep,
   SubmitStep,
+  SummaryStep,
+  TipFormat,
+  TipStep,
   TxStatus,
 } from "./types";
 
@@ -21,18 +25,30 @@ const donation = createSlice({
       return { step: "donate-form", recipient: payload };
     },
     setDetails: (state, { payload }: PayloadAction<DonationDetails>) => {
-      if (state.recipient?.isKYCRequired || payload.userOptForKYC) {
+      //when changing donation method, reset
+      const curr: DonationState =
+        state.step === "donate-form" && state.details?.method !== payload.method
+          ? { step: "donate-form", recipient: state.recipient }
+          : state;
+
+      //skip donor,splits for stocks,daf, as not being used
+      if (payload.method === "stocks" || payload.method === "daf") {
         return {
-          ...(state as KYCStep),
-          step: "kyc-form",
+          ...(curr as SplitsStep),
+          step: "submit",
           details: payload,
+          //these steps where skipped so provide placeholders
+          tip: 0,
+          format: "pct",
+          donor: { firstName: "", lastName: "", email: "" },
+          liquidSplitPct: 50,
         };
       }
+
       return {
-        ...(state as SubmitStep),
-        step: "submit",
+        ...(curr as SplitsStep),
+        step: "splits",
         details: payload,
-        kyc: undefined,
       };
     },
     resetDetails: (state) => {
@@ -42,17 +58,45 @@ const donation = createSlice({
         details: undefined,
       };
     },
-    setKYC: (state, { payload }: PayloadAction<KYC>) => {
+
+    setSplit: (state, { payload }: PayloadAction<number>) => {
+      if (state.recipient?.hide_bg_tip) {
+        return {
+          ...(state as SummaryStep),
+          step: "summary",
+          liquidSplitPct: payload,
+        };
+      }
+      return {
+        ...(state as TipStep),
+        step: "tip",
+        liquidSplitPct: payload,
+      };
+    },
+
+    setTip: (
+      state,
+      { payload }: PayloadAction<{ tip: number; format: TipFormat }>
+    ) => {
+      return {
+        ...(state as SummaryStep),
+        step: "summary",
+        tip: payload.tip,
+        format: payload.format,
+      };
+    },
+
+    setDonor: (state, { payload }: PayloadAction<Donor>) => {
       return {
         ...(state as SubmitStep),
         step: "submit",
-        kyc: payload,
+        donor: payload,
       };
     },
 
     setTxStatus(state, { payload }: PayloadAction<TxStatus>) {
       return {
-        ...(state as SubmitStep),
+        ...(state as CryptoResultStep),
         step: "tx",
         status: payload,
       };
@@ -70,6 +114,8 @@ export const {
   setStep,
   setDetails,
   resetDetails,
-  setKYC,
+  setSplit,
+  setTip,
+  setDonor,
   setTxStatus,
 } = donation.actions;

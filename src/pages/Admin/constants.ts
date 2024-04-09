@@ -1,7 +1,7 @@
-import { Link } from "./Sidebar/types";
 import { adminRoutes } from "constants/routes";
+import { Link } from "./Sidebar/types";
 
-const { program_editor, index, ...restAdminRoutes } = adminRoutes;
+const { program_editor: _pe, index: _i, ...restAdminRoutes } = adminRoutes;
 
 const sidebarRoutes = {
   ...restAdminRoutes,
@@ -49,13 +49,30 @@ export const LINKS: {
     },
   },
   widget_config: {
-    title: "Widget Configuration",
+    title: "Donation Form Builder",
     to: sidebarRoutes.widget_config,
     icon: {
       type: "Widget",
       size: 24,
     },
   },
+  settings: {
+    title: "Settings",
+    to: "settings",
+    icon: {
+      type: "Gear",
+      size: 21,
+    },
+  },
+  members: {
+    title: "Members",
+    to: "members",
+    icon: {
+      type: "Users",
+      size: 24,
+    },
+  },
+
   banking: {
     title: "Banking",
     to: sidebarRoutes.banking,

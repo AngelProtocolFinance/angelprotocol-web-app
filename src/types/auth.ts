@@ -14,4 +14,15 @@ export type CognitoGroup = "ap-admin"; //| future ;
 
 //type guard
 export const userIsSignedIn = (user: User): user is AuthenticatedUser =>
-  !!(user as AuthenticatedUser).token;
+  !!(user as AuthenticatedUser)?.token;
+
+export type SignInRouteState = {
+  from?: string;
+  search?: string;
+  data?: unknown;
+};
+
+export type StoredRouteState = {
+  pathname: string;
+  data?: unknown;
+};

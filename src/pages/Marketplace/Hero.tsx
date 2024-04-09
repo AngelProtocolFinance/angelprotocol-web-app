@@ -5,11 +5,9 @@ export default function Hero({ classes = "" }: { classes?: string }) {
     <div
       className={`${classes} grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 padded-container justify-items-center lg:content-start text-white`}
     >
-      <h1 className="order-1 font-extrabold w-full text-[1.63rem] md:text-3xl lg:text-[2.75rem] text-center lg:text-left lg:self-end">
-        <div className="leading-tight">BETTER GIVING REDEFINES</div>
-        <div className="leading-tight text-orange">
-          GLOBAL NONPROFIT FINANCING.
-        </div>
+      <h1 className="order-1 font-bold w-full text-[1.63rem] md:text-3xl/tight lg:text-[2.75rem] text-center lg:text-left lg:self-end text-balance">
+        <p className="contents md:block">BETTER GIVING REDEFINES</p>{" "}
+        <p className="contents md:block ">GLOBAL NONPROFIT FINANCING</p>
       </h1>
       <Image src="/images/hero.png" className="order-3 row-span-2 rounded-lg" />
       <p className="order-2 lg:order-3 text-[1.13rem] lg:text-2xl w-full leading-relaxed text-center lg:text-left">

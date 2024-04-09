@@ -1,7 +1,8 @@
 import { styles } from "./constants";
 
-export { MultiSelector } from "./MultiSelector";
-export { Selector } from "./Selector";
 export { default as FocusableInput } from "./FocusableInput";
+export { MultiSelector } from "./MultiSelector";
+export { NativeSelect } from "./NativeSelect";
+export { Selector } from "./Selector";
 
 export const { selectorButton: selectorButtonStyle } = styles;

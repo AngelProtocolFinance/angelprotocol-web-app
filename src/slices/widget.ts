@@ -1,26 +1,35 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { WidgetConfig } from "types/widget";
 
-type State = WidgetConfig;
+type State = WidgetConfig & { initial: WidgetConfig };
+
+const initial: WidgetConfig = {
+  endowment: { id: 0, name: "", hide_bg_tip: false },
+  isDescriptionTextShown: true,
+  splitDisabled: false,
+  liquidSplitPct: 50,
+};
 
 const initialState: State = {
-  endowment: { id: 0, name: "Nonprofit name" },
-  isDescriptionTextShown: true,
-  advancedOptions: {
-    display: "expanded",
-    liquidSplitPct: 50,
-  },
+  initial,
+  ...initial,
 };
 
 const widget = createSlice({
   name: "widget",
   initialState,
   reducers: {
-    update: (state, { payload }: PayloadAction<State>) => payload,
-    reset: () => initialState,
+    initialize: (_, { payload }: PayloadAction<WidgetConfig>) => ({
+      initial: payload,
+      ...payload,
+    }),
+    update: (state, { payload }: PayloadAction<WidgetConfig>) => ({
+      initial: state.initial,
+      ...payload,
+    }),
+    reset: (state) => ({ initial: state.initial, ...state.initial }),
   },
 });
 
 export default widget.reducer;
-export const { update: updateWidgetConfig, reset: resetWidgetConfig } =
-  widget.actions;
+export const { initialize, update, reset } = widget.actions;

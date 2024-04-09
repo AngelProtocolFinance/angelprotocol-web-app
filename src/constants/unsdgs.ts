@@ -1,4 +1,4 @@
-import { UNSDG_NUMS } from "types/lists";
+import { SDGGroup, UNSDG_NUMS } from "types/lists";
 
 type UNSDG = {
   text_light: string;
@@ -221,3 +221,32 @@ export const unsdgs: { [index in UNSDG_NUMS]: UNSDG } = {
 };
 
 export const MAX_SDGS = 8;
+
+export const categories: {
+  [K in SDGGroup]: { name: string; sdgs: UNSDG_NUMS[] };
+} = {
+  1: {
+    name: "Reducing overall inequality",
+    sdgs: [1, 2, 3],
+  },
+  2: {
+    name: "Access to safe conditions",
+    sdgs: [3, 6, 7],
+  },
+  3: {
+    name: "Sustainable growth",
+    sdgs: [8, 9, 16],
+  },
+  4: {
+    name: "Equality through education",
+    sdgs: [4, 5],
+  },
+  5: {
+    name: "Sustainable partnerships",
+    sdgs: [11, 12, 17],
+  },
+  6: {
+    name: "Holistic climate action",
+    sdgs: [13, 14, 15],
+  },
+};

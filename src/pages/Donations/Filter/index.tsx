@@ -1,23 +1,29 @@
 import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormEventHandler, useRef } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { FormValues as FV } from "./types";
-import { DonationsQueryParams } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
 import { weeksAgo } from "helpers/weeksAgo";
+import { FormEventHandler, useRef } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { DonationsQueryParams } from "types/aws";
 import Form from "./Form";
 import { schema } from "./schema";
+import { FormValues as FV } from "./types";
 
 type Props = {
   classes?: string;
   setParams: React.Dispatch<React.SetStateAction<DonationsQueryParams>>;
+  asker: string;
   isDisabled: boolean;
 };
 
-export default function Filter({ setParams, classes = "", isDisabled }: Props) {
+export default function Filter({
+  setParams,
+  classes = "",
+  isDisabled,
+  asker,
+}: Props) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
@@ -30,7 +36,6 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       endDate: dateToFormFormat(new Date()),
       network: { label: "Select network...", value: "" },
       currency: { label: "Select currency...", value: "" },
-      status: { label: "Select status...", value: "" },
     },
   });
 
@@ -38,14 +43,13 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
 
   async function submit(data: FV) {
     setParams((prev) => ({
-      id: prev.id,
-      chain_id: prev.chain_id,
+      asker,
+      status: prev.status,
       ...cleanObject({
-        afterDate: data.startDate ? new Date(data.startDate).toISOString() : "",
-        beforeDate: data.endDate ? new Date(data.endDate).toISOString() : "",
-        chainName: data.network.value,
-        denomination: data.currency.value,
-        status: data.status.value,
+        startDate: data.startDate ? new Date(data.startDate).toISOString() : "",
+        endDate: data.endDate ? new Date(data.endDate).toISOString() : "",
+        viaId: data.network.value,
+        symbol: data.currency.value,
       }),
     }));
     buttonRef.current?.click();
@@ -53,7 +57,10 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams((prev) => ({ id: prev.id, chain_id: prev.chain_id }));
+    setParams((prev) => ({
+      asker,
+      status: prev.status,
+    }));
     buttonRef.current?.click();
   };
   return (
@@ -61,7 +68,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       <Popover.Button
         ref={buttonRef}
         disabled={isDisabled}
-        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-orange text-white lg:dark:text-gray lg:text-gray-d1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-bluegray-d1 lg:border lg:border-prim"
+        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-blue-d1 text-white lg:text-navy-l1 lg:bg-white lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-navy-d3 lg:border lg:border-gray-l4"
       >
         {({ open }) => (
           <>

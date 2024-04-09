@@ -1,18 +1,20 @@
-import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
 import Loader from "components/Loader";
 import Seo from "components/Seo";
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import { CHARITY_LINKS } from "./constants";
+import useHeaderLinks from "./useHeaderLinks";
 
-const { HEADER_LINKS, GROUPS_DATA, SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
+const { GROUPS_DATA, SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
 
 export default function Layout() {
+  const headerLinks = useHeaderLinks();
   return (
-    <div className="grid grid-rows-[auto_1fr_auto]">
+    <div className="grid grid-rows-[4rem_minmax(calc(100dvh-4rem),1fr)_auto]">
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header classes="top-0 sticky z-20" links={HEADER_LINKS} />
+      <Header links={headerLinks} classes="sticky top-0 z-20" />
       <Suspense fallback={<LoaderComponent />}>
         <Outlet />
       </Suspense>

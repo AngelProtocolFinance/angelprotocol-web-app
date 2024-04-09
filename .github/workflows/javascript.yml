@@ -17,8 +17,8 @@ jobs:
       - name: Install dependencies
         run: yarn install
       - name: Lint codebase
-        run: yarn run lint
+        run: yarn lint
       - name: Test codebase
-        run: yarn run test --watchAll=false --coverage --json --outputFile ./codecov-report.json
+        run: yarn test --bail=0 --watch=false --passWithNoTests
       - name: Build codebase
         run: yarn build

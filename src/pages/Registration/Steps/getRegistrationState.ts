@@ -1,10 +1,10 @@
-import { InitReg, RegistrationState } from "../types";
 import {
   BankingDetails,
   DoneBanking,
   DoneDocs,
   DoneFSAInquiry,
   DoneOrgDetails,
+  EndowClaim,
   FSAInquiry,
   InitContact,
   OrgDetails,
@@ -18,6 +18,7 @@ import {
   isSubmitted,
 } from "types/aws";
 import { steps } from "../routes";
+import { InitReg, RegistrationState } from "../types";
 
 export function getRegistrationState(reg: SavedRegistration): {
   state: RegistrationState;
@@ -29,7 +30,7 @@ export function getRegistrationState(reg: SavedRegistration): {
       state: {
         step: 6,
         data: {
-          init: initReg(c),
+          init: initReg(c, r.InitClaim),
           contact: { ...c, orgName: r.OrganizationName },
           orgDetails: orgDetails(r),
           fsaInquiry: fsaInquiry(r),
@@ -49,7 +50,7 @@ export function getRegistrationState(reg: SavedRegistration): {
       state: {
         step: 5,
         data: {
-          init: initReg(c),
+          init: initReg(c, r.InitClaim),
           contact: { ...c, orgName: r.OrganizationName },
           orgDetails: orgDetails(r),
           fsaInquiry: fsaInquiry(r),
@@ -73,7 +74,7 @@ export function getRegistrationState(reg: SavedRegistration): {
         //cast to 4 (type only) to conform to type `RegStep4` which accepts documentation
         step: (isSignedFSA ? 4 : 3) as 4,
         data: {
-          init: initReg(c),
+          init: initReg(c, r.InitClaim),
           contact: { ...c, orgName: r.OrganizationName },
           orgDetails: orgDetails(r),
           fsaInquiry: fsaInquiry(r),
@@ -91,7 +92,7 @@ export function getRegistrationState(reg: SavedRegistration): {
       state: {
         step: 3,
         data: {
-          init: initReg(c),
+          init: initReg(c, r.InitClaim),
           contact: { ...c, orgName: r.OrganizationName },
           orgDetails: orgDetails(r),
           fsaInquiry: fsaInquiry(r),
@@ -106,7 +107,7 @@ export function getRegistrationState(reg: SavedRegistration): {
       state: {
         step: 2,
         data: {
-          init: initReg(c),
+          init: initReg(c, r.InitClaim),
           contact: { ...c, orgName: r.OrganizationName },
           orgDetails: orgDetails(r),
         },
@@ -121,7 +122,7 @@ export function getRegistrationState(reg: SavedRegistration): {
       state: {
         step: 1,
         data: {
-          init: initReg(c),
+          init: initReg(c, r.InitClaim),
           contact: { ...c, orgName: r.OrganizationName },
         },
       },
@@ -129,22 +130,23 @@ export function getRegistrationState(reg: SavedRegistration): {
     };
   }
 
-  const { ContactPerson: c } = reg;
+  const { ContactPerson: c, Registration: r } = reg;
   return {
     state: {
       step: 1,
       data: {
-        init: initReg(c),
+        init: initReg(c, r.InitClaim),
       },
     },
     nextStep: steps.contact,
   };
 }
 
-function initReg(i: InitContact): InitReg {
+function initReg(i: InitContact, claim?: EndowClaim): InitReg {
   return {
     email: i.Email,
     reference: i.PK,
+    claim,
   };
 }
 
@@ -162,7 +164,7 @@ function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
 function docs(reg: DoneDocs["Registration"]): TDocumentation["Documentation"] {
   const doc = reg.Documentation;
   if (doc.DocType === "Non-FSA") {
-    return { EIN: doc.EIN, DocType: doc.DocType };
+    return { EIN: doc.EIN, DocType: doc.DocType, Claim: doc.Claim };
   }
   return {
     DocType: doc.DocType,

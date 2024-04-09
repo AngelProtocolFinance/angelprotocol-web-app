@@ -1,10 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message";
+import Icon from "components/Icon";
+import { humanize } from "helpers";
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
 import { ImgLink, Props } from "./types";
-import Icon from "components/Icon";
-import { humanize } from "helpers";
 import useImgEditor from "./useImgEditor";
 
 const BYTES_IN_MB = 1e6;
@@ -40,33 +40,23 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
   });
 
   const invalid = !!get(errors, name);
-
-  const overlay = `before:content-[''] before:absolute before:inset-0 ${
-    isDragActive
-      ? "before:bg-orange-l5/95 before:dark:bg-blue-d6/95"
-      : isSubmitting
-      ? "before:bg-gray-l5/95 before:dark:bg-bluegray-d1/95"
-      : ""
-  }`;
+  const overlay = `before:content-[''] before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 `;
 
   return (
     <div className={`${classes?.container ?? ""} grid grid-rows-[1fr_auto]`}>
       <div
+        data-invalid={invalid}
+        data-drag={isDragActive}
+        data-disabled={isSubmitting}
         {...getRootProps({
-          className: `relative ${overlay} group field-container rounded border border-dashed focus:outline-none ${
-            isDragActive
-              ? "border-gray-d1 dark:border-gray"
-              : invalid
-              ? ""
-              : "border-prim focus:border-orange-l2 focus:dark:border-blue-d1"
-          } ${
-            isSubmitting
-              ? "cursor-default bg-gray-l5 dark:bg-bluegray-d1"
-              : "bg-gray-l6 dark:bg-blue-d5 cursor-pointer"
-          } ${classes?.dropzone ?? ""}`,
+          className: `relative ${overlay} ${classes?.dropzone ?? ""} group rounded border border-gray-l2 border-dashed 
+          focus:outline-none focus:ring-2 data-[drag="true"]:ring-2 has-[:active]:ring-2 ring-blue-d1 ring-offset-2 
+          hover:bg-blue-l5
+          data-[disabled="true"]:bg-gray-l5 data-[disabled="true"]:pointer-events-none
+          data-[invalid="true"]:border-red
+          `,
           ref,
         })}
-        aria-invalid={invalid}
         style={{
           background: preview
             ? `url('${preview}') center/cover no-repeat`
@@ -74,9 +64,8 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
         }}
       >
         {noneUploaded ? (
-          <button
-            type="button"
-            className="absolute-center grid justify-items-center text-sm text-gray-d1 dark:text-gray"
+          <div
+            className="absolute-center grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none"
             tabIndex={-1}
           >
             <Icon type="FileUpload" size={24} className="mb-[1.125rem]" />
@@ -84,7 +73,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
             <span className="text-center">
               Click to Browse or Drag &amp; Drop
             </span>
-          </button>
+          </div>
         ) : (
           /** something is uploaded and would disrupt text above
            *  so just show upload icon instead of it.
@@ -110,10 +99,13 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
           </div>
         )}
       </div>
-      <p className="text-xs text-gray-d1 dark:text-gray mt-2">
+      <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
         <span>
           Valid types are:{" "}
-          {accept.map((m) => m.split("/")[1].toUpperCase()).join(", ")}.{" "}
+          {accept
+            .map((m) => m.split("/")[1].toUpperCase().replace(/\+xml/gi, ""))
+            .join(", ")}
+          .{" "}
           {maxSize ? (
             <>
               Image should be less than {maxSize / BYTES_IN_MB}MB in size.

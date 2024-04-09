@@ -1,7 +1,10 @@
 import { WalletConnectModal } from "@walletconnect/modal";
-import { useEffect, useRef, useState } from "react";
 import { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes, SignClientTypes } from "@walletconnect/types";
+import { EIPMethods } from "constants/evm";
+import { logger } from "helpers";
+import { _pairing, _session, account } from "helpers/wallet-connect";
+import { useEffect, useRef, useState } from "react";
 import { RequestArguments } from "types/evm";
 import {
   EVMConnected,
@@ -9,9 +12,6 @@ import {
   Wallet,
   WalletMeta,
 } from "types/wallet";
-import { logger } from "helpers";
-import { _pairing, _session, account } from "helpers/wallet-connect";
-import { EIPMethods } from "constants/evm";
 
 const wcModal = new WalletConnectModal({
   projectId: "039a7aeef39cb740398760f71a471957",
@@ -41,21 +41,21 @@ export function useEVMWC(meta: WalletMeta): Wallet {
     status: "disconnected",
   });
 
-  function onSessionDelete() {
+  const onSessionDelete = () => {
     setState({ status: "disconnected" });
-  }
+  };
 
-  function onSessionUpdate({
+  const onSessionUpdate = ({
     params: { namespaces },
-  }: SignClientTypes.EventArguments["session_update"]) {
+  }: SignClientTypes.EventArguments["session_update"]) => {
     setState((prev) =>
       prev.status === "connected"
         ? { ...prev, ...account(namespaces.eip155) }
         : prev
     );
-  }
+  };
 
-  /** persistent connection */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: persistent connection
   useEffect(() => {
     (async () => {
       setState({ status: "loading" });
@@ -68,7 +68,6 @@ export function useEVMWC(meta: WalletMeta): Wallet {
         setState({ status: "disconnected" });
       }
     })();
-    //eslint-disable-next-line
   }, []);
 
   /** new connection */

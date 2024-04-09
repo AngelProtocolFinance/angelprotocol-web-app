@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Separator } from "components/registration";
+import { Separator } from "components/Separator";
 import { APP_NAME } from "constants/env";
 import { regRoutes } from "constants/routes";
+import { Link, useNavigate } from "react-router-dom";
 
 const NEED_HELP_ARTICLE_ID = 6628120;
 
@@ -27,18 +27,18 @@ export default function Form({ classes = "" }: { classes?: string }) {
         Register your new {APP_NAME} nonprofit account
       </h3>
 
-      <button type="submit" className="btn-orange btn-reg">
+      <button type="submit" className="btn-blue btn-reg">
         Start a new application
       </button>
       <Separator classes="before:mr-2 after:ml-2">OR</Separator>
 
-      <Link className="btn-outline-filled btn-reg" to={regRoutes.resume}>
+      <Link className="btn-outline-filled  btn-reg" to={regRoutes.resume}>
         Resume your registration
       </Link>
 
       <button
         type="button"
-        className="underline text-orange-l1 justify-self-center text-sm"
+        className="underline text-blue-d1 justify-self-center text-sm"
         onClick={openIntercomHelp}
       >
         Need Help?

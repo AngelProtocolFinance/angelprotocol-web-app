@@ -1,14 +1,14 @@
-import { useEndowment } from "services/aws/useEndowment";
 import Image from "components/Image";
+import { useEndowment } from "services/aws/useEndowment";
 import { useAdminContext } from "../../Context";
 
 export default function Header() {
   const { id } = useAdminContext();
-  const { data: profile, isLoading } = useEndowment(id, ["logo", "name"]);
+  const { data: profile, isLoading } = useEndowment({ id }, ["logo", "name"]);
 
   return (
     <div
-      className={`flex flex-col gap-1 w-full py-6 px-5 border-b border-prim`}
+      className={`flex flex-col gap-1 w-full py-6 px-5 border-b border-gray-l4`}
     >
       <div className="flex justify-between">
         <Image

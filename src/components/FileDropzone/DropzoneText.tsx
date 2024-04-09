@@ -1,8 +1,8 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { FileDropzoneAsset } from "types/components";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { isEmpty } from "helpers";
+import { FileDropzoneAsset } from "types/components";
 
 const filesKey: keyof FileDropzoneAsset = "files";
 
@@ -17,11 +17,11 @@ export default function DropzoneText({
 
   if (isFilesEmpty && isPreviewsEmpty) {
     return (
-      <span className="grid justify-items-center text-sm text-gray-d1 dark:text-gray">
+      <div className="grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none">
         <Icon type="FileUpload" size={24} className="mb-[1.125rem]" />
         <p className="font-semibold mb-1">Upload file</p>
         <span>Click to Browse or Drag &amp; Drop</span>
-      </span>
+      </div>
     );
   }
 

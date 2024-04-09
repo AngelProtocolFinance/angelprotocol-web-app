@@ -1,8 +1,8 @@
+import { humanize } from "helpers";
 import {
   dummyDonationsMetricList as metricsPlaceholder,
   useMetricsListQuery,
 } from "services/aws/business_metrics";
-import { humanize } from "helpers";
 
 export default function DonationMetrics() {
   const { data: metrics = metricsPlaceholder } = useMetricsListQuery({});

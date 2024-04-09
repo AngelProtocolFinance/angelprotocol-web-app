@@ -1,4 +1,7 @@
+import { chains } from "constants/chains";
+import { EIPMethods } from "constants/evm";
 import Decimal from "decimal.js";
+import { injectedProvider, isEmpty, logger } from "helpers";
 import { useEffect, useState } from "react";
 import { ChainID } from "types/chain";
 import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
@@ -8,9 +11,6 @@ import {
   Wallet,
   WalletMeta,
 } from "types/wallet";
-import { injectedProvider, isEmpty, logger } from "helpers";
-import { chains } from "constants/chains";
-import { EIPMethods } from "constants/evm";
 import { toPrefixedHex } from "./helpers";
 import { retrieveUserAction, saveUserAction } from "./helpers";
 import { isXdefiPrioritized } from "./helpers/isXdefiPrioritized";
@@ -27,6 +27,7 @@ export default function useInjectedWallet(
   });
 
   /** persistent connection */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   useEffect(() => {
     const lastAction = retrieveUserAction(actionKey);
     const shouldReconnect = lastAction === "connect";
@@ -39,7 +40,6 @@ export default function useInjectedWallet(
         }
       });
     };
-    //eslint-disable-next-line
   }, []);
 
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
@@ -141,7 +141,7 @@ export default function useInjectedWallet(
       });
 
       saveUserAction(actionKey, "connect");
-    } catch (err) {
+    } catch (_) {
       if (isUserInitiated) {
         alert("Failed to connect to wallet.");
       }

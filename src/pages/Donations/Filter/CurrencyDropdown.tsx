@@ -1,10 +1,10 @@
-import { useFormContext } from "react-hook-form";
-import { FormValues as FV } from "./types";
-import { Token } from "types/aws";
-import { useCurrenciesQuery } from "services/apes";
 import QueryLoader from "components/QueryLoader";
 import { Selector, selectorButtonStyle } from "components/Selector";
+import { useFormContext } from "react-hook-form";
 import { junoAddrPattern, terraAddrPattern } from "schemas/string";
+import { useCurrenciesQuery } from "services/apes";
+import { Token } from "types/aws";
+import { FormValues as FV } from "./types";
 
 export default function CurrencyDropdown({ classes = "" }) {
   const { getValues } = useFormContext<FV>();
@@ -15,8 +15,8 @@ export default function CurrencyDropdown({ classes = "" }) {
   const tokenTypes: Token["type"][] = isJuno
     ? ["juno-native", "ibc"]
     : isTerra
-    ? ["terra-native", "ibc", "cw20"]
-    : ["evm-native", "erc20"];
+      ? ["terra-native", "ibc", "cw20"]
+      : ["evm-native", "erc20"];
 
   const queryState = useCurrenciesQuery();
 
@@ -39,7 +39,7 @@ export default function CurrencyDropdown({ classes = "" }) {
         {(tokens) => (
           <Selector<FV, "currency", string>
             name="currency"
-            classes={{ button: "dark:bg-blue-d6" }}
+            classes={{ button: "dark:bg-blue-d6", options: "text-sm" }}
             options={tokens.map((c) => ({ label: c.symbol, value: c.symbol }))}
           />
         )}

@@ -1,7 +1,8 @@
+import { describe, expect, test } from "vitest";
 import { flatten } from "./flatten";
 
 describe("flatten", () => {
-  it("empty values not included in result", () => {
+  test("empty values not included in result", () => {
     const object = {
       name: "Jane Doe",
       address: {},
@@ -11,7 +12,7 @@ describe("flatten", () => {
     expect(flat).toEqual({ name: "Jane Doe" });
   });
 
-  it("full path and value", () => {
+  test("full path and value", () => {
     const object = {
       name: "James Bond",
       age: 70,

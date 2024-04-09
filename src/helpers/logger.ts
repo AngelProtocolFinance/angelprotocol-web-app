@@ -1,7 +1,8 @@
+import * as Sentry from "@sentry/react";
 import { IS_TEST } from "constants/env";
 
 type Logger = {
-  error: (...data: any[]) => void;
+  error: (message: any) => void;
   info: (...data: any[]) => void;
   log: (...data: any[]) => void;
 };
@@ -10,12 +11,16 @@ export const logger: Logger = IS_TEST
   ? {
       // using console.log for .error and .info funcs as console.error and
       // console.info are undefined while testing for some reason
-      error: (...data) => console.log(...data),
+      error: (message) => {
+        console.log(message);
+      },
       info: (...data) => console.log(...data),
       log: (...data) => console.log(...data),
     }
   : {
-      error: (_) => {},
+      error: (message) => {
+        Sentry.captureException(message);
+      },
       info: (_) => {},
       log: (_) => {},
     };

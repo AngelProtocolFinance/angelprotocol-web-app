@@ -1,16 +1,16 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, useForm } from "react-hook-form";
-import { FormValues } from "./types";
-import { OrgDetails as TOrgDetails } from "types/aws";
 import { country } from "components/CountrySelector";
 import { unsdgs } from "constants/unsdgs";
+import { FormProvider, useForm } from "react-hook-form";
+import { OrgDetails as TOrgDetails } from "types/aws";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
 import { schema } from "./schema";
+import { FormValues } from "./types";
 
 function OrgDetails() {
   const {
-    data: { orgDetails: org },
+    data: { orgDetails: org, init },
   } = useRegState<2>();
 
   const methods = useForm<FormValues>({
@@ -20,7 +20,10 @@ function OrgDetails() {
       : {
           Website: "",
           UN_SDG: [],
-          HqCountry: { name: "", flag: "", code: "" },
+          HqCountry: init.claim
+            ? /** all unclaimed endowments are US-based */
+              { name: "United States", flag: "🇺🇸", code: "US" }
+            : { name: "", flag: "", code: "" },
           EndowDesignation: { value: "", label: "" },
           ActiveInCountries: [],
           isAnonymousDonationsAllowed: "Yes",

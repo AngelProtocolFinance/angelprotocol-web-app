@@ -1,15 +1,15 @@
 import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormEventHandler, useRef } from "react";
-import { FormProvider, useForm } from "react-hook-form";
-import { FormValues as FV } from "./types";
-import { ApplicationsQueryParams } from "types/aws";
 import Icon, { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
 import { weeksAgo } from "helpers/weeksAgo";
+import { FormEventHandler, useRef } from "react";
+import { FormProvider, useForm } from "react-hook-form";
+import { ApplicationsQueryParams } from "types/aws";
 import Form from "./Form";
 import { schema } from "./schema";
+import { FormValues as FV } from "./types";
 
 type Props = {
   classes?: string;
@@ -70,7 +70,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       <Popover.Button
         ref={buttonRef}
         disabled={isDisabled}
-        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-orange text-white lg:dark:text-gray lg:text-gray-d1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-bluegray-d1 lg:border lg:border-prim"
+        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-blue text-white lg:dark:text-navy-l2 lg:text-navy-l1 lg:bg-white lg:dark:bg-blue-d6 lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-navy-d3 lg:border lg:border-gray-l4"
       >
         {({ open }) => (
           <>

@@ -7,12 +7,17 @@ export enum appRoutes {
   banking_applications = "/banking-applications",
   register = "/register",
   signin = "/signin",
+  signup = "/signup",
   profile = "/profile",
   donations = "/donations",
   donate = "/donate",
   donate_fiat_thanks = "/donate-fiat-thanks",
+  stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",
   gift = "/gift",
+  reset_password = "/signin/reset",
+  widget_config = "/widget-config",
+  blog = "/blog",
 }
 
 export const adminRoutes = {
@@ -23,7 +28,14 @@ export const adminRoutes = {
   banking: "banking",
   widget_config: "widget-config",
   donations: "donations",
+  settings: "settings",
+  members: "members",
 } as const;
+
+export enum donateWidgetRoutes {
+  donate_fiat_thanks = "donate-fiat-thanks",
+  stripe_payment_status = "stripe-payment-status",
+}
 
 export enum regRoutes {
   index = "",

@@ -1,8 +1,9 @@
-import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
-import { useEffect, useRef, useState } from "react";
 import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
+import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
 import { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import { SessionTypes } from "@walletconnect/types";
+import { _pairing, _session, account } from "helpers/wallet-connect";
+import { useEffect, useRef, useState } from "react";
 import { SignDoc, WCSignDirectRes } from "types/cosmos";
 import {
   CosmosConnected,
@@ -10,7 +11,6 @@ import {
   Wallet,
   WalletMeta,
 } from "types/wallet";
-import { _pairing, _session, account } from "helpers/wallet-connect";
 
 const keplrIcon = "/icons/wallets/keplr.png";
 
@@ -21,11 +21,11 @@ export function useKeplrWC(): Wallet {
   });
   const qrModalRef = useRef<KeplrQRCodeModalV2>();
 
-  function onSessionDelete() {
+  const onSessionDelete = () => {
     setState({ status: "disconnected" });
-  }
+  };
 
-  /** persistent connection */
+  // biome-ignore lint/correctness/useExhaustiveDependencies: persistent connection
   useEffect(() => {
     (async () => {
       setState({ status: "loading" });
@@ -38,7 +38,6 @@ export function useKeplrWC(): Wallet {
         setState({ status: "disconnected" });
       }
     })();
-    //eslint-disable-next-line
   }, []);
 
   /** new connection */
@@ -78,7 +77,7 @@ export function useKeplrWC(): Wallet {
       if (uri) {
         QRModal.close();
       }
-    } catch (err) {
+    } catch (_) {
       setState({ status: "disconnected" });
     } finally {
       qrModalRef.current?.close();

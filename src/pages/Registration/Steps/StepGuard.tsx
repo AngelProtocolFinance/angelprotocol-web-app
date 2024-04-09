@@ -1,7 +1,7 @@
+import { isEmpty } from "helpers";
 import { FC, createContext, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { InitReg, RegStep, RegistrationState } from "../types";
-import { isEmpty } from "helpers";
 
 export type StepGuardProps = {
   init: InitReg;
@@ -20,11 +20,11 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
 
     const { step: savedStep } = state;
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
     useEffect(() => {
       if (thisStep > savedStep + 1) {
         navigate(`../${savedStep}`, { state: init });
       }
-      //eslint-disable-next-line
     }, []);
 
     return (

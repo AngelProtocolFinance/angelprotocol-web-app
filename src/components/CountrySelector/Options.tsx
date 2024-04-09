@@ -1,7 +1,7 @@
 import { Combobox } from "@headlessui/react";
+import { isEmpty } from "helpers";
 import React from "react";
 import { Country } from "types/components";
-import { isEmpty } from "helpers";
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";
@@ -31,7 +31,7 @@ export default function Options({ query, options }: Props) {
               <li
                 className={`${
                   active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                } flex items-center gap-2 p-2 text-sm`}
+                } flex items-center gap-2 p-2 text-sm font-heading`}
               >
                 <span className="text-2xl">{country.flag}</span>
                 <span>{country.name}</span>

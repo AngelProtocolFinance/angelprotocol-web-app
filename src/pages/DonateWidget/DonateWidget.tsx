@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { useEndowment } from "services/aws/useEndowment";
 import { DappLogo } from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { idParamToNum, setToLightMode } from "helpers";
+import { useEffect } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useEndowment } from "services/aws/useEndowment";
 import Content from "./Content";
 
 //light mode by default
@@ -14,7 +14,7 @@ export default function DonateWidget() {
   const routeParams = useParams();
   const [searchParams] = useSearchParams();
   const endowId = idParamToNum(routeParams.id);
-  const queryState = useEndowment(endowId);
+  const queryState = useEndowment({ id: endowId });
 
   /** Hide the Intercom chatbot */
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function DonateWidget() {
         {(profile) => <Content profile={profile} searchParams={searchParams} />}
       </QueryLoader>{" "}
       <footer className="grid place-items-center h-20 w-full bg-blue dark:bg-blue-d3">
-        <DappLogo classes="w-20" />
+        <DappLogo classes="w-40" color="white" />
       </footer>
     </div>
   );

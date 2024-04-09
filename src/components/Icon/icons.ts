@@ -28,6 +28,7 @@ import {
 } from "react-icons/bs";
 import { CgUndo } from "react-icons/cg";
 import {
+  FaBitcoin,
   FaChurch,
   FaDiscord,
   FaDonate,
@@ -42,21 +43,30 @@ import {
   FaUniversity,
   FaUserCircle,
 } from "react-icons/fa";
-import { FaFileCsv, FaMoneyBills } from "react-icons/fa6";
-import { FiMenu, FiMoon } from "react-icons/fi";
+import { FaFileCsv, FaGear, FaMoneyBills } from "react-icons/fa6";
+import { FiCreditCard, FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdDownload, IoMdListBox } from "react-icons/io";
 import {
+  IoArrowBackOutline,
+  IoArrowForwardOutline,
+  IoChevronBack,
   IoClose,
   IoCloseCircle,
   IoCrop,
+  IoEyeOffOutline,
+  IoEyeOutline,
+  IoPeople,
   IoWalletSharp,
   IoWarning,
 } from "react-icons/io5";
+import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import {
   MdCardGiftcard,
+  MdDelete,
+  MdLockOutline,
   MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
   MdOutlineContentCopy,
@@ -64,38 +74,56 @@ import {
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
   MdOutlineFolder,
+  MdOutlineStickyNote2,
   MdOutlineUploadFile,
   MdSpaceDashboard,
+  MdVerified,
   MdWidgets,
 } from "react-icons/md";
-import { RiMapPin2Line, RiMoneyDollarCircleFill } from "react-icons/ri";
+import { PiPaypalLogo } from "react-icons/pi";
+import {
+  RiFundsBoxLine,
+  RiGasStationFill,
+  RiMapPin2Line,
+  RiMoneyDollarCircleFill,
+} from "react-icons/ri";
 import { RxMixerHorizontal } from "react-icons/rx";
 import { SiHiveBlockchain } from "react-icons/si";
 import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export const icons = {
+  Advisor: LiaChalkboardTeacherSolid,
   AdminPanel: MdOutlineAdminPanelSettings,
-  ArrowRight: BiChevronRight,
-  ArrowDown: BiChevronDown,
+  ArrowLeft: IoArrowBackOutline,
+  ArrowRight: IoArrowForwardOutline,
   Back: MdOutlineArrowBackIosNew,
+  Bitcoin: FaBitcoin,
   Blockchain: SiHiveBlockchain,
+  Charity: FaDonate,
   Check: BiCheck,
   CheckCircle: BsCheckCircle,
+  ChevronDown: BiChevronDown,
+  ChevronLeft: IoChevronBack,
+  ChevronRight: BiChevronRight,
   CircleMinus: AiOutlineMinusCircle,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
   Copy: MdOutlineContentCopy,
+  CreditCard: FiCreditCard,
   Crop: IoCrop,
   Dash: GoDash,
   Dashboard: MdSpaceDashboard,
+  Delete: MdDelete,
   Discord: FaDiscord,
-  Down: VscTriangleDown,
   DollarCircle: RiMoneyDollarCircleFill,
+  Down: VscTriangleDown,
   Email: MdOutlineEmail,
   Exclamation: FaExclamation,
   ExclamationCircleFill: BsExclamationCircleFill,
   ExternalLink: GoLinkExternal,
+  Eye: IoEyeOutline,
+  EyeSlashed: IoEyeOffOutline,
   Facebook: GrFacebookOption,
   FacebookCircle: FaFacebook,
   FatArrowDownload: IoMdDownload,
@@ -104,11 +132,16 @@ export const icons = {
   FileUpload: MdOutlineUploadFile,
   Filter: MdOutlineFilterAlt,
   FilterLeft: BsFilterLeft,
+  FilterMixer: RxMixerHorizontal,
   Folder: MdOutlineFolder,
+  Stocks: RiFundsBoxLine,
+  GasStation: RiGasStationFill,
+  Gear: FaGear,
   Giftcard: MdCardGiftcard,
   Globe: BiGlobe,
   HeartFill: AiFillHeart,
   HeartOutline: AiOutlineHeart,
+  Hospital: FaHospital,
   HourglassSplit: BsHourglassSplit,
   Info: AiOutlineInfoCircle,
   Instagram: FaInstagram,
@@ -119,33 +152,35 @@ export const icons = {
   MapPin: RiMapPin2Line,
   Medium: AiOutlineMedium,
   Menu: FiMenu,
-  FilterMixer: RxMixerHorizontal,
   Money: FaMoneyBills,
   Moon: FiMoon,
+  Padlock: MdLockOutline,
+  Paypal: PiPaypalLogo,
   Picture: ImFilePicture,
   Plus: AiOutlinePlus,
   Question: AiOutlineQuestionCircle,
+  ReligiousOrganization: FaChurch,
   Save: BiSave,
   Search: BiSearchAlt2,
   SecurityScan: AiFillSecurityScan,
+  StickyNote: MdOutlineStickyNote2,
   Sun: BiSun,
   Sync: GoSync,
   Telegram: FaTelegramPlane,
   Tiktok: FaTiktok,
   Twitter: BsTwitter,
   Undo: CgUndo,
+  University: FaUniversity,
   Unsorted: TiArrowUnsorted,
   Up: VscTriangleUp,
   Upload: AiOutlineUpload,
   User: FaUserCircle,
+  Users: IoPeople,
+  Verified: MdVerified,
   Wallet: IoWalletSharp,
   Warning: IoWarning,
   Widget: MdWidgets,
   Youtube: AiFillYoutube,
-  Hospital: FaHospital,
-  Charity: FaDonate,
-  University: FaUniversity,
-  ReligiousOrganization: FaChurch,
 } as const;
 
 export type IconType = keyof typeof icons;

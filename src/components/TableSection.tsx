@@ -46,9 +46,9 @@ export function Cells(props: CellProps) {
             ? "td"
             : "th"
           : //th first on body
-          index === 0
-          ? "th"
-          : "td",
+            index === 0
+            ? "th"
+            : "td",
         {
           key: index,
           className:
@@ -82,8 +82,9 @@ export function Cells(props: CellProps) {
   return <>{cells}</>;
 }
 
+type CellChild = JSX.Element | null | false;
 type CellBase = {
-  children: JSX.Element | (JSX.Element | null)[] | null;
+  children: CellChild | CellChild[];
   type: "th" | "td";
 
   cellClass: string;

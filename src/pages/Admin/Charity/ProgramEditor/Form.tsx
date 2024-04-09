@@ -1,12 +1,12 @@
-import { Link } from "react-router-dom";
-import { FV } from "./types";
 import Group from "components/Group";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
 import { adminRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
 import Milestones from "./Milestones";
-import { MAX_CHARS, VALID_MIME_TYPES } from "./schema";
+import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
+import { FV } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
@@ -18,7 +18,7 @@ export default function Form() {
         e.preventDefault();
         reset();
       }}
-      className="@container w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6 font-body"
+      className="@container w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <Group title="Program information">
         <Field<FV>
@@ -33,6 +33,7 @@ export default function Form() {
           accept={VALID_MIME_TYPES}
           aspect={[4, 1]}
           classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
+          maxSize={MAX_SIZE_IN_BYTES}
         />
 
         <Label className="-mb-4" required>
@@ -43,9 +44,9 @@ export default function Form() {
           charLimit={MAX_CHARS}
           classes={{
             container:
-              "rich-text-toolbar border border-prim text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             error: "static field-error -mt-4",
-            charCounter: "text-gray-d1 dark:text-gray",
+            charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
       </Group>
@@ -72,7 +73,7 @@ export default function Form() {
         <button
           disabled={isSubmitting}
           type="submit"
-          className="px-6 btn-orange text-sm"
+          className="px-6 btn-blue text-sm"
         >
           {initial ? "Submit changes" : "Create program"}
         </button>

@@ -6,8 +6,8 @@ import {
   getCurrentUser,
   signOut,
 } from "aws-amplify/auth";
-import { User, userIsSignedIn } from "types/auth";
 import { logger } from "helpers";
+import { User, userIsSignedIn } from "types/auth";
 
 type State = {
   user: User;
@@ -62,7 +62,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
 );
 
 const auth = createSlice({
-  name: "widget",
+  name: "auth",
   initialState,
   reducers: {
     reset: (state) => {

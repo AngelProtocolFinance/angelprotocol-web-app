@@ -1,11 +1,12 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { FieldValues, Path, get, useController } from "react-hook-form";
-import { Props } from "./types";
-import { OptionType, ValKey } from "types/components";
 import { DrawerIcon } from "components/Icon";
+import { FieldValues, Path, get, useController } from "react-hook-form";
+import { OptionType, ValKey } from "types/components";
+import { unpack } from "../form/helpers";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
+import { Props } from "./types";
 
 export function Selector<
   T extends FieldValues,
@@ -19,7 +20,7 @@ export function Selector<
   classes,
   onOptionChange,
 }: Props<T, K, V>) {
-  const { container = "", button = "" } = classes || {};
+  const cls = unpack(classes);
   const {
     formState: { isSubmitting, errors },
     field: { value: selected, onChange, ref },
@@ -39,14 +40,14 @@ export function Selector<
           onChange(option);
         }}
         as="div"
-        className={`relative ${container}`}
+        className={`relative ${cls.container}`}
       >
         <FocusableInput ref={ref} />
         <Listbox.Button
           aria-invalid={!!get(errors, valuePath)?.message}
           aria-disabled={isDisabled}
           as="button"
-          className={`${button} ${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
+          className={`${cls.button} ${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
         >
           {({ open }) => (
             <>
@@ -54,12 +55,12 @@ export function Selector<
               <DrawerIcon
                 isOpen={open}
                 size={25}
-                className="justify-self-end dark:text-gray shrink-0"
+                className="justify-self-end dark:text-navy-l2 shrink-0"
               />
             </>
           )}
         </Listbox.Button>
-        <Listbox.Options className={styles.options}>
+        <Listbox.Options className={`${styles.options} ${cls.options}`}>
           {options
             .filter((o) => !!o.value)
             .map((o) => (

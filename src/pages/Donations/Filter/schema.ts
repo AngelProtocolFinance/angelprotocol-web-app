@@ -1,6 +1,6 @@
+import { SchemaShape } from "schemas/types";
 import { ObjectSchema, date, lazy, object, ref, string } from "yup";
 import { FormValues } from "./types";
-import { SchemaShape } from "schemas/types";
 
 const endKey: keyof FormValues = "endDate";
 const startKey: keyof FormValues = "startDate";
@@ -23,6 +23,6 @@ export const schema = object<any, SchemaShape<FormValues>>({
             ? schema.min(ref(startKey), "can't be earlier than start date")
             : schema
         )
-      : string().required("invalid")
+      : string().required("invalid").trim()
   ),
 }) as ObjectSchema<FormValues>;

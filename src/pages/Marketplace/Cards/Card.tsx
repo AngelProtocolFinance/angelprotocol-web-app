@@ -1,19 +1,21 @@
+import Icon from "components/Icon";
+import Image from "components/Image";
+import Tooltip from "components/Tooltip";
+import VerifiedIcon from "components/VerifiedIcon";
+import { appRoutes } from "constants/routes";
+import { unsdgs } from "constants/unsdgs";
+import { isEmpty } from "helpers";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
 import { EndowmentCard } from "types/aws";
 import { UNSDG_NUMS } from "types/lists";
-import Icon from "components/Icon";
-import Image from "components/Image";
-import Tooltip from "components/Tooltip";
-import { isEmpty } from "helpers";
-import { appRoutes } from "constants/routes";
-import { unsdgs } from "constants/unsdgs";
 
 const PLACEHOLDER_TAGLINE = " ";
 
 export default function Card({
   active_in_countries = [],
   name,
+  card_img,
   logo,
   id,
   endow_designation,
@@ -21,11 +23,12 @@ export default function Card({
   tagline,
   hq_country,
   kyc_donors_only,
+  claimed = true,
 }: EndowmentCard) {
   return (
-    <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-prim hover:border-blue dark:hover:border-blue">
+    <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l4 hover:border-blue dark:hover:border-blue">
       <div className="absolute top-[14px] left-[14px] right-[14px] flex justify-between gap-3">
-        <p className="bg-orange-l1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
+        <p className="bg-blue-d1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
           {endow_designation}
         </p>
         {kyc_donors_only && <KYCIcon className="ml-auto" />}
@@ -36,21 +39,30 @@ export default function Card({
       >
         <Image
           loading="lazy"
-          src={logo}
+          src={card_img || logo}
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />
         <div className="flex flex-col p-3 pb-4 gap-3">
           {/* nonprofit NAME */}
-          <h3 className="text-ellipsis line-clamp-2">{name}</h3>
+          <h3 className="text-ellipsis line-clamp-2">
+            {claimed && (
+              <VerifiedIcon
+                classes="inline relative bottom-px mr-1"
+                size={18}
+              />
+            )}
+            <span className="inline">{name}</span>
+          </h3>
+
           {/* TAGLINE */}
           {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
-            <p className="peer text-gray-d1 dark:text-gray text-sm -mt-2">
+            <p className="peer text-navy-l1 dark:text-navy-l2 text-sm -mt-2">
               {tagline}
             </p>
           ) : null}
           {/* HQ & ACTIVE-IN COUNTRIES */}
-          <div className="text-gray-d1 dark:text-gray text-sm">
+          <div className="text-navy-l1 dark:text-navy-l2 text-sm">
             <p>
               <span className="font-semibold">HQ:</span> {hq_country}
             </p>
@@ -84,7 +96,7 @@ function SDG({ num }: { num: UNSDG_NUMS }) {
       <Tooltip anchorRef={ref} content={unsdgs[num].title} />
       <div
         ref={ref}
-        className="whitespace-nowrap bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 px-1 py-1 border border-prim rounded-lg"
+        className="whitespace-nowrap bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 px-1 py-1 border border-gray-l4 rounded-lg"
       >
         SDG #{num}
       </div>
@@ -100,8 +112,8 @@ function KYCIcon({ className = "" }) {
       <div ref={ref} className={className}>
         <Icon
           type="AdminPanel"
-          size={20}
-          className="text-white hover:text-orange cursor-pointer"
+          size={18}
+          className="text-white hover:text-blue-d1 cursor-pointer"
         />
       </div>
     </>

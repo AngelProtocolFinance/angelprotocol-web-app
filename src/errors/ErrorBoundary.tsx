@@ -1,6 +1,6 @@
-import { Component, ErrorInfo, PropsWithChildren } from "react";
 import ModalContext from "contexts/ModalContext";
 import { logger } from "helpers";
+import { Component, ErrorInfo, PropsWithChildren } from "react";
 import ErrorContext from "../contexts/ErrorContext";
 import ErrorHandler from "./ErrorHandler";
 
@@ -20,7 +20,7 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    logger.error("Caught error:", error, errorInfo);
+    logger.error(`Caught error: ${error}, error info: ${errorInfo}`);
   }
 
   render() {

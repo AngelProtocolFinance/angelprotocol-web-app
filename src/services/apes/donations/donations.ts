@@ -1,12 +1,5 @@
-import {
-  DonationRecord,
-  DonationsQueryParams,
-  PaginatedAWSQueryRes,
-  ReceiptPayload,
-  Token,
-} from "types/aws";
 import { IS_TEST } from "constants/env";
-import { version as v } from "../../helpers";
+import { ReceiptPayload, Token } from "types/aws";
 import { apes } from "../apes";
 
 export const donations_api = apes.injectEndpoints({
@@ -16,22 +9,9 @@ export const donations_api = apes.injectEndpoints({
       query: (receiptPayload) => {
         const { transactionId, ...restOfPayload } = receiptPayload;
         return {
-          url: `${v(3)}/donation`,
-          params: { transactionId },
+          url: `crypto-donation/${transactionId}`,
           method: "PUT",
           body: restOfPayload,
-        };
-      },
-    }),
-    donations: builder.query<
-      PaginatedAWSQueryRes<DonationRecord[]>,
-      DonationsQueryParams
-    >({
-      providesTags: ["donations"],
-      query: ({ id, chain_id, ...rest }) => {
-        return {
-          url: `${v(3)}/donation/${chain_id}/${id}`,
-          params: rest,
         };
       },
     }),

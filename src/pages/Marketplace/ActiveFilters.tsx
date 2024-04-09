@@ -1,19 +1,19 @@
-import { PropsWithChildren } from "react";
 import Icon from "components/Icon";
-import { useGetter, useSetter } from "store/accessors";
+import { categories } from "constants/unsdgs";
+import { PropsWithChildren } from "react";
 import {
   reset,
   setCountries,
   setDesignations,
   setKYCOnly,
-  setSdgs,
+  setSDGgroups,
+  setVerified,
 } from "slices/components/marketFilter";
-import { unsdgs } from "constants/unsdgs";
+import { useGetter, useSetter } from "store/accessors";
 
 export default function ActiveFilters() {
-  const { endow_designation, sdgs, countries, kyc_only } = useGetter(
-    (state) => state.component.marketFilter
-  );
+  const { endow_designation, sdgGroups, countries, kyc_only, verified } =
+    useGetter((state) => state.component.marketFilter);
 
   const dispatch = useSetter();
 
@@ -32,12 +32,14 @@ export default function ActiveFilters() {
     </Item>
   ));
 
-  const sdgFilters = sdgs.map((sdgNum) => (
+  const sdgFilters = sdgGroups.map((groupNum) => (
     <Item
-      key={sdgNum}
-      onRemove={() => dispatch(setSdgs(sdgs.filter((s) => s !== sdgNum)))}
+      key={groupNum}
+      onRemove={() =>
+        dispatch(setSDGgroups(sdgGroups.filter((s) => s !== groupNum)))
+      }
     >
-      SDG {sdgNum}: {unsdgs[sdgNum].title}
+      {categories[groupNum].name}
     </Item>
   ));
 
@@ -61,10 +63,22 @@ export default function ActiveFilters() {
     </Item>
   ));
 
+  const verificationFilters = verified.map((isVerified) => (
+    <Item
+      key={`${isVerified}`}
+      onRemove={() =>
+        dispatch(setVerified(verified.filter((v) => v !== isVerified)))
+      }
+    >
+      {isVerified ? "Verified" : "Not verified"}
+    </Item>
+  ));
+
   const filters = endowDesignations
     .concat(sdgFilters)
     .concat(countryFilters)
-    .concat(kycFilters);
+    .concat(kycFilters)
+    .concat(verificationFilters);
 
   return (
     <div className="flex flex-wrap gap-1">
@@ -87,7 +101,7 @@ function Item({ children, onRemove }: PropsWithChildren<{ onRemove(): void }>) {
     <button
       type="button"
       onClick={onRemove}
-      className="flex items-center gap-2 border select-none rounded-full cursor-pointer capitalize text-xs pt-1 pb-[.3rem] pl-3 pr-1.5 texg-gray-d1 dark:text-gray bg-orange-l6 hover:bg-orange-l5"
+      className="flex items-center gap-2 border select-none rounded-full cursor-pointer capitalize text-xs py-1 pl-3 pr-1.5 texg-gray-d1 dark:text-navy-l2 bg-blue-l5 hover:bg-blue-l4"
     >
       <span>{children}</span>
       <Icon type="CloseCircle" size={20} />
