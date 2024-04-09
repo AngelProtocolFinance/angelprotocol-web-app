@@ -1,7 +1,7 @@
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
-import { getTxUrl, humanize, maskAddress } from "helpers";
+import { getTxUrl, humanize, maskAddress, roundDownToNum } from "helpers";
 import { DonationRecord } from "types/aws";
 
 export default function Row(
@@ -56,10 +56,15 @@ export default function Row(
 }
 
 const amount = (splitLiqPct: number, amount = 0) => {
-  const liq = amount * (splitLiqPct / 100);
-  const amounts = { total: amount, liq, locked: amount - liq };
+  const liq = roundDownToNum(amount * (splitLiqPct / 100), 2);
+  const locked = amount - liq;
+  const amounts = {
+    total: amount,
+    liq,
+    locked,
+  };
   return ({ type }: { type: keyof typeof amounts }) => {
     const val = amounts[type];
-    return val ? <>${humanize(val, 2)}</> : <>--</>;
+    return val ? <>${humanize(val)}</> : <>--</>;
   };
 };
