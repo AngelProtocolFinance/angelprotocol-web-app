@@ -1,73 +1,19 @@
 import Prompt from "components/Prompt";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { logger } from "helpers";
-import {
-  PropsWithChildren,
-  ReactNode,
-  createContext,
-  useCallback,
-} from "react";
+import { ReactNode } from "react";
 import { useModalContext } from "../ModalContext";
 
-type State = {
-  handleError: (
-    error: any,
-    displayMessage?: string,
-    options?: { log: boolean }
-  ) => void;
-};
+export function parseError(error: unknown): string | undefined {
+  if (typeof error === "string") return error;
 
-const Context = createContext<State>({
-  handleError: (_: any, _1?: string, _2?: { log: boolean }) => {},
-});
+  if (typeof error === "object" && error != null) {
+    if ("message" in error) return parseError(error.message);
+    if ("data" in error) return parseError(error.data);
+    if ("error" in error) return parseError(error.error);
+  }
 
-export default function ErrorContext(props: PropsWithChildren<{}>) {
-  const { showModal } = useModalContext();
-
-  /**
-   * biome-ignore lint/correctness/useExhaustiveDependencies: bug in Biome with recursive dependencies
-   * Created an issue on their GH, see https://github.com/biomejs/biome/issues/2361
-   */
-  const handleError: State["handleError"] = useCallback(
-    (error: any, displayMessage?: string, options = { log: true }) => {
-      if (options.log) {
-        logger.error(error);
-      }
-
-      if (displayMessage) {
-        showModal(Prompt, {
-          type: "error",
-          children: displayMessage,
-        });
-      } else if (typeof error === "string") {
-        showModal(Prompt, {
-          type: "error",
-          children: error,
-        });
-      } else if ("message" in error) {
-        handleError(error.message);
-        //TODO: specify controlled error shapes
-      } else if (error.data && typeof error.data === "string") {
-        handleError(error.data);
-      } else if (error.data && "message" in error.data) {
-        handleError(error.data.message);
-      } else if ("error" in error) {
-        handleError(error.error);
-      } else {
-        showModal(Prompt, {
-          type: "error",
-          children: GENERIC_ERROR_MESSAGE,
-        });
-      }
-    },
-    [showModal]
-  );
-
-  return (
-    <Context.Provider value={{ handleError }}>
-      {props.children}
-    </Context.Provider>
-  );
+  if (error instanceof Error) return error.message;
 }
 
 export function useErrorContext() {
@@ -91,9 +37,9 @@ export function useErrorContext() {
    * @param displayMessage - overrides parsed or generic error message
    */
   function handleError(error: unknown, displayMessage?: string) {
-    //TODO: parse error
-    const parsed = displayMessage || GENERIC_ERROR_MESSAGE;
-    showModal(Prompt, { children: parsed });
+    showModal(Prompt, {
+      children: displayMessage || parseError(error) || GENERIC_ERROR_MESSAGE,
+    });
     logger.error(error);
   }
 

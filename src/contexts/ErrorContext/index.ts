@@ -1,1 +1,1 @@
-export { default, useErrorContext } from "./ErrorContext";
+export { useErrorContext } from "./ErrorContext";
