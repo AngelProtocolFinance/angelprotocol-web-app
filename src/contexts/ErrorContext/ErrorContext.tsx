@@ -24,7 +24,7 @@ export function useErrorContext() {
    * @param message - user can do something about
    * @param error - if provided, would be logged to sentry for further investigation
    */
-  function displayError(message: string | ReactNode, error?: unknown) {
+  function displayError(message: ReactNode, error?: unknown) {
     showModal(Prompt, { type: "error", children: message });
     if (error) {
       logger.error(error);
@@ -36,7 +36,7 @@ export function useErrorContext() {
    * @param error - unknown error occured
    * @param displayMessage - overrides parsed or generic error message
    */
-  function handleError(error: unknown, displayMessage?: string | ReactNode) {
+  function handleError(error: unknown, displayMessage?: ReactNode) {
     showModal(Prompt, {
       type: "error",
       children: displayMessage || parseError(error) || GENERIC_ERROR_MESSAGE,
