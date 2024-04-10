@@ -1,6 +1,5 @@
 import Prompt from "components/Prompt";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
 import { logger } from "helpers";
 import {
   PropsWithChildren,
@@ -45,8 +44,6 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
           type: "error",
           children: error,
         });
-      } else if (instanceOfAPError(error.data)) {
-        handleError(error.data);
       } else if ("message" in error) {
         handleError(error.message);
         //TODO: specify controlled error shapes
@@ -70,13 +67,6 @@ export default function ErrorContext(props: PropsWithChildren<{}>) {
     <Context.Provider value={{ handleError }}>
       {props.children}
     </Context.Provider>
-  );
-}
-
-function instanceOfAPError(obj: any): obj is APError {
-  return (
-    !!obj &&
-    (obj.discriminator === AP_ERROR_DISCRIMINATOR || obj instanceof Error)
   );
 }
 

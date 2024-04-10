@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthError, signUp } from "aws-amplify/auth";
 import Icon from "components/Icon";
 import { Form } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useState } from "react";
 import { useForm } from "react-hook-form";

@@ -1,7 +1,6 @@
 import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";

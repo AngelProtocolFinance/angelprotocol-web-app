@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { chains } from "constants/chains";
 import { APIs } from "constants/urls";
-import { LogDonationFail } from "errors/errors";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { invalidateApesTags } from "services/apes";
@@ -60,7 +59,7 @@ export const sendDonation = createAsyncThunk<void, DonateArgs>(
       });
 
       if (!response.ok) {
-        throw new LogDonationFail(payload.chainId, payload.transactionId);
+        throw `Failed to log donation tx:${payload.transactionId}:${payload.chainId}`;
       }
 
       const { guestDonor }: { guestDonor?: GuestDonor } = await response.json();
