@@ -13,7 +13,7 @@ export default function StatusTabs(props: Props) {
         className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
         focus:outline-none border-t border-x border-gray-l4 ${
           props.status === "final"
-            ? "bg-blue-l4 z-10"
+            ? "bg-blue-l4 z-20"
             : "bg-blue-l5 hover:bg-blue-l3 -mr-4"
         }`}
       >
@@ -29,8 +29,10 @@ export default function StatusTabs(props: Props) {
         className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
         focus:outline-none border-t border-x border-gray-l4 ${
           props.status === "pending"
-            ? "bg-blue-l4 z-10"
-            : "bg-blue-l5 hover:bg-blue-l3 -ml-4"
+            ? "bg-blue-l4 z-20"
+            : `bg-blue-l5 z-10 hover:bg-blue-l3 ${
+                props.status === "final" ? "-ml-4" : "-mr-4"
+              }`
         }`}
       >
         <span
@@ -45,7 +47,7 @@ export default function StatusTabs(props: Props) {
         className={`relative group w-full sm:w-40 rounded-t-lg py-2.5 text-sm font-bold leading-5
         focus:outline-none border-t border-x border-gray-l4 ${
           props.status === "intent"
-            ? "bg-blue-l4 z-10"
+            ? "bg-blue-l4 z-20"
             : "bg-blue-l5 hover:bg-blue-l3 -ml-4"
         }`}
       >
