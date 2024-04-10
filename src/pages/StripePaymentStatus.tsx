@@ -35,12 +35,13 @@ export default function StripePaymentStatus() {
       }}
       classes={{ container: "place-self-center" }}
     >
-      {({ status, guestDonor }) => (
+      {({ status, guestDonor, recipientName }) => (
         <Content
           status={status}
           onMount={handleProcessing}
           isInWidget={isInWidget}
           guestDonor={guestDonor}
+          recipientName={recipientName}
         />
       )}
     </QueryLoader>
@@ -52,6 +53,7 @@ function Content(props: {
   onMount: () => void;
   isInWidget: boolean;
   guestDonor?: GuestDonor;
+  recipientName?: string;
 }) {
   switch (props.status) {
     case "succeeded":
@@ -64,7 +66,7 @@ function Content(props: {
           state={
             {
               guestDonor: props.guestDonor,
-              recipientName: "",
+              recipientName: props.recipientName,
             } satisfies DonateFiatThanksState
           }
         />

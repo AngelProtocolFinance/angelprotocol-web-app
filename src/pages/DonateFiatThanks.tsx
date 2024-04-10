@@ -12,7 +12,7 @@ import { GuestDonor } from "types/aws";
 
 export type DonateFiatThanksState = {
   guestDonor?: GuestDonor;
-  recipientName: string;
+  recipientName?: string;
 };
 
 export default function DonateFiatThanks({ widgetVersion = false }) {
