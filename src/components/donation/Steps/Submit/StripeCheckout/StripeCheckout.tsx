@@ -2,12 +2,12 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import ErrorBoundary from "errors/ErrorBoundary";
+import ErrorTrigger from "errors/ErrorTrigger";
 import { useStripePaymentIntentQuery } from "services/apes";
 import { StripeCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
-import Err from "../Err";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
 import Paypal from "./Paypal";
@@ -81,21 +81,23 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
         </>
       )}
 
-      {isLoading ? (
-        <Loader msg="Loading payment form.." />
-      ) : isError || !clientSecret ? (
-        <Err error={error} />
-      ) : (
-        <Elements
-          options={{
-            clientSecret,
-            appearance: { theme: "stripe" },
-          }}
-          stripe={stripePromise}
-        >
-          <Checkout source={details.source} />
-        </Elements>
-      )}
+      <ErrorBoundary>
+        {isLoading ? (
+          <Loader msg="Loading payment form.." />
+        ) : isError || !clientSecret ? (
+          <ErrorTrigger error={error} />
+        ) : (
+          <Elements
+            options={{
+              clientSecret,
+              appearance: { theme: "stripe" },
+            }}
+            stripe={stripePromise}
+          >
+            <Checkout source={details.source} />
+          </Elements>
+        )}
+      </ErrorBoundary>
     </Summary>
   );
 }

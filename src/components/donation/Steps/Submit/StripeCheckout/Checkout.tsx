@@ -6,6 +6,7 @@ import {
 import LoadText from "components/LoadText";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import ErrorTrigger from "errors/ErrorTrigger";
 import { FormEventHandler, useState } from "react";
 import { DonationSource } from "types/lists";
 import Loader from "../Loader";
@@ -14,6 +15,8 @@ type Props = {
   source: DonationSource;
 };
 
+type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
+
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout({ source }: Props) {
@@ -21,14 +24,12 @@ export default function Checkout({ source }: Props) {
   const elements = useElements();
   const { handleError } = useErrorContext();
 
-  const [isLoading, setLoading] = useState(true);
   // There is a small delay before Stripe Payment Element starts to load.
   // To avoid just showing the "Back" button with nothing else on screen,
   // we first show a Loader ring and when the Stripe Element starts loading
   // (it has an inherent loading animation) that's when we hide the loader ring
   // and start showing the "Back" button
-  const [showLoader, setShowLoader] = useState(true);
-  const [isSubmitting, setSubmitting] = useState(false);
+  const [status, setStatus] = useState<Status>("init");
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -39,7 +40,7 @@ export default function Checkout({ source }: Props) {
       return;
     }
 
-    setSubmitting(true);
+    setStatus("submitting");
 
     const return_url =
       source === "bg-widget"
@@ -64,34 +65,34 @@ export default function Checkout({ source }: Props) {
       handleError(error);
     }
 
-    setSubmitting(false);
+    setStatus("ready");
   };
+
+  if (typeof status === "object") {
+    return <ErrorTrigger error={status.error} />;
+  }
+
+  if (status === "init") {
+    return <Loader />;
+  }
 
   return (
     <form onSubmit={handleSubmit} className="contents">
       <PaymentElement
         options={{ layout: "tabs" }}
-        onReady={() => setLoading(false)}
-        onLoadError={(error) => {
-          setLoading(false);
-          //TODO: need-error boundary
-          throw error;
-        }}
-        onLoaderStart={() => setShowLoader(false)}
+        onReady={() => setStatus("ready")}
+        onLoadError={(error) => setStatus({ error })}
+        onLoaderStart={() => setStatus("loading")}
       />
-      {showLoader ? (
-        <Loader />
-      ) : (
-        <button
-          className="btn-blue btn-donate w-full mt-6"
-          disabled={!stripe || !elements || isSubmitting || isLoading}
-          type="submit"
-        >
-          <LoadText text="Processing..." isLoading={isSubmitting}>
-            Donate Now
-          </LoadText>
-        </button>
-      )}
+      <button
+        className="btn-blue btn-donate w-full mt-6"
+        disabled={!stripe || !elements || status !== "ready"}
+        type="submit"
+      >
+        <LoadText text="Processing..." isLoading={status === "submitting"}>
+          Donate Now
+        </LoadText>
+      </button>
     </form>
   );
 }
