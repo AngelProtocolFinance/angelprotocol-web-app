@@ -1,5 +1,6 @@
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
@@ -21,6 +22,7 @@ export default function useEditProfile() {
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
+  const { displayError, handleError } = useErrorContext();
   const [endowment] = useLazyProfileQuery();
   const updateEndow = useUpdateEndowment();
 
@@ -49,18 +51,14 @@ export default function useEditProfile() {
 
       const diffs = getPayloadDiff(initial, update);
 
-      if (isEmpty(diffs)) {
-        return showModal(TxPrompt, { error: "No changes detected" });
-      }
+      if (isEmpty(diffs)) return displayError("No changes detected");
 
       if (update.slug !== initial.slug) {
         const result = await endowment({ slug: update.slug });
 
         //endow is found with update.slug
         if (result.isSuccess) {
-          return showModal(TxPrompt, {
-            error: `Slug "${update.slug}" is already taken`,
-          });
+          displayError(`Slug "${update.slug}" is already taken`);
         }
       }
 
@@ -73,9 +71,7 @@ export default function useEditProfile() {
 
       await updateEndow({ ...cleanUpdate, id });
     } catch (err) {
-      showModal(TxPrompt, {
-        error: err instanceof Error ? err.message : "Unknown error occured",
-      });
+      handleError(err);
     }
   };
 

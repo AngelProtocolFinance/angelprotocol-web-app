@@ -1,5 +1,6 @@
 import { TxPrompt } from "components/Prompt";
 import { appRoutes } from "constants/routes";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
 import { useEditEndowmentMutation } from "services/aws/aws";
@@ -8,6 +9,7 @@ import { EndowmentUpdate } from "services/types";
 export function useUpdateEndowment() {
   const { showModal } = useModalContext();
   const [submit] = useEditEndowmentMutation();
+  const { handleError } = useErrorContext();
 
   const updateEndowment = async (update: EndowmentUpdate) => {
     try {
@@ -19,11 +21,7 @@ export function useUpdateEndowment() {
         { isDismissible: false }
       );
 
-      const result = await submit(update);
-
-      if ("error" in result) {
-        return showModal(TxPrompt, { error: "Failed to update Profile" });
-      }
+      await submit(update).unwrap();
 
       return showModal(TxPrompt, {
         success: {
@@ -35,9 +33,7 @@ export function useUpdateEndowment() {
         },
       });
     } catch (err) {
-      showModal(TxPrompt, {
-        error: err instanceof Error ? err.message : "Unknown error occured",
-      });
+      handleError(err, "Failed to update Profile");
     }
   };
 
