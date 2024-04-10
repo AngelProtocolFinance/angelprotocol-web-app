@@ -72,10 +72,6 @@ export default function Checkout({ source }: Props) {
     return <ErrorTrigger error={status.error} />;
   }
 
-  if (status === "init") {
-    return <Loader />;
-  }
-
   return (
     <form onSubmit={handleSubmit} className="contents">
       <PaymentElement
@@ -84,15 +80,19 @@ export default function Checkout({ source }: Props) {
         onLoadError={(error) => setStatus({ error })}
         onLoaderStart={() => setStatus("loading")}
       />
-      <button
-        className="btn-blue btn-donate w-full mt-6"
-        disabled={!stripe || !elements || status !== "ready"}
-        type="submit"
-      >
-        <LoadText text="Processing..." isLoading={status === "submitting"}>
-          Donate Now
-        </LoadText>
-      </button>
+      {status === "init" ? (
+        <Loader />
+      ) : (
+        <button
+          className="btn-blue btn-donate w-full mt-6"
+          disabled={!stripe || !elements || status !== "ready"}
+          type="submit"
+        >
+          <LoadText text="Processing..." isLoading={status === "submitting"}>
+            Donate Now
+          </LoadText>
+        </button>
+      )}
     </form>
   );
 }
