@@ -10,9 +10,14 @@ import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import { GuestDonor } from "types/aws";
 
+export type DonateFiatThanksState = {
+  guestDonor?: GuestDonor;
+  recipientName: string;
+};
+
 export default function DonateFiatThanks({ widgetVersion = false }) {
   const location = useLocation();
-  const guestDonor: GuestDonor | undefined = location.state;
+  const state: DonateFiatThanksState | undefined = location.state;
   const user = useGetter((state) => state.auth.user);
 
   return (
@@ -33,8 +38,9 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>
       <p className="text-center text-navy-l1">
-        We'll process your donation to the nonprofit you specified as soon as
-        the payment has cleared.
+        We'll process your donation to{" "}
+        {state?.recipientName ?? "the nonprofit you specified"} as soon as the
+        payment has cleared.
         {widgetVersion
           ? ""
           : " You can safely navigate away using the button below."}
@@ -52,13 +58,13 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         page.
       </p>
 
-      {!userIsSignedIn(user) && guestDonor && (
+      {!userIsSignedIn(user) && state?.guestDonor && (
         <Signup
           classes="max-w-96 w-full mt-6 justify-self-center"
           donor={((d) => {
             const [firstName, lastName] = d.fullName.split(" ");
             return { firstName, lastName, email: d.email };
-          })(guestDonor)}
+          })(state.guestDonor)}
         />
       )}
 

@@ -9,6 +9,7 @@ import { Link, Navigate } from "react-router-dom";
 import { useGetStripePaymentStatusQuery } from "services/apes";
 import { useGetter } from "store/accessors";
 import { GuestDonor } from "types/aws";
+import { DonateFiatThanksState } from "./DonateFiatThanks";
 
 export default function StripePaymentStatus() {
   const paymentIntentId =
@@ -57,7 +58,17 @@ function Content(props: {
       const to = props.isInWidget
         ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
         : appRoutes.donate_fiat_thanks;
-      return <Navigate to={to} state={props.guestDonor} />;
+      return (
+        <Navigate
+          to={to}
+          state={
+            {
+              guestDonor: props.guestDonor,
+              recipientName: "",
+            } satisfies DonateFiatThanksState
+          }
+        />
+      );
     case "processing":
       return <Processing onMount={props.onMount} />;
     case "canceled":

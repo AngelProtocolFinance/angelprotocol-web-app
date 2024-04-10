@@ -4,19 +4,22 @@ import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
+import { DonateFiatThanksState } from "pages/DonateFiatThanks";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCapturePayPalOrderMutation } from "services/apes";
+import { DonationRecipient } from "slices/donation";
 import { DonationSource } from "types/lists";
 
 type Props = {
   orderId: string;
+  recipient: DonationRecipient;
   source: DonationSource;
 };
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ orderId, source }: Props) {
+export default function Checkout({ orderId, recipient, source }: Props) {
   const navigate = useNavigate();
 
   const [isSubmitting, setSubmitting] = useState(false);
@@ -65,15 +68,17 @@ export default function Checkout({ orderId, source }: Props) {
                 throw new Error(JSON.stringify(order));
               } else {
                 //accessed by redirect page
+                const state: DonateFiatThanksState = {
+                  guestDonor: order.guestDonor,
+                  recipientName: recipient.name,
+                };
                 if (source === "bg-widget") {
                   navigate(
                     `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`,
-                    { state: order.guestDonor }
+                    { state }
                   );
                 } else {
-                  navigate(appRoutes.donate_fiat_thanks, {
-                    state: order.guestDonor,
-                  });
+                  navigate(appRoutes.donate_fiat_thanks, { state });
                 }
               }
             } catch (error) {
