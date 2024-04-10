@@ -1,7 +1,6 @@
 import { DappLogo } from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
-import ErrorBoundary from "errors/ErrorBoundary";
 import { idParamToNum, setToLightMode } from "helpers";
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -38,11 +37,7 @@ export default function DonateWidget() {
         }}
         classes={{ container: "grid place-items-center h-full w-full" }}
       >
-        {(profile) => (
-          <ErrorBoundary showParsed>
-            <Content profile={profile} searchParams={searchParams} />
-          </ErrorBoundary>
-        )}
+        {(profile) => <Content profile={profile} searchParams={searchParams} />}
       </QueryLoader>
       <footer className="grid place-items-center h-20 w-full bg-blue dark:bg-blue-d3">
         <DappLogo classes="w-40" color="white" />

@@ -22,6 +22,9 @@ export default function parseConfig(
       liquidSplitPct: +parsedConfig.liquidSplitPct,
     };
   } catch (error) {
-    return { error: (error as ValidationError).message };
+    const message = (error as ValidationError).message;
+    return {
+      error: `Widget config is invalid: ${message}.`,
+    };
   }
 }

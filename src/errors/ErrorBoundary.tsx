@@ -2,7 +2,7 @@ import { logger } from "helpers";
 import { Component, ErrorInfo, PropsWithChildren, ReactNode } from "react";
 import DefaultFallback from "./DefaultFallback";
 
-type Props = PropsWithChildren<{ fallback?: ReactNode; showParsed?: true }>;
+type Props = PropsWithChildren<{ fallback?: ReactNode }>;
 
 type State = { error: Error | undefined };
 
