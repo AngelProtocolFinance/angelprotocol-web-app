@@ -4,7 +4,7 @@ import { logger } from "helpers";
 import { ReactNode } from "react";
 import { useModalContext } from "../ModalContext";
 
-export function parseError(error: unknown): string | undefined {
+function parseError(error: unknown): string | undefined {
   if (typeof error === "string") return error;
 
   if (typeof error === "object" && error != null) {
