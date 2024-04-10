@@ -4,9 +4,9 @@ import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
 import { logger } from "helpers";
 import {
   PropsWithChildren,
+  ReactNode,
   createContext,
   useCallback,
-  useContext,
 } from "react";
 import { useModalContext } from "../ModalContext";
 
@@ -81,5 +81,31 @@ function instanceOfAPError(obj: any): obj is APError {
 }
 
 export function useErrorContext() {
-  return useContext(Context);
+  const { showModal } = useModalContext();
+
+  /**
+   * @description for expected errors
+   * @param message - user can do something about
+   * @param error - if provided, would be logged to sentry for further investigation
+   */
+  function displayError(message: string | ReactNode, error?: unknown) {
+    showModal(Prompt, { children: message });
+    if (error) {
+      logger.error(error);
+    }
+  }
+
+  /**
+   * @description for unexpected errors
+   * @param error - unknown error occured
+   * @param displayMessage - overrides parsed or generic error message
+   */
+  function handleError(error: unknown, displayMessage?: string) {
+    //TODO: parse error
+    const parsed = displayMessage || GENERIC_ERROR_MESSAGE;
+    showModal(Prompt, { children: parsed });
+    logger.error(error);
+  }
+
+  return { handleError, displayError };
 }

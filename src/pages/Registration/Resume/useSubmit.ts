@@ -21,11 +21,10 @@ export default function useSubmit() {
     try {
       const { isError, error, data } = await checkPrevRegistration(reference);
       if (isError || !data) {
-        handleError(
+        return handleError(
           error,
           "No active application found with this registration reference"
         );
-        return;
       }
       storeRegistrationReference(reference);
 

@@ -2,7 +2,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APIs } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty, logger } from "helpers";
@@ -48,7 +47,7 @@ export default function RecipientDetailsForm({
     getFieldState,
   } = useForm({ disabled, shouldUnregister: true });
 
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const [updateRequirements] = useNewRequirementsMutation();
   const [createRecipient] = useCreateRecipientMutation();
 
@@ -106,9 +105,7 @@ export default function RecipientDetailsForm({
             (err) => err.code === "NOT_VALID"
           );
 
-          if (isEmpty(validations)) {
-            return handleError(_errs[0].message || GENERIC_ERROR_MESSAGE);
-          }
+          if (isEmpty(validations)) return displayError(_errs[0].message);
 
           //SET field errors
           for (const v of validations) {

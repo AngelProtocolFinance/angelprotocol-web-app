@@ -45,7 +45,7 @@ export default function Form({ classes = "" }) {
 
       setRecipient(recipient.email);
     } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
+      handleError(error);
     }
   }
 

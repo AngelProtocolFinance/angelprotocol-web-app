@@ -31,12 +31,7 @@ export default function SubscriptionForm() {
 
   async function submit(data: FV) {
     try {
-      const response = await subscribe(data.email);
-
-      if ("error" in response) {
-        throw response.error;
-      }
-
+      await subscribe(data.email).unwrap();
       reset();
     } catch (error) {
       handleError(error);

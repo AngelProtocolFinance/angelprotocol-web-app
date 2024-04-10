@@ -1,5 +1,4 @@
 import type { OnSubmit } from "components/BankDetails";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getFilePreviews } from "helpers";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +31,7 @@ export default function useSubmit() {
 
       return navigate(`../${steps.summary}`, { state: data.init });
     } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
+      handleError(error);
     }
   };
 

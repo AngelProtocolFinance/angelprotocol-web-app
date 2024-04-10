@@ -4,7 +4,6 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import LoadText from "components/LoadText";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { FormEventHandler, useState } from "react";
@@ -62,7 +61,7 @@ export default function Checkout({ source }: Props) {
     if (error.type === "card_error" || error.type === "validation_error") {
       handleError(error.message);
     } else {
-      handleError("An unexpected error occurred.");
+      handleError(error);
     }
 
     setSubmitting(false);
@@ -75,7 +74,8 @@ export default function Checkout({ source }: Props) {
         onReady={() => setLoading(false)}
         onLoadError={(error) => {
           setLoading(false);
-          handleError(error, GENERIC_ERROR_MESSAGE);
+          //TODO: need-error boundary
+          throw error;
         }}
         onLoaderStart={() => setShowLoader(false)}
       />

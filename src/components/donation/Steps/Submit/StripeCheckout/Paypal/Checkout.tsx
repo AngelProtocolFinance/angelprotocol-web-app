@@ -1,6 +1,5 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
@@ -77,7 +76,7 @@ export default function Checkout({ orderId, source }: Props) {
                 }
               }
             } catch (error) {
-              handleError(error, GENERIC_ERROR_MESSAGE);
+              handleError(error);
             } finally {
               setSubmitting(false);
             }

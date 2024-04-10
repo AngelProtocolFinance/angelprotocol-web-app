@@ -32,7 +32,6 @@ export default function ErrorPage(props: ErrorQueryParams) {
   const isRedirecting = submitText === redirectingText;
   return (
     <>
-      {" "}
       <div className="bg-red rounded-full aspect-square grid place-items-center mb-4">
         <Icon type="Exclamation" size={30} className="text-white m-5" />
       </div>

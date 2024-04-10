@@ -17,7 +17,7 @@ type Props = {
 };
 
 export default function SignupForm(props: Props) {
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
     register,
@@ -80,9 +80,10 @@ export default function SignupForm(props: Props) {
             },
           });
         } catch (err) {
-          const message =
-            err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-          handleError(err, message);
+          if (err instanceof AuthError) {
+            return displayError(err.message);
+          }
+          handleError(err);
         }
       })}
     >
