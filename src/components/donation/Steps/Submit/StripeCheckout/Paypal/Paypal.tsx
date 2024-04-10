@@ -1,7 +1,7 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
 import { PAYPAL_CLIENT_ID } from "constants/env";
-import ErrorUI from "errors/ErrorUI";
+import ErrorTrigger from "errors/ErrorTrigger";
 import { usePaypalOrderQuery } from "services/apes";
 import { StripeCheckoutStep } from "slices/donation";
 import Checkout from "./Checkout";
@@ -30,7 +30,7 @@ export default function Paypal(props: StripeCheckoutStep) {
   if (isLoading) return <ContentLoader className="rounded h-10 w-40" />;
 
   if (isError || !orderId || !PAYPAL_CLIENT_ID) {
-    return <ErrorUI error={error} />;
+    return <ErrorTrigger error={error} />;
   }
 
   return (

@@ -2,6 +2,7 @@ import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import ErrorTrigger from "errors/ErrorTrigger";
 import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -13,17 +14,22 @@ type Props = {
   source: DonationSource;
 };
 
+type Status = "ready" | "submitting" | { error: unknown };
+
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout({ orderId, source }: Props) {
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
-  const [isSubmitting, setSubmitting] = useState(false);
 
   const [{ isPending }] = usePayPalScriptReducer();
   const [captureOrder] = useCapturePayPalOrderMutation();
+  const [status, setStatus] = useState<Status>("ready");
 
   if (isPending) return <ContentLoader className="rounded h-10 w-40" />;
+
+  //show error UI: https://developer.paypal.com/docs/checkout/standard/customize/handle-errors/#link-buyercheckouterror
+  if (typeof status === "object") return <ErrorTrigger error={status.error} />;
 
   return (
     <PayPalButtons
@@ -35,12 +41,9 @@ export default function Checkout({ orderId, source }: Props) {
         height: 40,
       }}
       className="w-40 flex gap-2"
-      disabled={isSubmitting}
-      onCancel={() => setSubmitting(false)}
-      onError={(error) => {
-        setSubmitting(false);
-        handleError(error);
-      }}
+      disabled={status === "submitting"}
+      onCancel={() => setStatus("ready")}
+      onError={(error) => setStatus({ error })}
       onApprove={async (data, actions) => {
         try {
           const order = await captureOrder({
@@ -76,7 +79,7 @@ export default function Checkout({ orderId, source }: Props) {
         }
       }}
       createOrder={async () => {
-        setSubmitting(true);
+        setStatus("submitting");
         return orderId;
       }}
     />
