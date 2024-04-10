@@ -1,8 +1,8 @@
 import Seo from "components/Seo";
+import { ErrorStatus } from "components/Status";
 import { Steps } from "components/donation";
 import { APP_NAME, DAPP_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import ErrorTrigger from "errors/ErrorTrigger";
 import { useEffect } from "react";
 import { DonationRecipient, setRecipient } from "slices/donation";
 import { useSetter } from "store/accessors";
@@ -33,8 +33,9 @@ export default function Content({
 
   const config = parseConfig(searchParams);
 
+  //validation error
   if ("error" in config) {
-    return <ErrorTrigger error={config.error} />;
+    return <ErrorStatus classes="h-full">{config.error}</ErrorStatus>;
   }
 
   return (

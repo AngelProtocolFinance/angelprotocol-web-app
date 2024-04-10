@@ -43,7 +43,7 @@ export default function DonateWidget() {
             <Content profile={profile} searchParams={searchParams} />
           </ErrorBoundary>
         )}
-      </QueryLoader>{" "}
+      </QueryLoader>
       <footer className="grid place-items-center h-20 w-full bg-blue dark:bg-blue-d3">
         <DappLogo classes="w-40" color="white" />
       </footer>

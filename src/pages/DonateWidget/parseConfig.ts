@@ -10,7 +10,7 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
 
 export default function parseConfig(
   searchParams: URLSearchParams
-): DonaterConfigFromWidget | { error: unknown } {
+): DonaterConfigFromWidget | { error: string } {
   try {
     const parsedConfig = schema.validateSync(
       Object.fromEntries(searchParams.entries())
@@ -22,9 +22,6 @@ export default function parseConfig(
       liquidSplitPct: +parsedConfig.liquidSplitPct,
     };
   } catch (error) {
-    if (error instanceof ValidationError) {
-      return { error: `Invalid search parameters: ${error.message}` };
-    }
-    return { error };
+    return { error: (error as ValidationError).message };
   }
 }
