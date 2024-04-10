@@ -1,5 +1,4 @@
-import Prompt from "components/Prompt";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { MouseEventHandler } from "react";
 import { DropzoneOptions } from "react-dropzone";
@@ -26,6 +25,7 @@ export default function useImgEditor<T extends FieldValues, K extends Path<T>>({
 
   const { setValue, watch } = useFormContext<T>();
   const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
   const {
     field: {
       value: currFile = new File([], "default file"),
@@ -74,14 +74,7 @@ export default function useImgEditor<T extends FieldValues, K extends Path<T>>({
   };
 
   function handleCropResult(blob: Blob | null, originalFile: File) {
-    if (!blob) {
-      return showModal(Prompt, {
-        type: "error",
-        headline: "Edit image",
-        title: "Failed to crop image",
-        children: GENERIC_ERROR_MESSAGE,
-      });
-    }
+    if (!blob) return handleError("Failed to crop image");
     const cropped = URL.createObjectURL(blob);
     setValue(previewPath, cropped as any);
     onFileChange(

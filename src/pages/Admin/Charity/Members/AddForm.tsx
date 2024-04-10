@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Modal from "components/Modal";
 import Prompt from "components/Prompt";
 import { Field } from "components/form";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import {
   FormProvider,
@@ -23,6 +24,7 @@ export default function AddForm({ added, endowID }: Props) {
   const [addAdmin] = useNewEndowAdminMutation();
   const [profile] = useLazyProfileQuery();
   const { setModalOption, showModal } = useModalContext();
+  const { handleError } = useErrorContext();
   const methods = useForm({
     resolver: yupResolver(
       object({
@@ -66,13 +68,11 @@ export default function AddForm({ added, endowID }: Props) {
           </p>
         ),
       });
-    } catch (_) {
-      showModal(Prompt, {
-        headline: "Error.",
-        children: (
-          <p className="py-6 text-red">Failed to add {fv.email} to members</p>
-        ),
-      });
+    } catch (err) {
+      handleError(
+        err,
+        <p className="py-6 text-red">Failed to add {fv.email} to members</p>
+      );
     }
   };
 

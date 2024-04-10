@@ -1,14 +1,12 @@
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { useModalContext } from "contexts/ModalContext";
+import { useErrorContext } from "contexts/ErrorContext";
 import { PropsWithChildren, useRef, useState } from "react";
 import {
   useToggleBookmarkMutation,
   useWalletProfileQuery,
 } from "services/aws/aws";
 import { EndowmentBookmark } from "types/aws";
-import Prompt from "./Prompt";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 
@@ -24,7 +22,7 @@ export default function BookmarkBtn({ endowId, children }: Props) {
   } = useWalletProfileQuery("", {
     skip: true,
   });
-  const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
   const [toggle, { isLoading: isToggling }] = useToggleBookmarkMutation();
 
   const isLoading = isProfileLoading || isFetching || isToggling;
@@ -33,19 +31,14 @@ export default function BookmarkBtn({ endowId, children }: Props) {
   const isBookmarked = bookmark !== undefined;
 
   async function toogleBookmark() {
-    const res = await toggle({
-      endowId,
-      type: isBookmarked ? "delete" : "add",
-      wallet: "", //FUTURE: wallet may not be needed to edit bookmarks
-    });
-
-    if ("error" in res) {
-      showModal(Prompt, {
-        type: "error",
-        headline: "Bookmark",
-        title: "Failed to save bookmark",
-        children: GENERIC_ERROR_MESSAGE,
-      });
+    try {
+      await toggle({
+        endowId,
+        type: isBookmarked ? "delete" : "add",
+        wallet: "", //FUTURE: wallet may not be needed to edit bookmarks
+      }).unwrap();
+    } catch (err) {
+      handleError(err, "Failed to save bookmark");
     }
   }
 
