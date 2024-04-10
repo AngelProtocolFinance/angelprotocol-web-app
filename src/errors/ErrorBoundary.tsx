@@ -1,5 +1,6 @@
 import { logger } from "helpers";
 import { Component, ErrorInfo, PropsWithChildren, ReactNode } from "react";
+import DefaultFallback from "./DefaultFallback";
 
 type Props = PropsWithChildren<{ fallback?: ReactNode }>;
 
@@ -21,6 +22,8 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   render() {
-    return this.state.error ? this.props.fallback : this.props.children;
+    return this.state.error
+      ? this.props.fallback || <DefaultFallback />
+      : this.props.children;
   }
 }
