@@ -1,8 +1,7 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
 import { PAYPAL_CLIENT_ID } from "constants/env";
-import { logger } from "helpers";
-import { useEffect } from "react";
+import ErrorUI from "errors/ErrorUI";
 import { usePaypalOrderQuery } from "services/apes";
 import { StripeCheckoutStep } from "slices/donation";
 import Checkout from "./Checkout";
@@ -28,17 +27,13 @@ export default function Paypal(props: StripeCheckoutStep) {
     source: details.source,
   });
 
-  useEffect(() => {
-    if (error) {
-      logger.error(error);
-    }
-  }, [error]);
+  if (isLoading) return <ContentLoader className="rounded h-10 w-40" />;
 
-  return isLoading ? (
-    <ContentLoader className="rounded h-10 w-40" />
-  ) : isError || !orderId || PAYPAL_CLIENT_ID === "" ? (
-    <div id="paypal-failure-fallback" className="hidden" />
-  ) : (
+  if (isError || !orderId || !PAYPAL_CLIENT_ID) {
+    return <ErrorUI error={error} />;
+  }
+
+  return (
     <PayPalScriptProvider
       options={{
         clientId: PAYPAL_CLIENT_ID,
