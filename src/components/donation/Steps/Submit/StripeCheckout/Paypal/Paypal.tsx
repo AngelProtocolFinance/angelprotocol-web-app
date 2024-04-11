@@ -49,7 +49,11 @@ export default function Paypal(props: StripeCheckoutStep) {
       }}
     >
       <div className="flex items-center gap-2">
-        <Checkout orderId={orderId} source={details.source} />
+        <Checkout
+          orderId={orderId}
+          source={details.source}
+          recipient={recipient}
+        />
       </div>
     </PayPalScriptProvider>
   );
