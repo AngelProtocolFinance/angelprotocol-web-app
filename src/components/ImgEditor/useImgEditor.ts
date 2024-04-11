@@ -74,7 +74,7 @@ export default function useImgEditor<T extends FieldValues, K extends Path<T>>({
   };
 
   function handleCropResult(blob: Blob | null, originalFile: File) {
-    if (!blob) return handleError({ context: "cropping image" });
+    if (!blob) return handleError("Image blob can't be null", { context: "cropping image" });
     const cropped = URL.createObjectURL(blob);
     setValue(previewPath, cropped as any);
     onFileChange(
