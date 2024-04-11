@@ -79,8 +79,8 @@ export default function Checkout(props: StripeCheckoutStep) {
               }
             }
           }}
-          createOrder={async () => {
-            const orderId = await createOrder({
+          createOrder={async () =>
+            await createOrder({
               amount: +details.amount,
               tipAmount: tip,
               usdRate: details.currency.rate,
@@ -89,9 +89,8 @@ export default function Checkout(props: StripeCheckoutStep) {
               splitLiq: liquidSplitPct,
               donor,
               source: details.source,
-            }).unwrap();
-            return orderId;
-          }}
+            }).unwrap()
+          }
         />
       )}
     </>
