@@ -58,7 +58,7 @@ export default function useEditProfile() {
 
         //endow is found with update.slug
         if (result.isSuccess) {
-          displayError(`Slug "${update.slug}" is already taken`);
+          return displayError(`Slug "${update.slug}" is already taken`);
         }
       }
 
