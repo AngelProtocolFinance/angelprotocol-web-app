@@ -65,5 +65,5 @@ export function useErrorContext() {
 
 const genericMsg = (context?: string) =>
   `An unexpected error occurred${
-    context ? `while ${context}` : " "
+    context ? ` while ${context} ` : " "
   }and has been reported. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;
