@@ -83,7 +83,10 @@ export const apes = createApi({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
     getStripePaymentStatus: builder.query<
-      Pick<PaymentIntent, "status"> & { guestDonor?: GuestDonor },
+      Pick<PaymentIntent, "status"> & {
+        guestDonor?: GuestDonor;
+        recipientName?: string;
+      },
       { paymentIntentId: string }
     >({
       query: ({ paymentIntentId }) => ({
