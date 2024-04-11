@@ -5,7 +5,6 @@ import {
   resetPassword,
 } from "aws-amplify/auth";
 import { Form, Input, PasswordInput } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import useCounter from "hooks/useCounter";
 import { useState } from "react";
@@ -22,7 +21,7 @@ type Props = {
 };
 
 export default function SetPasswordForm(props: Props) {
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const [isRequestingNewCode, setIsRequestingNewCode] = useState(false);
   const methods = useForm({
     resolver: yupResolver(
@@ -55,9 +54,10 @@ export default function SetPasswordForm(props: Props) {
 
       props.setStep({ type: "success" });
     } catch (err) {
-      const message =
-        err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-      handleError(err, message, { log: !(err instanceof AuthError) });
+      if (err instanceof AuthError) {
+        return displayError(err.message);
+      }
+      handleError(err, { context: "resetting password" });
     }
   }
 
@@ -81,9 +81,10 @@ export default function SetPasswordForm(props: Props) {
 
       alert("New code has been sent to your email.");
     } catch (err) {
-      const message =
-        err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-      handleError(err, message, { log: !(err instanceof AuthError) });
+      if (err instanceof AuthError) {
+        return displayError(err.message);
+      }
+      handleError(err, { context: "resending code" });
     } finally {
       setIsRequestingNewCode(false);
     }

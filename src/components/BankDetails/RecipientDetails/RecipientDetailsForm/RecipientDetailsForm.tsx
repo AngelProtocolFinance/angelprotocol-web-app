@@ -2,7 +2,6 @@ import { ErrorMessage } from "@hookform/error-message";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APIs } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty, logger } from "helpers";
@@ -48,7 +47,7 @@ export default function RecipientDetailsForm({
     getFieldState,
   } = useForm({ disabled, shouldUnregister: true });
 
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const [updateRequirements] = useNewRequirementsMutation();
   const [createRecipient] = useCreateRecipientMutation();
 
@@ -95,7 +94,7 @@ export default function RecipientDetailsForm({
 
           //ERROR handling
           const error = res.error as FetchBaseQueryError;
-          if (error.status !== 422) return handleError(res.error);
+          if (error.status !== 422) throw res.error;
 
           //only handle 422
           const content = error.data as ValidationContent;
@@ -106,9 +105,7 @@ export default function RecipientDetailsForm({
             (err) => err.code === "NOT_VALID"
           );
 
-          if (isEmpty(validations)) {
-            return handleError(_errs[0].message || GENERIC_ERROR_MESSAGE);
-          }
+          if (isEmpty(validations)) return displayError(_errs[0].message);
 
           //SET field errors
           for (const v of validations) {
@@ -121,7 +118,7 @@ export default function RecipientDetailsForm({
             //wait a bit for `isSubmitting:false`, as disabled fields can't be focused
           }, 50);
         } catch (err) {
-          handleError(err);
+          handleError(err, { context: "validating" });
         }
       })}
       className="grid gap-5 text-navy-d4"

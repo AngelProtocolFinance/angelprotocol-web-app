@@ -1,6 +1,6 @@
 import { SchemaShape } from "schemas/types";
 import { DonaterConfigFromWidget, WidgetURLSearchParams } from "types/widget";
-import { number, object, string } from "yup";
+import { ValidationError, number, object, string } from "yup";
 
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   splitDisabled: string().required().oneOf(["true", "false"]),
@@ -10,29 +10,21 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
 
 export default function parseConfig(
   searchParams: URLSearchParams
-): { error: unknown } | { config: DonaterConfigFromWidget } {
+): DonaterConfigFromWidget | { error: string } {
   try {
-    const parsedConfig = Object.fromEntries(
-      searchParams.entries()
+    const parsedConfig = schema.validateSync(
+      Object.fromEntries(searchParams.entries())
     ) as WidgetURLSearchParams;
 
-    try {
-      schema.validateSync(parsedConfig);
-    } catch (err: any) {
-      if ("message" in err) {
-        throw `Invalid search parameters: ${err.message}`;
-      }
-      throw err;
-    }
-
     return {
-      config: {
-        isDescriptionTextShown: parsedConfig.isDescriptionTextShown === "true",
-        splitDisabled: parsedConfig.splitDisabled === "true",
-        liquidSplitPct: +parsedConfig.liquidSplitPct,
-      },
+      isDescriptionTextShown: parsedConfig.isDescriptionTextShown === "true",
+      splitDisabled: parsedConfig.splitDisabled === "true",
+      liquidSplitPct: +parsedConfig.liquidSplitPct,
     };
   } catch (error) {
-    return { error };
+    const message = (error as ValidationError).message;
+    return {
+      error: `Widget config is invalid: ${message}.`,
+    };
   }
 }

@@ -17,23 +17,24 @@ function Dashboard() {
   const { handleError } = useErrorContext();
 
   const submit = async ({ init }: CompleteRegistration) => {
-    const result = await submitApplication(init.reference);
-    if ("error" in result) {
-      return handleError(result.error);
+    try {
+      await submitApplication(init.reference).unwrap();
+      if (window.hasOwnProperty("lintrk")) {
+        (window as any).lintrk("track", { conversion_id: 12807754 });
+      }
+      showModal(Prompt, {
+        type: "success",
+        headline: "Submission",
+        title: "Submitted for review",
+        children: (
+          <>
+            Your application has been submitted. We will get back to you soon!
+          </>
+        ),
+      });
+    } catch (err) {
+      handleError(err, { context: "submitting registration" });
     }
-
-    if (window.hasOwnProperty("lintrk")) {
-      (window as any).lintrk("track", { conversion_id: 12807754 });
-    }
-
-    showModal(Prompt, {
-      type: "success",
-      headline: "Submission",
-      title: "Submitted for review",
-      children: (
-        <>Your application has been submitted. We will get back to you soon!</>
-      ),
-    });
   };
 
   const { status } = data;

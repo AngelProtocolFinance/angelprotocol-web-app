@@ -20,13 +20,8 @@ export default function useSubmit() {
   const onSubmit = async ({ reference }: FormValues) => {
     try {
       const { isError, error, data } = await checkPrevRegistration(reference);
-      if (isError || !data) {
-        handleError(
-          error,
-          "No active application found with this registration reference"
-        );
-        return;
-      }
+      if (isError || !data) return handleError(error, "parsed");
+
       storeRegistrationReference(reference);
 
       const { state, nextStep } = getRegistrationState(data);
@@ -34,7 +29,7 @@ export default function useSubmit() {
 
       navigate(`../${regRoutes.steps}/${nextStep}`, { state: init });
     } catch (err) {
-      handleError(err);
+      handleError(err, { context: "resuming registration" });
     }
   };
 

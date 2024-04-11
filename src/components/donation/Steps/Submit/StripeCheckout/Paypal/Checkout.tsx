@@ -1,6 +1,5 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
@@ -28,71 +27,66 @@ export default function Checkout(props: StripeCheckoutStep) {
   const [createOrder, { isLoading: isCreatingOrder }] =
     usePaypalOrderMutation();
 
-  return (
-    <>
-      {isPending && <ContentLoader className="rounded h-10 w-40" />}
-      {!isPending && (
-        <PayPalButtons
-          style={{
-            color: "gold",
-            layout: "horizontal",
-            shape: "rect",
-            label: "paypal",
-            height: 40,
-          }}
-          className="w-40 flex gap-2"
-          disabled={isCapturingOrder || isCreatingOrder}
-          onError={(error) => {
-            handleError(error, GENERIC_ERROR_MESSAGE);
-          }}
-          onApprove={async (data, actions) => {
-            const order = await captureOrder({
-              orderId: data.orderID,
-            }).unwrap();
+  if (isPending) return <ContentLoader className="rounded h-10 w-40" />;
 
-            if ("details" in order) {
-              if (order.details[0]?.issue === "INSTRUMENT_DECLINED") {
-                // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-                // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
-                return actions.restart();
-              } else if ("debug_id" in order) {
-                // (2) Other non-recoverable errors -> Show a failure message
-                throw new Error(
-                  `${order.details[0]?.description} (${order.debug_id})`
-                );
-              }
-            } else if (isEmpty(order.purchase_units ?? [])) {
-              throw new Error(JSON.stringify(order));
-            } else {
-              //accessed by redirect page
-              const state: DonateFiatThanksState = {
-                guestDonor: order.guestDonor,
-                recipientName: recipient.name,
-              };
-              if (details.source === "bg-widget") {
-                navigate(
-                  `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`,
-                  { state }
-                );
-              } else {
-                navigate(appRoutes.donate_fiat_thanks, { state });
-              }
-            }
-          }}
-          createOrder={async () =>
-            await createOrder({
-              amount: +details.amount,
-              tipAmount: tip,
-              usdRate: details.currency.rate,
-              currency: details.currency.code,
-              endowmentId: recipient.id,
-              splitLiq: liquidSplitPct,
-              donor,
-              source: details.source,
-            }).unwrap()
-          }
-        />
-      )}
-    </>
+  return (
+    <PayPalButtons
+      style={{
+        color: "gold",
+        layout: "horizontal",
+        shape: "rect",
+        label: "paypal",
+        height: 40,
+      }}
+      className="w-40 flex gap-2"
+      disabled={isCapturingOrder || isCreatingOrder}
+      onError={(error) => handleError(error, { context: "processing payment" })}
+      onApprove={async (data, actions) => {
+        const order = await captureOrder({
+          orderId: data.orderID,
+        }).unwrap();
+
+        if ("debug_id" in order) throw order;
+
+        if (
+          "details" in order &&
+          order.details[0]?.issue === "INSTRUMENT_DECLINED"
+        ) {
+          // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
+          // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
+          return actions.restart();
+        }
+
+        if ("purchase_units" in order && isEmpty(order.purchase_units ?? [])) {
+          throw order;
+        }
+
+        /// No problem with order
+
+        const state: DonateFiatThanksState = {
+          guestDonor: order.guestDonor,
+          recipientName: recipient.name,
+        };
+
+        const route =
+          details.source === "bg-widget"
+            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
+            : appRoutes.donate_fiat_thanks;
+
+        navigate(route, { state });
+      }}
+      createOrder={async () =>
+        await createOrder({
+          amount: +details.amount,
+          tipAmount: tip,
+          usdRate: details.currency.rate,
+          currency: details.currency.code,
+          endowmentId: recipient.id,
+          splitLiq: liquidSplitPct,
+          donor,
+          source: details.source,
+        }).unwrap()
+      }
+    />
   );
 }

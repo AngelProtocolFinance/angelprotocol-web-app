@@ -28,7 +28,7 @@ export default function useSubmit(data: Step3Data, form: UseFormReturn<FV>) {
     });
 
     if ("error" in result) {
-      return handleError(result.error);
+      return handleError(result.error, { context: "updating registration" });
     }
 
     navigate(`../${steps.docs}`, { state: data.init });

@@ -2,7 +2,6 @@ import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
 import Icon from "components/Icon";
 import Prompt from "components/Prompt";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { adminRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
@@ -48,7 +47,7 @@ export default function Banking() {
 
       navigate(`../${adminRoutes.banking}`);
     } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
+      handleError(error, { context: "submitting banking application" });
     }
   };
 

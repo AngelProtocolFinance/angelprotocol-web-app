@@ -48,7 +48,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
     });
 
     if ("error" in result) {
-      handleError(result.error);
+      return handleError(result.error, { context: "applying your review" });
     }
 
     showModal(GenericPrompt, {

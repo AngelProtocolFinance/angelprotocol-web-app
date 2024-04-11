@@ -1,6 +1,6 @@
 import ExtLink from "components/ExtLink";
 import { useModalContext } from "contexts/ModalContext";
-import { getTxUrl } from "helpers";
+import { getTxUrl, logger } from "helpers";
 import { useNavigate } from "react-router-dom";
 import { TxState, isTxError, isTxLoading, isTxSuccess } from "types/tx";
 import Prompt from "./Prompt";
@@ -44,6 +44,7 @@ function toPrompt(props: TxState): PromptProps & { message: string } {
       message: props.loading,
     };
   } else if (isTxError(props)) {
+    logger.error(props);
     return { type: "error", headline: "Transaction", message: props.error };
   } else {
     return {

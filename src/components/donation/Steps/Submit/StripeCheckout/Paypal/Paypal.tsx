@@ -1,13 +1,16 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import { PAYPAL_CLIENT_ID } from "constants/env";
+import ErrorTrigger from "errors/ErrorTrigger";
 import { StripeCheckoutStep } from "slices/donation";
 import Checkout from "./Checkout";
 
 // https://paypal.github.io/react-paypal-js/?path=/docs/example-paypalbuttons--default
 export default function Paypal(props: StripeCheckoutStep) {
-  return PAYPAL_CLIENT_ID === "" ? (
-    <div id="paypal-failure-fallback" className="hidden" />
-  ) : (
+  if (!PAYPAL_CLIENT_ID || PAYPAL_CLIENT_ID === " ") {
+    return <ErrorTrigger error="PAYPAL_CLIENT_ID not set" />;
+  }
+
+  return (
     <PayPalScriptProvider
       options={{
         clientId: PAYPAL_CLIENT_ID,

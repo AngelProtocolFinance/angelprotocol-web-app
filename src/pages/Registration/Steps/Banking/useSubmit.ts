@@ -1,5 +1,4 @@
 import type { OnSubmit } from "components/BankDetails";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getFilePreviews } from "helpers";
 import { useNavigate } from "react-router-dom";
@@ -19,20 +18,16 @@ export default function useSubmit() {
         bankStatementFile: { previews: [], files: [file] },
       });
 
-      const result = await updateReg({
+      await updateReg({
         reference: data.init.reference,
         type: "banking",
         BankStatementFile: bankStatementPreview.bankStatementFile[0],
         wise_recipient_id: recipient.id,
-      });
-
-      if ("error" in result) {
-        return handleError(result.error);
-      }
+      }).unwrap();
 
       return navigate(`../${steps.summary}`, { state: data.init });
     } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
+      handleError(error, { context: "submitting banking details" });
     }
   };
 

@@ -63,7 +63,7 @@ export default function useSubmit({ doc }: Props) {
       setRedirecting(true);
       window.location.href = url;
     } catch (err) {
-      handleError(err);
+      handleError(err, { context: "submitting documentation" });
     }
   };
   return {
