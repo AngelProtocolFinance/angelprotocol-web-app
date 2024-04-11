@@ -82,7 +82,7 @@ export default function SignupForm(props: Props) {
           if (err instanceof AuthError) {
             return displayError(err.message);
           }
-          handleError(err);
+          handleError(err, { context: "saving information" });
         }
       })}
     >

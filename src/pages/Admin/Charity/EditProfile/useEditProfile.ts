@@ -71,7 +71,7 @@ export default function useEditProfile() {
 
       await updateEndow({ ...cleanUpdate, id });
     } catch (err) {
-      handleError(err);
+      handleError(err, { context: "applying profile changes" });
     }
   };
 

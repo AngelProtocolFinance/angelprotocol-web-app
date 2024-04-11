@@ -46,7 +46,7 @@ export default function Form({ classes = "" }) {
       });
       reset();
     } catch (err) {
-      handleError(err, "Failed to claim gift card");
+      handleError(err, { context: "claiming giftcard" });
     }
   }
 

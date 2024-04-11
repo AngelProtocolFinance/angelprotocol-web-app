@@ -40,7 +40,7 @@ export default function DeletePrompt({
       });
       navigate(appRoutes.admin + `/${endowID}/${adminRoutes.banking}`);
     } catch (err) {
-      handleError(err);
+      handleError(err, { context: "deleting banking record" });
     }
   };
 

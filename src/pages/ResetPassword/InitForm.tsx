@@ -53,7 +53,7 @@ export default function InitForm(props: Props) {
       if (err instanceof AuthError) {
         return displayError(err.message);
       }
-      handleError(err);
+      handleError(err, { context: "resetting password" });
     }
   }
 

@@ -89,7 +89,7 @@ export default function SignupForm(props: Props) {
         return displayError(err.message);
       }
 
-      handleError(err);
+      handleError(err, { context: "signing up" });
     }
   }
 

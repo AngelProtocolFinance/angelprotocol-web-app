@@ -50,7 +50,7 @@ export default function ConfirmForm(props: Props) {
           if (err instanceof AuthError) {
             return displayError(err.message);
           }
-          handleError(err);
+          handleError(err, { context: "confirming signup" });
         }
       })}
     >
@@ -85,7 +85,7 @@ export default function ConfirmForm(props: Props) {
             if (err instanceof AuthError) {
               return displayError(err.message);
             }
-            handleError(err);
+            handleError(err, { context: "sending code" });
           } finally {
             setIsRequestingNewCode(false);
           }

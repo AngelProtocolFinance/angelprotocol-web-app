@@ -18,20 +18,16 @@ export default function useSubmit() {
         bankStatementFile: { previews: [], files: [file] },
       });
 
-      const result = await updateReg({
+      await updateReg({
         reference: data.init.reference,
         type: "banking",
         BankStatementFile: bankStatementPreview.bankStatementFile[0],
         wise_recipient_id: recipient.id,
-      });
-
-      if ("error" in result) {
-        return handleError(result.error);
-      }
+      }).unwrap();
 
       return navigate(`../${steps.summary}`, { state: data.init });
     } catch (error) {
-      handleError(error);
+      handleError(error, { context: "submitting banking details" });
     }
   };
 

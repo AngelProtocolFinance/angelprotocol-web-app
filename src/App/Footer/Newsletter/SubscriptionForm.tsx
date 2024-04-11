@@ -34,7 +34,8 @@ export default function SubscriptionForm() {
       await subscribe(data.email).unwrap();
       reset();
     } catch (error) {
-      handleError(error);
+      //user might already be subscribed and server returns a helpful message
+      handleError(error, "parsed");
     }
   }
 

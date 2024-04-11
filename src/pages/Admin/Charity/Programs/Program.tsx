@@ -17,7 +17,7 @@ export function Program(props: TProgram) {
     try {
       await deleteProgram(msg);
     } catch (err) {
-      handleError(err);
+      handleError(err, { context: "deleting program" });
     }
   };
 

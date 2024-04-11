@@ -25,7 +25,7 @@ export function useUpdateEndowment() {
 
       return showModal(TxPrompt, {
         success: {
-          message: "Profile successfully updated",
+          message: "Successfully updated",
           link: {
             description: "View changes",
             url: `${appRoutes.marketplace}/${cleanUpdates.id}`,
@@ -33,7 +33,7 @@ export function useUpdateEndowment() {
         },
       });
     } catch (err) {
-      handleError(err, "Failed to update Profile");
+      handleError(err, { context: "applying changes" });
     }
   };
 

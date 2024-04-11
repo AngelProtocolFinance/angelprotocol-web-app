@@ -47,7 +47,9 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
         : { verdict: "rejected", rejectionReason: fv.reason ?? "" }),
     });
 
-    if ("error" in result) return handleError(result.error);
+    if ("error" in result) {
+      return handleError(result.error, { context: "applying your review" });
+    }
 
     showModal(GenericPrompt, {
       headline: "Success",

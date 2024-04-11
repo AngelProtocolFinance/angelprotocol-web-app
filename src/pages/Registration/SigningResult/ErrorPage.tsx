@@ -25,7 +25,7 @@ export default function ErrorPage(props: ErrorQueryParams) {
       window.location.href = url;
     } catch (err) {
       setSubmitText(initialText);
-      handleError(err);
+      handleError(err, { context: "generating signing url" });
     }
   }
 

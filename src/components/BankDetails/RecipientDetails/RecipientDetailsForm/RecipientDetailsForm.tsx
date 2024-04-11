@@ -94,7 +94,7 @@ export default function RecipientDetailsForm({
 
           //ERROR handling
           const error = res.error as FetchBaseQueryError;
-          if (error.status !== 422) return handleError(res.error);
+          if (error.status !== 422) throw res.error;
 
           //only handle 422
           const content = error.data as ValidationContent;
@@ -118,7 +118,7 @@ export default function RecipientDetailsForm({
             //wait a bit for `isSubmitting:false`, as disabled fields can't be focused
           }, 50);
         } catch (err) {
-          handleError(err);
+          handleError(err, { context: "validating" });
         }
       })}
       className="grid gap-5 text-navy-d4"

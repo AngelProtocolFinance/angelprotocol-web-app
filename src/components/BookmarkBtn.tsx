@@ -38,7 +38,7 @@ export default function BookmarkBtn({ endowId, children }: Props) {
         wallet: "", //FUTURE: wallet may not be needed to edit bookmarks
       }).unwrap();
     } catch (err) {
-      handleError(err, "Failed to save bookmark");
+      handleError(err, { context: "changing bookmark" });
     }
   }
 

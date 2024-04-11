@@ -67,7 +67,7 @@ export default function useSubmit() {
       await updateEndow(updates);
       navigate(`${appRoutes.admin}/${id}/${adminRoutes.programs}`);
     } catch (err) {
-      handleError(err);
+      handleError(err, { context: "applying program changes" });
     }
   };
 

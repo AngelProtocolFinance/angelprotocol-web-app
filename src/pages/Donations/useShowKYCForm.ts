@@ -42,10 +42,7 @@ export default function useShowKYCForm() {
           "Your tax receipt has been sent to the email address provided",
       });
     } catch (err) {
-      handleError(
-        err,
-        "Failed to send receipt request. Please try again later."
-      );
+      handleError(err, { context: "requesting receipt" });
     }
   };
 

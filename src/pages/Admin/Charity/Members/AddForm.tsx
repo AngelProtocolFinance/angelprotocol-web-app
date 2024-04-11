@@ -69,10 +69,11 @@ export default function AddForm({ added, endowID }: Props) {
         ),
       });
     } catch (err) {
-      handleError(
-        err,
-        <p className="py-6 text-red">Failed to add {fv.email} to members</p>
-      );
+      handleError(err, {
+        custom: (
+          <p className="py-6 text-red">Failed to add {fv.email} to members</p>
+        ),
+      });
     }
   };
 

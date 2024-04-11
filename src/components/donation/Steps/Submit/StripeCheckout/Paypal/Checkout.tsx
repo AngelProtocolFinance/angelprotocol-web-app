@@ -75,7 +75,7 @@ export default function Checkout({ orderId, source }: Props) {
               : appRoutes.donate_fiat_thanks;
           navigate(route, { state: order.guestDonor });
         } catch (err) {
-          handleError(err);
+          handleError(err, { context: "processing payment" });
         }
       }}
       createOrder={async () => {

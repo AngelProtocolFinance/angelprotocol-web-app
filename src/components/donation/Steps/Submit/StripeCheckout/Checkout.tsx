@@ -60,9 +60,9 @@ export default function Checkout({ source }: Props) {
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
     if (error.type === "card_error" || error.type === "validation_error") {
-      handleError(error.message);
+      handleError(error.message, "parsed");
     } else {
-      handleError(error);
+      handleError(error, { context: "processing payment" });
     }
 
     setStatus("ready");

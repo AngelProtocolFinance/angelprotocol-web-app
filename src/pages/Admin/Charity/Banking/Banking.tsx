@@ -47,7 +47,7 @@ export default function Banking() {
 
       navigate(`../${adminRoutes.banking}`);
     } catch (error) {
-      handleError(error);
+      handleError(error, { context: "submitting banking application" });
     }
   };
 

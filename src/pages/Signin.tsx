@@ -66,7 +66,7 @@ export default function Signin() {
       if (err instanceof AuthError) {
         return displayError(err.message);
       }
-      handleError(err);
+      handleError(err, { context: "signing in" });
     }
   }
 

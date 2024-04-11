@@ -1,5 +1,5 @@
 import Prompt from "components/Prompt";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
+import { EMAIL_SUPPORT } from "constants/env";
 import { logger } from "helpers";
 import { ReactNode } from "react";
 import { useModalContext } from "../ModalContext";
@@ -31,18 +31,39 @@ export function useErrorContext() {
     }
   }
 
+  type Generic = {
+    /**
+     * context in present participle
+     * @example sending message
+     * @example loading resouce
+     */
+    context?: string;
+  };
+  type DisplayType = "parsed" | Generic | { custom: ReactNode };
+
   /**
    * @description for unexpected errors
    * @param error - unknown error occured
-   * @param displayMessage - overrides parsed or generic error message
+   * @param display - error info shown to user
    */
-  function handleError(error: unknown, displayMessage?: ReactNode) {
+  function handleError(error: unknown, display?: DisplayType) {
+    const disp = display || {};
     showModal(Prompt, {
       type: "error",
-      children: displayMessage || parseError(error) || GENERIC_ERROR_MESSAGE,
+      children:
+        disp === "parsed"
+          ? parseError(error)
+          : "custom" in disp
+            ? disp.custom
+            : genericMsg(disp.context),
     });
     logger.error(error);
   }
 
   return { handleError, displayError };
 }
+
+const genericMsg = (context?: string) =>
+  `An unexpected error occurred${
+    context ? `while ${context}` : " "
+  }and has been reported. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;

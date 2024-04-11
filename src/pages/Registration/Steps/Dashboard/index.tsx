@@ -33,7 +33,7 @@ function Dashboard() {
         ),
       });
     } catch (err) {
-      handleError(err);
+      handleError(err, { context: "submitting registration" });
     }
   };
 

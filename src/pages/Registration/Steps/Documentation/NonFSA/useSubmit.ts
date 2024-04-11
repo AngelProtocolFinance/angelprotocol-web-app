@@ -53,7 +53,7 @@ export default function useSubmit({ form, props }: Args) {
     });
 
     if ("error" in result) {
-      return handleError(result.error);
+      return handleError(result.error, { context: "submitting documentation" });
     }
     return navigate(`../${steps.banking}`, { state: data.init });
   };

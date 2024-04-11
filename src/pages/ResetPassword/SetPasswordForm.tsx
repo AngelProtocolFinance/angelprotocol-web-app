@@ -57,7 +57,7 @@ export default function SetPasswordForm(props: Props) {
       if (err instanceof AuthError) {
         return displayError(err.message);
       }
-      handleError(err);
+      handleError(err, { context: "resetting password" });
     }
   }
 
@@ -84,7 +84,7 @@ export default function SetPasswordForm(props: Props) {
       if (err instanceof AuthError) {
         return displayError(err.message);
       }
-      handleError(err);
+      handleError(err, { context: "resending code" });
     } finally {
       setIsRequestingNewCode(false);
     }

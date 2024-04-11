@@ -21,10 +21,11 @@ export default function useSubmit() {
     try {
       const { isError, error, data } = await checkPrevRegistration(reference);
       if (isError || !data) {
-        return handleError(
-          error,
-          "No active application found with this registration reference"
-        );
+        return handleError(error, {
+          //TODO: change to parsed, and make sure registration-get returns useful error message
+          custom:
+            "No active application found with this registration reference",
+        });
       }
       storeRegistrationReference(reference);
 
@@ -33,7 +34,7 @@ export default function useSubmit() {
 
       navigate(`../${regRoutes.steps}/${nextStep}`, { state: init });
     } catch (err) {
-      handleError(err);
+      handleError(err, { context: "resuming registration" });
     }
   };
 

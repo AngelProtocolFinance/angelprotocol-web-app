@@ -35,7 +35,7 @@ export default function Form({ classes = "" }) {
 
       setRecipient(recipient.email);
     } catch (error) {
-      handleError(error, "Failed to send gift card");
+      handleError(error, { context: "sending giftcard" });
     }
   }
 
