@@ -5,7 +5,6 @@ import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { DonateFiatThanksState } from "pages/DonateFiatThanks";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   useCapturePayPalOrderMutation,
@@ -19,14 +18,15 @@ export default function Checkout(props: StripeCheckoutStep) {
   const { details, recipient, liquidSplitPct, tip = 0, donor } = props;
 
   const navigate = useNavigate();
-
-  const [isSubmitting, setSubmitting] = useState(false);
-
-  const [{ isPending }] = usePayPalScriptReducer();
-  const [captureOrder] = useCapturePayPalOrderMutation();
   const { handleError } = useErrorContext();
 
-  const [createOrder, { isLoading }] = usePaypalOrderMutation();
+  const [{ isPending }] = usePayPalScriptReducer();
+
+  const [captureOrder, { isLoading: isCapturingOrder }] =
+    useCapturePayPalOrderMutation();
+
+  const [createOrder, { isLoading: isCreatingOrder }] =
+    usePaypalOrderMutation();
 
   return (
     <>
@@ -41,10 +41,8 @@ export default function Checkout(props: StripeCheckoutStep) {
             height: 40,
           }}
           className="w-40 flex gap-2"
-          disabled={isSubmitting || isLoading}
-          onCancel={() => setSubmitting(false)}
+          disabled={isCapturingOrder || isCreatingOrder}
           onError={(error) => {
-            setSubmitting(false);
             handleError(error, GENERIC_ERROR_MESSAGE);
           }}
           onApprove={async (data, actions) => {
@@ -82,7 +80,6 @@ export default function Checkout(props: StripeCheckoutStep) {
             }
           }}
           createOrder={async () => {
-            setSubmitting(true);
             const orderId = await createOrder({
               amount: +details.amount,
               tipAmount: tip,
