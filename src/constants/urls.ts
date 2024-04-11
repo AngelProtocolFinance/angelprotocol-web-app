@@ -4,7 +4,7 @@ export const APIs = {
   aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com",
   apes: `https://fctqkloitc.execute-api.us-east-1.amazonaws.com/${ENVIRONMENT}`,
   wordpress: `https://${
-    IS_TEST ? "angelgiving-dev.10web.site" : "34.29.12.245"
+    IS_TEST ? "angelgiving-dev.10web.site" : "better.giving"
   }/wp-json/wp/v2`,
 };
 
