@@ -20,13 +20,8 @@ export default function useSubmit() {
   const onSubmit = async ({ reference }: FormValues) => {
     try {
       const { isError, error, data } = await checkPrevRegistration(reference);
-      if (isError || !data) {
-        return handleError(error, {
-          //TODO: change to parsed, and make sure registration-get returns useful error message
-          custom:
-            "No active application found with this registration reference",
-        });
-      }
+      if (isError || !data) return handleError(error, "parsed");
+
       storeRegistrationReference(reference);
 
       const { state, nextStep } = getRegistrationState(data);
