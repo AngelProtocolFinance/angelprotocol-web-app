@@ -53,9 +53,9 @@ export default function useEditProfile() {
 
       if (isEmpty(diffs)) return displayError("No changes detected");
 
-      if (update.slug !== initial.slug) {
+      //dont check hit if unsetting
+      if (update.slug && update.slug !== initial.slug) {
         const result = await endowment({ slug: update.slug });
-
         //endow is found with update.slug
         if (result.isSuccess) {
           return displayError(`Slug "${update.slug}" is already taken`);
