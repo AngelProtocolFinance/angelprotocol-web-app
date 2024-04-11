@@ -31,7 +31,7 @@ const endowDesignations: EndowDesignation[] = [
   "Other",
 ];
 
-export default function Form() {
+export default function Form({ initSlug = "" }) {
   const { isSubmitting, id, editProfile, reset } = useEditProfile();
   return (
     <form
@@ -129,7 +129,7 @@ export default function Form() {
 
         <HideBGTipCheckbox />
 
-        <Slug />
+        <Slug initSlug={initSlug} />
       </Group>
 
       <Group title="Organization">

@@ -44,10 +44,9 @@ export default function EditProfile() {
 }
 
 function FormWithContext(props: TProfile & { id: number }) {
-  //
   const init: EndowmentProfileUpdate = toProfileUpdate({
     type: "initial",
-    data: { ...props },
+    data: props,
   });
 
   const defaults: FV = {
@@ -85,7 +84,7 @@ function FormWithContext(props: TProfile & { id: number }) {
 
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form initSlug={props.slug} />
     </FormProvider>
   );
 }
