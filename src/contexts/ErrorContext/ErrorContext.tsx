@@ -22,13 +22,9 @@ export function useErrorContext() {
   /**
    * @description for expected errors
    * @param message - user can do something about
-   * @param error - if provided, would be logged to sentry for further investigation
    */
-  function displayError(message: ReactNode, error?: unknown) {
+  function displayError(message: ReactNode) {
     showModal(Prompt, { type: "error", children: message });
-    if (error) {
-      logger.error(error);
-    }
   }
 
   type Generic = {
