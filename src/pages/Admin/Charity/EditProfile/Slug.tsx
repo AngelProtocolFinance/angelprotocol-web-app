@@ -1,12 +1,17 @@
 import { Field } from "components/form";
-import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { FV } from "./types";
 
+const genLink = (slug: string) =>
+  `${window.origin}${appRoutes.marketplace}/${slug}`;
+
 export default function Slug({ initSlug = "" }) {
-  const link =
-    initSlug && `${window.origin}${appRoutes.marketplace}/${initSlug}`;
+  const { watch } = useFormContext<FV>();
+  const link = initSlug && genLink(initSlug);
+
+  const newSlug = watch("slug");
 
   return (
     <div>
@@ -31,9 +36,9 @@ export default function Slug({ initSlug = "" }) {
         will continue to work. There is no risk of breaking existing links that
         have been shared.
       </p>
-      <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
-        Example: Setting this field as "myNonprofit" would create a new vanity
-        profile URL of {BASE_URL}/marketplace/myNonProfit
+
+      <p className="text-xs sm:text-sm text-navy-l1 italic mt-2">
+        Example: {genLink(newSlug || "myNonprofit")}
       </p>
     </div>
   );
