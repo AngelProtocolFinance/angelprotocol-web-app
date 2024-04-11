@@ -62,7 +62,7 @@ export const apes = createApi({
           rate: c.rate,
         })),
     }),
-    paypalOrder: builder.query<string, CreatePayPalOrderParams>({
+    paypalOrder: builder.mutation<string, CreatePayPalOrderParams>({
       query: (params) => ({
         url: `v1/fiat/paypal/${apiEnv}/orders`,
         method: "POST",
@@ -103,7 +103,7 @@ export const {
   useCapturePayPalOrderMutation,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
-  usePaypalOrderQuery,
+  usePaypalOrderMutation,
   useEndowBalanceQuery,
   useGetStripePaymentStatusQuery,
   useTokensQuery,
