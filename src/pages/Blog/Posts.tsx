@@ -75,7 +75,7 @@ const Cards = (props: { posts: Wordpress.Post[] }) =>
       <Media
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
         id={post.featured_media}
-        classes="w-full"
+        classes="w-full md:h-44 md:object-fill"
       />
       <div className="flex flex-col p-4 gap-3">
         <h2
