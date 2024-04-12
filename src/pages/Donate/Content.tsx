@@ -68,12 +68,11 @@ function Content(props: Props) {
         <p className="max-md:border-t max-md:border-gray-l3 max-md:px-4 max-md:pt-4 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
           By making a donation to {APP_NAME}, you agree to our{" "}
           <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
-          <A href={PRIVACY_POLICY}>Privacy Policy</A>, and{" "}
-          <span className="font-medium">Nonprofit Support Fee</span>. 100% of
-          your donation is tax-deductible to the extent allowed by US law. Your
-          donation is made to {APP_NAME}, a tax-exempt US 501(c)(3) charity that
-          grants unrestricted funds to {props.name} on your behalf. As a legal
-          matter, {APP_NAME} must provide any donations to {props.name} on an
+          <A href={PRIVACY_POLICY}>Privacy Policy</A>. 100% of your donation is
+          tax-deductible to the extent allowed by US law. Your donation is made
+          to {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants
+          unrestricted funds to {props.name} on your behalf. As a legal matter,{" "}
+          {APP_NAME} must provide any donations to {props.name} on an
           unrestricted basis, regardless of any designations or restrictions
           made by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
         </p>
