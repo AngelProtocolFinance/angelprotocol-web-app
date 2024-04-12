@@ -45,7 +45,7 @@ export const apes = createApi({
   endpoints: (builder) => ({
     capturePayPalOrder: builder.mutation<PayPalOrder, { orderId: string }>({
       query: (params) => ({
-        url: `v1/fiat/paypal/${apiEnv}/orders/${params.orderId}/capture`,
+        url: `fiat-donation/paypal/orders/${params.orderId}/capture`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
       }),
@@ -63,7 +63,7 @@ export const apes = createApi({
     }),
     paypalOrder: builder.mutation<string, CreatePayPalOrderParams>({
       query: (params) => ({
-        url: `v1/fiat/paypal/${apiEnv}/orders`,
+        url: "fiat-donation/paypal/orders",
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
