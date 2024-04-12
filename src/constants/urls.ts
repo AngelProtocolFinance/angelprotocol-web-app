@@ -3,9 +3,9 @@ import { BASE_URL, ENVIRONMENT, IS_TEST } from "./env";
 export const APIs = {
   aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com",
   apes: `https://fctqkloitc.execute-api.us-east-1.amazonaws.com/${ENVIRONMENT}`,
-  wordpress: `https://${
-    IS_TEST ? "angelgiving-dev.10web.site" : "better.giving"
-  }/wp-json/wp/v2`,
+  wordpress: `https://angelgiving${
+    IS_TEST ? "-dev" : ""
+  }.10web.site/wp-json/wp/v2`,
 };
 
 export const LITEPAPER = `${BASE_URL}/docs/litepaper-introduction/`;
