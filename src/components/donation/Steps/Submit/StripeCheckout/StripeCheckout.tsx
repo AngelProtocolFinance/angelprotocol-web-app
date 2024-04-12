@@ -28,7 +28,6 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     type: details.frequency === "once" ? "one-time" : "subscription",
     amount: +details.amount,
     tipAmount: tip,
-    usdRate: details.currency.rate,
     currency: details.currency.code,
     endowmentId: recipient.id,
     splitLiq: liquidSplitPct,
