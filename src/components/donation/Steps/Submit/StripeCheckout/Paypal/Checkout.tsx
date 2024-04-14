@@ -79,7 +79,6 @@ export default function Checkout(props: StripeCheckoutStep) {
         await createOrder({
           amount: +details.amount,
           tipAmount: tip,
-          usdRate: details.currency.rate,
           currency: details.currency.code,
           endowmentId: recipient.id,
           splitLiq: liquidSplitPct,
