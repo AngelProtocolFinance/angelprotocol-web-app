@@ -20,15 +20,15 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   const dispatch = useSetter();
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
-  const { details } = donation;
+  const { details, tip } = donation;
   const sender = wallet?.address;
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
     setEstimate("loading");
-    estimateDonation(details.token, details.chainId.value, sender).then(
+    estimateDonation(details.token, details.chainId.value, sender, tip).then(
       (estimate) => setEstimate(estimate)
     );
-  }, [sender, details]);
+  }, [sender, details, tip]);
 
   return (
     <div className={classes + " grid w-full gap-y-2"}>
