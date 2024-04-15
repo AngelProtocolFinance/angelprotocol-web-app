@@ -50,16 +50,24 @@ export const apes = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    fiatCurrencies: builder.query<DetailedCurrency[], void>({
-      query: () => ({
-        url: `v1/fiat/currencies`,
-      }),
-      transformResponse: (res: FiatCurrencyData) =>
-        res.currencies.map((c) => ({
-          code: c.currency_code,
-          min: c.minimum_amount,
-          rate: c.rate,
-        })),
+    fiatCurrencies: builder.query<
+      { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
+      void
+    >({
+      query: () => "fiat-currencies",
+      transformResponse: (res: FiatCurrencyData) => {
+        const toDetailed = (
+          input: FiatCurrencyData["currencies"][number]
+        ): DetailedCurrency => ({
+          code: input.currency_code,
+          rate: input.rate,
+          min: input.minimum_amount,
+        });
+        return {
+          currencies: res.currencies.map((c) => toDetailed(c)),
+          defaultCurr: res.default && toDetailed(res.default),
+        };
+      },
     }),
     paypalOrder: builder.mutation<string, CreatePayPalOrderParams>({
       query: (params) => ({
