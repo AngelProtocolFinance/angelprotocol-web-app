@@ -38,15 +38,15 @@ export type DonationRecord = {
   initAmountUsd?: number;
   finalAmountUsd?: number;
   splitLiqPct: number;
-
-  //medium
-  viaId: ChainID | "staging" | "fiat";
-  viaName: string;
 } & (
-  | { viaId: ChainID | "staging" }
+  | {
+      //medium
+      viaId: ChainID | "staging";
+      viaName: string;
+    }
   | {
       viaId: "fiat";
-      fiatRamp: "STRIPE" | "PAYPAL";
+      viaName: "STRIPE" | "PAYPAL";
     }
 );
 
