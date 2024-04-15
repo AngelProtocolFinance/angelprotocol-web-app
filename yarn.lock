@@ -3228,16 +3228,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stripe/react-stripe-js@npm:2.4.0":
-  version: 2.4.0
-  resolution: "@stripe/react-stripe-js@npm:2.4.0"
+"@stripe/react-stripe-js@npm:2.7.0":
+  version: 2.7.0
+  resolution: "@stripe/react-stripe-js@npm:2.7.0"
   dependencies:
     prop-types: "npm:^15.7.2"
   peerDependencies:
-    "@stripe/stripe-js": ^1.44.1 || ^2.0.0
+    "@stripe/stripe-js": ^1.44.1 || ^2.0.0 || ^3.0.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/2da819875942bc987488562b223ab1a91d3ecf094c750f7770bdfef6bcdf644f6efeb931013d7408a112da944310058290d32c3544d29d2f3c2c38edb2256294
+  checksum: 10/f0441cc7e6f169675d09009cb6b6f9fdb16d5238b558f17e62cf2365e347c11511b8df6c96865ed384dd11cbc6c12f00857ad6f0d89f9cd9dc37c1ecf26c7d6a
   languageName: node
   linkType: hard
 
@@ -4156,7 +4156,7 @@ __metadata:
     "@rsbuild/plugin-node-polyfill": "npm:0.4.10"
     "@rsbuild/plugin-react": "npm:0.4.10"
     "@sentry/react": "npm:7.89.0"
-    "@stripe/react-stripe-js": "npm:2.4.0"
+    "@stripe/react-stripe-js": "npm:2.7.0"
     "@stripe/stripe-js": "npm:2.4.0"
     "@tailwindcss/container-queries": "npm:0.1.1"
     "@terra-money/terra.js": "npm:3.1.10"
