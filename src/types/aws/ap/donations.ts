@@ -42,7 +42,13 @@ export type DonationRecord = {
   //medium
   viaId: ChainID | "staging" | "fiat";
   viaName: string;
-};
+} & (
+  | { viaId: ChainID | "staging" }
+  | {
+      viaId: "fiat";
+      fiatRamp: "STRIPE" | "PAYPAL";
+    }
+);
 
 export type DonationsQueryParams = {
   page?: number;
