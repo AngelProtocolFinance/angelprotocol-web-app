@@ -2,8 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import QueryLoader from "components/QueryLoader";
 import { Field, Form as FormContainer } from "components/form";
-import ErrorBoundary from "errors/ErrorBoundary";
-import ErrorTrigger from "errors/ErrorTrigger";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
@@ -20,17 +18,15 @@ const USD_CODE = "usd";
 export default function Loader(props: Props) {
   const query = useFiatCurrenciesQuery();
   return (
-    <ErrorBoundary>
-      <QueryLoader
-        queryState={query}
-        messages={{
-          loading: "loading donate form",
-          error: <ErrorTrigger error={query.error} />,
-        }}
-      >
-        {(data) => <Form {...props} {...data} />}
-      </QueryLoader>
-    </ErrorBoundary>
+    <QueryLoader
+      queryState={query}
+      messages={{
+        loading: "loading donate form",
+        error: "failed to load donate form",
+      }}
+    >
+      {(data) => <Form {...props} {...data} />}
+    </QueryLoader>
   );
 }
 
