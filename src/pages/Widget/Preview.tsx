@@ -9,7 +9,7 @@ export default function Preview({ classes = "" }) {
   return (
     <section className={`${classes} @container/preview pb-4`}>
       <h2 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3">
-        That's what our widget looks like:
+        That's what our Donation Form looks like:
       </h2>
       <div className="grid h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-navy-d4 bg-white">
         <div className="grow flex flex-col justify-between items-center pt-6 @xl/preview:pt-10">
