@@ -1,28 +1,51 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
+import QueryLoader from "components/QueryLoader";
 import { Field, Form as FormContainer } from "components/form";
+import ErrorBoundary from "errors/ErrorBoundary";
+import ErrorTrigger from "errors/ErrorTrigger";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { useFiatCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
-import { Currency } from "types/components";
+import { Currency, DetailedCurrency } from "types/components";
 import ContinueBtn from "../../common/ContinueBtn";
 import Frequency from "./Frequency";
 import { FormValues as FV, Props } from "./types";
 
 const USD_CODE = "usd";
 
-export default function Form({ widgetConfig, details }: Props) {
-  const dispatch = useSetter();
+export default function Loader(props: Props) {
+  const query = useFiatCurrenciesQuery();
+  return (
+    <ErrorBoundary>
+      <QueryLoader
+        queryState={query}
+        messages={{
+          loading: "loading donate form",
+          error: <ErrorTrigger error={query.error} />,
+        }}
+      >
+        {(data) => <Form {...props} {...data} />}
+      </QueryLoader>
+    </ErrorBoundary>
+  );
+}
 
-  const currencies = useFiatCurrenciesQuery();
+function Form({
+  widgetConfig,
+  details,
+  currencies,
+  defaultCurr,
+}: Props & { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency }) {
+  const dispatch = useSetter();
 
   const initial: FV = {
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
-    currency: { code: USD_CODE, min: 1, rate: 1 },
+    currency: defaultCurr || { code: USD_CODE, min: 1, rate: 1 },
     frequency: "",
   };
 
