@@ -54,7 +54,7 @@ export const apes = createApi({
       { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
       void
     >({
-      query: () => "fiat-currencies",
+      query: () => ({ url: "fiat-currencies", credentials: "include" }),
       transformResponse: (res: FiatCurrencyData) => {
         const toDetailed = (
           input: FiatCurrencyData["currencies"][number]
