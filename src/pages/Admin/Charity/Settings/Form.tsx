@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Form as _Form } from "components/form";
+import { CheckField, Form as _Form } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import { string } from "yup";
@@ -11,6 +11,7 @@ import { FV } from "./types";
 type Props = {
   id: number;
   receiptMsg?: string;
+  isSfCompounded?: boolean;
 };
 
 export default function Form(props: Props) {
@@ -22,7 +23,10 @@ export default function Form(props: Props) {
         receiptMsg: string().max(MAX_RECEIPT_MSG_CHAR, "exceeds max"),
       })
     ),
-    defaultValues: { receiptMsg: props.receiptMsg ?? "" },
+    defaultValues: {
+      receiptMsg: props.receiptMsg ?? "",
+      isSfCompounded: props.isSfCompounded ?? false,
+    },
   });
 
   const {
@@ -40,11 +44,18 @@ export default function Form(props: Props) {
         reset();
       }}
       onSubmit={handleSubmit(async (fv) => {
-        await updateEndow({ receiptMsg: fv.receiptMsg, id: props.id });
+        await updateEndow({
+          receiptMsg: fv.receiptMsg,
+          id: props.id,
+          isSfCompounded: fv.isSfCompounded,
+        });
       })}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <ReceiptMsg />
+      <CheckField<FV> name="isSfCompounded" classes={{ label: "font-medium" }}>
+        Compound Sustainability Fund Disbursements
+      </CheckField>
       <div className="flex gap-3">
         <button
           type="reset"
