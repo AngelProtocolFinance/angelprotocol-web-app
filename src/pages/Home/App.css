@@ -1,0 +1,379 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&family=Gochi+Hand&display=swap'); */
+
+
+@font-face {
+    font-family: vag;
+    src: url("./fonts/VAG\ Rounded\ Regular.ttf");
+}
+
+/* BackGround */
+.app{
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(251, 241, 235, 0.96) 87.19%, #FFF 94.34%);
+ 
+    background-blend-mode: screen, normal;
+    
+    overflow: hidden;
+    background-color: #fff;
+}
+/* background: url(<path-to-image>), lightgray 0% 0% / 50px 50px repeat, linear-gradient(180deg, rgba(255, 255, 255, 0.50) 0%, rgba(251, 241, 235, 0.96) 87.19%, #FFF 94.34%); */
+
+.DM_Sans{
+    font-family: "DM Sans";
+}
+.vag{
+    font-family: vag;
+    /* font-weight: 300; */
+}
+.Quicksand{
+    font-family: "Quicksand";
+}
+
+.Gochi_Hand{
+    font-family: "Gochi Hand";
+}
+
+.shadow {
+    box-shadow: 0px 12px 36px 0px rgba(0, 0, 0, 0.06);
+}
+
+.shadow_1 {
+    box-shadow: 0px 12px 6px 0px rgba(80, 79, 79, 0.06);
+}
+
+/*  Hero.jsx  */
+.bg_blur {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60%;
+    z-index: -1;
+    /* border-radius: 50%; */
+    background: #fdfdfd;
+    /* background-color: red; */
+    /* background: #ffff; */
+    filter: blur(400px);
+}
+
+
+.extra_width {
+    width: calc(100% + 70px)
+}
+
+.desc > * {
+    font-weight: 400px !important;
+    font-size: 16px;
+    display: inline;
+    line-height: 22px;
+    width: fit-content;
+}
+
+/*  Brands.jsx  */
+
+@keyframes slider {
+    from{
+        transform: translateX(0);
+    }
+    to{
+        transform: translateX(-100%);  
+    }
+}
+
+
+.brands {
+    animation: slider 10s linear infinite;
+}
+.brands_container{
+    width: 90vw;
+}
+.borderLine{
+    border: solid 1px #dbdada;
+}
+.brands_container:hover .brands{
+    animation-play-state: paused;    
+}
+.brands_container::-webkit-scrollbar{
+    display: block;
+    scroll-behavior: smooth;
+}
+/* 
+.brands img{
+    width: 100px;
+    height: 100px;
+    object-position: center;
+    object-fit: cover;
+    background-color: red;
+    margin-left: 20px;
+} */
+
+
+/* Video.jsx */
+
+
+.video_bg_blur {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    /* z-index: -9; */
+
+    /* background: #F6FBFA; */
+    /* background: rgb(255, 255, 255);
+    filter: blur(50px); */
+}
+
+
+
+/* .text span{
+    position: absolute;
+    left: 50%;
+    font-size: 18px;
+    transform-origin: 0 100px;
+    
+} */
+
+/* 
+.rgba{
+    background: rgba(45, 137, 200, .99);
+} */
+
+.bg_#EDFCE2{
+    background-color: #EDFCE2;
+}
+
+.bg_#F4F0FD{
+    background-color: #F4F0FD;
+}
+
+.bg_#EDF2FE{
+    background-color: #EDF2FE;
+}
+
+.active{
+    /* h-full top-0 z-10 */
+    height: 100%;
+    top: 0;
+    z-index: 10;
+}
+
+.non_active{
+    /* h-full top-0 z-10 */
+    height: 80%;
+    top: 10%;
+    z-index: 0;
+}
+
+/* CRUD Buttons */
+.CRUD_buttons{
+    background: linear-gradient(black, transparent);
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    transition: .4s all ease-in;
+    /* border : 1px solid black; */
+}
+
+.blog_card:hover .CRUD_buttons{
+    display: flex;
+    top: 0;
+}
+
+
+
+/* blog_crousal */
+
+.blog_crousal {
+    width: 92vw;
+    /* margin: auto; */
+    /* padding: 0 44px !important; */
+}
+
+.blog_crousal .swiper-slide{
+    /* width: unset !important; */
+    width: 300px;
+    /* margin: 0 !important; */
+}
+
+.cause-swiper{
+        border: none;
+        /* background: transparent; */
+        width: 92vw;
+        margin: auto;   
+        /* background-color: red;  */
+}
+
+.cause-swiper .swiper-slide{
+    /* width: 350px !important;     */
+    height: 520px; 
+   
+}
+
+.testimonial_swiper{
+    width: 92vw;
+    /* margin: auto; */
+  
+    /* background-color: yellow; */
+}
+
+.testimonial_swiper .swiper-slide{
+    /* width: 90vw; */
+    /* margin: auto; */
+  /* overflow-y: auto; */
+  padding-top: 40px;
+  
+  /* height: 520px; */
+    /* background-color: green; */
+}
+
+/* #desc p {
+    overflow-x: hidden;
+} */
+
+.ql-video {
+    width: 700px;
+    height: 400px;
+    margin: auto;
+  }
+
+  .ql-editor{
+    overflow: visible !important;
+  }
+
+  .ql-editor img{
+    margin: auto;
+  }
+
+  .ql-align-center{
+    text-align: center;
+  }
+
+  .ql-align-right{
+    text-align: right;
+  }
+
+  .ql-align-justify{
+    text-align: justify;
+  }
+
+  #desc  .ql-align-center{
+    text-align: left;
+  }
+
+  #desc  .ql-align-right{
+    text-align: left;
+  }
+
+  #desc  .ql-align-justify{
+    text-align: left;
+  }
+
+
+@media screen and (max-width : 1100px) {
+    
+/* .cause-swiper{
+    width: 100vw !important;   
+}
+.blog_crousal{
+    width: 90vw;
+    margin: auto;
+
+}    */
+
+.testimonial_swiper{
+    /* display: unset; */
+    /* width: 95vw !important; */
+    /* height: 500px; */
+    /* overflow: visible !important; */
+    /* overflow-x: hidden; */
+    /* padding-top: 50px; */
+    /* background-color: red; */
+}
+
+.ql-video {
+    width: 600px;
+    height: 350px;
+  }
+
+}
+
+@media screen and (min-width : 1400px) {
+    
+    .testimonial_swiper{
+        /* display: none !important; */
+       /* background-color: red; */
+        max-width: 1135px;
+    }
+
+   
+
+}
+
+@media screen and (max-width : 640px) {
+    
+    .search{
+        /* display: none !important; */
+       /* background-color: red; */
+        display: none;
+    }
+
+   
+
+}
+
+@media screen and (min-width : 1400px) {
+    .cause-swiper{
+        max-width: 1130px;
+    }
+
+    .blog_crousal{
+        max-width: 1130px;
+        /* background-color: red; */
+    }
+   
+}
+h1 {
+    width: 100%;
+  }
+  
+  /* Media Query for Phone (360px) */
+  @media only screen and (min-width: 360px) {
+    h1 {
+      width: 324px;
+    }
+  }
+  
+  /* Media Query for Tablet (768px) */
+  @media only screen and (min-width: 768px) {
+    h1 {
+      width: 720px;
+    }
+  }
+  
+  /* Media Query for Desktop (1440px) */
+  @media only screen and (min-width: 1200px) {
+    h1 {
+      width: 931px;
+    }
+  }
+@media screen and (min-width : 700px) {
+    .ql-video{
+        width: 350px;
+        height: 200px;
+    }
+    .cause-swiper{
+        width: 80vw;   
+    }
+    .testimonial_swiper{
+        width: 80vw;   
+    }
+    .blog_crousal{
+        width: 80vw;
+    
+    }  
+     
+}
+
