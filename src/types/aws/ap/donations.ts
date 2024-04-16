@@ -65,5 +65,5 @@ export type DonationsQueryParams = {
   viaId?: string;
   symbol?: string;
   asker: number | string;
-  status?: "final" | "pending";
+  status?: "final" | "pending" | "intent";
 };
