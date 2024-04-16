@@ -47,7 +47,7 @@ export default function Form(props: Props) {
         await updateEndow({
           receiptMsg: fv.receiptMsg,
           id: props.id,
-          isSfCompounded: fv.isSfCompounded,
+          sfCompounded: fv.isSfCompounded,
         });
       })}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
