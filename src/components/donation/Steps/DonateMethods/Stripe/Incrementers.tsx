@@ -15,6 +15,7 @@ function Incrementer({ value }: { value: number }) {
   const { setValue, trigger, watch } = useFormContext<FormValues>();
   return (
     <button
+      type="button"
       className="text-sm font-medium border border-gray-l4 hover:border-gray-l3 rounded-full w-20 h-10"
       onClick={() => {
         const amount = Number(watch("amount"));
