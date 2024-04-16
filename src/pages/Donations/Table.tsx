@@ -55,7 +55,7 @@ export default function Table({
           <HeaderButton
             onClick={handleHeaderClick("viaName")}
             _activeSortKey={sortKey}
-            _sortKey="chainName"
+            _sortKey="viaName"
             _sortDirection={sortDirection}
           >
             Network

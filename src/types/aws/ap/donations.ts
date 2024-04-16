@@ -17,6 +17,8 @@ type DonorDetails = {
 
 export type KYCData = Required<Omit<DonorDetails, "address"> & DonorAddress>;
 
+export type FiatRamp = "STRIPE" | "PAYPAL";
+
 export type DonationRecord = {
   id: string;
 
@@ -38,11 +40,17 @@ export type DonationRecord = {
   initAmountUsd?: number;
   finalAmountUsd?: number;
   splitLiqPct: number;
-
-  //medium
-  viaId: ChainID | "staging" | "fiat";
-  viaName: string;
-};
+} & (
+  | {
+      //medium
+      viaId: ChainID | "staging";
+      viaName: string;
+    }
+  | {
+      viaId: "fiat";
+      viaName: FiatRamp;
+    }
+);
 
 export type DonationsQueryParams = {
   page?: number;
