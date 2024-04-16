@@ -17,7 +17,7 @@ export default function Summary({
   const dispatch = useSetter();
   const user = useGetter((state) => state.auth.user);
 
-  const [amount, Amount] = (() => {
+  const [amount, Amount, currencyCode] = (() => {
     switch (details.method) {
       case "crypto": {
         return [+details.token.amount, token(details.token.coingecko_denom)];
@@ -28,7 +28,11 @@ export default function Summary({
         return [numShares, currency({ code: symbol, rate: null })];
       }
       default:
-        return [+details.amount, currency(details.currency)];
+        return [
+          +details.amount,
+          currency(details.currency),
+          details.currency.code,
+        ];
     }
   })();
 
@@ -64,7 +68,13 @@ export default function Summary({
               }
             : undefined)
         }
-        onSubmit={(donor) => !isPreview && dispatch(setDonor(donor))}
+        onSubmit={(donor) => {
+          if (isPreview) return;
+          if (currencyCode) {
+            document.cookie = `bg_pref_currency=${currencyCode.toUpperCase()}`;
+          }
+          dispatch(setDonor(donor));
+        }}
         classes="mt-6"
       />
     </SummaryContainer>
