@@ -85,7 +85,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   ]);
 
   return (
-    <div className={classes + " grid w-full gap-y-2"}>
+    <div className={`${classes} grid w-full gap-y-2`}>
       {/** estimate tooltip */}
       {estimate &&
         (estimate === "loading" ? (
