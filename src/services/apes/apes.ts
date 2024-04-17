@@ -3,6 +3,7 @@ import { PaymentIntent } from "@stripe/stripe-js";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import {
+  CryptoDonation,
   Donor,
   EndowmentBalances,
   FiatCurrencyData,
@@ -49,6 +50,27 @@ export const apes = createApi({
         method: "POST",
         headers: { authorization: TEMP_JWT },
       }),
+    }),
+    createCryptoIntent: builder.mutation<string, CryptoDonation>({
+      query: (params) => ({
+        url: `crypto-donation/v2`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+        body: JSON.stringify(params),
+      }),
+      transformResponse: (res: { id: string }) => res.id,
+    }),
+    confirmCryptoIntent: builder.mutation<
+      { guestDonor: GuestDonor },
+      { txId: string; txHash: string }
+    >({
+      query: ({ txHash, txId }) => ({
+        url: `crypto-donation/${txId}/confirm`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+        body: JSON.stringify({ txHash }),
+      }),
+      transformResponse: (res: { guestDonor: GuestDonor }) => res,
     }),
     fiatCurrencies: builder.query<
       { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
@@ -108,6 +130,8 @@ export const apes = createApi({
 
 export const {
   useCapturePayPalOrderMutation,
+  useCreateCryptoIntentMutation,
+  useConfirmCryptoIntentMutation,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
   usePaypalOrderMutation,
