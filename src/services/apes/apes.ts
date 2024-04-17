@@ -51,14 +51,13 @@ export const apes = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    createCryptoIntent: builder.mutation<string, CryptoDonation>({
+    createCryptoIntent: builder.mutation<{ id: string }, CryptoDonation>({
       query: (params) => ({
         url: `crypto-donation/v2`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
       }),
-      transformResponse: (res: { id: string }) => res.id,
     }),
     confirmCryptoIntent: builder.mutation<
       { guestDonor: GuestDonor },

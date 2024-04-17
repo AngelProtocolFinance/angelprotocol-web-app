@@ -1,6 +1,6 @@
 import { chains } from "constants/chains";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCreateCryptoIntentMutation } from "services/apes";
 import { CryptoSubmitStep } from "slices/donation";
 import { CryptoDonation } from "types/aws";
@@ -10,9 +10,8 @@ export default function useCreateCryptoIntent(
   donation: CryptoSubmitStep,
   wallet?: ConnectedWallet
 ) {
-  const [transactionId, setTransactionId] = useState<string>();
-
-  const [createCryptoIntent] = useCreateCryptoIntentMutation();
+  const [createCryptoIntent, { isError, isLoading, data }] =
+    useCreateCryptoIntentMutation();
   const { handleError } = useErrorContext();
 
   const { details, recipient, liquidSplitPct, tip = 0, donor } = donation;
@@ -38,8 +37,7 @@ export default function useCreateCryptoIntent(
           source: details.source,
           donor,
         };
-        const id = await createCryptoIntent(payload).unwrap();
-        setTransactionId(id);
+        await createCryptoIntent(payload).unwrap();
       } catch (err) {
         handleError(err);
       }
@@ -59,5 +57,5 @@ export default function useCreateCryptoIntent(
     handleError,
   ]);
 
-  return transactionId;
+  return { transactionId: data?.id, isError, isLoading };
 }

@@ -34,16 +34,21 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
 
   const [confirmCryptoIntent] = useConfirmCryptoIntentMutation();
 
-  const transactionId = useCreateCryptoIntent(donation, wallet);
+  const { transactionId, isError, isLoading } = useCreateCryptoIntent(
+    donation,
+    wallet
+  );
 
   return (
     <div className={`${classes} grid w-full gap-y-2`}>
       {/** estimate tooltip */}
       {estimate &&
-        (estimate === "loading" || !transactionId ? (
+        (estimate === "loading" || isLoading ? (
           <LoadingStatus classes="text-sm text-navy-l1">
             Simulating tx..
           </LoadingStatus>
+        ) : isError ? (
+          <ErrorStatus classes="text-sm">An error occurred</ErrorStatus>
         ) : isSuccess(estimate) ? (
           <p className="text-sm text-navy-l1 flex items-center gap-1">
             <Icon type="GasStation" className="text-base" />
