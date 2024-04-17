@@ -40,7 +40,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
     <div className={`${classes} grid w-full gap-y-2`}>
       {/** estimate tooltip */}
       {estimate &&
-        (estimate === "loading" ? (
+        (estimate === "loading" || !transactionId ? (
           <LoadingStatus classes="text-sm text-navy-l1">
             Simulating tx..
           </LoadingStatus>
