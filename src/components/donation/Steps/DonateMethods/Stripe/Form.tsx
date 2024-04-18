@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import QueryLoader from "components/QueryLoader";
 import { Field, Form as FormContainer } from "components/form";
+import { bgCookies, setCookie } from "helpers/cookie";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
@@ -11,6 +12,7 @@ import { useSetter } from "store/accessors";
 import { Currency, DetailedCurrency } from "types/components";
 import ContinueBtn from "../../common/ContinueBtn";
 import Frequency from "./Frequency";
+import Incrementers from "./Incrementers";
 import { FormValues as FV, Props } from "./types";
 
 const USD_CODE = "usd";
@@ -93,7 +95,10 @@ function Form({
       <CurrencySelector
         currencies={currencies}
         label="Currency"
-        onChange={onCurrencyChange}
+        onChange={(c) => {
+          setCookie(bgCookies.prefCode, c.code.toUpperCase());
+          onCurrencyChange(c);
+        }}
         value={currency}
         classes={{
           label: "font-semibold",
@@ -111,6 +116,7 @@ function Form({
         // validation must be dynamicly set depending on which exact currency is selected
         tooltip={createTooltip(currency)}
       />
+      {currency.code === USD_CODE && <Incrementers />}
 
       <p className="text-sm dark:text-navy-l2 mt-4">
         Please click the button below and follow the instructions provided to
