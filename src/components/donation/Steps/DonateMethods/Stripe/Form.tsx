@@ -94,7 +94,10 @@ function Form({
       <CurrencySelector
         currencies={currencies}
         label="Currency"
-        onChange={onCurrencyChange}
+        onChange={(c) => {
+          document.cookie = `bg_pref_currency=${c.code.toUpperCase()}`;
+          onCurrencyChange(c);
+        }}
         value={currency}
         classes={{
           label: "font-semibold",

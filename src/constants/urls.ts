@@ -1,8 +1,8 @@
 import { BASE_URL, ENVIRONMENT, IS_TEST } from "./env";
 
 export const APIs = {
-  aws: "https://kpnxz5rzo2.execute-api.us-east-1.amazonaws.com",
-  apes: `https://fctqkloitc.execute-api.us-east-1.amazonaws.com/${ENVIRONMENT}`,
+  aws: "https://ap-api.better.giving",
+  apes: `https://apes-api.better.giving/${ENVIRONMENT}`,
   wordpress: `https://angelgiving${
     IS_TEST ? "-dev" : ""
   }.10web.site/wp-json/wp/v2`,
