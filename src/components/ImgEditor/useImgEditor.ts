@@ -68,6 +68,7 @@ export default function useImgEditor<T extends Base, K extends Path<T>>({
   function handleCropResult(cropped: File) {
     setValue(path("preview"), URL.createObjectURL(cropped) as any);
     onFileChange(cropped);
+    trigger(name);
   }
 
   const handleReset: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -85,7 +86,7 @@ export default function useImgEditor<T extends Base, K extends Path<T>>({
     handleReset,
     preview,
     file: currFile,
-    filePath: path("file"),
+    filePath: path("file") as any,
     ref,
   };
 }

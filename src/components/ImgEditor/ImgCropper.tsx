@@ -35,7 +35,7 @@ export default function ImgCropper({ file, aspect: [x, y], onSave }: Props) {
     cropperRef.current.getCroppedCanvas().toBlob((blob) => {
       //nothing is cropped
       if (!blob) return onSave(file);
-      onSave(new File([blob], file.name));
+      onSave(new File([blob], file.name, { type: file.type }));
       closeModal();
     }, file.type);
   }

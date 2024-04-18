@@ -117,7 +117,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
         </span>{" "}
         <ErrorMessage
           errors={errors}
-          name={filePath as any}
+          name={filePath}
           as="span"
           className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
         />
