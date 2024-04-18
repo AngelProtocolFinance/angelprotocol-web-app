@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
-import { bgCookies, setCookie } from "helpers/cookie";
+import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import {
   Donor,
   EndowmentBalances,
@@ -53,9 +53,12 @@ export const apes = createApi({
     }),
     fiatCurrencies: builder.query<
       { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
-      string | undefined
+      void
     >({
-      query: (prefCode) => ({ url: "fiat-currencies", params: { prefCode } }),
+      query: () => ({
+        url: "fiat-currencies",
+        params: { prefCode: getCookie(bgCookies.prefCode) },
+      }),
       transformResponse: (res: FiatCurrencyData) => {
         const toDetailed = (
           input: FiatCurrencyData["currencies"][number]
