@@ -8,7 +8,7 @@ import { useCallback, useRef } from "react";
 type Props = {
   file: File;
   aspect: [number, number];
-  onSave(file: File): void; // blob.type is the same as Props.type
+  onSave(cropped: File): void;
 };
 
 export default function ImgCropper({ file, aspect: [x, y], onSave }: Props) {
