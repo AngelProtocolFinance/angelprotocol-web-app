@@ -1,4 +1,3 @@
-import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
@@ -41,7 +40,7 @@ export default function Body() {
                 )}
                 <span>{p.name}</span>
               </h3>
-              <BookmarkBtn endowId={p.id} />
+              {/* <BookmarkBtn endowId={p.id} /> */}
             </div>
             <p className="w-full font-normal text-lg">{p.tagline}</p>
           </div>
