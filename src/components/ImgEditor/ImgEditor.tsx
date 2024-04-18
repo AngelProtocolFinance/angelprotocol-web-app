@@ -4,19 +4,15 @@ import { humanize } from "helpers";
 import React from "react";
 import { useDropzone } from "react-dropzone";
 import { FieldValues, Path, get, useFormContext } from "react-hook-form";
-import { ImgLink, Props } from "./types";
+import { Props } from "./types";
 import useImgEditor from "./useImgEditor";
 
 const BYTES_IN_MB = 1e6;
-
-type Key = keyof ImgLink;
-const precropFileKey: Key = "precropFile";
 
 export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
   props: Props<T, K>
 ) {
   const { name, classes, maxSize, accept } = props;
-  const precropFilePath: any = `${String(name)}.${precropFileKey}`;
 
   const {
     formState: { errors, isSubmitting },
@@ -25,7 +21,8 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
   const {
     handleOpenCropper,
     handleReset,
-    imgSize,
+    file,
+    filePath,
     isInitial,
     noneUploaded,
     onDrop,
@@ -110,8 +107,8 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
             <>
               Image should be less than {maxSize / BYTES_IN_MB}MB in size.
               <br />
-              {imgSize
-                ? `Current image size: ${humanize(imgSize / BYTES_IN_MB)}MB.`
+              {file.size
+                ? `Current image size: ${humanize(file.size / BYTES_IN_MB)}MB.`
                 : ""}
             </>
           ) : (
@@ -120,7 +117,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
         </span>{" "}
         <ErrorMessage
           errors={errors}
-          name={precropFilePath as any}
+          name={filePath as any}
           as="span"
           className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
         />
