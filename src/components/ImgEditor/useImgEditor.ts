@@ -1,98 +1,80 @@
-import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { MouseEventHandler } from "react";
 import { DropzoneOptions } from "react-dropzone";
-import { FieldValues, useController, useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import { Path } from "react-hook-form";
 import ImgCropper from "./ImgCropper";
 import { ImgLink, Props } from "./types";
 
-type Key = keyof ImgLink;
-const fileKey: Key = "file";
-const previewKey: Key = "preview";
-const precropFileKey: Key = "precropFile";
+type Base = { [index: string]: ImgLink };
 
-type FilePath = `${string}.${typeof fileKey}`;
-
-export default function useImgEditor<T extends FieldValues, K extends Path<T>>({
+export default function useImgEditor<T extends Base, K extends Path<T>>({
   name,
   aspect,
   accept,
 }: Props<T, K>) {
-  const filePath: any = `${String(name)}.${fileKey}`;
-  const previewPath: any = `${String(name)}.${previewKey}`;
-  const precropFilePath: any = `${String(name)}.${precropFileKey}`;
+  const path = (sub: Path<ImgLink>): Path<T> => `${name}.${sub}` as any;
 
-  const { setValue, watch } = useFormContext<T>();
+  const { setValue, watch, resetField, trigger } = useFormContext<T>();
   const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
   const {
     field: {
       value: currFile = new File([], "default file"),
       onChange: onFileChange,
       ref,
     },
-  } = useController<Record<string, ImgLink>, FilePath>({
-    name: filePath,
+  } = useController<Base, `${string}.file`>({
+    name: `${name}.file`,
   });
 
-  const { publicUrl, preview, precropFile }: ImgLink = watch(name as any);
+  const { publicUrl, preview }: ImgLink = watch(name as any);
   const isInitial = preview === publicUrl;
   const noneUploaded = !publicUrl && !preview;
 
   const onDrop: DropzoneOptions["onDrop"] = (files: File[]) => {
     const newFile = files[0];
-    if (newFile) {
-      //preview & crop valid formats only
-      if (!!accept.find((x) => x === newFile.type)) {
-        const preview = URL.createObjectURL(newFile);
-        showModal(ImgCropper, {
-          preview,
-          aspect,
-          type: newFile.type,
-          onSave(blob) {
-            handleCropResult(blob, newFile);
-          },
-        });
-      }
-      onFileChange(newFile);
-      setValue(precropFilePath, newFile as any, { shouldValidate: true });
+    if (!newFile) return;
+
+    // set the file, and validate immediately
+    onFileChange(newFile);
+    trigger(name);
+
+    //don't show cropper if file is unsupported, render blank preview
+    if (!accept.includes(newFile.type as any)) {
+      return setValue(path("preview"), "" as any);
     }
+
+    //set pre-crop file preview
+    setValue(path("preview"), URL.createObjectURL(newFile) as any);
+
+    showModal(ImgCropper, {
+      file: newFile,
+      aspect,
+      type: newFile.type,
+      onSave: handleCropResult,
+    });
   };
 
   const handleOpenCropper: MouseEventHandler<HTMLButtonElement> = (e) => {
     //prevent container dropzone from catching click event
     e.stopPropagation();
     showModal(ImgCropper, {
-      preview,
+      file: currFile,
       aspect,
-      type: currFile.type,
-      onSave(blob) {
-        handleCropResult(blob, currFile);
-      },
+      onSave: handleCropResult,
     });
   };
 
-  function handleCropResult(blob: Blob | null, originalFile: File) {
-    if (!blob)
-      return handleError("Image blob can't be null", {
-        context: "cropping image",
-      });
-    const cropped = URL.createObjectURL(blob);
-    setValue(previewPath, cropped as any);
-    onFileChange(
-      new File([blob], originalFile.name, {
-        type: blob.type,
-      })
-    );
+  function handleCropResult(cropped: File) {
+    setValue(path("preview"), URL.createObjectURL(cropped) as any);
+    onFileChange(cropped);
   }
 
   const handleReset: MouseEventHandler<HTMLButtonElement> = (e) => {
     //prevent container dropzone from catching click event
     e.stopPropagation();
-    setValue(previewPath, publicUrl as any, { shouldValidate: false });
-    setValue(filePath, undefined as any, { shouldValidate: false });
-    setValue(precropFilePath, undefined as any, { shouldValidate: false });
+    resetField(name);
+    resetField(path("file"));
   };
 
   return {
@@ -102,7 +84,8 @@ export default function useImgEditor<T extends FieldValues, K extends Path<T>>({
     noneUploaded,
     handleReset,
     preview,
-    imgSize: precropFile?.size,
+    file: currFile,
+    filePath: path("file"),
     ref,
   };
 }
