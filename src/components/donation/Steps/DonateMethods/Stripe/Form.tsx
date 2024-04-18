@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import QueryLoader from "components/QueryLoader";
 import { Field, Form as FormContainer } from "components/form";
+import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
@@ -17,7 +18,8 @@ import { FormValues as FV, Props } from "./types";
 const USD_CODE = "usd";
 
 export default function Loader(props: Props) {
-  const query = useFiatCurrenciesQuery();
+  const prefCode = getCookie(bgCookies.prefCode);
+  const query = useFiatCurrenciesQuery(prefCode);
   return (
     <QueryLoader
       queryState={query}
@@ -95,8 +97,8 @@ function Form({
         currencies={currencies}
         label="Currency"
         onChange={(c) => {
-          document.cookie = `bg_pref_currency=${c.code.toUpperCase()}`;
           onCurrencyChange(c);
+          setCookie(bgCookies.prefCode, c.code.toUpperCase());
         }}
         value={currency}
         classes={{
