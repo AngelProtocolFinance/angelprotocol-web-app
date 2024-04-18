@@ -96,8 +96,8 @@ function Form({
         currencies={currencies}
         label="Currency"
         onChange={(c) => {
-          onCurrencyChange(c);
           setCookie(bgCookies.prefCode, c.code.toUpperCase());
+          onCurrencyChange(c);
         }}
         value={currency}
         classes={{
