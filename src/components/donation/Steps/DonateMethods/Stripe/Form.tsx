@@ -2,6 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import QueryLoader from "components/QueryLoader";
 import { Field, Form as FormContainer } from "components/form";
+import { bgCookies, setCookie } from "helpers/cookie";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
@@ -95,7 +96,7 @@ function Form({
         currencies={currencies}
         label="Currency"
         onChange={(c) => {
-          document.cookie = `bg_pref_currency=${c.code.toUpperCase()}`;
+          setCookie(bgCookies.prefCode, c.code.toUpperCase());
           onCurrencyChange(c);
         }}
         value={currency}
