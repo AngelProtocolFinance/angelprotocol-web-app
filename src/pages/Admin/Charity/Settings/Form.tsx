@@ -23,7 +23,7 @@ export default function Form(props: Props) {
         receiptMsg: string().max(MAX_RECEIPT_MSG_CHAR, "exceeds max"),
       })
     ),
-    defaultValues: {
+    values: {
       receiptMsg: props.receiptMsg ?? "",
       isSfCompounded: props.isSfCompounded ?? false,
     },
