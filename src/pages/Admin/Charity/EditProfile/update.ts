@@ -45,6 +45,7 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
       tagline: d.tagline ?? "",
       url: d.url ?? "",
       slug: d.slug ?? "",
+      sfCompounded: !!d.sfCompounded,
     };
   }
 
