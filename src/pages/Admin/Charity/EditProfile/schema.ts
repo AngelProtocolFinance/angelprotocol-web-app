@@ -18,10 +18,8 @@ export const VALID_MIME_TYPES: ImageMIMEType[] = [
 export const MAX_SIZE_IN_BYTES = 1e6;
 export const MAX_CHARS = 4000;
 
-// we only need to validate the pre-crop image and if we confirm it is valid
-// we can be sure that the cropped image is valid too
 const fileObj = object<any, SchemaShape<ImgLink>>({
-  precropFile: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES),
+  file: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES),
 });
 
 //construct strict shape to avoid hardcoding shape keys
