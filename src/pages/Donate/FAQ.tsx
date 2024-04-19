@@ -79,12 +79,11 @@ const faqs = [
       <p>
         To the extent permitted by law in their own country or state, Donors are
         entitled to a tax receipt for the full amount of their donation, which
-        includes any transaction fee they have incurred. For example, if a donor
-        makes a donation of $100, and incurs an additional $5 fee to make the
-        transaction, they will receive a tax receipt for $105, as that is the
-        amount they are able to claim as a charitable deduction. All Donors are
-        encouraged to consult with their tax preparer regarding the specific
-        deductibility of their contribution(s).
+        includes any transaction fee they have incurred.
+      </p>,
+      <p>
+        All Donors are encouraged to consult with their tax preparer regarding
+        the specific deductibility of their contribution(s).
       </p>,
       <p>
         Donors will need to provide KYD (know your donor) information including
@@ -95,14 +94,13 @@ const faqs = [
       </p>,
       <p>
         To keep a permanent record of all your donations and print tax receipts,
-        create your own personal user account&nbsp;
+        create your own personal user account{" "}
         <Link to={appRoutes.signup} className="text-blue hover:text-blue-l1">
           here
         </Link>
-        .
       </p>,
       <p>
-        Here's a short video showing how to do that:{" "}
+        Here is a short video showing how to do that:{" "}
         <ExtLink
           href="https://youtu.be/74kEk7aQauA"
           className="text-blue hover:text-blue-l1"
@@ -117,41 +115,18 @@ const faqs = [
     question: "How much does Better Giving charge?",
     paragraphs: [
       <p>
-        It is free to set up and start using a Better Giving account. Better
-        Giving only receives fees after donations have been received. There are
-        NO ongoing fees to any nonprofits.
+        It is free to set up and start using a Better Giving account. No
+        subscriptions. No upfront costs. There are no ongoing donation fees to
+        any nonprofits unless a nonprofit has opted out of offering donors a
+        voluntary donation to Better Giving.
       </p>,
       <p>
-        The fees are as follows and are charged at the point of donation. They
-        are very competitive in comparison with other routes, and the Fiscal
-        Sponsorship fee compares to a market standard of 4-10% !
-      </p>,
-      <p>
-        <Em intensity={3} classes="block mb-2">
-          For donations to US registered 501c3 accounts:
-        </Em>
-        <Em>Crypto donations</Em> - 2.9% of each donation
-        <div className="mb-2" />
-        <Em>Fiat donations</Em> (dollars, pounds, euros etc) - 1.5% (plus
-        external processing fees of 2.9% +$0.30 per donation)
-      </p>,
-      <p>
-        <Em intensity={3} classes="block mb-2">
-          For fiscally sponsored accounts (mainly non-US charities):
-        </Em>
-        <Em>Fiscal Sponsorship fee</Em> - 2.9%
-        <div className="mb-2" />
-        <Em>Crypto donations</Em> - 2.9% of each donation
-        <div className="mb-2" />
-        <Em>Fiat donations</Em> (dollars, pounds, euros etc) - 1.5% (plus
-        external processing fees of 2.9% +$0.30 per donation)
+        For fiscally sponsored accounts (mainly non-US charities), there is a
+        fiscal sponsorship fee of 2.9%.
       </p>,
       <p>
         Blockchain transaction fees may apply, but these can be fractions of a
         cent depending on the chain.
-      </p>,
-      <p className="font-semibold">
-        All fees applied are shown before any donation is made.
       </p>,
     ],
   },
