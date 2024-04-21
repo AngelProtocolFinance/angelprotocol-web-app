@@ -5,7 +5,6 @@ import { ImageMIMEType } from "types/lists";
 export type ImgLink = FileObject & {
   file?: File;
   preview: string;
-  precropFile?: File;
 };
 
 type Classes = { container?: string; dropzone?: string };

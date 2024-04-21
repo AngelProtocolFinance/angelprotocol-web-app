@@ -6,18 +6,12 @@ import Cropper from "cropperjs";
 import { useCallback, useRef } from "react";
 
 type Props = {
-  preview: string;
-  type: string; // original file type, will be the same for blob in `onSave(blob: Blob)`
+  file: File;
   aspect: [number, number];
-  onSave(blob: Blob | null): void; // blob.type is the same as Props.type
+  onSave(cropped: File): void;
 };
 
-export default function ImgCropper({
-  preview,
-  type,
-  aspect: [x, y],
-  onSave,
-}: Props) {
+export default function ImgCropper({ file, aspect: [x, y], onSave }: Props) {
   const { closeModal } = useModalContext();
 
   const cropperRef = useRef<Cropper>();
@@ -37,12 +31,13 @@ export default function ImgCropper({
   );
 
   function handleSave() {
-    if (cropperRef.current) {
-      cropperRef.current.getCroppedCanvas().toBlob((blob) => {
-        onSave(blob);
-        closeModal();
-      }, type);
-    }
+    if (!cropperRef.current) return onSave(file);
+    cropperRef.current.getCroppedCanvas().toBlob((blob) => {
+      //nothing is cropped
+      if (!blob) return onSave(file);
+      onSave(new File([blob], file.name, { type: file.type }));
+      closeModal();
+    }, file.type);
   }
 
   return (
@@ -56,7 +51,12 @@ export default function ImgCropper({
           <Icon type="Save" size={24} />
         </button>
       </div>
-      <Image ref={imgRef} alt="banner" src={preview} className="w-full" />
+      <Image
+        ref={imgRef}
+        alt="banner"
+        src={URL.createObjectURL(file)}
+        className="w-full"
+      />
     </Modal>
   );
 }
