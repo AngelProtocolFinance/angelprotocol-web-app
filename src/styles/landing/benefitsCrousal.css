@@ -1,0 +1,19 @@
+
+
+.benefits_crousal  .swiper-slide{
+    text-align: center !important;
+    padding: 20px 50px !important;
+    width: 650px;
+    height: 450px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 15px;
+    border-radius: 56px !important;
+    overflow: hidden !important;
+    background-color: burlywood;
+}
+
+.red-slide {
+    scale: 1;
+   }

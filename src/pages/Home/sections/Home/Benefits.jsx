@@ -1,5 +1,5 @@
 import React from 'react'
-import BenefitssCrousal from '../../components/BenefitssCrousal'
+import BenefitssCrousal from '../../../../components/landing/BenefitssCrousal'
 
 const Benefits = () => {
   return (

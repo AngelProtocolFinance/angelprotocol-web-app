@@ -3,7 +3,7 @@ export enum appRoutes {
   marketplace = "/marketplace",
   leaderboard = "/leaderboard",
   admin = "/admin",
-  home="/",
+  home = "/",
   applications = "/applications",
   banking_applications = "/banking-applications",
   register = "/register",

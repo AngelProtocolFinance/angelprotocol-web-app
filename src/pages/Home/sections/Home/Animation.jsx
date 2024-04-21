@@ -1,8 +1,7 @@
 import React from 'react'
-import AnimatedSVG from '../../components/AnimatedSVG'
-import JoinUsBanner from '../../components/JoinUsBanner'
-import MobileAnimation from '../../components/MobileAnimation'
-import TabletAnimation from '../../components/TabletAnimation'
+import AnimatedSVG from '../../../../components/landing/AnimatedSVG'
+import MobileAnimation from '../../../../components/landing/MobileAnimation'
+import TabletAnimation from '../../../../components/landing/TabletAnimation'
 
 const Animation = () => {
   return (
@@ -10,7 +9,6 @@ const Animation = () => {
         <AnimatedSVG />
         <MobileAnimation />
         <TabletAnimation />
-        {/* <JoinUsBanner /> */}
     </div>
   )
 }

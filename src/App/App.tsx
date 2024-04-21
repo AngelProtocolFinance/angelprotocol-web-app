@@ -28,7 +28,7 @@ const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const Widget = lazy(() => import("pages/Widget"));
 const BlogPosts = lazy(() => import("pages/Blog/Posts"));
 const BlogPost = lazy(() => import("pages/Blog/Post"));
-const Home = lazy(() => import("pages/Home/Homepage/Home"));
+const Home=lazy(() => import("pages/Home"));
 
 export default function App() {
   const location = useLocation();

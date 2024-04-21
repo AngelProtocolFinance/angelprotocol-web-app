@@ -11,7 +11,6 @@ const UserState = (props) => {
     useEffect(()=>{
           
           if(!localStorage.getItem("token")){
-            // navigate("/")
           }else {
             try {
               const getUser = async() => {
