@@ -3313,9 +3313,9 @@
 <feGaussianBlur stdDeviation="450" result="effect1_foregroundBlur_1348_3277"/>
 </filter>
 <linearGradient id="paint0_linear_1348_3277" x1="720" y1="0" x2="720" y2="7851.97" gradientUnits="userSpaceOnUse">
-<stop stopColor="white" stop-opacity="0.5"/>
-<stop offset="0.924171" stopColor="#FBF1EB" stop-opacity="0.962086"/>
-<stop offset="1" stopColor="white"/>
+<stop stop-color="white" stop-opacity="0.5"/>
+<stop offset="0.924171" stop-color="#FBF1EB" stop-opacity="0.962086"/>
+<stop offset="1" stop-color="white"/>
 </linearGradient>
 <linearGradient id="paint1_linear_1348_3277" x1="653.433" y1="1317.5" x2="653.433" y2="1321.99" gradientUnits="userSpaceOnUse">
 <stop/>

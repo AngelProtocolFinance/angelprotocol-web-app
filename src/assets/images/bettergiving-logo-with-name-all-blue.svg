@@ -139,19 +139,19 @@
        y2="16.502701"
        gradientUnits="userSpaceOnUse">
       <stop
-         stopColor="#316B9C"
+         stop-color="#316B9C"
          id="stop9" />
       <stop
          offset="0.28"
-         stopColor="#3571A2"
+         stop-color="#3571A2"
          id="stop10" />
       <stop
          offset="0.67"
-         stopColor="#4284B6"
+         stop-color="#4284B6"
          id="stop11" />
       <stop
          offset="1"
-         stopColor="#5198CB"
+         stop-color="#5198CB"
          id="stop12" />
     </linearGradient>
     <linearGradient
@@ -162,19 +162,19 @@
        y2="57.3605"
        gradientUnits="userSpaceOnUse">
       <stop
-         stopColor="#316B9C"
+         stop-color="#316B9C"
          id="stop13" />
       <stop
          offset="0.28"
-         stopColor="#3571A2"
+         stop-color="#3571A2"
          id="stop14" />
       <stop
          offset="0.67"
-         stopColor="#4284B6"
+         stop-color="#4284B6"
          id="stop15" />
       <stop
          offset="1"
-         stopColor="#5198CB"
+         stop-color="#5198CB"
          id="stop16" />
     </linearGradient>
     <clipPath
