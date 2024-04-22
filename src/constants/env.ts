@@ -1,6 +1,8 @@
 import isMobile from "is-mobile";
 
 export const IS_MOBILE = isMobile();
+export const ENVIRONMENT = process.env.PUBLIC_ENVIRONMENT;
+export const IS_TEST = ENVIRONMENT === "dev";
 
 // THE CONSTANTS BELOW ARE ALL CONFIGURED BY ENVIRONMENT VARIABLES
 // AND DISPLAY THE DESIRED TEXT/IMAGES/URLS/ETC THROUGHOUT THE APP

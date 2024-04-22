@@ -1,4 +1,5 @@
 import DOMPurify from "dompurify";
+import { DAPP_URL } from "constants/env";
 
 const BlogCard = ({ blog, imgUrl }) => {
   const sanitize = (dirtyHTML) => {
@@ -31,7 +32,7 @@ const BlogCard = ({ blog, imgUrl }) => {
       />
 
       <a
-        href={`https://better.giving/${blog.slug}/`}
+        href={`${DAPP_URL}/blog/${blog.slug}`}
         className="self-end mt-auto  text-[#2D89C8] px-4  py-2 rounded-full  font-semibold uppercase"
       >
         Read More
