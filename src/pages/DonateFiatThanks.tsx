@@ -2,7 +2,7 @@ import char from "assets/images/celebrating-character.png";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Signup from "components/Signup";
-import { DAPP_URL } from "constants/env";
+import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link, useLocation } from "react-router-dom";
@@ -49,7 +49,7 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         If you need a receipt for your donation, please fill out the KYC form
         for this transaction on your{" "}
         {widgetVersion ? (
-          <ExtLink href={`${DAPP_URL}${appRoutes.donations}`}>
+          <ExtLink href={`${BASE_URL}${appRoutes.donations}`}>
             My Donations
           </ExtLink>
         ) : (

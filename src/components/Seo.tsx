@@ -1,4 +1,4 @@
-import { APP_NAME, DAPP_URL, SEO_IMAGE } from "constants/env";
+import { APP_NAME, BASE_URL, SEO_IMAGE } from "constants/env";
 import { Helmet } from "react-helmet";
 
 type Props = {
@@ -14,7 +14,7 @@ export default function Seo({
   description = `${APP_NAME} provides impact stakeholders with the tools to fundraise, coordinate, and invest capital.`,
   name = APP_NAME,
   image = SEO_IMAGE,
-  url = DAPP_URL,
+  url = BASE_URL,
 }: Props) {
   return (
     <Helmet>

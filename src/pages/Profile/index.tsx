@@ -1,6 +1,6 @@
 import Image from "components/Image";
 import Seo from "components/Seo";
-import { APP_NAME, DAPP_URL } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 
 import { Navigate, useParams } from "react-router-dom";
@@ -40,7 +40,7 @@ export default function Profile({ legacy = false }) {
         description={data?.overview.slice(0, 140)}
         name={data.name}
         image={data.logo}
-        url={`${DAPP_URL}/profile/${data.id}`}
+        url={`${BASE_URL}/profile/${data.id}`}
       />
       <section className="grid grid-rows-[auto_auto_1fr] items-center isolate w-full h-full">
         <Banner />

@@ -1,5 +1,5 @@
 import CommonSEO from "components/Seo";
-import { APP_NAME, DAPP_URL } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useEndowment } from "services/aws/useEndowment";
 import { useAdminContext } from "../Context";
@@ -20,7 +20,7 @@ export default function Seo({
       description={profile?.overview.slice(0, 140)}
       name={profile?.name}
       image={profile?.logo}
-      url={`${DAPP_URL}/${appRoutes.admin}/${id}/${url}`}
+      url={`${BASE_URL}/${appRoutes.admin}/${id}/${url}`}
     />
   );
 }

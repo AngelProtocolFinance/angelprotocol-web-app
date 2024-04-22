@@ -32,7 +32,6 @@ const BlogCard = ({ blog, imgUrl }) => {
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: sanitize(blog?.excerpt?.rendered) }}
       />
-
       <Link
         to={`${appRoutes.blog}/${blog.slug}`}
         className="self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"
