@@ -24,7 +24,6 @@ const BlogCard = (props: Wordpress.Post) => {
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: props.excerpt.rendered }}
       />
-
       <Link
         to={`${appRoutes.blog}/${props.slug}`}
         className="self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"

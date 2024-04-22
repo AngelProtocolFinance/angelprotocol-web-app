@@ -1,6 +1,6 @@
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
-import { APP_NAME, DAPP_URL } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { useLeaderboardsQuery } from "services/aws/leaderboard";
 import DonationMetrics from "./DonationMetrics";
 import Table from "./Table";
@@ -10,7 +10,7 @@ export default function Leaderboard() {
 
   return (
     <section className="padded-container grid content-start pt-8 sm:pt-20 pb-20">
-      <Seo title={`Leaderboad - ${APP_NAME}`} url={`${DAPP_URL}/leaderboard`} />
+      <Seo title={`Leaderboad - ${APP_NAME}`} url={`${BASE_URL}/leaderboard`} />
       <DonationMetrics />
       <h3 className="mt-6 uppercase text-3xl">Impact board</h3>
       <QueryLoader
