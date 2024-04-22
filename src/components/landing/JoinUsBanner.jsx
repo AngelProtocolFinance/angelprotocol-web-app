@@ -19,7 +19,7 @@ const JoinUsBanner = () => {
       </span>
       <button className=" font-[font-heading] z-10 px-[80px] py-[18px] bg-white whitespace-nowrap rounded-[40px] font-semibold md:font-bold text-2xl md:text-3xl text-[#2D8AC8] flex justify-center">
         Join Us{" "}
-        <span className="md:hidden font-medium text-xl md:text-2xl mt-[2px] md:mt-1">
+        <span className="md:hidden font-medium text-xl md:text-2xl mt-0.5 md:mt-1">
           - It's free
         </span>
       </button>

@@ -14,7 +14,7 @@ const Footer = () => {
             />
           </div>
 
-          <p className="text-[14px] text[#3D5361] text-start break-words md:p-0  lg:w-[100%]   md:w-[70%] lg:ml-0 md:ml-6 font-normal  leading-2 -tracking-[.1px]">
+          <p className="text-xs text[#3D5361] text-start break-words md:p-0  lg:w-[100%]   md:w-[70%] lg:ml-0 md:ml-6 font-normal  leading-2 -tracking-[.1px]">
             Better Giving simplifies giving with a free platform that lets
             nonprofits around the world easily receive any kind of donation. Our
             Sustainability Fund ensures donations keep supporting causes,
@@ -32,10 +32,10 @@ const Footer = () => {
               HOW WE CAN HELP
             </h6>
             <ul>
-              <li className="text-[14px] text[##00000099] whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text[##00000099] whitespace-nowrap font-normal opacity-90">
                 Non-profits
               </li>
-              <li className="text-[14px] text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
                 Giving Partners (CSR)
               </li>
             </ul>
@@ -45,13 +45,13 @@ const Footer = () => {
               RESOURCES
             </h6>
             <ul>
-              <li className="text-[14px] text[##00000099]  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text[##00000099]  whitespace-nowrap font-normal opacity-90">
                 About
               </li>
-              <li className="text-[14px] text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
                 <a href="https://intercom.help/better-giving/en">FAQs</a>
               </li>
-              <li className="text-[14px] text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
                 News
               </li>
             </ul>
@@ -61,13 +61,13 @@ const Footer = () => {
               LEGAL
             </h6>
             <ul>
-              <li className="text-[14px] text[##00000099]  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text[##00000099]  whitespace-nowrap font-normal opacity-90">
                 Privacy Policy
               </li>
-              <li className="text-[14px] text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
                 Terms of Use <br /> (Donors)
               </li>
-              <li className="text-[14px] text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
                 Terms of Use <br /> (Non-Profits)
               </li>
             </ul>
@@ -87,7 +87,7 @@ const Footer = () => {
               </span>
             </p>
           </span>
-          <span className="flex flex-col md:items-start md:gap-[12px] gap-[12px] w-full  lg:w-full md:w-[45%]">
+          <span className="flex flex-col md:items-start gap-3 w-full  lg:w-full md:w-[45%]">
             <input
               type="text"
               name="email"
@@ -95,14 +95,14 @@ const Footer = () => {
               placeholder="Enter your email"
               className=" cursor-default text-[#000000] opacity-[.9] p-3 rounded-md font-normal border text-[15px] md:text-[13px] border-solid  border-[#0000001a] w-full"
             />
-            <button className="bg-blue-d1 rounded-[40px] px-7 py-[11px] text-white text-sm text-[14px] font-medium">
+            <button className="bg-blue-d1 rounded-[40px] px-7 py-[11px] text-white text-sm text-xs font-medium">
               Subscribe
             </button>
           </span>
         </div>
       </div>
 
-      <div className="lg:h-[64px] text-[#316B9C] font-medium    px-[24px] lg:px-[60px] py-[14px] flex justify-between items-center flex-col-reverse gap-[15px] lg:flex-row md:gap-[20px] bg-[#F1FAFF]">
+      <div className="lg:h-[64px] text-[#316B9C] font-medium    px-[24px] lg:px-[60px] py-3.5 flex justify-between items-center flex-col-reverse gap-[15px] lg:flex-row md:gap-[20px] bg-[#F1FAFF]">
         <p className=" text-[12px]   md:text-[15px] text-center ">
           <span className="">
             {" "}

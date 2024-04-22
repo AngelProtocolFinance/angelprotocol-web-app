@@ -97,11 +97,11 @@ const Path = () => {
           </span>
         </span>
         {path === "non-profits" ? (
-          <p className="text-[18px] md:text-[28px] font-medium w-full lg:max-w-[60%] md:max-w-[70%]  opacity-60  text-[#1D3C51] text-center  mx-auto font-body">
+          <p className="text-[18px] md:text-[28px] font-medium w-full lg:max-w-[60%] md:max-w-[70%]  opacity-60  text-navy-l1 text-center  mx-auto font-body">
             Access our free fundraising technology and tools.
           </p>
         ) : (
-          <p className="text-[18px] md:text-[28px] font-medium w-full lg:max-w-[60%] md:max-w-[70%]  opacity-60  text-[#1D3C51] text-center  mx-auto font-body">
+          <p className="text-[18px] md:text-[28px] font-medium w-full lg:max-w-[60%] md:max-w-[70%]  opacity-60  text-navy-l1 text-center  mx-auto font-body">
             Join our global community and amplify your charitable giving.
           </p>
         )}

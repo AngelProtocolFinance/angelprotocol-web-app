@@ -14,7 +14,7 @@ const Carousel = ({ slides }) => {
   }, [active]);
 
   return (
-    <div className="flex flex-col gap-5  font-body lg:hidden">
+    <div className="flex flex-col gap-5 font-body lg:hidden">
       {slides.map((slide, index) => {
         return (
           <div
@@ -28,12 +28,10 @@ const Carousel = ({ slides }) => {
             key={index}
           >
             <img src={slide.img_src} alt="logo" className="w-56 h-56" />
-            <p className="text-[20px] text-center md:text-[28px] font-body text-[#000] font-bold">
+            <p className="text-[20px] text-center md:text-[28px] font-body text-black font-bold">
               {slide.title}
             </p>
-            <p className="text-[16px] font-body md:text-xl text-center">
-              {slide.description}
-            </p>
+            <p className="md:text-xl text-center">{slide.description}</p>
           </div>
         );
       })}

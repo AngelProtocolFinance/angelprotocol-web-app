@@ -4,7 +4,7 @@ import CRUDButtons from "./CRUDButtons";
 const TestimonialCard = (props) => {
   return (
     <div
-      className={`relative md:w-full  md:min-h-[450px] lg:w-full lg:min-h-[450px] w-full min-h-[430px] p-[12px] pt-[62px] borderLine rounded-3xl flex flex-col justify-between bg-white   font-body  overflow ${props.className}`}
+      className={`relative md:w-full md:min-h-[450px] lg:w-full lg:min-h-[450px] w-full min-h-[430px] p-3 pt-16 borderLine rounded-3xl flex flex-col justify-between bg-white font-body overflow ${props.className}`}
     >
       {props.role === "ADMIN" && (
         <CRUDButtons handleDelete={props.handleDelete} id={props.id} />
@@ -22,7 +22,7 @@ const TestimonialCard = (props) => {
       </p>
       <span className="h-[84px]">
         <p className="text-lg opacity-90 font-bold">{props.reviewer}</p>
-        <p className="lg:text-lg md:text-lg text-[16px] font-medium opacity-75">
+        <p className="md:text-lg font-medium opacity-75">
           {props.reviewer_profession}
         </p>
       </span>

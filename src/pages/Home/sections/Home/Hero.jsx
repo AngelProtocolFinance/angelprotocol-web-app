@@ -41,13 +41,13 @@ const Hero = () => {
           <br className="xl:block hidden md:hidden lg:hidden" /> Amplified
           Impact
         </h1>
-        <p className="text-base text-[#1D3C51] z-10 font-normal lg:w-full md:w-full w-full hidden lg:block md:block md:text-[24px] text-center md:text-balance lg:leading-normal md:leading-normal font-body">
+        <p className="text-base text-navy-l1 z-10 font-normal lg:w-full md:w-full w-full hidden lg:block md:block md:text-[24px] text-center md:text-balance lg:leading-normal md:leading-normal font-body">
           As a nonprofit serving nonprofits, our all-in-one fundraising solution
           is free, global, and inclusive. <br /> However you want to give and
           receive, we've got your back. Together we can make donations go
           further and last forever.
         </p>
-        <p className="text-base lg:hidden md:hidden text-[#1D3C51] z-10 font-normal  w-[95%]  md:text-[24px] text-center l font-body">
+        <p className="text-base lg:hidden md:hidden text-navy-l1 z-10 font-normal  w-[95%]  md:text-[24px] text-center l font-body">
           As a nonprofit serving nonprofits, our all-in-one fundraising solution
           is free, global, and inclusive. <br /> However you want to give and
           receive, we've got your back. Together we can make donations go

@@ -8,12 +8,14 @@ import heartText from "../../../../assets/landing/heartText.svg";
 import videobanner from "../../../../assets/landing/video_bannerUpdate.png";
 import Button from "../../../../components/landing/Button";
 
+const triggerId = "__video";
+
 const Video = () => {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const tl = gsap.timeline({
       scrollTrigger: {
-        trigger: ".video",
+        trigger: `#${triggerId}`,
         start: "top top",
         scrub: 1,
       },
@@ -23,7 +25,7 @@ const Video = () => {
 
     tl.to(".circle img:first-child", {
       scrollTrigger: {
-        trigger: ".video",
+        trigger: `#${triggerId}`,
         start: "top top",
         scrub: 1,
       },
@@ -40,7 +42,10 @@ const Video = () => {
   }, []);
 
   return (
-    <section className=" video py-[29px] px-[15px] md:pt-[120px] lg:p-[100px] md:px-[30px] md:pb-[10px] flex flex-col gap-5 lg:gap-[40px] relative    xl:m-auto ">
+    <section
+      id={triggerId}
+      className="py-[29px] px-[15px] md:pt-[120px] lg:p-[100px] md:px-[30px] md:pb-2.5 flex flex-col gap-5 lg:gap-[40px] relative xl:m-auto"
+    >
       <span className="flex flex-col w-full relative">
         <span className="flex items-center justify-center md:top-[-250px] top-[-220px] w-full h-[170px] ">
           <span className="absolute w-full h-3/6 left-0 bottom-0 hidden md:block"></span>
@@ -57,14 +62,14 @@ const Video = () => {
           <h2 className="text-navy-d4 text-[32px] md:text-[42px] font-bold text-center font-heading md:mb-5 leading-normal mb-5 w-[100%]  md:max-w-[85%] lg:max-w-[85%]">
             The Better.Giving <br className="md:hidden lg:hidden" /> Alliance
           </h2>
-          <p className="text-[20px] md:text-[28px] lg:text-[28px] text-[#1D3C51] font-medium lg:min-w-[816px] w-[324px] opacity-[.8] md:w-[692px] md:tracking-[.3px] text-center  m-auto font-body">
+          <p className="text-[20px] md:text-[28px] lg:text-[28px] text-navy-l1 font-medium lg:min-w-[816px] w-[324px] opacity-[.8] md:w-[692px] md:tracking-[.3px] text-center  m-auto font-body">
             Join a global alliance of partners united around a giving pledge to
             create lasting positive change{" "}
           </p>
         </div>
       </span>
 
-      <div className=" borderLine flex flex-col relative top-0 left-[50%] translate-x-[-50%] items-center  justify-center gap-[40px] md:gap-[48px] lg:p-[32px] md:rounded-[48px] rounded-[18px] lg:rounded-[88px] p-[8px] pb-[24px]  w-full lg:w-[1100px]  bg-white md:mt-2 lg:mt-2 -mt-5 z-10">
+      <div className=" borderLine flex flex-col relative top-0 left-[50%] translate-x-[-50%] items-center  justify-center gap-[40px] md:gap-[48px] lg:p-[32px] md:rounded-[48px] rounded-[18px] lg:rounded-[88px] p-2 pb-6 w-full lg:w-[1100px]  bg-white md:mt-2 lg:mt-2 -mt-5 z-10">
         <div className="relative w-full  h-[171.2px] lg:h-[626px]  md:h-[392.94px] shrink-0  rounded-[17.5px] md:rounded-[40.17px] lg:rounded-[64px] overflow-hidden ">
           <img
             src={videobanner}
@@ -73,7 +78,7 @@ const Video = () => {
           />
         </div>
 
-        <span className=" circle absolute    lg:left-[-5%] md:left-[-5px] origin-center md:scale-[.8] lg:scale-[1] lg:bottom-[25%] md:bottom-[-9%] text-[16px] font-bold text-blue-d1 w-[180px] h-[180px] rounded-full hidden md:flex lg:flex items-center justify-center font-heading">
+        <span className=" circle absolute lg:left-[-5%] md:left-[-5px] origin-center md:scale-[.8] lg:scale-[1] lg:bottom-[25%] md:bottom-[-9%] font-bold text-blue-d1 w-44 h-44 rounded-full hidden md:flex lg:flex items-center justify-center font-heading">
           <img
             src={heartText}
             className="heartText w-full h-full object-cover object-center"
@@ -86,7 +91,7 @@ const Video = () => {
           />
         </span>
 
-        <p className="text-[16px] md:text-[24px] font-medium opacity-[.8] text-[#1D3C51] text-center md:w-[698px] w-[304px] md:px-5 lg:w-[908px] font-body">
+        <p className="md:text-[24px] font-medium opacity-[.8] text-navy-l1 text-center md:w-[698px] w-[304px] md:px-5 lg:w-[908px] font-body">
           We connect you with the causes you care about most, with pioneering
           ways to contribute, grow, and track your generosity, all while
           celebrating our collective impact.

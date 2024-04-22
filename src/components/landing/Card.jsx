@@ -10,7 +10,7 @@ const Card = (props) => {
         <img
           src={props.logo}
           alt="logo"
-          className="absolute object-cover h-[px] w-10 bottom-5 right-8"
+          className="absolute object-cover h-px w-10 bottom-5 right-8"
         />
       </span>
 

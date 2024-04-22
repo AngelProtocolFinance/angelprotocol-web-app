@@ -58,7 +58,7 @@ const BenefitsCarousel = ({ slides }) => {
               <p className="text-2xl text-[#0D283A] w-full font-body font-semibold">
                 {ele.title}
               </p>
-              <p className="text-base mt-2 text-ellipsis md:text-center font-body font-normal w-full text-[#1D3C51]">
+              <p className="text-base mt-2 text-ellipsis md:text-center font-body font-normal w-full text-navy-l1">
                 {ele.description}
               </p>
             </SwiperSlide>
@@ -98,7 +98,7 @@ const BenefitsCarousel = ({ slides }) => {
             />
           </g>
         </svg>
-        <p className="font-gochi max-w-[70%] text-center text-lg font-medium text-black">
+        <p className="font-gochi max-w-[70%] text-center text-lg font-medium text-[#111]">
           Scroll to know more
         </p>
       </div>

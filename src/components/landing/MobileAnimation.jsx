@@ -78,7 +78,7 @@ const MobileAnimation = () => {
             </defs>
           </svg>
 
-          <h4 className=" text-[14px] z-[33] font-bold z w-full mx-auto text-[#3c91cb] text-center mb-[65px]   font-heading">
+          <h4 className=" text-xs z-[33] font-bold z w-full mx-auto text-[#3c91cb] text-center mb-[65px]   font-heading">
             SIMPLE PATH TO FINANCIAL STABILITY
           </h4>
           <div className="bg-[#fbf8f9]   w-full h-[120px] absolute top-10 blur-[15px] -z-1">
