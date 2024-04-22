@@ -8,7 +8,7 @@ import brand6 from "../../../../assets/landing/brand_6.svg";
 import brand7 from "../../../../assets/landing/brand_7.svg";
 const Brands = () => {
   return (
-    <section className="flex items-center relative  mt-10  flex-col gap-[56px] py-[1.5rem]  md:py-[64px] mb-16  md:pt-0 md:pb-[110px] ">
+    <section className="flex items-center relative  mt-10  flex-col gap-14 py-[1.5rem] md:py-16 mb-16  md:pt-0 md:pb-[110px] ">
       <h2 className="text-[32px] md:text-[42px] font-bold lg:w-[100%] w-[324px]  mx-auto px-1 md:w-[516px]  text-navy-d4 text-center md:mx-auto   font-heading">
         Trusted by impactful <br className="hidden lg:flex" /> nonprofits
         worldwide

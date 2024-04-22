@@ -9,7 +9,7 @@ const NewNavbar = () => {
     <>
       <nav
         className={
-          "bg-[#fff] ease-in-out duration-400 top-0 left-0 w-full fixed  z-[9999] lg:h-[68px] h-[68px] shadow-md flex justify-between items-center  md:px-[40px] lg:px-[40px] xl:px-[40px] xl:h-[68px] px-5 md:w-full lg:w-full font-heading m-auto overflow-hidden"
+          "bg-[#fff] ease-in-out duration-400 top-0 left-0 w-full fixed  z-[9999] lg:h-[68px] h-[68px] shadow-md flex justify-between items-center  md:px-10 lg:px-10 xl:px-10 xl:h-[68px] px-5 md:w-full lg:w-full font-heading m-auto overflow-hidden"
         }
       >
         <DappLogo classes="w-48 h-12" />

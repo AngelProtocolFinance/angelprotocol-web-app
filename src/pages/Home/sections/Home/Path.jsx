@@ -66,7 +66,7 @@ const Path = () => {
   ];
 
   return (
-    <section className="px-6 lg:pt-0 lg:p-[28px] md:pt-0 md:p-[30px] pt-0 flex flex-col gap-[50px] lg:gap-[0px] mt-[-200px] mb-16  xl:max-w-[1440px] xl:m-auto xl:-mt-20">
+    <section className="px-6 lg:pt-0 lg:p-7 md:pt-0 md:p-[30px] pt-0 flex flex-col gap-[50px] lg:gap-[0px] mt-[-200px] mb-16  xl:max-w-[1440px] xl:m-auto xl:-mt-20">
       <div className="flex flex-col gap-[42px]">
         <span className="flex flex-col items-center gap-2 ">
           <h3 className="text-[13px] md:text-[18px] uppercase font-bold text-blue-d1 font-heading">

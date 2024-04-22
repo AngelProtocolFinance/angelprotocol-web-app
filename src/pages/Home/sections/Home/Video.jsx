@@ -44,7 +44,7 @@ const Video = () => {
   return (
     <section
       id={triggerId}
-      className="py-[29px] px-[15px] md:pt-[120px] lg:p-[100px] md:px-[30px] md:pb-2.5 flex flex-col gap-5 lg:gap-[40px] relative xl:m-auto"
+      className="py-[29px] px-[15px] md:pt-[120px] lg:p-[100px] md:px-[30px] md:pb-2.5 flex flex-col gap-5 lg:gap-10 relative xl:m-auto"
     >
       <span className="flex flex-col w-full relative">
         <span className="flex items-center justify-center md:top-[-250px] top-[-220px] w-full h-[170px] ">
@@ -69,7 +69,7 @@ const Video = () => {
         </div>
       </span>
 
-      <div className=" borderLine flex flex-col relative top-0 left-[50%] translate-x-[-50%] items-center  justify-center gap-[40px] md:gap-[48px] lg:p-[32px] md:rounded-[48px] rounded-[18px] lg:rounded-[88px] p-2 pb-6 w-full lg:w-[1100px]  bg-white md:mt-2 lg:mt-2 -mt-5 z-10">
+      <div className=" borderLine flex flex-col relative top-0 left-[50%] translate-x-[-50%] items-center  justify-center gap-10 md:gap-12 lg:p-8 md:rounded-[48px] rounded-[18px] lg:rounded-[88px] p-2 pb-6 w-full lg:w-[1100px] bg-white md:mt-2 lg:mt-2 -mt-5 z-10">
         <div className="relative w-full  h-[171.2px] lg:h-[626px]  md:h-[392.94px] shrink-0  rounded-[17.5px] md:rounded-[40.17px] lg:rounded-[64px] overflow-hidden ">
           <img
             src={videobanner}

@@ -76,8 +76,8 @@ const TabletAnimation = () => {
             </linearGradient>
           </defs>
         </svg>
-        <div className="absolute top-0 h-full flex flex-col   justify-between  px-[32px]">
-          <h4 className=" md:text-[18px] font-bold md:w-full      text-[#3c91cb] text-center md:mx-auto   font-heading">
+        <div className="absolute top-0 h-full flex flex-col justify-between  px-8">
+          <h4 className=" md:text-[18px] font-bold md:w-full text-[#3c91cb] text-center md:mx-auto   font-heading">
             SIMPLE PATH TO FINANCIAL STABILITY
           </h4>
           <div className="bg-[#fbf8f9] md:w-[65%] h-[120px] absolute top-10 left-36 blur-[15px] -z-1">

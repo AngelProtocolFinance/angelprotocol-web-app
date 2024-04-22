@@ -3,8 +3,8 @@ import log from "../../assets/landing/logo.svg";
 
 const Footer = () => {
   return (
-    <footer className="flex flex-col   lg:gap-[80px] gap-[50px] pt-[50px]  font-body">
-      <div className="flex flex-col lg:items-center  lg:justify-between  lg:flex-row md:flex-col px-6 lg:px-16 md:px-[30px] gap-[70px]">
+    <footer className="flex flex-col lg:gap-20 gap-[50px] pt-[50px] font-body">
+      <div className="flex flex-col lg:items-center  lg:justify-between lg:flex-row md:flex-col px-6 lg:px-16 md:px-[30px] gap-[70px]">
         <div className="flex flex-col gap-5 lg:flex-col md:flex-row lg:max-w-[28%] lg:gap-6 md:gap-[30px] md:items-start md:justify-between">
           <div className=" lg:w-[250px] md:w-[280px] w-[300px] lg:h-16 md:h-16 h-20 md:scale-[1] lg:scale-[1] scale-[.9] lg:-ml-7 md:-ml-2 -mb-2">
             <img
@@ -26,16 +26,16 @@ const Footer = () => {
           </p>
         </div>
 
-        <div className="flex gap-[70px]  flex-wrap md:flex-nowrap lg:self-auto md:self-center lg:-ml-2.5 ">
+        <div className="flex gap-[70px] flex-wrap md:flex-nowrap lg:self-auto md:self-center lg:-ml-2.5 ">
           <div className="flex flex-col gap-5">
             <h6 className="text-base font-semibold text-[#4585bb] md:mb-0 -mb-2">
               HOW WE CAN HELP
             </h6>
             <ul>
-              <li className="text-xs text[##00000099] whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text-black whitespace-nowrap font-normal opacity-90">
                 Non-profits
               </li>
-              <li className="text-xs text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text-black mt-4 whitespace-nowrap font-normal opacity-90">
                 Giving Partners (CSR)
               </li>
             </ul>
@@ -45,13 +45,13 @@ const Footer = () => {
               RESOURCES
             </h6>
             <ul>
-              <li className="text-xs text[##00000099]  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text-black whitespace-nowrap font-normal opacity-90">
                 About
               </li>
-              <li className="text-xs text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text-black mt-4  whitespace-nowrap font-normal opacity-90">
                 <a href="https://intercom.help/better-giving/en">FAQs</a>
               </li>
-              <li className="text-xs text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text-black mt-4 whitespace-nowrap font-normal opacity-90">
                 News
               </li>
             </ul>
@@ -61,13 +61,13 @@ const Footer = () => {
               LEGAL
             </h6>
             <ul>
-              <li className="text-xs text[##00000099]  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text-black  whitespace-nowrap font-normal opacity-90">
                 Privacy Policy
               </li>
-              <li className="text-xs text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text-black mt-4  whitespace-nowrap font-normal opacity-90">
                 Terms of Use <br /> (Donors)
               </li>
-              <li className="text-xs text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
+              <li className="text-xs text-black mt-4 whitespace-nowrap font-normal opacity-90">
                 Terms of Use <br /> (Non-Profits)
               </li>
             </ul>
@@ -102,7 +102,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="lg:h-[64px] text-[#316B9C] font-medium    px-6 lg:px-[60px] py-3.5 flex justify-between items-center flex-col-reverse gap-[15px] lg:flex-row md:gap-5 bg-[#F1FAFF]">
+      <div className="lg:h-16 text-[#316B9C] font-medium px-6 lg:px-[60px] py-3.5 flex justify-between items-center flex-col-reverse gap-[15px] lg:flex-row md:gap-5 bg-[#F1FAFF]">
         <p className=" text-[12px]   md:text-[15px] text-center ">
           <span className="">
             {" "}
