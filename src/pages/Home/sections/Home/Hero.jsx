@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { DAPP_URL } from "constants/env";
 import headillust from "../../../../assets/landing/head-illust.webp";
 import Button from "../../../../components/landing/Button";
 import Navbar from "../../../../components/landing/Navbar";
@@ -54,7 +55,9 @@ const Hero = () => {
 
         <div className="z-20  relative">
           <div className=" -ml-3 z-40">
-            <Button text={"Join Us"} />
+            <a href={`${DAPP_URL}/register`}>
+              <Button text={"Join Us"} />
+            </a>
           </div>
           <span className="md:flex flex-col items-center absolute top-[50%] right-[-70%] text-[#183244] hidden">
             <svg

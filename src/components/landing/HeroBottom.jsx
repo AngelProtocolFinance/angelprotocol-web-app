@@ -1,5 +1,6 @@
 import useCards from "pages/Marketplace/Cards/useCards";
 import React, { useEffect, useState } from "react";
+import { DAPP_URL } from "constants/env";
 import "swiper/css";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -413,7 +414,9 @@ const HeroBottom = () => {
         </div>
 
         <div className="-mt-30 z-40">
-          <Button text={"Explore All Causes"} />
+          <a href={`${DAPP_URL}/marketplace`}>
+            <Button text={"Explore All Causes"} />
+          </a>
         </div>
         <p className="bg-[#FFEECC] font-gochi text-2xl z-[22] px-4">
           from all around the globe
