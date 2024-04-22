@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/landing/crousal.css";
+import "../../styles/landing/Carousel.css";
 
-const Crousal = ({ slides }) => {
+const Carousel = ({ slides }) => {
   const [_right, setright] = useState(0);
   const [active, setActive] = useState(null);
 
@@ -41,4 +41,4 @@ const Crousal = ({ slides }) => {
   );
 };
 
-export default Crousal;
+export default Carousel;

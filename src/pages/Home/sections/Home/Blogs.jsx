@@ -133,7 +133,7 @@ const Blogs = () => {
       "https://angelgiving-dev.10web.site/wp-content/uplo…s/2023/04/Angel_Protocol_-_Website_Banners_13.png",
       "https://angelgiving-dev.10web.site/wp-content/uploads/2023/04/32.png",
       "https://angelgiving-dev.10web.site/wp-content/uplo…s/2023/04/10-point-plan-non-profit-fundrasing.png",
-    ]
+    ],
   );
 
   return (
@@ -208,7 +208,7 @@ const Blogs = () => {
           }}
           onSlideChange={(swiper) => handleSlideChange(swiper)}
           modules={[Navigation]}
-          className="blog_crousal"
+          className="blog_Carousel"
         >
           {blogs.map((ele, idx) => {
             return (

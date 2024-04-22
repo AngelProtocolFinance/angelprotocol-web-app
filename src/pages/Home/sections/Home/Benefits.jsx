@@ -1,10 +1,10 @@
 import React from "react";
-import BenefitssCrousal from "../../../../components/landing/BenefitssCrousal";
+import BenefitsCarousel from "../../../../components/landing/BenefitsCarousel";
 
 const Benefits = () => {
   return (
     <section className="flex items-center justify-center p-[100px]">
-      <BenefitssCrousal />
+      <BenefitsCarousel />
     </section>
   );
 };
