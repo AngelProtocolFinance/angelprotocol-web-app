@@ -266,7 +266,7 @@ const HeroBottom = () => {
     }
   }, [data]);
   return (
-    <div className="relative bottom-[300px] lg:bottom-[300px]   md:bottom-[350px] z-10 pt-[50px] px-[24px] ">
+    <div className="relative bottom-[300px] lg:bottom-[300px]   md:bottom-[350px] z-10 pt-[50px] px-6 ">
       <img
         src={mappng}
         alt="map"
@@ -334,7 +334,7 @@ const HeroBottom = () => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="text-blue-d1 w-[24px] h-[24px] font-bold"
+              className="text-blue-d1 w-6 h-6 font-bold"
             >
               <path
                 strokeLinecap="round"
@@ -398,7 +398,7 @@ const HeroBottom = () => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="text-blue-d1 w-[24px] h-[24px] font-bold "
+              className="text-blue-d1 w-6 h-6 font-bold "
             >
               <path
                 strokeLinecap="round"

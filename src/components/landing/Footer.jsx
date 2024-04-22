@@ -4,9 +4,9 @@ import log from "../../assets/landing/logo.svg";
 const Footer = () => {
   return (
     <footer className="flex flex-col   lg:gap-[80px] gap-[50px] pt-[50px]  font-body">
-      <div className="flex flex-col lg:items-center  lg:justify-between  lg:flex-row md:flex-col px-[24px] lg:px-[65px] md:px-[30px] gap-[70px]  ">
-        <div className="flex flex-col gap-[20px] lg:flex-col md:flex-row lg:max-w-[28%] lg:gap-6 md:gap-[30px] md:items-start md:justify-between">
-          <div className=" lg:w-[250px] md:w-[280px] w-[300px]    lg:h-16 md:h-16 h-20 md:scale-[1] lg:scale-[1] scale-[.9]  lg:-ml-7 md:-ml-2  -mb-2">
+      <div className="flex flex-col lg:items-center  lg:justify-between  lg:flex-row md:flex-col px-6 lg:px-16 md:px-[30px] gap-[70px]">
+        <div className="flex flex-col gap-5 lg:flex-col md:flex-row lg:max-w-[28%] lg:gap-6 md:gap-[30px] md:items-start md:justify-between">
+          <div className=" lg:w-[250px] md:w-[280px] w-[300px] lg:h-16 md:h-16 h-20 md:scale-[1] lg:scale-[1] scale-[.9] lg:-ml-7 md:-ml-2 -mb-2">
             <img
               src={log}
               className=" w-full h-full object-cover object-center  "
@@ -74,7 +74,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex  flex-col gap-[24px] lg:ml-16 md:ml-0 lg:flex-col lg:gap-6 md md:flex-row md:justify-between">
+        <div className="flex  flex-col gap-6 lg:ml-16 md:ml-0 lg:flex-col lg:gap-6 md md:flex-row md:justify-between">
           <span>
             <h6 className="text-base font-bold  text-[#4585bb] mb-1">
               Subscribe to our newsletter
@@ -95,14 +95,14 @@ const Footer = () => {
               placeholder="Enter your email"
               className=" cursor-default text-[#000000] opacity-[.9] p-3 rounded-md font-normal border text-[15px] md:text-[13px] border-solid  border-[#0000001a] w-full"
             />
-            <button className="bg-blue-d1 rounded-[40px] px-7 py-[11px] text-white text-sm text-xs font-medium">
+            <button className="bg-blue-d1 rounded-[40px] px-7 py-[11px] text-white text-xs font-medium">
               Subscribe
             </button>
           </span>
         </div>
       </div>
 
-      <div className="lg:h-[64px] text-[#316B9C] font-medium    px-[24px] lg:px-[60px] py-3.5 flex justify-between items-center flex-col-reverse gap-[15px] lg:flex-row md:gap-[20px] bg-[#F1FAFF]">
+      <div className="lg:h-[64px] text-[#316B9C] font-medium    px-6 lg:px-[60px] py-3.5 flex justify-between items-center flex-col-reverse gap-[15px] lg:flex-row md:gap-5 bg-[#F1FAFF]">
         <p className=" text-[12px]   md:text-[15px] text-center ">
           <span className="">
             {" "}

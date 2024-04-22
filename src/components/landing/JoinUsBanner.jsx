@@ -13,7 +13,7 @@ const JoinUsBanner = () => {
         <p className="text-lg font-bold mb-1 uppercase text-white">
           Fueling Dreams
         </p>
-        <p className="text-[24px] md:text-[42px] font-bold  lg:max-w-1/2 md:max-w-[80%] text-white">
+        <p className="text-2xl md:text-[42px] font-bold  lg:max-w-1/2 md:max-w-[80%] text-white">
           Together, we can change the world for good
         </p>
       </span>

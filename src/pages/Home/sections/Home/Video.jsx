@@ -91,7 +91,7 @@ const Video = () => {
           />
         </span>
 
-        <p className="md:text-[24px] font-medium opacity-[.8] text-navy-l1 text-center md:w-[698px] w-[304px] md:px-5 lg:w-[908px] font-body">
+        <p className="md:text-2xl font-medium opacity-[.8] text-navy-l1 text-center md:w-[698px] w-[304px] md:px-5 lg:w-[908px] font-body">
           We connect you with the causes you care about most, with pioneering
           ways to contribute, grow, and track your generosity, all while
           celebrating our collective impact.

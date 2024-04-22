@@ -9,14 +9,14 @@ const TestimonialCard = (props) => {
       {props.role === "ADMIN" && (
         <CRUDButtons handleDelete={props.handleDelete} id={props.id} />
       )}
-      <div className=" w-[130px] h-[130px] absolute top-[-10%] left-[20px] ">
+      <div className=" w-32 h-32 absolute top-[-10%] left-5">
         <img
           src={props.reviewer_logo}
           alt="logo"
-          className="w-full h-full object-contain "
+          className="size-full object-contain"
         />
       </div>
-      <p className="lg:text-[18px] md:text-[18px] text-[17px] h-[270px] mt-8 text-ellipsis overflow-x-hidden font-normal w-full break-words  opacity-[.8]">
+      <p className="md:text-lg text-[17px] h-[270px] mt-8 text-ellipsis overflow-x-hidden font-normal w-full break-words opacity-[.8]">
         {props.review ||
           "We are in love with the easy process Better Giving has created to start an endowment. We always focused on recurring giving with donors. This takes it to the next level."}
       </p>

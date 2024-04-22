@@ -22,7 +22,7 @@ const Testimonials = () => {
   return (
     <div className="p-[30px] lg:p-[100px] flex gap-5 flex-wrap">
       <div
-        className="min-w-[350px] min-h-[444px] border border-solid flex items-center justify-center pb-[24px] rounded-[18px] mt-4 cursor-pointer"
+        className="min-w-[350px] min-h-[444px] border border-solid flex items-center justify-center pb-6 rounded-[18px] mt-4 cursor-pointer"
         onClick={() => navigate("/dashboard/create-testimonial")}
       >
         <svg
