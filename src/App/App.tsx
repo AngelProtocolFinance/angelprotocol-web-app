@@ -28,7 +28,7 @@ const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const Widget = lazy(() => import("pages/Widget"));
 const BlogPosts = lazy(() => import("pages/Blog/Posts"));
 const BlogPost = lazy(() => import("pages/Blog/Post"));
-const Home=lazy(() => import("pages/Home"));
+const Home = lazy(() => import("pages/Home"));
 
 export default function App() {
   const location = useLocation();
@@ -116,10 +116,6 @@ export default function App() {
             <Route index element={<BlogPosts />} />
           </Route>
         </Route>
-        <Route
-          path="*"
-          element={<Navigate replace to={appRoutes.marketplace} />}
-        />
         <Route path="*" element={<Navigate replace to={appRoutes.home} />} />
       </SentryRoutes>
     </ModalContext>
