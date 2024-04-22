@@ -1,23 +1,23 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Aid from "../assets/landing/Aid.png";
-import test from "../assets/landing/testi3Img.png";
-import ph from "../assets/landing/PH8_Logo.jpeg";
-import shoe from "../assets/landing/shoes_that_speak.webp";
-import ace from "../assets/landing/ace_of_hearts.webp";
+import { useState } from "react";
 import casd from "../assets/landing/CASD-SL.webp";
+import ph from "../assets/landing/PH8_Logo.jpeg";
+import ace from "../assets/landing/ace_of_hearts.webp";
 import buck from "../assets/landing/buck.webp";
 import fora from "../assets/landing/foraday.png";
+import shoe from "../assets/landing/shoes_that_speak.webp";
+import test from "../assets/landing/testi3Img.png";
 export default function useGetTestimonials() {
-  const [testimonials, setTestimonials] = useState([
+  const [testimonials, _setTestimonials] = useState([
     {
-      review: "Better Giving is an incredible idea, platform and opportunity.I have loved working with the team",
+      review:
+        "Better Giving is an incredible idea, platform and opportunity.I have loved working with the team",
       reviewer: "Faith Flanagan",
       reviewer_profession: "Buckminster Fuller Institute",
       reviewer_logo: buck,
     },
     {
-      review:"I personally like to check our BG balance weekly.  Looking at the endowment growth week by week gives me a little spark of inspiration. The network of BG’s audience seems to be incredibly responsive to crypto’s empowerment. We hope to tap into that.",
+      review:
+        "I personally like to check our BG balance weekly.  Looking at the endowment growth week by week gives me a little spark of inspiration. The network of BG’s audience seems to be incredibly responsive to crypto’s empowerment. We hope to tap into that.",
       reviewer: "Jenna Edward",
       reviewer_profession: "The For a Day Foundation",
       reviewer_logo: fora,
@@ -58,7 +58,6 @@ export default function useGetTestimonials() {
       reviewer_logo: casd,
     },
   ]);
-
 
   return testimonials;
 }

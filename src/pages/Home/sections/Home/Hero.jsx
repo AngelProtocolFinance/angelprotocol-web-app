@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
+import headillust from "../../../../assets/landing/head-illust.webp";
+import Button from "../../../../components/landing/Button";
 import Navbar from "../../../../components/landing/Navbar";
 import "../../../../styles/landing/hero.css";
-import Button from "../../../../components/landing/Button";
-import headillust from "../../../../assets/landing/head-illust.webp" 
 const Hero = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [_scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,20 +35,27 @@ const Hero = () => {
           Give Today, Give Forever
         </p>
         <h1 className="text-[40px] md:text-[64px]  text-center z-10">
-        Simplified Giving,
-          <br className="xl:block hidden md:hidden lg:hidden" /> Amplified Impact
+          Simplified Giving,
+          <br className="xl:block hidden md:hidden lg:hidden" /> Amplified
+          Impact
         </h1>
         <p className="text-base text-[#1D3C51] z-10 font-normal lg:w-full md:w-full w-full hidden lg:block md:block md:text-[24px] text-center md:text-balance lg:leading-normal md:leading-normal font-body">
-        As a nonprofit serving nonprofits, our all-in-one fundraising solution is free, global, and inclusive. <br /> However you want to give
-and receive, we've got your back. Together we can make donations go further and last forever.
+          As a nonprofit serving nonprofits, our all-in-one fundraising solution
+          is free, global, and inclusive. <br /> However you want to give and
+          receive, we've got your back. Together we can make donations go
+          further and last forever.
         </p>
         <p className="text-base lg:hidden md:hidden text-[#1D3C51] z-10 font-normal  w-[95%]  md:text-[24px] text-center l font-body">
-        As a nonprofit serving nonprofits, our all-in-one fundraising solution is free, global, and inclusive. <br /> However you want to give
-and receive, we've got your back. Together we can make donations go further and last forever.
+          As a nonprofit serving nonprofits, our all-in-one fundraising solution
+          is free, global, and inclusive. <br /> However you want to give and
+          receive, we've got your back. Together we can make donations go
+          further and last forever.
         </p>
-        
+
         <div className="z-20  relative">
-        <div className=" -ml-3 z-40"><Button text={"Join Us"} /></div>
+          <div className=" -ml-3 z-40">
+            <Button text={"Join Us"} />
+          </div>
           <span className="md:flex flex-col items-center absolute top-[50%] right-[-70%] text-[#183244] hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,8 +79,6 @@ and receive, we've got your back. Together we can make donations go further and 
       <div className="h-[380px] w-[140vw] left-[-70px] bottom-[-10%] md:w-[120vw] lg:w-[120vw] lg:h-[140px]  absolute lg:left-[-40px] lg:rounded-full    lg:bottom-[90px] md:bottom-[-120px] md:left-[-60px] bg-[#fff]   lg:blur-[25px]  md:blur-[35px] blur-[40px] "></div>
       <div className="h-[200px] extra_width absolute bottom-[230px] left-[-70px] bg-[#ffff] hidden lg:block md:block  rounded-full blur-[400px] overflow-x-hidden"></div>
     </section>
-
-  
   );
 };
 

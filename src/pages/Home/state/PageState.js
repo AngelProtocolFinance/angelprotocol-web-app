@@ -1,18 +1,18 @@
-import React, { createContext, useState } from 'react'
+import React, { createContext, useState } from "react";
 
-export const PageContext = createContext(null)
+export const PageContext = createContext(null);
 
 const PageState = (props) => {
-  const [page, setPage] = useState("blog")
+  const [page, setPage] = useState("blog");
   const changePage = (page) => {
-    setPage(page)
-  }
+    setPage(page);
+  };
 
   return (
-    <PageContext.Provider value={{page, changePage}}>
+    <PageContext.Provider value={{ page, changePage }}>
       {props.children}
     </PageContext.Provider>
-  )
-}
+  );
+};
 
-export default PageState
+export default PageState;
