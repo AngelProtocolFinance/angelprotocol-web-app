@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -11,7 +11,7 @@ const BenefitsCarousel = ({ slides }) => {
 
   return (
     <div className="lg:flex justify-between w-full items-center p-16 hidden relative">
-      <div className="swip-prev slider-arrow relative left-[12.5%] translate-x-[-50%] z-40 borderLine rounded-full shadow-md p-4">
+      <div className="swip-prev slider-arrow relative left-[12.5%] -translate-x-1/2 z-40 borderLine rounded-full shadow-md p-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

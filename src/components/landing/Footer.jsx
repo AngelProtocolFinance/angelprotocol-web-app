@@ -14,7 +14,7 @@ const Footer = () => {
             />
           </div>
 
-          <p className="text-xs text[#3D5361] text-start break-words md:p-0  lg:w-[100%]   md:w-[70%] lg:ml-0 md:ml-6 font-normal  leading-2 -tracking-[.1px]">
+          <p className="text-xs text[#3D5361] text-start break-words md:p-0  lg:w-full   md:w-[70%] lg:ml-0 md:ml-6 font-normal  leading-2 -tracking-[.1px]">
             Better Giving simplifies giving with a free platform that lets
             nonprofits around the world easily receive any kind of donation. Our
             Sustainability Fund ensures donations keep supporting causes,
@@ -79,7 +79,7 @@ const Footer = () => {
             <h6 className="text-base font-bold  text-[#4585bb] mb-1">
               Subscribe to our newsletter
             </h6>
-            <p className="text-[12px] text[#647581] text-justify font-normal opacity-90 md:w-[100%] lg:w-[100%] w-[90%]">
+            <p className="text-[12px] text[#647581] text-justify font-normal opacity-90 md:w-full lg:w-full w-[90%]">
               By subscribing to this newsletter you confirm that you <br /> have
               read and agree with our{" "}
               <span className="underline font-medium text-[#000] opacity-[1]">

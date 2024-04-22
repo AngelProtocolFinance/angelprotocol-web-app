@@ -59,7 +59,7 @@ const Video = () => {
         </span>
 
         <div className="text flex flex-col  items-center -top-[65px]  md:-top-[50px] lg:-top-[50px]   relative">
-          <h2 className="text-navy-d4 text-[32px] md:text-[42px] font-bold text-center font-heading md:mb-5 leading-normal mb-5 w-[100%]  md:max-w-[85%] lg:max-w-[85%]">
+          <h2 className="text-navy-d4 text-[32px] md:text-[42px] font-bold text-center font-heading md:mb-5 leading-normal mb-5 w-full  md:max-w-[85%] lg:max-w-[85%]">
             The Better.Giving <br className="md:hidden lg:hidden" /> Alliance
           </h2>
           <p className="text-[20px] md:text-[28px] lg:text-[28px] text-navy-l1 font-medium lg:min-w-[816px] w-[324px] opacity-[.8] md:w-[692px] md:tracking-[.3px] text-center  m-auto font-body">
@@ -69,7 +69,7 @@ const Video = () => {
         </div>
       </span>
 
-      <div className=" borderLine flex flex-col relative top-0 left-[50%] translate-x-[-50%] items-center  justify-center gap-10 md:gap-12 lg:p-8 md:rounded-[48px] rounded-[18px] lg:rounded-[88px] p-2 pb-6 w-full lg:w-[1100px] bg-white md:mt-2 lg:mt-2 -mt-5 z-10">
+      <div className=" borderLine flex flex-col relative top-0 left-1/2 -translate-x-1/2 items-center  justify-center gap-10 md:gap-12 lg:p-8 md:rounded-[48px] rounded-[18px] lg:rounded-[88px] p-2 pb-6 w-full lg:w-[1100px] bg-white md:mt-2 lg:mt-2 -mt-5 z-10">
         <div className="relative w-full  h-[171.2px] lg:h-[626px]  md:h-[392.94px] shrink-0  rounded-[17.5px] md:rounded-[40.17px] lg:rounded-[64px] overflow-hidden ">
           <img
             src={videobanner}
@@ -78,7 +78,7 @@ const Video = () => {
           />
         </div>
 
-        <span className=" circle absolute lg:left-[-5%] md:left-[-5px] origin-center md:scale-[.8] lg:scale-[1] lg:bottom-[25%] md:bottom-[-9%] font-bold text-blue-d1 w-44 h-44 rounded-full hidden md:flex lg:flex items-center justify-center font-heading">
+        <span className=" circle absolute lg:left-[-5%] md:left-[-5px] origin-center md:scale-[.8] lg:scale-[1] lg:bottom-1/4 md:bottom-[-9%] font-bold text-blue-d1 w-44 h-44 rounded-full hidden md:flex lg:flex items-center justify-center font-heading">
           <img
             src={heartText}
             className="heartText w-full h-full object-cover object-center"
@@ -87,7 +87,7 @@ const Video = () => {
           <img
             src={heart}
             alt=""
-            className=" absolute top-[50%] left-[50%] object-cover object-center translate-x-[-50%] translate-y-[-50%] z-50"
+            className=" absolute top-1/2 left-1/2 object-cover object-center -translate-x-1/2 -translate-y-1/2 z-50"
           />
         </span>
 
@@ -105,7 +105,7 @@ const Video = () => {
         height="332"
         viewBox="0 0 209 332"
         fill="none"
-        className="absolute top-[50%] right-0"
+        className="absolute top-1/2 right-0"
       >
         <path
           opacity="0.4"

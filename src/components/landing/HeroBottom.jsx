@@ -270,7 +270,7 @@ const HeroBottom = () => {
       <img
         src={mappng}
         alt="map"
-        className=" w-[841px] h-[403px] lg:w-full md:w-full lg:h-[70%] md:h-[50%]  absolute lg:bottom-[-20%] lg:left-8 md:bottom-[-16%] md:left-4  z-[-88] bottom-[-12%] left-2 opacity-[1] lg:scale-[1] md:scale-[1] scale-[1] lg:object-fill object-cover object-center"
+        className=" w-[841px] h-[403px] lg:w-full md:w-full lg:h-[70%] md:h-1/2  absolute lg:bottom-[-20%] lg:left-8 md:bottom-[-16%] md:left-4  z-[-88] bottom-[-12%] left-2 opacity-[1] lg:scale-[1] md:scale-[1] scale-[1] lg:object-fill object-cover object-center"
       />
       <svg
         viewBox="0 0 1440 1533"
@@ -327,7 +327,7 @@ const HeroBottom = () => {
 
         <div className=" relative  flex items-center  md:gap-3 xl:gap-4 lg:justify-between w-fit top-0 left-[0%]   h-full  ">
           <div className="hidden md:block lg:hidden absolute bg-white h-full w-[40%] z-[8] top-[-2%] left-[-20%] blur-[100px] rounded-full"></div>
-          <button className="cause-prev lg:relative  lg:top-[90%] lg:left-[0%] lg:translate-y-[-50%] lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow-md md:absolute md:top-[42.5%] md:translate-y-[-50%] md:left-[2%] z-10  top-[42.5%] translate-y-[-50%]  absolute left-[-5%]  lg:-mt-7 p-3">
+          <button className="cause-prev lg:relative  lg:top-[90%] lg:left-[0%] lg:-translate-y-1/2 lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow-md md:absolute md:top-[42.5%] md:-translate-y-1/2 md:left-[2%] z-10  top-[42.5%] -translate-y-1/2  absolute left-[-5%]  lg:-mt-7 p-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -391,7 +391,7 @@ const HeroBottom = () => {
               })}
             </Swiper>
           </div>
-          <button className="cause-next  lg:-mt-7 lg:relative lg:top-[42%] lg:right-[0%] lg:translate-y-[-50%] lg:p-3 md:p-3  bg-white rounded-full borderLine z-[777] shadow-md md:absolute absolute md:top-[42%] md:right-[2%] top-[42.5%] translate-y-[-50%] z-40  right-[-5%] p-3 ">
+          <button className="cause-next  lg:-mt-7 lg:relative lg:top-[42%] lg:right-[0%] lg:-translate-y-1/2 lg:p-3 md:p-3  bg-white rounded-full borderLine z-[777] shadow-md md:absolute absolute md:top-[42%] md:right-[2%] top-[42.5%] -translate-y-1/2 z-40  right-[-5%] p-3 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -436,12 +436,12 @@ const HeroBottom = () => {
       <img
         src={frame4}
         alt="frame4"
-        className="    scale-[.6] opacity-60 absolute lg:top-[25%] lg:left-[84%] md:top-[32%] md:left-[84%]     -z-[9] hidden lg:block "
+        className="    scale-[.6] opacity-60 absolute lg:top-1/4 lg:left-[84%] md:top-[32%] md:left-[84%]     -z-[9] hidden lg:block "
       />
       <img
         src={frame5}
         alt="frame5"
-        className="  absolute md:top-[25%] md:right-[22%] md:scale-[.6] lg:scale-[.7]  lg:top-[20%] lg:left-[33%]  opacity-40 -z-[9]   hidden md:block"
+        className="  absolute md:top-1/4 md:right-[22%] md:scale-[.6] lg:scale-[.7]  lg:top-[20%] lg:left-[33%]  opacity-40 -z-[9]   hidden md:block"
       />
       <img
         src={frame6}
