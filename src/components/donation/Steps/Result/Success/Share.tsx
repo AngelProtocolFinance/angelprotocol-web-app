@@ -1,7 +1,7 @@
 import ExtLink from "components/ExtLink";
 import Icon, { IconType } from "components/Icon";
 import Modal from "components/Modal";
-import { DAPP_URL } from "constants/env";
+import { BASE_URL } from "constants/env";
 import { useModalContext } from "contexts/ModalContext";
 import { useCallback, useState } from "react";
 import { DonationRecipient } from "slices/donation";
@@ -63,7 +63,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
         <span className="font-bold">"@angelgiving_</span>!{" "}
         {`Every gift is
         invested to provide sustainable funding for nonprofits: Give once, give
-        forever. Help join the cause: ${DAPP_URL}`}
+        forever. Help join the cause: ${BASE_URL}`}
       </p>
       <ExtLink
         href={generateShareLink(shareText, type)}
@@ -80,7 +80,7 @@ function Prompt({ type, iconSize, recipient: { name } }: Props) {
 
 function generateShareLink(rawText: string, type: SocialMedia) {
   const encodedText = encodeURIComponent(rawText);
-  const encodedURL = encodeURIComponent(DAPP_URL);
+  const encodedURL = encodeURIComponent(BASE_URL);
   switch (type) {
     case "Twitter":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
@@ -92,7 +92,7 @@ function generateShareLink(rawText: string, type: SocialMedia) {
      */
     case "FacebookCircle":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
-        DAPP_URL
+        BASE_URL,
       )}&quote=${encodedText}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons

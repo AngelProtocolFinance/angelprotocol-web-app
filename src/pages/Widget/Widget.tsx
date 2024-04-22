@@ -1,6 +1,6 @@
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
-import { APP_NAME, DAPP_URL } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
@@ -16,7 +16,7 @@ export default function Widget({ endowId = 0 }: { endowId?: number }) {
   const queryState = useEndowment(
     { id: endowId },
     ["id", "hide_bg_tip", "logo", "name", "overview"],
-    { skip: !endowId }
+    { skip: !endowId },
   );
 
   return (
@@ -58,7 +58,7 @@ function Content({
         description={endowment?.overview.slice(0, 140)}
         name={endowment?.name}
         image={endowment?.logo}
-        url={`${DAPP_URL}${location.pathname}`}
+        url={`${BASE_URL}${location.pathname}`}
       />
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">
         Accept donations from your website today!

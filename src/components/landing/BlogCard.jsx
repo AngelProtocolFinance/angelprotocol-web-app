@@ -1,4 +1,4 @@
-import { DAPP_URL } from "constants/env";
+import { BASE_URL } from "constants/env";
 import DOMPurify from "dompurify";
 import React from "react";
 
@@ -33,7 +33,7 @@ const BlogCard = ({ blog, imgUrl }) => {
       />
 
       <a
-        href={`${DAPP_URL}/blog/${blog.slug}`}
+        href={`${BASE_URL}/blog/${blog.slug}`}
         className="self-end mt-auto  text-[#2D89C8] px-4  py-2 rounded-full  font-semibold uppercase"
       >
         Read More
