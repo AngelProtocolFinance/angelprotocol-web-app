@@ -9,7 +9,7 @@ const TestimonialCard = (props) => {
       {props.role === "ADMIN" && (
         <CRUDButtons handleDelete={props.handleDelete} id={props.id} />
       )}
-      <div className=" w-[130px] h-[130px]   absolute top-[-10%] left-[20px] ">
+      <div className=" w-[130px] h-[130px] absolute top-[-10%] left-[20px] ">
         <img
           src={props.reviewer_logo}
           alt="logo"

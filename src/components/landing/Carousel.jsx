@@ -27,7 +27,7 @@ const Carousel = ({ slides }) => {
             }`}
             key={index}
           >
-            <img src={slide.img_src} alt="logo" className=" w-56 h-56" />
+            <img src={slide.img_src} alt="logo" className="w-56 h-56" />
             <p className="text-[20px] text-center md:text-[28px] font-body text-[#000] font-bold">
               {slide.title}
             </p>

@@ -26,7 +26,7 @@ const Footer = () => {
           </p>
         </div>
 
-        <div className="flex gap-[70px]  flex-wrap md:flex-nowrap lg:self-auto md:self-center lg:ml-[-10px] ">
+        <div className="flex gap-[70px]  flex-wrap md:flex-nowrap lg:self-auto md:self-center lg:-ml-2.5 ">
           <div className="flex flex-col gap-5">
             <h6 className="text-base font-semibold text-[#4585bb] md:mb-0 -mb-2">
               HOW WE CAN HELP

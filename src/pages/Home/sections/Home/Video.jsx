@@ -40,15 +40,15 @@ const Video = () => {
   }, []);
 
   return (
-    <section className=" video py-[29px] px-[15px] md:pt-[120px] lg:p-[100px] md:px-[30px] md:pb-[10px]     flex flex-col gap-5 lg:gap-[40px] relative    xl:m-auto ">
+    <section className=" video py-[29px] px-[15px] md:pt-[120px] lg:p-[100px] md:px-[30px] md:pb-[10px] flex flex-col gap-5 lg:gap-[40px] relative    xl:m-auto ">
       <span className="flex flex-col  w-full    relative">
-        <span className="flex items-center justify-center  top-[-100px] md:top-[-250px] top-[-220px]     w-full h-[170px] ">
+        <span className="flex items-center justify-center md:top-[-250px] top-[-220px] w-full h-[170px] ">
           <span className="absolute w-full h-3/6 left-0 bottom-0 hidden md:block"></span>
           <img src={s2} alt="" className="md:h-full md:w-[220px] h-28  " />
           <img
             src={s}
             alt=""
-            className="md:h-full  md:w-[220px] md:ml-[-96px] lg:ml-[-96px] mt-1 md:mt-1 h-28 ml-[-62px] "
+            className="md:h-full  md:w-[220px] md:-ml-24 mt-1 md:mt-1 h-28 ml-[-62px] "
           />
           <div className="lg:h-[200px]  lg:w-[445px] md:h-[300px] md:w-[445px] w-[300px] h-[200px] top-14 md:bottom-20  absolute  rounded-full lg:bottom-28 bg-[#fff] blur-[20px]"></div>
         </span>

@@ -2,15 +2,15 @@ import { DAPP_URL } from "constants/env";
 import DOMPurify from "dompurify";
 import React from "react";
 
+const sanitize = (dirtyHTML) => {
+  const cleanHtml = DOMPurify.sanitize(dirtyHTML, {
+    ALLOWED_TAGS: ["p", "span", "b", "i", "u"],
+  });
+
+  return cleanHtml;
+};
+
 const BlogCard = ({ blog, imgUrl }) => {
-  const sanitize = (dirtyHTML) => {
-    const cleanHtml = DOMPurify.sanitize(dirtyHTML, {
-      ALLOWED_TAGS: ["p", "span", "b", "i", "u"],
-    });
-
-    return cleanHtml;
-  };
-
   return (
     <div className="w-full md:w-full h-[460px] borderLine flex flex-col gap-3 pb-5 rounded-[18px] relative blog_card overflow-hidden bg-white font-body">
       <img
