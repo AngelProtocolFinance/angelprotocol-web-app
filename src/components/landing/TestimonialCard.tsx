@@ -1,14 +1,8 @@
-import React from "react";
-import CRUDButtons from "./CRUDButtons";
-
-const TestimonialCard = (props) => {
+const TestimonialCard = (props: any) => {
   return (
     <div
       className={`relative md:w-full md:min-h-[450px] lg:w-full lg:min-h-[450px] w-full min-h-[430px] p-3 pt-16 borderLine rounded-3xl flex flex-col justify-between bg-white font-body overflow ${props.className}`}
     >
-      {props.role === "ADMIN" && (
-        <CRUDButtons handleDelete={props.handleDelete} id={props.id} />
-      )}
       <div className=" w-32 h-32 absolute top-[-10%] left-5">
         <img
           src={props.reviewer_logo}

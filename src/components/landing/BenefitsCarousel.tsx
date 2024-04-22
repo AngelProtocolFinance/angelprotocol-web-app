@@ -1,4 +1,3 @@
-import React from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -6,7 +5,8 @@ import "../../styles/landing/benefitsCarousel.css";
 
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 
-const BenefitsCarousel = ({ slides }) => {
+type Props = { slides: any[] };
+const BenefitsCarousel = ({ slides }: Props) => {
   const colors = ["#EDFCE2", "#EAE2FC", "#FCF6E2", "#EDF2FE"];
 
   return (

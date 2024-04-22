@@ -1,7 +1,6 @@
 import { gsap } from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React from "react";
 import roadmap1 from "../../assets/landing/roadmap1_wb.webp";
 import roadmap2 from "../../assets/landing/roadmap2_wb.webp";
 import roadmap3 from "../../assets/landing/roadmap3_wb.webp";

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import icon1 from "../../../../assets/landing/Icon1_wb.webp";
 import icon2 from "../../../../assets/landing/Icon2_wb.webp";
 import icon3 from "../../../../assets/landing/Icon3_wb.webp";
@@ -106,12 +106,9 @@ const Path = () => {
           </p>
         )}
       </div>
-      <BenefitsCarousel
-        path={path}
-        slides={path === "non-profits" ? nonProfits : donors}
-      />
+      <BenefitsCarousel slides={path === "non-profits" ? nonProfits : donors} />
       <Carousel slides={path === "non-profits" ? nonProfits : donors} />
-      <Button text={"Learn More"} className={"self-center"} />
+      <Button text="Learn More" />
     </section>
   );
 };

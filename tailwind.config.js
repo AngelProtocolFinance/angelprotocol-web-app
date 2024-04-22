@@ -108,10 +108,16 @@ module.exports = {
       fontFamily: {
         heading: ["Quicksand", "serif"],
         body: ["DM Sans", "sans-serif"],
-        gochi:["Gochi Hand","serif"],
+        gochi: ["Gochi Hand", "serif"],
       },
       width: {
         "3/4": "75%",
+      },
+      keyframes: {
+        "translate-rtl": {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-100%)" },
+        },
       },
     },
   },

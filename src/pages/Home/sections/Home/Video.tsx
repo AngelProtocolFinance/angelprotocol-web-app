@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import s from "../../../../assets/landing/Inifnite Half-right.png";
 import s2 from "../../../../assets/landing/half1.png";
 import heart from "../../../../assets/landing/heartOfText.png";
@@ -96,7 +96,7 @@ const Video = () => {
           ways to contribute, grow, and track your generosity, all while
           celebrating our collective impact.
         </p>
-        <Button text={"Join the Movement"} className="self-center" />
+        <Button text="Join the Movement" />
       </div>
 
       <svg

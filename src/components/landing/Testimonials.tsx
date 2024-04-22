@@ -4,10 +4,10 @@ import useGetTestimonials from "../../constants/useGetTestimonials";
 import TestimonialCard from "./TestimonialCard";
 
 const Testimonials = () => {
-  const [testimonials] = useGetTestimonials([]);
+  const testimonials = useGetTestimonials();
   const navigate = useNavigate();
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: number) => {
     const res = await axios({
       method: "delete",
       url: `/api/testimonials/${id}`,
@@ -40,7 +40,7 @@ const Testimonials = () => {
           />
         </svg>
       </div>
-      {testimonials.map((ele) => {
+      {testimonials.map((ele, idx) => {
         return (
           //biome-ignore lint: TODO: fix incorrect props role
           <TestimonialCard
@@ -50,7 +50,7 @@ const Testimonials = () => {
             reviewer_logo={ele.reviewer_logo}
             role={"ADMIN"}
             handleDelete={handleDelete}
-            id={ele._id}
+            id={idx}
             className="mt-4"
           />
         );
