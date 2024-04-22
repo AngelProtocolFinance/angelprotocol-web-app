@@ -43,11 +43,11 @@ const BenefitsCarousel = ({ slides }) => {
       </div>
 
       <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        loop={true}
-        slidesPerView={"auto"}
+        effect="coverflow"
+        grabCursor
+        centeredSlides
+        loop
+        slidesPerView="auto"
         coverflowEffect={{
           rotate: 0,
           stretch: 90,
@@ -83,7 +83,7 @@ const BenefitsCarousel = ({ slides }) => {
       </Swiper>
 
       <div
-        className="swip-next slider-arrow relative  right-[8%] z-30 translate-x-[-50%]   borderLine rounded-full p-4 shadow-md "
+        className="swip-next slider-arrow relative  right-[8%] z-30 -translate-x-1/2 select-none borderLine rounded-full p-4 shadow-md "
         style={{ opacity: showNextButton ? 1 : 0 }}
       >
         <svg
@@ -102,7 +102,7 @@ const BenefitsCarousel = ({ slides }) => {
         </svg>
       </div>
 
-      <div className="absolute bottom-[10px] right-[12%] flex flex-col items-center -rotate-12">
+      <div className="absolute bottom-2.5 right-[12%] flex flex-col items-center -rotate-12">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="41"

@@ -19,9 +19,9 @@ const BlogCard = ({ blog, imgUrl }) => {
         className="rounded-t-[18px] object-fill object-center h-[179px]"
       />
 
-      <div className="flex gap-2 px-6"></div>
+      <div className="flex gap-2 px-6" />
       <h4
-        className="text-[#0D283A] font-semibold w-full text-xl line-clamp-2  px-[24px]"
+        className="text-[#0D283A] font-semibold w-full text-xl line-clamp-2 px-6"
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: blog.title.rendered }}
       />
