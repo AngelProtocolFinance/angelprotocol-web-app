@@ -42,7 +42,7 @@ const Testimonials = () => {
       </div>
       {testimonials.map((ele) => {
         return (
-          //biome-ignore lint: TODO: fix incorect role
+          //biome-ignore lint: TODO: fix incorrect props role
           <TestimonialCard
             review={ele.review}
             reviewer={ele.reviewer}

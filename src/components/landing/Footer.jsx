@@ -27,7 +27,7 @@ const Footer = () => {
         <div className="flex gap-[70px]  flex-wrap md:flex-nowrap lg:self-auto md:self-center lg:ml-[-10px] ">
           <div className="flex flex-col gap-5">
             <h6 className="text-base font-semibold text-[#4585bb] md:mb-0 -mb-2">
-              Our Support
+              HOW WE CAN HELP
             </h6>
             <ul>
               <li className="text-[14px] text[##00000099] whitespace-nowrap font-normal opacity-90">
@@ -36,21 +36,18 @@ const Footer = () => {
               <li className="text-[14px] text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
                 Giving Partners (CSR)
               </li>
-              <li className="text-[14px] text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
-                Impact Board
-              </li>
             </ul>
           </div>
           <div className="flex flex-col gap-5">
             <h6 className="text-base font-semibold text-[#4585bb] md:mb-0 -mb-2">
-              Resources
+              RESOURCES
             </h6>
             <ul>
               <li className="text-[14px] text[##00000099]  whitespace-nowrap font-normal opacity-90">
                 About
               </li>
               <li className="text-[14px] text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
-                FAQs
+                <a href="https://intercom.help/better-giving/en">FAQs</a>
               </li>
               <li className="text-[14px] text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
                 News
@@ -59,7 +56,7 @@ const Footer = () => {
           </div>
           <div className=" flex flex-col gap-5">
             <h6 className="text-base font-semibold text-[#4585bb] md:mb-0 -mb-2">
-              Legal
+              LEGAL
             </h6>
             <ul>
               <li className="text-[14px] text[##00000099]  whitespace-nowrap font-normal opacity-90">

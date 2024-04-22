@@ -116,10 +116,6 @@ export default function App() {
             <Route index element={<BlogPosts />} />
           </Route>
         </Route>
-        <Route
-          path="*"
-          element={<Navigate replace to={appRoutes.marketplace} />}
-        />
         <Route path="*" element={<Navigate replace to={appRoutes.home} />} />
       </SentryRoutes>
     </ModalContext>

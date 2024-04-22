@@ -1,4 +1,6 @@
+import { appRoutes } from "constants/routes";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import headillust from "../../../../assets/landing/head-illust.webp";
 import Button from "../../../../components/landing/Button";
 import Navbar from "../../../../components/landing/Navbar";
@@ -53,9 +55,9 @@ const Hero = () => {
         </p>
 
         <div className="z-20  relative">
-          <div className=" -ml-3 z-40">
+          <Link to={appRoutes.register} className="block -ml-3 z-40">
             <Button text={"Join Us"} />
-          </div>
+          </Link>
           <span className="md:flex flex-col items-center absolute top-[50%] right-[-70%] text-[#183244] hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"

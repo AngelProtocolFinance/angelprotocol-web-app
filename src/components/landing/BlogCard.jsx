@@ -1,3 +1,4 @@
+import { DAPP_URL } from "constants/env";
 import DOMPurify from "dompurify";
 
 const BlogCard = ({ blog, imgUrl }) => {
@@ -20,18 +21,18 @@ const BlogCard = ({ blog, imgUrl }) => {
       <div className="flex gap-2 px-[24px]"></div>
       <h4
         className="text-[#0D283A] font-semibold w-full text-xl line-clamp-2  px-[24px]"
-        //biome-ignore lint: trusted
+        //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: blog.title.rendered }}
       />
       <p
         className="text-[#0D283A] text-[14px] lg:text-[16px] md:text-[16px] line-clamp-4 px-[24px]  tracking-[.8px]  text w-full  "
         id="desc"
-        //biome-ignore lint: trusted
+        //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: sanitize(blog?.excerpt?.rendered) }}
       />
 
       <a
-        href={`https://better.giving/${blog.slug}/`}
+        href={`${DAPP_URL}/blog/${blog.slug}`}
         className="self-end mt-auto  text-[#2D89C8] px-4  py-2 rounded-full  font-semibold uppercase"
       >
         Read More
