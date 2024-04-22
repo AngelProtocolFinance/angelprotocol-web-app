@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import quotation from "../../../../assets/landing/quotation.svg";
 import TestimonialCard from "../../../../components/landing/TestimonialCard";
 import useGetTestimonials from "../../../../constants/useGetTestimonials";
-import { Navigation } from "swiper/modules";
 
 const Testimonials = () => {
   const [_showPrevButton, setShowPrevButton] = useState(false);

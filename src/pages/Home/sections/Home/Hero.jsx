@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
 import { DAPP_URL } from "constants/env";
+import React, { useState, useEffect } from "react";
 import headillust from "../../../../assets/landing/head-illust.webp";
 import Button from "../../../../components/landing/Button";
 import Navbar from "../../../../components/landing/Navbar";

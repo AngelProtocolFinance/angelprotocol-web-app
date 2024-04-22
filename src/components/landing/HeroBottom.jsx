@@ -1,6 +1,6 @@
+import { DAPP_URL } from "constants/env";
 import useCards from "pages/Marketplace/Cards/useCards";
 import React, { useEffect, useState } from "react";
-import { DAPP_URL } from "constants/env";
 import "swiper/css";
 import "swiper/css";
 import "swiper/css/navigation";
