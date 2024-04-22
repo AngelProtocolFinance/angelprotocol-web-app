@@ -15,7 +15,7 @@ const Brands = () => {
 
       <div className="absolute bg-white h-1/2 w-[35%] z-[8] top-[56%] -translate-y-1/2 left-[-15%] blur-[70px] rounded-full" />
 
-      <div className="brands_container whitespace-nowrap overflow-x-auto">
+      <div className="w-[90vw] whitespace-nowrap overflow-x-auto group">
         {[1, 2, 3, 4].map((num) => (
           <BrandGroup
             key={num}
@@ -32,13 +32,16 @@ const Brands = () => {
 type BrandProps = { imgs: string[] };
 function BrandGroup({ imgs }: BrandProps) {
   return (
-    <div className="inline-block md:scale-[0] whitespace-nowrap brands">
+    <div className="inline-block animate-[translate-rtl_10s_linear_infinite] group-has-[:hover]:[animation-play-state:paused]">
       {imgs.map((img) => (
-        <div className="brand-img-box lg:w-32 lg:ml-8 md:ml-3 ml-2  lg:h-28 md:h-24 md:w-28 w-24 h-20  md:scale-[0.8] lg:scale-[1] scale-[.85]  inline-block">
+        <div
+          key={img}
+          className="brand-img-box lg:w-32 lg:ml-8 md:ml-3 ml-2  lg:h-28 md:h-24 md:w-28 w-24 h-20  md:scale-[0.8] lg:scale-[1] scale-[.85]  inline-block"
+        >
           <img
             src={img}
             className="w-full h-full object-cover object-center"
-            alt="brand_1"
+            alt="brand img"
           />
         </div>
       ))}

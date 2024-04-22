@@ -4,30 +4,8 @@
 
 
 
-@keyframes slider {
-    from {
-        transform: translateX(0);
-    }
-    to {
-        transform: translateX(-100%);
-    }
-}
-
-.brands {
-    animation: slider 10s linear infinite;
-}
-.brands_container {
-    width: 90vw;
-}
 .borderLine {
     border: solid 1px #dbdada;
-}
-.brands_container:hover .brands {
-    animation-play-state: paused;
-}
-.brands_container::-webkit-scrollbar {
-    display: block;
-    scroll-behavior: smooth;
 }
 
 .active {
