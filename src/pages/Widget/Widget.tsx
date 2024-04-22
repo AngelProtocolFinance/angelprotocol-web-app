@@ -16,7 +16,7 @@ export default function Widget({ endowId = 0 }: { endowId?: number }) {
   const queryState = useEndowment(
     { id: endowId },
     ["id", "hide_bg_tip", "logo", "name", "overview"],
-    { skip: !endowId },
+    { skip: !endowId }
   );
 
   return (

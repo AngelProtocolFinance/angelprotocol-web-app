@@ -15,7 +15,7 @@ export default function Profile({ legacy = false }) {
   const { id = "" } = useParams<{ id: string }>();
 
   const { isLoading, isError, data } = useEndowment(
-    slug.test(id) ? { slug: id } : { id: Number(id) },
+    slug.test(id) ? { slug: id } : { id: Number(id) }
   );
 
   if (isLoading) return <Skeleton />;
