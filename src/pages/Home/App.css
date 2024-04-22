@@ -2,29 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-.app {
-    background: linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(251, 241, 235, 0.96) 87.19%,
-        #fff 94.34%
-    );
 
-    background-blend-mode: screen, normal;
-
-    overflow: hidden;
-    background-color: #fff;
-}
-
-
-
-.desc > * {
-    font-weight: 400px !important;
-    font-size: 16px;
-    display: inline;
-    line-height: 22px;
-    width: fit-content;
-}
 
 @keyframes slider {
     from {
