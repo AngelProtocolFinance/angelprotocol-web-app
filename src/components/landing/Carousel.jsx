@@ -18,7 +18,7 @@ const Carousel = ({ slides }) => {
       {slides.map((slide, index) => {
         return (
           <div
-            className={`flex flex-col items-center gap-5 pt-5 px-[15px] md:px-[85px] w-full h-[480px] rounded-[56px] blur-[0px] shadow ${
+            className={`flex flex-col items-center gap-5 pt-5 px-[15px] md:px-[85px] w-full h-[480px] rounded-[56px] blur-[0px] shadow-black/5 ${
               index === 0
                 ? "bg-[#EDFCE2]"
                 : index === 1

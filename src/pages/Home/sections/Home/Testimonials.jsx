@@ -47,7 +47,7 @@ const Testimonials = () => {
 
       <div className="  relative  flex items-center  md:gap-3 xl:gap-4 lg:justify-between w-fit top-0 left-[50%]  translate-x-[-50%] h-full">
         <button
-          className="testimonial-prev lg:relative  lg:top-[50%] lg:left-[0%] lg:translate-y-[-50%] lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow md:absolute md:top-1/2 md:translate-y-[-50%] md:left-[2%] z-10  top-[50%] translate-y-[-50%]  absolute left-[-5%] left-0 p-3  "
+          className="testimonial-prev lg:relative  lg:top-[50%] lg:left-[0%] lg:translate-y-[-50%] lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow-md md:absolute md:top-1/2 md:translate-y-[-50%] md:left-[2%] z-10  top-[50%] translate-y-[-50%]  absolute left-[-5%] left-0 p-3  "
           // style={{ opacity: showPrevButton ? 1 : 0 }}
         >
           <svg
