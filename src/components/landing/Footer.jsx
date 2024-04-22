@@ -1,11 +1,11 @@
 import React from "react";
-import log from "../../assets/landing/logo.svg"
+import log from "../../assets/landing/logo.svg";
+
 const Footer = () => {
   return (
     <footer className="flex flex-col   lg:gap-[80px] gap-[50px] pt-[50px]  font-body">
       <div className="flex flex-col lg:items-center  lg:justify-between  lg:flex-row md:flex-col px-[24px] lg:px-[65px] md:px-[30px] gap-[70px]  ">
         <div className="flex flex-col gap-[20px] lg:flex-col md:flex-row lg:max-w-[28%] lg:gap-6 md:gap-[30px] md:items-start md:justify-between">
-         
           <div className=" lg:w-[250px] md:w-[280px] w-[300px]    lg:h-16 md:h-16 h-20 md:scale-[1] lg:scale-[1] scale-[.9]  lg:-ml-7 md:-ml-2  -mb-2">
             <img
               src={log}
@@ -29,7 +29,7 @@ const Footer = () => {
         <div className="flex gap-[70px]  flex-wrap md:flex-nowrap lg:self-auto md:self-center lg:ml-[-10px] ">
           <div className="flex flex-col gap-5">
             <h6 className="text-base font-semibold text-[#4585bb] md:mb-0 -mb-2">
-              Our Support
+              HOW WE CAN HELP
             </h6>
             <ul>
               <li className="text-[14px] text[##00000099] whitespace-nowrap font-normal opacity-90">
@@ -38,21 +38,18 @@ const Footer = () => {
               <li className="text-[14px] text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
                 Giving Partners (CSR)
               </li>
-              <li className="text-[14px] text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
-                Impact Board
-              </li>
             </ul>
           </div>
           <div className="flex flex-col gap-5">
             <h6 className="text-base font-semibold text-[#4585bb] md:mb-0 -mb-2">
-              Resources
+              RESOURCES
             </h6>
             <ul>
               <li className="text-[14px] text[##00000099]  whitespace-nowrap font-normal opacity-90">
                 About
               </li>
               <li className="text-[14px] text[##00000099] mt-4  whitespace-nowrap font-normal opacity-90">
-                FAQs
+                <a href="https://intercom.help/better-giving/en">FAQs</a>
               </li>
               <li className="text-[14px] text[##00000099] mt-4 whitespace-nowrap font-normal opacity-90">
                 News
@@ -61,7 +58,7 @@ const Footer = () => {
           </div>
           <div className=" flex flex-col gap-5">
             <h6 className="text-base font-semibold text-[#4585bb] md:mb-0 -mb-2">
-              Legal
+              LEGAL
             </h6>
             <ul>
               <li className="text-[14px] text[##00000099]  whitespace-nowrap font-normal opacity-90">

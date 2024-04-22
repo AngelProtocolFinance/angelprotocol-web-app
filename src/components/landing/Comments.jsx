@@ -1,49 +1,48 @@
+import axios from "axios";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/landing/comments.css";
-import { useContext, useState } from "react";
 import { UserContext } from "../state/UserState";
-import axios from "axios";
-
-
 
 const Comments = ({ comments, blogId, getBlog }) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading] = useState(false);
   const [description, setDescription] = useState("");
 
-  const { user } = useContext(UserContext)
+  const { user } = useContext(UserContext);
 
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
-    
-    const options = { 
-      day: 'numeric', 
-      month: 'short', 
-      year: 'numeric' 
+
+    const options = {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
     };
-  
-    return date.toLocaleDateString('en-GB', options);
+
+    return date.toLocaleDateString("en-GB", options);
   };
 
   const handleSubmit = async () => {
     try {
       const res = await axios({
-        url : `/api/comments`,
-        method : "post",
-        data : {
-          description, blogId
+        url: `/api/comments`,
+        method: "post",
+        data: {
+          description,
+          blogId,
         },
-        headers : {
-          authToken : localStorage.getItem("token")
-        }
-      })
-      if(res.data.success !== true){
-        return alert(res.data.message)
+        headers: {
+          authToken: localStorage.getItem("token"),
+        },
+      });
+      if (res.data.success !== true) {
+        return alert(res.data.message);
       }
-      setDescription("")
-      getBlog()
-      alert("Comment Added")
+      setDescription("");
+      getBlog();
+      alert("Comment Added");
     } catch (error) {
-      alert(error.message)
+      alert(error.message);
     }
   };
   return (
@@ -68,27 +67,27 @@ const Comments = ({ comments, blogId, getBlog }) => {
         {isLoading
           ? "loading"
           : comments?.map((comment) => (
-
-            <div className={"comment"} key={comment._id}>
-              <div className={"user"}>
-                {comment?.user?.avatar && (
-                  <img
-                    src={`${process.env.REACT_APP_API_HOST}/uploads/${comment.user.avatar}`}
-                    alt=""
-                    width={50}
-                    height={50}
-                    className={"image"}
-                  />
-
-                )}
-                <div className={"userInfo"}>
-                  <span className={"username"}>{comment.user.name}</span>
-                  <span className={"date"}>{formatDate(comment.createdAt)}</span>
+              <div className={"comment"} key={comment._id}>
+                <div className={"user"}>
+                  {comment?.user?.avatar && (
+                    <img
+                      src={`${process.env.REACT_APP_API_HOST}/uploads/${comment.user.avatar}`}
+                      alt=""
+                      width={50}
+                      height={50}
+                      className={"image"}
+                    />
+                  )}
+                  <div className={"userInfo"}>
+                    <span className={"username"}>{comment.user.name}</span>
+                    <span className={"date"}>
+                      {formatDate(comment.createdAt)}
+                    </span>
+                  </div>
                 </div>
+                <p className={"desc"}>{comment.description}</p>
               </div>
-              <p className={"desc"}>{comment.description}</p>
-            </div>
-          ))}
+            ))}
       </div>
     </div>
   );
