@@ -56,7 +56,7 @@ const Hero = () => {
 
         <div className="z-20  relative">
           <Link to={appRoutes.register} className="block -ml-3 z-40">
-            <Button text={"Join Us"} />
+            <Button text="Join Us" />
           </Link>
           <span className="md:flex flex-col items-center absolute top-1/2 right-[-70%] text-navy-d4 hidden">
             <svg

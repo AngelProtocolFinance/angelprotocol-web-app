@@ -154,7 +154,7 @@ const HeroBottom = () => {
         </div>
 
         <Link to={appRoutes.marketplace} className="block -mt-30 z-40">
-          <Button text={"Explore All Causes"} />
+          <Button text="Explore All Causes" />
         </Link>
         <p className="bg-[#FFEECC] font-gochi text-2xl z-[22] px-4">
           from all around the globe

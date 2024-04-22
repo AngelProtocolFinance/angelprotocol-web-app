@@ -108,7 +108,7 @@ const Path = () => {
       </div>
       <BenefitsCarousel slides={path === "non-profits" ? nonProfits : donors} />
       <Carousel slides={path === "non-profits" ? nonProfits : donors} />
-      <Button text={"Learn More"} className={"self-center"} />
+      <Button text="Learn More" />
     </section>
   );
 };

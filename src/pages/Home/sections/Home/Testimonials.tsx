@@ -88,13 +88,12 @@ const Testimonials = () => {
           {testimonials.map((ele, idx) => {
             return (
               <SwiperSlide key={idx}>
-                {" "}
                 <TestimonialCard
                   review={ele.review}
                   reviewer={ele.reviewer}
                   reviewer_profession={ele.reviewer_profession}
                   reviewer_logo={ele.reviewer_logo}
-                />{" "}
+                />
               </SwiperSlide>
             );
           })}

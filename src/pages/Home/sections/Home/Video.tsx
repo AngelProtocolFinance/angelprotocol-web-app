@@ -96,7 +96,7 @@ const Video = () => {
           ways to contribute, grow, and track your generosity, all while
           celebrating our collective impact.
         </p>
-        <Button text={"Join the Movement"} className="self-center" />
+        <Button text="Join the Movement" />
       </div>
 
       <svg
