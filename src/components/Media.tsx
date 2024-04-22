@@ -1,6 +1,6 @@
-import Image from "components/Image";
 import { useMediaQuery } from "services/wordpress";
 import { Wordpress } from "types/wordpress";
+import Image from "./Image";
 
 type Props = { id: number; classes?: string; sizes: string };
 

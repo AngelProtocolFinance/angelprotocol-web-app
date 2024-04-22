@@ -1,5 +1,5 @@
+import Media from "components/Media";
 import { appRoutes } from "constants/routes";
-import Media from "pages/Blog/Media";
 import { Link } from "react-router-dom";
 import { Wordpress } from "types/wordpress";
 
