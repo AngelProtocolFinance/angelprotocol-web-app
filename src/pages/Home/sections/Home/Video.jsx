@@ -33,7 +33,9 @@ const Video = () => {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      for (let trigger of ScrollTrigger.getAll()) {
+        trigger.kill();
+      }
     };
   }, []);
 
