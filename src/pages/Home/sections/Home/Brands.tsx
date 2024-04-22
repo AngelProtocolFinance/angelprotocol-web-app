@@ -16,18 +16,12 @@ const Brands = () => {
       <div className="absolute bg-white h-1/2 w-[35%] z-[8] top-[56%] -translate-y-1/2 left-[-15%] blur-[70px] rounded-full" />
 
       <div className="brands_container whitespace-nowrap overflow-x-auto">
-        <BrandGroup
-          imgs={[brand1, brand2, brand3, brand4, brand5, brand6, brand7]}
-        />
-        <BrandGroup
-          imgs={[brand1, brand2, brand3, brand4, brand5, brand6, brand7]}
-        />
-        <BrandGroup
-          imgs={[brand1, brand2, brand3, brand4, brand5, brand6, brand7]}
-        />
-        <BrandGroup
-          imgs={[brand1, brand2, brand3, brand4, brand5, brand6, brand7]}
-        />
+        {[1, 2, 3, 4].map((num) => (
+          <BrandGroup
+            key={num}
+            imgs={[brand1, brand2, brand3, brand4, brand5, brand6, brand7]}
+          />
+        ))}
       </div>
 
       <div className=" absolute bg-[#ffff] h-1/2 w-[35%] z-[8] top-[56%] -translate-y-1/2 right-[-15%] blur-[70px]   rounded-full"></div>
