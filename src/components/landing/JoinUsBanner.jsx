@@ -1,3 +1,4 @@
+import React from "react";
 import ban from "../../assets/landing/banner_image.png";
 const JoinUsBanner = () => {
   return (

@@ -1,6 +1,6 @@
 import { DappLogo } from "components/Image";
 import { appRoutes } from "constants/routes";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 const Navbar = () => {
   const [, setSearch] = useState("");

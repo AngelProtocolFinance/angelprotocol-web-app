@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import icon1 from "../../../../assets/landing/Icon1_wb.webp";
 import icon2 from "../../../../assets/landing/Icon2_wb.webp";
 import icon3 from "../../../../assets/landing/Icon3_wb.webp";
@@ -7,9 +7,9 @@ import icon5 from "../../../../assets/landing/Icon5_wb.webp";
 import icon6 from "../../../../assets/landing/Icon6_wb.webp";
 import icon7 from "../../../../assets/landing/Icon7_wb.webp";
 import icon8 from "../../../../assets/landing/Icon8_wb.webp";
-import BenefitssCrousal from "../../../../components/landing/BenefitsCarousel";
+import BenefitsCarousel from "../../../../components/landing/BenefitsCarousel";
 import Button from "../../../../components/landing/Button";
-import Crousal from "../../../../components/landing/Carousel";
+import Carousel from "../../../../components/landing/Carousel";
 const Path = () => {
   const [path, setPath] = useState("non-profits");
   const nonProfits = [
@@ -106,11 +106,11 @@ const Path = () => {
           </p>
         )}
       </div>
-      <BenefitssCrousal
+      <BenefitsCarousel
         path={path}
         slides={path === "non-profits" ? nonProfits : donors}
       />
-      <Crousal slides={path === "non-profits" ? nonProfits : donors} />
+      <Carousel slides={path === "non-profits" ? nonProfits : donors} />
       <Button text={"Learn More"} className={"self-center"} />
     </section>
   );

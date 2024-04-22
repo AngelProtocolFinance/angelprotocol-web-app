@@ -1,6 +1,6 @@
 import { appRoutes } from "constants/routes";
 import useCards from "pages/Marketplace/Cards/useCards";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css";
