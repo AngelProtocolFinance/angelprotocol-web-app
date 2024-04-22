@@ -1,0 +1,27 @@
+
+.svg-wrapper .container{
+    width: 100%;
+    height: calc(100% - 68px);
+    background-color: red;
+}
+
+.svg-wrapper #svg{
+    height: 100vh;
+    width: 100%;
+    
+}
+
+
+.svg-wrapper .ball {
+    fill: rgb(118, 206, 235);
+}
+
+.svg-wrapper .bubble1,.svg-wrapper .bubble2,.svg-wrapper .bubble3,.svg-wrapper .bubble4{
+ 
+   filter: grayscale(100%);
+   
+}
+.cir-ani{
+   filter: none;
+   background-color: red;
+}
