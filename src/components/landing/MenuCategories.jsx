@@ -20,7 +20,7 @@ const MenuCategories = () => {
   };
   useEffect(() => {
     getBlog();
-  }, [id]);
+  }, [getBlog]);
   return (
     <div className={"categoryList"}>
       {blog?.category.map((category) => {
