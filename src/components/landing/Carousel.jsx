@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "../../styles/landing/Carousel.css";
+import "../../styles/landing/carousel.css";
 
 const Carousel = ({ slides }) => {
   const [_right, setright] = useState(0);
