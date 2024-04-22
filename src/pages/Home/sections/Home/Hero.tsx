@@ -1,5 +1,5 @@
 import { appRoutes } from "constants/routes";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import headillust from "../../../../assets/landing/head-illust.webp";
 import Button from "../../../../components/landing/Button";

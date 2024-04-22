@@ -1,5 +1,4 @@
-import React from "react";
-const StepsCard = ({ step }) => {
+const StepsCard = ({ step }: any) => {
   return (
     <div className="steps_card flex     flex-col md:flex-row gap-5 md:gap-12 justify-between items-center z-[399] pb-[68px]">
       <div className="md:w-[299px] md:h-[299px] w-52 h-52 relative rounded-full bg-white overflow-hidden shadow-lg shadow-slate-200">

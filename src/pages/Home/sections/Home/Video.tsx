@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import s from "../../../../assets/landing/Inifnite Half-right.png";
 import s2 from "../../../../assets/landing/half1.png";
 import heart from "../../../../assets/landing/heartOfText.png";

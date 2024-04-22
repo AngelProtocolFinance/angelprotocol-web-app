@@ -1,14 +1,15 @@
+import Image from "components/Image";
 import { appRoutes } from "constants/routes";
-import React from "react";
 import { Link } from "react-router-dom";
+import { EndowmentCard } from "types/aws";
 
-const Card = (props) => {
+const Card = (props: EndowmentCard) => {
   return (
     <div className="flex flex-col gap-8 w-[90%] max-h-[520px] md:w-full md:max-h-[520px] lg:max-h-[520px] bg-white pb-4 rounded-[20px] z-10 overflow-hidden shadow-[0px_12px_6px_0px_rgba(80,79,79,0.06)]">
       <span className="relative">
-        <img src={props.img_src} alt="nonprofit logo" className="w-full h-60" />
-        <img
-          src={props.logo}
+        <Image src={props.logo} alt="nonprofit logo" className="w-full h-60" />
+        <Image
+          src={props.card_img}
           alt="logo"
           className="absolute object-cover h-px w-10 bottom-5 right-8"
         />
@@ -18,7 +19,7 @@ const Card = (props) => {
         {props.name}
       </h4>
       <p className="text-[#0D283A] h-12 text-base px-8 opacity-80 overflow-hidden text-ellipsis line-clamp-2 -mt-4">
-        {props.work}
+        {props.tagline}
       </p>
       <span className="px-8 justify-center flex items-center gap-8">
         <Link

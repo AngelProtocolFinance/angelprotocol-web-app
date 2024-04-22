@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
@@ -8,14 +7,6 @@ import TestimonialCard from "../../../../components/landing/TestimonialCard";
 import useGetTestimonials from "../../../../constants/useGetTestimonials";
 
 const Testimonials = () => {
-  const [, setShowPrevButton] = useState(false);
-  const [, setShowNextButton] = useState(true);
-
-  const handleSlideChange = (swiper) => {
-    setShowPrevButton(!swiper.isBeginning);
-    setShowNextButton(!swiper.isEnd);
-  };
-
   const testimonials = useGetTestimonials();
 
   return (
@@ -90,9 +81,7 @@ const Testimonials = () => {
           navigation={{
             nextEl: ".testimonial-next",
             prevEl: ".testimonial-prev",
-            clickable: true,
           }}
-          onSlideChange={(swiper) => handleSlideChange(swiper)}
           modules={[Navigation]}
           className="testimonial_swiper "
         >

@@ -1,18 +1,7 @@
-import React, { useEffect, useState } from "react";
 import "../../styles/landing/carousel.css";
 
-const Carousel = ({ slides }) => {
-  const [, setright] = useState(0);
-  const [active, setActive] = useState(null);
-
-  useEffect(() => {
-    setActive(slides.length - 1);
-  }, [slides]);
-
-  useEffect(() => {
-    setright(-(active - 2) * 50);
-  }, [active]);
-
+type Props = { slides: any[] };
+const Carousel = ({ slides }: Props) => {
   return (
     <div className="flex flex-col gap-5 font-body lg:hidden">
       {slides.map((slide, index) => {
