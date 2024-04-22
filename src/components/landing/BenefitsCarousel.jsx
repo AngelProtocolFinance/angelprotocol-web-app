@@ -61,7 +61,7 @@ const BenefitsCarousel = ({ slides }) => {
         }}
         onSlideChange={(swiper) => handleSlideChange(swiper)}
         modules={[EffectCoverflow, Pagination, Navigation]}
-        className="benefits_carousel"
+        className="benefits_Carousel"
       >
         {slides.map((ele, index) => {
           return (
