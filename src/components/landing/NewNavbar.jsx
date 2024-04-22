@@ -40,15 +40,15 @@ const NewNavbar = () => {
             className="w-[85%] p-1 outline-none relative hidden md:block"
           />
         </label>
-        <span className="md:flex h-full relative lg:w-[250px] flex justify-end items-center md:w-[250px] gap-3 items-center hidden">
+        <span className="md:flex h-full relative lg:w-[250px] flex justify-end items-center md:w-[250px] gap-3">
           <button
-            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-[#183244] text-base text-lg"
+            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-[#183244] text-lg"
             onClick={() => navigate("/login")}
           >
             Login
           </button>
           <button
-            className="bg-[#2D89C8] text-white px-6 pt-1.5 pb-2.5 rounded-[40px] font-semibold text-lg"
+            className="bg-blue-d1 text-white px-6 pt-1.5 pb-2.5 rounded-[40px] font-semibold text-lg"
             onClick={() => navigate("/signup")}
           >
             Sign up

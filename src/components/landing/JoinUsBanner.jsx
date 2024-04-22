@@ -8,7 +8,7 @@ const JoinUsBanner = () => {
         alt="banner"
         className="absolute right-[-30%] md:right-[10%] top-[-10%] h-full"
       />
-      <div className="w-[95%] h-[86%] bg-[#2d89c8] absolute md:rounded-[32px] rounded-[32px] left-[2.5%]  top-[7%] opacity-70 "></div>
+      <div className="w-[95%] h-[86%] bg-blue-d1 absolute md:rounded-[32px] rounded-[32px] left-[2.5%]  top-[7%] opacity-70 "></div>
       <span className="z-10 font-heading mb-[48px]">
         <p className="text-lg font-bold mb-1 uppercase text-white">
           Fueling Dreams

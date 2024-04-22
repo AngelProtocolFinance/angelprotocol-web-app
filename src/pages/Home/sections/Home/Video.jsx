@@ -41,7 +41,7 @@ const Video = () => {
 
   return (
     <section className=" video py-[29px] px-[15px] md:pt-[120px] lg:p-[100px] md:px-[30px] md:pb-[10px] flex flex-col gap-5 lg:gap-[40px] relative    xl:m-auto ">
-      <span className="flex flex-col  w-full    relative">
+      <span className="flex flex-col w-full relative">
         <span className="flex items-center justify-center md:top-[-250px] top-[-220px] w-full h-[170px] ">
           <span className="absolute w-full h-3/6 left-0 bottom-0 hidden md:block"></span>
           <img src={s2} alt="" className="md:h-full md:w-[220px] h-28  " />
@@ -73,7 +73,7 @@ const Video = () => {
           />
         </div>
 
-        <span className=" circle absolute    lg:left-[-5%] md:left-[-5px] origin-center md:scale-[.8] lg:scale-[1] lg:bottom-[25%] md:bottom-[-9%] text-[16px] font-bold text-[#2D89C8] w-[180px] h-[180px] rounded-full hidden md:flex lg:flex items-center justify-center font-heading">
+        <span className=" circle absolute    lg:left-[-5%] md:left-[-5px] origin-center md:scale-[.8] lg:scale-[1] lg:bottom-[25%] md:bottom-[-9%] text-[16px] font-bold text-blue-d1 w-[180px] h-[180px] rounded-full hidden md:flex lg:flex items-center justify-center font-heading">
           <img
             src={heartText}
             className="heartText w-full h-full object-cover object-center"

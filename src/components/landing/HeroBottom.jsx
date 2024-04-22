@@ -317,7 +317,7 @@ const HeroBottom = () => {
 
       <div className="flex flex-col items-center gap-5   ">
         <span className="flex flex-col items-center gap-3 mb-10 ">
-          <h3 className="text-lg uppercase font-bold text-[#2D89C8] font-heading text-[13px] md:text-[18px]">
+          <h3 className="text-lg uppercase font-bold text-blue-d1 font-heading text-[13px] md:text-[18px]">
             Bridge to better
           </h3>
           <h2 className="text-[32px] md:text-[42px] lg:w-full md:w-8/12 text-center capitalize font-bold text-[#183244] font-heading">
@@ -334,7 +334,7 @@ const HeroBottom = () => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="text-[#2D89C8] w-[24px] h-[24px] font-bold"
+              className="text-blue-d1 w-[24px] h-[24px] font-bold"
             >
               <path
                 strokeLinecap="round"
@@ -398,7 +398,7 @@ const HeroBottom = () => {
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="text-[#2D89C8] w-[24px] h-[24px] font-bold "
+              className="text-blue-d1 w-[24px] h-[24px] font-bold "
             >
               <path
                 strokeLinecap="round"

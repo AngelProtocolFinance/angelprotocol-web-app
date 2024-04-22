@@ -56,7 +56,7 @@ const Testimonials = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="text-[#2D89C8] w-[24px] h-[24px] font-bold"
+            className="text-blue-d1 w-[24px] h-[24px] font-bold"
           >
             <path
               strokeLinecap="round"
@@ -121,7 +121,7 @@ const Testimonials = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="text-[#2D89C8] w-[24px] h-[24px] font-bold "
+            className="text-blue-d1 w-[24px] h-[24px] font-bold "
           >
             <path
               strokeLinecap="round"

@@ -10,15 +10,15 @@ const BenefitsCarousel = ({ slides }) => {
   const colors = ["#EDFCE2", "#EAE2FC", "#FCF6E2", "#EDF2FE"];
 
   return (
-    <div className="lg:flex justify-between w-full  items-center p-16  hidden relative">
-      <div className="swip-prev slider-arrow relative  left-[12.5%] translate-x-[-50%]  z-40   borderLine rounded-full shadow-md p-4">
+    <div className="lg:flex justify-between w-full items-center p-16 hidden relative">
+      <div className="swip-prev slider-arrow relative left-[12.5%] translate-x-[-50%] z-40 borderLine rounded-full shadow-md p-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-[#2D89C8] w-6 h-6 text-[25px]"
+          className="text-blue-d1 w-6 h-6 text-[25px]"
         >
           <path
             strokeLinecap="round"
@@ -55,7 +55,7 @@ const BenefitsCarousel = ({ slides }) => {
                 className="w-60 h-60 mb-3 object-cover object-center"
                 alt="logo"
               />
-              <p className="text-2xl text-[#0D283A] w-full font-body  font-semibold">
+              <p className="text-2xl text-[#0D283A] w-full font-body font-semibold">
                 {ele.title}
               </p>
               <p className="text-base mt-2 text-ellipsis md:text-center font-body font-normal w-full text-[#1D3C51]">
@@ -66,14 +66,14 @@ const BenefitsCarousel = ({ slides }) => {
         })}
       </Swiper>
 
-      <div className="swip-next slider-arrow relative  right-[8%] z-30 -translate-x-1/2 select-none borderLine rounded-full p-4 shadow-md ">
+      <div className="swip-next slider-arrow relative right-[8%] z-30 -translate-x-1/2 select-none borderLine rounded-full p-4 shadow-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-[#2D89C8] w-6 h-6"
+          className="text-blue-d1 w-6 h-6"
         >
           <path
             strokeLinecap="round"
@@ -98,7 +98,7 @@ const BenefitsCarousel = ({ slides }) => {
             />
           </g>
         </svg>
-        <p className="font-gochi max-w-[70%] text-center text-lg font-medium text-[#111] ">
+        <p className="font-gochi max-w-[70%] text-center text-lg font-medium text-black">
           Scroll to know more
         </p>
       </div>
