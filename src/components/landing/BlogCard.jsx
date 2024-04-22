@@ -1,6 +1,7 @@
-import { DAPP_URL } from "constants/env";
+import { appRoutes } from "constants/routes";
 import DOMPurify from "dompurify";
 import React from "react";
+import { Link } from "react-router-dom";
 
 const sanitize = (dirtyHTML) => {
   const cleanHtml = DOMPurify.sanitize(dirtyHTML, {
@@ -32,12 +33,12 @@ const BlogCard = ({ blog, imgUrl }) => {
         dangerouslySetInnerHTML={{ __html: sanitize(blog?.excerpt?.rendered) }}
       />
 
-      <a
-        href={`${DAPP_URL}/blog/${blog.slug}`}
-        className="self-end mt-auto  text-blue-d1 px-4  py-2 rounded-full  font-semibold uppercase"
+      <Link
+        to={`${appRoutes.blog}/${blog.slug}`}
+        className="self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"
       >
         Read More
-      </a>
+      </Link>
     </div>
   );
 };
