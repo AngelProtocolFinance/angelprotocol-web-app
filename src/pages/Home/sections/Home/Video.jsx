@@ -1,20 +1,18 @@
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
+import { CustomEase } from "gsap/CustomEase";
+import { EasePack } from "gsap/EasePack";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import React, { useState, useEffect } from "react";
-import Button from "../../../../components/landing/Button";
+import s3 from "../../../../assets/landing/Ellipse 32.png";
 import s from "../../../../assets/landing/Inifnite Half-right.png";
 import s2 from "../../../../assets/landing/half1.png";
 import heart from "../../../../assets/landing/heartOfText.png";
 import heartText from "../../../../assets/landing/heartText.svg";
-import videobanner from "../../../../assets/landing/video_bannerUpdate.png"
-import s3 from "../../../../assets/landing/Ellipse 32.png";
-import { gsap } from "gsap";
-import { useGSAP } from "@gsap/react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { EasePack } from "gsap/EasePack";
-import { CustomEase } from "gsap/CustomEase";
+import videobanner from "../../../../assets/landing/video_bannerUpdate.png";
+import Button from "../../../../components/landing/Button";
 
 const Video = () => {
-
-
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const tl = gsap.timeline({
@@ -41,8 +39,6 @@ const Video = () => {
     return () => {
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
-
-    
   }, []);
 
   return (
@@ -56,7 +52,7 @@ const Video = () => {
             alt=""
             className="md:h-full  md:w-[220px] md:ml-[-96px] lg:ml-[-96px] mt-1 md:mt-1 h-28 ml-[-62px] "
           />
-         <div className="lg:h-[200px]  lg:w-[445px] md:h-[300px] md:w-[445px] w-[300px] h-[200px] top-14 md:bottom-20  absolute  rounded-full lg:bottom-28 bg-[#fff] blur-[20px]"></div>
+          <div className="lg:h-[200px]  lg:w-[445px] md:h-[300px] md:w-[445px] w-[300px] h-[200px] top-14 md:bottom-20  absolute  rounded-full lg:bottom-28 bg-[#fff] blur-[20px]"></div>
         </span>
 
         <div className="text flex flex-col  items-center -top-[65px]  md:-top-[50px] lg:-top-[50px]   relative">
@@ -71,14 +67,12 @@ const Video = () => {
       </span>
 
       <div className=" borderLine flex flex-col relative top-0 left-[50%] translate-x-[-50%] items-center  justify-center gap-[40px] md:gap-[48px] lg:p-[32px] md:rounded-[48px] rounded-[18px] lg:rounded-[88px] p-[8px] pb-[24px]  w-full lg:w-[1100px]  bg-white md:mt-2 lg:mt-2 -mt-5 z-10">
-       
         <div className="relative w-full  h-[171.2px] lg:h-[626px]  md:h-[392.94px] shrink-0  rounded-[17.5px] md:rounded-[40.17px] lg:rounded-[64px] overflow-hidden ">
           <img
             src={videobanner}
             alt="video"
             className=" w-full h-full object-fill  object-center"
           />
-         
         </div>
 
         <span className=" circle absolute    lg:left-[-5%] md:left-[-5px] origin-center md:scale-[.8] lg:scale-[1] lg:bottom-[25%] md:bottom-[-9%] text-[16px] font-bold text-[#2D89C8] w-[180px] h-[180px] rounded-full hidden md:flex lg:flex items-center justify-center font-heading">
@@ -87,14 +81,12 @@ const Video = () => {
             className="heartText w-full h-full object-cover object-center"
             alt=""
           />
-         <img
+          <img
             src={heart}
             alt=""
             className=" absolute top-[50%] left-[50%] object-cover object-center translate-x-[-50%] translate-y-[-50%] z-50"
           />
         </span>
-
-      
 
         <p className="text-[16px] md:text-[24px] font-medium opacity-[.8] text-[#1D3C51] text-center md:w-[698px] w-[304px] md:px-5 lg:w-[908px] font-body">
           We connect you with the causes you care about most, with pioneering

@@ -1,15 +1,15 @@
 import React, { useState } from "react";
+import icon1 from "../../../../assets/landing/Icon1_wb.webp";
+import icon2 from "../../../../assets/landing/Icon2_wb.webp";
+import icon3 from "../../../../assets/landing/Icon3_wb.webp";
+import icon4 from "../../../../assets/landing/Icon4_wb.webp";
+import icon5 from "../../../../assets/landing/Icon5_wb.webp";
+import icon6 from "../../../../assets/landing/Icon6_wb.webp";
+import icon7 from "../../../../assets/landing/Icon7_wb.webp";
+import icon8 from "../../../../assets/landing/Icon8_wb.webp";
 import BenefitssCrousal from "../../../../components/landing/BenefitssCrousal";
-import Crousal from "../../../../components/landing/Crousal";
 import Button from "../../../../components/landing/Button";
-import icon1 from "../../../../assets/landing/Icon1_wb.webp"
-import icon2 from "../../../../assets/landing/Icon2_wb.webp"
-import icon3 from "../../../../assets/landing/Icon3_wb.webp"
-import icon4 from "../../../../assets/landing/Icon4_wb.webp"
-import icon5 from "../../../../assets/landing/Icon5_wb.webp"
-import icon6 from "../../../../assets/landing/Icon6_wb.webp"
-import icon7 from "../../../../assets/landing/Icon7_wb.webp"
-import icon8 from "../../../../assets/landing/Icon8_wb.webp"
+import Crousal from "../../../../components/landing/Crousal";
 const Path = () => {
   const [path, setPath] = useState("non-profits");
   const [nonProfits, setNonProfits] = useState([
@@ -23,7 +23,7 @@ const Path = () => {
       title: "The World At Your Fingertips",
       description:
         "Donate to any nonprofit, anywhere in the world. Support local grassroots organizations who understand the problems on the ground",
-      img_src:icon2,
+      img_src: icon2,
     },
     {
       title: "Receive and Track Tax Benefits",
@@ -43,7 +43,7 @@ const Path = () => {
       title: "Expanded Funding Channels",
       description:
         "Tap into new sources of funding by accepting cash, crypto, stocks, donor funds, and more.",
-      img_src:icon5,
+      img_src: icon5,
     },
     {
       title: "Recurring Revenue Streams",
@@ -61,7 +61,7 @@ const Path = () => {
       title: "Global Reach and Fiscal Sponsorship",
       description:
         "Unlock new worldwide donor pipelines and accept cross-border gifts through fiscal sponsorship. Expand your global community.",
-      img_src:icon8,
+      img_src: icon8,
     },
   ]);
 
@@ -98,7 +98,7 @@ const Path = () => {
         </span>
         {path === "non-profits" ? (
           <p className="text-[18px] md:text-[28px] font-medium w-full lg:max-w-[60%] md:max-w-[70%]  opacity-60  text-[#1D3C51] text-center  mx-auto font-body">
-           Access our free fundraising technology and tools.
+            Access our free fundraising technology and tools.
           </p>
         ) : (
           <p className="text-[18px] md:text-[28px] font-medium w-full lg:max-w-[60%] md:max-w-[70%]  opacity-60  text-[#1D3C51] text-center  mx-auto font-body">

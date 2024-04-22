@@ -1,7 +1,7 @@
 import React from "react";
 import "../../styles/landing/menu.css";
-import MenuPosts from "./MenuPosts";
 import MenuCategories from "./MenuCategories";
+import MenuPosts from "./MenuPosts";
 
 const Menu = () => {
   return (

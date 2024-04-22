@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import TestimonialCard from "../../../../components/landing/TestimonialCard";
-import useGetTestimonials from "../../../../constants/useGetTestimonials";
-import { Swiper, SwiperSlide } from "swiper/react";
-import quotation from"../../../../assets/landing/quotation.svg"
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import { Swiper, SwiperSlide } from "swiper/react";
+import quotation from "../../../../assets/landing/quotation.svg";
+import TestimonialCard from "../../../../components/landing/TestimonialCard";
+import useGetTestimonials from "../../../../constants/useGetTestimonials";
 
 // import './styles.css';
 
@@ -47,7 +47,7 @@ const Testimonials = () => {
         className="h-[100px]  md:scale-[.8] lg:scale-[.9] scale-[.7] w-[100px] m-auto "
       />
       <h2 className="lg:w-full opacity-75 md:mx-auto lg:-mt-4 md:-mt-7 -mt-8 text-center text-[30px] w-full  md:w-full    px-5 leading-10 md:leading-[58px] md:mb-6 mb-6 md:text-[42px] font-bold font-heading">
-      Success Stories: <br className=" " /> Inspiring Change Together
+        Success Stories: <br className=" " /> Inspiring Change Together
       </h2>
 
       <div className="  relative  flex items-center  md:gap-3 xl:gap-4 lg:justify-between w-fit top-0 left-[50%]  translate-x-[-50%] h-full">
@@ -112,7 +112,6 @@ const Testimonials = () => {
                   reviewer_logo={ele.reviewer_logo}
                 />{" "}
               </SwiperSlide>
-              
             );
           })}
         </Swiper>
@@ -138,8 +137,6 @@ const Testimonials = () => {
         </button>
       </div>
     </div>
-
-    
   );
 };
 
