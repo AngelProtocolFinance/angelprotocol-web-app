@@ -22,6 +22,6 @@ export function determineAuthRedirectPath(
   const pathname =
     isSigningUp && signInRouteState?.from === appRoutes.register
       ? `${appRoutes.register}/${regRoutes.welcome}`
-      : signInRouteState?.from || "/";
+      : signInRouteState?.from || "/marketplace";
   return { redirectPath: { pathname, search }, data: signInRouteState?.data };
 }
