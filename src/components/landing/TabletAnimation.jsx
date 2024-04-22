@@ -11,35 +11,6 @@ import StepsCard from "./StepsCard";
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 const TabletAnimation = () => {
-  // useEffect(() => {
-  //   gsap.defaults({ ease: "none" });
-
-  //   const tab = gsap
-  //     .timeline({
-  //       scrollTrigger: {
-  //         trigger: "#svg5",
-  //         scrub: 0.4,
-  //         start: "top 40%",
-  //         end: "bottom 40%",
-  //       },
-  //       duration: 20,
-  //     })
-  //     .from(".line1", { duration: 10 }, 0)
-  //     .to(
-  //       ".dot",
-  //       {
-  //         motionPath: {
-  //           path: ".line1",
-  //           align: ".line1",
-  //           alignOrigin: [0.5, 0.5],
-  //         },
-  //         duration: 15,
-  //       },
-  //       0
-  //     )
-
-  // },[])
-
   const steps = [
     {
       img_src: roadmap1,
