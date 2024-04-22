@@ -7,25 +7,11 @@ import "../../styles/landing/benefitsCarousel.css";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 
 const BenefitsCarousel = ({ slides }) => {
-  const [, setActiveIndex] = useState(0);
-
-  const [showPrevButton, setShowPrevButton] = useState(false);
-  const [showNextButton, setShowNextButton] = useState(true);
-
-  const handleSlideChange = (swiper) => {
-    setActiveIndex(swiper.activeIndex);
-    setShowPrevButton(!swiper.isBeginning);
-    setShowNextButton(!swiper.isEnd);
-  };
-
   const colors = ["#EDFCE2", "#EAE2FC", "#FCF6E2", "#EDF2FE"];
 
   return (
     <div className="lg:flex justify-between w-full  items-center p-16  hidden relative">
-      <div
-        className="swip-prev slider-arrow relative  left-[12.5%] translate-x-[-50%]  z-40   borderLine rounded-full shadow-md p-4"
-        style={{ opacity: showPrevButton ? 1 : 0 }}
-      >
+      <div className="swip-prev slider-arrow relative  left-[12.5%] translate-x-[-50%]  z-40   borderLine rounded-full shadow-md p-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -57,9 +43,7 @@ const BenefitsCarousel = ({ slides }) => {
         navigation={{
           nextEl: ".swip-next",
           prevEl: ".swip-prev",
-          clickable: true,
         }}
-        onSlideChange={(swiper) => handleSlideChange(swiper)}
         modules={[EffectCoverflow, Pagination, Navigation]}
         className="benefits_Carousel"
       >
@@ -82,10 +66,7 @@ const BenefitsCarousel = ({ slides }) => {
         })}
       </Swiper>
 
-      <div
-        className="swip-next slider-arrow relative  right-[8%] z-30 -translate-x-1/2 select-none borderLine rounded-full p-4 shadow-md "
-        style={{ opacity: showNextButton ? 1 : 0 }}
-      >
+      <div className="swip-next slider-arrow relative  right-[8%] z-30 -translate-x-1/2 select-none borderLine rounded-full p-4 shadow-md ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
