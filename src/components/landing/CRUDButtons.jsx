@@ -1,7 +1,5 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useGetUser from "../../constants/useGetUser";
 import { PageContext } from "../../pages/Home/state/PageState";
 import { UserContext } from "../../pages/Home/state/UserState";
 

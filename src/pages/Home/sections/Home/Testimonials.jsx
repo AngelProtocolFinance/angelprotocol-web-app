@@ -1,20 +1,15 @@
-import React, { useState } from "react";
-// Import Swiper styles
+import { useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
+import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import quotation from "../../../../assets/landing/quotation.svg";
 import TestimonialCard from "../../../../components/landing/TestimonialCard";
 import useGetTestimonials from "../../../../constants/useGetTestimonials";
 
-// import './styles.css';
-
-// import required modules
-import { Navigation, Pagination } from "swiper/modules";
-
 const Testimonials = () => {
-  const [showPrevButton, setShowPrevButton] = useState(false);
-  const [showNextButton, setShowNextButton] = useState(true);
+  const [, setShowPrevButton] = useState(false);
+  const [, setShowNextButton] = useState(true);
 
   const handleSlideChange = (swiper) => {
     setShowPrevButton(!swiper.isBeginning);

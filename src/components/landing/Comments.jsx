@@ -5,7 +5,7 @@ import "../../styles/landing/comments.css";
 import { UserContext } from "../state/UserState";
 
 const Comments = ({ comments, blogId, getBlog }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [description, setDescription] = useState("");
 
   const { user } = useContext(UserContext);

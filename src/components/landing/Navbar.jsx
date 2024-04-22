@@ -1,11 +1,9 @@
 import { DappLogo } from "components/Image";
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Navbar = () => {
-  const [search, setSearch] = useState("");
+  const [, setSearch] = useState("");
   const navigate = useNavigate();
-
-  const [scrolled, setScrolled] = useState(false);
 
   return (
     <>

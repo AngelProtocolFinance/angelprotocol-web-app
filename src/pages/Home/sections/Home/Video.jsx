@@ -1,10 +1,6 @@
-import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
-import { CustomEase } from "gsap/CustomEase";
-import { EasePack } from "gsap/EasePack";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import React, { useState, useEffect } from "react";
-import s3 from "../../../../assets/landing/Ellipse 32.png";
+import { useEffect } from "react";
 import s from "../../../../assets/landing/Inifnite Half-right.png";
 import s2 from "../../../../assets/landing/half1.png";
 import heart from "../../../../assets/landing/heartOfText.png";
@@ -37,7 +33,9 @@ const Video = () => {
     });
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      for (const trigger of ScrollTrigger.getAll()) {
+        trigger.kill();
+      }
     };
   }, []);
 

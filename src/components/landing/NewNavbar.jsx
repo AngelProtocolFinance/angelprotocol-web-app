@@ -1,5 +1,5 @@
 import { DappLogo } from "components/Image";
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../pages/Home/App.css";
 const NewNavbar = () => {

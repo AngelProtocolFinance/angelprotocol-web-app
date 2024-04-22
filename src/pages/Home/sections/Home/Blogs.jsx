@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BlogCard from "../../../../components/landing/BlogCard";
 import useGetBlogs from "../../../../constants/useGetBlogs.js";
 
 const Blogs = () => {
   const [showPrevButton, setShowPrevButton] = useState(false);
-  const [showNextButton, setShowNextButton] = useState(true);
+  const [, setShowNextButton] = useState(true);
 
   const handleSlideChange = (swiper) => {
     setShowPrevButton(!swiper.isBeginning);

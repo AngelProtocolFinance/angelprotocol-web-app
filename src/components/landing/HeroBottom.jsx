@@ -17,8 +17,8 @@ import Button from "./Button";
 import Card from "./Card";
 
 const HeroBottom = () => {
-  const [showPrevButton, setShowPrevButton] = useState(false);
-  const [showNextButton, setShowNextButton] = useState(true);
+  const [, setShowPrevButton] = useState(false);
+  const [, setShowNextButton] = useState(true);
 
   const handleSlideChange = (swiper) => {
     setShowPrevButton(!swiper.isBeginning);
@@ -256,15 +256,7 @@ const HeroBottom = () => {
       claimed: true,
     },
   ]);
-  const {
-    hasMore,
-    isLoading,
-    isFetching,
-    isLoadingNextPage,
-    loadNextPage,
-    data,
-    isError,
-  } = useCards();
+  const { data } = useCards();
 
   useEffect(() => {
     if (data) {

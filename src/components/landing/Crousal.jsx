@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "../../styles/landing/crousal.css";
 
 const Crousal = ({ slides }) => {
-  const [right, setright] = useState(0);
+  const [, setright] = useState(0);
   const [active, setActive] = useState(null);
 
   useEffect(() => {

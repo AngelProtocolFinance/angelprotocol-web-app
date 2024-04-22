@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import "../../styles/landing/MenuCategories.css";
 
@@ -18,9 +18,11 @@ const MenuCategories = () => {
       alert(error.message);
     }
   };
+
+  //biome-ignore lint: TODO: move to RTK
   useEffect(() => {
     getBlog();
-  }, [id]);
+  }, []);
   return (
     <div className={"categoryList"}>
       {blog?.category.map((category) => {

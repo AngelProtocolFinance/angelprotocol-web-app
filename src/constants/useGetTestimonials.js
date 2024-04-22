@@ -1,6 +1,4 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Aid from "../assets/landing/Aid.png";
+import { useState } from "react";
 import casd from "../assets/landing/CASD-SL.webp";
 import ph from "../assets/landing/PH8_Logo.jpeg";
 import ace from "../assets/landing/ace_of_hearts.webp";
@@ -9,7 +7,7 @@ import fora from "../assets/landing/foraday.png";
 import shoe from "../assets/landing/shoes_that_speak.webp";
 import test from "../assets/landing/testi3Img.png";
 export default function useGetTestimonials() {
-  const [testimonials, setTestimonials] = useState([
+  const [testimonials] = useState([
     {
       review:
         "Better Giving is an incredible idea, platform and opportunity.I have loved working with the team",

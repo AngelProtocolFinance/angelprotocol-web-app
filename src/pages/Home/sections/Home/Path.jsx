@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import icon1 from "../../../../assets/landing/Icon1_wb.webp";
 import icon2 from "../../../../assets/landing/Icon2_wb.webp";
 import icon3 from "../../../../assets/landing/Icon3_wb.webp";
@@ -12,7 +12,7 @@ import Button from "../../../../components/landing/Button";
 import Crousal from "../../../../components/landing/Crousal";
 const Path = () => {
   const [path, setPath] = useState("non-profits");
-  const [nonProfits, setNonProfits] = useState([
+  const [nonProfits] = useState([
     {
       title: "Sustainable Impact",
       description:
@@ -38,7 +38,7 @@ const Path = () => {
       img_src: icon4,
     },
   ]);
-  const [donors, setDonors] = useState([
+  const [donors] = useState([
     {
       title: "Expanded Funding Channels",
       description:

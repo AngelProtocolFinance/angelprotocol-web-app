@@ -1,10 +1,9 @@
-import React from "react";
 import { Link } from "react-router-dom";
 const Card = (props) => {
   return (
     <div className="flex flex-col gap-8 w-[90%] max-h-[520px] md:w-full md:max-h-[520px] lg:w-full lg:max-h-[520px] bg-white pb-4 rounded-[20px] z-10 overflow-hidden shadow_1 font-body">
       <span className="relative">
-        <img src={props.img_src} alt="photo" className="w-full h-[240px] " />
+        <img src={props.img_src} alt="card img" className="w-full h-[240px] " />
         <img
           src={props.logo}
           alt="logo"

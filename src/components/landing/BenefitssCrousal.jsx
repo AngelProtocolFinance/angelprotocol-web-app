@@ -1,19 +1,13 @@
-import React, { useState } from "react";
-// Import Swiper React components
-import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
+import { useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
-
+import { Swiper, SwiperSlide } from "swiper/react";
 import "../../styles/landing/benefitsCrousal.css";
 
-// import required modules
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 
-const BenefitssCrousal = ({ path, slides }) => {
-  const [active, setActive] = useState(0);
-  const [activeIndex, setActiveIndex] = useState(0);
+const BenefitssCrousal = ({ slides }) => {
+  const [, setActiveIndex] = useState(0);
 
   const [showPrevButton, setShowPrevButton] = useState(false);
   const [showNextButton, setShowNextButton] = useState(true);

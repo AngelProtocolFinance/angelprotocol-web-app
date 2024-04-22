@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import headillust from "../../../../assets/landing/head-illust.webp";
 import Button from "../../../../components/landing/Button";
 import Navbar from "../../../../components/landing/Navbar";
 import "../../../../styles/landing/hero.css";
 const Hero = () => {
-  const [scrolled, setScrolled] = useState(false);
+  const [, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
