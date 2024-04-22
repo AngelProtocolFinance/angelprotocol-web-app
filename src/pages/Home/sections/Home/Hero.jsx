@@ -41,13 +41,13 @@ const Hero = () => {
           <br className="xl:block hidden md:hidden lg:hidden" /> Amplified
           Impact
         </h1>
-        <p className="text-base text-[#1D3C51] z-10 font-normal lg:w-full md:w-full w-full hidden lg:block md:block md:text-[24px] text-center md:text-balance lg:leading-normal md:leading-normal font-body">
+        <p className="text-base text-navy-l1 z-10 font-normal lg:w-full md:w-full w-full hidden lg:block md:block md:text-2xl text-center md:text-balance lg:leading-normal md:leading-normal font-body">
           As a nonprofit serving nonprofits, our all-in-one fundraising solution
           is free, global, and inclusive. <br /> However you want to give and
           receive, we've got your back. Together we can make donations go
           further and last forever.
         </p>
-        <p className="text-base lg:hidden md:hidden text-[#1D3C51] z-10 font-normal  w-[95%]  md:text-[24px] text-center l font-body">
+        <p className="text-base lg:hidden md:hidden text-navy-l1 z-10 font-normal  w-[95%]  md:text-2xl text-center l font-body">
           As a nonprofit serving nonprofits, our all-in-one fundraising solution
           is free, global, and inclusive. <br /> However you want to give and
           receive, we've got your back. Together we can make donations go
@@ -58,7 +58,7 @@ const Hero = () => {
           <Link to={appRoutes.register} className="block -ml-3 z-40">
             <Button text={"Join Us"} />
           </Link>
-          <span className="md:flex flex-col items-center absolute top-[50%] right-[-70%] text-[#183244] hidden">
+          <span className="md:flex flex-col items-center absolute top-1/2 right-[-70%] text-navy-d4 hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="82"
@@ -71,15 +71,15 @@ const Hero = () => {
                 fill="#183244"
               />
             </svg>
-            <p className="text-[#183244] translate-x-12 -rotate-[12deg] font-gochi">
+            <p className="text-navy-d4 translate-x-12 -rotate-[12deg] font-gochi">
               It’s totally free!
             </p>
           </span>
         </div>
       </div>
       <div className="h-[400px] blur-[200px]"></div>
-      <div className="h-[380px] w-[140vw] left-[-70px] bottom-[-10%] md:w-[120vw] lg:w-[120vw] lg:h-[140px]  absolute lg:left-[-40px] lg:rounded-full    lg:bottom-[90px] md:bottom-[-120px] md:left-[-60px] bg-[#fff]   lg:blur-[25px]  md:blur-[35px] blur-[40px] "></div>
-      <div className="h-[200px] extra_width absolute bottom-[230px] left-[-70px] bg-[#ffff] hidden lg:block md:block  rounded-full blur-[400px] overflow-x-hidden"></div>
+      <div className="h-[380px] w-[140vw] left-[-70px] bottom-[-10%] md:w-[120vw] lg:w-[120vw] lg:h-[140px]  absolute lg:-left-10 lg:rounded-full    lg:bottom-[90px] md:bottom-[-120px] md:left-[-60px] bg-[#fff]   lg:blur-[25px]  md:blur-[35px] blur-[40px] "></div>
+      <div className="h-[200px] w-[calc(100%+70px)] absolute bottom-[230px] left-[-70px] bg-[#ffff] hidden lg:block md:block  rounded-full blur-[400px] overflow-x-hidden"></div>
     </section>
   );
 };

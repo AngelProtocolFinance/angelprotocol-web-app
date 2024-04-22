@@ -37,7 +37,7 @@ export default function Table({ methods, classes = "" }: Props) {
           <Cells
             key={row.wiseRecipientID}
             type="td"
-            cellClass="p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br"
+            cellClass="p-3 border-t border-blue-l2 truncate first:rounded-bl last:rounded-br"
           >
             <>{new Date(row.dateCreated).toLocaleDateString()}</>
             <>{row.bankSummary}</>

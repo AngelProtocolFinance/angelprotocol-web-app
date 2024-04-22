@@ -35,20 +35,17 @@ const AnimatedSVG = () => {
         .to(".bubble4", { filter: "grayscale(0%)" }, 19.3);
 
       gsap
-        .timeline(
-          {
-            scrollTrigger: {
-              trigger: "#svg",
-              scrub: 0.2,
-              pin: true,
-              start: "top 10%",
-              end: "bottom -40%",
-            },
-            duration: 1,
-            ease: "power4.out",
+        .timeline({
+          scrollTrigger: {
+            trigger: "#svg",
+            scrub: 0.2,
+            pin: true,
+            start: "top 10%",
+            end: "bottom -40%",
           },
-          16
-        )
+          duration: 1,
+          ease: "power4.out",
+        })
         .from(
           ".line",
           {

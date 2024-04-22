@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { PageContext } from "../../pages/Home/state/PageState";
 import { UserContext } from "../../pages/Home/state/UserState";
@@ -7,8 +7,6 @@ const CRUDButtons = ({ handleDelete, id }) => {
   const { page } = useContext(PageContext);
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
-
-  useEffect(() => {}, []);
 
   return (
     <div
@@ -20,7 +18,7 @@ const CRUDButtons = ({ handleDelete, id }) => {
         onClick={() => {
           handleDelete(id);
         }}
-        className={`${user && user.role === "SUPERADMIN" ? "" : "hidden"}`}
+        className={user && user.role === "SUPERADMIN" ? "" : "hidden"}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +37,7 @@ const CRUDButtons = ({ handleDelete, id }) => {
       </button>
       <button
         onClick={() => navigate(`/dashboard/edit-${page}/${id}`)}
-        className={`${user && user.role === "SUPERADMIN" ? "" : "hidden"}`}
+        className={user && user.role === "SUPERADMIN" ? "" : "hidden"}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

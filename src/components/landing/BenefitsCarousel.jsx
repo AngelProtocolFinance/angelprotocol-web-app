@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,32 +7,18 @@ import "../../styles/landing/benefitsCarousel.css";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 
 const BenefitsCarousel = ({ slides }) => {
-  const [, setActiveIndex] = useState(0);
-
-  const [showPrevButton, setShowPrevButton] = useState(false);
-  const [showNextButton, setShowNextButton] = useState(true);
-
-  const handleSlideChange = (swiper) => {
-    setActiveIndex(swiper.activeIndex);
-    setShowPrevButton(!swiper.isBeginning);
-    setShowNextButton(!swiper.isEnd);
-  };
-
   const colors = ["#EDFCE2", "#EAE2FC", "#FCF6E2", "#EDF2FE"];
 
   return (
-    <div className="lg:flex justify-between w-full  items-center p-16  hidden relative">
-      <div
-        className="swip-prev slider-arrow relative  left-[12.5%] translate-x-[-50%]  z-40   borderLine rounded-full shadow-md p-4"
-        style={{ opacity: showPrevButton ? 1 : 0 }}
-      >
+    <div className="lg:flex justify-between w-full items-center p-16 hidden relative">
+      <div className="swip-prev slider-arrow relative left-[12.5%] -translate-x-1/2 z-40 borderLine rounded-full shadow-md p-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-[#2D89C8] w-6 h-6 text-[25px]"
+          className="text-blue-d1 w-6 h-6 text-[25px]"
         >
           <path
             strokeLinecap="round"
@@ -43,11 +29,11 @@ const BenefitsCarousel = ({ slides }) => {
       </div>
 
       <Swiper
-        effect={"coverflow"}
-        grabCursor={true}
-        centeredSlides={true}
-        loop={true}
-        slidesPerView={"auto"}
+        effect="coverflow"
+        grabCursor
+        centeredSlides
+        loop
+        slidesPerView="auto"
         coverflowEffect={{
           rotate: 0,
           stretch: 90,
@@ -57,9 +43,7 @@ const BenefitsCarousel = ({ slides }) => {
         navigation={{
           nextEl: ".swip-next",
           prevEl: ".swip-prev",
-          clickable: true,
         }}
-        onSlideChange={(swiper) => handleSlideChange(swiper)}
         modules={[EffectCoverflow, Pagination, Navigation]}
         className="benefits_Carousel"
       >
@@ -71,10 +55,10 @@ const BenefitsCarousel = ({ slides }) => {
                 className="w-60 h-60 mb-3 object-cover object-center"
                 alt="logo"
               />
-              <p className="text-2xl text-[#0D283A] w-full font-body  font-semibold">
+              <p className="text-2xl text-[#0D283A] w-full font-body font-semibold">
                 {ele.title}
               </p>
-              <p className="text-base mt-2 text-ellipsis md:text-center font-body font-normal w-full text-[#1D3C51]">
+              <p className="text-base mt-2 text-ellipsis md:text-center font-body font-normal w-full text-navy-l1">
                 {ele.description}
               </p>
             </SwiperSlide>
@@ -82,17 +66,14 @@ const BenefitsCarousel = ({ slides }) => {
         })}
       </Swiper>
 
-      <div
-        className="swip-next slider-arrow relative  right-[8%] z-30 translate-x-[-50%]   borderLine rounded-full p-4 shadow-md "
-        style={{ opacity: showNextButton ? 1 : 0 }}
-      >
+      <div className="swip-next slider-arrow relative right-[8%] z-30 -translate-x-1/2 select-none borderLine rounded-full p-4 shadow-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="text-[#2D89C8] w-6 h-6"
+          className="text-blue-d1 w-6 h-6"
         >
           <path
             strokeLinecap="round"
@@ -102,7 +83,7 @@ const BenefitsCarousel = ({ slides }) => {
         </svg>
       </div>
 
-      <div className="absolute bottom-[10px] right-[12%] flex flex-col items-center -rotate-12">
+      <div className="absolute bottom-2.5 right-[12%] flex flex-col items-center -rotate-12">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="41"
@@ -117,7 +98,7 @@ const BenefitsCarousel = ({ slides }) => {
             />
           </g>
         </svg>
-        <p className="font-gochi max-w-[70%] text-center text-lg font-medium text-[#111] ">
+        <p className="font-gochi max-w-[70%] text-center text-lg font-medium text-[#111]">
           Scroll to know more
         </p>
       </div>
