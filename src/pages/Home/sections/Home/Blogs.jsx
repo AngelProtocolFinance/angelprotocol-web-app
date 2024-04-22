@@ -7,14 +7,6 @@ import BlogCard from "../../../../components/landing/BlogCard";
 import useGetBlogs from "../../../../constants/useGetBlogs.js";
 
 const Blogs = () => {
-  const [showPrevButton, setShowPrevButton] = useState(false);
-  const [, setShowNextButton] = useState(true);
-
-  const handleSlideChange = (swiper) => {
-    setShowPrevButton(!swiper.isBeginning);
-    setShowNextButton(!swiper.isEnd);
-  };
-
   const { blogs, thumbBlog } = useGetBlogs(
     [
       {
@@ -161,10 +153,7 @@ const Blogs = () => {
       <div className="  relative  flex items-center  md:gap-3 xl:gap-4 lg:justify-between w-fit top-0 left-[50%]  translate-x-[-50%] h-full">
         <div className="hidden md:block lg:hidden absolute bg-white h-full w-[40%] z-[8] left-[-20%] blur-[100px] rounded-full"></div>
 
-        <button
-          className="prev lg:-mt-12 lg:relative  lg:top-[50%] lg:left-[0%] lg:translate-y-[-50%] lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow md:absolute md:top-1/2 md:translate-y-[-50%] md:left-[2%] z-10  top-[39.5%] translate-y-[-50%]  absolute left-[-5%]  p-3   md:block"
-          style={{ opacity: showPrevButton ? 1 : 0 }}
-        >
+        <button className="prev lg:-mt-12 lg:relative  lg:top-[50%] lg:left-[0%] lg:translate-y-[-50%] lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow md:absolute md:top-1/2 md:translate-y-[-50%] md:left-[2%] z-10  top-[39.5%] translate-y-[-50%]  absolute left-[-5%]  p-3   md:block">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -181,8 +170,8 @@ const Blogs = () => {
           </svg>
         </button>
         <Swiper
-          slidesPerView={"auto"}
-          loop={true}
+          slidesPerView=
+          loop
           speed={400}
           breakpoints={{
             768: {
@@ -204,9 +193,7 @@ const Blogs = () => {
           navigation={{
             nextEl: ".next",
             prevEl: ".prev",
-            clickable: true,
           }}
-          onSlideChange={(swiper) => handleSlideChange(swiper)}
           modules={[Navigation]}
           className="blog_Carousel"
         >
