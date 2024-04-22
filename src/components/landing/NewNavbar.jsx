@@ -9,7 +9,7 @@ const NewNavbar = () => {
     <>
       <nav
         className={
-          "bg-[#fff] ease-in-out duration-400 top-0 left-0 w-full fixed  z-[9999] lg:h-[68px] h-[68px] shadow-md flex justify-between items-center  md:px-[40px] lg:px-[40px] xl:px-[40px] xl:h-[68px] px-5 md:w-full lg:w-full font-heading m-auto overflow-hidden"
+          "bg-[#fff] ease-in-out duration-400 top-0 left-0 w-full fixed  z-[9999] lg:h-[68px] h-[68px] shadow-md flex justify-between items-center  md:px-10 lg:px-10 xl:px-10 xl:h-[68px] px-5 md:w-full lg:w-full font-heading m-auto overflow-hidden"
         }
       >
         <DappLogo classes="w-48 h-12" />
@@ -40,15 +40,15 @@ const NewNavbar = () => {
             className="w-[85%] p-1 outline-none relative hidden md:block"
           />
         </label>
-        <span className="md:flex h-full relative lg:w-[250px] flex justify-end items-center md:w-[250px] gap-3 items-center hidden">
+        <span className="md:flex h-full relative lg:w-[250px] flex justify-end items-center md:w-[250px] gap-3">
           <button
-            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-[#183244] text-base text-lg"
+            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-navy-d4 text-lg"
             onClick={() => navigate("/login")}
           >
             Login
           </button>
           <button
-            className="bg-[#2D89C8] text-white px-6 pt-1.5 pb-2.5 rounded-[40px] font-semibold text-lg"
+            className="bg-blue-d1 text-white px-6 pt-1.5 pb-2.5 rounded-[40px] font-semibold text-lg"
             onClick={() => navigate("/signup")}
           >
             Sign up

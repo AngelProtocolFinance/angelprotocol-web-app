@@ -78,13 +78,13 @@ const MobileAnimation = () => {
             </defs>
           </svg>
 
-          <h4 className=" text-[14px] z-[33] font-bold z w-full mx-auto text-[#3c91cb] text-center mb-[65px]   font-heading">
+          <h4 className=" text-xs z-[33] font-bold z w-full mx-auto text-[#3c91cb] text-center mb-[65px]   font-heading">
             SIMPLE PATH TO FINANCIAL STABILITY
           </h4>
           <div className="bg-[#fbf8f9]   w-full h-[120px] absolute top-10 blur-[15px] -z-1">
             {" "}
           </div>
-          <h2 className=" text-[32px] font-bold z-[88] -mt-10  w-[95%] mb-14  text-[#183244] text-center mx-auto    z-20  font-heading">
+          <h2 className=" text-[32px] font-bold z-[88] -mt-10  w-[95%] mb-14  text-navy-d4 text-center mx-auto    z-20  font-heading">
             Make a Lasting Impact: Give Today, Give Forever
           </h2>
 

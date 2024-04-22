@@ -45,9 +45,9 @@ const Testimonials = () => {
         Success Stories: <br className=" " /> Inspiring Change Together
       </h2>
 
-      <div className="  relative  flex items-center  md:gap-3 xl:gap-4 lg:justify-between w-fit top-0 left-[50%]  translate-x-[-50%] h-full">
+      <div className="  relative  flex items-center  md:gap-3 xl:gap-4 lg:justify-between w-fit top-0 left-1/2  -translate-x-1/2 h-full">
         <button
-          className="testimonial-prev lg:relative  lg:top-[50%] lg:left-[0%] lg:translate-y-[-50%] lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow md:absolute md:top-1/2 md:translate-y-[-50%] md:left-[2%] z-10  top-[50%] translate-y-[-50%]  absolute left-[-5%] left-0 p-3  "
+          className="testimonial-prev lg:relative  lg:top-1/2 lg:left-[0%] lg:-translate-y-1/2 lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow-md md:absolute md:top-1/2 md:-translate-y-1/2 md:left-[2%] z-10  top-1/2 -translate-y-1/2  absolute left-[-5%] left-0 p-3  "
           // style={{ opacity: showPrevButton ? 1 : 0 }}
         >
           <svg
@@ -56,7 +56,7 @@ const Testimonials = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="text-[#2D89C8] w-[24px] h-[24px] font-bold"
+            className="text-blue-d1 w-6 h-6 font-bold"
           >
             <path
               strokeLinecap="round"
@@ -112,7 +112,7 @@ const Testimonials = () => {
         </Swiper>
 
         <button
-          className="testimonial-next lg:relative lg:top-[50%] lg:right-[0%] lg:translate-y-[-50%] lg:p-3 md:p-3  bg-white rounded-full borderLine z-[777]  shadow-md md:absolute absolute md:top-1/2 md:right-[2%] top-[50%] translate-y-[-50%]  right-[-5%] p-3    anurag "
+          className="testimonial-next lg:relative lg:top-1/2 lg:right-[0%] lg:-translate-y-1/2 lg:p-3 md:p-3  bg-white rounded-full borderLine z-[777]  shadow-md md:absolute absolute md:top-1/2 md:right-[2%] top-1/2 -translate-y-1/2  right-[-5%] p-3    anurag "
           // style={{ opacity: showNextButton ? 1 : 0 }}
         >
           <svg
@@ -121,7 +121,7 @@ const Testimonials = () => {
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="text-[#2D89C8] w-[24px] h-[24px] font-bold "
+            className="text-blue-d1 w-6 h-6 font-bold "
           >
             <path
               strokeLinecap="round"

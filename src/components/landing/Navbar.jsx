@@ -41,15 +41,15 @@ const Navbar = () => {
           />
         </label>
 
-        <span className="md:flex h-full relative lg:w-[240px] flex justify-end items-center md:w-[220px] gap-3 items-center hidden">
+        <span className="md:flex h-full relative lg:w-[240px] flex justify-end md:w-[220px] gap-3 items-center">
           <Link
-            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-[#183244] text-base text-lg"
+            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-navy-d4 text-lg"
             to={appRoutes.signin}
           >
             Login
           </Link>
           <Link
-            className="bg-[#2D89C8] text-white px-6 pt-1.5 pb-2.5 rounded-[40px] font-semibold text-lg"
+            className="bg-blue-d1 text-white px-6 pt-1.5 pb-2.5 rounded-[40px] font-semibold text-lg"
             to={appRoutes.signup}
           >
             Sign up

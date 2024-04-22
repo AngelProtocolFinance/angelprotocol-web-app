@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
@@ -7,14 +7,6 @@ import BlogCard from "../../../../components/landing/BlogCard";
 import useGetBlogs from "../../../../constants/useGetBlogs.js";
 
 const Blogs = () => {
-  const [showPrevButton, setShowPrevButton] = useState(false);
-  const [, setShowNextButton] = useState(true);
-
-  const handleSlideChange = (swiper) => {
-    setShowPrevButton(!swiper.isBeginning);
-    setShowNextButton(!swiper.isEnd);
-  };
-
   const { blogs, thumbBlog } = useGetBlogs(
     [
       {
@@ -137,7 +129,7 @@ const Blogs = () => {
   );
 
   return (
-    <section className=" xl:px-[126px] lg:px-[60px] md:px-[30px] flex flex-col gap-[56px] py-[50px]  blogs relative z-10">
+    <section className="xl:px-[126px] lg:px-[60px] md:px-[30px] flex flex-col gap-14 py-[50px] blogs relative z-10">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="156"
@@ -154,24 +146,21 @@ const Blogs = () => {
           fill="#FDE3D8"
         />
       </svg>
-      <h2 className="text-[#183244] text-[32px] md:text-[42px] font-bold text-center font-heading">
+      <h2 className="text-navy-d4 text-[32px] md:text-[42px] font-bold text-center font-heading">
         Check out the latest
       </h2>
 
-      <div className="  relative  flex items-center  md:gap-3 xl:gap-4 lg:justify-between w-fit top-0 left-[50%]  translate-x-[-50%] h-full">
+      <div className="  relative  flex items-center  md:gap-3 xl:gap-4 lg:justify-between w-fit top-0 left-1/2  -translate-x-1/2 h-full">
         <div className="hidden md:block lg:hidden absolute bg-white h-full w-[40%] z-[8] left-[-20%] blur-[100px] rounded-full"></div>
 
-        <button
-          className="prev lg:-mt-12 lg:relative  lg:top-[50%] lg:left-[0%] lg:translate-y-[-50%] lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow md:absolute md:top-1/2 md:translate-y-[-50%] md:left-[2%] z-10  top-[39.5%] translate-y-[-50%]  absolute left-[-5%]  p-3   md:block"
-          style={{ opacity: showPrevButton ? 1 : 0 }}
-        >
+        <button className="prev lg:-mt-12 lg:relative  lg:top-1/2 lg:left-[0%] lg:-translate-y-1/2 lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow-md md:absolute md:top-1/2 md:-translate-y-1/2 md:left-[2%] z-10  top-[39.5%] -translate-y-1/2  absolute left-[-5%]  p-3   md:block">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="text-[#2D89C8] w-[24px] h-[24px] font-bold"
+            className="text-blue-d1 w-6 h-6 font-bold"
           >
             <path
               strokeLinecap="round"
@@ -181,8 +170,8 @@ const Blogs = () => {
           </svg>
         </button>
         <Swiper
-          slidesPerView={"auto"}
-          loop={true}
+          slidesPerView="auto"
+          loop
           speed={400}
           breakpoints={{
             768: {
@@ -204,9 +193,7 @@ const Blogs = () => {
           navigation={{
             nextEl: ".next",
             prevEl: ".prev",
-            clickable: true,
           }}
-          onSlideChange={(swiper) => handleSlideChange(swiper)}
           modules={[Navigation]}
           className="blog_Carousel"
         >
@@ -219,14 +206,14 @@ const Blogs = () => {
           })}
         </Swiper>
 
-        <button className="next lg:relative lg:-mt-12 lg:top-[50%] lg:right-[0%] lg:translate-y-[-50%] lg:p-3 md:p-3  bg-white rounded-full borderLine z-[777]  shadow-md md:absolute absolute md:top-1/2 md:right-[2%] top-[39.5%] translate-y-[-50%]  right-[-5%] p-3  md:block">
+        <button className="next lg:relative lg:-mt-12 lg:top-1/2 lg:right-[0%] lg:-translate-y-1/2 lg:p-3 md:p-3  bg-white rounded-full borderLine z-[777]  shadow-md md:absolute absolute md:top-1/2 md:right-[2%] top-[39.5%] -translate-y-1/2  right-[-5%] p-3  md:block">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
             strokeWidth={1.5}
             stroke="currentColor"
-            className="text-[#2D89C8] w-[24px] h-[24px] font-bold "
+            className="text-blue-d1 w-6 h-6 font-bold "
           >
             <path
               strokeLinecap="round"
