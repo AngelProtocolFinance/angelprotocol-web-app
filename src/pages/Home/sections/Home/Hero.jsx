@@ -79,7 +79,7 @@ const Hero = () => {
       </div>
       <div className="h-[400px] blur-[200px]"></div>
       <div className="h-[380px] w-[140vw] left-[-70px] bottom-[-10%] md:w-[120vw] lg:w-[120vw] lg:h-[140px]  absolute lg:-left-10 lg:rounded-full    lg:bottom-[90px] md:bottom-[-120px] md:left-[-60px] bg-[#fff]   lg:blur-[25px]  md:blur-[35px] blur-[40px] "></div>
-      <div className="h-[200px] extra_width absolute bottom-[230px] left-[-70px] bg-[#ffff] hidden lg:block md:block  rounded-full blur-[400px] overflow-x-hidden"></div>
+      <div className="h-[200px] w-[calc(100%+70px)] absolute bottom-[230px] left-[-70px] bg-[#ffff] hidden lg:block md:block  rounded-full blur-[400px] overflow-x-hidden"></div>
     </section>
   );
 };

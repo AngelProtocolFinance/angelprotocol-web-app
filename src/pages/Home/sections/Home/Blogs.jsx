@@ -170,7 +170,7 @@ const Blogs = () => {
           </svg>
         </button>
         <Swiper
-          slidesPerView=
+          slidesPerView="auto"
           loop
           speed={400}
           breakpoints={{
