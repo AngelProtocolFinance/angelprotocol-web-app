@@ -1,5 +1,3 @@
-import React from "react";
-
 const DateFormatter = ({ originalDate }) => {
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);

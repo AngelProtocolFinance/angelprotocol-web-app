@@ -1,4 +1,3 @@
-import React from "react";
 import "../../styles/landing/menu.css";
 import MenuCategories from "./MenuCategories";
 import MenuPosts from "./MenuPosts";

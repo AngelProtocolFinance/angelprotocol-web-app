@@ -64,15 +64,15 @@ const MobileAnimation = () => {
                 y2="1924.94"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#FEFBFC" />
-                <stop offset="0.0747417" stop-color="#F1ECFD" />
-                <stop offset="0.195424" stop-color="#FEFBFC" />
-                <stop offset="0.324275" stop-color="#ECF2FD" />
-                <stop offset="0.508205" stop-color="#FEFBFC" />
-                <stop offset="0.626472" stop-color="#ECFBFD" />
-                <stop offset="0.754949" stop-color="#ECF2FD" />
-                <stop offset="0.896279" stop-color="#ECF2FD" />
-                <stop offset="1" stop-color="#FEFBFC" />
+                <stop stopColor="#FEFBFC" />
+                <stop offset="0.0747417" stopColor="#F1ECFD" />
+                <stop offset="0.195424" stopColor="#FEFBFC" />
+                <stop offset="0.324275" stopColor="#ECF2FD" />
+                <stop offset="0.508205" stopColor="#FEFBFC" />
+                <stop offset="0.626472" stopColor="#ECFBFD" />
+                <stop offset="0.754949" stopColor="#ECF2FD" />
+                <stop offset="0.896279" stopColor="#ECF2FD" />
+                <stop offset="1" stopColor="#FEFBFC" />
               </linearGradient>
             </defs>
           </svg>

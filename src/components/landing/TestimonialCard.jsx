@@ -1,4 +1,3 @@
-import React from "react";
 import CRUDButtons from "./CRUDButtons";
 
 const TestimonialCard = (props) => {

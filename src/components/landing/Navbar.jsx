@@ -1,13 +1,14 @@
 import { DappLogo } from "components/Image";
+import { appRoutes } from "constants/routes";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const [, setSearch] = useState("");
-  const navigate = useNavigate();
 
   return (
     <>
       <nav
+        data-testid="nav_dropdown"
         className="bg-white lg:h-[68px] h-[68px] relative rounded-[40px] flex justify-between items-center  lg:px-4 md:px-4 xl:px-5 px-5 md:w-full lg:w-full  font-heading m-auto overflow-hidden"
         id="temp"
       >
@@ -41,18 +42,18 @@ const Navbar = () => {
         </label>
 
         <span className="md:flex h-full relative lg:w-[240px] flex justify-end items-center md:w-[220px] gap-3 items-center hidden">
-          <button
+          <Link
             className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-[#183244] text-base text-lg"
-            onClick={() => navigate("/login")}
+            to={appRoutes.signin}
           >
             Login
-          </button>
-          <button
+          </Link>
+          <Link
             className="bg-[#2D89C8] text-white px-6 pt-1.5 pb-2.5 rounded-[40px] font-semibold text-lg"
-            onClick={() => navigate("/signup")}
+            to={appRoutes.signup}
           >
             Sign up
-          </button>
+          </Link>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

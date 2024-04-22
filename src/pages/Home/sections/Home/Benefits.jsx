@@ -1,4 +1,3 @@
-import React from "react";
 import BenefitssCrousal from "../../../../components/landing/BenefitssCrousal";
 
 const Benefits = () => {

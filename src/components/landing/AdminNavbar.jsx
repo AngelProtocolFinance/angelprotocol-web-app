@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { PageContext } from "../../pages/Home/state/PageState";
 import { UserContext } from "../../pages/Home/state/UserState";
 

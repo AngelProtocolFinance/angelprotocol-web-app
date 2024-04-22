@@ -1,5 +1,7 @@
+import { appRoutes } from "constants/routes";
 import useCards from "pages/Marketplace/Cards/useCards";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -412,9 +414,9 @@ const HeroBottom = () => {
           <div className="hidden md:block lg:hidden absolute bg-white h-full w-[40%] z-[8] blur-[100px] right-[-15%] top-[-2%]  rounded-full"></div>
         </div>
 
-        <div className="-mt-30 z-40">
+        <Link to={appRoutes.marketplace} className="block -mt-30 z-40">
           <Button text={"Explore All Causes"} />
-        </div>
+        </Link>
         <p className="bg-[#FFEECC] font-gochi text-2xl z-[22] px-4">
           from all around the globe
         </p>
