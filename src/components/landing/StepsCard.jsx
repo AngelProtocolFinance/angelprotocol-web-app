@@ -10,7 +10,7 @@ const StepsCard = ({ step }) => {
         />
       </div>
       <span className="md:w-[50%] w-[100%]">
-        <h4 className="text-[#183244] text-center md:text-left text-[24px] md:text-[32px] leading-[40px] font-bold font-heading">
+        <h4 className="text-navy-d4 text-center md:text-left text-[24px] md:text-[32px] leading-[40px] font-bold font-heading">
           {step.title}
         </h4>
         <p className="text-[16px] md:text-[20px] text-center md:text-left opacity-[1]  text-[#1D3C51] w-full  font-normal md:text-balance font-body mt-4">

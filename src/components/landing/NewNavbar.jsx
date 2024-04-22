@@ -42,7 +42,7 @@ const NewNavbar = () => {
         </label>
         <span className="md:flex h-full relative lg:w-[250px] flex justify-end items-center md:w-[250px] gap-3">
           <button
-            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-[#183244] text-lg"
+            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-navy-d4 text-lg"
             onClick={() => navigate("/login")}
           >
             Login

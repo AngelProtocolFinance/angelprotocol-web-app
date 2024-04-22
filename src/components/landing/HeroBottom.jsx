@@ -320,7 +320,7 @@ const HeroBottom = () => {
           <h3 className="text-lg uppercase font-bold text-blue-d1 font-heading text-[13px] md:text-[18px]">
             Bridge to better
           </h3>
-          <h2 className="text-[32px] md:text-[42px] lg:w-full md:w-8/12 text-center capitalize font-bold text-[#183244] font-heading">
+          <h2 className="text-[32px] md:text-[42px] lg:w-full md:w-8/12 text-center capitalize font-bold text-navy-d4 font-heading">
             Connecting Donors to Causes That Matter
           </h2>
         </span>

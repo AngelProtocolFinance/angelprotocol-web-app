@@ -83,7 +83,7 @@ const TabletAnimation = () => {
           <div className="bg-[#fbf8f9] md:w-[65%] h-[120px] absolute top-10 left-36 blur-[15px] -z-1">
             {" "}
           </div>
-          <h2 className=" md:text-[40px] font-bold   md:max-w-[70%] mt-2 mb-10  text-[#183244] text-center md:mx-auto leading-[60px]  z-20  font-heading">
+          <h2 className=" md:text-[40px] font-bold   md:max-w-[70%] mt-2 mb-10  text-navy-d4 text-center md:mx-auto leading-[60px]  z-20  font-heading">
             Make a Lasting Impact: Give Today, Give Forever
           </h2>
           {steps.map((step, idx) => {

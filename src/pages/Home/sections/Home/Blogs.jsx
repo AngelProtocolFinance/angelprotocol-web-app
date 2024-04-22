@@ -129,7 +129,7 @@ const Blogs = () => {
   );
 
   return (
-    <section className=" xl:px-[126px] lg:px-[60px] md:px-[30px] flex flex-col gap-[56px] py-[50px]  blogs relative z-10">
+    <section className="xl:px-[126px] lg:px-[60px] md:px-[30px] flex flex-col gap-14 py-[50px] blogs relative z-10">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="156"
@@ -146,7 +146,7 @@ const Blogs = () => {
           fill="#FDE3D8"
         />
       </svg>
-      <h2 className="text-[#183244] text-[32px] md:text-[42px] font-bold text-center font-heading">
+      <h2 className="text-navy-d4 text-[32px] md:text-[42px] font-bold text-center font-heading">
         Check out the latest
       </h2>
 

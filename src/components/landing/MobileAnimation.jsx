@@ -84,7 +84,7 @@ const MobileAnimation = () => {
           <div className="bg-[#fbf8f9]   w-full h-[120px] absolute top-10 blur-[15px] -z-1">
             {" "}
           </div>
-          <h2 className=" text-[32px] font-bold z-[88] -mt-10  w-[95%] mb-14  text-[#183244] text-center mx-auto    z-20  font-heading">
+          <h2 className=" text-[32px] font-bold z-[88] -mt-10  w-[95%] mb-14  text-navy-d4 text-center mx-auto    z-20  font-heading">
             Make a Lasting Impact: Give Today, Give Forever
           </h2>
 

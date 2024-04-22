@@ -43,7 +43,7 @@ const Navbar = () => {
 
         <span className="md:flex h-full relative lg:w-[240px] flex justify-end md:w-[220px] gap-3 items-center">
           <Link
-            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-[#183244] text-lg"
+            className="px-2.5 pt-1.5 pb-2.5 rounded-[40px] font-bold text-navy-d4 text-lg"
             to={appRoutes.signin}
           >
             Login

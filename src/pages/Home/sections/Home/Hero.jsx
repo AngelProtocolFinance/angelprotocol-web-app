@@ -58,7 +58,7 @@ const Hero = () => {
           <Link to={appRoutes.register} className="block -ml-3 z-40">
             <Button text={"Join Us"} />
           </Link>
-          <span className="md:flex flex-col items-center absolute top-[50%] right-[-70%] text-[#183244] hidden">
+          <span className="md:flex flex-col items-center absolute top-[50%] right-[-70%] text-navy-d4 hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="82"
@@ -71,7 +71,7 @@ const Hero = () => {
                 fill="#183244"
               />
             </svg>
-            <p className="text-[#183244] translate-x-12 -rotate-[12deg] font-gochi">
+            <p className="text-navy-d4 translate-x-12 -rotate-[12deg] font-gochi">
               It’s totally free!
             </p>
           </span>

@@ -54,7 +54,7 @@ const Video = () => {
         </span>
 
         <div className="text flex flex-col  items-center -top-[65px]  md:-top-[50px] lg:-top-[50px]   relative">
-          <h2 className="text-[#183244] text-[32px] md:text-[42px] font-bold text-center font-heading md:mb-5 leading-normal mb-5 w-[100%]  md:max-w-[85%] lg:max-w-[85%]">
+          <h2 className="text-navy-d4 text-[32px] md:text-[42px] font-bold text-center font-heading md:mb-5 leading-normal mb-5 w-[100%]  md:max-w-[85%] lg:max-w-[85%]">
             The Better.Giving <br className="md:hidden lg:hidden" /> Alliance
           </h2>
           <p className="text-[20px] md:text-[28px] lg:text-[28px] text-[#1D3C51] font-medium lg:min-w-[816px] w-[324px] opacity-[.8] md:w-[692px] md:tracking-[.3px] text-center  m-auto font-body">
