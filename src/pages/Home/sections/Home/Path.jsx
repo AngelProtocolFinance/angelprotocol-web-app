@@ -7,9 +7,9 @@ import icon5 from "../../../../assets/landing/Icon5_wb.webp";
 import icon6 from "../../../../assets/landing/Icon6_wb.webp";
 import icon7 from "../../../../assets/landing/Icon7_wb.webp";
 import icon8 from "../../../../assets/landing/Icon8_wb.webp";
-import BenefitssCrousal from "../../../../components/landing/BenefitssCrousal";
+import BenefitssCrousal from "../../../../components/landing/BenefitsCarousel";
 import Button from "../../../../components/landing/Button";
-import Crousal from "../../../../components/landing/Crousal";
+import Crousal from "../../../../components/landing/Carousel";
 const Path = () => {
   const [path, setPath] = useState("non-profits");
   const nonProfits = [

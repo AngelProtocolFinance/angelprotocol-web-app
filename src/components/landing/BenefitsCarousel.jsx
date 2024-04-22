@@ -2,11 +2,11 @@ import { useState } from "react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "../../styles/landing/benefitsCrousal.css";
+import "../../styles/landing/benefitsCarousel.css";
 
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 
-const BenefitssCrousal = ({ slides }) => {
+const BenefitsCarousel = ({ slides }) => {
   const [, setActiveIndex] = useState(0);
 
   const [showPrevButton, setShowPrevButton] = useState(false);
@@ -61,7 +61,7 @@ const BenefitssCrousal = ({ slides }) => {
         }}
         onSlideChange={(swiper) => handleSlideChange(swiper)}
         modules={[EffectCoverflow, Pagination, Navigation]}
-        className="benefits_crousal"
+        className="benefits_carousel"
       >
         {slides.map((ele, index) => {
           return (
@@ -125,4 +125,4 @@ const BenefitssCrousal = ({ slides }) => {
   );
 };
 
-export default BenefitssCrousal;
+export default BenefitsCarousel;

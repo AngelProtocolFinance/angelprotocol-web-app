@@ -208,7 +208,7 @@ const Blogs = () => {
           }}
           onSlideChange={(swiper) => handleSlideChange(swiper)}
           modules={[Navigation]}
-          className="blog_crousal"
+          className="blog_carousel"
         >
           {blogs.map((ele, idx) => {
             return (
