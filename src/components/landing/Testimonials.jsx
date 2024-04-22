@@ -1,11 +1,10 @@
 import axios from "axios";
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import useGetTestimonials from "../../constants/useGetTestimonials";
 import TestimonialCard from "./TestimonialCard";
 
 const Testimonials = () => {
-  const [testimonials, _setTestimonials] = useGetTestimonials([]);
+  const [testimonials] = useGetTestimonials([]);
   const navigate = useNavigate();
 
   const handleDelete = async (id) => {
@@ -43,11 +42,13 @@ const Testimonials = () => {
       </div>
       {testimonials.map((ele) => {
         return (
+          //biome-ignore lint: TODO: fix incorrect props role
           <TestimonialCard
             review={ele.review}
             reviewer={ele.reviewer}
             reviewer_profession={ele.reviewer_profession}
             reviewer_logo={ele.reviewer_logo}
+            role={"ADMIN"}
             handleDelete={handleDelete}
             id={ele._id}
             className="mt-4"

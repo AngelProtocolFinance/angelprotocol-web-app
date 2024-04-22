@@ -1,6 +1,7 @@
-import { DAPP_URL } from "constants/env";
+import { appRoutes } from "constants/routes";
 import useCards from "pages/Marketplace/Cards/useCards";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -18,8 +19,8 @@ import Button from "./Button";
 import Card from "./Card";
 
 const HeroBottom = () => {
-  const [_showPrevButton, setShowPrevButton] = useState(false);
-  const [_showNextButton, setShowNextButton] = useState(true);
+  const [, setShowPrevButton] = useState(false);
+  const [, setShowNextButton] = useState(true);
 
   const handleSlideChange = (swiper) => {
     setShowPrevButton(!swiper.isBeginning);
@@ -413,11 +414,9 @@ const HeroBottom = () => {
           <div className="hidden md:block lg:hidden absolute bg-white h-full w-[40%] z-[8] blur-[100px] right-[-15%] top-[-2%]  rounded-full"></div>
         </div>
 
-        <div className="-mt-30 z-40">
-          <a href={`${DAPP_URL}/marketplace`}>
-            <Button text={"Explore All Causes"} />
-          </a>
-        </div>
+        <Link to={appRoutes.marketplace} className="block -mt-30 z-40">
+          <Button text={"Explore All Causes"} />
+        </Link>
         <p className="bg-[#FFEECC] font-gochi text-2xl z-[22] px-4">
           from all around the globe
         </p>

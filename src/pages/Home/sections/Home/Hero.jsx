@@ -1,11 +1,12 @@
-import { DAPP_URL } from "constants/env";
-import React, { useState, useEffect } from "react";
+import { appRoutes } from "constants/routes";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import headillust from "../../../../assets/landing/head-illust.webp";
 import Button from "../../../../components/landing/Button";
 import Navbar from "../../../../components/landing/Navbar";
 import "../../../../styles/landing/hero.css";
 const Hero = () => {
-  const [_scrolled, setScrolled] = useState(false);
+  const [, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,11 +55,9 @@ const Hero = () => {
         </p>
 
         <div className="z-20  relative">
-          <div className=" -ml-3 z-40">
-            <a href={`${DAPP_URL}/register`}>
-              <Button text={"Join Us"} />
-            </a>
-          </div>
+          <Link to={appRoutes.register} className="block -ml-3 z-40">
+            <Button text={"Join Us"} />
+          </Link>
           <span className="md:flex flex-col items-center absolute top-[50%] right-[-70%] text-[#183244] hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"

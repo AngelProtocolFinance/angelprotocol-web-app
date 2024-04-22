@@ -8,7 +8,7 @@ import useGetBlogs from "../../../../constants/useGetBlogs.js";
 
 const Blogs = () => {
   const [showPrevButton, setShowPrevButton] = useState(false);
-  const [_showNextButton, setShowNextButton] = useState(true);
+  const [, setShowNextButton] = useState(true);
 
   const handleSlideChange = (swiper) => {
     setShowPrevButton(!swiper.isBeginning);

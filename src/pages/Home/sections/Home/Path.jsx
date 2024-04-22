@@ -12,7 +12,7 @@ import Button from "../../../../components/landing/Button";
 import Carousel from "../../../../components/landing/Carousel";
 const Path = () => {
   const [path, setPath] = useState("non-profits");
-  const [nonProfits, _setNonProfits] = useState([
+  const nonProfits = [
     {
       title: "Sustainable Impact",
       description:
@@ -37,8 +37,8 @@ const Path = () => {
         "Use the giving method that works for you - from check, card and bank transfers to stock, DAF and crypto",
       img_src: icon4,
     },
-  ]);
-  const [donors, _setDonors] = useState([
+  ];
+  const donors = [
     {
       title: "Expanded Funding Channels",
       description:
@@ -63,7 +63,7 @@ const Path = () => {
         "Unlock new worldwide donor pipelines and accept cross-border gifts through fiscal sponsorship. Expand your global community.",
       img_src: icon8,
     },
-  ]);
+  ];
 
   return (
     <section className="px-[24px] lg:pt-0 lg:p-[28px] md:pt-0 md:p-[30px] pt-0 flex flex-col gap-[50px] lg:gap-[0px] mt-[-200px] mb-16  xl:max-w-[1440px] xl:m-auto xl:-mt-20">

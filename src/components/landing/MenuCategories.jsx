@@ -18,9 +18,11 @@ const MenuCategories = () => {
       alert(error.message);
     }
   };
+
+  //biome-ignore lint: TODO: move to RTK
   useEffect(() => {
     getBlog();
-  }, [getBlog]);
+  }, []);
   return (
     <div className={"categoryList"}>
       {blog?.category.map((category) => {

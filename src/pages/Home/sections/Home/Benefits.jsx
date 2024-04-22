@@ -1,4 +1,3 @@
-import React from "react";
 import BenefitsCarousel from "../../../../components/landing/BenefitsCarousel";
 
 const Benefits = () => {

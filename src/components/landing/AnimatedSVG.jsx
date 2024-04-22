@@ -4,7 +4,6 @@ import { CustomEase } from "gsap/CustomEase";
 import { EasePack } from "gsap/EasePack";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-// AnimatedSVG.js
 import React from "react";
 import roadmap1 from "../../assets/landing/roadmap1_wb.webp";
 import roadmap2 from "../../assets/landing/roadmap2_wb.webp";
@@ -35,7 +34,7 @@ const AnimatedSVG = () => {
         .to(".bubble3", { filter: "grayscale(0%)" }, 14.5)
         .to(".bubble4", { filter: "grayscale(0%)" }, 19.3);
 
-      const _main = gsap
+      gsap
         .timeline(
           {
             scrollTrigger: {

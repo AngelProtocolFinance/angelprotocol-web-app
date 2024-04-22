@@ -21,7 +21,6 @@ export default function NavDropdown({ links }: Props) {
       {({ open }) => (
         <>
           <Popover.Button
-            data-testid="nav_dropdown"
             className={`${
               open ? "text-white" : "text-white/90"
             } group flex justify-center items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75`}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../../styles/landing/carousel.css";
 
 const Carousel = ({ slides }) => {
-  const [_right, setright] = useState(0);
+  const [, setright] = useState(0);
   const [active, setActive] = useState(null);
 
   useEffect(() => {

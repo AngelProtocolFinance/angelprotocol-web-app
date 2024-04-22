@@ -1,4 +1,3 @@
-import { useState } from "react";
 import casd from "../assets/landing/CASD-SL.webp";
 import ph from "../assets/landing/PH8_Logo.jpeg";
 import ace from "../assets/landing/ace_of_hearts.webp";
@@ -7,7 +6,7 @@ import fora from "../assets/landing/foraday.png";
 import shoe from "../assets/landing/shoes_that_speak.webp";
 import test from "../assets/landing/testi3Img.png";
 export default function useGetTestimonials() {
-  const [testimonials, _setTestimonials] = useState([
+  return [
     {
       review:
         "Better Giving is an incredible idea, platform and opportunity.I have loved working with the team",
@@ -57,7 +56,5 @@ export default function useGetTestimonials() {
       reviewer_profession: "Community Action for Sustainable Development",
       reviewer_logo: casd,
     },
-  ]);
-
-  return testimonials;
+  ];
 }

@@ -1,5 +1,6 @@
 import { DAPP_URL } from "constants/env";
 import DOMPurify from "dompurify";
+import React from "react";
 
 const BlogCard = ({ blog, imgUrl }) => {
   const sanitize = (dirtyHTML) => {

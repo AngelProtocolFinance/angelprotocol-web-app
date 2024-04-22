@@ -1,5 +1,4 @@
 import React from "react";
-
 const StepsCard = ({ step }) => {
   return (
     <div className="steps_card flex     flex-col md:flex-row gap-[20px]  md:gap-[48px]  justify-between items-center  z-[399] pb-[68px]">

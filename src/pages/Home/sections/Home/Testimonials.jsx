@@ -8,8 +8,8 @@ import TestimonialCard from "../../../../components/landing/TestimonialCard";
 import useGetTestimonials from "../../../../constants/useGetTestimonials";
 
 const Testimonials = () => {
-  const [_showPrevButton, setShowPrevButton] = useState(false);
-  const [_showNextButton, setShowNextButton] = useState(true);
+  const [, setShowPrevButton] = useState(false);
+  const [, setShowNextButton] = useState(true);
 
   const handleSlideChange = (swiper) => {
     setShowPrevButton(!swiper.isBeginning);

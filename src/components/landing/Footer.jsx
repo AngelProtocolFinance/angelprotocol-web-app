@@ -1,5 +1,6 @@
 import React from "react";
 import log from "../../assets/landing/logo.svg";
+
 const Footer = () => {
   return (
     <footer className="flex flex-col   lg:gap-[80px] gap-[50px] pt-[50px]  font-body">

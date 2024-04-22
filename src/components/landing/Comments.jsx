@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/landing/comments.css";
 import { UserContext } from "../state/UserState";
 
 const Comments = ({ comments, blogId, getBlog }) => {
-  const [isLoading, _setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [description, setDescription] = useState("");
 
   const { user } = useContext(UserContext);

@@ -1,11 +1,10 @@
 import React from "react";
-// import Image from "next/image";
 import { Link } from "react-router-dom";
 import useGetBlogs from "../../../../constants/useGetBlogs";
 import "../../styles/landing/MenuPosts.css";
 
 const MenuPosts = ({ withImage }) => {
-  const [blogs, _setBlogs] = useGetBlogs([]);
+  const [blogs] = useGetBlogs([]);
 
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
