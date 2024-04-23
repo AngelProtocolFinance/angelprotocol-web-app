@@ -1,9 +1,6 @@
-import "swiper/css";
-import "swiper/css/pagination";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "../../../styles/landing/benefitsCarousel.css";
-
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import s from "./benefits.module.css";
 
 type Props = { slides: any[] };
 const BenefitsCarousel = ({ slides }: Props) => {
@@ -11,7 +8,7 @@ const BenefitsCarousel = ({ slides }: Props) => {
 
   return (
     <div className="lg:flex justify-between w-full items-center p-16 hidden relative">
-      <div className="swip-prev slider-arrow relative left-[12.5%] -translate-x-1/2 z-40 borderLine rounded-full shadow-md p-4">
+      <div className="swip-prev slider-arrow relative left-[12.5%] -translate-x-1/2 z-40 border border-[#dbdada] rounded-full shadow-md p-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -45,11 +42,14 @@ const BenefitsCarousel = ({ slides }: Props) => {
           prevEl: ".swip-prev",
         }}
         modules={[EffectCoverflow, Pagination, Navigation]}
-        className="benefits_Carousel"
       >
         {slides.map((ele, index) => {
           return (
-            <SwiperSlide key={index} style={{ backgroundColor: colors[index] }}>
+            <SwiperSlide
+              key={index}
+              style={{ backgroundColor: colors[index] }}
+              className={s.slide}
+            >
               <img
                 src={ele.img_src}
                 className="w-60 h-60 mb-3 object-cover object-center"
@@ -66,7 +66,7 @@ const BenefitsCarousel = ({ slides }: Props) => {
         })}
       </Swiper>
 
-      <div className="swip-next slider-arrow relative right-[8%] z-30 -translate-x-1/2 select-none borderLine rounded-full p-4 shadow-md">
+      <div className="swip-next slider-arrow relative right-[8%] z-30 -translate-x-1/2 select-none border border-[#dbdada] rounded-full p-4 shadow-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

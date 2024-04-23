@@ -68,7 +68,7 @@ const Video = () => {
         </div>
       </span>
 
-      <div className=" borderLine flex flex-col relative top-0 left-1/2 -translate-x-1/2 items-center  justify-center gap-10 md:gap-12 lg:p-8 md:rounded-[48px] rounded-[18px] lg:rounded-[88px] p-2 pb-6 w-full lg:w-[1100px] bg-white md:mt-2 lg:mt-2 -mt-5 z-10">
+      <div className=" border border-[#dbdada] flex flex-col relative top-0 left-1/2 -translate-x-1/2 items-center  justify-center gap-10 md:gap-12 lg:p-8 md:rounded-[48px] rounded-[18px] lg:rounded-[88px] p-2 pb-6 w-full lg:w-[1100px] bg-white md:mt-2 lg:mt-2 -mt-5 z-10">
         <div className="relative w-full  h-[171.2px] lg:h-[626px]  md:h-[392.94px] shrink-0  rounded-[17.5px] md:rounded-[40.17px] lg:rounded-[64px] overflow-hidden ">
           <img
             src={videobanner}
