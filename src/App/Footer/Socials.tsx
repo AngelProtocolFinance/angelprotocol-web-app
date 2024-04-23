@@ -6,7 +6,7 @@ type Props = { links: SocialMediaLink[] };
 
 export default function Socials({ links }: Props) {
   return (
-    <div className="flex items-center gap-4 md:gap-8">
+    <div className="flex items-center gap-3 md:gap-6">
       {links.map(({ title, icon, href }) => {
         return (
           <ExtLink
