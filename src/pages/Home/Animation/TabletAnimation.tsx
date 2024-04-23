@@ -5,8 +5,8 @@ import roadmap1 from "../../../assets/landing/roadmap1_wb.webp";
 import roadmap2 from "../../../assets/landing/roadmap2_wb.webp";
 import roadmap3 from "../../../assets/landing/roadmap3_wb.webp";
 import roadmap4 from "../../../assets/landing/roadmap4_wb.webp";
-import "../../../styles/landing/TabletAnimation.css";
 import StepsCard from "./StepsCard";
+import s from "./tablet.module.css";
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
@@ -39,7 +39,7 @@ const TabletAnimation = () => {
   ];
 
   return (
-    <div className="hidden md:block lg:hidden tablet_animation relative">
+    <div className={`hidden md:block lg:hidden ${s.tablet_animation} relative`}>
       <div className=" bg relative mt-5">
         <svg
           id="svg5"

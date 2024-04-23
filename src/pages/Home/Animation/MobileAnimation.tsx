@@ -5,8 +5,8 @@ import roadmap1 from "../../../assets/landing/roadmap1_wb.webp";
 import roadmap2 from "../../../assets/landing/roadmap2_wb.webp";
 import roadmap3 from "../../../assets/landing/roadmap3_wb.webp";
 import roadmap4 from "../../../assets/landing/roadmap4_wb.webp";
-import "../../../styles/landing/MobileAnimation.css";
 import StepsCard from "./StepsCard";
+import s from "./mobile.module.css";
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
@@ -38,7 +38,9 @@ const MobileAnimation = () => {
     },
   ];
   return (
-    <div className="md:hidden mobile_animation  h-full w-full  relative overflow-visible">
+    <div
+      className={`md:hidden ${s.mobile_animation}  h-full w-full  relative overflow-visible`}
+    >
       <div className="  w-full h-full relative mt-5 ">
         <div className="relative   top-0 h-full flex flex-col   justify-between px-[15px]">
           <svg

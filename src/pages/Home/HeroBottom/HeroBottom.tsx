@@ -1,10 +1,6 @@
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
-import "swiper/css";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import frame1 from "../../../assets/landing/frame_1.png";
@@ -16,6 +12,7 @@ import frame6 from "../../../assets/landing/frame_6.png";
 import mappng from "../../../assets/landing/map.png";
 import Button from "../common/Button";
 import Card from "./Card";
+import s from "./styles.module.css";
 
 const HeroBottom = () => {
   const { data } = useEndowmentCardsQuery({
@@ -86,7 +83,7 @@ const HeroBottom = () => {
 
         <div className=" relative  flex items-center  md:gap-3 xl:gap-4 lg:justify-between w-fit top-0 left-[0%]   h-full  ">
           <div className="hidden md:block lg:hidden absolute bg-white h-full w-[40%] z-[8] top-[-2%] left-[-20%] blur-[100px] rounded-full"></div>
-          <button className="cause-prev lg:relative  lg:top-[90%] lg:left-[0%] lg:-translate-y-1/2 lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full borderLine shadow-md md:absolute md:top-[42.5%] md:-translate-y-1/2 md:left-[2%] z-10  top-[42.5%] -translate-y-1/2  absolute left-[-5%]  lg:-mt-7 p-3">
+          <button className="cause-prev lg:relative  lg:top-[90%] lg:left-[0%] lg:-translate-y-1/2 lg:p-3 w-fit h-fit md:p-3  bg-white rounded-full border border-[#dbdada] shadow-md md:absolute md:top-[42.5%] md:-translate-y-1/2 md:left-[2%] z-10  top-[42.5%] -translate-y-1/2  absolute left-[-5%]  lg:-mt-7 p-3">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -128,7 +125,7 @@ const HeroBottom = () => {
                 prevEl: ".cause-prev",
               }}
               modules={[Navigation]}
-              className="cause-swiper"
+              className={s["cause-swiper"]}
             >
               {(data?.Items || []).map((endow) => (
                 <SwiperSlide key={endow.id}>
@@ -137,7 +134,7 @@ const HeroBottom = () => {
               ))}
             </Swiper>
           </div>
-          <button className="cause-next  lg:-mt-7 lg:relative lg:top-[42%] lg:right-[0%] lg:-translate-y-1/2 lg:p-3 md:p-3  bg-white rounded-full borderLine z-[777] shadow-md md:absolute absolute md:top-[42%] md:right-[2%] top-[42.5%] -translate-y-1/2 z-40  right-[-5%] p-3 ">
+          <button className="cause-next  lg:-mt-7 lg:relative lg:top-[42%] lg:right-[0%] lg:-translate-y-1/2 lg:p-3 md:p-3  bg-white rounded-full border border-[#dbdada] z-[777] shadow-md md:absolute absolute md:top-[42%] md:right-[2%] top-[42.5%] -translate-y-1/2 z-40  right-[-5%] p-3 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

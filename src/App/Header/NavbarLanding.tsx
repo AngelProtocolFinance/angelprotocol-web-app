@@ -1,7 +1,6 @@
 import { DappLogo } from "components/Image";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./App.css";
 const NewNavbar = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
@@ -14,7 +13,7 @@ const NewNavbar = () => {
       <DappLogo classes="w-48 h-12" />
       <label
         htmlFor="search"
-        className="search lg:w-[33%] absolute lg:left-[650px] md:left-[280px] md:w-[35%] w-[8%] h-full flex items-center  gap-3"
+        className="max-[640px]:hidden lg:w-[33%] absolute lg:left-[650px] md:left-[280px] md:w-[35%] w-[8%] h-full flex items-center  gap-3"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

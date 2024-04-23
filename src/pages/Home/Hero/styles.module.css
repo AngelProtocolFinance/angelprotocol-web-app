@@ -1,0 +1,53 @@
+.hero .copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-top: 45px;
+}
+
+.copy p:first-child {
+  color: #183244;
+  text-align: center;
+
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.72px;
+  text-transform: uppercase;
+}
+
+.copy h1 {
+  color: #183244;
+  text-align: center;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%;
+  letter-spacing: -1.28px;
+}
+
+.copy button {
+  padding: 14px 40px;
+  border-radius: 40px;
+  background: #2d89c8;
+  box-shadow: 0px 16px 64px 0px rgba(45, 137, 200, 0.2);
+  margin-top: 20px;
+
+  color: #fffbf0;
+
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 142%;
+}
+
+.copy button span {
+  color: #fffbf0;
+  text-align: center;
+
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  line-height: 142%;
+}

@@ -1,21 +1,23 @@
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import headillust from "../../../assets/landing/head-illust.webp";
-import "../../../styles/landing/hero.css";
 import Button from "../common/Button";
+import s from "./styles.module.css";
 const Hero = () => {
   return (
-    <section className="hero  mb-[90px] px-[18px] lg:px-[150px]  w-full h-full  py-[30px] md:px-[50px]   relative">
+    <section
+      className={`${s.hero}  mb-[90px] px-[18px] lg:px-[150px] w-full h-full py-[30px] md:px-[50px]   relative`}
+    >
       <img
         src={headillust}
         className="absolute w-full h-full  lg:top-[-16%]   top-0 left-0 lg:object-fill object-center md:object-cover object-cover "
         alt=""
       />
-      <div className="copy font-heading">
+      <div className={`${s.copy} font-heading`}>
         <p className="text-[13px] md:text-[18px] z-10">
           Give Today, Give Forever
         </p>
-        <h1 className="text-[40px] md:text-[64px]  text-center z-10">
+        <h1 className="w-full min-[360px]:w-[324px] min-[768px]:w-[720px] text-[40px] md:text-[64px] text-center z-10">
           Simplified Giving,
           <br className="xl:block hidden md:hidden lg:hidden" /> Amplified
           Impact
