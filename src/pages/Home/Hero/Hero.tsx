@@ -19,7 +19,7 @@ const Hero = () => {
         <p className="text-[13px] md:text-[18px] z-10">
           Give Today, Give Forever
         </p>
-        <h1 className="text-[40px] md:text-[64px]  text-center z-10">
+        <h1 className="w-full min-[360px]:w-[324px] min-[768px]:w-[720px] text-[40px] md:text-[64px] text-center z-10">
           Simplified Giving,
           <br className="xl:block hidden md:hidden lg:hidden" /> Amplified
           Impact

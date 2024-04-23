@@ -1,7 +1,6 @@
 import { DappLogo } from "components/Image";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./App.css";
 const NewNavbar = () => {
   const [search, setSearch] = useState("");
   const navigate = useNavigate();
