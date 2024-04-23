@@ -1,6 +1,6 @@
-import TabletAnimation from "./TabletAnimation";
 import AnimatedSVG from "./AnimatedSVG";
 import MobileAnimation from "./MobileAnimation";
+import TabletAnimation from "./TabletAnimation";
 
 const Animation = () => {
   return (
