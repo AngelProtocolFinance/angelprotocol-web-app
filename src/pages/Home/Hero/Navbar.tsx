@@ -15,7 +15,7 @@ const Navbar = () => {
 
       <label
         htmlFor="search"
-        className=" search lg:w-[33%] absolute lg:left-[520px] md:left-[220px] sm:w-[0%] md:w-[35%] w-[8%] h-full flex items-center  gap-3"
+        className=" max-[640px]:hidden lg:w-[33%] absolute lg:left-[520px] md:left-[220px] sm:w-[0%] md:w-[35%] w-[8%] h-full flex items-center  gap-3"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

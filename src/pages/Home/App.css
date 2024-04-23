@@ -2,35 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.borderLine {
-  border: solid 1px #dbdada;
-}
-
-.active {
-  height: 100%;
-  top: 0;
-  z-index: 10;
-}
-
-.non_active {
-  height: 80%;
-  top: 10%;
-  z-index: 0;
-}
-
-.CRUD_buttons {
-  background: linear-gradient(black, transparent);
-  border-bottom-right-radius: 10px;
-  border-bottom-left-radius: 10px;
-  transition: 0.4s all ease-in;
-}
-
-@media screen and (max-width: 640px) {
-  .search {
-    display: none;
-  }
-}
-
 h1 {
   width: 100%;
 }

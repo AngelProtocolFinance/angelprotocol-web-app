@@ -7,7 +7,7 @@ import s from "./styles.module.css";
 const BlogCard = (props: Wordpress.Post) => {
   return (
     <div
-      className={`w-full md:w-full h-[460px] borderLine flex flex-col gap-3 pb-5 rounded-[18px] relative ${s.blog_card} overflow-hidden bg-white font-body`}
+      className={`w-full md:w-full h-[460px] border border-[#dbdada] flex flex-col gap-3 pb-5 rounded-[18px] relative ${s.blog_card} overflow-hidden bg-white font-body`}
     >
       <Media
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"

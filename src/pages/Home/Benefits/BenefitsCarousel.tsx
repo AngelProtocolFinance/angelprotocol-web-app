@@ -10,7 +10,7 @@ const BenefitsCarousel = ({ slides }: Props) => {
 
   return (
     <div className="lg:flex justify-between w-full items-center p-16 hidden relative">
-      <div className="swip-prev slider-arrow relative left-[12.5%] -translate-x-1/2 z-40 borderLine rounded-full shadow-md p-4">
+      <div className="swip-prev slider-arrow relative left-[12.5%] -translate-x-1/2 z-40 border border-[#dbdada] rounded-full shadow-md p-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -68,7 +68,7 @@ const BenefitsCarousel = ({ slides }: Props) => {
         })}
       </Swiper>
 
-      <div className="swip-next slider-arrow relative right-[8%] z-30 -translate-x-1/2 select-none borderLine rounded-full p-4 shadow-md">
+      <div className="swip-next slider-arrow relative right-[8%] z-30 -translate-x-1/2 select-none border border-[#dbdada] rounded-full p-4 shadow-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
