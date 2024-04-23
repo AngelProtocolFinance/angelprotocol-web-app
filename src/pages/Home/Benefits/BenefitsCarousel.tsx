@@ -1,5 +1,3 @@
-import "swiper/css";
-import "swiper/css/pagination";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import s from "./benefits.module.css";

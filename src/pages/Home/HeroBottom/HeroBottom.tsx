@@ -1,10 +1,6 @@
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
-import "swiper/css";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import frame1 from "../../../assets/landing/frame_1.png";

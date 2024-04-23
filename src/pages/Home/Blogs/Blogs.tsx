@@ -1,6 +1,4 @@
 import { usePostsQuery } from "services/wordpress";
-import "swiper/css";
-import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BlogCard from "./BlogCard";
