@@ -1,29 +1,9 @@
 import { appRoutes } from "constants/routes";
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import headillust from "../../../assets/landing/head-illust.webp";
 import "../../../styles/landing/hero.css";
 import Button from "../common/Button";
-import Navbar from "./Navbar";
 const Hero = () => {
-  const [, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY >= 100) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
   return (
     <section className="hero  mb-[90px] px-[18px] lg:px-[150px]  w-full h-full  py-[30px] md:px-[50px]   relative">
       <img
@@ -31,7 +11,6 @@ const Hero = () => {
         className="absolute w-full h-full  lg:top-[-16%]   top-0 left-0 lg:object-fill object-center md:object-cover object-cover "
         alt=""
       />
-      <Navbar />
       <div className="copy font-heading">
         <p className="text-[13px] md:text-[18px] z-10">
           Give Today, Give Forever

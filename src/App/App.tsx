@@ -42,7 +42,6 @@ export default function App() {
   return (
     <ModalContext>
       <SentryRoutes>
-        <Route path={appRoutes.home} element={<Home />} />
         <Route path={appRoutes.donate_widget}>
           <Route path=":id" element={<DonateWidget />} />
           <Route
@@ -124,6 +123,7 @@ export default function App() {
             element={<TermsNonprofits />}
           />
           <Route path={appRoutes.terms_donors} element={<TermsDonors />} />
+          <Route index element={<Home />} />
         </Route>
         <Route path="*" element={<Navigate replace to={appRoutes.home} />} />
       </SentryRoutes>
