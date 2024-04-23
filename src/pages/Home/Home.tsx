@@ -3,7 +3,7 @@ import Footer from "../../components/landing/Footer";
 import NewNavbar from "../../components/landing/NewNavbar";
 import "../App.css";
 import Animation from "./Animation";
-import Path from "./Benefits/Path";
+import Path from "./Benefits";
 import Blogs from "./Blogs";
 import Brands from "./Brands";
 import Hero from "./Hero";
