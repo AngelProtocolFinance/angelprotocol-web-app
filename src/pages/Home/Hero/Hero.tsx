@@ -1,10 +1,10 @@
 import { appRoutes } from "constants/routes";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import headillust from "../../../../assets/landing/head-illust.webp";
-import Button from "../../../../components/landing/Button";
-import Navbar from "../../../../components/landing/Navbar";
-import "../../../../styles/landing/hero.css";
+import headillust from "../../../assets/landing/head-illust.webp";
+import "../../../styles/landing/hero.css";
+import Button from "../common/Button";
+import Navbar from "./Navbar";
 const Hero = () => {
   const [, setScrolled] = useState(false);
 

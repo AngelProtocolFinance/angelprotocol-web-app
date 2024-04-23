@@ -1,15 +1,15 @@
 import { useState } from "react";
-import icon1 from "../../../../assets/landing/Icon1_wb.webp";
-import icon2 from "../../../../assets/landing/Icon2_wb.webp";
-import icon3 from "../../../../assets/landing/Icon3_wb.webp";
-import icon4 from "../../../../assets/landing/Icon4_wb.webp";
-import icon5 from "../../../../assets/landing/Icon5_wb.webp";
-import icon6 from "../../../../assets/landing/Icon6_wb.webp";
-import icon7 from "../../../../assets/landing/Icon7_wb.webp";
-import icon8 from "../../../../assets/landing/Icon8_wb.webp";
-import BenefitsCarousel from "../../../../components/landing/BenefitsCarousel";
-// import Button from "../../../../components/landing/Button";
-import Carousel from "../../../../components/landing/Carousel";
+import icon1 from "../../../assets/landing/Icon1_wb.webp";
+import icon2 from "../../../assets/landing/Icon2_wb.webp";
+import icon3 from "../../../assets/landing/Icon3_wb.webp";
+import icon4 from "../../../assets/landing/Icon4_wb.webp";
+import icon5 from "../../../assets/landing/Icon5_wb.webp";
+import icon6 from "../../../assets/landing/Icon6_wb.webp";
+import icon7 from "../../../assets/landing/Icon7_wb.webp";
+import icon8 from "../../../assets/landing/Icon8_wb.webp";
+// import Button from "../common/Button";
+import BenefitsCarousel from "./BenefitsCarousel";
+import Carousel from "./Carousel";
 const Path = () => {
   const [path, setPath] = useState("non-profits");
   const nonProfits = [

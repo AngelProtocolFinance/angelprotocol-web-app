@@ -4,11 +4,11 @@ import { CustomEase } from "gsap/CustomEase";
 import { EasePack } from "gsap/EasePack";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import roadmap1 from "../../assets/landing/roadmap1_wb.webp";
-import roadmap2 from "../../assets/landing/roadmap2_wb.webp";
-import roadmap3 from "../../assets/landing/roadmap3_wb.webp";
-import roadmap4 from "../../assets/landing/roadmap4_wb.webp";
-import "../../styles/landing/svgAnimation.css";
+import roadmap1 from "../../../assets/landing/roadmap1_wb.webp";
+import roadmap2 from "../../../assets/landing/roadmap2_wb.webp";
+import roadmap3 from "../../../assets/landing/roadmap3_wb.webp";
+import roadmap4 from "../../../assets/landing/roadmap4_wb.webp";
+import "../../../styles/landing/svgAnimation.css";
 gsap.registerPlugin(EasePack, CustomEase, ScrollTrigger, MotionPathPlugin);
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);

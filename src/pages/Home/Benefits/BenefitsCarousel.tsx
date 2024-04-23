@@ -1,7 +1,7 @@
 import "swiper/css";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "../../styles/landing/benefitsCarousel.css";
+import "../../../styles/landing/benefitsCarousel.css";
 
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 

@@ -1,10 +1,10 @@
-import brand1 from "../../../../assets/landing/brand_1.svg";
-import brand2 from "../../../../assets/landing/brand_2.svg";
-import brand3 from "../../../../assets/landing/brand_3.svg";
-import brand4 from "../../../../assets/landing/brand_4.svg";
-import brand5 from "../../../../assets/landing/brand_5.svg";
-import brand6 from "../../../../assets/landing/brand_6.svg";
-import brand7 from "../../../../assets/landing/brand_7.svg";
+import brand1 from "assets/landing/brand_1.svg";
+import brand2 from "assets/landing/brand_2.svg";
+import brand3 from "assets/landing/brand_3.svg";
+import brand4 from "assets/landing/brand_4.svg";
+import brand5 from "assets/landing/brand_5.svg";
+import brand6 from "assets/landing/brand_6.svg";
+import brand7 from "assets/landing/brand_7.svg";
 const Brands = () => {
   return (
     <section className="flex items-center relative mt-10 flex-col gap-14 py-[1.5rem] md:py-16 mb-16 md:pt-0 md:pb-[110px]">

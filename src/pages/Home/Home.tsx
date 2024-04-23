@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
-import Footer from "../../../components/landing/Footer";
-import HeroBottom from "../../../components/landing/HeroBottom";
-import NewNavbar from "../../../components/landing/NewNavbar";
-import "../App.css";
-import Animation from "../sections/Home/Animation";
-import Blogs from "../sections/Home/Blogs";
-import Brands from "../sections/Home/Brands";
-import Hero from "../sections/Home/Hero";
-import Path from "../sections/Home/Path";
-import Testimonials from "../sections/Home/Testimonials";
-import Video from "../sections/Home/Video";
+import Animation from "./Animation";
+import "./App.css";
+import Path from "./Benefits";
+import Blogs from "./Blogs";
+import Brands from "./Brands";
+import Footer from "./Footer";
+import Hero from "./Hero";
+import HeroBottom from "./HeroBottom";
+import NewNavbar from "./NewNavbar";
+import Testimonials from "./Testimonials";
+import Video from "./Video";
 const Home = () => {
   const [showNavbar, setShowNavbar] = useState(false);
   const heroHeight = 700;
