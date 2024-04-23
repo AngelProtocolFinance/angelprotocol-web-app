@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import Animation from "./Animation";
 import "./App.css";
 import Path from "./Benefits";
