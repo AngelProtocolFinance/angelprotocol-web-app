@@ -1,4 +1,4 @@
-import log from "../../assets/landing/logo.svg";
+import log from "assets/landing/logo.svg";
 
 const Footer = () => {
   return (

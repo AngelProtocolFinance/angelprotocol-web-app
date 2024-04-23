@@ -1,11 +1,11 @@
 import { gsap } from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import roadmap1 from "../../assets/landing/roadmap1_wb.webp";
-import roadmap2 from "../../assets/landing/roadmap2_wb.webp";
-import roadmap3 from "../../assets/landing/roadmap3_wb.webp";
-import roadmap4 from "../../assets/landing/roadmap4_wb.webp";
-import "../../styles/landing/MobileAnimation.css";
+import roadmap1 from "../../../assets/landing/roadmap1_wb.webp";
+import roadmap2 from "../../../assets/landing/roadmap2_wb.webp";
+import roadmap3 from "../../../assets/landing/roadmap3_wb.webp";
+import roadmap4 from "../../../assets/landing/roadmap4_wb.webp";
+import "../../../styles/landing/MobileAnimation.css";
 import StepsCard from "./StepsCard";
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);

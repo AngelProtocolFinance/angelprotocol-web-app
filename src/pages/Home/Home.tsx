@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import NewNavbar from "../../components/landing/NewNavbar";
-import "../App.css";
 import Animation from "./Animation";
+import "./App.css";
 import Path from "./Benefits";
 import Blogs from "./Blogs";
 import Brands from "./Brands";
 import Footer from "./Footer";
 import Hero from "./Hero";
 import HeroBottom from "./HeroBottom";
+import NewNavbar from "./NewNavbar";
 import Testimonials from "./Testimonials";
 import Video from "./Video";
 const Home = () => {
