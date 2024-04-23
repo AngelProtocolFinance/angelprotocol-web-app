@@ -1,5 +1,3 @@
-import s from "./carousel.module.css";
-
 type Props = { slides: any[] };
 const Carousel = ({ slides }: Props) => {
   return (

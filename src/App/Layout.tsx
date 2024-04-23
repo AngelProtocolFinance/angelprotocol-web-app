@@ -5,7 +5,10 @@ import { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer/FooterV2";
 import Header from "./Header";
+import { CHARITY_LINKS } from "./constants";
 import useHeaderLinks from "./useHeaderLinks";
+
+const { SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
 
 export default function Layout() {
   const headerLinks = useHeaderLinks();
@@ -19,7 +22,7 @@ export default function Layout() {
           <Outlet />
         </ErrorBoundary>
       </Suspense>
-      <Footer />
+      <Footer socials={SOCIAL_MEDIA_LINKS} />
     </div>
   );
 }
