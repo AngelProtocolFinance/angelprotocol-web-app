@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Animation from "./Animation";
-import "./App.css";
 import Path from "./Benefits";
 import Blogs from "./Blogs";
 import Brands from "./Brands";
