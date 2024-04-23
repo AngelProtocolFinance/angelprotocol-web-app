@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import BlogCard from "../../../../components/landing/BlogCard";
+import BlogCard from "../../components/landing/BlogCard";
 
 const Blogs = () => {
   const { data: page } = usePostsQuery({ page: 1 });
