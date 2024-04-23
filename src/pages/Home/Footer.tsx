@@ -1,4 +1,6 @@
-import log from "assets/landing/logo.svg";
+import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
+import log from "../../assets/landing/logo.svg";
 
 const Footer = () => {
   return (
@@ -51,7 +53,7 @@ const Footer = () => {
                 <a href="https://intercom.help/better-giving/en">FAQs</a>
               </li>
               <li className="text-xs text-black mt-4 whitespace-nowrap font-normal opacity-90">
-                News
+                <Link to={appRoutes.blog}>News</Link>
               </li>
             </ul>
           </div>
@@ -61,13 +63,17 @@ const Footer = () => {
             </h6>
             <ul>
               <li className="text-xs text-black  whitespace-nowrap font-normal opacity-90">
-                Privacy Policy
+                <Link to={appRoutes.privacy_policy}>Privacy Policy</Link>
               </li>
               <li className="text-xs text-black mt-4  whitespace-nowrap font-normal opacity-90">
-                Terms of Use <br /> (Donors)
+                <Link to={appRoutes.terms_donors}>
+                  Terms of Use <br /> (Donors)
+                </Link>
               </li>
               <li className="text-xs text-black mt-4 whitespace-nowrap font-normal opacity-90">
-                Terms of Use <br /> (Non-Profits)
+                <Link to={appRoutes.terms_nonprofits}>
+                  Terms of Use <br /> (Non-Profits)
+                </Link>
               </li>
             </ul>
           </div>
@@ -82,7 +88,7 @@ const Footer = () => {
               By subscribing to this newsletter you confirm that you <br /> have
               read and agree with our{" "}
               <span className="underline font-medium text-[#000] opacity-[1]">
-                Privacy Policy.
+                <Link to={appRoutes.privacy_policy}>Privacy Policy</Link>.
               </span>
             </p>
           </span>

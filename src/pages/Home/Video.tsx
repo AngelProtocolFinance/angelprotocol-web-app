@@ -6,7 +6,6 @@ import s2 from "../../assets/landing/half1.png";
 import heart from "../../assets/landing/heartOfText.png";
 import heartText from "../../assets/landing/heartText.svg";
 import videobanner from "../../assets/landing/video_bannerUpdate.png";
-import Button from "./common/Button";
 
 const triggerId = "__video";
 
@@ -96,7 +95,8 @@ const Video = () => {
           ways to contribute, grow, and track your generosity, all while
           celebrating our collective impact.
         </p>
-        <Button text="Join the Movement" />
+        {/* TODO: enable once we have the static pages ready */}
+        {/*<Button text="Join the Movement" />*/}
       </div>
 
       <svg

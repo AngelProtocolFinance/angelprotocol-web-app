@@ -7,7 +7,7 @@ import icon5 from "../../../assets/landing/Icon5_wb.webp";
 import icon6 from "../../../assets/landing/Icon6_wb.webp";
 import icon7 from "../../../assets/landing/Icon7_wb.webp";
 import icon8 from "../../../assets/landing/Icon8_wb.webp";
-import Button from "../common/Button";
+// import Button from "../common/Button";
 import BenefitsCarousel from "./BenefitsCarousel";
 import Carousel from "./Carousel";
 const Path = () => {
@@ -108,7 +108,8 @@ const Path = () => {
       </div>
       <BenefitsCarousel slides={path === "non-profits" ? nonProfits : donors} />
       <Carousel slides={path === "non-profits" ? nonProfits : donors} />
-      <Button text="Learn More" />
+      {/* TODO: enable once we have the static pages ready */}
+      {/*<Button text="Learn More" />*/}
     </section>
   );
 };
