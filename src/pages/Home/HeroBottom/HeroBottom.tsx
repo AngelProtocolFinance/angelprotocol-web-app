@@ -14,7 +14,7 @@ import frame4 from "../../../assets/landing/frame_4.png";
 import frame5 from "../../../assets/landing/frame_5.png";
 import frame6 from "../../../assets/landing/frame_6.png";
 import mappng from "../../../assets/landing/map.png";
-import Button from "../../../components/landing/Button";
+import Button from "../common/Button";
 import Card from "./Card";
 
 const HeroBottom = () => {

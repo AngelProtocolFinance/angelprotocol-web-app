@@ -6,7 +6,7 @@ import s2 from "../../assets/landing/half1.png";
 import heart from "../../assets/landing/heartOfText.png";
 import heartText from "../../assets/landing/heartText.svg";
 import videobanner from "../../assets/landing/video_bannerUpdate.png";
-import Button from "../../components/landing/Button";
+import Button from "./common/Button";
 
 const triggerId = "__video";
 
