@@ -1,9 +1,8 @@
 import "swiper/css";
 import "swiper/css/pagination";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "../../../styles/landing/benefitsCarousel.css";
-
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import s from "./benefits.module.css";
 
 type Props = { slides: any[] };
 const BenefitsCarousel = ({ slides }: Props) => {
@@ -45,11 +44,14 @@ const BenefitsCarousel = ({ slides }: Props) => {
           prevEl: ".swip-prev",
         }}
         modules={[EffectCoverflow, Pagination, Navigation]}
-        className="benefits_Carousel"
       >
         {slides.map((ele, index) => {
           return (
-            <SwiperSlide key={index} style={{ backgroundColor: colors[index] }}>
+            <SwiperSlide
+              key={index}
+              style={{ backgroundColor: colors[index] }}
+              className={s.slide}
+            >
               <img
                 src={ele.img_src}
                 className="w-60 h-60 mb-3 object-cover object-center"

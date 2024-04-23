@@ -1,4 +1,4 @@
-import "../../../styles/landing/carousel.css";
+import s from "./carousel.module.css";
 
 type Props = { slides: any[] };
 const Carousel = ({ slides }: Props) => {
