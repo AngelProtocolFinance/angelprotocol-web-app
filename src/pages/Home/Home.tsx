@@ -9,7 +9,7 @@ import Video from "./Video";
 const Home = () => {
   return (
     <div>
-      <div className="bg-gradient-to-b from-white/50 via-[#FBF1EB]/96 to-white overflow-hidden mix-blend-screen">
+      <div>
         <Hero />
         <HeroBottom />
         <Path />
