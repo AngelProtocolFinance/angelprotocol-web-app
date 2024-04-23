@@ -3,11 +3,11 @@ import Footer from "../../components/landing/Footer";
 import NewNavbar from "../../components/landing/NewNavbar";
 import "../App.css";
 import Animation from "./Animation";
+import Path from "./Benefits/Path";
 import Blogs from "./Blogs";
 import Brands from "./Brands";
 import Hero from "./Hero";
 import HeroBottom from "./HeroBottom";
-import Path from "./Path";
 import Testimonials from "./Testimonials";
 import Video from "./Video";
 const Home = () => {
