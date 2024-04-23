@@ -1,6 +1,6 @@
 import { appRoutes } from "constants/routes";
-import useCards from "pages/Marketplace/Cards/useCards";
 import { Link } from "react-router-dom";
+import { useEndowmentCardsQuery } from "services/aws/aws";
 import "swiper/css";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -14,11 +14,15 @@ import frame4 from "../../assets/landing/frame_4.png";
 import frame5 from "../../assets/landing/frame_5.png";
 import frame6 from "../../assets/landing/frame_6.png";
 import mappng from "../../assets/landing/map.png";
-import Button from "./Button";
-import Card from "./Card";
+import Button from "../../components/landing/Button";
+import Card from "../../components/landing/Card";
 
 const HeroBottom = () => {
-  const { data } = useCards();
+  const { data } = useEndowmentCardsQuery({
+    claimed: "true",
+    page: 1,
+    query: "",
+  });
 
   return (
     <div className="relative bottom-[300px] lg:bottom-[300px]   md:bottom-[350px] z-10 pt-[50px] px-6 ">

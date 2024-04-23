@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import Footer from "../../components/landing/Footer";
-import HeroBottom from "../../components/landing/HeroBottom";
 import NewNavbar from "../../components/landing/NewNavbar";
 import "../App.css";
 import Animation from "./Animation";
 import Blogs from "./Blogs";
 import Brands from "./Brands";
 import Hero from "./Hero";
+import HeroBottom from "./HeroBottom";
 import Path from "./Path";
 import Testimonials from "./Testimonials";
 import Video from "./Video";
