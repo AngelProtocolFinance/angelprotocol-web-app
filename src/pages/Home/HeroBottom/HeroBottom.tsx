@@ -7,6 +7,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Button from "../../../components/landing/Button";
 import frame1 from "../../assets/landing/frame_1.png";
 import frame2 from "../../assets/landing/frame_2.png";
 import frame3 from "../../assets/landing/frame_3.png";
@@ -14,8 +15,7 @@ import frame4 from "../../assets/landing/frame_4.png";
 import frame5 from "../../assets/landing/frame_5.png";
 import frame6 from "../../assets/landing/frame_6.png";
 import mappng from "../../assets/landing/map.png";
-import Button from "../../components/landing/Button";
-import Card from "../../components/landing/Card";
+import Card from "./Card";
 
 const HeroBottom = () => {
   const { data } = useEndowmentCardsQuery({
