@@ -33,9 +33,11 @@ vi.mock("services/aws/leaderboard", () => ({
   }),
 }));
 
-const heroText = /BETTER GIVING REDEFINES/i;
+const homeHeroText = /simplified giving/i;
+const marketplaceHeroText = /better giving redefines/i;
+
 const marketLink = /explore all causes/i;
-const loginLink = /login/i;
+const loginLink = /log in/i;
 const signupLink = /sign up/i;
 // const leadLink = /leaderboard/i;
 const loaderTestId = "loader";
@@ -53,11 +55,25 @@ describe("App.tsx tests", () => {
         </Provider>
       </MemoryRouter>
     );
+    // footer is immediately rendered
     // role here https://www.w3.org/TR/html-aria/#docconformance
-    const footer = screen.findByRole("contentinfo");
-    expect(await footer).toBeInTheDocument();
+    const footer = screen.getByRole("contentinfo");
+    expect(footer).toBeInTheDocument();
 
     expect(screen.getByTestId("nav_dropdown")).toBeInTheDocument();
+
+    //home page is being lazy loaded
+    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
+    //home page is finally loaded
+    expect(
+      await screen.findByRole(
+        "heading",
+        { name: homeHeroText },
+        { timeout: 3000 }
+      )
+    ).toBeInTheDocument();
+
+    expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     expect(
       await screen.findByRole("link", { name: loginLink })
@@ -90,14 +106,14 @@ describe("App.tsx tests", () => {
     // expect(screen.getByRole("heading", { name: leadLink })).toBeInTheDocument();
     // expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
-    //user goes back to Marketplace
+    //user goes to Marketplace
     fireEvent.click(
       screen.getByRole("link", {
         name: marketLink,
       })
     );
     expect(
-      await screen.findByRole("heading", { name: heroText })
+      await screen.findByRole("heading", { name: marketplaceHeroText })
     ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
   });
