@@ -1,6 +1,8 @@
+import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import log from "../../assets/landing/logo.svg";
+import Newsletter from "./Newsletter";
 
 const Footer = () => {
   return (
@@ -34,7 +36,7 @@ const Footer = () => {
             </h6>
             <ul>
               <li className="text-xs text-black whitespace-nowrap font-normal opacity-90">
-                Non-profits
+                <Link to={appRoutes.home}>Non-profits</Link>
               </li>
               <li className="text-xs text-black mt-4 whitespace-nowrap font-normal opacity-90">
                 Giving Partners (CSR)
@@ -79,40 +81,15 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="flex  flex-col gap-6 lg:ml-16 md:ml-0 lg:flex-col lg:gap-6 md md:flex-row md:justify-between">
-          <span>
-            <h6 className="text-base font-bold  text-[#4585bb] mb-1">
-              Subscribe to our newsletter
-            </h6>
-            <p className="text-[12px] text[#647581] text-justify font-normal opacity-90 md:w-full lg:w-full w-[90%]">
-              By subscribing to this newsletter you confirm that you <br /> have
-              read and agree with our{" "}
-              <span className="underline font-medium text-[#000] opacity-[1]">
-                <Link to={appRoutes.privacy_policy}>Privacy Policy</Link>.
-              </span>
-            </p>
-          </span>
-          <span className="flex flex-col md:items-start gap-3 w-full  lg:w-full md:w-[45%]">
-            <input
-              type="text"
-              name="email"
-              id="email"
-              placeholder="Enter your email"
-              className=" cursor-default text-[#000000] opacity-[.9] p-3 rounded-md font-normal border text-[15px] md:text-[13px] border-solid  border-[#0000001a] w-full"
-            />
-            <button className="bg-blue-d1 rounded-[40px] px-7 py-[11px] text-white text-xs font-medium">
-              Subscribe
-            </button>
-          </span>
+        <div className="flex flex-col gap-6 lg:ml-16 md:ml-0 lg:flex-col lg:gap-6 md md:flex-row md:justify-between">
+          <Newsletter />
         </div>
       </div>
 
       <div className="lg:h-16 text-[#316B9C] font-medium px-6 lg:px-[60px] py-3.5 flex justify-between items-center flex-col-reverse gap-[15px] lg:flex-row md:gap-5 bg-[#F1FAFF]">
         <p className=" text-[12px]   md:text-[15px] text-center ">
           <span className="">
-            {" "}
-            © Copyright 2023 Better.Giving, A Registered Charitable 501 (C) (3)
-            (EIN 87-3758939)
+            {`© Copyright ${new Date().getFullYear()} ${APP_NAME}, A Registered Charitable 501(C)(3) (EIN 87-3758939)`}
           </span>
         </p>
         <span className="flex gap-3 items-center">

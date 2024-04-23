@@ -48,8 +48,8 @@ export default function SubscriptionForm() {
         <input
           {...register("email")}
           id="email"
-          className="text-xs field-input enabled:focus:ring-blue-d2 border-none w-full h-10 px-3 bg-white"
-          placeholder="Enter your email address here"
+          className="cursor-default text-[#000000] opacity-[.9] p-3 rounded-md font-normal border text-[15px] md:text-[13px] border-solid  border-[#0000001a] w-full"
+          placeholder="Enter your email"
           disabled={isSubmitting}
         />
         <ErrorMessage
@@ -62,7 +62,7 @@ export default function SubscriptionForm() {
       </div>
       <button
         type="submit"
-        className="btn-blue enabled:hover:bg-blue-l4 enabled:hover:text-navy-d4 px-4 text-xs h-10 w-[80vw] lg:w-full xl:w-min"
+        className="bg-blue-d1 rounded-[40px] px-7 py-[11px] text-white text-xs font-medium"
         disabled={isSubmitting}
       >
         Subscribe

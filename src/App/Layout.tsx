@@ -1,9 +1,9 @@
 import Loader from "components/Loader";
 import Seo from "components/Seo";
 import ErrorBoundary from "errors/ErrorBoundary";
-import Footer from "pages/Home/Footer";
 import { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
+import Footer from "./Footer/FooterV2";
 import Header from "./Header";
 import useHeaderLinks from "./useHeaderLinks";
 
