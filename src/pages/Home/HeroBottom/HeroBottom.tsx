@@ -22,7 +22,7 @@ const HeroBottom = () => {
   });
 
   return (
-    <div className="relative bottom-[300px] lg:bottom-[300px]   md:bottom-[350px] z-10 pt-[50px] px-6 ">
+    <div className="relative">
       <img
         src={mappng}
         alt="map"

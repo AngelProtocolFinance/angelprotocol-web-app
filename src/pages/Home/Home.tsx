@@ -8,18 +8,16 @@ import Testimonials from "./Testimonials";
 import Video from "./Video";
 const Home = () => {
   return (
-    <div>
-      <div>
-        <Hero />
-        <HeroBottom />
-        <Path />
-        <Brands />
-        <Animation />
-        <Video />
-        <Testimonials />
-        <Blogs />
-      </div>
-    </div>
+    <>
+      <Hero />
+      <HeroBottom />
+      <Path />
+      <Brands />
+      <Animation />
+      <Video />
+      <Testimonials />
+      <Blogs />
+    </>
   );
 };
 
