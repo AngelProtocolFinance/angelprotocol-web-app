@@ -8,7 +8,6 @@ import roadmap1 from "../../../assets/landing/roadmap1_wb.webp";
 import roadmap2 from "../../../assets/landing/roadmap2_wb.webp";
 import roadmap3 from "../../../assets/landing/roadmap3_wb.webp";
 import roadmap4 from "../../../assets/landing/roadmap4_wb.webp";
-import "../../../styles/landing/svgAnimation.css";
 gsap.registerPlugin(EasePack, CustomEase, ScrollTrigger, MotionPathPlugin);
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
@@ -28,10 +27,10 @@ const AnimatedSVG = () => {
             ease: "elastic(2.5, 1)",
           },
         })
-        .to(".bubble1", { filter: "grayscale(0%)" }, 0)
-        .to(".bubble2", { filter: "grayscale(0%)" }, 8)
-        .to(".bubble3", { filter: "grayscale(0%)" }, 14.5)
-        .to(".bubble4", { filter: "grayscale(0%)" }, 19.3);
+        .to("#bubble1", { filter: "grayscale(0%)" }, 0)
+        .to("#bubble2", { filter: "grayscale(0%)" }, 8)
+        .to("#bubble3", { filter: "grayscale(0%)" }, 14.5)
+        .to("#bubble4", { filter: "grayscale(0%)" }, 19.3);
 
       gsap
         .timeline({
@@ -53,7 +52,7 @@ const AnimatedSVG = () => {
           0
         )
         .to(
-          ".ball",
+          "#ball",
           {
             motionPath: {
               path: ".line",
@@ -91,6 +90,7 @@ const AnimatedSVG = () => {
         height={609}
         fill="none"
         viewBox="-100 70 1900 709"
+        className="w-full h-screen"
         id="svg"
       >
         <path
@@ -120,7 +120,7 @@ const AnimatedSVG = () => {
             <stop offset={0.893} stopColor="#E1F7FE" />
           </linearGradient>
         </defs>
-        <circle cx={50} cy={100} r={22} className="ball" />
+        <circle cx={50} cy={100} r={22} className="fill-[#76ceeb]" id="ball" />
         <svg
           width={1184}
           height={200}
@@ -139,7 +139,8 @@ const AnimatedSVG = () => {
         </svg>
 
         <svg
-          className="bubble1"
+          id="bubble1"
+          className="grayscale"
           width="550"
           height="500"
           viewBox="0 0 582 500"
@@ -203,7 +204,8 @@ const AnimatedSVG = () => {
           height={500}
           x={990}
           y={340}
-          className="bubble2"
+          id="bubble2"
+          className="grayscale"
           viewBox="0 0 582 500"
         >
           <circle
@@ -259,7 +261,8 @@ const AnimatedSVG = () => {
           height={560}
           x={1700}
           y={170}
-          className="bubble3"
+          id="bubble3"
+          className="grayscale"
           viewBox="0 0 582 560"
         >
           <circle
@@ -314,7 +317,8 @@ const AnimatedSVG = () => {
           height={500}
           x={2600}
           y={300}
-          className="bubble4"
+          id="bubble4"
+          className="grayscale"
           viewBox="0 0 582 500"
         >
           <circle
