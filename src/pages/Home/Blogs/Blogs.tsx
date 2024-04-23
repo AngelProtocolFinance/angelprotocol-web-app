@@ -4,6 +4,7 @@ import "swiper/css/pagination";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BlogCard from "./BlogCard";
+import s from "./styles.module.css";
 
 const Blogs = () => {
   const { data: page } = usePostsQuery({ page: 1 });
@@ -75,7 +76,7 @@ const Blogs = () => {
             prevEl: ".prev",
           }}
           modules={[Navigation]}
-          className="blog_Carousel"
+          className={s.blog_Carousel}
         >
           {(page?.posts || []).map((blog, idx) => {
             return (

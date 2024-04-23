@@ -2,154 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 .borderLine {
-    border: solid 1px #dbdada;
+  border: solid 1px #dbdada;
 }
 
 .active {
-    height: 100%;
-    top: 0;
-    z-index: 10;
+  height: 100%;
+  top: 0;
+  z-index: 10;
 }
 
 .non_active {
-    height: 80%;
-    top: 10%;
-    z-index: 0;
+  height: 80%;
+  top: 10%;
+  z-index: 0;
 }
 
 .CRUD_buttons {
-    background: linear-gradient(black, transparent);
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    transition: 0.4s all ease-in;
-}
-
-.blog_card:hover .CRUD_buttons {
-    display: flex;
-    top: 0;
-}
-
-.blog_Carousel {
-    width: 92vw;
-}
-
-.blog_Carousel .swiper-slide {
-    width: 300px;
-}
-
-.cause-swiper {
-    border: none;
-    width: 92vw;
-    margin: auto;
-}
-
-.cause-swiper .swiper-slide {
-    height: 520px;
-}
-
-.testimonial_swiper {
-    width: 92vw;
-}
-
-.testimonial_swiper .swiper-slide {
-    padding-top: 40px;
-}
-
-.ql-video {
-    width: 700px;
-    height: 400px;
-    margin: auto;
-}
-
-.ql-editor {
-    overflow: visible !important;
-}
-
-.ql-editor img {
-    margin: auto;
-}
-
-.ql-align-center {
-    text-align: center;
-}
-
-.ql-align-right {
-    text-align: right;
-}
-
-.ql-align-justify {
-    text-align: justify;
-}
-
-#desc .ql-align-center {
-    text-align: left;
-}
-
-#desc .ql-align-right {
-    text-align: left;
-}
-
-#desc .ql-align-justify {
-    text-align: left;
-}
-
-@media screen and (max-width: 1100px) {
-    .ql-video {
-        width: 600px;
-        height: 350px;
-    }
-}
-
-@media screen and (min-width: 1400px) {
-    .testimonial_swiper {
-        max-width: 1135px;
-    }
+  background: linear-gradient(black, transparent);
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  transition: 0.4s all ease-in;
 }
 
 @media screen and (max-width: 640px) {
-    .search {
-        display: none;
-    }
+  .search {
+    display: none;
+  }
 }
 
-@media screen and (min-width: 1400px) {
-    .cause-swiper {
-        max-width: 1130px;
-    }
-
-    .blog_Carousel {
-        max-width: 1130px;
-    }
-}
 h1 {
-    width: 100%;
+  width: 100%;
 }
 @media only screen and (min-width: 360px) {
-    h1 {
-        width: 324px;
-    }
+  h1 {
+    width: 324px;
+  }
 }
 @media only screen and (min-width: 768px) {
-    h1 {
-        width: 720px;
-    }
-}
-
-@media screen and (min-width: 700px) {
-    .ql-video {
-        width: 350px;
-        height: 200px;
-    }
-    .cause-swiper {
-        width: 80vw;
-    }
-    .testimonial_swiper {
-        width: 80vw;
-    }
-    .blog_Carousel {
-        width: 80vw;
-    }
+  h1 {
+    width: 720px;
+  }
 }

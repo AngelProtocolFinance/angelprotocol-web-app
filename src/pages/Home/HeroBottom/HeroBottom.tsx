@@ -16,6 +16,7 @@ import frame6 from "../../../assets/landing/frame_6.png";
 import mappng from "../../../assets/landing/map.png";
 import Button from "../common/Button";
 import Card from "./Card";
+import s from "./styles.module.css";
 
 const HeroBottom = () => {
   const { data } = useEndowmentCardsQuery({
@@ -128,7 +129,7 @@ const HeroBottom = () => {
                 prevEl: ".cause-prev",
               }}
               modules={[Navigation]}
-              className="cause-swiper"
+              className={s["cause-swiper"]}
             >
               {(data?.Items || []).map((endow) => (
                 <SwiperSlide key={endow.id}>

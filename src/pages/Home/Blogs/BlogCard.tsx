@@ -2,10 +2,13 @@ import Media from "components/Media";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { Wordpress } from "types/wordpress";
+import s from "./styles.module.css";
 
 const BlogCard = (props: Wordpress.Post) => {
   return (
-    <div className="w-full md:w-full h-[460px] borderLine flex flex-col gap-3 pb-5 rounded-[18px] relative blog_card overflow-hidden bg-white font-body">
+    <div
+      className={`w-full md:w-full h-[460px] borderLine flex flex-col gap-3 pb-5 rounded-[18px] relative ${s.blog_card} overflow-hidden bg-white font-body`}
+    >
       <Media
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
         id={props.featured_media}

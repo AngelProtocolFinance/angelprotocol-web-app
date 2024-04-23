@@ -4,6 +4,7 @@ import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import quotation from "../../../assets/landing/quotation.svg";
 import TestimonialCard from "./TestimonialCard";
+import s from "./styles.module.css";
 import useGetTestimonials from "./useGetTestimonials";
 
 const Testimonials = () => {
@@ -83,7 +84,7 @@ const Testimonials = () => {
             prevEl: ".testimonial-prev",
           }}
           modules={[Navigation]}
-          className="testimonial_swiper "
+          className={s.testimonial_swiper}
         >
           {testimonials.map((ele, idx) => {
             return (
