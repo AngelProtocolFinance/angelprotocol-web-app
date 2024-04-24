@@ -66,7 +66,7 @@ const Video = () => {
       <div className="rounded-xl md:rounded-[3rem] max-w-[69.5rem] p-4 border border-gray-l4 justify-self-center">
         <div className="relative">
           <img src={videobanner} alt="donation tally" />
-          <HeartSurroundedText classes="max-xl:hidden absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/2" />
+          <TextSurroundedHeart classes="max-xl:hidden absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/2" />
         </div>
         <p className="mt-20 md:text-2xl font-medium text-navy-l1/80 text-center">
           We connect you with the causes you care about most, with pioneering
@@ -78,22 +78,17 @@ const Video = () => {
     </section>
   );
 };
-//left-0 bottom-0 -translate-x-1/2 translate-y-1/2
 
-function HeartSurroundedText({ classes = "" }) {
+function TextSurroundedHeart({ classes = "" }) {
   return (
     <>
       <img
         id={textCircleId}
         src={heartText}
-        className={` size-40 ${classes}`}
+        className={`size-40 ${classes}`}
         alt="words in circle"
       />
-      <img
-        src={heart}
-        alt="blue heart"
-        className={`w-14 absolute ${classes}`}
-      />
+      <img src={heart} alt="blue heart" className={`w-14 ${classes}`} />
     </>
   );
 }
