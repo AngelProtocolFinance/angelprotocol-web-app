@@ -1,29 +1,24 @@
+import Icon from "components/Icon";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import s from "./benefits.module.css";
+import { Slide } from "./types";
 
-type Props = { slides: any[] };
-const BenefitsCarousel = ({ slides }: Props) => {
-  const colors = ["#EDFCE2", "#EAE2FC", "#FCF6E2", "#EDF2FE"];
-
+type Props = { slides: Slide[]; classes?: string };
+const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
   return (
-    <div className="lg:flex justify-between w-full items-center p-16 hidden relative">
-      <div className="swip-prev slider-arrow relative left-[12.5%] -translate-x-1/2 z-40 border border-[#dbdada] rounded-full shadow-md p-4">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="text-blue-d1 w-6 h-6 text-[25px]"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M15.75 19.5 8.25 12l7.5-7.5"
-          />
-        </svg>
-      </div>
+    <div className={`grid relative ${classes}`}>
+      <button
+        type="button"
+        className="swip-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-3/4"
+      >
+        <Icon type="Back" />
+      </button>
+      <button
+        type="button"
+        className="swip-next p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-3/4"
+      >
+        <Icon type="Next" />
+      </button>
 
       <Swiper
         effect="coverflow"
@@ -41,49 +36,30 @@ const BenefitsCarousel = ({ slides }: Props) => {
           nextEl: ".swip-next",
           prevEl: ".swip-prev",
         }}
+        wrapperClass="w-screen @container"
         modules={[EffectCoverflow, Pagination, Navigation]}
       >
-        {slides.map((ele, index) => {
+        {slides.map((slide, index) => {
           return (
             <SwiperSlide
               key={index}
-              style={{ backgroundColor: colors[index] }}
-              className={s.slide}
+              className={`grid justify-items-center gap-9 py-14 px-10 w-[30rem] @4xl:w-[48rem] rounded-5xl ${slide.bgColorClass}`}
             >
               <img
-                src={ele.img_src}
-                className="w-60 h-60 mb-3 object-cover object-center"
+                src={slide.img_src}
+                className="size-60 object-cover object-center"
                 alt="logo"
               />
-              <p className="text-2xl text-[#0D283A] w-full font-body font-semibold">
-                {ele.title}
+              <p className="text-2xl text-[#0D283A] w-full text-center font-semibold">
+                {slide.title}
               </p>
-              <p className="text-base mt-2 text-ellipsis md:text-center font-body font-normal w-full text-navy-l1">
-                {ele.description}
-              </p>
+              <p className="text-center text-balance">{slide.description}</p>
             </SwiperSlide>
           );
         })}
       </Swiper>
 
-      <div className="swip-next slider-arrow relative right-[8%] z-30 -translate-x-1/2 select-none border border-[#dbdada] rounded-full p-4 shadow-md">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth={1.5}
-          stroke="currentColor"
-          className="text-blue-d1 w-6 h-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="m8.25 4.5 7.5 7.5-7.5 7.5"
-          />
-        </svg>
-      </div>
-
-      <div className="absolute bottom-2.5 right-[12%] flex flex-col items-center -rotate-12">
+      <div className="absolute grid bottom-0 left-3/4 z-10 -rotate-12">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="41"

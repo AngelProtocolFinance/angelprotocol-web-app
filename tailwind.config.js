@@ -119,6 +119,12 @@ module.exports = {
           "100%": { transform: "translateX(-100%)" },
         },
       },
+      borderRadius: {
+        /** 32px */
+        "4xl": "2rem",
+        /** 56px */
+        "5xl": "3.5rem",
+      },
     },
   },
   plugins: [require("@tailwindcss/container-queries")],
