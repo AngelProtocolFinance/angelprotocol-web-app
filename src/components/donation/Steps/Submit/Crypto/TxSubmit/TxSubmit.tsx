@@ -30,10 +30,10 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
     setEstimate("loading");
-    estimateDonation(details.token, details.chainId.value, sender).then(
+    estimateDonation(details.token, details.chainId.value, sender, tip).then(
       (estimate) => setEstimate(estimate)
     );
-  }, [sender, details]);
+  }, [sender, details, tip]);
 
   const [confirmCryptoIntent] = useConfirmCryptoIntentMutation();
 
