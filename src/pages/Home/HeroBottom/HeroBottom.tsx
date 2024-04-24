@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import frame1 from "../../../assets/landing/frame_1.png";
-import frame2 from "../../../assets/landing/frame_2.png";
-import frame3 from "../../../assets/landing/frame_3.png";
-import frame4 from "../../../assets/landing/frame_4.png";
-import frame5 from "../../../assets/landing/frame_5.png";
-import frame6 from "../../../assets/landing/frame_6.png";
-import mappng from "../../../assets/landing/map.png";
 import Card from "./Card";
+import frame1 from "./characters/frame_1.png";
+import frame2 from "./characters/frame_2.png";
+import frame3 from "./characters/frame_3.png";
+import frame4 from "./characters/frame_4.png";
+import frame6 from "./characters/frame_6.png";
+import mappng from "./map.png";
 
 const HeroBottom = () => {
   const { data } = useEndowmentCardsQuery({
@@ -25,7 +24,6 @@ const HeroBottom = () => {
       className="grid relative bg-contain bg-no-repeat bg-[center_25rem] mb-4 pb-80"
       style={{ backgroundImage: `url('${mappng}')` }}
     >
-      <div className="absolute inset-0 bg-white/40" />
       <h3 className="isolate uppercase text-blue-d1 text-center mt-2">
         Bridge to better
       </h3>
@@ -92,33 +90,24 @@ const HeroBottom = () => {
       <img
         src={frame1}
         alt="frame1"
-        className="  absolute top-[2%] md:top-[5%]  md:left-[3%] lg:top-[5%]  lg:left-[15%]  -left-5 md:scale-[.8] scale-[.6]  lg:scale-[.7]  -z-10"
+        className="absolute size-24 border-red right-0 left-40"
       />
       <img
         src={frame2}
         alt="frame2"
-        className="  md:scale-[.7] scale-[.5] absolute top-[-4%] right-[-5%] lg:top-[2%] lg:left-[74%] md:top-[8%] md:right-[4%]  md:block lg:block  -z-10 "
+        className="absolute top-0 right-40 -translate-y-1/2 size-32"
       />
       <img
         src={frame3}
         alt="frame3"
-        className="absolute lg:top-[15%] lg:right-[0%] md:top-[15%] md:right-[10%] -top-3 right-2  md:scale-[.9] lg:scale-[.9] scale-[.7] opacity-[.5]  z-10 hidden lg:block "
+        className="absolute right-0 translate-x-1/5 top-44"
       />
       <img
         src={frame4}
         alt="frame4"
-        className="    scale-[.6] opacity-60 absolute lg:top-1/4 lg:left-[84%] md:top-[32%] md:left-[84%]     -z-[9] hidden lg:block "
+        className="absolute size-20 right-24 top-1/4"
       />
-      <img
-        src={frame5}
-        alt="frame5"
-        className="  absolute md:top-1/4 md:right-[22%] md:scale-[.6] lg:scale-[.7]  lg:top-[20%] lg:left-[33%]  opacity-40 -z-[9]   hidden md:block"
-      />
-      <img
-        src={frame6}
-        alt="frame6"
-        className="   absolute md:top-[38%] md:left-[.5%] lg:top-[38%]  top-[25.5%] -left-2 -z-10 scale-[.7]   lg:left-[3%]"
-      />
+      <img src={frame6} alt="frame6" className="absolute left-0 top-1/4" />
     </div>
   );
 };
