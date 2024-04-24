@@ -36,7 +36,7 @@ const Testimonials = () => {
           },
         }}
         modules={[Navigation]}
-        className="w-[90vw] md:w-screen lg:w-[80vw]"
+        className="w-[90vw] lg:w-[80vw]"
       >
         {testimonials.map((ele, idx) => {
           return (

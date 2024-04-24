@@ -9,13 +9,13 @@ import Video from "./Video";
 const Home = () => {
   return (
     <>
-      {/* <Hero /> */}
-      {/* <HeroBottom /> */}
-      {/* <Path /> */}
-      {/* <Brands /> */}
-      {/* <Animation /> */}
-      {/* <Video /> */}
-      {/* <Testimonials /> */}
+      <Hero />
+      <HeroBottom />
+      <Path />
+      <Brands />
+      <Animation />
+      <Video />
+      <Testimonials />
       <Blogs />
     </>
   );
