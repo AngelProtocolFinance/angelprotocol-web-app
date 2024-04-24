@@ -4190,8 +4190,7 @@ __metadata:
     aws-amplify: "npm:6.0.18"
     cropperjs: "npm:1.6.1"
     decimal.js: "npm:10.4.3"
-    dompurify: "npm:^3.1.0"
-    gsap: "npm:^3.12.5"
+    gsap: "npm:3.12.5"
     is-mobile: "npm:4.0.0"
     jsdom: "npm:24.0.0"
     postcss-import: "npm:16.0.1"
@@ -4206,7 +4205,7 @@ __metadata:
     react-redux: "npm:9.1.0"
     react-router-dom: "npm:6.22.2"
     react-test-renderer: "npm:18.2.0"
-    swiper: "npm:^11.1.1"
+    swiper: "npm:11.1.1"
     tailwindcss: "npm:3.4.1"
     type-fest: "npm:4.12.0"
     typescript: "npm:5.4.2"
@@ -5367,13 +5366,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "dompurify@npm:3.1.0"
-  checksum: 10/a8788d3510b0a5e26ae8f1beb3f079be63f417be0f7259918c273bd53f9b9eab50a0708e065caff9904ae97895cc4a7d4c66a1076021a9be0685389ad8ae4d2d
-  languageName: node
-  linkType: hard
-
 "duplexify@npm:^4.1.2":
   version: 4.1.2
   resolution: "duplexify@npm:4.1.2"
@@ -6029,7 +6021,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gsap@npm:^3.12.4, gsap@npm:^3.12.5":
+"gsap@npm:3.12.5, gsap@npm:^3.12.4":
   version: 3.12.5
   resolution: "gsap@npm:3.12.5"
   checksum: 10/192e9f6b11e54d8a0d26cff76573278d42748c6a54906fa42c81425390238ea8f6abbba5c0bca75c4bba32e4f2db957f22c2158fab1be7d4a8d71fc2fb24e8c3
@@ -9028,7 +9020,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swiper@npm:^11.1.1":
+"swiper@npm:11.1.1":
   version: 11.1.1
   resolution: "swiper@npm:11.1.1"
   checksum: 10/24a3b96f407f6bdbdceea0c75d796ccc8e8921c234d59d6344b0b07e53ae606ddfecfc1a81d5a6cadddc0b6b0b9e2b458b14e8198b12b1cbc30f5a137370cee9
