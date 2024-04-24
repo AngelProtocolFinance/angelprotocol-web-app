@@ -5,7 +5,7 @@ import { EndowmentCard } from "types/aws";
 
 const Card = (props: EndowmentCard) => {
   return (
-    <div className="grid shadow-xl rounded-xl bg-white">
+    <div className="grid rounded-xl bg-white">
       <Image
         src={props.card_img || props.logo}
         alt="logo"

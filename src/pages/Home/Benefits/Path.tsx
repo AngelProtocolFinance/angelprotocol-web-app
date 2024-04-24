@@ -1,41 +1,49 @@
 import { useState } from "react";
-import icon1 from "../../../assets/landing/Icon1_wb.webp";
-import icon2 from "../../../assets/landing/Icon2_wb.webp";
-import icon3 from "../../../assets/landing/Icon3_wb.webp";
-import icon4 from "../../../assets/landing/Icon4_wb.webp";
-import icon5 from "../../../assets/landing/Icon5_wb.webp";
-import icon6 from "../../../assets/landing/Icon6_wb.webp";
-import icon7 from "../../../assets/landing/Icon7_wb.webp";
-import icon8 from "../../../assets/landing/Icon8_wb.webp";
 // import Button from "../common/Button";
 import BenefitsCarousel from "./BenefitsCarousel";
 import Carousel from "./Carousel";
+import icon1 from "./icons/Icon1_wb.webp";
+import icon2 from "./icons/Icon2_wb.webp";
+import icon3 from "./icons/Icon3_wb.webp";
+import icon4 from "./icons/Icon4_wb.webp";
+import icon5 from "./icons/Icon5_wb.webp";
+import icon6 from "./icons/Icon6_wb.webp";
+import icon7 from "./icons/Icon7_wb.webp";
+import icon8 from "./icons/Icon8_wb.webp";
+import { Slide } from "./types";
+
+const colors = ["bg-[#EDFCE2]", "bg-[#EAE2FC]", "bg-[#FCF6E2]", "bg-[#EDF2FE]"];
+type TPath = "non-profits" | "donors";
 const Path = () => {
-  const [path, setPath] = useState("non-profits");
-  const nonProfits = [
+  const [path, setPath] = useState<TPath>("non-profits");
+  const nonProfits: Slide[] = [
     {
       title: "Sustainable Impact",
       description:
         "Your donation grows through our nonprofit Sustainability Fund. Give the gift that keeps on giving.",
       img_src: icon1,
+      bgColorClass: colors[1],
     },
     {
       title: "The World At Your Fingertips",
       description:
         "Donate to any nonprofit, anywhere in the world. Support local grassroots organizations who understand the problems on the ground",
       img_src: icon2,
+      bgColorClass: colors[2],
     },
     {
       title: "Receive and Track Tax Benefits",
       description:
         "Get automated receipts to claim deductions and eliminate capital gains tax when donating property such as stocks and crypto",
       img_src: icon3,
+      bgColorClass: colors[3],
     },
     {
       title: "Your Donation, Your Way",
       description:
         "Use the giving method that works for you - from check, card and bank transfers to stock, DAF and crypto",
       img_src: icon4,
+      bgColorClass: colors[4],
     },
   ];
   const donors = [
@@ -44,41 +52,45 @@ const Path = () => {
       description:
         "Tap into new sources of funding by accepting cash, crypto, stocks, donor funds, and more.",
       img_src: icon5,
+      bgColorClass: colors[1],
     },
     {
       title: "Recurring Revenue Streams",
       description:
         "Get perpetual funding as your donor gifts grow inside our Sustainability Fund's balanced investment portfolio",
       img_src: icon6,
+      bgColorClass: colors[2],
     },
     {
       title: "Simplified Donation Management",
       description:
         "Forget the admin hassle. We handle the complexity of processing diverse donations, issuing automated tax receipts, and consolidating donor data",
       img_src: icon7,
+      bgColorClass: colors[3],
     },
     {
       title: "Global Reach and Fiscal Sponsorship",
       description:
         "Unlock new worldwide donor pipelines and accept cross-border gifts through fiscal sponsorship. Expand your global community.",
       img_src: icon8,
+      bgColorClass: colors[4],
     },
   ];
 
   return (
-    <section className="relative">
+    <section className="relative grid">
       <h3 className="text-[13px] md:text-[18px] uppercase font-bold text-blue-d1 font-heading">
         Bridge to better
       </h3>
       <h2 className="text-[32px] md:text-[42px] capitalize font-bold text-navy-d4 lg:w-full  md:max-w-full lg:text-center text-center leading-snug font-heading">
         Amplifying Impact For All
       </h2>
-      <div className="flex p-1  bg-[#F6EFE5] font-medium cursor-pointer rounded-3xl gap-2 self-center">
+      <div className="flex p-1 bg-[#F6EFE5] font-medium rounded-3xl gap-2 self-center">
         <button
           type="button"
           className={`${
             path === "non-profits" ? "bg-white" : "bg-transparent"
-          } py-2 px-6 rounded-3xl font-body`}
+          } py-2 px-6 rounded-3xl`}
           onClick={() => setPath("non-profits")}
         >
           For Donors
@@ -87,7 +99,7 @@ const Path = () => {
           type="button"
           className={`${
             path === "donors" ? "bg-white" : "bg-transparent"
-          } py-2 px-6 rounded-3xl font-body`}
+          } py-2 px-6 rounded-3xl`}
           onClick={() => {
             setPath("donors");
           }}
@@ -95,20 +107,14 @@ const Path = () => {
           For Nonprofits
         </button>
       </div>
-      <div className="flex flex-col gap-[42px]">
-        {path === "non-profits" ? (
-          <p className="text-[18px] md:text-[28px] font-medium w-full lg:max-w-[60%] md:max-w-[70%]  opacity-60  text-navy-l1 text-center  mx-auto font-body">
-            Access our free fundraising technology and tools.
-          </p>
-        ) : (
-          <p className="text-[18px] md:text-[28px] font-medium w-full lg:max-w-[60%] md:max-w-[70%]  opacity-60  text-navy-l1 text-center  mx-auto font-body">
-            Join our global community and amplify your charitable giving.
-          </p>
-        )}
-      </div>
+      <p className="text-lg md:text-[28px] font-medium  text-navy-l1/60 text-center mx-auto">
+        {path === "non-profits"
+          ? "Access our free fundraising technology and tools."
+          : "Join our global community and amplify your charitable giving."}
+      </p>
 
-      <BenefitsCarousel slides={path === "non-profits" ? nonProfits : donors} />
-      <Carousel slides={path === "non-profits" ? nonProfits : donors} />
+      {/* <BenefitsCarousel slides={path === "non-profits" ? nonProfits : donors} /> */}
+      {/* <Carousel slides={path === "non-profits" ? nonProfits : donors} /> */}
       {/* TODO: enable once we have the static pages ready */}
       {/*<Button text="Learn More" />*/}
     </section>
