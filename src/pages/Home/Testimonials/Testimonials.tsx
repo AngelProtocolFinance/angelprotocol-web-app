@@ -1,31 +1,14 @@
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import quotation from "../../../assets/landing/quotation.svg";
 import TestimonialCard from "./TestimonialCard";
-import s from "./styles.module.css";
+import quotation from "./quotation.svg";
 import useGetTestimonials from "./useGetTestimonials";
 
 const Testimonials = () => {
   const testimonials = useGetTestimonials();
 
   return (
-    <div className="lg:px-[60px] pt-5 md:px-[30px] md:py-[100px] flex flex-col gap-[50px]  relative">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="287"
-        height="358"
-        viewBox="0 0 287 358"
-        fill="none"
-        className="absolute  hidden lg:block top-[15%] left-0"
-      >
-        <path
-          opacity="0.4"
-          fillRule="evenodd"
-          clipRule="evenodd"
-          d="M-186.87 150.179C-171.375 144.719 -154.386 152.856 -148.926 168.354C-113.43 269.088 -3.00679 321.979 97.7107 286.489C198.428 250.999 251.301 140.567 215.805 39.8331C210.344 24.3355 218.478 7.34603 233.973 1.88603C249.468 -3.57398 266.456 4.56309 271.917 20.0607C318.335 151.79 249.194 296.201 117.486 342.611C-14.221 389.021 -158.62 319.856 -205.038 188.126C-210.499 172.629 -202.365 155.639 -186.87 150.179Z"
-          fill="#D8E9FD"
-        />
-      </svg>
+    <div className="grid relative">
       <img
         src={quotation}
         alt="quotation mark"
@@ -82,7 +65,7 @@ const Testimonials = () => {
             prevEl: ".testimonial-prev",
           }}
           modules={[Navigation]}
-          className={s.testimonial_swiper}
+          className="w-screen"
         >
           {testimonials.map((ele, idx) => {
             return (

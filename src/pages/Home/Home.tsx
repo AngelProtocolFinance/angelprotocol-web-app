@@ -14,8 +14,8 @@ const Home = () => {
       {/* <Path /> */}
       {/* <Brands /> */}
       {/* <Animation /> */}
-      <Video />
-      {/* <Testimonials /> */}
+      {/* <Video /> */}
+      <Testimonials />
       {/* <Blogs /> */}
     </>
   );
