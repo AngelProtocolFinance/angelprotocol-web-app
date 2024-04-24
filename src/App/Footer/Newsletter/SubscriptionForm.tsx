@@ -40,10 +40,7 @@ export default function SubscriptionForm() {
   }
 
   return (
-    <form
-      className="flex flex-col items-center gap-4 w-full md:w-4/5 lg:w-full xl:flex-row xl:items-start xl:gap-6"
-      onSubmit={handleSubmit(submit)}
-    >
+    <form className="grid gap-4" onSubmit={handleSubmit(submit)}>
       <div className="flex flex-col gap-1 w-[80vw] lg:w-full">
         <input
           {...register("email")}
