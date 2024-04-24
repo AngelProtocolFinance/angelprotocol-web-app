@@ -8,6 +8,7 @@ import heartText from "../../assets/landing/heartText.svg";
 import videobanner from "../../assets/landing/video_bannerUpdate.png";
 
 const triggerId = "__video";
+const textCircleId = "__text_circle";
 
 const Video = () => {
   useEffect(() => {
@@ -22,7 +23,7 @@ const Video = () => {
       duration: 5,
     });
 
-    tl.to(".circle img:first-child", {
+    tl.to(`#${textCircleId}`, {
       scrollTrigger: {
         trigger: `#${triggerId}`,
         start: "top top",
@@ -62,10 +63,10 @@ const Video = () => {
         create lasting positive change{" "}
       </p>
 
-      <div className="rounded-[3rem] w-[69.5rem] p-4 border border-gray-l4 justify-self-center">
+      <div className="rounded-[3rem] max-w-[69.5rem] p-4 border border-gray-l4 justify-self-center">
         <div className="relative">
           <img src={videobanner} alt="video" className="" />
-          <HeartSurroundedText classes="max-md:hidden absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/2" />
+          <HeartSurroundedText classes="max-xl:hidden absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/2" />
         </div>
         <p className="md:text-2xl font-medium text-navy-l1/80 text-center mt-20">
           We connect you with the causes you care about most, with pioneering
@@ -83,6 +84,7 @@ function HeartSurroundedText({ classes = "" }) {
   return (
     <>
       <img
+        id={textCircleId}
         src={heartText}
         className={` size-40 ${classes}`}
         alt="words in circle"
