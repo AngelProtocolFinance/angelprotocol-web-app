@@ -4,19 +4,19 @@ import { CustomEase } from "gsap/CustomEase";
 import { EasePack } from "gsap/EasePack";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import roadmap1 from "../../../assets/landing/roadmap1_wb.webp";
-import roadmap2 from "../../../assets/landing/roadmap2_wb.webp";
-import roadmap3 from "../../../assets/landing/roadmap3_wb.webp";
-import roadmap4 from "../../../assets/landing/roadmap4_wb.webp";
+import roadmap1 from "./images/roadmap1_wb.webp";
+import roadmap2 from "./images/roadmap2_wb.webp";
+import roadmap3 from "./images/roadmap3_wb.webp";
+import roadmap4 from "./images/roadmap4_wb.webp";
 gsap.registerPlugin(EasePack, CustomEase, ScrollTrigger, MotionPathPlugin);
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
-const AnimatedSVG = () => {
+const AnimatedSVG = ({ classes = "" }) => {
   useGSAP(() => {
     let mm = gsap.matchMedia();
 
-    mm.add("(min-width:769px)", () => {
+    mm.add("(min-width:768px)", () => {
       gsap.defaults({ ease: "none" });
 
       const poppins = gsap
@@ -44,13 +44,7 @@ const AnimatedSVG = () => {
           duration: 1,
           ease: "power4.out",
         })
-        .from(
-          ".line",
-          {
-            duration: 10,
-          },
-          0
-        )
+        .from(".line", { duration: 10 }, 0)
         .to(
           "#ball",
           {
@@ -84,7 +78,7 @@ const AnimatedSVG = () => {
   });
 
   return (
-    <div className="svg-wrapper w-[95vw] hidden     lg:block  mb-8">
+    <div className={`${classes} py-20`}>
       <svg
         width={2715}
         height={609}
