@@ -66,36 +66,36 @@ const Path = () => {
   ];
 
   return (
-    <section className="px-6 lg:pt-0 lg:p-7 md:pt-0 md:p-[30px] pt-0 flex flex-col gap-[50px] lg:gap-[0px] mt-[-200px] mb-16  xl:max-w-[1440px] xl:m-auto xl:-mt-20">
+    <section className="relative">
+      <h3 className="text-[13px] md:text-[18px] uppercase font-bold text-blue-d1 font-heading">
+        Bridge to better
+      </h3>
+      <h2 className="text-[32px] md:text-[42px] capitalize font-bold text-navy-d4 lg:w-full  md:max-w-full lg:text-center text-center leading-snug font-heading">
+        Amplifying Impact For All
+      </h2>
+      <div className="flex p-1  bg-[#F6EFE5] font-medium cursor-pointer rounded-3xl gap-2 self-center">
+        <button
+          type="button"
+          className={`${
+            path === "non-profits" ? "bg-white" : "bg-transparent"
+          } py-2 px-6 rounded-3xl font-body`}
+          onClick={() => setPath("non-profits")}
+        >
+          For Donors
+        </button>
+        <button
+          type="button"
+          className={`${
+            path === "donors" ? "bg-white" : "bg-transparent"
+          } py-2 px-6 rounded-3xl font-body`}
+          onClick={() => {
+            setPath("donors");
+          }}
+        >
+          For Nonprofits
+        </button>
+      </div>
       <div className="flex flex-col gap-[42px]">
-        <span className="flex flex-col items-center gap-2 ">
-          <h3 className="text-[13px] md:text-[18px] uppercase font-bold text-blue-d1 font-heading">
-            Bridge to better
-          </h3>
-          <h2 className="text-[32px] md:text-[42px] capitalize font-bold text-navy-d4 lg:w-full  md:max-w-full lg:text-center text-center leading-snug font-heading">
-            Amplifying Impact For All
-          </h2>
-        </span>
-        <span className="flex p-1  bg-[#F6EFE5] font-medium cursor-pointer rounded-3xl gap-2 self-center">
-          <span
-            className={`${
-              path === "non-profits" ? "bg-white" : "bg-transparent"
-            } py-2 px-6 rounded-3xl font-body`}
-            onClick={() => setPath("non-profits")}
-          >
-            For Donors
-          </span>
-          <span
-            className={`${
-              path === "donors" ? "bg-white" : "bg-transparent"
-            } py-2 px-6 rounded-3xl font-body`}
-            onClick={() => {
-              setPath("donors");
-            }}
-          >
-            For Nonprofits
-          </span>
-        </span>
         {path === "non-profits" ? (
           <p className="text-[18px] md:text-[28px] font-medium w-full lg:max-w-[60%] md:max-w-[70%]  opacity-60  text-navy-l1 text-center  mx-auto font-body">
             Access our free fundraising technology and tools.
@@ -106,6 +106,7 @@ const Path = () => {
           </p>
         )}
       </div>
+
       <BenefitsCarousel slides={path === "non-profits" ? nonProfits : donors} />
       <Carousel slides={path === "non-profits" ? nonProfits : donors} />
       {/* TODO: enable once we have the static pages ready */}
