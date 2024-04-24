@@ -46,12 +46,12 @@ const Video = () => {
       <div className="flex justify-self-center relative">
         <img
           src={s2}
-          alt=""
+          alt="infinity left half"
           className="relative h-28 sm:h-52 left-[1.9rem] sm:left-[3.5rem]"
         />
         <img
           src={s}
-          alt=""
+          alt="infinity right half"
           className="relative h-28 sm:h-52 right-[1.9rem] sm:right-[3.5rem]"
         />
       </div>
