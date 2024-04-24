@@ -73,7 +73,6 @@ export const apes = createApi({
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify({ txHash }),
       }),
-      transformResponse: (res: { guestDonor: GuestDonor }) => res,
     }),
     fiatCurrencies: builder.query<
       { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
