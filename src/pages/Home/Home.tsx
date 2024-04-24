@@ -9,7 +9,7 @@ import Video from "./Video";
 const Home = () => {
   return (
     <>
-      <Hero />
+      <Hero classes="-mt-24" />
       <HeroBottom />
       <Path />
       <Brands />

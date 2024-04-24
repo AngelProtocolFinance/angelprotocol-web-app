@@ -1,0 +1,15 @@
+.ellipse_top::after {
+  content: "";
+  height: 30rem;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #f6fbfa 50%,
+    transparent
+  );
+  bottom: 0;
+  transform: translateY(50%);
+  left: 0;
+  right: 0;
+  position: absolute;
+}

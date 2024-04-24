@@ -90,7 +90,7 @@ const HeroBottom = () => {
       <img
         src={frame1}
         alt="frame1"
-        className="absolute size-24 border-red right-0 left-40"
+        className="absolute size-24 right-0 left-40"
       />
       <img
         src={frame2}

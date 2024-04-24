@@ -2,15 +2,14 @@ import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import headillust from "./head-illust.webp";
+import s from "./styles.module.css";
 
-const Hero = () => {
+const Hero = ({ classes = "" }) => {
   return (
     <section
-      className="relative grid bg-cover bg-no-repeat sm:bg-[center_-15rem] pt-36 pb-8 sm:pb-96 -mt-24"
+      className={`${classes} ${s.ellipse_top} relative grid bg-cover bg-no-repeat sm:bg-[center_-15rem] pt-36 pb-8 sm:pb-96`}
       style={{ backgroundImage: `url('${headillust}')` }}
     >
-      <div className="absolute inset-0 bg-white/40" />
-
       <p className="text-[13px] md:text-[18px] font-heading uppercase font-bold text-center mb-5 isolate tracking-wider">
         Give Today, Give Forever
       </p>
