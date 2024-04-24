@@ -55,10 +55,10 @@ const Video = () => {
           className="relative h-28 sm:h-52 right-[1.9rem] sm:right-[3.5rem]"
         />
       </div>
-      <h2 className="text-navy-d4 text-[32px] md:text-[42px] text-center">
+      <h2 className="text-navy-d4 text-[32px] md:text-[42px] text-center mb-5">
         The Better.Giving Alliance
       </h2>
-      <p className="text-[20px] md:text-[28px] text-navy-l1/80 font-medium text-center max-w-2xl mx-auto text-pretty">
+      <p className="text-[20px] md:text-[28px] text-navy-l1/80 font-medium text-center max-w-2xl mx-auto text-pretty mb-14">
         Join a global alliance of partners united around a giving pledge to
         create lasting positive change{" "}
       </p>
@@ -68,7 +68,7 @@ const Video = () => {
           <img src={videobanner} alt="video" className="" />
           <HeartSurroundedText classes="max-xl:hidden absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/2" />
         </div>
-        <p className="md:text-2xl font-medium text-navy-l1/80 text-center mt-20">
+        <p className="mt-20 md:text-2xl font-medium text-navy-l1/80 text-center">
           We connect you with the causes you care about most, with pioneering
           ways to contribute, grow, and track your generosity, all while
           celebrating our collective impact.
