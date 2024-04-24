@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import headillust from "../../../assets/landing/head-illust.webp";
+import headillust from "./head-illust.webp";
 
 const Hero = () => {
   return (
