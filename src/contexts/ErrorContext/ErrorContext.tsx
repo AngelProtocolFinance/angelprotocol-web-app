@@ -1,7 +1,7 @@
 import Prompt from "components/Prompt";
 import { EMAIL_SUPPORT } from "constants/env";
 import { logger } from "helpers";
-import { ReactNode, useCallback } from "react";
+import { ReactNode } from "react";
 import { useModalContext } from "../ModalContext";
 
 function parseError(error: unknown): string | undefined {
@@ -42,22 +42,19 @@ export function useErrorContext() {
    * @param error - unknown error occured
    * @param display - error info shown to user
    */
-  const handleError = useCallback(
-    (error: unknown, display?: DisplayType) => {
-      const disp = display || {};
-      showModal(Prompt, {
-        type: "error",
-        children:
-          disp === "parsed"
-            ? parseError(error)
-            : "custom" in disp
-              ? disp.custom
-              : genericMsg(disp.context),
-      });
-      logger.error(error);
-    },
-    [showModal]
-  );
+  const handleError = (error: unknown, display?: DisplayType) => {
+    const disp = display || {};
+    showModal(Prompt, {
+      type: "error",
+      children:
+        disp === "parsed"
+          ? parseError(error)
+          : "custom" in disp
+            ? disp.custom
+            : genericMsg(disp.context),
+    });
+    logger.error(error);
+  };
 
   return { handleError, displayError };
 }
