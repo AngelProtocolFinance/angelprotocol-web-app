@@ -63,7 +63,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       <ContinueBtn
         type="button"
         onClick={
-          wallet && transactionId && estimate && isSuccess(estimate)
+          transactionId && wallet && estimate && isSuccess(estimate)
             ? () => {
                 const action = sendDonation({
                   onSuccess: (txHash) =>
