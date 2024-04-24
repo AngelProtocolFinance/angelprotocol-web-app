@@ -33,8 +33,10 @@ vi.mock("services/aws/leaderboard", () => ({
   }),
 }));
 
-const heroText = /BETTER GIVING REDEFINES/i;
-const marketLink = /marketplace/i;
+const homeHeroText = /simplified giving/i;
+const marketplaceHeroText = /better giving redefines/i;
+
+const marketLink = /explore all causes/i;
 const loginLink = /log in/i;
 const signupLink = /sign up/i;
 // const leadLink = /leaderboard/i;
@@ -60,12 +62,17 @@ describe("App.tsx tests", () => {
 
     expect(screen.getByTestId("nav_dropdown")).toBeInTheDocument();
 
-    //marketplace is being lazy loaded
+    //home page is being lazy loaded
     expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-    //marketplace is finally loaded
+    //home page is finally loaded
     expect(
-      await screen.findByRole("heading", { name: heroText }, { timeout: 3000 })
+      await screen.findByRole(
+        "heading",
+        { name: homeHeroText },
+        { timeout: 3000 }
+      )
     ).toBeInTheDocument();
+
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
     expect(
@@ -99,15 +106,15 @@ describe("App.tsx tests", () => {
     // expect(screen.getByRole("heading", { name: leadLink })).toBeInTheDocument();
     // expect(screen.queryByTestId(loaderTestId)).toBeNull();
 
-    //user goes back to Marketplace
-    fireEvent.click(screen.getByTestId("nav_dropdown"));
+    //user goes to Marketplace
     fireEvent.click(
       screen.getByRole("link", {
         name: marketLink,
       })
     );
-    //marketplace is already lazy loaded on first visit
-    expect(screen.getByRole("heading", { name: heroText })).toBeInTheDocument();
+    expect(
+      await screen.findByRole("heading", { name: marketplaceHeroText })
+    ).toBeInTheDocument();
     expect(screen.queryByTestId(loaderTestId)).toBeNull();
   });
 });

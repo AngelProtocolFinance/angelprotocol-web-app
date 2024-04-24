@@ -1,0 +1,7 @@
+.tablet_animation .dot {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgb(118, 206, 235);
+}

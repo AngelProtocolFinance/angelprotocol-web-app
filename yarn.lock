@@ -1281,6 +1281,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@gsap/react@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@gsap/react@npm:2.1.0"
+  dependencies:
+    gsap: "npm:^3.12.4"
+    react: "npm:>=16"
+  checksum: 10/97387f9e9d7878924d268cc7414935c3ed45ae2254fcc76dca5274fa028724eea7f64744f6722999fecff9d7e5a2b9191d33e3f23724d52a2c472e4ba2a2d3c3
+  languageName: node
+  linkType: hard
+
 "@headlessui/react@npm:1.7.18":
   version: 1.7.18
   resolution: "@headlessui/react@npm:1.7.18"
@@ -4143,6 +4153,7 @@ __metadata:
     "@cosmjs/encoding": "npm:0.32.3"
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/bignumber": "npm:5.7.0"
+    "@gsap/react": "npm:^2.1.0"
     "@headlessui/react": "npm:1.7.18"
     "@hookform/error-message": "npm:2.0.1"
     "@hookform/resolvers": "npm:3.3.4"
@@ -4179,6 +4190,8 @@ __metadata:
     aws-amplify: "npm:6.0.18"
     cropperjs: "npm:1.6.1"
     decimal.js: "npm:10.4.3"
+    dompurify: "npm:^3.1.0"
+    gsap: "npm:^3.12.5"
     is-mobile: "npm:4.0.0"
     jsdom: "npm:24.0.0"
     postcss-import: "npm:16.0.1"
@@ -4193,6 +4206,7 @@ __metadata:
     react-redux: "npm:9.1.0"
     react-router-dom: "npm:6.22.2"
     react-test-renderer: "npm:18.2.0"
+    swiper: "npm:^11.1.1"
     tailwindcss: "npm:3.4.1"
     type-fest: "npm:4.12.0"
     typescript: "npm:5.4.2"
@@ -5353,6 +5367,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dompurify@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "dompurify@npm:3.1.0"
+  checksum: 10/a8788d3510b0a5e26ae8f1beb3f079be63f417be0f7259918c273bd53f9b9eab50a0708e065caff9904ae97895cc4a7d4c66a1076021a9be0685389ad8ae4d2d
+  languageName: node
+  linkType: hard
+
 "duplexify@npm:^4.1.2":
   version: 4.1.2
   resolution: "duplexify@npm:4.1.2"
@@ -6005,6 +6026,13 @@ __metadata:
   version: 15.8.0
   resolution: "graphql@npm:15.8.0"
   checksum: 10/f8d830287a9028d6779b59c437e0ade63a713b47521b02b60316df1761b805b1a7ce03be88053d224b7f78f5d1d1a786d287ab229cd158b42ebeea9e86daaba5
+  languageName: node
+  linkType: hard
+
+"gsap@npm:^3.12.4, gsap@npm:^3.12.5":
+  version: 3.12.5
+  resolution: "gsap@npm:3.12.5"
+  checksum: 10/192e9f6b11e54d8a0d26cff76573278d42748c6a54906fa42c81425390238ea8f6abbba5c0bca75c4bba32e4f2db957f22c2158fab1be7d4a8d71fc2fb24e8c3
   languageName: node
   linkType: hard
 
@@ -8287,7 +8315,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.2.0":
+"react@npm:18.2.0, react@npm:>=16":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
@@ -8997,6 +9025,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 10/a9dc19ae2220c952bd2231d08ddeecb1b0328b61e72071ff4000c8384e145cc07c1c0bdb3b5a1cb06e186a7b2790f1dee793418b332f6ddf320de25d9125be7e
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.1":
+  version: 11.1.1
+  resolution: "swiper@npm:11.1.1"
+  checksum: 10/24a3b96f407f6bdbdceea0c75d796ccc8e8921c234d59d6344b0b07e53ae606ddfecfc1a81d5a6cadddc0b6b0b9e2b458b14e8198b12b1cbc30f5a137370cee9
   languageName: node
   linkType: hard
 

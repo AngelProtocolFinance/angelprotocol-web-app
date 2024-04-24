@@ -28,6 +28,10 @@ const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const Widget = lazy(() => import("pages/Widget"));
 const BlogPosts = lazy(() => import("pages/Blog/Posts"));
 const BlogPost = lazy(() => import("pages/Blog/Post"));
+const Home = lazy(() => import("pages/Home"));
+const PrivacyPolicy = lazy(() => import("pages/Legal/PrivacyPolicy"));
+const TermsDonors = lazy(() => import("pages/Legal/TermsDonors"));
+const TermsNonprofits = lazy(() => import("pages/Legal/TermsNonprofits"));
 
 export default function App() {
   const location = useLocation();
@@ -113,11 +117,15 @@ export default function App() {
             <Route path=":slug" element={<BlogPost />} />
             <Route index element={<BlogPosts />} />
           </Route>
+          <Route path={appRoutes.privacy_policy} element={<PrivacyPolicy />} />
+          <Route
+            path={appRoutes.terms_nonprofits}
+            element={<TermsNonprofits />}
+          />
+          <Route path={appRoutes.terms_donors} element={<TermsDonors />} />
+          <Route index element={<Home />} />
         </Route>
-        <Route
-          path="*"
-          element={<Navigate replace to={appRoutes.marketplace} />}
-        />
+        <Route path="*" element={<Navigate replace to={appRoutes.home} />} />
       </SentryRoutes>
     </ModalContext>
   );

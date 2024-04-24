@@ -6,6 +6,10 @@
 
 @import "../node_modules/cropperjs/dist/cropper.min.css";
 
+@import "../node_modules/swiper/swiper.min.css";
+@import "../node_modules/swiper/modules/pagination.min.css";
+@import "../node_modules/swiper/modules/navigation.min.css";
+
 @import "tailwindcss/components";
 @import "./styles/components.css";
 

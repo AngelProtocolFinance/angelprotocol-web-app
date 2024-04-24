@@ -3,6 +3,7 @@ export enum appRoutes {
   marketplace = "/marketplace",
   leaderboard = "/leaderboard",
   admin = "/admin",
+  home = "/",
   applications = "/applications",
   banking_applications = "/banking-applications",
   register = "/register",
@@ -18,6 +19,9 @@ export enum appRoutes {
   reset_password = "/signin/reset",
   widget_config = "/widget-config",
   blog = "/blog",
+  privacy_policy = "/privacy-policy",
+  terms_donors = "/terms-of-use",
+  terms_nonprofits = "/terms-of-use-npo",
 }
 
 export const adminRoutes = {

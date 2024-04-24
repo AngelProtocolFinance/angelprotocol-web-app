@@ -1,0 +1,21 @@
+.cause-swiper {
+  border: none;
+  width: 92vw;
+  margin: auto;
+}
+
+.cause-swiper .swiper-slide {
+  height: 520px;
+}
+
+@media screen and (min-width: 1400px) {
+  .cause-swiper {
+    max-width: 1130px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .cause-swiper {
+    width: 80vw;
+  }
+}

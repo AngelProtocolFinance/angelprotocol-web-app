@@ -1,5 +1,5 @@
 import Seo from "components/Seo";
-import { APP_NAME, DAPP_URL } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { regRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
 import { Suspense, lazy } from "react";
@@ -18,7 +18,7 @@ function Registration() {
       <Suspense fallback="Loading page...">
         <Seo
           title={`Registration Portal - ${APP_NAME}`}
-          url={`${DAPP_URL}/register`}
+          url={`${BASE_URL}/register`}
         />
         <Routes>
           <Route

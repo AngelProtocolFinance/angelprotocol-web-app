@@ -1,10 +1,5 @@
 import { BASE_URL, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
-import {
-  PRIVACY_POLICY,
-  TERMS_OF_USE_DONOR,
-  TERMS_OF_USE_NPO,
-} from "constants/urls";
 import { Link, LinkGroup, SocialMediaLink } from "./types";
 
 type LINKS = {
@@ -15,7 +10,7 @@ type LINKS = {
 };
 
 const HEADER_LINKS: Link[] = [
-  { title: "For Nonprofits", href: BASE_URL, external: true },
+  { title: "For Nonprofits", href: appRoutes.home, external: true },
   {
     title: "Marketplace",
     href: appRoutes.marketplace,
@@ -51,7 +46,7 @@ export const CHARITY_LINKS: LINKS = {
       links: [
         {
           text: "Non-profits",
-          href: BASE_URL,
+          href: appRoutes.home,
         },
         {
           text: "Giving Partners (CSR)",
@@ -64,7 +59,7 @@ export const CHARITY_LINKS: LINKS = {
       links: [
         { text: "About us", href: `${BASE_URL}/about-better-giving/` },
         { text: "FAQs", href: INTERCOM_HELP },
-        { text: "News", href: `${BASE_URL}/news/` },
+        { text: "News", href: appRoutes.blog },
       ],
     },
     {
@@ -72,13 +67,13 @@ export const CHARITY_LINKS: LINKS = {
       links: [
         {
           text: "Privacy policy",
-          href: PRIVACY_POLICY,
+          href: appRoutes.privacy_policy,
         },
         {
           text: "Terms of Use (Donors)",
-          href: TERMS_OF_USE_DONOR,
+          href: appRoutes.terms_donors,
         },
-        { text: "Terms of Use (Nonprofits)", href: TERMS_OF_USE_NPO },
+        { text: "Terms of Use (Nonprofits)", href: appRoutes.terms_nonprofits },
       ],
     },
   ],

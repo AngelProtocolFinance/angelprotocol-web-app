@@ -1,6 +1,6 @@
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
-import { APP_NAME, DAPP_URL } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { idParamToNum } from "helpers";
 import { useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
@@ -38,7 +38,7 @@ export default function Donate() {
             description={profile.overview.slice(0, 140)}
             name={`${profile.name}`}
             image={`${profile.logo}`}
-            url={`${DAPP_URL}/donate/${profile.id}`}
+            url={`${BASE_URL}/donate/${profile.id}`}
           />
           <Content
             tagline={profile.tagline}
