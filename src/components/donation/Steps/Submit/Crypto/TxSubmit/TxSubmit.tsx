@@ -1,8 +1,12 @@
 import Icon from "components/Icon/Icon";
 import { ErrorStatus, LoadingStatus } from "components/Status";
+import { chains } from "constants/chains";
 import { humanize } from "helpers";
 import { useEffect, useState } from "react";
-import { useConfirmCryptoIntentMutation } from "services/apes";
+import {
+  useConfirmCryptoIntentMutation,
+  useCreateCryptoIntentQuery,
+} from "services/apes";
 import { CryptoSubmitStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { useSetter } from "store/accessors";
@@ -11,7 +15,6 @@ import ContinueBtn from "../../../common/ContinueBtn";
 import { EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";
-import useCreateCryptoIntent from "./useCreateCryptoIntent";
 
 type Props = {
   classes?: string;
@@ -22,7 +25,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   const dispatch = useSetter();
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
-  const { details } = donation;
+  const { details, tip = 0, liquidSplitPct, recipient, donor } = donation;
   const sender = wallet?.address;
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
@@ -34,9 +37,24 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
 
   const [confirmCryptoIntent] = useConfirmCryptoIntentMutation();
 
-  const { transactionId, isError, isLoading } = useCreateCryptoIntent(
-    donation,
-    wallet
+  const {
+    data: intent,
+    isError,
+    isLoading,
+  } = useCreateCryptoIntentQuery(
+    {
+      amount: +details.token.amount,
+      tipAmount: tip,
+      chainId: chains[details.chainId.value].id,
+      chainName: chains[details.chainId.value].name,
+      denomination: details.token.symbol,
+      splitLiq: liquidSplitPct,
+      walletAddress: wallet?.address ?? "",
+      endowmentId: recipient.id,
+      source: details.source,
+      donor,
+    },
+    { skip: !wallet?.address }
   );
 
   return (
@@ -63,13 +81,13 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       <ContinueBtn
         type="button"
         onClick={
-          transactionId && wallet && estimate && isSuccess(estimate)
+          intent?.transactionId && wallet && estimate && isSuccess(estimate)
             ? () => {
                 const action = sendDonation({
                   onSuccess: (txHash) =>
                     confirmCryptoIntent({
                       txHash,
-                      txId: transactionId,
+                      txId: intent?.transactionId,
                     }).unwrap(),
                   ...txPackage(estimate, wallet),
                 });
@@ -78,7 +96,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
             : undefined
         }
         disabled={
-          !transactionId || !wallet || !estimate || !isSuccess(estimate)
+          !intent?.transactionId || !wallet || !estimate || !isSuccess(estimate)
         }
       />
     </div>

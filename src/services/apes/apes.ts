@@ -52,7 +52,10 @@ export const apes = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    createCryptoIntent: builder.mutation<{ id: string }, CryptoDonation>({
+    createCryptoIntent: builder.query<
+      { transactionId: string },
+      CryptoDonation
+    >({
       query: (params) => ({
         url: `crypto-donation/v2`,
         method: "POST",
@@ -141,7 +144,7 @@ export const apes = createApi({
 
 export const {
   useCapturePayPalOrderMutation,
-  useCreateCryptoIntentMutation,
+  useCreateCryptoIntentQuery,
   useConfirmCryptoIntentMutation,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
