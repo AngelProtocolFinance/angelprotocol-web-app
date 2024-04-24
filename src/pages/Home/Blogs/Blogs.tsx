@@ -8,20 +8,20 @@ const Blogs = () => {
   const { data: page } = usePostsQuery({ page: 1 });
 
   return (
-    <section className="grid">
-      <h2 className="text-navy-d4 text-[32px] md:text-[42px] text-center">
+    <section className="grid content-start">
+      <h2 className="text-navy-d4 text-[32px] md:text-[42px] text-center mb-14">
         Check out the latest
       </h2>
       <div className="relative">
         <button
           type="button"
-          className="blog-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-1/4"
+          className="blog-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-10 md:left-[15%]"
         >
           <Icon type="Back" />
         </button>
         <button
           type="button"
-          className="blog-next p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-1/4"
+          className="blog-next p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-10 md:right-[15%]"
         >
           <Icon type="Next" />
         </button>
@@ -47,7 +47,7 @@ const Blogs = () => {
             nextEl: ".blog-next",
             prevEl: ".blog-prev",
           }}
-          className="w-[60vw] md:w-[80vw] lg:w-[60vw]"
+          className="w-[70vw] md:w-[80vw] lg:w-[70vw]"
           modules={[Navigation]}
         >
           {(page?.posts || []).map((blog, idx) => {
