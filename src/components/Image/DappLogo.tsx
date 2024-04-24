@@ -1,6 +1,6 @@
 import dappLogoWhite from "assets/images/bettergiving-logo-white.png";
 import dappLogo from "assets/images/bettergiving-logo.png";
-import { BASE_URL } from "constants/env";
+import { appRoutes } from "constants/routes";
 import Image from "./Image";
 
 type Props = {
@@ -13,8 +13,8 @@ export default function DappLogo({ classes = "", color = "blue" }: Props) {
     <Image
       className={classes}
       src={color === "blue" ? dappLogo : dappLogoWhite}
-      title="Go to Marketing page"
-      href={BASE_URL}
+      title="Go to Home page"
+      href={appRoutes.home}
     />
   );
 }

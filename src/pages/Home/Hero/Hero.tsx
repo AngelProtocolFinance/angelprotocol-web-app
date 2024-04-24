@@ -2,7 +2,6 @@ import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import headillust from "../../../assets/landing/head-illust.webp";
 import Button from "../common/Button";
-import Navbar from "./Navbar";
 import s from "./styles.module.css";
 const Hero = () => {
   return (
@@ -14,7 +13,6 @@ const Hero = () => {
         className="absolute w-full h-full  lg:top-[-16%]   top-0 left-0 lg:object-fill object-center md:object-cover object-cover "
         alt=""
       />
-      <Navbar />
       <div className={`${s.copy} font-heading`}>
         <p className="text-[13px] md:text-[18px] z-10">
           Give Today, Give Forever
