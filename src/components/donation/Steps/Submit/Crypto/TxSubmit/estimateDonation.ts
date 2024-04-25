@@ -14,11 +14,14 @@ import { tokenBalance } from "./tokenBalance";
 export async function estimateDonation(
   token: TokenWithAmount,
   chainID: ChainID,
-  sender: string
+  sender: string,
+  tipAmount: number
 ): Promise<Exclude<EstimateStatus, "loading">> {
   try {
+    const grossAmount = +token.amount + tipAmount;
+
     const balance = await tokenBalance(token, chainID, sender);
-    if (balance < +token.amount) {
+    if (balance < grossAmount) {
       return { error: "Not enough balance" };
     }
 
@@ -28,7 +31,7 @@ export async function estimateDonation(
     switch (chainID) {
       case "juno-1":
       case "uni-6": {
-        const scaledAmount = scaleToStr(token.amount, token.decimals);
+        const scaledAmount = scaleToStr(grossAmount, token.decimals);
         const to = apWallets.junoDeposit;
         const msg =
           token.type === "juno-native" || token.type === "ibc"
@@ -49,7 +52,7 @@ export async function estimateDonation(
 
       case "pisco-1":
       case "phoenix-1": {
-        const scaledAmount = scaleToStr(token.amount, token.decimals);
+        const scaledAmount = scaleToStr(grossAmount, token.decimals);
         const msg =
           token.type === "terra-native" || token.type === "ibc"
             ? new MsgSend(sender, apWallets.terra, [
@@ -67,7 +70,7 @@ export async function estimateDonation(
       //evm chains
       default: {
         const tx: SimulSendNativeTx | SimulContractTx = (() => {
-          const scaledAmount = scale(token.amount, token.decimals).toHex();
+          const scaledAmount = scale(grossAmount, token.decimals).toHex();
 
           switch (token.type) {
             case "evm-native":

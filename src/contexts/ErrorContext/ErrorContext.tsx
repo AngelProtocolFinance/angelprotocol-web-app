@@ -42,7 +42,7 @@ export function useErrorContext() {
    * @param error - unknown error occured
    * @param display - error info shown to user
    */
-  function handleError(error: unknown, display?: DisplayType) {
+  const handleError = (error: unknown, display?: DisplayType) => {
     const disp = display || {};
     showModal(Prompt, {
       type: "error",
@@ -54,7 +54,7 @@ export function useErrorContext() {
             : genericMsg(disp.context),
     });
     logger.error(error);
-  }
+  };
 
   return { handleError, displayError };
 }
