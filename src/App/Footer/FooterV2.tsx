@@ -7,12 +7,24 @@ import { SocialMediaLink } from "../types";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
 
-type Props = { socials: SocialMediaLink[]; classes?: string };
+type Props = { socials: SocialMediaLink[] };
 
-function Footer({ socials, classes = "" }: Props) {
+function Footer({ socials }: Props) {
+  function ref(node: HTMLElement | null) {
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([e]) => {
+        const intercom = document.querySelector(".intercom-launcher");
+        intercom?.classList.toggle("hidden", e.isIntersecting);
+      },
+      { threshold: [0.5] }
+    );
+    observer.observe(node);
+  }
   return (
     <footer
-      className={`grid grid-cols-[auto_auto] xl:grid-cols-[repeat(5,auto)] content-start ${classes} border-t`}
+      ref={ref}
+      className="grid grid-cols-[auto_auto] xl:grid-cols-[repeat(5,auto)] border-t border-gray-l4/40"
     >
       <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 padded-container p-4 md:p-10">
         <div className="flex flex-col md:flex-row items-center xl:grid content-start col-start-1 col-span-full xl:col-span-1 xl:max-w-96 relative xl:bottom-7">
