@@ -29,9 +29,15 @@ const Widget = lazy(() => import("pages/Widget"));
 const BlogPosts = lazy(() => import("pages/Blog/Posts"));
 const BlogPost = lazy(() => import("pages/Blog/Post"));
 const Home = lazy(() => import("pages/Home"));
+// Legal
 const PrivacyPolicy = lazy(() => import("pages/Legal/PrivacyPolicy"));
 const TermsDonors = lazy(() => import("pages/Legal/TermsDonors"));
 const TermsNonprofits = lazy(() => import("pages/Legal/TermsNonprofits"));
+// Informational
+const NonprofitInfo = lazy(() => import("pages/Informational/NonprofitInfo"));
+const DonorInfo = lazy(() => import("pages/Informational/DonorInfo"));
+const BGAlliance = lazy(() => import("pages/Informational/BGAlliance"));
+const AboutUs = lazy(() => import("pages/Informational/AboutUs"));
 
 export default function App() {
   const location = useLocation();
@@ -123,6 +129,10 @@ export default function App() {
             element={<TermsNonprofits />}
           />
           <Route path={appRoutes.terms_donors} element={<TermsDonors />} />
+          <Route path={appRoutes.nonprofit_info} element={<NonprofitInfo />} />
+          <Route path={appRoutes.donor_info} element={<DonorInfo />} />
+          <Route path={appRoutes.about_us} element={<AboutUs />} />
+          <Route path={appRoutes.bga} element={<BGAlliance />} />
           <Route index element={<Home />} />
         </Route>
         <Route path="*" element={<Navigate replace to={appRoutes.home} />} />
