@@ -8,7 +8,7 @@ const Testimonials = () => {
   const testimonials = useGetTestimonials();
 
   return (
-    <div className="grid relative">
+    <div className="grid relative pt-48">
       <img
         src={quotation}
         alt="quotation mark"

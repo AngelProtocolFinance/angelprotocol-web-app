@@ -6,6 +6,7 @@ import s2 from "../../assets/landing/half1.png";
 import heart from "../../assets/landing/heartOfText.png";
 import heartText from "../../assets/landing/heartText.svg";
 import videobanner from "../../assets/landing/video_bannerUpdate.png";
+import styles from "./video.module.css";
 
 const triggerId = "__video";
 const textCircleId = "__text_circle";
@@ -42,7 +43,7 @@ const Video = () => {
   }, []);
 
   return (
-    <section id={triggerId} className="grid relative px-6">
+    <section id={triggerId} className="grid relative px-6 pt-80">
       <div className="flex justify-self-center relative">
         <img
           src={s2}
@@ -55,10 +56,12 @@ const Video = () => {
           className="relative h-28 sm:h-52 right-[1.9rem] sm:right-[3.5rem]"
         />
       </div>
-      <h2 className="text-navy-d4 text-[32px] md:text-[42px] text-center mb-5">
+      <h2
+        className={`${styles.heading} justify-self-center text-navy-d4 text-[32px] md:text-[42px] text-center mb-5 -mt-12 sm:-mt-16`}
+      >
         The Better.Giving Alliance
       </h2>
-      <p className="text-[20px] md:text-[28px] text-navy-l1/80 font-medium text-center max-w-2xl mx-auto text-pretty mb-14">
+      <p className="z-10 text-[20px] md:text-[28px] text-navy-l1/80 font-medium text-center max-w-2xl mx-auto text-pretty mb-14">
         Join a global alliance of partners united around a giving pledge to
         create lasting positive change{" "}
       </p>

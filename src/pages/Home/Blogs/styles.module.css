@@ -1,24 +1,23 @@
-.blog_card:hover .CRUD_buttons {
-  display: flex;
-  top: 0;
+.carousel_overlay::before {
+  content: "";
+  position: absolute;
+  height: 180%;
+  width: 60%;
+  background: radial-gradient(ellipse at center, white 15%, transparent 60%);
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  z-index: 2;
 }
 
-.blog_Carousel {
-  width: 92vw;
-}
-
-.blog_Carousel .swiper-slide {
-  width: 300px;
-}
-
-@media screen and (min-width: 1400px) {
-  .blog_Carousel {
-    max-width: 1130px;
-  }
-}
-
-@media screen and (min-width: 700px) {
-  .blog_Carousel {
-    width: 80vw;
-  }
+.carousel_overlay::after {
+  content: "";
+  position: absolute;
+  height: 180%;
+  width: 60%;
+  background: radial-gradient(ellipse at center, white 15%, transparent 60%);
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
 }

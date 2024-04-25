@@ -3,16 +3,18 @@ import { usePostsQuery } from "services/wordpress";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import BlogCard from "./BlogCard";
+import s from "./styles.module.css";
 
 const Blogs = () => {
   const { data: page } = usePostsQuery({ page: 1 });
 
   return (
-    <section className="grid content-start">
+    <section className="grid content-start pt-40">
       <h2 className="text-navy-d4 text-[32px] md:text-[42px] text-center mb-14">
         Check out the latest
       </h2>
       <div className="relative">
+        <div className={`${s.carousel_overlay} absolute inset-0 md:hidden`} />
         <button
           type="button"
           className="blog-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-10 md:left-[15%]"
