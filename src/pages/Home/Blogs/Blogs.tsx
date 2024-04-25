@@ -14,7 +14,6 @@ const Blogs = () => {
         Check out the latest
       </h2>
       <div className="relative">
-        <div className={`${s.carousel_overlay} absolute inset-0 md:hidden`} />
         <button
           type="button"
           className="blog-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-10 md:left-[15%]"
@@ -60,6 +59,7 @@ const Blogs = () => {
             );
           })}
         </Swiper>
+        <div className={`${s.carousel_overlay} absolute inset-0 md:hidden`} />
       </div>
     </section>
   );

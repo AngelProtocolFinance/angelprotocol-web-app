@@ -2,8 +2,8 @@
   content: "";
   position: absolute;
   height: 180%;
-  width: 60%;
-  background: radial-gradient(ellipse at center, white 15%, transparent 60%);
+  width: 80%;
+  background: radial-gradient(ellipse at center, white 20%, transparent 60%);
   right: 0;
   top: 50%;
   transform: translate(50%, -50%);
@@ -14,8 +14,8 @@
   content: "";
   position: absolute;
   height: 180%;
-  width: 60%;
-  background: radial-gradient(ellipse at center, white 15%, transparent 60%);
+  width: 80%;
+  background: radial-gradient(ellipse at center, white 20%, transparent 60%);
   left: 0;
   top: 50%;
   transform: translate(-50%, -50%);

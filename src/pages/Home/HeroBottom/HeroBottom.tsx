@@ -35,7 +35,6 @@ const HeroBottom = () => {
       </h2>
 
       <div className={s.carousel}>
-        <div className={`${s.carousel_overlay} absolute inset-0 xl:hidden`} />
         <button
           type="button"
           className="cause-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
@@ -78,7 +77,8 @@ const HeroBottom = () => {
               <Card key={endow.id} {...endow} />
             </SwiperSlide>
           ))}
-        </Swiper>
+        </Swiper>{" "}
+        <div className={`${s.carousel_overlay} absolute inset-0 xl:hidden`} />
       </div>
 
       <Link
