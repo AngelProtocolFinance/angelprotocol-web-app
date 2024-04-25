@@ -7,23 +7,16 @@ import s from "./styles.module.css";
 const Hero = ({ classes = "" }) => {
   return (
     <section
-      className={`${classes} ${s.ellipse_top} relative grid bg-cover bg-no-repeat sm:bg-[center_-15rem] pt-36 pb-8 sm:pb-96`}
+      className={`${classes} ${s.bottom_blur} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
       style={{ backgroundImage: `url('${headillust}')` }}
     >
-      <p className="text-[13px] md:text-[18px] font-heading uppercase font-bold text-center mb-5 isolate tracking-wider">
+      <p className="z-10 text-[13px] md:text-[18px] font-heading uppercase font-bold text-center mb-5 tracking-wider">
         Give Today, Give Forever
       </p>
-      <h1 className="w-full text-[40px] md:text-[64px] text-center leading-none mb-5 isolate">
-        Simplified Giving,
-        <br className="xl:block hidden md:hidden" /> Amplified Impact
+      <h1 className="z-10 mx-auto text-4xl md:text-5xl lg:text-6xl text-center leading-none mb-5 px-6">
+        Simplified Giving, <br /> Amplified Impact
       </h1>
-      <p className="isolate text-navy-l1 hidden lg:block md:block md:text-2xl text-center text-balance">
-        As a nonprofit serving nonprofits, our all-in-one fundraising solution
-        is free, global, and inclusive. <br /> However you want to give and
-        receive, we've got your back. Together we can make donations go further
-        and last forever.
-      </p>
-      <p className="isolate md:hidden text-navy-l1 md:text-2xl text-center l font-body">
+      <p className="z-10 px-6 text-navy-l1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
         As a nonprofit serving nonprofits, our all-in-one fundraising solution
         is free, global, and inclusive. <br /> However you want to give and
         receive, we've got your back. Together we can make donations go further

@@ -11,6 +11,7 @@ import frame3 from "./characters/frame_3.png";
 import frame4 from "./characters/frame_4.png";
 import frame6 from "./characters/frame_6.png";
 import mappng from "./map.png";
+import s from "./styles.module.css";
 
 const HeroBottom = () => {
   const { data } = useEndowmentCardsQuery({
@@ -21,26 +22,28 @@ const HeroBottom = () => {
 
   return (
     <div
-      className="grid relative bg-contain bg-no-repeat bg-[center_25rem] mb-4 pb-80"
+      className={`${s.corner_blemish} grid content-start relative bg-contain bg-no-repeat bg-[center_25rem] mb-4 pb-80`}
       style={{ backgroundImage: `url('${mappng}')` }}
     >
-      <h3 className="isolate uppercase text-blue-d1 text-center mt-2">
+      <h3 className="z-10 uppercase text-blue-d1 text-center my-4">
         Bridge to better
       </h3>
-      <h2 className="isolate text-[32px] md:text-[42px] text-center text-navy-d4 font-heading">
+      <h2
+        className={`${s.heading_blemish} px-6 justify-self-center z-10 mb-9 lg:mb-12 text-3xl md:text-4xl text-center text-navy-d4`}
+      >
         Connecting Donors to Causes That Matter
       </h2>
 
-      <div className="relative">
+      <div className={s.carousel_blemish}>
         <button
           type="button"
-          className="cause-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-[6vw]"
+          className="cause-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
         >
           <Icon type="Back" />
         </button>
         <button
           type="button"
-          className="cause-next p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-[6vw]"
+          className="cause-next p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-[5%] xl:right-[15%]"
         >
           <Icon type="Next" />
         </button>
@@ -58,7 +61,7 @@ const HeroBottom = () => {
             },
             1024: {
               spaceBetween: 20,
-              slidesPerView: 4,
+              slidesPerView: 3,
             },
           }}
           navigation={{
@@ -66,7 +69,7 @@ const HeroBottom = () => {
             prevEl: ".cause-prev",
           }}
           modules={[Navigation]}
-          className="relative w-[80vw] py-8"
+          className="relative w-[90vw] xl:w-[60vw] py-8"
         >
           {(data?.Items || []).map((endow) => (
             <SwiperSlide key={endow.id} className="">
@@ -78,7 +81,7 @@ const HeroBottom = () => {
 
       <Link
         to={appRoutes.marketplace}
-        className="mt-16 justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full font-heading relative"
+        className="z-10 mt-16 justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full font-heading relative"
       >
         <span className="ml-1">Explore All Causes</span>
         <Icon type="ArrowRightLong" className="text-lg" />
@@ -90,24 +93,28 @@ const HeroBottom = () => {
       <img
         src={frame1}
         alt="frame1"
-        className="absolute size-24 right-0 left-40"
+        className="absolute size-16 xl:size-24 max-xl:top-[10%] right-0 left-[5%]"
       />
       <img
         src={frame2}
         alt="frame2"
-        className="absolute top-0 right-40 -translate-y-1/2 size-32"
+        className="absolute top-0 right-[5%] xl:right-[10%] -translate-y-1/2 size-20 xl:size-28"
       />
       <img
         src={frame3}
         alt="frame3"
-        className="absolute right-0 translate-x-1/5 top-44"
+        className="max-xl:hidden absolute right-0 translate-x-1/5 top-44 "
       />
       <img
         src={frame4}
         alt="frame4"
-        className="absolute size-20 right-24 top-1/4"
+        className="absolute size-16 right-[12%] bottom-[40%] xl:top-1/4"
       />
-      <img src={frame6} alt="frame6" className="absolute left-0 top-1/4" />
+      <img
+        src={frame6}
+        alt="frame6"
+        className="max-xl:hidden absolute left-0 top-1/4"
+      />
     </div>
   );
 };

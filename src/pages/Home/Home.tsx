@@ -11,12 +11,12 @@ const Home = () => {
     <>
       <Hero classes="-mt-24" />
       <HeroBottom />
-      <Path />
+      {/* <Path />
       <Brands />
       <Animation />
       <Video />
       <Testimonials />
-      <Blogs />
+      <Blogs /> */}
     </>
   );
 };

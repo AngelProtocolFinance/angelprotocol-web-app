@@ -1,5 +1,11 @@
-.ellipse_top::after {
+.bottom_blur::after {
   content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateY(50%);
+
   height: 30rem;
   background: linear-gradient(
     to bottom,
@@ -7,9 +13,13 @@
     #f6fbfa 50%,
     transparent
   );
-  bottom: 0;
-  transform: translateY(50%);
-  left: 0;
-  right: 0;
+}
+
+.bottom_blur::before {
+  content: "";
   position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0.2;
+  z-index: 0;
 }

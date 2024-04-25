@@ -1,0 +1,72 @@
+.carousel_blemish {
+  position: relative;
+  z-index: 1;
+}
+
+.carousel_blemish::after {
+  content: "";
+  position: absolute;
+  height: 50rem;
+  width: 140%;
+  background: radial-gradient(
+    ellipse at center,
+    #eae2fc70 1%,
+    white 20%,
+    transparent 70%
+  );
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.heading_blemish {
+  position: relative;
+}
+.heading_blemish::after {
+  content: "";
+  position: absolute;
+  height: 6em;
+  width: 130%;
+  background: radial-gradient(ellipse at center, white 20%, transparent 70%);
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  z-index: -1;
+}
+.heading_blemish::before {
+  content: "";
+  position: absolute;
+  height: 6em;
+  width: 100%;
+  background: radial-gradient(ellipse at center, white 10%, transparent 70%);
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+/** fdefd1 */
+.corner_blemish::after {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 150%;
+  background: radial-gradient(ellipse at center, #fdefd1 1px, transparent 70%);
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  z-index: -1;
+}
+
+.corner_blemish::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 150%;
+  background: radial-gradient(ellipse at center, #eae2fc 1px, transparent 70%);
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
