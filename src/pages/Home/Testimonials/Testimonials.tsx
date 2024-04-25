@@ -8,7 +8,7 @@ const Testimonials = () => {
   const testimonials = useGetTestimonials();
 
   return (
-    <div className="grid relative pt-48">
+    <div className="grid relative pt-48 bg-gradient-to-t from-peach/40 to-transparent">
       <img
         src={quotation}
         alt="quotation mark"

@@ -13,7 +13,7 @@ import icon7 from "./icons/Icon7_wb.webp";
 import icon8 from "./icons/Icon8_wb.webp";
 import { Slide } from "./types";
 
-const colors = ["bg-[#EDFCE2]", "bg-[#EAE2FC]", "bg-[#FCF6E2]", "bg-[#EDF2FE]"];
+const colors = ["bg-[#EDFCE2]", "bg-lilac", "bg-[#FCF6E2]", "bg-[#EDF2FE]"];
 type TPath = "non-profits" | "donors";
 const Path = () => {
   const [path, setPath] = useState<TPath>("non-profits");

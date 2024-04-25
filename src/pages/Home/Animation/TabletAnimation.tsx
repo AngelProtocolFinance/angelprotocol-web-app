@@ -39,7 +39,9 @@ const TabletAnimation = ({ classes = "" }) => {
   ];
 
   return (
-    <div className={`${classes} ${s.tablet_animation} relative pt-24`}>
+    <div
+      className={`${classes} ${s.tablet_animation} relative pt-24 bg-peach/20`}
+    >
       <div className=" bg relative mt-5">
         <svg
           id="svg5"

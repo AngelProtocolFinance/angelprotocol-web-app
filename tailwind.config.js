@@ -97,6 +97,9 @@ module.exports = {
       sdg15: "#59ba48",
       sdg16: "#126a9f",
       sdg17: "#13496b",
+
+      peach: "#fdE3d8",
+      lilac: "#eae2fc",
     },
 
     extend: {

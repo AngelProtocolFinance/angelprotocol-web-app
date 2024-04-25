@@ -6,7 +6,7 @@ import { Wordpress } from "types/wordpress";
 
 const BlogCard = (props: Wordpress.Post) => {
   return (
-    <div className="border border-[#dbdada] h-[27rem] grid gap-3 pb-5 rounded-3xl bg-white">
+    <div className="h-[27rem] grid gap-3 pb-5 rounded-3xl bg-white">
       <Media
         sizes="(max-width: 640px) 100vw, 33vw"
         id={props.featured_media}

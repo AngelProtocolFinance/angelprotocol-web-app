@@ -78,7 +78,7 @@ const AnimatedSVG = ({ classes = "" }) => {
   });
 
   return (
-    <div className={classes}>
+    <div className={`${classes} bg-peach/20`}>
       <svg
         width={2715}
         height={609}

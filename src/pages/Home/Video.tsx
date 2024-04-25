@@ -43,7 +43,10 @@ const Video = () => {
   }, []);
 
   return (
-    <section id={triggerId} className="grid relative px-6 pt-80">
+    <section
+      id={triggerId}
+      className="grid relative px-6 pt-80 bg-gradient-to-b from-peach/20 to-transparent"
+    >
       <div className="flex justify-self-center relative">
         <img
           src={s2}

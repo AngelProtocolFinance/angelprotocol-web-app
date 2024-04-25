@@ -9,7 +9,7 @@ import Marquee from "react-fast-marquee";
 
 const Brands = () => {
   return (
-    <section className="grid content-start gap-14">
+    <section className="grid content-start gap-14 bg-gradient-to-b from-transparent to-peach/20">
       <h2 className="text-[32px] md:text-[42px] text-navy-d4 px-8 text-center max-w-lg mx-auto text-balance">
         Trusted by impactful nonprofits worldwide
       </h2>
