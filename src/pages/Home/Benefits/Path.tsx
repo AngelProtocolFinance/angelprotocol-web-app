@@ -1,4 +1,6 @@
+import { appRoutes } from "constants/routes";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import icon1 from "../../../assets/landing/Icon1_wb.webp";
 import icon2 from "../../../assets/landing/Icon2_wb.webp";
 import icon3 from "../../../assets/landing/Icon3_wb.webp";
@@ -7,7 +9,7 @@ import icon5 from "../../../assets/landing/Icon5_wb.webp";
 import icon6 from "../../../assets/landing/Icon6_wb.webp";
 import icon7 from "../../../assets/landing/Icon7_wb.webp";
 import icon8 from "../../../assets/landing/Icon8_wb.webp";
-// import Button from "../common/Button";
+import Button from "../common/Button";
 import BenefitsCarousel from "./BenefitsCarousel";
 import Carousel from "./Carousel";
 const Path = () => {
@@ -108,8 +110,16 @@ const Path = () => {
       </div>
       <BenefitsCarousel slides={path === "non-profits" ? nonProfits : donors} />
       <Carousel slides={path === "non-profits" ? nonProfits : donors} />
-      {/* TODO: enable once we have the static pages ready */}
-      {/*<Button text="Learn More" />*/}
+      <Link
+        className="block -mt-30 z-40"
+        to={
+          path === "non-profits"
+            ? appRoutes.nonprofit_info
+            : appRoutes.donor_info
+        }
+      >
+        <Button text="Learn More" />
+      </Link>
     </section>
   );
 };

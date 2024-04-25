@@ -1,11 +1,14 @@
+import { appRoutes } from "constants/routes";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import s from "../../assets/landing/Inifnite Half-right.png";
 import s2 from "../../assets/landing/half1.png";
 import heart from "../../assets/landing/heartOfText.png";
 import heartText from "../../assets/landing/heartText.svg";
 import videobanner from "../../assets/landing/video_bannerUpdate.png";
+import Button from "./common/Button";
 
 const triggerId = "__video";
 
@@ -95,8 +98,9 @@ const Video = () => {
           ways to contribute, grow, and track your generosity, all while
           celebrating our collective impact.
         </p>
-        {/* TODO: enable once we have the static pages ready */}
-        {/*<Button text="Join the Movement" />*/}
+        <Link to={appRoutes.bga} className="block -mt-30 z-40">
+          <Button text="Join the Movement" />
+        </Link>
       </div>
 
       <svg
