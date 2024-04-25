@@ -84,7 +84,7 @@
   position: absolute;
   height: 200%;
   width: 60%;
-  background: radial-gradient(ellipse at center, white 20%, transparent 60%);
+  background: radial-gradient(ellipse at center, white 15%, transparent 60%);
   right: 0;
   top: 50%;
   transform: translate(50%, -50%);
@@ -96,7 +96,7 @@
   position: absolute;
   height: 200%;
   width: 60%;
-  background: radial-gradient(ellipse at center, white 20%, transparent 60%);
+  background: radial-gradient(ellipse at center, white 15%, transparent 60%);
   left: 0;
   top: 50%;
   transform: translate(-50%, -50%);
