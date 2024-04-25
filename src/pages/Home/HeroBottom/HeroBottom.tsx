@@ -35,6 +35,7 @@ const HeroBottom = () => {
       </h2>
 
       <div className={s.carousel_blemish}>
+        <div className={`${s.side_blemish} absolute inset-0 xl:hidden`} />
         <button
           type="button"
           className="cause-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
@@ -70,6 +71,7 @@ const HeroBottom = () => {
           }}
           modules={[Navigation]}
           className="relative w-[90vw] xl:w-[60vw] py-8"
+          wrapperClass={s.swiper_wrapper}
         >
           {(data?.Items || []).map((endow) => (
             <SwiperSlide key={endow.id} className="">

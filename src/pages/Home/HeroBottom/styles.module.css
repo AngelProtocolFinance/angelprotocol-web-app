@@ -70,3 +70,27 @@
   transform: translate(-50%, -50%);
   z-index: -1;
 }
+
+.side_blemish::before {
+  content: "";
+  position: absolute;
+  height: 200%;
+  width: 40%;
+  background: radial-gradient(ellipse at center, white 15%, transparent 60%);
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  z-index: 2;
+}
+
+.side_blemish::after {
+  content: "";
+  position: absolute;
+  height: 200%;
+  width: 40%;
+  background: radial-gradient(ellipse at center, white 15%, transparent 60%);
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
