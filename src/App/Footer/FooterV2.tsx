@@ -1,8 +1,8 @@
+import log from "assets/images/bettergiving-logo-with-name-all-blue.svg";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import log from "../../assets/landing/logo.svg";
 import { SocialMediaLink } from "../types";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
