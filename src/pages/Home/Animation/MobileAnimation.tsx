@@ -39,7 +39,7 @@ const MobileAnimation = ({ classes = "" }) => {
   ];
   return (
     <div
-      className={`${classes} ${s.mobile_animation} h-full w-full relative overflow-visible`}
+      className={`${classes} ${s.mobile_animation} h-full w-full relative overflow-visible pt-24`}
     >
       <div className="  w-full h-full relative mt-5 ">
         <div className="relative top-0 h-full flex flex-col justify-between px-[15px]">

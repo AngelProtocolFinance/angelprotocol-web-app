@@ -16,7 +16,7 @@ const AnimatedSVG = ({ classes = "" }) => {
   useGSAP(() => {
     let mm = gsap.matchMedia();
 
-    mm.add("(min-width:768px)", () => {
+    mm.add("(min-width:769px)", () => {
       gsap.defaults({ ease: "none" });
 
       const poppins = gsap
@@ -37,9 +37,8 @@ const AnimatedSVG = ({ classes = "" }) => {
           scrollTrigger: {
             trigger: "#svg",
             scrub: 0.2,
-            pin: true,
-            start: "top 10%",
-            end: "bottom -40%",
+            start: "top top+110",
+            end: "bottom bottom-720",
           },
           duration: 1,
           ease: "power4.out",
@@ -57,8 +56,8 @@ const AnimatedSVG = ({ classes = "" }) => {
             duration: 25,
             scrollTrigger: {
               trigger: "#svg",
-              start: "top 70%",
-              end: "bottom -40%",
+              start: "top top+120",
+              end: "bottom bottom-720",
               scrub: 0.6,
             },
           },
@@ -78,7 +77,7 @@ const AnimatedSVG = ({ classes = "" }) => {
   });
 
   return (
-    <div className={`${classes} py-20`}>
+    <div className={classes}>
       <svg
         width={2715}
         height={609}
