@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Card from "./Card";
+import Card, { Skeleton } from "./Card";
 import frame1 from "./characters/frame_1.png";
 import frame2 from "./characters/frame_2.png";
 import frame3 from "./characters/frame_3.png";
@@ -72,9 +72,13 @@ const HeroBottom = () => {
           className="relative w-[90vw] xl:w-[60vw] py-8"
           wrapperClass={s.swiper_wrapper}
         >
-          {(data?.Items || []).map((endow) => (
-            <SwiperSlide key={endow.id} className="">
-              <Card key={endow.id} {...endow} />
+          {(data?.Items || [1, 2, 3, 4, 5, 6]).map((endow, idx) => (
+            <SwiperSlide key={idx}>
+              {typeof endow === "number" ? (
+                <Skeleton />
+              ) : (
+                <Card key={endow.id} {...endow} />
+              )}
             </SwiperSlide>
           ))}
         </Swiper>{" "}

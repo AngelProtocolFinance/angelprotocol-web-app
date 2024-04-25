@@ -1,3 +1,4 @@
+import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
@@ -5,11 +6,11 @@ import { Wordpress } from "types/wordpress";
 
 const BlogCard = (props: Wordpress.Post) => {
   return (
-    <div className="border border-[#dbdada] flex flex-col gap-3 pb-5 rounded-2xl overflow-hidden bg-white">
+    <div className="border border-[#dbdada] h-[27rem] grid gap-3 pb-5 rounded-3xl bg-white">
       <Media
         sizes="(max-width: 640px) 100vw, 33vw"
         id={props.featured_media}
-        classes="rounded-t-[18px] object-fill object-center h-[179px]"
+        classes="rounded-t-[18px] object-fill object-center h-44"
       />
 
       <h4
@@ -32,5 +33,9 @@ const BlogCard = (props: Wordpress.Post) => {
     </div>
   );
 };
+
+export const Skeleton = () => (
+  <ContentLoader className="h-[27rem] rounded-3xl" />
+);
 
 export default BlogCard;

@@ -37,8 +37,9 @@ const AnimatedSVG = ({ classes = "" }) => {
           scrollTrigger: {
             trigger: "#svg",
             scrub: 0.2,
-            start: "top top+110",
-            end: "bottom bottom-720",
+            pin: true,
+            start: "top 10%",
+            end: "bottom -40%",
           },
           duration: 1,
           ease: "power4.out",
@@ -56,8 +57,8 @@ const AnimatedSVG = ({ classes = "" }) => {
             duration: 25,
             scrollTrigger: {
               trigger: "#svg",
-              start: "top top+120",
-              end: "bottom bottom-720",
+              start: "top 70%",
+              end: "bottom -40%",
               scrub: 0.6,
             },
           },

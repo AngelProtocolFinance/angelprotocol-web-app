@@ -1,3 +1,4 @@
+import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
@@ -28,5 +29,9 @@ const Card = (props: EndowmentCard) => {
     </div>
   );
 };
+
+export const Skeleton = () => (
+  <ContentLoader className="h-[27rem] rounded-4xl" />
+);
 
 export default Card;

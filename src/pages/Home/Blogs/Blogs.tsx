@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { usePostsQuery } from "services/wordpress";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import BlogCard from "./BlogCard";
+import BlogCard, { Skeleton } from "./BlogCard";
 import s from "./styles.module.css";
 
 const Blogs = () => {
@@ -51,10 +51,14 @@ const Blogs = () => {
           className="w-[70vw] md:w-[80vw] lg:w-[70vw]"
           modules={[Navigation]}
         >
-          {(page?.posts || []).map((blog, idx) => {
+          {(page?.posts || [1, 2, 3, 4, 5, 6]).map((blog, idx) => {
             return (
-              <SwiperSlide key={idx} className="w-[300px]">
-                <BlogCard {...blog} />
+              <SwiperSlide key={idx}>
+                {typeof blog === "number" ? (
+                  <Skeleton />
+                ) : (
+                  <BlogCard {...blog} />
+                )}
               </SwiperSlide>
             );
           })}
