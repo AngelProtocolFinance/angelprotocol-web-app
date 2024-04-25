@@ -50,3 +50,7 @@ export enum regRoutes {
   sign_notice = "sign-notice",
   sign_result = "sign-result",
 }
+
+export enum donateRoutes {
+  donations = "donations",
+}

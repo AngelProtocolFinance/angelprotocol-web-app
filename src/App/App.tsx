@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/react";
-import { appRoutes, donateWidgetRoutes } from "constants/routes";
+import { appRoutes, donateRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { lazy } from "react";
@@ -78,7 +78,14 @@ export default function App() {
           />
 
           <Route path={appRoutes.donations} element={<Donations />} />
-          <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
+          <Route path={`${appRoutes.donate}/:id/*`} element={<Donate />} />
+          <Route path={appRoutes.donate}>
+            <Route path=":id" element={<Donate />} />
+            <Route
+              path={`:id/${donateRoutes.donations}/:donationId`}
+              element={<Donate />}
+            />
+          </Route>
           <Route
             path={appRoutes.donate_fiat_thanks}
             element={<DonateFiatThanks />}

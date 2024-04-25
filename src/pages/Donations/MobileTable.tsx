@@ -6,6 +6,8 @@ import { PropsWithChildren } from "react";
 import LoadMoreBtn from "./LoadMoreBtn";
 import { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
+import { useNavigate } from "react-router-dom";
+import { appRoutes, donateRoutes } from "constants/routes";
 
 export default function MobileTable({
   donations,
@@ -18,6 +20,7 @@ export default function MobileTable({
 }: TableProps) {
   const { sorted } = useSort(donations, "date");
   const showKYCForm = useShowKYCForm();
+  const navigate = useNavigate();
 
   return (
     <div
@@ -77,6 +80,20 @@ export default function MobileTable({
                       onClick={() => showKYCForm(row.id)}
                     >
                       <Icon type="FatArrowDownload" className="text-2xl" />
+                    </button>
+                  </Row>
+                )}
+                {status === "intent" && (
+                  <Row title="Finish Paying" className="rounded-b">
+                    <button
+                      className="block"
+                      onClick={() =>
+                        navigate(
+                          `${appRoutes.donate}/${row.recipientId}/${donateRoutes.donations}/${row.id}`
+                        )
+                      }
+                    >
+                      <Icon type="ArrowRight" className="text-2xl" />
                     </button>
                   </Row>
                 )}

@@ -3,10 +3,10 @@ import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { chainIds } from "constants/chainIds";
-import { appRoutes } from "constants/routes";
+import { appRoutes, donateRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";
 import useSort from "hooks/useSort";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import LoadMoreBtn from "./LoadMoreBtn";
 import { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
@@ -26,6 +26,7 @@ export default function Table({
   );
 
   const showKYCForm = useShowKYCForm();
+  const navigate = useNavigate();
 
   return (
     <table
@@ -81,6 +82,9 @@ export default function Table({
           {status === "final" && (
             <span className="flex justify-center">Receipt</span>
           )}
+          {status === "intent" && (
+            <span className="flex justify-center">Finish Paying</span>
+          )}
         </Cells>
       </TableSection>
       <TableSection
@@ -135,6 +139,18 @@ export default function Table({
                   onClick={() => showKYCForm(row.id)}
                 >
                   <Icon type="FatArrowDownload" className="text-2xl" />
+                </button>
+              )}
+              {status === "intent" && (
+                <button
+                  className="w-full flex justify-center"
+                  onClick={() =>
+                    navigate(
+                      `${appRoutes.donate}/${row.recipientId}/${donateRoutes.donations}/${row.id}`
+                    )
+                  }
+                >
+                  <Icon type="ArrowRight" className="text-2xl" />
                 </button>
               )}
             </Cells>
