@@ -40,8 +40,8 @@ export default function SubscriptionForm() {
   }
 
   return (
-    <form className="grid gap-4" onSubmit={handleSubmit(submit)}>
-      <div className="flex flex-col gap-1 w-[80vw] lg:w-full">
+    <form className="grid content-start" onSubmit={handleSubmit(submit)}>
+      <div className="grid mb-3">
         <input
           {...register("email")}
           id="email"
@@ -53,13 +53,13 @@ export default function SubscriptionForm() {
           errors={errors}
           as="p"
           name="email"
-          className="w-full text-xs text-white text-center"
+          className="w-full text-xs text-red-d2 text-left mt-0.5"
         />
         {isSuccess && !errors.email && <SuccessMessage />}
       </div>
       <button
         type="submit"
-        className="bg-blue-d1 rounded-[40px] px-7 py-[11px] text-white text-xs font-medium"
+        className="sm:justify-self-start bg-blue-d1 rounded-full px-5 py-2 text-white text-sm font-medium"
         disabled={isSubmitting}
       >
         Subscribe

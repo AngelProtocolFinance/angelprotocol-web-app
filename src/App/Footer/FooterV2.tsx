@@ -12,16 +12,16 @@ type Props = { socials: SocialMediaLink[]; classes?: string };
 function Footer({ socials, classes = "" }: Props) {
   return (
     <footer
-      className={`grid xl:grid-cols-[repeat(5,auto)] content-start ${classes} bg-gray-l4`}
+      className={`grid grid-cols-[auto_auto] xl:grid-cols-[repeat(5,auto)] content-start ${classes} border-t`}
     >
-      <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-5 padded-container py-4">
-        <div className="grid content-start col-start-1 col-span-1 max-w-96 relative bottom-7">
+      <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 padded-container p-4 md:p-10">
+        <div className="flex flex-col md:flex-row items-center xl:grid content-start col-start-1 col-span-full xl:col-span-1 xl:max-w-96 relative xl:bottom-7">
           <img
             src={log}
-            className="h-24 object-cover object-center  "
+            className="h-24 object-cover object-center relative right-4"
             alt="logo"
           />
-          <p className="text-xs text-[#3D5361] break-words">
+          <p className="text-xs text-[#3D5361]">
             Better Giving simplifies giving with a free platform that lets
             nonprofits around the world easily receive any kind of donation. Our
             Sustainability Fund ensures donations keep supporting causes,
@@ -33,44 +33,47 @@ function Footer({ socials, classes = "" }: Props) {
           </p>
         </div>
 
-        <LinkGroup
-          classes="col-start-2 col-span-1"
-          title="How we can help"
-          links={[
-            <Link to={appRoutes.home}>Non-profits</Link>,
-            "Giving Partners (CSR)",
-          ]}
-        />
+        <div className="xl:contents gap-8 row-start-2 row-span-1 col-span-2 flex flex-wrap justify-self-center my-14">
+          <LinkGroup
+            classes="col-start-2 col-span-1"
+            title="How we can help"
+            links={[
+              <Link to={appRoutes.home}>Non-profits</Link>,
+              "Giving Partners (CSR)",
+            ]}
+          />
+          <LinkGroup
+            classes="col-start-3 col-span-1"
+            title="Resources"
+            links={[
+              "About",
+              <a href="https://intercom.help/better-giving/en">FAQs</a>,
+              <Link to={appRoutes.blog}>News</Link>,
+            ]}
+          />
 
-        <LinkGroup
-          classes="col-start-3 col-span-1"
-          title="Legal"
-          links={[
-            <Link to={appRoutes.privacy_policy}>Privacy Policy</Link>,
-            <Link to={appRoutes.terms_donors}>
-              Terms of Use <br /> (Donors)
-            </Link>,
-            <Link to={appRoutes.terms_nonprofits}>
-              Terms of Use <br /> (Non-Profits)
-            </Link>,
-          ]}
-        />
-        <LinkGroup
-          classes="col-start-4 col-span-1"
-          title="Resources"
-          links={[
-            "About",
-            <a href="https://intercom.help/better-giving/en">FAQs</a>,
-            <Link to={appRoutes.blog}>News</Link>,
-          ]}
-        />
+          <LinkGroup
+            classes="col-start-4 col-span-1"
+            title="Legal"
+            links={[
+              <Link to={appRoutes.privacy_policy}>Privacy Policy</Link>,
+              <Link to={appRoutes.terms_donors}>
+                Terms of Use <br /> (Donors)
+              </Link>,
+              <Link to={appRoutes.terms_nonprofits}>
+                Terms of Use <br /> (Non-Profits)
+              </Link>,
+            ]}
+          />
+        </div>
 
-        <Newsletter classes="col-start-5 col-span-1" />
+        <Newsletter classes="row-start-3 col-span-2 xl:row-start-1 xl:col-start-5 col-span-1" />
       </div>
 
-      <div className="col-span-5 max-lg:flex-col p-3 flex items-center justify-between text-[#316B9C] font-medium bg-[#F1FAFF]">
-        <p className="">
-          {`© Copyright ${new Date().getFullYear()} ${APP_NAME}, A Registered Charitable 501(C)(3) (EIN 87-3758939)`}
+      <div className="col-span-2 xl:col-span-5 max-lg:flex-col py-2 px-4 md:px-10 md:py-4 flex gap-y-2 items-center justify-between text-[#316B9C] font-medium bg-[#F1FAFF]">
+        <p className="text-[0.93rem] text-center">
+          © Copyright {new Date().getFullYear()} {APP_NAME}, A Registered
+          Charitable 501(C)(3) (EIN 87-3758939)
         </p>
         <Socials links={socials} />
       </div>
@@ -85,11 +88,11 @@ type LinkGroupProps = {
 };
 function LinkGroup({ links, title, classes = "" }: LinkGroupProps) {
   return (
-    <div className={`grid gap-4 content-start ${classes}`}>
+    <div className={`grid gap-2 content-start ${classes}`}>
       <h6 className="font-semibold text-[#4585bb] uppercase">{title}</h6>
-      <ul className="contents text-xs text-black/90">
+      <ul className="contents text-[0.94rem] text-navy-l3">
         {links.map((link, idx) => (
-          <li className="contents" key={idx}>
+          <li className="contents hover:underline" key={idx}>
             {link}
           </li>
         ))}
