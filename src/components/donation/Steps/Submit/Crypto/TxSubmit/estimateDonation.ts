@@ -18,12 +18,12 @@ export async function estimateDonation(
   tipAmount = 0
 ): Promise<Exclude<EstimateStatus, "loading">> {
   try {
+    const grossAmount = +token.amount + tipAmount;
+
     const balance = await tokenBalance(token, chainID, sender);
-    if (balance < +token.amount) {
+    if (balance < grossAmount) {
       return { error: "Not enough balance" };
     }
-
-    const grossAmount = +token.amount + tipAmount;
 
     let toEstimate: EstimateInput;
     // ///////////// GET TX CONTENT ///////////////
