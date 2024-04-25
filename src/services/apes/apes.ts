@@ -4,6 +4,7 @@ import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import {
+  CryptoDonation,
   Donor,
   EndowmentBalances,
   FiatCurrencyData,
@@ -49,6 +50,28 @@ export const apes = createApi({
         url: `fiat-donation/paypal/orders/${params.orderId}/capture`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
+      }),
+    }),
+    createCryptoIntent: builder.query<
+      { transactionId: string },
+      CryptoDonation
+    >({
+      query: (params) => ({
+        url: `crypto-donation/v2`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+        body: JSON.stringify(params),
+      }),
+    }),
+    confirmCryptoIntent: builder.mutation<
+      { guestDonor: GuestDonor },
+      { txId: string; txHash: string }
+    >({
+      query: ({ txHash, txId }) => ({
+        url: `crypto-donation/${txId}/confirm`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+        body: JSON.stringify({ txHash }),
       }),
     }),
     fiatCurrencies: builder.query<
@@ -120,6 +143,8 @@ export const apes = createApi({
 
 export const {
   useCapturePayPalOrderMutation,
+  useCreateCryptoIntentQuery,
+  useConfirmCryptoIntentMutation,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
   usePaypalOrderMutation,

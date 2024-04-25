@@ -112,6 +112,8 @@ export type DonationState =
   | SubmitStep
   | CryptoResultStep;
 
-export type DonateArgs = { donation: CryptoSubmitStep } & TxPackage;
+export type DonateArgs = {
+  onSuccess: (txHash: string) => Promise<{ guestDonor: GuestDonor }>;
+} & TxPackage;
 
 export type DonationStep = DonationState["step"];
