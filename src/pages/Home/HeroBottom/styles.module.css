@@ -1,9 +1,9 @@
-.carousel_blemish {
+.carousel {
   position: relative;
   z-index: 1;
 }
-
-.carousel_blemish::after {
+/** backdrop */
+.carousel::after {
   content: "";
   position: absolute;
   height: 50rem;
@@ -20,10 +20,11 @@
   z-index: -1;
 }
 
-.heading_blemish {
+.heading {
   position: relative;
 }
-.heading_blemish::after {
+/** right blemish */
+.heading::after {
   content: "";
   position: absolute;
   height: 6em;
@@ -34,7 +35,9 @@
   transform: translate(50%, -50%);
   z-index: -1;
 }
-.heading_blemish::before {
+
+/** left blemish */
+.heading::before {
   content: "";
   position: absolute;
   height: 6em;
@@ -46,20 +49,21 @@
   z-index: -1;
 }
 
-/** fdefd1 */
-.corner_blemish::after {
+/** page transition blur */
+.container::after {
   content: "";
   position: absolute;
-  height: 100%;
-  width: 150%;
+  height: 100rem;
+  width: 100%;
   background: radial-gradient(ellipse at center, #fdefd1 1px, transparent 70%);
   right: 0;
-  top: 50%;
-  transform: translate(50%, -50%);
+  bottom: 0;
+  transform: translate(50%, 50%);
   z-index: -1;
 }
 
-.corner_blemish::before {
+/** side violet blemish */
+.container::before {
   content: "";
   position: absolute;
   height: 100%;
@@ -71,7 +75,7 @@
   z-index: -1;
 }
 
-.side_blemish::before {
+.carousel_overlay::before {
   content: "";
   position: absolute;
   height: 200%;
@@ -83,7 +87,7 @@
   z-index: 2;
 }
 
-.side_blemish::after {
+.carousel_overlay::after {
   content: "";
   position: absolute;
   height: 200%;

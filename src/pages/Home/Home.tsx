@@ -1,5 +1,5 @@
 import Animation from "./Animation";
-import Path from "./Benefits";
+import Benefits from "./Benefits";
 import Blogs from "./Blogs";
 import Brands from "./Brands";
 import Hero from "./Hero";
@@ -11,12 +11,12 @@ const Home = () => {
     <>
       <Hero classes="-mt-24" />
       <HeroBottom />
-      {/* <Path />
+      <Benefits />
       <Brands />
       <Animation />
       <Video />
       <Testimonials />
-      <Blogs /> */}
+      <Blogs />
     </>
   );
 };

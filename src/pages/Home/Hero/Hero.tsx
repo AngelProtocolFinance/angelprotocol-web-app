@@ -7,7 +7,7 @@ import s from "./styles.module.css";
 const Hero = ({ classes = "" }) => {
   return (
     <section
-      className={`${classes} ${s.bottom_blur} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
+      className={`${classes} ${s.container} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
       style={{ backgroundImage: `url('${headillust}')` }}
     >
       <p className="z-10 text-[13px] md:text-[18px] font-heading uppercase font-bold text-center mb-5 tracking-wider">

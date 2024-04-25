@@ -1,4 +1,5 @@
-.bottom_blur::after {
+/** transition blur */
+.container::after {
   content: "";
   position: absolute;
   left: 0;
@@ -15,7 +16,8 @@
   );
 }
 
-.bottom_blur::before {
+/** overlay */
+.container::before {
   content: "";
   position: absolute;
   inset: 0;

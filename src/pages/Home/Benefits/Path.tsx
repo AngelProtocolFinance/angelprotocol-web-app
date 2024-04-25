@@ -2,6 +2,7 @@ import { useState } from "react";
 // import Button from "../common/Button";
 import BenefitsCarousel from "./BenefitsCarousel";
 import Carousel from "./Carousel";
+import s from "./benefits.module.css";
 import icon1 from "./icons/Icon1_wb.webp";
 import icon2 from "./icons/Icon2_wb.webp";
 import icon3 from "./icons/Icon3_wb.webp";
@@ -78,7 +79,7 @@ const Path = () => {
   ];
 
   return (
-    <section className="relative grid">
+    <section className={`relative grid ${s.container} pb-20 xl:pb-32`}>
       <h3 className="text-[13px] md:text-[18px] uppercase text-blue-d1 text-center mb-4">
         Bridge to better
       </h3>

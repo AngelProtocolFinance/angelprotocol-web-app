@@ -22,20 +22,20 @@ const HeroBottom = () => {
 
   return (
     <div
-      className={`${s.corner_blemish} grid content-start relative bg-contain bg-no-repeat bg-[center_25rem] mb-4 pb-80`}
+      className={`${s.container} grid content-start relative bg-contain bg-no-repeat bg-[center_25rem] mb-4 pb-40`}
       style={{ backgroundImage: `url('${mappng}')` }}
     >
       <h3 className="z-10 uppercase text-blue-d1 text-center my-4">
         Bridge to better
       </h3>
       <h2
-        className={`${s.heading_blemish} px-6 justify-self-center z-10 mb-9 lg:mb-12 text-3xl md:text-4xl text-center text-navy-d4`}
+        className={`${s.heading} px-6 justify-self-center z-10 mb-9 lg:mb-12 text-3xl md:text-4xl text-center text-navy-d4`}
       >
         Connecting Donors to Causes That Matter
       </h2>
 
-      <div className={s.carousel_blemish}>
-        <div className={`${s.side_blemish} absolute inset-0 xl:hidden`} />
+      <div className={s.carousel}>
+        <div className={`${s.carousel_overlay} absolute inset-0 xl:hidden`} />
         <button
           type="button"
           className="cause-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
