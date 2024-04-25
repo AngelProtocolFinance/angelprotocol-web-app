@@ -37,15 +37,15 @@ const HeroBottom = () => {
       <div className={s.carousel}>
         <button
           type="button"
-          className="cause-prev p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
+          className="cause-prev p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
         >
-          <Icon type="Back" />
+          <Icon type="Back" className="text-2xl" />
         </button>
         <button
           type="button"
-          className="cause-next p-3 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-[5%] xl:right-[15%]"
+          className="cause-next p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 right-[5%] xl:right-[15%]"
         >
-          <Icon type="Next" />
+          <Icon type="Next" className="text-2xl" />
         </button>
         <Swiper
           centeredSlides

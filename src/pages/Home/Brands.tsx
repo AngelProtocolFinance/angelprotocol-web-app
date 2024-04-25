@@ -13,7 +13,7 @@ const Brands = () => {
       <h2 className="text-[32px] md:text-[42px] text-navy-d4 px-8 text-center max-w-lg mx-auto text-balance">
         Trusted by impactful nonprofits worldwide
       </h2>
-      <Marquee pauseOnHover gradient gradientColor="#fff" className="h-max">
+      <Marquee pauseOnHover className="h-max">
         {[
           brand1,
           brand2,
