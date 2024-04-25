@@ -1,5 +1,4 @@
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -153,10 +152,7 @@ const HeroBottom = () => {
 
           <div className="hidden md:block lg:hidden absolute bg-white h-full w-[40%] z-[8] blur-[100px] right-[-15%] top-[-2%]  rounded-full"></div>
         </div>
-
-        <Link to={appRoutes.marketplace} className="block -mt-30 z-40">
-          <Button text="Explore All Causes" />
-        </Link>
+        <Button href={appRoutes.marketplace} text="Explore All Causes" />
         <p className="bg-[#FFEECC] font-gochi text-2xl z-[22] px-4">
           from all around the globe
         </p>

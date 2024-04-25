@@ -1,8 +1,8 @@
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
 import headillust from "../../../assets/landing/head-illust.webp";
 import Button from "../common/Button";
 import s from "./styles.module.css";
+
 const Hero = () => {
   return (
     <section
@@ -36,9 +36,7 @@ const Hero = () => {
         </p>
 
         <div className="z-20  relative">
-          <Link to={appRoutes.register} className="block -ml-3 z-40">
-            <Button text="Join Us" />
-          </Link>
+          <Button text="Join Us" href={appRoutes.register} />
           <span className="md:flex flex-col items-center absolute top-1/2 right-[-70%] text-navy-d4 hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"

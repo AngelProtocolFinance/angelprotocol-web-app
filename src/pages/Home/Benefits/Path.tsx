@@ -1,6 +1,5 @@
 import { appRoutes } from "constants/routes";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import icon1 from "../../../assets/landing/Icon1_wb.webp";
 import icon2 from "../../../assets/landing/Icon2_wb.webp";
 import icon3 from "../../../assets/landing/Icon3_wb.webp";
@@ -110,16 +109,14 @@ const Path = () => {
       </div>
       <BenefitsCarousel slides={path === "non-profits" ? nonProfits : donors} />
       <Carousel slides={path === "non-profits" ? nonProfits : donors} />
-      <Link
-        className="block -mt-30 z-40"
-        to={
+      <Button
+        href={
           path === "non-profits"
             ? appRoutes.nonprofit_info
             : appRoutes.donor_info
         }
-      >
-        <Button text="Learn More" />
-      </Link>
+        text="Learn More"
+      />
     </section>
   );
 };

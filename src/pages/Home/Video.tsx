@@ -2,7 +2,6 @@ import { appRoutes } from "constants/routes";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
 import s from "../../assets/landing/Inifnite Half-right.png";
 import s2 from "../../assets/landing/half1.png";
 import heart from "../../assets/landing/heartOfText.png";
@@ -98,9 +97,7 @@ const Video = () => {
           ways to contribute, grow, and track your generosity, all while
           celebrating our collective impact.
         </p>
-        <Link to={appRoutes.bga} className="block -mt-30 z-40">
-          <Button text="Join the Movement" />
-        </Link>
+        <Button text="Join the Movement" href={appRoutes.bga} />
       </div>
 
       <svg
