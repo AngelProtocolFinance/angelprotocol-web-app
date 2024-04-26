@@ -5,7 +5,7 @@ import SubscriptionForm from "./SubscriptionForm";
 export default function Newsletter({ classes = "" }) {
   return (
     <div
-      className={`grid content-start px-1 ${classes} sm:max-md:grid-cols-2 xl:grid-cols-1 gap-x-8`}
+      className={`grid content-start px-1 ${classes} sm:max-md:grid-cols-2 xl:grid-cols-1 gap-x-8 xl:max-w-md`}
     >
       <div className="mb-6">
         <h6 className="text-[#4585bb] mb-3.5">Subscribe to our newsletter</h6>

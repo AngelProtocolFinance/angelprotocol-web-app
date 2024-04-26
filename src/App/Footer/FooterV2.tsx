@@ -45,7 +45,7 @@ function Footer({ socials }: Props) {
           </p>
         </div>
 
-        <div className="xl:contents gap-8 row-start-2 row-span-1 col-span-2 flex flex-wrap justify-self-center my-14">
+        <div className="xl:contents gap-4 gap-x-12 sm:gap-x-24 row-start-2 row-span-1 col-span-2 flex flex-wrap justify-self-center my-6 sm:my-14">
           <LinkGroup
             classes="col-start-2 col-span-1"
             title="How we can help"
@@ -102,7 +102,7 @@ function LinkGroup({ links, title, classes = "" }: LinkGroupProps) {
   return (
     <div className={`grid gap-2 content-start ${classes}`}>
       <h6 className="font-semibold text-[#4585bb] uppercase">{title}</h6>
-      <ul className="contents text-[0.94rem] text-navy-l3">
+      <ul className="contents text-sm text-navy-l3">
         {links.map((link, idx) => (
           <li className="contents hover:underline" key={idx}>
             {link}
