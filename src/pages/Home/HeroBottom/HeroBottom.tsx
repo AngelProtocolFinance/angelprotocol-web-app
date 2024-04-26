@@ -22,7 +22,7 @@ const HeroBottom = () => {
 
   return (
     <div
-      className={`${s.container} grid content-start relative bg-[length:300%] md:bg-[length:200%] lg:bg-contain bg-no-repeat bg-[center_100%] mb-4 pb-40 overflow-x-hidden`}
+      className={`${s.container} grid content-start relative bg-[length:300%] md:bg-[length:200%] lg:bg-contain bg-no-repeat bg-[center_100%] mb-4 pb-40 overflow-x-clip`}
       style={{ backgroundImage: `url('${mappng}')` }}
     >
       <h3 className="z-10 uppercase text-blue-d1 text-center my-4">
