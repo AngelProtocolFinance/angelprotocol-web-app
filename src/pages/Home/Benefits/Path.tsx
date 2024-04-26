@@ -79,7 +79,9 @@ const Path = () => {
   ];
 
   return (
-    <section className={`relative grid ${s.container} pb-20 xl:pb-32`}>
+    <section
+      className={`relative grid ${s.container} pb-20 xl:pb-32 overflow-x-hidden`}
+    >
       <h3 className="text-[13px] md:text-[18px] uppercase text-blue-d1 text-center mb-4">
         Bridge to better
       </h3>
