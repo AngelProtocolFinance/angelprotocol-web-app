@@ -4,9 +4,7 @@ export default function TermsNonprofits() {
       <h1 className="font-bold uppercase col-span-full text-2xl lg:text-3xl break-words mt-6">
         Terms of Use: Nonprofit Organizations
       </h1>
-      <span className="text-gray text-sm">
-        Last modified: September 8, 2023
-      </span>
+      <span className="text-gray text-sm">Last modified: April 1, 2024</span>
       <section className="pt-8">
         <h2 className="text-2xl">Introduction</h2>
         <p className="pt-5">
@@ -24,16 +22,16 @@ export default function TermsNonprofits() {
           and securities, and make grant recommendations to NPOs.
         </p>
         <p className="pt-5">
-          In furtherance of its charitable mission, Better Giving (1) maintains
-          a donor-advised fund (the "Fund") enabling Donors to donate assets to
-          Better Giving and make grant recommendations to NPOs; (2) provides
-          fiscal sponsorship services to qualifying NPOs, and accepting
-          donations and grants on their behalf; and (3) maintains and manages a
-          board designated endowment (or quasi-endowment) (hereinafter the
-          "Endowment") to accept unrestricted donations from Donors, to support
-          NPOs with sustainable grant funding, at Better Giving’s sole
-          discretion. Please read this Agreement carefully as these Terms
-          explain our commitments to you and our requirements of you as a NPO.
+          In furtherance of its charitable mission, Better Giving (1) receives
+          donations from Donors and makes follow-on grants to NPO’s based upon
+          Donor recommendations; (2) provides fiscal sponsorship services to
+          qualifying NPOs, and accepts donations and grants on their behalf; and
+          (3) maintains and manages a board designated endowment fund (or
+          quasi-endowment) (hereinafter the “Fund”) to accept unrestricted
+          donations from Donors, to support NPOs with sustainable grant funding,
+          at Better Giving’s sole discretion. Please read this Agreement
+          carefully as these Terms explain our commitments to you and our
+          requirements of you as a NPO.
         </p>
         <p className="pt-5">
           By using the Platform and/or registering your account, you acknowledge
@@ -42,7 +40,7 @@ export default function TermsNonprofits() {
           agreeing to these Terms on behalf of an organization or legal entity,
           you represent and warrant that you are authorized to agree to these
           Terms on that organization’s or entity’s behalf and bind them to these
-          Terms (in which case, the references to "you" and "your" in these
+          Terms (in which case, the references to “you” and “your'' in these
           Terms, except for in this sentence, refer to that organization or
           entity). You further represent that you have the full authority to
           enter into and comply with the Terms of this Agreement and have
@@ -91,25 +89,31 @@ export default function TermsNonprofits() {
           Agreement and any applicable laws and regulations.
         </p>
         <p className="pt-5">
-          Donation for Immediate Grant. Donors may make a one-time donation to
-          the Better Giving Fund and recommend an NPO to receive a grant from
-          Better Giving, which will be disbursed to the NPO on a rolling basis.
-        </p>
-        <p className="pt-5">
-          Donation to Board Designated (or Quasi) Endowment. Donors may direct
-          their charitable contribution to the Better Giving Endowment, which is
-          a board designated endowment created and maintained by Better Giving
-          to support NPOs in perpetuity. When making contributions to the
-          Endowment, Donors may recommend NPOs to be supported by income
-          generated from the principal of their contribution(s) in perpetuity,
-          with grant disbursements issued to NPOs on a quarterly basis. All
-          contributions made by Donors to the Endowment are unrestricted
-          contributions and Donors understand that both principal and income are
-          available for expenditure by Better Giving at the discretion of its
-          board of directors. Although the Endowment allows for the withdrawal
-          of principal, the Better Giving board of directors views contributions
-          to the Endowment as long term investments with principal remaining
-          intact to support NPOs, as part of Better Giving’s charitable mission.
+          <ul className="pl-8 list-decimal list-outside">
+            <li className="pt-2">
+              <strong>Donation for Immediate Grant.</strong> Donors may make a
+              one-time donation to the Better Giving Fund and recommend an NPO
+              to receive a grant from Better Giving, which will be disbursed to
+              the NPO on a rolling basis.
+            </li>
+            <li className="pt-2">
+              <strong>Donation to the Fund.</strong> Donors may direct their
+              charitable contribution to the Fund, which is a board designated
+              endowment created and maintained by Better Giving to support NPOs
+              in perpetuity. When making contributions to the Fund, Donors may
+              recommend NPOs to be supported by income generated from the
+              principal of their contribution(s) in perpetuity, with grant
+              disbursements issued to NPOs on a quarterly basis. All
+              contributions made by Donors to the Fund are unrestricted
+              contributions and Donors understand that both principal and income
+              are available for expenditure by Better Giving at the discretion
+              of its board of directors. Although the Fund allows for the
+              withdrawal of principal, the Better Giving board of directors
+              views contributions to the Fund as long term investments with
+              principal remaining intact to support NPOs, as part of Better
+              Giving’s charitable mission.
+            </li>
+          </ul>
         </p>
         <p className="pt-5">
           <strong>c.</strong> We facilitate the issuance of tax receipts showing
@@ -244,7 +248,7 @@ export default function TermsNonprofits() {
         </p>
       </section>
       <section className="pt-8">
-        <h2 className="text-2xl">4. Receiving Donations</h2>
+        <h2 className="text-2xl">4. Receiving Grants from Better Giving</h2>
         <p className="pt-5">
           <strong>a.</strong> You acknowledge that we make no promise that you
           will receive any grants from us as a result of your status as a NPO.
@@ -256,20 +260,27 @@ export default function TermsNonprofits() {
           discretion in making any and all grants to NPOs. We make grant
           distributions to qualified NPOs based upon recommendations made by
           Donors, and consequently any grants received in accordance with this
-          Agreement will be received by you from Angel Giving.
+          Agreement will be received by you from Better Giving.
         </p>
         <p className="pt-5">
-          c. Pursuant to our Privacy Policy, we may disclose to you information
-          about Donors, including name and contact information. You agree that
-          we disclose this information to you only for the purpose of enabling
-          you to acknowledge donations and to provide a reasonable amount of
-          information about your charitable work. You become the data controller
-          of the Donor’s personal information that we provide to you for this
-          limited purpose. You must not use the Donor’s personal information for
-          any other purpose without the Donor’s further consent, including but
-          not limited to for marketing purposes. You agree that you will obtain
-          consent from Donors to use the information we provide to you for any
-          purpose beyond what is contained in this clause.
+          c. Pursuant to our{" "}
+          <Link
+            to={appRoutes.privacy_policy}
+            className="hover:text-blue-d1 text-blue"
+          >
+            Privacy Policy
+          </Link>
+          , we may disclose to you information about Donors, including name and
+          contact information. You agree that we disclose this information to
+          you only for the purpose of enabling you to acknowledge donations and
+          to provide a reasonable amount of information about your charitable
+          work. You become the data controller of the Donor’s personal
+          information that we provide to you for this limited purpose. You must
+          not use the Donor’s personal information for any other purpose without
+          the Donor’s further consent, including but not limited to for
+          marketing purposes. You agree that you will obtain consent from Donors
+          to use the information we provide to you for any purpose beyond what
+          is contained in this clause.
         </p>
         <p className="pt-5">
           <strong>d.</strong> On an ongoing basis, all grant recommendations
@@ -304,6 +315,20 @@ export default function TermsNonprofits() {
           Giving’s services are free for NPOs. We do not charge you a fee for
           registering on the Platform nor for receiving grants from Better
           Giving. There are no hidden fees or recurring charges.
+          <ol className="pl-8 list-decimal list-outside">
+            <li className="pt-2">
+              Fund Management Fees. Better Giving maintains a fee structure for
+              the operation and maintenance of the Fund, as follows: (1) Assets
+              Under Management Fee assessed quarterly equal to .2125% of the
+              Fund balance; and (2) Annual Performance Fee equal to 12.5% over a
+              5% hurdle rate.
+            </li>
+            <li className="pt-2">
+              Donor Fees. NPOs may elect to have Donor Fees set as either (1) an
+              optional donation to Better Giving at the Donor’s sole discretion;
+              or (2) a flat 2.9% fee on all donations made.
+            </li>
+          </ol>
         </p>
       </section>
       <section className="pt-8">
@@ -455,29 +480,47 @@ export default function TermsNonprofits() {
       </section>
       <section className="pt-8">
         <h2 className="text-2xl">8. Term and Termination</h2>
-        <ol className="pl-5 list-decimal list-outside">
+        <ol className="pl-5 list-outside">
           <li className="pt-2">
-            This Agreement becomes effective when you have accepted it by
-            following the instructions to register as a NPO on the Platform.
-            Once in effect, this Agreement will continue until terminated by
-            either you or us.
+            <strong>a.</strong> This Agreement becomes effective when you have
+            accepted it by following the instructions to register as a NPO on
+            the Platform. Once in effect, this Agreement will continue until
+            terminated by either you or us.
           </li>
           <li className="pt-2">
-            If you breach this Agreement at any time, you will not be considered
-            to be in good standing and we may suspend and/or withhold any grants
-            in our sole discretion. We may terminate this Agreement at any time
-            and for any reason by providing notice to you in accordance with
-            this Agreement.
+            <strong>b.</strong> This Agreement may be terminated at any time by
+            either you or Better Giving, with or without cause, with notice
+            provided by one party to the other.
           </li>
           <li className="pt-2">
-            Neither you nor Better Giving shall have any obligation to each
-            other following the termination of this Agreement, except those
-            obligations that survive this Agreement, as set forth in Section
-            9(e).
+            <strong>c.</strong> If you breach this Agreement at any time, you
+            will not be considered to be in good standing and we may suspend
+            and/or withhold any grants in our sole discretion. We may terminate
+            this Agreement at any time and for any reason by providing notice to
+            you in accordance with this Agreement.
           </li>
           <li className="pt-2">
-            The obligations of Sections 3(b), 5, 7, 8, 9, and 10 will survive
-            the termination of this Agreement.
+            <strong>d.</strong> Upon termination, we will deactivate the
+            donation function to your NPO on the Platform, as well as on any
+            donation widgets and Donors will no longer be able to donate to you.
+            Better Giving will, subject to the terms and conditions of this
+            Agreement, grant any donations made to you up until the date of
+            termination.
+          </li>
+          <li className="pt-2">
+            <strong>e.</strong> Once this Agreement is terminated, Better Giving
+            will no longer disburse any grants to you from the Fund, as of the
+            date of termination.
+          </li>
+          <li className="pt-2">
+            <strong>f.</strong> Neither you nor Better Giving shall have any
+            obligation to each other following the termination of this
+            Agreement, except those obligations that survive this Agreement, as
+            set forth in Section 9(e).
+          </li>
+          <li className="pt-2">
+            <strong>g.</strong> The obligations of Sections 3(b), 5, 7, 8, 9,
+            and 10 will survive the termination of this Agreement.
           </li>
         </ol>
       </section>
@@ -547,7 +590,7 @@ export default function TermsNonprofits() {
           available to us in law or equity.
         </p>
         <p className="pt-5">
-          <strong>h.</strong> Dispute Resolution. Any dispute between you and
+          <strong>h. Dispute Resolution.</strong> Any dispute between you and
           Better Giving which cannot be resolved by negotiation shall be
           submitted to mediation, and if mediation fails, arbitration, under the
           rules of any entity that you and we may subsequently agree upon in
@@ -556,7 +599,7 @@ export default function TermsNonprofits() {
           jurisdiction.
         </p>
         <p className="pt-5">
-          <strong>i.</strong> Governing Law. This Agreement will be governed by
+          <strong>i. Governing Law.</strong> This Agreement will be governed by
           and construed in accordance with the substantive laws of the State of
           Delaware without regard to conflicts of laws and all disputes arising
           under and relating to this Agreement shall be brought and resolved

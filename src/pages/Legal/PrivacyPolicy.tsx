@@ -8,9 +8,7 @@ export default function PrivacyPolicy() {
       <h1 className="font-bold uppercase col-span-full text-2xl lg:text-3xl break-words mt-6">
         Privacy Policy
       </h1>
-      <span className="text-gray text-sm">
-        Last modified: September 8, 2023
-      </span>
+      <span className="text-gray text-sm">Last modified: April 19, 2024</span>
       <section className="pt-8">
         <h2 className="text-2xl">Introduction</h2>
         <p className="pt-5">
@@ -80,7 +78,7 @@ export default function PrivacyPolicy() {
           received personal information from a child under 13 without
           verification of parental consent, we will delete that information. If
           you believe we might have any information from or about a child under
-          13, please contact us at: hi@better.giving.
+          13, please contact us at: support@better.giving.
         </p>
       </section>
       <section className="pt-8">
@@ -218,12 +216,9 @@ export default function PrivacyPolicy() {
             our Site. Flash cookies are not managed by the same browser settings
             as are used for browser cookies. For information about managing your
             privacy and security settings for Flash cookies, see{" "}
-            <ExtLink
-              className="hover:text-blue-d1 text-blue"
-              href="https://docs.google.com/document/d/1OMF45tdJW_IdiNxjL2juHwPhtUWbCtzE/edit#bookmark=id.1ksv4uv"
-            >
+            <Link className="hover:text-blue-d1 text-blue" href="#choices">
               Choices About How We Use and Disclose Your Information
-            </ExtLink>
+            </Link>
             .
           </li>
           <li className="pt-2">
@@ -274,22 +269,8 @@ export default function PrivacyPolicy() {
           <li className="pt-2">For any other purpose with your consent.</li>
         </ul>
         <p className="pt-5">
-          We may also use your information to contact you about our own and
-          third-parties’ goods and services that may be of interest to you. If
-          you do not want us to use your information in this way, please check
-          the relevant box located on the form on which we collect your data
-          (the registration form). For more information, see{" "}
-          <ExtLink
-            className="hover:text-blue-d1 text-blue"
-            href="https://docs.google.com/document/d/1OMF45tdJW_IdiNxjL2juHwPhtUWbCtzE/edit#bookmark=id.1ksv4uv"
-          >
-            Choices About How We Use and Disclose Your Information
-          </ExtLink>
-          .
-        </p>
-        <p className="pt-5">
           We may use the information we have collected from you to enable us to
-          display advertisements to our advertisers’ target audiences. Even
+          display advertisements to our advertisers' target audiences. Even
           though we do not disclose your personal information for these purposes
           without your consent, if you click on or otherwise interact with an
           advertisement, the advertiser may assume that you meet its target
@@ -322,20 +303,6 @@ export default function PrivacyPolicy() {
             our Site users is among the assets transferred.
           </li>
           <li className="pt-2">
-            To third parties to market their products or services to you if you
-            have consented to these disclosures. We contractually require these
-            third parties to keep personal information confidential and use it
-            only for the purposes for which we disclose it to them. For more
-            information, see{" "}
-            <ExtLink
-              className="hover:text-blue-d1 text-blue"
-              href="https://docs.google.com/document/d/1OMF45tdJW_IdiNxjL2juHwPhtUWbCtzE/edit#bookmark=id.1ksv4uv"
-            >
-              Choices About How We Use and Disclose Your Information
-            </ExtLink>
-            .
-          </li>
-          <li className="pt-2">
             To fulfill the purpose for which you provide it.
           </li>
           <li className="pt-2">
@@ -360,7 +327,7 @@ export default function PrivacyPolicy() {
           </li>
         </ul>
       </section>
-      <section className="pt-8">
+      <section className="pt-8" id="choices">
         <h2 className="text-2xl">
           Choices About How We Use and Disclose Your Information
         </h2>
@@ -376,27 +343,6 @@ export default function PrivacyPolicy() {
             when cookies are being sent. If you disable or refuse cookies,
             please note that some parts of this site may then be inaccessible or
             not function properly.
-          </li>
-          <li className="pt-2">
-            <strong>
-              Disclosure of Your Information for Third-Party Advertising.
-            </strong>{" "}
-            If you do not want us to share your personal information with
-            unaffiliated or non-agent third parties for promotional purposes,
-            you can opt out by checking the relevant box located on the form on
-            which we collect your data (the registration form). You can also
-            always opt out by checking or unchecking the relevant boxes or by
-            sending us an email stating your request to hi@better.giving.
-          </li>
-          <li className="pt-2">
-            <strong>Promotional Offers from the Company.</strong> If you do not
-            wish to have your contact information used by the Company to promote
-            our own or third parties’ products or services, you can opt out by
-            checking the relevant box located on the form on which we collect
-            your data (the registration form) or at any other time by sending us
-            an email stating your request to hi@better.giving. If we have sent
-            you a promotional email, you may send us a return email asking to be
-            omitted from future email distributions.
           </li>
         </ul>
         <p className="pt-5">
@@ -421,8 +367,8 @@ export default function PrivacyPolicy() {
           required to inform you of the lawful bases of our processing of your
           personal information, which are described below. If you have questions
           about the legal bases under which we are processing your information,
-          please contact us at hi@better.giving. The legal bases under which We
-          may process your personal information include:
+          please contact us at support@better.giving. The legal bases under
+          which We may process your personal information include:
         </p>
         <ul className="pl-8 list-disc list-outside">
           <li className="pt-2">To provide our services to you.</li>
@@ -455,8 +401,8 @@ export default function PrivacyPolicy() {
         </h2>
         <p className="pt-5">
           Under the GDPR you have certain rights regarding your personal
-          information. You may email hi@better.giving to request the following
-          actions:
+          information. You may email support@better.giving to request the
+          following actions:
         </p>
         <ul className="pl-8 list-disc list-outside">
           <li className="pt-2">
@@ -542,7 +488,7 @@ export default function PrivacyPolicy() {
         </p>
         <p className="pt-5">
           California consumers may make a request pursuant to their rights under
-          the CCPA by contacting us at hi@better.giving.
+          the CCPA by contacting us at support@better.giving.
         </p>
       </section>
       <section className="pt-8">
@@ -587,7 +533,7 @@ export default function PrivacyPolicy() {
         <h2 className="text-2xl">Contact Information</h2>
         <p className="pt-5 pb-10">
           To ask questions or comment about this privacy policy and our privacy
-          practices, contact us at hi@better.giving.
+          practices, contact us at support@better.giving.
         </p>
       </section>
     </div>

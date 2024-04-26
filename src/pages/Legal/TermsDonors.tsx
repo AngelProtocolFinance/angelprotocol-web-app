@@ -7,15 +7,9 @@ export default function TermsDonors() {
       <h1 className="font-bold uppercase col-span-full text-2xl lg:text-3xl break-words mt-6">
         Terms and Conditions: Donors
       </h1>
-      <span className="text-gray text-sm">
-        Last modified: September 8, 2023
-      </span>
+      <span className="text-gray text-sm">Last modified: April 1, 2024</span>
       <section className="pt-8">
         <h2 className="text-2xl">Introduction</h2>
-        <p className="pt-5">
-          Welcome to Better Giving! Thank you for your support of impactful
-          nonprofits, we’re grateful you’re here.
-        </p>
         <p className="pt-5">
           These Terms of Use (the "Terms") are a binding contract ("Agreement")
           by and between you ("you." "your," or "Donors") and Altruistic
@@ -64,7 +58,7 @@ export default function TermsDonors() {
       <section className="pt-8">
         <h2 className="text-2xl">1. Terms and Conditions for Donations</h2>
         <p className="pt-5">
-          <strong>a.</strong> Control of Funds. By making a donation, you
+          <strong>a. Control of Funds.</strong> By making a donation, you
           understand, acknowledge and agree that you are making a charitable
           donation to Better Giving, a public charity recognized by the Internal
           Revenue Service as a tax-exempt organization under Internal Revenue
@@ -75,7 +69,7 @@ export default function TermsDonors() {
           assets.
         </p>
         <p className="pt-5">
-          <strong>b.</strong> Authority. By making a donation to Better Giving,
+          <strong>b. Authority.</strong> By making a donation to Better Giving,
           you hereby represent and warrant that you have the legal authority to
           make a donation and that any and all funds or assets donated to Better
           Giving belong to you and are free and clear of any and all
@@ -83,38 +77,44 @@ export default function TermsDonors() {
           donation in accordance with applicable tax laws.
         </p>
         <p className="pt-5">
-          <strong>c.</strong> Donation Options: When you make a donation to
+          <strong>c. Donation Options:</strong> When you make a donation to
           Better Giving, you may either (i) recommend a specific qualified NPO
           to receive a one-time grant from Better Giving, or (ii) may direct
-          your contribution to the Better Giving Endowment and recommend an NPO
-          to be supported by the principal of your contribution in perpetuity.
-          Better Giving retains the ultimate authority and discretion to approve
-          and disburse any grants in accordance with this Agreement and any
-          applicable laws and regulations.
+          your contribution to the Fundt and recommend an NPO to be supported by
+          the principal of your contribution in perpetuity.{" "}
+          <strong>
+            Better Giving retains the ultimate authority and discretion to
+            approve and disburse any grants in accordance with this Agreement
+            and any applicable laws and regulations.
+          </strong>
+          <ul className="pl-8">
+            <li className="pt-2">
+              i. Donation for Immediate Grant. You may make a one-time donation
+              to Better Giving and recommend an NPO to receive a grant from
+              Better Giving, which will be disbursed to the NPO on a rolling
+              basis.
+            </li>
+            <li className="pt-2">
+              ii. Donation to the Fund. You may direct your charitable
+              contribution to the Fund, which is a board designated endowment
+              created and maintained by Better Giving to support NPOs in
+              perpetuity. When making contributions to the Fund, Donors may
+              recommend NPOs to be supported by income generated from the
+              principal of their contribution(s) in perpetuity, with grant
+              disbursements issued to NPOs on a quarterly basis. All
+              contributions made by Donors to the Fund are unrestricted
+              contributions and Donors understand that both principal and income
+              are available for expenditure by Better Giving at the discretion
+              of its board of directors. Although the Fund allows for the
+              withdrawal of principal, the Better Giving board of directors
+              views contributions to the Fund as long term investments with
+              principal remaining intact to support NPOs, as part of Better
+              Giving’s charitable mission.
+            </li>
+          </ul>
         </p>
         <p className="pt-5">
-          Donation for Immediate Grant. You may make a one-time donation to
-          Better Giving and recommend an NPO to receive a grant from Better
-          Giving, which will be disbursed to the NPO on a rolling basis.
-        </p>
-        <p className="pt-5">
-          Donation to Board Designated (or Quasi) Endowment. You may direct your
-          charitable contribution to the Better Giving Endowment, which is a
-          board designated endowment created and maintained by Better Giving to
-          support NPOs in perpetuity. When making contributions to the
-          Endowment, Donors may recommend NPOs to be supported by income
-          generated from the principal of their contribution(s) in perpetuity,
-          with grant disbursements issued to NPOs on a quarterly basis. All
-          contributions made by Donors to the Endowment are unrestricted
-          contributions and Donors understand that both principal and income are
-          available for expenditure by Better Giving at the discretion of its
-          board of directors. Although the Endowment allows for the withdrawal
-          of principal, the Better Giving board of directors views contributions
-          to the Endowment as long term investments with principal remaining
-          intact to support NPOs, as part of Better Giving’s charitable mission.
-        </p>
-        <p className="pt-5">
-          <strong>d.</strong> NPO Eligibility. On an ongoing basis, we will take
+          <strong>d. NPO Eligibility.</strong> On an ongoing basis, we will take
           steps to confirm that each NPO you make grant recommendations to, is
           registered as a public charity in good standing under Section
           501(c)(3) of the Internal Revenue Code or in the case of non-US
@@ -128,19 +128,34 @@ export default function TermsDonors() {
           recommendation rests with Better Giving.
         </p>
         <p className="pt-5">
-          <strong>e.</strong> Donor Fees:
+          <strong>e. Donor Fees:</strong>
         </p>
         <p className="pt-5">
-          Donors are charged a base fee of 1.5% for all donations made on the
-          Platform, in addition to a 1.4% processing fee for non-fiat donations
-          (cryptocurrency, publicly traded securities, and Fund contributions).
-          Better Giving provides fiscal sponsorship services to certain
-          qualified NPOs and charitable projects. Donors making contributions to
-          Better Giving to support fiscally sponsored NPO’s are charged a 2.9%
-          fee.
+          <ul className="pl-8">
+            <li className="pt-2">
+              i. NPOs may elect to have Donor Fees set as either (1) an optional
+              donation to Better Giving at the Donor’s sole discretion; or (2) a
+              flat 2.9% fee on all donations made. There may be additional
+              transaction fees for donations of cryptocurrency, over which
+              Better Giving has no control.
+            </li>
+            <li className="pt-2">
+              ii. Better Giving provides fiscal sponsorship services to certain
+              qualified NPOs and charitable projects. Donors making
+              contributions to Better Giving to support fiscally sponsored NPO’s
+              are charged a 2.9% fee.
+            </li>
+          </ul>
         </p>
         <p className="pt-5">
-          <strong>f.</strong> Charitable Use. Donations made to Better Giving
+          <strong>f. Fund Management Fees.</strong> Better Giving maintains a
+          fee structure for the operation and maintenance of the Fund, as
+          follows: (1) Assets Under Management Fee assessed quarterly equal to
+          .2125% of the Fund balance; and (2) Annual Performance Fee equal to
+          12.5% over a 5% hurdle rate.
+        </p>
+        <p className="pt-5">
+          <strong>g. Charitable Use.</strong> Donations made to Better Giving
           may only be used for charitable purposes in accordance with any and
           all applicable local, state, federal or national laws. Any grant
           recommendations may not confer an impermissible private benefit.
