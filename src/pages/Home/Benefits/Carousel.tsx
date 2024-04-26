@@ -1,21 +1,17 @@
-type Props = { slides: any[] };
-const Carousel = ({ slides }: Props) => {
+import { Slide } from "./types";
+
+type Props = { slides: Slide[]; classes?: string };
+const Carousel = ({ slides, classes = "" }: Props) => {
   return (
-    <div className="flex flex-col gap-5 font-body lg:hidden">
+    <div className={`grid gap-5 font-body ${classes} px-8`}>
       {slides.map((slide, index) => {
         return (
           <div
-            className={`flex flex-col items-center gap-5 pt-5 px-[15px] md:px-[85px] w-full h-[480px] rounded-[56px] blur-[0px] shadow-black/5 ${
-              index === 0
-                ? "bg-[#EDFCE2]"
-                : index === 1
-                  ? "bg-[#EAE2FC]"
-                  : "bg-[#FCF6E2]"
-            }`}
+            className={`${slide.bgColorClass} grid justify-items-center p-8 rounded-4xl md:rounded-5xl shadow-black/5 `}
             key={index}
           >
-            <img src={slide.img_src} alt="logo" className="w-56 h-56" />
-            <p className="text-[20px] text-center md:text-[28px] font-body text-black font-bold">
+            <img src={slide.img_src} alt="logo" className="size-56 mb-8" />
+            <p className="text-[20px] text-center md:text-[28px] text-black font-bold mb-3">
               {slide.title}
             </p>
             <p className="md:text-xl text-center">{slide.description}</p>

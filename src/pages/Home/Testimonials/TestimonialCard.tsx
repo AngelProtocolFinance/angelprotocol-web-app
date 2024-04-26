@@ -1,25 +1,20 @@
-const TestimonialCard = (props: any) => {
+import { Testimonial } from "./types";
+
+const TestimonialCard = (props: Testimonial) => {
   return (
-    <div
-      className={`relative md:w-full md:min-h-[450px] lg:w-full lg:min-h-[450px] w-full min-h-[430px] p-3 pt-16 border border-[#dbdada] rounded-3xl flex flex-col justify-between bg-white font-body overflow ${props.className}`}
-    >
-      <div className=" w-32 h-32 absolute top-[-10%] left-5">
-        <img
-          src={props.reviewer_logo}
-          alt="logo"
-          className="size-full object-contain"
-        />
-      </div>
-      <p className="md:text-lg text-[17px] h-[270px] mt-8 text-ellipsis overflow-x-hidden font-normal w-full break-words opacity-[.8]">
-        {props.review ||
-          "We are in love with the easy process Better Giving has created to start an endowment. We always focused on recurring giving with donors. This takes it to the next level."}
-      </p>
-      <span className="h-[84px]">
-        <p className="text-lg opacity-90 font-bold">{props.reviewer}</p>
-        <p className="md:text-lg font-medium opacity-75">
-          {props.reviewer_profession}
+    <div className="@container">
+      <img
+        src={props.reviewer_logo}
+        alt="logo"
+        className="object-contain size-28 rounded-lg ml-8 bg-white shadow-xl"
+      />
+      <div className="relative -mt-14 pt-24 px-8 pb-8 rounded-3xl bg-white -z-10">
+        <p className="text-lg @md:h-64 mt-8">{props.review}</p>
+        <p className="mt-4 @md:mt-0 text-lg opacity-90 font-bold">
+          {props.reviewer}
         </p>
-      </span>
+        <p className="md:text-lg font-medium">{props.reviewer_profession}</p>
+      </div>
     </div>
   );
 };

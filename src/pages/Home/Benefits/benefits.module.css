@@ -1,13 +1,15 @@
-.slide {
-  text-align: center;
-  padding: 20px 50px;
-  width: 650px;
-  height: 450px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  border-radius: 56px;
-  overflow: hidden;
-  background-color: burlywood;
+.container {
+  z-index: 1;
+}
+
+.container::after {
+  content: "";
+  position: absolute;
+  height: 300%;
+  width: 300%;
+  background: radial-gradient(ellipse at center, #eae2fc70 1%, transparent 40%);
+  left: 0%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
 }

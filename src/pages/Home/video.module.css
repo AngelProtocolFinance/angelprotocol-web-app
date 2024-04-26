@@ -1,0 +1,16 @@
+.heading {
+  z-index: 1;
+  position: relative;
+}
+/** backdrop */
+.heading::after {
+  content: "";
+  position: absolute;
+  height: 10em;
+  width: 250%;
+  background: radial-gradient(ellipse at center, white 15%, transparent 70%);
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}

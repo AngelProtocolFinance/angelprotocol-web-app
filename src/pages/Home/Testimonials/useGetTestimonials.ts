@@ -1,11 +1,12 @@
-import casd from "assets/landing/CASD-SL.webp";
-import ph from "assets/landing/PH8_Logo.jpeg";
-import ace from "assets/landing/ace_of_hearts.webp";
-import buck from "assets/landing/buck.webp";
-import fora from "assets/landing/foraday.png";
-import shoe from "assets/landing/shoes_that_speak.webp";
-import test from "assets/landing/testi3Img.png";
-export default function useGetTestimonials() {
+import casd from "./orgs/CASD-SL.webp";
+import ph from "./orgs/PH8_Logo.jpeg";
+import ace from "./orgs/ace_of_hearts.webp";
+import buck from "./orgs/buck.webp";
+import fora from "./orgs/foraday.png";
+import shoe from "./orgs/shoes_that_speak.webp";
+import test from "./orgs/testi3Img.png";
+import { Testimonial } from "./types";
+export default function useGetTestimonials(): Testimonial[] {
   return [
     {
       review:

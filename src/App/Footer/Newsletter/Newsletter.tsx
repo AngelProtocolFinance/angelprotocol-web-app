@@ -2,22 +2,26 @@ import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import SubscriptionForm from "./SubscriptionForm";
 
-export default function Newsletter() {
+export default function Newsletter({ classes = "" }) {
   return (
-    <div className="flex flex-col items-center gap-6 w-full px-1 lg:w-full lg:max-w-xs xl:max-w-md">
-      <h6 className="text-base font-bold  text-[#4585bb] mb-1">
-        Subscribe to our newsletter
-      </h6>
-      <p className="text-[12px] text[#647581] text-justify font-normal opacity-90 md:w-full lg:w-full w-[90%]">
-        By subscribing to this newsletter you confirm that you <br /> have read
-        and agree with our{" "}
-        <span className="underline font-medium text-[#000] opacity-[1]">
-          <Link to={appRoutes.privacy_policy}>Privacy Policy</Link>.
-        </span>
-      </p>
-      <span className="flex flex-col md:items-start gap-3 w-full  lg:w-full md:w-[45%]">
-        <SubscriptionForm />
-      </span>
+    <div
+      className={`grid content-start px-1 ${classes} sm:max-md:grid-cols-2 xl:grid-cols-1 gap-x-8 xl:max-w-md`}
+    >
+      <div className="mb-6">
+        <h6 className="text-[#4585bb] mb-3.5">Subscribe to our newsletter</h6>
+        <p className="text-[12px] text[#647581] text-justify text-pretty">
+          By subscribing to this newsletter you confirm that you have read and
+          agree with our{" "}
+          <Link
+            to={appRoutes.privacy_policy}
+            className="font-medium underline text-black"
+          >
+            Privacy Policy
+          </Link>
+        </p>
+      </div>
+
+      <SubscriptionForm />
     </div>
   );
 }

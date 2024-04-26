@@ -1,5 +1,5 @@
 import Animation from "./Animation";
-import Path from "./Benefits";
+import Benefits from "./Benefits";
 import Blogs from "./Blogs";
 import Brands from "./Brands";
 import Hero from "./Hero";
@@ -8,18 +8,16 @@ import Testimonials from "./Testimonials";
 import Video from "./Video";
 const Home = () => {
   return (
-    <div>
-      <div>
-        <Hero />
-        <HeroBottom />
-        <Path />
-        <Brands />
-        <Animation />
-        <Video />
-        <Testimonials />
-        <Blogs />
-      </div>
-    </div>
+    <>
+      <Hero classes="-mt-24" />
+      <HeroBottom />
+      <Benefits />
+      <Brands />
+      <Animation />
+      <Video />
+      <Testimonials />
+      <Blogs />
+    </>
   );
 };
 

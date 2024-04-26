@@ -20,6 +20,7 @@ export default function Header({ links, classes }: Props) {
             const isIntersecting = e.intersectionRatio < 1;
             e.target.classList.toggle("bg-white", isIntersecting);
             e.target.classList.toggle("shadow-lg", isIntersecting);
+            e.target.classList.toggle("px-4", !isIntersecting);
           },
           { threshold: [1] }
         );

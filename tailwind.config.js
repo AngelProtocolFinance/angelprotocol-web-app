@@ -97,6 +97,9 @@ module.exports = {
       sdg15: "#59ba48",
       sdg16: "#126a9f",
       sdg17: "#13496b",
+
+      peach: "#fdE3d8",
+      lilac: "#eae2fc",
     },
 
     extend: {
@@ -118,6 +121,12 @@ module.exports = {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-100%)" },
         },
+      },
+      borderRadius: {
+        /** 32px */
+        "4xl": "2rem",
+        /** 56px */
+        "5xl": "3.5rem",
       },
     },
   },

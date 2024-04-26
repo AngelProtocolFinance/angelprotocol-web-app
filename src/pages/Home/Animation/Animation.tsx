@@ -4,11 +4,11 @@ import TabletAnimation from "./TabletAnimation";
 
 const Animation = () => {
   return (
-    <div className=" relative flex flex-col ">
-      <AnimatedSVG />
-      <MobileAnimation />
-      <TabletAnimation />
-    </div>
+    <>
+      <AnimatedSVG classes="max-lg:hidden 2xl:pt-24" />
+      <MobileAnimation classes="sm:hidden" />
+      <TabletAnimation classes="hidden sm:max-lg:block" />
+    </>
   );
 };
 

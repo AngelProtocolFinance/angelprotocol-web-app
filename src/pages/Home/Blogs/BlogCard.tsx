@@ -1,21 +1,18 @@
+import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { Wordpress } from "types/wordpress";
-import s from "./styles.module.css";
 
 const BlogCard = (props: Wordpress.Post) => {
   return (
-    <div
-      className={`w-full md:w-full h-[460px] border border-[#dbdada] flex flex-col gap-3 pb-5 rounded-[18px] relative ${s.blog_card} overflow-hidden bg-white font-body`}
-    >
+    <div className="h-[27rem] grid gap-3 pb-5 rounded-3xl bg-white">
       <Media
-        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+        sizes="(max-width: 640px) 100vw, 33vw"
         id={props.featured_media}
-        classes="rounded-t-[18px] object-fill object-center h-[179px]"
+        classes="rounded-t-[18px] object-fill object-center h-44"
       />
 
-      <div className="flex gap-2 px-6" />
       <h4
         className="text-[#0D283A] font-semibold w-full text-xl line-clamp-2 px-6"
         //biome-ignore lint: trusted html
@@ -36,5 +33,9 @@ const BlogCard = (props: Wordpress.Post) => {
     </div>
   );
 };
+
+export const Skeleton = () => (
+  <ContentLoader className="h-[27rem] rounded-3xl" />
+);
 
 export default BlogCard;
