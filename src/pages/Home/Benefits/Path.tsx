@@ -83,7 +83,7 @@ const Path = () => {
       <h3 className="text-[13px] md:text-[18px] uppercase text-blue-d1 text-center mb-4">
         Bridge to better
       </h3>
-      <h2 className="text-[32px] md:text-[42px] capitalize text-navy-d4 leading-snug text-center mb-11">
+      <h2 className="text-[32px] md:text-[42px] capitalize text-navy-d4 leading-snug text-center text-pretty mb-11">
         Amplifying impact for all
       </h2>
       <div className="flex p-1 bg-[#F6EFE5] font-medium rounded-3xl gap-2 justify-self-center mb-11">

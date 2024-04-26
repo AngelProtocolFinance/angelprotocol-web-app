@@ -24,7 +24,7 @@ export default function Layout() {
       <Seo /> {/* Load all defaults for SEO meta tags */}
       <Header
         links={headerLinks}
-        classes={`${isHome ? "mt-8" : ""} sticky z-[999] top-[-1px]`}
+        classes={`${isHome ? "mt-8 px-4" : ""} sticky z-[999] top-[-1px]`}
       />
       <Suspense fallback={<LoaderComponent />}>
         <ErrorBoundary key={key} /** allows for recovery when changing page */>
