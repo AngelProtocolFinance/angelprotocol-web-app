@@ -216,9 +216,9 @@ export default function PrivacyPolicy() {
             our Site. Flash cookies are not managed by the same browser settings
             as are used for browser cookies. For information about managing your
             privacy and security settings for Flash cookies, see{" "}
-            <Link className="hover:text-blue-d1 text-blue" href="#choices">
+            <a className="hover:text-blue-d1 text-blue" href="#choices">
               Choices About How We Use and Disclose Your Information
-            </Link>
+            </a>
             .
           </li>
           <li className="pt-2">
