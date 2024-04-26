@@ -1,3 +1,6 @@
+import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
+
 export default function TermsNonprofits() {
   return (
     <div className="padded-container min-h-screen pb-6">
