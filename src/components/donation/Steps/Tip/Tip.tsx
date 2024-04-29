@@ -100,7 +100,9 @@ export default function Tip({
         <Image src={dappLogo} className="inline-block h-8 px-1" />
       </h4>
       <p className="text-navy-l1">
-        We are completely free, and rely on donations
+        Better Giving offers this donation service free of charge to empower
+        nonprofits worldwide. As a nonprofit ourselves, we depend on your
+        support. Please consider donating to help us keep it free for all.
       </p>
 
       {isPct && (
