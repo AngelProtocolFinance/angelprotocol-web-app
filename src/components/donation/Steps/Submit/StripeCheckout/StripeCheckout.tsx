@@ -29,19 +29,17 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     isLoading,
     isError,
     error,
-  } = useStripePaymentIntentQuery(
-    {
-      type: details.frequency,
-      amount: +details.amount,
-      tipAmount: tip,
-      currency: details.currency.code,
-      endowmentId: recipient.id,
-      splitLiq: liquidSplitPct,
-      donor: props.donor,
-      source: details.source,
-    },
-    { skip: !!intentTransactionId }
-  );
+  } = useStripePaymentIntentQuery({
+    transactionId: intentTransactionId,
+    type: details.frequency,
+    amount: +details.amount,
+    tipAmount: tip,
+    currency: details.currency.code,
+    endowmentId: recipient.id,
+    splitLiq: liquidSplitPct,
+    donor: props.donor,
+    source: details.source,
+  });
 
   const dispatch = useSetter();
 

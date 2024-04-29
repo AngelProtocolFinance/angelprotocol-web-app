@@ -50,6 +50,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
     isLoading,
   } = useCreateCryptoIntentQuery(
     {
+      transactionId: intentTransactionId,
       amount: +details.token.amount,
       tipAmount: tip,
       chainId: chains[details.chainId.value].id,
@@ -61,7 +62,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       source: details.source,
       donor,
     },
-    { skip: !wallet?.address || !!intentTransactionId }
+    { skip: !wallet?.address }
   );
 
   const intentId = intentTransactionId ?? intent?.transactionId;
