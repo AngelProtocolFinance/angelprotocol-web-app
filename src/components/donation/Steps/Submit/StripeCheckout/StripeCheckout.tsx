@@ -16,22 +16,32 @@ import Checkout from "./Checkout";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, liquidSplitPct, tip = 0 } = props;
+  const {
+    details,
+    recipient,
+    liquidSplitPct,
+    tip = 0,
+    intentTransactionId,
+  } = props;
+
   const {
     data: clientSecret,
     isLoading,
     isError,
     error,
-  } = useStripePaymentIntentQuery({
-    type: details.frequency,
-    amount: +details.amount,
-    tipAmount: tip,
-    currency: details.currency.code,
-    endowmentId: recipient.id,
-    splitLiq: liquidSplitPct,
-    donor: props.donor,
-    source: details.source,
-  });
+  } = useStripePaymentIntentQuery(
+    {
+      type: details.frequency,
+      amount: +details.amount,
+      tipAmount: tip,
+      currency: details.currency.code,
+      endowmentId: recipient.id,
+      splitLiq: liquidSplitPct,
+      donor: props.donor,
+      source: details.source,
+    },
+    { skip: !!intentTransactionId }
+  );
 
   const dispatch = useSetter();
 

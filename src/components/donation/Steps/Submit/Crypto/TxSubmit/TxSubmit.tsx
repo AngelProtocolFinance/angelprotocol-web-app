@@ -25,7 +25,14 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   const dispatch = useSetter();
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
-  const { details, tip = 0, liquidSplitPct, recipient, donor } = donation;
+  const {
+    details,
+    tip = 0,
+    liquidSplitPct,
+    recipient,
+    donor,
+    intentTransactionId,
+  } = donation;
   const sender = wallet?.address;
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
@@ -54,8 +61,10 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       source: details.source,
       donor,
     },
-    { skip: !wallet?.address }
+    { skip: !wallet?.address || !!intentTransactionId }
   );
+
+  const intentId = intentTransactionId ?? intent?.transactionId;
 
   return (
     <div className={`${classes} grid w-full gap-y-2`}>
@@ -81,13 +90,13 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       <ContinueBtn
         type="button"
         onClick={
-          intent?.transactionId && wallet && estimate && isSuccess(estimate)
+          intentId && wallet && estimate && isSuccess(estimate)
             ? () => {
                 const action = sendDonation({
                   onSuccess: (txHash) =>
                     confirmCryptoIntent({
                       txHash,
-                      txId: intent?.transactionId,
+                      txId: intentId,
                     }).unwrap(),
                   ...txPackage(estimate, wallet),
                 });
@@ -95,9 +104,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
               }
             : undefined
         }
-        disabled={
-          !intent?.transactionId || !wallet || !estimate || !isSuccess(estimate)
-        }
+        disabled={!intentId || !wallet || !estimate || !isSuccess(estimate)}
       />
     </div>
   );

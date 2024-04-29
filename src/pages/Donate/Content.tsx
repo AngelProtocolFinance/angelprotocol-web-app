@@ -21,12 +21,10 @@ type Props = DonationRecipient & {
 };
 
 function Content(props: Props) {
-  const {
-    state: { transactionId },
-  } = useLocation();
+  const { state } = useLocation();
 
-  if (transactionId) {
-    return <WithIntent transactionId={transactionId} {...props} />;
+  if (state?.transactionId) {
+    return <WithIntent transactionId={state?.transactionId} {...props} />;
   }
 
   return <LoadedContent {...props} />;
@@ -34,6 +32,12 @@ function Content(props: Props) {
 
 function WithIntent(props: Props & { transactionId: string }) {
   const queryState = useIntentQuery({ transactionId: props.transactionId });
+
+  useEffect(() => {
+    return () => {
+      window.history.replaceState({}, "");
+    };
+  }, []);
 
   return (
     <QueryLoader queryState={queryState}>

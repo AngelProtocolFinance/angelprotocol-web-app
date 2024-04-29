@@ -49,12 +49,13 @@ export type FiatDonation = {
   source: DonationSource;
 };
 
-export type DonationIntent =
+export type DonationIntent = { transactionId: string } & (
   | (CryptoDonation & { token: Token })
   | (FiatDonation & {
       currency: Currency;
       frequency: FiatPaymentFrequency;
-    });
+    })
+);
 
 export type FiatPaymentFrequency = "one-time" | "subscription";
 
