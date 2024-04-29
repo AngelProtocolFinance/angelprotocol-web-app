@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Donor } from "types/aws";
+import { DonationIntent, Donor } from "types/aws";
+import { ChainID } from "types/chain";
 import {
   CryptoResultStep,
   DonationDetails,
@@ -21,6 +22,66 @@ const donation = createSlice({
   name: "donate",
   initialState: initialState as DonationState,
   reducers: {
+    loadIntent: (
+      _,
+      {
+        payload,
+      }: PayloadAction<DonationIntent & { recipient: DonationRecipient }>
+    ) => {
+      if ("walletAddress" in payload) {
+        return {
+          step: "submit",
+          details: {
+            method: "crypto",
+            chainId: {
+              label: payload.chainName,
+              value: payload.chainId as ChainID,
+            },
+            source: payload.source,
+            token: {
+              amount: `${payload.amount}`,
+              symbol: payload.denomination,
+              // must have been approved
+              approved: true,
+              // TODO: get actual coingecko denom
+              coingecko_denom: payload.denomination,
+              // TODO: get actual decimals
+              decimals: 0,
+              // TODO:
+              logo: "",
+              // TODO:
+              min_donation_amnt: 0,
+              // TODO:
+              token_id: "",
+              // TODO:
+              type: "erc20",
+            },
+          },
+          donor: payload.donor,
+          format: "amount",
+          tip: payload.tipAmount,
+          liquidSplitPct: payload.splitLiq,
+          recipient: payload.recipient,
+        };
+      }
+      return {
+        step: "submit",
+        details: {
+          method: "stripe",
+          amount: `${payload.amount}`,
+          // TODO:
+          currency: { code: payload.currency, min: 0, rate: 0 },
+          // TODO
+          frequency: "once",
+          source: payload.source,
+        },
+        donor: payload.donor,
+        format: "amount",
+        tip: payload.tipAmount,
+        liquidSplitPct: payload.splitLiq,
+        recipient: payload.recipient,
+      };
+    },
     setRecipient: (_, { payload }: PayloadAction<DonationRecipient>) => {
       return { step: "donate-form", recipient: payload };
     },
@@ -110,6 +171,7 @@ const donation = createSlice({
 
 export default donation.reducer;
 export const {
+  loadIntent,
   setRecipient,
   setStep,
   setDetails,

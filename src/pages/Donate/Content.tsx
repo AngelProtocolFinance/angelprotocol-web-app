@@ -1,13 +1,16 @@
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
+import QueryLoader from "components/QueryLoader";
 import { Steps } from "components/donation";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { memo, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { DonationRecipient, setRecipient } from "slices/donation";
+import { Link, useLocation } from "react-router-dom";
+import { useIntentQuery } from "services/apes";
+import { DonationRecipient, loadIntent, setRecipient } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
+import { DonationIntent } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
@@ -18,10 +21,37 @@ type Props = DonationRecipient & {
 };
 
 function Content(props: Props) {
+  const {
+    state: { transactionId },
+  } = useLocation();
+
+  if (transactionId) {
+    return <WithIntent transactionId={transactionId} {...props} />;
+  }
+
+  return <LoadedContent {...props} />;
+}
+
+function WithIntent(props: Props & { transactionId: string }) {
+  const queryState = useIntentQuery({ transactionId: props.transactionId });
+
+  return (
+    <QueryLoader queryState={queryState}>
+      {(intent) => <LoadedContent {...props} intent={intent} />}
+    </QueryLoader>
+  );
+}
+
+function LoadedContent(props: Props & { intent?: DonationIntent }) {
   const dispatch = useSetter();
   const state = useGetter((state) => state.donation);
   useEffect(() => {
-    dispatch(setRecipient(props));
+    const { intent, ...recipient } = props;
+    if (intent) {
+      dispatch(loadIntent({ ...intent, recipient }));
+    } else {
+      dispatch(setRecipient(recipient));
+    }
   }, [dispatch, props]);
 
   const CONTAINER_ID = "__container_id";

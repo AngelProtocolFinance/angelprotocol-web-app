@@ -36,6 +36,20 @@ export type CryptoDonation = {
   donor: Donor;
 };
 
+export type FiatDonation = {
+  /** Denominated in USD. */
+  amount: number;
+  tipAmount: number;
+  /**ISO 3166-1 alpha-3 code. */
+  currency: string;
+  endowmentId: number;
+  splitLiq: number;
+  donor: Donor;
+  source: DonationSource;
+};
+
+export type DonationIntent = CryptoDonation | FiatDonation;
+
 type Currency = {
   /** ISO 3166-1 alpha-3 code */
   currency_code: string;

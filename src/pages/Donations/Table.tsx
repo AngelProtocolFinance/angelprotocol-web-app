@@ -3,10 +3,10 @@ import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { chainIds } from "constants/chainIds";
-import { appRoutes, donateRoutes } from "constants/routes";
+import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";
 import useSort from "hooks/useSort";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import LoadMoreBtn from "./LoadMoreBtn";
 import { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
@@ -26,7 +26,6 @@ export default function Table({
   );
 
   const showKYCForm = useShowKYCForm();
-  const navigate = useNavigate();
 
   return (
     <table
@@ -142,16 +141,12 @@ export default function Table({
                 </button>
               )}
               {status === "intent" && (
-                <button
-                  className="w-full flex justify-center"
-                  onClick={() =>
-                    navigate(
-                      `${appRoutes.donate}/${row.recipientId}/${donateRoutes.donations}/${row.id}`
-                    )
-                  }
+                <ExtLink
+                  href={`${appRoutes.donations}/${row.id}`}
+                  className="flex gap-px items-center cursor-pointer text-blue underline hover:text-blue-l1"
                 >
-                  <Icon type="ArrowRight" className="text-2xl" />
-                </button>
+                  Finish Paying <Icon size={16} type="ArrowRight" />
+                </ExtLink>
               )}
             </Cells>
           ))

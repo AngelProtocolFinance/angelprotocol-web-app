@@ -1,5 +1,5 @@
 import * as Sentry from "@sentry/react";
-import { appRoutes, donateRoutes, donateWidgetRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { lazy } from "react";
@@ -9,6 +9,7 @@ import Layout from "./Layout";
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
+const DonationLoader = lazy(() => import("pages/DonationLoader"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
@@ -57,6 +58,10 @@ export default function App() {
           path={`${appRoutes.donate_widget}/:id`}
           element={<DonateWidget />}
         />
+        <Route
+          path={`${appRoutes.donations}/:id`}
+          element={<DonationLoader />}
+        />
         <Route element={<Layout />}>
           <Route
             path={`${appRoutes.profile}/:id/*`}
@@ -78,14 +83,7 @@ export default function App() {
           />
 
           <Route path={appRoutes.donations} element={<Donations />} />
-          <Route path={`${appRoutes.donate}/:id/*`} element={<Donate />} />
-          <Route path={appRoutes.donate}>
-            <Route path=":id" element={<Donate />} />
-            <Route
-              path={`:id/${donateRoutes.donations}/:donationId`}
-              element={<Donate />}
-            />
-          </Route>
+          <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
             path={appRoutes.donate_fiat_thanks}
             element={<DonateFiatThanks />}

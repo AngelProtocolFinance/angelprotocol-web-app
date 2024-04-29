@@ -1,13 +1,13 @@
 import { Disclosure } from "@headlessui/react";
 import Icon, { DrawerIcon } from "components/Icon";
+import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { PropsWithChildren } from "react";
+import { useNavigate } from "react-router-dom";
 import LoadMoreBtn from "./LoadMoreBtn";
 import { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
-import { useNavigate } from "react-router-dom";
-import { appRoutes, donateRoutes } from "constants/routes";
 
 export default function MobileTable({
   donations,
@@ -88,9 +88,7 @@ export default function MobileTable({
                     <button
                       className="block"
                       onClick={() =>
-                        navigate(
-                          `${appRoutes.donate}/${row.recipientId}/${donateRoutes.donations}/${row.id}`
-                        )
+                        navigate(`${appRoutes.donations}/${row.id}`)
                       }
                     >
                       <Icon type="ArrowRight" className="text-2xl" />
