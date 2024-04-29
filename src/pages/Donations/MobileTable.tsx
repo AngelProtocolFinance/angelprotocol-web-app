@@ -1,10 +1,10 @@
 import { Disclosure } from "@headlessui/react";
+import ExtLink from "components/ExtLink";
 import Icon, { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { PropsWithChildren } from "react";
-import { useNavigate } from "react-router-dom";
 import LoadMoreBtn from "./LoadMoreBtn";
 import { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
@@ -20,7 +20,6 @@ export default function MobileTable({
 }: TableProps) {
   const { sorted } = useSort(donations, "date");
   const showKYCForm = useShowKYCForm();
-  const navigate = useNavigate();
 
   return (
     <div
@@ -72,7 +71,18 @@ export default function MobileTable({
                     ? `$${humanize(row.initAmountUsd, 2)}`
                     : "--"}
                 </Row>
-                <Row title="TX Hash">{row.id}</Row>
+                {status === "intent" ? (
+                  <Row title="Finish Paying" className="rounded-b">
+                    <ExtLink
+                      href={`${appRoutes.donations}/${row.id}`}
+                      className="flex gap-px items-center cursor-pointer text-blue underline hover:text-blue-l1"
+                    >
+                      Finish Paying <Icon size={16} type="ArrowRight" />
+                    </ExtLink>
+                  </Row>
+                ) : (
+                  <Row title="TX Hash">{row.id}</Row>
+                )}
                 {status === "final" && (
                   <Row title="Receipt" className="rounded-b">
                     <button
@@ -80,18 +90,6 @@ export default function MobileTable({
                       onClick={() => showKYCForm(row.id)}
                     >
                       <Icon type="FatArrowDownload" className="text-2xl" />
-                    </button>
-                  </Row>
-                )}
-                {status === "intent" && (
-                  <Row title="Finish Paying" className="rounded-b">
-                    <button
-                      className="block"
-                      onClick={() =>
-                        navigate(`${appRoutes.donations}/${row.id}`)
-                      }
-                    >
-                      <Icon type="ArrowRight" className="text-2xl" />
                     </button>
                   </Row>
                 )}

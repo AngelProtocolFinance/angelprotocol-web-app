@@ -77,12 +77,13 @@ export default function Table({
           >
             USD Value
           </HeaderButton>
-          <>TX Hash</>
+          {status === "intent" ? (
+            <span className="flex justify-center">Finish Paying</span>
+          ) : (
+            <>TX Hash</>
+          )}
           {status === "final" && (
             <span className="flex justify-center">Receipt</span>
-          )}
-          {status === "intent" && (
-            <span className="flex justify-center">Finish Paying</span>
           )}
         </Cells>
       </TableSection>
@@ -122,7 +123,14 @@ export default function Table({
                   ? `$${humanize(row.initAmountUsd, 2)}`
                   : "--"}
               </>
-              {row.viaId === "fiat" || row.viaId === "staging" ? (
+              {status === "intent" ? (
+                <ExtLink
+                  href={`${appRoutes.donations}/${row.id}`}
+                  className="flex gap-px items-center cursor-pointer text-blue underline hover:text-blue-l1"
+                >
+                  Finish Paying <Icon size={16} type="ArrowRight" />
+                </ExtLink>
+              ) : row.viaId === "fiat" || row.viaId === "staging" ? (
                 <>- - -</>
               ) : (
                 <ExtLink
@@ -139,14 +147,6 @@ export default function Table({
                 >
                   <Icon type="FatArrowDownload" className="text-2xl" />
                 </button>
-              )}
-              {status === "intent" && (
-                <ExtLink
-                  href={`${appRoutes.donations}/${row.id}`}
-                  className="flex gap-px items-center cursor-pointer text-blue underline hover:text-blue-l1"
-                >
-                  Finish Paying <Icon size={16} type="ArrowRight" />
-                </ExtLink>
               )}
             </Cells>
           ))
