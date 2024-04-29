@@ -21,12 +21,12 @@ export function LockedSplitSlider({
         <div className="grid gap-1 grid-cols-[1fr_auto] items-center">
           <p className="text-xl text-right">{100 - value}%</p>
           <Image src={sendMoney} className="ml-1" />
-          <p className="uppercase text-xs col-span-full">Instantly Available</p>
+          <p className="uppercase text-xs col-span-full">Direct Donation</p>
         </div>
         <div className="grid gap-1 grid-cols-[auto_1fr] items-center">
           <Image src={leaf} className="mr-1" />
           <p className="text-xl">{value}%</p>
-          <p className="uppercase text-xs col-span-full">Sustainable fund</p>
+          <p className="uppercase text-xs col-span-full">Sustainability Fund</p>
         </div>
       </div>
 

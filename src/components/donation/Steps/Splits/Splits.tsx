@@ -82,7 +82,7 @@ export default function Split({
           </dd>
         </dl>
         <dl>
-          <dt className="text-navy-l1 text-xs">Compounded Forever</dt>
+          <dt className="text-navy-l1 text-xs">Invested for Growth</dt>
           <dd>
             <span className="text-xs font-medium mr-1">
               {symbol.toUpperCase()}
@@ -93,10 +93,9 @@ export default function Split({
       </div>
 
       <p className="text-sm text-navy-l1 mt-6">
-        With splitting your donation into sustainable funds, you align
-        investments with personal values, improving long-term financial
-        performance, reducing risk exposure, and contributing to global
-        sustainability goals.
+        Support {widgetConfig.endowment.name}'s future by contributing to the
+        Sustainability Fund, which invests your donation for long-term growth to
+        provide reliable, ongoing funding. Give today, give forever.
       </p>
 
       <ContinueBtn
