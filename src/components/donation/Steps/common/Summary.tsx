@@ -26,7 +26,7 @@ type Props = {
 
 export default function Summary({
   Amount,
-  frequency = "once",
+  frequency = "one-time",
   ...props
 }: Props) {
   const { container, split: splitClass } = unpack(props.classes);
@@ -68,7 +68,7 @@ export default function Summary({
         {props.tip && (
           <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
             <dt className="mr-auto text-navy-d4">
-              Total {frequency === "monthly" ? "monthly " : ""}charge
+              Total {frequency === "subscription" ? "monthly " : ""}charge
             </dt>
             <Amount amount={props.amount + props.tip.value} />
           </div>

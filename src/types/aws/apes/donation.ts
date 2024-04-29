@@ -56,7 +56,7 @@ export type DonationIntent =
       frequency: FiatPaymentFrequency;
     });
 
-export type FiatPaymentFrequency = "once" | "monthly";
+export type FiatPaymentFrequency = "one-time" | "subscription";
 
 type Currency = {
   /** ISO 3166-1 alpha-3 code */

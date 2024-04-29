@@ -23,7 +23,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     isError,
     error,
   } = useStripePaymentIntentQuery({
-    type: details.frequency === "once" ? "one-time" : "subscription",
+    type: details.frequency,
     amount: +details.amount,
     tipAmount: tip,
     currency: details.currency.code,
