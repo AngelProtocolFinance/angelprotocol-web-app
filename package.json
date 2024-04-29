@@ -72,7 +72,7 @@
     "@rsbuild/plugin-node-polyfill": "0.4.10",
     "@rsbuild/plugin-react": "0.4.10",
     "@tailwindcss/container-queries": "0.1.1",
-    "@testing-library/dom": "9.3.4",
+    "@testing-library/dom": "10.1.0",
     "@testing-library/jest-dom": "6.4.2",
     "@testing-library/react": "14.2.1",
     "@testing-library/user-event": "14.5.2",
