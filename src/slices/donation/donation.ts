@@ -55,7 +55,11 @@ const donation = createSlice({
         details: {
           method: "stripe",
           amount: `${payload.amount}`,
-          currency: payload.currency,
+          currency: {
+            code: payload.currency.currency_code,
+            min: payload.currency.minimum_amount,
+            rate: payload.currency.rate,
+          },
           frequency: payload.frequency,
           source: payload.source,
         },

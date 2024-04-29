@@ -1,6 +1,5 @@
 import { DonationSource } from "types/lists";
 import { Token } from ".";
-import { DetailedCurrency } from "types/components";
 
 export type Donor = {
   email: string;
@@ -53,7 +52,7 @@ export type FiatDonation = {
 export type DonationIntent =
   | (CryptoDonation & { token: Token })
   | (FiatDonation & {
-      currency: DetailedCurrency;
+      currency: Currency;
       frequency: FiatPaymentFrequency;
     });
 
