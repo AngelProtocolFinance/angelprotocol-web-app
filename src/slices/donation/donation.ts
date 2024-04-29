@@ -40,21 +40,7 @@ const donation = createSlice({
             source: payload.source,
             token: {
               amount: `${payload.amount}`,
-              symbol: payload.denomination,
-              // must have been approved
-              approved: true,
-              // TODO: get actual coingecko denom
-              coingecko_denom: payload.denomination,
-              // TODO: get actual decimals
-              decimals: 0,
-              // TODO:
-              logo: "",
-              // TODO:
-              min_donation_amnt: 0,
-              // TODO:
-              token_id: "",
-              // TODO:
-              type: "erc20",
+              ...payload.token,
             },
           },
           donor: payload.donor,
@@ -69,10 +55,8 @@ const donation = createSlice({
         details: {
           method: "stripe",
           amount: `${payload.amount}`,
-          // TODO:
-          currency: { code: payload.currency, min: 0, rate: 0 },
-          // TODO
-          frequency: "once",
+          currency: payload.currency,
+          frequency: payload.frequency,
           source: payload.source,
         },
         donor: payload.donor,

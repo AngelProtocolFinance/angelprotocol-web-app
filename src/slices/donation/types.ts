@@ -1,4 +1,4 @@
-import { Donor, Endowment, GuestDonor } from "types/aws";
+import { Donor, Endowment, FiatPaymentFrequency, GuestDonor } from "types/aws";
 import { ChainID } from "types/chain";
 import { DetailedCurrency, OptionType } from "types/components";
 import { DonationSource } from "types/lists";
@@ -28,7 +28,7 @@ type FiatDonationDetails = BaseDonationDetais & {
 
 export type StripeDonationDetails = {
   method: "stripe";
-  frequency: "once" | "monthly";
+  frequency: FiatPaymentFrequency;
 } & FiatDonationDetails;
 
 export type StocksDonationDetails = {

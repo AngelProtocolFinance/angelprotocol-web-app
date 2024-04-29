@@ -1,4 +1,6 @@
 import { DonationSource } from "types/lists";
+import { Token } from ".";
+import { DetailedCurrency } from "types/components";
 
 export type Donor = {
   email: string;
@@ -48,7 +50,14 @@ export type FiatDonation = {
   source: DonationSource;
 };
 
-export type DonationIntent = CryptoDonation | FiatDonation;
+export type DonationIntent =
+  | (CryptoDonation & { token: Token })
+  | (FiatDonation & {
+      currency: DetailedCurrency;
+      frequency: FiatPaymentFrequency;
+    });
+
+export type FiatPaymentFrequency = "once" | "monthly";
 
 type Currency = {
   /** ISO 3166-1 alpha-3 code */

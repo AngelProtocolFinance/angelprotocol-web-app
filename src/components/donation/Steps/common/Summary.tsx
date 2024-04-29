@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import type { FiatPaymentFrequency } from "types/aws";
 import Icon from "../../../Icon";
 import { unpack } from "../../../form/helpers";
 import BackBtn from "./BackBtn";
@@ -17,7 +18,7 @@ type Props = {
 
   Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
   onBack(): void;
-  frequency?: "once" | "monthly";
+  frequency?: FiatPaymentFrequency;
   classes?: Classes;
   children?: ReactNode;
   preSplitContent?: ReactNode;
