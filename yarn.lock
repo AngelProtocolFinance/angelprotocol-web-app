@@ -3388,7 +3388,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/dom@npm:9.3.4, @testing-library/dom@npm:^9.0.0":
+"@testing-library/dom@npm:9.3.4":
   version: 9.3.4
   resolution: "@testing-library/dom@npm:9.3.4"
   dependencies:
@@ -3401,6 +3401,22 @@ __metadata:
     lz-string: "npm:^1.5.0"
     pretty-format: "npm:^27.0.2"
   checksum: 10/510da752ea76f4a10a0a4e3a77917b0302cf03effe576cd3534cab7e796533ee2b0e9fb6fb11b911a1ebd7c70a0bb6f235bf4f816c9b82b95b8fe0cddfd10975
+  languageName: node
+  linkType: hard
+
+"@testing-library/dom@npm:^10.0.0":
+  version: 10.1.0
+  resolution: "@testing-library/dom@npm:10.1.0"
+  dependencies:
+    "@babel/code-frame": "npm:^7.10.4"
+    "@babel/runtime": "npm:^7.12.5"
+    "@types/aria-query": "npm:^5.0.1"
+    aria-query: "npm:5.3.0"
+    chalk: "npm:^4.1.0"
+    dom-accessibility-api: "npm:^0.5.9"
+    lz-string: "npm:^1.5.0"
+    pretty-format: "npm:^27.0.2"
+  checksum: 10/6d6ef942deedf547180c76d4cc2c43fe8e52a98ef68be6ba7382a43d3b1e1e5696d9c32ae0b2df12c92ea50023187d132ad2542fc118ba4b900f149e97d019e0
   languageName: node
   linkType: hard
 
@@ -3437,17 +3453,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@testing-library/react@npm:14.2.1":
-  version: 14.2.1
-  resolution: "@testing-library/react@npm:14.2.1"
+"@testing-library/react@npm:15.0.5":
+  version: 15.0.5
+  resolution: "@testing-library/react@npm:15.0.5"
   dependencies:
     "@babel/runtime": "npm:^7.12.5"
-    "@testing-library/dom": "npm:^9.0.0"
+    "@testing-library/dom": "npm:^10.0.0"
     "@types/react-dom": "npm:^18.0.0"
   peerDependencies:
     react: ^18.0.0
     react-dom: ^18.0.0
-  checksum: 10/e02b2f32ae79665a79fc4d8ee053fd3832bfcd4753aa1dba05cdece1a9f59c72a0fae91e0a9387597dcb686d631a722729f2878e38dc95e6f23b291ad8d09b6c
+  checksum: 10/27b938ddcdd6b4a98d4564460899f36ae3f69ad749e25389424c1c1d0adf40adeb1387dd29303c0f83b33e2f7ce7133253e0491c4b22af8cb340f631901dbe62
   languageName: node
   linkType: hard
 
@@ -4163,7 +4179,7 @@ __metadata:
     "@terra-money/wallet-provider": "npm:3.11.2"
     "@testing-library/dom": "npm:9.3.4"
     "@testing-library/jest-dom": "npm:6.4.2"
-    "@testing-library/react": "npm:14.2.1"
+    "@testing-library/react": "npm:15.0.5"
     "@testing-library/user-event": "npm:14.5.2"
     "@types/node": "npm:18.18.13"
     "@types/quill": "npm:2.0.14"
@@ -4293,7 +4309,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aria-query@npm:^5.0.0":
+"aria-query@npm:5.3.0, aria-query@npm:^5.0.0":
   version: 5.3.0
   resolution: "aria-query@npm:5.3.0"
   dependencies:
