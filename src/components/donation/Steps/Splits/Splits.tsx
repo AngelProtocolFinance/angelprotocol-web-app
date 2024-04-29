@@ -93,10 +93,9 @@ export default function Split({
       </div>
 
       <p className="text-sm text-navy-l1 mt-6">
-        Support {widgetConfig ? widgetConfig.endowment.name : "this nonprofit"}
-        's future by contributing to the Sustainability Fund, which invests your
-        donation for long-term growth to provide reliable, ongoing funding. Give
-        today, give forever.
+        Support this nonprofit's future by contributing to the Sustainability
+        Fund, which invests your donation for long-term growth to provide
+        reliable, ongoing funding. Give today, give forever.
       </p>
 
       <ContinueBtn
