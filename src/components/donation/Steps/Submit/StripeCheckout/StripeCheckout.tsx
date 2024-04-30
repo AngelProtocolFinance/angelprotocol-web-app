@@ -21,7 +21,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     recipient,
     liquidSplitPct,
     tip = 0,
-    intentTransactionId,
+    oldTransactionId: intentTransactionId,
   } = props;
 
   const {

@@ -20,7 +20,7 @@ export default function Checkout(props: StripeCheckoutStep) {
     liquidSplitPct,
     tip = 0,
     donor,
-    intentTransactionId,
+    oldTransactionId: intentTransactionId,
   } = props;
 
   const navigate = useNavigate();

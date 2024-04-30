@@ -88,7 +88,7 @@ export type SummaryStep = {
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
   /** Set only when loading an existing intent */
-  intentTransactionId?: string;
+  oldTransactionId?: string;
 } & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;

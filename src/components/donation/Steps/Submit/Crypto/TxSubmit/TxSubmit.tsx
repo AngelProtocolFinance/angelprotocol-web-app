@@ -31,7 +31,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
     liquidSplitPct,
     recipient,
     donor,
-    intentTransactionId,
+    oldTransactionId,
   } = donation;
   const sender = wallet?.address;
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
     isLoading,
   } = useCreateCryptoIntentQuery(
     {
-      transactionId: intentTransactionId,
+      transactionId: oldTransactionId,
       amount: +details.token.amount,
       tipAmount: tip,
       chainId: chains[details.chainId.value].id,
@@ -65,7 +65,8 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
     { skip: !wallet?.address }
   );
 
-  const intentId = intentTransactionId ?? intent?.transactionId;
+  // if
+  const intentId = oldTransactionId ?? intent?.transactionId;
 
   return (
     <div className={`${classes} grid w-full gap-y-2`}>
