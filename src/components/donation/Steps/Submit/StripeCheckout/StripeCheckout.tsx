@@ -10,11 +10,9 @@ import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
-import Paypal from "./Paypal";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
-
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
@@ -57,29 +55,6 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
           : undefined
       }
     >
-      {details.frequency === "once" && (
-        <>
-          {/* we don't have subscriptions for paypal for now */}
-          <div className="has-[#paypal-failure-fallback]:hidden peer">
-            <p className="mb-2 font-medium">Express checkout</p>
-            <div className="flex items-center">
-              <ErrorBoundary
-                fallback={
-                  <div id="paypal-failure-fallback" className="hidden" />
-                }
-              >
-                <Paypal {...props} />
-              </ErrorBoundary>
-            </div>
-          </div>
-          <div className="relative border border-gray-l4 h-px w-full mb-8 mt-6 grid place-items-center peer-has-[.hidden]:hidden">
-            <span className="absolute bg-white px-4 text-navy-l2 text-xs">
-              OR
-            </span>
-          </div>
-        </>
-      )}
-
       <ErrorBoundary>
         {isLoading ? (
           <Loader msg="Loading payment form.." />
