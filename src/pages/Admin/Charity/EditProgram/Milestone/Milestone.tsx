@@ -22,7 +22,7 @@ export default function Milestone(props: Props) {
     },
     resolver: yupResolver(schema),
   });
-  const { submit, isSubmitting, isDirty } = useSubmit(
+  const { submit, isSubmitting, isDirty, reset } = useSubmit(
     methods,
     props.id,
     props.programId
@@ -51,6 +51,10 @@ export default function Milestone(props: Props) {
         }
         disabled={isSubmitting}
         onSubmit={submit}
+        onReset={(e) => {
+          e.preventDefault();
+          reset();
+        }}
         methods={methods}
       >
         <Label className="-mb-4">Image of milestone</Label>
@@ -65,7 +69,6 @@ export default function Milestone(props: Props) {
           }}
           maxSize={MAX_SIZE_IN_BYTES}
         />
-
         <Field<FV, "date">
           type="date"
           classes={{ input: "date-input uppercase", container: "field-admin" }}
@@ -92,7 +95,6 @@ export default function Milestone(props: Props) {
             charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
-
         <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-start">
           <button
             disabled={!isDirty}

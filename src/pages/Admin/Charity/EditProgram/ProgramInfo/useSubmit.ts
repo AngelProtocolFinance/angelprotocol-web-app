@@ -1,11 +1,10 @@
-import { TxPrompt } from "components/Prompt";
+import Prompt, { TxPrompt } from "components/Prompt";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 
 import { cleanObject } from "helpers/cleanObject";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { useEditProgramMutation } from "services/aws/programs";
 import { Program, ProgramUpdate } from "types/aws";
 import { useAdminContext } from "../../../Context";
@@ -17,11 +16,10 @@ export default function useSubmit(
   initProgram: Program
 ) {
   const { id } = useAdminContext();
-  const navigate = useNavigate();
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isDirty },
   } = methods;
 
   const { showModal } = useModalContext();
@@ -45,9 +43,12 @@ export default function useSubmit(
         title: fv.title,
       });
       await updateProgram({ endowId: id, ...update }).unwrap();
-      navigate(`${appRoutes.admin}/${id}/${adminRoutes.programs}`);
+      showModal(Prompt, {
+        type: "success",
+        children: "Program information updated",
+      });
     } catch (err) {
-      handleError(err, { context: "applying program changes" });
+      handleError(err, { context: "applying program info changes" });
     }
   };
 
@@ -55,6 +56,6 @@ export default function useSubmit(
     reset,
     submit: handleSubmit(submit),
     isSubmitting,
-    id,
+    isDirty,
   };
 }

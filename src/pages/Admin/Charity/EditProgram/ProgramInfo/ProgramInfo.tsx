@@ -12,18 +12,29 @@ import useSubmit from "./useSubmit";
 
 export default function ProgramInfo(props: Program) {
   const methods = useForm<FV>({
-    defaultValues: {
+    values: {
       title: props.title,
-      image: { name: "", publicUrl: props.banner, preview: props.banner },
-      description: props.description,
+      image: {
+        name: "",
+        publicUrl: props.banner ?? "",
+        preview: props.banner ?? "",
+      },
+      description: {
+        value: props.description,
+        length: props.description.length ?? 0,
+      },
     },
     resolver: yupResolver(schema),
   });
-  const { submit, isSubmitting } = useSubmit(methods, props);
+  const { submit, isSubmitting, isDirty, reset } = useSubmit(methods, props);
   return (
     <Group title="Program information">
       <Form
         onSubmit={submit}
+        onReset={(e) => {
+          e.preventDefault();
+          reset();
+        }}
         methods={methods}
         disabled={isSubmitting}
         className="contents"
@@ -56,6 +67,29 @@ export default function ProgramInfo(props: Program) {
             charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
+        <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-start">
+          <button
+            disabled={!isDirty}
+            type="reset"
+            className="btn-outline-filled py-2 text-sm"
+          >
+            Reset
+          </button>
+          <button
+            disabled={!isDirty}
+            type="submit"
+            className="btn-blue py-2 text-sm"
+          >
+            Save changes
+          </button>
+          <button
+            type="button"
+            className="@lg:ml-auto btn-outline-filled  text-sm"
+            onClick={() => alert("delete")}
+          >
+            Delete program
+          </button>
+        </div>
       </Form>
     </Group>
   );

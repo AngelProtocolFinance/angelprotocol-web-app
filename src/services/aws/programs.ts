@@ -28,7 +28,7 @@ const programs = aws.injectEndpoints({
     }),
     editProgram: builder.mutation<Program, ProgramUpdate & { endowId: number }>(
       {
-        invalidatesTags: (_, error) => (error ? [] : ["programs"]),
+        invalidatesTags: (_, error) => (error ? [] : ["program", "programs"]),
         query: ({ endowId, id, ...payload }) => {
           return {
             url: `/${v(1)}/endowments/${endowId}/programs/${id}`,
