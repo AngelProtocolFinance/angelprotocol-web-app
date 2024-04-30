@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { mumbai, polygon } from "constants/chains";
+import { polygon, polygonAmoy } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { FormProvider, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
@@ -19,7 +19,7 @@ export default function Crypto({ config, ...state }: Props) {
     source: config ? "bg-widget" : "bg-marketplace",
     token: initToken,
     chainId: IS_TEST
-      ? { label: mumbai.name, value: mumbai.id }
+      ? { label: polygonAmoy.name, value: polygonAmoy.id }
       : { label: polygon.name, value: polygon.id },
   };
 

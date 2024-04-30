@@ -1,10 +1,10 @@
 export type EVMChainID =
   //polygon
   | "137"
-  | "80001"
+  | "80002"
   //ethereum
   | "1"
-  | "5"
+  | "11155111"
   // arbitrum
   | "42161"
   | "421614"
