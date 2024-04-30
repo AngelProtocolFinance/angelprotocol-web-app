@@ -52,7 +52,7 @@ function Content({
   return (
     <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
       <Seo
-        title={`Widget Configuration${
+        title={`Donation Form Configuration${
           endowment?.id ? ` for nonprofit ${endowment?.id}` : ""
         } - ${APP_NAME}`}
         description={endowment?.overview.slice(0, 140)}

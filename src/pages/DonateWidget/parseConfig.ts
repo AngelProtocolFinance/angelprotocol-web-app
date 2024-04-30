@@ -24,7 +24,7 @@ export default function parseConfig(
   } catch (error) {
     const message = (error as ValidationError).message;
     return {
-      error: `Widget config is invalid: ${message}.`,
+      error: `Donation Form config is invalid: ${message}.`,
     };
   }
 }
