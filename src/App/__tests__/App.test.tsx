@@ -33,7 +33,7 @@ vi.mock("services/aws/leaderboard", () => ({
   }),
 }));
 
-const homeHeroText = /simplified giving/i;
+const homeHeroText = /Simplified Giving/i;
 const marketplaceHeroText = /better giving redefines/i;
 
 const marketLink = /explore all causes/i;
