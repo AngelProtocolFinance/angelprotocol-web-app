@@ -21,7 +21,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     recipient,
     liquidSplitPct,
     tip = 0,
-    oldTransactionId: intentTransactionId,
+    oldTransactionId,
   } = props;
 
   const {
@@ -30,7 +30,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     isError,
     error,
   } = useStripePaymentIntentQuery({
-    transactionId: intentTransactionId,
+    transactionId: oldTransactionId,
     type: details.frequency,
     amount: +details.amount,
     tipAmount: tip,

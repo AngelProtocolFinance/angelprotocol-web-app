@@ -20,7 +20,7 @@ export default function Checkout(props: StripeCheckoutStep) {
     liquidSplitPct,
     tip = 0,
     donor,
-    oldTransactionId: intentTransactionId,
+    oldTransactionId,
   } = props;
 
   const navigate = useNavigate();
@@ -84,7 +84,7 @@ export default function Checkout(props: StripeCheckoutStep) {
       }}
       createOrder={async () =>
         await createOrder({
-          transactionId: intentTransactionId,
+          transactionId: oldTransactionId,
           amount: +details.amount,
           tipAmount: tip,
           currency: details.currency.code,
