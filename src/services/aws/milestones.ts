@@ -6,10 +6,10 @@ import { aws } from "./aws";
 const milestones = aws.injectEndpoints({
   endpoints: (builder) => ({
     newMilestone: builder.mutation<
-      Milestone,
+      { id: string },
       NewMilestone & { endowId: number; programId: string }
     >({
-      invalidatesTags: (_, error) => (error ? [] : ["programs"]),
+      invalidatesTags: (_, error) => (error ? [] : ["program"]),
       query: ({ endowId, programId, ...payload }) => {
         return {
           url: `/${v(
@@ -25,7 +25,7 @@ const milestones = aws.injectEndpoints({
       Milestone,
       MilestoneUpdate & { endowId: number; programId: string }
     >({
-      invalidatesTags: (_, error) => (error ? [] : ["programs"]),
+      invalidatesTags: (_, error) => (error ? [] : ["program"]),
       query: ({ endowId, programId, id, ...payload }) => {
         return {
           url: `/${v(
