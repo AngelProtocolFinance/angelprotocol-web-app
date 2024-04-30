@@ -19,7 +19,7 @@ export default function ProgramEditor() {
     <>
       <Link
         to={"../" + adminRoutes.programs}
-        className="flex items-center gap-2 text-blue-d1 hover:text-blue -mb-2"
+        className="flex items-center gap-2 text-blue-d1 hover:text-blue"
       >
         <Icon type="Back" />
         <span>Back</span>
