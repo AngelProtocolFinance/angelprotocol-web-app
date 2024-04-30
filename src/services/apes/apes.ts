@@ -63,7 +63,7 @@ export const apes = createApi({
       }),
     }),
     intent: builder.query<DonationIntent, { transactionId: string }>({
-      query: (params) => ({ url: `donations/${params.transactionId}` }),
+      query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
     }),
     fiatCurrencies: builder.query<
       { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
