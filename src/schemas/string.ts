@@ -36,12 +36,12 @@ export const url = Yup.string()
 export function walletAddrPatten(chainId: ChainID) {
   switch (chainId) {
     case "1":
-    case "5":
+    case "11155111":
     case "56":
     case "97":
     case "137":
     case "42161":
-    case "80001":
+    case "80002":
     case "421614":
       return evmAddrPattern;
     case "pisco-1":

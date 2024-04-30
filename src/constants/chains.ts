@@ -99,32 +99,32 @@ export const terraMainnet: Chain = {
 };
 
 //testnets
-export const mumbai: Chain = {
+export const polygonAmoy: Chain = {
   isTest: true,
-  id: "80001",
-  brand: "polygon",
-  name: "Polygon Mumbai Testnet",
-  rpc: baseProxyURL + "/mumbai",
+  id: "80002",
+  brand: "polygonAmoy",
+  name: "Polygon Amoy Testnet",
+  rpc: baseProxyURL + "/polygonAmoy",
   lcd: "",
-  blockExplorer: "https://mumbai.polygonscan.com",
+  blockExplorer: "https://amoy.polygonscan.com",
   nativeToken: {
-    id: "80001",
+    id: "80002",
     symbol: "MATIC",
     decimals: 18,
     coinGeckoId: "matic-network",
   },
 };
 
-export const goerli: Chain = {
+export const sepolia: Chain = {
   isTest: true,
-  id: "5",
-  brand: "ethereum",
-  name: "Ethereum Goerli Testnet",
-  rpc: baseProxyURL + "/goerli",
+  id: "11155111",
+  brand: "sepolia",
+  name: "Ethereum Sepolia Testnet",
+  rpc: baseProxyURL + "/sepolia",
   lcd: "",
-  blockExplorer: "https://goerli.etherscan.io",
+  blockExplorer: "https://sepolia.etherscan.io",
   nativeToken: {
-    id: "5",
+    id: "11155111",
     symbol: "ETH",
     decimals: 18,
     coinGeckoId: "ethereum",
@@ -186,8 +186,8 @@ export const chainList: Chain[] = [
   binance,
   juno,
   terraMainnet,
-  mumbai,
-  goerli,
+  sepolia,
+  polygonAmoy,
   arbitrumSepolia,
   binanceTestnet,
   terraTestnet,
@@ -203,9 +203,9 @@ export const EVMChains: EVMChainID[] = [
   "137",
   "42161",
   "421614",
-  "5",
+  "11155111",
   "56",
-  "80001",
+  "80002",
   "97",
 ];
 export const cosmosChains: CosmosChainID[] = ["juno-1", "uni-6"];
