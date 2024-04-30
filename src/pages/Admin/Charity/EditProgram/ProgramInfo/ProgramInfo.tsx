@@ -26,11 +26,18 @@ export default function ProgramInfo(props: Program) {
     },
     resolver: yupResolver(schema),
   });
-  const { submit, isSubmitting, isDirty, reset } = useSubmit(methods, props);
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitting, isDirty },
+  } = methods;
+
+  const submit = useSubmit(props);
+
   return (
     <Group title="Program information">
       <Form
-        onSubmit={submit}
+        onSubmit={handleSubmit(submit)}
         onReset={(e) => {
           e.preventDefault();
           reset();

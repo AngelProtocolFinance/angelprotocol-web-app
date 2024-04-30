@@ -22,13 +22,13 @@ export default function Milestone(props: Props) {
     },
     resolver: yupResolver(schema),
   });
-  const { submit, isSubmitting, isDirty, reset } = useSubmit(
-    methods,
-    props.id,
-    props.programId
-  );
 
-  console.log({ isDirty });
+  const {
+    reset,
+    handleSubmit,
+    formState: { isSubmitting, isDirty },
+  } = methods;
+  const onSubmit = useSubmit(props.id, props.programId);
 
   return (
     <Disclosure
@@ -50,7 +50,7 @@ export default function Milestone(props: Props) {
           } bg-white dark:bg-blue-d6 py-6 px-4 grid content-start gap-6`
         }
         disabled={isSubmitting}
-        onSubmit={submit}
+        onSubmit={handleSubmit(onSubmit)}
         onReset={(e) => {
           e.preventDefault();
           reset();
@@ -99,20 +99,20 @@ export default function Milestone(props: Props) {
           <button
             disabled={!isDirty}
             type="reset"
-            className="btn-outline-filled py-2 text-sm"
+            className="btn-outline-filled py-1.5 px-4 text-sm"
           >
             Reset
           </button>
           <button
             disabled={!isDirty}
             type="submit"
-            className="btn-blue py-2 text-sm"
+            className="btn-blue py-1.5 text-sm"
           >
             Save changes
           </button>
           <button
             type="button"
-            className="@lg:ml-auto btn-outline-filled  text-sm"
+            className="@lg:ml-auto btn-red py-1.5 text-sm"
             onClick={() => alert("delete")}
           >
             Delete milestone
