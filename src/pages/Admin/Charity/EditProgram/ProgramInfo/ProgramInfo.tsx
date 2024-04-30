@@ -12,13 +12,22 @@ import useSubmit from "./useSubmit";
 
 export default function ProgramInfo(props: Program) {
   const methods = useForm<FV>({
-    defaultValues: props,
+    defaultValues: {
+      title: props.title,
+      image: { name: "", publicUrl: props.banner, preview: props.banner },
+      description: props.description,
+    },
     resolver: yupResolver(schema),
   });
   const { submit, isSubmitting } = useSubmit(methods, props);
   return (
     <Group title="Program information">
-      <Form onSubmit={submit} methods={methods} disabled={isSubmitting}>
+      <Form
+        onSubmit={submit}
+        methods={methods}
+        disabled={isSubmitting}
+        className="contents"
+      >
         <Field<FV>
           classes="field-admin"
           name="title"

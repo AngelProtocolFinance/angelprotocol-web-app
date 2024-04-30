@@ -8,6 +8,7 @@ import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";
 import Dashboard from "./Dashboard";
 import Donations from "./Donations";
 import EditProfile from "./EditProfile";
+import EditProgram from "./EditProgram";
 import Members from "./Members/Members";
 import ProgramCreator from "./ProgramCreator";
 import Programs from "./Programs";
@@ -42,6 +43,10 @@ export default function Charity() {
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.programs} element={<Programs />} />
         <Route path={adminRoutes.programs_new} element={<ProgramCreator />} />
+        <Route
+          path={`${adminRoutes.program_edit}/:id`}
+          element={<EditProgram />}
+        />
 
         <Route path={adminRoutes.settings} element={<Settings />} />
         <Route path={adminRoutes.members} element={<Members />} />

@@ -28,6 +28,7 @@ export default function useImgEditor<T extends Base, K extends Path<T>>({
   });
 
   const { publicUrl, preview }: ImgLink = watch(name as any);
+
   const isInitial = preview === publicUrl;
   const noneUploaded = !publicUrl && !preview;
 

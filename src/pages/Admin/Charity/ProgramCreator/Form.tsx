@@ -3,7 +3,7 @@ import Group from "components/Group";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
-import FormWithContext from "components/form/Form";
+import { Form as FormWithContext } from "components/form";
 import { adminRoutes } from "constants/routes";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";

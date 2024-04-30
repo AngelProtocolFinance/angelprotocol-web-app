@@ -2,7 +2,7 @@ import QueryLoader from "components/QueryLoader";
 import { useParams } from "react-router-dom";
 import { useProgramQuery } from "services/aws/programs";
 import { useAdminContext } from "../../Context";
-import Form from "./Form";
+import Content from "./Content";
 
 export default function ProgramEditor() {
   const { id: programId = "" } = useParams();
@@ -17,7 +17,7 @@ export default function ProgramEditor() {
       queryState={programQuery}
       messages={{ loading: "Loading program", error: "Failed to load program" }}
     >
-      {(p) => <Form {...p} />}
+      {(p) => <Content {...p} />}
     </QueryLoader>
   );
 }
