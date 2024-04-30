@@ -65,7 +65,8 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
     { skip: !wallet?.address }
   );
 
-  // if
+  // if oldTransactionId is present, we should be using and updating it;
+  // otherwise, a new intent was created, so we should use its tx id.
   const intentId = oldTransactionId ?? intent?.transactionId;
 
   return (
