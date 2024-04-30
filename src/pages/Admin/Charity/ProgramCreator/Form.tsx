@@ -1,23 +1,37 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import Group from "components/Group";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
+import FormWithContext from "components/form/Form";
 import { adminRoutes } from "constants/routes";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Milestones from "./Milestones";
-import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
+import {
+  MAX_CHARS,
+  MAX_SIZE_IN_BYTES,
+  VALID_MIME_TYPES,
+  schema,
+} from "./schema";
 import { FV } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function Form() {
-  const { isSubmitting, submit, reset, initial } = useSubmit();
+  const methods = useForm<FV>({
+    defaultValues: {
+      title: "",
+      description: "",
+      image: { publicUrl: "", preview: "" },
+      milestones: [],
+    },
+    resolver: yupResolver(schema),
+  });
+  const { isSubmitting, submit } = useSubmit(methods);
   return (
-    <form
+    <FormWithContext
+      methods={methods}
       onSubmit={submit}
-      onReset={(e) => {
-        e.preventDefault();
-        reset();
-      }}
       className="@container w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <Group title="Program information">
@@ -54,30 +68,21 @@ export default function Form() {
       <Milestones />
 
       <div className="flex gap-3 group-disabled:hidden">
-        {initial ? (
-          <button
-            disabled={isSubmitting}
-            type="reset"
-            className="px-6 btn-outline-filled text-sm"
-          >
-            Reset changes
-          </button>
-        ) : (
-          <Link
-            to={"../" + adminRoutes.programs}
-            className="px-6 btn-outline-filled text-sm"
-          >
-            Cancel
-          </Link>
-        )}
+        <Link
+          to={"../" + adminRoutes.programs}
+          className="px-6 btn-outline-filled text-sm"
+        >
+          Cancel
+        </Link>
+
         <button
           disabled={isSubmitting}
           type="submit"
           className="px-6 btn-blue text-sm"
         >
-          {initial ? "Submit changes" : "Create program"}
+          Create program
         </button>
       </div>
-    </form>
+    </FormWithContext>
   );
 }

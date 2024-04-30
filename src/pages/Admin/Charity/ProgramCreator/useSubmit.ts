@@ -4,33 +4,34 @@ import { adminRoutes, appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
-import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
-import { SubmitHandler, useFormContext } from "react-hook-form";
+import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { EndowmentProgramsUpdate, Program } from "types/aws";
+import { useNewProgramMutation } from "services/aws/aws";
 import { useAdminContext } from "../../Context";
-import { useUpdateEndowment } from "../common";
 import { FV } from "./types";
 
-export default function useSubmit() {
+export default function useSubmit(methods: UseFormReturn<FV>) {
   const { id } = useAdminContext();
   const navigate = useNavigate();
   const {
     reset,
     handleSubmit,
     formState: { isSubmitting },
-    getValues,
-  } = useFormContext<FV>();
+  } = methods;
 
   const { showModal } = useModalContext();
   const { handleError, displayError } = useErrorContext();
-  const updateEndow = useUpdateEndowment();
+  const [createProgram] = useNewProgramMutation();
 
-  const submit: SubmitHandler<FV> = async ({ initial, ...fv }) => {
+  const submit: SubmitHandler<FV> = async (fv) => {
     try {
+      if (fv.milestones.length >= 24) {
+        return displayError("Number of milestones should not exceed 24");
+      }
+
       const [imageURL, ...milestoneMediaURLs] = await uploadImgs(
-        [fv.image, ...fv.milestones.map((m) => m.milestone_media)],
+        [fv.image, ...fv.milestones.map((m) => m.media)],
         () => {
           showModal(
             TxPrompt,
@@ -41,30 +42,18 @@ export default function useSubmit() {
       );
 
       //having initial value means form is for editing
-
-      const program: Program = {
-        program_title: fv.title,
-        program_id: initial ? initial.program_id : window.crypto.randomUUID(),
-        program_description: fv.description.value,
-        program_banner: imageURL,
-        program_milestones: fv.milestones.map(({ idx: _, ...m }, i) => ({
+      await createProgram({
+        title: fv.title,
+        description: fv.description.value,
+        banner: imageURL,
+        milestones: fv.milestones.map(({ idx: _, ...m }, i) => ({
           ...m,
-          milestone_date: new Date(m.milestone_date).toISOString(),
-          milestone_media: milestoneMediaURLs[i],
-          milestone_description: m.milestone_description.value,
+          date: new Date(m.date).toISOString(),
+          media: milestoneMediaURLs[i],
+          description: m.description.value,
         })),
-      };
+      });
 
-      if (initial) {
-        const diff = getPayloadDiff(initial, program);
-        if (isEmpty(diff)) return displayError("No changes detected");
-      }
-
-      const updates: EndowmentProgramsUpdate = {
-        id,
-        program: [program],
-      };
-      await updateEndow(updates);
       navigate(`${appRoutes.admin}/${id}/${adminRoutes.programs}`);
     } catch (err) {
       handleError(err, { context: "applying program changes" });
@@ -76,7 +65,6 @@ export default function useSubmit() {
     submit: handleSubmit(submit),
     isSubmitting,
     id,
-    initial: getValues("initial"),
   };
 }
 

@@ -4,9 +4,9 @@ import { MileStone } from "types/aws";
 import { RichTextContent } from "types/components";
 
 export type FormMilestone = OverrideProperties<
-  MileStone,
+  Omit<MileStone, "id">,
   { media: ImgLink; description: RichTextContent }
->;
+> & { idx: number };
 
 export type FV = {
   title: string;

@@ -25,6 +25,7 @@ import { version as v } from "../helpers";
 import {
   EndowmentUpdate,
   IdOrSlug,
+  NewProgram,
   ProgramDeleteMsg,
   VersionSpecificWalletProfile,
 } from "../types";
@@ -59,6 +60,7 @@ export const aws = createApi({
     "endowment",
     "endowments",
     "strategy",
+    "programs",
     "program",
     "applications",
     "application",
@@ -160,6 +162,17 @@ export const aws = createApi({
         };
       },
     }),
+    newProgram: builder.mutation<Program, NewProgram>({
+      invalidatesTags: (_, error) => (error ? [] : ["programs"]),
+      query: (payload) => {
+        return {
+          url: `/${v(1)}/programs`,
+          method: "POST",
+          headers: { authorization: TEMP_JWT },
+          body: payload,
+        };
+      },
+    }),
     deleteProgram: builder.mutation<EndowmentProfile, ProgramDeleteMsg>({
       invalidatesTags: (_, error) => (error ? [] : ["endowment"]),
       query: ({ id, program_id }) => {
@@ -233,6 +246,7 @@ export const {
   useDonationsQuery,
   useLazyDonationsQuery,
   useLazyEndowWithEinQuery,
+  useNewProgramMutation,
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },

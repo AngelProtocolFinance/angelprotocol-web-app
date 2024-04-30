@@ -15,8 +15,8 @@ export default function Milestone({
     watch,
     formState: { errors },
   } = useFormContext<FV>();
-  const mediaName: Path<FV> = `milestones.${idx}.milestone_media`;
-  const title = watch(`milestones.${idx}.milestone_title`);
+  const mediaName: Path<FV> = `milestones.${idx}.media`;
+  const title = watch(`milestones.${idx}.title`);
 
   const milestoneError = errors.milestones?.[idx];
 
@@ -60,21 +60,21 @@ export default function Milestone({
         <Field<FV, "date">
           type="date"
           classes={{ input: "date-input uppercase", container: "field-admin" }}
-          name={`milestones.${idx}.milestone_date`}
+          name={`milestones.${idx}.date`}
           label="Date of milestone"
           placeholder="e.g. 2014-09-23"
           required
         />
         <Field<FV>
           classes="field-admin"
-          name={`milestones.${idx}.milestone_title`}
+          name={`milestones.${idx}.title`}
           label="Title of milestone"
           placeholder="e.g. John"
           required
         />
         <Label className="-mb-4">Description of milestone</Label>
         <RichTextEditor<FV>
-          fieldName={`milestones.${idx}.milestone_description`}
+          fieldName={`milestones.${idx}.description`}
           charLimit={MAX_CHARS}
           classes={{
             container:
