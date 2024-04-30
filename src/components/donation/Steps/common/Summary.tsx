@@ -51,11 +51,11 @@ export default function Summary({
         </dt>
         <Amount amount={props.amount} classes="text-navy-d4" />
         <div className="flex items-center justify-between col-span-full">
-          <dt className="mr-auto text-sm">Sustainable Fund</dt>
+          <dt className="mr-auto text-sm">Sustainability Fund</dt>
           <Amount classes="text-sm" amount={locked} />
         </div>
         <div className="flex items-center justify-between col-span-full">
-          <dt className="mr-auto text-sm">Instantly Available</dt>
+          <dt className="mr-auto text-sm">Direct Donation</dt>
           <Amount classes="text-sm" amount={liq} />
         </div>
         {props.tip && (

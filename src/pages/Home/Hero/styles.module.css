@@ -1,0 +1,27 @@
+/** transition blur */
+.container::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: translateY(50%);
+
+  height: 30rem;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #f6fbfa 50%,
+    transparent
+  );
+}
+
+/** overlay */
+.container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: white;
+  opacity: 0.35;
+  z-index: 0;
+}

@@ -1,85 +1,65 @@
 import Prompt from "components/Prompt";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
-import { APError, AP_ERROR_DISCRIMINATOR } from "errors/errors";
+import { EMAIL_SUPPORT } from "constants/env";
 import { logger } from "helpers";
-import {
-  PropsWithChildren,
-  createContext,
-  useCallback,
-  useContext,
-} from "react";
+import { ReactNode } from "react";
 import { useModalContext } from "../ModalContext";
 
-type State = {
-  handleError: (
-    error: any,
-    displayMessage?: string,
-    options?: { log: boolean }
-  ) => void;
-};
+function parseError(error: unknown): string | undefined {
+  if (typeof error === "string") return error;
 
-const Context = createContext<State>({
-  handleError: (_: any, _1?: string, _2?: { log: boolean }) => {},
-});
+  if (typeof error === "object" && error != null) {
+    if ("message" in error) return parseError(error.message);
+    if ("data" in error) return parseError(error.data);
+    if ("error" in error) return parseError(error.error);
+  }
 
-export default function ErrorContext(props: PropsWithChildren<{}>) {
-  const { showModal } = useModalContext();
-
-  /**
-   * biome-ignore lint/correctness/useExhaustiveDependencies: bug in Biome with recursive dependencies
-   * Created an issue on their GH, see https://github.com/biomejs/biome/issues/2361
-   */
-  const handleError: State["handleError"] = useCallback(
-    (error: any, displayMessage?: string, options = { log: true }) => {
-      if (options.log) {
-        logger.error(error);
-      }
-
-      if (displayMessage) {
-        showModal(Prompt, {
-          type: "error",
-          children: displayMessage,
-        });
-      } else if (typeof error === "string") {
-        showModal(Prompt, {
-          type: "error",
-          children: error,
-        });
-      } else if (instanceOfAPError(error.data)) {
-        handleError(error.data);
-      } else if ("message" in error) {
-        handleError(error.message);
-        //TODO: specify controlled error shapes
-      } else if (error.data && typeof error.data === "string") {
-        handleError(error.data);
-      } else if (error.data && "message" in error.data) {
-        handleError(error.data.message);
-      } else if ("error" in error) {
-        handleError(error.error);
-      } else {
-        showModal(Prompt, {
-          type: "error",
-          children: GENERIC_ERROR_MESSAGE,
-        });
-      }
-    },
-    [showModal]
-  );
-
-  return (
-    <Context.Provider value={{ handleError }}>
-      {props.children}
-    </Context.Provider>
-  );
-}
-
-function instanceOfAPError(obj: any): obj is APError {
-  return (
-    !!obj &&
-    (obj.discriminator === AP_ERROR_DISCRIMINATOR || obj instanceof Error)
-  );
+  if (error instanceof Error) return error.message;
 }
 
 export function useErrorContext() {
-  return useContext(Context);
+  const { showModal } = useModalContext();
+
+  /**
+   * @description for expected errors
+   * @param message - user can do something about
+   */
+  function displayError(message: ReactNode) {
+    showModal(Prompt, { type: "error", children: message });
+  }
+
+  type Generic = {
+    /**
+     * context in present participle
+     * @example sending message
+     * @example loading resouce
+     */
+    context?: string;
+  };
+  type DisplayType = "parsed" | Generic | { custom: ReactNode };
+
+  /**
+   * @description for unexpected errors
+   * @param error - unknown error occured
+   * @param display - error info shown to user
+   */
+  const handleError = (error: unknown, display?: DisplayType) => {
+    const disp = display || {};
+    showModal(Prompt, {
+      type: "error",
+      children:
+        disp === "parsed"
+          ? parseError(error)
+          : "custom" in disp
+            ? disp.custom
+            : genericMsg(disp.context),
+    });
+    logger.error(error);
+  };
+
+  return { handleError, displayError };
 }
+
+const genericMsg = (context?: string) =>
+  `An unexpected error occurred${
+    context ? ` while ${context} ` : " "
+  }and has been reported. Please get in touch with ${EMAIL_SUPPORT} if the problem persists.`;

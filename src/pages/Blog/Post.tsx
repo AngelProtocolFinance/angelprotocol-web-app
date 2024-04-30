@@ -1,13 +1,13 @@
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
+import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { usePostQuery, useUserQuery } from "services/wordpress";
 import { Wordpress } from "types/wordpress";
-import Media from "./Media";
 
-const containerStyle = "padded-container max-w-4xl mx-auto pb-4";
+const containerStyle = "w-full padded-container max-w-4xl mx-auto pb-4";
 
 export default function Post() {
   const { slug = "" } = useParams<{ slug: string }>();

@@ -74,6 +74,7 @@ export type Endowment = {
   url?: string;
   /** not claimed only if `false` */
   claimed?: boolean;
+  sfCompounded?: boolean;
 };
 
 export type EndowmentProfile = Endowment;
@@ -108,7 +109,7 @@ export type EndowmentProfileUpdate = Except<
 
 export type EndowmentSettingsUpdate = Pick<
   Required<Endowment>,
-  "id" | "receiptMsg"
+  "id" | "receiptMsg" | "sfCompounded"
 >;
 
 export type EndowmentProgramsUpdate = Pick<

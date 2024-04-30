@@ -28,7 +28,6 @@ export type CryptoDonation = {
   denomination: string;
   endowmentId: number;
   chainId: string;
-  transactionId: string;
   walletAddress: string;
   /** 1 - 100 */
   splitLiq: number;
@@ -37,13 +36,15 @@ export type CryptoDonation = {
   donor: Donor;
 };
 
+type Currency = {
+  /** ISO 3166-1 alpha-3 code */
+  currency_code: string;
+  minimum_amount: number;
+  /** unit/usd */
+  rate: number;
+};
+
 export type FiatCurrencyData = {
-  currencies: {
-    /** ISO 3166-1 alpha-3 code */
-    currency_code: string;
-    minimum_amount: number;
-    /** unit/usd */
-    rate: number;
-    timestamp: string;
-  }[];
+  default?: Currency;
+  currencies: Currency[];
 };

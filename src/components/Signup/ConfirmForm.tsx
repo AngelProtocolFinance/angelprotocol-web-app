@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthError, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
 import { Field, Form } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useState } from "react";
 import { UseFormReturn, useForm } from "react-hook-form";
@@ -15,7 +14,7 @@ type Props = {
   classes?: string;
 };
 export default function ConfirmForm(props: Props) {
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const [isRequestingNewCode, setIsRequestingNewCode] = useState(false);
   const methods = useForm({
     resolver: yupResolver(object({ code: requiredString })),
@@ -43,14 +42,15 @@ export default function ConfirmForm(props: Props) {
             result.nextStep.signUpStep !== "DONE" ||
             !result.isSignUpComplete
           ) {
-            return handleError("Code confirmation failed");
+            throw "Code confirmation failed";
           }
 
           props.setSignupState("success");
         } catch (err) {
-          const message =
-            err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-          handleError(err, message);
+          if (err instanceof AuthError) {
+            return displayError(err.message);
+          }
+          handleError(err, { context: "confirming signup" });
         }
       })}
     >
@@ -82,9 +82,10 @@ export default function ConfirmForm(props: Props) {
 
             return alert("New code has been sent to your email.");
           } catch (err) {
-            const message =
-              err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-            handleError(err, message);
+            if (err instanceof AuthError) {
+              return displayError(err.message);
+            }
+            handleError(err, { context: "sending code" });
           } finally {
             setIsRequestingNewCode(false);
           }

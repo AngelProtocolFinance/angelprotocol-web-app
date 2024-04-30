@@ -25,14 +25,13 @@ export default function ErrorPage(props: ErrorQueryParams) {
       window.location.href = url;
     } catch (err) {
       setSubmitText(initialText);
-      handleError(err);
+      handleError(err, { context: "generating signing url" });
     }
   }
 
   const isRedirecting = submitText === redirectingText;
   return (
     <>
-      {" "}
       <div className="bg-red rounded-full aspect-square grid place-items-center mb-4">
         <Icon type="Exclamation" size={30} className="text-white m-5" />
       </div>

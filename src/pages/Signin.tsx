@@ -7,7 +7,6 @@ import LoaderRing from "components/LoaderRing";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
@@ -26,7 +25,7 @@ type FormValues = {
 };
 
 export default function Signin() {
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const methods = useForm<FormValues>({
     resolver: yupResolver(
       object({
@@ -64,9 +63,10 @@ export default function Signin() {
       if (nextStep.signInStep !== "DONE")
         throw `Unexpected next step: ${nextStep.signInStep}`;
     } catch (err) {
-      const message =
-        err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-      handleError(err, message, { log: !(err instanceof AuthError) });
+      if (err instanceof AuthError) {
+        return displayError(err.message);
+      }
+      handleError(err, { context: "signing in" });
     }
   }
 

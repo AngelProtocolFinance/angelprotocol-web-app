@@ -1,9 +1,7 @@
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
-import { TxPrompt } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
-import { useModalContext } from "contexts/ModalContext";
-import { logger } from "helpers";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useAdminContext } from "pages/Admin/Context";
 import { Link } from "react-router-dom";
 import { useDeleteProgramMutation } from "services/aws/aws";
@@ -12,17 +10,14 @@ import { Program as TProgram } from "types/aws";
 
 export function Program(props: TProgram) {
   const { id } = useAdminContext();
-  const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
   const [deleteProgram, { isLoading: isDeleting }] = useDeleteProgramMutation();
 
   const handleDeleteProgram = async (msg: ProgramDeleteMsg) => {
     try {
       await deleteProgram(msg);
     } catch (err) {
-      logger.error(err);
-      showModal(TxPrompt, {
-        error: err instanceof Error ? err.message : "Unknown error occured",
-      });
+      handleError(err, { context: "deleting program" });
     }
   };
 

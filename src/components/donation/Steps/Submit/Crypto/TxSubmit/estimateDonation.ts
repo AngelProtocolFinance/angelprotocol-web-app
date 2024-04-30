@@ -15,7 +15,7 @@ export async function estimateDonation(
   token: TokenWithAmount,
   chainID: ChainID,
   sender: string,
-  tipAmount = 0
+  tipAmount: number
 ): Promise<Exclude<EstimateStatus, "loading">> {
   try {
     const grossAmount = +token.amount + tipAmount;

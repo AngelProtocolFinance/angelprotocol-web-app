@@ -1,6 +1,12 @@
 import { Selector } from "components/Selector";
 import { chains } from "constants/chains";
+import { DonationRecord } from "types/aws";
+import { OptionType } from "types/components";
 import { FormValues as FV } from "./types";
+
+const fiatNetworks: OptionType<string>[] = [
+  { label: "Fiat", value: "fiat" },
+] satisfies OptionType<Extract<DonationRecord["viaId"], "fiat">>[];
 
 export default function NetworkDropdown({ classes = "" }) {
   return (
@@ -9,10 +15,12 @@ export default function NetworkDropdown({ classes = "" }) {
       <Selector<FV, "network", string>
         name="network"
         classes={{ button: "dark:bg-blue-d6", options: "text-sm" }}
-        options={Object.entries(chains).map(([, chain]) => ({
-          label: chain.name,
-          value: chain.id,
-        }))}
+        options={fiatNetworks.concat(
+          Object.entries(chains).map(([, chain]) => ({
+            label: chain.name,
+            value: chain.id,
+          }))
+        )}
       />
     </div>
   );

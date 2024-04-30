@@ -1,8 +1,8 @@
 import ContentLoader from "components/ContentLoader";
+import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
 import { Link } from "react-router-dom";
 import { Wordpress } from "types/wordpress";
-import Media from "./Media";
 import usePagination from "./usePagination";
 
 export default function Posts() {
@@ -75,7 +75,7 @@ const Cards = (props: { posts: Wordpress.Post[] }) =>
       <Media
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
         id={post.featured_media}
-        classes="h-32 sm:h-60 w-full object-cover"
+        classes="w-full md:h-44 md:object-fill"
       />
       <div className="flex flex-col p-4 gap-3">
         <h2

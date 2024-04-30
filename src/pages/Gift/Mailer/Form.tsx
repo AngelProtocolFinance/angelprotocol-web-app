@@ -1,12 +1,9 @@
-import Prompt from "components/Prompt";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { richTextToHTML } from "helpers/richTextToHtml";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
@@ -20,7 +17,6 @@ export default function Form({ classes = "" }) {
     reset,
     formState: { isSubmitting },
   } = useFormContext<FV>();
-  const { showModal } = useModalContext();
   const [recipient, setRecipient] = useState<string>();
   const { handleError } = useErrorContext();
 
@@ -35,17 +31,11 @@ export default function Form({ classes = "" }) {
         }),
       });
 
-      if (!res.ok) {
-        return showModal(Prompt, {
-          type: "error",
-          headline: "Confirmation",
-          title: "Failed to send gift card",
-        });
-      }
+      if (!res.ok) throw await res.json();
 
       setRecipient(recipient.email);
     } catch (error) {
-      handleError(error, GENERIC_ERROR_MESSAGE);
+      handleError(error, { context: "sending giftcard" });
     }
   }
 

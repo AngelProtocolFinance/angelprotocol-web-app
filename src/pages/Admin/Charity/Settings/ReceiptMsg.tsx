@@ -10,7 +10,10 @@ export default function ReceiptMsg() {
     <div>
       <Field<FV, "textarea">
         type="textarea"
-        classes="field-admin [&_[data-error]]:-bottom-4"
+        classes={{
+          container: "field-admin [&_[data-error]]:-bottom-4",
+          label: "text-base font-medium",
+        }}
         name="receiptMsg"
         label="Tax Receipt message for donors"
         placeholder="Your nonprofit's message to all donors"

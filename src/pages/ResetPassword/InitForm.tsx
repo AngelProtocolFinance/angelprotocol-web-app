@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthError, resetPassword } from "aws-amplify/auth";
 import { Form, Input } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { UseFormReturn, useForm } from "react-hook-form";
@@ -15,7 +14,7 @@ type Props = {
 };
 
 export default function InitForm(props: Props) {
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const methods = useForm({
     resolver: yupResolver(
       object({ email: requiredString.trim().email("invalid email format") })
@@ -51,9 +50,10 @@ export default function InitForm(props: Props) {
         },
       });
     } catch (err) {
-      const message =
-        err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-      handleError(err, message, { log: !(err instanceof AuthError) });
+      if (err instanceof AuthError) {
+        return displayError(err.message);
+      }
+      handleError(err, { context: "resetting password" });
     }
   }
 

@@ -1,0 +1,104 @@
+.carousel {
+  position: relative;
+  z-index: 2;
+}
+/** backdrop */
+.carousel::after {
+  content: "";
+  position: absolute;
+  height: 50rem;
+  width: 140%;
+  background: radial-gradient(
+    ellipse at center,
+    #eae2fc70 1%,
+    white 20%,
+    transparent 70%
+  );
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.heading {
+  position: relative;
+}
+/** right blemish */
+.heading::after {
+  content: "";
+  position: absolute;
+  height: 6em;
+  width: 130%;
+  background: radial-gradient(ellipse at center, white 20%, transparent 70%);
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  z-index: -1;
+}
+
+/** left blemish */
+.heading::before {
+  content: "";
+  position: absolute;
+  height: 6em;
+  width: 100%;
+  background: radial-gradient(ellipse at center, white 10%, transparent 70%);
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+/** page transition blur */
+.container::after {
+  content: "";
+  position: absolute;
+  height: 100rem;
+  width: 100%;
+  background: radial-gradient(
+    ellipse at center,
+    #fdefd195 1px,
+    transparent 70%
+  );
+  right: 0;
+  bottom: 0;
+  transform: translate(50%, 50%);
+  z-index: -1;
+}
+
+/** side violet blemish */
+.container::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 150%;
+  background: radial-gradient(ellipse at center, #eae2fc 1px, transparent 70%);
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.carousel_overlay::before {
+  content: "";
+  position: absolute;
+  height: 200%;
+  width: 60%;
+  background: radial-gradient(ellipse at center, white 5%, transparent 80%);
+  right: 0;
+  top: 50%;
+  transform: translate(50%, -50%);
+  z-index: 1;
+}
+
+.carousel_overlay::after {
+  content: "";
+  position: absolute;
+  height: 200%;
+  width: 60%;
+  background: radial-gradient(ellipse at center, white 5%, transparent 80%);
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}

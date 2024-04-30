@@ -31,42 +31,35 @@ export default function SubscriptionForm() {
 
   async function submit(data: FV) {
     try {
-      const response = await subscribe(data.email);
-
-      if ("error" in response) {
-        throw response.error;
-      }
-
+      await subscribe(data.email).unwrap();
       reset();
     } catch (error) {
-      handleError(error);
+      //user might already be subscribed and server returns a helpful message
+      handleError(error, "parsed");
     }
   }
 
   return (
-    <form
-      className="flex flex-col items-center gap-4 w-full md:w-4/5 lg:w-full xl:flex-row xl:items-start xl:gap-6"
-      onSubmit={handleSubmit(submit)}
-    >
-      <div className="flex flex-col gap-1 w-[80vw] lg:w-full">
+    <form className="grid content-start" onSubmit={handleSubmit(submit)}>
+      <div className="grid mb-3">
         <input
           {...register("email")}
           id="email"
-          className="text-xs field-input enabled:focus:ring-blue-d2 border-none w-full h-10 px-3 bg-white"
-          placeholder="Enter your email address here"
+          className="cursor-default text-[#000000] opacity-[.9] p-3 rounded-md font-normal border text-[15px] md:text-[13px] border-solid  border-[#0000001a] w-full"
+          placeholder="Enter your email"
           disabled={isSubmitting}
         />
         <ErrorMessage
           errors={errors}
           as="p"
           name="email"
-          className="w-full text-xs text-white text-center"
+          className="w-full text-xs text-red-d2 text-left mt-0.5"
         />
         {isSuccess && !errors.email && <SuccessMessage />}
       </div>
       <button
         type="submit"
-        className="btn-blue enabled:hover:bg-blue-l4 enabled:hover:text-navy-d4 px-4 text-xs h-10 w-[80vw] lg:w-full xl:w-min"
+        className="sm:justify-self-start bg-blue-d1 rounded-full px-5 py-2 text-white text-sm font-medium"
         disabled={isSubmitting}
       >
         Subscribe

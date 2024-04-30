@@ -40,7 +40,7 @@ export default function useSubmit() {
     });
 
     if ("error" in result) {
-      return handleError(result.error);
+      return handleError(result.error, { context: "updating registration" });
     }
 
     navigate(`../${steps.fsaInquiry}`, { state: init });

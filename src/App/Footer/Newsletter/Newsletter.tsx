@@ -1,23 +1,23 @@
-import { BASE_URL } from "constants/env";
+import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
 import SubscriptionForm from "./SubscriptionForm";
 
-export default function Newsletter() {
+export default function Newsletter({ classes = "" }) {
   return (
-    <div className="flex flex-col items-center gap-6 w-full px-1 lg:w-full lg:max-w-xs xl:max-w-md">
-      <div className="flex flex-col items-center lg:items-start w-[80vw] lg:w-full">
-        <p className="font-heading text-sm font-bold uppercase leading-6">
-          Subscribe to our newsletter
-        </p>
-        <p className="font-normal text-xs text-center lg:text-left">
+    <div
+      className={`grid content-start px-1 ${classes} sm:max-md:grid-cols-2 xl:grid-cols-1 gap-x-8 xl:max-w-md`}
+    >
+      <div className="mb-6">
+        <h6 className="text-[#4585bb] mb-3.5">Subscribe to our newsletter</h6>
+        <p className="text-[12px] text[#647581] text-justify text-pretty">
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}
-          <a
-            href={`${BASE_URL}/privacy-policy/`}
-            className="font-bold cursor-pointer hover:underline"
+          <Link
+            to={appRoutes.privacy_policy}
+            className="font-medium underline text-black"
           >
             Privacy Policy
-          </a>
-          .
+          </Link>
         </p>
       </div>
 

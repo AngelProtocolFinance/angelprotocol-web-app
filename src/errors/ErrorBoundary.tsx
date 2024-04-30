@@ -1,10 +1,8 @@
-import ModalContext from "contexts/ModalContext";
 import { logger } from "helpers";
-import { Component, ErrorInfo, PropsWithChildren } from "react";
-import ErrorContext from "../contexts/ErrorContext";
-import ErrorHandler from "./ErrorHandler";
+import { Component, ErrorInfo, PropsWithChildren, ReactNode } from "react";
+import DefaultFallback from "./DefaultFallback";
 
-type Props = PropsWithChildren<{}>;
+type Props = PropsWithChildren<{ fallback?: ReactNode }>;
 
 type State = { error: Error | undefined };
 
@@ -20,18 +18,13 @@ export default class ErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    logger.error(`Caught error: ${error}, error info: ${errorInfo}`);
+    logger.error(error);
+    logger.error(errorInfo);
   }
 
   render() {
-    return (
-      <ModalContext>
-        <ErrorContext>
-          <ErrorHandler error={this.state.error}>
-            {this.props.children}
-          </ErrorHandler>
-        </ErrorContext>
-      </ModalContext>
-    );
+    return this.state.error
+      ? this.props.fallback || <DefaultFallback />
+      : this.props.children;
   }
 }

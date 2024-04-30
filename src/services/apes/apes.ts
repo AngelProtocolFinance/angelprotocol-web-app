@@ -2,7 +2,9 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { PaymentIntent } from "@stripe/stripe-js";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
+import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import {
+  CryptoDonation,
   Donor,
   EndowmentBalances,
   FiatCurrencyData,
@@ -21,7 +23,6 @@ type FiatDonation = {
   /** Denominated in USD. */
   amount: number;
   tipAmount: number;
-  usdRate: number;
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
   endowmentId: number;
@@ -46,25 +47,66 @@ export const apes = createApi({
   endpoints: (builder) => ({
     capturePayPalOrder: builder.mutation<PayPalOrder, { orderId: string }>({
       query: (params) => ({
-        url: `v1/fiat/paypal/${apiEnv}/orders/${params.orderId}/capture`,
+        url: `fiat-donation/paypal/orders/${params.orderId}/capture`,
         method: "POST",
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    fiatCurrencies: builder.query<DetailedCurrency[], void>({
-      query: () => ({
-        url: `v1/fiat/currencies`,
-      }),
-      transformResponse: (res: FiatCurrencyData) =>
-        res.currencies.map((c) => ({
-          code: c.currency_code,
-          min: c.minimum_amount,
-          rate: c.rate,
-        })),
-    }),
-    paypalOrder: builder.query<string, CreatePayPalOrderParams>({
+    createCryptoIntent: builder.query<
+      { transactionId: string },
+      CryptoDonation
+    >({
       query: (params) => ({
-        url: `v1/fiat/paypal/${apiEnv}/orders`,
+        url: `crypto-donation/v2`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+        body: JSON.stringify(params),
+      }),
+    }),
+    confirmCryptoIntent: builder.mutation<
+      { guestDonor: GuestDonor },
+      { txId: string; txHash: string }
+    >({
+      query: ({ txHash, txId }) => ({
+        url: `crypto-donation/${txId}/confirm`,
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+        body: JSON.stringify({ txHash }),
+      }),
+    }),
+    fiatCurrencies: builder.query<
+      { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
+      void
+    >({
+      query: () => ({
+        url: "fiat-currencies",
+        params: { prefCode: getCookie(bgCookies.prefCode) },
+      }),
+      transformResponse: (res: FiatCurrencyData) => {
+        const toDetailed = (
+          input: FiatCurrencyData["currencies"][number]
+        ): DetailedCurrency => ({
+          code: input.currency_code,
+          rate: input.rate,
+          min: input.minimum_amount,
+        });
+
+        if (res.default) {
+          setCookie(
+            bgCookies.prefCode,
+            res.default.currency_code.toUpperCase()
+          );
+        }
+
+        return {
+          currencies: res.currencies.map((c) => toDetailed(c)),
+          defaultCurr: res.default && toDetailed(res.default),
+        };
+      },
+    }),
+    paypalOrder: builder.mutation<string, CreatePayPalOrderParams>({
+      query: (params) => ({
+        url: "fiat-donation/paypal/orders",
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
@@ -83,7 +125,10 @@ export const apes = createApi({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
     getStripePaymentStatus: builder.query<
-      Pick<PaymentIntent, "status"> & { guestDonor?: GuestDonor },
+      Pick<PaymentIntent, "status"> & {
+        guestDonor?: GuestDonor;
+        recipientName?: string;
+      },
       { paymentIntentId: string }
     >({
       query: ({ paymentIntentId }) => ({
@@ -98,9 +143,11 @@ export const apes = createApi({
 
 export const {
   useCapturePayPalOrderMutation,
+  useCreateCryptoIntentQuery,
+  useConfirmCryptoIntentMutation,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
-  usePaypalOrderQuery,
+  usePaypalOrderMutation,
   useEndowBalanceQuery,
   useGetStripePaymentStatusQuery,
   useTokensQuery,

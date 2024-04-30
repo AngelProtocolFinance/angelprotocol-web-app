@@ -2,7 +2,7 @@ import char from "assets/images/celebrating-character.png";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Signup from "components/Signup";
-import { DAPP_URL } from "constants/env";
+import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link, useLocation } from "react-router-dom";
@@ -10,9 +10,14 @@ import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import { GuestDonor } from "types/aws";
 
+export type DonateFiatThanksState = {
+  guestDonor?: GuestDonor;
+  recipientName?: string;
+};
+
 export default function DonateFiatThanks({ widgetVersion = false }) {
   const location = useLocation();
-  const guestDonor: GuestDonor | undefined = location.state;
+  const state: DonateFiatThanksState | undefined = location.state;
   const user = useGetter((state) => state.auth.user);
 
   return (
@@ -33,8 +38,9 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>
       <p className="text-center text-navy-l1">
-        We'll process your donation to the nonprofit you specified as soon as
-        the payment has cleared.
+        We'll process your donation to{" "}
+        {state?.recipientName ?? "the nonprofit you specified"} as soon as the
+        payment has cleared.
         {widgetVersion
           ? ""
           : " You can safely navigate away using the button below."}
@@ -43,7 +49,7 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         If you need a receipt for your donation, please fill out the KYC form
         for this transaction on your{" "}
         {widgetVersion ? (
-          <ExtLink href={`${DAPP_URL}${appRoutes.donations}`}>
+          <ExtLink href={`${BASE_URL}${appRoutes.donations}`}>
             My Donations
           </ExtLink>
         ) : (
@@ -52,13 +58,13 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         page.
       </p>
 
-      {!userIsSignedIn(user) && guestDonor && (
+      {!userIsSignedIn(user) && state?.guestDonor && (
         <Signup
           classes="max-w-96 w-full mt-6 justify-self-center"
           donor={((d) => {
             const [firstName, lastName] = d.fullName.split(" ");
             return { firstName, lastName, email: d.email };
-          })(guestDonor)}
+          })(state.guestDonor)}
         />
       )}
 

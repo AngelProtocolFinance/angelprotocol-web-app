@@ -4,6 +4,7 @@ import Prompt from "components/Prompt";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { isConnected, useWalletContext } from "contexts/WalletContext";
 import { useFormContext } from "react-hook-form";
@@ -19,34 +20,34 @@ export default function Form({ classes = "" }) {
     formState: { isSubmitting },
   } = useFormContext<FV>();
   const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
 
   const walletState = useWalletContext();
 
   async function submit(data: FV) {
     /** restricted by submit button */
-    const wallet = walletState as ConnectedWallet;
-    const res = await fetch(APIs.aws + "/v1/giftcard/claim", {
-      method: "POST",
-      body: JSON.stringify({
-        secret: data.secret,
-        recipient: wallet.address,
-        chain: wallet.chainId,
-      }),
-    });
-    if (!res.ok) {
-      return showModal(Prompt, {
-        type: "error",
-        headline: "Claim",
-        title: "Failed to claim gift card",
+    try {
+      const wallet = walletState as ConnectedWallet;
+      const res = await fetch(APIs.aws + "/v1/giftcard/claim", {
+        method: "POST",
+        body: JSON.stringify({
+          secret: data.secret,
+          recipient: wallet.address,
+          chain: wallet.chainId,
+        }),
       });
+      if (!res.ok) throw await res.json();
+
+      showModal(Prompt, {
+        type: "success",
+        headline: "Redeem",
+        title: "Giftcard Redeemed Successfully",
+        children: `Giftcard balance has been credited to your account and you can start donating!`,
+      });
+      reset();
+    } catch (err) {
+      handleError(err, { context: "claiming giftcard" });
     }
-    showModal(Prompt, {
-      type: "success",
-      headline: "Redeem",
-      title: "Giftcard Redeemed Successfully",
-      children: `Giftcard balance has been credited to your account and you can start donating!`,
-    });
-    reset();
   }
 
   return (

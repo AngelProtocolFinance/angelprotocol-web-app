@@ -2,7 +2,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthError, signUp } from "aws-amplify/auth";
 import Icon from "components/Icon";
 import { Form } from "components/form";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -17,7 +16,7 @@ type Props = {
 };
 
 export default function SignupForm(props: Props) {
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
     register,
@@ -80,9 +79,10 @@ export default function SignupForm(props: Props) {
             },
           });
         } catch (err) {
-          const message =
-            err instanceof AuthError ? err.message : GENERIC_ERROR_MESSAGE;
-          handleError(err, message);
+          if (err instanceof AuthError) {
+            return displayError(err.message);
+          }
+          handleError(err, { context: "signing up" });
         }
       })}
     >

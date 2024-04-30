@@ -1,8 +1,9 @@
 import { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
 import { adminRoutes, appRoutes } from "constants/routes";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { isEmpty, logger } from "helpers";
+import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { SubmitHandler, useFormContext } from "react-hook-form";
@@ -23,6 +24,7 @@ export default function useSubmit() {
   } = useFormContext<FV>();
 
   const { showModal } = useModalContext();
+  const { handleError, displayError } = useErrorContext();
   const updateEndow = useUpdateEndowment();
 
   const submit: SubmitHandler<FV> = async ({ initial, ...fv }) => {
@@ -55,9 +57,7 @@ export default function useSubmit() {
 
       if (initial) {
         const diff = getPayloadDiff(initial, program);
-        if (isEmpty(diff)) {
-          return showModal(TxPrompt, { error: "No changes detected" });
-        }
+        if (isEmpty(diff)) return displayError("No changes detected");
       }
 
       const updates: EndowmentProgramsUpdate = {
@@ -67,10 +67,7 @@ export default function useSubmit() {
       await updateEndow(updates);
       navigate(`${appRoutes.admin}/${id}/${adminRoutes.programs}`);
     } catch (err) {
-      logger.error(err);
-      showModal(TxPrompt, {
-        error: err instanceof Error ? err.message : "Unknown error occured",
-      });
+      handleError(err, { context: "applying program changes" });
     }
   };
 

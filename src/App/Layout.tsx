@@ -1,24 +1,37 @@
 import Loader from "components/Loader";
 import Seo from "components/Seo";
+import { appRoutes } from "constants/routes";
+import ErrorBoundary from "errors/ErrorBoundary";
 import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
-import Footer from "./Footer";
+import { Outlet, useLocation } from "react-router-dom";
+import Footer from "./Footer/FooterV2";
 import Header from "./Header";
 import { CHARITY_LINKS } from "./constants";
 import useHeaderLinks from "./useHeaderLinks";
 
-const { GROUPS_DATA, SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
+const { SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
 
 export default function Layout() {
   const headerLinks = useHeaderLinks();
+  const { key, pathname } = useLocation();
+  const isHome = pathname === appRoutes.home;
   return (
-    <div className="grid grid-rows-[4rem_minmax(calc(100dvh-4rem),1fr)_auto]">
+    <div
+      className={`grid ${
+        isHome ? "" : "grid-rows-[4rem_minmax(calc(100dvh-4rem),1fr)_auto]"
+      }`}
+    >
       <Seo /> {/* Load all defaults for SEO meta tags */}
-      <Header links={headerLinks} classes="sticky top-0 z-20" />
+      <Header
+        links={headerLinks}
+        classes={`${isHome ? "mt-8 px-4" : ""} sticky z-[999] top-[-1px]`}
+      />
       <Suspense fallback={<LoaderComponent />}>
-        <Outlet />
+        <ErrorBoundary key={key} /** allows for recovery when changing page */>
+          <Outlet />
+        </ErrorBoundary>
       </Suspense>
-      <Footer linkGroups={GROUPS_DATA} socials={SOCIAL_MEDIA_LINKS} />
+      <Footer socials={SOCIAL_MEDIA_LINKS} />
     </div>
   );
 }
