@@ -1,3 +1,4 @@
+import character from "assets/images/waving-character.png";
 import Image from "components/Image";
 import { DonationsQueryParams } from "types/aws";
 
@@ -12,8 +13,8 @@ export default function NoDonations({ classes, status }: Props) {
       className={`${classes} max-sm:text-center grid sm:grid-cols-[1fr_auto] max-w-md gap-y-2 gap-x-4`}
     >
       <Image
-        alt="someone looking for an object"
-        src="/images/not-found.png"
+        alt="Laira mascot waving"
+        src={character}
         className="max-sm:place-self-center sm:col-start-2 sm:row-start-1 sm:row-span-2 rounded-full w-48 object-cover object-center"
       />
       <h3 className="text-lg self-end">No donations found.</h3>
