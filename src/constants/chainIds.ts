@@ -1,6 +1,6 @@
+import { ChainID } from "types/chain";
 import { Chains } from "types/lists";
 import { IS_TEST } from "./env";
-import { ChainID } from "types/chain";
 
 export const chainIds: { [key in Chains]: ChainID } = IS_TEST
   ? {

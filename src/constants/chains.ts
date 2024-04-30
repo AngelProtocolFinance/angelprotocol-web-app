@@ -104,7 +104,7 @@ export const polygonAmoy: Chain = {
   id: "80002",
   brand: "polygonAmoy",
   name: "Polygon Amoy Testnet",
-  rpc: baseProxyURL + "/amoy",
+  rpc: baseProxyURL + "/polygonAmoy",
   lcd: "",
   blockExplorer: "https://amoy.polygonscan.com",
   nativeToken: {
@@ -186,6 +186,7 @@ export const chainList: Chain[] = [
   binance,
   juno,
   terraMainnet,
+  sepolia,
   polygonAmoy,
   arbitrumSepolia,
   binanceTestnet,

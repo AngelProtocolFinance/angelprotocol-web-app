@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { polygonAmoy, polygon } from "constants/chains";
+import { polygon, polygonAmoy } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { FormProvider, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
