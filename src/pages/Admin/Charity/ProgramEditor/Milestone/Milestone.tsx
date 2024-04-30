@@ -14,11 +14,15 @@ import useMustate from "./useMutate";
 type Props = TMilestone & { programId: string };
 export default function Milestone(props: Props) {
   const methods = useForm<FV>({
-    defaultValues: {
+    values: {
       date: dateToFormFormat(new Date()),
       title: props.title,
-      media: { name: "", publicUrl: props.media, preview: props.media },
-      description: props.description,
+      media: {
+        name: "",
+        publicUrl: props.media ?? "",
+        preview: props.media ?? "",
+      },
+      description: { value: props.description ?? "" },
     },
     resolver: yupResolver(schema),
   });

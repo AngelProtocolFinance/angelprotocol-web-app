@@ -12,17 +12,14 @@ import useSubmit from "./useSubmit";
 
 export default function ProgramInfo(props: Program) {
   const methods = useForm<FV>({
-    defaultValues: {
+    values: {
       title: props.title,
       image: {
         name: "",
         publicUrl: props.banner ?? "",
         preview: props.banner ?? "",
       },
-      description: {
-        value: props.description,
-        length: props.description.length ?? 0,
-      },
+      description: { value: props.description },
     },
     resolver: yupResolver(schema),
   });
