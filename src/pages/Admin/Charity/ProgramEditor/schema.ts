@@ -22,10 +22,10 @@ const fileObj = object().shape<SchemaShape<ImgLink>>({
 });
 
 const milesStoneSchema = object<any, SchemaShape<FormMilestone>>({
-  milestone_date: date().typeError("invalid date"),
-  milestone_description: richTextContent({ maxChars: MAX_CHARS }),
-  milestone_title: requiredString.trim(),
-  milestone_media: fileObj,
+  date: date().typeError("invalid date"),
+  description: richTextContent({ maxChars: MAX_CHARS }),
+  title: requiredString.trim(),
+  media: fileObj,
 });
 
 //construct strict shape to avoid hardcoding shape keys

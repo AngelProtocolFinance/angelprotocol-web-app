@@ -4,18 +4,20 @@ import { APIEnvironment, UNSDG_NUMS } from "../../lists";
 export type EndowmentTierNum = 1 | 2 | 3;
 
 export type MileStone = {
-  milestone_date: string; //isoDate
-  milestone_description: string;
-  milestone_media: string;
-  milestone_title: string;
+  id: string;
+  /** iso date */
+  date: string;
+  description?: string;
+  media?: string;
+  title: string;
 };
 
 export type Program = {
-  program_banner: string;
-  program_description: string;
-  program_id: string;
-  program_title: string;
-  program_milestones: MileStone[];
+  banner?: string;
+  description: string;
+  id: string;
+  title: string;
+  milestones: MileStone[];
 };
 
 export type EndowDesignation =
