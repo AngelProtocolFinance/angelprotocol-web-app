@@ -4,6 +4,7 @@ import { adminRoutes, appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
+import { cleanObject } from "helpers/cleanObject";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -43,16 +44,19 @@ export default function useSubmit(methods: UseFormReturn<FV>) {
 
       //having initial value means form is for editing
       await createProgram({
+        endowId: id,
         title: fv.title,
         description: fv.description.value,
-        banner: imageURL,
-        milestones: fv.milestones.map(({ idx: _, ...m }, i) => ({
-          ...m,
-          date: new Date(m.date).toISOString(),
-          media: milestoneMediaURLs[i],
-          description: m.description.value,
-        })),
-      });
+        ...(imageURL && { banner: imageURL }),
+        milestones: fv.milestones.map(({ idx: _, ...m }, i) =>
+          cleanObject({
+            ...m,
+            date: new Date(m.date).toISOString(),
+            media: milestoneMediaURLs[i],
+            description: m.description.value,
+          })
+        ),
+      }).unwrap();
 
       navigate(`${appRoutes.admin}/${id}/${adminRoutes.programs}`);
     } catch (err) {

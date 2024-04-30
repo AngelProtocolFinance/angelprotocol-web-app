@@ -166,19 +166,19 @@ export const aws = createApi({
         };
       },
     }),
-    newProgram: builder.mutation<Program, NewProgram>({
+    newProgram: builder.mutation<Program, NewProgram & { endowId: number }>({
       invalidatesTags: (_, error) => (error ? [] : ["programs"]),
-      query: (payload) => {
+      query: ({ endowId, ...payload }) => {
         return {
-          url: `/${v(1)}/programs`,
+          url: `/${v(1)}/endowments/${endowId}/programs`,
           method: "POST",
           headers: { authorization: TEMP_JWT },
           body: payload,
         };
       },
     }),
-    deleteProgram: builder.mutation<EndowmentProfile, ProgramDeleteMsg>({
-      invalidatesTags: (_, error) => (error ? [] : ["endowment"]),
+    deleteProgram: builder.mutation<unknown, ProgramDeleteMsg>({
+      invalidatesTags: (_, error) => (error ? [] : ["programs"]),
       query: ({ id, program_id }) => {
         return {
           url: `/${v(1)}/endowments/${id}/programs/${program_id}`,
