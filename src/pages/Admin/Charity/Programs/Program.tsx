@@ -4,7 +4,7 @@ import { adminRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useAdminContext } from "pages/Admin/Context";
 import { Link } from "react-router-dom";
-import { useDeleteProgramMutation } from "services/aws/aws";
+import { useDeleteProgramMutation } from "services/aws/programs";
 import { ProgramDeleteMsg } from "services/types";
 import { Program as TProgram } from "types/aws";
 

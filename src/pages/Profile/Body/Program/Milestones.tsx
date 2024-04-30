@@ -2,7 +2,7 @@ import Image from "components/Image";
 import RichText from "components/RichText";
 import { Info } from "components/Status";
 import { isEmpty } from "helpers";
-import { MileStone as TMilestone } from "types/aws";
+import { Milestone as TMilestone } from "types/aws";
 import Container from "../common/Container";
 
 type Props = {

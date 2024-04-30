@@ -15,18 +15,14 @@ import {
   Endowment,
   EndowmentCard,
   EndowmentOption,
-  EndowmentProfile,
   EndowmentsQueryParams,
-  NewProgram,
   PaginatedAWSQueryRes,
-  Program,
   WalletProfile,
 } from "types/aws";
 import { version as v } from "../helpers";
 import {
   EndowmentUpdate,
   IdOrSlug,
-  ProgramDeleteMsg,
   VersionSpecificWalletProfile,
 } from "../types";
 
@@ -145,15 +141,7 @@ export const aws = createApi({
     >({
       query: (ein) => ({ url: "v7/endowments", params: { ein, env: apiEnv } }),
     }),
-    programs: builder.query<Program[], number>({
-      providesTags: ["programs", "program"],
-      query: (endowId) => `/${v(1)}/endowments/${endowId}/programs`,
-    }),
-    program: builder.query<Program, { endowId: number; programId: string }>({
-      providesTags: ["program"],
-      query: ({ endowId, programId }) =>
-        `/${v(1)}/endowments/${endowId}/programs/${programId}`,
-    }),
+
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
       invalidatesTags: (_, error) =>
         error ? [] : ["endowments", "endowment", "walletProfile"],
@@ -166,27 +154,7 @@ export const aws = createApi({
         };
       },
     }),
-    newProgram: builder.mutation<Program, NewProgram & { endowId: number }>({
-      invalidatesTags: (_, error) => (error ? [] : ["programs"]),
-      query: ({ endowId, ...payload }) => {
-        return {
-          url: `/${v(1)}/endowments/${endowId}/programs`,
-          method: "POST",
-          headers: { authorization: TEMP_JWT },
-          body: payload,
-        };
-      },
-    }),
-    deleteProgram: builder.mutation<unknown, ProgramDeleteMsg>({
-      invalidatesTags: (_, error) => (error ? [] : ["programs"]),
-      query: ({ id, program_id }) => {
-        return {
-          url: `/${v(1)}/endowments/${id}/programs/${program_id}`,
-          method: "DELETE",
-          headers: { authorization: TEMP_JWT },
-        };
-      },
-    }),
+
     applications: builder.query<
       PaginatedAWSQueryRes<Application[]>,
       ApplicationsQueryParams
@@ -236,13 +204,11 @@ export const aws = createApi({
 });
 
 export const {
-  useDeleteProgramMutation,
   useWalletProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentQuery,
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,
-  useProgramQuery,
   useEditEndowmentMutation,
   useApplicationsQuery,
   useApplicationQuery,
@@ -250,8 +216,6 @@ export const {
   useDonationsQuery,
   useLazyDonationsQuery,
   useLazyEndowWithEinQuery,
-  useProgramsQuery,
-  useNewProgramMutation,
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },

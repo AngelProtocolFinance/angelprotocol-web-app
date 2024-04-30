@@ -1,6 +1,6 @@
 import QueryLoader from "components/QueryLoader";
 import RichText from "components/RichText";
-import { useProgramsQuery } from "services/aws/aws";
+import { useProgramsQuery } from "services/aws/programs";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";

@@ -3,7 +3,7 @@ import QueryLoader from "components/QueryLoader";
 import RichText from "components/RichText";
 import { useProfileContext } from "pages/Profile/ProfileContext";
 import { useParams } from "react-router-dom";
-import { useProgramQuery } from "services/aws/aws";
+import { useProgramQuery } from "services/aws/programs";
 import Container from "../common/Container";
 import Milestones from "./Milestones";
 

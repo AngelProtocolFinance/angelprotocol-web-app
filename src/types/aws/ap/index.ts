@@ -4,7 +4,7 @@ import { APIEnvironment, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
-export type MileStone = {
+export type Milestone = {
   id: string;
   /** iso date */
   date: string;
@@ -18,7 +18,7 @@ export type Program = {
   description: string;
   id: string;
   title: string;
-  milestones: MileStone[];
+  milestones: Milestone[];
 };
 
 export type EndowDesignation =
@@ -111,9 +111,12 @@ export type EndowmentSettingsUpdate = Pick<
 >;
 
 export type NewProgram = Omit<Program, "id" | "milestones"> & {
-  milestones: Omit<MileStone, "id">[];
+  milestones: Omit<Milestone, "id">[];
 };
-export type ProgramUpdate = PartialExcept<Program, "id">;
+export type ProgramUpdate = PartialExcept<Omit<Program, "milestones">, "id">;
+
+export type NewMilestone = Omit<Milestone, "id">;
+export type MilestoneUpdate = PartialExcept<Milestone, "id">;
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";

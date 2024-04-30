@@ -8,7 +8,7 @@ import { cleanObject } from "helpers/cleanObject";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useNewProgramMutation } from "services/aws/aws";
+import { useNewProgramMutation } from "services/aws/programs";
 import { useAdminContext } from "../../Context";
 import { FV } from "./types";
 
