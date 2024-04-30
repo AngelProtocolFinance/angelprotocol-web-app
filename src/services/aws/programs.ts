@@ -15,7 +15,10 @@ const programs = aws.injectEndpoints({
       query: ({ endowId, programId }) =>
         `/${v(1)}/endowments/${endowId}/programs/${programId}`,
     }),
-    newProgram: builder.mutation<Program, NewProgram & { endowId: number }>({
+    newProgram: builder.mutation<
+      { id: string },
+      NewProgram & { endowId: number }
+    >({
       invalidatesTags: (_, error) => (error ? [] : ["programs"]),
       query: ({ endowId, ...payload }) => {
         return {

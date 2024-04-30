@@ -30,6 +30,7 @@ export default function ProgramEditor() {
           loading: "Loading program",
           error: "Failed to load program",
         }}
+        classes={{ container: "mt-2" }}
       >
         {(p) => <Content {...p} />}
       </QueryLoader>
