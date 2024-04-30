@@ -1,5 +1,10 @@
 import { TEMP_JWT } from "constants/auth";
-import { Milestone, MilestoneUpdate, NewMilestone } from "types/aws";
+import {
+  Milestone,
+  MilestoneDelete,
+  MilestoneUpdate,
+  NewMilestone,
+} from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
@@ -37,7 +42,23 @@ const milestones = aws.injectEndpoints({
         };
       },
     }),
+    deleteMilestone: builder.mutation<unknown, MilestoneDelete>({
+      invalidatesTags: (_, error) => (error ? [] : ["program"]),
+      query: ({ endowId, programId, milestoneId }) => {
+        return {
+          url: `/${v(
+            1
+          )}/endowments/${endowId}/programs/${programId}/milestones/${milestoneId}`,
+          method: "DELETE",
+          headers: { authorization: TEMP_JWT },
+        };
+      },
+    }),
   }),
 });
 
-export const { useEditMilestoneMutation, useNewMilestoneMutation } = milestones;
+export const {
+  useEditMilestoneMutation,
+  useNewMilestoneMutation,
+  useDeleteMilestoneMutation,
+} = milestones;

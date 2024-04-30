@@ -117,6 +117,11 @@ export type ProgramUpdate = PartialExcept<Omit<Program, "milestones">, "id">;
 
 export type NewMilestone = Omit<Milestone, "id">;
 export type MilestoneUpdate = PartialExcept<Milestone, "id">;
+export type MilestoneDelete = {
+  endowId: number;
+  programId: string;
+  milestoneId: string;
+};
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";

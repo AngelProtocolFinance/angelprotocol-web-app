@@ -9,7 +9,7 @@ import { Milestone as TMilestone } from "types/aws";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { schema } from "./schema";
 import { FV } from "./types";
-import useSubmit from "./useSubmit";
+import useMustate from "./useMutate";
 
 type Props = TMilestone & { programId: string };
 export default function Milestone(props: Props) {
@@ -27,7 +27,10 @@ export default function Milestone(props: Props) {
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = methods;
-  const onSubmit = useSubmit(props.id, props.programId);
+  const { submit, handleDeleteMilestone, isDeletingMilestone } = useMustate(
+    props.id,
+    props.programId
+  );
 
   return (
     <Disclosure
@@ -49,7 +52,7 @@ export default function Milestone(props: Props) {
           } bg-white dark:bg-blue-d6 py-6 px-4 grid content-start gap-6`
         }
         disabled={isSubmitting}
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submit)}
         methods={methods}
       >
         <Label className="-mb-4">Image of milestone</Label>
@@ -92,11 +95,12 @@ export default function Milestone(props: Props) {
         />
         <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-between">
           <button
+            disabled={isDeletingMilestone}
             type="button"
             className="btn-red py-2 text-sm"
-            onClick={() => alert("delete")}
+            onClick={() => handleDeleteMilestone(props.id)}
           >
-            Delete milestone
+            {isDeletingMilestone ? "Deleting.." : "Delete"} milestone
           </button>
           <button
             disabled={!isDirty}
