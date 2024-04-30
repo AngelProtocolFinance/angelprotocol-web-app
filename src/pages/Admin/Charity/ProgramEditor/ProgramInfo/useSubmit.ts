@@ -27,13 +27,14 @@ export default function useSubmit(initProgram: Program) {
         );
       });
 
-      const update: ProgramUpdate = cleanObject({
+      const update: ProgramUpdate = {
         id: initProgram.id,
         banner: imageURL,
         description: fv.description.value,
         title: fv.title,
-      });
-      await updateProgram({ endowId: id, ...update }).unwrap();
+      };
+
+      await updateProgram({ endowId: id, ...cleanObject(update) }).unwrap();
       showModal(Prompt, {
         type: "success",
         children: "Program information updated",

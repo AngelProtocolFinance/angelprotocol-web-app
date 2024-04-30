@@ -36,6 +36,7 @@ export default function useMutate(milestoneId: string, programId: string) {
         media: imageURL,
         description: fv.description.value,
         title: fv.title,
+        date: new Date(fv.date).toISOString(),
       };
       await editMilestone({
         endowId: id,
