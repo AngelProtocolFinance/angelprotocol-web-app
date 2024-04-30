@@ -19,7 +19,7 @@ export default function Programs() {
         endowId: id,
         milestones: [],
       }).unwrap();
-      navigate(`../${adminRoutes.program_edit}/${result.id}`);
+      navigate(`../${adminRoutes.program_editor}/${result.id}`);
     } catch (err) {
       handleError(err, { context: "creating program" });
     }

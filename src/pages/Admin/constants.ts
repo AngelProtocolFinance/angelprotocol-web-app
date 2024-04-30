@@ -1,12 +1,7 @@
 import { adminRoutes } from "constants/routes";
 import { Link } from "./Sidebar/types";
 
-const {
-  programs_new: _pn,
-  program_edit: _pe,
-  index: _i,
-  ...restAdminRoutes
-} = adminRoutes;
+const { program_editor: _pe, index: _i, ...restAdminRoutes } = adminRoutes;
 
 const sidebarRoutes = {
   ...restAdminRoutes,

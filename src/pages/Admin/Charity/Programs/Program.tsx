@@ -53,7 +53,7 @@ export function Program(props: TProgram) {
             delete
           </button>
           <Link
-            to={`../${adminRoutes.program_edit}/${props.id}`}
+            to={`../${adminRoutes.program_editor}/${props.id}`}
             className="btn-outline-filled w-24 py-2 text-sm"
             state={props}
           >
