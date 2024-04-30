@@ -1,5 +1,8 @@
+import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import { adminRoutes } from "constants/routes";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useProgramQuery } from "services/aws/programs";
 import { useAdminContext } from "../../Context";
 import Content from "./Content";
@@ -13,11 +16,23 @@ export default function ProgramEditor() {
   );
 
   return (
-    <QueryLoader
-      queryState={programQuery}
-      messages={{ loading: "Loading program", error: "Failed to load program" }}
-    >
-      {(p) => <Content {...p} />}
-    </QueryLoader>
+    <>
+      <Link
+        to={"../" + adminRoutes.programs}
+        className="flex items-center gap-2 text-blue-d1 hover:text-blue -mb-2"
+      >
+        <Icon type="Back" />
+        <span>Back</span>
+      </Link>
+      <QueryLoader
+        queryState={programQuery}
+        messages={{
+          loading: "Loading program",
+          error: "Failed to load program",
+        }}
+      >
+        {(p) => <Content {...p} />}
+      </QueryLoader>
+    </>
   );
 }

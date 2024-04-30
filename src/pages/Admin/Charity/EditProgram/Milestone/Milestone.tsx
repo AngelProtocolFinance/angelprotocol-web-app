@@ -24,7 +24,6 @@ export default function Milestone(props: Props) {
   });
 
   const {
-    reset,
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = methods;
@@ -51,10 +50,6 @@ export default function Milestone(props: Props) {
         }
         disabled={isSubmitting}
         onSubmit={handleSubmit(onSubmit)}
-        onReset={(e) => {
-          e.preventDefault();
-          reset();
-        }}
         methods={methods}
       >
         <Label className="-mb-4">Image of milestone</Label>
@@ -95,27 +90,20 @@ export default function Milestone(props: Props) {
             charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
-        <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-start">
+        <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-between">
           <button
-            disabled={!isDirty}
-            type="reset"
-            className="btn-outline-filled py-1.5 px-4 text-sm"
+            type="button"
+            className="btn-red py-2 text-sm"
+            onClick={() => alert("delete")}
           >
-            Reset
+            Delete milestone
           </button>
           <button
             disabled={!isDirty}
             type="submit"
-            className="btn-blue py-1.5 text-sm"
+            className="btn-blue py-2 text-sm"
           >
             Save changes
-          </button>
-          <button
-            type="button"
-            className="@lg:ml-auto btn-red py-1.5 text-sm"
-            onClick={() => alert("delete")}
-          >
-            Delete milestone
           </button>
         </div>
       </Disclosure.Panel>

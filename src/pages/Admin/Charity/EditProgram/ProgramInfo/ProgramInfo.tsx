@@ -27,7 +27,6 @@ export default function ProgramInfo(props: Program) {
     resolver: yupResolver(schema),
   });
   const {
-    reset,
     handleSubmit,
     formState: { isSubmitting, isDirty },
   } = methods;
@@ -38,10 +37,6 @@ export default function ProgramInfo(props: Program) {
     <Group title="Program information">
       <Form
         onSubmit={handleSubmit(submit)}
-        onReset={(e) => {
-          e.preventDefault();
-          reset();
-        }}
         methods={methods}
         disabled={isSubmitting}
         className="contents"
@@ -74,29 +69,13 @@ export default function ProgramInfo(props: Program) {
             charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
-        <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-start">
-          <button
-            disabled={!isDirty}
-            type="reset"
-            className="btn-outline-filled py-2 text-sm"
-          >
-            Reset
-          </button>
-          <button
-            disabled={!isDirty}
-            type="submit"
-            className="btn-blue py-2 text-sm"
-          >
-            Save changes
-          </button>
-          <button
-            type="button"
-            className="@lg:ml-auto btn-outline-filled  text-sm"
-            onClick={() => alert("delete")}
-          >
-            Delete program
-          </button>
-        </div>
+        <button
+          disabled={!isDirty}
+          type="submit"
+          className="@lg:justify-self-end btn-blue py-2 text-sm"
+        >
+          Save changes
+        </button>
       </Form>
     </Group>
   );
