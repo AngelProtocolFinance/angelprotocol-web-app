@@ -7,9 +7,7 @@ import LoaderRing from "components/LoaderRing";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
-import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { PRIVACY_POLICY, TERMS_OF_USE_NPO } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
 import { determineAuthRedirectPath } from "helpers";
 import { useForm } from "react-hook-form";
@@ -147,22 +145,25 @@ export default function Signin() {
       </Form>
       <span className="text-xs sm:text-sm text-center w-80">
         By signing in, you agree to our{" "}
-        <ExtLink href={PRIVACY_POLICY} className="text-blue hover:text-blue-l2">
+        <ExtLink
+          href={appRoutes.privacy_policy}
+          className="text-blue hover:text-blue-l2"
+        >
           Privacy Policy
         </ExtLink>
         ,{" "}
         <ExtLink
-          href={`${BASE_URL}/cookie-policy/`}
+          href={appRoutes.terms_donors}
           className="text-blue hover:text-blue-l2"
         >
-          Cookie Policy
+          Terms of Use (Donors)
         </ExtLink>
         , and{" "}
         <ExtLink
-          href={TERMS_OF_USE_NPO}
+          href={appRoutes.terms_nonprofits}
           className="text-blue hover:text-blue-l2"
         >
-          Terms of Use
+          Terms of Use (Nonprofits)
         </ExtLink>
       </span>
     </div>

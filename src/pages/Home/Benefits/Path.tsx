@@ -14,9 +14,9 @@ import icon8 from "./icons/Icon8_wb.webp";
 import { Slide } from "./types";
 
 const colors = ["bg-[#EDFCE2]", "bg-lilac", "bg-[#FCF6E2]", "bg-[#EDF2FE]"];
-type TPath = "non-profits" | "donors";
+type TPath = "nonprofits" | "donors";
 const Path = () => {
-  const [path, setPath] = useState<TPath>("non-profits");
+  const [path, setPath] = useState<TPath>("donors");
   const nonProfits: Slide[] = [
     {
       title: "Sustainable Impact",
@@ -92,15 +92,6 @@ const Path = () => {
         <button
           type="button"
           className={`${
-            path === "non-profits" ? "bg-white" : "bg-transparent"
-          } py-2 px-6 rounded-3xl`}
-          onClick={() => setPath("non-profits")}
-        >
-          For Donors
-        </button>
-        <button
-          type="button"
-          className={`${
             path === "donors" ? "bg-white" : "bg-transparent"
           } py-2 px-6 rounded-3xl`}
           onClick={() => {
@@ -109,19 +100,28 @@ const Path = () => {
         >
           For Nonprofits
         </button>
+        <button
+          type="button"
+          className={`${
+            path === "nonprofits" ? "bg-white" : "bg-transparent"
+          } py-2 px-6 rounded-3xl`}
+          onClick={() => setPath("nonprofits")}
+        >
+          For Donors
+        </button>
       </div>
       <p className="text-lg md:text-[28px] font-medium text-navy-l1/60 text-center mb-11">
-        {path === "non-profits"
+        {path === "nonprofits"
           ? "Access our free fundraising technology and tools."
           : "Join our global community and amplify your charitable giving."}
       </p>
 
       <BenefitsCarousel
-        slides={path === "non-profits" ? nonProfits : donors}
+        slides={path === "nonprofits" ? nonProfits : donors}
         classes="max-lg:hidden"
       />
       <Carousel
-        slides={path === "non-profits" ? nonProfits : donors}
+        slides={path === "nonprofits" ? nonProfits : donors}
         classes="lg:hidden"
       />
       {/* TODO: enable once we have the static pages ready */}

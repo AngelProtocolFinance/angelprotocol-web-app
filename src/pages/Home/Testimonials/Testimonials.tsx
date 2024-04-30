@@ -1,3 +1,4 @@
+import Icon from "components/Icon";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import TestimonialCard from "./TestimonialCard";
@@ -18,6 +19,19 @@ const Testimonials = () => {
         Success Stories: <br /> Inspiring Change Together
       </h2>
 
+      <button
+        type="button"
+        className="swip-prev p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-3/4 -translate-y-1/2 right-[90%]"
+      >
+        <Icon type="Back" className="text-2xl" />
+      </button>
+      <button
+        type="button"
+        className="swip-next p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-3/4 -translate-y-1/2 left-[90%]"
+      >
+        <Icon type="Next" className="text-2xl" />
+      </button>
+
       <Swiper
         centeredSlides
         loop
@@ -36,6 +50,10 @@ const Testimonials = () => {
           },
         }}
         modules={[Navigation]}
+        navigation={{
+          nextEl: ".swip-next",
+          prevEl: ".swip-prev",
+        }}
         className="w-[90vw] lg:w-[80vw]"
       >
         {testimonials.map((ele, idx) => {
