@@ -150,9 +150,9 @@ export const aws = createApi({
       query: (endowId) => `/${v(1)}/endowments/${endowId}/programs`,
     }),
     program: builder.query<Program, { endowId: number; programId: string }>({
-      providesTags: ["endowment", "program"],
+      providesTags: ["program"],
       query: ({ endowId, programId }) =>
-        `/${v(1)}/profile/${apiEnv}/program/${endowId}/${programId}`,
+        `/${v(1)}/endowments/${endowId}/programs/${programId}`,
     }),
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
       invalidatesTags: (_, error) =>
@@ -250,6 +250,7 @@ export const {
   useDonationsQuery,
   useLazyDonationsQuery,
   useLazyEndowWithEinQuery,
+  useProgramsQuery,
   useNewProgramMutation,
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },

@@ -8,7 +8,7 @@ export default function Programs() {
       <div className="flex items-center justify-between">
         <h2 className="text-[2rem] font-bold">Programs</h2>
         <Link
-          to={`../${adminRoutes.program_editor}/new`}
+          to={`../${adminRoutes.programs_new}`}
           className="btn-blue px-8 py-2"
         >
           Create program

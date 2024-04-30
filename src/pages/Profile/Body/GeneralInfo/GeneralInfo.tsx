@@ -1,5 +1,6 @@
+import QueryLoader from "components/QueryLoader";
 import RichText from "components/RichText";
-import { isEmpty } from "helpers";
+import { useProgramsQuery } from "services/aws/aws";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";
@@ -7,6 +8,8 @@ import Programs from "./Programs";
 
 export default function GeneralInfo({ className = "" }) {
   const profile = useProfileContext();
+  const programs = useProgramsQuery(profile.id);
+
   return (
     <div
       className={`${className} grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
@@ -19,11 +22,16 @@ export default function GeneralInfo({ className = "" }) {
             readOnly
           />
         </Container>
-        {!isEmpty(profile.program) && (
-          <Container title="Programs">
-            <Programs />
-          </Container>
-        )}
+        <QueryLoader
+          queryState={programs}
+          messages={{ error: "Failed to load programs", empty: <></> }}
+        >
+          {(programs) => (
+            <Container title="Programs">
+              <Programs programs={programs} />
+            </Container>
+          )}
+        </QueryLoader>
       </div>
       <DetailsColumn className="self-start lg:sticky lg:top-[5.5rem]" />
     </div>

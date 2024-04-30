@@ -9,7 +9,7 @@ import Dashboard from "./Dashboard";
 import Donations from "./Donations";
 import EditProfile from "./EditProfile";
 import Members from "./Members/Members";
-import ProgramEditor from "./ProgramEditor";
+import ProgramCreator from "./ProgramCreator";
 import Programs from "./Programs";
 import Settings from "./Settings";
 
@@ -41,10 +41,7 @@ export default function Charity() {
 
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.programs} element={<Programs />} />
-        <Route
-          path={adminRoutes.program_editor + "/:id"}
-          element={<ProgramEditor />}
-        />
+        <Route path={adminRoutes.programs_new} element={<ProgramCreator />} />
 
         <Route path={adminRoutes.settings} element={<Settings />} />
         <Route path={adminRoutes.members} element={<Members />} />

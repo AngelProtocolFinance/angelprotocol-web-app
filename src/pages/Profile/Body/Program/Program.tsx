@@ -22,16 +22,16 @@ export default function Program({ className = "" }) {
         <div
           className={`${className} grid items-start grid-rows-[auto_auto] gap-8 w-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
         >
-          <Container title={p.program_title} expanded>
+          <Container title={p.title} expanded>
             <RichText
-              content={{ value: p.program_description }}
+              content={{ value: p.description }}
               readOnly
               classes={{ container: "m-6" }}
             />
           </Container>
           <Milestones
             classes="self-start lg:sticky lg:top-28"
-            milestones={p.program_milestones}
+            milestones={p.milestones}
           />
         </div>
       )}

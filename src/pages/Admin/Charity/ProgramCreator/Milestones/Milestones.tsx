@@ -20,10 +20,10 @@ export default function Milestones() {
         <button
           onClick={() =>
             append({
-              milestone_date: dateToFormFormat(new Date()),
-              milestone_description: { value: "" },
-              milestone_title: `Milestone ${fields.length + 1}`,
-              milestone_media: {
+              date: dateToFormFormat(new Date()),
+              description: { value: "" },
+              title: `Milestone ${fields.length + 1}`,
+              media: {
                 name: "",
                 preview: "",
                 publicUrl: "",
