@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useProgramQuery } from "services/aws/programs";
 import { useAdminContext } from "../../Context";
-import Content from "./Content";
+import Form from "./Form";
 
 export default function ProgramEditor() {
   const { id: programId = "" } = useParams();
@@ -32,7 +32,7 @@ export default function ProgramEditor() {
         }}
         classes={{ container: "mt-2" }}
       >
-        {(p) => <Content {...p} />}
+        {(p) => <Form {...p} />}
       </QueryLoader>
     </>
   );
