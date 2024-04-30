@@ -17,6 +17,7 @@ import {
   EndowmentOption,
   EndowmentProfile,
   EndowmentsQueryParams,
+  NewProgram,
   PaginatedAWSQueryRes,
   Program,
   WalletProfile,
@@ -25,7 +26,6 @@ import { version as v } from "../helpers";
 import {
   EndowmentUpdate,
   IdOrSlug,
-  NewProgram,
   ProgramDeleteMsg,
   VersionSpecificWalletProfile,
 } from "../types";
@@ -144,6 +144,10 @@ export const aws = createApi({
       string
     >({
       query: (ein) => ({ url: "v7/endowments", params: { ein, env: apiEnv } }),
+    }),
+    programs: builder.query<Program[], number>({
+      providesTags: ["programs", "program"],
+      query: (endowId) => `/${v(1)}/endowments/${endowId}/programs`,
     }),
     program: builder.query<Program, { endowId: number; programId: string }>({
       providesTags: ["endowment", "program"],

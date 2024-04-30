@@ -1,11 +1,8 @@
 import {
   BankingApplication,
   EndowmentProfileUpdate,
-  EndowmentProgramsUpdate,
   EndowmentSettingsUpdate,
   FSASignerDocumentation,
-  MileStone,
-  Program,
   V2RecipientAccount,
   WalletProfile,
 } from "types/aws";
@@ -17,13 +14,9 @@ export type ChainQueryArgs = {
 };
 
 export type EndowmentUpdate = SemiPartial<
-  EndowmentProfileUpdate & EndowmentSettingsUpdate & EndowmentProgramsUpdate,
+  EndowmentProfileUpdate & EndowmentSettingsUpdate,
   "id"
 >;
-
-export type NewProgram = Omit<Program, "id" | "milestones"> & {
-  milestones: Omit<MileStone, "id">[];
-};
 
 export type ProgramDeleteMsg = { id: number; program_id: string };
 

@@ -1,4 +1,5 @@
 import { Except } from "type-fest";
+import { PartialExcept } from "types/utils";
 import { APIEnvironment, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
@@ -63,7 +64,6 @@ export type Endowment = {
   card_img?: string;
   /** empty string by default */
   overview: string;
-  program: Program[];
   published: boolean;
   registration_number: string;
   sdgs: UNSDG_NUMS[];
@@ -100,11 +100,7 @@ export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
-  | "endow_designation"
-  | "fiscal_sponsored"
-  | "receiptMsg"
-  | "program"
-  | "claimed"
+  "endow_designation" | "fiscal_sponsored" | "receiptMsg" | "claimed"
 > & {
   endow_designation: EndowDesignation | "";
 };
@@ -114,10 +110,10 @@ export type EndowmentSettingsUpdate = Pick<
   "id" | "receiptMsg" | "sfCompounded"
 >;
 
-export type EndowmentProgramsUpdate = Pick<
-  Required<Endowment>,
-  "id" | "program"
->;
+export type NewProgram = Omit<Program, "id" | "milestones"> & {
+  milestones: Omit<MileStone, "id">[];
+};
+export type ProgramUpdate = PartialExcept<Program, "id">;
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
