@@ -12,7 +12,7 @@ import useSubmit from "./useSubmit";
 
 export default function ProgramInfo(props: Program) {
   const methods = useForm<FV>({
-    values: {
+    defaultValues: {
       title: props.title,
       image: {
         name: "",
