@@ -21,7 +21,7 @@ export default function useSubmit(
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, isDirty },
   } = methods;
 
   const { showModal } = useModalContext();
@@ -59,6 +59,6 @@ export default function useSubmit(
     reset,
     submit: handleSubmit(submit),
     isSubmitting,
-    id,
+    isDirty,
   };
 }

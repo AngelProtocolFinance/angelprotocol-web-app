@@ -22,14 +22,19 @@ export default function Milestone(props: Props) {
     },
     resolver: yupResolver(schema),
   });
-  const { submit, isSubmitting } = useSubmit(
+  const { submit, isSubmitting, isDirty } = useSubmit(
     methods,
     props.id,
     props.programId
   );
 
+  console.log({ isDirty });
+
   return (
-    <Disclosure as="div" className={`border rounded overflow-hidden`}>
+    <Disclosure
+      as="div"
+      className="border border-gray-l4 rounded overflow-hidden"
+    >
       <div className="relative py-3 px-4 text-center bg-blue-l5 dark:bg-blue-d7">
         <span className="text-xl font-bold font-heading">{props.title}</span>
         <Disclosure.Button className="absolute right-4 top-1/2 -translate-y-1/2">
@@ -44,9 +49,9 @@ export default function Milestone(props: Props) {
             open ? "border-t border-gray-l4" : ""
           } bg-white dark:bg-blue-d6 py-6 px-4 grid content-start gap-6`
         }
+        disabled={isSubmitting}
         onSubmit={submit}
         methods={methods}
-        disabled={isSubmitting}
       >
         <Label className="-mb-4">Image of milestone</Label>
         <ImgEditor<FV, "media">
@@ -60,6 +65,7 @@ export default function Milestone(props: Props) {
           }}
           maxSize={MAX_SIZE_IN_BYTES}
         />
+
         <Field<FV, "date">
           type="date"
           classes={{ input: "date-input uppercase", container: "field-admin" }}
@@ -86,13 +92,30 @@ export default function Milestone(props: Props) {
             charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
-        <button
-          type="button"
-          className="btn-outline-filled @md:justify-self-end w-full @lg:w-52 py-2 text-sm"
-          onClick={() => alert("delete")}
-        >
-          Delete milestone
-        </button>
+
+        <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-start">
+          <button
+            disabled={!isDirty}
+            type="reset"
+            className="btn-outline-filled py-2 text-sm"
+          >
+            Reset
+          </button>
+          <button
+            disabled={!isDirty}
+            type="submit"
+            className="btn-blue py-2 text-sm"
+          >
+            Save changes
+          </button>
+          <button
+            type="button"
+            className="@lg:ml-auto btn-outline-filled  text-sm"
+            onClick={() => alert("delete")}
+          >
+            Delete milestone
+          </button>
+        </div>
       </Disclosure.Panel>
     </Disclosure>
   );
