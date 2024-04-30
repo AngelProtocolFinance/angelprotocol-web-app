@@ -5,11 +5,8 @@ import { RichTextContent } from "types/components";
 
 export type FormMilestone = OverrideProperties<
   MileStone,
-  { milestone_media: ImgLink; milestone_description: RichTextContent }
-> & {
-  //meta
-  idx: number;
-};
+  { media: ImgLink; description: RichTextContent }
+>;
 
 export type FV = {
   title: string;
