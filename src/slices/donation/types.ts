@@ -1,4 +1,4 @@
-import { Donor, Endowment, GuestDonor } from "types/aws";
+import { Donor, Endowment, FiatPaymentFrequency, GuestDonor } from "types/aws";
 import { ChainID } from "types/chain";
 import { DetailedCurrency, OptionType } from "types/components";
 import { DonationSource } from "types/lists";
@@ -28,7 +28,7 @@ type FiatDonationDetails = BaseDonationDetais & {
 
 export type StripeDonationDetails = {
   method: "stripe";
-  frequency: "once" | "monthly";
+  frequency: FiatPaymentFrequency;
 } & FiatDonationDetails;
 
 export type StocksDonationDetails = {
@@ -87,6 +87,8 @@ export type SummaryStep = {
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
+  /** Set only when loading an existing intent */
+  oldTransactionId?: string;
 } & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;

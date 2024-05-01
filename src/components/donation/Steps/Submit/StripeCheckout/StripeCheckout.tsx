@@ -16,14 +16,22 @@ import Checkout from "./Checkout";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, liquidSplitPct, tip = 0 } = props;
+  const {
+    details,
+    recipient,
+    liquidSplitPct,
+    tip = 0,
+    oldTransactionId,
+  } = props;
+
   const {
     data: clientSecret,
     isLoading,
     isError,
     error,
   } = useStripePaymentIntentQuery({
-    type: details.frequency === "once" ? "one-time" : "subscription",
+    transactionId: oldTransactionId,
+    type: details.frequency,
     amount: +details.amount,
     tipAmount: tip,
     currency: details.currency.code,

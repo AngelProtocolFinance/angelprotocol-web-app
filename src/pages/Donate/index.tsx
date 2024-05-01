@@ -10,10 +10,8 @@ export default function Donate() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
   const queryState = useEndowment({ id: numId }, [
-    "fiscal_sponsored",
     "id",
     "image",
-    "kyc_donors_only",
     "logo",
     "name",
     "overview",
@@ -36,8 +34,8 @@ export default function Donate() {
           <Seo
             title={`Donate to ${profile.name} - ${APP_NAME}`}
             description={profile.overview?.slice(0, 140)}
-            name={`${profile.name}`}
-            image={`${profile.logo}`}
+            name={profile.name}
+            image={profile.logo}
             url={`${BASE_URL}/donate/${profile.id}`}
           />
           <Content

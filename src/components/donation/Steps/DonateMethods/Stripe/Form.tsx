@@ -44,7 +44,7 @@ function Form({
     source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: defaultCurr || { code: USD_CODE, min: 1, rate: 1 },
-    frequency: "monthly",
+    frequency: "subscription",
   };
 
   const currencyKey: keyof FV = "currency";

@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { Donor } from "types/aws";
+import { DonationIntent, Donor } from "types/aws";
+import { ChainID } from "types/chain";
 import {
   CryptoResultStep,
   DonationDetails,
@@ -21,6 +22,56 @@ const donation = createSlice({
   name: "donate",
   initialState: initialState as DonationState,
   reducers: {
+    loadIntent: (
+      _,
+      {
+        payload,
+      }: PayloadAction<DonationIntent & { recipient: DonationRecipient }>
+    ) => {
+      if ("walletAddress" in payload) {
+        return {
+          step: "submit",
+          details: {
+            method: "crypto",
+            chainId: {
+              label: payload.chainName,
+              value: payload.chainId as ChainID,
+            },
+            source: payload.source,
+            token: {
+              amount: `${payload.amount}`,
+              ...payload.token,
+            },
+          },
+          donor: payload.donor,
+          format: "pct",
+          intentTransactionId: payload.transactionId,
+          tip: payload.tipAmount,
+          liquidSplitPct: payload.splitLiq,
+          recipient: payload.recipient,
+        };
+      }
+      return {
+        step: "submit",
+        details: {
+          method: "stripe",
+          amount: `${payload.amount}`,
+          currency: {
+            code: payload.currency.currency_code,
+            min: payload.currency.minimum_amount,
+            rate: payload.currency.rate,
+          },
+          frequency: payload.frequency,
+          source: payload.source,
+        },
+        donor: payload.donor,
+        format: "pct",
+        intentTransactionId: payload.transactionId,
+        tip: payload.tipAmount,
+        liquidSplitPct: payload.splitLiq,
+        recipient: payload.recipient,
+      };
+    },
     setRecipient: (_, { payload }: PayloadAction<DonationRecipient>) => {
       return { step: "donate-form", recipient: payload };
     },
@@ -110,6 +161,7 @@ const donation = createSlice({
 
 export default donation.reducer;
 export const {
+  loadIntent,
   setRecipient,
   setStep,
   setDetails,
