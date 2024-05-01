@@ -21,7 +21,7 @@ const registration_api = aws.injectEndpoints({
       { email: string; claim?: EndowClaim }
     >({
       query: ({ email, claim }) => ({
-        url: `${v(5)}/registration`,
+        url: `${v(6)}/registration`,
         method: "POST",
         body: { Email: email, ...(claim && { InitClaim: claim }) },
         headers: { authorization: TEMP_JWT },
