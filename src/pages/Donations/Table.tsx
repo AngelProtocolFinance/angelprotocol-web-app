@@ -77,11 +77,7 @@ export default function Table({
           >
             USD Value
           </HeaderButton>
-          {status === "intent" ? (
-            <span className="flex justify-center">Finish Paying</span>
-          ) : (
-            <>TX Hash</>
-          )}
+          {status === "intent" ? <></> : <>TX Hash</>}
           {status === "final" && (
             <span className="flex justify-center">Receipt</span>
           )}
@@ -128,7 +124,7 @@ export default function Table({
                   href={`${appRoutes.donations}/${row.id}`}
                   className="flex gap-px items-center cursor-pointer text-blue underline hover:text-blue-l1"
                 >
-                  Finish Paying <Icon size={16} type="ArrowRight" />
+                  Finish Paying
                 </ExtLink>
               ) : row.viaId === "fiat" || row.viaId === "staging" ? (
                 <>- - -</>
