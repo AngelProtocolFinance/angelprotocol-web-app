@@ -14,7 +14,14 @@ import { StripeCheckoutStep } from "slices/donation";
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout(props: StripeCheckoutStep) {
-  const { details, recipient, liquidSplitPct, tip = 0, donor } = props;
+  const {
+    details,
+    recipient,
+    liquidSplitPct,
+    tip = 0,
+    donor,
+    oldTransactionId,
+  } = props;
 
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
@@ -77,6 +84,7 @@ export default function Checkout(props: StripeCheckoutStep) {
       }}
       createOrder={async () =>
         await createOrder({
+          transactionId: oldTransactionId,
           amount: +details.amount,
           tipAmount: tip,
           currency: details.currency.code,

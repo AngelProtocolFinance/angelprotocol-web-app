@@ -77,7 +77,7 @@ export default function Table({
           >
             USD Value
           </HeaderButton>
-          <>TX Hash</>
+          {status === "intent" ? <></> : <>TX Hash</>}
           {status === "final" && (
             <span className="flex justify-center">Receipt</span>
           )}
@@ -119,7 +119,14 @@ export default function Table({
                   ? `$${humanize(row.initAmountUsd, 2)}`
                   : "--"}
               </>
-              {row.viaId === "fiat" || row.viaId === "staging" ? (
+              {status === "intent" ? (
+                <ExtLink
+                  href={`${appRoutes.donations}/${row.id}`}
+                  className="flex gap-px items-center cursor-pointer text-blue underline hover:text-blue-l1"
+                >
+                  Finish Paying
+                </ExtLink>
+              ) : row.viaId === "fiat" || row.viaId === "staging" ? (
                 <>- - -</>
               ) : (
                 <ExtLink

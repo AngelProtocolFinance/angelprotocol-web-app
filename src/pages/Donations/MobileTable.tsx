@@ -1,5 +1,7 @@
 import { Disclosure } from "@headlessui/react";
+import ExtLink from "components/ExtLink";
 import Icon, { DrawerIcon } from "components/Icon";
+import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { PropsWithChildren } from "react";
@@ -69,7 +71,18 @@ export default function MobileTable({
                     ? `$${humanize(row.initAmountUsd, 2)}`
                     : "--"}
                 </Row>
-                <Row title="TX Hash">{row.id}</Row>
+                {status === "intent" ? (
+                  <Row title="Finish Paying" className="rounded-b">
+                    <ExtLink
+                      href={`${appRoutes.donations}/${row.id}`}
+                      className="flex gap-px items-center cursor-pointer text-blue underline hover:text-blue-l1"
+                    >
+                      Finish Paying <Icon size={16} type="ArrowRight" />
+                    </ExtLink>
+                  </Row>
+                ) : (
+                  <Row title="TX Hash">{row.id}</Row>
+                )}
                 {status === "final" && (
                   <Row title="Receipt" className="rounded-b">
                     <button

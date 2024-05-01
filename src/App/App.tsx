@@ -9,6 +9,7 @@ import Layout from "./Layout";
 const Admin = lazy(() => import("pages/Admin"));
 const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
+const DonationLoader = lazy(() => import("pages/DonationLoader"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
@@ -56,6 +57,10 @@ export default function App() {
         <Route
           path={`${appRoutes.donate_widget}/:id`}
           element={<DonateWidget />}
+        />
+        <Route
+          path={`${appRoutes.donations}/:id`}
+          element={<DonationLoader />}
         />
         <Route element={<Layout />}>
           <Route
