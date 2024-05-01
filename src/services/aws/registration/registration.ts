@@ -59,8 +59,8 @@ const registration_api = aws.injectEndpoints({
     updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ reference, ...payload }) => {
         return {
-          url: `v6/registration/${reference}`,
-          method: "PUT",
+          url: `v7/registration/${reference}`,
+          method: "PATCH",
           body: payload,
         };
       },
