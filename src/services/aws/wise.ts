@@ -4,7 +4,6 @@ import {
   Quote,
   V1RecipientAccount,
   V2RecipientAccount,
-  ValidationContent,
   WiseCurrency,
 } from "types/aws";
 import { Currency } from "types/components";
@@ -26,12 +25,6 @@ export const wise = aws.injectEndpoints({
           body: payload,
           headers: { "Content-Type": "application/json" },
         };
-      },
-      transformErrorResponse(res) {
-        if (res.status === 422) {
-          return (res.data as ValidationContent).errors[0].message;
-        }
-        return "Failed to create recipient";
       },
     }),
     recipient: builder.query<V2RecipientAccount, string>({
