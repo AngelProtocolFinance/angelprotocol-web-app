@@ -1,4 +1,4 @@
-import log from "assets/images/bettergiving-logo-with-name-all-blue.svg";
+import dappLogo from "assets/images/bettergiving-logo.png";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ReactNode } from "react";
@@ -24,12 +24,12 @@ function Footer({ socials }: Props) {
   return (
     <footer
       ref={ref}
-      className="grid grid-cols-[auto_auto] xl:grid-cols-[repeat(5,auto)] border-t border-gray-l4/40"
+      className="grid grid-cols-[auto_auto] xl:grid-cols-[repeat(5,auto)] border-t border-gray-l4"
     >
       <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 xl:gap-10 padded-container p-4 md:p-10">
         <div className="flex flex-col md:flex-row gap-y-2 gap-x-4 items-center xl:grid content-start col-start-1 col-span-full xl:col-span-1 xl:max-w-96">
           <img
-            src={log}
+            src={dappLogo}
             className="h-10 object-cover object-center"
             alt="logo"
           />
@@ -46,26 +46,25 @@ function Footer({ socials }: Props) {
         </div>
 
         <div className="xl:contents gap-4 gap-x-12 sm:gap-x-24 row-start-2 row-span-1 col-span-2 flex flex-wrap justify-self-center my-6 sm:my-14">
-          <LinkGroup
+          {/*<LinkGroup
             classes="col-start-2 col-span-1"
             title="How we can help"
             links={[
-              <Link to={appRoutes.home}>Non-profits</Link>,
+              <Link to={appRoutes.home}>Nonprofits</Link>,
               "Giving Partners (CSR)",
             ]}
-          />
+          />*/}
           <LinkGroup
-            classes="col-start-3 col-span-1"
+            classes="col-start-2 col-span-1"
             title="Resources"
             links={[
-              "About",
               <a href="https://intercom.help/better-giving/en">FAQs</a>,
               <Link to={appRoutes.blog}>News</Link>,
             ]}
           />
 
           <LinkGroup
-            classes="col-start-4 col-span-1"
+            classes="col-start-3 col-span-1"
             title="Legal"
             links={[
               <Link to={appRoutes.privacy_policy}>Privacy Policy</Link>,
@@ -73,7 +72,7 @@ function Footer({ socials }: Props) {
                 Terms of Use <br /> (Donors)
               </Link>,
               <Link to={appRoutes.terms_nonprofits}>
-                Terms of Use <br /> (Non-Profits)
+                Terms of Use <br /> (Nonprofits)
               </Link>,
             ]}
           />
