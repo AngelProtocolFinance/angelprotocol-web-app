@@ -10,26 +10,16 @@ type LINKS = {
 };
 
 const HEADER_LINKS: Link[] = [
-  { title: "For Nonprofits", href: appRoutes.home },
+  { title: "Home", href: appRoutes.home },
   {
     title: "Marketplace",
     href: appRoutes.marketplace,
     end: true,
   },
-  // {
-  //   title: "Giving Partners (CSR)",
-  //   href: `${BASE_URL}/giving-partners-csr/`,
-  //   external: true,
-  // },
   {
     title: "Blog",
     href: appRoutes.blog,
   },
-  // {
-  //   title: "About",
-  //   href: `${BASE_URL}/better-giving-about/`,
-  //   external: true,
-  // },
   { title: "Register NPO", href: appRoutes.register },
 ];
 
