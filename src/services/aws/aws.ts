@@ -76,7 +76,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "v6/endowments",
+          url: "algolia-endowments",
           params: {
             ...params,
             fields: endowCardFields,
@@ -89,7 +89,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "v6/endowments",
+          url: "algolia-endowments",
           params: { ...params, fields: endowSelectorOptionFields, env: apiEnv },
         };
       },
@@ -238,7 +238,6 @@ const endowCardObj: {
   sdgs: "",
   id: "",
   card_img: "",
-  logo: "",
   kyc_donors_only: "",
   name: "",
   tagline: "",

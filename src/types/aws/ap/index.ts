@@ -84,15 +84,15 @@ export type EndowmentProfile = Endowment;
 export type EndowmentCard = Pick<
   Endowment,
   | "id"
-  | "active_in_countries"
   | "card_img"
-  | "endow_designation"
-  | "hq_country"
-  | "kyc_donors_only"
-  | "logo"
   | "name"
-  | "sdgs"
   | "tagline"
+  | "hq_country"
+  | "sdgs"
+  | "active_in_countries"
+  | "endow_designation"
+  //icons
+  | "kyc_donors_only"
   | "claimed"
 >;
 export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
