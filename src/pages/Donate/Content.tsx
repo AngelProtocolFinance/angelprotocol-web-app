@@ -38,7 +38,7 @@ function Content(props: Props) {
 
   return (
     <div
-      className="fixed inset-0 overflow-y-auto w-full z-20 bg-[#F6F7F8]"
+      className="fixed inset-0 overflow-y-auto w-full z-50 bg-[#F6F7F8]"
       id={CONTAINER_ID}
     >
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">

@@ -1,4 +1,4 @@
-import { BASE_URL, INTERCOM_HELP } from "constants/env";
+import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { Link, LinkGroup, SocialMediaLink } from "./types";
 
@@ -10,25 +10,15 @@ type LINKS = {
 };
 
 const HEADER_LINKS: Link[] = [
-  { title: "For Nonprofits", href: appRoutes.home, external: true },
+  { title: "Home", href: appRoutes.home },
   {
     title: "Marketplace",
     href: appRoutes.marketplace,
     end: true,
   },
   {
-    title: "Giving Partners (CSR)",
-    href: `${BASE_URL}/giving-partners-csr/`,
-    external: true,
-  },
-  {
     title: "Blog",
     href: appRoutes.blog,
-  },
-  {
-    title: "About",
-    href: `${BASE_URL}/better-giving-about/`,
-    external: true,
   },
   { title: "Register NPO", href: appRoutes.register },
 ];
@@ -41,23 +31,23 @@ export const CHARITY_LINKS: LINKS = {
     { title: "Sign up", href: appRoutes.signup },
   ],
   GROUPS_DATA: [
-    {
-      title: "How We Can Help",
-      links: [
-        {
-          text: "Non-profits",
-          href: appRoutes.home,
-        },
-        {
-          text: "Giving Partners (CSR)",
-          href: `${BASE_URL}/giving-partners-csr/`,
-        },
-      ],
-    },
+    // {
+    //   title: "How We Can Help",
+    //   links: [
+    //     {
+    //       text: "Nonprofits",
+    //       href: appRoutes.home,
+    //     },
+    //     {
+    //       text: "Giving Partners (CSR)",
+    //       href: `${BASE_URL}/giving-partners-csr/`,
+    //     },
+    //   ],
+    // },
     {
       title: "Resources",
       links: [
-        { text: "About us", href: `${BASE_URL}/about-better-giving/` },
+        // { text: "About us", href: `${BASE_URL}/about-better-giving/` },
         { text: "FAQs", href: INTERCOM_HELP },
         { text: "News", href: appRoutes.blog },
       ],
@@ -92,7 +82,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "Discord",
         size: 24,
       },
-      href: "https://discord.gg/kPjCcJCXX7",
+      href: "https://discord.gg/RyjzGdwD7s",
     },
     {
       title: "YouTube",
@@ -100,7 +90,7 @@ export const CHARITY_LINKS: LINKS = {
         type: "Youtube",
         size: 24,
       },
-      href: "https://www.youtube.com/@bettergiving",
+      href: "https://www.youtube.com/@BetterDotGiving",
     },
     {
       title: "Facebook",

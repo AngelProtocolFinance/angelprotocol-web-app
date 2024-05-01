@@ -16,7 +16,7 @@ const Hero = ({ classes = "" }) => {
       <h1 className="z-10 mx-auto text-4xl md:text-5xl lg:text-6xl text-center leading-none mb-5 px-6">
         Simplified Giving, <br /> Amplified Impact
       </h1>
-      <p className="z-10 px-6 text-navy-l1 max-md:block md:text-2xl text-center text-pretty sm:text-balance">
+      <p className="z-10 px-6 text-navy max-md:block md:text-2xl text-center text-pretty sm:text-balance">
         As a nonprofit serving nonprofits, our all-in-one fundraising solution
         is free, global, and inclusive. <br /> However you want to give and
         receive, we've got your back. Together we can make donations go further

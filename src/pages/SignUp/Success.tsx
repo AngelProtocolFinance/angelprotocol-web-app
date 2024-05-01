@@ -11,7 +11,7 @@ export default function Success({ userType }: Props) {
   const { state } = useLocation();
   const { redirectPath } = determineAuthRedirectPath(state);
   // donors get redirected to the route which they originally attempted to
-  // access; non-profits get redirected to the page to register their NPO
+  // access; nonprofits get redirected to the page to register their NPO
   const signInRouteState: SignInRouteState = {
     from: userType === "donor" ? redirectPath.pathname : appRoutes.register,
   };
