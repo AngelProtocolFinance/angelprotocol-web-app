@@ -29,54 +29,54 @@ export type EndowDesignation =
   | "Other";
 
 type SocialMediaURLs = {
-  /** empty string by default */
-  twitter: string;
-  /** empty string by default */
-  facebook: string;
-  /** empty string by default */
-  linkedin: string;
-  /** empty string by default */
-  instagram: string;
-  /** empty string by default */
-  discord: string;
-  /** empty string by default */
-  youtube: string;
-  /** empty string by default */
-  tiktok: string;
+  /** may be empty */
+  twitter?: string;
+  /** may be empty */
+  facebook?: string;
+  /** may be empty */
+  linkedin?: string;
+  /** may be empty */
+  instagram?: string;
+  /** may be empty */
+  discord?: string;
+  /** may be empty */
+  youtube?: string;
+  /** may be empty */
+  tiktok?: string;
 };
 
 export type Endowment = {
   id: number;
+  /** may be empty */
   slug?: string;
-  active_in_countries: string[];
-  endow_designation: EndowDesignation;
-  fiscal_sponsored: boolean;
-  hq_country: string;
-  /** empty string by default */
-  image: string;
-  kyc_donors_only: boolean;
-  /** optional as older endowments don't have it set */
-  hide_bg_tip?: boolean;
-  /** empty string by default */
-  logo: string;
-  name: string;
-  /** empty string by default */
-  card_img?: string;
-  /** empty string by default */
-  overview: string;
-  published: boolean;
   registration_number: string;
-  sdgs: UNSDG_NUMS[];
-  social_media_urls: SocialMediaURLs;
-  /** empty string by default */
-  street_address: string;
-  /** empty string by default */
+  name: string;
+  endow_designation: EndowDesignation;
+  /** may be empty */
+  overview?: string;
+  /** may be empty */
   tagline?: string;
-  receiptMsg?: string;
+  image?: string;
+  logo?: string;
+  card_img?: string;
+  hq_country: string;
+  active_in_countries: string[];
+  /** may be empty */
+  street_address?: string;
+  social_media_urls: SocialMediaURLs;
   url?: string;
-  /** not claimed only if `false` */
-  claimed?: boolean;
+  sdgs: UNSDG_NUMS[];
+  /** may be empty */
+  receiptMsg?: string;
+
+  kyc_donors_only: boolean;
+  fiscal_sponsored: boolean;
+  claimed: boolean;
+
+  //can be optional, default false and need not be explicit
+  hide_bg_tip?: boolean;
   sfCompounded?: boolean;
+  published?: boolean;
 };
 
 export type EndowmentProfile = Endowment;

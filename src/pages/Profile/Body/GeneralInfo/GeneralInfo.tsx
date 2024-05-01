@@ -17,7 +17,7 @@ export default function GeneralInfo({ className = "" }) {
       <div className="flex flex-col gap-8 w-full h-full">
         <Container title="Overview">
           <RichText
-            content={{ value: profile.overview }}
+            content={{ value: profile.overview ?? "" }}
             classes={{ container: "w-full h-full px-8 py-10" }}
             readOnly
           />

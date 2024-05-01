@@ -127,7 +127,7 @@ export const aws = createApi({
     >({
       providesTags: ["endowment"],
       query: ({ fields, ...args }) => ({
-        url: "id" in args ? `v7/endowments/${args.id}` : "v7/endowments",
+        url: "id" in args ? `v8/endowments/${args.id}` : "v8/endowments",
         params: {
           env: apiEnv,
           slug: args.slug,
@@ -139,7 +139,7 @@ export const aws = createApi({
       Pick<Endowment, "id" | "name" | "claimed" | "registration_number">,
       string
     >({
-      query: (ein) => ({ url: "v7/endowments", params: { ein, env: apiEnv } }),
+      query: (ein) => ({ url: "v8/endowments", params: { ein, env: apiEnv } }),
     }),
 
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({

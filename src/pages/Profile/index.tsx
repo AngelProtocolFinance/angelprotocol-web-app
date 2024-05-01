@@ -37,7 +37,7 @@ export default function Profile({ legacy = false }) {
     <ProfileContext.Provider value={data}>
       <Seo
         title={`${data.name} - ${APP_NAME}`}
-        description={data?.overview.slice(0, 140)}
+        description={data?.overview?.slice(0, 140)}
         name={data.name}
         image={data.logo}
         url={`${BASE_URL}/profile/${data.id}`}

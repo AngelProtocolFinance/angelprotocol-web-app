@@ -55,7 +55,7 @@ function Content({
         title={`Donation Form Configuration${
           endowment?.id ? ` for nonprofit ${endowment?.id}` : ""
         } - ${APP_NAME}`}
-        description={endowment?.overview.slice(0, 140)}
+        description={endowment?.overview?.slice(0, 140)}
         name={endowment?.name}
         image={endowment?.logo}
         url={`${BASE_URL}${location.pathname}`}

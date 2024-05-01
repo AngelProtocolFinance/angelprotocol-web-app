@@ -56,7 +56,7 @@ function FormWithContext(props: TProfile & { id: number }) {
       publicUrl: props.image ?? "",
       preview: props.image ?? "",
     },
-    logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    logo: { name: "", publicUrl: props.logo ?? "", preview: props.logo ?? "" },
     card_img: {
       name: "",
       publicUrl: props.card_img ?? "",
@@ -71,7 +71,7 @@ function FormWithContext(props: TProfile & { id: number }) {
       label: x,
       value: x,
     })),
-    overview: { value: props.overview },
+    overview: { value: props.overview ?? "" },
 
     //meta
     initial: init,
