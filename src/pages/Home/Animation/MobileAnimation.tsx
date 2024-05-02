@@ -3,6 +3,7 @@ import roadmap1 from "./images/roadmap1_wb.webp";
 import roadmap2 from "./images/roadmap2_wb.webp";
 import roadmap3 from "./images/roadmap3_wb.webp";
 import roadmap4 from "./images/roadmap4_wb.webp";
+import path from "./images/static-path.png";
 import { Card } from "./types";
 
 const MobileAnimation = ({ classes = "" }) => {
@@ -34,7 +35,10 @@ const MobileAnimation = ({ classes = "" }) => {
   ];
 
   return (
-    <div className={`${classes} relative pt-24 bg-peach/20 grid px-4`}>
+    <div
+      className={`${classes} relative pt-24 bg-peach/20 grid px-4 bg-no-repeat`}
+      style={{ backgroundImage: `url('${path}')` }}
+    >
       <h4 className="text-xs text-[#3c91cb] mb-4 text-center">
         SIMPLE PATH TO FINANCIAL STABILITY
       </h4>
