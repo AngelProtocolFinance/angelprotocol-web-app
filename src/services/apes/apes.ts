@@ -106,7 +106,7 @@ export const apes = createApi({
     }),
     stripePaymentIntent: builder.query<string, StripePaymentIntentParams>({
       query: (data) => ({
-        url: "fiat-donation/stripe/v2",
+        url: "fiat-donation/stripe",
         method: "POST",
         body: JSON.stringify(data),
       }),
