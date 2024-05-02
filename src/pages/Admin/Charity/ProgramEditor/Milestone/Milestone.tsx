@@ -1,54 +1,68 @@
 import { Disclosure } from "@headlessui/react";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { DrawerIcon } from "components/Icon";
 import ImgEditor from "components/ImgEditor/ImgEditor";
 import { RichTextEditor } from "components/RichText";
-import { Field, Label } from "components/form";
-import { Path, useFormContext } from "react-hook-form";
-import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../schema";
-import { FV, FormMilestone } from "../types";
+import { Field, Form, Label, dateToFormFormat } from "components/form";
+import { useForm } from "react-hook-form";
+import { Milestone as TMilestone } from "types/aws";
+import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
+import { schema } from "./schema";
+import { FV } from "./types";
+import useMustate from "./useMutate";
 
-export default function Milestone({
-  idx,
-  onRemove,
-}: FormMilestone & { onRemove(idx: number): void }) {
+type Props = TMilestone & { programId: string };
+export default function Milestone(props: Props) {
+  const methods = useForm<FV>({
+    values: {
+      date: dateToFormFormat(new Date()),
+      title: props.title,
+      media: {
+        name: "",
+        publicUrl: props.media ?? "",
+        preview: props.media ?? "",
+      },
+      description: { value: props.description ?? "" },
+    },
+    resolver: yupResolver(schema),
+  });
+
   const {
-    watch,
-    formState: { errors },
-  } = useFormContext<FV>();
-  const mediaName: Path<FV> = `milestones.${idx}.milestone_media`;
-  const title = watch(`milestones.${idx}.milestone_title`);
-
-  const milestoneError = errors.milestones?.[idx];
+    handleSubmit,
+    formState: { isSubmitting, isDirty },
+  } = methods;
+  const { submit, handleDeleteMilestone, isDeletingMilestone } = useMustate(
+    props.id,
+    props.programId
+  );
 
   return (
     <Disclosure
       as="div"
-      className={`border ${
-        //helps distinguish erroneous milestone just in case user collapses dropdown with errors left
-        milestoneError ? "border-red" : "border-gray-l4"
-      } rounded overflow-hidden`}
+      className="border border-gray-l4 rounded overflow-hidden"
     >
       <div className="relative py-3 px-4 text-center bg-blue-l5 dark:bg-blue-d7">
-        <span className="text-xl font-bold font-heading">
-          {title || `Milestone ${idx + 1}`}
-        </span>
+        <span className="text-xl font-bold font-heading">{props.title}</span>
         <Disclosure.Button className="absolute right-4 top-1/2 -translate-y-1/2">
           {({ open }) => <DrawerIcon isOpen={open} size={24} />}
         </Disclosure.Button>
       </div>
 
       <Disclosure.Panel
-        as="div"
+        as={Form}
         className={({ open }) =>
           `${
             open ? "border-t border-gray-l4" : ""
           } bg-white dark:bg-blue-d6 py-6 px-4 grid content-start gap-6`
         }
+        disabled={isSubmitting}
+        onSubmit={handleSubmit(submit)}
+        methods={methods}
       >
         <Label className="-mb-4">Image of milestone</Label>
-        <ImgEditor<FV, typeof mediaName>
+        <ImgEditor<FV, "media">
           // resolved T[Path<T>] does not equal to ImgLink though it is the same ??
-          name={mediaName}
+          name="media"
           accept={VALID_MIME_TYPES}
           aspect={[4, 1]}
           classes={{
@@ -60,21 +74,21 @@ export default function Milestone({
         <Field<FV, "date">
           type="date"
           classes={{ input: "date-input uppercase", container: "field-admin" }}
-          name={`milestones.${idx}.milestone_date`}
+          name="date"
           label="Date of milestone"
           placeholder="e.g. 2014-09-23"
           required
         />
         <Field<FV>
           classes="field-admin"
-          name={`milestones.${idx}.milestone_title`}
+          name="title"
           label="Title of milestone"
           placeholder="e.g. John"
           required
         />
         <Label className="-mb-4">Description of milestone</Label>
         <RichTextEditor<FV>
-          fieldName={`milestones.${idx}.milestone_description`}
+          fieldName="description"
           charLimit={MAX_CHARS}
           classes={{
             container:
@@ -83,13 +97,23 @@ export default function Milestone({
             charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
-        <button
-          type="button"
-          className="btn-outline-filled @md:justify-self-end w-full @lg:w-52 py-2 text-sm"
-          onClick={() => onRemove(idx)}
-        >
-          Delete milestone
-        </button>
+        <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-between">
+          <button
+            disabled={isDeletingMilestone}
+            type="button"
+            className="btn-red py-2 text-sm"
+            onClick={() => handleDeleteMilestone(props.id)}
+          >
+            {isDeletingMilestone ? "Deleting.." : "Delete"} milestone
+          </button>
+          <button
+            disabled={!isDirty}
+            type="submit"
+            className="btn-blue py-2 text-sm"
+          >
+            Save changes
+          </button>
+        </div>
       </Disclosure.Panel>
     </Disclosure>
   );

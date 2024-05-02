@@ -4,7 +4,7 @@ import { adminRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useAdminContext } from "pages/Admin/Context";
 import { Link } from "react-router-dom";
-import { useDeleteProgramMutation } from "services/aws/aws";
+import { useDeleteProgramMutation } from "services/aws/programs";
 import { ProgramDeleteMsg } from "services/types";
 import { Program as TProgram } from "types/aws";
 
@@ -29,11 +29,11 @@ export function Program(props: TProgram) {
     >
       <div className="flex items-center gap-x-4 @lg:contents">
         <Image
-          src={props.program_banner}
+          src={props.banner}
           alt="program banner"
           className="w-10 aspect-square object-cover"
         />
-        <p className="font-bold">{props.program_title}</p>
+        <p className="font-bold">{props.title}</p>
       </div>
 
       {isDeleting ? (
@@ -46,14 +46,14 @@ export function Program(props: TProgram) {
             onClick={() =>
               handleDeleteProgram({
                 id,
-                program_id: props.program_id,
+                program_id: props.id,
               })
             }
           >
             delete
           </button>
           <Link
-            to={`../${adminRoutes.program_editor}/${props.program_id}`}
+            to={`../${adminRoutes.program_editor}/${props.id}`}
             className="btn-outline-filled w-24 py-2 text-sm"
             state={props}
           >

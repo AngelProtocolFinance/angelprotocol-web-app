@@ -8,8 +8,8 @@ const Card = (props: EndowmentCard) => {
   return (
     <div className="grid rounded-4xl bg-white h-[27rem] border border-gray-l4/30 shadow-sm shadow-black/5">
       <Image
-        src={props.logo || props.card_img}
-        alt="logo"
+        src={props.card_img}
+        alt="card image"
         className="object-cover w-full rounded-t-4xl h-56"
       />
       <h4 className="text-[#0D283A] font-bold text-xl whitespace-nowrap text-ellipsis px-8 mt-4 overflow-hidden">

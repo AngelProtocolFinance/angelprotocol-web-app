@@ -15,17 +15,14 @@ import {
   Endowment,
   EndowmentCard,
   EndowmentOption,
-  EndowmentProfile,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
-  Program,
   WalletProfile,
 } from "types/aws";
 import { version as v } from "../helpers";
 import {
   EndowmentUpdate,
   IdOrSlug,
-  ProgramDeleteMsg,
   VersionSpecificWalletProfile,
 } from "../types";
 
@@ -59,6 +56,7 @@ export const aws = createApi({
     "endowment",
     "endowments",
     "strategy",
+    "programs",
     "program",
     "applications",
     "application",
@@ -78,7 +76,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "v6/endowments",
+          url: "algolia-endowments",
           params: {
             ...params,
             fields: endowCardFields,
@@ -91,7 +89,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "v6/endowments",
+          url: "algolia-endowments",
           params: { ...params, fields: endowSelectorOptionFields, env: apiEnv },
         };
       },
@@ -129,7 +127,7 @@ export const aws = createApi({
     >({
       providesTags: ["endowment"],
       query: ({ fields, ...args }) => ({
-        url: "id" in args ? `v7/endowments/${args.id}` : "v7/endowments",
+        url: "id" in args ? `v8/endowments/${args.id}` : "v8/endowments",
         params: {
           env: apiEnv,
           slug: args.slug,
@@ -141,35 +139,22 @@ export const aws = createApi({
       Pick<Endowment, "id" | "name" | "claimed" | "registration_number">,
       string
     >({
-      query: (ein) => ({ url: "v7/endowments", params: { ein, env: apiEnv } }),
+      query: (ein) => ({ url: "v8/endowments", params: { ein, env: apiEnv } }),
     }),
-    program: builder.query<Program, { endowId: number; programId: string }>({
-      providesTags: ["endowment", "program"],
-      query: ({ endowId, programId }) =>
-        `/${v(1)}/profile/${apiEnv}/program/${endowId}/${programId}`,
-    }),
+
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
       invalidatesTags: (_, error) =>
         error ? [] : ["endowments", "endowment", "walletProfile"],
       query: ({ id, ...payload }) => {
         return {
-          url: `/${v(1)}/endowments/${id}`,
+          url: `/${v(7)}/endowments/${id}`,
           method: "PATCH",
           headers: { authorization: TEMP_JWT },
           body: payload,
         };
       },
     }),
-    deleteProgram: builder.mutation<EndowmentProfile, ProgramDeleteMsg>({
-      invalidatesTags: (_, error) => (error ? [] : ["endowment"]),
-      query: ({ id, program_id }) => {
-        return {
-          url: `/${v(1)}/endowments/${id}/programs/${program_id}`,
-          method: "DELETE",
-          headers: { authorization: TEMP_JWT },
-        };
-      },
-    }),
+
     applications: builder.query<
       PaginatedAWSQueryRes<Application[]>,
       ApplicationsQueryParams
@@ -195,7 +180,7 @@ export const aws = createApi({
       invalidatesTags: ["application", "applications"],
       query: (verdict) => {
         return {
-          url: `${v(2)}/applications`,
+          url: `${v(3)}/applications`,
           method: "PUT",
           headers: { authorization: TEMP_JWT },
           body: verdict,
@@ -219,13 +204,11 @@ export const aws = createApi({
 });
 
 export const {
-  useDeleteProgramMutation,
   useWalletProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentQuery,
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,
-  useProgramQuery,
   useEditEndowmentMutation,
   useApplicationsQuery,
   useApplicationQuery,
@@ -255,7 +238,6 @@ const endowCardObj: {
   sdgs: "",
   id: "",
   card_img: "",
-  logo: "",
   kyc_donors_only: "",
   name: "",
   tagline: "",

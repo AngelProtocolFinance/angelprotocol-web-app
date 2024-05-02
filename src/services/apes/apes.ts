@@ -45,7 +45,7 @@ export const apes = createApi({
       CryptoDonation
     >({
       query: (params) => ({
-        url: `crypto-donation/v2`,
+        url: "crypto-donation/v3",
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
@@ -97,7 +97,7 @@ export const apes = createApi({
     }),
     paypalOrder: builder.mutation<string, CreatePayPalOrderParams>({
       query: (params) => ({
-        url: "fiat-donation/paypal/orders",
+        url: "fiat-donation/paypal/orders/v2",
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
@@ -106,7 +106,7 @@ export const apes = createApi({
     }),
     stripePaymentIntent: builder.query<string, StripePaymentIntentParams>({
       query: (data) => ({
-        url: "fiat-donation/stripe",
+        url: "fiat-donation/stripe/v2",
         method: "POST",
         body: JSON.stringify(data),
       }),

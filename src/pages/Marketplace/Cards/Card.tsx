@@ -16,14 +16,13 @@ export default function Card({
   active_in_countries = [],
   name,
   card_img,
-  logo,
   id,
   endow_designation,
   sdgs,
   tagline,
   hq_country,
   kyc_donors_only,
-  claimed = true,
+  claimed,
 }: EndowmentCard) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l4 hover:border-blue dark:hover:border-blue">
@@ -39,7 +38,7 @@ export default function Card({
       >
         <Image
           loading="lazy"
-          src={card_img || logo}
+          src={card_img}
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />

@@ -16,6 +16,7 @@ export function RichTextEditor<T extends FieldValues>(
   } & Pick<Editable, "charLimit" | "placeHolder">
 ) {
   const {
+    setValue,
     formState: { isSubmitting },
   } = useFormContext<T>();
   const {
@@ -30,6 +31,9 @@ export function RichTextEditor<T extends FieldValues>(
       <RichText
         content={value}
         onChange={onChange}
+        onInit={(v) =>
+          setValue(props.fieldName, v as any, { shouldDirty: false })
+        }
         placeHolder={props.placeHolder}
         charLimit={props.charLimit}
         classes={props.classes}

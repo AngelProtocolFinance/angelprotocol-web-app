@@ -33,17 +33,17 @@ export default function Donate() {
         <>
           <Seo
             title={`Donate to ${profile.name} - ${APP_NAME}`}
-            description={profile.overview.slice(0, 140)}
+            description={profile.overview?.slice(0, 140)}
             name={profile.name}
             image={profile.logo}
             url={`${BASE_URL}/donate/${profile.id}`}
           />
           <Content
             tagline={profile.tagline}
-            logo={profile.card_img || profile.logo}
+            logo={profile.card_img || profile.logo || ""}
             name={profile.name}
             hide_bg_tip={!!profile.hide_bg_tip}
-            banner={profile.image}
+            banner={profile.image || ""}
             id={numId}
           />
         </>

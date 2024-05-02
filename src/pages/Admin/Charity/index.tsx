@@ -42,7 +42,7 @@ export default function Charity() {
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.programs} element={<Programs />} />
         <Route
-          path={adminRoutes.program_editor + "/:id"}
+          path={`${adminRoutes.program_editor}/:id`}
           element={<ProgramEditor />}
         />
 

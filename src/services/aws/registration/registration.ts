@@ -21,7 +21,7 @@ const registration_api = aws.injectEndpoints({
       { email: string; claim?: EndowClaim }
     >({
       query: ({ email, claim }) => ({
-        url: `${v(5)}/registration`,
+        url: `${v(6)}/registration`,
         method: "POST",
         body: { Email: email, ...(claim && { InitClaim: claim }) },
         headers: { authorization: TEMP_JWT },
@@ -59,8 +59,8 @@ const registration_api = aws.injectEndpoints({
     updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ reference, ...payload }) => {
         return {
-          url: `v6/registration/${reference}`,
-          method: "PUT",
+          url: `v7/registration/${reference}`,
+          method: "PATCH",
           body: payload,
         };
       },

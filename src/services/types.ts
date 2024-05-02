@@ -1,7 +1,6 @@
 import {
   BankingApplication,
   EndowmentProfileUpdate,
-  EndowmentProgramsUpdate,
   EndowmentSettingsUpdate,
   FSASignerDocumentation,
   V2RecipientAccount,
@@ -15,7 +14,7 @@ export type ChainQueryArgs = {
 };
 
 export type EndowmentUpdate = SemiPartial<
-  EndowmentProfileUpdate & EndowmentSettingsUpdate & EndowmentProgramsUpdate,
+  EndowmentProfileUpdate & EndowmentSettingsUpdate,
   "id"
 >;
 
