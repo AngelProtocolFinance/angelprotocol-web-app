@@ -101,9 +101,7 @@ export default function RecipientDetailsForm({
 
           //filter "NOT_VALID"
           const _errs = content.errors;
-          const validations = content.errors.filter(
-            (err) => err.code === "NOT_VALID"
-          );
+          const validations = _errs.filter((err) => err.code === "NOT_VALID");
 
           if (isEmpty(validations)) return displayError(_errs[0].message);
 
