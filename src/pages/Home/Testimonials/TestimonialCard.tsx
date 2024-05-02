@@ -1,9 +1,11 @@
+import Image from "components/Image";
 import { Testimonial } from "./types";
 
 const TestimonialCard = (props: Testimonial) => {
   return (
     <div className="@container">
-      <img
+      <Image
+        height={240}
         src={props.reviewer_logo}
         alt="logo"
         className="object-contain size-28 rounded-lg ml-8 bg-white shadow-xl"

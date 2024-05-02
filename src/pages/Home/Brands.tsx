@@ -30,7 +30,7 @@ const Brands = () => {
           brand6,
           brand7,
         ].map((b, idx) => (
-          <img key={idx} src={b} className="" alt="brand img" />
+          <img key={idx} src={b} height={106} alt="brand img" />
         ))}
       </Marquee>
     </section>

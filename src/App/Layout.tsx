@@ -37,5 +37,5 @@ export default function Layout() {
 }
 
 const LoaderComponent = () => (
-  <Loader bgColorClass="bg-white" gapClass="gap-2" widthClass="w-4" />
+  <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
 );
