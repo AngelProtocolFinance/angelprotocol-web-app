@@ -1,3 +1,4 @@
+import Benefits from "./Benefits";
 import DonationFormInfo from "./DonationFormInfo";
 import FellowNonProfits from "./FellowNonProfits";
 import Hero from "./Hero";
@@ -7,9 +8,10 @@ export default function Nonprofits() {
   return (
     <div className="w-full grid content-start pb-16 @container">
       <Hero className="padded-container" />
-      <FellowNonProfits className="my-20" />
-      <DonationFormInfo className="mt-28" />
-      <WhyBG className="mt-40" />
+      <FellowNonProfits className="my-20 padded-container" />
+      <DonationFormInfo className="mt-28 padded-container" />
+      <WhyBG className="mt-40 padded-container" />
+      <Benefits className="mt-56 padded-container px-10" />
     </div>
   );
 }

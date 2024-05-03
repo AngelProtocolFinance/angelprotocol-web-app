@@ -28,7 +28,7 @@ const items: TListItem[] = [
 
 export default function WhyBG({ className = "" }) {
   return (
-    <section className={`${className} grid padded-container`}>
+    <section className={`${className} grid`}>
       <h2 className="mb-16 col-span-full text-center text-4xl">
         Why better giving?
       </h2>
