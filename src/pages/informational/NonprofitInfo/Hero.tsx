@@ -23,13 +23,13 @@ export default function Hero({ className = "" }) {
         <div className="flex flex-col @sm:flex-row justify-center @6xl:justify-start items-center gap-6">
           <Link
             to={appRoutes.register}
-            className="btn-blue rounded-full px-8 py-2 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50"
+            className="btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50"
           >
             Start today
           </Link>
           <Link
             to={INTERCOM_HELP}
-            className="btn-outline-blue border-2 rounded-full px-8 py-2 @6xl:px-12 @6xl:py-6 @6xl:text-xl"
+            className="btn-outline-blue border-2 rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl"
           >
             Book a Demo
           </Link>
