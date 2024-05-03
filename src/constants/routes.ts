@@ -19,9 +19,12 @@ export enum appRoutes {
   reset_password = "/signin/reset",
   widget_config = "/widget-config",
   blog = "/blog",
+  //legal
   privacy_policy = "/privacy-policy",
   terms_donors = "/terms-of-use",
   terms_nonprofits = "/terms-of-use-npo",
+  //informational
+  nonprofit_info = "/nonprofit",
 }
 
 export const adminRoutes = {
