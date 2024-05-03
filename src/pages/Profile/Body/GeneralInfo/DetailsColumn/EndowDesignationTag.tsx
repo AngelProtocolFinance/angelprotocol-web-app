@@ -1,6 +1,6 @@
-import Icon, { IconType } from "components/Icon";
-import { PropsWithChildren } from "react";
-import { EndowDesignation, EndowmentProfile } from "types/aws";
+import Icon, { type IconType } from "components/Icon";
+import type { PropsWithChildren } from "react";
+import type { EndowDesignation, EndowmentProfile } from "types/aws";
 
 const icons: { [key in EndowDesignation]: IconType } = {
   Charity: "HeartFill",

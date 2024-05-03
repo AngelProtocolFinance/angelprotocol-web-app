@@ -1,6 +1,6 @@
 import character from "assets/images/waving-character.png";
 import Image from "components/Image";
-import { DonationsQueryParams } from "types/aws";
+import type { DonationsQueryParams } from "types/aws";
 
 type Props = {
   classes: string;

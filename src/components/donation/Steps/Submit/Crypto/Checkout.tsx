@@ -3,9 +3,9 @@ import { Info, LoadingStatus } from "components/Status";
 import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { maskAddress } from "helpers";
-import { PropsWithChildren } from "react";
-import { CryptoSubmitStep } from "slices/donation";
-import { ConnectedWallet } from "types/wallet";
+import type { PropsWithChildren } from "react";
+import type { CryptoSubmitStep } from "slices/donation";
+import type { ConnectedWallet } from "types/wallet";
 import TxSubmit from "./TxSubmit";
 import WalletSelection from "./WalletSelection";
 

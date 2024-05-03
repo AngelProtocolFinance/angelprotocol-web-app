@@ -1,12 +1,12 @@
-import { OverrideProperties } from "type-fest";
-import {
+import type { OverrideProperties } from "type-fest";
+import type {
   ContactDetails,
   ContactRoles,
   InitContact,
   OrgDataForStep1,
   ReferralMethods,
 } from "types/aws";
-import { OptionType } from "types/components";
+import type { OptionType } from "types/components";
 
 export type FormValues = OverrideProperties<
   ContactDetails & OrgDataForStep1,

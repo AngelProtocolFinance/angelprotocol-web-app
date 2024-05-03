@@ -1,6 +1,6 @@
 import { Transition } from "@headlessui/react";
 import { useEffect, useState } from "react";
-import { RefObject } from "react";
+import type { RefObject } from "react";
 import { createPortal } from "react-dom";
 
 type Props<T extends HTMLElement> = {

@@ -1,4 +1,4 @@
-import { FormButtonsProps } from "components/BankDetails/types";
+import type { FormButtonsProps } from "components/BankDetails/types";
 import LoadText from "components/LoadText";
 
 export default function FormButtons({

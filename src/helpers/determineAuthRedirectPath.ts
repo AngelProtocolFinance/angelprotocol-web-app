@@ -1,5 +1,5 @@
 import { appRoutes, regRoutes } from "constants/routes";
-import { SignInRouteState } from "types/auth";
+import type { SignInRouteState } from "types/auth";
 
 /**
  * Determines the pathname to which to redirect post-authentication

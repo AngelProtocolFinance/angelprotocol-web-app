@@ -1,5 +1,5 @@
 import { CheckField } from "components/form";
-import { FV } from "./types";
+import type { FV } from "./types";
 
 export default function HideBGTipCheckbox() {
   return (

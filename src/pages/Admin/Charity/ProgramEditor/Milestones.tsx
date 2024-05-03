@@ -4,7 +4,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
 import { useNewMilestoneMutation } from "services/aws/milestones";
-import { Milestone as TMilestone } from "types/aws";
+import type { Milestone as TMilestone } from "types/aws";
 import Milestone from "./Milestone";
 
 type Props = {

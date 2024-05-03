@@ -1,8 +1,8 @@
 import { tokenShape } from "schemas/shape";
 import { walletAddr } from "schemas/string";
-import { SchemaShape } from "schemas/types";
-import { ObjectSchema, object } from "yup";
-import { FormValues } from "./types";
+import type { SchemaShape } from "schemas/types";
+import { type ObjectSchema, object } from "yup";
+import type { FormValues } from "./types";
 
 export const schema = object().shape<SchemaShape<FormValues>>({
   token: object(tokenShape(false)),

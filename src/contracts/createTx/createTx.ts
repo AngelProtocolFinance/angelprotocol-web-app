@@ -1,5 +1,5 @@
-import { SimulContractTx } from "types/evm";
-import { TxOptions, TxType } from "types/tx";
+import type { SimulContractTx } from "types/evm";
+import type { TxOptions, TxType } from "types/tx";
 import { txs } from "./txs";
 
 export function createTx<T extends TxType>(

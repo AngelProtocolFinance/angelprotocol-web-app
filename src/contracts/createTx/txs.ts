@@ -1,5 +1,5 @@
 import { toTuple } from "helpers";
-import { TxArgs, TxType } from "types/tx";
+import type { TxArgs, TxType } from "types/tx";
 import { erc20 } from "../evm/ERC20";
 
 export const txs: { [T in TxType]: (args: TxArgs<T>) => string } = {

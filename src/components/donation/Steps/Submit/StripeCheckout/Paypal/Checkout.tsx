@@ -3,13 +3,13 @@ import ContentLoader from "components/ContentLoader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { DonateFiatThanksState } from "pages/DonateFiatThanks";
+import type { DonateFiatThanksState } from "pages/DonateFiatThanks";
 import { useNavigate } from "react-router-dom";
 import {
   useCapturePayPalOrderMutation,
   usePaypalOrderMutation,
 } from "services/apes";
-import { StripeCheckoutStep } from "slices/donation";
+import type { StripeCheckoutStep } from "slices/donation";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook

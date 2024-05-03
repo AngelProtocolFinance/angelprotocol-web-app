@@ -1,7 +1,7 @@
 import { Separator } from "components/Separator";
 import { APP_NAME } from "constants/env";
 import { memo } from "react";
-import { LinkGroup, SocialMediaLink } from "../types";
+import type { LinkGroup, SocialMediaLink } from "../types";
 import Links from "./Links";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";

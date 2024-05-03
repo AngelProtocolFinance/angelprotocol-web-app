@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { Link } from "react-router-dom";
-import { BankingApplicationStatus, PayoutMethod } from "types/aws";
+import type { BankingApplicationStatus, PayoutMethod } from "types/aws";
 
 type Props = {
   methods: PayoutMethod[];

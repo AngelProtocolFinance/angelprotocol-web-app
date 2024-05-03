@@ -1,7 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import ErrorPage from "./ErrorPage";
 import Success from "./Success";
-import { QueryParams, isSuccess } from "./types";
+import { type QueryParams, isSuccess } from "./types";
 
 export default function SignResult({ classes = "" }) {
   const [URLSearchParams] = useSearchParams();

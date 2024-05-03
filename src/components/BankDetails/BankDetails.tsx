@@ -2,11 +2,11 @@ import { Separator } from "components/Separator";
 import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
 import { useWiseCurrenciesQuery } from "services/aws/wise";
-import { Currency } from "types/components";
+import type { Currency } from "types/components";
 import CurrencySelector from "../CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
-import { IFormButtons, OnSubmit } from "./types";
+import type { IFormButtons, OnSubmit } from "./types";
 
 /**
  * Denominated in USD

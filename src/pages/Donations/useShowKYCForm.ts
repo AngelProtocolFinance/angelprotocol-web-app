@@ -1,4 +1,4 @@
-import { FormValues, useKYCForm } from "components/KYCForm";
+import { type FormValues, useKYCForm } from "components/KYCForm";
 import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";

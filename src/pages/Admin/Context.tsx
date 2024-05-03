@@ -1,9 +1,9 @@
 import Icon from "components/Icon";
 import { idParamToNum } from "helpers";
-import { PropsWithChildren, createContext, useContext } from "react";
+import { type PropsWithChildren, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { AuthenticatedUser } from "types/auth";
-import { AdminParams } from "./types";
+import type { AuthenticatedUser } from "types/auth";
+import type { AdminParams } from "./types";
 
 type AdminContext = { id: number; user: AuthenticatedUser };
 

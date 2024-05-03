@@ -4,7 +4,7 @@ import { Label } from "components/form";
 import { isEmpty } from "helpers";
 import { memo, useState } from "react";
 import { useRequirementsQuery } from "services/aws/wise";
-import { IFormButtons, OnSubmit } from "../types";
+import type { IFormButtons, OnSubmit } from "../types";
 import RecipientDetailsForm from "./RecipientDetailsForm";
 
 type Props = {

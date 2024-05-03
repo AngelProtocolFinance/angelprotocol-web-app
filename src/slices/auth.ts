@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  AuthUser,
+  type AuthUser,
   fetchAuthSession,
   fetchUserAttributes,
   getCurrentUser,
   signOut,
 } from "aws-amplify/auth";
 import { logger } from "helpers";
-import { User, userIsSignedIn } from "types/auth";
+import { type User, userIsSignedIn } from "types/auth";
 
 type State = {
   user: User;

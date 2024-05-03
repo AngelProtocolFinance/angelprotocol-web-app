@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Slide } from "./types";
+import type { Slide } from "./types";
 
 type Props = { slides: Slide[]; classes?: string };
 const BenefitsCarousel = ({ slides, classes = "" }: Props) => {

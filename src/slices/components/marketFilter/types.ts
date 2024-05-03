@@ -1,5 +1,9 @@
-import { EndowDesignation, EndowmentsSortKey, SortDirection } from "types/aws";
-import { SDGGroup } from "types/lists";
+import type {
+  EndowDesignation,
+  EndowmentsSortKey,
+  SortDirection,
+} from "types/aws";
+import type { SDGGroup } from "types/lists";
 
 export type Sort = { key: EndowmentsSortKey; direction: SortDirection };
 

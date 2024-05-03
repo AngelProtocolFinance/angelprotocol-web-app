@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { CSVLink } from "react-csv";
-import { CommonPropTypes } from "react-csv/components/CommonPropTypes";
+import type { CommonPropTypes } from "react-csv/components/CommonPropTypes";
 
 type Props = CommonPropTypes & { classes?: string; children: ReactNode };
 

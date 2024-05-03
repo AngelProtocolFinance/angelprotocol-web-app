@@ -1,4 +1,4 @@
-import { SDGGroup, UNSDG_NUMS } from "types/lists";
+import type { SDGGroup, UNSDG_NUMS } from "types/lists";
 
 type UNSDG = {
   text_light: string;

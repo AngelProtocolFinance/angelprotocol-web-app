@@ -1,11 +1,11 @@
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
-import { ComponentType, createContext, useContext } from "react";
+import { type ComponentType, createContext, useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
-import { AuthenticatedUser, CognitoGroup } from "types/auth";
-import { SignInRouteState } from "types/auth";
+import type { AuthenticatedUser, CognitoGroup } from "types/auth";
+import type { SignInRouteState } from "types/auth";
 
 export default function withAuth<Props>(
   Component: ComponentType<Props & { user: AuthenticatedUser }>,

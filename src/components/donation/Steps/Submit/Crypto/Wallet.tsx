@@ -1,5 +1,5 @@
 import Image from "components/Image";
-import { DisconnectedWallet } from "types/wallet";
+import type { DisconnectedWallet } from "types/wallet";
 
 export default function Wallet({ connect, logo, name }: DisconnectedWallet) {
   return (

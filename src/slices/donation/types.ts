@@ -1,8 +1,13 @@
-import { Donor, Endowment, FiatPaymentFrequency, GuestDonor } from "types/aws";
-import { ChainID } from "types/chain";
-import { DetailedCurrency, OptionType } from "types/components";
-import { DonationSource } from "types/lists";
-import { TokenWithAmount, TxPackage } from "types/tx";
+import type {
+  Donor,
+  Endowment,
+  FiatPaymentFrequency,
+  GuestDonor,
+} from "types/aws";
+import type { ChainID } from "types/chain";
+import type { DetailedCurrency, OptionType } from "types/components";
+import type { DonationSource } from "types/lists";
+import type { TokenWithAmount, TxPackage } from "types/tx";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,

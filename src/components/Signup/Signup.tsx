@@ -2,7 +2,7 @@ import { useState } from "react";
 import ConfirmForm from "./ConfirmForm";
 import SignupForm from "./SignupForm";
 import Success from "./Success";
-import { Donor, SignupState } from "./types";
+import type { Donor, SignupState } from "./types";
 
 type Props = { classes?: string; donor: Donor };
 

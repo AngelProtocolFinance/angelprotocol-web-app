@@ -1,8 +1,8 @@
-import { ImgLink } from "components/ImgEditor";
+import type { ImgLink } from "components/ImgEditor";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { genFileSchema } from "schemas/file";
-import { SchemaShape } from "schemas/types";
-import { ImageMIMEType } from "types/lists";
+import type { SchemaShape } from "schemas/types";
+import type { ImageMIMEType } from "types/lists";
 import { object } from "yup";
 
 export const VALID_MIME_TYPES: ImageMIMEType[] = [

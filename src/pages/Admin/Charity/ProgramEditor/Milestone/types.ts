@@ -1,7 +1,7 @@
-import { ImgLink } from "components/ImgEditor";
-import { OverrideProperties } from "type-fest";
-import { Milestone } from "types/aws";
-import { RichTextContent } from "types/components";
+import type { ImgLink } from "components/ImgEditor";
+import type { OverrideProperties } from "type-fest";
+import type { Milestone } from "types/aws";
+import type { RichTextContent } from "types/components";
 
 export type FV = OverrideProperties<
   Omit<Milestone, "id">,

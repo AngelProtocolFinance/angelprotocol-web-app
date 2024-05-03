@@ -1,4 +1,4 @@
-import { FilterState } from "./types";
+import type { FilterState } from "./types";
 
 export const initialState: FilterState = {
   sdgGroups: [],

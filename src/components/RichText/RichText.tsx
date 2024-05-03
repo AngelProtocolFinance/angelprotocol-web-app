@@ -1,6 +1,6 @@
 import Quill from "quill";
 import { useCallback, useState } from "react";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export default function RichText(props: Props) {
   const [numChars, setNumChars] = useState(0);

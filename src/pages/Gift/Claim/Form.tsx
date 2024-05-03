@@ -9,8 +9,8 @@ import { useModalContext } from "contexts/ModalContext";
 import { isConnected, useWalletContext } from "contexts/WalletContext";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { ConnectedWallet } from "types/wallet";
-import { FormValues as FV } from "./types";
+import type { ConnectedWallet } from "types/wallet";
+import type { FormValues as FV } from "./types";
 
 export default function Form({ classes = "" }) {
   const {

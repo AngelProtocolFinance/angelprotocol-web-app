@@ -1,7 +1,7 @@
 import Status, { ErrorStatus, LoadingStatus } from "components/Status";
 import { isEmpty, logger } from "helpers";
-import { ReactElement } from "react";
-import { QueryState } from "types/third-party/redux";
+import type { ReactElement } from "react";
+import type { QueryState } from "types/third-party/redux";
 
 type Props<T> = {
   queryState: QueryState<T>;

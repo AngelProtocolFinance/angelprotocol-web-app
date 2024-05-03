@@ -1,4 +1,4 @@
-import { FormHTMLAttributes } from "react";
+import type { FormHTMLAttributes } from "react";
 
 export default function Form({
   isSubmitting,

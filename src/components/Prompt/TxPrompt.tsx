@@ -2,9 +2,9 @@ import ExtLink from "components/ExtLink";
 import { useModalContext } from "contexts/ModalContext";
 import { getTxUrl, logger } from "helpers";
 import { useNavigate } from "react-router-dom";
-import { TxState, isTxError, isTxLoading, isTxSuccess } from "types/tx";
+import { type TxState, isTxError, isTxLoading, isTxSuccess } from "types/tx";
 import Prompt from "./Prompt";
-import { Props as PromptProps } from "./types";
+import type { Props as PromptProps } from "./types";
 
 export function TxPrompt(props: TxState) {
   const { closeModal } = useModalContext();

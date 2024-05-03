@@ -5,7 +5,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/registration";
-import { ErrorQueryParams } from "./types";
+import type { ErrorQueryParams } from "./types";
 
 const initialText = "Retry";
 const redirectingText = "Redirecting...";

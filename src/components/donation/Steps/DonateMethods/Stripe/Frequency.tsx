@@ -1,7 +1,7 @@
 import { RadioGroup as RG } from "@headlessui/react";
 import Icon from "components/Icon";
 import { useController, useFormContext } from "react-hook-form";
-import { FormValues as FV } from "./types";
+import type { FormValues as FV } from "./types";
 
 type Freq = FV["frequency"];
 

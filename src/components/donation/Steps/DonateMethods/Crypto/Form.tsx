@@ -4,13 +4,13 @@ import { IS_TEST } from "constants/env";
 import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { setDetails } from "slices/donation";
-import { ChainID } from "types/chain";
+import type { ChainID } from "types/chain";
 import { Selector } from "../../../../Selector";
 import TokenField from "../../../../TokenField";
 import ContinueBtn from "../../common/ContinueBtn";
-import { Config } from "../../types";
+import type { Config } from "../../types";
 import { initToken } from "./constants";
-import { DonateValues } from "./types";
+import type { DonateValues } from "./types";
 
 type Props = {
   configFromWidget: Config | null;

@@ -1,9 +1,14 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { HTMLInputTypeAttribute, createElement } from "react";
-import { FieldValues, Path, get, useFormContext } from "react-hook-form";
+import { type HTMLInputTypeAttribute, createElement } from "react";
+import {
+  type FieldValues,
+  type Path,
+  get,
+  useFormContext,
+} from "react-hook-form";
 import { Label } from ".";
 import { unpack } from "./helpers";
-import { Classes } from "./types";
+import type { Classes } from "./types";
 
 const textarea = "textarea" as const;
 type TextArea = typeof textarea;

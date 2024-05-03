@@ -3,9 +3,9 @@ import { EIPMethods } from "constants/evm";
 import Decimal from "decimal.js";
 import { injectedProvider, isEmpty, logger } from "helpers";
 import { useEffect, useState } from "react";
-import { ChainID } from "types/chain";
-import { AccountChangeHandler, ChainChangeHandler } from "types/evm";
-import {
+import type { ChainID } from "types/chain";
+import type { AccountChangeHandler, ChainChangeHandler } from "types/evm";
+import type {
   EVMProviderState,
   InjectedProviderID,
   Wallet,
@@ -135,7 +135,7 @@ export default function useInjectedWallet(
         id: providerID,
         status: "connected",
         address: accounts[0],
-        chainId: `${parseInt(hexChainId, 16)}`,
+        chainId: `${Number.parseInt(hexChainId, 16)}`,
         request: provider.request.bind(provider),
         isSwitching: false,
       });

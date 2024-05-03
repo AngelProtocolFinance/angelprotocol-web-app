@@ -1,16 +1,16 @@
 import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
-import { Keplr } from "@keplr-wallet/types";
+import type { Keplr } from "@keplr-wallet/types";
 import { chains } from "constants/chains";
 import { base64FromU8a, u8aFromBase64 } from "helpers/encoding";
-import { ChainID, CosmosChainID } from "types/chain";
+import type { ChainID, CosmosChainID } from "types/chain";
 import {
-  BroadcastRes,
-  BroadcastSuccess,
-  SignDoc,
-  TxResponse,
+  type BroadcastRes,
+  type BroadcastSuccess,
+  type SignDoc,
+  type TxResponse,
   isBroadcastError,
 } from "types/cosmos";
-import { TxError, TxResult } from "types/tx";
+import type { TxError, TxResult } from "types/tx";
 
 export async function sendCosmosTx(
   chainID: CosmosChainID,

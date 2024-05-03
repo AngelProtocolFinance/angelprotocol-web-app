@@ -1,5 +1,5 @@
-import { BankingApplicationStatus } from "types/aws";
-import { OptionType } from "types/components";
+import type { BankingApplicationStatus } from "types/aws";
+import type { OptionType } from "types/components";
 
 export type FormValues = {
   endowmentID: string;

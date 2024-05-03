@@ -1,7 +1,7 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DonationIntent, Donor } from "types/aws";
-import { ChainID } from "types/chain";
-import {
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { DonationIntent, Donor } from "types/aws";
+import type { ChainID } from "types/chain";
+import type {
   CryptoResultStep,
   DonationDetails,
   DonationRecipient,

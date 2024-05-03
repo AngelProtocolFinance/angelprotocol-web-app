@@ -1,5 +1,5 @@
-import { EstimateResult, TxPackage } from "types/tx";
-import { ConnectedWallet, isCosmos, isEVM, isTerra } from "types/wallet";
+import type { EstimateResult, TxPackage } from "types/tx";
+import { type ConnectedWallet, isCosmos, isEVM, isTerra } from "types/wallet";
 
 export const txPackage = (
   estimate: EstimateResult,

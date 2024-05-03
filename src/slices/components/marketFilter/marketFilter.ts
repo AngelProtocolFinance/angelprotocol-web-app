@@ -1,8 +1,8 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { EndowDesignation } from "types/aws";
-import { SDGGroup } from "types/lists";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { EndowDesignation } from "types/aws";
+import type { SDGGroup } from "types/lists";
 import { initialState } from "./constants";
-import { Sort } from "./types";
+import type { Sort } from "./types";
 
 const marketFilter = createSlice({
   name: "marketFilter",

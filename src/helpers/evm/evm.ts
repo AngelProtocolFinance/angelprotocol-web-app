@@ -1,5 +1,5 @@
-import { InjectedProvider, RequestArguments } from "types/evm";
-import { InjectedProviderID } from "types/wallet";
+import type { InjectedProvider, RequestArguments } from "types/evm";
+import type { InjectedProviderID } from "types/wallet";
 
 export async function injectedProvider(
   id: InjectedProviderID

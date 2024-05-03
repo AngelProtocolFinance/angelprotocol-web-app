@@ -1,6 +1,6 @@
-import { PropsWithChildren } from "react";
-import { IconBaseProps } from "react-icons";
-import { IconType } from "../Icon";
+import type { PropsWithChildren } from "react";
+import type { IconBaseProps } from "react-icons";
+import type { IconType } from "../Icon";
 
 export type StatusProps<T extends JSX.Element | IconType> = PropsWithChildren<{
   icon: T;

@@ -14,7 +14,7 @@ import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
-import { StoredRouteState } from "types/auth";
+import type { StoredRouteState } from "types/auth";
 import { object } from "yup";
 
 type FormValues = {

@@ -1,6 +1,6 @@
-import { IconType } from "../Icon";
+import type { IconType } from "../Icon";
 import Icon, { icons } from "../Icon";
-import { StatusProps } from "./types";
+import type { StatusProps } from "./types";
 
 export default function Status<T extends IconType | JSX.Element>({
   icon,

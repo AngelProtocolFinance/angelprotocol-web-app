@@ -1,4 +1,4 @@
-import { ConnectedWallet, DisconnectedWallet } from "types/wallet";
+import type { ConnectedWallet, DisconnectedWallet } from "types/wallet";
 
 export type WalletContextState =
   | "loading" /** consolidate all LoadingWallet*/

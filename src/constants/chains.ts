@@ -1,4 +1,4 @@
-import { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
+import type { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
 
 const baseProxyURL = "https://59vigz9r91.execute-api.us-east-1.amazonaws.com";
 //mainnets

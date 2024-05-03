@@ -1,13 +1,13 @@
 import { ErrorMessage } from "@hookform/error-message";
 import {
-  FieldValues,
-  Path,
+  type FieldValues,
+  type Path,
   get,
   useController,
   useFormContext,
 } from "react-hook-form";
 import RichText from "./RichText";
-import { Editable, EditorClasses } from "./types";
+import type { Editable, EditorClasses } from "./types";
 
 export function RichTextEditor<T extends FieldValues>(
   props: {

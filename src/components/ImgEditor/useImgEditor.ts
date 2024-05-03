@@ -1,10 +1,10 @@
 import { useModalContext } from "contexts/ModalContext";
-import { MouseEventHandler } from "react";
-import { DropzoneOptions } from "react-dropzone";
+import type { MouseEventHandler } from "react";
+import type { DropzoneOptions } from "react-dropzone";
 import { useController, useFormContext } from "react-hook-form";
-import { Path } from "react-hook-form";
+import type { Path } from "react-hook-form";
 import ImgCropper from "./ImgCropper";
-import { ImgLink, Props } from "./types";
+import type { ImgLink, Props } from "./types";
 
 type Base = { [index: string]: ImgLink };
 

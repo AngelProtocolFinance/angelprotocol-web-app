@@ -1,12 +1,12 @@
 import { WalletConnectModal } from "@walletconnect/modal";
-import { SignClient } from "@walletconnect/sign-client/dist/types/client";
-import { SessionTypes, SignClientTypes } from "@walletconnect/types";
+import type { SignClient } from "@walletconnect/sign-client/dist/types/client";
+import type { SessionTypes, SignClientTypes } from "@walletconnect/types";
 import { EIPMethods } from "constants/evm";
 import { logger } from "helpers";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { useEffect, useRef, useState } from "react";
-import { RequestArguments } from "types/evm";
-import {
+import type { RequestArguments } from "types/evm";
+import type {
   EVMConnected,
   EVMProviderState,
   Wallet,

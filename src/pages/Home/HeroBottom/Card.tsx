@@ -2,7 +2,7 @@ import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { EndowmentCard } from "types/aws";
+import type { EndowmentCard } from "types/aws";
 
 const Card = (props: EndowmentCard) => {
   return (

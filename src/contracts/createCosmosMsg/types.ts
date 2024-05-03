@@ -1,4 +1,4 @@
-import { Coin } from "types/cosmos";
+import type { Coin } from "types/cosmos";
 
 type NativeTransfer = {
   amount: string;

@@ -1,6 +1,9 @@
-import { SchemaShape } from "schemas/types";
-import { DonaterConfigFromWidget, WidgetURLSearchParams } from "types/widget";
-import { ValidationError, number, object, string } from "yup";
+import type { SchemaShape } from "schemas/types";
+import type {
+  DonaterConfigFromWidget,
+  WidgetURLSearchParams,
+} from "types/widget";
+import { type ValidationError, number, object, string } from "yup";
 
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   splitDisabled: string().required().oneOf(["true", "false"]),

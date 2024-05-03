@@ -1,6 +1,6 @@
-import { FieldValues, Path, PathValue } from "react-hook-form";
-import { ChainID } from "types/chain";
-import { TokenWithAmount } from "types/tx";
+import type { FieldValues, Path, PathValue } from "react-hook-form";
+import type { ChainID } from "types/chain";
+import type { TokenWithAmount } from "types/tx";
 
 type Classes = {
   container?: string;

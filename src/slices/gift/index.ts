@@ -1,6 +1,6 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { ChainID } from "types/chain";
-import { TokenWithAmount } from "types/tx";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { ChainID } from "types/chain";
+import type { TokenWithAmount } from "types/tx";
 
 export type GiftState = FormStep | SubmitStep | TxStep;
 

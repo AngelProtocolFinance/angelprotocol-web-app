@@ -8,9 +8,13 @@ import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { memo, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useIntentQuery } from "services/apes";
-import { DonationRecipient, loadIntent, setRecipient } from "slices/donation";
+import {
+  type DonationRecipient,
+  loadIntent,
+  setRecipient,
+} from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
-import { DonationIntent } from "types/aws";
+import type { DonationIntent } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 

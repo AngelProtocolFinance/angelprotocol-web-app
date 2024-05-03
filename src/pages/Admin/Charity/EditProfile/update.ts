@@ -1,6 +1,6 @@
-import { Except } from "type-fest";
-import { EndowmentProfile, EndowmentProfileUpdate } from "types/aws";
-import { FV } from "./types";
+import type { Except } from "type-fest";
+import type { EndowmentProfile, EndowmentProfileUpdate } from "types/aws";
+import type { FV } from "./types";
 
 type RequiredFields = Pick<EndowmentProfileUpdate, "id">;
 type Arg =

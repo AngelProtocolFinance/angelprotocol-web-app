@@ -2,12 +2,12 @@ import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import {
-  FieldValues,
-  Path,
+  type FieldValues,
+  type Path,
   useController,
   useFormContext,
 } from "react-hook-form";
-import { Country } from "types/components";
+import type { Country } from "types/components";
 import Icon, { DrawerIcon } from "../Icon";
 import Options from "./Options";
 import { placeHolderCountryOption } from "./constants";
