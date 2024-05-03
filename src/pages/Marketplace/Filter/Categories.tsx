@@ -1,7 +1,7 @@
 import { categories } from "constants/unsdgs";
 import { setSDGgroups } from "slices/components/marketFilter";
 import { useGetter, useSetter } from "store/accessors";
-import { SDGGroup } from "types/lists";
+import type { SDGGroup } from "types/lists";
 import { FlatFilter } from "./common";
 
 export default function Categories() {

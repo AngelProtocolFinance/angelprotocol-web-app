@@ -1,4 +1,4 @@
-import { IconBaseProps } from "react-icons";
+import type { IconBaseProps } from "react-icons";
 import Icon from "./Icon";
 
 export function DrawerIcon({

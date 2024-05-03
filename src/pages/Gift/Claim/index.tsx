@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
 import Form from "./Form";
-import { FormValues as FV } from "./types";
+import type { FormValues as FV } from "./types";
 
 export default function Claim({ classes = "" }) {
   const methods = useForm<FV>({

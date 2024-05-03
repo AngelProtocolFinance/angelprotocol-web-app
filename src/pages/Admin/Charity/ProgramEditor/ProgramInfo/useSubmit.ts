@@ -3,12 +3,12 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 
 import { cleanObject } from "helpers/cleanObject";
-import { SubmitHandler } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 import { useEditProgramMutation } from "services/aws/programs";
-import { Program, ProgramUpdate } from "types/aws";
+import type { Program, ProgramUpdate } from "types/aws";
 import { useAdminContext } from "../../../Context";
 import { uploadImg } from "../common";
-import { FV } from "./types";
+import type { FV } from "./types";
 
 export default function useSubmit(initProgram: Program) {
   const { id } = useAdminContext();

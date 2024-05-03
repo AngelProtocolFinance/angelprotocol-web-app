@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { PaymentIntent } from "@stripe/stripe-js";
+import type { PaymentIntent } from "@stripe/stripe-js";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { bgCookies, getCookie, setCookie } from "helpers/cookie";
-import {
+import type {
   CryptoDonation,
   DonationIntent,
   EndowmentBalances,
@@ -13,8 +13,8 @@ import {
   PayPalOrder,
   Token,
 } from "types/aws";
-import { ChainID } from "types/chain";
-import { DetailedCurrency } from "types/components";
+import type { ChainID } from "types/chain";
+import type { DetailedCurrency } from "types/components";
 import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";

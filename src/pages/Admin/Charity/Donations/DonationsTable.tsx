@@ -2,8 +2,8 @@ import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
-import { DonationRecord, KYCData } from "types/aws";
-import { Ensure } from "types/utils";
+import type { DonationRecord, KYCData } from "types/aws";
+import type { Ensure } from "types/utils";
 import { useAdminContext } from "../../Context";
 import Table from "./Table";
 

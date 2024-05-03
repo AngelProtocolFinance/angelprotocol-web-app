@@ -1,6 +1,6 @@
 import ExtLink from "components/ExtLink";
-import Icon, { IconType } from "components/Icon";
-import { EndowmentProfile } from "types/aws";
+import Icon, { type IconType } from "components/Icon";
+import type { EndowmentProfile } from "types/aws";
 
 export default function Socials(
   props: Pick<EndowmentProfile, "social_media_urls">

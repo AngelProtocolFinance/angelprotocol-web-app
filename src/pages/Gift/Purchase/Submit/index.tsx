@@ -2,14 +2,14 @@ import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
-import { PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 import { Link } from "react-router-dom";
-import { SubmitStep, setStep } from "slices/gift";
+import { type SubmitStep, setStep } from "slices/gift";
 import { useSetter } from "store/accessors";
-import { TokenWithAmount } from "types/tx";
-import { WithWallet } from "types/wallet";
+import type { TokenWithAmount } from "types/tx";
+import type { WithWallet } from "types/wallet";
 import CompleteBtn from "./CompleteBtn";
-import { EstimateStatus } from "./types";
+import type { EstimateStatus } from "./types";
 
 export default function Submit(props: WithWallet<SubmitStep>) {
   const dispatch = useSetter();

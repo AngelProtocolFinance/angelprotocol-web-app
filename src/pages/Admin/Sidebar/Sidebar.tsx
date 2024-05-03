@@ -3,7 +3,7 @@ import { createNavLinkStyler } from "helpers";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import Header from "./Header";
-import { LinkGroup } from "./types";
+import type { LinkGroup } from "./types";
 
 type Props = {
   className?: string;

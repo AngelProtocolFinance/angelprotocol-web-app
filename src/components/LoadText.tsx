@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 export default function LoadText({
   text = "Submitting...",

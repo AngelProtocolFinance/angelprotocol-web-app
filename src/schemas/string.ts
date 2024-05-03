@@ -1,4 +1,4 @@
-import { ChainID } from "types/chain";
+import type { ChainID } from "types/chain";
 import * as Yup from "yup";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;

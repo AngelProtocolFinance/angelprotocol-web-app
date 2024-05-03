@@ -1,4 +1,4 @@
-import { RichTextContent } from "types/components";
+import type { RichTextContent } from "types/components";
 
 type ReadOnly = {
   readOnly: true;

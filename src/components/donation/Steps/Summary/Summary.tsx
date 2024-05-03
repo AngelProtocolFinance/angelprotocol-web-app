@@ -1,4 +1,4 @@
-import { SummaryStep, setDonor, setStep } from "slices/donation";
+import { type SummaryStep, setDonor, setStep } from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import { currency } from "../common/Currency";

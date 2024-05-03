@@ -1,5 +1,5 @@
 import { SignClient } from "@walletconnect/sign-client";
-import { SessionTypes } from "@walletconnect/types";
+import type { SessionTypes } from "@walletconnect/types";
 
 type Name = "Keplr" | "MetaMask Wallet";
 

@@ -1,4 +1,4 @@
-import { EndowmentOption } from "types/aws";
+import type { EndowmentOption } from "types/aws";
 
 export type FormValues = {
   endowment: EndowmentOption;

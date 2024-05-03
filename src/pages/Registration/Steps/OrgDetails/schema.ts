@@ -1,10 +1,10 @@
 import { MAX_SDGS } from "constants/unsdgs";
 import { optionType } from "schemas/shape";
 import { url, requiredString } from "schemas/string";
-import { SchemaShape } from "schemas/types";
-import { Country } from "types/components";
-import { ObjectSchema, array, object } from "yup";
-import { FormValues } from "./types";
+import type { SchemaShape } from "schemas/types";
+import type { Country } from "types/components";
+import { type ObjectSchema, array, object } from "yup";
+import type { FormValues } from "./types";
 
 export const schema = object<any, SchemaShape<FormValues>>({
   Website: url.required("required"),

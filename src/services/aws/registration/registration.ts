@@ -2,7 +2,7 @@ import { TEMP_JWT } from "constants/auth";
 import { EMAIL_SUPPORT } from "constants/env";
 import { logger } from "helpers";
 import { apiEnv } from "services/constants";
-import {
+import type {
   ContactUpdateResult,
   EndowClaim,
   InitApplication,
@@ -11,7 +11,7 @@ import {
   SubmitResult,
 } from "types/aws";
 import { version as v } from "../../helpers";
-import { FiscalSponsorhipAgreementSigner } from "../../types";
+import type { FiscalSponsorhipAgreementSigner } from "../../types";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({

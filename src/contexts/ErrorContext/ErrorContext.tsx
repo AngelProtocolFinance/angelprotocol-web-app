@@ -1,7 +1,7 @@
 import Prompt from "components/Prompt";
 import { EMAIL_SUPPORT } from "constants/env";
 import { logger } from "helpers";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { useModalContext } from "../ModalContext";
 
 function parseError(error: unknown): string | undefined {

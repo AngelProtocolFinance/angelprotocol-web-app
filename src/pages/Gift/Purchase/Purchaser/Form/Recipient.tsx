@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { Path, useFormContext } from "react-hook-form";
-import { FormValues } from "../types";
+import { type Path, useFormContext } from "react-hook-form";
+import type { FormValues } from "../types";
 
 export default function Recipient({ classes = "" }: { classes?: string }) {
   const {

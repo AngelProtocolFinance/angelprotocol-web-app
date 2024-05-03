@@ -1,6 +1,6 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { DafCheckoutStep } from "slices/donation";
+import type { DafCheckoutStep } from "slices/donation";
 
 export default function ManualDonation(props: DafCheckoutStep) {
   const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;

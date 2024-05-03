@@ -1,5 +1,5 @@
-import { ChainID } from "types/chain";
-import { DisconnectedWallet } from "types/wallet";
+import type { ChainID } from "types/chain";
+import type { DisconnectedWallet } from "types/wallet";
 import Wallet from "./Wallet";
 
 type Props = {

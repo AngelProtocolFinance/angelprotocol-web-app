@@ -1,4 +1,4 @@
-import { RegStep } from "pages/Registration/types";
+import type { RegStep } from "pages/Registration/types";
 import { Link } from "react-router-dom";
 import { useRegState } from "../StepGuard";
 

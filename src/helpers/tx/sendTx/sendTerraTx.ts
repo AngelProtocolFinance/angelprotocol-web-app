@@ -1,8 +1,8 @@
-import { CreateTxOptions } from "@terra-money/terra.js";
-import { ConnectedWallet } from "@terra-money/wallet-provider";
+import type { CreateTxOptions } from "@terra-money/terra.js";
+import type { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Timeout, TxFailed, UserDenied } from "@terra-money/wallet-provider";
-import { TerraChainID } from "types/chain";
-import { SubmittedTx, TxResult } from "types/tx";
+import type { TerraChainID } from "types/chain";
+import type { SubmittedTx, TxResult } from "types/tx";
 import { logger } from "../../logger";
 
 export async function sendTerraTx(

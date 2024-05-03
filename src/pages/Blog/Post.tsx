@@ -5,7 +5,7 @@ import QueryLoader from "components/QueryLoader";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { usePostQuery, useUserQuery } from "services/wordpress";
-import { Wordpress } from "types/wordpress";
+import type { Wordpress } from "types/wordpress";
 
 const containerStyle = "w-full padded-container max-w-4xl mx-auto pb-4";
 

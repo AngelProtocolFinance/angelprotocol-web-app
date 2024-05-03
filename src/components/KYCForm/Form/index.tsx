@@ -5,7 +5,7 @@ import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { useFormContext } from "react-hook-form";
-import { FormValues as FV, Props } from "../types";
+import type { FormValues as FV, Props } from "../types";
 import Tooltip from "./Tooltip";
 import { states } from "./us-states";
 

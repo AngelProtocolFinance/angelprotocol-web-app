@@ -5,8 +5,8 @@ import { APIs } from "constants/urls";
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import { invalidateApesTags } from "services/apes";
-import { TxPackage, isTxResultError } from "types/tx";
-import gift, { GiftDetails, TxStatus, setTxStatus } from "./index";
+import { type TxPackage, isTxResultError } from "types/tx";
+import gift, { type GiftDetails, type TxStatus, setTxStatus } from "./index";
 
 type Args = {
   details: GiftDetails;

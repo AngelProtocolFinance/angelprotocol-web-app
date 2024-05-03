@@ -5,10 +5,10 @@ import ImgEditor from "components/ImgEditor/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Form, Label, dateToFormFormat } from "components/form";
 import { useForm } from "react-hook-form";
-import { Milestone as TMilestone } from "types/aws";
+import type { Milestone as TMilestone } from "types/aws";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { schema } from "./schema";
-import { FV } from "./types";
+import type { FV } from "./types";
 import useMustate from "./useMutate";
 
 type Props = TMilestone & { programId: string };

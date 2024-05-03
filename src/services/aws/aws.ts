@@ -2,9 +2,9 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { apiEnv } from "services/constants";
-import { RootState } from "store/store";
+import type { RootState } from "store/store";
 import { userIsSignedIn } from "types/auth";
-import {
+import type {
   Application,
   ApplicationDetails,
   ApplicationVerdict,
@@ -20,7 +20,7 @@ import {
   WalletProfile,
 } from "types/aws";
 import { version as v } from "../helpers";
-import {
+import type {
   EndowmentUpdate,
   IdOrSlug,
   VersionSpecificWalletProfile,

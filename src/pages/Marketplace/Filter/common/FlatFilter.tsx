@@ -1,5 +1,5 @@
 import { Listbox } from "@headlessui/react";
-import { GroupProps } from "./types";
+import type { GroupProps } from "./types";
 
 export function FlatFilter<T>(props: GroupProps<T>) {
   return (

@@ -5,7 +5,7 @@ import { invalidateApesTags } from "services/apes";
 import { invalidateAwsTags } from "services/aws/aws";
 import { isTxResultError } from "types/tx";
 import donation, { setTxStatus } from "../donation";
-import { DonateArgs, TxStatus } from "../types";
+import type { DonateArgs, TxStatus } from "../types";
 
 export const sendDonation = createAsyncThunk<void, DonateArgs>(
   `${donation.name}/sendDonation`,

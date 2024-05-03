@@ -1,5 +1,5 @@
 import CurrentStep from "./CurrentStep";
-import { Config } from "./types";
+import type { Config } from "./types";
 
 type Props = {
   className?: string;

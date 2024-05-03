@@ -1,4 +1,4 @@
-import { Program } from "types/aws";
+import type { Program } from "types/aws";
 import Milestones from "./Milestones";
 import ProgramInfo from "./ProgramInfo";
 

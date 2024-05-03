@@ -5,7 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { steps } from "../../routes";
 import { useRegState, withStepGuard } from "../StepGuard";
-import { FV } from "./types";
+import type { FV } from "./types";
 import useSubmit from "./useSubmit";
 
 const countryWhiteList = ["United States"]; //will add more in the future;

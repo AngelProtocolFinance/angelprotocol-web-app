@@ -1,5 +1,5 @@
 import { Dialog, Transition } from "@headlessui/react";
-import React, { FC } from "react";
+import React, { type FC } from "react";
 
 const ModalFn: FC<any> = (props) => (
   <Transition.Child

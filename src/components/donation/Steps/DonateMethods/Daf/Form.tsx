@@ -5,9 +5,9 @@ import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
-import { DetailedCurrency } from "types/components";
+import type { DetailedCurrency } from "types/components";
 import ContinueBtn from "../../common/ContinueBtn";
-import { FormValues as FV, Props } from "./types";
+import type { FormValues as FV, Props } from "./types";
 
 /**
  * Only USD donations are permissible for DAF donations.

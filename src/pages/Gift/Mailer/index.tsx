@@ -3,7 +3,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { useLocation } from "react-router-dom";
 import Form from "./Form";
 import { schema } from "./schema";
-import { FormValues } from "./types";
+import type { FormValues } from "./types";
 
 export default function Mailer({ classes = "" }) {
   const { state } = useLocation();

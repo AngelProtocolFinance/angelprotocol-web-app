@@ -1,4 +1,4 @@
-import { Primitive, Tuple, Tupleable } from "types/evm";
+import type { Primitive, Tuple, Tupleable } from "types/evm";
 
 const isPrimitive = (val: Tupleable[string]): val is Primitive =>
   typeof val === "number" ||

@@ -1,4 +1,4 @@
-import { Country } from "types/components";
+import type { Country } from "types/components";
 
 export const placeHolderCountryOption: Country = {
   name: "",

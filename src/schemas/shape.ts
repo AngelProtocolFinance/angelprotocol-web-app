@@ -1,9 +1,9 @@
-import { OptionType, RichTextContent } from "types/components";
+import type { OptionType, RichTextContent } from "types/components";
 import type { TokenWithAmount as TWA } from "types/tx";
 import {
-  NumberSchema,
-  ObjectSchema,
-  StringSchema,
+  type NumberSchema,
+  type ObjectSchema,
+  type StringSchema,
   lazy,
   mixed,
   number,
@@ -12,7 +12,7 @@ import {
 } from "yup";
 import { requiredString } from "./string";
 import { testTokenDigits } from "./tests";
-import { SchemaShape } from "./types";
+import type { SchemaShape } from "./types";
 
 /**
  * No need to trim the value, as Yup's cast when calling `number()`

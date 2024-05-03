@@ -3,7 +3,7 @@ import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { getTxUrl } from "helpers";
 import { Link } from "react-router-dom";
-import { TError, setStep } from "slices/gift";
+import { type TError, setStep } from "slices/gift";
 import { useSetter } from "store/accessors";
 
 export default function Err({ error, hash }: TError) {

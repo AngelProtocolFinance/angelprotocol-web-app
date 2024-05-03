@@ -1,4 +1,4 @@
-import {
+import type {
   AccountRequirements,
   CreateRecipientRequest,
   Quote,
@@ -6,7 +6,7 @@ import {
   V2RecipientAccount,
   WiseCurrency,
 } from "types/aws";
-import { Currency } from "types/components";
+import type { Currency } from "types/components";
 import { aws } from "../aws/aws";
 import { version as v } from "../helpers";
 

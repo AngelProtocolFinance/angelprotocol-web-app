@@ -3,9 +3,9 @@ import { chains } from "constants/chains";
 import { EIPMethods } from "constants/evm";
 import { erc20 } from "contracts/evm/ERC20";
 import { condenseToNum, objToBase64, request } from "helpers";
-import { Token } from "types/aws";
-import { ChainID } from "types/chain";
-import { CW20Balance } from "types/contracts";
+import type { Token } from "types/aws";
+import type { ChainID } from "types/chain";
+import type { CW20Balance } from "types/contracts";
 
 type CosmosBalance = { balance: { denom: string; amount: string } };
 export const tokenBalance = async (

@@ -1,11 +1,11 @@
 import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
-import { SignClient } from "@walletconnect/sign-client/dist/types/client";
-import { SessionTypes } from "@walletconnect/types";
+import type { SignClient } from "@walletconnect/sign-client/dist/types/client";
+import type { SessionTypes } from "@walletconnect/types";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { useEffect, useRef, useState } from "react";
-import { SignDoc, WCSignDirectRes } from "types/cosmos";
-import {
+import type { SignDoc, WCSignDirectRes } from "types/cosmos";
+import type {
   CosmosConnected,
   CosmosProviderState,
   Wallet,

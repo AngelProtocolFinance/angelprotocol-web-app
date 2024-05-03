@@ -5,11 +5,11 @@ import GenericPrompt from "components/Prompt";
 import { Field } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import {
   FormProvider,
-  SubmitHandler,
-  UseFormReturn,
+  type SubmitHandler,
+  type UseFormReturn,
   useForm,
 } from "react-hook-form";
 import { requiredString } from "schemas/string";

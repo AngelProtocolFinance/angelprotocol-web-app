@@ -1,4 +1,4 @@
-import { DonationRecord, DonationsQueryParams } from "types/aws";
+import type { DonationRecord, DonationsQueryParams } from "types/aws";
 
 export type TableProps = {
   donations: DonationRecord[];

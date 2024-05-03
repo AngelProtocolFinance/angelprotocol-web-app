@@ -1,6 +1,6 @@
-import { IdOrSlug } from "services/types";
-import { Endowment } from "types/aws";
-import { QueryState } from "types/third-party/redux";
+import type { IdOrSlug } from "services/types";
+import type { Endowment } from "types/aws";
+import type { QueryState } from "types/third-party/redux";
 import { useEndowmentQuery } from "./aws";
 
 type ArrayValues<T extends readonly unknown[]> = T[number];

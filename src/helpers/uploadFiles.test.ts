@@ -1,6 +1,6 @@
 import { APIs } from "constants/urls";
 import { afterEach, describe, expect, test, vi } from "vitest";
-import { Bucket, bucketURL, uploadFiles } from "./uploadFiles";
+import { type Bucket, bucketURL, uploadFiles } from "./uploadFiles";
 
 const TIME_STAMP = 123456789;
 const AUTH_TOKEN = "test";

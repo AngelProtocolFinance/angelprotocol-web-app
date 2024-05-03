@@ -3,9 +3,9 @@ import { idParamToNum } from "helpers";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
-import { PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { RegStep } from "../types";
+import type { RegStep } from "../types";
 
 type Props = {
   step: RegStep;

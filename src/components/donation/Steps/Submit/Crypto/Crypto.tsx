@@ -2,7 +2,7 @@ import { WalletProvider } from "@terra-money/wallet-provider";
 import { chainOptions } from "constants/chainOptions";
 import { chains } from "constants/chains";
 import WalletContext from "contexts/WalletContext/WalletContext";
-import { CryptoSubmitStep, setStep } from "slices/donation";
+import { type CryptoSubmitStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import Image from "../../../../Image";
 import Summary from "../../common/Summary";

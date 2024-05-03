@@ -1,7 +1,7 @@
 import { Combobox } from "@headlessui/react";
 import { DrawerIcon } from "../Icon";
 import TokenOptions from "./TokenOptions";
-import { SelectorProps } from "./types";
+import type { SelectorProps } from "./types";
 
 export default function TokenSelector({
   selectedChainId,

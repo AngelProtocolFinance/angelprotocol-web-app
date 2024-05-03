@@ -1,5 +1,5 @@
-import { FileObject } from "../common";
-import { RegistrationStatus } from "./registration";
+import type { FileObject } from "../common";
+import type { RegistrationStatus } from "./registration";
 
 export type ApplicationsQueryParams = {
   limit?: number; // Number of items to be returned per request

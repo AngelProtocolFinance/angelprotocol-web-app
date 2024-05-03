@@ -1,5 +1,5 @@
-import { ContactRoles, ReferralMethods } from "types/aws";
-import { OptionType } from "types/components";
+import type { ContactRoles, ReferralMethods } from "types/aws";
+import type { OptionType } from "types/components";
 
 export const roles: { [key in ContactRoles]: string } = {
   "": "",

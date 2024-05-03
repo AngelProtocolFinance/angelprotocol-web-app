@@ -4,7 +4,7 @@ import QueryLoader from "components/QueryLoader";
 import withAuth from "contexts/Auth";
 import { isEmpty } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
-import { DonationRecord } from "types/aws";
+import type { DonationRecord } from "types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";

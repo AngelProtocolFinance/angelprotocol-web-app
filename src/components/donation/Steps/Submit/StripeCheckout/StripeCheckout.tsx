@@ -4,7 +4,7 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
 import { useStripePaymentIntentQuery } from "services/apes";
-import { StripeCheckoutStep, setStep } from "slices/donation";
+import { type StripeCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";

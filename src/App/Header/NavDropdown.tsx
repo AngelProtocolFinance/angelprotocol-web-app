@@ -7,7 +7,7 @@ import { Fragment } from "react";
 import { NavLink } from "react-router-dom";
 import { logout } from "slices/auth";
 import { useGetter, useSetter } from "store/accessors";
-import { Link } from "../types";
+import type { Link } from "../types";
 import Menu from "./UserMenu/Menu";
 
 type Props = { links: Link[] };

@@ -2,7 +2,7 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import { getTxUrl, humanize, maskAddress, roundDownToNum } from "helpers";
-import { DonationRecord } from "types/aws";
+import type { DonationRecord } from "types/aws";
 
 export default function Row(
   props: DonationRecord & { hasMore?: boolean; classes?: string }

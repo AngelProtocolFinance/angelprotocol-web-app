@@ -6,8 +6,8 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import {
   FormProvider,
-  SubmitHandler,
-  UseFormReturn,
+  type SubmitHandler,
+  type UseFormReturn,
   useForm,
 } from "react-hook-form";
 import { requiredString } from "schemas/string";

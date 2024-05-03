@@ -3,8 +3,8 @@ import { Selector, selectorButtonStyle } from "components/Selector";
 import { useFormContext } from "react-hook-form";
 import { junoAddrPattern, terraAddrPattern } from "schemas/string";
 import { useCurrenciesQuery } from "services/apes";
-import { Token } from "types/aws";
-import { FormValues as FV } from "./types";
+import type { Token } from "types/aws";
+import type { FormValues as FV } from "./types";
 
 export default function CurrencyDropdown({ classes = "" }) {
   const { getValues } = useFormContext<FV>();

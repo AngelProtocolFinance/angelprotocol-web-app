@@ -3,7 +3,7 @@ import { Separator } from "components/Separator";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { AuthenticatedUser } from "types/auth";
+import type { AuthenticatedUser } from "types/auth";
 import EndowmentLink from "./EndowmentLink";
 
 type Props = {

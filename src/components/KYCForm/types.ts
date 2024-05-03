@@ -1,4 +1,4 @@
-import { Country, OptionType } from "types/components";
+import type { Country, OptionType } from "types/components";
 
 export type FormValues = {
   name: { first: string; last: string };

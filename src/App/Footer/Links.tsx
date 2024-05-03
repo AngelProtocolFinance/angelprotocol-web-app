@@ -1,4 +1,4 @@
-import { LinkGroup } from "../types";
+import type { LinkGroup } from "../types";
 
 const linkStyles = "font-semibold text-xs";
 

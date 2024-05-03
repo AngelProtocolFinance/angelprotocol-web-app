@@ -6,7 +6,7 @@ import { getSavedRegistrationReference } from "helpers";
 import { useNavigate } from "react-router-dom";
 import { useLazyRegQuery } from "services/aws/registration";
 import { getRegistrationState } from "../Steps/getRegistrationState";
-import { SignerCompleteQueryParams } from "./types";
+import type { SignerCompleteQueryParams } from "./types";
 
 const proxyFunctionURL =
   "https://h247dsayjkdwlheiboq54r2gxu0htegs.lambda-url.us-east-1.on.aws";

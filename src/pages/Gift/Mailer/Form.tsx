@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
 import Success from "./Success";
-import { FormValues as FV } from "./types";
+import type { FormValues as FV } from "./types";
 
 export default function Form({ classes = "" }) {
   const {

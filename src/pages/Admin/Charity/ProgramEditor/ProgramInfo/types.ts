@@ -1,5 +1,5 @@
-import { ImgLink } from "components/ImgEditor";
-import { RichTextContent } from "types/components";
+import type { ImgLink } from "components/ImgEditor";
+import type { RichTextContent } from "types/components";
 
 export type FV = {
   title: string;

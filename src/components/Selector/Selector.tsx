@@ -1,12 +1,17 @@
 import { Listbox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { DrawerIcon } from "components/Icon";
-import { FieldValues, Path, get, useController } from "react-hook-form";
-import { OptionType, ValKey } from "types/components";
+import {
+  type FieldValues,
+  type Path,
+  get,
+  useController,
+} from "react-hook-form";
+import type { OptionType, ValKey } from "types/components";
 import { unpack } from "../form/helpers";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export function Selector<
   T extends FieldValues,

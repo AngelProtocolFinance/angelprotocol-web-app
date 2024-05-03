@@ -1,7 +1,7 @@
 import Copier from "components/Copier";
 import { appRoutes } from "constants/routes";
 import { useGetter } from "store/accessors";
-import { WidgetConfig, WidgetURLSearchParams } from "types/widget";
+import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
 export default function Snippet({ classes = "" }) {
   const config = useGetter((state) => state.widget);

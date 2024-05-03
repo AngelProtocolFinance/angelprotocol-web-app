@@ -4,9 +4,9 @@ import { Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useEffect } from "react";
-import { DonationRecipient, setRecipient } from "slices/donation";
+import { type DonationRecipient, setRecipient } from "slices/donation";
 import { useSetter } from "store/accessors";
-import { EndowmentProfile } from "types/aws";
+import type { EndowmentProfile } from "types/aws";
 import parseConfig from "./parseConfig";
 
 type Props = {

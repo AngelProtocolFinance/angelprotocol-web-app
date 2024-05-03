@@ -1,4 +1,4 @@
-import { DonationsMetricList } from "types/aws";
+import type { DonationsMetricList } from "types/aws";
 import { aws } from "./aws";
 
 export const dummyDonationsMetricList: DonationsMetricList = {

@@ -1,11 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import { FormStep } from "slices/gift";
-import { TokenWithAmount } from "types/tx";
-import { WithWallet } from "types/wallet";
+import type { FormStep } from "slices/gift";
+import type { TokenWithAmount } from "types/tx";
+import type { WithWallet } from "types/wallet";
 import Form from "./Form";
 import { schema } from "./schema";
-import { FormValues } from "./types";
+import type { FormValues } from "./types";
 
 export default function Purchaser({
   classes: _c = "",

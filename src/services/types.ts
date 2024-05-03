@@ -1,4 +1,4 @@
-import {
+import type {
   BankingApplication,
   EndowmentProfileUpdate,
   EndowmentSettingsUpdate,
@@ -6,7 +6,7 @@ import {
   V2RecipientAccount,
   WalletProfile,
 } from "types/aws";
-import { SemiPartial } from "types/utils";
+import type { SemiPartial } from "types/utils";
 
 export type ChainQueryArgs = {
   address: string;

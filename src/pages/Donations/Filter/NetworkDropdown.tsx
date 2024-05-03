@@ -1,8 +1,8 @@
 import { Selector } from "components/Selector";
 import { chains } from "constants/chains";
-import { DonationRecord } from "types/aws";
-import { OptionType } from "types/components";
-import { FormValues as FV } from "./types";
+import type { DonationRecord } from "types/aws";
+import type { OptionType } from "types/components";
+import type { FormValues as FV } from "./types";
 
 const fiatNetworks: OptionType<string>[] = [
   { label: "Fiat", value: "fiat" },

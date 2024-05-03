@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form } from "components/form";
 import { useForm } from "react-hook-form";
-import { Donor, Donor as FV } from "types/aws";
+import type { Donor, Donor as FV } from "types/aws";
 import { object, string } from "yup";
 import ContinueBtn from "../common/ContinueBtn";
 

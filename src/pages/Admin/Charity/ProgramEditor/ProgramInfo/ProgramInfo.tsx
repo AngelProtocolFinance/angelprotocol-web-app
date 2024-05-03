@@ -4,10 +4,10 @@ import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Form, Label } from "components/form";
 import { useForm } from "react-hook-form";
-import { Program } from "types/aws";
+import type { Program } from "types/aws";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { schema } from "./schema";
-import { FV } from "./types";
+import type { FV } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function ProgramInfo(props: Program) {
