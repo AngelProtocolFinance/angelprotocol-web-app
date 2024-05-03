@@ -66,7 +66,7 @@ function ListItem(props: TListItem) {
         type="Shapes"
         className="col-start-1 row-span-2 text-gray mt-1 text-lg @6xl:text-xl"
       />
-      <h6 className="font-body text-lg @6xl:text-xl text-navy-l1">
+      <h6 className="text-lg font-medium @6xl:text-xl text-navy-d4">
         {props.title}
       </h6>
       <p className="text-lg @6xl:text-xl text-navy-l3">{props.description}</p>
