@@ -1,5 +1,5 @@
 import { IS_TEST } from "constants/env";
-import { ReceiptPayload, Token } from "types/aws";
+import type { ReceiptPayload, Token } from "types/aws";
 import { apes } from "../apes";
 
 export const donations_api = apes.injectEndpoints({

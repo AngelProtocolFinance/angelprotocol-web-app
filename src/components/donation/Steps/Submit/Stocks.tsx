@@ -1,6 +1,6 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { StockCheckoutStep, setStep } from "slices/donation";
+import { type StockCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
 

@@ -6,7 +6,7 @@ import { string } from "yup";
 import { useUpdateEndowment } from "../common";
 import ReceiptMsg from "./ReceiptMsg";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
-import { FV } from "./types";
+import type { FV } from "./types";
 
 type Props = {
   id: number;

@@ -7,7 +7,7 @@ import { useEndowment } from "services/aws/useEndowment";
 import { setRecipient } from "slices/donation";
 import { initialize } from "slices/widget";
 import { useGetter, useSetter } from "store/accessors";
-import { Endowment } from "types/aws";
+import type { Endowment } from "types/aws";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";

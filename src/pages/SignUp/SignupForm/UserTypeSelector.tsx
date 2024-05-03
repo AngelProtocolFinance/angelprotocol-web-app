@@ -1,5 +1,5 @@
 import { useController, useFormContext } from "react-hook-form";
-import { FormValues } from "../types";
+import type { FormValues } from "../types";
 
 const btnClass = (isSelected: boolean) =>
   `flex items-center justify-center btn-outline-2 h-[42px] ${

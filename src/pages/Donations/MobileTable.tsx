@@ -4,9 +4,9 @@ import Icon, { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import LoadMoreBtn from "./LoadMoreBtn";
-import { TableProps } from "./types";
+import type { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
 
 export default function MobileTable({

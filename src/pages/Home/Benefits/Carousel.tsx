@@ -1,4 +1,4 @@
-import { Slide } from "./types";
+import type { Slide } from "./types";
 
 type Props = { slides: Slide[]; classes?: string };
 const Carousel = ({ slides, classes = "" }: Props) => {

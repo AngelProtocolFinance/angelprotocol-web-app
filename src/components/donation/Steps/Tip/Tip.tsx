@@ -8,7 +8,7 @@ import { humanize } from "helpers";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import { TipStep, setStep, setTip } from "slices/donation";
+import { type TipStep, setStep, setTip } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";

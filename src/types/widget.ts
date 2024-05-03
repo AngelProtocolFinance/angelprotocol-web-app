@@ -1,4 +1,4 @@
-import { EndowmentOption } from "./aws";
+import type { EndowmentOption } from "./aws";
 
 export type WidgetConfig = {
   endowment: EndowmentOption;

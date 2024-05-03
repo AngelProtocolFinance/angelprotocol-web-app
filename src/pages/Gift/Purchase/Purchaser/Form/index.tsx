@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setDetails } from "slices/gift";
-import { FormValues as FV } from "../types";
+import type { FormValues as FV } from "../types";
 import Recipient from "./Recipient";
 
 export default function Form({ classes = "" }) {

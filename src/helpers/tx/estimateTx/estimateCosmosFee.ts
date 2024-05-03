@@ -11,9 +11,9 @@ import { chains } from "constants/chains";
 import { condenseToNum } from "helpers/decimal";
 import { base64FromU8a } from "helpers/encoding";
 import Long from "long";
-import { CosmosChainID } from "types/chain";
-import { JSONAccount, SimulateRes } from "types/cosmos";
-import { EstimateResult } from "types/tx";
+import type { CosmosChainID } from "types/chain";
+import type { JSONAccount, SimulateRes } from "types/cosmos";
+import type { EstimateResult } from "types/tx";
 
 const GAS_PRICE = "0.075";
 

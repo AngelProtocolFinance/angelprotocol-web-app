@@ -5,7 +5,7 @@ import Splits from "./Splits";
 import Submit from "./Submit";
 import Summary from "./Summary";
 import Tip from "./Tip";
-import { Config } from "./types";
+import type { Config } from "./types";
 
 type Props = { config: Config | null };
 

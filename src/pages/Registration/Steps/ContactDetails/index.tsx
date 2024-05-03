@@ -1,13 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { FormProvider, useForm } from "react-hook-form";
-import { ContactRoles, ReferralMethods } from "types/aws";
-import { OptionType } from "types/components";
+import type { ContactRoles, ReferralMethods } from "types/aws";
+import type { OptionType } from "types/components";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
 import { referralMethods, roles } from "./constants";
 import { schema } from "./schema";
-import { FormValues } from "./types";
+import type { FormValues } from "./types";
 
 function ContactDetails() {
   const {

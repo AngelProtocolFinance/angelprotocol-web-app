@@ -7,7 +7,7 @@ import { alphanumeric, requiredString } from "schemas/string";
 import { object } from "yup";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
-import { FormValues as FV, Props } from "./types";
+import type { FormValues as FV, Props } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function NonFSA(props: Props) {

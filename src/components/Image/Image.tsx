@@ -1,7 +1,7 @@
 import ContentLoader from "components/ContentLoader";
 import ExtLink from "components/ExtLink";
 import React, {
-  PropsWithChildren,
+  type PropsWithChildren,
   useImperativeHandle,
   useRef,
   useState,

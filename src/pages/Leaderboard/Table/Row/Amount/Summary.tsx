@@ -1,7 +1,7 @@
 import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
-import { AmountProps } from ".";
+import type { AmountProps } from ".";
 
 export default function Summary({ locked, liquid, type }: AmountProps) {
   const { closeModal } = useModalContext();

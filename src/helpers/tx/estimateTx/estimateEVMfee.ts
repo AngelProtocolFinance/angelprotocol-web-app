@@ -1,9 +1,9 @@
 import { chains } from "constants/chains";
 import { EIPMethods } from "constants/evm";
 import Decimal from "decimal.js";
-import { EVMChainID } from "types/chain";
-import { SimulTx } from "types/evm";
-import { EstimateResult } from "types/tx";
+import type { EVMChainID } from "types/chain";
+import type { SimulTx } from "types/evm";
+import type { EstimateResult } from "types/tx";
 import { condense } from "../../decimal";
 import { request } from "../../evm";
 

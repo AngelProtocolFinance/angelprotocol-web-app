@@ -1,5 +1,5 @@
-import { DonationSource } from "types/lists";
-import { Token } from ".";
+import type { DonationSource } from "types/lists";
+import type { Token } from ".";
 
 export type Donor = {
   email: string;

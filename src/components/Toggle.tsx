@@ -1,9 +1,9 @@
 import { Switch } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { Fragment, PropsWithChildren } from "react";
+import { Fragment, type PropsWithChildren } from "react";
 import {
-  FieldValues as FV,
-  Path,
+  type FieldValues as FV,
+  type Path,
   useController,
   useFormContext,
 } from "react-hook-form";

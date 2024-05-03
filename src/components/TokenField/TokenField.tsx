@@ -1,14 +1,14 @@
 import { ErrorMessage } from "@hookform/error-message";
 import {
-  FieldValues,
-  Path,
+  type FieldValues,
+  type Path,
   useController,
   useFormContext,
 } from "react-hook-form";
-import { TokenWithAmount } from "types/tx";
+import type { TokenWithAmount } from "types/tx";
 import { unpack } from "../form/helpers";
 import TokenSelector from "./TokenSelector";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 const amountKey: keyof TokenWithAmount = "amount";
 const tokenIDkey: keyof TokenWithAmount = "token_id";

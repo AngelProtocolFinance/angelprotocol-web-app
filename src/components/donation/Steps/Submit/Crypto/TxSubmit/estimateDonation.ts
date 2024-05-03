@@ -5,10 +5,10 @@ import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
-import { ChainID } from "types/chain";
-import { SimulContractTx, SimulSendNativeTx } from "types/evm";
-import { EstimateInput, TokenWithAmount } from "types/tx";
-import { EstimateStatus } from "../types";
+import type { ChainID } from "types/chain";
+import type { SimulContractTx, SimulSendNativeTx } from "types/evm";
+import type { EstimateInput, TokenWithAmount } from "types/tx";
+import type { EstimateStatus } from "../types";
 import { tokenBalance } from "./tokenBalance";
 
 export async function estimateDonation(

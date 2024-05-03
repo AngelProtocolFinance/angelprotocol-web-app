@@ -1,7 +1,7 @@
 import { juno, terraMainnet } from "constants/chains";
 import { useEffect, useState } from "react";
-import { ChainID } from "types/chain";
-import { CosmosProviderState, Wallet, WalletMeta } from "types/wallet";
+import type { ChainID } from "types/chain";
+import type { CosmosProviderState, Wallet, WalletMeta } from "types/wallet";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 
 const actionKey = `keplr__pref`;

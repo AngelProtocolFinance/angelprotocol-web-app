@@ -1,13 +1,13 @@
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
-import { Keplr } from "@keplr-wallet/types";
+import type { Keplr } from "@keplr-wallet/types";
 import type { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
-import { Token } from "./aws";
-import { ChainID, CosmosChainID, EVMChainID, TerraChainID } from "./chain";
-import { Allowance, Transfer } from "./contracts/erc20";
-import { SignDoc } from "./cosmos";
-import { Requester, Tupleable } from "./evm";
-import { EVMTx, SimulTx } from "./evm";
+import type { Token } from "./aws";
+import type { ChainID, CosmosChainID, EVMChainID, TerraChainID } from "./chain";
+import type { Allowance, Transfer } from "./contracts/erc20";
+import type { SignDoc } from "./cosmos";
+import type { Requester, Tupleable } from "./evm";
+import type { EVMTx, SimulTx } from "./evm";
 
 export type TokenWithAmount = Token & {
   amount: string;

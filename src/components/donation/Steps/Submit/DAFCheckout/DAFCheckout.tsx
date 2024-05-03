@@ -1,4 +1,4 @@
-import { DafCheckoutStep, setStep } from "slices/donation";
+import { type DafCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../../common/BackBtn";
 import ManualDonation from "./ManualDonation";

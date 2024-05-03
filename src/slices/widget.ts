@@ -1,5 +1,5 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { WidgetConfig } from "types/widget";
+import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
+import type { WidgetConfig } from "types/widget";
 
 type State = WidgetConfig & { initial: WidgetConfig };
 

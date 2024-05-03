@@ -4,7 +4,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
 import { useEditEndowmentMutation } from "services/aws/aws";
-import { EndowmentUpdate } from "services/types";
+import type { EndowmentUpdate } from "services/types";
 
 export function useUpdateEndowment() {
   const { showModal } = useModalContext();

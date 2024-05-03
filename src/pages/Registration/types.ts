@@ -1,5 +1,5 @@
-import { Except } from "type-fest";
-import {
+import type { Except } from "type-fest";
+import type {
   BankingDetails,
   ContactDetails,
   EndowClaim,

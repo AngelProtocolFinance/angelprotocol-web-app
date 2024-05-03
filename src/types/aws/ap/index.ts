@@ -1,6 +1,6 @@
-import { Except } from "type-fest";
-import { PartialExcept } from "types/utils";
-import { APIEnvironment, UNSDG_NUMS } from "../../lists";
+import type { Except } from "type-fest";
+import type { PartialExcept } from "types/utils";
+import type { APIEnvironment, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 

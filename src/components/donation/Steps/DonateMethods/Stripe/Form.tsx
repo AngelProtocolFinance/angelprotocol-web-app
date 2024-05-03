@@ -9,11 +9,11 @@ import { requiredString } from "schemas/string";
 import { useFiatCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
 import { useSetter } from "store/accessors";
-import { Currency, DetailedCurrency } from "types/components";
+import type { Currency, DetailedCurrency } from "types/components";
 import ContinueBtn from "../../common/ContinueBtn";
 import Frequency from "./Frequency";
 import Incrementers from "./Incrementers";
-import { FormValues as FV, Props } from "./types";
+import type { FormValues as FV, Props } from "./types";
 
 const USD_CODE = "usd";
 

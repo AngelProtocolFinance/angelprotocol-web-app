@@ -1,8 +1,8 @@
 import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
-import { EndowClaim } from "types/aws";
+import type { EndowClaim } from "types/aws";
 import { useProfileContext } from "../../../ProfileContext";
 import DonateButton from "../../DonateButton";
 import Balances from "./Balances";

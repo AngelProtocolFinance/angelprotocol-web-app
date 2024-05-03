@@ -41,7 +41,8 @@
         "noPrecisionLoss": "off",
         "noSwitchDeclarations": "off",
         "noChildrenProp": "off",
-        "noUnusedVariables": "warn"
+        "noUnusedVariables": "warn",
+        "useJsxKeyInIterable": "off"
       },
       "a11y": {
         "useButtonType": "off",

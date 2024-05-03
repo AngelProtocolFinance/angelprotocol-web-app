@@ -2,15 +2,15 @@ import Prompt, { TxPrompt } from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
-import { SubmitHandler } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 import {
   useDeleteMilestoneMutation,
   useEditMilestoneMutation,
 } from "services/aws/milestones";
-import { MilestoneUpdate } from "types/aws";
+import type { MilestoneUpdate } from "types/aws";
 import { useAdminContext } from "../../../Context";
 import { uploadImg } from "../common";
-import { FV } from "./types";
+import type { FV } from "./types";
 
 export default function useMutate(milestoneId: string, programId: string) {
   const { id } = useAdminContext();

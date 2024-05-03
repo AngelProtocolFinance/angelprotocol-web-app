@@ -8,7 +8,7 @@ import { getTxUrl, humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { Link } from "react-router-dom";
 import LoadMoreBtn from "./LoadMoreBtn";
-import { TableProps } from "./types";
+import type { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
 
 export default function Table({

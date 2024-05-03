@@ -1,5 +1,5 @@
-import { Except } from "type-fest";
-import { NonFSADocumentation } from "types/aws";
+import type { Except } from "type-fest";
+import type { NonFSADocumentation } from "types/aws";
 
 export type FormValues = Except<NonFSADocumentation, "DocType" | "Claim">;
 

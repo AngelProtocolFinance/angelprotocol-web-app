@@ -1,5 +1,5 @@
 import { maskAddress } from "helpers";
-import { Props } from "../types";
+import type { Props } from "../types";
 
 export default function Tooltip(props: Props) {
   return (

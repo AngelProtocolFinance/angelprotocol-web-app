@@ -1,10 +1,10 @@
 import { BYTES_IN_MB } from "constants/common";
 import { fileDropzoneAssetShape } from "schemas/file";
 import { alphanumeric, requiredString } from "schemas/string";
-import { SchemaShape } from "schemas/types";
-import { MIMEType } from "types/lists";
-import { ObjectSchema, object } from "yup";
-import { FormValues } from "./types";
+import type { SchemaShape } from "schemas/types";
+import type { MIMEType } from "types/lists";
+import { type ObjectSchema, object } from "yup";
+import type { FormValues } from "./types";
 
 export const MB_LIMIT = 6;
 

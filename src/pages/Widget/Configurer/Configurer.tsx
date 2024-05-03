@@ -1,14 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LockedSplitSlider } from "components/donation/Steps/Splits";
 import { CheckField, Form } from "components/form";
-import { SubmitHandler, useController, useForm } from "react-hook-form";
+import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import { reset, update } from "slices/widget";
 import { useGetter, useSetter } from "store/accessors";
-import { EndowmentOption } from "types/aws";
-import { WidgetConfig } from "types/widget";
+import type { EndowmentOption } from "types/aws";
+import type { WidgetConfig } from "types/widget";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
-import { FormValues } from "./types";
+import type { FormValues } from "./types";
 
 type Props = {
   classes?: string;

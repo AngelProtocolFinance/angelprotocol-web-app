@@ -2,12 +2,12 @@ import { Popover } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Icon, { DrawerIcon } from "components/Icon";
 import { cleanObject } from "helpers/cleanObject";
-import { FormEventHandler, useRef } from "react";
+import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
-import { BankingApplicationsQueryParams } from "types/aws";
+import type { BankingApplicationsQueryParams } from "types/aws";
 import Form from "./Form";
-import { FormValues as FV } from "./types";
+import type { FormValues as FV } from "./types";
 
 type Props = {
   classes?: string;

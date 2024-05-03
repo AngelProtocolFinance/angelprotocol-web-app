@@ -2,7 +2,7 @@ import { Field } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useFormContext } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { FV } from "./types";
+import type { FV } from "./types";
 
 const genLink = (slug: string) =>
   `${window.origin}${appRoutes.marketplace}/${slug}`;

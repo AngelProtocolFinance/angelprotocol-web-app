@@ -1,6 +1,6 @@
 import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { Navigate } from "react-router-dom";
-import { StoredRouteState } from "types/auth";
+import type { StoredRouteState } from "types/auth";
 
 export default function OAuthRedirector() {
   const retrieved: StoredRouteState | null = (() => {

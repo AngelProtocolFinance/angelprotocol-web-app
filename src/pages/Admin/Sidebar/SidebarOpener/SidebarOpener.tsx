@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import { LinkGroup } from "../types";
+import type { LinkGroup } from "../types";
 import useSidebarOpener from "./useSidebarOpener";
 
 type Props = { className?: string; linkGroups: LinkGroup[] };

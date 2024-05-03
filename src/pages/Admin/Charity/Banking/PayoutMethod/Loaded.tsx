@@ -3,10 +3,10 @@ import Icon from "components/Icon";
 import { adminRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
 import { useAdminContext } from "pages/Admin/Context";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
-import { BankingApplicationDetails } from "services/types";
+import type { BankingApplicationDetails } from "services/types";
 import DeletePrompt from "./DeletePrompt";
 
 export default function Loaded(props: BankingApplicationDetails) {

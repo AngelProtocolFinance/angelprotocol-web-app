@@ -4,7 +4,7 @@ import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
 import { matchPath, useLocation } from "react-router-dom";
-import { Link, LinkGroup } from "../types";
+import type { Link, LinkGroup } from "../types";
 import ToggleableSidebar from "./ToggleableSidebar";
 
 const ADMIN_ROUTE = `${appRoutes.admin}/:id/`;

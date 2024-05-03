@@ -1,6 +1,6 @@
-import { SubmitStep } from "slices/gift";
-import { EstimateResult } from "types/tx";
-import { EstimateStatus } from "./types";
+import type { SubmitStep } from "slices/gift";
+import type { EstimateResult } from "types/tx";
+import type { EstimateStatus } from "./types";
 
 type Props = {
   estimate: EstimateStatus;

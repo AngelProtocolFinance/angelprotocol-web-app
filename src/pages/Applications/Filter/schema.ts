@@ -1,6 +1,6 @@
-import { SchemaShape } from "schemas/types";
-import { ObjectSchema, date, lazy, object, ref, string } from "yup";
-import { FormValues } from "./types";
+import type { SchemaShape } from "schemas/types";
+import { type ObjectSchema, date, lazy, object, ref, string } from "yup";
+import type { FormValues } from "./types";
 
 const endKey: keyof FormValues = "endDate";
 const startKey: keyof FormValues = "startDate";

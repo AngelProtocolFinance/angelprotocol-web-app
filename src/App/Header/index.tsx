@@ -1,7 +1,7 @@
 import { DappLogo } from "components/Image";
 import { appRoutes } from "constants/routes";
 import { useLocation } from "react-router-dom";
-import { Link } from "../types";
+import type { Link } from "../types";
 import NavDropdown from "./NavDropdown";
 import UserMenu from "./UserMenu";
 

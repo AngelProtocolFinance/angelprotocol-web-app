@@ -8,10 +8,10 @@ import { Form, Input, PasswordInput } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import useCounter from "hooks/useCounter";
 import { useState } from "react";
-import { UseFormReturn, useForm } from "react-hook-form";
+import { type UseFormReturn, useForm } from "react-hook-form";
 import { password, requiredString } from "schemas/string";
 import { object, ref } from "yup";
-import { CodeRecipientEmail, StepSetter } from "./types";
+import type { CodeRecipientEmail, StepSetter } from "./types";
 
 const MAX_TIME = 30;
 

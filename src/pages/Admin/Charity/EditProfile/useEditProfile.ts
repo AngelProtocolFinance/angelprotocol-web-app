@@ -1,16 +1,16 @@
-import { ImgLink } from "components/ImgEditor";
+import type { ImgLink } from "components/ImgEditor";
 import { TxPrompt } from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
 import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
-import { SubmitHandler, useFormContext } from "react-hook-form";
+import { type SubmitHandler, useFormContext } from "react-hook-form";
 import { useLazyProfileQuery } from "services/aws/aws";
-import { EndowmentProfileUpdate } from "types/aws";
+import type { EndowmentProfileUpdate } from "types/aws";
 import { useAdminContext } from "../../Context";
 import { useUpdateEndowment } from "../common";
-import { FV } from "./types";
+import type { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
 export default function useEditProfile() {

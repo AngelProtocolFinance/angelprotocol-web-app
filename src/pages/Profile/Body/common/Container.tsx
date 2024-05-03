@@ -1,5 +1,6 @@
 import Icon from "components/Icon";
-import React, { PropsWithChildren, useState } from "react";
+import type React from "react";
+import { type PropsWithChildren, useState } from "react";
 
 type Props = PropsWithChildren<{
   title: string;

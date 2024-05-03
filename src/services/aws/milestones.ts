@@ -1,5 +1,5 @@
 import { TEMP_JWT } from "constants/auth";
-import {
+import type {
   Milestone,
   MilestoneDelete,
   MilestoneUpdate,

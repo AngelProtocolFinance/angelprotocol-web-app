@@ -1,10 +1,10 @@
 import { humanize } from "helpers";
 import { useEffect, useState } from "react";
-import { SplitsStep, setSplit, setStep } from "slices/donation";
+import { type SplitsStep, setSplit, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
-import { Config } from "../types";
+import type { Config } from "../types";
 import { LockedSplitSlider } from "./LockedSplitSlider";
 
 type Props = SplitsStep & {

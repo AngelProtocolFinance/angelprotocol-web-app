@@ -1,7 +1,7 @@
 import Image from "components/Image";
 import RichText from "components/RichText";
 import { Link } from "react-router-dom";
-import { Program as TProgram } from "types/aws";
+import type { Program as TProgram } from "types/aws";
 
 export default function Programs({ programs }: { programs: TProgram[] }) {
   return (

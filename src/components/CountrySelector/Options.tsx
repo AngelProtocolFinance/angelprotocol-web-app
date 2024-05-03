@@ -1,7 +1,7 @@
 import { Combobox } from "@headlessui/react";
 import { isEmpty } from "helpers";
 import React from "react";
-import { Country } from "types/components";
+import type { Country } from "types/components";
 
 const containerStyle =
   "absolute top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller";

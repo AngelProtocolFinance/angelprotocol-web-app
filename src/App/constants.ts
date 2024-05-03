@@ -1,6 +1,6 @@
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { Link, LinkGroup, SocialMediaLink } from "./types";
+import type { Link, LinkGroup, SocialMediaLink } from "./types";
 
 type LINKS = {
   HEADER_LINKS: Link[];

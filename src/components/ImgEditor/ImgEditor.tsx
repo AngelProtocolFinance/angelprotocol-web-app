@@ -1,10 +1,15 @@
 import { ErrorMessage } from "@hookform/error-message";
 import Icon from "components/Icon";
 import { humanize } from "helpers";
-import React from "react";
+import type React from "react";
 import { useDropzone } from "react-dropzone";
-import { FieldValues, Path, get, useFormContext } from "react-hook-form";
-import { Props } from "./types";
+import {
+  type FieldValues,
+  type Path,
+  get,
+  useFormContext,
+} from "react-hook-form";
+import type { Props } from "./types";
 import useImgEditor from "./useImgEditor";
 
 const BYTES_IN_MB = 1e6;

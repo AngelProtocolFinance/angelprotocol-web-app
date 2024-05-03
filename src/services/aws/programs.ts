@@ -1,7 +1,7 @@
 import { TEMP_JWT } from "constants/auth";
-import { NewProgram, Program, ProgramUpdate } from "types/aws";
+import type { NewProgram, Program, ProgramUpdate } from "types/aws";
 import { version as v } from "../helpers";
-import { ProgramDeleteMsg } from "../types";
+import type { ProgramDeleteMsg } from "../types";
 import { aws } from "./aws";
 
 const programs = aws.injectEndpoints({

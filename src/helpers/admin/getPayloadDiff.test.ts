@@ -6,8 +6,8 @@ describe("getPayloadDiff", () => {
     expect(
       getPayloadDiff(
         //biome-ignore format:
-        { a: 1, b: 2, c: 3, d: NaN },
-        { a: 1, b: 2, c: 3, d: NaN }
+        { a: 1, b: 2, c: 3, d: Number.NaN },
+        { a: 1, b: 2, c: 3, d: Number.NaN }
       )
     ).toStrictEqual([]);
     expect(
@@ -28,9 +28,9 @@ describe("getPayloadDiff", () => {
     expect(
       getPayloadDiff(
         //biome-ignore format:
-        { a: 1, b: "a", c: 3, d: undefined, e: "", f: 4, g: [1], h: 5, i: NaN },
+        { a: 1, b: "a", c: 3, d: undefined, e: "", f: 4, g: [1], h: 5, i: Number.NaN },
         //biome-ignore format:
-        { a: 0, b: "b", c: "", d: null, e: undefined, f: false, g: [], h: NaN, i: NaN }
+        { a: 0, b: "b", c: "", d: null, e: undefined, f: false, g: [], h: Number.NaN, i: Number.NaN }
       )
     ).toStrictEqual([
       ["a", 1, 0],

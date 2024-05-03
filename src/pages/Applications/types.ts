@@ -1,4 +1,4 @@
-import { Application } from "types/aws";
+import type { Application } from "types/aws";
 
 export type TableProps = {
   applications: Application[];

@@ -5,16 +5,16 @@ import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEndowment } from "services/aws/useEndowment";
-import {
-  EndowmentProfile as TProfile,
+import type {
   EndowmentProfileUpdate,
+  EndowmentProfile as TProfile,
 } from "types/aws";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
-import { FV } from "./types";
+import type { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {

@@ -1,11 +1,11 @@
 import { Listbox } from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
-import { AriaAttributes, forwardRef } from "react";
-import { OptionType, ValKey } from "types/components";
+import { type AriaAttributes, forwardRef } from "react";
+import type { OptionType, ValKey } from "types/components";
 import { unpack } from "../form/helpers";
 import FocusableInput from "./FocusableInput";
 import { styles } from "./constants";
-import { Classes } from "./types";
+import type { Classes } from "./types";
 
 type Props<V extends ValKey> = {
   "aria-invalid"?: AriaAttributes["aria-invalid"];

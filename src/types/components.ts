@@ -1,4 +1,4 @@
-import { FileObject } from "./aws";
+import type { FileObject } from "./aws";
 
 //selector
 export type ValKey = string | number;

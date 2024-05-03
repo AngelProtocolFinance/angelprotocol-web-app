@@ -2,7 +2,7 @@ import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
 import { Link } from "react-router-dom";
-import { Wordpress } from "types/wordpress";
+import type { Wordpress } from "types/wordpress";
 import usePagination from "./usePagination";
 
 export default function Posts() {

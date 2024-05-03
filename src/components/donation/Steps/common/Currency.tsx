@@ -1,5 +1,5 @@
 import { humanize } from "helpers";
-import { Currency as TCurrency } from "types/components";
+import type { Currency as TCurrency } from "types/components";
 
 type Props = { classes?: string; amount: string | number };
 export function currency({ rate, code }: TCurrency) {

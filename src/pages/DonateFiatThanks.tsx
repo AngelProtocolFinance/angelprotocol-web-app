@@ -8,7 +8,7 @@ import { confetti } from "helpers/confetti";
 import { Link, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
-import { GuestDonor } from "types/aws";
+import type { GuestDonor } from "types/aws";
 
 export type DonateFiatThanksState = {
   guestDonor?: GuestDonor;

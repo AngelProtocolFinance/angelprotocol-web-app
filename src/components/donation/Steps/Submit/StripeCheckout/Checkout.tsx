@@ -7,8 +7,8 @@ import LoadText from "components/LoadText";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import ErrorTrigger from "errors/ErrorTrigger";
-import { FormEventHandler, useState } from "react";
-import { DonationSource } from "types/lists";
+import { type FormEventHandler, useState } from "react";
+import type { DonationSource } from "types/lists";
 import Loader from "../Loader";
 
 type Props = {

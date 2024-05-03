@@ -7,8 +7,8 @@ import { unsdgs } from "constants/unsdgs";
 import { isEmpty } from "helpers";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { EndowmentCard } from "types/aws";
-import { UNSDG_NUMS } from "types/lists";
+import type { EndowmentCard } from "types/aws";
+import type { UNSDG_NUMS } from "types/lists";
 
 const PLACEHOLDER_TAGLINE = " ";
 

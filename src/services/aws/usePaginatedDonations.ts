@@ -1,7 +1,7 @@
 import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
 import { useSetter } from "store/accessors";
-import { DonationsQueryParams } from "types/aws";
+import type { DonationsQueryParams } from "types/aws";
 import {
   updateAWSQueryData,
   useDonationsQuery,

@@ -1,8 +1,13 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { useDropzone } from "react-dropzone";
-import { FieldValues, Path, get, useController } from "react-hook-form";
-import { FileDropzoneAsset } from "types/components";
-import { MIMEType } from "types/lists";
+import {
+  type FieldValues,
+  type Path,
+  get,
+  useController,
+} from "react-hook-form";
+import type { FileDropzoneAsset } from "types/components";
+import type { MIMEType } from "types/lists";
 import DropzoneText from "./DropzoneText";
 
 const filesKey: keyof FileDropzoneAsset = "files";

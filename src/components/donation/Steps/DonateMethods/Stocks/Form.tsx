@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form as FormContainer } from "components/form";
-import { UseFormReturn, useForm } from "react-hook-form";
+import { type UseFormReturn, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { requiredString } from "schemas/string";
-import { StockFormStep, setDetails } from "slices/donation";
+import { type StockFormStep, setDetails } from "slices/donation";
 import { object } from "yup";
 import ContinueBtn from "../../common/ContinueBtn";
 

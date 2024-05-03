@@ -1,6 +1,6 @@
 import { useModalContext } from "contexts/ModalContext";
 import KYCForm from "./KYCForm";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export function useKYCForm() {
   const { showModal } = useModalContext();

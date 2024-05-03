@@ -14,9 +14,9 @@ import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
-import { StoredRouteState } from "types/auth";
+import type { StoredRouteState } from "types/auth";
 import { mixed, object } from "yup";
-import { FormValues, StateSetter, UserType } from "../types";
+import type { FormValues, StateSetter, UserType } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
 
 type Props = {
