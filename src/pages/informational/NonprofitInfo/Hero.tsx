@@ -6,7 +6,7 @@ import heroImg from "./hero.png";
 
 export default function Hero({ className = "" }) {
   return (
-    <div
+    <section
       className={`${className} grid justify-items-center gap-y-10 @6xl:justify-items-start @6xl:grid-cols-[1fr_auto] py-24`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
@@ -41,6 +41,6 @@ export default function Hero({ className = "" }) {
         height={500}
         className="rounded-4xl order-1 @6xl:order-2"
       />
-    </div>
+    </section>
   );
 }
