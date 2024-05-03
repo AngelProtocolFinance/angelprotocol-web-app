@@ -16,8 +16,8 @@ import { Slide } from "./types";
 const colors = ["bg-[#EDFCE2]", "bg-lilac", "bg-[#FCF6E2]", "bg-[#EDF2FE]"];
 type TPath = "nonprofits" | "donors";
 const Path = () => {
-  const [path, setPath] = useState<TPath>("donors");
-  const nonProfits: Slide[] = [
+  const [path, setPath] = useState<TPath>("nonprofits");
+  const donors: Slide[] = [
     {
       title: "Sustainable Impact",
       description:
@@ -47,7 +47,7 @@ const Path = () => {
       bgColorClass: colors[3],
     },
   ];
-  const donors: Slide[] = [
+  const nonprofits: Slide[] = [
     {
       title: "Expanded Funding Channels",
       description:
@@ -98,7 +98,7 @@ const Path = () => {
             setPath("donors");
           }}
         >
-          For Nonprofits
+          For Donors
         </button>
         <button
           type="button"
@@ -107,7 +107,7 @@ const Path = () => {
           } py-2 px-6 rounded-3xl`}
           onClick={() => setPath("nonprofits")}
         >
-          For Donors
+          For Nonprofits
         </button>
       </div>
       <p className="text-lg md:text-[28px] font-medium text-navy-l1/60 text-center mb-11">
@@ -117,11 +117,11 @@ const Path = () => {
       </p>
 
       <BenefitsCarousel
-        slides={path === "nonprofits" ? nonProfits : donors}
+        slides={path === "nonprofits" ? nonprofits : donors}
         classes="max-lg:hidden"
       />
       <Carousel
-        slides={path === "nonprofits" ? nonProfits : donors}
+        slides={path === "nonprofits" ? nonprofits : donors}
         classes="lg:hidden"
       />
       {/* TODO: enable once we have the static pages ready */}
