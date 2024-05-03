@@ -2151,10 +2151,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remix-run/router@npm:1.15.2":
-  version: 1.15.2
-  resolution: "@remix-run/router@npm:1.15.2"
-  checksum: 10/2a2c9c062228130d0383328de2757301e878fc268a72f813b60b8463bb7ed2c1fa4018072883af8096982a4b2741ec6eb349587cd7f95acfdf09588d93adea67
+"@remix-run/router@npm:1.16.0":
+  version: 1.16.0
+  resolution: "@remix-run/router@npm:1.16.0"
+  checksum: 10/51f5805ec172d8ec038f8eebb5af51cac11e8dc419116c23c3765eaf1d4381390da4ab1cd04874e9126c1ec8ec7283c97efdcaf338095130439111d5218aeed0
   languageName: node
   linkType: hard
 
@@ -4209,14 +4209,14 @@ __metadata:
     react-dropzone: "npm:14.2.3"
     react-fast-marquee: "npm:1.6.4"
     react-helmet: "npm:6.1.0"
-    react-hook-form: "npm:7.51.0"
-    react-icons: "npm:5.0.1"
+    react-hook-form: "npm:7.51.3"
+    react-icons: "npm:5.2.0"
     react-redux: "npm:9.1.2"
-    react-router-dom: "npm:6.22.2"
+    react-router-dom: "npm:6.23.0"
     react-test-renderer: "npm:18.2.0"
     swiper: "npm:11.1.1"
     tailwindcss: "npm:3.4.1"
-    type-fest: "npm:4.12.0"
+    type-fest: "npm:4.18.1"
     typescript: "npm:5.4.2"
     vite-tsconfig-paths: "npm:4.3.1"
     vitest: "npm:1.3.1"
@@ -8159,21 +8159,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:7.51.0":
-  version: 7.51.0
-  resolution: "react-hook-form@npm:7.51.0"
+"react-hook-form@npm:7.51.3":
+  version: 7.51.3
+  resolution: "react-hook-form@npm:7.51.3"
   peerDependencies:
     react: ^16.8.0 || ^17 || ^18
-  checksum: 10/2697e2b56afca36098aed04d187e9756641e1f61e1a29c566b7bba0899c885fc5f995219a29a9535db748bd55e186cdf95ff8af546247a4bf3418a00863cbd24
+  checksum: 10/37f5d681b0f9d6a64b56e38c6ea98941c78d2634e175e7722e66a6bd72b4b22a73a5b912ada8cc010b5ec9e1019b8e2d4a6b0f38e87280600f8e921dee96aaca
   languageName: node
   linkType: hard
 
-"react-icons@npm:5.0.1":
-  version: 5.0.1
-  resolution: "react-icons@npm:5.0.1"
+"react-icons@npm:5.2.0":
+  version: 5.2.0
+  resolution: "react-icons@npm:5.2.0"
   peerDependencies:
     react: "*"
-  checksum: 10/c4458c643ae32a793ddebc5fa1235c7ec051be1b131205510e8199d15a4c89221a501f95a71fa21c2da93e8dd225290e2e24bb80abd3fb85801e43009e692098
+  checksum: 10/708c827dba6b10a27340792b4a1b51a6c9cd2aca2cf201207922fd64182bc93ccbf4cfebeb1e5e490da27a1d365772dcc4d51b1beab53db5a5385ce5ed1a278f
   languageName: node
   linkType: hard
 
@@ -8224,27 +8224,27 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-router-dom@npm:6.22.2":
-  version: 6.22.2
-  resolution: "react-router-dom@npm:6.22.2"
+"react-router-dom@npm:6.23.0":
+  version: 6.23.0
+  resolution: "react-router-dom@npm:6.23.0"
   dependencies:
-    "@remix-run/router": "npm:1.15.2"
-    react-router: "npm:6.22.2"
+    "@remix-run/router": "npm:1.16.0"
+    react-router: "npm:6.23.0"
   peerDependencies:
     react: ">=16.8"
     react-dom: ">=16.8"
-  checksum: 10/1469ea32fd5b35d44909c8e64a778620e990b43a1c6f4d5989630e769a9956e0057a54771ccde2e434a9aff7591c02752dcfe0678a1868d4e53411cec7ecf7a8
+  checksum: 10/8825c9b5d5731cb8ecf39e927949cb24474d0f3aff4ffc75b2c236c5678c4970eada98160c6fef3a99c0bdb59ce25d8951da9fdc4ac103135e450f200426c778
   languageName: node
   linkType: hard
 
-"react-router@npm:6.22.2":
-  version: 6.22.2
-  resolution: "react-router@npm:6.22.2"
+"react-router@npm:6.23.0":
+  version: 6.23.0
+  resolution: "react-router@npm:6.23.0"
   dependencies:
-    "@remix-run/router": "npm:1.15.2"
+    "@remix-run/router": "npm:1.16.0"
   peerDependencies:
     react: ">=16.8"
-  checksum: 10/744c9c3d3b6f3d031ef8c34d86f16075f96d4487584f2a526f722bc5b05c5879fc5056236b824472530fc5aad0ecf6eef88d2848d5b1a32aab9849bda3a5c839
+  checksum: 10/1b5228bec63147b3cf5c645ed7eac5eeca5561c70f348b61ed3af9acf86b1a181ec4af28320419eadad626c6e725defd7eb8d7418cc6080384fc7956e0325947
   languageName: node
   linkType: hard
 
@@ -9251,10 +9251,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:4.12.0":
-  version: 4.12.0
-  resolution: "type-fest@npm:4.12.0"
-  checksum: 10/5869216e840c962942672623e0447ed342f1eb6dbed1874a09ba1944b268c793bd8b5607c9f96ee01363e859a93f32ad06ab71a7aab29ff896bf18d66602a37b
+"type-fest@npm:4.18.1":
+  version: 4.18.1
+  resolution: "type-fest@npm:4.18.1"
+  checksum: 10/ff76e19cb969854161fea2de854073f346e159f5efff05906ece93cbde8a7161b9374121aca53782b44f754152cbacc70264c90ca1acc81ca917723acce5054f
   languageName: node
   linkType: hard
 
