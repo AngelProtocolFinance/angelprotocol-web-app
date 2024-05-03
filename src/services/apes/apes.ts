@@ -45,7 +45,7 @@ export const apes = createApi({
       CryptoDonation
     >({
       query: (params) => ({
-        url: "crypto-donation/v3",
+        url: "crypto-donation",
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
