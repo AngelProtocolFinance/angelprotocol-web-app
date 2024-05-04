@@ -46,7 +46,7 @@ const Path = () => {
       </div>
       <p className="text-lg md:text-[28px] font-medium text-navy-l1/60 text-center mb-11">
         {path === "nonprofits"
-          ? "Join our global community and amplify your charitable giving. "
+          ? "Join our global community and amplify your charitable giving."
           : "Access our free fundraising technology and tools."}
       </p>
 
