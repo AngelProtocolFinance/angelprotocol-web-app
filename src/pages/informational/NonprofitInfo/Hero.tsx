@@ -2,7 +2,7 @@ import Image from "components/Image";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import heroImg from "./hero.png";
+import heroImg from "./images/hero.png";
 
 export default function Hero({ className = "" }) {
   return (
@@ -13,7 +13,7 @@ export default function Hero({ className = "" }) {
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-navy-d4 mb-5">
           Funding Today, Funding Forever
         </h4>
-        <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl text-pretty mb-4 text-navy-d4 leading-tight">
+        <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl @6xl:leading-tight text-pretty mb-4 text-navy-d4">
           Fundraising made simple, sustainable, and entirely free
         </h1>
         <p className="mb-10 text-lg @6xl:text-xl text-center @6xl:text-left">
@@ -29,7 +29,7 @@ export default function Hero({ className = "" }) {
           </Link>
           <Link
             to={INTERCOM_HELP}
-            className="btn-outline-blue border-2 rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl"
+            className="btn-outline-blue border-2 rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl hover:shadow-2xl hover:shadow-blue/50"
           >
             Book a Demo
           </Link>

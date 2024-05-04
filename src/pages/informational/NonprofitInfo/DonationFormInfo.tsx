@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import Image from "components/Image";
-import donationFormImgMobile from "./donation-form-mobile.png";
-import donationFormImg from "./donation-form.png";
+import donationFormImgMobile from "./images/donation-form-mobile.png";
+import donationFormImg from "./images/donation-form.png";
 
 type TListItem = {
   title: string;
