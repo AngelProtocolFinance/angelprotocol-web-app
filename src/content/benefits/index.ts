@@ -15,7 +15,7 @@ export type Benefit = {
   img: string;
   cardBgClass: string;
 };
-const nonprofits: Benefit[] = [
+const donors: Benefit[] = [
   {
     title: "Sustainable Impact",
     description:
@@ -45,7 +45,7 @@ const nonprofits: Benefit[] = [
     cardBgClass: colors[3],
   },
 ];
-const donors: Benefit[] = [
+const nonprofits: Benefit[] = [
   {
     title: "Expanded Funding Channels",
     description:
