@@ -5,5 +5,17 @@ import brand4 from "./4.png";
 import brand5 from "./5.png";
 import brand6 from "./6.png";
 import brand7 from "./7.png";
+import brand8 from "./8.png";
+import brand9 from "./9.png";
 
-export const brands = [brand1, brand2, brand3, brand4, brand5, brand6, brand7];
+export const brands = [
+  brand1,
+  brand2,
+  brand3,
+  brand4,
+  brand5,
+  brand6,
+  brand7,
+  brand8,
+  brand9,
+];
