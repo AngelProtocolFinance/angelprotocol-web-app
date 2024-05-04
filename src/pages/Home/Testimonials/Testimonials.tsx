@@ -1,9 +1,9 @@
+import quotation from "assets/icons/quotation.svg";
 import Icon from "components/Icon";
 import { testimonials } from "content/testimonials";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import TestimonialCard from "./TestimonialCard";
-import quotation from "./quotation.svg";
 
 const Testimonials = () => {
   return (

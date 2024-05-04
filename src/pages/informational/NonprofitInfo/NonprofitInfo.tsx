@@ -3,6 +3,7 @@ import DonationFormInfo from "./DonationFormInfo";
 import FellowNonProfits from "./FellowNonProfits";
 import FiscalSponsorship from "./FiscalSponsorship";
 import Hero from "./Hero";
+import Testimonials from "./Testimonials";
 import WhyBG from "./WhyBG";
 
 export default function Nonprofits() {
@@ -14,6 +15,7 @@ export default function Nonprofits() {
       <WhyBG className="mt-40 padded-container" />
       <Benefits className="mt-56 padded-container px-10" />
       <FiscalSponsorship className="@xl:mt-56 padded-container" />
+      <Testimonials className="mt-40 padded-container" />
     </div>
   );
 }
