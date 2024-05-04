@@ -9,15 +9,17 @@ export default function Testimonials({ className = "" }) {
     <div
       className={`${className} grid @3xl:grid-cols-[2fr_3fr] gap-x-4 relative`}
     >
-      <img
-        src={quotation}
-        alt="quotation mark"
-        width={66}
-        className="@3xl:mb-8 col-span-full @3xl:sticky @3xl:top-20 bg-white"
-      />
-      <h2 className="text-navy-d4 text-pretty py-4 text-2xl @3xl:text-4.5xl leading-tight sticky top-14 @3xl:top-32 self-start bg-white z-10 shadow-2xl shadow-white">
-        Amazing stories from our customers
-      </h2>
+      <div className="@3xl:mb-40 @3xl:-mt-24 py-4 @3xl:py-0 sticky top-16 @3xl:top-32 bottom-32 self-start bg-white z-10 shadow-2xl shadow-white">
+        <img
+          src={quotation}
+          alt="quotation mark"
+          width={66}
+          className="mb-4 @3xl:mb-8"
+        />
+        <h2 className="text-navy-d4 text-pretty text-2xl @3xl:text-4.5xl leading-tight ">
+          Amazing stories from our customers
+        </h2>
+      </div>
 
       <div className="grid gap-y-3.5 @container">
         {testimonials.map((t, idx) => (
