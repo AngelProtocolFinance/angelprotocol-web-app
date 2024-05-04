@@ -4,7 +4,7 @@ import roadmap2 from "./images/roadmap2_wb.webp";
 import roadmap3 from "./images/roadmap3_wb.webp";
 import roadmap4 from "./images/roadmap4_wb.webp";
 import path from "./images/static-path.png";
-import { Card } from "./types";
+import type { Card } from "./types";
 
 const MobileAnimation = ({ classes = "" }) => {
   const cards: Card[] = [
