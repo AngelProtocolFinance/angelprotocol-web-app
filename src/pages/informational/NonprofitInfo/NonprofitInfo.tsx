@@ -10,7 +10,7 @@ import WhyBG from "./WhyBG";
 export default function Nonprofits() {
   return (
     <div className="w-full grid content-start pb-16 @container">
-      <Hero className="padded-container" />
+      <Hero className="padded-container px-10" />
       <FellowNonProfits className="my-44" />
       <DonationFormInfo className="mt-28 padded-container" />
       <WhyBG className="mt-56 padded-container" />

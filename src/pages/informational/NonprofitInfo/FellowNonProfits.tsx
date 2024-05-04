@@ -4,7 +4,7 @@ import Marquee from "react-fast-marquee";
 export default function FellowNonProfits({ className = "" }) {
   return (
     <section className={`${className} grid`}>
-      <h2 className="text-center text-4xl text-navy-d4 text-pretty mb-12">
+      <h2 className="px-2 text-center text-4xl text-navy-d4 text-pretty mb-12">
         Trusted by Fellow Nonprofits Globally
       </h2>
       <Marquee

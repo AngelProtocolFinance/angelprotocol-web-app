@@ -6,7 +6,7 @@ import fiscalsponsorshipImg from "./images/fiscal-sponsorship.png";
 export default function FiscalSponsorship({ className = "" }) {
   return (
     <section
-      className={`${className} grid justify-items-center gap-y-10 @6xl:justify-items-start @6xl:grid-cols-[1fr_auto] py-24`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[1fr_auto] py-24`}
     >
       <div className="grid max-w-2xl order-2 @6xl:order-1">
         <h1 className="text-center @6xl:text-left text-3xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-navy-d4">
