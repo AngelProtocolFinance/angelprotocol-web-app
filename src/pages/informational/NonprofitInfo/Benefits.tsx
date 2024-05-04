@@ -11,7 +11,7 @@ export default function Benefits({ className = "" }) {
         Amplifying impact for all
       </h2>
       <p className="text-xl font-medium text-navy-l2 text-center mb-24 text-balance">
-        Access our free fundraising technology and tools
+        Join our global community and amplify your charitable giving.
       </p>
       <div className="grid gap-y-24 @2xl:gap-y-32">
         {benefits.nonprofits.map((b, i) => (
