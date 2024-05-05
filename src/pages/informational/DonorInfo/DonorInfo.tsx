@@ -1,6 +1,7 @@
 import { benefits } from "content/benefits";
 import Benefits from "../../@sections/Benefits";
 import HeroBottom from "../../@sections/HeroBottom";
+import BottomCta from "./BottomCta";
 import DonationFormInfo from "./DonationFormInfo";
 import Hero from "./Hero";
 
@@ -17,6 +18,7 @@ export default function DonorInfo({ className = "" }) {
         body="Access our free fundraising technology and tools."
         items={benefits.donors}
       />
+      <BottomCta className="mt-40 mb-20 max-w-5xl @5xl:max-w-6xl justify-self-center mx-4 @md:mx-10" />
     </main>
   );
 }
