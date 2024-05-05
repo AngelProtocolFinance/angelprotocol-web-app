@@ -1,5 +1,5 @@
 import { benefits } from "content/benefits";
-import Benefits from "./Benefits";
+import Benefits from "../../@sections/Benefits";
 import BottomCta from "./BottomCta";
 import DonationFormInfo from "./DonationFormInfo";
 import FellowNonProfits from "./FellowNonProfits";
