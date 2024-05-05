@@ -1,20 +1,29 @@
 import Image from "components/Image";
-import { type Benefit as TBenefit, benefits } from "content/benefits";
+import type { Benefit as TBenefit } from "content/benefits";
 
-export default function Benefits({ className = "" }) {
+type Props = {
+  className?: string;
+  items: TBenefit[];
+  subheading?: string;
+  heading: string;
+  body: string;
+};
+export default function Benefits(props: Props) {
   return (
-    <section className={`grid ${className}`}>
-      <h4 className="text-lg uppercase text-blue-d1 text-center mb-4">
-        Bridge to better
-      </h4>
+    <section className={`grid ${props.className ?? ""}`}>
+      {props.subheading && (
+        <h4 className="text-lg uppercase text-blue-d1 text-center mb-4">
+          {props.subheading}
+        </h4>
+      )}
       <h2 className="text-4.5xl capitalize text-navy-d4 text-center text-pretty mb-3">
-        Amplifying impact for all
+        {props.heading}
       </h2>
       <p className="text-xl font-medium text-navy-l2 text-center mb-24 text-balance">
-        Join our global community and amplify your charitable giving.
+        {props.body}
       </p>
       <div className="grid gap-y-24 @2xl:gap-y-32">
-        {benefits.nonprofits.map((b, i) => (
+        {props.items.map((b, i) => (
           <Benefit {...b} key={i} />
         ))}
       </div>
