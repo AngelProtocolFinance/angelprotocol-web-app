@@ -13,7 +13,7 @@ import frame6 from "./characters/frame_6.png";
 import mappng from "./map.png";
 import s from "./styles.module.css";
 
-const HeroBottom = () => {
+const HeroBottom = ({ className = "" }) => {
   const { data } = useEndowmentCardsQuery({
     claimed: "true",
     page: 1,
@@ -22,7 +22,7 @@ const HeroBottom = () => {
 
   return (
     <div
-      className={`${s.container} grid content-start relative bg-[length:300%] md:bg-[length:200%] lg:bg-contain bg-no-repeat bg-[center_100%] mb-4 pb-40 overflow-x-clip`}
+      className={`${className} ${s.container} grid content-start relative bg-[length:300%] md:bg-[length:200%] lg:bg-contain bg-no-repeat bg-[center_100%] pb-40 overflow-x-clip`}
       style={{ backgroundImage: `url('${mappng}')` }}
     >
       <h3 className="z-10 uppercase text-blue-d1 text-center my-4">
