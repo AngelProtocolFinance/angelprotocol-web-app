@@ -19,7 +19,7 @@ export default function BottomCta({ className = "" }) {
           to={appRoutes.marketplace}
           className="justify-self-center @5xl:justify-self-start btn-outline-blue bg-white rounded-full px-8 py-3 @5xl:px-12 @5xl:py-6 @5xl:text-xl"
         >
-          Start today
+          Donate today
         </Link>
       </div>
       <Image
