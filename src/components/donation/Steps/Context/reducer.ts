@@ -1,48 +1,39 @@
-import type { Donor } from "types/aws";
 import type {
   CryptoResultStep,
-  DonationDetails,
   DonationState,
   DonationStep,
   SubmitStep,
   SummaryStep,
-  TipFormat,
   TipStep,
-  TxStatus,
+  Update,
 } from "../types";
 
-export type Action =
-  | { type: "step"; payload: DonationStep }
-  | { type: "reset" }
-  | {
-      type: "form";
-      payload: DonationDetails;
-    }
-  | { type: "split"; payload: number }
-  | { type: "tip"; payload: { tip: number; format: TipFormat } }
-  | { type: "donor"; payload: Donor }
-  | { type: "tx-status"; payload: TxStatus };
-
-export function reducer(state: DonationState, action: Action): DonationState {
-  if (action.type === "reset") {
-    return { step: "donate-form", recipient: state.recipient };
+export function reducer(state: DonationState, update: Update): DonationState {
+  if (update === "reset") {
+    return {
+      step: "donate-form",
+      recipient: state.recipient,
+      config: state.config,
+    };
   }
 
-  if (action.type === "form") {
-    const { payload } = action;
+  if ("method" in update) {
     //when changing donation method, reset
     const curr: DonationState =
-      state.step === "donate-form" &&
-      state.details?.method !== action.payload.method
-        ? { step: "donate-form", recipient: state.recipient }
+      state.step === "donate-form" && state.details?.method !== update.method
+        ? {
+            step: "donate-form",
+            recipient: state.recipient,
+            config: state.config,
+          }
         : state;
 
     //skip donor,splits for stocks,daf, as not being used
-    if (payload.method === "stocks" || payload.method === "daf") {
+    if (update.method === "stocks" || update.method === "daf") {
       return {
         ...curr,
         step: "submit",
-        details: payload,
+        details: update,
         //these steps where skipped so provide placeholders
         tip: 0,
         format: "pct",
@@ -54,51 +45,51 @@ export function reducer(state: DonationState, action: Action): DonationState {
     return {
       ...curr,
       step: "splits",
-      details: payload,
+      details: update,
     };
   }
 
-  if (action.type === "split") {
+  if ("liquidSplitPct" in update) {
     if (state.recipient.hide_bg_tip) {
       return {
         ...(state as SummaryStep),
         step: "summary",
-        liquidSplitPct: action.payload,
+        liquidSplitPct: update.liquidSplitPct,
       };
     }
     return {
       ...(state as TipStep),
       step: "tip",
-      liquidSplitPct: action.payload,
+      liquidSplitPct: update.liquidSplitPct,
     };
   }
 
-  if (action.type === "tip") {
+  if ("tip" in update) {
     return {
       ...(state as SummaryStep),
       step: "summary",
-      tip: action.payload.tip,
-      format: action.payload.format,
+      tip: update.tip,
+      format: update.format,
     };
   }
 
-  if (action.type === "donor") {
+  if ("donor" in update) {
     return {
       ...(state as SubmitStep),
       step: "submit",
-      donor: action.payload,
+      donor: update.donor,
     };
   }
 
-  if (action.type === "tx-status") {
+  if ("txStatus" in update) {
     return {
       ...(state as CryptoResultStep),
       step: "tx",
-      status: action.payload,
+      status: update.txStatus,
     };
   }
 
-  action.type satisfies "step";
+  update satisfies { step: DonationStep };
 
-  return { ...state, step: action.payload as any };
+  return { ...state, step: update.step as any };
 }

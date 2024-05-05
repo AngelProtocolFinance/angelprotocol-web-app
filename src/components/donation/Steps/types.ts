@@ -8,9 +8,12 @@ import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import type { TokenWithAmount, TxPackage } from "types/tx";
-import type { DonaterConfigFromWidget } from "types/widget";
 
-export type Config = Omit<DonaterConfigFromWidget, "isDescriptionTextShown">;
+export type Config = {
+  liquidSplitPct: number;
+  isSplitDisabled: boolean;
+  isPreview?: boolean;
+};
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,
@@ -60,9 +63,10 @@ export function hasEmail(
   return details.method === "stripe" || details.method === "daf";
 }
 
-export type FormStep<T extends DonationDetails = DonationDetails> = {
+export type Init = { recipient: DonationRecipient; config: Config | null };
+
+export type FormStep<T extends DonationDetails = DonationDetails> = Init & {
   step: "donate-form";
-  recipient: DonationRecipient;
   details?: T;
 };
 
@@ -122,3 +126,12 @@ export type DonateArgs = {
 } & TxPackage;
 
 export type DonationStep = DonationState["step"];
+
+export type Update =
+  | DonationDetails
+  | { liquidSplitPct: number }
+  | { tip: number; format: TipFormat }
+  | { donor: Donor }
+  | { txStatus: TxStatus }
+  | "reset"
+  | { step: DonationStep };
