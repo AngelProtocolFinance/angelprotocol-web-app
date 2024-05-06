@@ -1,17 +1,11 @@
 import { Tab } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { Label } from "components/form";
-import type { DonationDetails, FormStep } from "slices/donation";
-import type { Config } from "../types";
+import type { DonationDetails, FormStep } from "../types";
 import Crypto from "./Crypto";
 import Daf from "./Daf";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
-
-type Props = {
-  donaterConfig: Config | null;
-  state: FormStep;
-};
 
 const tabIdx = (method?: DonationDetails["method"]) => {
   switch (method) {
@@ -36,13 +30,14 @@ const tabClasses = (selected: boolean) =>
       : "border border-gray-l4 @md/steps:border-none text-navy-l1"
   }  flex items-center gap-2 p-2 @md/steps:px-3 @md/steps:py-[1.15rem] @md/steps:grid @md/steps:grid-cols-subgrid @md/steps:col-span-2 focus:outline-none @md/steps:w-28 rounded @md/steps:rounded-none`;
 
-export default function DonateMethods({ donaterConfig, state }: Props) {
+export default function DonateMethods(props: FormStep) {
+  const { config, recipient, details, step } = props;
   return (
     <Tab.Group
       manual
       as="div"
       className="grid @md/steps:grid-cols-[auto_1fr]"
-      defaultIndex={tabIdx(state.details?.method)}
+      defaultIndex={tabIdx(details?.method)}
     >
       <Label className="p-4 pb-0 col-span-full @md/steps:hidden font-bold">
         Payment method
@@ -71,41 +66,34 @@ export default function DonateMethods({ donaterConfig, state }: Props) {
       >
         <Tab.Panel>
           <Stripe
-            recipient={state.recipient}
-            step={state.step}
-            details={
-              state.details?.method === "stripe" ? state.details : undefined
-            }
-            widgetConfig={donaterConfig}
+            recipient={recipient}
+            step={step}
+            details={details?.method === "stripe" ? details : undefined}
+            config={config}
           />
         </Tab.Panel>
         <Tab.Panel>
           <Stocks
-            recipient={state.recipient}
-            step={state.step}
-            details={
-              state.details?.method === "stocks" ? state.details : undefined
-            }
+            recipient={recipient}
+            step={step}
+            details={details?.method === "stocks" ? details : undefined}
+            config={config}
           />
         </Tab.Panel>
         <Tab.Panel>
           <Daf
-            recipient={state.recipient}
-            step={state.step}
-            details={
-              state.details?.method === "daf" ? state.details : undefined
-            }
-            widgetConfig={donaterConfig}
+            recipient={recipient}
+            step={step}
+            details={details?.method === "daf" ? details : undefined}
+            config={config}
           />
         </Tab.Panel>
         <Tab.Panel>
           <Crypto
-            recipient={state.recipient}
-            step={state.step}
-            details={
-              state.details?.method === "crypto" ? state.details : undefined
-            }
-            config={donaterConfig}
+            recipient={recipient}
+            step={step}
+            details={details?.method === "crypto" ? details : undefined}
+            config={config}
           />
         </Tab.Panel>
       </Tab.Panels>

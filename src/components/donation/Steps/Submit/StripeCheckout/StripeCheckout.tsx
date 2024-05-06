@@ -4,12 +4,12 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
 import { useStripePaymentIntentQuery } from "services/apes";
-import { type StripeCheckoutStep, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { type StripeCheckoutStep } from "../../types";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
+import { useDonationState } from "../../Context";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
@@ -41,7 +41,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     source: details.source,
   });
 
-  const dispatch = useSetter();
+  const [,setState] = useDonationState()
 
   return (
     <Summary
@@ -49,7 +49,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
         container: "grid content-start p-4 @md/steps:p-8",
         split: "mb-4",
       }}
-      onBack={() => dispatch(setStep("summary"))}
+      onBack={() => setState({step:"summary"})}
       Amount={currency(details.currency)}
       amount={+details.amount}
       splitLiq={liquidSplitPct}

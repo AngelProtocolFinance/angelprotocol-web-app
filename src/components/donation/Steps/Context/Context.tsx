@@ -1,42 +1,30 @@
 import {
   type Dispatch,
-  type ReactNode,
+  type PropsWithChildren,
   createContext,
   useContext,
   useReducer,
 } from "react";
-import type { DonationState } from "../types";
-import { type Action, reducer } from "./reducer";
+import type { DonationState, Update } from "../types";
+import { reducer } from "./reducer";
 
-type Props = {
-  children?: ReactNode;
-  initial: DonationState;
-};
-
-type State = {
-  state: DonationState;
-  dispatch: Dispatch<Action>;
-};
+type State = [DonationState, Dispatch<Update>];
 
 const INIT = "__INIT";
 const context = createContext<State>(INIT as any);
-export default function Context(props: Props) {
-  const [state, dispatch] = useReducer(reducer, {
-    step: "donate-form",
-    recipient: {} as any,
-  });
+export default function Context({
+  children,
+  ...initState
+}: PropsWithChildren<DonationState>) {
+  const slice = useReducer(reducer, initState);
 
-  return (
-    <context.Provider value={{ state, dispatch }}>
-      {props.children}
-    </context.Provider>
-  );
+  return <context.Provider value={slice}>{children}</context.Provider>;
 }
 
-export function useDonationState() {
+export function useDonationState(): State {
   const val: any = useContext(context);
   if (val === INIT) {
-    throw "useDonationState can only be used in components inside Donation context";
+    throw "useDonationStateState can only be used in components inside Donation context";
   }
 
   return val;

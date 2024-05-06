@@ -9,7 +9,7 @@ import {
   useCapturePayPalOrderMutation,
   usePaypalOrderMutation,
 } from "services/apes";
-import type { StripeCheckoutStep } from "slices/donation";
+import type { StripeCheckoutStep } from "../../../types";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook

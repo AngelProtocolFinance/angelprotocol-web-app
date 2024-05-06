@@ -1,10 +1,27 @@
 import { DappLogo } from "components/Image";
-import { Steps } from "components/donation";
+import { type DonationState, Steps } from "components/donation";
 import { useGetter } from "store/accessors";
 
 export default function Preview({ classes = "" }) {
   const { endowment, ...config } = useGetter((state) => state.widget);
   const endowName = endowment.name || "nonprofit name";
+
+  const state: DonationState = {
+    step: "splits",
+    recipient: endowment,
+    config: {
+      isPreview: true,
+      isSplitDisabled: config.splitDisabled,
+      liquidSplitPct: config.liquidSplitPct,
+    },
+    details: {
+      method: "stripe",
+      amount: "",
+      currency: { code: "usd", rate: 1, min: 1 },
+      frequency: "subscription",
+      source: "bg-widget",
+    },
+  };
 
   return (
     <section className={`${classes} @container/preview pb-4`}>
@@ -23,12 +40,9 @@ export default function Preview({ classes = "" }) {
             </p>
           )}
           <Steps
+            key={JSON.stringify(config)}
             className="my-5 @md/preview:w-3/4 border border-gray-l4"
-            donaterConfig={{
-              isPreview: true,
-              splitDisabled: config.splitDisabled,
-              liquidSplitPct: config.liquidSplitPct,
-            }}
+            {...state}
           />
           <footer className="mt-auto grid place-items-center h-20 w-full bg-blue">
             <DappLogo classes="w-40" color="white" />

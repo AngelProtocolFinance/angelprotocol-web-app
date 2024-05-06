@@ -4,7 +4,7 @@ import Modal from "components/Modal";
 import { BASE_URL } from "constants/env";
 import { useModalContext } from "contexts/ModalContext";
 import { useCallback, useState } from "react";
-import type { DonationRecipient } from "slices/donation";
+import type { DonationRecipient } from "../../types";
 
 export type SocialMedia = Extract<
   IconType,

@@ -1,17 +1,17 @@
+import Context from "./Context";
 import CurrentStep from "./CurrentStep";
-import type { Config } from "./types";
+import type { DonationState } from "./types";
 
-type Props = {
-  className?: string;
-  donaterConfig: Config | null;
-};
-
-export function Steps({ className = "", donaterConfig }: Props) {
+export function Steps(props: DonationState & { className?: string }) {
   return (
     <div
-      className={`grid ${className} w-full @container/steps overflow-clip bg-white min-h-96`}
+      className={`grid ${
+        props.className ?? ""
+      } w-full @container/steps overflow-clip bg-white min-h-96`}
     >
-      <CurrentStep config={donaterConfig} />
+      <Context {...props}>
+        <CurrentStep />
+      </Context>
     </div>
   );
 }

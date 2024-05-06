@@ -1,8 +1,7 @@
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { useDonationState } from "../Context";
 
 export default function Err({
   classes = "",
@@ -11,8 +10,7 @@ export default function Err({
   classes?: string;
   endowId: number;
 }) {
-  const dispatch = useSetter();
-
+  const [, setState] = useDonationState();
   return (
     <div className={`grid justify-items-center ${classes}`}>
       <div className="bg-red rounded-full aspect-square grid place-items-center mb-8">
@@ -35,9 +33,7 @@ export default function Err({
         </Link>
         <button
           type="button"
-          onClick={() => {
-            dispatch(setStep("donate-form"));
-          }}
+          onClick={() => setState({ step: "donate-form" })}
           className="w-full btn-blue btn-donate px-5"
         >
           Change payment details

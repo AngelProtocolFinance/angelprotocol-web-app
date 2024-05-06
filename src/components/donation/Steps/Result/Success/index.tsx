@@ -4,10 +4,10 @@ import Signup from "components/Signup";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link } from "react-router-dom";
-import type { DonationRecipient } from "slices/donation";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import type { GuestDonor } from "types/aws";
+import type { DonationRecipient } from "../../types";
 import Share, { type SocialMedia } from "./Share";
 
 type Props = {

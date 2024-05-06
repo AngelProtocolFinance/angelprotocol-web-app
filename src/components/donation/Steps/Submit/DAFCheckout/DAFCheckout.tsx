@@ -1,14 +1,14 @@
-import { type DafCheckoutStep, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { useDonationState } from "../../Context";
 import BackBtn from "../../common/BackBtn";
+import type { DafCheckoutStep } from "../../types";
 import ManualDonation from "./ManualDonation";
 
 export default function DAFCheckout(props: DafCheckoutStep) {
-  const dispatch = useSetter();
+  const [, setState] = useDonationState();
 
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
-      <BackBtn onClick={() => dispatch(setStep("donate-form"))} />
+      <BackBtn onClick={() => setState({ step: "donate-form" })} />
       <ManualDonation {...props} />
     </div>
   );

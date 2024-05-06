@@ -3,20 +3,16 @@ import { polygon, polygonAmoy } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { FormProvider, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
-import type { CryptoFormStep } from "slices/donation";
 import { object } from "yup";
-import type { Config } from "../../types";
+import type { CryptoFormStep } from "../../types";
 import Form from "./Form";
 import { initToken } from "./constants";
 import type { DonateValues } from "./types";
 
-type Props = CryptoFormStep & {
-  config: Config | null;
-};
-
-export default function Crypto({ config, ...state }: Props) {
+type Props = CryptoFormStep;
+export default function Crypto(props: Props) {
   const initial: DonateValues = {
-    source: config ? "bg-widget" : "bg-marketplace",
+    source: props.config ? "bg-widget" : "bg-marketplace",
     token: initToken,
     chainId: IS_TEST
       ? { label: polygonAmoy.name, value: polygonAmoy.id }
@@ -24,7 +20,7 @@ export default function Crypto({ config, ...state }: Props) {
   };
 
   const methods = useForm<DonateValues>({
-    values: state.details || initial,
+    values: props.details || initial,
     resolver: yupResolver(
       schema<DonateValues>({
         token: object(tokenShape()),
@@ -34,7 +30,7 @@ export default function Crypto({ config, ...state }: Props) {
   });
   return (
     <FormProvider {...methods}>
-      <Form configFromWidget={config} />
+      <Form source={props.config ? "bg-widget" : "bg-marketplace"} />
     </FormProvider>
   );
 }

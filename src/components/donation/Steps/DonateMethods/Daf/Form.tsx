@@ -3,9 +3,8 @@ import CurrencySelector from "components/CurrencySelector";
 import { Field, Form as FormContainer } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import { setDetails } from "slices/donation";
-import { useSetter } from "store/accessors";
 import type { DetailedCurrency } from "types/components";
+import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import type { FormValues as FV, Props } from "./types";
 
@@ -15,17 +14,17 @@ import type { FormValues as FV, Props } from "./types";
  */
 const USD_CURRENCY: DetailedCurrency = { code: "usd", rate: 1, min: 1 };
 
-export default function Form({ widgetConfig, details }: Props) {
-  const dispatch = useSetter();
+export default function Form(props: Props) {
+  const [, setState] = useDonationState();
 
   const initial: FV = {
-    source: widgetConfig ? "bg-widget" : "bg-marketplace",
+    source: props.config ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: USD_CURRENCY,
   };
 
   const methods = useForm<FV>({
-    defaultValues: details || initial,
+    defaultValues: props.details || initial,
     resolver: yupResolver(
       schema<FV>({
         amount: stringNumber(
@@ -41,12 +40,10 @@ export default function Form({ widgetConfig, details }: Props) {
     <FormContainer
       methods={methods}
       onSubmit={handleSubmit((fv) =>
-        dispatch(
-          setDetails({
-            ...fv,
-            method: "daf",
-          })
-        )
+        setState({
+          ...fv,
+          method: "daf",
+        })
       )}
       className="grid gap-4"
     >

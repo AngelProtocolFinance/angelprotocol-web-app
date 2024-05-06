@@ -1,12 +1,9 @@
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
-import { setRecipient } from "slices/donation";
-import { initialize } from "slices/widget";
-import { useGetter, useSetter } from "store/accessors";
+
 import type { Endowment } from "types/aws";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
@@ -35,19 +32,6 @@ function Content({
   >;
 }) {
   const location = useLocation();
-  const widget = useGetter((state) => state.widget);
-
-  const dispatch = useSetter();
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
-  useEffect(() => {
-    if (endowment) {
-      dispatch(initialize({ ...widget.initial, endowment }));
-      dispatch(setRecipient(endowment));
-    } else {
-      dispatch(setRecipient(widget.endowment));
-    }
-  }, [dispatch]);
 
   return (
     <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">

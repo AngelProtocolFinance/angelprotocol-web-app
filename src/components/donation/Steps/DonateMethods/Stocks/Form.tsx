@@ -1,15 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form as FormContainer } from "components/form";
 import { type UseFormReturn, useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 import { requiredString } from "schemas/string";
-import { type StockFormStep, setDetails } from "slices/donation";
 import { object } from "yup";
+import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import type { StockFormStep } from "../../types";
 
 export default function Form(props: StockFormStep) {
-  const dispatch = useDispatch();
-
+  const [, setState] = useDonationState();
   const methods = useForm({
     defaultValues: props.details
       ? {
@@ -34,15 +33,13 @@ export default function Form(props: StockFormStep) {
     <FormContainer
       methods={methods}
       className="grid"
-      onSubmit={methods.handleSubmit((fv) => {
-        dispatch(
-          setDetails({
-            method: "stocks",
-            symbol: fv.symbol,
-            numShares: +fv.numShares,
-          })
-        );
-      })}
+      onSubmit={methods.handleSubmit((fv) =>
+        setState({
+          method: "stocks",
+          symbol: fv.symbol,
+          numShares: +fv.numShares,
+        })
+      )}
     >
       <Field<FV>
         required

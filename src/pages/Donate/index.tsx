@@ -29,21 +29,21 @@ export default function Donate() {
       }}
       classes={{ container: "place-self-center text-center mt-8" }}
     >
-      {(profile) => (
+      {(endow) => (
         <>
           <Seo
-            title={`Donate to ${profile.name} - ${APP_NAME}`}
-            description={profile.overview?.slice(0, 140)}
-            name={profile.name}
-            image={profile.logo}
-            url={`${BASE_URL}/donate/${profile.id}`}
+            title={`Donate to ${endow.name} - ${APP_NAME}`}
+            description={endow.overview?.slice(0, 140)}
+            name={endow.name}
+            image={endow.logo}
+            url={`${BASE_URL}/donate/${endow.id}`}
           />
           <Content
-            tagline={profile.tagline}
-            logo={profile.card_img || profile.logo || ""}
-            name={profile.name}
-            hide_bg_tip={!!profile.hide_bg_tip}
-            banner={profile.image || ""}
+            tagline={endow.tagline}
+            logo={endow.card_img || endow.logo || ""}
+            name={endow.name}
+            hide_bg_tip={!!endow.hide_bg_tip}
+            banner={endow.image || ""}
             id={numId}
           />
         </>

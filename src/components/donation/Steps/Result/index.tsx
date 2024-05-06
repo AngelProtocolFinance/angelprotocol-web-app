@@ -1,4 +1,4 @@
-import type { CryptoResultStep } from "slices/donation";
+import type { CryptoResultStep } from "../types";
 import Err from "./Err";
 import Loading from "./Loading";
 import Success from "./Success";

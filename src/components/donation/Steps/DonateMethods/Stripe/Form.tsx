@@ -7,9 +7,8 @@ import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { useFiatCurrenciesQuery } from "services/apes";
-import { setDetails } from "slices/donation";
-import { useSetter } from "store/accessors";
 import type { Currency, DetailedCurrency } from "types/components";
+import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import Frequency from "./Frequency";
 import Incrementers from "./Incrementers";
@@ -33,15 +32,15 @@ export default function Loader(props: Props) {
 }
 
 function Form({
-  widgetConfig,
   details,
   currencies,
   defaultCurr,
+  config,
 }: Props & { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency }) {
-  const dispatch = useSetter();
+  const [, setState] = useDonationState();
 
   const initial: FV = {
-    source: widgetConfig ? "bg-widget" : "bg-marketplace",
+    source: config ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: defaultCurr || { code: USD_CODE, min: 1, rate: 1 },
     frequency: "subscription",
@@ -80,15 +79,13 @@ function Form({
   return (
     <FormContainer
       methods={methods}
-      onSubmit={handleSubmit((fv) => {
-        dispatch(
-          setDetails({
-            ...fv,
-            frequency: fv.frequency as Exclude<FV["frequency"], "">, //validated by schema
-            method: "stripe",
-          })
-        );
-      })}
+      onSubmit={handleSubmit((fv) =>
+        setState({
+          ...fv,
+          frequency: fv.frequency as Exclude<FV["frequency"], "">, //validated by schema
+          method: "stripe",
+        })
+      )}
       className="grid gap-4"
     >
       <Frequency />

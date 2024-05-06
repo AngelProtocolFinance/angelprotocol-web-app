@@ -1,4 +1,4 @@
-import { useDonation } from "./Context";
+import { useDonationState } from "./Context";
 import DonateMethods from "./DonateMethods";
 import Result from "./Result";
 import Splits from "./Splits";
@@ -7,7 +7,7 @@ import Summary from "./Summary";
 import Tip from "./Tip";
 
 export default function CurrentStep() {
-  const [state] = useDonation();
+  const [state] = useDonationState();
 
   if (state.step === "donate-form") return <DonateMethods {...state} />;
 
@@ -19,7 +19,7 @@ export default function CurrentStep() {
       />
     );
   }
-  
+
   if (state.step === "tip") return <Tip {...state} />;
 
   if (state.step === "summary") return <Summary {...state} />;

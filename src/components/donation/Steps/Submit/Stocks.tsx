@@ -1,16 +1,18 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { type StockCheckoutStep, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
+import type { StockCheckoutStep } from "../types";
 
 export default function Stocks(props: StockCheckoutStep) {
   const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;
-  const dispatch = useSetter();
-
+  const [, setState] = useDonationState();
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
-      <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
+      <BackBtn
+        type="button"
+        onClick={() => setState({ step: "donate-form" })}
+      />
       <p className="mt-4 text-center text-navy-l1 uppercase">
         Donation pending
       </p>

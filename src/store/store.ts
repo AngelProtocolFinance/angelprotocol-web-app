@@ -8,13 +8,11 @@ import { coingecko } from "services/coingecko";
 import { wordpress } from "services/wordpress";
 import auth, { loadSession, reset } from "slices/auth";
 import { componentReducer } from "slices/components";
-import { donation } from "slices/donation";
 import gift from "slices/gift";
 import widget from "slices/widget";
 
 export const store = configureStore({
   reducer: {
-    donation,
     gift,
     auth,
     component: componentReducer,
