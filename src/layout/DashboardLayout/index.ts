@@ -1,4 +1,2 @@
-
-
-export {default} from "./Layout"
-export * from "./Sidebar/types"
+export { default } from "./Layout";
+export * from "./Sidebar/types";

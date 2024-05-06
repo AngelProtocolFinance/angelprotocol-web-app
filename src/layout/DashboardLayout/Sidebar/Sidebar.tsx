@@ -1,13 +1,13 @@
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
-import React, { ReactNode } from "react";
+import React, { type ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import type { LinkGroup } from "./types";
 
 type Props = {
   className?: string;
   linkGroups: LinkGroup[];
-  sidebarHeader?:ReactNode
+  sidebarHeader?: ReactNode;
   onChange?: () => void;
 };
 
