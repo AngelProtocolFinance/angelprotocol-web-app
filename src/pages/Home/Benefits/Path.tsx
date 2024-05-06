@@ -3,7 +3,6 @@ import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import Button from "../common/Button";
 import BenefitsCarousel from "./BenefitsCarousel";
 import Carousel from "./Carousel";
 import s from "./benefits.module.css";
@@ -52,16 +51,17 @@ const Path = () => {
 
       <BenefitsCarousel slides={benefits[path]} classes="max-lg:hidden" />
       <Carousel slides={benefits[path]} classes="lg:hidden" />
-      {/* TODO: enable donor info link once we have the static pages ready */}
-      {path === "nonprofits" && (
-        <Link
-          to={appRoutes.nonprofit_info}
-          className="mt-8 justify-self-center btn-blue normal-case items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
-        >
-          <span className="mr-1">Learn more</span>
-          <Icon type="ArrowRightLong" />
-        </Link>
-      )}
+      <Link
+        to={
+          path === "nonprofits"
+            ? appRoutes.nonprofit_info
+            : appRoutes.donor_info
+        }
+        className="mt-8 justify-self-center btn-blue normal-case items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
+      >
+        <span className="mr-1">Learn more</span>
+        <Icon type="ArrowRightLong" />
+      </Link>
     </section>
   );
 };
