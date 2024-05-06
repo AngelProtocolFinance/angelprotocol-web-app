@@ -25,6 +25,7 @@ export enum appRoutes {
   terms_nonprofits = "/terms-of-use-npo",
   //informational
   nonprofit_info = "/nonprofit",
+  donor_info = "/donor",
 }
 
 export const adminRoutes = {

@@ -1,16 +1,16 @@
+import HeroBottom from "../@sections/HeroBottom";
 import Animation from "./Animation";
 import Benefits from "./Benefits";
 import Blogs from "./Blogs";
 import Brands from "./Brands";
 import Hero from "./Hero";
-import HeroBottom from "./HeroBottom";
 import Testimonials from "./Testimonials";
 import Video from "./Video";
 const Home = () => {
   return (
     <>
       <Hero classes="-mt-24" />
-      <HeroBottom />
+      <HeroBottom className="mb-10" />
       <Benefits />
       <Brands />
       <Animation />

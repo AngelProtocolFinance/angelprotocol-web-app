@@ -2,42 +2,16 @@ import donationFormImgMobile from "assets/images/donation-form-mobile.png";
 import donationFormImg from "assets/images/donation-form.png";
 import Icon from "components/Icon";
 import Image from "components/Image";
-
-type TListItem = {
-  title: string;
-  description: string;
-};
-const items: TListItem[] = [
-  {
-    title: "Quick, simple setup",
-    description:
-      "Register in minutes, we’ll review and get you started right away",
-  },
-  {
-    title: "Never miss a donation",
-    description:
-      "Accept cash, stocks, crypto, and DAF gifts all in one conversion-optimized form",
-  },
-  {
-    title: "Increase funds raised",
-    description:
-      "Increase funds raised: Choose to have your donations invested to provide sustainable funding",
-  },
-  {
-    title: "Fundraise for free",
-    description:
-      "Fundraise for free: 100% free. No setup costs, no recurring charges, no platform fees of any kind",
-  },
-];
+import { benefits } from "content/benefits";
 
 export default function DonationFormInfo({ className = "" }) {
   return (
     <section className={`${className} grid @6xl:grid-cols-2 gap-x-16`}>
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
-        Your all-in-one donation form
+        Your all-in-one donation portal
       </h4>
       <h2 className="mb-16 col-span-full text-center text-4xl">
-        Easily accept all types of donations
+        Give the way you want, to the causes you care about most
       </h2>
       <Image
         src={donationFormImg}
@@ -49,13 +23,18 @@ export default function DonationFormInfo({ className = "" }) {
       />
 
       <ul className="divide-y divide-gray-l4 mt-6 @6xl:mt-0">
-        {items.map((item, idx) => (
-          <ListItem {...item} key={idx} />
+        {benefits.donors.map((b, idx) => (
+          <ListItem title={b.title} description={b.description} key={idx} />
         ))}
       </ul>
     </section>
   );
 }
+
+type TListItem = {
+  title: string;
+  description: string;
+};
 
 function ListItem(props: TListItem) {
   return (
