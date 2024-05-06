@@ -1,3 +1,4 @@
+import flying_character from "assets/images/flying-character.png";
 import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
@@ -8,7 +9,7 @@ const Card = (props: EndowmentCard) => {
   return (
     <div className="grid rounded-4xl bg-white h-[27rem] border border-gray-l4/30 shadow-sm shadow-black/5">
       <Image
-        src={props.card_img}
+        src={props.card_img || flying_character}
         alt="card image"
         height={224}
         className="object-cover w-full rounded-t-4xl h-56"
