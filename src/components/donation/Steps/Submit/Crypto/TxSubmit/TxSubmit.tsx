@@ -7,11 +7,11 @@ import {
   useConfirmCryptoIntentMutation,
   useCreateCryptoIntentQuery,
 } from "services/apes";
-import type { CryptoSubmitStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { useSetter } from "store/accessors";
 import type { ConnectedWallet } from "types/wallet";
 import ContinueBtn from "../../../common/ContinueBtn";
+import type { CryptoSubmitStep } from "../../../types";
 import { type EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";

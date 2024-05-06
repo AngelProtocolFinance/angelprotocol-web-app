@@ -1,20 +1,13 @@
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
-import QueryLoader from "components/QueryLoader";
-import { Steps } from "components/donation";
+import { Steps, type DonationRecipient} from "components/donation";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import { memo, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useIntentQuery } from "services/apes";
-import {
-  type DonationRecipient,
-  loadIntent,
-  setRecipient,
-} from "slices/donation";
-import { useGetter, useSetter } from "store/accessors";
-import type { DonationIntent } from "types/aws";
+import { memo } from "react";
+import { Link } from "react-router-dom";
+
+import type { DonationRecord } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
@@ -22,63 +15,12 @@ type Props = DonationRecipient & {
   logo: string;
   banner: string;
   tagline?: string;
+  intent?: DonationRecord;
 };
 
 function Content(props: Props) {
-  const { state } = useLocation();
-
-  if (state?.transactionId) {
-    return <WithIntent transactionId={state?.transactionId} {...props} />;
-  }
-
-  return <LoadedContent {...props} />;
-}
-
-function WithIntent(props: Props & { transactionId: string }) {
-  const queryState = useIntentQuery({ transactionId: props.transactionId });
-
-  useEffect(() => {
-    return () => {
-      window.history.replaceState({}, "");
-    };
-  }, []);
-
   return (
-    <QueryLoader queryState={queryState}>
-      {(intent) => <LoadedContent {...props} intent={intent} />}
-    </QueryLoader>
-  );
-}
-
-function LoadedContent(props: Props & { intent?: DonationIntent }) {
-  const dispatch = useSetter();
-  const state = useGetter((state) => state.donation);
-  useEffect(() => {
-    const { intent, ...recipient } = props;
-    if (intent) {
-      dispatch(loadIntent({ ...intent, recipient }));
-    } else {
-      dispatch(setRecipient(recipient));
-    }
-  }, [dispatch, props]);
-
-  const CONTAINER_ID = "__container_id";
-  const prevStep = useRef(state.step);
-  useEffect(() => {
-    /** at first visit, equal so no scrolling happens
-     * on next or back, would be different
-     */
-    if (state.step === prevStep.current) return;
-    const element = document.getElementById(CONTAINER_ID);
-    element?.scrollIntoView();
-    prevStep.current = state.step;
-  }, [state.step]);
-
-  return (
-    <div
-      className="fixed inset-0 overflow-y-auto w-full z-50 bg-[#F6F7F8]"
-      id={CONTAINER_ID}
-    >
+    <div className="fixed inset-0 overflow-y-auto w-full z-50 bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
         <DappLogo classes="h-[2.036rem]" />
         <Link
@@ -98,8 +40,13 @@ function LoadedContent(props: Props & { intent?: DonationIntent }) {
         {/** small screen but space is still enough to render sidebar */}
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps
+            recipient={{
+              hide_bg_tip: props.hide_bg_tip,
+              id: props.id,
+              name: props.name,
+            }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
-            donaterConfig={null}
+          
           />
         </div>
         <FAQ classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]" />
