@@ -33,6 +33,7 @@ const Home = lazy(() => import("pages/Home"));
 const PrivacyPolicy = lazy(() => import("pages/Legal/PrivacyPolicy"));
 const TermsDonors = lazy(() => import("pages/Legal/TermsDonors"));
 const TermsNonprofits = lazy(() => import("pages/Legal/TermsNonprofits"));
+const NonprofitInfo = lazy(() => import("pages/informational/NonprofitInfo"));
 
 export default function App() {
   const location = useLocation();
@@ -128,6 +129,7 @@ export default function App() {
             element={<TermsNonprofits />}
           />
           <Route path={appRoutes.terms_donors} element={<TermsDonors />} />
+          <Route path={appRoutes.nonprofit_info} element={<NonprofitInfo />} />
           <Route index element={<Home />} />
         </Route>
         <Route path="*" element={<Navigate replace to={appRoutes.home} />} />

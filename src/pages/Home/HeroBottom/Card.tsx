@@ -10,6 +10,7 @@ const Card = (props: EndowmentCard) => {
       <Image
         src={props.card_img}
         alt="card image"
+        height={224}
         className="object-cover w-full rounded-t-4xl h-56"
       />
       <h4 className="text-[#0D283A] font-bold text-xl whitespace-nowrap text-ellipsis px-8 mt-4 overflow-hidden">

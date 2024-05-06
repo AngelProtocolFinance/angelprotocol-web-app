@@ -1,11 +1,11 @@
 import { brands } from "content/brands";
 import Marquee from "react-fast-marquee";
 
-const Brands = () => {
+export default function FellowNonProfits({ className = "" }) {
   return (
-    <section className="grid content-start gap-14 bg-gradient-to-b from-transparent to-peach/20">
-      <h2 className="text-[32px] md:text-[42px] text-navy-d4 px-8 text-center max-w-lg mx-auto text-balance">
-        Trusted by impactful nonprofits worldwide
+    <section className={`${className} grid`}>
+      <h2 className="px-2 text-center text-4xl text-navy-d4 text-pretty mb-12">
+        Trusted by Fellow Nonprofits Globally
       </h2>
       <Marquee
         pauseOnHover
@@ -21,6 +21,4 @@ const Brands = () => {
       </Marquee>
     </section>
   );
-};
-
-export default Brands;
+}

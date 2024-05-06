@@ -1,9 +1,9 @@
 import Icon from "components/Icon";
+import type { Benefit } from "content/benefits";
 import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import type { Slide } from "./types";
 
-type Props = { slides: Slide[]; classes?: string };
+type Props = { slides: Benefit[]; classes?: string };
 const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
   return (
     <div className={`grid relative ${classes}`}>
@@ -43,10 +43,10 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
           return (
             <SwiperSlide
               key={index}
-              className={`grid justify-items-center gap-9 py-14 px-10 w-[30rem] @4xl:w-[48rem] rounded-5xl ${slide.bgColorClass}`}
+              className={`grid justify-items-center gap-9 py-14 px-10 w-[30rem] @4xl:w-[48rem] rounded-5xl ${slide.cardBgClass}`}
             >
               <img
-                src={slide.img_src}
+                src={slide.img}
                 className="size-60 object-cover object-center"
                 alt="logo"
               />
