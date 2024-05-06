@@ -1,3 +1,4 @@
+import flying_character from "assets/images/flying-character.png";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import Tooltip from "components/Tooltip";
@@ -38,7 +39,7 @@ export default function Card({
       >
         <Image
           loading="lazy"
-          src={card_img}
+          src={card_img || flying_character}
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />

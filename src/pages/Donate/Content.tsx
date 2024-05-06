@@ -1,3 +1,4 @@
+import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import QueryLoader from "components/QueryLoader";
@@ -89,12 +90,14 @@ function LoadedContent(props: Props & { intent?: DonationIntent }) {
         </Link>
       </div>
       <div className="md:px-4 max-w-[68.625rem] mx-auto grid md:grid-cols-[1fr_auto] items-start content-start gap-4">
-        <OrgCard
-          name={props.name}
-          tagline={props.tagline}
-          logo={props.logo}
-          classes="col-start-1 row-start-1"
-        />
+        <Link to={`${appRoutes.marketplace}/${props.id}`} className="">
+          <OrgCard
+            name={props.name}
+            tagline={props.tagline}
+            logo={props.logo || flying_character}
+            classes="col-start-1 row-start-1"
+          />
+        </Link>
         {/** small screen but space is still enough to render sidebar */}
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps
