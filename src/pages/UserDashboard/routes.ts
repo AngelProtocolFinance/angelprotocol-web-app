@@ -10,7 +10,7 @@ export const linkGroups: LinkGroup[] = [
   {
     links: [
       {
-        title: "My donations",
+        title: "My Donations",
         to: appRoutes.donations,
         icon: {
           type: "DollarCircle",
