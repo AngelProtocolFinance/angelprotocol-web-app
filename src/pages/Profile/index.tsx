@@ -1,8 +1,8 @@
+import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-
 import { Navigate, useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import Body from "./Body";
@@ -39,7 +39,7 @@ export default function Profile({ legacy = false }) {
         title={`${data.name} - ${APP_NAME}`}
         description={data?.overview?.slice(0, 140)}
         name={data.name}
-        image={data.logo}
+        image={data?.logo || flying_character}
         url={`${BASE_URL}/profile/${data.id}`}
       />
       <section className="grid grid-rows-[auto_auto_1fr] items-center isolate w-full h-full">
@@ -64,11 +64,11 @@ function Banner() {
 }
 
 function Logo() {
-  const { logo = "" } = useProfileContext();
+  const { logo } = useProfileContext();
   return (
     <div className="padded-container flex justify-center items-center w-full overflow-visible h-0 isolate lg:justify-start">
       <Image
-        src={logo}
+        src={logo || flying_character}
         className="h-48 w-48 border border-gray-l4 rounded-full object-cover bg-white"
       />
     </div>
