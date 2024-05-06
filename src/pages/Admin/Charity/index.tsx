@@ -2,7 +2,7 @@ import { adminRoutes } from "constants/routes";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Widget from "../../Widget";
 import { useAdminContext } from "../Context";
-import Layout from "../Layout";
+import Layout from "layout/DashboardLayout";
 import { LINKS } from "../constants";
 import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";
 import Dashboard from "./Dashboard";
