@@ -12,7 +12,7 @@ import {
 } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { useLazyProfileQuery } from "services/aws/aws";
-import { useNewEndowAdminMutation } from "services/aws/users";
+import { useNewEndowAdminMutation } from "services/aws/endow-admins";
 import { object } from "yup";
 
 export type Props = {
