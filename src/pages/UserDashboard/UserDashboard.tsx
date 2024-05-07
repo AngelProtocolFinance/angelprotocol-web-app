@@ -13,6 +13,8 @@ export default withAuth(function UserDashboard({ user }) {
           <DashboardLayout
             rootRoute={`${appRoutes.user_dashboard}/`}
             linkGroups={linkGroups}
+            //dummy header
+            sidebarHeader={<div className="h-5" />}
           />
         }
       >
