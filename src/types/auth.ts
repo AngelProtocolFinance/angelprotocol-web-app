@@ -7,7 +7,7 @@ export type AuthenticatedUser = {
   lastName?: string;
   isSigningOut: boolean;
   /** lowercase */
-  prefCurrencyCode?:string;
+  prefCurrencyCode?: string;
 };
 
 export type User = null | "loading" | AuthenticatedUser;

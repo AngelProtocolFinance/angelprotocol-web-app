@@ -1,9 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {
-  type AuthUser,
-  fetchAuthSession,
-  signOut,
-} from "aws-amplify/auth";
+import { type AuthUser, fetchAuthSession, signOut } from "aws-amplify/auth";
 import { APIs } from "constants/urls";
 import { logger } from "helpers";
 import { type User, userIsSignedIn } from "types/auth";
@@ -25,31 +21,33 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       const session = await fetchAuthSession();
       if (!session.tokens) return null;
 
-      const idToken = session.tokens.idToken
-      if(!idToken) return null
+      const idToken = session.tokens.idToken;
+      if (!idToken) return null;
 
       type Payload = {
         /** csv */
-        endows:string,
-        "cognito:groups": string[]
-        email:string
-      }
-      
-      const { endows, "cognito:groups": groups = [], email:userEmail } = idToken.payload  as Payload;
+        endows: string;
+        "cognito:groups": string[];
+        email: string;
+      };
+
+      const {
+        endows,
+        "cognito:groups": groups = [],
+        email: userEmail,
+      } = idToken.payload as Payload;
 
       //use user attributes from DB
-      const res = await fetch(`${APIs.apes}/users/${userEmail}`)
-      if(!res.ok) return null
+      const res = await fetch(`${APIs.apes}/users/${userEmail}`);
+      if (!res.ok) return null;
 
       type UserAttr = {
         familyName: string;
         givenName: string;
-        prefCurrencyCode?:string
-      }
+        prefCurrencyCode?: string;
+      };
 
-      const userAttributes:UserAttr = await res.json() 
-
-
+      const userAttributes: UserAttr = await res.json();
 
       return {
         token: idToken.toString(),
