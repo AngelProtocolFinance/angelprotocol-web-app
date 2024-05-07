@@ -2,10 +2,9 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   type AuthUser,
   fetchAuthSession,
-  fetchUserAttributes,
-  getCurrentUser,
   signOut,
 } from "aws-amplify/auth";
+import { APIs } from "constants/urls";
 import { logger } from "helpers";
 import { type User, userIsSignedIn } from "types/auth";
 
@@ -26,32 +25,40 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       const session = await fetchAuthSession();
       if (!session.tokens) return null;
 
-      const [attributes] = await Promise.all([
-        fetchUserAttributes(),
-        //user.id may be used in distinguishing my-donations page
-        user ? Promise.resolve(user) : getCurrentUser(),
-      ]);
+      const idToken = session.tokens.idToken
+      if(!idToken) return null
 
-      const { endows, "cognito:groups": groups = [] } =
-        session.tokens.idToken?.payload || {};
+      type Payload = {
+        /** csv */
+        endows:string,
+        "cognito:groups": string[]
+        email:string
+      }
+      
+      const { endows, "cognito:groups": groups = [], email:userEmail } = idToken.payload  as Payload;
 
-      const token = session.tokens.idToken?.toString() ?? "";
+      //use user attributes from DB
+      const res = await fetch(`${APIs.apes}/users/${userEmail}`)
+      if(!res.ok) return null
 
-      const endowments =
-        //either none or correctly formatted string
-        (endows as string | undefined)?.split(",").map(Number) || [];
+      type UserAttr = {
+        familyName: string;
+        givenName: string;
+        prefCurrencyCode?:string
+      }
+
+      const userAttributes:UserAttr = await res.json() 
+
+
 
       return {
-        token,
-        groups: groups as string[], //AWS generated so there's a level of safety
-        endowments: endowments,
-        /**
-         * email is guaranteed as it is the primary verifcation mechanism,
-         * and is always retrieved from federated signin
-         */
-        email: attributes.email!,
-        firstName: attributes.given_name,
-        lastName: attributes.family_name,
+        token: idToken.toString(),
+        groups,
+        endowments: endows.split(",").map(Number),
+        email: userEmail,
+        firstName: userAttributes.givenName,
+        lastName: userAttributes.familyName,
+        prefCurrencyCode: userAttributes.prefCurrencyCode,
         isSigningOut: false,
       };
     } catch (err) {
