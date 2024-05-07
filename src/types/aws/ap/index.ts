@@ -171,3 +171,9 @@ export interface DonationsMetricList {
   donations_daily_count: number;
   donations_total_amount_v2: number;
 }
+
+export type UserAttributes = {
+  familyName: string;
+  givenName: string;
+  prefCurrencyCode?: string;
+};

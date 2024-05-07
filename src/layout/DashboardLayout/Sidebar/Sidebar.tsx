@@ -23,7 +23,7 @@ export default function Sidebar({
     >
       {sidebarHeader}
 
-      <div className={`grid grid-cols-[auto_1fr] py-3 gap-x-2 ${!sidebarHeader ? "mt-3" : ""}`}>
+      <div className="grid grid-cols-[auto_1fr] py-3 gap-x-2">
         {linkGroups.map((group) => (
           <React.Fragment key={`link_group-${group.title}`}>
             {group.title && (

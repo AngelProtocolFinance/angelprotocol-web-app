@@ -7,7 +7,7 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("pages/Admin"));
-const UserDashboard = lazy(() => import("pages/UserDashboard"))
+const UserDashboard = lazy(() => import("pages/UserDashboard"));
 const Profile = lazy(() => import("pages/Profile"));
 const Donations = lazy(() => import("pages/Donations"));
 const DonationLoader = lazy(() => import("pages/DonationLoader"));
@@ -71,7 +71,10 @@ export default function App() {
             element={<Profile legacy />}
           />
           <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
-          <Route path={`${appRoutes.user_dashboard}/*`} element={<UserDashboard />} />
+          <Route
+            path={`${appRoutes.user_dashboard}/*`}
+            element={<UserDashboard />}
+          />
           <Route
             path={appRoutes.banking_applications}
             element={<BankingApplications />}

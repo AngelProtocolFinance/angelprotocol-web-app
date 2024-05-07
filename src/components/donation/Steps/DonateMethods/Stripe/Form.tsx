@@ -8,7 +8,8 @@ import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { useFiatCurrenciesQuery } from "services/apes";
 import { setDetails } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { useGetter, useSetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
 import type { Currency, DetailedCurrency } from "types/components";
 import ContinueBtn from "../../common/ContinueBtn";
 import Frequency from "./Frequency";
@@ -18,7 +19,10 @@ import type { FormValues as FV, Props } from "./types";
 const USD_CODE = "usd";
 
 export default function Loader(props: Props) {
-  const query = useFiatCurrenciesQuery();
+  const user = useGetter((state) => state.auth.user);
+  const query = useFiatCurrenciesQuery(
+    userIsSignedIn(user) ? user.prefCurrencyCode : undefined
+  );
   return (
     <QueryLoader
       queryState={query}

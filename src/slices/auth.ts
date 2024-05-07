@@ -4,6 +4,7 @@ import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { logger } from "helpers";
 import { type User, userIsSignedIn } from "types/auth";
+import type { UserAttributes } from "types/aws";
 
 type State = {
   user: User;
@@ -45,13 +46,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       );
       if (!res.ok) return null;
 
-      type UserAttr = {
-        familyName: string;
-        givenName: string;
-        prefCurrencyCode?: string;
-      };
-
-      const userAttributes: UserAttr = await res.json();
+      const userAttributes: UserAttributes = await res.json();
 
       return {
         token: idToken.toString(),

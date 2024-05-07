@@ -1,27 +1,19 @@
-import { FormError, FormSkeleton } from "components/admin";
-import { useEndowment } from "services/aws/useEndowment";
+import QueryLoader from "components/QueryLoader";
+import { useFiatCurrenciesQuery } from "services/apes";
+import type { AuthenticatedUser } from "types/auth";
 import Form from "./Form";
 
-export default function Settings() {
-  const {
-    data: endow,
-    isLoading,
-    isError,
-  } = useEndowment({ id }, ["receiptMsg", "sfCompounded"]);
-
-  if (isLoading) {
-    return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;
-  }
-
-  if (isError || !endow) {
-    return <FormError errorMessage="Failed to load settings" />;
-  }
-
+export default function EditProfile(props: AuthenticatedUser) {
+  const query = useFiatCurrenciesQuery(props.prefCurrencyCode);
   return (
-    <Form
-      receiptMsg={endow.receiptMsg}
-      id={id}
-      isSfCompounded={endow.sfCompounded}
-    />
+    <QueryLoader
+      queryState={query}
+      messages={{
+        loading: "loading form",
+        error: "failed to load form",
+      }}
+    >
+      {(data) => <Form {...data} user={props} />}
+    </QueryLoader>
   );
 }

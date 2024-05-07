@@ -1,6 +1,7 @@
-import { CurrencyOption } from "types/components";
+import type { CurrencyOption } from "types/components";
 
 export type FV = {
-  userName: string;
-  prefCode: CurrencyOption;
+  firstName: string;
+  lastName: string;
+  prefCurrency: CurrencyOption;
 };
