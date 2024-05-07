@@ -1,3 +1,4 @@
+import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import { useEndowment } from "services/aws/useEndowment";
 import { useAdminContext } from "../../Context";
@@ -13,7 +14,7 @@ export default function Header() {
       <div className="flex justify-between">
         <Image
           className="w-14 h-14"
-          src={profile?.logo}
+          src={profile?.logo || flying_character}
           isSrcLoading={isLoading}
         />
       </div>

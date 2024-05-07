@@ -1,3 +1,4 @@
+import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import Seo from "components/Seo";
@@ -52,12 +53,12 @@ export default function Profile({ legacy = false }) {
 }
 
 function Banner() {
-  const { image = "/images/placeholder-banner.png" } = useProfileContext();
+  const { image } = useProfileContext();
   return (
     <div
       className="relative w-full h-52 sm:h-72 bg-cover bg-center"
       style={{
-        backgroundImage: `url('${image}')`,
+        backgroundImage: `url('${image || fallback_banner}')`,
       }}
     />
   );
