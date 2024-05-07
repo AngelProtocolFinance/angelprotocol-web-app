@@ -6,35 +6,34 @@ import type {
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
-const users = aws.injectEndpoints({
+const endowAdmins = aws.injectEndpoints({
   endpoints: (builder) => ({
-    users: builder.query<string[], number>({
-      providesTags: ["users"],
+    endowAdmins: builder.query<string[], number>({
+      providesTags: ["endow-admins"],
       query: (endowID) => {
         return {
-          url: `/${v(1)}/users/${endowID}`,
+          url: `/${v(1)}/endowments/${endowID}/admins`,
           headers: { Authorization: TEMP_JWT },
         };
       },
     }),
     newEndowAdmin: builder.mutation<unknown, NewEndowAdminPayload>({
-      invalidatesTags: (_, error) => (error ? [] : ["users"]),
+      invalidatesTags: (_, error) => (error ? [] : ["endow-admins"]),
       query: ({ endowID, ...payload }) => {
         return {
           method: "POST",
-          url: `/${v(1)}/users/${endowID}`,
+          url: `/${v(1)}/endowments/${endowID}/admins`,
           body: payload,
           headers: { Authorization: TEMP_JWT },
         };
       },
     }),
     deleteEndowAdmin: builder.mutation<unknown, DeleteEndowAdminPayload>({
-      invalidatesTags: (_, error) => (error ? [] : ["users"]),
+      invalidatesTags: (_, error) => (error ? [] : ["endow-admins"]),
       query: ({ endowID, ...payload }) => {
         return {
           method: "DELETE",
-          url: `/${v(1)}/users/${endowID}`,
-          body: payload,
+          url: `/${v(1)}/endowments/${endowID}/admins/${payload.email}`,
           headers: { Authorization: TEMP_JWT },
         };
       },
@@ -43,7 +42,7 @@ const users = aws.injectEndpoints({
 });
 
 export const {
-  useUsersQuery,
+  useEndowAdminsQuery,
   useNewEndowAdminMutation,
   useDeleteEndowAdminMutation,
-} = users;
+} = endowAdmins;

@@ -6,6 +6,8 @@ export type AuthenticatedUser = {
   firstName?: string;
   lastName?: string;
   isSigningOut: boolean;
+  /** lowercase */
+  prefCurrencyCode?: string;
 };
 
 export type User = null | "loading" | AuthenticatedUser;
