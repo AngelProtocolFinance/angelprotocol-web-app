@@ -177,3 +177,5 @@ export type UserAttributes = {
   givenName: string;
   prefCurrencyCode?: string;
 };
+
+export type UserUpdate = Partial<UserAttributes>;

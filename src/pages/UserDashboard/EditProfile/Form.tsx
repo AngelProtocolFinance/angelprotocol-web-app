@@ -8,6 +8,8 @@ import { cleanObject } from "helpers/cleanObject";
 import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import { useEditUserMutation } from "services/aws/users";
+import { updateUserAttributes } from "slices/auth";
+import { useSetter } from "store/accessors";
 import type { AuthenticatedUser } from "types/auth";
 import type { UserAttributes } from "types/aws";
 import type { DetailedCurrency } from "types/components";
@@ -21,6 +23,7 @@ type Props = {
 };
 
 export default function Form(props: Props) {
+  const dispatch = useSetter();
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
   const [editUser] = useEditUserMutation();
@@ -68,7 +71,7 @@ export default function Form(props: Props) {
             familyName: fv.lastName,
             prefCurrencyCode: fv.prefCurrency.code,
           };
-          await editUser({
+          const updated = await editUser({
             ...cleanObject(update),
             userEmail: props.user.email,
           }).unwrap();
@@ -76,9 +79,7 @@ export default function Form(props: Props) {
             type: "success",
             children: "Sucessfully updated!",
           });
-          await new Promise((r) => setTimeout(r, 200));
-          //reloads session (fetches user attributes)
-          window.location.reload();
+          dispatch(updateUserAttributes(updated));
         } catch (err) {
           handleError(err, { context: "updating settings" });
         }

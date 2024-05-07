@@ -1,14 +1,11 @@
 import { TEMP_JWT } from "constants/auth";
-import type { UserAttributes } from "types/aws";
+import type { UserUpdate } from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
 const endowAdmins = aws.injectEndpoints({
   endpoints: (builder) => ({
-    editUser: builder.mutation<
-      Partial<UserAttributes>,
-      Partial<UserAttributes> & { userEmail: string }
-    >({
+    editUser: builder.mutation<UserUpdate, UserUpdate & { userEmail: string }>({
       invalidatesTags: ["user"],
       query: ({ userEmail, ...payload }) => {
         return {
