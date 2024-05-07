@@ -16,7 +16,7 @@ export const logout = createAsyncThunk("auth/logout", signOut);
 
 export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
   "auth/loadSession",
-  async (user) => {
+  async (_) => {
     try {
       const session = await fetchAuthSession();
       if (!session.tokens) return null;
@@ -38,7 +38,9 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       } = idToken.payload as Payload;
 
       //use user attributes from DB
-      const res = await fetch(`${APIs.apes}/users/${userEmail}`);
+      const res = await fetch(`${APIs.aws}/staging/users/${userEmail}`, {
+        headers: { authorization: idToken.toString() },
+      });
       if (!res.ok) return null;
 
       type UserAttr = {
