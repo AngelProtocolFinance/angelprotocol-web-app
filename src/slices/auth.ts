@@ -19,9 +19,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
   async (_) => {
     try {
       const session = await fetchAuthSession();
-      if (!session.tokens) return null;
-
-      const idToken = session.tokens.idToken;
+      const idToken = session.tokens?.idToken;
       if (!idToken) return null;
 
       type Payload = {
