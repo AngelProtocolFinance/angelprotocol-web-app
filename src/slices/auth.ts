@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { type AuthUser, fetchAuthSession, signOut } from "aws-amplify/auth";
+import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { logger } from "helpers";
 import { type User, userIsSignedIn } from "types/auth";
@@ -36,9 +37,12 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       } = idToken.payload as Payload;
 
       //use user attributes from DB
-      const res = await fetch(`${APIs.aws}/staging/users/${userEmail}`, {
-        headers: { authorization: idToken.toString() },
-      });
+      const res = await fetch(
+        `${APIs.aws}/${IS_TEST ? "staging" : "v2"}/users/${userEmail}`,
+        {
+          headers: { authorization: idToken.toString() },
+        }
+      );
       if (!res.ok) return null;
 
       type UserAttr = {
