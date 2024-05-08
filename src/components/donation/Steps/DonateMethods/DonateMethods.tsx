@@ -31,7 +31,7 @@ const tabClasses = (selected: boolean) =>
   }  flex items-center gap-2 p-2 @md/steps:px-3 @md/steps:py-[1.15rem] @md/steps:grid @md/steps:grid-cols-subgrid @md/steps:col-span-2 focus:outline-none @md/steps:w-28 rounded @md/steps:rounded-none`;
 
 export default function DonateMethods(props: FormStep) {
-  const { config, recipient, details, step } = props;
+  const { config, recipient, details, intentId, step } = props;
   return (
     <Tab.Group
       manual
@@ -70,6 +70,7 @@ export default function DonateMethods(props: FormStep) {
             step={step}
             details={details?.method === "stripe" ? details : undefined}
             config={config}
+            intentId={intentId}
           />
         </Tab.Panel>
         <Tab.Panel>
@@ -77,7 +78,6 @@ export default function DonateMethods(props: FormStep) {
             recipient={recipient}
             step={step}
             details={details?.method === "stocks" ? details : undefined}
-            config={config}
           />
         </Tab.Panel>
         <Tab.Panel>
@@ -85,7 +85,6 @@ export default function DonateMethods(props: FormStep) {
             recipient={recipient}
             step={step}
             details={details?.method === "daf" ? details : undefined}
-            config={config}
           />
         </Tab.Panel>
         <Tab.Panel>
@@ -94,6 +93,7 @@ export default function DonateMethods(props: FormStep) {
             step={step}
             details={details?.method === "crypto" ? details : undefined}
             config={config}
+            intentId={intentId}
           />
         </Tab.Panel>
       </Tab.Panels>

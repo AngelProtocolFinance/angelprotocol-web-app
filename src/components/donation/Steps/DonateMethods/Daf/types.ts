@@ -1,5 +1,5 @@
 import type { DafDonationDetails, DafFormStep } from "../../types";
 
-export type Props = DafFormStep;
+export type Props = Omit<DafFormStep, "intentId" | "config">;
 
-export type FormValues = Omit<DafDonationDetails, "method">;
+export type FormValues = Omit<DafDonationDetails, "method" | "source">;

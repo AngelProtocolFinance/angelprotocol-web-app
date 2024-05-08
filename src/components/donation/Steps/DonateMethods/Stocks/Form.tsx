@@ -7,7 +7,9 @@ import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import type { StockFormStep } from "../../types";
 
-export default function Form(props: StockFormStep) {
+export default function Form(
+  props: Omit<StockFormStep, "intentId" | "config">
+) {
   const [, setState] = useDonationState();
   const methods = useForm({
     defaultValues: props.details

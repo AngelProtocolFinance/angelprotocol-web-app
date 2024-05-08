@@ -2,11 +2,16 @@ import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { idParamToNum } from "helpers";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
+import type { DonationRecord } from "types/aws";
 import Content from "./Content";
 
 export default function Donate() {
+  const location = useLocation();
+
+  //navigate caller must make sure that /:id is the same as intentRecord.id
+  const intentRecord = location.state as DonationRecord | undefined;
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
   const queryState = useEndowment({ id: numId }, [
@@ -39,12 +44,15 @@ export default function Donate() {
             url={`${BASE_URL}/donate/${endow.id}`}
           />
           <Content
+            recipient={{
+              name: endow.name,
+              id: numId,
+              hide_bg_tip: endow.hide_bg_tip,
+            }}
             tagline={endow.tagline}
             logo={endow.card_img || endow.logo || ""}
-            name={endow.name}
-            hide_bg_tip={!!endow.hide_bg_tip}
             banner={endow.image || ""}
-            id={numId}
+            intentRecord={intentRecord}
           />
         </>
       )}

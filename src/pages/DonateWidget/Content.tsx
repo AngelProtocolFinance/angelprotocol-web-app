@@ -35,22 +35,10 @@ export default function Content({
   }
 
   const initState: DonationState = {
-    step: "splits",
+    step: "donate-form",
     intentId: undefined,
     recipient: recipient,
-    config: {
-      isPreview: true,
-      isSplitDisabled: config.splitDisabled,
-      liquidSplitPct: config.liquidSplitPct,
-    },
-    liquidSplitPct: config.liquidSplitPct,
-    details: {
-      method: "stripe",
-      source: "bg-widget",
-      amount: "",
-      currency: { code: "usd", rate: 1, min: 1 },
-      frequency: "one-time",
-    },
+    config,
   };
 
   return (

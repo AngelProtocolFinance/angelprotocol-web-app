@@ -51,7 +51,7 @@ export default function Split({
       </p>
 
       <LockedSplitSlider
-        disabled={state.config?.isSplitDisabled}
+        disabled={state.config?.splitDisabled}
         value={lockedSplitPct}
         onChange={setLockedSplitPct}
       />

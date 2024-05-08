@@ -14,6 +14,7 @@ export function reducer(state: DonationState, update: Update): DonationState {
       step: "donate-form",
       recipient: state.recipient,
       config: state.config,
+      intentId: state.intentId,
     };
   }
 
@@ -25,6 +26,7 @@ export function reducer(state: DonationState, update: Update): DonationState {
             step: "donate-form",
             recipient: state.recipient,
             config: state.config,
+            intentId: state.intentId,
           }
         : state;
 

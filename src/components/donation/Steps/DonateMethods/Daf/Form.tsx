@@ -18,7 +18,6 @@ export default function Form(props: Props) {
   const [, setState] = useDonationState();
 
   const initial: FV = {
-    source: props.config ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: USD_CURRENCY,
   };
@@ -42,6 +41,8 @@ export default function Form(props: Props) {
       onSubmit={handleSubmit((fv) =>
         setState({
           ...fv,
+          //not used in manual donation
+          source: "bg-marketplace",
           method: "daf",
         })
       )}

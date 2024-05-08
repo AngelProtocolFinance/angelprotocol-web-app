@@ -10,8 +10,8 @@ import type { DonationSource } from "types/lists";
 import type { TokenWithAmount, TxPackage } from "types/tx";
 
 export type Config = {
+  splitDisabled: boolean;
   liquidSplitPct: number;
-  isSplitDisabled: boolean;
   isPreview?: boolean;
 };
 
