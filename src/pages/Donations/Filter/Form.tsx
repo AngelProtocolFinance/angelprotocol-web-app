@@ -19,29 +19,29 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       as="form"
       onSubmit={submit}
       onReset={onReset}
-      className={`${classes} grid content-start gap-4 w-full rounded border border-gray-l4 bg-white dark:bg-blue-d5 max-lg:pb-6 max-lg:shadow-lg`}
+      className={`${classes} grid content-start gap-4 w-full rounded border border-gray-l4 bg-white dark:bg-blue-d5 pb-6 @5xl:pb-0 shadow-lg @5xl:shadow-sm`}
     >
-      <div className="lg:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
+      <div className="@5xl:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
         <span className="text-blue-d1">Filters</span>
         <Popover.Button className="absolute top-1/2 -translate-y-1/2 right-2">
           <Icon type="Close" size={33} />
         </Popover.Button>
       </div>
 
-      <div className="grid gap-x-[1.125rem] grid-cols-2 px-4 lg:px-6 lg:pt-6">
+      <div className="grid gap-x-[1.125rem] grid-cols-2 px-4 @5xl:px-6 @5xl:pt-6">
         <label className="col-span-full text-sm mb-2">Date</label>
         <DateInput<FV> name="startDate" />
         <DateInput<FV> name="endDate" />
       </div>
 
-      {/*<NetworkDropdown classes="px-4 lg:px-6" />*/}
-      {/*<CurrencyDropdown classes="px-4 lg:px-6" />*/}
+      {/*<NetworkDropdown classes="px-4 @5xl:px-6" />*/}
+      {/*<CurrencyDropdown classes="px-4 @5xl:px-6" />*/}
 
-      <div className="max-lg:row-start-2 flex gap-x-4 items-center justify-between max-lg:px-4 max-lg:py-3 p-6 lg:mt-2 bg-blue-l5 dark:bg-blue-d7 border-y lg:border-t border-gray-l4">
-        <h3 className="uppercase lg:hidden">Filter by</h3>
+      <div className="row-start-2 flex gap-x-4 items-center justify-between px-4 py-3 p-6 @5xl:mt-2 bg-blue-l5 dark:bg-blue-d7 border-y @5xl:border-t border-gray-l4">
+        <h3 className="uppercase @5xl:hidden">Filter by</h3>
         <button
           type="reset"
-          className="text-blue-d1 underline text-sm max-lg:ml-auto"
+          className="text-blue-d1 underline text-sm ml-auto @5xl:ml-0"
         >
           Reset filters
         </button>

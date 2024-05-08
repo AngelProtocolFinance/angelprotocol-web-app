@@ -68,15 +68,19 @@ export default function Filter({
       <Popover.Button
         ref={buttonRef}
         disabled={isDisabled}
-        className="w-full lg:w-[22.3rem] flex justify-center items-center p-3 rounded bg-blue-d1 text-white lg:text-navy-l1 lg:bg-white lg:justify-between disabled:bg-gray lg:disabled:bg-gray-l3 lg:dark:disabled:bg-navy-d3 lg:border lg:border-gray-l4"
+        className="w-full @5xl:w-[22.3rem] flex justify-center items-center p-3 rounded bg-blue-d1 text-white @5xl:text-navy-l1 @5xl:bg-white @5xl:justify-between disabled:bg-gray @5xl:disabled:bg-gray-l3 @5xl:dark:disabled:bg-navy-d3 @5xl:border @5xl:border-gray-l4"
       >
         {({ open }) => (
           <>
-            <Icon className="lg:hidden" type="Filter" size={20} />
-            <div className="uppercase font-semibold text-[0.9375rem] ">
+            <Icon className="@5xl:hidden" type="Filter" size={20} />
+            <div className="uppercase font-semibold text-[0.9375rem]">
               Filter
             </div>
-            <DrawerIcon isOpen={open} className="hidden lg:inline" size={21} />
+            <DrawerIcon
+              isOpen={open}
+              className="hidden @5xl:inline"
+              size={21}
+            />
           </>
         )}
       </Popover.Button>
@@ -85,7 +89,7 @@ export default function Filter({
         <Form
           submit={handleSubmit(submit)}
           onReset={onReset}
-          classes="max-lg:fixed max-lg:inset-x-0 max-lg:top-0 lg:mt-1 absolute top-full z-20"
+          classes="fixed @5xl:absolute @5xl:static inset-x-0 top-0 @5xl:top-full  @5xl:mt-1 z-40"
         />
       </FormProvider>
     </Popover>
