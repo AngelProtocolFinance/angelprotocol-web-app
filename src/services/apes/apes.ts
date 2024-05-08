@@ -120,7 +120,7 @@ export const apes = createApi({
       Pick<PaymentIntent, "status"> & {
         guestDonor?: GuestDonor;
         recipientName?: string;
-        recipientId?:number;
+        recipientId?: number;
       },
       { paymentIntentId: string }
     >({
