@@ -1,9 +1,9 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import withAuth from "contexts/Auth";
 import { isEmpty } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
+import type { AuthenticatedUser } from "types/auth";
 import type { DonationRecord } from "types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
@@ -11,7 +11,7 @@ import NoDonations from "./NoDonations";
 import StatusTabs from "./StatusTabs";
 import Table from "./Table";
 
-export default withAuth(function Donations({ user }) {
+export default function Donations({ user }: { user: AuthenticatedUser }) {
   const queryState = usePaginatedDonationRecords({
     email: user.email,
   });
@@ -36,13 +36,13 @@ export default withAuth(function Donations({ user }) {
     isLoading || isFetching || isLoadingNextPage || isError;
 
   return (
-    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container pt-8 lg:pt-20 pb-20">
-      <h1 className="text-3xl max-lg:text-center max-lg:col-span-full max-lg:mb-4">
+    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 @5xl:gap-y-8 @5xl:gap-x-3 relative">
+      <h1 className="text-3xl text-center @5xl:text-left col-span-full @5xl:col-span-1 mb-4 @5xl:mb-0">
         My Donations
       </h1>
       <CsvExporter
         aria-disabled={isLoadingOrError || isEmpty(data?.Items ?? [])}
-        classes="max-lg:row-start-5 max-lg:col-span-full lg:justify-self-end btn-blue px-8 py-3"
+        classes="row-start-5 @5xl:row-auto col-span-full @5xl:col-span-1 @5xl:justify-self-end btn-blue px-8 py-3"
         headers={csvHeaders}
         data={data?.Items || []}
         filename={
@@ -70,12 +70,12 @@ export default withAuth(function Donations({ user }) {
         isDisabled={isLoading || isLoadingNextPage}
         setParams={setParams}
         asker={user.email}
-        classes="max-lg:col-span-full max-lg:w-full"
+        classes="col-span-full @5xl:col-span-1 w-full @5xl:w-auto"
       />
       <div className="grid col-span-full">
         <StatusTabs status={status} changeStatus={setStatus} />
 
-        <div className="p-5 bg-gray-l6 border border-gray-l4 rounded-b sm:rounded-tr grid">
+        <div className="p-5 bg-gray-l6 border border-gray-l4 rounded-b @2xl:rounded-tr grid">
           <QueryLoader
             queryState={{
               data: data?.Items,
@@ -105,7 +105,7 @@ export default withAuth(function Donations({ user }) {
                   isLoading={isLoadingNextPage}
                   status={status}
                   onLoadMore={loadNextPage}
-                  classes="hidden max-lg:mt-4 lg:table"
+                  classes="hidden mt-4 @5xl:mt-0 @5xl:table"
                 />
                 <MobileTable
                   donations={donations}
@@ -114,7 +114,7 @@ export default withAuth(function Donations({ user }) {
                   status={status}
                   isLoading={isLoadingNextPage}
                   onLoadMore={loadNextPage}
-                  classes="lg:hidden max-lg:my-4"
+                  classes="@5xl:hidden my-4 @5xl:my-0"
                 />
               </div>
             )}
@@ -123,7 +123,7 @@ export default withAuth(function Donations({ user }) {
       </div>
     </div>
   );
-});
+}
 
 const csvHeaders: { key: keyof DonationRecord; label: string }[] = [
   { key: "initAmount", label: "Amount" },

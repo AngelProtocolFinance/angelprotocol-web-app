@@ -9,7 +9,6 @@ import Layout from "./Layout";
 const Admin = lazy(() => import("pages/Admin"));
 const UserDashboard = lazy(() => import("pages/UserDashboard"));
 const Profile = lazy(() => import("pages/Profile"));
-const Donations = lazy(() => import("pages/Donations"));
 const DonationLoader = lazy(() => import("pages/DonationLoader"));
 const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
@@ -88,8 +87,6 @@ export default function App() {
             path={appRoutes.applications + "/:id"}
             element={<Application />}
           />
-
-          <Route path={appRoutes.donations} element={<Donations />} />
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
             path={appRoutes.donate_fiat_thanks}
