@@ -1,9 +1,9 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import withAuth from "contexts/Auth";
 import { isEmpty } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
+import type { AuthenticatedUser } from "types/auth";
 import type { DonationRecord } from "types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
@@ -11,7 +11,7 @@ import NoDonations from "./NoDonations";
 import StatusTabs from "./StatusTabs";
 import Table from "./Table";
 
-export default withAuth(function Donations({ user }) {
+export default function Donations({ user }: { user: AuthenticatedUser }) {
   const queryState = usePaginatedDonationRecords({
     email: user.email,
   });
@@ -36,7 +36,7 @@ export default withAuth(function Donations({ user }) {
     isLoading || isFetching || isLoadingNextPage || isError;
 
   return (
-    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 @5xl:gap-y-8 @5xl:gap-x-3 relative padded-container pt-8 @5xl:pt-20 pb-20">
+    <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 @5xl:gap-y-8 @5xl:gap-x-3 relative">
       <h1 className="text-3xl text-center @5xl:text-left col-span-full @5xl:col-span-1 mb-4 @5xl:mb-0">
         My Donations
       </h1>
@@ -123,7 +123,7 @@ export default withAuth(function Donations({ user }) {
       </div>
     </div>
   );
-});
+}
 
 const csvHeaders: { key: keyof DonationRecord; label: string }[] = [
   { key: "initAmount", label: "Amount" },
