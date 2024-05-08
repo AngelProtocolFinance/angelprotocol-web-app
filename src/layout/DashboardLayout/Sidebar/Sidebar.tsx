@@ -1,26 +1,27 @@
 import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
-import React from "react";
+import React, { type ReactNode } from "react";
 import { NavLink } from "react-router-dom";
-import Header from "./Header";
 import type { LinkGroup } from "./types";
 
 type Props = {
   className?: string;
   linkGroups: LinkGroup[];
+  sidebarHeader?: ReactNode;
   onChange?: () => void;
 };
 
 export default function Sidebar({
   className = "",
   linkGroups,
-  onChange = () => {},
+  onChange,
+  sidebarHeader,
 }: Props) {
   return (
     <div
       className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-gray-l4 ${className}`}
     >
-      <Header />
+      {sidebarHeader}
 
       <div className="grid grid-cols-[auto_1fr] py-3 gap-x-2">
         {linkGroups.map((group) => (

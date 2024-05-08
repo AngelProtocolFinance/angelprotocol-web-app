@@ -7,15 +7,16 @@ import { matchPath, useLocation } from "react-router-dom";
 import type { Link, LinkGroup } from "../types";
 import ToggleableSidebar from "./ToggleableSidebar";
 
-const ADMIN_ROUTE = `${appRoutes.admin}/:id/`;
-
 const DEFAULT_LINK: Link = {
   title: "Open Menu",
   icon: { type: "Menu", size: 24 },
   to: "",
 };
 
-export default function useSidebarOpener(linkGroups: LinkGroup[]) {
+export default function useSidebarOpener(
+  linkGroups: LinkGroup[],
+  rootRoute: string
+) {
   const currPath = useLocation().pathname;
 
   // Explanation for the `reduce()` part:
@@ -26,7 +27,7 @@ export default function useSidebarOpener(linkGroups: LinkGroup[]) {
   const activeLink = linkGroups
     .flatMap((g) => g.links)
     .reduce((prev, curr) => {
-      const match = matchPath(`${ADMIN_ROUTE}${curr.to}/*`, currPath);
+      const match = matchPath(`${rootRoute}${curr.to}/*`, currPath);
 
       if (!match || prev.to.length > curr.to.length) {
         return prev;

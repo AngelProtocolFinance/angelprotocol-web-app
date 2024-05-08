@@ -67,11 +67,12 @@ export const apes = createApi({
     }),
     fiatCurrencies: builder.query<
       { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
-      void
+      /** dbPrefCode */
+      string | undefined
     >({
-      query: () => ({
+      query: (dbPrefCode) => ({
         url: "fiat-currencies",
-        params: { prefCode: getCookie(bgCookies.prefCode) },
+        params: { prefCode: dbPrefCode || getCookie(bgCookies.prefCode) },
       }),
       transformResponse: (res: FiatCurrencyData) => {
         const toDetailed = (

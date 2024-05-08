@@ -1,7 +1,7 @@
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import { useEndowment } from "services/aws/useEndowment";
-import { useAdminContext } from "../../Context";
+import { useAdminContext } from "../Context";
 
 export default function Header() {
   const { id } = useAdminContext();

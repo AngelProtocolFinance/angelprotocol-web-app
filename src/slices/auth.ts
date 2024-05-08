@@ -1,9 +1,14 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  type PayloadAction,
+  createAsyncThunk,
+  createSlice,
+} from "@reduxjs/toolkit";
 import { type AuthUser, fetchAuthSession, signOut } from "aws-amplify/auth";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { logger } from "helpers";
 import { type User, userIsSignedIn } from "types/auth";
+import type { UserAttributes, UserUpdate } from "types/aws";
 
 type State = {
   user: User;
@@ -45,13 +50,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       );
       if (!res.ok) return null;
 
-      type UserAttr = {
-        familyName: string;
-        givenName: string;
-        prefCurrencyCode?: string;
-      };
-
-      const userAttributes: UserAttr = await res.json();
+      const userAttributes: UserAttributes = await res.json();
 
       return {
         token: idToken.toString(),
@@ -82,6 +81,20 @@ const auth = createSlice({
         state.user.isSigningOut = true;
       }
     },
+    updateUserAttributes: (state, { payload }: PayloadAction<UserUpdate>) => {
+      if (userIsSignedIn(state.user)) {
+        const { familyName, givenName, prefCurrencyCode } = payload;
+        if (givenName) {
+          state.user.firstName = givenName;
+        }
+        if (familyName) {
+          state.user.lastName = familyName;
+        }
+        if (prefCurrencyCode) {
+          state.user.prefCurrencyCode = prefCurrencyCode;
+        }
+      }
+    },
   },
   extraReducers(builder) {
     builder.addCase(loadSession.fulfilled, (state, action) => {
@@ -99,4 +112,4 @@ const auth = createSlice({
 });
 
 export default auth.reducer;
-export const { reset } = auth.actions;
+export const { reset, updateUserAttributes } = auth.actions;

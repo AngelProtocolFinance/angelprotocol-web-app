@@ -65,6 +65,7 @@ export const aws = createApi({
     "registration",
     "endow-admins",
     "donations",
+    "user",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,

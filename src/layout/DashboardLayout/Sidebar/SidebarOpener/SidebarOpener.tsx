@@ -2,10 +2,14 @@ import Icon from "components/Icon";
 import type { LinkGroup } from "../types";
 import useSidebarOpener from "./useSidebarOpener";
 
-type Props = { className?: string; linkGroups: LinkGroup[] };
+type Props = { className?: string; linkGroups: LinkGroup[]; rootRoute: string };
 
-export function SidebarOpener({ className = "", linkGroups }: Props) {
-  const { open, activeLink } = useSidebarOpener(linkGroups);
+export function SidebarOpener({
+  className = "",
+  linkGroups,
+  rootRoute,
+}: Props) {
+  const { open, activeLink } = useSidebarOpener(linkGroups, rootRoute);
 
   return (
     <button
