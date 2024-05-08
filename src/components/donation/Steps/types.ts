@@ -63,7 +63,11 @@ export function hasEmail(
   return details.method === "stripe" || details.method === "daf";
 }
 
-export type Init = { recipient: DonationRecipient; config: Config | null };
+export type Init = {
+  recipient: DonationRecipient;
+  config: Config | null;
+  intentId: string | undefined;
+};
 
 export type FormStep<T extends DonationDetails = DonationDetails> = Init & {
   step: "donate-form";

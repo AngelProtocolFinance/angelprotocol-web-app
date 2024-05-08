@@ -1,11 +1,12 @@
 import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
-import { Steps } from "components/donation";
+import {
+  type DonationRecipient,
+  type DonationState,
+  Steps,
+} from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { useEffect } from "react";
-import { type DonationRecipient, setRecipient } from "slices/donation";
-import { useSetter } from "store/accessors";
 import type { EndowmentProfile } from "types/aws";
 import parseConfig from "./parseConfig";
 
@@ -20,16 +21,11 @@ export default function Content({
   searchParams,
   classes = "",
 }: Props) {
-  const dispatch = useSetter();
-
-  useEffect(() => {
-    const donationRecipient: DonationRecipient = {
-      id: profile.id,
-      name: profile.name,
-      hide_bg_tip: !!profile.hide_bg_tip,
-    };
-    dispatch(setRecipient(donationRecipient));
-  }, [dispatch, profile]);
+  const recipient: DonationRecipient = {
+    id: profile.id,
+    name: profile.name,
+    hide_bg_tip: !!profile.hide_bg_tip,
+  };
 
   const config = parseConfig(searchParams);
 
@@ -37,6 +33,25 @@ export default function Content({
   if ("error" in config) {
     return <ErrorStatus classes="h-full">{config.error}</ErrorStatus>;
   }
+
+  const initState: DonationState = {
+    step: "splits",
+    intentId: undefined,
+    recipient: recipient,
+    config: {
+      isPreview: true,
+      isSplitDisabled: config.splitDisabled,
+      liquidSplitPct: config.liquidSplitPct,
+    },
+    liquidSplitPct: config.liquidSplitPct,
+    details: {
+      method: "stripe",
+      source: "bg-widget",
+      amount: "",
+      currency: { code: "usd", rate: 1, min: 1 },
+      frequency: "one-time",
+    },
+  };
 
   return (
     <div
@@ -62,7 +77,7 @@ export default function Content({
 
       <Steps
         className="mt-5 w-full md:w-3/4 border border-gray-l4"
-        donaterConfig={config}
+        {...initState}
       />
     </div>
   );

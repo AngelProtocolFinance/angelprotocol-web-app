@@ -1,6 +1,6 @@
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
-import { Steps, type DonationRecipient} from "components/donation";
+import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
@@ -46,7 +46,6 @@ function Content(props: Props) {
               name: props.name,
             }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
-          
           />
         </div>
         <FAQ classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]" />

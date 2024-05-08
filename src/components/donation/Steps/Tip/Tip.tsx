@@ -8,11 +8,11 @@ import { humanize } from "helpers";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import { type TipStep, } from "../types";
 import { useSetter } from "store/accessors";
+import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
-import { useDonationState } from "../Context";
+import type { TipStep } from "../types";
 
 const DEFAULT_PCT = "0.17";
 
@@ -41,7 +41,7 @@ export default function Tip({
   tip: persistedTip,
   format = "pct",
 }: TipStep) {
-  const [,setState] = useDonationState()
+  const [, setState] = useDonationState();
 
   const [symbol, amount, decimals = 2] = (() => {
     switch (details.method) {
@@ -85,13 +85,15 @@ export default function Tip({
 
   return (
     <form
-      onSubmit={handleSubmit((v) => setState({
-        tip: Number(v.tip.amount),
-        format: isPct ? "pct" : "amount",
-      }))}
+      onSubmit={handleSubmit((v) =>
+        setState({
+          tip: Number(v.tip.amount),
+          format: isPct ? "pct" : "amount",
+        })
+      )}
       className="grid content-start p-4 @md/steps:p-8"
     >
-      <BackBtn type="button" onClick={() => setState({step:"splits"})} />
+      <BackBtn type="button" onClick={() => setState({ step: "splits" })} />
       <h4 className="mt-4 text-lg">
         One-Time Donation to{" "}
         <Image src={dappLogo} className="inline-block h-8 px-1" />

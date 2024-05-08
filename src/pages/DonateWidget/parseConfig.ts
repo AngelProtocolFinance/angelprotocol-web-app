@@ -1,8 +1,5 @@
 import type { SchemaShape } from "schemas/types";
-import type {
-  DonaterConfigFromWidget,
-  WidgetURLSearchParams,
-} from "types/widget";
+import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 import { type ValidationError, number, object, string } from "yup";
 
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
@@ -13,7 +10,7 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
 
 export default function parseConfig(
   searchParams: URLSearchParams
-): DonaterConfigFromWidget | { error: string } {
+): Omit<WidgetConfig, "endowment"> | { error: string } {
   try {
     const parsedConfig = schema.validateSync(
       Object.fromEntries(searchParams.entries())

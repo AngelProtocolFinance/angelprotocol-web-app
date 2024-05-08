@@ -1,11 +1,11 @@
-import { type SummaryStep} from "../types";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
+import { useDonationState } from "../Context";
 import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
+import type { SummaryStep } from "../types";
 import DonorForm from "./DonorForm";
-import { useDonationState } from "../Context";
 
 export default function Summary({
   details,
@@ -15,7 +15,7 @@ export default function Summary({
   recipient,
   isPreview = false,
 }: SummaryStep & { isPreview?: boolean }) {
-  const [,setState] = useDonationState()
+  const [, setState] = useDonationState();
   const user = useGetter((state) => state.auth.user);
 
   const [amount, Amount] = (() => {
@@ -41,8 +41,7 @@ export default function Summary({
       amount={amount}
       splitLiq={liquidSplitPct}
       onBack={() =>
-
-        setState({step:recipient.hide_bg_tip ? "splits" : "tip"})
+        setState({ step: recipient.hide_bg_tip ? "splits" : "tip" })
       }
       tip={
         tip
@@ -64,7 +63,7 @@ export default function Summary({
               }
             : undefined)
         }
-        onSubmit={(donor) => !isPreview && setState({donor})}
+        onSubmit={(donor) => !isPreview && setState({ donor })}
         classes="mt-6"
       />
     </SummaryContainer>
