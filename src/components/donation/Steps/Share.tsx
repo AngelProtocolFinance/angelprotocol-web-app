@@ -1,23 +1,59 @@
-import ExtLink from "components/ExtLink";
-import Icon, { type IconType } from "components/Icon";
-import Modal from "components/Modal";
 import { BASE_URL } from "constants/env";
 import { useModalContext } from "contexts/ModalContext";
 import { useCallback, useState } from "react";
 import type { DonationRecipient } from "slices/donation";
+import ExtLink from "../../ExtLink";
+import Icon, { type IconType } from "../../Icon";
+import Modal from "../../Modal";
 
-export type SocialMedia = Extract<
+type SocialMedia = Extract<
   IconType,
   "FacebookCircle" | "Twitter" | "Telegram" | "Linkedin"
 >;
 
-type Props = {
+const socials: [SocialMedia, number][] = [
+  ["Twitter", 21],
+  ["Telegram", 21],
+  ["Linkedin", 21],
+  ["FacebookCircle", 22],
+];
+
+type ShareProps = {
+  recipient: DonationRecipient;
+  className?: string;
+};
+
+export default function ShareContainer(props: ShareProps) {
+  return (
+    <div className={`${props.className ?? ""} grid justify-items-center py-2`}>
+      <h2 className="w-full pt-2 text-center font-medium text-blue-d2 mb-2">
+        Spread the word!
+      </h2>
+      <p className="text-center text-navy-l1 text-sm max-w-sm">
+        Encourage your friends to join in and contribute, making a collective
+        impact through donations.
+      </p>
+      <div className="flex items-center gap-2 mt-1">
+        {socials.map(([type, size]) => (
+          <Share
+            key={type}
+            iconSize={size}
+            type={type}
+            recipient={props.recipient}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+type ShareBtnProps = {
   type: SocialMedia;
   iconSize: number;
   recipient: DonationRecipient;
 };
 
-export default function Share(props: Props) {
+function Share(props: ShareBtnProps) {
   const { type, iconSize } = props;
   const { showModal } = useModalContext();
 
@@ -33,7 +69,7 @@ export default function Share(props: Props) {
   );
 }
 
-function Prompt({ type, iconSize, recipient: { name } }: Props) {
+function Prompt({ type, iconSize, recipient: { name } }: ShareBtnProps) {
   const { closeModal } = useModalContext();
 
   //shareText will always hold some value
