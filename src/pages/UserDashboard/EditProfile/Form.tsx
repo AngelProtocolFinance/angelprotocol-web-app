@@ -100,9 +100,15 @@ export default function Form(props: Props) {
         label="First name"
         placeholder="First name"
         classes="mt-8"
+        required
       />
 
-      <Field<FV> name="lastName" label="Last name" placeholder="Last name" />
+      <Field<FV>
+        name="lastName"
+        label="Last name"
+        placeholder="Last name"
+        required
+      />
 
       <div className="flex gap-3">
         <button
