@@ -7,6 +7,8 @@ import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { useFiatCurrenciesQuery } from "services/apes";
+import { useGetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
 import type { Currency, DetailedCurrency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -17,7 +19,10 @@ import type { FormValues as FV, Props } from "./types";
 const USD_CODE = "usd";
 
 export default function Loader(props: Props) {
-  const query = useFiatCurrenciesQuery();
+  const user = useGetter((state) => state.auth.user);
+  const query = useFiatCurrenciesQuery(
+    userIsSignedIn(user) ? user.prefCurrencyCode : undefined
+  );
   return (
     <QueryLoader
       queryState={query}

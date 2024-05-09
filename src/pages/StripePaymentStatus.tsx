@@ -6,7 +6,7 @@ import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useCallback, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { useGetStripePaymentStatusQuery } from "services/apes";
+import { useStripePaymentStatusQuery } from "services/apes";
 import { useGetter } from "store/accessors";
 import type { GuestDonor } from "types/aws";
 import type { DonateFiatThanksState } from "./DonateFiatThanks";
@@ -15,7 +15,7 @@ export default function StripePaymentStatus() {
   const paymentIntentId =
     new URLSearchParams(window.location.search).get("payment_intent") ?? "";
 
-  const queryState = useGetStripePaymentStatusQuery(
+  const queryState = useStripePaymentStatusQuery(
     { paymentIntentId },
     { skip: !paymentIntentId }
   );

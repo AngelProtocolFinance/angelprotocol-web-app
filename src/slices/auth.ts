@@ -1,13 +1,14 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
-  type AuthUser,
-  fetchAuthSession,
-  fetchUserAttributes,
-  getCurrentUser,
-  signOut,
-} from "aws-amplify/auth";
+  type PayloadAction,
+  createAsyncThunk,
+  createSlice,
+} from "@reduxjs/toolkit";
+import { type AuthUser, fetchAuthSession, signOut } from "aws-amplify/auth";
+import { IS_TEST } from "constants/env";
+import { APIs } from "constants/urls";
 import { logger } from "helpers";
 import { type User, userIsSignedIn } from "types/auth";
+import type { UserAttributes, UserUpdate } from "types/aws";
 
 type State = {
   user: User;
@@ -21,37 +22,44 @@ export const logout = createAsyncThunk("auth/logout", signOut);
 
 export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
   "auth/loadSession",
-  async (user) => {
+  async (_) => {
     try {
       const session = await fetchAuthSession();
-      if (!session.tokens) return null;
+      const idToken = session.tokens?.idToken;
+      if (!idToken) return null;
 
-      const [attributes] = await Promise.all([
-        fetchUserAttributes(),
-        //user.id may be used in distinguishing my-donations page
-        user ? Promise.resolve(user) : getCurrentUser(),
-      ]);
+      type Payload = {
+        /** csv */
+        endows: string;
+        "cognito:groups": string[];
+        email: string;
+      };
 
-      const { endows, "cognito:groups": groups = [] } =
-        session.tokens.idToken?.payload || {};
+      const {
+        endows,
+        "cognito:groups": groups = [],
+        email: userEmail,
+      } = idToken.payload as Payload;
 
-      const token = session.tokens.idToken?.toString() ?? "";
+      //use user attributes from DB
+      const res = await fetch(
+        `${APIs.aws}/${IS_TEST ? "staging" : "v2"}/users/${userEmail}`,
+        {
+          headers: { authorization: idToken.toString() },
+        }
+      );
+      if (!res.ok) return null;
 
-      const endowments =
-        //either none or correctly formatted string
-        (endows as string | undefined)?.split(",").map(Number) || [];
+      const userAttributes: UserAttributes = await res.json();
 
       return {
-        token,
-        groups: groups as string[], //AWS generated so there's a level of safety
-        endowments: endowments,
-        /**
-         * email is guaranteed as it is the primary verifcation mechanism,
-         * and is always retrieved from federated signin
-         */
-        email: attributes.email!,
-        firstName: attributes.given_name,
-        lastName: attributes.family_name,
+        token: idToken.toString(),
+        groups,
+        endowments: endows.split(",").map(Number),
+        email: userEmail,
+        firstName: userAttributes.givenName,
+        lastName: userAttributes.familyName,
+        prefCurrencyCode: userAttributes.prefCurrencyCode,
         isSigningOut: false,
       };
     } catch (err) {
@@ -73,6 +81,20 @@ const auth = createSlice({
         state.user.isSigningOut = true;
       }
     },
+    updateUserAttributes: (state, { payload }: PayloadAction<UserUpdate>) => {
+      if (userIsSignedIn(state.user)) {
+        const { familyName, givenName, prefCurrencyCode } = payload;
+        if (givenName) {
+          state.user.firstName = givenName;
+        }
+        if (familyName) {
+          state.user.lastName = familyName;
+        }
+        if (prefCurrencyCode) {
+          state.user.prefCurrencyCode = prefCurrencyCode;
+        }
+      }
+    },
   },
   extraReducers(builder) {
     builder.addCase(loadSession.fulfilled, (state, action) => {
@@ -90,4 +112,4 @@ const auth = createSlice({
 });
 
 export default auth.reducer;
-export const { reset } = auth.actions;
+export const { reset, updateUserAttributes } = auth.actions;

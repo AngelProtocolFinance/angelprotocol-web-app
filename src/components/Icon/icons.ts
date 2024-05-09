@@ -48,6 +48,7 @@ import {
   FaFileCsv,
   FaGear,
   FaMoneyBills,
+  FaShapes,
 } from "react-icons/fa6";
 import { FiCreditCard, FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
@@ -171,6 +172,7 @@ export const icons = {
   Save: BiSave,
   Search: BiSearchAlt2,
   SecurityScan: AiFillSecurityScan,
+  Shapes: FaShapes,
   StickyNote: MdOutlineStickyNote2,
   Sun: BiSun,
   Sync: GoSync,

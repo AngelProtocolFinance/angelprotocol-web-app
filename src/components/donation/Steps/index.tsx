@@ -1,8 +1,8 @@
 import type { DonationIntent } from "types/aws";
+import type { ChainID } from "types/chain";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
 import type { Config, DonationRecipient, DonationState } from "./types";
-import { ChainID } from "types/chain";
 
 type Props = {
   config: Config | null;
@@ -59,13 +59,9 @@ function initialState({
       },
       liquidSplitPct: intent.splitLiq,
 
-
-     
       tip: intent.tipAmount,
       format: "pct",
       donor: intent.donor,
-    
-     
     };
   }
   return {
@@ -88,10 +84,5 @@ function initialState({
     tip: intent.tipAmount,
     format: "pct",
     donor: intent.donor,
-  
-  
-
   };
-
-
 }
