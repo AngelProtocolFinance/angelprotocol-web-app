@@ -1,6 +1,6 @@
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
-import { Steps } from "components/donation";
+import { DonationTermsAndConditions, Steps } from "components/donation";
 import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { useGetter } from "store/accessors";
@@ -32,6 +32,10 @@ export default function Preview({ classes = "" }) {
               splitDisabled: config.splitDisabled,
               liquidSplitPct: config.liquidSplitPct,
             }}
+          />
+          <DonationTermsAndConditions
+            endowName={endowName}
+            classes="border-t @3xl/preview:border-none border-gray-l3 px-4 pt-4"
           />
           <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
             By making a donation to {APP_NAME}, you agree to our{" "}
