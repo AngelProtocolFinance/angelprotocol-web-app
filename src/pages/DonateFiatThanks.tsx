@@ -2,6 +2,7 @@ import char from "assets/images/celebrating-character.png";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Signup from "components/Signup";
+import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
@@ -13,6 +14,7 @@ import type { GuestDonor } from "types/aws";
 export type DonateFiatThanksState = {
   guestDonor?: GuestDonor;
   recipientName?: string;
+  recipientId?: number;
 };
 
 export default function DonateFiatThanks({ widgetVersion = false }) {
@@ -45,6 +47,12 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
           ? ""
           : " You can safely navigate away using the button below."}
       </p>
+
+      <Share
+        recipient={{ id: 1, name: "Hello world" }}
+        className="mt-6 border border-gray-l3 rounded-xl"
+      />
+
       <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
         If you need a receipt for your donation, please fill out the KYC form
         for this transaction on your{" "}

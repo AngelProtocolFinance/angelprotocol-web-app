@@ -116,10 +116,11 @@ export const apes = createApi({
     endowBalance: builder.query<EndowmentBalances, number>({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
-    getStripePaymentStatus: builder.query<
+    stripePaymentStatus: builder.query<
       Pick<PaymentIntent, "status"> & {
         guestDonor?: GuestDonor;
         recipientName?: string;
+        recipientId?: number;
       },
       { paymentIntentId: string }
     >({
@@ -142,7 +143,7 @@ export const {
   useStripePaymentIntentQuery,
   usePaypalOrderMutation,
   useEndowBalanceQuery,
-  useGetStripePaymentStatusQuery,
+  useStripePaymentStatusQuery,
   useTokensQuery,
   util: {
     invalidateTags: invalidateApesTags,

@@ -1,6 +1,4 @@
 import char from "assets/images/celebrating-character.png";
-import Image from "components/Image";
-import Signup from "components/Signup";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link } from "react-router-dom";
@@ -8,7 +6,9 @@ import type { DonationRecipient } from "slices/donation";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import type { GuestDonor } from "types/aws";
-import Share, { type SocialMedia } from "./Share";
+import Image from "../../../../Image";
+import Signup from "../../../../Signup";
+import Share from "../../Share";
 
 type Props = {
   classes?: string;
@@ -38,18 +38,7 @@ export default function Success({ classes, guestDonor, recipient }: Props) {
         The donation process is complete, and we are grateful for your support.
       </p>
 
-      <h2 className="mt-2 w-full pt-2 text-center font-medium text-blue-d2">
-        Spread the word!
-      </h2>
-      <p className="text-center text-navy-l1 text-sm max-w-sm">
-        Encourage your friends to join in and contribute, making a collective
-        impact through donations.
-      </p>
-      <div className="flex items-center gap-2 mt-1 mb-2">
-        {socials.map(([type, size]) => (
-          <Share key={type} iconSize={size} type={type} recipient={recipient} />
-        ))}
-      </div>
+      <Share recipient={recipient} className="mt-2" />
 
       {!userIsSignedIn(user) && guestDonor && (
         <Signup
@@ -70,10 +59,3 @@ export default function Success({ classes, guestDonor, recipient }: Props) {
     </div>
   );
 }
-
-const socials: [SocialMedia, number][] = [
-  ["Twitter", 21],
-  ["Telegram", 21],
-  ["Linkedin", 21],
-  ["FacebookCircle", 22],
-];
