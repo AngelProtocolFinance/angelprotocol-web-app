@@ -33,7 +33,7 @@ export default function Preview({ classes = "" }) {
           />
           <DonationTermsAndConditions
             endowName={endowName}
-            classes="border-t @3xl/preview:border-none border-gray-l3 px-4 pt-4"
+            classes="border-t @3xl/preview:border-none border-gray-l3 px-4 py-4"
           />
           <footer className="mt-auto grid place-items-center h-20 w-full bg-blue">
             <DappLogo classes="w-40" color="white" />
