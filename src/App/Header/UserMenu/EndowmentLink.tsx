@@ -13,7 +13,7 @@ export default function EndowmentLink({ endowId }: Props) {
       queryState={query}
       messages={{
         loading: <Skeleton />,
-        error: <_Link id={endowId} classes="text-red" />,
+        error: <_Link id={endowId} />,
       }}
     >
       {(endow) => <_Link {...endow} id={endowId} />}
@@ -25,12 +25,11 @@ type LinkProps = {
   id: number;
   name?: string;
   logo?: string;
-  classes?: string;
 };
 const _Link = (props: LinkProps) => (
   <Link
     to={appRoutes.admin + `/${props.id}`}
-    className={`${props.classes} hover:text-blue-d1 text-sm flex items-center gap-2`}
+    className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
     <Image src={props.logo} className="object-cover h-[20px] w-[20px]" />
     <span>{props.name ?? `Endowment: ${props.id}`}</span>
