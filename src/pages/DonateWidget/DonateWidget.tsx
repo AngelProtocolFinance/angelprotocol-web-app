@@ -27,7 +27,7 @@ export default function DonateWidget() {
   }, []);
 
   return (
-    <div className="grid grid-rows-[1fr_auto] justify-items-center gap-10 @container">
+    <div className="grid grid-rows-[1fr_auto_auto] justify-items-center">
       <QueryLoader
         queryState={queryState}
         messages={{
@@ -42,7 +42,7 @@ export default function DonateWidget() {
       </QueryLoader>
       <DonationTermsAndConditions
         endowName={queryState.data?.name ?? "this nonprofit"}
-        classes="border-t @3xl:border-none border-gray-l3 px-4 pt-4"
+        classes="px-4 pb-4"
       />
       <footer className="grid place-items-center h-20 w-full bg-blue dark:bg-blue-d3">
         <DappLogo classes="w-40" color="white" />
