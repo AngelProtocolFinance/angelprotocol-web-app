@@ -82,20 +82,6 @@ const donation = createSlice({
           ? { step: "donate-form", recipient: state.recipient }
           : state;
 
-      //skip donor,splits for stocks,daf, as not being used
-      if (payload.method === "stocks" || payload.method === "daf") {
-        return {
-          ...(curr as SplitsStep),
-          step: "submit",
-          details: payload,
-          //these steps where skipped so provide placeholders
-          tip: 0,
-          format: "pct",
-          donor: { firstName: "", lastName: "", email: "" },
-          liquidSplitPct: 50,
-        };
-      }
-
       return {
         ...(curr as SplitsStep),
         step: "splits",
