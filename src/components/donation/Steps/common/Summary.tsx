@@ -51,28 +51,30 @@ export default function Summary({
             : "Total donation"}
         </dt>
         <Amount amount={props.amount} classes="text-navy-d4" />
-        <div className="flex items-center justify-between col-span-full">
-          <dt className="mr-auto text-sm">Sustainability Fund</dt>
-          <Amount classes="text-sm" amount={locked} />
-        </div>
-        <div className="flex items-center justify-between col-span-full">
-          <dt className="mr-auto text-sm">Direct Donation</dt>
-          <Amount classes="text-sm" amount={liq} />
-        </div>
-        {props.tip && (
+        {locked > 0 && (
+          <>
+            <div className="flex items-center justify-between col-span-full">
+              <dt className="mr-auto text-sm">Sustainability Fund</dt>
+              <Amount classes="text-sm" amount={locked} />
+            </div>
+            <div className="flex items-center justify-between col-span-full">
+              <dt className="mr-auto text-sm">Direct Donation</dt>
+              <Amount classes="text-sm" amount={liq} />
+            </div>
+          </>
+        )}
+        {props.tip && props.tip.value > 0 && (
           <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
             <dt className="mr-auto">Donation for Better Giving</dt>
             <Amount classes="text-sm" amount={props.tip.value} />
           </div>
         )}
-        {props.tip && (
-          <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
-            <dt className="mr-auto text-navy-d4">
-              Total {frequency === "subscription" ? "monthly " : ""}charge
-            </dt>
-            <Amount amount={props.amount + props.tip.value} />
-          </div>
-        )}
+        <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
+          <dt className="mr-auto text-navy-d4">
+            Total {frequency === "subscription" ? "monthly " : ""}charge
+          </dt>
+          <Amount amount={props.amount + (props.tip ? props.tip.value : 0)} />
+        </div>
       </dl>
 
       {props.children}
