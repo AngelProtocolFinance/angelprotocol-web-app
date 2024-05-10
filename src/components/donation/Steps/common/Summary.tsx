@@ -1,3 +1,6 @@
+// TODO: Swap with "pointing" character, once asset is available
+import character from "assets/images/waving-character.png";
+import Image from "components/Image/Image";
 import type { ReactNode } from "react";
 import type { FiatPaymentFrequency } from "types/aws";
 import Icon from "../../../Icon";
@@ -54,7 +57,10 @@ export default function Summary({
         {locked > 0 && (
           <>
             <div className="flex items-center justify-between col-span-full">
-              <dt className="mr-auto text-sm">Sustainability Fund</dt>
+              <div className="mr-auto flex">
+                <dt className="text-sm mt-2">Sustainability Fund</dt>
+                <Image src={character} className="inline-block px-1 h-8" />
+              </div>
               <Amount classes="text-sm" amount={locked} />
             </div>
             <div className="flex items-center justify-between col-span-full">
@@ -76,6 +82,15 @@ export default function Summary({
           <Amount amount={props.amount + (props.tip ? props.tip.value : 0)} />
         </div>
       </dl>
+      {locked > 0 && (
+        <div className="flex pt-3">
+          <Image src={character} className="inline-block mt-1 pl-1 pr-2 h-8" />
+          <div className="mr-auto text-sm text-navy-l3">
+            The Sustainability Fund invests your donation for long-term growth
+            to provide reliable, ongoing funding. Give today, give forever!
+          </div>
+        </div>
+      )}
 
       {props.children}
     </div>
