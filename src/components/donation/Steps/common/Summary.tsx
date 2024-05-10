@@ -54,22 +54,18 @@ export default function Summary({
             : "Total donation"}
         </dt>
         <Amount amount={props.amount} classes="text-navy-d4" />
-        {locked > 0 && (
-          <>
-            <div className="flex items-center justify-between col-span-full">
-              <div className="mr-auto flex">
-                <dt className="text-sm mt-2">Sustainability Fund</dt>
-                <Image src={character} className="inline-block px-1 h-8" />
-              </div>
-              <Amount classes="text-sm" amount={locked} />
-            </div>
-            <div className="flex items-center justify-between col-span-full">
-              <dt className="mr-auto text-sm">Direct Donation</dt>
-              <Amount classes="text-sm" amount={liq} />
-            </div>
-          </>
-        )}
-        {props.tip && props.tip.value > 0 && (
+        <div className="flex items-center justify-between col-span-full">
+          <div className="mr-auto flex">
+            <dt className="text-sm mt-2">Sustainability Fund</dt>
+            <Image src={character} className="inline-block px-1 h-8" />
+          </div>
+          <Amount classes="text-sm" amount={locked} />
+        </div>
+        <div className="flex items-center justify-between col-span-full">
+          <dt className="mr-auto text-sm">Direct Donation</dt>
+          <Amount classes="text-sm" amount={liq} />
+        </div>
+        {props.tip && (
           <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
             <dt className="mr-auto">Donation for Better Giving</dt>
             <Amount classes="text-sm" amount={props.tip.value} />
