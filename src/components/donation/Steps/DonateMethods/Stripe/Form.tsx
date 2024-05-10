@@ -36,16 +36,15 @@ export default function Loader(props: Props) {
   );
 }
 
-function Form({
-  details,
-  currencies,
-  defaultCurr,
-  config,
-}: Props & { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency }) {
+type FormProps = Props & {
+  currencies: DetailedCurrency[];
+  defaultCurr?: DetailedCurrency;
+};
+
+function Form({ currencies, defaultCurr, ...props }: FormProps) {
   const [, setState] = useDonationState();
 
   const initial: FV = {
-    source: config ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: defaultCurr || { code: USD_CODE, min: 1, rate: 1 },
     frequency: "subscription",
@@ -53,7 +52,7 @@ function Form({
 
   const currencyKey: keyof FV = "currency";
   const methods = useForm<FV>({
-    defaultValues: details || initial,
+    defaultValues: props.details || initial,
     resolver: yupResolver(
       schema<FV>({
         frequency: requiredString,
@@ -84,13 +83,17 @@ function Form({
   return (
     <FormContainer
       methods={methods}
-      onSubmit={handleSubmit((fv) =>
+      onSubmit={handleSubmit(({ frequency, ...fv }) => {
         setState({
-          ...fv,
-          frequency: fv.frequency as Exclude<FV["frequency"], "">, //validated by schema
-          method: "stripe",
-        })
-      )}
+          ...props,
+          step: "splits",
+          details: {
+            ...fv,
+            method: "stripe",
+            frequency: frequency as Exclude<FV["frequency"], "">,
+          },
+        });
+      })}
       className="grid gap-4"
     >
       <Frequency />

@@ -8,7 +8,6 @@ import { humanize } from "helpers";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import { useSetter } from "store/accessors";
 import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
@@ -36,11 +35,8 @@ const shape = schema<FV>({
   tip: tipSchema,
 });
 
-export default function Tip({
-  details,
-  tip: persistedTip,
-  format = "pct",
-}: TipStep) {
+export default function Tip(props: TipStep) {
+  const { details, tip: persistedTip, format = "pct" } = props;
   const [, setState] = useDonationState();
 
   const [symbol, amount, decimals = 2] = (() => {
@@ -87,13 +83,17 @@ export default function Tip({
     <form
       onSubmit={handleSubmit((v) =>
         setState({
+          ...props,
           tip: Number(v.tip.amount),
           format: isPct ? "pct" : "amount",
         })
       )}
       className="grid content-start p-4 @md/steps:p-8"
     >
-      <BackBtn type="button" onClick={() => setState({ step: "splits" })} />
+      <BackBtn
+        type="button"
+        onClick={() => setState({ ...props, step: "splits" })}
+      />
       <h4 className="mt-4 text-lg">
         One-Time Donation to{" "}
         <Image src={dappLogo} className="inline-block h-8 px-1" />

@@ -17,7 +17,7 @@ export default function Crypto(props: CryptoSubmitStep) {
   return (
     <Summary
       classes="grid content-start p-4 @md/steps:p-8"
-      onBack={() => setState({ step: "summary" })}
+      onBack={() => setState({ ...props, step: "summary" })}
       Amount={Amount}
       amount={+details.token.amount}
       splitLiq={props.liquidSplitPct}
@@ -25,7 +25,7 @@ export default function Crypto(props: CryptoSubmitStep) {
         tip
           ? {
               value: tip,
-              charityName: props.recipient.name,
+              charityName: props.init.recipient.name,
             }
           : undefined
       }

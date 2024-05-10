@@ -37,9 +37,15 @@ export default function Form(
       className="grid"
       onSubmit={methods.handleSubmit((fv) =>
         setState({
-          method: "stocks",
-          symbol: fv.symbol,
-          numShares: +fv.numShares,
+          ...props,
+          step: "submit",
+          details: { ...fv, method: "stocks", numShares: +fv.numShares },
+          //provide skipped steps
+          intentId: "",
+          liquidSplitPct: 50,
+          tip: 0,
+          format: "amount",
+          donor: { firstName: "", lastName: "", email: "" },
         })
       )}
     >

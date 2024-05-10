@@ -2,14 +2,11 @@ import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useDonationState } from "../Context";
+import type { CryptoResultStep } from "../types";
 
-export default function Err({
-  classes = "",
-  endowId,
-}: {
-  classes?: string;
-  endowId: number;
-}) {
+type Props = CryptoResultStep & { classes?: string };
+
+export default function Err({ classes = "", ...props }: Props) {
   const [, setState] = useDonationState();
   return (
     <div className={`grid justify-items-center ${classes}`}>
@@ -26,14 +23,14 @@ export default function Err({
       </p>
       <div className="grid sm:grid-cols-2 mt-12 gap-5 w-full sm:w-auto">
         <Link
-          to={appRoutes.marketplace + `/${endowId}`}
+          to={appRoutes.marketplace + `/${props.init.recipient.id}`}
           className="btn-outline btn-donate w-full px-5 text-center"
         >
           Back to the platform
         </Link>
         <button
           type="button"
-          onClick={() => setState({ step: "donate-form" })}
+          onClick={() => setState({ ...props, step: "donate-form" })}
           className="w-full btn-blue btn-donate px-5"
         >
           Change payment details

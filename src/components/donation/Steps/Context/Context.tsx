@@ -3,12 +3,11 @@ import {
   type PropsWithChildren,
   createContext,
   useContext,
-  useReducer,
+  useState,
 } from "react";
-import type { DonationState, Update } from "../types";
-import { reducer } from "./reducer";
+import type { DonationState } from "../types";
 
-type State = [DonationState, Dispatch<Update>];
+type State = [DonationState, Dispatch<React.SetStateAction<DonationState>>];
 
 const INIT = "__INIT";
 const context = createContext<State>(INIT as any);
@@ -16,9 +15,9 @@ export default function Context({
   children,
   ...initState
 }: PropsWithChildren<DonationState>) {
-  const slice = useReducer(reducer, initState);
+  const state = useState<DonationState>(initState);
 
-  return <context.Provider value={slice}>{children}</context.Provider>;
+  return <context.Provider value={state}>{children}</context.Provider>;
 }
 
 export function useDonationState(): State {

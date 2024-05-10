@@ -15,7 +15,9 @@ export default function CurrentStep() {
     return (
       <Splits
         {...state}
-        liquidSplitPct={state.liquidSplitPct ?? state.config?.liquidSplitPct}
+        liquidSplitPct={
+          state.liquidSplitPct ?? state.init.widgetConfig?.liquidSplitPct
+        }
       />
     );
   }

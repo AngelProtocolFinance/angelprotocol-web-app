@@ -12,7 +12,6 @@ import type { DonateValues } from "./types";
 type Props = CryptoFormStep;
 export default function Crypto(props: Props) {
   const initial: DonateValues = {
-    source: props.config ? "bg-widget" : "bg-marketplace",
     token: initToken,
     chainId: IS_TEST
       ? { label: polygonAmoy.name, value: polygonAmoy.id }
@@ -30,7 +29,7 @@ export default function Crypto(props: Props) {
   });
   return (
     <FormProvider {...methods}>
-      <Form source={props.config ? "bg-widget" : "bg-marketplace"} />
+      <Form {...props} />
     </FormProvider>
   );
 }

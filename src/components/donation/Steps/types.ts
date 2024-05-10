@@ -6,10 +6,9 @@ import type {
 } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
-import type { DonationSource } from "types/lists";
 import type { TokenWithAmount, TxPackage } from "types/tx";
 
-export type Config = {
+export type WidgetConfig = {
   splitDisabled: boolean;
   liquidSplitPct: number;
   isPreview?: boolean;
@@ -22,17 +21,13 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
 
 export type DonationRecipient = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 
-type BaseDonationDetais = {
-  source: DonationSource;
-};
-
-export type CryptoDonationDetails = BaseDonationDetais & {
+export type CryptoDonationDetails = {
   method: "crypto"; //use to preserve selected method
   token: TokenWithAmount;
   chainId: OptionType<ChainID>;
 };
 
-type FiatDonationDetails = BaseDonationDetais & {
+type FiatDonationDetails = {
   amount: string;
   currency: DetailedCurrency;
 };
@@ -65,12 +60,12 @@ export function hasEmail(
 
 export type Init = {
   recipient: DonationRecipient;
-  config: Config | null;
-  intentId: string | undefined;
+  widgetConfig: WidgetConfig | null;
 };
 
-export type FormStep<T extends DonationDetails = DonationDetails> = Init & {
+export type FormStep<T extends DonationDetails = DonationDetails> = {
   step: "donate-form";
+  init: Init;
   details?: T;
 };
 
@@ -88,20 +83,19 @@ export type SplitsStep = {
 export type TipFormat = "pct" | "amount";
 export type TipStep = {
   step: "tip";
-  tip: number;
+  tip?: number;
   format?: TipFormat;
 } & From<SplitsStep>;
 
 export type SummaryStep = {
   step: "summary";
   donor?: Donor;
+  intentId?: string;
 } & From<TipStep>;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-  /** Set only when loading an existing intent */
-  oldTransactionId?: string;
-} & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
+} & Omit<From<SummaryStep>, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
@@ -130,12 +124,3 @@ export type DonateArgs = {
 } & TxPackage;
 
 export type DonationStep = DonationState["step"];
-
-export type Update =
-  | DonationDetails
-  | { liquidSplitPct: number }
-  | { tip: number; format: TipFormat }
-  | { donor: Donor }
-  | { txStatus: TxStatus }
-  | "reset"
-  | { step: DonationStep };

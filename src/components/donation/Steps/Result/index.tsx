@@ -8,19 +8,18 @@ export default function Result({
   ...state
 }: CryptoResultStep & { classes?: string }) {
   if (state.status === "error") {
-    const { recipient } = state;
-    return <Err classes={classes} endowId={recipient.id} />;
+    return <Err classes={classes} {...state} />;
   }
 
   if ("loadingMsg" in state.status) {
     const { loadingMsg } = state.status;
     return <Loading message={loadingMsg} classes={classes} />;
   }
-  const { status, recipient } = state;
+  const { status, init } = state;
   return (
     <Success
       classes={classes}
-      recipient={recipient}
+      recipient={init.recipient}
       guestDonor={status.guestDonor}
     />
   );

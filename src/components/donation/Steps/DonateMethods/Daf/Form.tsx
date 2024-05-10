@@ -40,10 +40,15 @@ export default function Form(props: Props) {
       methods={methods}
       onSubmit={handleSubmit((fv) =>
         setState({
-          ...fv,
-          //not used in manual donation
-          source: "bg-marketplace",
-          method: "daf",
+          ...props,
+          step: "submit",
+          details: { ...fv, method: "daf" },
+          //provide skipped steps
+          intentId: "",
+          liquidSplitPct: 50,
+          tip: 0,
+          format: "amount",
+          donor: { firstName: "", lastName: "", email: "" },
         })
       )}
       className="grid gap-4"

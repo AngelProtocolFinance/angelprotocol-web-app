@@ -7,10 +7,9 @@ import type { SplitsStep } from "../types";
 import { LockedSplitSlider } from "./LockedSplitSlider";
 
 type Props = SplitsStep;
-export default function Split({
-  details,
-  liquidSplitPct: donationLiquidSplit = 50,
-}: Props) {
+export default function Split(props: Props) {
+  const { details, liquidSplitPct: donationLiquidSplit = 50 } = props;
+
   const [state, setState] = useDonationState();
   const [lockedSplitPct, setLockedSplitPct] = useState(
     100 - donationLiquidSplit
@@ -43,7 +42,7 @@ export default function Split({
     <div className="grid content-start p-4 @md/steps:p-8">
       <BackBtn
         type="button"
-        onClick={() => setState({ step: "donate-form" })}
+        onClick={() => setState({ ...props, step: "donate-form" })}
       />
       <h4 className="mt-4">Sustainability Fund Donation</h4>
       <p className="mb-6 text-navy-l1">
@@ -51,7 +50,7 @@ export default function Split({
       </p>
 
       <LockedSplitSlider
-        disabled={state.config?.splitDisabled}
+        disabled={state.init.widgetConfig?.splitDisabled}
         value={lockedSplitPct}
         onChange={setLockedSplitPct}
       />
@@ -86,7 +85,24 @@ export default function Split({
 
       <ContinueBtn
         type="button"
-        onClick={() => setState({ liquidSplitPct: liqSplitPct })}
+        onClick={() => {
+          if (props.init.recipient.hide_bg_tip) {
+            return setState({
+              ...props,
+              step: "tip",
+              liquidSplitPct: liqSplitPct,
+            });
+          }
+
+          setState({
+            ...props,
+            step: "summary",
+            liquidSplitPct: liqSplitPct,
+            //provide skipped step
+            tip: 0,
+            format: "amount",
+          });
+        }}
         className="mt-6"
       />
     </div>

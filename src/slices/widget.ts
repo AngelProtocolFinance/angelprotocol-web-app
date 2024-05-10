@@ -1,18 +1,13 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { WidgetConfig } from "types/widget";
 
-type State = WidgetConfig & { initial: WidgetConfig };
+type State = WidgetConfig;
 
-const initial: WidgetConfig = {
+const initialState: State = {
   endowment: { id: 0, name: "", hide_bg_tip: false },
   isDescriptionTextShown: true,
   splitDisabled: false,
   liquidSplitPct: 50,
-};
-
-const initialState: State = {
-  initial,
-  ...initial,
 };
 
 const widget = createSlice({
@@ -23,11 +18,8 @@ const widget = createSlice({
       initial: payload,
       ...payload,
     }),
-    update: (state, { payload }: PayloadAction<WidgetConfig>) => ({
-      initial: state.initial,
-      ...payload,
-    }),
-    reset: (state) => ({ initial: state.initial, ...state.initial }),
+    update: (_, { payload }: PayloadAction<WidgetConfig>) => payload,
+    reset: (state) => ({ ...initialState, endowment: state.endowment }),
   },
 });
 

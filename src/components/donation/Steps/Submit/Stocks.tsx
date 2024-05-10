@@ -5,13 +5,13 @@ import BackBtn from "../common/BackBtn";
 import type { StockCheckoutStep } from "../types";
 
 export default function Stocks(props: StockCheckoutStep) {
-  const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;
+  const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
   const [, setState] = useDonationState();
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
       <BackBtn
         type="button"
-        onClick={() => setState({ step: "donate-form" })}
+        onClick={() => setState({ ...props, step: "donate-form" })}
       />
       <p className="mt-4 text-center text-navy-l1 uppercase">
         Donation pending
@@ -30,7 +30,7 @@ export default function Stocks(props: StockCheckoutStep) {
         <p>Account number: Z40390069</p>
         <p>Account name: Altruistic Partners Empowering Society, Inc</p>
         <p>
-          Reference: [Internal Ref#, if needed] {props.recipient.name} (
+          Reference: [Internal Ref#, if needed] {props.init.recipient.name} (
           {profileUrl})
         </p>
       </div>
@@ -55,7 +55,7 @@ export default function Stocks(props: StockCheckoutStep) {
       </p>
       <a
         href={emailLink(
-          props.recipient.name,
+          props.init.recipient.name,
           profileUrl,
           props.details.numShares,
           props.details.symbol

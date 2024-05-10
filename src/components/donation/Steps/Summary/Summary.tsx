@@ -7,14 +7,8 @@ import { token } from "../common/Token";
 import type { SummaryStep } from "../types";
 import DonorForm from "./DonorForm";
 
-export default function Summary({
-  details,
-  liquidSplitPct,
-  donor,
-  tip,
-  recipient,
-  isPreview = false,
-}: SummaryStep & { isPreview?: boolean }) {
+export default function Summary(props: SummaryStep) {
+  const { details, liquidSplitPct, donor, tip, init } = props;
   const [, setState] = useDonationState();
   const user = useGetter((state) => state.auth.user);
 
@@ -41,13 +35,15 @@ export default function Summary({
       amount={amount}
       splitLiq={liquidSplitPct}
       onBack={() =>
-        setState({ step: recipient.hide_bg_tip ? "splits" : "tip" })
+        init.recipient.hide_bg_tip
+          ? setState({ ...props, step: "splits" })
+          : setState({ ...props, step: "tip" })
       }
       tip={
         tip
           ? {
               value: tip,
-              charityName: recipient.name,
+              charityName: init.recipient.name,
             }
           : undefined
       }
@@ -63,7 +59,15 @@ export default function Summary({
               }
             : undefined)
         }
-        onSubmit={(donor) => !isPreview && setState({ donor })}
+        onSubmit={(donor) =>
+          !init.widgetConfig?.isPreview &&
+          setState({
+            ...props,
+            step: "submit",
+            donor,
+            intentId: "todo create intent id here",
+          })
+        }
         classes="mt-6"
       />
     </SummaryContainer>

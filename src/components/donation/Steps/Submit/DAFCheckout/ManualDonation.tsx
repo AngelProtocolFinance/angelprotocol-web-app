@@ -3,7 +3,7 @@ import { appRoutes } from "constants/routes";
 import type { DafCheckoutStep } from "../../types";
 
 export default function ManualDonation(props: DafCheckoutStep) {
-  const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;
+  const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
 
   return (
     <>
@@ -26,7 +26,7 @@ export default function ManualDonation(props: DafCheckoutStep) {
         <p>Contact Info: Chauncey St. John, Board Member</p>
         <p>Email: hi@better.giving</p>
         <p>
-          Reference: [INTERNAL REF#, if needed] {props.recipient.name} (
+          Reference: [INTERNAL REF#, if needed] {props.init.recipient.name} (
           {profileUrl})
         </p>
       </div>
@@ -50,7 +50,11 @@ export default function ManualDonation(props: DafCheckoutStep) {
         information.
       </p>
       <a
-        href={emailLink(props.recipient.name, profileUrl, props.details.amount)}
+        href={emailLink(
+          props.init.recipient.name,
+          profileUrl,
+          props.details.amount
+        )}
         className="mt-1.5 btn btn-blue rounded-full px-4 py-2 justify-self-end text-xs font-normal"
       >
         Generate email

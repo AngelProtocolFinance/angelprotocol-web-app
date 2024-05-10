@@ -48,7 +48,7 @@ function Content(props: Props) {
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps
             recipient={props.recipient}
-            config={null}
+            widgetConfig={null}
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
         </div>

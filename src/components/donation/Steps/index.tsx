@@ -2,10 +2,15 @@ import type { DonationIntent } from "types/aws";
 import type { ChainID } from "types/chain";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
-import type { Config, DonationRecipient, DonationState } from "./types";
+import type {
+  DonationRecipient,
+  DonationState,
+  Init,
+  WidgetConfig,
+} from "./types";
 
 type Props = {
-  config: Config | null;
+  widgetConfig: WidgetConfig | null;
   recipient: DonationRecipient;
   intent?: DonationIntent;
   className?: string;
@@ -27,48 +32,38 @@ export function Steps(props: Props) {
 
 function initialState({
   intent,
-  config,
+  widgetConfig,
   recipient,
 }: Omit<Props, "className">): DonationState {
-  if (!intent) {
-    return {
-      step: "donate-form",
-      config,
-      recipient,
-      intentId: undefined,
-    };
-  }
+  const init: Init = { widgetConfig, recipient };
+
+  if (!intent) return { step: "donate-form", init };
 
   if ("walletAddress" in intent) {
     return {
+      init,
       step: "submit",
-      recipient,
-      intentId: intent.transactionId,
-      config: null,
       details: {
         method: "crypto",
         chainId: {
           label: intent.chainName,
           value: intent.chainId as ChainID,
         },
-        source: intent.source,
         token: {
           amount: `${intent.amount}`,
           ...intent.token,
         },
       },
       liquidSplitPct: intent.splitLiq,
-
       tip: intent.tipAmount,
       format: "pct",
       donor: intent.donor,
+      intentId: intent.transactionId,
     };
   }
   return {
+    init,
     step: "submit",
-    recipient: recipient,
-    intentId: intent.transactionId,
-    config: null,
     details: {
       method: "stripe",
       amount: `${intent.amount}`,
@@ -78,11 +73,11 @@ function initialState({
         rate: intent.currency.rate,
       },
       frequency: intent.frequency,
-      source: intent.source,
     },
     liquidSplitPct: intent.splitLiq,
     tip: intent.tipAmount,
     format: "pct",
     donor: intent.donor,
+    intentId: intent.transactionId,
   };
 }

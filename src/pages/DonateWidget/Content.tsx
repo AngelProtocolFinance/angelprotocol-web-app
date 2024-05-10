@@ -1,11 +1,7 @@
 import ExtLink from "components/ExtLink";
 import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
-import {
-  type DonationRecipient,
-  type DonationState,
-  Steps,
-} from "components/donation";
+import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
@@ -36,13 +32,6 @@ export default function Content({
     return <ErrorStatus classes="h-full">{config.error}</ErrorStatus>;
   }
 
-  const initState: DonationState = {
-    step: "donate-form",
-    intentId: undefined,
-    recipient: recipient,
-    config,
-  };
-
   return (
     <div
       className={`${classes} max-w-3xl w-full h-full p-6 grid content-start justify-items-center`}
@@ -67,7 +56,8 @@ export default function Content({
 
       <Steps
         className="mt-5 w-full md:w-3/4 border border-gray-l4"
-        {...initState}
+        recipient={recipient}
+        widgetConfig={config}
       />
       <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
         By making a donation to {APP_NAME}, you agree to our{" "}

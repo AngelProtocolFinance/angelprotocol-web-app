@@ -3,19 +3,15 @@ import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { useFormContext } from "react-hook-form";
 import type { ChainID } from "types/chain";
-import type { DonationSource } from "types/lists";
 import { Selector } from "../../../../Selector";
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import type { CryptoFormStep } from "../../types";
 import { initToken } from "./constants";
 import type { DonateValues } from "./types";
 
-type Props = {
-  source: DonationSource;
-};
-
-export default function Form({ source }: Props) {
+export default function Form(props: CryptoFormStep) {
   const [, setState] = useDonationState();
 
   const { watch, reset, setValue, handleSubmit } =
@@ -23,9 +19,9 @@ export default function Form({ source }: Props) {
 
   function submit(data: DonateValues) {
     setState({
-      ...data,
-      method: "crypto",
-      source,
+      ...props,
+      step: "splits",
+      details: { ...data, method: "crypto" },
     });
     reset();
   }

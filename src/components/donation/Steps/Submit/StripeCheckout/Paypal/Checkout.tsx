@@ -14,14 +14,7 @@ import type { StripeCheckoutStep } from "../../../types";
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout(props: StripeCheckoutStep) {
-  const {
-    details,
-    recipient,
-    liquidSplitPct,
-    tip = 0,
-    donor,
-    oldTransactionId,
-  } = props;
+  const { details, liquidSplitPct, tip = 0, donor, init } = props;
 
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
@@ -72,26 +65,25 @@ export default function Checkout(props: StripeCheckoutStep) {
 
         const state: DonateFiatThanksState = {
           guestDonor: order.guestDonor,
-          recipientName: recipient.name,
+          recipientName: init.recipient.name,
         };
 
-        const route =
-          details.source === "bg-widget"
-            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
-            : appRoutes.donate_fiat_thanks;
+        const route = props.init.widgetConfig
+          ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
+          : appRoutes.donate_fiat_thanks;
 
         navigate(route, { state });
       }}
       createOrder={async () =>
         await createOrder({
-          transactionId: oldTransactionId,
+          transactionId: "", //TODO: shoud not be required
           amount: +details.amount,
           tipAmount: tip,
           currency: details.currency.code,
-          endowmentId: recipient.id,
+          endowmentId: init.recipient.id,
           splitLiq: liquidSplitPct,
           donor,
-          source: details.source,
+          source: init.widgetConfig ? "bg-widget" : "bg-marketplace",
         }).unwrap()
       }
     />
