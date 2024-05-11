@@ -52,7 +52,6 @@ export type DonationDetails =
   | StocksDonationDetails
   | DafDonationDetails;
 
-
 export type Init = {
   recipient: DonationRecipient;
   widgetConfig: WidgetConfig | null;
@@ -68,7 +67,6 @@ export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type StockFormStep = FormStep<StocksDonationDetails>;
 export type DafFormStep = FormStep<DafDonationDetails>;
-
 
 export type SplitsStep = {
   step: "splits";

@@ -1,7 +1,6 @@
 import { logger } from "helpers";
 import { sendTx } from "helpers/tx";
 import {
-  type Dispatch,
   type PropsWithChildren,
   createContext,
   useContext,
@@ -21,9 +20,14 @@ type CryptoSubmitter = (
   data: CryptoSubmitStep
 ) => Promise<void>;
 
+type StateSetter = (
+  newState: DonationState,
+  replace?: boolean | ((prev: DonationState) => boolean)
+) => void;
+
 type State = {
   state: DonationState;
-  setState: Dispatch<React.SetStateAction<DonationState>>;
+  setState: StateSetter;
   submitCrypto: CryptoSubmitter;
 };
 
@@ -35,14 +39,21 @@ export default function Context({
 }: PropsWithChildren<DonationState>) {
   const dispatch = useSetter();
   const [confirmIntent] = useConfirmCryptoIntentMutation();
-  const [state, setState] = useState<DonationState>(initState);
+  const [state, set] = useState<DonationState>(initState);
+
+  const setState: StateSetter = (newState: DonationState, replace) =>
+    set((prev) => {
+      const isReplace = typeof replace === "function" ? replace(prev) : replace;
+      if (isReplace) return newState;
+      //merge instead
+      return { ...prev, ...newState };
+    });
 
   const submitCrypto: CryptoSubmitter = async (
     txPackage: TxPackage,
     data: CryptoSubmitStep
   ) => {
-    const updateTx = (status: TxStatus) =>
-      setState({ ...data, step: "tx", status });
+    const updateTx = (status: TxStatus) => set({ ...data, step: "tx", status });
 
     try {
       const result = await sendTx(txPackage);

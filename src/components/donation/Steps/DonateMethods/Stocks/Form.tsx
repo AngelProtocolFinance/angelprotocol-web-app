@@ -6,6 +6,7 @@ import { object } from "yup";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import type { StockFormStep } from "../../types";
+import { isNewMethod } from "../helpers";
 
 export default function Form(
   props: Omit<StockFormStep, "intentId" | "config">
@@ -36,15 +37,18 @@ export default function Form(
       methods={methods}
       className="grid"
       onSubmit={methods.handleSubmit((fv) =>
-        setState({
-          ...props,
-          step: "submit",
-          details: { ...fv, method: "stocks", numShares: +fv.numShares },
-          //provide skipped steps
-          intentId: "",
-          liquidSplitPct: 50,
-          donor: { firstName: "", lastName: "", email: "" },
-        })
+        setState(
+          {
+            ...props,
+            step: "submit",
+            details: { ...fv, method: "stocks", numShares: +fv.numShares },
+            //provide skipped steps
+            intentId: "",
+            liquidSplitPct: 50,
+            donor: { firstName: "", lastName: "", email: "" },
+          },
+          (prev) => isNewMethod(prev, "stocks")
+        )
       )}
     >
       <Field<FV>

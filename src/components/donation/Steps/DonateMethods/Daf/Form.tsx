@@ -6,6 +6,7 @@ import { schema, stringNumber } from "schemas/shape";
 import type { DetailedCurrency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import { isNewMethod } from "../helpers";
 import type { FormValues as FV, Props } from "./types";
 
 /**
@@ -39,15 +40,18 @@ export default function Form(props: Props) {
     <FormContainer
       methods={methods}
       onSubmit={handleSubmit((fv) =>
-        setState({
-          ...props,
-          step: "submit",
-          details: { ...fv, method: "daf" },
-          //provide skipped steps
-          intentId: "",
-          liquidSplitPct: 50,
-          donor: { firstName: "", lastName: "", email: "" },
-        })
+        setState(
+          {
+            ...props,
+            step: "submit",
+            details: { ...fv, method: "daf" },
+            //provide skipped steps
+            intentId: "",
+            liquidSplitPct: 50,
+            donor: { firstName: "", lastName: "", email: "" },
+          },
+          (prev) => isNewMethod(prev, "daf")
+        )
       )}
       className="grid gap-4"
     >

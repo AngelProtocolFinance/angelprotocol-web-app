@@ -12,6 +12,7 @@ import { userIsSignedIn } from "types/auth";
 import type { Currency, DetailedCurrency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import { isNewMethod } from "../helpers";
 import Frequency from "./Frequency";
 import Incrementers from "./Incrementers";
 import type { FormValues as FV, Props } from "./types";
@@ -83,17 +84,20 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
   return (
     <FormContainer
       methods={methods}
-      onSubmit={handleSubmit(({ frequency, ...fv }) => {
-        setState({
-          ...props,
-          step: "splits",
-          details: {
-            ...fv,
-            method: "stripe",
-            frequency: frequency as Exclude<FV["frequency"], "">,
+      onSubmit={handleSubmit(({ frequency, ...fv }) =>
+        setState(
+          {
+            ...props,
+            step: "splits",
+            details: {
+              ...fv,
+              method: "stripe",
+              frequency: frequency as Exclude<FV["frequency"], "">,
+            },
           },
-        });
-      })}
+          (prev) => isNewMethod(prev, "stripe")
+        )
+      )}
       className="grid gap-4"
     >
       <Frequency />
