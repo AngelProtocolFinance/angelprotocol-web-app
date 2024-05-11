@@ -82,14 +82,12 @@ export default function Summary(props: SummaryStep) {
 
   async function createIntent(donor: Donor) {
     if (init.widgetConfig?.isPreview) return;
-
-    !init.widgetConfig?.isPreview &&
-      setState({
-        ...props,
-        step: "submit",
-        donor,
-        intentId: intentId ? await intentId(donor) : "not needed",
-      });
+    setState({
+      ...props,
+      step: "submit",
+      donor,
+      intentId: intentId ? await intentId(donor) : "not needed",
+    });
   }
 
   return (
