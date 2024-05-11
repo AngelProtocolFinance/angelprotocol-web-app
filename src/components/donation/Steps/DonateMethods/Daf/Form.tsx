@@ -15,7 +15,7 @@ import type { FormValues as FV, Props } from "./types";
 const USD_CURRENCY: DetailedCurrency = { code: "usd", rate: 1, min: 1 };
 
 export default function Form(props: Props) {
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
 
   const initial: FV = {
     amount: "",

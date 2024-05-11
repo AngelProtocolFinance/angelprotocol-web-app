@@ -2,14 +2,13 @@ import Icon from "components/Icon/Icon";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { humanize } from "helpers";
 import { useEffect, useState } from "react";
-import { sendDonation } from "slices/donation/sendDonation";
-import { useSetter } from "store/accessors";
 import type { ConnectedWallet } from "types/wallet";
 import ContinueBtn from "../../../common/ContinueBtn";
 import type { CryptoSubmitStep } from "../../../types";
 import { type EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";
+import { useDonationState } from "components/donation/Steps/Context";
 
 type Props = {
   classes?: string;
@@ -17,7 +16,7 @@ type Props = {
   wallet?: ConnectedWallet;
 };
 export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
-  const dispatch = useSetter();
+  const { submitCrypto } = useDonationState();
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
   const { details, tip = 0 } = donation;
@@ -54,12 +53,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
         type="button"
         onClick={
           wallet && estimate && isSuccess(estimate)
-            ? () => {
-                const action = sendDonation({
-                  ...txPackage(estimate, wallet),
-                });
-                dispatch(action);
-              }
+            ? () => submitCrypto(txPackage(estimate, wallet), donation)
             : undefined
         }
         disabled={!wallet || !estimate || !isSuccess(estimate)}

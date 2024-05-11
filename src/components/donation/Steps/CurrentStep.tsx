@@ -7,7 +7,7 @@ import Summary from "./Summary";
 import Tip from "./Tip";
 
 export default function CurrentStep() {
-  const [state] = useDonationState();
+  const { state } = useDonationState();
 
   if (state.step === "donate-form") return <DonateMethods {...state} />;
 

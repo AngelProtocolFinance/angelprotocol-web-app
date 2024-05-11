@@ -42,7 +42,7 @@ type FormProps = Props & {
 };
 
 function Form({ currencies, defaultCurr, ...props }: FormProps) {
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
 
   const initial: FV = {
     amount: "",

@@ -7,7 +7,7 @@ import type { CryptoResultStep } from "../types";
 type Props = CryptoResultStep & { classes?: string };
 
 export default function Err({ classes = "", ...props }: Props) {
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
   return (
     <div className={`grid justify-items-center ${classes}`}>
       <div className="bg-red rounded-full aspect-square grid place-items-center mb-8">

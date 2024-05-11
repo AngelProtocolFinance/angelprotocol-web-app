@@ -10,7 +10,7 @@ import type { StockFormStep } from "../../types";
 export default function Form(
   props: Omit<StockFormStep, "intentId" | "config">
 ) {
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
   const methods = useForm({
     defaultValues: props.details
       ? {

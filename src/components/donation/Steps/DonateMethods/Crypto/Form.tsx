@@ -12,7 +12,7 @@ import { initToken } from "./constants";
 import type { DonateValues } from "./types";
 
 export default function Form(props: CryptoFormStep) {
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
 
   const { watch, reset, setValue, handleSubmit } =
     useFormContext<DonateValues>();

@@ -9,7 +9,7 @@ import DonorForm from "./DonorForm";
 
 export default function Summary(props: SummaryStep) {
   const { details, liquidSplitPct, donor, tip, init } = props;
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
   const user = useGetter((state) => state.auth.user);
 
   const [amount, Amount] = (() => {

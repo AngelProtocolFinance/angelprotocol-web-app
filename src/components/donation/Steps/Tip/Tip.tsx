@@ -37,7 +37,7 @@ const shape = schema<FV>({
 
 export default function Tip(props: TipStep) {
   const { details, tip: persistedTip, format = "pct" } = props;
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
 
   const [symbol, amount, decimals = 2] = (() => {
     switch (details.method) {

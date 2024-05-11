@@ -10,7 +10,7 @@ import type { CryptoSubmitStep } from "../../types";
 import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
   const { details, tip } = props;
   const Amount = token(details.token.coingecko_denom);
 

@@ -6,7 +6,7 @@ import type { StockCheckoutStep } from "../types";
 
 export default function Stocks(props: StockCheckoutStep) {
   const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
       <BackBtn

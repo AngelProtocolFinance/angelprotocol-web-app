@@ -5,9 +5,27 @@ import {
   useContext,
   useState,
 } from "react";
-import type { DonationState } from "../types";
+import type { CryptoSubmitStep, DonationState, TxStatus } from "../types";
+import { TxPackage, isTxResultError } from "types/tx";
+import { sendTx } from "helpers/tx";
+import { useSetter } from "store/accessors";
+import {
+  invalidateApesTags,
+  useConfirmCryptoIntentMutation,
+} from "services/apes";
+import { invalidateAwsTags } from "services/aws/aws";
+import { logger } from "helpers";
 
-type State = [DonationState, Dispatch<React.SetStateAction<DonationState>>];
+type CryptoSubmitter = (
+  txPackage: TxPackage,
+  data: CryptoSubmitStep
+) => Promise<void>;
+
+type State = {
+  state: DonationState;
+  setState: Dispatch<React.SetStateAction<DonationState>>;
+  submitCrypto: CryptoSubmitter;
+};
 
 const INIT = "__INIT";
 const context = createContext<State>(INIT as any);
@@ -15,9 +33,49 @@ export default function Context({
   children,
   ...initState
 }: PropsWithChildren<DonationState>) {
-  const state = useState<DonationState>(initState);
+  const dispatch = useSetter();
+  const [confirmIntent] = useConfirmCryptoIntentMutation();
+  const [state, setState] = useState<DonationState>(initState);
 
-  return <context.Provider value={state}>{children}</context.Provider>;
+  const submitCrypto: CryptoSubmitter = async (
+    txPackage: TxPackage,
+    data: CryptoSubmitStep
+  ) => {
+    const updateTx = (status: TxStatus) =>
+      setState({ ...data, step: "tx", status });
+
+    try {
+      const result = await sendTx(txPackage);
+
+      if (isTxResultError(result)) {
+        return updateTx("error");
+      }
+      const { hash } = result;
+
+      updateTx({
+        loadingMsg: "Saving donation details",
+      });
+
+      const { guestDonor } = await confirmIntent({
+        txHash: hash,
+        txId: data.intentId,
+      }).unwrap();
+
+      updateTx({ hash, guestDonor });
+      //invalidate cache entries
+      dispatch(invalidateApesTags(["tokens"]));
+      dispatch(invalidateAwsTags(["donations"]));
+    } catch (err) {
+      logger.error(err);
+      updateTx("error");
+    }
+  };
+
+  return (
+    <context.Provider value={{ state, setState, submitCrypto }}>
+      {children}
+    </context.Provider>
+  );
 }
 
 export function useDonationState(): State {

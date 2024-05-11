@@ -14,7 +14,7 @@ const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
   const { details, init, liquidSplitPct } = props;
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
 
   return (
     <Summary

@@ -4,7 +4,7 @@ import type { DafCheckoutStep } from "../../types";
 import ManualDonation from "./ManualDonation";
 
 export default function DAFCheckout(props: DafCheckoutStep) {
-  const [, setState] = useDonationState();
+  const { setState } = useDonationState();
 
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
