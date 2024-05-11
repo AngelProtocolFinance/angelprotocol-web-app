@@ -11,7 +11,7 @@ import { schema, stringNumber } from "schemas/shape";
 import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
-import type { TipStep } from "../types";
+import type { TipFormat, TipStep } from "../types";
 
 const DEFAULT_PCT = "0.17";
 
@@ -66,7 +66,7 @@ export default function Tip(props: TipStep) {
     defaultValues: {
       tip: persistedTip
         ? {
-            amount: persistedTip.toString(),
+            amount: persistedTip.value.toString(),
             pct: `${persistedTip.value / amount}`,
           }
         : initial,
@@ -76,18 +76,19 @@ export default function Tip(props: TipStep) {
     field: { value: tip, onChange: onTipChange },
   } = useController<FV, "tip">({ name: "tip", control });
 
-  //if user selects custom, can't go back to %
-  const [isPct, setIsPct] = useState(persistedTip?.format === "pct");
+  const [format, setFormat] = useState<TipFormat>(
+    persistedTip?.format ?? "pct"
+  );
 
   return (
     <form
-      onSubmit={handleSubmit((v) =>
+      onSubmit={handleSubmit((fv) =>
         setState({
           ...props,
           step: "summary",
           tip: {
-            value: Number(v.tip.amount),
-            format: isPct ? "pct" : "amount",
+            value: Number(fv.tip.amount),
+            format,
           },
         })
       )}
@@ -107,7 +108,7 @@ export default function Tip(props: TipStep) {
         support. Please consider donating to help us keep it free for all.
       </p>
 
-      {isPct && (
+      {format === "pct" && (
         <Slider.Root
           min={0}
           max={1}
@@ -140,17 +141,17 @@ export default function Tip(props: TipStep) {
           </Slider.Thumb>
         </Slider.Root>
       )}
-      {isPct && (
+      {format === "pct" && (
         <button
           type="button"
-          onClick={() => setIsPct(false)}
+          onClick={() => setFormat("amount")}
           className="justify-self-center text-sm mt-6 underline hover:text-blue"
         >
           Enter custom tip
         </button>
       )}
 
-      {!isPct && (
+      {format === "amount" && (
         <>
           <label className="mb-2 mt-6 font-heading font-semibold">
             Your One-Time Donation Amount

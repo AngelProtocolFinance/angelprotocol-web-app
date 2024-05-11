@@ -84,22 +84,13 @@ export default function Split(props: Props) {
 
       <ContinueBtn
         type="button"
-        onClick={() => {
-          if (props.init.recipient.hide_bg_tip) {
-            return setState({
-              ...props,
-              step: "tip",
-              liquidSplitPct: liqSplitPct,
-            });
-          }
-
+        onClick={() =>
           setState({
             ...props,
-            step: "summary",
+            step: props.init.recipient.hide_bg_tip ? "summary" : "tip",
             liquidSplitPct: liqSplitPct,
-            //provide skipped step
-          });
-        }}
+          })
+        }
         className="mt-6"
       />
     </div>

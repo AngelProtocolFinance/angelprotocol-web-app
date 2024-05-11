@@ -52,11 +52,6 @@ export type DonationDetails =
   | StocksDonationDetails
   | DafDonationDetails;
 
-export function hasEmail(
-  details: DonationDetails
-): details is StripeDonationDetails | DafDonationDetails {
-  return details.method === "stripe" || details.method === "daf";
-}
 
 export type Init = {
   recipient: DonationRecipient;
@@ -73,6 +68,7 @@ export type StripeFormStep = FormStep<StripeDonationDetails>;
 export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type StockFormStep = FormStep<StocksDonationDetails>;
 export type DafFormStep = FormStep<DafDonationDetails>;
+
 
 export type SplitsStep = {
   step: "splits";
