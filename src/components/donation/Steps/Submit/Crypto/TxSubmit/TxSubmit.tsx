@@ -1,5 +1,6 @@
 import Icon from "components/Icon/Icon";
 import { ErrorStatus, LoadingStatus } from "components/Status";
+import { useDonationState } from "components/donation/Steps/Context";
 import { humanize } from "helpers";
 import { useEffect, useState } from "react";
 import type { ConnectedWallet } from "types/wallet";
@@ -8,7 +9,6 @@ import type { CryptoSubmitStep } from "../../../types";
 import { type EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";
-import { useDonationState } from "components/donation/Steps/Context";
 
 type Props = {
   classes?: string;
