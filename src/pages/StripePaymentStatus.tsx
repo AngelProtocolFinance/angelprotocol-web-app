@@ -92,7 +92,6 @@ function Processing({ onMount = () => {} }) {
 }
 
 function Unsuccessful() {
-  const state = useGetter((state) => state.donation);
   return (
     <div className="justify-self-center display-block m-auto max-w-[35rem] pt-8 sm:pt-20 pb-20 scroll-mt-6">
       <Icon type="CloseCircle" size={96} className="text-green mb-4 mx-auto" />
@@ -103,7 +102,8 @@ function Unsuccessful() {
         Your donation was not successful, please try again.
       </p>
       <Link
-        to={`${appRoutes.donate}/${state.recipient?.id}`}
+        //TODO: pick share PR from master
+        to={`${appRoutes.donate}/${1}`}
         className="w-full sm:w-auto btn-blue btn-donate h-10 rounded-lg"
       >
         Back to the donation page
