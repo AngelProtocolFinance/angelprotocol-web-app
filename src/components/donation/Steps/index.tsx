@@ -39,7 +39,7 @@ function initialState({
 
   if (!intent) return { step: "donate-form", init };
 
-  if ("walletAddress" in intent) {
+  if ("chainId" in intent) {
     return {
       init,
       step: "submit",
@@ -57,7 +57,7 @@ function initialState({
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
       donor: intent.donor,
-      intentId: intent.transactionId,
+      intentId: intent.id,
     };
   }
   return {
@@ -76,6 +76,6 @@ function initialState({
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },
     donor: intent.donor,
-    intentId: intent.transactionId,
+    intentId: intent.id,
   };
 }

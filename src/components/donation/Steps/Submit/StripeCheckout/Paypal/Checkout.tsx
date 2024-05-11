@@ -76,7 +76,6 @@ export default function Checkout(props: StripeCheckoutStep) {
       }}
       createOrder={async () =>
         await createOrder({
-          transactionId: "", //TODO: shoud not be required
           amount: +details.amount,
           tipAmount: tip?.value ?? 0,
           currency: details.currency.code,

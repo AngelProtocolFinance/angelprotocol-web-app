@@ -24,13 +24,11 @@ export type ReceiptPayload = {
 };
 
 export type CryptoDonation = {
-  transactionId: string;
   amount: number;
   tipAmount: number;
   denomination: string;
   endowmentId: number;
   chainId: string;
-  walletAddress: string;
   /** 1 - 100 */
   splitLiq: number;
   chainName: string;
@@ -39,7 +37,6 @@ export type CryptoDonation = {
 };
 
 export type FiatDonation = {
-  transactionId: string;
   /** Denominated in USD. */
   amount: number;
   tipAmount: number;
@@ -51,12 +48,13 @@ export type FiatDonation = {
   source: DonationSource;
 };
 
-export type DonationIntent =
+export type DonationIntent = { id: string } & (
   | (CryptoDonation & { token: Token })
   | (FiatDonation & {
       currency: Currency;
       frequency: FiatPaymentFrequency;
-    });
+    })
+);
 
 export type FiatPaymentFrequency = "one-time" | "subscription";
 

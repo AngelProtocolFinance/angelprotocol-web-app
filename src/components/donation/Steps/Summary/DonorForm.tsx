@@ -1,17 +1,25 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form } from "components/form";
+import type { ReactNode } from "react";
 import { useForm } from "react-hook-form";
 import type { Donor, Donor as FV } from "types/aws";
 import { object, string } from "yup";
-import ContinueBtn from "../common/ContinueBtn";
 
 type Props = {
   onSubmit(donor: FV): void;
+  submitBtn: ReactNode;
+  disabled?: boolean;
   classes?: string;
   donor?: Donor;
 };
 
-export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
+export default function DonorForm({
+  classes = "",
+  onSubmit,
+  submitBtn,
+  disabled,
+  donor,
+}: Props) {
   const methods = useForm<FV>({
     defaultValues: donor || { firstName: "", lastName: "", email: "" },
     resolver: yupResolver(
@@ -29,6 +37,7 @@ export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
 
   return (
     <Form
+      disabled={disabled}
       methods={methods}
       onSubmit={handleSubmit(onSubmit)}
       className={`grid grid-cols-2 gap-4 ${classes}`}
@@ -55,11 +64,11 @@ export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
         placeholder="Email address"
         classes={{
           label: "font-medium text-base",
-          container: "col-span-full field-donate",
+          container: "col-span-full field-donate mb-6",
         }}
         required
       />
-      <ContinueBtn className="px-4 col-span-full mt-6" text="Checkout" />
+      {submitBtn}
     </Form>
   );
 }
