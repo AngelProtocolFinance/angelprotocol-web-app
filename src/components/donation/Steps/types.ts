@@ -83,19 +83,18 @@ export type SplitsStep = {
 export type TipFormat = "pct" | "amount";
 export type TipStep = {
   step: "tip";
-  tip?: number;
-  format?: TipFormat;
+  tip?: { value: number; format: TipFormat };
 } & From<SplitsStep>;
 
 export type SummaryStep = {
   step: "summary";
   donor?: Donor;
   intentId?: string;
-} & From<TipStep>;
+} & From<TipStep, "tip">; //tip is skipped
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<From<SummaryStep>, "details"> & { details: T };
+} & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
@@ -109,7 +108,7 @@ export type TxStatus =
 export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;
-} & From<CryptoSubmitStep>;
+} & From<CryptoSubmitStep, "tip">; //tip is skipped
 
 export type DonationState =
   | FormStep

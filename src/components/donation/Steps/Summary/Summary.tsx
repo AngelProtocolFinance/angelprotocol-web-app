@@ -42,7 +42,7 @@ export default function Summary(props: SummaryStep) {
       tip={
         tip
           ? {
-              value: tip,
+              value: tip.value,
               charityName: init.recipient.name,
             }
           : undefined

@@ -30,7 +30,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       tip={
         props.tip
           ? {
-              value: props.tip,
+              value: props.tip.value,
               charityName: init.recipient.name,
             }
           : undefined

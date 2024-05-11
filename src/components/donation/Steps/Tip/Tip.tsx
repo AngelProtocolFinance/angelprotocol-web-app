@@ -36,7 +36,7 @@ const shape = schema<FV>({
 });
 
 export default function Tip(props: TipStep) {
-  const { details, tip: persistedTip, format = "pct" } = props;
+  const { details, tip: persistedTip } = props;
   const { setState } = useDonationState();
 
   const [symbol, amount, decimals = 2] = (() => {
@@ -67,7 +67,7 @@ export default function Tip(props: TipStep) {
       tip: persistedTip
         ? {
             amount: persistedTip.toString(),
-            pct: `${persistedTip / amount}`,
+            pct: `${persistedTip.value / amount}`,
           }
         : initial,
     },
@@ -77,15 +77,18 @@ export default function Tip(props: TipStep) {
   } = useController<FV, "tip">({ name: "tip", control });
 
   //if user selects custom, can't go back to %
-  const [isPct, setIsPct] = useState(format === "pct");
+  const [isPct, setIsPct] = useState(persistedTip?.format === "pct");
 
   return (
     <form
       onSubmit={handleSubmit((v) =>
         setState({
           ...props,
-          tip: Number(v.tip.amount),
-          format: isPct ? "pct" : "amount",
+          step: "summary",
+          tip: {
+            value: Number(v.tip.amount),
+            format: isPct ? "pct" : "amount",
+          },
         })
       )}
       className="grid content-start p-4 @md/steps:p-8"

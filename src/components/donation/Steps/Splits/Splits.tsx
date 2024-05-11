@@ -98,8 +98,6 @@ export default function Split(props: Props) {
             step: "summary",
             liquidSplitPct: liqSplitPct,
             //provide skipped step
-            tip: 0,
-            format: "amount",
           });
         }}
         className="mt-6"

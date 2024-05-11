@@ -55,8 +55,7 @@ function initialState({
         },
       },
       liquidSplitPct: intent.splitLiq,
-      tip: intent.tipAmount,
-      format: "pct",
+      tip: { value: intent.tipAmount, format: "pct" },
       donor: intent.donor,
       intentId: intent.transactionId,
     };
@@ -75,8 +74,7 @@ function initialState({
       frequency: intent.frequency,
     },
     liquidSplitPct: intent.splitLiq,
-    tip: intent.tipAmount,
-    format: "pct",
+    tip: { value: intent.tipAmount, format: "pct" },
     donor: intent.donor,
     intentId: intent.transactionId,
   };

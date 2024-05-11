@@ -19,14 +19,17 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   const { submitCrypto } = useDonationState();
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
-  const { details, tip = 0 } = donation;
+  const { details, tip } = donation;
   const sender = wallet?.address;
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
     setEstimate("loading");
-    estimateDonation(details.token, details.chainId.value, sender, tip).then(
-      (estimate) => setEstimate(estimate)
-    );
+    estimateDonation(
+      details.token,
+      details.chainId.value,
+      sender,
+      tip?.value ?? 0
+    ).then((estimate) => setEstimate(estimate));
   }, [sender, details, tip]);
 
   return (

@@ -24,7 +24,7 @@ export default function Crypto(props: CryptoSubmitStep) {
       tip={
         tip
           ? {
-              value: tip,
+              value: tip.value,
               charityName: props.init.recipient.name,
             }
           : undefined

@@ -14,7 +14,7 @@ import type { StripeCheckoutStep } from "../../../types";
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout(props: StripeCheckoutStep) {
-  const { details, liquidSplitPct, tip = 0, donor, init } = props;
+  const { details, liquidSplitPct, tip, donor, init } = props;
 
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
@@ -78,7 +78,7 @@ export default function Checkout(props: StripeCheckoutStep) {
         await createOrder({
           transactionId: "", //TODO: shoud not be required
           amount: +details.amount,
-          tipAmount: tip,
+          tipAmount: tip?.value ?? 0,
           currency: details.currency.code,
           endowmentId: init.recipient.id,
           splitLiq: liquidSplitPct,

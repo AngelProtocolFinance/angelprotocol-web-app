@@ -46,8 +46,6 @@ export default function Form(props: Props) {
           //provide skipped steps
           intentId: "",
           liquidSplitPct: 50,
-          tip: 0,
-          format: "amount",
           donor: { firstName: "", lastName: "", email: "" },
         })
       )}
