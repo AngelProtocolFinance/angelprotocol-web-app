@@ -2,10 +2,12 @@ import { Combobox } from "@headlessui/react";
 import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useTokensQuery } from "services/apes";
-import type { ChainID } from "types/chain";
+import { chainIdIsNotSupported, type ChainID } from "types/chain";
 import Icon from "../Icon";
 import Image from "../Image";
 import { ErrorStatus, LoadingStatus } from "../Status";
+import { chains } from "constants/chains";
+import { Token } from "types/aws";
 
 type Props = {
   selectedChainId: ChainID;
@@ -16,12 +18,30 @@ const container =
   "border border-gray-l4 p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
 export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   const [searchText, setSearchText] = useState("");
+
+  const nativeToken = chains[selectedChainId].nativeToken;
+  const unsupportedToken: Token | undefined = chainIdIsNotSupported(
+    selectedChainId
+  )
+    ? {
+        ...nativeToken,
+        approved: false,
+        logo: nativeToken.logo ?? "",
+        min_donation_amnt: 0,
+        coingecko_denom: nativeToken.coinGeckoId,
+        token_id: nativeToken.id,
+        type: "evm-native",
+      }
+    : undefined;
+
   const {
-    data: tokens = [],
+    data: tokens = unsupportedToken ? [unsupportedToken] : [],
     isLoading,
     isFetching,
     isError,
-  } = useTokensQuery(selectedChainId);
+  } = useTokensQuery(selectedChainId, {
+    skip: !!unsupportedToken,
+  });
 
   const searchResult =
     searchText === ""

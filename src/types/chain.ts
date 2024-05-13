@@ -23,6 +23,14 @@ export type ChainID =
   | CosmosChainID
   | TerraChainID
   | UnsupportedChainId;
+
+
+export const chainIdIsNotSupported = (
+  chainId: ChainID
+): chainId is UnsupportedChainId =>
+  chainId === "btc" || chainId === "solana" || chainId === "xrp";
+
+
 type NativeAtomicUnit = string; //ujunox uluna
 type IBCDenom = string;
 type ReceiverAddr = string;
@@ -40,6 +48,7 @@ export type Chain = {
     symbol: string;
     decimals: number;
     coinGeckoId: string;
+    logo?: string;
   };
 };
 

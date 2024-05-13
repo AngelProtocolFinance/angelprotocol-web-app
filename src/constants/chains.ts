@@ -180,22 +180,7 @@ export const terraTestnet: Chain = {
   },
 };
 
-export const ripple: Chain = {
-  isTest: IS_TEST,
-  id: "xrp",
-  brand: "ripple",
-  name: "Ripple",
-  lcd: "",
-  rpc: "",
-  blockExplorer: "",
-  nativeToken: {
-    //TODO: change to ap wallet
-    id: "r3PDXzXky6gboMrwurmSCiUyhzdrFyAbfu",
-    symbol: "XRP",
-    decimals: 0,
-    coinGeckoId: "ripple",
-  },
-};
+
 
 export const bitcoin: Chain = {
   isTest: IS_TEST,
@@ -211,6 +196,7 @@ export const bitcoin: Chain = {
     symbol: "BTC",
     decimals: 0,
     coinGeckoId: "bitcoin",
+    logo: "https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=032",
   },
 };
 
@@ -228,10 +214,27 @@ export const solana: Chain = {
     symbol: "SOL",
     decimals: 0,
     coinGeckoId: "solana",
+    logo: "https://cryptologos.cc/logos/solana-sol-logo.png?v=032",
   },
 };
 
-
+export const ripple: Chain = {
+  isTest: IS_TEST,
+  id: "xrp",
+  brand: "ripple",
+  name: "Ripple",
+  lcd: "",
+  rpc: "",
+  blockExplorer: "",
+  nativeToken: {
+    //TODO: change to ap wallet
+    id: "r3PDXzXky6gboMrwurmSCiUyhzdrFyAbfu",
+    symbol: "XRP",
+    decimals: 0,
+    coinGeckoId: "ripple",
+    logo: "https://cryptologos.cc/logos/xrp-xrp-logo.png?v=032",
+  },
+};
 
 export const chainList: Chain[] = [
   polygon,
@@ -245,6 +248,9 @@ export const chainList: Chain[] = [
   arbitrumSepolia,
   binanceTestnet,
   terraTestnet,
+  bitcoin,
+  solana,
+  ripple,
 ];
 
 export const chains: Chains = chainList.reduce(

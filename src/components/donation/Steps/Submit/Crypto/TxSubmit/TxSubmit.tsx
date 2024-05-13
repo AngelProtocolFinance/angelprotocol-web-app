@@ -15,6 +15,7 @@ import ContinueBtn from "../../../common/ContinueBtn";
 import { type EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";
+import { chainIdIsNotSupported } from "types/chain";
 
 type Props = {
   classes?: string;
@@ -37,7 +38,8 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
     const chainId = details.chainId.value;
-    if (chainId === "btc" || chainId === "solana" || chainId === "xrp") {
+
+    if (chainIdIsNotSupported(chainId)) {
       return setEstimate(undefined);
     }
 
