@@ -3,15 +3,20 @@ import Icon from "../../../Icon";
 
 export default function ContinueBtn({
   className,
+  type = "button",
   text = "Continue",
   ...props
 }: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> & {
   text?: string;
 }) {
   return (
-    <button {...props} className={`btn-blue btn-donate ${className}`}>
+    <button
+      {...props}
+      type={type}
+      className={`btn-blue btn-donate ${className}`}
+    >
       <span className="mr-4">{text}</span>
-      <Icon type="ArrowRight" className="text-white text-lg" />
+      <Icon type="ArrowRight" className="text-lg" />
     </button>
   );
 }

@@ -59,7 +59,11 @@ export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
         }}
         required
       />
-      <ContinueBtn className="px-4 col-span-full mt-6" text="Checkout" />
+      <ContinueBtn
+        type="submit"
+        className="px-4 col-span-full mt-6"
+        text="Checkout"
+      />
     </Form>
   );
 }

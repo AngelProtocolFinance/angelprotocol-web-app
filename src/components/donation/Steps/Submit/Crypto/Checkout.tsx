@@ -3,9 +3,11 @@ import { Info, LoadingStatus } from "components/Status";
 import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { isEmpty, maskAddress } from "helpers";
-import type { PropsWithChildren } from "react";
+import { type PropsWithChildren, type ReactNode, useState } from "react";
 import type { CryptoSubmitStep } from "slices/donation";
+import { chainIdIsNotSupported } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
+import ContinueBtn from "../../common/ContinueBtn";
 import DirectMode from "./DirectMode";
 import TxSubmit from "./TxSubmit";
 import WalletSelection from "./WalletSelection";
@@ -15,6 +17,12 @@ type Props = CryptoSubmitStep & { classes?: string };
 export default function Checkout({ classes = "", ...props }: Props) {
   const wallet = useWalletContext();
   const chainID = props.details.chainId.value;
+
+  type Method = "direct" | "with-wallet";
+  //state to allow opting for direct donation
+  const [method, setMethod] = useState<Method>(
+    chainIdIsNotSupported(chainID) ? "direct" : "with-wallet"
+  );
 
   if (wallet === "loading") {
     return (
@@ -29,18 +37,37 @@ export default function Checkout({ classes = "", ...props }: Props) {
   if (isDisconnected(wallet)) {
     const supported = wallet.filter((w) => w.supportedChains.includes(chainID));
 
-    if (isEmpty(supported)) {
+    if (isEmpty(supported) || method === "direct") {
       return <DirectMode classes="mt-6" token={props.details.token} />;
     }
 
     return (
-      <Container classes={classes} donation={props}>
+      <Container
+        classes={`${classes} grid`}
+        donation={props}
+        continueBtn={
+          <ContinueBtn
+            onClick={() => setMethod("direct")}
+            className="bg-blue-l4 text-blue enabled:hover:bg-blue-l3 justify-self-stretch"
+            text="Donate directly to wallet address"
+          />
+        }
+      >
         <WalletSelection wallets={supported} classes="mt-2" />
+        {method === "with-wallet" && (
+          <div className="w-full h-px border border-gray-l4 my-9 flex items-center justify-center">
+            <span className="bg-white px-3.5 text-navy-l3">OR</span>
+          </div>
+        )}
       </Container>
     );
   }
 
   if (!wallet.supportedChains.includes(chainID)) {
+    if (chainIdIsNotSupported(chainID)) {
+      return <DirectMode classes="mt-6" token={props.details.token} />;
+    }
+
     return (
       <Container classes={classes} donation={props}>
         <Info classes="mt-2">Connected wallet doesn't support this chain.</Info>
@@ -103,19 +130,20 @@ type ContainerProps = PropsWithChildren<{
   classes?: string;
   wallet?: ConnectedWallet;
   donation: CryptoSubmitStep;
+  continueBtn?: ReactNode;
 }>;
 function Container({
   classes = "",
   wallet,
   children,
   donation,
+  continueBtn = <TxSubmit wallet={wallet} donation={donation} classes="mt-8" />,
 }: ContainerProps) {
   return (
     <div className={classes}>
       <p>Select a wallet to continue:</p>
       {children}
-
-      <TxSubmit wallet={wallet} donation={donation} classes="mt-8" />
+      {continueBtn}
     </div>
   );
 }

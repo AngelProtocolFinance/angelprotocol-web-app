@@ -28,7 +28,6 @@ export default function DirectMode({ token, classes = "" }: Props) {
         <span className="capitalize text-sm">Copy address</span>
       </Copier>
       <ContinueBtn
-        type="button"
         text="I have completed the payment"
         className="justify-self-stretch mt-8"
       />

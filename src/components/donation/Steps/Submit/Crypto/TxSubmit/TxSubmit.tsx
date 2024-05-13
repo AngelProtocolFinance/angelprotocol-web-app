@@ -98,7 +98,6 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
         ))}
 
       <ContinueBtn
-        type="button"
         onClick={
           intentId && wallet && estimate && isSuccess(estimate)
             ? () => {

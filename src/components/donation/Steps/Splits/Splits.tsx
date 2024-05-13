@@ -99,7 +99,6 @@ export default function Split({
       </p>
 
       <ContinueBtn
-        type="button"
         onClick={() => {
           dispatch(setSplit(liqSplitPct));
         }}
