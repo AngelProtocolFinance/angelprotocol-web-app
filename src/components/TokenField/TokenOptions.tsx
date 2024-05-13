@@ -19,13 +19,22 @@ const container =
 export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   const [searchText, setSearchText] = useState("");
 
+  const {
+    data = [],
+    isLoading,
+    isFetching,
+    isError,
+  } = useTokensQuery(selectedChainId, {
+    skip: chainIdIsNotSupported(selectedChainId),
+  });
+
   const nativeToken = chains[selectedChainId].nativeToken;
   const unsupportedToken: Token | undefined = chainIdIsNotSupported(
     selectedChainId
   )
     ? {
         ...nativeToken,
-        approved: false,
+        approved: true,
         logo: nativeToken.logo ?? "",
         min_donation_amnt: 0,
         coingecko_denom: nativeToken.coinGeckoId,
@@ -34,14 +43,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
       }
     : undefined;
 
-  const {
-    data: tokens = unsupportedToken ? [unsupportedToken] : [],
-    isLoading,
-    isFetching,
-    isError,
-  } = useTokensQuery(selectedChainId, {
-    skip: !!unsupportedToken,
-  });
+  const tokens = unsupportedToken ? [unsupportedToken] : data;
 
   const searchResult =
     searchText === ""
@@ -74,7 +76,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
         <Icon type="Search" size={20} />
         <Combobox.Input
           placeholder="Search..."
-          aria-disabled={tokens.length <= 1}
+          aria-disabled={tokens.length < 1}
           className="text-left text-sm focus:outline-none bg-transparent w-20"
           onChange={(event) => setSearchText(event.target.value)}
         />
