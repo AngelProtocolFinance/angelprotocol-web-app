@@ -1,4 +1,5 @@
 import type { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
+import { IS_TEST } from "./env";
 
 const baseProxyURL = "https://59vigz9r91.execute-api.us-east-1.amazonaws.com";
 //mainnets
@@ -178,6 +179,59 @@ export const terraTestnet: Chain = {
     coinGeckoId: "terra-luna-2",
   },
 };
+
+export const ripple: Chain = {
+  isTest: IS_TEST,
+  id: "xrp",
+  brand: "ripple",
+  name: "Ripple",
+  lcd: "",
+  rpc: "",
+  blockExplorer: "",
+  nativeToken: {
+    //TODO: change to ap wallet
+    id: "r3PDXzXky6gboMrwurmSCiUyhzdrFyAbfu",
+    symbol: "XRP",
+    decimals: 0,
+    coinGeckoId: "ripple",
+  },
+};
+
+export const bitcoin: Chain = {
+  isTest: IS_TEST,
+  id: "btc",
+  brand: "bitcoin",
+  name: "Bitcoin",
+  lcd: "",
+  rpc: "",
+  blockExplorer: "",
+  nativeToken: {
+    //TODO: change to ap wallet
+    id: "bc1q9ll6ngymkla8mnk5fq6dwlhgr3yutuxvg3whz5",
+    symbol: "BTC",
+    decimals: 0,
+    coinGeckoId: "bitcoin",
+  },
+};
+
+export const solana: Chain = {
+  isTest: IS_TEST,
+  id: "solana",
+  brand: "solana",
+  name: "Solana",
+  lcd: "",
+  rpc: "",
+  blockExplorer: "",
+  nativeToken: {
+    //TODO: change to ap wallet
+    id: "5ZuyExCSj9595QehogSVEf2SqMhgXGKhV9Cs9zWp6JBA",
+    symbol: "SOL",
+    decimals: 0,
+    coinGeckoId: "solana",
+  },
+};
+
+
 
 export const chainList: Chain[] = [
   polygon,

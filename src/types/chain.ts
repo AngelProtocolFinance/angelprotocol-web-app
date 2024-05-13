@@ -16,9 +16,16 @@ export type CosmosChainID = "juno-1" | "uni-6";
 //would remove this type once terra tooling is unified to that of cosmos (keplr)
 export type TerraChainID = "phoenix-1" | "pisco-1";
 
-export type ChainID = EVMChainID | CosmosChainID | TerraChainID;
+export type UnsupportedChainId = "xrp" | "solana" | "btc";
+
+export type ChainID =
+  | EVMChainID
+  | CosmosChainID
+  | TerraChainID
+  | UnsupportedChainId;
 type NativeAtomicUnit = string; //ujunox uluna
 type IBCDenom = string;
+type ReceiverAddr = string;
 
 export type Chain = {
   isTest: boolean;
@@ -29,7 +36,7 @@ export type Chain = {
   lcd: string;
   blockExplorer: string;
   nativeToken: {
-    id: ChainID | NativeAtomicUnit | IBCDenom;
+    id: ChainID | NativeAtomicUnit | IBCDenom | ReceiverAddr;
     symbol: string;
     decimals: number;
     coinGeckoId: string;

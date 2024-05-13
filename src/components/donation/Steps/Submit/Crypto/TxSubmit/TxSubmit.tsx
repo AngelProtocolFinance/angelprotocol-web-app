@@ -36,9 +36,14 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   const sender = wallet?.address;
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
-    setEstimate("loading");
-    estimateDonation(details.token, details.chainId.value, sender, tip).then(
-      (estimate) => setEstimate(estimate)
+    const chainId = details.chainId.value;
+    if (chainId === "btc" || chainId === "solana" || chainId === "xrp") {
+      return setEstimate(undefined);
+    }
+
+    if (details.chainId.value) setEstimate("loading");
+    estimateDonation(details.token, chainId, sender, tip).then((estimate) =>
+      setEstimate(estimate)
     );
   }, [sender, details, tip]);
 

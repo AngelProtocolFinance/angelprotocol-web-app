@@ -5,7 +5,7 @@ import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
-import type { ChainID } from "types/chain";
+import type { ChainID, UnsupportedChainId } from "types/chain";
 import type { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import type { EstimateInput, TokenWithAmount } from "types/tx";
 import type { EstimateStatus } from "../types";
@@ -13,7 +13,7 @@ import { tokenBalance } from "./tokenBalance";
 
 export async function estimateDonation(
   token: TokenWithAmount,
-  chainID: ChainID,
+  chainID: Exclude<ChainID, UnsupportedChainId>,
   sender: string,
   tipAmount: number
 ): Promise<Exclude<EstimateStatus, "loading">> {
