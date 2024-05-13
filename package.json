@@ -34,7 +34,7 @@
     "@ethersproject/abi": "5.7.0",
     "@ethersproject/bignumber": "5.7.0",
     "@gsap/react": "^2.1.0",
-    "@headlessui/react": "1.7.18",
+    "@headlessui/react": "2.0.3",
     "@hookform/error-message": "2.0.1",
     "@hookform/resolvers": "3.3.4",
     "@keplr-wallet/proto-types": "0.12.23",
