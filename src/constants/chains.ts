@@ -180,8 +180,6 @@ export const terraTestnet: Chain = {
   },
 };
 
-
-
 export const bitcoin: Chain = {
   isTest: IS_TEST,
   id: "btc",

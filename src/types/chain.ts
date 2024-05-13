@@ -24,12 +24,10 @@ export type ChainID =
   | TerraChainID
   | UnsupportedChainId;
 
-
 export const chainIdIsNotSupported = (
   chainId: ChainID
 ): chainId is UnsupportedChainId =>
   chainId === "btc" || chainId === "solana" || chainId === "xrp";
-
 
 type NativeAtomicUnit = string; //ujunox uluna
 type IBCDenom = string;

@@ -10,12 +10,12 @@ import {
 import type { CryptoSubmitStep } from "slices/donation";
 import { sendDonation } from "slices/donation/sendDonation";
 import { useSetter } from "store/accessors";
+import { chainIdIsNotSupported } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
 import ContinueBtn from "../../../common/ContinueBtn";
 import { type EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";
-import { chainIdIsNotSupported } from "types/chain";
 
 type Props = {
   classes?: string;

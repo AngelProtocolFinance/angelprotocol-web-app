@@ -1,13 +1,13 @@
 import { Combobox } from "@headlessui/react";
+import { chains } from "constants/chains";
 import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useTokensQuery } from "services/apes";
-import { chainIdIsNotSupported, type ChainID } from "types/chain";
+import type { Token } from "types/aws";
+import { type ChainID, chainIdIsNotSupported } from "types/chain";
 import Icon from "../Icon";
 import Image from "../Image";
 import { ErrorStatus, LoadingStatus } from "../Status";
-import { chains } from "constants/chains";
-import { Token } from "types/aws";
 
 type Props = {
   selectedChainId: ChainID;

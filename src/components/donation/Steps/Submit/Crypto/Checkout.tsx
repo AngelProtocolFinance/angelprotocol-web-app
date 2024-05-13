@@ -5,6 +5,7 @@ import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { maskAddress } from "helpers";
 import type { PropsWithChildren } from "react";
 import type { CryptoSubmitStep } from "slices/donation";
+import { chainIdIsNotSupported } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
 import TxSubmit from "./TxSubmit";
 import WalletSelection from "./WalletSelection";
@@ -26,9 +27,14 @@ export default function Checkout({ classes = "", ...props }: Props) {
   }
 
   if (isDisconnected(wallet)) {
+    const supported = wallet.filter((w) => w.supportedChains.includes(chainID));
     return (
       <Container classes={classes} donation={props}>
-        <WalletSelection chainID={chainID} wallets={wallet} classes="mt-2" />
+        {supported.length > 0 ? (
+          <WalletSelection wallets={supported} classes="mt-2" />
+        ) : (
+          <>show QR</>
+        )}
       </Container>
     );
   }
@@ -103,10 +109,19 @@ function Container({
   children,
   donation,
 }: ContainerProps) {
+  if (chainIdIsNotSupported(donation.details.chainId.value)) {
+    return (
+      <div className={classes}>
+        <div>QR code</div>
+      </div>
+    );
+  }
+
   return (
     <div className={classes}>
       <p>Select a wallet to continue:</p>
       {children}
+
       <TxSubmit wallet={wallet} donation={donation} classes="mt-8" />
     </div>
   );
