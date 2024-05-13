@@ -1,31 +1,38 @@
 import Icon from "components/Icon";
 import useCopier from "./useCopier";
+import { ReactNode } from "react";
+import { unpack } from "../form/helpers";
+
+type Classes = string | { container?: string; icon?: string };
 
 type Props = {
   text: string;
-  classes?: string;
+  classes?: Classes;
   size?: { copy?: number; check?: number };
+  children?: ReactNode;
 };
 
-export default function Copier({ text, classes = "", size }: Props) {
+export default function Copier({ text, classes, size, children }: Props) {
   const { handleCopy, copied } = useCopier(text);
+  const { container, icon } = unpack(classes);
   return (
-    <button type="button" onClick={handleCopy}>
+    <button className={container} type="button" onClick={handleCopy}>
       {(copied && (
         <Icon
           type="Check"
-          className={`${classes} cursor-default hover:text-current`}
+          className={`${icon} cursor-default hover:text-current`}
           title="Copied!"
           size={size?.check}
         />
       )) || (
         <Icon
           type="Copy"
-          className={`${classes} cursor-pointer`}
+          className={`${icon} cursor-pointer`}
           title="Copy Address"
           size={size?.copy}
         />
       )}
+      {children}
     </button>
   );
 }
