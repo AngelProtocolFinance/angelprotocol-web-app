@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
-import useCopier from "./useCopier";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { unpack } from "../form/helpers";
+import useCopier from "./useCopier";
 
 type Classes = string | { container?: string; icon?: string };
 

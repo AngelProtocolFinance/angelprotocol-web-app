@@ -2,11 +2,11 @@ import Image from "components/Image/Image";
 import { Info, LoadingStatus } from "components/Status";
 import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
-import { maskAddress } from "helpers";
+import { isEmpty, maskAddress } from "helpers";
 import type { PropsWithChildren } from "react";
 import type { CryptoSubmitStep } from "slices/donation";
-import { chainIdIsNotSupported } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
+import DirectMode from "./DirectMode";
 import TxSubmit from "./TxSubmit";
 import WalletSelection from "./WalletSelection";
 
@@ -28,13 +28,14 @@ export default function Checkout({ classes = "", ...props }: Props) {
 
   if (isDisconnected(wallet)) {
     const supported = wallet.filter((w) => w.supportedChains.includes(chainID));
+
+    if (isEmpty(supported)) {
+      return <DirectMode classes="mt-6" token={props.details.token} />;
+    }
+
     return (
       <Container classes={classes} donation={props}>
-        {supported.length > 0 ? (
-          <WalletSelection wallets={supported} classes="mt-2" />
-        ) : (
-          <>show QR</>
-        )}
+        <WalletSelection wallets={supported} classes="mt-2" />
       </Container>
     );
   }
@@ -109,14 +110,6 @@ function Container({
   children,
   donation,
 }: ContainerProps) {
-  if (chainIdIsNotSupported(donation.details.chainId.value)) {
-    return (
-      <div className={classes}>
-        <div>QR code</div>
-      </div>
-    );
-  }
-
   return (
     <div className={classes}>
       <p>Select a wallet to continue:</p>
