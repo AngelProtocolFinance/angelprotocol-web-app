@@ -1,6 +1,6 @@
 import type { FieldValues, Path, PathValue } from "react-hook-form";
 import type { ChainID } from "types/chain";
-import type { TokenWithAmount } from "types/tx";
+import type { TokenOption } from "types/tx";
 
 type Classes = {
   container?: string;
@@ -9,7 +9,7 @@ type Classes = {
 };
 
 export type Props<T extends FieldValues, K extends Path<T>> = {
-  name: PathValue<T, K> extends TokenWithAmount ? K : never;
+  name: PathValue<T, K> extends TokenOption ? K : never;
   label: string;
   selectedChainId: ChainID;
   classes?: Classes;
@@ -21,6 +21,6 @@ export type Props<T extends FieldValues, K extends Path<T>> = {
 
 export type SelectorProps = {
   selectedChainId: ChainID;
-  selectedToken: TokenWithAmount;
-  onChange(token: TokenWithAmount): void;
+  selectedToken: TokenOption;
+  onChange(token: TokenOption): void;
 };

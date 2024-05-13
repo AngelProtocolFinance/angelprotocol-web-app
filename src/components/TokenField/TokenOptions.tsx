@@ -3,8 +3,8 @@ import { chains } from "constants/chains";
 import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useTokensQuery } from "services/apes";
-import type { Token } from "types/aws";
 import { type ChainID, chainIdIsNotSupported } from "types/chain";
+import type { TokenOption } from "types/tx";
 import Icon from "../Icon";
 import Image from "../Image";
 import { ErrorStatus, LoadingStatus } from "../Status";
@@ -29,7 +29,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   });
 
   const nativeToken = chains[selectedChainId].nativeToken;
-  const unsupportedToken: Token | undefined = chainIdIsNotSupported(
+  const unsupportedToken: TokenOption | undefined = chainIdIsNotSupported(
     selectedChainId
   )
     ? {
@@ -40,6 +40,8 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
         coingecko_denom: nativeToken.coinGeckoId,
         token_id: nativeToken.id,
         type: "evm-native",
+        directReceiverAddr: chains[selectedChainId].directReceiverAddr,
+        amount: "",
       }
     : undefined;
 

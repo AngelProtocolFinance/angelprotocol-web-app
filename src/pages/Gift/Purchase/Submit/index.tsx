@@ -6,7 +6,7 @@ import { type PropsWithChildren, useState } from "react";
 import { Link } from "react-router-dom";
 import { type SubmitStep, setStep } from "slices/gift";
 import { useSetter } from "store/accessors";
-import type { TokenWithAmount } from "types/tx";
+import type { TokenOption } from "types/tx";
 import type { WithWallet } from "types/wallet";
 import CompleteBtn from "./CompleteBtn";
 import type { EstimateStatus } from "./types";
@@ -64,7 +64,7 @@ function TxTotal({
   token,
 }: {
   estimate: EstimateStatus;
-  token: TokenWithAmount;
+  token: TokenOption;
 }) {
   switch (estimate) {
     case "error":

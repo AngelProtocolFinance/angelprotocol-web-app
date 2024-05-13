@@ -1,5 +1,5 @@
 import type { OptionType, RichTextContent } from "types/components";
-import type { TokenWithAmount as TWA } from "types/tx";
+import type { TokenOption as TWA } from "types/tx";
 import {
   type NumberSchema,
   type ObjectSchema,

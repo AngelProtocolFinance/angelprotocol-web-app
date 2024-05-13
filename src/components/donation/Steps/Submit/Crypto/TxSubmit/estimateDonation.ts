@@ -7,12 +7,12 @@ import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
 import type { ChainID, UnsupportedChainId } from "types/chain";
 import type { SimulContractTx, SimulSendNativeTx } from "types/evm";
-import type { EstimateInput, TokenWithAmount } from "types/tx";
+import type { EstimateInput, TokenOption } from "types/tx";
 import type { EstimateStatus } from "../types";
 import { tokenBalance } from "./tokenBalance";
 
 export async function estimateDonation(
-  token: TokenWithAmount,
+  token: TokenOption,
   chainID: Exclude<ChainID, UnsupportedChainId>,
   sender: string,
   tipAmount: number

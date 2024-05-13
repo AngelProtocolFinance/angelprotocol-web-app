@@ -188,9 +188,10 @@ export const bitcoin: Chain = {
   lcd: "",
   rpc: "",
   blockExplorer: "",
+  //TODO: change to ap wallet
+  directReceiverAddr: "bc1q9ll6ngymkla8mnk5fq6dwlhgr3yutuxvg3whz5",
   nativeToken: {
-    //TODO: change to ap wallet
-    id: "bc1q9ll6ngymkla8mnk5fq6dwlhgr3yutuxvg3whz5",
+    id: "btc",
     symbol: "BTC",
     decimals: 0,
     coinGeckoId: "bitcoin",
@@ -206,9 +207,10 @@ export const solana: Chain = {
   lcd: "",
   rpc: "",
   blockExplorer: "",
+  //TODO: change to ap wallet
+  directReceiverAddr: "5ZuyExCSj9595QehogSVEf2SqMhgXGKhV9Cs9zWp6JBA",
   nativeToken: {
-    //TODO: change to ap wallet
-    id: "5ZuyExCSj9595QehogSVEf2SqMhgXGKhV9Cs9zWp6JBA",
+    id: "sol",
     symbol: "SOL",
     decimals: 0,
     coinGeckoId: "solana",
@@ -224,9 +226,10 @@ export const ripple: Chain = {
   lcd: "",
   rpc: "",
   blockExplorer: "",
+  //TODO: change to ap wallet
+  directReceiverAddr: "r3PDXzXky6gboMrwurmSCiUyhzdrFyAbfu",
   nativeToken: {
-    //TODO: change to ap wallet
-    id: "r3PDXzXky6gboMrwurmSCiUyhzdrFyAbfu",
+    id: "xrp",
     symbol: "XRP",
     decimals: 0,
     coinGeckoId: "ripple",

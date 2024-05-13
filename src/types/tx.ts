@@ -9,8 +9,9 @@ import type { SignDoc } from "./cosmos";
 import type { Requester, Tupleable } from "./evm";
 import type { EVMTx, SimulTx } from "./evm";
 
-export type TokenWithAmount = Token & {
+export type TokenOption = Token & {
   amount: string;
+  directReceiverAddr?: string;
 };
 
 // //////////// ESTIMATE TX ////////////

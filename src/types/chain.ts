@@ -31,7 +31,6 @@ export const chainIdIsNotSupported = (
 
 type NativeAtomicUnit = string; //ujunox uluna
 type IBCDenom = string;
-type ReceiverAddr = string;
 
 export type Chain = {
   isTest: boolean;
@@ -41,8 +40,9 @@ export type Chain = {
   rpc: string;
   lcd: string;
   blockExplorer: string;
+  directReceiverAddr?: string;
   nativeToken: {
-    id: ChainID | NativeAtomicUnit | IBCDenom | ReceiverAddr;
+    id: ChainID | NativeAtomicUnit | IBCDenom;
     symbol: string;
     decimals: number;
     coinGeckoId: string;

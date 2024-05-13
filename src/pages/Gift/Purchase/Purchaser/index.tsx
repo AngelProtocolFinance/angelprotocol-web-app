@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import type { FormStep } from "slices/gift";
-import type { TokenWithAmount } from "types/tx";
+import type { TokenOption } from "types/tx";
 import type { WithWallet } from "types/wallet";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -12,7 +12,7 @@ export default function Purchaser({
   wallet: _w,
   ...state
 }: WithWallet<FormStep> & { classes?: string }) {
-  const _tokens: TokenWithAmount[] = []; //FUTURE: load tokens
+  const _tokens: TokenOption[] = []; //FUTURE: load tokens
 
   const methods = useForm<FormValues>({
     mode: "onChange",

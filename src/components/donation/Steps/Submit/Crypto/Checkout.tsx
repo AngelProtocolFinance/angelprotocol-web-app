@@ -37,8 +37,21 @@ export default function Checkout({ classes = "", ...props }: Props) {
   if (isDisconnected(wallet)) {
     const supported = wallet.filter((w) => w.supportedChains.includes(chainID));
 
-    if (isEmpty(supported) || method === "direct") {
+    if (isEmpty(supported)) {
       return <DirectMode classes="mt-6" token={props.details.token} />;
+    }
+
+    if (method === "direct") {
+      return (
+        <DirectMode
+          classes="mt-6"
+          token={{
+            ...props.details.token,
+            //TODO: change this to ap wallet
+            directReceiverAddr: "0xce551C1125BfCdAb88048854522D0B220f41A6Ff",
+          }}
+        />
+      );
     }
 
     return (

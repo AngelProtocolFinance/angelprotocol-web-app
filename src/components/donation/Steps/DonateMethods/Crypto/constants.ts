@@ -1,6 +1,6 @@
-import type { TokenWithAmount } from "types/tx";
+import type { TokenOption } from "types/tx";
 
-export const initToken: TokenWithAmount = {
+export const initToken: TokenOption = {
   approved: false,
   decimals: 6,
   logo: "",
