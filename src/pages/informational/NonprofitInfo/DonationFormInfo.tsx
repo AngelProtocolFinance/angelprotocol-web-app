@@ -1,32 +1,40 @@
 import donationFormImgMobile from "assets/images/donation-form-mobile.png";
 import donationFormImg from "assets/images/donation-form.png";
-import Icon from "components/Icon";
+import lairaOpenArms from "assets/laira/laira-open-arms.png";
+import lairaSitting from "assets/laira/laira-sitting.png";
+import lairaJumping from "assets/laira/laira-happy-jump.png";
+import lairaStanding from "assets/laira/laira-standing.png";
 import Image from "components/Image";
 
 type TListItem = {
   title: string;
   description: string;
+  image: { src: string; height?: number; width?: number };
 };
 const items: TListItem[] = [
   {
     title: "Quick, simple setup",
     description:
       "Register in minutes, we’ll review and get you started right away",
+    image: { src: lairaOpenArms, width: 28 },
   },
   {
     title: "Never miss a donation",
     description:
       "Accept cash, stocks, crypto, and DAF gifts all in one conversion-optimized form",
+    image: { src: lairaSitting, width: 23 },
   },
   {
     title: "Increase funds raised",
     description:
       "Increase funds raised: Choose to have your donations invested to provide sustainable funding",
+    image: { src: lairaJumping, width: 30 },
   },
   {
     title: "Fundraise for free",
     description:
       "Fundraise for free: 100% free. No setup costs, no recurring charges, no platform fees of any kind",
+    image: { src: lairaStanding, width: 20 },
   },
 ];
 
@@ -60,9 +68,11 @@ export default function DonationFormInfo({ className = "" }) {
 function ListItem(props: TListItem) {
   return (
     <li className="grid grid-cols-[auto_1fr] gap-y-1 gap-x-4 py-6">
-      <Icon
-        type="Shapes"
+      <Image
+        src={props.image.src}
         className="col-start-1 row-span-2 text-gray mt-1 text-lg @6xl:text-xl"
+        width={props.image.width}
+        height={props.image.height}
       />
       <h6 className="text-lg font-medium @6xl:text-xl text-navy-d4">
         {props.title}
