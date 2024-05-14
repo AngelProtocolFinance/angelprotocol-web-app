@@ -12,9 +12,9 @@ export default function Preview({ classes = "" }) {
   const endowName = endowment.name || "this nonprofit";
 
   return (
-    <section className={`${classes} @container/preview pb-4`}>
-      <div className="max-sm:hidden">
-        <p className="flex text-navy-d4 text-2xl font-gochi text-nowrap">
+    <section className={`${classes} @container/preview pb-4 mt-10`}>
+      <div>
+        <p className="flex text-navy-d4 text-2xl font-gochi">
           <Image src={character} className="h-[45px] mr-2 pb-2" />
           Check out the LIVE preview of your Donation Form!
         </p>
