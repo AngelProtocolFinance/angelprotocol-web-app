@@ -70,7 +70,7 @@ function ListItem(props: TListItem) {
     <li className="grid grid-cols-[auto_1fr] gap-y-1 gap-x-4 py-6">
       <Image
         src={props.image.src}
-        className="col-start-1 row-span-2 text-gray mt-1 text-lg @6xl:text-xl"
+        className="col-start-1 row-span-2"
         width={props.image.width}
         height={props.image.height}
       />
