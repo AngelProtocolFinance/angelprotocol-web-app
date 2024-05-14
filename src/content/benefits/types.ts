@@ -3,4 +3,5 @@ export type Benefit = {
   description: string;
   img: string;
   cardBgClass: string;
+  listIcon?: { src: string; height?: number; width?: number };
 };
