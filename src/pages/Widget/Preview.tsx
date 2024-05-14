@@ -1,5 +1,7 @@
+import character from "assets/images/waving-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
+import Image from "components/Image/Image";
 import { Steps } from "components/donation";
 import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
@@ -11,9 +13,12 @@ export default function Preview({ classes = "" }) {
 
   return (
     <section className={`${classes} @container/preview pb-4`}>
-      <h2 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3">
-        That's what our Donation Form looks like:
-      </h2>
+      <div>
+        <p className="flex text-navy-d4 text-2xl font-gochi">
+          <Image src={character} className="h-[45px] mr-2 pb-2" />
+          Check out the LIVE preview of your Donation Form!
+        </p>
+      </div>
       <div className="grid h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-navy-d4 bg-white">
         <div className="grow flex flex-col justify-between items-center pt-6 @xl/preview:pt-10">
           <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
