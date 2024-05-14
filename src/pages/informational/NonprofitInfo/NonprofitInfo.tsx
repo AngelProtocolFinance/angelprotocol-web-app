@@ -17,10 +17,10 @@ export default function Nonprofits() {
       <WhyBG className="mt-56 padded-container" />
       <Benefits
         className="mt-56 padded-container px-10"
-        subheading="Bridge to better"
-        heading="Amplifying impact for all"
+        subheading="Simple path to financial stability"
+        heading="Making a Lasting Impact: Give today, Give Forever"
         body="Join our global community and amplify your charitable giving."
-        items={benefits.nonprofits}
+        items={benefits.sf}
       />
       <FiscalSponsorship className="@xl:mt-56 padded-container" />
       <Testimonials className="mt-40 padded-container" />

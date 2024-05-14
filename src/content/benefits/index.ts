@@ -6,15 +6,11 @@ import icon5 from "./icons/Icon5_wb.webp";
 import icon6 from "./icons/Icon6_wb.webp";
 import icon7 from "./icons/Icon7_wb.webp";
 import icon8 from "./icons/Icon8_wb.webp";
+import { sf } from "./sf-benefits";
+import { Benefit } from "./types";
 
 const colors = ["bg-[#EDFCE2]", "bg-lilac", "bg-[#FCF6E2]", "bg-[#EDF2FE]"];
 
-export type Benefit = {
-  title: string;
-  description: string;
-  img: string;
-  cardBgClass: string;
-};
 const donors: Benefit[] = [
   {
     title: "Sustainable Impact",
@@ -76,4 +72,5 @@ const nonprofits: Benefit[] = [
   },
 ];
 
-export const benefits = { donors, nonprofits };
+export const benefits = { donors, nonprofits, sf };
+export type { Benefit } from "./types";
