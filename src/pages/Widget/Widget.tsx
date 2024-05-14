@@ -71,7 +71,7 @@ function Content({
         <Configurer endowment={endowment} />
         <Snippet classes="mt-10" />
       </div>
-      <Preview classes="order-last @4xl/widget:order-none @4xl/widget:mt-0" />
+      <Preview classes="order-last @4xl/widget:order-none @4xl/widget:mt-0 mt-10" />
     </div>
   );
 }

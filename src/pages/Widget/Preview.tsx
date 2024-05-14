@@ -12,7 +12,7 @@ export default function Preview({ classes = "" }) {
   const endowName = endowment.name || "this nonprofit";
 
   return (
-    <section className={`${classes} @container/preview pb-4 mt-10`}>
+    <section className={`${classes} @container/preview pb-4`}>
       <div>
         <p className="flex text-navy-d4 text-2xl font-gochi">
           <Image src={character} className="h-[45px] mr-2 pb-2" />
