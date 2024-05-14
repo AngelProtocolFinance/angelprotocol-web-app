@@ -80,5 +80,7 @@ const nonprofits: Benefit[] = [
   },
 ];
 
-export const benefits = { donors, nonprofits, sf };
+const donorsOrder2 = [donors[3], donors[0], donors[1], donors[2]];
+
+export const benefits = { donors, nonprofits, sf, donorsOrder2 };
 export type { Benefit } from "./types";

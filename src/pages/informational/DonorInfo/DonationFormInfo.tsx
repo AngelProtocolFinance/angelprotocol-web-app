@@ -23,7 +23,7 @@ export default function DonationFormInfo({ className = "" }) {
       />
 
       <ul className="divide-y divide-gray-l4 mt-6 @6xl:mt-0">
-        {benefits.donors.map((b, idx) => (
+        {benefits.donorsOrder2.map((b, idx) => (
           <ListItem
             title={b.title}
             description={b.description}
