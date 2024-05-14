@@ -1,8 +1,8 @@
 import Image from "components/Image";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { benefits } from "content/benefits";
 import { Link } from "react-router-dom";
-import heroImg from "./images/hero.png";
 
 export default function Hero({ className = "" }) {
   return (
@@ -36,7 +36,7 @@ export default function Hero({ className = "" }) {
         </div>
       </div>
       <Image
-        src={heroImg}
+        src={benefits.donors[1].img}
         width={500}
         height={500}
         className="rounded-4xl order-1 @6xl:order-2"

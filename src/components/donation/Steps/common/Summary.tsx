@@ -1,5 +1,5 @@
 // TODO: Swap with "pointing" character, once asset is available
-import character from "assets/images/waving-character.png";
+import character from "assets/laira/laira-waiving.png";
 import Image from "components/Image/Image";
 import type { ReactNode } from "react";
 import type { FiatPaymentFrequency } from "types/aws";

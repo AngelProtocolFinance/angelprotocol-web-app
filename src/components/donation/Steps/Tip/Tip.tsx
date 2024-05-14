@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Slider from "@radix-ui/react-slider";
 import dappLogo from "assets/images/bettergiving-logo.png";
-import character from "assets/images/waving-character.png";
+import waivingLaira from "assets/laira/laira-waiving.png";
 import Image from "components/Image/Image";
 import { humanize } from "helpers";
 import { useState } from "react";
@@ -181,7 +181,11 @@ export default function Tip({
       )}
 
       <div className="rounded bg-blue-l5 h-[4.5rem] mt-16 relative">
-        <Image src={character} className="absolute left-1 bottom-0" />
+        <Image
+          src={waivingLaira}
+          width={50}
+          className="absolute left-5 bottom-1"
+        />
         <p className="px-[5.32rem] grid place-items-center text-center h-full text-[0.94rem]">
           Thank you for keeping Better Giving free for everyone!
         </p>

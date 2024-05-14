@@ -1,13 +1,10 @@
 import { useGSAP } from "@gsap/react";
+import { benefits } from "content/benefits";
 import { gsap } from "gsap";
 import { CustomEase } from "gsap/CustomEase";
 import { EasePack } from "gsap/EasePack";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import roadmap1 from "./images/roadmap1_wb.webp";
-import roadmap2 from "./images/roadmap2_wb.webp";
-import roadmap3 from "./images/roadmap3_wb.webp";
-import roadmap4 from "./images/roadmap4_wb.webp";
 gsap.registerPlugin(EasePack, CustomEase, ScrollTrigger, MotionPathPlugin);
 
 gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
@@ -188,9 +185,13 @@ const AnimatedSVG = ({ classes = "" }) => {
             </clipPath>
           </defs>
 
-          {/* <image href='/a.svg' width={260} height={240} x={142} y={10}  /> */}
-          {/* <image href='/img_bubble1.png'  width={302} height={302} x={124} y={0}  /> */}
-          <image href={roadmap1} width="302" height="302" x="124" y="0" />
+          <image
+            href={benefits.sf[0].img}
+            width="302"
+            height="302"
+            x="124"
+            y="0"
+          />
         </svg>
 
         <svg
@@ -245,9 +246,13 @@ const AnimatedSVG = ({ classes = "" }) => {
             </clipPath>
           </defs>
 
-          {/* <image href='/a.svg' width={260} height={240} x={142} y={10}  /> */}
-          {/* <image href='/img_bubble1.png'  width={302} height={302} x={124} y={0}  /> */}
-          <image href={roadmap2} width="302" height="302" x="124" y="0" />
+          <image
+            href={benefits.sf[1].img}
+            width="302"
+            height="302"
+            x="124"
+            y="0"
+          />
         </svg>
 
         <svg
@@ -301,9 +306,14 @@ const AnimatedSVG = ({ classes = "" }) => {
               />
             </clipPath>
           </defs>
-          {/* <image href='/mobile-ani-pig.svg' width={254} height={240} x={147} y={10}  /> */}
-          {/* <image href='/img_bubble3.png' width={302} height={302} x={124} y={0}  /> */}
-          <image href={roadmap3} width={302} height={302} x={124} y={0} />
+
+          <image
+            href={benefits.sf[2].img}
+            width={302}
+            height={302}
+            x={124}
+            y={0}
+          />
         </svg>
 
         <svg
@@ -427,8 +437,13 @@ const AnimatedSVG = ({ classes = "" }) => {
             </clipPath>
           </defs>
 
-          {/* <image href='/img_bubble4.png' width={302} height={302} x={124} y={0}  /> */}
-          <image href={roadmap4} width={302} height={302} x={124} y={0} />
+          <image
+            href={benefits.sf[3].img}
+            width={302}
+            height={302}
+            x={124}
+            y={0}
+          />
         </svg>
       </svg>
     </div>

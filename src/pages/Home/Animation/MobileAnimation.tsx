@@ -1,33 +1,30 @@
+import { benefits } from "content/benefits";
 import StepsCard from "./StepsCard";
-import roadmap1 from "./images/roadmap1_wb.webp";
-import roadmap2 from "./images/roadmap2_wb.webp";
-import roadmap3 from "./images/roadmap3_wb.webp";
-import roadmap4 from "./images/roadmap4_wb.webp";
 import path from "./images/static-path.png";
 import type { Card } from "./types";
 
 const MobileAnimation = ({ classes = "" }) => {
   const cards: Card[] = [
     {
-      img: roadmap1,
+      img: benefits.sf[0].img,
       title: "The Gift That Keeps On Giving",
       description:
         "Donors can choose a portion of their donation to go into the Sustainability Fund, allowing it to grow and provide ongoing support to the nonprofit of their choice - forever.",
     },
     {
-      img: roadmap2,
+      img: benefits.sf[1].img,
       title: "Simple, Sustainable Growth",
       description:
         "The Sustainability Fund is owned and managed by Better Giving and invested into a balanced portfolio to protect and grow over time - no admin work or liability for nonprofits.",
     },
     {
-      img: roadmap3,
+      img: benefits.sf[2].img,
       title: "Reliable Funding Stream",
       description:
         "Sustainability Fund growth is paid out quarterly, providing nonprofits with a new source of recurring revenue - consistent funding that doesn’t rely on donation cycles.",
     },
     {
-      img: roadmap4,
+      img: benefits.sf[3].img,
       title: "Result:",
       description:
         "Better Giving provides nonprofits with a simple path to financial stability while giving donors a way to amplify their impact, ensuring their gift continues to provide support - not just today, but every day.",
