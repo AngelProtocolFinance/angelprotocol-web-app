@@ -1,8 +1,8 @@
 import donationFormImgMobile from "assets/images/donation-form-mobile.png";
 import donationFormImg from "assets/images/donation-form.png";
+import lairaJumping from "assets/laira/laira-happy-jump.png";
 import lairaOpenArms from "assets/laira/laira-open-arms.png";
 import lairaSitting from "assets/laira/laira-sitting.png";
-import lairaJumping from "assets/laira/laira-happy-jump.png";
 import lairaStanding from "assets/laira/laira-standing.png";
 import Image from "components/Image";
 

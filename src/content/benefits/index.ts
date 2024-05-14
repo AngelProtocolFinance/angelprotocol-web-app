@@ -7,7 +7,7 @@ import icon6 from "./icons/Icon6_wb.webp";
 import icon7 from "./icons/Icon7_wb.webp";
 import icon8 from "./icons/Icon8_wb.webp";
 import { sf } from "./sf-benefits";
-import { Benefit } from "./types";
+import type { Benefit } from "./types";
 
 const colors = ["bg-[#EDFCE2]", "bg-lilac", "bg-[#FCF6E2]", "bg-[#EDF2FE]"];
 

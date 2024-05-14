@@ -1,8 +1,8 @@
 import Image from "components/Image";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
 import { benefits } from "content/benefits";
+import { Link } from "react-router-dom";
 
 export default function Hero({ className = "" }) {
   return (
