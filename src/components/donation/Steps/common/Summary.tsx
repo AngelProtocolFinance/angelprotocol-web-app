@@ -48,28 +48,36 @@ export default function Summary({
       <dl
         className={`text-navy-l1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 ${splitClass}`}
       >
-        <dt className="mr-auto text-navy-d4">
-          {props.tip
-            ? `Donation for ${props.tip.charityName}`
-            : "Total donation"}
-        </dt>
-        <Amount amount={props.amount} classes="text-navy-d4" />
-        <div className="flex items-center justify-between col-span-full">
-          <div className="mr-auto flex">
-            <dt className="text-sm mt-2">Sustainability Fund</dt>
-            <Image src={character} className="inline-block px-1 h-8" />
-          </div>
-          <Amount classes="text-sm" amount={locked} />
-        </div>
-        <div className="flex items-center justify-between col-span-full">
-          <dt className="mr-auto text-sm">Direct Donation</dt>
-          <Amount classes="text-sm" amount={liq} />
-        </div>
-        {props.tip && (
-          <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
-            <dt className="mr-auto">Donation for Better Giving</dt>
-            <Amount classes="text-sm" amount={props.tip.value} />
-          </div>
+        {(props.tip || locked > 0) && (
+          <>
+            <dt className="mr-auto text-navy-d4">
+              {props.tip
+                ? `Donation for ${props.tip.charityName}`
+                : "Total donation"}
+            </dt>
+            <Amount amount={props.amount} classes="text-navy-d4" />
+            {locked > 0 && (
+              <>
+                <div className="flex items-center justify-between col-span-full">
+                  <div className="mr-auto flex">
+                    <dt className="text-sm mt-2">Sustainability Fund</dt>
+                    <Image src={character} className="inline-block px-1 h-8" />
+                  </div>
+                  <Amount classes="text-sm" amount={locked} />
+                </div>
+                <div className="flex items-center justify-between col-span-full">
+                  <dt className="mr-auto text-sm">Direct Donation</dt>
+                  <Amount classes="text-sm" amount={liq} />
+                </div>
+              </>
+            )}
+            {props.tip && (
+              <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
+                <dt className="mr-auto">Donation for Better Giving</dt>
+                <Amount classes="text-sm" amount={props.tip.value} />
+              </div>
+            )}
+          </>
         )}
         <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
           <dt className="mr-auto text-navy-d4">
