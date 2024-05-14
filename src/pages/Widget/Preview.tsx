@@ -1,4 +1,4 @@
-import character from "assets/images/waving-character.png";
+import character from "assets/laira/laira-waiving.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import Image from "components/Image/Image";
