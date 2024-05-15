@@ -87,7 +87,7 @@ export default function Summary({
         </div>
       </dl>
       {locked > 0 && (
-        <div className="flex pt-3">
+        <div className="flex py-3">
           <Image src={character} className="inline-block mt-1 pl-1 pr-2 h-8" />
           <div className="mr-auto text-sm text-navy-l3">
             The Sustainability Fund invests your donation for long-term growth
