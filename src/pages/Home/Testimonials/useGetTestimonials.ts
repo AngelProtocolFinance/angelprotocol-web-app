@@ -5,7 +5,7 @@ import buck from "./orgs/buck.webp";
 import fora from "./orgs/foraday.png";
 import shoe from "./orgs/shoes_that_speak.webp";
 import test from "./orgs/testi3Img.png";
-import { Testimonial } from "./types";
+import type { Testimonial } from "./types";
 export default function useGetTestimonials(): Testimonial[] {
   return [
     {
