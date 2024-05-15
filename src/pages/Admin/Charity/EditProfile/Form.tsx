@@ -12,7 +12,6 @@ import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import type { EndowDesignation } from "types/aws";
 import type { UNSDG_NUMS } from "types/lists";
-import HideBGTipCheckbox from "./HideBGTipCheckbox";
 import Slug from "./Slug";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
@@ -126,8 +125,6 @@ export default function Form({ initSlug = "" }) {
           label="Website of your organization"
           placeholder="https://website.org"
         />
-
-        <HideBGTipCheckbox />
 
         <Slug initSlug={initSlug} />
       </Group>

@@ -1,4 +1,4 @@
-import character from "assets/images/waving-character.png";
+import character from "assets/laira/laira-waiving.png";
 import Image from "components/Image";
 import type { DonationsQueryParams } from "types/aws";
 
@@ -15,7 +15,8 @@ export default function NoDonations({ classes, status }: Props) {
       <Image
         alt="Laira mascot waving"
         src={character}
-        className="max-sm:place-self-center sm:col-start-2 sm:row-start-1 sm:row-span-2 rounded-full w-48 object-cover object-center"
+        className="max-sm:place-self-center sm:col-start-2 sm:row-start-1 sm:row-span-2"
+        width={100}
       />
       <h3 className="text-lg self-end">No donations found.</h3>
       <p className="self-start text-navy-l1 dark:text-navy-l2">

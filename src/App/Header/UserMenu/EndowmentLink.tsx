@@ -13,21 +13,28 @@ export default function EndowmentLink({ endowId }: Props) {
       queryState={query}
       messages={{
         loading: <Skeleton />,
-        error: <></>,
+        error: <_Link id={endowId} />,
       }}
     >
-      {({ name, logo }) => (
-        <Link
-          to={appRoutes.admin + `/${endowId}`}
-          className="hover:text-blue-d1 text-sm flex items-center gap-2"
-        >
-          <Image src={logo} className="object-cover h-[20px] w-[20px]" />
-          <span>{name}</span>
-        </Link>
-      )}
+      {(endow) => <_Link {...endow} id={endowId} />}
     </QueryLoader>
   );
 }
+
+type LinkProps = {
+  id: number;
+  name?: string;
+  logo?: string;
+};
+const _Link = (props: LinkProps) => (
+  <Link
+    to={appRoutes.admin + `/${props.id}`}
+    className="hover:text-blue-d1 text-sm flex items-center gap-2"
+  >
+    <Image src={props.logo} className="object-cover h-[20px] w-[20px]" />
+    <span>{props.name ?? `Endowment: ${props.id}`}</span>
+  </Link>
+);
 
 function Skeleton() {
   return (

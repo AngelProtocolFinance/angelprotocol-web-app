@@ -37,7 +37,7 @@ export type DonationRecord = {
   /** ISODate string */
   date: string;
   symbol: string;
-  initTipAmount?: number;
+  initAmount: string;
   initAmountUsd?: number;
   finalAmountUsd?: number;
   splitLiqPct: number;

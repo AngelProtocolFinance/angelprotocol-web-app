@@ -22,8 +22,9 @@ export default function Stocks(props: StockCheckoutStep) {
       </p>
       <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed mt-6">
         <p>
-          Please transfer [&nbsp;{props.details.numShares}&nbsp;] share(s) of
-          [&nbsp;{props.details.symbol}&nbsp;] to:
+          Please transfer [&nbsp;
+          {props.details.numShares + (props.tip?.value ?? 0)}
+          &nbsp;] share(s) of [&nbsp;{props.details.symbol}&nbsp;] to:
         </p>
         <p>Deliver to: Fidelity Investments</p>
         <p>DTC number: 0226</p>

@@ -13,10 +13,10 @@ export default function DonorInfo({ className = "" }) {
       <DonationFormInfo className="mt-20 padded-container" />
       <Benefits
         className="mt-56 padded-container px-10"
-        subheading="Bridge to better"
-        heading="Nonprofit Sustainability Fund: Give today, give forever"
+        subheading="Simple path to financial stability"
+        heading="Making a Lasting Impact: Give today, Give Forever"
         body="Access our free fundraising technology and tools."
-        items={benefits.donors}
+        items={benefits.sf}
       />
       <BottomCta className="mt-40 mb-20 max-w-5xl @5xl:max-w-6xl justify-self-center mx-4 @md:mx-10" />
     </main>
