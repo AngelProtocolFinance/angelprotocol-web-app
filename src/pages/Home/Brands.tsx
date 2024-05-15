@@ -5,7 +5,7 @@ const Brands = () => {
   return (
     <section className="grid content-start gap-14 bg-gradient-to-b from-transparent to-peach/20">
       <h2 className="text-[32px] md:text-[42px] text-navy-d4 px-8 text-center max-w-lg mx-auto text-balance">
-        Trusted by impactful nonprofits worldwide
+        Over $6M raised for nonprofits worldwide
       </h2>
       <Marquee
         pauseOnHover
@@ -16,7 +16,14 @@ const Brands = () => {
           .concat(brands)
           .concat(brands)
           .map((b, idx) => (
-            <img key={idx} src={b} height={80} alt="brand img" />
+            <img
+              key={idx}
+              src={b}
+              height={80}
+              width={120}
+              className="object-contain"
+              alt="brand img"
+            />
           ))}
       </Marquee>
     </section>
