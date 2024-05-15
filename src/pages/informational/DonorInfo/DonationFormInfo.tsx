@@ -1,7 +1,6 @@
-import donationFormImgMobile from "assets/images/donation-form-mobile.png";
-import donationFormImg from "assets/images/donation-form.png";
 import Icon from "components/Icon";
 import Image from "components/Image";
+import { StepsCarousel } from "components/donation";
 import { benefits } from "content/benefits";
 
 export default function DonationFormInfo({ className = "" }) {
@@ -13,14 +12,8 @@ export default function DonationFormInfo({ className = "" }) {
       <h2 className="mb-16 col-span-full text-center text-4xl">
         Give the way you want, to the causes you care about most
       </h2>
-      <Image
-        src={donationFormImg}
-        className="hidden @lg:block self-center justify-self-center rounded-xl border border-gray-l4 shadow-2xl shadow-black/5"
-      />
-      <Image
-        src={donationFormImgMobile}
-        className="@lg:hidden self-center justify-self-center rounded-xl border border-gray-l4 shadow-2xl shadow-black/5"
-      />
+
+      <StepsCarousel classes="w-full max-w-lg self-center justify-self-center" />
 
       <ul className="divide-y divide-gray-l4 mt-6 @6xl:mt-0">
         {benefits.donorsOrder2.map((b, idx) => (

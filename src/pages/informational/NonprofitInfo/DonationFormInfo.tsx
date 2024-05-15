@@ -1,10 +1,9 @@
-import donationFormImgMobile from "assets/images/donation-form-mobile.png";
-import donationFormImg from "assets/images/donation-form.png";
 import lairaJumping from "assets/laira/laira-happy-jump.png";
 import lairaOpenArms from "assets/laira/laira-open-arms.png";
 import lairaSitting from "assets/laira/laira-sitting.png";
 import lairaStanding from "assets/laira/laira-standing.png";
 import Image from "components/Image";
+import { StepsCarousel } from "components/donation";
 
 type TListItem = {
   title: string;
@@ -47,14 +46,8 @@ export default function DonationFormInfo({ className = "" }) {
       <h2 className="mb-16 col-span-full text-center text-4xl">
         Easily accept all types of donations
       </h2>
-      <Image
-        src={donationFormImg}
-        className="hidden @lg:block self-center justify-self-center rounded-xl border border-gray-l4 shadow-2xl shadow-black/5"
-      />
-      <Image
-        src={donationFormImgMobile}
-        className="@lg:hidden self-center justify-self-center rounded-xl border border-gray-l4 shadow-2xl shadow-black/5"
-      />
+
+      <StepsCarousel classes="w-full max-w-lg self-center justify-self-center" />
 
       <ul className="divide-y divide-gray-l4 mt-6 @6xl:mt-0">
         {items.map((item, idx) => (
