@@ -1,11 +1,11 @@
 import Image from "components/Image";
-import form from "./screenshots/form.png";
-import split from "./screenshots/split.png";
-import tip from "./screenshots/tip.png";
-import summary from "./screenshots/summary.png";
-import result from "./screenshots/result.png";
-import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import form from "./screenshots/form.png";
+import result from "./screenshots/result.png";
+import split from "./screenshots/split.png";
+import summary from "./screenshots/summary.png";
+import tip from "./screenshots/tip.png";
 
 const screenshots = [form, split, tip, summary, result];
 
