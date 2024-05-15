@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { APIs } from "constants/urls";
-import { Wordpress } from "types/wordpress";
+import type { Wordpress } from "types/wordpress";
 
 export const wordpress = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: APIs.wordpress }),

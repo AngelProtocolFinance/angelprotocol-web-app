@@ -6,7 +6,7 @@ import {
   useLazyApplicationsQuery,
 } from "services/aws/aws";
 import { useSetter } from "store/accessors";
-import { ApplicationsQueryParams } from "types/aws";
+import type { ApplicationsQueryParams } from "types/aws";
 
 export default function usePaginatedApplications() {
   const dispatch = useSetter();

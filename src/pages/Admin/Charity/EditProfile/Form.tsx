@@ -10,13 +10,12 @@ import Toggle from "components/Toggle";
 import { Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { EndowDesignation } from "types/aws";
-import { UNSDG_NUMS } from "types/lists";
-import HideBGTipCheckbox from "./HideBGTipCheckbox";
+import type { EndowDesignation } from "types/aws";
+import type { UNSDG_NUMS } from "types/lists";
 import Slug from "./Slug";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
-import { FV } from "./types";
+import type { FV } from "./types";
 import useEditProfile from "./useEditProfile";
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
@@ -126,8 +125,6 @@ export default function Form({ initSlug = "" }) {
           label="Website of your organization"
           placeholder="https://website.org"
         />
-
-        <HideBGTipCheckbox />
 
         <Slug initSlug={initSlug} />
       </Group>

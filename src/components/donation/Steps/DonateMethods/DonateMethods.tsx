@@ -1,8 +1,8 @@
 import { Tab } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { Label } from "components/form";
-import { DonationDetails, FormStep } from "slices/donation";
-import { Config } from "../types";
+import type { DonationDetails, FormStep } from "slices/donation";
+import type { Config } from "../types";
 import Crypto from "./Crypto";
 import Daf from "./Daf";
 import Stocks from "./Stocks";

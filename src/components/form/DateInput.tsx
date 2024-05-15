@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { FieldValues, Path, useFormContext } from "react-hook-form";
+import { type FieldValues, type Path, useFormContext } from "react-hook-form";
 
 export default function DateInput<T extends FieldValues>({
   name,

@@ -3,11 +3,11 @@ import { AuthError, resetPassword } from "aws-amplify/auth";
 import { Form, Input } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { UseFormReturn, useForm } from "react-hook-form";
+import { type UseFormReturn, useForm } from "react-hook-form";
 import { Link, useLocation } from "react-router-dom";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
-import { StepSetter } from "./types";
+import type { StepSetter } from "./types";
 
 type Props = {
   setStep: StepSetter;

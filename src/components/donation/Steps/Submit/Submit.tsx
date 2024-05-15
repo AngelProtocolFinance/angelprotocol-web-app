@@ -1,4 +1,4 @@
-import { SubmitStep } from "slices/donation";
+import type { SubmitStep } from "slices/donation";
 import Crypto from "./Crypto";
 import DAFCheckout from "./DAFCheckout";
 import Stocks from "./Stocks";

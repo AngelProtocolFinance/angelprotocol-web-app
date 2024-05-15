@@ -4,7 +4,7 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
 import { useStripePaymentIntentQuery } from "services/apes";
-import { StripeCheckoutStep, setStep } from "slices/donation";
+import { type StripeCheckoutStep, setStep } from "slices/donation";
 import { useSetter } from "store/accessors";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
@@ -16,14 +16,22 @@ import Checkout from "./Checkout";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { details, recipient, liquidSplitPct, tip = 0 } = props;
+  const {
+    details,
+    recipient,
+    liquidSplitPct,
+    tip = 0,
+    oldTransactionId,
+  } = props;
+
   const {
     data: clientSecret,
     isLoading,
     isError,
     error,
   } = useStripePaymentIntentQuery({
-    type: details.frequency === "once" ? "one-time" : "subscription",
+    transactionId: oldTransactionId,
+    type: details.frequency,
     amount: +details.amount,
     tipAmount: tip,
     currency: details.currency.code,

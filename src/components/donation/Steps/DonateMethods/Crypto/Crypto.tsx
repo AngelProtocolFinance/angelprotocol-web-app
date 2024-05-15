@@ -1,14 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { mumbai, polygon } from "constants/chains";
+import { polygon, polygonAmoy } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { FormProvider, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
-import { CryptoFormStep } from "slices/donation";
+import type { CryptoFormStep } from "slices/donation";
 import { object } from "yup";
-import { Config } from "../../types";
+import type { Config } from "../../types";
 import Form from "./Form";
 import { initToken } from "./constants";
-import { DonateValues } from "./types";
+import type { DonateValues } from "./types";
 
 type Props = CryptoFormStep & {
   config: Config | null;
@@ -19,7 +19,7 @@ export default function Crypto({ config, ...state }: Props) {
     source: config ? "bg-widget" : "bg-marketplace",
     token: initToken,
     chainId: IS_TEST
-      ? { label: mumbai.name, value: mumbai.id }
+      ? { label: polygonAmoy.name, value: polygonAmoy.id }
       : { label: polygon.name, value: polygon.id },
   };
 

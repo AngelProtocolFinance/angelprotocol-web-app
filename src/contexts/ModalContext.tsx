@@ -2,14 +2,14 @@ import { Dialog, Transition } from "@headlessui/react";
 import { isEmpty } from "helpers";
 import {
   Fragment,
-  PropsWithChildren,
-  ReactNode,
+  type PropsWithChildren,
+  type ReactNode,
   createContext,
   useCallback,
   useContext,
   useState,
 } from "react";
-import { FC } from "react";
+import type { FC } from "react";
 
 type ModalOptions = { isDismissible: boolean; onClose(): void };
 type ModalState = {

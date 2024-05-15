@@ -1,6 +1,6 @@
 import Icon from "components/Icon";
 import { categories } from "constants/unsdgs";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import {
   reset,
   setCountries,

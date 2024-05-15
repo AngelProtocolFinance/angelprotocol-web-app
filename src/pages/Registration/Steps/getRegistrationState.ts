@@ -1,15 +1,15 @@
 import {
-  BankingDetails,
-  DoneBanking,
-  DoneDocs,
-  DoneFSAInquiry,
-  DoneOrgDetails,
-  EndowClaim,
-  FSAInquiry,
-  InitContact,
-  OrgDetails,
-  SavedRegistration,
-  TDocumentation,
+  type BankingDetails,
+  type DoneBanking,
+  type DoneDocs,
+  type DoneFSAInquiry,
+  type DoneOrgDetails,
+  type EndowClaim,
+  type FSAInquiry,
+  type InitContact,
+  type OrgDetails,
+  type SavedRegistration,
+  type TDocumentation,
   isDoneBanking,
   isDoneContact,
   isDoneDocs,
@@ -18,7 +18,7 @@ import {
   isSubmitted,
 } from "types/aws";
 import { steps } from "../routes";
-import { InitReg, RegistrationState } from "../types";
+import type { InitReg, RegistrationState } from "../types";
 
 export function getRegistrationState(reg: SavedRegistration): {
   state: RegistrationState;

@@ -4,7 +4,7 @@ import { useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setDetails } from "slices/gift";
-import { FormValues as FV } from "../types";
+import type { FormValues as FV } from "../types";
 import Recipient from "./Recipient";
 
 export default function Form({ classes = "" }) {
@@ -31,7 +31,7 @@ export default function Form({ classes = "" }) {
     >
       <TokenField<FV, "token">
         name="token"
-        selectedChainId="80001"
+        selectedChainId="80002"
         label="Enter the donation amount:"
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withBalance

@@ -1,4 +1,4 @@
-import { GuestDonor } from "./donation";
+import type { GuestDonor } from "./donation";
 
 /**
  * Note: if an error occurs, the `PayPalOrder.details` array is always sure to have

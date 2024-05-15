@@ -1,6 +1,6 @@
-import { FieldValues, Path, PathValue } from "react-hook-form";
-import { FileObject } from "types/aws";
-import { ImageMIMEType } from "types/lists";
+import type { FieldValues, Path, PathValue } from "react-hook-form";
+import type { FileObject } from "types/aws";
+import type { ImageMIMEType } from "types/lists";
 
 export type ImgLink = FileObject & {
   file?: File;

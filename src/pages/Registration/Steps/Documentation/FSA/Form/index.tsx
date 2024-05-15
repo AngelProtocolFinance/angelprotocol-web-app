@@ -7,7 +7,7 @@ import { useRegState } from "pages/Registration/Steps/StepGuard";
 import { Link } from "react-router-dom";
 import { steps } from "../../../../routes";
 import { MB_LIMIT, VALID_MIME_TYPES } from "../schema";
-import { FormValues as FV, Props } from "../types";
+import type { FormValues as FV, Props } from "../types";
 import useSubmit from "./useSubmit";
 
 export default function Form(props: Props) {

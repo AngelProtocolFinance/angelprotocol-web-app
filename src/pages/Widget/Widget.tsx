@@ -7,7 +7,7 @@ import { useEndowment } from "services/aws/useEndowment";
 import { setRecipient } from "slices/donation";
 import { initialize } from "slices/widget";
 import { useGetter, useSetter } from "store/accessors";
-import { Endowment } from "types/aws";
+import type { Endowment } from "types/aws";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
@@ -55,7 +55,7 @@ function Content({
         title={`Donation Form Configuration${
           endowment?.id ? ` for nonprofit ${endowment?.id}` : ""
         } - ${APP_NAME}`}
-        description={endowment?.overview.slice(0, 140)}
+        description={endowment?.overview?.slice(0, 140)}
         name={endowment?.name}
         image={endowment?.logo}
         url={`${BASE_URL}${location.pathname}`}
@@ -63,15 +63,15 @@ function Content({
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">
         Accept donations from your website today!
       </h1>
-      <p className="text-center @4xl/widget:text-left text-sm @4xl/widget:text-base @4xl/widget:col-span-2">
+      <p className="text-center @4xl/widget:text-left text-sm @4xl/widget:text-base @4xl/widget:col-span-2 pb-2">
         Just configure your Donation Form below, copy & paste the code on your
         website and you're ready to go!
       </p>
-      <Preview classes="mt-10 order-last @4xl/widget:order-none @4xl/widget:mt-0" />
       <div className="w-full">
         <Configurer endowment={endowment} />
         <Snippet classes="mt-10" />
       </div>
+      <Preview classes="order-last @4xl/widget:order-none @4xl/widget:mt-0 mt-10" />
     </div>
   );
 }

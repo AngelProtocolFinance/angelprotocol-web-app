@@ -1,21 +1,24 @@
-import { Except } from "type-fest";
-import { APIEnvironment, UNSDG_NUMS } from "../../lists";
+import type { Except } from "type-fest";
+import type { PartialExcept } from "types/utils";
+import type { APIEnvironment, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
-export type MileStone = {
-  milestone_date: string; //isoDate
-  milestone_description: string;
-  milestone_media: string;
-  milestone_title: string;
+export type Milestone = {
+  id: string;
+  /** iso date */
+  date: string;
+  description?: string;
+  media?: string;
+  title: string;
 };
 
 export type Program = {
-  program_banner: string;
-  program_description: string;
-  program_id: string;
-  program_title: string;
-  program_milestones: MileStone[];
+  banner?: string;
+  description: string;
+  id: string;
+  title: string;
+  milestones: Milestone[];
 };
 
 export type EndowDesignation =
@@ -26,55 +29,54 @@ export type EndowDesignation =
   | "Other";
 
 type SocialMediaURLs = {
-  /** empty string by default */
-  twitter: string;
-  /** empty string by default */
-  facebook: string;
-  /** empty string by default */
-  linkedin: string;
-  /** empty string by default */
-  instagram: string;
-  /** empty string by default */
-  discord: string;
-  /** empty string by default */
-  youtube: string;
-  /** empty string by default */
-  tiktok: string;
+  /** may be empty */
+  twitter?: string;
+  /** may be empty */
+  facebook?: string;
+  /** may be empty */
+  linkedin?: string;
+  /** may be empty */
+  instagram?: string;
+  /** may be empty */
+  discord?: string;
+  /** may be empty */
+  youtube?: string;
+  /** may be empty */
+  tiktok?: string;
 };
 
 export type Endowment = {
   id: number;
+  /** may be empty */
   slug?: string;
-  active_in_countries: string[];
-  endow_designation: EndowDesignation;
-  fiscal_sponsored: boolean;
-  hq_country: string;
-  /** empty string by default */
-  image: string;
-  kyc_donors_only: boolean;
-  /** optional as older endowments don't have it set */
-  hide_bg_tip?: boolean;
-  /** empty string by default */
-  logo: string;
-  name: string;
-  /** empty string by default */
-  card_img?: string;
-  /** empty string by default */
-  overview: string;
-  program: Program[];
-  published: boolean;
   registration_number: string;
-  sdgs: UNSDG_NUMS[];
-  social_media_urls: SocialMediaURLs;
-  /** empty string by default */
-  street_address: string;
-  /** empty string by default */
+  name: string;
+  endow_designation: EndowDesignation;
+  /** may be empty */
+  overview?: string;
+  /** may be empty */
   tagline?: string;
-  receiptMsg?: string;
+  image?: string;
+  logo?: string;
+  card_img?: string;
+  hq_country: string;
+  active_in_countries: string[];
+  /** may be empty */
+  street_address?: string;
+  social_media_urls: SocialMediaURLs;
   url?: string;
-  /** not claimed only if `false` */
-  claimed?: boolean;
+  sdgs: UNSDG_NUMS[];
+  /** may be empty */
+  receiptMsg?: string;
+
+  kyc_donors_only: boolean;
+  fiscal_sponsored: boolean;
+  claimed: boolean;
+
+  //can be optional, default false and need not be explicit
+  hide_bg_tip?: boolean;
   sfCompounded?: boolean;
+  published?: boolean;
 };
 
 export type EndowmentProfile = Endowment;
@@ -82,15 +84,15 @@ export type EndowmentProfile = Endowment;
 export type EndowmentCard = Pick<
   Endowment,
   | "id"
-  | "active_in_countries"
   | "card_img"
-  | "endow_designation"
-  | "hq_country"
-  | "kyc_donors_only"
-  | "logo"
   | "name"
-  | "sdgs"
   | "tagline"
+  | "hq_country"
+  | "sdgs"
+  | "active_in_countries"
+  | "endow_designation"
+  //icons
+  | "kyc_donors_only"
   | "claimed"
 >;
 export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
@@ -101,21 +103,29 @@ export type EndowmentProfileUpdate = Except<
   | "endow_designation"
   | "fiscal_sponsored"
   | "receiptMsg"
-  | "program"
   | "claimed"
+  | "hide_bg_tip"
 > & {
   endow_designation: EndowDesignation | "";
 };
 
 export type EndowmentSettingsUpdate = Pick<
   Required<Endowment>,
-  "id" | "receiptMsg" | "sfCompounded"
+  "id" | "receiptMsg" | "sfCompounded" | "hide_bg_tip"
 >;
 
-export type EndowmentProgramsUpdate = Pick<
-  Required<Endowment>,
-  "id" | "program"
->;
+export type NewProgram = Omit<Program, "id" | "milestones"> & {
+  milestones: Omit<Milestone, "id">[];
+};
+export type ProgramUpdate = PartialExcept<Omit<Program, "milestones">, "id">;
+
+export type NewMilestone = Omit<Milestone, "id">;
+export type MilestoneUpdate = PartialExcept<Milestone, "id">;
+export type MilestoneDelete = {
+  endowId: number;
+  programId: string;
+  milestoneId: string;
+};
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
@@ -133,20 +143,6 @@ export type EndowmentsQueryParams = {
   claimed?: string;
 };
 
-export interface LeaderboardEntry {
-  charity_logo: string;
-  charity_name: string;
-  endowment_id: number;
-  total_liq: number;
-  total_lock: number;
-  overall: number;
-}
-
-export interface Update {
-  endowments: LeaderboardEntry[];
-  last_update: string;
-}
-
 export type EndowmentBookmark = {
   endowId: number;
   name: string;
@@ -160,8 +156,10 @@ export type WalletProfile = {
   bookmarks: EndowmentBookmark[];
 };
 
-export interface DonationsMetricList {
-  donations_daily_amount: number;
-  donations_daily_count: number;
-  donations_total_amount_v2: number;
-}
+export type UserAttributes = {
+  familyName: string;
+  givenName: string;
+  prefCurrencyCode?: string;
+};
+
+export type UserUpdate = Partial<UserAttributes>;

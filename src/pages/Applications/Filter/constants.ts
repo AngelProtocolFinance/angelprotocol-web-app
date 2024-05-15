@@ -1,5 +1,5 @@
-import { RegistrationStatus } from "types/aws";
-import { OptionType } from "types/components";
+import type { RegistrationStatus } from "types/aws";
+import type { OptionType } from "types/components";
 
 export const statuses: OptionType<RegistrationStatus>[] = [
   { label: "Rejected", value: "Rejected" },

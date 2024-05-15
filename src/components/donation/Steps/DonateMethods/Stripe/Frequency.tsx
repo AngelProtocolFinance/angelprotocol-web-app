@@ -1,7 +1,7 @@
 import { RadioGroup as RG } from "@headlessui/react";
 import Icon from "components/Icon";
 import { useController, useFormContext } from "react-hook-form";
-import { FormValues as FV } from "./types";
+import type { FormValues as FV } from "./types";
 
 type Freq = FV["frequency"];
 
@@ -28,11 +28,14 @@ export default function Frequency() {
         Frequency <span className="text-red">*</span>
       </RG.Label>
       <div className="grid grid-cols-2 gap-2 @[21rem]/frequency:flex">
-        <RG.Option value={"monthly" satisfies Freq} className={styles.option}>
+        <RG.Option
+          value={"subscription" satisfies Freq}
+          className={styles.option}
+        >
           <span>Give Monthly</span>
           <Icon type="Check" className={styles.icon} />
         </RG.Option>
-        <RG.Option value={"once" satisfies Freq} className={styles.option}>
+        <RG.Option value={"one-time" satisfies Freq} className={styles.option}>
           <span>Give Once</span>
           <Icon type="Check" className={styles.icon} />
         </RG.Option>

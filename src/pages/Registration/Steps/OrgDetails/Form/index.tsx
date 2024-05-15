@@ -8,10 +8,10 @@ import { Field, Label, Radio } from "components/form";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";
 import { Link } from "react-router-dom";
-import { EndowDesignation } from "types/aws";
+import type { EndowDesignation } from "types/aws";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
-import { FormValues as FV } from "../types";
+import type { FormValues as FV } from "../types";
 import useSubmit from "./useSubmit";
 
 const endowDesignations: EndowDesignation[] = [

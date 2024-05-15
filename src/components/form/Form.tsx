@@ -1,5 +1,5 @@
-import { FormHTMLAttributes, forwardRef } from "react";
-import { FormProvider, UseFormReturn } from "react-hook-form";
+import { type FormHTMLAttributes, forwardRef } from "react";
+import { FormProvider, type UseFormReturn } from "react-hook-form";
 
 type Props = FormHTMLAttributes<HTMLFormElement> & {
   methods?: UseFormReturn<any, any, any>;

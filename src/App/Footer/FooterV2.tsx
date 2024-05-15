@@ -1,9 +1,9 @@
 import dappLogo from "assets/images/bettergiving-logo.png";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { SocialMediaLink } from "../types";
+import type { SocialMediaLink } from "../types";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
 

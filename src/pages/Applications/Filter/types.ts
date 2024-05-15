@@ -1,5 +1,5 @@
-import { RegistrationStatus } from "types/aws";
-import { Country, OptionType } from "types/components";
+import type { RegistrationStatus } from "types/aws";
+import type { Country, OptionType } from "types/components";
 
 export type FormValues = {
   startDate: string;

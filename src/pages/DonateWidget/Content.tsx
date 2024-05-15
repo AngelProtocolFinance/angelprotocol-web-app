@@ -1,12 +1,14 @@
+import ExtLink from "components/ExtLink";
 import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
 import { Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { useEffect } from "react";
-import { DonationRecipient, setRecipient } from "slices/donation";
+import { type DonationRecipient, setRecipient } from "slices/donation";
 import { useSetter } from "store/accessors";
-import { EndowmentProfile } from "types/aws";
+import type { EndowmentProfile } from "types/aws";
 import parseConfig from "./parseConfig";
 
 type Props = {
@@ -44,7 +46,7 @@ export default function Content({
     >
       <Seo
         title={`Donate to ${profile.name} - ${APP_NAME}`}
-        description={profile.overview.slice(0, 140)}
+        description={profile.overview?.slice(0, 140)}
         name={profile.name}
         image={profile.logo}
         url={`${BASE_URL}/${appRoutes.donate_widget}/${profile.id}`}
@@ -64,6 +66,26 @@ export default function Content({
         className="mt-5 w-full md:w-3/4 border border-gray-l4"
         donaterConfig={config}
       />
+      <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
+        By making a donation to {APP_NAME}, you agree to our{" "}
+        <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
+        <A href={PRIVACY_POLICY}>Privacy Policy</A>. 100% of your donation is
+        tax-deductible to the extent allowed by US law. Your donation is made to{" "}
+        {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants unrestricted
+        funds to {profile.name} on your behalf. As a legal matter, {APP_NAME}{" "}
+        must provide any donations to {profile.name} on an unrestricted basis,
+        regardless of any designations or restrictions made by you.{" "}
+        <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
+      </p>
     </div>
   );
 }
+
+const A: typeof ExtLink = ({ className, ...props }) => {
+  return (
+    <ExtLink
+      {...props}
+      className={className + " font-medium hover:underline"}
+    />
+  );
+};

@@ -1,7 +1,7 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-import { BaseQueryFn } from "@reduxjs/toolkit/dist/query";
-import { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
-import { TypedUseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";
+import type { PayloadAction } from "@reduxjs/toolkit";
+import type { BaseQueryFn } from "@reduxjs/toolkit/dist/query";
+import type { TagDescription } from "@reduxjs/toolkit/dist/query/endpointDefinitions";
+import type { TypedUseQueryHookResult } from "@reduxjs/toolkit/dist/query/react/buildHooks";
 
 type Tag = TagDescription<string>;
 export type TagPayload = PayloadAction<Tag[], string>;

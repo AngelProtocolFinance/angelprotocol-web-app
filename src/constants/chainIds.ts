@@ -1,13 +1,14 @@
-import { Chains } from "types/lists";
+import type { ChainID } from "types/chain";
+import type { Chains } from "types/lists";
 import { IS_TEST } from "./env";
 
-export const chainIds: { [key in Chains]: string } = IS_TEST
+export const chainIds: { [key in Chains]: ChainID } = IS_TEST
   ? {
       arbitrum: "421614",
       binance: "97",
-      ethereum: "5",
+      ethereum: "11155111",
       juno: "uni-6",
-      polygon: "80001",
+      polygon: "80002",
       terra: "pisco-1",
     }
   : {

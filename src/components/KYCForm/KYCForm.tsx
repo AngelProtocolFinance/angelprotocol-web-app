@@ -4,7 +4,7 @@ import Modal from "components/Modal";
 import { FormProvider, useForm } from "react-hook-form";
 import Form, { formStyle } from "./Form";
 import { schema } from "./schema";
-import { FormValues, Props } from "./types";
+import type { FormValues, Props } from "./types";
 
 export default function KYCForm(props: Props) {
   const init: FormValues = {

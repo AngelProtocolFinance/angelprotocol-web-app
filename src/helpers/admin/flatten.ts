@@ -1,4 +1,4 @@
-import { Primitive } from "type-fest";
+import type { Primitive } from "type-fest";
 import { isEmpty } from "../isEmpty";
 
 export type Obj = {

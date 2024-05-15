@@ -1,7 +1,7 @@
 import { Field } from "components/form";
 import { useFormContext } from "react-hook-form";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
-import { FV } from "./types";
+import type { FV } from "./types";
 
 export default function ReceiptMsg() {
   const { watch } = useFormContext<FV>();

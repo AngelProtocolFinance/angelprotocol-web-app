@@ -2,19 +2,19 @@ import { Combobox } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import Icon, { DrawerIcon } from "components/Icon";
 import { isEmpty } from "helpers";
-import { PropsWithChildren, useState } from "react";
+import { type PropsWithChildren, useState } from "react";
 import {
-  FieldValues,
-  Path,
+  type FieldValues,
+  type Path,
   get,
   useController,
   useFormContext,
 } from "react-hook-form";
-import { OptionType, ValKey } from "types/components";
+import type { OptionType, ValKey } from "types/components";
 import { unpack } from "../form/helpers";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
-import { MultiselectorProps } from "./types";
+import type { MultiselectorProps } from "./types";
 
 export function MultiSelector<
   T extends FieldValues,

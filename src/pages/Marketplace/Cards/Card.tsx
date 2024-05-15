@@ -1,3 +1,4 @@
+import flying_character from "assets/images/flying-character.png";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import Tooltip from "components/Tooltip";
@@ -7,8 +8,8 @@ import { unsdgs } from "constants/unsdgs";
 import { isEmpty } from "helpers";
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import { EndowmentCard } from "types/aws";
-import { UNSDG_NUMS } from "types/lists";
+import type { EndowmentCard } from "types/aws";
+import type { UNSDG_NUMS } from "types/lists";
 
 const PLACEHOLDER_TAGLINE = " ";
 
@@ -16,14 +17,13 @@ export default function Card({
   active_in_countries = [],
   name,
   card_img,
-  logo,
   id,
   endow_designation,
   sdgs,
   tagline,
   hq_country,
   kyc_donors_only,
-  claimed = true,
+  claimed,
 }: EndowmentCard) {
   return (
     <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l4 hover:border-blue dark:hover:border-blue">
@@ -39,7 +39,7 @@ export default function Card({
       >
         <Image
           loading="lazy"
-          src={card_img || logo}
+          src={card_img || flying_character}
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />

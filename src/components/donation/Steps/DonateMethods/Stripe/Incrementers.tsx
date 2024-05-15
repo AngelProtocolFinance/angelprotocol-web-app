@@ -1,5 +1,5 @@
 import { useFormContext } from "react-hook-form";
-import { FormValues } from "./types";
+import type { FormValues } from "./types";
 
 export default function Incrementers() {
   return (

@@ -5,16 +5,16 @@ import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { FormProvider, useForm } from "react-hook-form";
 import { useEndowment } from "services/aws/useEndowment";
-import {
-  EndowmentProfile as TProfile,
+import type {
   EndowmentProfileUpdate,
+  EndowmentProfile as TProfile,
 } from "types/aws";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { schema } from "./schema";
-import { FV } from "./types";
+import type { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
 export default function EditProfile() {
@@ -56,7 +56,7 @@ function FormWithContext(props: TProfile & { id: number }) {
       publicUrl: props.image ?? "",
       preview: props.image ?? "",
     },
-    logo: { name: "", publicUrl: props.logo, preview: props.logo },
+    logo: { name: "", publicUrl: props.logo ?? "", preview: props.logo ?? "" },
     card_img: {
       name: "",
       publicUrl: props.card_img ?? "",
@@ -71,7 +71,7 @@ function FormWithContext(props: TProfile & { id: number }) {
       label: x,
       value: x,
     })),
-    overview: { value: props.overview },
+    overview: { value: props.overview ?? "" },
 
     //meta
     initial: init,

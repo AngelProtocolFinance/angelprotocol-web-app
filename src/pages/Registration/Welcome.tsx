@@ -8,9 +8,9 @@ import { storeRegistrationReference } from "helpers";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
-import { EndowClaim } from "types/aws";
+import type { EndowClaim } from "types/aws";
 import { steps } from "./routes";
-import { InitReg } from "./types";
+import type { InitReg } from "./types";
 
 export default function Welcome({ classes = "" }: { classes?: string }) {
   const { email } = useAuthenticatedUser();

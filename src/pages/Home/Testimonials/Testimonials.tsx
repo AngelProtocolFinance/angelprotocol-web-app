@@ -1,13 +1,11 @@
+import quotation from "assets/icons/quotation.svg";
 import Icon from "components/Icon";
+import { testimonials } from "content/testimonials";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import TestimonialCard from "./TestimonialCard";
-import quotation from "./quotation.svg";
-import useGetTestimonials from "./useGetTestimonials";
 
 const Testimonials = () => {
-  const testimonials = useGetTestimonials();
-
   return (
     <div className="grid relative pt-48 bg-gradient-to-t from-peach/40 to-transparent">
       <img
@@ -56,15 +54,10 @@ const Testimonials = () => {
         }}
         className="w-[90vw] lg:w-[80vw]"
       >
-        {testimonials.map((ele, idx) => {
+        {testimonials.map((t, idx) => {
           return (
             <SwiperSlide key={idx}>
-              <TestimonialCard
-                review={ele.review}
-                reviewer={ele.reviewer}
-                reviewer_profession={ele.reviewer_profession}
-                reviewer_logo={ele.reviewer_logo}
-              />
+              <TestimonialCard {...t} />
             </SwiperSlide>
           );
         })}

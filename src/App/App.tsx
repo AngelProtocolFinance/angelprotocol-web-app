@@ -7,9 +7,9 @@ import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("pages/Admin"));
+const UserDashboard = lazy(() => import("pages/UserDashboard"));
 const Profile = lazy(() => import("pages/Profile"));
-const Donations = lazy(() => import("pages/Donations"));
-const Leaderboard = lazy(() => import("pages/Leaderboard"));
+const DonationLoader = lazy(() => import("pages/DonationLoader"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));
@@ -32,6 +32,8 @@ const Home = lazy(() => import("pages/Home"));
 const PrivacyPolicy = lazy(() => import("pages/Legal/PrivacyPolicy"));
 const TermsDonors = lazy(() => import("pages/Legal/TermsDonors"));
 const TermsNonprofits = lazy(() => import("pages/Legal/TermsNonprofits"));
+const NonprofitInfo = lazy(() => import("pages/informational/NonprofitInfo"));
+const DonorInfo = lazy(() => import("pages/informational/DonorInfo"));
 
 export default function App() {
   const location = useLocation();
@@ -57,12 +59,20 @@ export default function App() {
           path={`${appRoutes.donate_widget}/:id`}
           element={<DonateWidget />}
         />
+        <Route
+          path={`${appRoutes.donations}/:id`}
+          element={<DonationLoader />}
+        />
         <Route element={<Layout />}>
           <Route
             path={`${appRoutes.profile}/:id/*`}
             element={<Profile legacy />}
           />
           <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
+          <Route
+            path={`${appRoutes.user_dashboard}/*`}
+            element={<UserDashboard />}
+          />
           <Route
             path={appRoutes.banking_applications}
             element={<BankingApplications />}
@@ -76,8 +86,6 @@ export default function App() {
             path={appRoutes.applications + "/:id"}
             element={<Application />}
           />
-
-          <Route path={appRoutes.donations} element={<Donations />} />
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
           <Route
             path={appRoutes.donate_fiat_thanks}
@@ -87,7 +95,6 @@ export default function App() {
             path={appRoutes.stripe_payment_status}
             element={<StripePaymentStatus />}
           />
-          <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
           <Route path={`${appRoutes.register}/*`} element={<Registration />} />
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
           <Route path={appRoutes.signin} element={<Signin />} />
@@ -123,6 +130,8 @@ export default function App() {
             element={<TermsNonprofits />}
           />
           <Route path={appRoutes.terms_donors} element={<TermsDonors />} />
+          <Route path={appRoutes.nonprofit_info} element={<NonprofitInfo />} />
+          <Route path={appRoutes.donor_info} element={<DonorInfo />} />
           <Route index element={<Home />} />
         </Route>
         <Route path="*" element={<Navigate replace to={appRoutes.home} />} />

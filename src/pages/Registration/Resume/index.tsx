@@ -4,7 +4,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
 import Form from "./Form";
-import { FormValues } from "./types";
+import type { FormValues } from "./types";
 
 export default function Resume({ classes = "" }: { classes?: string }) {
   const methods = useForm<FormValues>({

@@ -1,9 +1,10 @@
-import { adminRoutes } from "constants/routes";
+import { adminRoutes, appRoutes } from "constants/routes";
+import Layout from "layout/DashboardLayout";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Widget from "../../Widget";
 import { useAdminContext } from "../Context";
-import Layout from "../Layout";
-import { LINKS } from "../constants";
+import SidebarHeader from "../SidebarHeader";
+import { linkGroups } from "../constants";
 import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";
 import Dashboard from "./Dashboard";
 import Donations from "./Donations";
@@ -21,19 +22,9 @@ export default function Charity() {
       <Route
         element={
           <Layout
-            linkGroups={[
-              { links: [LINKS.dashboard, LINKS.donations] },
-              { title: "Profile", links: [LINKS.edit_profile, LINKS.programs] },
-              {
-                title: "Manage",
-                links: [
-                  LINKS.settings,
-                  LINKS.members,
-                  LINKS.banking,
-                  LINKS.widget_config,
-                ],
-              },
-            ]}
+            rootRoute={`${appRoutes.admin}/:id/`}
+            linkGroups={linkGroups}
+            sidebarHeader={<SidebarHeader />}
           />
         }
       >
@@ -42,7 +33,7 @@ export default function Charity() {
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.programs} element={<Programs />} />
         <Route
-          path={adminRoutes.program_editor + "/:id"}
+          path={`${adminRoutes.program_editor}/:id`}
           element={<ProgramEditor />}
         />
 

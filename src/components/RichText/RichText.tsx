@@ -1,6 +1,6 @@
 import Quill from "quill";
 import { useCallback, useState } from "react";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export default function RichText(props: Props) {
   const [numChars, setNumChars] = useState(0);
@@ -39,7 +39,7 @@ export default function RichText(props: Props) {
       will be blocked by validation on re-submit
       */
       if (quill.getLength() <= 1) {
-        props.onChange({ value: "", length: 0 });
+        props.onInit({ value: "", length: 0 });
       }
 
       quill.on("editor-change", function handleChange() {

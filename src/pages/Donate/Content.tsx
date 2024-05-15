@@ -1,13 +1,21 @@
+import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
+import QueryLoader from "components/QueryLoader";
 import { Steps } from "components/donation";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { memo, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
-import { DonationRecipient, setRecipient } from "slices/donation";
+import { Link, useLocation } from "react-router-dom";
+import { useIntentQuery } from "services/apes";
+import {
+  type DonationRecipient,
+  loadIntent,
+  setRecipient,
+} from "slices/donation";
 import { useGetter, useSetter } from "store/accessors";
+import type { DonationIntent } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
@@ -18,10 +26,41 @@ type Props = DonationRecipient & {
 };
 
 function Content(props: Props) {
+  const { state } = useLocation();
+
+  if (state?.transactionId) {
+    return <WithIntent transactionId={state?.transactionId} {...props} />;
+  }
+
+  return <LoadedContent {...props} />;
+}
+
+function WithIntent(props: Props & { transactionId: string }) {
+  const queryState = useIntentQuery({ transactionId: props.transactionId });
+
+  useEffect(() => {
+    return () => {
+      window.history.replaceState({}, "");
+    };
+  }, []);
+
+  return (
+    <QueryLoader queryState={queryState}>
+      {(intent) => <LoadedContent {...props} intent={intent} />}
+    </QueryLoader>
+  );
+}
+
+function LoadedContent(props: Props & { intent?: DonationIntent }) {
   const dispatch = useSetter();
   const state = useGetter((state) => state.donation);
   useEffect(() => {
-    dispatch(setRecipient(props));
+    const { intent, ...recipient } = props;
+    if (intent) {
+      dispatch(loadIntent({ ...intent, recipient }));
+    } else {
+      dispatch(setRecipient(recipient));
+    }
   }, [dispatch, props]);
 
   const CONTAINER_ID = "__container_id";
@@ -51,12 +90,14 @@ function Content(props: Props) {
         </Link>
       </div>
       <div className="md:px-4 max-w-[68.625rem] mx-auto grid md:grid-cols-[1fr_auto] items-start content-start gap-4">
-        <OrgCard
-          name={props.name}
-          tagline={props.tagline}
-          logo={props.logo}
-          classes="col-start-1 row-start-1"
-        />
+        <Link to={`${appRoutes.marketplace}/${props.id}`} className="">
+          <OrgCard
+            name={props.name}
+            tagline={props.tagline}
+            logo={props.logo || flying_character}
+            classes="col-start-1 row-start-1"
+          />
+        </Link>
         {/** small screen but space is still enough to render sidebar */}
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps

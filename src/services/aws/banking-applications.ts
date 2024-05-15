@@ -1,7 +1,7 @@
 import { TEMP_JWT } from "constants/auth";
-import { RootState } from "store/store";
+import type { RootState } from "store/store";
 import { userIsSignedIn } from "types/auth";
-import {
+import type {
   BankingApplication,
   BankingApplicationUpdate,
   BankingApplicationsPage,
@@ -11,7 +11,7 @@ import {
   V2RecipientAccount,
 } from "types/aws";
 import { version as v } from "../helpers";
-import { BankingApplicationDetails } from "../types";
+import type { BankingApplicationDetails } from "../types";
 import { aws } from "./aws";
 
 const bankingApplications = aws.injectEndpoints({

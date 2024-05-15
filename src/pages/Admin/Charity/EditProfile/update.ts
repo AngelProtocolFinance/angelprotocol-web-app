@@ -1,6 +1,6 @@
-import { Except } from "type-fest";
-import { EndowmentProfile, EndowmentProfileUpdate } from "types/aws";
-import { FV } from "./types";
+import type { Except } from "type-fest";
+import type { EndowmentProfile, EndowmentProfileUpdate } from "types/aws";
+import type { FV } from "./types";
 
 type RequiredFields = Pick<EndowmentProfileUpdate, "id">;
 type Arg =
@@ -22,14 +22,13 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
       active_in_countries: d.active_in_countries,
       card_img: d.card_img ?? "",
       endow_designation: d.endow_designation,
-      hide_bg_tip: !!d.hide_bg_tip,
       hq_country: d.hq_country,
-      image: d.image,
+      image: d.image ?? "",
       kyc_donors_only: d.kyc_donors_only,
-      logo: d.logo,
+      logo: d.logo ?? "",
       name: d.name,
-      overview: d.overview,
-      published: d.published,
+      overview: d.overview ?? "",
+      published: !!d.published,
       registration_number: d.registration_number,
       sdgs: d.sdgs,
       social_media_urls: {
@@ -41,7 +40,7 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
         youtube: d.social_media_urls.youtube,
         tiktok: d.social_media_urls.tiktok,
       },
-      street_address: d.street_address,
+      street_address: d.street_address ?? "",
       tagline: d.tagline ?? "",
       url: d.url ?? "",
       slug: d.slug ?? "",

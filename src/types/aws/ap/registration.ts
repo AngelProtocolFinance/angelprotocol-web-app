@@ -1,7 +1,7 @@
-import { Except } from "type-fest";
-import { UNSDG_NUMS } from "types/lists";
-import { EndowDesignation } from ".";
-import { FileObject } from "../common";
+import type { Except } from "type-fest";
+import type { UNSDG_NUMS } from "types/lists";
+import type { EndowDesignation } from ".";
+import type { FileObject } from "../common";
 
 export type RegistrationStatus =
   | "Inactive"

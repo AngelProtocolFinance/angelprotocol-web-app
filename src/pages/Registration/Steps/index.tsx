@@ -4,7 +4,7 @@ import { appRoutes } from "constants/routes";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { useRegQuery } from "services/aws/registration";
 import { steps } from "../routes";
-import { InitReg, RegStep4, RegistrationState } from "../types";
+import type { InitReg, RegStep4, RegistrationState } from "../types";
 import Banking from "./Banking";
 import Contact from "./ContactDetails";
 import Dashboard from "./Dashboard";
@@ -13,7 +13,7 @@ import FSAInquiry from "./FSAInquiry/";
 import OrgDetails from "./OrgDetails";
 import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
-import { StepGuardProps } from "./StepGuard";
+import type { StepGuardProps } from "./StepGuard";
 import { getRegistrationState } from "./getRegistrationState";
 
 export default function Steps({ classes = "" }: { classes?: string }) {

@@ -2,7 +2,7 @@ import { Combobox } from "@headlessui/react";
 import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useTokensQuery } from "services/apes";
-import { ChainID } from "types/chain";
+import type { ChainID } from "types/chain";
 import Icon from "../Icon";
 import Image from "../Image";
 import { ErrorStatus, LoadingStatus } from "../Status";

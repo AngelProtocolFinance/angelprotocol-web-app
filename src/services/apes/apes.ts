@@ -1,35 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { PaymentIntent } from "@stripe/stripe-js";
+import type { PaymentIntent } from "@stripe/stripe-js";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { bgCookies, getCookie, setCookie } from "helpers/cookie";
-import {
+import type {
   CryptoDonation,
-  Donor,
+  DonationIntent,
   EndowmentBalances,
   FiatCurrencyData,
+  FiatDonation,
   GuestDonor,
   PayPalOrder,
   Token,
 } from "types/aws";
-import { ChainID } from "types/chain";
-import { DetailedCurrency } from "types/components";
-import { DonationSource } from "types/lists";
+import type { ChainID } from "types/chain";
+import type { DetailedCurrency } from "types/components";
 import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
-
-type FiatDonation = {
-  /** Denominated in USD. */
-  amount: number;
-  tipAmount: number;
-  /**ISO 3166-1 alpha-3 code. */
-  currency: string;
-  endowmentId: number;
-  splitLiq: number;
-  donor: Donor;
-  source: DonationSource;
-};
 
 type StripePaymentIntentParams = FiatDonation & {
   type: "one-time" | "subscription";
@@ -57,7 +45,7 @@ export const apes = createApi({
       CryptoDonation
     >({
       query: (params) => ({
-        url: `crypto-donation/v2`,
+        url: "crypto-donation",
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
@@ -74,13 +62,17 @@ export const apes = createApi({
         body: JSON.stringify({ txHash }),
       }),
     }),
+    intent: builder.query<DonationIntent, { transactionId: string }>({
+      query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
+    }),
     fiatCurrencies: builder.query<
       { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
-      void
+      /** dbPrefCode */
+      string | undefined
     >({
-      query: () => ({
+      query: (dbPrefCode) => ({
         url: "fiat-currencies",
-        params: { prefCode: getCookie(bgCookies.prefCode) },
+        params: { prefCode: dbPrefCode || getCookie(bgCookies.prefCode) },
       }),
       transformResponse: (res: FiatCurrencyData) => {
         const toDetailed = (
@@ -106,7 +98,7 @@ export const apes = createApi({
     }),
     paypalOrder: builder.mutation<string, CreatePayPalOrderParams>({
       query: (params) => ({
-        url: "fiat-donation/paypal/orders",
+        url: "fiat-donation/paypal/orders/v2",
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
@@ -124,10 +116,11 @@ export const apes = createApi({
     endowBalance: builder.query<EndowmentBalances, number>({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
-    getStripePaymentStatus: builder.query<
+    stripePaymentStatus: builder.query<
       Pick<PaymentIntent, "status"> & {
         guestDonor?: GuestDonor;
         recipientName?: string;
+        recipientId?: number;
       },
       { paymentIntentId: string }
     >({
@@ -145,11 +138,12 @@ export const {
   useCapturePayPalOrderMutation,
   useCreateCryptoIntentQuery,
   useConfirmCryptoIntentMutation,
+  useIntentQuery,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
   usePaypalOrderMutation,
   useEndowBalanceQuery,
-  useGetStripePaymentStatusQuery,
+  useStripePaymentStatusQuery,
   useTokensQuery,
   util: {
     invalidateTags: invalidateApesTags,

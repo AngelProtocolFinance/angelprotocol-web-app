@@ -2,7 +2,7 @@ import { TEMP_JWT } from "constants/auth";
 import { EMAIL_SUPPORT } from "constants/env";
 import { logger } from "helpers";
 import { apiEnv } from "services/constants";
-import {
+import type {
   ContactUpdateResult,
   EndowClaim,
   InitApplication,
@@ -11,7 +11,7 @@ import {
   SubmitResult,
 } from "types/aws";
 import { version as v } from "../../helpers";
-import { FiscalSponsorhipAgreementSigner } from "../../types";
+import type { FiscalSponsorhipAgreementSigner } from "../../types";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
@@ -21,7 +21,7 @@ const registration_api = aws.injectEndpoints({
       { email: string; claim?: EndowClaim }
     >({
       query: ({ email, claim }) => ({
-        url: `${v(5)}/registration`,
+        url: `${v(6)}/registration`,
         method: "POST",
         body: { Email: email, ...(claim && { InitClaim: claim }) },
         headers: { authorization: TEMP_JWT },
@@ -59,9 +59,10 @@ const registration_api = aws.injectEndpoints({
     updateReg: builder.mutation<any, RegistrationUpdate>({
       query: ({ reference, ...payload }) => {
         return {
-          url: `v6/registration/${reference}`,
-          method: "PUT",
+          url: `${v(7)}/registration/${reference}`,
+          method: "PATCH",
           body: payload,
+          headers: { authorization: TEMP_JWT },
         };
       },
       transformErrorResponse(res, _meta, { type }) {

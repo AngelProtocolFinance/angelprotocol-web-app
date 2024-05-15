@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
-import { Donor, StateSetter } from "./types";
+import type { Donor, StateSetter } from "./types";
 
 type Props = {
   donor: Donor;

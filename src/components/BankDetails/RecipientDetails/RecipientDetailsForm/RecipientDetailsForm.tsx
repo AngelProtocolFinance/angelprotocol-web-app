@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
 import { APIs } from "constants/urls";
@@ -10,9 +10,9 @@ import {
   useCreateRecipientMutation,
   useNewRequirementsMutation,
 } from "services/aws/wise";
-import { Group, ValidationContent } from "types/aws";
-import { ApplicationMIMEType } from "types/lists";
-import { IFormButtons, OnSubmit } from "../../types";
+import type { Group, ValidationContent } from "types/aws";
+import type { ApplicationMIMEType } from "types/lists";
+import type { IFormButtons, OnSubmit } from "../../types";
 import Form from "./Form";
 
 type Props = {

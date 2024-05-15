@@ -1,12 +1,12 @@
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
 import { useErrorContext } from "contexts/ErrorContext";
-import { PropsWithChildren, useRef, useState } from "react";
+import { type PropsWithChildren, useRef, useState } from "react";
 import {
   useToggleBookmarkMutation,
   useWalletProfileQuery,
 } from "services/aws/aws";
-import { EndowmentBookmark } from "types/aws";
+import type { EndowmentBookmark } from "types/aws";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 

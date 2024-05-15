@@ -1,8 +1,8 @@
 import { richTextContent } from "schemas/shape";
 import { requiredString } from "schemas/string";
-import { SchemaShape } from "schemas/types";
-import { ObjectSchema, object } from "yup";
-import { FormValues as FV } from "./types";
+import type { SchemaShape } from "schemas/types";
+import { type ObjectSchema, object } from "yup";
+import type { FormValues as FV } from "./types";
 
 export const schema = object<any, SchemaShape<FV>>({
   purchaser: requiredString.trim(),

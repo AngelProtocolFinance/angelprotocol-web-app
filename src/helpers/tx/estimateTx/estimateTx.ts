@@ -1,4 +1,4 @@
-import { EstimateInput, EstimateResult } from "types/tx";
+import type { EstimateInput, EstimateResult } from "types/tx";
 import { logger } from "../../logger";
 import { estimateCosmosFee } from "./estimateCosmosFee";
 import { estimateEVMFee } from "./estimateEVMfee";

@@ -2,8 +2,8 @@ import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { determineAuthRedirectPath } from "helpers";
 import { Link, useLocation } from "react-router-dom";
-import { SignInRouteState } from "types/auth";
-import { UserType } from "./types";
+import type { SignInRouteState } from "types/auth";
+import type { UserType } from "./types";
 
 type Props = { userType: UserType };
 

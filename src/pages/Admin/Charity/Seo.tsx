@@ -17,7 +17,7 @@ export default function Seo({
   return (
     <CommonSEO
       title={`${title} - ${APP_NAME}`}
-      description={profile?.overview.slice(0, 140)}
+      description={profile?.overview?.slice(0, 140)}
       name={profile?.name}
       image={profile?.logo}
       url={`${BASE_URL}/${appRoutes.admin}/${id}/${url}`}

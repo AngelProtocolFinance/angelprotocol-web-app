@@ -5,14 +5,17 @@ import TableSection, { Cells } from "components/TableSection";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useModalContext } from "contexts/ModalContext";
 import { useAdminContext } from "pages/Admin/Context";
-import { useDeleteEndowAdminMutation, useUsersQuery } from "services/aws/users";
+import {
+  useDeleteEndowAdminMutation,
+  useEndowAdminsQuery,
+} from "services/aws/endow-admins";
 import AddForm from "./AddForm";
 
 export default function List() {
   const { showModal } = useModalContext();
   const { id } = useAdminContext();
 
-  const queryState = useUsersQuery(id);
+  const queryState = useEndowAdminsQuery(id);
   return (
     <div>
       <button

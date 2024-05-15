@@ -2,7 +2,7 @@ import Image from "components/Image";
 import RichText from "components/RichText";
 import { Info } from "components/Status";
 import { isEmpty } from "helpers";
-import { MileStone as TMilestone } from "types/aws";
+import type { Milestone as TMilestone } from "types/aws";
 import Container from "../common/Container";
 
 type Props = {
@@ -30,13 +30,8 @@ export default function Milestones({ classes = "", milestones }: Props) {
   );
 }
 
-function Milestone({
-  milestone_media,
-  milestone_date,
-  milestone_title,
-  milestone_description,
-}: TMilestone) {
-  const isComplete = new Date() >= new Date(milestone_date);
+function Milestone(m: TMilestone) {
+  const isComplete = new Date() >= new Date(m.date);
 
   return (
     <div
@@ -44,17 +39,17 @@ function Milestone({
         isComplete ? "border-blue-d1" : "border-gray-l4"
       }`}
     >
-      {milestone_media && (
+      {m.media && (
         <div className="pl-6 sm:pl-8">
-          <Image src={milestone_media} className="h-60 w-full rounded" />
+          <Image src={m.media} className="h-60 w-full rounded" />
         </div>
       )}
 
       <p className="mt-4 pl-6 sm:pl-8 mb-3 text-navy-l1 dark:text-navy-l2 text-xs">
-        {new Date(milestone_date).toLocaleDateString()}
+        {new Date(m.date).toLocaleDateString()}
       </p>
       <h6 className="pl-6 sm:pl-8 font-bold mb-3 relative">
-        {milestone_title}
+        {m.title}
         <span className="bg-white dark:bg-blue-d6 w-4 h-6 absolute left-[-0.5px] top-1/2 -translate-y-1/2 -translate-x-1/2" />
         <span
           className={`${
@@ -64,7 +59,7 @@ function Milestone({
       </h6>
       <div className="pl-6 sm:pl-8">
         <RichText
-          content={{ value: milestone_description }}
+          content={{ value: m.description ?? "" }}
           readOnly
           classes={{
             container: "text-navy-l1 dark:text-navy-l2 text-sm w-full",

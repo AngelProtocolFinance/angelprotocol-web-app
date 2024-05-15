@@ -1,7 +1,7 @@
 import Copier from "components/Copier";
 import { appRoutes } from "constants/routes";
 import { useGetter } from "store/accessors";
-import { WidgetConfig, WidgetURLSearchParams } from "types/widget";
+import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
 export default function Snippet({ classes = "" }) {
   const config = useGetter((state) => state.widget);
@@ -16,7 +16,7 @@ export default function Snippet({ classes = "" }) {
       <h2 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3">
         Copy / paste this code snippet:
       </h2>
-      <div className="flex items-center justify-center gap-x-4 max-w-xl px-10 rounded bg-gray-l3 dark:bg-blue-d4">
+      <div className="flex items-center justify-center gap-x-4 max-w-xl px-10 rounded bg-gray-l3 dark:bg-blue-d4 @4xl/widget:mx-auto">
         <div className="w-full text-sm sm:text-base font-mono break-all py-4">
           {iframeURL}
         </div>

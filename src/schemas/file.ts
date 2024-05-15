@@ -1,7 +1,7 @@
 import { isEmpty } from "helpers";
-import { FileObject } from "types/aws";
-import { FileDropzoneAsset } from "types/components";
-import { MIMEType } from "types/lists";
+import type { FileObject } from "types/aws";
+import type { FileDropzoneAsset } from "types/components";
+import type { MIMEType } from "types/lists";
 import * as Yup from "yup";
 
 const previewsKey: keyof FileDropzoneAsset = "previews";

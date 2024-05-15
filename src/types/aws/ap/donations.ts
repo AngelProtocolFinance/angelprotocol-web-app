@@ -1,4 +1,4 @@
-import { ChainID } from "types/chain";
+import type { ChainID } from "types/chain";
 
 type DonorAddress = {
   line1: string;

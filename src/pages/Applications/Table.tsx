@@ -4,9 +4,9 @@ import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import useSort from "hooks/useSort";
 import { Link } from "react-router-dom";
-import { RegistrationStatus } from "types/aws";
+import type { RegistrationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
-import { TableProps } from "./types";
+import type { TableProps } from "./types";
 
 export default function Table({
   applications,

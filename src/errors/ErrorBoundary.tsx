@@ -1,5 +1,10 @@
 import { logger } from "helpers";
-import { Component, ErrorInfo, PropsWithChildren, ReactNode } from "react";
+import {
+  Component,
+  type ErrorInfo,
+  type PropsWithChildren,
+  type ReactNode,
+} from "react";
 import DefaultFallback from "./DefaultFallback";
 
 type Props = PropsWithChildren<{ fallback?: ReactNode }>;

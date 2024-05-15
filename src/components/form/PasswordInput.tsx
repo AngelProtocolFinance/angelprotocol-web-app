@@ -1,6 +1,11 @@
 import Icon from "components/Icon";
 import { useState } from "react";
-import { FieldValues, Path, get, useFormContext } from "react-hook-form";
+import {
+  type FieldValues,
+  type Path,
+  get,
+  useFormContext,
+} from "react-hook-form";
 import { fieldClasses } from "./constants";
 
 type Props<T extends FieldValues> = {

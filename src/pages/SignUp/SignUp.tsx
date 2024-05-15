@@ -2,7 +2,7 @@ import { useState } from "react";
 import ConfirmForm from "./ConfirmForm";
 import SignupForm from "./SignupForm";
 import Success from "./Success";
-import { SignupState } from "./types";
+import type { SignupState } from "./types";
 
 export default function SignUp() {
   const [state, setState] = useState<SignupState>({ type: "init" });

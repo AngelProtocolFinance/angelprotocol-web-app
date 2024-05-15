@@ -2,7 +2,7 @@ import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { Wordpress } from "types/wordpress";
+import type { Wordpress } from "types/wordpress";
 
 const BlogCard = (props: Wordpress.Post) => {
   return (

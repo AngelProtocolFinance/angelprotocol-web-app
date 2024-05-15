@@ -1,11 +1,11 @@
 import {
   ConnectType,
-  Connection as TerraConnection,
-  Installation,
+  type Installation,
+  type Connection as TerraConnection,
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
-import {
+import type {
   TerraProviderState,
   TerraWalletID,
   Wallet,

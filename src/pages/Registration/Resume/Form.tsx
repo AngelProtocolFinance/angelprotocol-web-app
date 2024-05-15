@@ -1,7 +1,7 @@
 import { Separator } from "components/Separator";
 import { Field } from "components/form";
 import { Link } from "react-router-dom";
-import { FormValues } from "./types";
+import type { FormValues } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function Form({ classes = "" }: { classes?: string }) {

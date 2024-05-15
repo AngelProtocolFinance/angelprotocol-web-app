@@ -1,4 +1,4 @@
-import { TxPackage } from "types/tx";
+import type { TxPackage } from "types/tx";
 import { sendCosmosTx } from "./sendCosmosTx";
 import { sendEVMTx } from "./sendEVMTx";
 import { sendTerraTx } from "./sendTerraTx";

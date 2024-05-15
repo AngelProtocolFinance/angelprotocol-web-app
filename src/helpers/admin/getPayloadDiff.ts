@@ -1,6 +1,6 @@
-import { Primitive } from "type-fest";
-import { Diff, PrimitiveValue } from "types/utils";
-import { Obj, flatten } from "./flatten";
+import type { Primitive } from "type-fest";
+import type { Diff, PrimitiveValue } from "types/utils";
+import { type Obj, flatten } from "./flatten";
 
 export const NOT_SET = "not-set";
 

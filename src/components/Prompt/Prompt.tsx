@@ -2,7 +2,7 @@ import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "../Icon";
 import LoaderRing from "../LoaderRing";
-import { Props } from "./types";
+import type { Props } from "./types";
 
 export default function Prompt({
   type,
