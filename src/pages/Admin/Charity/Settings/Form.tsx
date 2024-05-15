@@ -2,17 +2,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CheckField, Form as _Form } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
+import type { Endowment } from "types/aws";
 import { string } from "yup";
 import { useUpdateEndowment } from "../common";
+import HideBGTipCheckbox from "./HideBGTipCheckbox";
 import ReceiptMsg from "./ReceiptMsg";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import type { FV } from "./types";
 
-type Props = {
-  id: number;
-  receiptMsg?: string;
-  isSfCompounded?: boolean;
-};
+type Props = Pick<
+  Endowment,
+  "id" | "receiptMsg" | "sfCompounded" | "hide_bg_tip"
+>;
 
 export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();
@@ -25,7 +26,8 @@ export default function Form(props: Props) {
     ),
     values: {
       receiptMsg: props.receiptMsg ?? "",
-      isSfCompounded: props.isSfCompounded ?? false,
+      isSfCompounded: props.sfCompounded ?? false,
+      hideBgTip: props.hide_bg_tip ?? false,
     },
   });
 
@@ -48,6 +50,7 @@ export default function Form(props: Props) {
           receiptMsg: fv.receiptMsg,
           id: props.id,
           sfCompounded: fv.isSfCompounded,
+          hide_bg_tip: fv.hideBgTip,
         });
       })}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
@@ -67,6 +70,8 @@ export default function Form(props: Props) {
           available to you as needed.
         </p>
       </div>
+
+      <HideBGTipCheckbox />
 
       <div className="flex gap-3">
         <button
