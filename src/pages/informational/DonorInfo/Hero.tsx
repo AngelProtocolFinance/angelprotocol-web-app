@@ -30,7 +30,7 @@ export default function Hero({ className = "" }) {
       </div>
 
       <Image
-        src={benefits.donors[0].img}
+        src={benefits.nonprofits[1].img}
         width={350}
         height={350}
         className="order-1 @6xl:order-2 justify-self-center"

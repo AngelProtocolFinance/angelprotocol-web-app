@@ -23,8 +23,13 @@ export default function DonationFormInfo({ className = "" }) {
       />
 
       <ul className="divide-y divide-gray-l4 mt-6 @6xl:mt-0">
-        {benefits.donors.map((b, idx) => (
-          <ListItem title={b.title} description={b.description} key={idx} />
+        {benefits.donorsOrder2.map((b, idx) => (
+          <ListItem
+            title={b.title}
+            description={b.description}
+            icon={b.listIcon}
+            key={idx}
+          />
         ))}
       </ul>
     </section>
@@ -34,15 +39,25 @@ export default function DonationFormInfo({ className = "" }) {
 type TListItem = {
   title: string;
   description: string;
+  icon?: { src: string; height?: number; width?: number };
 };
 
 function ListItem(props: TListItem) {
   return (
     <li className="grid grid-cols-[auto_1fr] gap-y-1 gap-x-4 py-6">
-      <Icon
-        type="Shapes"
-        className="col-start-1 row-span-2 text-gray mt-1 text-lg @6xl:text-xl"
-      />
+      {props.icon ? (
+        <Image
+          className="col-start-1 row-span-2 mt-1"
+          src={props.icon.src}
+          height={props.icon.height}
+          width={props.icon.width}
+        />
+      ) : (
+        <Icon
+          type="Shapes"
+          className="col-start-1 row-span-2 text-gray mt-1 text-lg @6xl:text-xl"
+        />
+      )}
       <h6 className="text-lg font-medium @6xl:text-xl text-navy-d4">
         {props.title}
       </h6>
