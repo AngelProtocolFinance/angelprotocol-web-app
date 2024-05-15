@@ -70,7 +70,7 @@ export default function Card({
               <span className="font-semibold">Active in:</span>{" "}
               {isEmpty(active_in_countries)
                 ? hq_country
-                : active_in_countries.join(" ,")}
+                : active_in_countries.join(", ")}
             </p>
           </div>
           <div className="mt-auto empty:hidden grid gap-3">

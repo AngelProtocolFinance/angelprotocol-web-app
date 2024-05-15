@@ -9,7 +9,7 @@ const Blogs = () => {
   const { data: page } = usePostsQuery({ page: 1 });
 
   return (
-    <section className="grid content-start py-40 bg-gradient-to-b from-peach/40 to-transparent">
+    <section className="grid content-start py-40 bg-gradient-to-b from-peach/40 to-transparent overflow-x-clip">
       <h2 className="text-navy-d4 text-[32px] md:text-[42px] text-center mb-14">
         Check out the latest
       </h2>
