@@ -10,7 +10,6 @@ const Admin = lazy(() => import("pages/Admin"));
 const UserDashboard = lazy(() => import("pages/UserDashboard"));
 const Profile = lazy(() => import("pages/Profile"));
 const DonationLoader = lazy(() => import("pages/DonationLoader"));
-const Leaderboard = lazy(() => import("pages/Leaderboard"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));
@@ -96,7 +95,6 @@ export default function App() {
             path={appRoutes.stripe_payment_status}
             element={<StripePaymentStatus />}
           />
-          <Route path={appRoutes.leaderboard} element={<Leaderboard />} />
           <Route path={`${appRoutes.register}/*`} element={<Registration />} />
           <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
           <Route path={appRoutes.signin} element={<Signin />} />
