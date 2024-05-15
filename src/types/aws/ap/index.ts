@@ -139,20 +139,6 @@ export type EndowmentsQueryParams = {
   claimed?: string;
 };
 
-export interface LeaderboardEntry {
-  charity_logo: string;
-  charity_name: string;
-  endowment_id: number;
-  total_liq: number;
-  total_lock: number;
-  overall: number;
-}
-
-export interface Update {
-  endowments: LeaderboardEntry[];
-  last_update: string;
-}
-
 export type EndowmentBookmark = {
   endowId: number;
   name: string;
@@ -165,12 +151,6 @@ export type WalletProfile = {
   admin: EndowmentBookmark[];
   bookmarks: EndowmentBookmark[];
 };
-
-export interface DonationsMetricList {
-  donations_daily_amount: number;
-  donations_daily_count: number;
-  donations_total_amount_v2: number;
-}
 
 export type UserAttributes = {
   familyName: string;
