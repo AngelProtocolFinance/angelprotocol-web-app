@@ -1,6 +1,6 @@
 import Icon from "components/Icon";
 import type { Benefit } from "content/benefits";
-import { EffectCoverflow, Navigation, Pagination } from "swiper/modules";
+import { EffectCoverflow, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 type Props = { slides: Benefit[]; classes?: string };
@@ -37,7 +37,7 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
           prevEl: ".swip-prev",
         }}
         wrapperClass="w-screen @container"
-        modules={[EffectCoverflow, Pagination, Navigation]}
+        modules={[EffectCoverflow, Navigation]}
       >
         {slides.map((slide, index) => {
           return (
