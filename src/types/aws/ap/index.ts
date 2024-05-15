@@ -100,14 +100,18 @@ export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
-  "endow_designation" | "fiscal_sponsored" | "receiptMsg" | "claimed"
+  | "endow_designation"
+  | "fiscal_sponsored"
+  | "receiptMsg"
+  | "claimed"
+  | "hide_bg_tip"
 > & {
   endow_designation: EndowDesignation | "";
 };
 
 export type EndowmentSettingsUpdate = Pick<
   Required<Endowment>,
-  "id" | "receiptMsg" | "sfCompounded"
+  "id" | "receiptMsg" | "sfCompounded" | "hide_bg_tip"
 >;
 
 export type NewProgram = Omit<Program, "id" | "milestones"> & {
