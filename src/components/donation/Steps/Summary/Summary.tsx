@@ -72,7 +72,7 @@ export default function Summary(props: SummaryStep) {
       //stocks skips summary (straight to submit), as donor info is not saved in DB
       case "stocks": {
         const { numShares, symbol } = details;
-        return [numShares, currency({ code: symbol, rate: null })]; //intent is not needed
+        return [numShares, currency({ code: symbol, rate: null })];
       }
 
       default:
@@ -85,7 +85,7 @@ export default function Summary(props: SummaryStep) {
       ...props,
       step: "submit",
       donor,
-      intentId: intentId ? await intentId(donor) : "not needed",
+      intentId: intentId ? await intentId(donor) : "not used intent",
     });
   }
 
