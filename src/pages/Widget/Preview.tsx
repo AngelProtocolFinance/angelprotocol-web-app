@@ -2,7 +2,7 @@ import character from "assets/laira/laira-waiving.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import Image from "components/Image/Image";
-import { Steps } from "components/donation";
+import { DonationState, Steps } from "components/donation";
 import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { WidgetConfig } from "types/widget";
@@ -12,7 +12,24 @@ type Props = {
   config: WidgetConfig;
 };
 export default function Preview({ classes = "", config }: Props) {
+  const { endowment, ...restConfig } = config;
   const endowName = config.endowment.name;
+
+  const initState: DonationState = {
+    step: "donate-form",
+    init: {
+      mode: "preview",
+      recipient: endowment,
+      widgetConfig: restConfig,
+    },
+    details: {
+      method: "stripe",
+      amount: "100",
+      currency: { code: "usd", rate: 1, min: 1 },
+      frequency: "subscription",
+    },
+  };
+
   return (
     <section className={`${classes} @container/preview pb-4`}>
       <div>
@@ -33,11 +50,9 @@ export default function Preview({ classes = "", config }: Props) {
             </p>
           )}
           <Steps
-            key={JSON.stringify(config)}
-            mode="preview"
+            key={JSON.stringify(initState)}
+            init={initState}
             className="my-5 @md/preview:w-3/4 border border-gray-l4"
-            widgetConfig={config}
-            recipient={config.endowment}
           />
           <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
             By making a donation to {APP_NAME}, you agree to our{" "}
