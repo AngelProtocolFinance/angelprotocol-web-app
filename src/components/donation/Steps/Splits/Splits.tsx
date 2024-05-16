@@ -8,10 +8,17 @@ import { LockedSplitSlider } from "./LockedSplitSlider";
 
 type Props = SplitsStep;
 export default function Split(props: Props) {
-  const { details, liquidSplitPct: donationLiquidSplit = 50 } = props;
+  const { details, init, liquidSplitPct: liquidSplitFromSplitStepPct } = props;
+
+  const persistedLiqSplitPct =
+    init.mode === "live"
+      ? liquidSplitFromSplitStepPct
+      : init.widgetConfig?.liquidSplitPct;
+
   const { setState } = useDonationState();
+
   const [lockedSplitPct, setLockedSplitPct] = useState(
-    100 - donationLiquidSplit
+    100 - (persistedLiqSplitPct ?? 50)
   );
 
   const liqSplitPct = 100 - lockedSplitPct;

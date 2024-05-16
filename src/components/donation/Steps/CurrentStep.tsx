@@ -9,25 +9,22 @@ import Tip from "./Tip";
 export default function CurrentStep() {
   const { state } = useDonationState();
 
-  if (state.step === "donate-form") return <DonateMethods {...state} />;
+  switch (state.step) {
+    case "donate-form":
+      return <DonateMethods {...state} />;
+    case "splits":
+      return <Splits {...state} />;
+    case "tip":
+      return <Tip {...state} />;
+    case "summary":
+      return <Summary {...state} />;
+    case "submit":
+      return <Submit {...state} />;
 
-  if (state.step === "splits") {
-    return (
-      <Splits
-        {...state}
-        liquidSplitPct={
-          state.liquidSplitPct ?? state.init.widgetConfig?.liquidSplitPct
-        }
-      />
-    );
+    default:
+      state.step satisfies "tx";
+      return (
+        <Result {...state} classes="justify-self-center p-4 @md/steps:p-8" />
+      );
   }
-
-  if (state.step === "tip") return <Tip {...state} />;
-
-  if (state.step === "summary") return <Summary {...state} />;
-
-  if (state.step === "submit") return <Submit {...state} />;
-
-  state.step satisfies "tx";
-  return <Result {...state} classes="justify-self-center p-4 @md/steps:p-8" />;
 }
