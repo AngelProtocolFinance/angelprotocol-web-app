@@ -84,16 +84,12 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
   return (
     <FormContainer
       methods={methods}
-      onSubmit={handleSubmit(({ frequency, ...fv }) =>
+      onSubmit={handleSubmit((fv) =>
         setState(
           {
             ...props,
             step: "splits",
-            details: {
-              ...fv,
-              method: "stripe",
-              frequency: frequency as Exclude<FV["frequency"], "">,
-            },
+            details: { ...fv, method: "stripe" },
           },
           (prev) => isNewMethod(prev, "stripe")
         )

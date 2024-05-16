@@ -20,11 +20,7 @@ export default function Form(props: CryptoFormStep) {
 
   function submit(data: DonateValues) {
     setState(
-      {
-        ...props,
-        step: "splits",
-        details: { ...data, method: "crypto" },
-      },
+      { ...props, step: "splits", details: { ...data, method: "crypto" } },
       (prev) => isNewMethod(prev, "crypto")
     );
     reset();
