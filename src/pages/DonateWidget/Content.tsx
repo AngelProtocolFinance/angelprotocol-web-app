@@ -55,6 +55,7 @@ export default function Content({
       )}
 
       <Steps
+        mode="live"
         className="mt-5 w-full md:w-3/4 border border-gray-l4"
         recipient={recipient}
         widgetConfig={config}

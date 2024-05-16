@@ -47,6 +47,7 @@ function Content(props: Props) {
         {/** small screen but space is still enough to render sidebar */}
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps
+            mode="live"
             recipient={props.recipient}
             widgetConfig={null}
             className="md:border border-gray-l4 rounded-lg row-start-2"

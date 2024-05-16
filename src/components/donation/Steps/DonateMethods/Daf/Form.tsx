@@ -49,6 +49,7 @@ export default function Form(props: Props) {
             intentId: "",
             liquidSplitPct: 50,
             donor: { firstName: "", lastName: "", email: "" },
+            tip: undefined,
           },
           (prev) => isNewMethod(prev, "daf")
         )

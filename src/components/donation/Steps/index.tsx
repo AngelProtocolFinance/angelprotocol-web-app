@@ -6,10 +6,12 @@ import type {
   DonationRecipient,
   DonationState,
   Init,
+  Mode,
   WidgetConfig,
 } from "./types";
 
 type Props = {
+  mode: Mode;
   widgetConfig: WidgetConfig | null;
   recipient: DonationRecipient;
   intent?: DonationIntent;
@@ -34,8 +36,9 @@ function initialState({
   intent,
   widgetConfig,
   recipient,
+  mode,
 }: Omit<Props, "className">): DonationState {
-  const init: Init = { widgetConfig, recipient };
+  const init: Init = { widgetConfig, recipient, mode };
 
   if (!intent) return { step: "donate-form", init };
 
@@ -57,7 +60,7 @@ function initialState({
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
       donor: intent.donor,
-      intentId: intent.id,
+      intentId: intent.transactionId,
     };
   }
   return {
@@ -76,6 +79,6 @@ function initialState({
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },
     donor: intent.donor,
-    intentId: intent.id,
+    intentId: intent.transactionId,
   };
 }

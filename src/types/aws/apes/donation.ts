@@ -48,7 +48,7 @@ export type FiatDonation = {
   source: DonationSource;
 };
 
-export type DonationIntent = { id: string } & (
+export type DonationIntent = { transactionId: string } & (
   | (CryptoDonation & { token: Token })
   | (FiatDonation & {
       currency: Currency;

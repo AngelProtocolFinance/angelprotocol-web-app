@@ -51,8 +51,10 @@ export type DonationDetails =
   | CryptoDonationDetails
   | StocksDonationDetails
   | DafDonationDetails;
+export type Mode = "live" | "preview";
 
 export type Init = {
+  mode: Mode;
   recipient: DonationRecipient;
   widgetConfig: WidgetConfig | null;
 };
@@ -77,18 +79,19 @@ export type SplitsStep = {
 export type TipFormat = "pct" | "amount";
 export type TipStep = {
   step: "tip";
-  tip?: { value: number; format: TipFormat };
+  //tip can be skipped
+  tip: { value: number; format: TipFormat } | undefined;
 } & From<SplitsStep>;
 
 export type SummaryStep = {
   step: "summary";
   donor?: Donor;
   intentId?: string;
-} & From<TipStep, "tip">; //tip is skipped
+} & From<TipStep>; //tip is skipped
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
+} & Omit<From<SummaryStep>, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
@@ -102,7 +105,7 @@ export type TxStatus =
 export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;
-} & From<CryptoSubmitStep, "tip">; //tip is skipped
+} & From<CryptoSubmitStep>;
 
 export type DonationState =
   | FormStep

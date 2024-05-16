@@ -46,6 +46,7 @@ export default function Form(
             intentId: "",
             liquidSplitPct: 50,
             donor: { firstName: "", lastName: "", email: "" },
+            tip: undefined,
           },
           (prev) => isNewMethod(prev, "stocks")
         )

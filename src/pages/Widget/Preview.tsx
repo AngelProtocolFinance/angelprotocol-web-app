@@ -31,6 +31,7 @@ export default function Preview({ classes = "" }) {
             </p>
           )}
           <Steps
+            mode="preview"
             key={JSON.stringify(config)}
             className="my-5 @md/preview:w-3/4 border border-gray-l4"
             widgetConfig={config}
