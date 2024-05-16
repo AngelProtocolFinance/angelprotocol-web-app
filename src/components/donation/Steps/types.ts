@@ -79,14 +79,14 @@ export type TipFormat = "pct" | "amount";
 export type TipStep = {
   step: "tip";
   //tip can be skipped
-  tip: { value: number; format: TipFormat } | undefined;
+  tip: undefined | { value: number; format: TipFormat } | undefined;
 } & From<SplitsStep>;
 
 export type SummaryStep = {
   step: "summary";
   donor?: Donor;
   intentId?: string;
-} & From<TipStep>; //tip is skipped
+} & From<TipStep>; 
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
