@@ -20,7 +20,7 @@ export default function Summary(props: SummaryStep) {
   const user = useGetter((state) => state.auth.user);
   const [cryptoIntent, { isLoading: isCreatingCryptoIntent }] =
     useLazyCreateCryptoIntentQuery();
-  const [getStripeIntent, { isLoading: isCreatingStripeInntent }] =
+  const [getStripeIntent, { isLoading: isCreatingStripeIntent }] =
     useLazyStripePaymentIntentQuery();
 
   type IntentCreator = (donor: Donor) => Promise<string>;
@@ -81,7 +81,6 @@ export default function Summary(props: SummaryStep) {
   })();
 
   async function createIntent(donor: Donor) {
-    if (init.widgetConfig?.isPreview) return;
     setState({
       ...props,
       step: "submit",
@@ -89,6 +88,9 @@ export default function Summary(props: SummaryStep) {
       intentId: intentId ? await intentId(donor) : "not needed",
     });
   }
+
+  const isCreatingIntent = isCreatingCryptoIntent || isCreatingStripeIntent;
+  const isContinueDisabled = isCreatingIntent || props.init.mode === "preview";
 
   return (
     <SummaryContainer
@@ -114,7 +116,8 @@ export default function Summary(props: SummaryStep) {
       <DonorForm
         submitBtn={
           <ContinueBtn
-            disabled={isCreatingCryptoIntent || isCreatingStripeInntent}
+            disabled={isContinueDisabled}
+            isLoading={isCreatingIntent}
             type="submit"
             className="px-4 col-span-full"
             text="Checkout"

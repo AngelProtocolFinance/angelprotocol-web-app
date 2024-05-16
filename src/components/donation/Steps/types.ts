@@ -11,7 +11,6 @@ import type { TokenWithAmount, TxPackage } from "types/tx";
 export type WidgetConfig = {
   splitDisabled: boolean;
   liquidSplitPct: number;
-  isPreview?: boolean;
 };
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
