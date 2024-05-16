@@ -43,13 +43,8 @@ export default function Form(props: Props) {
         setState(
           {
             ...props,
-            step: "submit",
+            step: "splits",
             details: { ...fv, method: "daf" },
-            //provide skipped steps
-            intentId: "",
-            liquidSplitPct: 50,
-            donor: { firstName: "", lastName: "", email: "" },
-            tip: undefined,
           },
           (prev) => isNewMethod(prev, "daf")
         )

@@ -40,13 +40,8 @@ export default function Form(
         setState(
           {
             ...props,
-            step: "submit",
+            step: "splits",
             details: { ...fv, method: "stocks", numShares: +fv.numShares },
-            //provide skipped steps
-            intentId: "",
-            liquidSplitPct: 50,
-            donor: { firstName: "", lastName: "", email: "" },
-            tip: undefined,
           },
           (prev) => isNewMethod(prev, "stocks")
         )
