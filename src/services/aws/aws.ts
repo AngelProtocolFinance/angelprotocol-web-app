@@ -239,6 +239,7 @@ const endowCardObj: {
   sdgs: "",
   id: "",
   card_img: "",
+  logo: "",
   kyc_donors_only: "",
   name: "",
   tagline: "",

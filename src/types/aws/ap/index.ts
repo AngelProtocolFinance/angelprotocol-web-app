@@ -85,6 +85,7 @@ export type EndowmentCard = Pick<
   Endowment,
   | "id"
   | "card_img"
+  | "logo" //used as fallback when card_img is not set
   | "name"
   | "tagline"
   | "hq_country"
