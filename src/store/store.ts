@@ -9,14 +9,12 @@ import { wordpress } from "services/wordpress";
 import auth, { loadSession, reset } from "slices/auth";
 import { componentReducer } from "slices/components";
 import gift from "slices/gift";
-import widget from "slices/widget";
 
 export const store = configureStore({
   reducer: {
     gift,
     auth,
     component: componentReducer,
-    widget,
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,
     [coingecko.reducerPath]: coingecko.reducer,

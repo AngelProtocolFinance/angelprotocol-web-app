@@ -3,11 +3,12 @@ import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useLocation } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
-
 import type { Endowment } from "types/aws";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
+import { useState } from "react";
+import { WidgetConfig } from "types/widget";
 
 export default function Widget({ endowId = 0 }: { endowId?: number }) {
   const queryState = useEndowment(
@@ -32,6 +33,16 @@ function Content({
   >;
 }) {
   const location = useLocation();
+  const [state, setState] = useState<WidgetConfig>({
+    endowment: endowment || {
+      id: 0,
+      name: "this nonprofit",
+      hide_bg_tip: false,
+    },
+    isDescriptionTextShown: true,
+    liquidSplitPct: 50,
+    splitDisabled: false,
+  });
 
   return (
     <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
@@ -52,10 +63,13 @@ function Content({
         website and you're ready to go!
       </p>
       <div className="w-full">
-        <Configurer endowment={endowment} />
-        <Snippet classes="mt-10" />
+        <Configurer config={state} setConfig={setState} />
+        <Snippet config={state} classes="mt-10" />
       </div>
-      <Preview classes="order-last @4xl/widget:order-none @4xl/widget:mt-0 mt-10" />
+      <Preview
+        config={state}
+        classes="order-last @4xl/widget:order-none @4xl/widget:mt-0 mt-10"
+      />
     </div>
   );
 }
