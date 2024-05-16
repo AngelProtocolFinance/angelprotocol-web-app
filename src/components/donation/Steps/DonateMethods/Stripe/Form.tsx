@@ -12,7 +12,7 @@ import { userIsSignedIn } from "types/auth";
 import type { Currency, DetailedCurrency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
-import { isNewMethod } from "../helpers";
+import { isNewMethod, nextFormState } from "../helpers";
 import Frequency from "./Frequency";
 import Incrementers from "./Incrementers";
 import type { FormValues as FV, Props } from "./types";
@@ -85,13 +85,8 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
     <FormContainer
       methods={methods}
       onSubmit={handleSubmit((fv) =>
-        setState(
-          {
-            ...props,
-            step: "splits",
-            details: { ...fv, method: "stripe" },
-          },
-          (prev) => isNewMethod(prev, "stripe")
+        setState(nextFormState(props, { ...fv, method: "stripe" }), (prev) =>
+          isNewMethod(prev, "stripe")
         )
       )}
       className="grid gap-4"

@@ -10,22 +10,26 @@ import type {
   WidgetConfig,
 } from "./types";
 
-type Props = {
+type Components = {
   mode: Mode;
   widgetConfig: WidgetConfig | null;
   recipient: DonationRecipient;
   intent?: DonationIntent;
-  className?: string;
+};
+type InitState = {
+  init: DonationState;
 };
 
-export function Steps(props: Props) {
+type Props = {
+  className?: string;
+} & (Components | InitState);
+
+export function Steps({ className = "", ...props }: Props) {
   return (
     <div
-      className={`grid ${
-        props.className ?? ""
-      } w-full @container/steps overflow-clip bg-white min-h-96`}
+      className={`grid ${className} w-full @container/steps overflow-clip bg-white min-h-96`}
     >
-      <Context {...initialState(props)}>
+      <Context {...("init" in props ? props.init : initialState(props))}>
         <CurrentStep />
       </Context>
     </div>
@@ -37,7 +41,7 @@ function initialState({
   widgetConfig,
   recipient,
   mode,
-}: Omit<Props, "className">): DonationState {
+}: Components): DonationState {
   const init: Init = { widgetConfig, recipient, mode };
 
   if (!intent) return { step: "donate-form", init };

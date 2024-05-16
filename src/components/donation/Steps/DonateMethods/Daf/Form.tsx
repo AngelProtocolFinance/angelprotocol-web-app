@@ -6,7 +6,7 @@ import { schema, stringNumber } from "schemas/shape";
 import type { DetailedCurrency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
-import { isNewMethod } from "../helpers";
+import { isNewMethod, nextFormState } from "../helpers";
 import type { FormValues as FV, Props } from "./types";
 
 /**
@@ -40,13 +40,8 @@ export default function Form(props: Props) {
     <FormContainer
       methods={methods}
       onSubmit={handleSubmit((fv) =>
-        setState(
-          {
-            ...props,
-            step: "splits",
-            details: { ...fv, method: "daf" },
-          },
-          (prev) => isNewMethod(prev, "daf")
+        setState(nextFormState(props, { ...fv, method: "daf" }), (prev) =>
+          isNewMethod(prev, "daf")
         )
       )}
       className="grid gap-4"

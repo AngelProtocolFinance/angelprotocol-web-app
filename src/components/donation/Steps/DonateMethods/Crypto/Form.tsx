@@ -8,7 +8,7 @@ import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import type { CryptoFormStep } from "../../types";
-import { isNewMethod } from "../helpers";
+import { isNewMethod, nextFormState } from "../helpers";
 import { initToken } from "./constants";
 import type { DonateValues } from "./types";
 
@@ -19,9 +19,8 @@ export default function Form(props: CryptoFormStep) {
     useFormContext<DonateValues>();
 
   function submit(data: DonateValues) {
-    setState(
-      { ...props, step: "splits", details: { ...data, method: "crypto" } },
-      (prev) => isNewMethod(prev, "crypto")
+    setState(nextFormState(props, { ...data, method: "crypto" }), (prev) =>
+      isNewMethod(prev, "crypto")
     );
     reset();
   }
