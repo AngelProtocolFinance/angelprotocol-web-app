@@ -120,7 +120,9 @@ function Form({
         // validation must be dynamicly set depending on which exact currency is selected
         tooltip={createTooltip(currency)}
       />
-      {currency.code === USD_CODE && <Incrementers />}
+      {currency.rate && (
+        <Incrementers code={currency.code} rate={currency.rate} />
+      )}
 
       <p className="text-sm dark:text-navy-l2 mt-4">
         Please click the button below and follow the instructions provided to
