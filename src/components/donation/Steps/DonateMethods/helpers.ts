@@ -24,9 +24,9 @@ export const nextFormState = (
 
   const toPersist: DonationState =
     prev.details?.method === details.method
-      ? //persist everything if of the same method
-        { ...prev, ...("tip" in prev ? { tip: newTip } : {}) }
-      : { init: prev.init, step: "donate-form" };
+      ? { ...prev, ...("tip" in prev ? { tip: newTip } : {}) }
+      : //reset if of different method
+        { init: prev.init, step: "donate-form" };
 
   if (prev.init.widgetConfig?.splitDisabled) {
     return {
