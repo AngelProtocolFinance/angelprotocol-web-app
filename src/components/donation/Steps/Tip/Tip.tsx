@@ -96,7 +96,14 @@ export default function Tip(props: TipStep) {
     >
       <BackBtn
         type="button"
-        onClick={() => setState({ ...props, step: "splits" })}
+        onClick={() =>
+          setState({
+            ...props,
+            step: props.init.widgetConfig?.splitDisabled
+              ? "donate-form"
+              : "splits",
+          })
+        }
       />
       <h4 className="mt-4 text-lg">
         One-Time Donation to{" "}
