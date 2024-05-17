@@ -9,7 +9,12 @@ export default function Settings() {
     data: endow,
     isLoading,
     isError,
-  } = useEndowment({ id }, ["receiptMsg", "sfCompounded", "hide_bg_tip"]);
+  } = useEndowment({ id }, [
+    "receiptMsg",
+    "sfCompounded",
+    "hide_bg_tip",
+    "programDonateAllowed",
+  ]);
 
   if (isLoading) {
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;
