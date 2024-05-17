@@ -54,7 +54,7 @@ function initialState({
   if ("chainId" in intent) {
     return {
       init,
-      step: "summary",
+      step: "submit",
       details: {
         method: "crypto",
         chainId: {
@@ -73,7 +73,7 @@ function initialState({
   }
   return {
     init,
-    step: "summary",
+    step: "submit",
     details: {
       method: "stripe",
       amount: `${intent.amount}`,

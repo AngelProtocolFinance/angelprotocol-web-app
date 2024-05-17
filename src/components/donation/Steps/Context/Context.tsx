@@ -17,7 +17,8 @@ import type { CryptoSubmitStep, DonationState, TxStatus } from "../types";
 
 type CryptoSubmitter = (
   txPackage: TxPackage,
-  data: CryptoSubmitStep
+  data: CryptoSubmitStep,
+  txId: string
 ) => Promise<void>;
 
 type StateSetter = (
@@ -51,11 +52,14 @@ export default function Context({
 
   const submitCrypto: CryptoSubmitter = async (
     txPackage: TxPackage,
-    data: CryptoSubmitStep
+    data: CryptoSubmitStep,
+    txId
   ) => {
     const updateTx = (status: TxStatus) => set({ ...data, step: "tx", status });
 
     try {
+      updateTx({ loadingMsg: "Payment is being processed..." });
+
       const result = await sendTx(txPackage);
 
       if (isTxResultError(result)) {
@@ -69,7 +73,7 @@ export default function Context({
 
       const { guestDonor } = await confirmIntent({
         txHash: hash,
-        txId: data.checkoutId,
+        txId,
       }).unwrap();
 
       updateTx({ hash, guestDonor });

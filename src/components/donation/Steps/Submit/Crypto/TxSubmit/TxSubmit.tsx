@@ -84,7 +84,8 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
         type="button"
         onClick={
           intentId && wallet && estimate && isSuccess(estimate)
-            ? () => submitCrypto(txPackage(estimate, wallet), donation)
+            ? () =>
+                submitCrypto(txPackage(estimate, wallet), donation, intentId)
             : undefined
         }
         disabled={!intentId || !wallet || !estimate || !isSuccess(estimate)}
