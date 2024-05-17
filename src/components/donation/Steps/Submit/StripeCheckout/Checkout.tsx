@@ -8,7 +8,6 @@ import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import ErrorTrigger from "errors/ErrorTrigger";
 import { type FormEventHandler, useState } from "react";
-import type { DonationSource } from "types/lists";
 import type { StripeCheckoutStep } from "../../types";
 import Loader from "../Loader";
 

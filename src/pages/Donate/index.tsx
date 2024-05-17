@@ -9,10 +9,13 @@ import Content from "./Content";
 
 export default function Donate() {
   const location = useLocation();
+  //setter of this should make sure that intent.endowmentId is the same as this page's param.id
   const intent = location.state as DonationIntent | undefined;
+
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const queryState = useEndowment({ id: intent?.endowmentId ?? numId }, [
+
+  const queryState = useEndowment({ id: numId }, [
     "id",
     "image",
     "logo",
