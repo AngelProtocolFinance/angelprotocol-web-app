@@ -136,7 +136,7 @@ export const apes = createApi({
 
 export const {
   useCapturePayPalOrderMutation,
-  useLazyCreateCryptoIntentQuery,
+  useCreateCryptoIntentQuery,
   useConfirmCryptoIntentMutation,
   useLazyIntentQuery,
   useFiatCurrenciesQuery,
