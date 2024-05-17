@@ -2,6 +2,7 @@ import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { idParamToNum } from "helpers";
+import { useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import type { DonationIntent } from "types/aws";
@@ -9,11 +10,14 @@ import Content from "./Content";
 
 export default function Donate() {
   const location = useLocation();
-  /*setter of this should make sure that intent.endowmentId is the same
-   * as this page's param.id. In addition, intent (window.history.state) should be cleared
-   * by submit processes
-   */
+
+  //setter of this should make sure that intent.endowmentId is the same as this page's param.id.
   const intent = location.state as DonationIntent | undefined;
+
+  //clear window.history.state after loading the intent into memory
+  useEffect(() => {
+    window.history.replaceState({}, "");
+  }, []);
 
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);

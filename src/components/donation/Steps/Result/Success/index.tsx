@@ -18,6 +18,7 @@ type Props = {
 
 export default function Success({ classes, guestDonor, recipient }: Props) {
   const user = useGetter((state) => state.auth.user);
+
   return (
     <div className={`grid justify-items-center ${classes}`}>
       <div
