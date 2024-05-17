@@ -25,7 +25,7 @@ export default function Form(props: Props) {
       receiptMsg: props.receiptMsg ?? "",
       sfCompounded: props.sfCompounded ?? false,
       hide_bg_tip: props.hide_bg_tip ?? false,
-      programDonateDisabled: !(props.programDonateAllowed ?? true),
+      programDonateDisabled: !(props.progDonationsAllowed ?? true),
     },
   });
 
@@ -46,7 +46,7 @@ export default function Form(props: Props) {
       onSubmit={handleSubmit(async ({ programDonateDisabled, ...fv }) => {
         await updateEndow({
           ...fv,
-          programDonateAllowed: !programDonateDisabled,
+          progDonationsAllowed: !programDonateDisabled,
           id: props.id,
         });
       })}
@@ -73,9 +73,9 @@ export default function Form(props: Props) {
           Disable Program-based donations
         </CheckField>
         <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
-          Program based donations are allowed by default, enabling donors to
+          Program-based donations are allowed by default, enabling donors to
           select a specifc Program they wish to put their donation towards. You
-          may opt-in or out of Program-based donations at any time
+          may opt-in or out of Program-based donations at any time.
         </p>
       </div>
 

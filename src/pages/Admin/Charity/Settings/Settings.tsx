@@ -13,7 +13,7 @@ export default function Settings() {
     "receiptMsg",
     "sfCompounded",
     "hide_bg_tip",
-    "programDonateAllowed",
+    "progDonationsAllowed",
   ]);
 
   if (isLoading) {
