@@ -1,4 +1,5 @@
 import type { DonationSource } from "types/lists";
+import type { Ensure } from "types/utils";
 import type { Token } from ".";
 
 export type Donor = {
@@ -24,11 +25,13 @@ export type ReceiptPayload = {
 };
 
 export type CryptoDonation = {
+  transactionId?: string;
   amount: number;
   tipAmount: number;
   denomination: string;
   endowmentId: number;
   chainId: string;
+  walletAddress?: string;
   /** 1 - 100 */
   splitLiq: number;
   chainName: string;
@@ -37,6 +40,7 @@ export type CryptoDonation = {
 };
 
 export type FiatDonation = {
+  transactionId?: string;
   /** Denominated in USD. */
   amount: number;
   tipAmount: number;
@@ -48,13 +52,13 @@ export type FiatDonation = {
   source: DonationSource;
 };
 
-export type DonationIntent = { transactionId: string } & (
-  | (CryptoDonation & { token: Token })
-  | (FiatDonation & {
+export type DonationIntent =
+  //donation records always have transactionId
+  | (Ensure<CryptoDonation, "transactionId"> & { token: Token })
+  | (Ensure<FiatDonation, "transactionId"> & {
       currency: Currency;
       frequency: FiatPaymentFrequency;
-    })
-);
+    });
 
 export type FiatPaymentFrequency = "one-time" | "subscription";
 

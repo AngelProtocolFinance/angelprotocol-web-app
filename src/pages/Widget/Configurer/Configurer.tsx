@@ -1,12 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LockedSplitSlider } from "components/donation/Steps/Splits";
 import { CheckField, Form } from "components/form";
+import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import type { WidgetConfig } from "types/widget";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
-import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   classes?: string;

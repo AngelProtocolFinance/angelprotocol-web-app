@@ -39,7 +39,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       <ErrorBoundary>
         <Elements
           options={{
-            clientSecret: props.intentId,
+            clientSecret: props.checkoutId,
             appearance: { theme: "stripe" },
           }}
           stripe={stripePromise}

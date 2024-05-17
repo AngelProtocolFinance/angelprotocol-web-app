@@ -8,7 +8,7 @@ import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
-import type { DonationRecord } from "types/aws";
+import type { DonationIntent } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
@@ -16,7 +16,7 @@ type Props = {
   logo: string;
   banner: string;
   tagline?: string;
-  intentRecord?: DonationRecord;
+  intent?: DonationIntent;
   recipient: DonationRecipient;
 };
 
@@ -48,6 +48,7 @@ function Content(props: Props) {
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps
             mode="live"
+            intent={props.intent}
             recipient={props.recipient}
             widgetConfig={null}
             className="md:border border-gray-l4 rounded-lg row-start-2"

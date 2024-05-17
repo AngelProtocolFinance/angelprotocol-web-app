@@ -30,6 +30,7 @@ export default function Summary(props: SummaryStep) {
         const intent: IntentCreator = (donor) =>
           cryptoIntent(
             {
+              transactionId: init.intentId,
               amount: +details.token.amount,
               tipAmount: tip?.value ?? 0,
               chainId: details.chainId.value,
@@ -56,6 +57,7 @@ export default function Summary(props: SummaryStep) {
         const intent: IntentCreator = (donor: Donor) =>
           getStripeIntent(
             {
+              transactionId: init.intentId,
               type: details.frequency,
               amount: +details.amount,
               tipAmount: tip?.value ?? 0,
@@ -85,7 +87,7 @@ export default function Summary(props: SummaryStep) {
       ...props,
       step: "submit",
       donor,
-      intentId: intentId ? await intentId(donor) : "not used intent",
+      checkoutId: intentId ? await intentId(donor) : "not used intent",
     });
   }
 

@@ -2,10 +2,10 @@ import character from "assets/laira/laira-waiving.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import Image from "components/Image/Image";
-import { DonationState, Steps } from "components/donation";
+import { type DonationState, Steps } from "components/donation";
 import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import { WidgetConfig } from "types/widget";
+import type { WidgetConfig } from "types/widget";
 
 type Props = {
   classes?: string;

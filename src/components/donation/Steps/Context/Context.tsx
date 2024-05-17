@@ -69,7 +69,7 @@ export default function Context({
 
       const { guestDonor } = await confirmIntent({
         txHash: hash,
-        txId: data.intentId,
+        txId: data.checkoutId,
       }).unwrap();
 
       updateTx({ hash, guestDonor });

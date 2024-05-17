@@ -56,6 +56,8 @@ export type Init = {
   mode: Mode;
   recipient: DonationRecipient;
   widgetConfig: WidgetConfig | null;
+  /** intent to resume */
+  intentId?: string;
 };
 
 export type FormStep<T extends DonationDetails = DonationDetails> = {
@@ -85,8 +87,9 @@ export type TipStep = {
 export type SummaryStep = {
   step: "summary";
   donor?: Donor;
-  intentId?: string;
-} & From<TipStep>; 
+  /**  clientSecret for stripe or intentId to confirm for crypto */
+  checkoutId?: string;
+} & From<TipStep>;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";

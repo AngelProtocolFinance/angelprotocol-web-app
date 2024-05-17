@@ -1,14 +1,14 @@
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import type { Endowment } from "types/aws";
+import type { WidgetConfig } from "types/widget";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
-import { useState } from "react";
-import { WidgetConfig } from "types/widget";
 
 export default function Widget({ endowId = 0 }: { endowId?: number }) {
   const queryState = useEndowment(

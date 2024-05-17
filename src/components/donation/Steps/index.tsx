@@ -42,14 +42,19 @@ function initialState({
   recipient,
   mode,
 }: Components): DonationState {
-  const init: Init = { widgetConfig, recipient, mode };
+  const init: Init = {
+    widgetConfig,
+    recipient,
+    mode,
+    intentId: intent?.transactionId,
+  };
 
   if (!intent) return { step: "donate-form", init };
 
   if ("chainId" in intent) {
     return {
       init,
-      step: "submit",
+      step: "summary",
       details: {
         method: "crypto",
         chainId: {
@@ -64,12 +69,11 @@ function initialState({
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
       donor: intent.donor,
-      intentId: intent.transactionId,
     };
   }
   return {
     init,
-    step: "submit",
+    step: "summary",
     details: {
       method: "stripe",
       amount: `${intent.amount}`,
@@ -83,6 +87,5 @@ function initialState({
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },
     donor: intent.donor,
-    intentId: intent.transactionId,
   };
 }

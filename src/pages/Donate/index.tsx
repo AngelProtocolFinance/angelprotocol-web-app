@@ -4,17 +4,15 @@ import { APP_NAME, BASE_URL } from "constants/env";
 import { idParamToNum } from "helpers";
 import { useLocation, useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
-import type { DonationRecord } from "types/aws";
+import type { DonationIntent } from "types/aws";
 import Content from "./Content";
 
 export default function Donate() {
   const location = useLocation();
-
-  //navigate caller must make sure that /:id is the same as intentRecord.id
-  const intentRecord = location.state as DonationRecord | undefined;
+  const intent = location.state as DonationIntent | undefined;
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const queryState = useEndowment({ id: numId }, [
+  const queryState = useEndowment({ id: intent?.endowmentId ?? numId }, [
     "id",
     "image",
     "logo",
@@ -52,7 +50,7 @@ export default function Donate() {
             tagline={endow.tagline}
             logo={endow.card_img || endow.logo || ""}
             banner={endow.image || ""}
-            intentRecord={intentRecord}
+            intent={intent}
           />
         </>
       )}

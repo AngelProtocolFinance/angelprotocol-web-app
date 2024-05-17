@@ -138,7 +138,7 @@ export const {
   useCapturePayPalOrderMutation,
   useLazyCreateCryptoIntentQuery,
   useConfirmCryptoIntentMutation,
-  useIntentQuery,
+  useLazyIntentQuery,
   useFiatCurrenciesQuery,
   useLazyStripePaymentIntentQuery,
   usePaypalOrderMutation,
