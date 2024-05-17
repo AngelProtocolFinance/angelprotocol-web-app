@@ -9,7 +9,10 @@ import Content from "./Content";
 
 export default function Donate() {
   const location = useLocation();
-  //setter of this should make sure that intent.endowmentId is the same as this page's param.id
+  /*setter of this should make sure that intent.endowmentId is the same
+   * as this page's param.id. In addition, intent (window.history.state) should be cleared
+   * by submit processes
+   */
   const intent = location.state as DonationIntent | undefined;
 
   const { id } = useParams<{ id: string }>();
