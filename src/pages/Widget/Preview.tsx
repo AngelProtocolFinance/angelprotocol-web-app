@@ -5,6 +5,7 @@ import Image from "components/Image/Image";
 import { type DonationState, Steps } from "components/donation";
 import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
+import { useEndowment } from "services/aws/useEndowment";
 import type { WidgetConfig } from "types/widget";
 
 type Props = {
@@ -15,11 +16,13 @@ export default function Preview({ classes = "", config }: Props) {
   const { endowment, ...restConfig } = config;
   const endowName = config.endowment.name;
 
+  const { data } = useEndowment({ id: endowment.id }, ["hide_bg_tip"]);
+
   const initState: DonationState = {
     step: "donate-form",
     init: {
       mode: "preview",
-      recipient: endowment,
+      recipient: { ...endowment, hide_bg_tip: data?.hide_bg_tip },
       widgetConfig: restConfig,
     },
     details: {

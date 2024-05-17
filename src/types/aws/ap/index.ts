@@ -95,7 +95,7 @@ export type EndowmentCard = Pick<
   | "kyc_donors_only"
   | "claimed"
 >;
-export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
+export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
