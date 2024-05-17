@@ -87,8 +87,6 @@ export type TipStep = {
 export type SummaryStep = {
   step: "summary";
   donor?: Donor;
-  /**  clientSecret for stripe or intentId to confirm for crypto */
-  checkoutId?: string;
 } & From<TipStep>;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {

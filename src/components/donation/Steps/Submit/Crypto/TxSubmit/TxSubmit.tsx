@@ -5,12 +5,12 @@ import { humanize } from "helpers";
 import { useEffect, useState } from "react";
 import { useCreateCryptoIntentQuery } from "services/apes";
 import type { ConnectedWallet } from "types/wallet";
+import { useDonationState } from "../../../Context";
 import ContinueBtn from "../../../common/ContinueBtn";
+import type { CryptoSubmitStep } from "../../../types";
 import { type EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
 import { txPackage } from "./txPackage";
-import { CryptoSubmitStep } from "../../../types";
-import { useDonationState } from "../../../Context";
 
 type Props = {
   classes?: string;

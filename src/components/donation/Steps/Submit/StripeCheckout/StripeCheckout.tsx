@@ -4,12 +4,12 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
 import { useStripePaymentIntentQuery } from "services/apes";
+import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
+import type { StripeCheckoutStep } from "../../types";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
-import { StripeCheckoutStep } from "../../types";
-import { useDonationState } from "../../Context";
 
 // Followed Stripe's custom flow docs
 // https://stripe.com/docs/payments/quickstart
