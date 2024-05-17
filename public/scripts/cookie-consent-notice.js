@@ -3,12 +3,7 @@
   o = d.getElementsByTagName("head")[0];
   g = d.createElement("script");
   g.async = 1;
-  g.src =
-    "https://app.complydog.com/cookie-consent-tool.js" +
-    "?v=" +
-    c.cdogSettings.version +
-    "&website=" +
-    window.location.href;
+  g.src = "/scripts/complydog-sans-quill.min.js";
   g.setAttribute("cdog-campaign", c.cdogSettings.campaignId);
   !c.cdogInit ? o.appendChild(g) : "";
 })(window, document);
