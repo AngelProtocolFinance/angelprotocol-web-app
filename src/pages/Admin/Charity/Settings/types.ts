@@ -1,5 +1,6 @@
 export type FV = {
   receiptMsg: string;
-  isSfCompounded: boolean;
-  hideBgTip: boolean;
+  hide_bg_tip: boolean;
+  sfCompounded: boolean;
+  programDonateDisabled: boolean;
 };

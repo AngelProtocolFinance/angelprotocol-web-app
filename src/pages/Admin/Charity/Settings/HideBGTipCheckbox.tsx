@@ -4,7 +4,7 @@ import type { FV } from "./types";
 export default function HideBGTipCheckbox() {
   return (
     <div className="grid gap-2">
-      <CheckField<FV> name="hideBgTip" classes="font-medium">
+      <CheckField<FV> name="hide_bg_tip" classes="font-medium">
         Opt out of tip-based donations
       </CheckField>
       <span className="text-xs sm:text-sm italic text-navy-l1">

@@ -77,6 +77,8 @@ export type Endowment = {
   hide_bg_tip?: boolean;
   sfCompounded?: boolean;
   published?: boolean;
+  /** allowed by default */
+  progDonationsAllowed?: boolean;
 };
 
 export type EndowmentProfile = Endowment;
@@ -97,21 +99,24 @@ export type EndowmentCard = Pick<
 >;
 export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 
+export type EndowmentSettingsAttributes = Extract<
+  keyof Endowment,
+  "receiptMsg" | "sfCompounded" | "hide_bg_tip" | "progDonationsAllowed"
+>;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
   | "endow_designation"
   | "fiscal_sponsored"
-  | "receiptMsg"
   | "claimed"
-  | "hide_bg_tip"
+  | EndowmentSettingsAttributes
 > & {
   endow_designation: EndowDesignation | "";
 };
 
 export type EndowmentSettingsUpdate = Pick<
   Required<Endowment>,
-  "id" | "receiptMsg" | "sfCompounded" | "hide_bg_tip"
+  EndowmentSettingsAttributes
 >;
 
 export type NewProgram = Omit<Program, "id" | "milestones"> & {

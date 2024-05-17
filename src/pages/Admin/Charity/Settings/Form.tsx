@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CheckField, Form as _Form } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
-import type { Endowment } from "types/aws";
+import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
 import { string } from "yup";
 import { useUpdateEndowment } from "../common";
 import HideBGTipCheckbox from "./HideBGTipCheckbox";
@@ -10,10 +10,7 @@ import ReceiptMsg from "./ReceiptMsg";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import type { FV } from "./types";
 
-type Props = Pick<
-  Endowment,
-  "id" | "receiptMsg" | "sfCompounded" | "hide_bg_tip"
->;
+type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
 
 export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();
@@ -26,8 +23,9 @@ export default function Form(props: Props) {
     ),
     values: {
       receiptMsg: props.receiptMsg ?? "",
-      isSfCompounded: props.sfCompounded ?? false,
-      hideBgTip: props.hide_bg_tip ?? false,
+      sfCompounded: props.sfCompounded ?? false,
+      hide_bg_tip: props.hide_bg_tip ?? false,
+      programDonateDisabled: !(props.progDonationsAllowed ?? true),
     },
   });
 
@@ -45,22 +43,18 @@ export default function Form(props: Props) {
         e.preventDefault();
         reset();
       }}
-      onSubmit={handleSubmit(async (fv) => {
+      onSubmit={handleSubmit(async ({ programDonateDisabled, ...fv }) => {
         await updateEndow({
-          receiptMsg: fv.receiptMsg,
+          ...fv,
+          progDonationsAllowed: !programDonateDisabled,
           id: props.id,
-          sfCompounded: fv.isSfCompounded,
-          hide_bg_tip: fv.hideBgTip,
         });
       })}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <ReceiptMsg />
       <div>
-        <CheckField<FV>
-          name="isSfCompounded"
-          classes={{ label: "font-medium" }}
-        >
+        <CheckField<FV> name="sfCompounded" classes={{ label: "font-medium" }}>
           Reinvest dividends from Sustainability Fund
         </CheckField>
         <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
@@ -68,6 +62,20 @@ export default function Form(props: Props) {
           giving your Sustainability Fund balance a boost and ensuring your
           mission has the support it needs to thrive. Your funds remain
           available to you as needed.
+        </p>
+      </div>
+
+      <div>
+        <CheckField<FV>
+          name="programDonateDisabled"
+          classes={{ label: "font-medium" }}
+        >
+          Disable Program-based donations
+        </CheckField>
+        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+          Program-based donations are allowed by default, enabling donors to
+          select a specifc Program they wish to put their donation towards. You
+          may opt-in or out of Program-based donations at any time.
         </p>
       </div>
 
