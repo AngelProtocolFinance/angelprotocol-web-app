@@ -30,7 +30,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
 
       type Payload = {
         /** csv */
-        endows: string;
+        endows?: string;
         "cognito:groups": string[];
         email: string;
       };
@@ -55,7 +55,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       return {
         token: idToken.toString(),
         groups,
-        endowments: endows.split(",").map(Number),
+        endowments: endows?.split(",").map(Number) ?? [],
         email: userEmail,
         firstName: userAttributes.givenName,
         lastName: userAttributes.familyName,
