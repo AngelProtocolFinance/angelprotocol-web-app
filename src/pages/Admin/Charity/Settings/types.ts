@@ -1,3 +1,6 @@
-import type { EndowmentSettingsUpdate } from "types/aws";
-
-export type FV = Omit<EndowmentSettingsUpdate, "id">;
+export type FV = {
+  receiptMsg: string;
+  hide_bg_tip: boolean;
+  sfCompounded: boolean;
+  programDonateDisabled: boolean;
+};

@@ -25,7 +25,7 @@ export default function Form(props: Props) {
       receiptMsg: props.receiptMsg ?? "",
       sfCompounded: props.sfCompounded ?? false,
       hide_bg_tip: props.hide_bg_tip ?? false,
-      programDonateAllowed: props.programDonateAllowed ?? true,
+      programDonateDisabled: !(props.programDonateAllowed ?? true),
     },
   });
 
@@ -43,8 +43,12 @@ export default function Form(props: Props) {
         e.preventDefault();
         reset();
       }}
-      onSubmit={handleSubmit(async (fv) => {
-        await updateEndow({ ...fv, id: props.id });
+      onSubmit={handleSubmit(async ({ programDonateDisabled, ...fv }) => {
+        await updateEndow({
+          ...fv,
+          programDonateAllowed: !programDonateDisabled,
+          id: props.id,
+        });
       })}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
@@ -58,6 +62,20 @@ export default function Form(props: Props) {
           giving your Sustainability Fund balance a boost and ensuring your
           mission has the support it needs to thrive. Your funds remain
           available to you as needed.
+        </p>
+      </div>
+
+      <div>
+        <CheckField<FV>
+          name="programDonateDisabled"
+          classes={{ label: "font-medium" }}
+        >
+          Disable Program-based donations
+        </CheckField>
+        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+          Program based donations are allowed by default, enabling donors to
+          select a specifc Program they wish to put their donation towards. You
+          may opt-in or out of Program-based donations at any time
         </p>
       </div>
 
