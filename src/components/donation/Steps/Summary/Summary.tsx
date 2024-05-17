@@ -16,10 +16,14 @@ import DonorForm from "./DonorForm";
 
 export default function Summary(props: SummaryStep) {
   const { details, liquidSplitPct, donor, tip, init } = props;
+
   const { setState } = useDonationState();
+
   const user = useGetter((state) => state.auth.user);
+
   const [cryptoIntent, { isLoading: isCreatingCryptoIntent }] =
     useLazyCreateCryptoIntentQuery();
+
   const [getStripeIntent, { isLoading: isCreatingStripeIntent }] =
     useLazyStripePaymentIntentQuery();
 
@@ -102,9 +106,14 @@ export default function Summary(props: SummaryStep) {
       amount={amount}
       splitLiq={liquidSplitPct}
       onBack={() =>
-        init.recipient.hide_bg_tip
-          ? setState({ ...props, step: "splits" })
-          : setState({ ...props, step: "tip" })
+        setState({
+          ...props,
+          step: init.recipient.hide_bg_tip
+            ? init.widgetConfig?.splitDisabled
+              ? "donate-form"
+              : "splits"
+            : "tip",
+        })
       }
       tip={
         tip
