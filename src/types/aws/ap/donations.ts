@@ -1,5 +1,4 @@
 import type { ChainID } from "types/chain";
-import type { DonationSource } from "types/lists";
 
 type DonorAddress = {
   line1: string;
@@ -37,7 +36,7 @@ export type DonationRecord = {
   /** ISODate string */
   date: string;
   symbol: string;
-  initAmount: string;
+  initAmount: number;
   initAmountUsd?: number;
   finalAmountUsd?: number;
   splitLiqPct: number;

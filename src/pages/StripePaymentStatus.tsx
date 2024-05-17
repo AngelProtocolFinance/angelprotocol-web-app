@@ -7,7 +7,6 @@ import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useCallback, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useStripePaymentStatusQuery } from "services/apes";
-import { useGetter } from "store/accessors";
 import type { GuestDonor } from "types/aws";
 import type { DonateFiatThanksState } from "./DonateFiatThanks";
 
@@ -35,13 +34,14 @@ export default function StripePaymentStatus() {
       }}
       classes={{ container: "place-self-center" }}
     >
-      {({ status, guestDonor, recipientName }) => (
+      {({ status, guestDonor, recipientName, recipientId }) => (
         <Content
           status={status}
           onMount={handleProcessing}
           isInWidget={isInWidget}
           guestDonor={guestDonor}
           recipientName={recipientName}
+          recipientId={recipientId}
         />
       )}
     </QueryLoader>
@@ -54,6 +54,7 @@ function Content(props: {
   isInWidget: boolean;
   guestDonor?: GuestDonor;
   recipientName?: string;
+  recipientId?: number;
 }) {
   switch (props.status) {
     case "succeeded":
@@ -67,6 +68,7 @@ function Content(props: {
             {
               guestDonor: props.guestDonor,
               recipientName: props.recipientName,
+              recipientId: props.recipientId,
             } satisfies DonateFiatThanksState
           }
         />
@@ -74,9 +76,9 @@ function Content(props: {
     case "processing":
       return <Processing onMount={props.onMount} />;
     case "canceled":
-      return <Unsuccessful />;
+      return <Unsuccessful recipientId={props.recipientId} />;
     default:
-      return <SomethingWentWrong />;
+      return <SomethingWentWrong recipientId={props.recipientId} />;
   }
 }
 function Processing({ onMount = () => {} }) {
@@ -91,7 +93,7 @@ function Processing({ onMount = () => {} }) {
   );
 }
 
-function Unsuccessful() {
+function Unsuccessful({ recipientId }: { recipientId?: number }) {
   return (
     <div className="justify-self-center display-block m-auto max-w-[35rem] pt-8 sm:pt-20 pb-20 scroll-mt-6">
       <Icon type="CloseCircle" size={96} className="text-green mb-4 mx-auto" />
@@ -103,7 +105,7 @@ function Unsuccessful() {
       </p>
       <Link
         //TODO: pick share PR from master
-        to={`${appRoutes.donate}/${1}`}
+        to={`${appRoutes.donate}/${recipientId}`}
         className="w-full sm:w-auto btn-blue btn-donate h-10 rounded-lg"
       >
         Back to the donation page
@@ -112,7 +114,7 @@ function Unsuccessful() {
   );
 }
 
-function SomethingWentWrong() {
+function SomethingWentWrong({ recipientId }: { recipientId?: number }) {
   return (
     <div className="justify-self-center display-block m-auto max-w-[35rem] pt-8 sm:pt-20 pb-20 scroll-mt-6">
       <Icon type="CloseCircle" size={96} className="text-green mb-4 mx-auto" />
@@ -125,7 +127,7 @@ function SomethingWentWrong() {
       </p>
       <Link
         //TODO: pick share PR from master
-        to={`${appRoutes.donate}/${1}`}
+        to={`${appRoutes.donate}/${recipientId}`}
         className="w-full sm:w-auto btn-blue btn-donate h-10 rounded-lg"
       >
         Back to the donation page
