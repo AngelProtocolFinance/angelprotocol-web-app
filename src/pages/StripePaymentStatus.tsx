@@ -104,7 +104,6 @@ function Unsuccessful({ recipientId }: { recipientId?: number }) {
         Your donation was not successful, please try again.
       </p>
       <Link
-        //TODO: pick share PR from master
         to={`${appRoutes.donate}/${recipientId}`}
         className="w-full sm:w-auto btn-blue btn-donate h-10 rounded-lg"
       >
@@ -126,7 +125,6 @@ function SomethingWentWrong({ recipientId }: { recipientId?: number }) {
         please get in touch with {EMAIL_SUPPORT}.
       </p>
       <Link
-        //TODO: pick share PR from master
         to={`${appRoutes.donate}/${recipientId}`}
         className="w-full sm:w-auto btn-blue btn-donate h-10 rounded-lg"
       >
