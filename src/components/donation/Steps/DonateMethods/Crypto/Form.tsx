@@ -7,21 +7,18 @@ import { Selector } from "../../../../Selector";
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
-import type { CryptoFormStep } from "../../types";
-import { isNewMethod, nextFormState } from "../helpers";
+import { nextFormState } from "../helpers";
 import { initToken } from "./constants";
 import type { DonateValues } from "./types";
 
-export default function Form(props: CryptoFormStep) {
+export default function Form() {
   const { setState } = useDonationState();
 
   const { watch, reset, setValue, handleSubmit } =
     useFormContext<DonateValues>();
 
   function submit(data: DonateValues) {
-    setState(nextFormState(props, { ...data, method: "crypto" }), (prev) =>
-      isNewMethod(prev, "crypto")
-    );
+    setState((prev) => nextFormState(prev, { ...data, method: "crypto" }));
     reset();
   }
 

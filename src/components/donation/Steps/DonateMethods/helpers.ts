@@ -1,25 +1,41 @@
-import type { DonationDetails, DonationState, FormStep } from "../types";
+import type { DonationDetails, DonationState } from "../types";
 
-export const isNewMethod = (
-  prev: DonationState,
-  method: NonNullable<FormStep["details"]>["method"]
-) => prev.step === "donate-form" && prev.details?.method !== method;
+const tokenId = (details: DonationDetails) => {
+  switch (details.method) {
+    case "crypto":
+      return details.token.token_id;
+    case "stocks":
+      return details.symbol;
+    default:
+      return details.currency.code;
+  }
+};
 
 export const nextFormState = (
   prev: DonationState,
   details: DonationDetails
 ): DonationState => {
-  const { init } = prev;
+  //reset tip when form changes tokenId
+  const newTip = (() => {
+    if (!("tip" in prev)) return;
+    if (tokenId(prev.details) !== tokenId(details)) return;
+    return prev.tip;
+  })();
 
-  if (init.widgetConfig?.splitDisabled) {
+  const toPersist: DonationState =
+    prev.details?.method === details.method
+      ? //persist everything if of the same method
+        { ...prev, ...("tip" in prev ? { tip: newTip } : {}) }
+      : { init: prev.init, step: "donate-form" };
+
+  if (prev.init.widgetConfig?.splitDisabled) {
     return {
-      ...prev,
+      ...toPersist,
       details,
       //also skip tip if applicable
-      step: init.recipient.hide_bg_tip ? "summary" : "tip",
-      tip: undefined,
-      liquidSplitPct: init.widgetConfig.liquidSplitPct,
+      step: prev.init.recipient.hide_bg_tip ? "summary" : "tip",
+      liquidSplitPct: prev.init.widgetConfig.liquidSplitPct,
     };
   }
-  return { ...prev, details, step: "splits" };
+  return { ...toPersist, details, step: "splits" };
 };

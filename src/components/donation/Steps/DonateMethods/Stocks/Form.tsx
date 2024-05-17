@@ -6,7 +6,7 @@ import { object } from "yup";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import type { StockFormStep } from "../../types";
-import { isNewMethod, nextFormState } from "../helpers";
+import { nextFormState } from "../helpers";
 
 export default function Form(
   props: Omit<StockFormStep, "intentId" | "config">
@@ -37,13 +37,12 @@ export default function Form(
       methods={methods}
       className="grid"
       onSubmit={methods.handleSubmit((fv) =>
-        setState(
-          nextFormState(props, {
+        setState((prev) =>
+          nextFormState(prev, {
             ...fv,
             method: "stocks",
             numShares: +fv.numShares,
-          }),
-          (prev) => isNewMethod(prev, "stocks")
+          })
         )
       )}
     >

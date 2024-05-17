@@ -96,7 +96,6 @@ export default function Split(props: Props) {
             ...props,
             step: props.init.recipient.hide_bg_tip ? "summary" : "tip",
             liquidSplitPct: liqSplitPct,
-            tip: undefined,
           })
         }
         className="mt-6"

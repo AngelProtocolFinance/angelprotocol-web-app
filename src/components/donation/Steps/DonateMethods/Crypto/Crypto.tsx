@@ -29,7 +29,7 @@ export default function Crypto(props: Props) {
   });
   return (
     <FormProvider {...methods}>
-      <Form {...props} />
+      <Form />
     </FormProvider>
   );
 }

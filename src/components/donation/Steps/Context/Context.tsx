@@ -22,8 +22,7 @@ type CryptoSubmitter = (
 ) => Promise<void>;
 
 type StateSetter = (
-  newState: DonationState,
-  replace?: boolean | ((prev: DonationState) => boolean)
+  newState: DonationState | ((prev: DonationState) => DonationState)
 ) => void;
 
 type State = {
@@ -42,13 +41,10 @@ export default function Context({
   const [confirmIntent] = useConfirmCryptoIntentMutation();
   const [state, set] = useState<DonationState>(initState);
 
-  const setState: StateSetter = (newState: DonationState, replace) =>
-    set((prev) => {
-      const isReplace = typeof replace === "function" ? replace(prev) : replace;
-      if (isReplace) return newState;
-      //merge instead
-      return { ...prev, ...newState };
-    });
+  const setState: StateSetter = (newState) =>
+    set((prev) =>
+      typeof newState === "function" ? newState(prev) : { ...prev, ...newState }
+    );
 
   const submitCrypto: CryptoSubmitter = async (
     txPackage: TxPackage,

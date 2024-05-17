@@ -6,7 +6,7 @@ import type {
 } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
-import type { TokenWithAmount, TxPackage } from "types/tx";
+import type { TokenWithAmount } from "types/tx";
 
 export type WidgetConfig = {
   splitDisabled: boolean;
@@ -81,17 +81,17 @@ export type TipFormat = "pct" | "amount";
 export type TipStep = {
   step: "tip";
   //tip can be skipped
-  tip: undefined | { value: number; format: TipFormat } | undefined;
+  tip?: { value: number; format: TipFormat };
 } & From<SplitsStep>;
 
 export type SummaryStep = {
   step: "summary";
   donor?: Donor;
-} & From<TipStep>;
+} & From<TipStep, "tip">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
-} & Omit<From<SummaryStep>, "details"> & { details: T };
+} & Omit<From<SummaryStep, "tip">, "details"> & { details: T };
 
 export type CryptoSubmitStep = SubmitStep<CryptoDonationDetails>;
 export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
@@ -105,7 +105,7 @@ export type TxStatus =
 export type CryptoResultStep = {
   step: "tx";
   status: TxStatus;
-} & From<CryptoSubmitStep>;
+} & From<CryptoSubmitStep, "tip">;
 
 export type DonationState =
   | FormStep
@@ -114,9 +114,3 @@ export type DonationState =
   | SummaryStep
   | SubmitStep
   | CryptoResultStep;
-
-export type DonateArgs = {
-  onSuccess: (txHash: string) => Promise<{ guestDonor: GuestDonor }>;
-} & TxPackage;
-
-export type DonationStep = DonationState["step"];
