@@ -64,9 +64,16 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
           onChange={(lockedPct) => onChange(100 - lockedPct)}
         />
 
-        <CheckField<FormValues> name="splitDisabled" classes="mt-4">
-          Disable changing the split value
-        </CheckField>
+        <div className="mt-4">
+          <CheckField<FormValues> name="splitDisabled">
+            Disable changing the split value
+          </CheckField>
+          <p className="text-xs @4xl/widget:text-sm italic text-navy-l1 mt-2">
+            Disabling the Split Value means donors will not be able to change it
+            from the default set on the slider above. Checking this box will
+            hide the split screen entirely.
+          </p>
+        </div>
 
         <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-4">
           <button
