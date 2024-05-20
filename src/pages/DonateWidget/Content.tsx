@@ -1,13 +1,10 @@
 import ExtLink from "components/ExtLink";
 import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
-import { Steps } from "components/donation";
+import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import { useEffect } from "react";
-import { type DonationRecipient, setRecipient } from "slices/donation";
-import { useSetter } from "store/accessors";
 import type { EndowmentProfile } from "types/aws";
 import parseConfig from "./parseConfig";
 
@@ -22,16 +19,11 @@ export default function Content({
   searchParams,
   classes = "",
 }: Props) {
-  const dispatch = useSetter();
-
-  useEffect(() => {
-    const donationRecipient: DonationRecipient = {
-      id: profile.id,
-      name: profile.name,
-      hide_bg_tip: !!profile.hide_bg_tip,
-    };
-    dispatch(setRecipient(donationRecipient));
-  }, [dispatch, profile]);
+  const recipient: DonationRecipient = {
+    id: profile.id,
+    name: profile.name,
+    hide_bg_tip: !!profile.hide_bg_tip,
+  };
 
   const config = parseConfig(searchParams);
 
@@ -63,8 +55,10 @@ export default function Content({
       )}
 
       <Steps
+        mode="live"
         className="mt-5 w-full md:w-3/4 border border-gray-l4"
-        donaterConfig={config}
+        recipient={recipient}
+        widgetConfig={config}
       />
       <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
         By making a donation to {APP_NAME}, you agree to our{" "}

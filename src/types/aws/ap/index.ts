@@ -83,6 +83,7 @@ export type Endowment = {
 
 export type EndowmentProfile = Endowment;
 
+/** from algolia index instead of DB */
 export type EndowmentCard = Pick<
   Endowment,
   | "id"
@@ -97,7 +98,7 @@ export type EndowmentCard = Pick<
   | "kyc_donors_only"
   | "claimed"
 >;
-export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
+export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
 export type EndowmentSettingsAttributes = Extract<
   keyof Endowment,

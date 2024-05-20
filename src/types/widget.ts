@@ -12,7 +12,3 @@ export type WidgetURLSearchParams = {
   liquidSplitPct: string;
   splitDisabled: "true" | "false";
 };
-
-export type DonaterConfigFromWidget = Omit<WidgetConfig, "endowment"> & {
-  isPreview?: boolean;
-};

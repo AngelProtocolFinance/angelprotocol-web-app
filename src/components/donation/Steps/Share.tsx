@@ -1,10 +1,10 @@
 import { BASE_URL } from "constants/env";
 import { useModalContext } from "contexts/ModalContext";
 import { useCallback, useState } from "react";
-import type { DonationRecipient } from "slices/donation";
 import ExtLink from "../../ExtLink";
 import Icon, { type IconType } from "../../Icon";
 import Modal from "../../Modal";
+import type { DonationRecipient } from "./types";
 
 type SocialMedia = Extract<
   IconType,

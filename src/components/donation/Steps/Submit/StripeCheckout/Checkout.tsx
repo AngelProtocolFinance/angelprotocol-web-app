@@ -8,18 +8,14 @@ import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import ErrorTrigger from "errors/ErrorTrigger";
 import { type FormEventHandler, useState } from "react";
-import type { DonationSource } from "types/lists";
+import type { StripeCheckoutStep } from "../../types";
 import Loader from "../Loader";
-
-type Props = {
-  source: DonationSource;
-};
 
 type Status = "init" | "loading" | "ready" | "submitting" | { error: unknown };
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
-export default function Checkout({ source }: Props) {
+export default function Checkout(props: StripeCheckoutStep) {
   const stripe = useStripe();
   const elements = useElements();
   const { handleError } = useErrorContext();
@@ -42,10 +38,9 @@ export default function Checkout({ source }: Props) {
 
     setStatus("submitting");
 
-    const return_url =
-      source === "bg-widget"
-        ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
-        : `${window.location.origin}${appRoutes.stripe_payment_status}`;
+    const return_url = props.init.widgetConfig
+      ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
+      : `${window.location.origin}${appRoutes.stripe_payment_status}`;
 
     const { error } = await stripe.confirmPayment({
       elements,

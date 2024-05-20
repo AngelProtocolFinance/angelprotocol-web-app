@@ -1,16 +1,18 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { type StockCheckoutStep, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
+import type { StockCheckoutStep } from "../types";
 
 export default function Stocks(props: StockCheckoutStep) {
-  const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;
-  const dispatch = useSetter();
-
+  const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
+  const { setState } = useDonationState();
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
-      <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
+      <BackBtn
+        type="button"
+        onClick={() => setState({ ...props, step: "donate-form" })}
+      />
       <p className="mt-4 text-center text-navy-l1 uppercase">
         Donation pending
       </p>
@@ -20,7 +22,8 @@ export default function Stocks(props: StockCheckoutStep) {
       </p>
       <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed mt-6">
         <p>
-          Please transfer [&nbsp;{props.details.numShares + (props.tip ?? 0)}
+          Please transfer [&nbsp;
+          {props.details.numShares + (props.tip?.value ?? 0)}
           &nbsp;] share(s) of [&nbsp;{props.details.symbol}&nbsp;] to:
         </p>
         <p>Deliver to: Fidelity Investments</p>
@@ -28,7 +31,7 @@ export default function Stocks(props: StockCheckoutStep) {
         <p>Account number: Z40390069</p>
         <p>Account name: Altruistic Partners Empowering Society, Inc</p>
         <p>
-          Reference: [Internal Ref#, if needed] {props.recipient.name} (
+          Reference: [Internal Ref#, if needed] {props.init.recipient.name} (
           {profileUrl})
         </p>
       </div>
@@ -53,7 +56,7 @@ export default function Stocks(props: StockCheckoutStep) {
       </p>
       <a
         href={emailLink(
-          props.recipient.name,
+          props.init.recipient.name,
           profileUrl,
           props.details.numShares,
           props.details.symbol

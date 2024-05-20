@@ -8,10 +8,10 @@ import { humanize } from "helpers";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
-import { type TipStep, setStep, setTip } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
+import type { TipFormat, TipStep } from "../types";
 
 const DEFAULT_PCT = "0.17";
 
@@ -35,12 +35,9 @@ const shape = schema<FV>({
   tip: tipSchema,
 });
 
-export default function Tip({
-  details,
-  tip: persistedTip,
-  format = "pct",
-}: TipStep) {
-  const dispatch = useSetter();
+export default function Tip(props: TipStep) {
+  const { details, tip: persistedTip } = props;
+  const { setState } = useDonationState();
 
   const [symbol, amount, decimals = 2] = (() => {
     switch (details.method) {
@@ -69,8 +66,8 @@ export default function Tip({
     defaultValues: {
       tip: persistedTip
         ? {
-            amount: persistedTip.toString(),
-            pct: `${persistedTip / amount}`,
+            amount: persistedTip.value.toString(),
+            pct: `${persistedTip.value / amount}`,
           }
         : initial,
     },
@@ -79,22 +76,35 @@ export default function Tip({
     field: { value: tip, onChange: onTipChange },
   } = useController<FV, "tip">({ name: "tip", control });
 
-  //if user selects custom, can't go back to %
-  const [isPct, setIsPct] = useState(format === "pct");
+  const [format, setFormat] = useState<TipFormat>(
+    persistedTip?.format ?? "pct"
+  );
 
   return (
     <form
-      onSubmit={handleSubmit((v) =>
-        dispatch(
-          setTip({
-            tip: Number(v.tip.amount),
-            format: isPct ? "pct" : "amount",
-          })
-        )
+      onSubmit={handleSubmit((fv) =>
+        setState({
+          ...props,
+          step: "summary",
+          tip: {
+            value: Number(fv.tip.amount),
+            format,
+          },
+        })
       )}
       className="grid content-start p-4 @md/steps:p-8"
     >
-      <BackBtn type="button" onClick={() => dispatch(setStep("splits"))} />
+      <BackBtn
+        type="button"
+        onClick={() =>
+          setState({
+            ...props,
+            step: props.init.widgetConfig?.splitDisabled
+              ? "donate-form"
+              : "splits",
+          })
+        }
+      />
       <h4 className="mt-4 text-lg">
         One-Time Donation to{" "}
         <Image src={dappLogo} className="inline-block h-8 px-1" />
@@ -105,7 +115,7 @@ export default function Tip({
         support. Please consider donating to help us keep it free for all.
       </p>
 
-      {isPct && (
+      {format === "pct" && (
         <Slider.Root
           min={0}
           max={1}
@@ -138,17 +148,17 @@ export default function Tip({
           </Slider.Thumb>
         </Slider.Root>
       )}
-      {isPct && (
+      {format === "pct" && (
         <button
           type="button"
-          onClick={() => setIsPct(false)}
+          onClick={() => setFormat("amount")}
           className="justify-self-center text-sm mt-6 underline hover:text-blue"
         >
           Enter custom tip
         </button>
       )}
 
-      {!isPct && (
+      {format === "amount" && (
         <>
           <label className="mb-2 mt-6 font-heading font-semibold">
             Your One-Time Donation Amount

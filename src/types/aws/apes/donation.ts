@@ -1,4 +1,5 @@
 import type { DonationSource } from "types/lists";
+import type { Ensure } from "types/utils";
 import type { Token } from ".";
 
 export type Donor = {
@@ -52,8 +53,9 @@ export type FiatDonation = {
 };
 
 export type DonationIntent =
-  | (CryptoDonation & { token: Token })
-  | (FiatDonation & {
+  //donation records always have transactionId
+  | (Ensure<CryptoDonation, "transactionId"> & { token: Token })
+  | (Ensure<FiatDonation, "transactionId"> & {
       currency: Currency;
       frequency: FiatPaymentFrequency;
     });

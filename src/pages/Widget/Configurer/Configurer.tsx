@@ -1,10 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LockedSplitSlider } from "components/donation/Steps/Splits";
 import { CheckField, Form } from "components/form";
+import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
-import { reset, update } from "slices/widget";
-import { useGetter, useSetter } from "store/accessors";
-import type { EndowmentOption } from "types/aws";
 import type { WidgetConfig } from "types/widget";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
@@ -12,43 +10,30 @@ import type { FormValues } from "./types";
 
 type Props = {
   classes?: string;
-  endowment?: EndowmentOption;
+  config: WidgetConfig;
+  setConfig: Dispatch<SetStateAction<WidgetConfig>>;
 };
 
-export default function Configurer({ classes = "", endowment }: Props) {
-  const widgetInitValues = useGetter((state) => state.widget);
-  const dispatch = useSetter();
-
+export default function Configurer({ classes = "", config, setConfig }: Props) {
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
-    defaultValues: {
-      endowment: endowment ?? {
-        ...widgetInitValues.endowment,
-        name: "", // must set name to "" so that no value is displayed by default in the EndowmentSelector input
-      },
-      isDescriptionTextShown: widgetInitValues.isDescriptionTextShown,
-      splitDisabled: widgetInitValues.splitDisabled,
-      liquidPercentage: widgetInitValues.liquidSplitPct,
-    },
+    //set new config as default, so user would need to make a change to be able to update again
+    values: config,
   });
 
-  const submit: SubmitHandler<FormValues> = async (fv) => {
-    const newConfig: WidgetConfig = {
-      endowment: fv.endowment,
-      isDescriptionTextShown: fv.isDescriptionTextShown,
-      splitDisabled: fv.splitDisabled,
-      liquidSplitPct: fv.liquidPercentage,
-    };
-    dispatch(update(newConfig));
-  };
+  const submit: SubmitHandler<FormValues> = (fv) => setConfig(fv);
 
-  const { handleSubmit, reset: hookFormReset } = methods;
+  const {
+    handleSubmit,
+    reset: hookFormReset,
+    formState: { isDirty },
+  } = methods;
 
   const {
     field: { onChange, value },
   } = useController({
     control: methods.control,
-    name: "liquidPercentage",
+    name: "liquidSplitPct",
   });
 
   return (
@@ -58,7 +43,6 @@ export default function Configurer({ classes = "", endowment }: Props) {
       onSubmit={handleSubmit(submit)}
       onReset={(e) => {
         e.preventDefault();
-        dispatch(reset());
         hookFormReset();
       }}
     >
@@ -80,18 +64,27 @@ export default function Configurer({ classes = "", endowment }: Props) {
           onChange={(lockedPct) => onChange(100 - lockedPct)}
         />
 
-        <CheckField<FormValues> name="splitDisabled" classes="mt-4">
-          Disable changing the split value
-        </CheckField>
+        <div className="mt-4">
+          <CheckField<FormValues> name="splitDisabled">
+            Disable changing the split value
+          </CheckField>
+          <p className="text-xs @4xl/widget:text-sm italic text-navy-l1 mt-2">
+            Disabling the Split Value means donors will not be able to change it
+            from the default set on the slider above. Checking this box will
+            hide the split screen entirely.
+          </p>
+        </div>
 
         <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-4">
           <button
+            disabled={!isDirty}
             type="reset"
             className="btn-outline-filled @max-sm/configurer:mx-auto w-40"
           >
             Reset Changes
           </button>
           <button
+            disabled={!isDirty}
             type="submit"
             className="btn-blue @max-sm/configurer:mx-auto w-40"
           >
