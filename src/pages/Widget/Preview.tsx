@@ -16,13 +16,22 @@ export default function Preview({ classes = "", config }: Props) {
   const { endowment, ...restConfig } = config;
   const endowName = config.endowment.name;
 
-  const { data } = useEndowment({ id: endowment.id }, ["hide_bg_tip"]);
+  const { data } = useEndowment({ id: endowment.id }, [
+    "hide_bg_tip",
+    "splitLiqPct",
+    "splitFixed",
+  ]);
 
   const initState: DonationState = {
     step: "donate-form",
     init: {
       mode: "preview",
-      recipient: { ...endowment, hide_bg_tip: data?.hide_bg_tip },
+      recipient: {
+        ...endowment,
+        hide_bg_tip: data?.hide_bg_tip,
+        splitLiqPct: data?.splitLiqPct,
+        splitFixed: data?.splitFixed,
+      },
       widgetConfig: restConfig,
     },
     details: {

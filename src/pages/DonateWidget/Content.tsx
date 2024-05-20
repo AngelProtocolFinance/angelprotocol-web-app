@@ -23,6 +23,8 @@ export default function Content({
     id: profile.id,
     name: profile.name,
     hide_bg_tip: !!profile.hide_bg_tip,
+    splitLiqPct: profile.splitLiqPct,
+    splitFixed: profile.splitFixed,
   };
 
   const config = parseConfig(searchParams);

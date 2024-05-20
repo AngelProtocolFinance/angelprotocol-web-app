@@ -18,7 +18,11 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
   "step" | U
 > & { [key in U]?: T[key] };
 
-export type DonationRecipient = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
+export type DonationRecipient = Pick<
+  Endowment,
+  "id" | "name" | "hide_bg_tip" | "splitLiqPct" | "splitFixed"
+>;
+
 
 export type CryptoDonationDetails = {
   method: "crypto"; //use to preserve selected method
