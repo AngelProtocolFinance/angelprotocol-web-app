@@ -6,7 +6,7 @@ import type {
 } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
-import { DonationSource } from "types/lists";
+import type { DonationSource } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
 
 export type Config = {

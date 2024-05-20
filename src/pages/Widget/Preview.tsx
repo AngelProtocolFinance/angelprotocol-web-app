@@ -22,7 +22,6 @@ export default function Preview({ classes = "", config }: Props) {
     "splitFixed",
   ]);
 
-
   const initState: DonationState = {
     step: "donate-form",
     init: {

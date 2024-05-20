@@ -1,15 +1,15 @@
 import type { DonationIntent } from "types/aws";
 import type { ChainID } from "types/chain";
+import type { DonationSource } from "types/lists";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
 import type {
+  Config,
   DonationRecipient,
   DonationState,
   Init,
   Mode,
-  Config,
 } from "./types";
-import { DonationSource } from "types/lists";
 
 type Components = {
   source: DonationSource;
