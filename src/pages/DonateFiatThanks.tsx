@@ -57,11 +57,11 @@ export default function DonateFiatThanks({ widgetVersion = false }) {
         If you need a receipt for your donation, please fill out the KYC form
         for this transaction on your{" "}
         {widgetVersion ? (
-          <ExtLink href={`${BASE_URL}${appRoutes.donations}`}>
+          <ExtLink href={`${BASE_URL}${appRoutes.user_dashboard}/donations`}>
             My Donations
           </ExtLink>
         ) : (
-          <Link to={appRoutes.donations}>My Donations</Link>
+          <Link to={`${appRoutes.user_dashboard}/donations`}>My Donations</Link>
         )}{" "}
         page.
       </p>
