@@ -27,7 +27,7 @@ export default function Form(props: Props) {
       sfCompounded: props.sfCompounded ?? false,
       hide_bg_tip: props.hide_bg_tip ?? false,
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
-      splitLockPct: props.splitLiqPct ?? 50,
+      splitLockPct: 100 - (props.splitLiqPct ?? 50),
       splitFixed: props.splitFixed ?? false,
     },
   });
