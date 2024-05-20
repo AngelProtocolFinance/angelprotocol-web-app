@@ -96,6 +96,16 @@ export default function Form(props: Props) {
         onChange={onSplitLockedPctChanged}
         value={splitLockedPct}
       />
+      <div className="mt-4">
+        <CheckField<FV> name="splitFixed">
+          Disable changing the split value
+        </CheckField>
+        <p className="text-xs sm:text-sm italic text-navy-l1 mt-2">
+          Disabling the Split Value means donors will not be able to change it
+          from the default set on the slider above. Checking this box will hide
+          the split screen entirely.
+        </p>
+      </div>
 
       <div className="flex gap-3">
         <button
