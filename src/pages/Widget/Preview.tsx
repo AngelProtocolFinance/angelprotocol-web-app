@@ -16,11 +16,7 @@ export default function Preview({ classes = "", config }: Props) {
   const { endowment, ...restConfig } = config;
   const endowName = config.endowment.name;
 
-  const { data } = useEndowment({ id: endowment.id }, [
-    "hide_bg_tip",
-    "splitLiqPct",
-    "splitFixed",
-  ]);
+  const { data } = useEndowment({ id: endowment.id }, ["hide_bg_tip"]);
 
   const initState: DonationState = {
     step: "donate-form",
