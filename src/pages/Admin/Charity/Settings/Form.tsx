@@ -92,11 +92,13 @@ export default function Form(props: Props) {
 
       <HideBGTipCheckbox />
 
+      <label className="mt-6 font-medium">Define default split value:</label>
       <LockedSplitSlider
         onChange={onSplitLockedPctChanged}
         value={splitLockedPct}
       />
-      <div className="mt-4">
+
+      <div className="mt-2">
         <CheckField<FV> name="splitFixed">
           Disable changing the split value
         </CheckField>
