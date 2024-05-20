@@ -4,4 +4,5 @@ export type FV = {
   sfCompounded: boolean;
   programDonateDisabled: boolean;
   splitLockPct: number;
+  splitFixed: boolean;
 };

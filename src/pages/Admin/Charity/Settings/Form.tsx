@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { LockedSplitSlider } from "components/donation";
 import { CheckField, Form as _Form } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
@@ -9,7 +10,6 @@ import HideBGTipCheckbox from "./HideBGTipCheckbox";
 import ReceiptMsg from "./ReceiptMsg";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import type { FV } from "./types";
-import { LockedSplitSlider } from "components/donation";
 
 type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
 
@@ -28,6 +28,7 @@ export default function Form(props: Props) {
       hide_bg_tip: props.hide_bg_tip ?? false,
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
       splitLockPct: props.splitLiqPct ?? 50,
+      splitFixed: props.splitFixed ?? false,
     },
   });
 

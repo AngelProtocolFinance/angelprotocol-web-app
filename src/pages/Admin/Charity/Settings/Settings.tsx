@@ -15,6 +15,7 @@ export default function Settings() {
     "hide_bg_tip",
     "progDonationsAllowed",
     "splitLiqPct",
+    "splitFixed",
   ]);
 
   if (isLoading) {

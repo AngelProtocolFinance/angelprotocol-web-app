@@ -80,6 +80,7 @@ export type Endowment = {
   /** allowed by default */
   progDonationsAllowed?: boolean;
   splitLiqPct?: number;
+  splitFixed?: boolean;
 };
 
 export type EndowmentProfile = Endowment;
@@ -108,6 +109,7 @@ export type EndowmentSettingsAttributes = Extract<
   | "hide_bg_tip"
   | "progDonationsAllowed"
   | "splitLiqPct"
+  | "splitFixed"
 >;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
