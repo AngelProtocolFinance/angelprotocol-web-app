@@ -58,8 +58,6 @@ export default function Donate() {
               name: profile.name,
               id: numId,
               hide_bg_tip: profile.hide_bg_tip,
-              splitLiqPct: profile.splitLiqPct,
-              splitFixed: profile.splitFixed,
             }}
             tagline={profile.tagline}
             logo={profile.logo || profile.card_img || ""}

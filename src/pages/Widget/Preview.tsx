@@ -22,6 +22,8 @@ export default function Preview({ classes = "", config }: Props) {
     "splitFixed",
   ]);
 
+  console.log({ data });
+
   const initState: DonationState = {
     step: "donate-form",
     init: {
@@ -29,8 +31,6 @@ export default function Preview({ classes = "", config }: Props) {
       recipient: {
         ...endowment,
         hide_bg_tip: data?.hide_bg_tip,
-        splitLiqPct: data?.splitLiqPct,
-        splitFixed: data?.splitFixed,
       },
       widgetConfig: restConfig,
     },

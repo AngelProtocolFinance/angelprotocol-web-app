@@ -54,13 +54,16 @@ export default function Form(props: Props) {
         e.preventDefault();
         reset();
       }}
-      onSubmit={handleSubmit(async ({ programDonateDisabled, ...fv }) => {
-        await updateEndow({
-          ...fv,
-          progDonationsAllowed: !programDonateDisabled,
-          id: props.id,
-        });
-      })}
+      onSubmit={handleSubmit(
+        async ({ programDonateDisabled, splitLockPct, ...fv }) => {
+          await updateEndow({
+            ...fv,
+            progDonationsAllowed: !programDonateDisabled,
+            splitLiqPct: 100 - splitLockPct,
+            id: props.id,
+          });
+        }
+      )}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <ReceiptMsg />

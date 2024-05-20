@@ -18,7 +18,7 @@ export default function Split(props: Props) {
   const { setState } = useDonationState();
 
   const [lockedSplitPct, setLockedSplitPct] = useState(
-    100 - (persistedLiqSplitPct ?? init.recipient.splitLiqPct ?? 50)
+    100 - (persistedLiqSplitPct ?? 50)
   );
 
   const liqSplitPct = 100 - lockedSplitPct;

@@ -54,6 +54,7 @@ export default function Summary(props: SummaryStep) {
       }
     >
       <DonorForm
+        mode={init.mode}
         donor={
           donor ||
           (userIsSignedIn(user)
