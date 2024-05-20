@@ -38,7 +38,7 @@ export default function Summary(props: SummaryStep) {
         setState({
           ...props,
           step: init.recipient.hide_bg_tip
-            ? init.widgetConfig?.splitDisabled
+            ? init.config?.splitDisabled
               ? "donate-form"
               : "splits"
             : "tip",
@@ -54,6 +54,7 @@ export default function Summary(props: SummaryStep) {
       }
     >
       <DonorForm
+        mode={init.mode}
         donor={
           donor ||
           (userIsSignedIn(user)

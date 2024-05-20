@@ -21,9 +21,13 @@ export default function Preview({ classes = "", config }: Props) {
   const initState: DonationState = {
     step: "donate-form",
     init: {
+      source: "bg-widget",
       mode: "preview",
-      recipient: { ...endowment, hide_bg_tip: data?.hide_bg_tip },
-      widgetConfig: restConfig,
+      recipient: {
+        ...endowment,
+        hide_bg_tip: data?.hide_bg_tip,
+      },
+      config: restConfig,
     },
     details: {
       method: "stripe",

@@ -14,6 +14,8 @@ export default function Settings() {
     "sfCompounded",
     "hide_bg_tip",
     "progDonationsAllowed",
+    "splitLiqPct",
+    "splitFixed",
   ]);
 
   if (isLoading) {

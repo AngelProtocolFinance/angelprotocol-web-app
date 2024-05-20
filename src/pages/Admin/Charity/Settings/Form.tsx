@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { LockedSplitSlider } from "components/donation";
 import { CheckField, Form as _Form } from "components/form";
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
 import { string } from "yup";
@@ -26,6 +27,8 @@ export default function Form(props: Props) {
       sfCompounded: props.sfCompounded ?? false,
       hide_bg_tip: props.hide_bg_tip ?? false,
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
+      splitLockPct: 100 - (props.splitLiqPct ?? 50),
+      splitFixed: props.splitFixed ?? false,
     },
   });
 
@@ -33,7 +36,15 @@ export default function Form(props: Props) {
     reset,
     handleSubmit,
     formState: { isSubmitting, isDirty },
+    control,
   } = methods;
+
+  const {
+    field: { value: splitLockedPct, onChange: onSplitLockedPctChanged },
+  } = useController<FV, "splitLockPct">({
+    control,
+    name: "splitLockPct",
+  });
 
   return (
     <_Form
@@ -43,13 +54,16 @@ export default function Form(props: Props) {
         e.preventDefault();
         reset();
       }}
-      onSubmit={handleSubmit(async ({ programDonateDisabled, ...fv }) => {
-        await updateEndow({
-          ...fv,
-          progDonationsAllowed: !programDonateDisabled,
-          id: props.id,
-        });
-      })}
+      onSubmit={handleSubmit(
+        async ({ programDonateDisabled, splitLockPct, ...fv }) => {
+          await updateEndow({
+            ...fv,
+            progDonationsAllowed: !programDonateDisabled,
+            splitLiqPct: 100 - splitLockPct,
+            id: props.id,
+          });
+        }
+      )}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <ReceiptMsg />
@@ -80,6 +94,23 @@ export default function Form(props: Props) {
       </div>
 
       <HideBGTipCheckbox />
+
+      <label className="mt-6 font-medium">Define default split value:</label>
+      <LockedSplitSlider
+        onChange={onSplitLockedPctChanged}
+        value={splitLockedPct}
+      />
+
+      <div className="mt-2">
+        <CheckField<FV> name="splitFixed">
+          Disable changing the split value
+        </CheckField>
+        <p className="text-xs sm:text-sm italic text-navy-l1 mt-2">
+          Disabling the Split Value means donors will not be able to change it
+          from the default set on the slider above. Checking this box will hide
+          the split screen entirely.
+        </p>
+      </div>
 
       <div className="flex gap-3">
         <button

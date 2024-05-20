@@ -1,18 +1,20 @@
 import type { DonationIntent } from "types/aws";
 import type { ChainID } from "types/chain";
+import type { DonationSource } from "types/lists";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
 import type {
+  Config,
   DonationRecipient,
   DonationState,
   Init,
   Mode,
-  WidgetConfig,
 } from "./types";
 
 type Components = {
+  source: DonationSource;
   mode: Mode;
-  widgetConfig: WidgetConfig | null;
+  config: Config | null;
   recipient: DonationRecipient;
   intent?: DonationIntent;
 };
@@ -37,13 +39,15 @@ export function Steps({ className = "", ...props }: Props) {
 }
 
 function initialState({
+  source,
   intent,
-  widgetConfig,
+  config,
   recipient,
   mode,
 }: Components): DonationState {
   const init: Init = {
-    widgetConfig,
+    source,
+    config,
     recipient,
     mode,
     intentId: intent?.transactionId,

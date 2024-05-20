@@ -1,56 +1,58 @@
 import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
-import { type DonationRecipient, Steps } from "components/donation";
+import { Steps } from "components/donation";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
-import type { DonationIntent } from "types/aws";
+import type { DonationIntent, Endowment } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
 type Props = {
-  logo: string;
-  banner: string;
-  tagline?: string;
   intent?: DonationIntent;
-  recipient: DonationRecipient;
+  endowment: Endowment;
 };
 
-function Content(props: Props) {
+function Content({ intent, endowment }: Props) {
   return (
     <div className="fixed inset-0 overflow-y-auto w-full z-50 bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
         <DappLogo classes="h-[2.036rem]" />
         <Link
-          to={`${appRoutes.marketplace}/${props.recipient.id}`}
+          to={`${appRoutes.marketplace}/${endowment.id}`}
           className="font-semibold font-heading hover:text-blue-d1"
         >
           Cancel
         </Link>
       </div>
       <div className="md:px-4 max-w-[68.625rem] mx-auto grid md:grid-cols-[1fr_auto] items-start content-start gap-4">
-        <Link
-          to={`${appRoutes.marketplace}/${props.recipient.id}`}
-          className=""
-        >
+        <Link to={`${appRoutes.marketplace}/${endowment.id}`} className="">
           <OrgCard
-            name={props.recipient.name}
-            tagline={props.tagline}
-            logo={props.logo || flying_character}
+            name={endowment.name}
+            tagline={endowment.tagline}
+            logo={endowment.logo || flying_character}
             classes="col-start-1 row-start-1"
           />
         </Link>
         {/** small screen but space is still enough to render sidebar */}
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps
+            source="bg-marketplace"
             mode="live"
-            intent={props.intent}
-            recipient={props.recipient}
-            widgetConfig={null}
+            intent={intent}
+            recipient={{
+              id: endowment.id,
+              name: endowment.name,
+              hide_bg_tip: endowment.hide_bg_tip,
+            }}
+            config={{
+              splitDisabled: endowment.splitFixed ?? false,
+              liquidSplitPct: endowment.splitLiqPct ?? 50,
+            }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
         </div>
@@ -61,11 +63,10 @@ function Content(props: Props) {
           <A href={PRIVACY_POLICY}>Privacy Policy</A>. 100% of your donation is
           tax-deductible to the extent allowed by US law. Your donation is made
           to {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants
-          unrestricted funds to {props.recipient.name} on your behalf. As a
-          legal matter, {APP_NAME} must provide any donations to{" "}
-          {props.recipient.name} on an unrestricted basis, regardless of any
-          designations or restrictions made by you.{" "}
-          <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
+          unrestricted funds to {endowment.name} on your behalf. As a legal
+          matter, {APP_NAME} must provide any donations to {endowment.name} on
+          an unrestricted basis, regardless of any designations or restrictions
+          made by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
         </p>
         <p className="max-md:px-4 mb-4 max-mbcol-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
           <span className="block mb-0.5">

@@ -13,7 +13,15 @@ import Snippet from "./Snippet";
 export default function Widget({ endowId = 0 }: { endowId?: number }) {
   const queryState = useEndowment(
     { id: endowId },
-    ["id", "hide_bg_tip", "logo", "name", "overview"],
+    [
+      "id",
+      "hide_bg_tip",
+      "logo",
+      "name",
+      "overview",
+      "splitFixed",
+      "splitLiqPct",
+    ],
     { skip: !endowId }
   );
 
@@ -29,7 +37,13 @@ function Content({
 }: {
   endowment?: Pick<
     Endowment,
-    "id" | "hide_bg_tip" | "logo" | "name" | "overview"
+    | "id"
+    | "hide_bg_tip"
+    | "logo"
+    | "name"
+    | "overview"
+    | "splitFixed"
+    | "splitLiqPct"
   >;
 }) {
   const location = useLocation();
@@ -40,8 +54,8 @@ function Content({
       hide_bg_tip: false,
     },
     isDescriptionTextShown: true,
-    liquidSplitPct: 50,
-    splitDisabled: false,
+    liquidSplitPct: endowment?.splitLiqPct ?? 50,
+    splitDisabled: endowment?.splitFixed ?? false,
   });
 
   return (

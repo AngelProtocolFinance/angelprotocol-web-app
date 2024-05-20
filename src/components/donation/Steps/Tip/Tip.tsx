@@ -99,9 +99,7 @@ export default function Tip(props: TipStep) {
         onClick={() =>
           setState({
             ...props,
-            step: props.init.widgetConfig?.splitDisabled
-              ? "donate-form"
-              : "splits",
+            step: props.init.config?.splitDisabled ? "donate-form" : "splits",
           })
         }
       />

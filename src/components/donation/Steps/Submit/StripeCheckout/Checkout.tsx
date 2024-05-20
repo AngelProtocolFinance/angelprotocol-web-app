@@ -38,9 +38,10 @@ export default function Checkout(props: StripeCheckoutStep) {
 
     setStatus("submitting");
 
-    const return_url = props.init.widgetConfig
-      ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
-      : `${window.location.origin}${appRoutes.stripe_payment_status}`;
+    const return_url =
+      props.init.source === "bg-widget"
+        ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
+        : `${window.location.origin}${appRoutes.stripe_payment_status}`;
 
     const { error } = await stripe.confirmPayment({
       elements,

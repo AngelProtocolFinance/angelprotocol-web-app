@@ -12,8 +12,8 @@ export default function Split(props: Props) {
 
   const persistedLiqSplitPct =
     init.mode === "live"
-      ? liquidSplitFromSplitStepPct
-      : init.widgetConfig?.liquidSplitPct;
+      ? liquidSplitFromSplitStepPct ?? init.config?.liquidSplitPct
+      : init.config?.liquidSplitPct;
 
   const { setState } = useDonationState();
 
@@ -56,7 +56,7 @@ export default function Split(props: Props) {
       </p>
 
       <LockedSplitSlider
-        disabled={props.init.widgetConfig?.splitDisabled}
+        disabled={props.init.config?.splitDisabled}
         value={lockedSplitPct}
         onChange={setLockedSplitPct}
       />

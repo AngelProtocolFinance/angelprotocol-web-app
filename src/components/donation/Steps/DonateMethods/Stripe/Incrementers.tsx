@@ -1,13 +1,14 @@
 import { humanize, roundDownToNum } from "helpers";
 import { useFormContext } from "react-hook-form";
-import type { Currency } from "types/components";
 import type { FormValues } from "./types";
 
 export default function Incrementers({
   rate,
   code,
-}: { rate: number; code: string }) {
-  console.log(code, rate);
+}: {
+  rate: number;
+  code: string;
+}) {
   return (
     <div className="flex justify-center gap-3">
       <Incrementer value={40 * rate} curr={code} />

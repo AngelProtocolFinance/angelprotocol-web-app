@@ -55,10 +55,11 @@ export default function Content({
       )}
 
       <Steps
+        source="bg-widget"
         mode="live"
         className="mt-5 w-full md:w-3/4 border border-gray-l4"
         recipient={recipient}
-        widgetConfig={config}
+        config={config}
       />
       <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
         By making a donation to {APP_NAME}, you agree to our{" "}

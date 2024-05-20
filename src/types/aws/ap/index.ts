@@ -79,6 +79,8 @@ export type Endowment = {
   published?: boolean;
   /** allowed by default */
   progDonationsAllowed?: boolean;
+  splitLiqPct?: number;
+  splitFixed?: boolean;
 };
 
 export type EndowmentProfile = Endowment;
@@ -102,7 +104,12 @@ export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
 export type EndowmentSettingsAttributes = Extract<
   keyof Endowment,
-  "receiptMsg" | "sfCompounded" | "hide_bg_tip" | "progDonationsAllowed"
+  | "receiptMsg"
+  | "sfCompounded"
+  | "hide_bg_tip"
+  | "progDonationsAllowed"
+  | "splitLiqPct"
+  | "splitFixed"
 >;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
