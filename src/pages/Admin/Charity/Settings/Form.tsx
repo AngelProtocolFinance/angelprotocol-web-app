@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { CheckField, Form as _Form } from "components/form";
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
 import { string } from "yup";
@@ -9,6 +9,7 @@ import HideBGTipCheckbox from "./HideBGTipCheckbox";
 import ReceiptMsg from "./ReceiptMsg";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import type { FV } from "./types";
+import { LockedSplitSlider } from "components/donation";
 
 type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
 
@@ -26,6 +27,7 @@ export default function Form(props: Props) {
       sfCompounded: props.sfCompounded ?? false,
       hide_bg_tip: props.hide_bg_tip ?? false,
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
+      splitLockPct: props.splitLiqPct ?? 50,
     },
   });
 
@@ -33,7 +35,15 @@ export default function Form(props: Props) {
     reset,
     handleSubmit,
     formState: { isSubmitting, isDirty },
+    control,
   } = methods;
+
+  const {
+    field: { value: splitLockedPct, onChange: onSplitLockedPctChanged },
+  } = useController<FV, "splitLockPct">({
+    control,
+    name: "splitLockPct",
+  });
 
   return (
     <_Form
@@ -80,6 +90,11 @@ export default function Form(props: Props) {
       </div>
 
       <HideBGTipCheckbox />
+
+      <LockedSplitSlider
+        onChange={onSplitLockedPctChanged}
+        value={splitLockedPct}
+      />
 
       <div className="flex gap-3">
         <button
