@@ -23,7 +23,6 @@ export type DonationRecipient = Pick<
   "id" | "name" | "hide_bg_tip" | "splitLiqPct" | "splitFixed"
 >;
 
-
 export type CryptoDonationDetails = {
   method: "crypto"; //use to preserve selected method
   token: TokenWithAmount;

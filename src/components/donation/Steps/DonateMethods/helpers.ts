@@ -28,13 +28,17 @@ export const nextFormState = (
       : //reset if of different method
         { init: prev.init, step: "donate-form" };
 
-  if (prev.init.widgetConfig?.splitDisabled) {
+
+  if (prev.init.widgetConfig?.splitDisabled || prev.init.recipient.splitFixed) {
     return {
       ...toPersist,
       details,
       //also skip tip if applicable
       step: prev.init.recipient.hide_bg_tip ? "summary" : "tip",
-      liquidSplitPct: prev.init.widgetConfig.liquidSplitPct,
+      liquidSplitPct:
+        prev.init.widgetConfig?.liquidSplitPct ||
+        prev.init.recipient.splitLiqPct ||
+        50,
     };
   }
   return { ...toPersist, details, step: "splits" };
