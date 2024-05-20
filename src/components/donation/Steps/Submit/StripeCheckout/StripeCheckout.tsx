@@ -33,7 +33,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     endowmentId: init.recipient.id,
     splitLiq: liquidSplitPct,
     donor: props.donor,
-    source: init.widgetConfig ? "bg-widget" : "bg-marketplace",
+    source: init.source,
   });
 
   return (

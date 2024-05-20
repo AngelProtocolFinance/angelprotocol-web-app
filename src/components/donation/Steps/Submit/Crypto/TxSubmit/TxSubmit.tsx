@@ -49,7 +49,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       splitLiq: liquidSplitPct,
       walletAddress: wallet?.address ?? "",
       endowmentId: init.recipient.id,
-      source: init.widgetConfig ? "bg-widget" : "bg-marketplace",
+      source: init.config ? "bg-widget" : "bg-marketplace",
       donor,
     },
     { skip: !wallet?.address }

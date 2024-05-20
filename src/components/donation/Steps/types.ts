@@ -6,9 +6,10 @@ import type {
 } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
+import { DonationSource } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
 
-export type WidgetConfig = {
+export type Config = {
   splitDisabled: boolean;
   liquidSplitPct: number;
 };
@@ -53,9 +54,10 @@ export type DonationDetails =
 export type Mode = "live" | "preview";
 
 export type Init = {
+  source: DonationSource;
   mode: Mode;
   recipient: DonationRecipient;
-  widgetConfig: WidgetConfig | null;
+  config: Config | null;
   /** intent to resume */
   intentId?: string;
 };

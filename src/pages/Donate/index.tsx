@@ -22,18 +22,7 @@ export default function Donate() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
 
-  const queryState = useEndowment({ id: numId }, [
-    "id",
-    "image",
-    "logo",
-    "name",
-    "overview",
-    "tagline",
-    "card_img",
-    "hide_bg_tip",
-    "splitLiqPct",
-    "splitFixed",
-  ]);
+  const queryState = useEndowment({ id: numId });
 
   return (
     <QueryLoader
@@ -53,17 +42,7 @@ export default function Donate() {
             image={profile.logo}
             url={`${BASE_URL}/donate/${profile.id}`}
           />
-          <Content
-            recipient={{
-              name: profile.name,
-              id: numId,
-              hide_bg_tip: profile.hide_bg_tip,
-            }}
-            tagline={profile.tagline}
-            logo={profile.logo || profile.card_img || ""}
-            banner={profile.image || ""}
-            intent={intent}
-          />
+          <Content endowment={profile} intent={intent} />
         </>
       )}
     </QueryLoader>

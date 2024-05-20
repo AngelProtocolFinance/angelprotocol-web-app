@@ -68,9 +68,10 @@ export default function Checkout(props: StripeCheckoutStep) {
           recipientName: init.recipient.name,
         };
 
-        const route = props.init.widgetConfig
-          ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
-          : appRoutes.donate_fiat_thanks;
+        const route =
+          props.init.source === "bg-widget"
+            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
+            : appRoutes.donate_fiat_thanks;
 
         navigate(route, { state });
       }}
@@ -82,7 +83,7 @@ export default function Checkout(props: StripeCheckoutStep) {
           endowmentId: init.recipient.id,
           splitLiq: liquidSplitPct,
           donor,
-          source: init.widgetConfig ? "bg-widget" : "bg-marketplace",
+          source: init.source,
         }).unwrap()
       }
     />

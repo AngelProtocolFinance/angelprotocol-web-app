@@ -22,17 +22,17 @@ export default function Preview({ classes = "", config }: Props) {
     "splitFixed",
   ]);
 
-  console.log({ data });
 
   const initState: DonationState = {
     step: "donate-form",
     init: {
+      source: "bg-widget",
       mode: "preview",
       recipient: {
         ...endowment,
         hide_bg_tip: data?.hide_bg_tip,
       },
-      widgetConfig: restConfig,
+      config: restConfig,
     },
     details: {
       method: "stripe",

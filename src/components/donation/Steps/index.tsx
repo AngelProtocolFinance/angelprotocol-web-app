@@ -7,12 +7,14 @@ import type {
   DonationState,
   Init,
   Mode,
-  WidgetConfig,
+  Config,
 } from "./types";
+import { DonationSource } from "types/lists";
 
 type Components = {
+  source: DonationSource;
   mode: Mode;
-  widgetConfig: WidgetConfig | null;
+  config: Config | null;
   recipient: DonationRecipient;
   intent?: DonationIntent;
 };
@@ -37,13 +39,15 @@ export function Steps({ className = "", ...props }: Props) {
 }
 
 function initialState({
+  source,
   intent,
-  widgetConfig,
+  config,
   recipient,
   mode,
 }: Components): DonationState {
   const init: Init = {
-    widgetConfig,
+    source,
+    config,
     recipient,
     mode,
     intentId: intent?.transactionId,
