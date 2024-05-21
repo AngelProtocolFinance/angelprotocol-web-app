@@ -143,7 +143,7 @@ export default function Form(props: Props) {
         }
       />
 
-      <div className="flex gap-3">
+      <div className="flex gap-3 mt-8">
         <button
           type="reset"
           className="px-6 btn-outline-filled text-sm"
