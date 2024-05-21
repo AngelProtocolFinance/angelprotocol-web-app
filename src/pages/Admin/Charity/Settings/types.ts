@@ -5,4 +5,6 @@ export type FV = {
   programDonateDisabled: boolean;
   splitLockPct: number;
   splitFixed: boolean;
+  /** in USD */
+  payout_minimum: string;
 };

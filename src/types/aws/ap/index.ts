@@ -81,6 +81,7 @@ export type Endowment = {
   progDonationsAllowed?: boolean;
   splitLiqPct?: number;
   splitFixed?: boolean;
+  payout_minimum?: number;
 };
 
 export type EndowmentProfile = Endowment;
@@ -110,6 +111,7 @@ export type EndowmentSettingsAttributes = Extract<
   | "progDonationsAllowed"
   | "splitLiqPct"
   | "splitFixed"
+  | "payout_minimum"
 >;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
