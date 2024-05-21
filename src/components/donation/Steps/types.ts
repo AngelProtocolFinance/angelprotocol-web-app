@@ -9,11 +9,6 @@ import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
 
-export type Config = {
-  splitDisabled: boolean;
-  liquidSplitPct: number;
-};
-
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,
   "step" | U
@@ -51,7 +46,17 @@ export type DonationDetails =
   | CryptoDonationDetails
   | StocksDonationDetails
   | DafDonationDetails;
+
+export type DonateMethod = DonationDetails["method"];
+
 export type Mode = "live" | "preview";
+
+export type Config = {
+  splitDisabled: boolean;
+  liquidSplitPct: number;
+  /** donation tabs follows the list order */
+  methods?: DonateMethod[];
+};
 
 export type Init = {
   source: DonationSource;
