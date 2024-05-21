@@ -4,7 +4,7 @@ import { CheckField, Field, Form as _Form } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
-import { number, string } from "yup";
+import { string } from "yup";
 import { useUpdateEndowment } from "../common";
 import HideBGTipCheckbox from "./HideBGTipCheckbox";
 import ReceiptMsg from "./ReceiptMsg";
@@ -12,6 +12,7 @@ import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import type { FV } from "./types";
 
 type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
+const PAYOUT_MIN_USD = 50;
 
 export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();
@@ -21,8 +22,8 @@ export default function Form(props: Props) {
       schema<FV>({
         receiptMsg: string().max(MAX_RECEIPT_MSG_CHAR, "exceeds max"),
         payout_minimum: stringNumber(
-          (s) => s,
-          (n) => n.min(50, "must be greater than $50")
+          (s) => s.required("required"),
+          (n) => n.min(PAYOUT_MIN_USD, `must be greater than ${PAYOUT_MIN_USD}`)
         ),
       })
     ),
@@ -124,8 +125,10 @@ export default function Form(props: Props) {
       </div>
 
       <Field
+        placeholder={`$${PAYOUT_MIN_USD}`}
+        required
         name="payout_minimum"
-        label="Payout Minimum (USD)"
+        label="Payout Minimum"
         classes={{
           label: "font-medium text-base",
           container: "mt-8",
