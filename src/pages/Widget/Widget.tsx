@@ -1,3 +1,4 @@
+import { fill } from "components/DonateMethods";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
@@ -44,6 +45,7 @@ function Content({
     | "overview"
     | "splitFixed"
     | "splitLiqPct"
+    | "donateMethods"
   >;
 }) {
   const location = useLocation();
@@ -56,12 +58,7 @@ function Content({
     isDescriptionTextShown: true,
     liquidSplitPct: endowment?.splitLiqPct ?? 50,
     splitDisabled: endowment?.splitFixed ?? false,
-    methods: [
-      { id: "crypto", name: "Crypto", disabled: false },
-      { id: "daf", name: "DAF", disabled: false },
-      { id: "stocks", name: "Stocks", disabled: false },
-      { id: "stripe", name: "Card", disabled: false },
-    ],
+    methods: fill(endowment?.donateMethods),
   });
 
   return (

@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods } from "components/DonateMethods";
-import { LockedSplitSlider } from "components/donation/Steps/Splits";
+import { LockedSplitSlider } from "components/donation";
 import { CheckField, Form } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";

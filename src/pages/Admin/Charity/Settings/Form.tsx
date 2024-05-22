@@ -1,10 +1,13 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { DonateMethods, fill } from "components/DonateMethods";
 import { LockedSplitSlider } from "components/donation";
 import { CheckField, Field, Form as _Form } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
-import { string } from "yup";
+import type { TDonateMethod } from "types/components";
+import { array, string } from "yup";
 import { useUpdateEndowment } from "../common";
 import HideBGTipCheckbox from "./HideBGTipCheckbox";
 import ReceiptMsg from "./ReceiptMsg";
@@ -25,6 +28,13 @@ export default function Form(props: Props) {
           (s) => s.required("required"),
           (n) => n.min(PAYOUT_MIN_USD, `must be greater than ${PAYOUT_MIN_USD}`)
         ),
+        donateMethods: array().test(
+          "",
+          "at least one payment option should be active",
+          (values) => {
+            return values?.some((v) => !(v as TDonateMethod).disabled);
+          }
+        ),
       })
     ),
     values: {
@@ -35,21 +45,25 @@ export default function Form(props: Props) {
       splitLockPct: 100 - (props.splitLiqPct ?? 50),
       splitFixed: props.splitFixed ?? false,
       payout_minimum: `${props.payout_minimum ?? 50}`,
+      donateMethods: fill(props.donateMethods),
     },
   });
 
   const {
     reset,
     handleSubmit,
-    formState: { isSubmitting, isDirty },
+    formState: { isSubmitting, isDirty, errors },
     control,
   } = methods;
 
-  const {
-    field: { value: splitLockedPct, onChange: onSplitLockedPctChanged },
-  } = useController<FV, "splitLockPct">({
+  const { field: splitLockPct } = useController<FV, "splitLockPct">({
     control,
     name: "splitLockPct",
+  });
+
+  const { field: donateMethods } = useController<FV, "donateMethods">({
+    control,
+    name: "donateMethods",
   });
 
   return (
@@ -65,6 +79,7 @@ export default function Form(props: Props) {
           programDonateDisabled,
           splitLockPct,
           payout_minimum,
+          donateMethods,
           ...fv
         }) => {
           await updateEndow({
@@ -73,6 +88,9 @@ export default function Form(props: Props) {
             splitLiqPct: 100 - splitLockPct,
             id: props.id,
             payout_minimum: +payout_minimum,
+            donateMethods: donateMethods
+              .filter((m) => !m.disabled)
+              .map((m) => m.id),
           });
         }
       )}
@@ -111,8 +129,8 @@ export default function Form(props: Props) {
         Define default split value (Marketplace only):
       </label>
       <LockedSplitSlider
-        onChange={onSplitLockedPctChanged}
-        value={splitLockedPct}
+        onChange={splitLockPct.onChange}
+        value={splitLockPct.value}
       />
 
       <div className="mt-2">
@@ -142,6 +160,24 @@ export default function Form(props: Props) {
             example, it can be useful to reduce the total number of payments
             made if the receiving bank charges a fee per deposit transaction.
           </span>
+        }
+      />
+
+      <DonateMethods
+        classes={{
+          container: "mt-8",
+          label: "font-medium",
+          tooltip: "italic text-sm",
+        }}
+        values={donateMethods.value}
+        onChange={donateMethods.onChange}
+        error={
+          <ErrorMessage
+            name="donateMethods"
+            as="p"
+            errors={errors}
+            className="text-red text-sm mb-1"
+          />
         }
       />
 

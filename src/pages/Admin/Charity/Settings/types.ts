@@ -1,3 +1,5 @@
+import type { TDonateMethod } from "types/components";
+
 export type FV = {
   receiptMsg: string;
   hide_bg_tip: boolean;
@@ -7,4 +9,5 @@ export type FV = {
   splitFixed: boolean;
   /** in USD */
   payout_minimum: string;
+  donateMethods: TDonateMethod[];
 };
