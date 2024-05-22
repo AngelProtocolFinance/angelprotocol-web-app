@@ -1,19 +1,19 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LockedSplitSlider } from "components/donation/Steps/Splits";
 import { CheckField, Form } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
 import {
   type SubmitHandler,
+  get,
   useController,
   useForm,
-  get,
 } from "react-hook-form";
 import type { WidgetConfig } from "types/widget";
 import { DonateMethods } from "./DonateMethods";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
-import { ErrorMessage } from "@hookform/error-message";
 
 type Props = {
   classes?: string;

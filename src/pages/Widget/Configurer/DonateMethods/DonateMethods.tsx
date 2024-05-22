@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import { unpack } from "components/form/helpers";
 import { Reorder, useDragControls, useMotionValue } from "framer-motion";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { Method as TMethod } from "types/widget";
 
 type Updator = (methods: TMethod[]) => void;
