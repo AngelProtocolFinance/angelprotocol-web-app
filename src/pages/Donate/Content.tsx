@@ -52,6 +52,7 @@ function Content({ intent, endowment }: Props) {
             config={{
               splitDisabled: endowment.splitFixed ?? false,
               liquidSplitPct: endowment.splitLiqPct ?? 50,
+              methodIds: endowment.donateMethods,
             }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
