@@ -58,7 +58,7 @@ function Content({
     splitDisabled: endowment?.splitFixed ?? false,
     methods: [
       { id: "crypto", name: "Crypto", disabled: false },
-      { id: "daf", name: "DAF", disabled: true },
+      { id: "daf", name: "DAF", disabled: false },
       { id: "stocks", name: "Stocks", disabled: false },
       { id: "stripe", name: "Card", disabled: false },
     ],

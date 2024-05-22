@@ -78,7 +78,11 @@ export default function DonateMethods(props: FormStep) {
           const Panel = methods[tab].panel;
           return (
             <Tab.Panel key={tab}>
-              <Panel init={init} step={step} details={details} />
+              <Panel
+                init={init}
+                step={step}
+                details={details?.method === tab ? details : undefined}
+              />
             </Tab.Panel>
           );
         })}

@@ -13,7 +13,7 @@ type Props = {
   config: WidgetConfig;
 };
 export default function Preview({ classes = "", config }: Props) {
-  const { endowment, ...restConfig } = config;
+  const { endowment, methods, ...restConfig } = config;
   const endowName = config.endowment.name;
 
   const { data } = useEndowment({ id: endowment.id }, ["hide_bg_tip"]);
@@ -27,7 +27,10 @@ export default function Preview({ classes = "", config }: Props) {
         ...endowment,
         hide_bg_tip: data?.hide_bg_tip,
       },
-      config: restConfig,
+      config: {
+        ...restConfig,
+        methodIds: methods.filter((m) => !m.disabled).map((m) => m.id),
+      },
     },
     details: {
       method: "stripe",
