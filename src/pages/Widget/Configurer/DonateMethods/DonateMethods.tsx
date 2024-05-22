@@ -1,6 +1,6 @@
-import { Method as TMethod } from "types/widget";
-import { Reorder, useMotionValue, useDragControls } from "framer-motion";
 import Icon from "components/Icon";
+import { Reorder, useDragControls, useMotionValue } from "framer-motion";
+import type { Method as TMethod } from "types/widget";
 
 type Updator = (methods: TMethod[]) => void;
 

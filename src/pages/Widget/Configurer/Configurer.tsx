@@ -4,10 +4,10 @@ import { CheckField, Form } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import type { WidgetConfig } from "types/widget";
+import { DonateMethods } from "./DonateMethods";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
-import { DonateMethods } from "./DonateMethods";
 
 type Props = {
   classes?: string;
