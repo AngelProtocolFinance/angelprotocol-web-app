@@ -9,7 +9,7 @@ export const schema = object<any, SchemaShape<FormValues>>({
   }),
   methods: array().test(
     "",
-    "at least one method should be active",
+    "at least one payment option should be active",
     (values) => {
       return values?.some((v) => !(v as Method).disabled);
     }

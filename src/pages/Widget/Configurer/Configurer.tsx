@@ -86,7 +86,11 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
         </div>
 
         <DonateMethods
-          classes={{ container: "mt-4", tooltip: "italic" }}
+          classes={{
+            container: "mt-8",
+            tooltip: "italic",
+            label: "font-medium text-base",
+          }}
           values={donateMethods.value}
           onChange={donateMethods.onChange}
           error={
@@ -99,7 +103,7 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
           }
         />
 
-        <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-4">
+        <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-8">
           <button
             disabled={!isDirty}
             type="reset"
