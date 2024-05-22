@@ -1,7 +1,7 @@
 import type { SchemaShape } from "schemas/types";
+import type { TDonateMethod } from "types/components";
 import { type ObjectSchema, array, number, object } from "yup";
 import type { FormValues } from "./types";
-import { TDonateMethod } from "types/components";
 
 export const schema = object<any, SchemaShape<FormValues>>({
   endowment: object<any, SchemaShape<FormValues["endowment"]>>({

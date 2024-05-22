@@ -1,5 +1,5 @@
 import type { EndowmentOption } from "./aws";
-import { TDonateMethod } from "./components";
+import type { TDonateMethod } from "./components";
 
 export type WidgetConfig = {
   endowment: EndowmentOption;

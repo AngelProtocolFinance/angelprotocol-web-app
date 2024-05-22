@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { Reorder, useDragControls, useMotionValue } from "framer-motion";
 import { unpack } from "helpers/unpack";
 import type { ReactNode } from "react";
-import { TDonateMethod } from "types/components";
+import type { TDonateMethod } from "types/components";
 
 type Updator = (methods: TDonateMethod[]) => void;
 type Classes = {

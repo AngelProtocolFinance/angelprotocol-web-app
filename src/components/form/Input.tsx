@@ -1,6 +1,6 @@
 import Icon, { type IconType } from "components/Icon";
-import { unpack } from "helpers";
 import type { Classes } from "components/form/types";
+import { unpack } from "helpers";
 import type { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 import {
   type FieldValues,
