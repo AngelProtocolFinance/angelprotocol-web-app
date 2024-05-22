@@ -93,6 +93,7 @@ import {
   RiGasStationFill,
   RiMapPin2Line,
   RiMoneyDollarCircleFill,
+  RiDraggable,
 } from "react-icons/ri";
 import { RxMixerHorizontal } from "react-icons/rx";
 import { SiHiveBlockchain } from "react-icons/si";
@@ -126,6 +127,7 @@ export const icons = {
   Discord: FaDiscord,
   DollarCircle: RiMoneyDollarCircleFill,
   Down: VscTriangleDown,
+  Drag: RiDraggable,
   Email: MdOutlineEmail,
   Exclamation: FaExclamation,
   ExclamationCircleFill: BsExclamationCircleFill,

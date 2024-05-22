@@ -1,32 +1,52 @@
 import Icon from "components/Icon";
+import { unpack } from "components/form/helpers";
 import { Reorder, useDragControls, useMotionValue } from "framer-motion";
+import { ReactNode } from "react";
 import type { Method as TMethod } from "types/widget";
 
 type Updator = (methods: TMethod[]) => void;
+type Classes = {
+  container?: string;
+  label?: string;
+  tooltip?: string;
+};
 
 type Props = {
   values: TMethod[];
   onChange: Updator;
+  error?: ReactNode;
+  classes?: Classes | string;
 };
 
-export function DonateMethods({ values, onChange }: Props) {
+export function DonateMethods({ values, onChange, error, classes }: Props) {
+  const style = unpack(classes);
   return (
-    <Reorder.Group
-      axis="y"
-      onReorder={(values) => onChange(values.map((v) => JSON.parse(v)))}
-      values={values.map((v) => JSON.stringify(v))}
-      className="grid gap-4"
-    >
-      {values.map((v) => (
-        <Method
-          value={v}
-          key={v.id}
-          updator={(updated) =>
-            onChange(values.map((v) => (v.id === updated.id ? updated : v)))
-          }
-        />
-      ))}
-    </Reorder.Group>
+    <div className={style.container}>
+      <label className={`${style.label} mb-2 block`}>
+        Customize donation payment options
+      </label>
+      <p className={`text-navy-l1 ${style.tooltip} mb-4`}>
+        Here you can turn on/off payment options and change the order of their
+        appearance
+      </p>
+      {error}
+      <Reorder.Group
+        axis="y"
+        onReorder={(values) => onChange(values.map((v) => JSON.parse(v)))}
+        values={values.map((v) => JSON.stringify(v))}
+        className="grid gap-4"
+      >
+        {values.map((v) => (
+          <Method
+            value={v}
+            key={v.id}
+            updator={(updated) =>
+              onChange(values.map((v) => (v.id === updated.id ? updated : v)))
+            }
+          />
+        ))}
+      </Reorder.Group>
+    </div>
   );
 }
 
@@ -47,11 +67,11 @@ function Method({
       dragControls={controls}
       id={value.id}
       style={{ y }}
-      className="flex items-center gap-2 border border-gray-l4 p-3 aria-disabled:bg-gray-l4"
+      className="flex items-center gap-2 border border-gray-l4 p-3 aria-disabled:bg-gray-l4 aria-disabled:text-gray rounded bg-white select-none"
     >
       <input
         type="checkbox"
-        className="accent-blue-d1 size-4"
+        className="accent-blue-d1 size-3.5"
         checked={!value.disabled}
         onChange={(e) => {
           updator({ ...value, disabled: !e.target.checked });
@@ -59,11 +79,11 @@ function Method({
       />
       <button
         type="button"
-        className="disabled:pointer-events-none"
+        className="text-xl disabled:pointer-events-none cursor-grab disabled:cursor-default"
         onPointerDown={(e) => controls.start(e)}
         disabled={value.disabled}
       >
-        <Icon type="Menu" />
+        <Icon type="Drag" />
       </button>
 
       {value.name}

@@ -2,12 +2,18 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { LockedSplitSlider } from "components/donation/Steps/Splits";
 import { CheckField, Form } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
-import { type SubmitHandler, useController, useForm } from "react-hook-form";
+import {
+  type SubmitHandler,
+  useController,
+  useForm,
+  get,
+} from "react-hook-form";
 import type { WidgetConfig } from "types/widget";
 import { DonateMethods } from "./DonateMethods";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
+import { ErrorMessage } from "@hookform/error-message";
 
 type Props = {
   classes?: string;
@@ -27,7 +33,7 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
   const {
     handleSubmit,
     reset: hookFormReset,
-    formState: { isDirty },
+    formState: { isDirty, errors },
   } = methods;
 
   const { field: liquidSplitPct } = useController({
@@ -80,8 +86,17 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
         </div>
 
         <DonateMethods
+          classes={{ container: "mt-4", tooltip: "italic" }}
           values={donateMethods.value}
           onChange={donateMethods.onChange}
+          error={
+            <ErrorMessage
+              name="methods"
+              as="p"
+              errors={errors}
+              className="text-red text-sm mb-1"
+            />
+          }
         />
 
         <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-4">
