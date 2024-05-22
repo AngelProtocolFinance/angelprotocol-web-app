@@ -77,10 +77,16 @@ export type Endowment = {
   hide_bg_tip?: boolean;
   sfCompounded?: boolean;
   published?: boolean;
+  /** allowed by default */
+  progDonationsAllowed?: boolean;
+  splitLiqPct?: number;
+  splitFixed?: boolean;
+  payout_minimum?: number;
 };
 
 export type EndowmentProfile = Endowment;
 
+/** from algolia index instead of DB */
 export type EndowmentCard = Pick<
   Endowment,
   | "id"
@@ -95,19 +101,32 @@ export type EndowmentCard = Pick<
   | "kyc_donors_only"
   | "claimed"
 >;
-export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
+export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
+export type EndowmentSettingsAttributes = Extract<
+  keyof Endowment,
+  | "receiptMsg"
+  | "sfCompounded"
+  | "hide_bg_tip"
+  | "progDonationsAllowed"
+  | "splitLiqPct"
+  | "splitFixed"
+  | "payout_minimum"
+>;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
-  "endow_designation" | "fiscal_sponsored" | "receiptMsg" | "claimed"
+  | "endow_designation"
+  | "fiscal_sponsored"
+  | "claimed"
+  | EndowmentSettingsAttributes
 > & {
   endow_designation: EndowDesignation | "";
 };
 
 export type EndowmentSettingsUpdate = Pick<
   Required<Endowment>,
-  "id" | "receiptMsg" | "sfCompounded"
+  EndowmentSettingsAttributes
 >;
 
 export type NewProgram = Omit<Program, "id" | "milestones"> & {
@@ -139,20 +158,6 @@ export type EndowmentsQueryParams = {
   claimed?: string;
 };
 
-export interface LeaderboardEntry {
-  charity_logo: string;
-  charity_name: string;
-  endowment_id: number;
-  total_liq: number;
-  total_lock: number;
-  overall: number;
-}
-
-export interface Update {
-  endowments: LeaderboardEntry[];
-  last_update: string;
-}
-
 export type EndowmentBookmark = {
   endowId: number;
   name: string;
@@ -165,12 +170,6 @@ export type WalletProfile = {
   admin: EndowmentBookmark[];
   bookmarks: EndowmentBookmark[];
 };
-
-export interface DonationsMetricList {
-  donations_daily_amount: number;
-  donations_daily_count: number;
-  donations_total_amount_v2: number;
-}
 
 export type UserAttributes = {
   familyName: string;

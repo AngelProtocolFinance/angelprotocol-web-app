@@ -1,37 +1,25 @@
 import { humanize } from "helpers";
-import { useEffect, useState } from "react";
-import { type SplitsStep, setSplit, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { useState } from "react";
+import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
-import type { Config } from "../types";
+import type { SplitsStep } from "../types";
 import { LockedSplitSlider } from "./LockedSplitSlider";
 
-type Props = SplitsStep & {
-  widgetConfig: Config | null;
-};
+type Props = SplitsStep;
+export default function Split(props: Props) {
+  const { details, init, liquidSplitPct: liquidSplitFromSplitStepPct } = props;
 
-export default function Split({
-  details,
-  liquidSplitPct: donationLiquidSplit = 50,
-  widgetConfig,
-}: Props) {
-  const dispatch = useSetter();
+  const persistedLiqSplitPct =
+    init.mode === "live"
+      ? liquidSplitFromSplitStepPct ?? init.config?.liquidSplitPct
+      : init.config?.liquidSplitPct;
 
-  const initLiqSplit = (() => {
-    if (!widgetConfig) return donationLiquidSplit;
-    if (widgetConfig.isPreview) return widgetConfig.liquidSplitPct;
-    return donationLiquidSplit || widgetConfig.liquidSplitPct;
-  })();
+  const { setState } = useDonationState();
 
-  const [lockedSplitPct, setLockedSplitPct] = useState(100 - initLiqSplit);
-
-  // update lockedSplitPct whenever a new default liquid % value is passed from parent
-  useEffect(() => {
-    if (!widgetConfig) return;
-    if (!widgetConfig.isPreview) return;
-    setLockedSplitPct(100 - widgetConfig.liquidSplitPct);
-  }, [widgetConfig]);
+  const [lockedSplitPct, setLockedSplitPct] = useState(
+    100 - (persistedLiqSplitPct ?? 50)
+  );
 
   const liqSplitPct = 100 - lockedSplitPct;
 
@@ -58,14 +46,17 @@ export default function Split({
 
   return (
     <div className="grid content-start p-4 @md/steps:p-8">
-      <BackBtn type="button" onClick={() => dispatch(setStep("donate-form"))} />
+      <BackBtn
+        type="button"
+        onClick={() => setState({ ...props, step: "donate-form" })}
+      />
       <h4 className="mt-4">Sustainability Fund Donation</h4>
       <p className="mb-6 text-navy-l1">
         Create a sustainable impact: Give today, give forever
       </p>
 
       <LockedSplitSlider
-        disabled={widgetConfig?.splitDisabled}
+        disabled={props.init.config?.splitDisabled}
         value={lockedSplitPct}
         onChange={setLockedSplitPct}
       />
@@ -99,9 +90,14 @@ export default function Split({
       </p>
 
       <ContinueBtn
-        onClick={() => {
-          dispatch(setSplit(liqSplitPct));
-        }}
+        type="button"
+        onClick={() =>
+          setState({
+            ...props,
+            step: props.init.recipient.hide_bg_tip ? "summary" : "tip",
+            liquidSplitPct: liqSplitPct,
+          })
+        }
         className="mt-6"
       />
     </div>

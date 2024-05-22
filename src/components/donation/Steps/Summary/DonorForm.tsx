@@ -4,14 +4,21 @@ import { useForm } from "react-hook-form";
 import type { Donor, Donor as FV } from "types/aws";
 import { object, string } from "yup";
 import ContinueBtn from "../common/ContinueBtn";
+import type { Mode } from "../types";
 
 type Props = {
   onSubmit(donor: FV): void;
   classes?: string;
   donor?: Donor;
+  mode: Mode;
 };
 
-export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
+export default function DonorForm({
+  classes = "",
+  onSubmit,
+  donor,
+  mode,
+}: Props) {
   const methods = useForm<FV>({
     defaultValues: donor || { firstName: "", lastName: "", email: "" },
     resolver: yupResolver(
@@ -61,6 +68,7 @@ export default function DonorForm({ classes = "", onSubmit, donor }: Props) {
       />
       <ContinueBtn
         type="submit"
+        disabled={mode === "preview"}
         className="px-4 col-span-full mt-6"
         text="Checkout"
       />

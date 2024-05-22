@@ -1,3 +1,4 @@
+import { ErrorCode as errors } from "@ethersproject/logger";
 import { EIPMethods } from "constants/evm";
 import type { EVMChainID } from "types/chain";
 import type { EVMTx, Requester, TxReceipt } from "types/evm";
@@ -30,7 +31,28 @@ export async function sendEVMTx(
     };
   } catch (err) {
     logger.error(err);
-    return { error: "Error encountered while sending transaction" };
+    return {
+      error: EvmError(err) || "Error encountered while sending transaction",
+    };
+  }
+}
+
+function EvmError(error: any): string | undefined {
+  switch (error?.code) {
+    //https://eips.ethereum.org/EIPS/eip-1193#provider-errors
+    case 4001:
+      return "Transaction cancelled";
+    case 4900:
+    case 4901:
+      return "Wallet is disconnected";
+    //https://eips.ethereum.org/EIPS/eip-1474#error-codes
+    case 32603:
+    case errors.SERVER_ERROR:
+      return "Error connecting to server. Please try again later.";
+    case errors.TIMEOUT:
+      return "Transaction timed out.";
+    case errors.ACTION_REJECTED:
+      return "Transaction cancelled.";
   }
 }
 

@@ -1,8 +1,3 @@
-import type { EndowmentOption } from "types/aws";
+import type { WidgetConfig } from "types/widget";
 
-export type FormValues = {
-  endowment: EndowmentOption;
-  isDescriptionTextShown: boolean;
-  splitDisabled: boolean;
-  liquidPercentage: number;
-};
+export type FormValues = WidgetConfig;

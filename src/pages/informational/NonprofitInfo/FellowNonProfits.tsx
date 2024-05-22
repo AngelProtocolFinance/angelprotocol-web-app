@@ -16,7 +16,14 @@ export default function FellowNonProfits({ className = "" }) {
           .concat(brands)
           .concat(brands)
           .map((b, idx) => (
-            <img key={idx} src={b} height={80} alt="brand img" />
+            <img
+              key={idx}
+              src={b}
+              alt="brand img"
+              height={80}
+              width={120}
+              className="object-contain"
+            />
           ))}
       </Marquee>
     </section>

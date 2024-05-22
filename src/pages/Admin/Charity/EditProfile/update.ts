@@ -22,7 +22,6 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
       active_in_countries: d.active_in_countries,
       card_img: d.card_img ?? "",
       endow_designation: d.endow_designation,
-      hide_bg_tip: !!d.hide_bg_tip,
       hq_country: d.hq_country,
       image: d.image ?? "",
       kyc_donors_only: d.kyc_donors_only,
@@ -45,7 +44,6 @@ export function toProfileUpdate(arg: Arg): EndowmentProfileUpdate {
       tagline: d.tagline ?? "",
       url: d.url ?? "",
       slug: d.slug ?? "",
-      sfCompounded: !!d.sfCompounded,
     };
   }
 

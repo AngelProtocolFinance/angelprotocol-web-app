@@ -1,108 +1,59 @@
 import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
-import QueryLoader from "components/QueryLoader";
 import { Steps } from "components/donation";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import { memo, useEffect, useRef } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useIntentQuery } from "services/apes";
-import {
-  type DonationRecipient,
-  loadIntent,
-  setRecipient,
-} from "slices/donation";
-import { useGetter, useSetter } from "store/accessors";
-import type { DonationIntent } from "types/aws";
+import { memo } from "react";
+import { Link } from "react-router-dom";
+
+import type { DonationIntent, Endowment } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
-type Props = DonationRecipient & {
-  logo: string;
-  banner: string;
-  tagline?: string;
+type Props = {
+  intent?: DonationIntent;
+  endowment: Endowment;
 };
 
-function Content(props: Props) {
-  const { state } = useLocation();
-
-  if (state?.transactionId) {
-    return <WithIntent transactionId={state?.transactionId} {...props} />;
-  }
-
-  return <LoadedContent {...props} />;
-}
-
-function WithIntent(props: Props & { transactionId: string }) {
-  const queryState = useIntentQuery({ transactionId: props.transactionId });
-
-  useEffect(() => {
-    return () => {
-      window.history.replaceState({}, "");
-    };
-  }, []);
-
+function Content({ intent, endowment }: Props) {
   return (
-    <QueryLoader queryState={queryState}>
-      {(intent) => <LoadedContent {...props} intent={intent} />}
-    </QueryLoader>
-  );
-}
-
-function LoadedContent(props: Props & { intent?: DonationIntent }) {
-  const dispatch = useSetter();
-  const state = useGetter((state) => state.donation);
-  useEffect(() => {
-    const { intent, ...recipient } = props;
-    if (intent) {
-      dispatch(loadIntent({ ...intent, recipient }));
-    } else {
-      dispatch(setRecipient(recipient));
-    }
-  }, [dispatch, props]);
-
-  const CONTAINER_ID = "__container_id";
-  const prevStep = useRef(state.step);
-  useEffect(() => {
-    /** at first visit, equal so no scrolling happens
-     * on next or back, would be different
-     */
-    if (state.step === prevStep.current) return;
-    const element = document.getElementById(CONTAINER_ID);
-    element?.scrollIntoView();
-    prevStep.current = state.step;
-  }, [state.step]);
-
-  return (
-    <div
-      className="fixed inset-0 overflow-y-auto w-full z-50 bg-[#F6F7F8]"
-      id={CONTAINER_ID}
-    >
+    <div className="fixed inset-0 overflow-y-auto w-full z-50 bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
         <DappLogo classes="h-[2.036rem]" />
         <Link
-          to={`${appRoutes.marketplace}/${props.id}`}
+          to={`${appRoutes.marketplace}/${endowment.id}`}
           className="font-semibold font-heading hover:text-blue-d1"
         >
           Cancel
         </Link>
       </div>
       <div className="md:px-4 max-w-[68.625rem] mx-auto grid md:grid-cols-[1fr_auto] items-start content-start gap-4">
-        <Link to={`${appRoutes.marketplace}/${props.id}`} className="">
+        <Link to={`${appRoutes.marketplace}/${endowment.id}`} className="">
           <OrgCard
-            name={props.name}
-            tagline={props.tagline}
-            logo={props.logo || flying_character}
+            name={endowment.name}
+            tagline={endowment.tagline}
+            logo={endowment.logo || flying_character}
             classes="col-start-1 row-start-1"
           />
         </Link>
         {/** small screen but space is still enough to render sidebar */}
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps
+            source="bg-marketplace"
+            mode="live"
+            intent={intent}
+            recipient={{
+              id: endowment.id,
+              name: endowment.name,
+              hide_bg_tip: endowment.hide_bg_tip,
+            }}
+            config={{
+              splitDisabled: endowment.splitFixed ?? false,
+              liquidSplitPct: endowment.splitLiqPct ?? 50,
+            }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
-            donaterConfig={null}
           />
         </div>
         <FAQ classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]" />
@@ -112,9 +63,9 @@ function LoadedContent(props: Props & { intent?: DonationIntent }) {
           <A href={PRIVACY_POLICY}>Privacy Policy</A>. 100% of your donation is
           tax-deductible to the extent allowed by US law. Your donation is made
           to {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants
-          unrestricted funds to {props.name} on your behalf. As a legal matter,{" "}
-          {APP_NAME} must provide any donations to {props.name} on an
-          unrestricted basis, regardless of any designations or restrictions
+          unrestricted funds to {endowment.name} on your behalf. As a legal
+          matter, {APP_NAME} must provide any donations to {endowment.name} on
+          an unrestricted basis, regardless of any designations or restrictions
           made by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
         </p>
         <p className="max-md:px-4 mb-4 max-mbcol-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">

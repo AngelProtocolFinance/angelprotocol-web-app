@@ -13,7 +13,7 @@ const programs = aws.injectEndpoints({
     program: builder.query<Program, { endowId: number; programId: string }>({
       providesTags: ["program"],
       query: ({ endowId, programId }) =>
-        `/${v(2)}/endowments/${endowId}/programs/${programId}`,
+        `/${v(1)}/endowments/${endowId}/programs/${programId}`,
     }),
     newProgram: builder.mutation<
       { id: string },
@@ -46,7 +46,7 @@ const programs = aws.injectEndpoints({
       invalidatesTags: (_, error) => (error ? [] : ["programs"]),
       query: ({ id, program_id }) => {
         return {
-          url: `/${v(1)}/endowments/${id}/programs/${program_id}`,
+          url: `/${v(2)}/endowments/${id}/programs/${program_id}`,
           method: "DELETE",
           headers: { authorization: TEMP_JWT },
         };

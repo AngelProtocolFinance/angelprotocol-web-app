@@ -13,7 +13,7 @@ const Path = () => {
 
   return (
     <section
-      className={`relative grid ${s.container} pb-20 xl:pb-32 overflow-x-clip`}
+      className={`relative grid ${s.container} pb-40 xl:pb-56 overflow-x-clip`}
     >
       <h3 className="text-[13px] md:text-[18px] uppercase text-blue-d1 text-center mb-4">
         Bridge to better
@@ -31,7 +31,7 @@ const Path = () => {
             setPath("nonprofits");
           }}
         >
-          For Nonprofits
+          For Donors
         </button>
         <button
           type="button"
@@ -40,7 +40,7 @@ const Path = () => {
           } py-2 px-6 rounded-3xl`}
           onClick={() => setPath("donors")}
         >
-          For Donors
+          For Nonprofits
         </button>
       </div>
       <p className="text-lg md:text-[28px] font-medium text-navy-l1/60 text-center mb-11">

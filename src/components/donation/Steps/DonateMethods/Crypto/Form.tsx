@@ -2,34 +2,23 @@ import { Label } from "components/form";
 import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { useFormContext } from "react-hook-form";
-import { useDispatch } from "react-redux";
-import { setDetails } from "slices/donation";
 import type { ChainID } from "types/chain";
 import { Selector } from "../../../../Selector";
 import TokenField from "../../../../TokenField";
+import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
-import type { Config } from "../../types";
+import { nextFormState } from "../helpers";
 import { initToken } from "./constants";
 import type { DonateValues } from "./types";
 
-type Props = {
-  configFromWidget: Config | null;
-};
+export default function Form() {
+  const { setState } = useDonationState();
 
-export default function Form({ configFromWidget }: Props) {
   const { watch, reset, setValue, handleSubmit } =
     useFormContext<DonateValues>();
 
-  const dispatch = useDispatch();
-
   function submit(data: DonateValues) {
-    dispatch(
-      setDetails({
-        ...data,
-        method: "crypto",
-        source: configFromWidget ? "bg-widget" : "bg-marketplace",
-      })
-    );
+    setState((prev) => nextFormState(prev, { ...data, method: "crypto" }));
     reset();
   }
 
