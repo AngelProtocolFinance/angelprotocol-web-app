@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LockedSplitSlider } from "components/donation";
-import { CheckField, Form as _Form } from "components/form";
+import { CheckField, Field, Form as _Form } from "components/form";
 import { useController, useForm } from "react-hook-form";
-import { schema } from "schemas/shape";
+import { schema, stringNumber } from "schemas/shape";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
 import { string } from "yup";
 import { useUpdateEndowment } from "../common";
@@ -12,6 +12,7 @@ import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import type { FV } from "./types";
 
 type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
+const PAYOUT_MIN_USD = 50;
 
 export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();
@@ -20,6 +21,10 @@ export default function Form(props: Props) {
     resolver: yupResolver(
       schema<FV>({
         receiptMsg: string().max(MAX_RECEIPT_MSG_CHAR, "exceeds max"),
+        payout_minimum: stringNumber(
+          (s) => s.required("required"),
+          (n) => n.min(PAYOUT_MIN_USD, `must be greater than ${PAYOUT_MIN_USD}`)
+        ),
       })
     ),
     values: {
@@ -29,6 +34,7 @@ export default function Form(props: Props) {
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
       splitLockPct: 100 - (props.splitLiqPct ?? 50),
       splitFixed: props.splitFixed ?? false,
+      payout_minimum: `${props.payout_minimum ?? 50}`,
     },
   });
 
@@ -55,12 +61,18 @@ export default function Form(props: Props) {
         reset();
       }}
       onSubmit={handleSubmit(
-        async ({ programDonateDisabled, splitLockPct, ...fv }) => {
+        async ({
+          programDonateDisabled,
+          splitLockPct,
+          payout_minimum,
+          ...fv
+        }) => {
           await updateEndow({
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
             splitLiqPct: 100 - splitLockPct,
             id: props.id,
+            payout_minimum: +payout_minimum,
           });
         }
       )}
@@ -95,7 +107,7 @@ export default function Form(props: Props) {
 
       <HideBGTipCheckbox />
 
-      <label className="mt-6 font-medium">
+      <label className="mt-8 font-medium">
         Define default split value (Marketplace only):
       </label>
       <LockedSplitSlider
@@ -104,7 +116,7 @@ export default function Form(props: Props) {
       />
 
       <div className="mt-2">
-        <CheckField<FV> name="splitFixed">
+        <CheckField<FV> name="splitFixed" classes="font-medium">
           Disable changing the split value
         </CheckField>
         <p className="text-xs sm:text-sm italic text-navy-l1 mt-2">
@@ -114,7 +126,26 @@ export default function Form(props: Props) {
         </p>
       </div>
 
-      <div className="flex gap-3">
+      <Field
+        placeholder={`$${PAYOUT_MIN_USD}`}
+        required
+        name="payout_minimum"
+        label="Payout Minimum"
+        classes={{
+          label: "font-medium text-base",
+          container: "mt-8",
+        }}
+        tooltip={
+          <span className="text-navy-l1 text-sm italic">
+            Minimum amount of funds your current account must reach before
+            triggering a Payout to your Nonprofit's connected Bank Account. For
+            example, it can be useful to reduce the total number of payments
+            made if the receiving bank charges a fee per deposit transaction.
+          </span>
+        }
+      />
+
+      <div className="flex gap-3 mt-8">
         <button
           type="reset"
           className="px-6 btn-outline-filled text-sm"
