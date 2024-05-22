@@ -31,7 +31,7 @@ const Path = () => {
             setPath("nonprofits");
           }}
         >
-          For Donors
+          For Nonprofits
         </button>
         <button
           type="button"
@@ -40,7 +40,7 @@ const Path = () => {
           } py-2 px-6 rounded-3xl`}
           onClick={() => setPath("donors")}
         >
-          For Nonprofits
+          For Donors
         </button>
       </div>
       <p className="text-lg md:text-[28px] font-medium text-navy-l1/60 text-center mb-11">
