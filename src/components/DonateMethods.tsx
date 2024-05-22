@@ -1,10 +1,10 @@
 import Icon from "components/Icon";
-import { unpack } from "components/form/helpers";
 import { Reorder, useDragControls, useMotionValue } from "framer-motion";
+import { unpack } from "helpers/unpack";
 import type { ReactNode } from "react";
-import type { Method as TMethod } from "types/widget";
+import { TDonateMethod } from "types/components";
 
-type Updator = (methods: TMethod[]) => void;
+type Updator = (methods: TDonateMethod[]) => void;
 type Classes = {
   container?: string;
   label?: string;
@@ -12,7 +12,7 @@ type Classes = {
 };
 
 type Props = {
-  values: TMethod[];
+  values: TDonateMethod[];
   onChange: Updator;
   error?: ReactNode;
   classes?: Classes | string;
@@ -54,8 +54,8 @@ function Method({
   value,
   updator,
 }: {
-  value: TMethod;
-  updator: (old: TMethod) => void;
+  value: TDonateMethod;
+  updator: (old: TDonateMethod) => void;
 }) {
   const y = useMotionValue(0);
   const controls = useDragControls();

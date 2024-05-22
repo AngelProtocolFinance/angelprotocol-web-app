@@ -5,7 +5,7 @@ import type { CurrencyOption } from "types/components";
 import { type QueryState, isQuery } from "types/third-party/redux";
 import { DrawerIcon } from "../Icon";
 import { Label } from "../form";
-import { unpack } from "../form/helpers";
+import { unpack } from "helpers";
 import CurrencyOptions from "./CurrencyOptions";
 
 type Classes = {

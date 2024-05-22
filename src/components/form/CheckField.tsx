@@ -6,7 +6,7 @@ import {
   get,
   useFormContext,
 } from "react-hook-form";
-import { unpack } from "./helpers";
+import { unpack } from "helpers";
 import type { Classes } from "./types";
 
 export function CheckField<T extends FieldValues>({

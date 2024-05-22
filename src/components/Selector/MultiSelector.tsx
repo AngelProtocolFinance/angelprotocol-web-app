@@ -11,7 +11,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import type { OptionType, ValKey } from "types/components";
-import { unpack } from "../form/helpers";
+import { unpack } from "helpers";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
 import type { MultiselectorProps } from "./types";

@@ -1,5 +1,5 @@
 import Icon, { type IconType } from "components/Icon";
-import { unpack } from "components/form/helpers";
+import { unpack } from "helpers";
 import type { Classes } from "components/form/types";
 import type { HTMLInputTypeAttribute, InputHTMLAttributes } from "react";
 import {

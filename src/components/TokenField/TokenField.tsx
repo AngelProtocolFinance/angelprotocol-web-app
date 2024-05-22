@@ -6,7 +6,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import type { TokenWithAmount } from "types/tx";
-import { unpack } from "../form/helpers";
+import { unpack } from "helpers";
 import TokenSelector from "./TokenSelector";
 import type { Props } from "./types";
 

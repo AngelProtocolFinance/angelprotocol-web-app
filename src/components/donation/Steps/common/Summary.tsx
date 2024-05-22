@@ -4,7 +4,7 @@ import Image from "components/Image/Image";
 import type { ReactNode } from "react";
 import type { FiatPaymentFrequency } from "types/aws";
 import Icon from "../../../Icon";
-import { unpack } from "../../../form/helpers";
+import { unpack } from "helpers";
 import BackBtn from "./BackBtn";
 
 type Classes =
