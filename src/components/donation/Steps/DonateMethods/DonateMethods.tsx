@@ -2,12 +2,12 @@ import { Tab } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { Label } from "components/form";
 import type { ReactNode } from "react";
+import type { DonateMethodId } from "types/lists";
 import type { FormStep } from "../types";
 import Crypto from "./Crypto";
 import Daf from "./Daf";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
-import { DonateMethodId } from "types/lists";
 
 const methods: {
   [K in DonateMethodId]: {

@@ -1,5 +1,5 @@
 import type { EndowmentOption } from "./aws";
-import { DonateMethodId } from "./lists";
+import type { DonateMethodId } from "./lists";
 
 export type Method = {
   id: DonateMethodId;

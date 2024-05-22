@@ -1,5 +1,5 @@
 import type { SchemaShape } from "schemas/types";
-import { DonateMethodId } from "types/lists";
+import type { DonateMethodId } from "types/lists";
 import type { Method, WidgetConfig, WidgetURLSearchParams } from "types/widget";
 import { type ValidationError, number, object, string } from "yup";
 
