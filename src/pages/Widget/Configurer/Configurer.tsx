@@ -15,6 +15,7 @@ type Props = {
 };
 
 export default function Configurer({ classes = "", config, setConfig }: Props) {
+  const {} = config;
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     //set new config as default, so user would need to make a change to be able to update again

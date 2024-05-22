@@ -41,3 +41,5 @@ export type ImageMIMEType = `image/${ImageSubType}`;
 export type ApplicationMIMEType = `application/${ApplicationSubType}`;
 
 export type MIMEType = ImageMIMEType | ApplicationMIMEType;
+
+export type DonateMethodId = "stripe" | "crypto" | "daf" | "stocks";

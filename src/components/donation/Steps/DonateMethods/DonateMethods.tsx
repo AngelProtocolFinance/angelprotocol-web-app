@@ -2,14 +2,15 @@ import { Tab } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { Label } from "components/form";
 import type { ReactNode } from "react";
-import type { DonateMethod, FormStep } from "../types";
+import type { FormStep } from "../types";
 import Crypto from "./Crypto";
 import Daf from "./Daf";
 import Stocks from "./Stocks";
 import Stripe from "./Stripe";
+import { DonateMethodId } from "types/lists";
 
 const methods: {
-  [K in DonateMethod]: {
+  [K in DonateMethodId]: {
     name: string;
     icon: ReactNode;
     panel: (props: FormStep<any>) => JSX.Element;
@@ -36,7 +37,7 @@ const methods: {
     panel: Crypto,
   },
 };
-const allMethods: DonateMethod[] = ["stripe", "stocks", "daf", "crypto"];
+const allMethodIds: DonateMethodId[] = ["stripe", "stocks", "daf", "crypto"];
 
 const tabClasses = (selected: boolean) =>
   `${
@@ -48,7 +49,7 @@ const tabClasses = (selected: boolean) =>
 export default function DonateMethods(props: FormStep) {
   const { details, step, init } = props;
 
-  const tabs = init.config?.methods || allMethods;
+  const tabs = init.config?.methodIds || allMethodIds;
   const tabIdxFound = tabs.findIndex((t) => t === details?.method);
 
   return (
