@@ -1,9 +1,16 @@
+import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { LockedSplitSlider } from "components/donation/Steps/Splits";
 import { CheckField, Form } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
-import { type SubmitHandler, useController, useForm } from "react-hook-form";
+import {
+  type SubmitHandler,
+  get,
+  useController,
+  useForm,
+} from "react-hook-form";
 import type { WidgetConfig } from "types/widget";
+import { DonateMethods } from "./DonateMethods";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
@@ -26,14 +33,17 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
   const {
     handleSubmit,
     reset: hookFormReset,
-    formState: { isDirty },
+    formState: { isDirty, errors },
   } = methods;
 
-  const {
-    field: { onChange, value },
-  } = useController({
+  const { field: liquidSplitPct } = useController({
     control: methods.control,
     name: "liquidSplitPct",
+  });
+
+  const { field: donateMethods } = useController({
+    control: methods.control,
+    name: "methods",
   });
 
   return (
@@ -60,8 +70,8 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
 
         <label className="-mb-4">Define default split value:</label>
         <LockedSplitSlider
-          value={100 - value}
-          onChange={(lockedPct) => onChange(100 - lockedPct)}
+          value={100 - liquidSplitPct.value}
+          onChange={(lockedPct) => liquidSplitPct.onChange(100 - lockedPct)}
         />
 
         <div className="mt-4">
@@ -75,7 +85,25 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
           </p>
         </div>
 
-        <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-4">
+        <DonateMethods
+          classes={{
+            container: "mt-8",
+            tooltip: "italic",
+            label: "font-medium text-base",
+          }}
+          values={donateMethods.value}
+          onChange={donateMethods.onChange}
+          error={
+            <ErrorMessage
+              name="methods"
+              as="p"
+              errors={errors}
+              className="text-red text-sm mb-1"
+            />
+          }
+        />
+
+        <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-8">
           <button
             disabled={!isDirty}
             type="reset"

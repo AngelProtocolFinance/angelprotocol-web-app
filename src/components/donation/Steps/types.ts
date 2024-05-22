@@ -6,13 +6,8 @@ import type {
 } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
-import type { DonationSource } from "types/lists";
+import type { DonateMethodId, DonationSource } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
-
-export type Config = {
-  splitDisabled: boolean;
-  liquidSplitPct: number;
-};
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,
@@ -22,7 +17,7 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
 export type DonationRecipient = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 
 export type CryptoDonationDetails = {
-  method: "crypto"; //use to preserve selected method
+  method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
   token: TokenWithAmount;
   chainId: OptionType<ChainID>;
 };
@@ -33,17 +28,17 @@ type FiatDonationDetails = {
 };
 
 export type StripeDonationDetails = {
-  method: "stripe";
+  method: Extract<DonateMethodId, "stripe">;
   frequency: FiatPaymentFrequency;
 } & FiatDonationDetails;
 
 export type StocksDonationDetails = {
-  method: "stocks";
+  method: Extract<DonateMethodId, "stocks">;
   symbol: string;
   numShares: number;
 };
 export type DafDonationDetails = {
-  method: "daf";
+  method: Extract<DonateMethodId, "daf">;
 } & FiatDonationDetails;
 
 export type DonationDetails =
@@ -51,7 +46,15 @@ export type DonationDetails =
   | CryptoDonationDetails
   | StocksDonationDetails
   | DafDonationDetails;
+
 export type Mode = "live" | "preview";
+
+export type Config = {
+  splitDisabled: boolean;
+  liquidSplitPct: number;
+  /** donation tabs follows the list order */
+  methodIds?: DonateMethodId[];
+};
 
 export type Init = {
   source: DonationSource;
