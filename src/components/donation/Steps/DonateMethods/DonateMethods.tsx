@@ -64,7 +64,7 @@ export default function DonateMethods(props: FormStep) {
       </Label>
       <Tab.List className="grid grid-cols-2 gap-2 @md/steps:gap-0 p-4 @md/steps:p-0 @md/steps:grid-cols-[auto_1fr] @[42rem]/steps:min-w-48 content-start @md/steps:divide-y @md/steps:divide-white @md/steps:border-r border-gray-l4">
         {tabs.map((tab) => (
-          <Tab className={({ selected }) => tabClasses(selected)}>
+          <Tab key={tab} className={({ selected }) => tabClasses(selected)}>
             {methods[tab].icon}
             <span className="text-left">{methods[tab].name}</span>
           </Tab>
@@ -77,7 +77,7 @@ export default function DonateMethods(props: FormStep) {
         {tabs.map((tab) => {
           const Panel = methods[tab].panel;
           return (
-            <Tab.Panel>
+            <Tab.Panel key={tab}>
               <Panel init={init} step={step} details={details} />
             </Tab.Panel>
           );

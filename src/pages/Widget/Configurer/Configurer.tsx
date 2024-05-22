@@ -7,6 +7,7 @@ import type { WidgetConfig } from "types/widget";
 import EndowmentSelector from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
+import { DonateMethods } from "./DonateMethods";
 
 type Props = {
   classes?: string;
@@ -29,11 +30,14 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
     formState: { isDirty },
   } = methods;
 
-  const {
-    field: { onChange, value },
-  } = useController({
+  const { field: liquidSplitPct } = useController({
     control: methods.control,
     name: "liquidSplitPct",
+  });
+
+  const { field: donateMethods } = useController({
+    control: methods.control,
+    name: "methods",
   });
 
   return (
@@ -60,8 +64,8 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
 
         <label className="-mb-4">Define default split value:</label>
         <LockedSplitSlider
-          value={100 - value}
-          onChange={(lockedPct) => onChange(100 - lockedPct)}
+          value={100 - liquidSplitPct.value}
+          onChange={(lockedPct) => liquidSplitPct.onChange(100 - lockedPct)}
         />
 
         <div className="mt-4">
@@ -74,6 +78,11 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
             hide the split screen entirely.
           </p>
         </div>
+
+        <DonateMethods
+          values={donateMethods.value}
+          onChange={donateMethods.onChange}
+        />
 
         <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-4">
           <button

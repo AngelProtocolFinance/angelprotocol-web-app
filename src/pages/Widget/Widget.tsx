@@ -56,6 +56,12 @@ function Content({
     isDescriptionTextShown: true,
     liquidSplitPct: endowment?.splitLiqPct ?? 50,
     splitDisabled: endowment?.splitFixed ?? false,
+    methods: [
+      { id: "crypto", name: "Crypto", disabled: false },
+      { id: "daf", name: "DAF", disabled: true },
+      { id: "stocks", name: "Stocks", disabled: false },
+      { id: "stripe", name: "Card", disabled: false },
+    ],
   });
 
   return (
