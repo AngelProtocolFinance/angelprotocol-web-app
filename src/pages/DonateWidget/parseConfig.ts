@@ -1,6 +1,6 @@
 import type { SchemaShape } from "schemas/types";
 import type { DonateMethodId } from "types/lists";
-import type { Method, WidgetConfig, WidgetURLSearchParams } from "types/widget";
+import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 import { type ValidationError, number, object, string } from "yup";
 
 const allMethodIds: DonateMethodId[] = ["crypto", "daf", "stocks", "stripe"];
@@ -16,21 +16,30 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   }),
 });
 
+type Parsed = Omit<WidgetConfig, "endowment" | "methods"> & {
+  methodIds?: DonateMethodId[];
+};
+
 export default function parseConfig(
   searchParams: URLSearchParams
-): Omit<WidgetConfig, "endowment"> | { error: string } {
+): Parsed | { error: string } {
   try {
     const { methods: methodsCsv, ...config } = schema.validateSync(
       Object.fromEntries(searchParams.entries())
     ) as WidgetURLSearchParams;
 
-    const methodIds = (methodsCsv?.split(",") || []) as DonateMethodId[];
+    const methodIds = (methodsCsv?.split(",") || [
+      "stripe",
+      "stocks",
+      "daf",
+      "crypto",
+    ]) as DonateMethodId[];
 
     return {
       isDescriptionTextShown: config.isDescriptionTextShown === "true",
       splitDisabled: config.splitDisabled === "true",
       liquidSplitPct: +config.liquidSplitPct,
-      methods: methods(methodIds, allMethodIds),
+      methodIds,
     };
   } catch (error) {
     const message = (error as ValidationError).message;
@@ -39,24 +48,3 @@ export default function parseConfig(
     };
   }
 }
-
-function methods(sub: DonateMethodId[], complete: DonateMethodId[]): Method[] {
-  const full = new Set(complete);
-  const existing = sub.filter((x) => full.has(x));
-  const missing = complete.filter((x) => !existing.includes(x));
-  return [...toMethods(existing), ...toMethods(missing, true)];
-}
-
-const methodNames: { [K in DonateMethodId]: string } = {
-  crypto: "Crypto",
-  daf: "DAF",
-  stocks: "Stocks",
-  stripe: "Card",
-};
-
-const toMethods = (ids: DonateMethodId[], disabled = false): Method[] =>
-  ids.map((id) => ({
-    id,
-    name: methodNames[id],
-    disabled,
-  }));
