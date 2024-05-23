@@ -1,4 +1,5 @@
 import type { FileObject } from "./aws";
+import type { DonateMethodId } from "./lists";
 
 //selector
 export type ValKey = string | number;
@@ -55,4 +56,10 @@ export type RichTextContent = {
    * by the RichText component itself and updated on every change.
    */
   length?: number;
+};
+
+export type TDonateMethod = {
+  id: DonateMethodId;
+  name: string;
+  disabled: boolean;
 };

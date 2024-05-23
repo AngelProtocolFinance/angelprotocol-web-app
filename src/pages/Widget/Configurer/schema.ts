@@ -1,5 +1,5 @@
 import type { SchemaShape } from "schemas/types";
-import type { Method } from "types/widget";
+import type { TDonateMethod } from "types/components";
 import { type ObjectSchema, array, number, object } from "yup";
 import type { FormValues } from "./types";
 
@@ -11,7 +11,7 @@ export const schema = object<any, SchemaShape<FormValues>>({
     "",
     "at least one payment option should be active",
     (values) => {
-      return values?.some((v) => !(v as Method).disabled);
+      return values?.some((v) => !(v as TDonateMethod).disabled);
     }
   ),
 }) as ObjectSchema<FormValues>;

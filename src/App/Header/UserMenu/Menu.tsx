@@ -20,7 +20,7 @@ export default function Menu({ user, signOut }: Props) {
       </p>
       <div className="w-64 min-h-[5rem] p-3">
         <Link
-          to={appRoutes.donations}
+          to={`${appRoutes.user_dashboard}/donations`}
           className=" hover:text-blue-d1 text-sm flex items-center gap-2"
         >
           <Icon type="Money" className="text-lg" />
