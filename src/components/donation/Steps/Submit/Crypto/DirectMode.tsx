@@ -34,6 +34,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     source: init.config ? "bg-widget" : "bg-marketplace",
     donor,
   });
+
   return (
     <div className={`${classes} grid justify-items-center`}>
       <p className="text-navy-l1 text-balance text-center mb-3.5 max-w-sm">
