@@ -1,5 +1,5 @@
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
-import { chainIdWallets } from "constants/ap-wallets";
+import { apWallets } from "constants/ap-wallets";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
@@ -25,7 +25,7 @@ export async function estimateDonation(
       return { error: "Not enough balance" };
     }
 
-    const recipient = chainIdWallets[chainID];
+    const recipient = apWallets[chainID];
     let toEstimate: EstimateInput;
     // ///////////// GET TX CONTENT ///////////////
 

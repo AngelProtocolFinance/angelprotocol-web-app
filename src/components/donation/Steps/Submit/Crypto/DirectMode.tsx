@@ -1,7 +1,7 @@
 import ContentLoader from "components/ContentLoader";
 import Copier from "components/Copier";
 import QueryLoader from "components/QueryLoader";
-import { chainIdWallets } from "constants/ap-wallets";
+import { apWallets } from "constants/ap-wallets";
 import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import type { DonateThanksState } from "pages/DonateThanks";
@@ -20,7 +20,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
 
   const { details, init, tip, liquidSplitPct, donor } = donation;
 
-  const recipient = chainIdWallets[details.chainId.value];
+  const recipient = apWallets[details.chainId.value];
 
   const intentQuery = useCreateCryptoIntentQuery({
     transactionId: init.intentId,
