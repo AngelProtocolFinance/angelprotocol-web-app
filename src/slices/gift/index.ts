@@ -1,6 +1,6 @@
 import { type PayloadAction, createSlice } from "@reduxjs/toolkit";
 import type { ChainID } from "types/chain";
-import type { TokenOption } from "types/tx";
+import type { TokenWithAmount } from "types/tx";
 
 export type GiftState = FormStep | SubmitStep | TxStep;
 
@@ -42,7 +42,7 @@ export default gift.reducer;
 export const { setStep, setDetails, resetDetails, setTxStatus } = gift.actions;
 
 export type GiftDetails = {
-  token: TokenOption;
+  token: TokenWithAmount;
   recipient: string;
   chainID: ChainID;
 };

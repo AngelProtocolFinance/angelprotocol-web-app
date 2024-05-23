@@ -1,16 +1,17 @@
 import Copier from "components/Copier";
+import { chainIdWallets } from "constants/ap-wallets";
 import { QRCodeSVG } from "qrcode.react";
-import type { TokenOption } from "types/tx";
+import type { ChainID } from "types/chain";
+import type { TokenWithAmount } from "types/tx";
 import ContinueBtn from "../../common/ContinueBtn";
 
 type Props = {
   classes?: string;
-  token: TokenOption;
+  token: TokenWithAmount;
+  chainId: ChainID;
 };
-export default function DirectMode({ token, classes = "" }: Props) {
-  const recipient = token.directReceiverAddr;
-  if (!recipient) throw "@dev: should be set";
-
+export default function DirectMode({ token, chainId, classes = "" }: Props) {
+  const recipient = chainIdWallets[chainId];
   return (
     <div className={`${classes} grid justify-items-center`}>
       <p className="text-navy-l1 text-balance text-center mb-3.5 max-w-sm">

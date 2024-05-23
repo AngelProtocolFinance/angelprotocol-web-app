@@ -16,12 +16,15 @@ type Props = CryptoSubmitStep & { classes?: string };
 
 export default function Checkout({ classes = "", ...props }: Props) {
   const wallet = useWalletContext();
-  const chainID = props.details.chainId.value;
+  const {
+    chainId: { value: chainId },
+    token,
+  } = props.details;
 
   type Method = "direct" | "with-wallet";
   //state to allow opting for direct donation
   const [method, setMethod] = useState<Method>(
-    chainIdIsNotSupported(chainID) ? "direct" : "with-wallet"
+    chainIdIsNotSupported(chainId) ? "direct" : "with-wallet"
   );
 
   if (wallet === "loading") {
@@ -34,15 +37,14 @@ export default function Checkout({ classes = "", ...props }: Props) {
     );
   }
 
-  if (chainIdIsNotSupported(chainID)) {
-    return <DirectMode token={props.details.token} />;
+  if (chainIdIsNotSupported(chainId)) {
+    return <DirectMode token={token} chainId={chainId} />;
   }
 
   if (isDisconnected(wallet)) {
     if (method === "direct") {
-      return <DirectMode classes="mt-6" token={props.details.token} />;
+      return <DirectMode classes="mt-6" token={token} chainId={chainId} />;
     }
-
     return (
       <Container
         classes={`${classes} grid`}
@@ -56,7 +58,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
         }
       >
         <WalletSelection
-          wallets={wallet.filter((w) => w.supportedChains.includes(chainID))}
+          wallets={wallet.filter((w) => w.supportedChains.includes(chainId))}
           classes="mt-2"
         />
         {method === "with-wallet" && (
@@ -68,7 +70,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
     );
   }
 
-  if (!wallet.supportedChains.includes(chainID)) {
+  if (!wallet.supportedChains.includes(chainId)) {
     return (
       <Container classes={classes} donation={props}>
         <Info classes="mt-2">Connected wallet doesn't support this chain.</Info>
@@ -83,7 +85,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
     );
   }
 
-  if (chainID !== wallet.chainId) {
+  if (chainId !== wallet.chainId) {
     return (
       <Container classes={classes} donation={props}>
         {wallet.switchChain ? (
@@ -94,10 +96,10 @@ export default function Checkout({ classes = "", ...props }: Props) {
             <button
               disabled={wallet.isSwitching}
               type="button"
-              onClick={() => wallet.switchChain?.(chainID)}
+              onClick={() => wallet.switchChain?.(chainId)}
               className="btn-outline-filled px-4 py-2 mt-2 text-xs font-normal"
             >
-              Switch to {chains[chainID].name}
+              Switch to {chains[chainId].name}
             </button>
           </>
         ) : (

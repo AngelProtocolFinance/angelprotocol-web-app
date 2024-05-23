@@ -2,14 +2,11 @@
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
 
-const qrTokenTypes = [
-  "btc-native",
-  "doge-native",
-  "sol-native",
-  "xrp-native",
-] as const;
-
-export type QrTokenType = (typeof qrTokenTypes)[number];
+export type QrTokenType =
+  | "btc-native"
+  | "doge-native"
+  | "sol-native"
+  | "xrp-native";
 
 export type TokenType =
   | "juno-native"
@@ -19,9 +16,6 @@ export type TokenType =
   | "cw20"
   | "ibc"
   | QrTokenType;
-
-export const isQrToken = (input: TokenType): input is QrTokenType =>
-  qrTokenTypes.includes(input as any);
 
 export type Token = {
   approved: boolean; // true

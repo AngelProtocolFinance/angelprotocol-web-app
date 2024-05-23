@@ -1,5 +1,5 @@
 import { Coin, MsgExecuteContract, MsgSend } from "@terra-money/terra.js";
-import { apWallets } from "constants/ap-wallets";
+import { chainIdWallets } from "constants/ap-wallets";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
@@ -7,12 +7,12 @@ import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
 import type { SupportedChainId } from "types/chain";
 import type { SimulContractTx, SimulSendNativeTx } from "types/evm";
-import type { EstimateInput, TokenOption } from "types/tx";
+import type { EstimateInput, TokenWithAmount } from "types/tx";
 import type { EstimateStatus } from "../types";
 import { tokenBalance } from "./tokenBalance";
 
 export async function estimateDonation(
-  token: TokenOption,
+  token: TokenWithAmount,
   chainID: SupportedChainId,
   sender: string,
   tipAmount: number
@@ -25,6 +25,7 @@ export async function estimateDonation(
       return { error: "Not enough balance" };
     }
 
+    const recipient = chainIdWallets[chainID];
     let toEstimate: EstimateInput;
     // ///////////// GET TX CONTENT ///////////////
 
@@ -32,16 +33,15 @@ export async function estimateDonation(
       case "juno-1":
       case "uni-6": {
         const scaledAmount = scaleToStr(grossAmount, token.decimals);
-        const to = apWallets.junoDeposit;
         const msg =
           token.type === "juno-native" || token.type === "ibc"
             ? createCosmosMsg(sender, "recipient.send", {
-                recipient: to,
+                recipient,
                 amount: scaledAmount,
                 denom: token.token_id,
               })
             : createCosmosMsg(sender, "cw20.transfer", {
-                recipient: to,
+                recipient,
                 amount: scaledAmount,
                 cw20: token.token_id,
               });
@@ -55,13 +55,13 @@ export async function estimateDonation(
         const scaledAmount = scaleToStr(grossAmount, token.decimals);
         const msg =
           token.type === "terra-native" || token.type === "ibc"
-            ? new MsgSend(sender, apWallets.terra, [
+            ? new MsgSend(sender, recipient, [
                 new Coin(token.token_id, scaledAmount),
               ])
             : new MsgExecuteContract(sender, token.token_id, {
                 transfer: {
                   amount: scaledAmount,
-                  recipient: apWallets.terra,
+                  recipient: recipient,
                 },
               });
         toEstimate = { chainID, val: [msg] };
@@ -77,13 +77,13 @@ export async function estimateDonation(
               return {
                 from: sender,
                 value: scaledAmount,
-                to: apWallets.evmDeposit,
+                to: recipient,
               };
             //"erc20"
             default: {
               return createTx(sender, "erc20.transfer", {
                 erc20: token.token_id,
-                to: apWallets.evmDeposit,
+                to: recipient,
                 amount: scaledAmount,
               });
             }

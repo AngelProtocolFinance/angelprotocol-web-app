@@ -9,10 +9,8 @@ import type { SignDoc } from "./cosmos";
 import type { Requester, Tupleable } from "./evm";
 import type { EVMTx, SimulTx } from "./evm";
 
-export type TokenOption = Token & {
+export type TokenWithAmount = Token & {
   amount: string;
-  //attach to qr token
-  directReceiverAddr?: string;
 };
 
 // //////////// ESTIMATE TX ////////////

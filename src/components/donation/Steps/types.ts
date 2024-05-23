@@ -7,7 +7,7 @@ import type {
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonateMethodId, DonationSource } from "types/lists";
-import type { TokenOption } from "types/tx";
+import type { TokenWithAmount } from "types/tx";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,
@@ -18,7 +18,7 @@ export type DonationRecipient = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
 
 export type CryptoDonationDetails = {
   method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
-  token: TokenOption;
+  token: TokenWithAmount;
   chainId: OptionType<ChainID>;
 };
 

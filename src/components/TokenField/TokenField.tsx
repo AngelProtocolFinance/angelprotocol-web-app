@@ -6,13 +6,13 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import type { TokenOption } from "types/tx";
+import type { TokenWithAmount } from "types/tx";
 import TokenSelector from "./TokenSelector";
 import type { Props } from "./types";
 
-const amountKey: keyof TokenOption = "amount";
-const tokenIDkey: keyof TokenOption = "token_id";
-type BaseFormValue = { [index: string]: TokenOption };
+const amountKey: keyof TokenWithAmount = "amount";
+const tokenIDkey: keyof TokenWithAmount = "token_id";
+type BaseFormValue = { [index: string]: TokenWithAmount };
 
 export default function TokenField<T extends FieldValues, K extends Path<T>>({
   label,
