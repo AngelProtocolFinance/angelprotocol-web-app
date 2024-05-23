@@ -35,7 +35,13 @@ export default function Checkout({ classes = "", ...props }: Props) {
   }
 
   if (chainIdIsNotSupported(chainID)) {
-    return <DirectMode token={props.details.token} chainId={chainID} />;
+    return (
+      <DirectMode
+        classes="mt-6"
+        token={props.details.token}
+        chainId={chainID}
+      />
+    );
   }
 
   if (isDisconnected(wallet)) {
