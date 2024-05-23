@@ -33,4 +33,4 @@ export const apWallets: { [K in ChainID]: string } = {
   "uni-6": wallets.junoDeposit,
   "xrp-mainnet": wallets.xrp,
   "xrp-testnet": wallets.xrp,
-} as const;
+}; 
