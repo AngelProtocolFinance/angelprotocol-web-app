@@ -3,7 +3,7 @@ import ContentLoader from "components/ContentLoader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import type { DonateFiatThanksState } from "pages/DonateFiatThanks";
+import type { DonateThanksState } from "pages/DonateThanks";
 import { useNavigate } from "react-router-dom";
 import {
   useCapturePayPalOrderMutation,
@@ -63,15 +63,15 @@ export default function Checkout(props: StripeCheckoutStep) {
 
         /// No problem with order
 
-        const state: DonateFiatThanksState = {
+        const state: DonateThanksState = {
           guestDonor: order.guestDonor,
           recipientName: init.recipient.name,
         };
 
         const route =
           props.init.source === "bg-widget"
-            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
-            : appRoutes.donate_fiat_thanks;
+            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}`
+            : appRoutes.donate_thanks;
 
         navigate(route, { state });
       }}

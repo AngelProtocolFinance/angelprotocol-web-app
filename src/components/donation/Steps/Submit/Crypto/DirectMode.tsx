@@ -1,8 +1,12 @@
 import Copier from "components/Copier";
 import { chainIdWallets } from "constants/ap-wallets";
+import { appRoutes } from "constants/routes";
+import type { DonateThanksState } from "pages/DonateThanks";
 import { QRCodeSVG } from "qrcode.react";
+import { useNavigate } from "react-router-dom";
 import type { ChainID } from "types/chain";
 import type { TokenWithAmount } from "types/tx";
+import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 
 type Props = {
@@ -11,6 +15,8 @@ type Props = {
   chainId: ChainID;
 };
 export default function DirectMode({ token, chainId, classes = "" }: Props) {
+  const { state } = useDonationState();
+  const navigate = useNavigate();
   const recipient = chainIdWallets[chainId];
   return (
     <div className={`${classes} grid justify-items-center`}>
@@ -31,6 +37,14 @@ export default function DirectMode({ token, chainId, classes = "" }: Props) {
         <span className="capitalize text-sm">Copy address</span>
       </Copier>
       <ContinueBtn
+        onClick={() =>
+          navigate(appRoutes.donate_thanks, {
+            state: {
+              recipientName: state.init.recipient.name,
+              recipientId: state.init.recipient.id,
+            } satisfies DonateThanksState,
+          })
+        }
         text="I have completed the payment"
         className="justify-self-stretch mt-8"
       />
