@@ -1,9 +1,16 @@
-import type { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
+import type {
+  Chains,
+  CosmosChainID,
+  EVMChainID,
+  SupportedChain,
+  UnsupportedChain,
+  UnsupportedChains,
+} from "types/chain";
 import { IS_TEST } from "./env";
 
 const baseProxyURL = "https://59vigz9r91.execute-api.us-east-1.amazonaws.com";
 //mainnets
-export const polygon: Chain = {
+export const polygon: SupportedChain = {
   isTest: false,
   id: "137",
   brand: "polygon",
@@ -19,7 +26,7 @@ export const polygon: Chain = {
   },
 };
 
-export const ethereum: Chain = {
+export const ethereum: SupportedChain = {
   isTest: false,
   id: "1",
   brand: "ethereum",
@@ -35,7 +42,7 @@ export const ethereum: Chain = {
   },
 };
 
-export const arbitrum: Chain = {
+export const arbitrum: SupportedChain = {
   isTest: false,
   id: "42161",
   brand: "arbitrum",
@@ -51,7 +58,7 @@ export const arbitrum: Chain = {
   },
 };
 
-export const binance: Chain = {
+export const binance: SupportedChain = {
   isTest: false,
   id: "56",
   brand: "binance",
@@ -67,7 +74,7 @@ export const binance: Chain = {
   },
 };
 
-export const juno: Chain = {
+export const juno: SupportedChain = {
   isTest: false,
   id: "juno-1",
   brand: "juno",
@@ -83,7 +90,7 @@ export const juno: Chain = {
   },
 };
 
-export const terraMainnet: Chain = {
+export const terraMainnet: SupportedChain = {
   isTest: false,
   id: "phoenix-1",
   brand: "terra",
@@ -100,7 +107,7 @@ export const terraMainnet: Chain = {
 };
 
 //testnets
-export const polygonAmoy: Chain = {
+export const polygonAmoy: SupportedChain = {
   isTest: true,
   id: "80002",
   brand: "polygonAmoy",
@@ -116,7 +123,7 @@ export const polygonAmoy: Chain = {
   },
 };
 
-export const sepolia: Chain = {
+export const sepolia: SupportedChain = {
   isTest: true,
   id: "11155111",
   brand: "sepolia",
@@ -132,7 +139,7 @@ export const sepolia: Chain = {
   },
 };
 
-export const arbitrumSepolia: Chain = {
+export const arbitrumSepolia: SupportedChain = {
   isTest: true,
   id: "421614",
   brand: "arbitrum",
@@ -148,7 +155,7 @@ export const arbitrumSepolia: Chain = {
   },
 };
 
-export const binanceTestnet: Chain = {
+export const binanceTestnet: SupportedChain = {
   isTest: true,
   id: "97",
   brand: "binance",
@@ -164,7 +171,7 @@ export const binanceTestnet: Chain = {
   },
 };
 
-export const terraTestnet: Chain = {
+export const terraTestnet: SupportedChain = {
   isTest: true,
   id: "pisco-1",
   brand: "terra",
@@ -180,64 +187,44 @@ export const terraTestnet: Chain = {
   },
 };
 
-export const bitcoin: Chain = {
+/** UNSUPPORTED (via QR only) CHAIN IDs */
+export const bitcoin: UnsupportedChain = {
   isTest: IS_TEST,
-  id: "btc",
-  brand: "bitcoin",
+  id: `btc-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Bitcoin",
-  lcd: "",
-  rpc: "",
-  blockExplorer: "",
+  blockExplorer: "https://btcscan.org",
   //TODO: change to ap wallet
   directReceiverAddr: "bc1q9ll6ngymkla8mnk5fq6dwlhgr3yutuxvg3whz5",
-  nativeToken: {
-    id: "btc",
-    symbol: "BTC",
-    decimals: 0,
-    coinGeckoId: "bitcoin",
-    logo: "https://cryptologos.cc/logos/bitcoin-btc-logo.png?v=032",
-  },
 };
 
-export const solana: Chain = {
+export const solana: UnsupportedChain = {
   isTest: IS_TEST,
-  id: "solana",
-  brand: "solana",
+  id: `sol-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Solana",
-  lcd: "",
-  rpc: "",
-  blockExplorer: "",
+  blockExplorer: "https://solscan.io",
   //TODO: change to ap wallet
   directReceiverAddr: "5ZuyExCSj9595QehogSVEf2SqMhgXGKhV9Cs9zWp6JBA",
-  nativeToken: {
-    id: "sol",
-    symbol: "SOL",
-    decimals: 0,
-    coinGeckoId: "solana",
-    logo: "https://cryptologos.cc/logos/solana-sol-logo.png?v=032",
-  },
 };
 
-export const ripple: Chain = {
+export const ripple: UnsupportedChain = {
   isTest: IS_TEST,
-  id: "xrp",
-  brand: "ripple",
+  id: `xrp-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Ripple",
-  lcd: "",
-  rpc: "",
-  blockExplorer: "",
+  blockExplorer: "https://xrpscan.com",
   //TODO: change to ap wallet
   directReceiverAddr: "r3PDXzXky6gboMrwurmSCiUyhzdrFyAbfu",
-  nativeToken: {
-    id: "xrp",
-    symbol: "XRP",
-    decimals: 0,
-    coinGeckoId: "ripple",
-    logo: "https://cryptologos.cc/logos/xrp-xrp-logo.png?v=032",
-  },
 };
 
-export const chainList: Chain[] = [
+export const doge: UnsupportedChain = {
+  isTest: IS_TEST,
+  id: `doge-${IS_TEST ? "testnet" : "mainnet"}`,
+  name: "Doge",
+  blockExplorer: "https://dogechain.info",
+  //TODO: change to ap wallet
+  directReceiverAddr: "DKEmyNuY3GxoDoNsJQYa8cvsyYM48motw3",
+};
+
+const supportedChainList: SupportedChain[] = [
   polygon,
   ethereum,
   arbitrum,
@@ -249,12 +236,22 @@ export const chainList: Chain[] = [
   arbitrumSepolia,
   binanceTestnet,
   terraTestnet,
+];
+
+const unsupportedChainList: UnsupportedChain[] = [
   bitcoin,
+  doge,
   solana,
   ripple,
 ];
 
-export const chains: Chains = chainList.reduce(
+export const chainList = [...supportedChainList, ...unsupportedChainList];
+
+export const unsupportedChains = unsupportedChainList.reduce(
+  (prev, curr) => ({ ...prev, [curr.id]: curr }),
+  {} as UnsupportedChains
+);
+export const chains = chainList.reduce(
   (prev, curr) => ({ ...prev, [curr.id]: curr }),
   {} as Chains
 );

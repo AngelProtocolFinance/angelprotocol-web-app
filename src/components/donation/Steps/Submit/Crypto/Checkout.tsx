@@ -2,7 +2,7 @@ import Image from "components/Image/Image";
 import { Info, LoadingStatus } from "components/Status";
 import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
-import { isEmpty, maskAddress } from "helpers";
+import { maskAddress } from "helpers";
 import { type PropsWithChildren, type ReactNode, useState } from "react";
 import { chainIdIsNotSupported } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
@@ -34,13 +34,11 @@ export default function Checkout({ classes = "", ...props }: Props) {
     );
   }
 
+  if (chainIdIsNotSupported(chainID)) {
+    return <DirectMode token={props.details.token} />;
+  }
+
   if (isDisconnected(wallet)) {
-    const supported = wallet.filter((w) => w.supportedChains.includes(chainID));
-
-    if (isEmpty(supported)) {
-      return <DirectMode classes="mt-6" token={props.details.token} />;
-    }
-
     if (method === "direct") {
       return (
         <DirectMode
@@ -66,7 +64,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
           />
         }
       >
-        <WalletSelection wallets={supported} classes="mt-2" />
+        <WalletSelection wallets={wallet} classes="mt-2" />
         {method === "with-wallet" && (
           <div className="w-full h-px border border-gray-l4 my-9 flex items-center justify-center">
             <span className="bg-white px-3.5 text-navy-l3">OR</span>
@@ -77,10 +75,6 @@ export default function Checkout({ classes = "", ...props }: Props) {
   }
 
   if (!wallet.supportedChains.includes(chainID)) {
-    if (chainIdIsNotSupported(chainID)) {
-      return <DirectMode classes="mt-6" token={props.details.token} />;
-    }
-
     return (
       <Container classes={classes} donation={props}>
         <Info classes="mt-2">Connected wallet doesn't support this chain.</Info>

@@ -1,4 +1,4 @@
-import type { ChainID, UnsupportedChainId } from "types/chain";
+import type { SupportedChainId } from "types/chain";
 import * as Yup from "yup";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
@@ -8,7 +8,7 @@ const evmAddrPattern = /^0x[a-fA-F0-9]{40}$/;
 
 export const requiredString = Yup.string().required("required");
 
-export const walletAddr = (chainId: Exclude<ChainID, UnsupportedChainId>) =>
+export const walletAddr = (chainId: SupportedChainId) =>
   Yup.lazy((val) =>
     val === ""
       ? Yup.string()
@@ -33,9 +33,7 @@ export const url = Yup.string()
     return "invalid url";
   });
 
-export function walletAddrPatten(
-  chainId: Exclude<ChainID, UnsupportedChainId>
-) {
+export function walletAddrPatten(chainId: SupportedChainId) {
   switch (chainId) {
     case "1":
     case "11155111":

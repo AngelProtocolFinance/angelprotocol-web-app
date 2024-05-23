@@ -3,7 +3,7 @@ import { EIPMethods } from "constants/evm";
 import Decimal from "decimal.js";
 import { injectedProvider, isEmpty, logger } from "helpers";
 import { useEffect, useState } from "react";
-import type { ChainID } from "types/chain";
+import type { ChainID, SupportedChainId } from "types/chain";
 import type { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import type {
   EVMProviderState,
@@ -61,7 +61,7 @@ export default function useInjectedWallet(
     });
   };
 
-  async function switchChain(chainID: ChainID) {
+  async function switchChain(chainID: SupportedChainId) {
     if (state.status !== "connected") {
       return alert("Wallet is not connected");
     }

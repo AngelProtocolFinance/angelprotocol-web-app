@@ -1,10 +1,8 @@
 import { Combobox } from "@headlessui/react";
-import { chains } from "constants/chains";
 import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useTokensQuery } from "services/apes";
 import { type ChainID, chainIdIsNotSupported } from "types/chain";
-import type { TokenOption } from "types/tx";
 import Icon from "../Icon";
 import Image from "../Image";
 import { ErrorStatus, LoadingStatus } from "../Status";
@@ -20,32 +18,13 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   const [searchText, setSearchText] = useState("");
 
   const {
-    data = [],
+    data: tokens = [],
     isLoading,
     isFetching,
     isError,
   } = useTokensQuery(selectedChainId, {
     skip: chainIdIsNotSupported(selectedChainId),
   });
-
-  const nativeToken = chains[selectedChainId].nativeToken;
-  const unsupportedToken: TokenOption | undefined = chainIdIsNotSupported(
-    selectedChainId
-  )
-    ? {
-        ...nativeToken,
-        approved: true,
-        logo: nativeToken.logo ?? "",
-        min_donation_amnt: 0,
-        coingecko_denom: nativeToken.coinGeckoId,
-        token_id: nativeToken.id,
-        type: "evm-native",
-        directReceiverAddr: chains[selectedChainId].directReceiverAddr,
-        amount: "",
-      }
-    : undefined;
-
-  const tokens = unsupportedToken ? [unsupportedToken] : data;
 
   const searchResult =
     searchText === ""

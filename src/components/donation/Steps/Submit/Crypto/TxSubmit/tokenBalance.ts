@@ -4,13 +4,13 @@ import { EIPMethods } from "constants/evm";
 import { erc20 } from "contracts/evm/ERC20";
 import { condenseToNum, objToBase64, request } from "helpers";
 import type { Token } from "types/aws";
-import type { ChainID } from "types/chain";
+import type { SupportedChainId } from "types/chain";
 import type { CW20Balance } from "types/contracts";
 
 type CosmosBalance = { balance: { denom: string; amount: string } };
 export const tokenBalance = async (
   { decimals, token_id, type }: Token,
-  chainID: ChainID,
+  chainID: SupportedChainId,
   holder: string
 ): Promise<number> => {
   const { lcd, rpc } = chains[chainID];
