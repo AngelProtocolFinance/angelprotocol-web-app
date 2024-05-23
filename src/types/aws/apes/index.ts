@@ -2,13 +2,27 @@
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
 
-type TokenType =
+
+const qrTokenTypes = [
+  "btc-native",
+  "doge-native",
+  "sol-native",
+  "xrp-native",
+] as const;
+
+export type QrTokenType = (typeof qrTokenTypes)[number];
+
+export type TokenType =
   | "juno-native"
   | "terra-native"
   | "evm-native"
   | "erc20"
   | "cw20"
-  | "ibc";
+  | "ibc"
+  | QrTokenType;
+
+export const isQrToken = (input: TokenType): input is QrTokenType =>
+  qrTokenTypes.includes(input as any);
 
 export type Token = {
   approved: boolean; // true
@@ -20,6 +34,7 @@ export type Token = {
   coingecko_denom: string;
   type: TokenType;
 };
+
 
 export type EndowmentBalances = {
   contributionsCount: number;

@@ -65,7 +65,6 @@ export type UnsupportedChain = Pick<
   SupportedChain,
   "isTest" | "name" | "blockExplorer"
 > & {
-  directReceiverAddr: string;
   id: UnsupportedChainId;
 };
 export type SupportedChains = { [K in SupportedChainId]: SupportedChain };

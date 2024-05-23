@@ -3,7 +3,7 @@ import { chains } from "constants/chains";
 import { EIPMethods } from "constants/evm";
 import { erc20 } from "contracts/evm/ERC20";
 import { condenseToNum, objToBase64, request } from "helpers";
-import type { Token } from "types/aws";
+import type { QrTokenType, Token } from "types/aws";
 import type { SupportedChainId } from "types/chain";
 import type { CW20Balance } from "types/contracts";
 
@@ -44,8 +44,8 @@ export const tokenBalance = async (
       }).then((hex) => condenseToNum(hex, decimals));
     }
     default: {
-      const x: never = type;
-      throw new Error(`${x} not handled`);
+      const x = type satisfies QrTokenType;
+      throw `should not fetch balance for ${x}: unsupported`;
     }
   }
 };

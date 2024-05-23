@@ -40,16 +40,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
 
   if (isDisconnected(wallet)) {
     if (method === "direct") {
-      return (
-        <DirectMode
-          classes="mt-6"
-          token={{
-            ...props.details.token,
-            //TODO: change this to ap wallet
-            directReceiverAddr: "0xce551C1125BfCdAb88048854522D0B220f41A6Ff",
-          }}
-        />
-      );
+      return <DirectMode classes="mt-6" token={props.details.token} />;
     }
 
     return (
@@ -64,7 +55,10 @@ export default function Checkout({ classes = "", ...props }: Props) {
           />
         }
       >
-        <WalletSelection wallets={wallet} classes="mt-2" />
+        <WalletSelection
+          wallets={wallet.filter((w) => w.supportedChains.includes(chainID))}
+          classes="mt-2"
+        />
         {method === "with-wallet" && (
           <div className="w-full h-px border border-gray-l4 my-9 flex items-center justify-center">
             <span className="bg-white px-3.5 text-navy-l3">OR</span>

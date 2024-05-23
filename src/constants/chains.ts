@@ -187,14 +187,11 @@ export const terraTestnet: SupportedChain = {
   },
 };
 
-/** UNSUPPORTED (via QR only) CHAIN IDs */
 export const bitcoin: UnsupportedChain = {
   isTest: IS_TEST,
   id: `btc-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Bitcoin",
   blockExplorer: "https://btcscan.org",
-  //TODO: change to ap wallet
-  directReceiverAddr: "bc1q9ll6ngymkla8mnk5fq6dwlhgr3yutuxvg3whz5",
 };
 
 export const solana: UnsupportedChain = {
@@ -202,8 +199,6 @@ export const solana: UnsupportedChain = {
   id: `sol-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Solana",
   blockExplorer: "https://solscan.io",
-  //TODO: change to ap wallet
-  directReceiverAddr: "5ZuyExCSj9595QehogSVEf2SqMhgXGKhV9Cs9zWp6JBA",
 };
 
 export const ripple: UnsupportedChain = {
@@ -211,8 +206,6 @@ export const ripple: UnsupportedChain = {
   id: `xrp-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Ripple",
   blockExplorer: "https://xrpscan.com",
-  //TODO: change to ap wallet
-  directReceiverAddr: "r3PDXzXky6gboMrwurmSCiUyhzdrFyAbfu",
 };
 
 export const doge: UnsupportedChain = {
@@ -220,8 +213,6 @@ export const doge: UnsupportedChain = {
   id: `doge-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Doge",
   blockExplorer: "https://dogechain.info",
-  //TODO: change to ap wallet
-  directReceiverAddr: "DKEmyNuY3GxoDoNsJQYa8cvsyYM48motw3",
 };
 
 const supportedChainList: SupportedChain[] = [

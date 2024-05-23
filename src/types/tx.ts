@@ -11,6 +11,7 @@ import type { EVMTx, SimulTx } from "./evm";
 
 export type TokenOption = Token & {
   amount: string;
+  //attach to qr token
   directReceiverAddr?: string;
 };
 
