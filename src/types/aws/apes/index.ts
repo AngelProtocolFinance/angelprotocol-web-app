@@ -2,7 +2,6 @@
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
 
-
 const qrTokenTypes = [
   "btc-native",
   "doge-native",
@@ -34,7 +33,6 @@ export type Token = {
   coingecko_denom: string;
   type: TokenType;
 };
-
 
 export type EndowmentBalances = {
   contributionsCount: number;
