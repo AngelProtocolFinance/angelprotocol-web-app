@@ -17,6 +17,7 @@ export default function Settings() {
     "splitLiqPct",
     "splitFixed",
     "payout_minimum",
+    "donateMethods",
   ]);
 
   if (isLoading) {

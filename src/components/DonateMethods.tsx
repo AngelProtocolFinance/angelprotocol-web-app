@@ -1,10 +1,11 @@
 import Icon from "components/Icon";
-import { unpack } from "components/form/helpers";
 import { Reorder, useDragControls, useMotionValue } from "framer-motion";
+import { unpack } from "helpers/unpack";
 import type { ReactNode } from "react";
-import type { Method as TMethod } from "types/widget";
+import type { TDonateMethod } from "types/components";
+import type { DonateMethodId } from "types/lists";
 
-type Updator = (methods: TMethod[]) => void;
+type Updator = (methods: TDonateMethod[]) => void;
 type Classes = {
   container?: string;
   label?: string;
@@ -12,7 +13,7 @@ type Classes = {
 };
 
 type Props = {
-  values: TMethod[];
+  values: TDonateMethod[];
   onChange: Updator;
   error?: ReactNode;
   classes?: Classes | string;
@@ -54,8 +55,8 @@ function Method({
   value,
   updator,
 }: {
-  value: TMethod;
-  updator: (old: TMethod) => void;
+  value: TDonateMethod;
+  updator: (old: TDonateMethod) => void;
 }) {
   const y = useMotionValue(0);
   const controls = useDragControls();
@@ -89,4 +90,24 @@ function Method({
       {value.name}
     </Reorder.Item>
   );
+}
+
+const names: { [K in DonateMethodId]: string } = {
+  crypto: "Crypto",
+  daf: "DAF",
+  stocks: "Stocks",
+  stripe: "Card",
+};
+const toMethods = (ids: DonateMethodId[], disabled = false): TDonateMethod[] =>
+  ids.map((id) => ({
+    id,
+    name: names[id],
+    disabled,
+  }));
+
+const all: DonateMethodId[] = ["stripe", "stocks", "daf", "crypto"];
+export function fill(sub = all): TDonateMethod[] {
+  const existing = sub.filter((x) => all.includes(x));
+  const missing = all.filter((x) => !sub.includes(x));
+  return toMethods(existing).concat(toMethods(missing, true));
 }
