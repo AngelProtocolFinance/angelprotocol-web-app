@@ -3,7 +3,6 @@ import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useTokensQuery } from "services/apes";
 import type { ChainID } from "types/chain";
-import type { TokenWithAmount } from "types/tx";
 import Icon from "../Icon";
 import Image from "../Image";
 import { ErrorStatus, LoadingStatus } from "../Status";
@@ -72,7 +71,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
             className={
               "flex items-center gap-2 p-3 hover:bg-blue-l4 dark:hover:bg-blue-d5 cursor-pointer"
             }
-            value={{ ...token, amount: "0" } satisfies TokenWithAmount}
+            value={{ ...token, amount: "0" }}
           >
             <Image src={token.logo} className="w-6 h-6" />
             <span className="text-sm">{token.symbol}</span>
