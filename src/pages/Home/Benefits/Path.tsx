@@ -1,8 +1,8 @@
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
 import { benefits } from "content/benefits";
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import BenefitsCarousel from "./BenefitsCarousel";
 import Carousel from "./Carousel";
 import s from "./benefits.module.css";
