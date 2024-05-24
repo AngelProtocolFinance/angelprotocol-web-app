@@ -3,4 +3,4 @@ pre-commit:
     check:
       add: true
       glob: "*.{ts,tsx,json,d.ts}"
-      run: yarn biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files} && git add .
+      run: yarn biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
