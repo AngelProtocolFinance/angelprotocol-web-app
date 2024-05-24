@@ -90,6 +90,7 @@
     "@types/react-test-renderer": "18.0.7",
     "@walletconnect/types": "2.10.5",
     "jsdom": "24.0.0",
+    "lefthook": "1.6.12",
     "postcss-import": "16.1.0",
     "react-test-renderer": "18.2.0",
     "tailwindcss": "3.4.3",

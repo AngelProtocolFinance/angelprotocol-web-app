@@ -1,0 +1,4 @@
+pre-commit:
+  commands:
+    check:
+      run: yarn biome check --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
