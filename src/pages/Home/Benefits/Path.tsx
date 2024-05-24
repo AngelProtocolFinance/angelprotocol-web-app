@@ -1,11 +1,11 @@
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
-import { benefits } from "content/benefits";
 import { useState } from "react";
+import Carousel from "./Carousel";
 import { Link } from "react-router-dom";
 import BenefitsCarousel from "./BenefitsCarousel";
-import Carousel from "./Carousel";
 import s from "./benefits.module.css";
+import { benefits } from "content/benefits";
 
 type TPath = keyof typeof benefits;
 const Path = () => {
