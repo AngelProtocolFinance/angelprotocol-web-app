@@ -21,6 +21,8 @@ export type Program = {
   milestones: Milestone[];
 };
 
+export type Media = { type: "video"; url: string; id: string }; // {article} | {album}
+
 export type EndowDesignation =
   | "Charity"
   | "Religious Organization"
