@@ -65,5 +65,6 @@ const Path = () => {
     </section>
   );
 };
+const x = "unused";
 
 export default Path;
