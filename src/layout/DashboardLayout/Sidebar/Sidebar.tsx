@@ -22,7 +22,6 @@ export default function Sidebar({
       className={`flex flex-col w-72 md:w-64 h-full bg-white dark:bg-blue-d6 border-r border-gray-l4 ${className}`}
     >
       {sidebarHeader}
-
       <div className="grid grid-cols-[auto_1fr] py-3 gap-x-2">
         {linkGroups.map((group) => (
           <React.Fragment key={`link_group-${group.title}`}>
@@ -40,7 +39,7 @@ export default function Sidebar({
                 onClick={onChange}
                 aria-disabled={link.disabled}
               >
-                <Icon {...link.icon} />
+                <Icon {...link.icon} className="justify-self-center" />
                 {link.title}
               </NavLink>
             ))}
