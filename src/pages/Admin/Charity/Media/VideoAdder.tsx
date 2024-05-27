@@ -1,14 +1,21 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
+import Prompt from "components/Prompt";
 import { Field, Form } from "components/form";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { type UseFormReturn, useForm } from "react-hook-form";
 import { url } from "schemas/string";
+import { useNewMediumMutation } from "services/aws/media";
 import { object } from "yup";
+import { useAdminContext } from "../../Context";
 
 export default function VideoAdder() {
-  const { closeModal, isDismissible } = useModalContext();
+  const { id } = useAdminContext();
+  const { showModal, closeModal, isDismissible } = useModalContext();
+  const [createMedium, { isLoading }] = useNewMediumMutation();
+  const { handleError } = useErrorContext();
 
   const methods = useForm({
     resolver: yupResolver(object({ url: url.required("required") })),
@@ -22,7 +29,18 @@ export default function VideoAdder() {
 
   return (
     <Modal
-      onSubmit={handleSubmit((fv) => console.log(fv.url))}
+      disabled={isLoading}
+      onSubmit={handleSubmit(async (fv) => {
+        try {
+          await createMedium({ endowId: id, newUrl: fv.url }).unwrap();
+          showModal(Prompt, {
+            type: "success",
+            children: "Successfully created media",
+          });
+        } catch (err) {
+          handleError(err, { context: "creating media" });
+        }
+      })}
       as={Form}
       methods={methods}
       className="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
