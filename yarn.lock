@@ -1327,12 +1327,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:3.3.4":
-  version: 3.3.4
-  resolution: "@hookform/resolvers@npm:3.3.4"
+"@hookform/resolvers@npm:3.4.2":
+  version: 3.4.2
+  resolution: "@hookform/resolvers@npm:3.4.2"
   peerDependencies:
     react-hook-form: ^7.0.0
-  checksum: 10/0845e15f53b515ab5dc8d970d4ee7f47bbdfc4f4391bc166361535482d96b6ae3d1812669107fca05bf8687fa5447e3ed65f2eee3e349759b23b229ca978f917
+  checksum: 10/a7773a3c38665826f4d72183667724da49f72646e3207c36e1a89433c782b823cae9675a19756314bc1b27ac237976c77d8341d4be4641c0e7c04aef40f1a0f4
   languageName: node
   linkType: hard
 
@@ -4168,7 +4168,7 @@ __metadata:
     "@gsap/react": "npm:2.1.1"
     "@headlessui/react": "npm:1.7.19"
     "@hookform/error-message": "npm:2.0.1"
-    "@hookform/resolvers": "npm:3.3.4"
+    "@hookform/resolvers": "npm:3.4.2"
     "@keplr-wallet/proto-types": "npm:0.12.83"
     "@keplr-wallet/types": "npm:0.12.83"
     "@keplr-wallet/wc-qrcode-modal": "npm:0.12.83"
