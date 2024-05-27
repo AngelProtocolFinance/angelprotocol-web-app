@@ -1,13 +1,20 @@
 import { TEMP_JWT } from "constants/auth";
-import type { Media } from "types/aws";
+import type { Media, MediaQueryParams } from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
+type MediaPage = {
+  items: Media[]; //future: album | article
+  nextPageKey?: string;
+};
+
 const media = aws.injectEndpoints({
   endpoints: (builder) => ({
-    media: builder.query<Media[], number>({
+    media: builder.query<MediaPage, MediaQueryParams & { endowId: number }>({
       providesTags: ["media", "medium"],
-      query: (endowId) => `/${v(1)}/endowments/${endowId}/media`,
+      query: ({ endowId, ...params }) => {
+        return { url: `/${v(1)}/endowments/${endowId}/media`, params };
+      },
     }),
     medium: builder.query<Media, { endowId: number; mediaId: string }>({
       providesTags: ["program"],
@@ -64,4 +71,6 @@ export const {
   useNewMediumMutation,
   useEditMediumMutation,
   useDeleteMediumMutation,
+  useLazyMediaQuery,
+  util: { updateQueryData: updateMediaQueryData },
 } = media;

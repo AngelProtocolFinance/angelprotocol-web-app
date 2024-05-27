@@ -21,7 +21,17 @@ export type Program = {
   milestones: Milestone[];
 };
 
-export type Media = { type: "video"; url: string; id: string }; // {article} | {album}
+export type Media = {
+  type: "video";
+  url: string;
+  id: string;
+  dateCreated: string;
+}; // {article} | {album}
+export type MediaQueryParams = {
+  type?: "video"; //future: article | album
+  featured?: boolean;
+  nextPageKey?: string;
+};
 
 export type EndowDesignation =
   | "Charity"

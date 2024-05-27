@@ -1,25 +1,23 @@
 import { useState } from "react";
-import {
-  updateBankingApplicationsQueryData,
-  useBankingApplicationsQuery,
-  useLazyBankingApplicationsQuery,
-} from "services/aws/banking-applications";
 import { useSetter } from "store/accessors";
-import type { BankingApplicationsQueryParams } from "types/aws";
+import type { MediaQueryParams } from "types/aws";
+import {
+  updateMediaQueryData,
+  useLazyMediaQuery,
+  useMediaQuery,
+} from "./media";
 
-export default function usePagination() {
+export function usePaginatedMedia(endowId: number) {
   const dispatch = useSetter();
 
-  const [query, setQuery] = useState("");
+  const [params, setParams] = useState<MediaQueryParams>({});
 
-  const [params, setParams] = useState<BankingApplicationsQueryParams>({});
-
-  const queryState = useBankingApplicationsQuery(params);
+  const queryState = useMediaQuery({ ...params, endowId });
 
   const { isLoading, isFetching, isError, data, originalArgs } = queryState;
 
   const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
-    useLazyBankingApplicationsQuery();
+    useLazyMediaQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
@@ -35,14 +33,10 @@ export default function usePagination() {
       if (newPageRes) {
         //pessimistic update to original cache data
         dispatch(
-          updateBankingApplicationsQueryData(
-            "bankingApplications",
-            originalArgs,
-            (prevResult) => {
-              prevResult.items.push(...newPageRes.items);
-              prevResult.nextPageKey = newPageRes.nextPageKey;
-            }
-          )
+          updateMediaQueryData("media", originalArgs, (prevResult) => {
+            prevResult.items.push(...newPageRes.items);
+            prevResult.nextPageKey = newPageRes.nextPageKey;
+          })
         );
       }
     }
@@ -57,9 +51,7 @@ export default function usePagination() {
     isLoading,
     isFetching,
     isLoadingNextPage,
-    query,
     loadNextPage,
-    onQueryChange: setQuery,
     setParams,
   };
 }

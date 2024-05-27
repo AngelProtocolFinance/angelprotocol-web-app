@@ -1,8 +1,11 @@
 import Icon from "components/Icon";
 import { useModalContext } from "contexts/ModalContext";
+import { useAdminContext } from "../../Context";
+import FeaturedVideos from "./FeaturedVideos";
 import VideoAdder from "./VideoAdder";
 
 export default function Media() {
+  const { id } = useAdminContext();
   const { showModal } = useModalContext();
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
@@ -20,6 +23,7 @@ export default function Media() {
           </button>
         </div>
         <h5 className="text-lg mt-10">Featured videos</h5>
+        <FeaturedVideos endowId={id} />
       </div>
     </div>
   );
