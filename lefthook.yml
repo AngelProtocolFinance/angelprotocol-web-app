@@ -1,0 +1,6 @@
+pre-commit:
+  commands:
+    check:
+      stage_fixed: true
+      glob: "*.{ts,tsx,json,d.ts}"
+      run: yarn biome check --apply --no-errors-on-unmatched --files-ignore-unknown=true {staged_files}
