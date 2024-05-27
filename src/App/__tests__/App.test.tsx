@@ -59,9 +59,9 @@ describe("App.tsx tests", () => {
 
     //user goes to Marketplace
     fireEvent.click(
-      screen.getByRole("link", {
+      screen.getAllByRole("link", {
         name: marketLink,
-      })
+      })[0]
     );
     expect(
       await screen.findByRole("heading", { name: marketplaceHeroText })
