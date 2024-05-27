@@ -28,12 +28,12 @@ export default function Header({ links, classes }: Props) {
         observer.observe(node);
       }}
     >
-      <div className="grid items-center grid-cols-[auto_1fr_auto] gap-4 padded-container bg-white rounded-full py-2">
+      <div className="grid relative items-center grid-cols-2 gap-4 padded-container bg-white rounded-full py-2">
         <DappLogo classes="w-48 h-12" />
         {location.pathname !== appRoutes.marketplace && (
           <Link
             to={appRoutes.marketplace}
-            className="justify-self-center btn-blue capitalize items-center px-4 py-1 text-sm gap-1 rounded-full font-heading"
+            className="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 btn-blue capitalize items-center px-4 py-1 text-sm gap-1 rounded-full font-heading"
           >
             <Icon type="Search" className="mr-1 text-lg" />
             <span>Explore all causes</span>
