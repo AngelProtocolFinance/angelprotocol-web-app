@@ -49,7 +49,7 @@ const media = aws.injectEndpoints({
       invalidatesTags: (_, error) => (error ? [] : ["media"]),
       query: ({ endowId, mediaId }) => {
         return {
-          url: `/${v(2)}/endowments/${endowId}/programs/${mediaId}`,
+          url: `/${v(1)}/endowments/${endowId}/media/${mediaId}`,
           method: "DELETE",
           headers: { authorization: TEMP_JWT },
         };
