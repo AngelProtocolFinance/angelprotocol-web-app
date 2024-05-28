@@ -69,7 +69,7 @@ export default function VideoEditor(props: Props) {
     >
       <div className="relative">
         <p className="text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
-          Add video
+          {props.edit ? "Edit" : "Add"} video
         </p>
         {isDismissible && (
           <button
