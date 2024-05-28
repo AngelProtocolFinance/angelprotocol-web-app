@@ -1,5 +1,7 @@
 import Icon from "components/Icon";
+import { adminRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
+import { Link } from "react-router-dom";
 import { useAdminContext } from "../../Context";
 import FeaturedVideos from "./FeaturedVideos";
 import VideoAdder from "./VideoAdder";
@@ -7,6 +9,7 @@ import VideoAdder from "./VideoAdder";
 export default function Media() {
   const { id } = useAdminContext();
   const { showModal } = useModalContext();
+
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
       <h3 className="text-[2rem]">Media</h3>
@@ -23,7 +26,13 @@ export default function Media() {
           </button>
         </div>
         <h5 className="text-lg mt-10">Featured videos</h5>
-        <FeaturedVideos endowId={id} />
+        <FeaturedVideos endowId={id} classes="mt-4" />
+        <Link
+          to={`../${adminRoutes.videos}`}
+          className="btn-outline-filled text-sm py-3 rounded mt-4"
+        >
+          View all videos
+        </Link>
       </div>
     </div>
   );

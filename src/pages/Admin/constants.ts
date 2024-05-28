@@ -1,7 +1,12 @@
 import { adminRoutes } from "constants/routes";
 import type { LinkGroup } from "layout/DashboardLayout";
 
-const { program_editor: _pe, index: _i, ...restAdminRoutes } = adminRoutes;
+const {
+  program_editor: _pe,
+  index: _i,
+  videos: _v,
+  ...restAdminRoutes
+} = adminRoutes;
 
 const sidebarRoutes = {
   ...restAdminRoutes,

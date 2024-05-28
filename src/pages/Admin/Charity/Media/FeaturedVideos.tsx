@@ -1,5 +1,6 @@
 import QueryLoader from "components/QueryLoader";
 import { usePaginatedMedia } from "services/aws/usePaginatedMedia";
+import VideoPreview from "./VideoPreview";
 
 type Props = {
   classes?: string;
@@ -7,14 +8,24 @@ type Props = {
 };
 
 export default function FeaturedVideos({ endowId, classes = "" }: Props) {
-  const query = usePaginatedMedia(endowId);
+  const { data, isLoading, isFetching, isError } = usePaginatedMedia(endowId);
   return (
     <QueryLoader
-      queryState={query}
+      queryState={{ data: data?.items, isLoading, isFetching, isError }}
       classes={{ container: classes }}
-      messages={{ loading: "loading...", error: "failed to get videos" }}
+      messages={{
+        loading: "loading...",
+        error: "failed to get videos",
+        empty: "No featured videos",
+      }}
     >
-      {(data) => <>{data.items.length}</>}
+      {(items) => (
+        <div className={`${classes} flex flex-wrap gap-4 rounded-sm`}>
+          {items.map((item) => (
+            <VideoPreview key={item.id} {...item} />
+          ))}
+        </div>
+      )}
     </QueryLoader>
   );
 }
