@@ -33,6 +33,11 @@ export type MediaQueryParams = {
   nextPageKey?: string;
 };
 
+export type MediaUpdate = {
+  url?: string;
+  featured?: boolean;
+};
+
 export type EndowDesignation =
   | "Charity"
   | "Religious Organization"

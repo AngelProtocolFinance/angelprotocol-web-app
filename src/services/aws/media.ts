@@ -1,5 +1,5 @@
 import { TEMP_JWT } from "constants/auth";
-import type { Media, MediaQueryParams } from "types/aws";
+import type { Media, MediaQueryParams, MediaUpdate } from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
@@ -37,15 +37,15 @@ const media = aws.injectEndpoints({
     }),
     editMedium: builder.mutation<
       Media,
-      { endowId: number; mediaId: string; newUrl: string }
+      MediaUpdate & { endowId: number; mediaId: string }
     >({
       invalidatesTags: (_, error) => (error ? [] : ["medium", "media"]),
-      query: ({ endowId, mediaId, newUrl }) => {
+      query: ({ endowId, mediaId, ...payload }) => {
         return {
           url: `/${v(1)}/endowments/${endowId}/media/${mediaId}`,
           method: "PATCH",
           headers: { authorization: TEMP_JWT },
-          body: newUrl,
+          body: payload,
         };
       },
     }),

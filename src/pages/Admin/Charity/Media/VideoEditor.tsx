@@ -47,7 +47,7 @@ export default function VideoEditor(props: Props) {
             ? editMedium({
                 endowId: id,
                 mediaId: props.edit.mediaId,
-                newUrl: fv.url,
+                url: fv.url,
               })
             : createMedium({ endowId: id, newUrl: fv.url });
           await request.unwrap();
