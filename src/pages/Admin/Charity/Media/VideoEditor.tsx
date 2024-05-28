@@ -7,38 +7,60 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { type UseFormReturn, useForm } from "react-hook-form";
 import { url } from "schemas/string";
-import { useNewMediumMutation } from "services/aws/media";
+import {
+  useEditMediumMutation,
+  useNewMediumMutation,
+} from "services/aws/media";
 import { object } from "yup";
 import { useAdminContext } from "../../Context";
 
-export default function VideoAdder() {
+type Props = {
+  edit?: { prevUrl: string; mediaId: string };
+};
+
+export default function VideoEditor(props: Props) {
   const { id } = useAdminContext();
   const { showModal, closeModal, isDismissible } = useModalContext();
-  const [createMedium, { isLoading }] = useNewMediumMutation();
+  const [createMedium, { isLoading: creating }] = useNewMediumMutation();
+  const [editMedium, { isLoading: editing }] = useEditMediumMutation();
   const { handleError } = useErrorContext();
 
   const methods = useForm({
     resolver: yupResolver(object({ url: url.required("required") })),
     defaultValues: {
-      url: "",
+      url: props.edit?.prevUrl ?? "",
     },
   });
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    formState: { isDirty },
+  } = methods;
 
   return (
     <Modal
-      disabled={isLoading}
+      disabled={creating || editing}
       onSubmit={handleSubmit(async (fv) => {
         try {
-          await createMedium({ endowId: id, newUrl: fv.url }).unwrap();
+          const request = props.edit
+            ? editMedium({
+                endowId: id,
+                mediaId: props.edit.mediaId,
+                newUrl: fv.url,
+              })
+            : createMedium({ endowId: id, newUrl: fv.url });
+          await request.unwrap();
           showModal(Prompt, {
             type: "success",
-            children: "Successfully created media",
+            children: `Successfully ${
+              props.edit ? "updated" : "created"
+            } media`,
           });
         } catch (err) {
-          handleError(err, { context: "creating media" });
+          handleError(err, {
+            context: `${props.edit ? "editing" : "creating"} media`,
+          });
         }
       })}
       as={Form}
@@ -75,7 +97,11 @@ export default function VideoAdder() {
         >
           Cancel
         </button>
-        <button type="submit" className="btn-blue px-8 py-2 text-sm">
+        <button
+          disabled={!isDirty}
+          type="submit"
+          className="btn-blue px-8 py-2 text-sm"
+        >
           Continue
         </button>
       </div>

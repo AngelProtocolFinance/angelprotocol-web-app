@@ -1,5 +1,4 @@
 import Icon from "components/Icon";
-import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useAdminContext } from "pages/Admin/Context";
@@ -7,23 +6,29 @@ import type { ButtonHTMLAttributes } from "react";
 import ReactPlayer from "react-player";
 import { useDeleteMediumMutation } from "services/aws/media";
 import type { Media } from "types/aws";
+import VideoEditor from "./VideoEditor";
 
 export default function VideoPreview(props: Media) {
   const { id } = useAdminContext();
+  const { handleError } = useErrorContext();
+  const { showModal } = useModalContext();
   const [deleteMedium, { isLoading: isDeleting }] = useDeleteMediumMutation();
   const allControlsDisabled = isDeleting;
   return (
     <div className="text-navy-d4" key={props.id}>
       <div className="flex justify-end mb-1">
-        <CRUDBtn
-          disabled={allControlsDisabled}
-          mutation={() =>
-            deleteMedium({ endowId: id, mediaId: props.id }).unwrap()
-          }
-        >
-          <Icon type="Star" className="text-[#FFA500] " />
+        <CRUDBtn disabled={allControlsDisabled}>
+          <Icon
+            type="Star"
+            className="text-[#FFA500] group-disabled:text-gray-l1"
+          />
         </CRUDBtn>
         <button
+          onClick={() =>
+            showModal(VideoEditor, {
+              edit: { mediaId: props.id, prevUrl: props.url },
+            })
+          }
           type="button"
           className="p-1.5 text-lg rounded-full hover:bg-blue-l4"
         >
@@ -32,9 +37,13 @@ export default function VideoPreview(props: Media) {
         <CRUDBtn
           disabled={allControlsDisabled}
           isLoading={isDeleting}
-          mutation={() =>
-            deleteMedium({ endowId: id, mediaId: props.id }).unwrap()
-          }
+          onClick={async () => {
+            try {
+              await deleteMedium({ endowId: id, mediaId: props.id }).unwrap();
+            } catch (err) {
+              handleError(err, { context: "deleting videos" });
+            }
+          }}
         >
           <Icon type="Delete" />
         </CRUDBtn>
@@ -55,28 +64,16 @@ export default function VideoPreview(props: Media) {
 function CRUDBtn({
   className,
   isLoading,
-  mutation,
   children,
   ...props
-}: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type" | "onClick"> & {
+}: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> & {
   isLoading?: boolean;
-  mutation: () => Promise<unknown>;
 }) {
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
   return (
     <button
       {...props}
-      onClick={async () => {
-        try {
-          await mutation();
-          showModal(Prompt, { type: "success" });
-        } catch (err) {
-          handleError(err, { context: "updating videos" });
-        }
-      }}
       type="button"
-      className={`p-1.5 text-lg rounded-full hover:bg-blue-l4 disabled:text-gray ${className}`}
+      className={`p-1.5 text-lg rounded-full hover:bg-blue-l4 group disabled:text-gray-l1 ${className}`}
     >
       {isLoading ? <Icon type="Loading" className="animate-spin" /> : children}
     </button>

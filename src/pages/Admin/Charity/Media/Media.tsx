@@ -1,10 +1,9 @@
 import Icon from "components/Icon";
-import { adminRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
 import { Link } from "react-router-dom";
 import { useAdminContext } from "../../Context";
 import FeaturedVideos from "./FeaturedVideos";
-import VideoAdder from "./VideoAdder";
+import VideoEditor from "./VideoEditor";
 
 export default function Media() {
   const { id } = useAdminContext();
@@ -17,7 +16,7 @@ export default function Media() {
         <div className="flex justify-between items-center">
           <h4 className="text-2xl">Videos</h4>
           <button
-            onClick={() => showModal(VideoAdder, {})}
+            onClick={() => showModal(VideoEditor, {})}
             type="button"
             className="btn-outline-filled text-sm px-8 py-2 gap-1"
           >
