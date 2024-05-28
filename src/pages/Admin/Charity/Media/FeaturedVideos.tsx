@@ -8,7 +8,10 @@ type Props = {
 };
 
 export default function FeaturedVideos({ endowId, classes = "" }: Props) {
-  const { data, isLoading, isFetching, isError } = usePaginatedMedia(endowId);
+  const { data, isLoading, isFetching, isError } = usePaginatedMedia(endowId, {
+    featured: true,
+    type: "video",
+  });
   return (
     <QueryLoader
       queryState={{ data: data?.items, isLoading, isFetching, isError }}
@@ -20,7 +23,7 @@ export default function FeaturedVideos({ endowId, classes = "" }: Props) {
       }}
     >
       {(items) => (
-        <div className={`${classes} flex flex-wrap gap-4 rounded-sm`}>
+        <div className={`${classes} grid @2xl:grid-cols-2 gap-4`}>
           {items.map((item) => (
             <VideoPreview key={item.id} {...item} />
           ))}

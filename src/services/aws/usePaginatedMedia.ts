@@ -7,10 +7,13 @@ import {
   useMediaQuery,
 } from "./media";
 
-export function usePaginatedMedia(endowId: number) {
+export function usePaginatedMedia(
+  endowId: number,
+  initParams?: MediaQueryParams
+) {
   const dispatch = useSetter();
 
-  const [params, setParams] = useState<MediaQueryParams>({});
+  const [params, setParams] = useState<MediaQueryParams>(initParams ?? {});
 
   const queryState = useMediaQuery({ ...params, endowId });
 
