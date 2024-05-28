@@ -251,6 +251,5 @@ const endowSelectorOptionObj: {
 } = {
   id: "",
   name: "",
-  hide_bg_tip: "",
 };
 const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");

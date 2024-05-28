@@ -1,10 +1,12 @@
 import Copier from "components/Copier";
 import { appRoutes } from "constants/routes";
-import { useGetter } from "store/accessors";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
-export default function Snippet({ classes = "" }) {
-  const config = useGetter((state) => state.widget);
+type Props = {
+  classes?: string;
+  config: WidgetConfig;
+};
+export default function Snippet({ classes = "", config }: Props) {
   const widgetURL = widgetURLfn(config);
   const iframeURL =
     config.endowment.id !== 0
@@ -32,6 +34,10 @@ const widgetURLfn = (config: WidgetConfig) => {
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
     splitDisabled: config.splitDisabled ? "true" : "false",
     liquidSplitPct: config.liquidSplitPct.toString(),
+    methods: config.methods
+      .filter((m) => !m.disabled)
+      .map((m) => m.id)
+      .join(","),
   };
   return (
     window.location.origin +

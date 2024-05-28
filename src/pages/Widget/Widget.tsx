@@ -1,13 +1,12 @@
+import { fill } from "components/DonateMethods";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { useEffect } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
-import { setRecipient } from "slices/donation";
-import { initialize } from "slices/widget";
-import { useGetter, useSetter } from "store/accessors";
 import type { Endowment } from "types/aws";
+import type { WidgetConfig } from "types/widget";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
@@ -15,7 +14,15 @@ import Snippet from "./Snippet";
 export default function Widget({ endowId = 0 }: { endowId?: number }) {
   const queryState = useEndowment(
     { id: endowId },
-    ["id", "hide_bg_tip", "logo", "name", "overview"],
+    [
+      "id",
+      "hide_bg_tip",
+      "logo",
+      "name",
+      "overview",
+      "splitFixed",
+      "splitLiqPct",
+    ],
     { skip: !endowId }
   );
 
@@ -31,23 +38,28 @@ function Content({
 }: {
   endowment?: Pick<
     Endowment,
-    "id" | "hide_bg_tip" | "logo" | "name" | "overview"
+    | "id"
+    | "hide_bg_tip"
+    | "logo"
+    | "name"
+    | "overview"
+    | "splitFixed"
+    | "splitLiqPct"
+    | "donateMethods"
   >;
 }) {
   const location = useLocation();
-  const widget = useGetter((state) => state.widget);
-
-  const dispatch = useSetter();
-
-  // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
-  useEffect(() => {
-    if (endowment) {
-      dispatch(initialize({ ...widget.initial, endowment }));
-      dispatch(setRecipient(endowment));
-    } else {
-      dispatch(setRecipient(widget.endowment));
-    }
-  }, [dispatch]);
+  const [state, setState] = useState<WidgetConfig>({
+    endowment: endowment || {
+      id: 0,
+      name: "this nonprofit",
+      hide_bg_tip: false,
+    },
+    isDescriptionTextShown: true,
+    liquidSplitPct: endowment?.splitLiqPct ?? 50,
+    splitDisabled: endowment?.splitFixed ?? false,
+    methods: fill(endowment?.donateMethods),
+  });
 
   return (
     <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
@@ -68,10 +80,13 @@ function Content({
         website and you're ready to go!
       </p>
       <div className="w-full">
-        <Configurer endowment={endowment} />
-        <Snippet classes="mt-10" />
+        <Configurer config={state} setConfig={setState} />
+        <Snippet config={state} classes="mt-10" />
       </div>
-      <Preview classes="order-last @4xl/widget:order-none @4xl/widget:mt-0 mt-10" />
+      <Preview
+        config={state}
+        classes="order-last @4xl/widget:order-none @4xl/widget:mt-0 mt-10"
+      />
     </div>
   );
 }

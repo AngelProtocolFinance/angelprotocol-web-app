@@ -1,18 +1,18 @@
 import type { EndowmentOption } from "./aws";
+import type { TDonateMethod } from "./components";
 
 export type WidgetConfig = {
   endowment: EndowmentOption;
   isDescriptionTextShown: boolean;
   splitDisabled: boolean;
   liquidSplitPct: number;
+  methods: TDonateMethod[];
 };
 
 export type WidgetURLSearchParams = {
   isDescriptionTextShown: "true" | "false";
   liquidSplitPct: string;
   splitDisabled: "true" | "false";
-};
-
-export type DonaterConfigFromWidget = Omit<WidgetConfig, "endowment"> & {
-  isPreview?: boolean;
+  /** csv of method ids */
+  methods?: string;
 };

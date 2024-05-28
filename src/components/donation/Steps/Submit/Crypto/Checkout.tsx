@@ -4,8 +4,8 @@ import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { maskAddress } from "helpers";
 import type { PropsWithChildren } from "react";
-import type { CryptoSubmitStep } from "slices/donation";
 import type { ConnectedWallet } from "types/wallet";
+import type { CryptoSubmitStep } from "../../types";
 import TxSubmit from "./TxSubmit";
 import WalletSelection from "./WalletSelection";
 

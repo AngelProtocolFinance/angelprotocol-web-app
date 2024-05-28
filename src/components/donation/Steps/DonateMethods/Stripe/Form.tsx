@@ -7,11 +7,12 @@ import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { useFiatCurrenciesQuery } from "services/apes";
-import { setDetails } from "slices/donation";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import type { Currency, DetailedCurrency } from "types/components";
+import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import { nextFormState } from "../helpers";
 import Frequency from "./Frequency";
 import Incrementers from "./Incrementers";
 import type { FormValues as FV, Props } from "./types";
@@ -36,16 +37,15 @@ export default function Loader(props: Props) {
   );
 }
 
-function Form({
-  widgetConfig,
-  details,
-  currencies,
-  defaultCurr,
-}: Props & { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency }) {
-  const dispatch = useSetter();
+type FormProps = Props & {
+  currencies: DetailedCurrency[];
+  defaultCurr?: DetailedCurrency;
+};
+
+function Form({ currencies, defaultCurr, ...props }: FormProps) {
+  const { setState } = useDonationState();
 
   const initial: FV = {
-    source: widgetConfig ? "bg-widget" : "bg-marketplace",
     amount: "",
     currency: defaultCurr || { code: USD_CODE, min: 1, rate: 1 },
     frequency: "subscription",
@@ -53,7 +53,7 @@ function Form({
 
   const currencyKey: keyof FV = "currency";
   const methods = useForm<FV>({
-    defaultValues: details || initial,
+    defaultValues: props.details || initial,
     resolver: yupResolver(
       schema<FV>({
         frequency: requiredString,
@@ -84,15 +84,9 @@ function Form({
   return (
     <FormContainer
       methods={methods}
-      onSubmit={handleSubmit((fv) => {
-        dispatch(
-          setDetails({
-            ...fv,
-            frequency: fv.frequency as Exclude<FV["frequency"], "">, //validated by schema
-            method: "stripe",
-          })
-        );
-      })}
+      onSubmit={handleSubmit((fv) =>
+        setState((prev) => nextFormState(prev, { ...fv, method: "stripe" }))
+      )}
       className="grid gap-4"
     >
       <Frequency />
@@ -120,7 +114,9 @@ function Form({
         // validation must be dynamicly set depending on which exact currency is selected
         tooltip={createTooltip(currency)}
       />
-      {currency.code === USD_CODE && <Incrementers />}
+      {currency.rate && (
+        <Incrementers code={currency.code} rate={currency.rate} />
+      )}
 
       <p className="text-sm dark:text-navy-l2 mt-4">
         Please click the button below and follow the instructions provided to

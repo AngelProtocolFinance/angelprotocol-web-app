@@ -5,6 +5,7 @@ import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
 import type { PropsWithChildren } from "react";
+import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
@@ -73,12 +74,7 @@ export default function MobileTable({
                 </Row>
                 {status === "intent" ? (
                   <Row title="Finish Paying" className="rounded-b">
-                    <ExtLink
-                      href={`${appRoutes.donations}/${row.id}`}
-                      className="flex gap-px items-center cursor-pointer text-blue underline hover:text-blue-l1"
-                    >
-                      Finish Paying <Icon size={16} type="ArrowRight" />
-                    </ExtLink>
+                    <IntentResumer intentId={row.id} />
                   </Row>
                 ) : (
                   <Row title="TX Hash">{row.id}</Row>

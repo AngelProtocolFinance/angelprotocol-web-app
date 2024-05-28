@@ -1,45 +1,30 @@
-import { useGetter } from "store/accessors";
+import { useDonationState } from "./Context";
 import DonateMethods from "./DonateMethods";
 import Result from "./Result";
 import Splits from "./Splits";
 import Submit from "./Submit";
 import Summary from "./Summary";
 import Tip from "./Tip";
-import type { Config } from "./types";
 
-type Props = { config: Config | null };
+export default function CurrentStep() {
+  const { state } = useDonationState();
 
-export default function CurrentStep({ config }: Props) {
-  const state = useGetter((state) => state.donation);
+  switch (state.step) {
+    case "donate-form":
+      return <DonateMethods {...state} />;
+    case "splits":
+      return <Splits {...state} />;
+    case "tip":
+      return <Tip {...state} />;
+    case "summary":
+      return <Summary {...state} />;
+    case "submit":
+      return <Submit {...state} />;
 
-  if (state.step === "init") return <></>; // <Steps /> sets to step 1 onMount
-
-  if (state.step === "donate-form") {
-    return <DonateMethods donaterConfig={config} state={state} />;
+    default:
+      state.step satisfies "tx";
+      return (
+        <Result {...state} classes="justify-self-center p-4 @md/steps:p-8" />
+      );
   }
-
-  if (state.step === "splits") {
-    return (
-      <Splits
-        {...state}
-        liquidSplitPct={state.liquidSplitPct ?? config?.liquidSplitPct}
-        widgetConfig={config}
-      />
-    );
-  }
-
-  if (state.step === "tip") {
-    return <Tip {...state} />;
-  }
-
-  if (state.step === "summary") {
-    return <Summary {...state} isPreview={config?.isPreview} />;
-  }
-
-  if (state.step === "submit") {
-    return <Submit {...state} />;
-  }
-
-  state.step satisfies "tx";
-  return <Result {...state} classes="justify-self-center p-4 @md/steps:p-8" />;
 }

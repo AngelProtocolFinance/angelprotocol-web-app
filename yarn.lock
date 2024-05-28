@@ -4201,9 +4201,11 @@ __metadata:
     aws-amplify: "npm:6.2.0"
     cropperjs: "npm:1.6.2"
     decimal.js: "npm:10.4.3"
+    framer-motion: "npm:11.2.5"
     gsap: "npm:3.12.5"
     is-mobile: "npm:4.0.0"
     jsdom: "npm:24.0.0"
+    lefthook: "npm:1.6.12"
     postcss-import: "npm:16.1.0"
     quill: "npm:2.0.1"
     react: "npm:18.2.0"
@@ -5758,6 +5760,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"framer-motion@npm:11.2.5":
+  version: 11.2.5
+  resolution: "framer-motion@npm:11.2.5"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10/d0eaaa7af919f3984e055911e891a0bf4211eb1aefdf2bc2ad8f377296014933c6886c56ff155c2e437c63c05b871689e881c3949a5e3f304c6204582fef8f96
+  languageName: node
+  linkType: hard
+
 "fs-minipass@npm:^2.0.0":
   version: 2.1.0
   resolution: "fs-minipass@npm:2.1.0"
@@ -6538,6 +6560,97 @@ __metadata:
   version: 1.0.0
   resolution: "keyvaluestorage-interface@npm:1.0.0"
   checksum: 10/e652448bc915f9c21b9916678ed58f5314c831f0a284d190a340c0370296c71918e0cdc1156a17b12d1993941b302f0881e23fb9c395079e2065a7d2f33d0199
+  languageName: node
+  linkType: hard
+
+"lefthook-darwin-arm64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-darwin-arm64@npm:1.6.12"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-darwin-x64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-darwin-x64@npm:1.6.12"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-arm64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-freebsd-arm64@npm:1.6.12"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-x64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-freebsd-x64@npm:1.6.12"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-arm64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-linux-arm64@npm:1.6.12"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-x64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-linux-x64@npm:1.6.12"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-arm64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-windows-arm64@npm:1.6.12"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-x64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-windows-x64@npm:1.6.12"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook@npm:1.6.12"
+  dependencies:
+    lefthook-darwin-arm64: "npm:1.6.12"
+    lefthook-darwin-x64: "npm:1.6.12"
+    lefthook-freebsd-arm64: "npm:1.6.12"
+    lefthook-freebsd-x64: "npm:1.6.12"
+    lefthook-linux-arm64: "npm:1.6.12"
+    lefthook-linux-x64: "npm:1.6.12"
+    lefthook-windows-arm64: "npm:1.6.12"
+    lefthook-windows-x64: "npm:1.6.12"
+  dependenciesMeta:
+    lefthook-darwin-arm64:
+      optional: true
+    lefthook-darwin-x64:
+      optional: true
+    lefthook-freebsd-arm64:
+      optional: true
+    lefthook-freebsd-x64:
+      optional: true
+    lefthook-linux-arm64:
+      optional: true
+    lefthook-linux-x64:
+      optional: true
+    lefthook-windows-arm64:
+      optional: true
+    lefthook-windows-x64:
+      optional: true
+  bin:
+    lefthook: bin/index.js
+  checksum: 10/aa01a64e965a04e956a46040a91284736e82b81411025bc52a6a768029bf3a8d7ad33b6300e8de7b39c21cdfbbb58b47ff253322ad4bed8f0c2677510d025afd
   languageName: node
   linkType: hard
 

@@ -1,5 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message";
-import { type HTMLInputTypeAttribute, createElement } from "react";
+import { unpack } from "helpers";
+import {
+  type HTMLInputTypeAttribute,
+  type ReactNode,
+  createElement,
+} from "react";
 import {
   type FieldValues,
   type Path,
@@ -7,7 +12,6 @@ import {
   useFormContext,
 } from "react-hook-form";
 import { Label } from ".";
-import { unpack } from "./helpers";
 import type { Classes } from "./types";
 
 const textarea = "textarea" as const;
@@ -22,7 +26,7 @@ type FieldProps<T extends FieldValues, K extends InputType> = Omit<
 > & {
   name: Path<T>;
   classes?: Classes | string;
-  tooltip?: string;
+  tooltip?: ReactNode;
   label: string;
   type?: K;
 };
@@ -67,7 +71,11 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
 
       {(tooltip && ( //tooltip in normal flow
         <p className={style.error + " text-left mt-2 left-0 text-xs"}>
-          <span className="text-navy-l1 dark:text-navy-l2">{tooltip}</span>{" "}
+          {typeof tooltip === "string" ? (
+            <span className="text-navy-l1 dark:text-navy-l2">{tooltip}</span>
+          ) : (
+            tooltip
+          )}{" "}
           <ErrorMessage
             errors={errors}
             name={name}

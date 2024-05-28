@@ -4,10 +4,10 @@ import { PUBLIC_STRIPE_KEY } from "constants/env";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
 import { useStripePaymentIntentQuery } from "services/apes";
-import { type StripeCheckoutStep, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
+import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
+import type { StripeCheckoutStep } from "../../types";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
 
@@ -16,13 +16,8 @@ import Checkout from "./Checkout";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const {
-    details,
-    recipient,
-    liquidSplitPct,
-    tip = 0,
-    oldTransactionId,
-  } = props;
+  const { init, details, liquidSplitPct, tip } = props;
+  const { setState } = useDonationState();
 
   const {
     data: clientSecret,
@@ -30,18 +25,16 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     isError,
     error,
   } = useStripePaymentIntentQuery({
-    transactionId: oldTransactionId,
+    transactionId: init.intentId,
     type: details.frequency,
     amount: +details.amount,
-    tipAmount: tip,
+    tipAmount: tip?.value ?? 0,
     currency: details.currency.code,
-    endowmentId: recipient.id,
+    endowmentId: init.recipient.id,
     splitLiq: liquidSplitPct,
     donor: props.donor,
-    source: details.source,
+    source: init.source,
   });
-
-  const dispatch = useSetter();
 
   return (
     <Summary
@@ -49,7 +42,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
         container: "grid content-start p-4 @md/steps:p-8",
         split: "mb-4",
       }}
-      onBack={() => dispatch(setStep("summary"))}
+      onBack={() => setState({ ...props, step: "summary" })}
       Amount={currency(details.currency)}
       amount={+details.amount}
       splitLiq={liquidSplitPct}
@@ -57,8 +50,8 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       tip={
         props.tip
           ? {
-              value: props.tip,
-              charityName: props.recipient.name,
+              value: props.tip.value,
+              charityName: init.recipient.name,
             }
           : undefined
       }
@@ -76,7 +69,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
             }}
             stripe={stripePromise}
           >
-            <Checkout source={details.source} />
+            <Checkout {...props} />
           </Elements>
         )}
       </ErrorBoundary>

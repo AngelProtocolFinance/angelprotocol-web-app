@@ -2,23 +2,27 @@ import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { idParamToNum } from "helpers";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
+import type { DonationIntent } from "types/aws";
 import Content from "./Content";
 
 export default function Donate() {
+  const location = useLocation();
+
+  //setter of this should make sure that intent.endowmentId is the same as this page's param.id.
+  const intent = location.state as DonationIntent | undefined;
+
+  //clear window.history.state after loading the intent into memory
+  useEffect(() => {
+    window.history.replaceState({}, "");
+  }, []);
+
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
-  const queryState = useEndowment({ id: numId }, [
-    "id",
-    "image",
-    "logo",
-    "name",
-    "overview",
-    "tagline",
-    "card_img",
-    "hide_bg_tip",
-  ]);
+
+  const queryState = useEndowment({ id: numId });
 
   return (
     <QueryLoader
@@ -38,14 +42,7 @@ export default function Donate() {
             image={profile.logo}
             url={`${BASE_URL}/donate/${profile.id}`}
           />
-          <Content
-            tagline={profile.tagline}
-            logo={profile.card_img || profile.logo || ""}
-            name={profile.name}
-            hide_bg_tip={!!profile.hide_bg_tip}
-            banner={profile.image || ""}
-            id={numId}
-          />
+          <Content endowment={profile} intent={intent} />
         </>
       )}
     </QueryLoader>

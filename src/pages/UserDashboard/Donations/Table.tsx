@@ -7,6 +7,7 @@ import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { Link } from "react-router-dom";
+import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
@@ -120,12 +121,7 @@ export default function Table({
                   : "--"}
               </>
               {status === "intent" ? (
-                <ExtLink
-                  href={`${appRoutes.donations}/${row.id}`}
-                  className="flex gap-px items-center cursor-pointer text-blue underline hover:text-blue-l1"
-                >
-                  Finish Paying
-                </ExtLink>
+                <IntentResumer intentId={row.id} />
               ) : row.viaId === "fiat" || row.viaId === "staging" ? (
                 <>- - -</>
               ) : (

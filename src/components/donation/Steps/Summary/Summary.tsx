@@ -1,20 +1,15 @@
-import { type SummaryStep, setDonor, setStep } from "slices/donation";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
+import { useDonationState } from "../Context";
 import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
+import type { SummaryStep } from "../types";
 import DonorForm from "./DonorForm";
 
-export default function Summary({
-  details,
-  liquidSplitPct,
-  donor,
-  tip,
-  recipient,
-  isPreview = false,
-}: SummaryStep & { isPreview?: boolean }) {
-  const dispatch = useSetter();
+export default function Summary(props: SummaryStep) {
+  const { details, liquidSplitPct, donor, tip, init } = props;
+  const { setState } = useDonationState();
   const user = useGetter((state) => state.auth.user);
 
   const [amount, Amount] = (() => {
@@ -40,20 +35,26 @@ export default function Summary({
       amount={amount}
       splitLiq={liquidSplitPct}
       onBack={() =>
-        recipient.hide_bg_tip
-          ? dispatch(setStep("splits"))
-          : dispatch(setStep("tip"))
+        setState({
+          ...props,
+          step: init.recipient.hide_bg_tip
+            ? init.config?.splitDisabled
+              ? "donate-form"
+              : "splits"
+            : "tip",
+        })
       }
       tip={
         tip
           ? {
-              value: tip,
-              charityName: recipient.name,
+              value: tip.value,
+              charityName: init.recipient.name,
             }
           : undefined
       }
     >
       <DonorForm
+        mode={init.mode}
         donor={
           donor ||
           (userIsSignedIn(user)
@@ -64,7 +65,7 @@ export default function Summary({
               }
             : undefined)
         }
-        onSubmit={(donor) => !isPreview && dispatch(setDonor(donor))}
+        onSubmit={(donor) => setState({ ...props, step: "submit", donor })}
         classes="mt-6"
       />
     </SummaryContainer>

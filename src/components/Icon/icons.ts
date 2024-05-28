@@ -89,6 +89,7 @@ import {
 } from "react-icons/md";
 import { PiPaypalLogo } from "react-icons/pi";
 import {
+  RiDraggable,
   RiFundsBoxLine,
   RiGasStationFill,
   RiMapPin2Line,
@@ -126,6 +127,7 @@ export const icons = {
   Discord: FaDiscord,
   DollarCircle: RiMoneyDollarCircleFill,
   Down: VscTriangleDown,
+  Drag: RiDraggable,
   Email: MdOutlineEmail,
   Exclamation: FaExclamation,
   ExclamationCircleFill: BsExclamationCircleFill,
