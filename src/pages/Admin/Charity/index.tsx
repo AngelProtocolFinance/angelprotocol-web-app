@@ -10,7 +10,6 @@ import Dashboard from "./Dashboard";
 import Donations from "./Donations";
 import EditProfile from "./EditProfile";
 import Media from "./Media";
-import Videos from "./Media/Videos";
 import Members from "./Members/Members";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
@@ -34,8 +33,7 @@ export default function Charity() {
 
         <Route path={adminRoutes.edit_profile} element={<EditProfile />} />
         <Route path={adminRoutes.programs} element={<Programs />} />
-        <Route path={adminRoutes.media} element={<Media />} />
-        <Route path={adminRoutes.videos} element={<Videos />} />
+        <Route path={`${adminRoutes.media}/*`} element={<Media />} />
         <Route
           path={`${adminRoutes.program_editor}/:id`}
           element={<ProgramEditor />}

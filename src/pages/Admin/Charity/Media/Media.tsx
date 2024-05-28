@@ -28,7 +28,7 @@ export default function Media() {
         <h5 className="text-lg mt-10">Featured videos</h5>
         <FeaturedVideos endowId={id} classes="mt-4" />
         <Link
-          to={`../${adminRoutes.videos}`}
+          to="videos"
           className="btn-outline-filled text-sm py-3 rounded mt-4"
         >
           View all videos
