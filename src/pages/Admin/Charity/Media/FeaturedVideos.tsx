@@ -11,6 +11,7 @@ export default function FeaturedVideos({ endowId, classes = "" }: Props) {
   const { data, isLoading, isFetching, isError } = usePaginatedMedia(endowId, {
     featured: true,
     type: "video",
+    limit: 3,
   });
   return (
     <QueryLoader

@@ -26,7 +26,7 @@ export default function Videos() {
         ]}
       />
       <div className="flex justify-between items-center">
-        <h4 className="text-2xl capitalize">All videos</h4>
+        <h4 className="text-2xl capitalize mt-4">All videos</h4>
         <button
           onClick={() => showModal(VideoEditor, {})}
           type="button"
@@ -36,7 +36,7 @@ export default function Videos() {
           <span>add video</span>
         </button>
       </div>
-      <List endowId={id} classes="mt-4" />
+      <List endowId={id} classes="mt-6" />
     </div>
   );
 }

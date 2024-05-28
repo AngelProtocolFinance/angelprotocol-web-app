@@ -32,6 +32,7 @@ export type MediaQueryParams = {
   type?: "video"; //future: article | album
   featured?: boolean;
   nextPageKey?: string;
+  limit?: number;
 };
 
 export type MediaUpdate = Partial<Pick<Media, "url" | "featured">>;

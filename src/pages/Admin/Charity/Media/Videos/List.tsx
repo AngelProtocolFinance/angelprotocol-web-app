@@ -9,10 +9,18 @@ type Props = {
 };
 
 export function List({ endowId, classes = "" }: Props) {
-  const { data, isLoading, isFetching, isError, hasMore, loadNextPage } =
-    usePaginatedMedia(endowId, {
-      type: "video",
-    });
+  const {
+    data,
+    isLoading,
+    isFetching,
+    isLoadingNextPage,
+    isError,
+    hasMore,
+    loadNextPage,
+  } = usePaginatedMedia(endowId, {
+    type: "video",
+    limit: 10,
+  });
   return (
     <QueryLoader
       queryState={{ data: data?.items, isLoading, isFetching, isError }}
@@ -31,8 +39,13 @@ export function List({ endowId, classes = "" }: Props) {
             <VideoPreview key={item.id} {...item} />
           ))}
           {hasMore && (
-            <button type="button" onClick={loadNextPage}>
-              load more
+            <button
+              disabled={isLoadingNextPage || isLoading || isFetching}
+              type="button"
+              onClick={loadNextPage}
+              className="col-span-full btn-outline-filled text-sm py-3"
+            >
+              {isLoadingNextPage ? "Loading..." : "Load more videos"}
             </button>
           )}
         </div>
@@ -43,12 +56,14 @@ export function List({ endowId, classes = "" }: Props) {
 
 function NoVideo({ classes = "" }) {
   return (
-    <div className={`bg-white ${classes}`}>
-      <Icon type="Picture" />
-      <p className="font-bold">Start by adding your first video</p>
-      <p className="text-sm">
-        You have no videos. To add one, use the <span>Add video</span> button
-        above.
+    <div
+      className={`bg-white ${classes} grid justify-items-center rounded border border-gray-l4 px-4 py-16`}
+    >
+      <Icon type="Picture" className="text-navy-l2 text-2xl mb-6" />
+      <p className="font-bold mb-2">Start by adding your first video</p>
+      <p className="text-sm text-navy-l1">
+        You have no videos. To add one, use the{" "}
+        <span className="text-navy-d4 font-bold">Add video</span> button above.
       </p>
     </div>
   );

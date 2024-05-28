@@ -17,10 +17,16 @@ export function usePaginatedMedia(
 
   const queryState = useMediaQuery({ ...params, endowId });
 
-  const { isLoading, isFetching, isError, data, originalArgs } = queryState;
+  const { isLoading, isError, isFetching, data, originalArgs } = queryState;
 
-  const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
-    useLazyMediaQuery();
+  const [
+    loadMore,
+    {
+      isLoading: isLoadingNextPage,
+      isFetching: isFetchingNextPage,
+      isError: isErrorNextPage,
+    },
+  ] = useLazyMediaQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
@@ -53,7 +59,7 @@ export function usePaginatedMedia(
     isError: isError || isErrorNextPage,
     isLoading,
     isFetching,
-    isLoadingNextPage,
+    isLoadingNextPage: isLoadingNextPage || isFetchingNextPage,
     loadNextPage,
     setParams,
   };
