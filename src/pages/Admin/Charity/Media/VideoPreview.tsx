@@ -4,7 +4,10 @@ import { useModalContext } from "contexts/ModalContext";
 import { useAdminContext } from "pages/Admin/Context";
 import type { ButtonHTMLAttributes } from "react";
 import ReactPlayer from "react-player";
-import { useDeleteMediumMutation } from "services/aws/media";
+import {
+  useDeleteMediumMutation,
+  useEditMediumMutation,
+} from "services/aws/media";
 import type { Media } from "types/aws";
 import VideoEditor from "./VideoEditor";
 
@@ -13,27 +16,43 @@ export default function VideoPreview(props: Media) {
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
   const [deleteMedium, { isLoading: isDeleting }] = useDeleteMediumMutation();
-  const allControlsDisabled = isDeleting;
+  const [editMedium, { isLoading: isEditing }] = useEditMediumMutation();
+  const allControlsDisabled = isDeleting || isEditing;
   return (
     <div className="text-navy-d4" key={props.id}>
       <div className="flex justify-end mb-1">
-        <CRUDBtn disabled={allControlsDisabled}>
+        <CRUDBtn
+          isLoading={isEditing}
+          disabled={allControlsDisabled}
+          onClick={async () => {
+            try {
+              await editMedium({
+                endowId: id,
+                mediaId: props.id,
+                featured: !props.featured,
+              }).unwrap();
+            } catch (err) {
+              handleError(err, { context: "editing video" });
+            }
+          }}
+        >
           <Icon
             type="Star"
-            className="text-[#FFA500] group-disabled:text-gray-l1"
+            className={`${
+              props.featured ? "text-[#FFA500]" : ""
+            } group-disabled:text-gray-l1`}
           />
         </CRUDBtn>
-        <button
+        <CRUDBtn
+          disabled={allControlsDisabled}
           onClick={() =>
             showModal(VideoEditor, {
               edit: { mediaId: props.id, prevUrl: props.url },
             })
           }
-          type="button"
-          className="p-1.5 text-lg rounded-full hover:bg-blue-l4"
         >
           <Icon type="Pencil" />
-        </button>
+        </CRUDBtn>
         <CRUDBtn
           disabled={allControlsDisabled}
           isLoading={isDeleting}

@@ -25,6 +25,7 @@ export type Media = {
   type: "video";
   url: string;
   id: string;
+  featured: boolean;
   dateCreated: string;
 }; // {article} | {album}
 export type MediaQueryParams = {
@@ -33,10 +34,7 @@ export type MediaQueryParams = {
   nextPageKey?: string;
 };
 
-export type MediaUpdate = {
-  url?: string;
-  featured?: boolean;
-};
+export type MediaUpdate = Partial<Pick<Media, "url" | "featured">>;
 
 export type EndowDesignation =
   | "Charity"
