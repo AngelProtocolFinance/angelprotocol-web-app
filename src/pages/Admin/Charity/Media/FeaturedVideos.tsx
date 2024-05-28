@@ -23,7 +23,9 @@ export default function FeaturedVideos({ endowId, classes = "" }: Props) {
       }}
     >
       {(items) => (
-        <div className={`${classes} grid @2xl:grid-cols-2 gap-4`}>
+        <div
+          className={`${classes} grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4`}
+        >
           {items.map((item) => (
             <VideoPreview key={item.id} {...item} />
           ))}
