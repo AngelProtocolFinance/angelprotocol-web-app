@@ -50,13 +50,15 @@ export default function Preview({ classes = "", config }: Props) {
       </div>
       <div className="grid h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-navy-d4 bg-white">
         <div className="grow flex flex-col justify-between items-center pt-6 @xl/preview:pt-10">
-          <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
-            Donate to {endowName}
-          </h1>
+          {config.isTitleShown && (
+            <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
+              {config.title || `Donate to ${endowName}`}
+            </h1>
+          )}
           {config.isDescriptionTextShown && (
             <p className="text-xs text-center @sm/preview:text-base">
-              Check out the many crypto and fiat donation options. Provide your
-              personal details to receive an immediate tax receipt.
+              {config.description ||
+                "Check out the many crypto and fiat donation options. Provide your personal details to receive an immediate tax receipt."}
             </p>
           )}
           <Steps

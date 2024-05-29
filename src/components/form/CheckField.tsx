@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { unpack } from "helpers";
-import type { PropsWithChildren } from "react";
+import type { ChangeEvent, PropsWithChildren } from "react";
 import {
   type FieldValues,
   type Path,
@@ -15,11 +15,13 @@ export function CheckField<T extends FieldValues>({
   classes,
   disabled,
   required,
+  onChange,
 }: PropsWithChildren<{
   name: Path<T>;
   classes?: Classes;
   disabled?: boolean;
   required?: boolean;
+  onChange?: (val: boolean) => void;
 }>) {
   const {
     register,
@@ -34,7 +36,10 @@ export function CheckField<T extends FieldValues>({
   return (
     <div className={`check-field ${container}`}>
       <input
-        {...register(name)}
+        {...register(name, {
+          onChange: (event: ChangeEvent<HTMLInputElement>) =>
+            onChange?.(event.target.checked),
+        })}
         className={int + " peer"}
         type="checkbox"
         id={id}

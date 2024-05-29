@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods } from "components/DonateMethods";
 import { LockedSplitSlider } from "components/donation";
-import { CheckField, Form } from "components/form";
+import { CheckField, Field, Form } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import type { WidgetConfig } from "types/widget";
@@ -29,6 +29,8 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
     handleSubmit,
     reset: hookFormReset,
     formState: { isDirty, errors },
+    setValue,
+    watch,
   } = methods;
 
   const { field: liquidSplitPct } = useController({
@@ -40,6 +42,9 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
     control: methods.control,
     name: "methods",
   });
+
+  const isDescriptionTextShown = watch("isDescriptionTextShown");
+  const isTitleShown = watch("isTitleShown");
 
   return (
     <Form
@@ -55,21 +60,51 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
         Donation Form Builder
       </h2>
 
-      <div className="grid content-start gap-6 text-sm">
-        <label className="-mb-4">Nonprofit name:</label>
+      <div className="grid content-start text-sm">
+        <label className="mt-2 mb-2 font-medium text-base">
+          Nonprofit name:
+        </label>
         <EndowmentSelector />
 
-        <CheckField<FormValues> name="isDescriptionTextShown">
-          Show description text
+        <Field<FormValues, "textarea">
+          type="textarea"
+          name="title"
+          label="Custom title"
+          classes={{ container: "mt-8", label: "font-medium text-base" }}
+          disabled={!isTitleShown}
+        />
+        <CheckField<FormValues>
+          name="isTitleShown"
+          classes="mt-3"
+          onChange={(checked) => !checked && setValue("title", "")}
+        >
+          Show title
         </CheckField>
 
-        <label className="-mb-4">Define default split value:</label>
+        <Field<FormValues, "textarea">
+          type="textarea"
+          name="description"
+          label="Custom description"
+          classes={{ container: "mt-8", label: "font-medium text-base" }}
+          disabled={!isDescriptionTextShown}
+        />
+        <CheckField<FormValues>
+          name="isDescriptionTextShown"
+          classes="mt-4"
+          onChange={(checked) => !checked && setValue("description", "")}
+        >
+          Show description
+        </CheckField>
+
+        <label className="mt-12 mb-4 font-medium text-base">
+          Define default split value:
+        </label>
         <LockedSplitSlider
           value={100 - liquidSplitPct.value}
           onChange={(lockedPct) => liquidSplitPct.onChange(100 - lockedPct)}
         />
 
-        <div className="mt-4">
+        <div className="mt-6">
           <CheckField<FormValues> name="splitDisabled">
             Disable changing the split value
           </CheckField>
@@ -82,7 +117,7 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
 
         <DonateMethods
           classes={{
-            container: "mt-8",
+            container: "mt-16",
             tooltip: "italic",
             label: "font-medium text-base",
           }}
