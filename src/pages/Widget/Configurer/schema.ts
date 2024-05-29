@@ -1,6 +1,6 @@
 import type { SchemaShape } from "schemas/types";
 import type { TDonateMethod } from "types/components";
-import { type ObjectSchema, array, number, object } from "yup";
+import { type ObjectSchema, array, number, object, string } from "yup";
 import type { FormValues } from "./types";
 
 export const schema = object<any, SchemaShape<FormValues>>({
@@ -14,4 +14,6 @@ export const schema = object<any, SchemaShape<FormValues>>({
       return values?.some((v) => !(v as TDonateMethod).disabled);
     }
   ),
+  title: string().max(100),
+  description: string().max(300),
 }) as ObjectSchema<FormValues>;

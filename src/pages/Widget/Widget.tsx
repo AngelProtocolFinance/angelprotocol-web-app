@@ -56,6 +56,7 @@ function Content({
       hide_bg_tip: false,
     },
     isDescriptionTextShown: true,
+    isTitleShown: true,
     liquidSplitPct: endowment?.splitLiqPct ?? 50,
     splitDisabled: endowment?.splitFixed ?? false,
     methods: fill(endowment?.donateMethods),
@@ -75,7 +76,7 @@ function Content({
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">
         Accept donations from your website today!
       </h1>
-      <p className="text-center @4xl/widget:text-left text-sm @4xl/widget:text-base @4xl/widget:col-span-2 pb-2">
+      <p className="mb-8 text-center @4xl/widget:text-left text-sm @4xl/widget:text-base @4xl/widget:col-span-2 pb-2">
         Just configure your Donation Form below, copy & paste the code on your
         website and you're ready to go!
       </p>
