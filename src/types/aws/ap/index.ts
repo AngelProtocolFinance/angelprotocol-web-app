@@ -103,7 +103,7 @@ export type Endowment = {
 
 export type EndowmentProfile = Endowment;
 
-/** from algolia index instead of DB */
+/** from CloudSearch index instead of DB */
 export type EndowmentCard = Pick<
   Endowment,
   | "id"

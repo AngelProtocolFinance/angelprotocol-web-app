@@ -79,7 +79,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "algolia-endowments",
+          url: "cloudsearch-nonprofits",
           params: {
             ...params,
             fields: endowCardFields,
@@ -92,7 +92,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "algolia-endowments",
+          url: "cloudsearch-nonprofits",
           params: { ...params, fields: endowSelectorOptionFields, env: apiEnv },
         };
       },
