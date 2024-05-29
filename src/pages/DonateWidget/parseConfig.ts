@@ -14,6 +14,8 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
       allMethodIds.includes(id as DonateMethodId)
     );
   }),
+  title: string().max(100),
+  description: string().max(300),
 });
 
 type Parsed = Omit<WidgetConfig, "endowment" | "methods"> & {
@@ -40,6 +42,9 @@ export default function parseConfig(
       splitDisabled: config.splitDisabled === "true",
       liquidSplitPct: +config.liquidSplitPct,
       methodIds,
+      title: config.title,
+      isTitleShown: (config.isTitleShown ?? "true") === "true",
+      description: config.description,
     };
   } catch (error) {
     const message = (error as ValidationError).message;
