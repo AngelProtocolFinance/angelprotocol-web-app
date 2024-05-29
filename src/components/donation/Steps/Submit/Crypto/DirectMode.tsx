@@ -1,7 +1,6 @@
 import ContentLoader from "components/ContentLoader";
 import Copier from "components/Copier";
 import QueryLoader from "components/QueryLoader";
-import { apWallets } from "constants/ap-wallets";
 import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import type { DonateThanksState } from "pages/DonateThanks";
@@ -20,9 +19,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
 
   const { details, init, tip, liquidSplitPct, donor } = donation;
 
-  const recipient = apWallets[details.chainId.value];
-
-  const intentQuery = useCreateCryptoIntentQuery({
+  const { data: intent, ...intentState } = useCreateCryptoIntentQuery({
     transactionId: init.intentId,
     amount: +details.token.amount,
     tipAmount: tip?.value ?? 0,
@@ -42,13 +39,13 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         {details.token.symbol} from your crypto wallet to the address below
       </p>
       <QueryLoader
-        queryState={intentQuery}
+        queryState={{ data: intent?.recipientAddress, ...intentState }}
         messages={{
           loading: <ContentLoader className="size-48 rounded" />,
           error: "Failed to load donation address",
         }}
       >
-        {() => (
+        {(recipient) => (
           <>
             <QRCodeSVG value={recipient} className="mb-3.5" size={192} />
             <p className="text-sm mb-4">{recipient}</p>
@@ -67,7 +64,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       </QueryLoader>
 
       <ContinueBtn
-        disabled={intentQuery.isError || intentQuery.isLoading}
+        disabled={intentState.isError || intentState.isLoading}
         onClick={() =>
           navigate(appRoutes.donate_thanks, {
             state: {

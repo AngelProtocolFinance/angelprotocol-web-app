@@ -41,7 +41,11 @@ export const apes = createApi({
       }),
     }),
     createCryptoIntent: builder.query<
-      { transactionId: string },
+      {
+        transactionId: string;
+        /** defined if !CryptoDonation.walletAddress */
+        recipientAddress?: string;
+      },
       CryptoDonation
     >({
       query: (params) => ({
