@@ -21,6 +21,22 @@ export type Program = {
   milestones: Milestone[];
 };
 
+export type Media = {
+  type: "video";
+  url: string;
+  id: string;
+  featured: boolean;
+  dateCreated: string;
+}; // {article} | {album}
+export type MediaQueryParams = {
+  type?: "video"; //future: article | album
+  featured?: boolean;
+  nextPageKey?: string;
+  limit?: number;
+};
+
+export type MediaUpdate = Partial<Pick<Media, "url" | "featured">>;
+
 export type EndowDesignation =
   | "Charity"
   | "Religious Organization"
@@ -87,7 +103,7 @@ export type Endowment = {
 
 export type EndowmentProfile = Endowment;
 
-/** from algolia index instead of DB */
+/** from CloudSearch index instead of DB */
 export type EndowmentCard = Pick<
   Endowment,
   | "id"

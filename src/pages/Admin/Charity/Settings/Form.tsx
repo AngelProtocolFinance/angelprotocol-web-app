@@ -97,6 +97,7 @@ export default function Form(props: Props) {
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <ReceiptMsg />
+
       <div>
         <CheckField<FV> name="sfCompounded" classes={{ label: "font-medium" }}>
           Reinvest dividends from Sustainability Fund
@@ -125,9 +126,27 @@ export default function Form(props: Props) {
 
       <HideBGTipCheckbox />
 
-      <label className="mt-8 font-medium">
-        Define default split value (Marketplace only):
-      </label>
+      <Field
+        placeholder={`$${PAYOUT_MIN_USD}`}
+        required
+        name="payout_minimum"
+        label="Payout Minimum"
+        classes={{
+          label: "font-medium text-base",
+        }}
+        tooltip={
+          <span className="text-navy-l1 text-sm italic">
+            Minimum amount of funds your current account must reach before
+            triggering a Payout to your Nonprofit's connected Bank Account. For
+            example, it can be useful to reduce the total number of payments
+            made if the receiving bank charges a fee per deposit transaction.
+          </span>
+        }
+      />
+
+      <h5 className="mt-12 text-2xl">Marketplace settings</h5>
+
+      <label className="mt-2 font-medium">Define default split value:</label>
       <LockedSplitSlider
         onChange={splitLockPct.onChange}
         value={splitLockPct.value}
@@ -143,25 +162,6 @@ export default function Form(props: Props) {
           the split screen entirely.
         </p>
       </div>
-
-      <Field
-        placeholder={`$${PAYOUT_MIN_USD}`}
-        required
-        name="payout_minimum"
-        label="Payout Minimum"
-        classes={{
-          label: "font-medium text-base",
-          container: "mt-8",
-        }}
-        tooltip={
-          <span className="text-navy-l1 text-sm italic">
-            Minimum amount of funds your current account must reach before
-            triggering a Payout to your Nonprofit's connected Bank Account. For
-            example, it can be useful to reduce the total number of payments
-            made if the receiving bank charges a fee per deposit transaction.
-          </span>
-        }
-      />
 
       <DonateMethods
         classes={{

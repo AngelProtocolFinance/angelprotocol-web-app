@@ -1,5 +1,6 @@
 import Copier from "components/Copier";
 import { appRoutes } from "constants/routes";
+import { cleanObject } from "helpers/cleanObject";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
 type Props = {
@@ -41,6 +42,9 @@ const widgetURLfn = (config: WidgetConfig) => {
       .filter((m) => !m.disabled)
       .map((m) => m.id)
       .join(","),
+    isTitleShown: config.isTitleShown ? "true" : "false",
+    title: config.title ?? "",
+    description: config.description ?? "",
   };
   return (
     window.location.origin +
@@ -48,6 +52,6 @@ const widgetURLfn = (config: WidgetConfig) => {
     "/" +
     config.endowment.id +
     "?" +
-    new URLSearchParams(params).toString()
+    new URLSearchParams(cleanObject(params)).toString()
   );
 };

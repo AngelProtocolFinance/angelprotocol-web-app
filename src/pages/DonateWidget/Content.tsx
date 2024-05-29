@@ -34,7 +34,7 @@ export default function Content({
 
   return (
     <div
-      className={`${classes} max-w-3xl w-full h-full p-6 grid content-start justify-items-center`}
+      className={`${classes} max-w-3xl w-full h-full p-6 grid gap-5 content-start justify-items-center`}
     >
       <Seo
         title={`Donate to ${profile.name} - ${APP_NAME}`}
@@ -43,21 +43,23 @@ export default function Content({
         image={profile.logo}
         url={`${BASE_URL}/${appRoutes.donate_widget}/${profile.id}`}
       />
-      <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg sm:text-3xl">
-        Donate to {profile.name}
-      </h1>
+      {config.isTitleShown && (
+        <h1 className="flex justify-center items-center gap-10 w-full z-20 text-lg sm:text-3xl">
+          {config.title || `Donate to ${profile.name}`}
+        </h1>
+      )}
 
       {config.isDescriptionTextShown && (
         <p className="text-xs text-center sm:text-base">
-          Check out the many crypto and fiat donation options. Provide your
-          personal details to receive an immediate tax receipt.
+          {config.description ||
+            "Check out the many crypto and fiat donation options. Provide your personal details to receive an immediate tax receipt."}
         </p>
       )}
 
       <Steps
         source="bg-widget"
         mode="live"
-        className="mt-5 w-full md:w-3/4 border border-gray-l4"
+        className="w-full md:w-3/4 border border-gray-l4"
         recipient={recipient}
         config={config}
       />

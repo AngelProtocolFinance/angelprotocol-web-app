@@ -9,6 +9,7 @@ export default function ReceiptMsg() {
   return (
     <div>
       <Field<FV, "textarea">
+        rows={5}
         type="textarea"
         classes={{
           container: "field-admin [&_[data-error]]:-bottom-4",

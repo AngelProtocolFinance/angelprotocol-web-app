@@ -67,16 +67,7 @@
   }
 
   .checkbox {
-    @apply appearance-none relative w-4 h-4 shrink-0 cursor-pointer disabled:cursor-default border border-gray-d2 dark:border-white rounded focus:outline-none focus:ring-2 focus:ring-blue-d1 disabled:bg-gray-l5 ring-offset-1 disabled:dark:bg-navy;
-  }
-  .checkbox:checked::before {
-    content: "✓";
-  }
-  .checkbox::before {
-    @apply text-sm absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
-  }
-  .checkbox[aria-invalid="true"] {
-    @apply border-red;
+    @apply accent-blue-d1 size-4 shrink-0 focus:outline-none focus:ring-2 focus:ring-blue-d1 disabled:accent-gray-l5 ring-offset-1;
   }
 }
 
@@ -143,7 +134,7 @@
   }
 
   .check-field {
-    @apply grid grid-cols-[auto_1fr] gap-x-3 items-center;
+    @apply grid grid-cols-[auto_1fr] justify-items-start gap-x-3 items-center;
   }
   .check-field > label {
     @apply cursor-pointer peer-disabled:cursor-default data-[required=true]:after:ml-1 data-[required=true]:after:content-['*'] data-[required=true]:after:text-red;
@@ -159,7 +150,7 @@
 /** page components */
 @layer components {
   .btn-outline-filled {
-    @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3;
+    @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 disabled:bg-gray-l4 aria-disabled:bg-gray-l4;
   }
   .btn-outline-gray {
     @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-navy-d3 dark:enabled:hover:bg-navy dark:active:bg-navy-d4;
