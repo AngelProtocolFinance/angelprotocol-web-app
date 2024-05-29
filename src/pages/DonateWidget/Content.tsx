@@ -45,13 +45,13 @@ export default function Content({
       />
       {config.isTitleShown && (
         <h1 className="flex justify-center items-center gap-10 w-full z-20 text-lg sm:text-3xl">
-          {config.title ?? `Donate to ${profile.name}`}
+          {config.title || `Donate to ${profile.name}`}
         </h1>
       )}
 
       {config.isDescriptionTextShown && (
         <p className="text-xs text-center sm:text-base">
-          {config.description ??
+          {config.description ||
             "Check out the many crypto and fiat donation options. Provide your personal details to receive an immediate tax receipt."}
         </p>
       )}
