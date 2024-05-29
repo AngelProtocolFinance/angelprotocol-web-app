@@ -25,7 +25,7 @@ export default function usePagination() {
     //button is hidden when there's no more
     if (
       data?.nextPageKey &&
-      originalArgs /** cards won't even show if no initial query is made */
+      originalArgs /** items won't even show if no initial query is made */
     ) {
       const { data: newPageRes } = await loadMore({
         ...originalArgs,
