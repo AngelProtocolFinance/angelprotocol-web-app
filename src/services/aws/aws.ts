@@ -58,6 +58,8 @@ export const aws = createApi({
     "strategy",
     "programs",
     "program",
+    "media",
+    "medium",
     "applications",
     "application",
     "banking-applications",

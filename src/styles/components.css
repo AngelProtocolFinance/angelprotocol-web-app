@@ -159,7 +159,7 @@
 /** page components */
 @layer components {
   .btn-outline-filled {
-    @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3;
+    @apply btn-outline bg-blue-l5 dark:bg-blue-d4 enabled:hover:bg-blue-l4 dark:enabled:hover:bg-blue-d3 disabled:bg-gray-l4 aria-disabled:bg-gray-l4;
   }
   .btn-outline-gray {
     @apply btn-outline bg-gray-l5 enabled:hover:bg-gray-l6 active:bg-gray-l4 dark:bg-navy-d3 dark:enabled:hover:bg-navy dark:active:bg-navy-d4;
