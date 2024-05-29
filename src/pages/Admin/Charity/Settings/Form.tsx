@@ -125,9 +125,9 @@ export default function Form(props: Props) {
 
       <HideBGTipCheckbox />
 
-      <label className="mt-8 font-medium">
-        Define default split value (Marketplace only):
-      </label>
+      <h5 className="mt-12 text-2xl">Marketplace settings</h5>
+
+      <label className="mt-2 font-medium">Define default split value:</label>
       <LockedSplitSlider
         onChange={splitLockPct.onChange}
         value={splitLockPct.value}
