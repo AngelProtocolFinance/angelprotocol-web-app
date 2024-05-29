@@ -133,7 +133,6 @@ export default function Form(props: Props) {
         label="Payout Minimum"
         classes={{
           label: "font-medium text-base",
-          container: "",
         }}
         tooltip={
           <span className="text-navy-l1 text-sm italic">
