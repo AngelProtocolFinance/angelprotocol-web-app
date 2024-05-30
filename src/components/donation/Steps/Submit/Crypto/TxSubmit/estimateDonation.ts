@@ -25,7 +25,6 @@ export async function estimateDonation(
       return { error: "Not enough balance" };
     }
 
-    const recipient = apWallets[chainID];
     let toEstimate: EstimateInput;
     // ///////////// GET TX CONTENT ///////////////
 
@@ -33,15 +32,16 @@ export async function estimateDonation(
       case "juno-1":
       case "uni-6": {
         const scaledAmount = scaleToStr(grossAmount, token.decimals);
+        const to = apWallets.junoDeposit;
         const msg =
           token.type === "juno-native" || token.type === "ibc"
             ? createCosmosMsg(sender, "recipient.send", {
-                recipient,
+                recipient: to,
                 amount: scaledAmount,
                 denom: token.token_id,
               })
             : createCosmosMsg(sender, "cw20.transfer", {
-                recipient,
+                recipient: to,
                 amount: scaledAmount,
                 cw20: token.token_id,
               });
@@ -55,13 +55,13 @@ export async function estimateDonation(
         const scaledAmount = scaleToStr(grossAmount, token.decimals);
         const msg =
           token.type === "terra-native" || token.type === "ibc"
-            ? new MsgSend(sender, recipient, [
+            ? new MsgSend(sender, apWallets.terra, [
                 new Coin(token.token_id, scaledAmount),
               ])
             : new MsgExecuteContract(sender, token.token_id, {
                 transfer: {
                   amount: scaledAmount,
-                  recipient: recipient,
+                  recipient: apWallets.terra,
                 },
               });
         toEstimate = { chainID, val: [msg] };
@@ -77,13 +77,13 @@ export async function estimateDonation(
               return {
                 from: sender,
                 value: scaledAmount,
-                to: recipient,
+                to: apWallets.evmDeposit,
               };
             //"erc20"
             default: {
               return createTx(sender, "erc20.transfer", {
                 erc20: token.token_id,
-                to: recipient,
+                to: apWallets.evmDeposit,
                 amount: scaledAmount,
               });
             }
