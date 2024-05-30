@@ -40,8 +40,20 @@ export default function Preview({ classes = "", config }: Props) {
     },
   };
 
+  const { accentPrimary, accentSecondary } = restConfig;
+
   return (
-    <section className={`${classes} @container/preview pb-4`}>
+    <section
+      style={{
+        ...(accentPrimary
+          ? ({ "--accent-primary": accentPrimary } as any)
+          : {}),
+        ...(accentPrimary
+          ? ({ "--accent-secondary": accentSecondary } as any)
+          : {}),
+      }}
+      className={`${classes} @container/preview pb-4`}
+    >
       <div>
         <p className="flex text-navy-d4 text-2xl font-gochi">
           <Image src={character} className="h-[45px] mr-2 pb-2" />
@@ -77,7 +89,7 @@ export default function Preview({ classes = "", config }: Props) {
             unrestricted basis, regardless of any designations or restrictions
             made by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
           </p>
-          <footer className="mt-auto grid place-items-center h-20 w-full bg-blue">
+          <footer className="mt-auto grid place-items-center h-20 w-full bg-[--accent-primary]">
             <DappLogo classes="w-40" color="white" />
           </footer>
         </div>

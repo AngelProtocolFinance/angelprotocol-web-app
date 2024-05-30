@@ -31,6 +31,7 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
     formState: { isDirty, errors },
     setValue,
     watch,
+    register,
   } = methods;
 
   const { field: liquidSplitPct } = useController({
@@ -132,6 +133,16 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
             />
           }
         />
+
+        <h4 className="text-2xl mt-8">Style settings</h4>
+        <div className="flex items-center gap-2 mt-2">
+          <input type="color" {...register("accentPrimary")} />
+          <label>Accent primary</label>
+        </div>
+        <div className="flex items-center gap-2 mt-2">
+          <input type="color" {...register("accentSecondary")} />
+          <label>Accent secondary</label>
+        </div>
 
         <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-8">
           <button

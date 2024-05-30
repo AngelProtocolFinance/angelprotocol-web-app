@@ -29,7 +29,6 @@ type Props = {
 export function Steps({ className = "", ...props }: Props) {
   return (
     <div
-      style={{ "--accent-primary": "red", "--accent-secondary": "pink" } as any}
       className={`grid ${className} w-full @container/steps overflow-clip bg-white min-h-96`}
     >
       <Context {...("init" in props ? props.init : initialState(props))}>
