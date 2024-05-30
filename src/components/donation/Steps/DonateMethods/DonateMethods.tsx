@@ -42,7 +42,7 @@ const allMethodIds: DonateMethodId[] = ["stripe", "stocks", "daf", "crypto"];
 const tabClasses = (selected: boolean) =>
   `${
     selected
-      ? "font-medium bg-blue-l4 text-navy-d4"
+      ? "font-medium bg-[--widget-accent-secondary] text-navy-d4"
       : "border border-gray-l4 @md/steps:border-none text-navy-l1"
   }  flex items-center gap-2 p-2 @md/steps:px-3 @md/steps:py-[1.15rem] @md/steps:grid @md/steps:grid-cols-subgrid @md/steps:col-span-2 focus:outline-none @md/steps:w-28 rounded @md/steps:rounded-none`;
 
