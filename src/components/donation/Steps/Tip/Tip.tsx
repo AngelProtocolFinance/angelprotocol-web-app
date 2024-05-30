@@ -128,7 +128,7 @@ export default function Tip(props: TipStep) {
           className="relative flex items-center select-none touch-none mt-16"
         >
           <Slider.Track className="relative grow rounded-full h-1.5 bg-[#EAECEB]">
-            <Slider.Range className="absolute bg-blue-d1 rounded-full h-full" />
+            <Slider.Range className="absolute bg-[--accent-primary] rounded-full h-full" />
           </Slider.Track>
           <Slider.Thumb className="flex gap-[2.5px] justify-center items-center w-9 h-5 bg-white border border-[#EAECEB] shadow-lg shadow-black/15 rounded-[6px] relative">
             <span className="w-px h-2.5 bg-[#D9D9D9]" />
@@ -150,7 +150,7 @@ export default function Tip(props: TipStep) {
         <button
           type="button"
           onClick={() => setFormat("amount")}
-          className="justify-self-center text-sm mt-6 underline hover:text-blue"
+          className="justify-self-center text-sm mt-6 underline hover:text-[color:var(--accent-primary)]"
         >
           Enter custom tip
         </button>
@@ -176,7 +176,9 @@ export default function Tip(props: TipStep) {
               }
               placeholder="Enter amount"
             />
-            <span className="uppercase text-blue-d1">{symbol}</span>
+            <span className="uppercase text-[color:var(--accent-primary)]">
+              {symbol}
+            </span>
             <ErrorMessage
               data-error
               className="field-error text-right mt-2"
