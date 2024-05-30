@@ -114,7 +114,7 @@
   }
 
   .field-input-donate {
-    @apply bg-gray-l5 rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
+    @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
   }
 
   .field {
@@ -191,7 +191,7 @@
   }
 
   .field-container-donate {
-    @apply text-base font-semibold bg-gray-l5 rounded-lg;
+    @apply text-base font-semibold rounded-lg;
   }
   .field-container-donate > input {
     @apply py-3.5 px-5 text-base placeholder:font-medium;
