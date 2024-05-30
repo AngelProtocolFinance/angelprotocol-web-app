@@ -9,7 +9,10 @@ export default function ContinueBtn({
   text?: string;
 }) {
   return (
-    <button {...props} className={`btn-blue btn-donate ${className}`}>
+    <button
+      {...props}
+      className={`btn-blue bg-[--widget-accent-primary] hover:enabled:bg-[--widget-accent-primary] btn-donate ${className}`}
+    >
       <span className="mr-4">{text}</span>
       <Icon type="ArrowRight" className="text-white text-lg" />
     </button>
