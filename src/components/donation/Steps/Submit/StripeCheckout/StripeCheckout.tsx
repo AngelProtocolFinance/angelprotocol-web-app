@@ -64,8 +64,22 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
         ) : (
           <Elements
             options={{
+              fonts: [
+                {
+                  family: "DM Sans",
+                  cssSrc: "https://fonts.googleapis.com/css2?family=Quicksand",
+                },
+              ],
               clientSecret,
-              appearance: { theme: "stripe" },
+              appearance: {
+                theme: "flat",
+                variables: {
+                  colorPrimary: undefined,
+                  fontFamily: "Quicksand, sans-serif",
+                  borderRadius: "8px",
+                  gridRowSpacing: "20px",
+                },
+              },
             }}
             stripe={stripePromise}
           >
