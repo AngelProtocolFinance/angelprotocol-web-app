@@ -52,7 +52,13 @@ export default function DonateWidget() {
         queryState={queryState}
         messages={{
           loading: (
-            <LoaderRing thickness={12} classes="w-28 place-self-center" />
+            <LoaderRing
+              thickness={12}
+              classes={{
+                container: "w-28 place-self-center",
+                ringToColor: "to-[--accent-primary]",
+              }}
+            />
           ),
           error: "Failed to get nonprofit info",
         }}
@@ -60,7 +66,7 @@ export default function DonateWidget() {
       >
         {(profile) => <Content profile={profile} config={config} />}
       </QueryLoader>
-      <footer className="grid place-items-center h-20 w-full bg-blue dark:bg-blue-d3">
+      <footer className="grid place-items-center h-20 w-full bg-[--accent-primary]">
         <DappLogo classes="w-40" color="white" />
       </footer>
     </div>

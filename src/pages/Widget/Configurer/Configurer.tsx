@@ -134,14 +134,22 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
           }
         />
 
-        <h4 className="text-2xl mt-8">Style settings</h4>
-        <div className="flex items-center gap-2 mt-2">
-          <input type="color" {...register("accentPrimary")} />
-          <label>Accent primary</label>
+        <h4 className="font-bold text-base mt-8">Style settings</h4>
+        <div className="flex items-center gap-2 mt-3">
+          <input
+            id="__accent-prim"
+            type="color"
+            {...register("accentPrimary")}
+          />
+          <label htmlFor="__accent-prim"> Accent primary</label>
         </div>
-        <div className="flex items-center gap-2 mt-2">
-          <input type="color" {...register("accentSecondary")} />
-          <label>Accent secondary</label>
+        <div className="flex items-center gap-2 mt-3">
+          <input
+            id="__accent-sec"
+            type="color"
+            {...register("accentSecondary")}
+          />
+          <label htmlFor="__accent-sec">Accent secondary</label>
         </div>
 
         <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-8">

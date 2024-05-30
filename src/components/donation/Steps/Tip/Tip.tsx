@@ -190,7 +190,7 @@ export default function Tip(props: TipStep) {
         </>
       )}
 
-      <div className="rounded bg-blue-l5 h-[4.5rem] mt-16 relative">
+      <div className="rounded bg-[--accent-secondary] h-[4.5rem] mt-16 relative">
         <Image
           src={waivingLaira}
           width={50}
