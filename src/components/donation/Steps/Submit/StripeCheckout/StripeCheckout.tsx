@@ -66,7 +66,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
             options={{
               fonts: [
                 {
-                  family: "DM Sans",
+                  family: "Quicksand",
                   cssSrc: "https://fonts.googleapis.com/css2?family=Quicksand",
                 },
               ],
