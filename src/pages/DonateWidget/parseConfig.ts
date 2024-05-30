@@ -15,8 +15,8 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
       allMethodIds.includes(id as DonateMethodId)
     );
   }),
-  accentPrimary: string().matches(hexColor),
-  accentSecondary: string().matches(hexColor),
+  accentPrimary: string().matches(hexColor, "invalid color format"),
+  accentSecondary: string().matches(hexColor, "invalid color format"),
   title: string().max(100),
   description: string().max(300),
 });
