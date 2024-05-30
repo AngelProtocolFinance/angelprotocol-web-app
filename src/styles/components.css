@@ -116,6 +116,9 @@
   .field-input-donate {
     @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
   }
+  .field-input-donate:enabled:focus {
+    @apply ring-[color:var(--widget-accent-primary)];
+  }
 
   .field {
     @apply relative;
@@ -195,6 +198,9 @@
   }
   .field-container-donate > input {
     @apply py-3.5 px-5 text-base placeholder:font-medium;
+  }
+  .field-container-donate:has(:focus) {
+    @apply ring-[color:var(--widget-accent-primary)];
   }
 
   .field-admin-sec > input {
