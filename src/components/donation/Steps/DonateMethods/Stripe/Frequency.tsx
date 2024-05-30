@@ -8,7 +8,7 @@ type Freq = FV["frequency"];
 const styles = {
   icon: "hidden @[21rem]/frequency:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
   option:
-    "group border-gray-l3 rounded-lg px-2 @[21rem]/frequency:px-6 border h-[2.625rem] flex items-center justify-center @[21rem]/frequency:justify-start aria-checked:bg-[--widget-accent-primary] aria-checked:text-white aria-checked:border-none select-none",
+    "group border-gray-l3 rounded-lg px-2 @[21rem]/frequency:px-6 border h-[2.625rem] flex items-center justify-center @[21rem]/frequency:justify-start aria-checked:bg-[--accent-primary] aria-checked:text-white aria-checked:border-none select-none",
 };
 
 export default function Frequency() {

@@ -17,6 +17,6 @@
 @import "./styles/utilities.css";
 
 :root {
-    --widget-accent-primary: theme(colors.blue.d1);
-    --widget-accent-secondary:theme(colors.blue.l4);
+    --accent-primary: theme(colors.blue.d1);
+    --accent-secondary:theme(colors.blue.l4);
   }
