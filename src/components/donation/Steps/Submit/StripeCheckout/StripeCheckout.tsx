@@ -74,7 +74,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
               appearance: {
                 theme: "flat",
                 variables: {
-                  colorPrimary: undefined,
+                  colorPrimary: init.config?.accentPrimary,
                   fontFamily: "Quicksand, sans-serif",
                   borderRadius: "8px",
                   gridRowSpacing: "20px",
