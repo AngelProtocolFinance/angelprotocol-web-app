@@ -55,7 +55,7 @@ export default function CurrencyOptions({
             <Combobox.Option key={code} value={{ code, name, min, rate }}>
               {({ active, selected }) => (
                 <div
-                  className={`${active ? "bg-blue-l2 dark:bg-blue-d1" : ""} ${
+                  className={`${active ? "bg-[--accent-secondary]" : ""} ${
                     selected ? "font-semibold" : "font-normal"
                   } flex items-center gap-2 p-2 cursor-pointer truncate`}
                 >

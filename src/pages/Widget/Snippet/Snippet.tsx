@@ -45,6 +45,8 @@ const widgetURLfn = (config: WidgetConfig) => {
     isTitleShown: config.isTitleShown ? "true" : "false",
     title: config.title ?? "",
     description: config.description ?? "",
+    accentPrimary: config.accentPrimary ?? "",
+    accentSecondary: config.accentSecondary ?? "",
   };
   return (
     window.location.origin +

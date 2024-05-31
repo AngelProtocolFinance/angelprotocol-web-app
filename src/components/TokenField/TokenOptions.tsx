@@ -69,7 +69,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
           <Combobox.Option
             key={token.token_id + token.type}
             className={
-              "flex items-center gap-2 p-3 hover:bg-blue-l4 dark:hover:bg-blue-d5 cursor-pointer"
+              "flex items-center gap-2 p-3 hover:bg-[--accent-secondary] cursor-pointer"
             }
             value={{ ...token, amount: "0" }}
           >

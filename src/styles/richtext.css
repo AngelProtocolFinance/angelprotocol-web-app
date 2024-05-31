@@ -8,7 +8,7 @@
 
 .ql-container.ql-snow {
   padding: 0;
-  border: none;
+  border: none !important;
 }
 
 .ql-toolbar.ql-snow {

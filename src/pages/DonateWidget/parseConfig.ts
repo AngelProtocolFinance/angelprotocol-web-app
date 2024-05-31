@@ -5,6 +5,7 @@ import { type ValidationError, number, object, string } from "yup";
 
 const allMethodIds: DonateMethodId[] = ["crypto", "daf", "stocks", "stripe"];
 
+const hexColor = /^#[0-9A-F]{6}$/i;
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   splitDisabled: string().required().oneOf(["true", "false"]),
   isDescriptionTextShown: string().required().oneOf(["true", "false"]),
@@ -14,11 +15,13 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
       allMethodIds.includes(id as DonateMethodId)
     );
   }),
+  accentPrimary: string().matches(hexColor, "invalid color format"),
+  accentSecondary: string().matches(hexColor, "invalid color format"),
   title: string().max(100),
   description: string().max(300),
 });
 
-type Parsed = Omit<WidgetConfig, "endowment" | "methods"> & {
+export type Parsed = Omit<WidgetConfig, "endowment" | "methods"> & {
   methodIds?: DonateMethodId[];
 };
 
@@ -45,6 +48,8 @@ export default function parseConfig(
       title: config.title,
       isTitleShown: (config.isTitleShown ?? "true") === "true",
       description: config.description,
+      accentPrimary: config.accentPrimary,
+      accentSecondary: config.accentSecondary,
     };
   } catch (error) {
     const message = (error as ValidationError).message;
