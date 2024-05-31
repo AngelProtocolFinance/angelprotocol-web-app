@@ -17,7 +17,8 @@ export default function Content({ profile, config, classes = "" }: Props) {
   const recipient: DonationRecipient = {
     id: profile.id,
     name: profile.name,
-    hide_bg_tip: !!profile.hide_bg_tip,
+    hide_bg_tip: profile.hide_bg_tip,
+    progDonationsAllowed: profile.progDonationsAllowed,
   };
 
   return (

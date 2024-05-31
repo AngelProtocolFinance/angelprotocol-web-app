@@ -14,7 +14,10 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
   "step" | U
 > & { [key in U]?: T[key] };
 
-export type DonationRecipient = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
+export type DonationRecipient = Pick<
+  Endowment,
+  "id" | "name" | "hide_bg_tip" | "progDonationsAllowed"
+>;
 
 type BaseDonationDetails = {
   /** value is "" if no program is selected   */

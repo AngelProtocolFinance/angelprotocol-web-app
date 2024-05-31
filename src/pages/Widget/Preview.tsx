@@ -16,7 +16,10 @@ export default function Preview({ classes = "", config }: Props) {
   const { endowment, methods, ...restConfig } = config;
   const endowName = config.endowment.name;
 
-  const { data } = useEndowment({ id: endowment.id }, ["hide_bg_tip"]);
+  const { data } = useEndowment({ id: endowment.id }, [
+    "hide_bg_tip",
+    "progDonationsAllowed",
+  ]);
 
   const initState: DonationState = {
     step: "donate-form",
@@ -26,6 +29,7 @@ export default function Preview({ classes = "", config }: Props) {
       recipient: {
         ...endowment,
         hide_bg_tip: data?.hide_bg_tip,
+        progDonationsAllowed: data?.progDonationsAllowed,
       },
       config: {
         ...restConfig,
