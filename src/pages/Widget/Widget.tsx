@@ -60,6 +60,8 @@ function Content({
     liquidSplitPct: endowment?.splitLiqPct ?? 50,
     splitDisabled: endowment?.splitFixed ?? false,
     methods: fill(endowment?.donateMethods),
+    accentPrimary: "#2D89C8",
+    accentSecondary: "#E6F1F9",
   });
 
   return (

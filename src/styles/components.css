@@ -16,7 +16,7 @@
     @apply w-1;
   }
   .scroller::-webkit-scrollbar-thumb {
-    @apply bg-blue-d1;
+    @apply bg-[--accent-primary];
   }
   .scroller::-webkit-scrollbar-track {
     @apply bg-gray-l3 dark:bg-navy;
@@ -114,7 +114,10 @@
   }
 
   .field-input-donate {
-    @apply bg-gray-l5 rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
+    @apply rounded-lg text-base py-[13px] px-5 font-semibold placeholder:font-medium;
+  }
+  .field-input-donate:enabled:focus {
+    @apply ring-[color:var(--accent-primary)];
   }
 
   .field {
@@ -191,10 +194,13 @@
   }
 
   .field-container-donate {
-    @apply text-base font-semibold bg-gray-l5 rounded-lg;
+    @apply text-base font-semibold rounded-lg;
   }
   .field-container-donate > input {
     @apply py-3.5 px-5 text-base placeholder:font-medium;
+  }
+  .field-container-donate:has(:focus) {
+    @apply ring-[color:var(--accent-primary)];
   }
 
   .field-admin-sec > input {

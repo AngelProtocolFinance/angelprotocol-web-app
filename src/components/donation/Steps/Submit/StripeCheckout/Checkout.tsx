@@ -80,7 +80,7 @@ export default function Checkout(props: StripeCheckoutStep) {
         <Loader />
       ) : (
         <button
-          className="btn-blue btn-donate w-full mt-6"
+          className="btn-blue btn-donate bg-[--accent-primary] hover:enabled:bg-[--accent-primary] w-full mt-6"
           disabled={!stripe || !elements || status !== "ready"}
           type="submit"
         >

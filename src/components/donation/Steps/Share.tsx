@@ -26,7 +26,7 @@ type ShareProps = {
 export default function ShareContainer(props: ShareProps) {
   return (
     <div className={`${props.className ?? ""} grid justify-items-center py-2`}>
-      <h2 className="w-full pt-2 text-center font-medium text-blue-d2 mb-2">
+      <h2 className="w-full pt-2 text-center font-medium text-[color:var(--accent-primary)] mb-2">
         Spread the word!
       </h2>
       <p className="text-center text-navy-l1 text-sm max-w-sm">

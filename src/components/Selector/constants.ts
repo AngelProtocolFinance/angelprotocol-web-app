@@ -11,9 +11,9 @@ export const styles = {
   option: (selected: boolean, active: boolean) =>
     `px-4 py-2 cursor-pointer ${
       selected
-        ? "bg-blue-l2  dark:bg-blue-d1"
+        ? "bg-[--accent-secondary]"
         : active
-          ? "cursor-pointer bg-blue-l3 dark:bg-blue-d2"
+          ? "cursor-pointer bg-[--accent-secondary]"
           : ""
     }`,
   options:

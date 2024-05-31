@@ -54,6 +54,10 @@ export type Config = {
   liquidSplitPct: number;
   /** donation tabs follows the list order */
   methodIds?: DonateMethodId[];
+  /** hex color without alpha */
+  accentPrimary?: string;
+  /** hex color without alpha */
+  accentSecondary?: string;
 };
 
 export type Init = {
