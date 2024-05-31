@@ -10,7 +10,7 @@ export default function Incrementers({
   code: string;
 }) {
   return (
-    <div className="flex justify-center gap-3">
+    <div className="flex justify-center flex-wrap gap-3">
       <Incrementer value={40 * rate} curr={code} />
       <Incrementer value={100 * rate} curr={code} />
       <Incrementer value={200 * rate} curr={code} />
