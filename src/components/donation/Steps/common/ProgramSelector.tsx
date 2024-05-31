@@ -17,14 +17,13 @@ export function ProgramSelector({
   onChange,
   endowId,
 }: Props) {
-  console.log(program);
   return (
     <Listbox
       value={program}
       by="value"
       onChange={onChange}
       as="div"
-      className={`grid ${classes} group has-[[data-error]]:hidden has-[[data-empty]]:hidden has-[[data-loading]]:hidden`}
+      className={`relative grid ${classes} group has-[[data-error]]:hidden has-[[data-empty]]:hidden has-[[data-loading]]:hidden`}
     >
       <Listbox.Label className="block font-semibold font-heading mb-2 text-navy-d4">
         Select program
@@ -45,15 +44,21 @@ export function ProgramSelector({
           </>
         )}
       </Listbox.Button>
-      <Options endowId={endowId} />
+      <Options endowId={endowId} classes="absolute top-full left-0 z-10" />
     </Listbox>
   );
 }
 
-function Options({ endowId }: { endowId: number }) {
+type OptionsProps = {
+  endowId: number;
+  classes?: string;
+};
+
+function Options({ endowId, classes = "" }: OptionsProps) {
   const query = useProgramsQuery(endowId);
   return (
     <QueryLoader
+      classes={{ container: classes }}
       queryState={query}
       messages={{
         //parent watches for these data status to show/hide the entire listbox
@@ -63,7 +68,9 @@ function Options({ endowId }: { endowId: number }) {
       }}
     >
       {(options) => (
-        <Listbox.Options className="border border-gray-l4 px-5 py-3.5 rounded-lg mt-2 grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1">
+        <Listbox.Options
+          className={`${classes} bg-white w-full border border-gray-l4 px-5 py-3.5 rounded-lg mt-2 grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1`}
+        >
           {options.map((o) => (
             <Listbox.Option
               key={o.id}
@@ -73,7 +80,7 @@ function Options({ endowId }: { endowId: number }) {
                   value: o.id,
                 } satisfies OptionType<string>
               }
-              className="select-none hover:text-[color:var(--accent-primary)]"
+              className="select-none hover:text-[color:var(--accent-primary)] aria-selected:text-[color:var(--accent-primary)]"
             >
               <span>{o.title}</span>
             </Listbox.Option>
