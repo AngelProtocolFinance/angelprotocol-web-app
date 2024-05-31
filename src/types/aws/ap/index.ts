@@ -1,6 +1,6 @@
 import type { Except } from "type-fest";
 import type { PartialExcept } from "types/utils";
-import type { APIEnvironment, UNSDG_NUMS } from "../../lists";
+import type { APIEnvironment, DonateMethodId, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
@@ -20,6 +20,22 @@ export type Program = {
   title: string;
   milestones: Milestone[];
 };
+
+export type Media = {
+  type: "video";
+  url: string;
+  id: string;
+  featured: boolean;
+  dateCreated: string;
+}; // {article} | {album}
+export type MediaQueryParams = {
+  type?: "video"; //future: article | album
+  featured?: boolean;
+  nextPageKey?: string;
+  limit?: number;
+};
+
+export type MediaUpdate = Partial<Pick<Media, "url" | "featured">>;
 
 export type EndowDesignation =
   | "Charity"
@@ -77,10 +93,17 @@ export type Endowment = {
   hide_bg_tip?: boolean;
   sfCompounded?: boolean;
   published?: boolean;
+  /** allowed by default */
+  progDonationsAllowed?: boolean;
+  splitLiqPct?: number;
+  splitFixed?: boolean;
+  payout_minimum?: number;
+  donateMethods?: DonateMethodId[];
 };
 
 export type EndowmentProfile = Endowment;
 
+/** from CloudSearch index instead of DB */
 export type EndowmentCard = Pick<
   Endowment,
   | "id"
@@ -95,23 +118,33 @@ export type EndowmentCard = Pick<
   | "kyc_donors_only"
   | "claimed"
 >;
-export type EndowmentOption = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
+export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
+export type EndowmentSettingsAttributes = Extract<
+  keyof Endowment,
+  | "receiptMsg"
+  | "sfCompounded"
+  | "hide_bg_tip"
+  | "progDonationsAllowed"
+  | "splitLiqPct"
+  | "splitFixed"
+  | "payout_minimum"
+  | "donateMethods"
+>;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
   | "endow_designation"
   | "fiscal_sponsored"
-  | "receiptMsg"
   | "claimed"
-  | "hide_bg_tip"
+  | EndowmentSettingsAttributes
 > & {
   endow_designation: EndowDesignation | "";
 };
 
 export type EndowmentSettingsUpdate = Pick<
   Required<Endowment>,
-  "id" | "receiptMsg" | "sfCompounded" | "hide_bg_tip"
+  EndowmentSettingsAttributes
 >;
 
 export type NewProgram = Omit<Program, "id" | "milestones"> & {

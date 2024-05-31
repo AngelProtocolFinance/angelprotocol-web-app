@@ -2,30 +2,30 @@ import { WalletProvider } from "@terra-money/wallet-provider";
 import { chainOptions } from "constants/chainOptions";
 import { chains } from "constants/chains";
 import WalletContext from "contexts/WalletContext/WalletContext";
-import { type CryptoSubmitStep, setStep } from "slices/donation";
-import { useSetter } from "store/accessors";
 import Image from "../../../../Image";
+import { useDonationState } from "../../Context";
 import Summary from "../../common/Summary";
 import { token } from "../../common/Token";
+import type { CryptoSubmitStep } from "../../types";
 import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
-  const dispatch = useSetter();
+  const { setState } = useDonationState();
   const { details, tip } = props;
   const Amount = token(details.token.coingecko_denom);
 
   return (
     <Summary
       classes="grid content-start p-4 @md/steps:p-8"
-      onBack={() => dispatch(setStep("summary"))}
+      onBack={() => setState({ ...props, step: "summary" })}
       Amount={Amount}
       amount={+details.token.amount}
       splitLiq={props.liquidSplitPct}
       tip={
         tip
           ? {
-              value: tip,
-              charityName: props.recipient.name,
+              value: tip.value,
+              charityName: props.init.recipient.name,
             }
           : undefined
       }

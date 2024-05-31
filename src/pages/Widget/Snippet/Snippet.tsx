@@ -1,10 +1,13 @@
 import Copier from "components/Copier";
 import { appRoutes } from "constants/routes";
-import { useGetter } from "store/accessors";
+import { cleanObject } from "helpers/cleanObject";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
-export default function Snippet({ classes = "" }) {
-  const config = useGetter((state) => state.widget);
+type Props = {
+  classes?: string;
+  config: WidgetConfig;
+};
+export default function Snippet({ classes = "", config }: Props) {
   const widgetURL = widgetURLfn(config);
   const iframeURL =
     config.endowment.id !== 0
@@ -32,6 +35,15 @@ const widgetURLfn = (config: WidgetConfig) => {
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
     splitDisabled: config.splitDisabled ? "true" : "false",
     liquidSplitPct: config.liquidSplitPct.toString(),
+    methods: config.methods
+      .filter((m) => !m.disabled)
+      .map((m) => m.id)
+      .join(","),
+    isTitleShown: config.isTitleShown ? "true" : "false",
+    title: config.title ?? "",
+    description: config.description ?? "",
+    accentPrimary: config.accentPrimary ?? "",
+    accentSecondary: config.accentSecondary ?? "",
   };
   return (
     window.location.origin +
@@ -39,6 +51,6 @@ const widgetURLfn = (config: WidgetConfig) => {
     "/" +
     config.endowment.id +
     "?" +
-    new URLSearchParams(params).toString()
+    new URLSearchParams(cleanObject(params)).toString()
   );
 };

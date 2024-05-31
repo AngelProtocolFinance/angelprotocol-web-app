@@ -1,48 +1,28 @@
 import ExtLink from "components/ExtLink";
 import Seo from "components/Seo";
-import { ErrorStatus } from "components/Status";
-import { Steps } from "components/donation";
+import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import { useEffect } from "react";
-import { type DonationRecipient, setRecipient } from "slices/donation";
-import { useSetter } from "store/accessors";
 import type { EndowmentProfile } from "types/aws";
-import parseConfig from "./parseConfig";
+import type { Parsed } from "./parseConfig";
 
 type Props = {
   profile: EndowmentProfile;
-  searchParams: URLSearchParams;
+  config: Parsed;
   classes?: string;
 };
 
-export default function Content({
-  profile,
-  searchParams,
-  classes = "",
-}: Props) {
-  const dispatch = useSetter();
-
-  useEffect(() => {
-    const donationRecipient: DonationRecipient = {
-      id: profile.id,
-      name: profile.name,
-      hide_bg_tip: !!profile.hide_bg_tip,
-    };
-    dispatch(setRecipient(donationRecipient));
-  }, [dispatch, profile]);
-
-  const config = parseConfig(searchParams);
-
-  //validation error
-  if ("error" in config) {
-    return <ErrorStatus classes="h-full">{config.error}</ErrorStatus>;
-  }
+export default function Content({ profile, config, classes = "" }: Props) {
+  const recipient: DonationRecipient = {
+    id: profile.id,
+    name: profile.name,
+    hide_bg_tip: !!profile.hide_bg_tip,
+  };
 
   return (
     <div
-      className={`${classes} max-w-3xl w-full h-full p-6 grid content-start justify-items-center`}
+      className={`${classes} max-w-3xl w-full h-full p-6 grid gap-5 content-start justify-items-center`}
     >
       <Seo
         title={`Donate to ${profile.name} - ${APP_NAME}`}
@@ -51,20 +31,25 @@ export default function Content({
         image={profile.logo}
         url={`${BASE_URL}/${appRoutes.donate_widget}/${profile.id}`}
       />
-      <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg sm:text-3xl">
-        Donate to {profile.name}
-      </h1>
+      {config.isTitleShown && (
+        <h1 className="flex justify-center items-center gap-10 w-full z-20 text-lg sm:text-3xl">
+          {config.title || `Donate to ${profile.name}`}
+        </h1>
+      )}
 
       {config.isDescriptionTextShown && (
         <p className="text-xs text-center sm:text-base">
-          Check out the many crypto and fiat donation options. Provide your
-          personal details to receive an immediate tax receipt.
+          {config.description ||
+            "Check out the many crypto and fiat donation options. Provide your personal details to receive an immediate tax receipt."}
         </p>
       )}
 
       <Steps
-        className="mt-5 w-full md:w-3/4 border border-gray-l4"
-        donaterConfig={config}
+        source="bg-widget"
+        mode="live"
+        className="w-full md:w-3/4 border border-gray-l4"
+        recipient={recipient}
+        config={config}
       />
       <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
         By making a donation to {APP_NAME}, you agree to our{" "}

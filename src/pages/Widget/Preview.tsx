@@ -2,17 +2,58 @@ import character from "assets/laira/laira-waiving.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import Image from "components/Image/Image";
-import { Steps } from "components/donation";
+import { type DonationState, Steps } from "components/donation";
 import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
-import { useGetter } from "store/accessors";
+import { useEndowment } from "services/aws/useEndowment";
+import type { WidgetConfig } from "types/widget";
 
-export default function Preview({ classes = "" }) {
-  const { endowment, ...config } = useGetter((state) => state.widget);
-  const endowName = endowment.name || "this nonprofit";
+type Props = {
+  classes?: string;
+  config: WidgetConfig;
+};
+export default function Preview({ classes = "", config }: Props) {
+  const { endowment, methods, ...restConfig } = config;
+  const endowName = config.endowment.name;
+
+  const { data } = useEndowment({ id: endowment.id }, ["hide_bg_tip"]);
+
+  const initState: DonationState = {
+    step: "donate-form",
+    init: {
+      source: "bg-widget",
+      mode: "preview",
+      recipient: {
+        ...endowment,
+        hide_bg_tip: data?.hide_bg_tip,
+      },
+      config: {
+        ...restConfig,
+        methodIds: methods.filter((m) => !m.disabled).map((m) => m.id),
+      },
+    },
+    details: {
+      method: "stripe",
+      amount: "100",
+      currency: { code: "usd", rate: 1, min: 1 },
+      frequency: "subscription",
+    },
+  };
+
+  const { accentPrimary, accentSecondary } = restConfig;
 
   return (
-    <section className={`${classes} @container/preview pb-4`}>
+    <section
+      style={{
+        ...(accentPrimary
+          ? ({ "--accent-primary": accentPrimary } as any)
+          : {}),
+        ...(accentPrimary
+          ? ({ "--accent-secondary": accentSecondary } as any)
+          : {}),
+      }}
+      className={`${classes} @container/preview pb-4`}
+    >
       <div>
         <p className="flex text-navy-d4 text-2xl font-gochi">
           <Image src={character} className="h-[45px] mr-2 pb-2" />
@@ -21,22 +62,21 @@ export default function Preview({ classes = "" }) {
       </div>
       <div className="grid h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-navy-d4 bg-white">
         <div className="grow flex flex-col justify-between items-center pt-6 @xl/preview:pt-10">
-          <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
-            Donate to {endowName}
-          </h1>
+          {config.isTitleShown && (
+            <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
+              {config.title || `Donate to ${endowName}`}
+            </h1>
+          )}
           {config.isDescriptionTextShown && (
             <p className="text-xs text-center @sm/preview:text-base">
-              Check out the many crypto and fiat donation options. Provide your
-              personal details to receive an immediate tax receipt.
+              {config.description ||
+                "Check out the many crypto and fiat donation options. Provide your personal details to receive an immediate tax receipt."}
             </p>
           )}
           <Steps
+            key={JSON.stringify(initState)}
+            init={initState}
             className="my-5 @md/preview:w-3/4 border border-gray-l4"
-            donaterConfig={{
-              isPreview: true,
-              splitDisabled: config.splitDisabled,
-              liquidSplitPct: config.liquidSplitPct,
-            }}
           />
           <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
             By making a donation to {APP_NAME}, you agree to our{" "}
@@ -49,7 +89,7 @@ export default function Preview({ classes = "" }) {
             unrestricted basis, regardless of any designations or restrictions
             made by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
           </p>
-          <footer className="mt-auto grid place-items-center h-20 w-full bg-blue">
+          <footer className="mt-auto grid place-items-center h-20 w-full bg-[--accent-primary]">
             <DappLogo classes="w-40" color="white" />
           </footer>
         </div>

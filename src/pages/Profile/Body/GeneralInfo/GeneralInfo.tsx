@@ -1,14 +1,19 @@
 import QueryLoader from "components/QueryLoader";
 import RichText from "components/RichText";
 import { useProgramsQuery } from "services/aws/programs";
+import { usePaginatedMedia } from "services/aws/usePaginatedMedia";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";
+import Media from "./Media";
 import Programs from "./Programs";
 
 export default function GeneralInfo({ className = "" }) {
   const profile = useProfileContext();
   const programs = useProgramsQuery(profile.id);
+  const { data: media, ...mediaState } = usePaginatedMedia(profile.id, {
+    featured: true,
+  });
 
   return (
     <div
@@ -29,6 +34,16 @@ export default function GeneralInfo({ className = "" }) {
           {(programs) => (
             <Container title="Programs">
               <Programs programs={programs} />
+            </Container>
+          )}
+        </QueryLoader>
+        <QueryLoader
+          queryState={{ data: media?.items, ...mediaState }}
+          messages={{ error: "Failed to load media", empty: <></> }}
+        >
+          {(media) => (
+            <Container title="Media">
+              <Media media={media} />
             </Container>
           )}
         </QueryLoader>

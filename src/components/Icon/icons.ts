@@ -38,6 +38,7 @@ import {
   FaInstagram,
   FaLinkedin,
   FaLinkedinIn,
+  FaStar,
   FaTelegramPlane,
   FaTiktok,
   FaUniversity,
@@ -89,10 +90,12 @@ import {
 } from "react-icons/md";
 import { PiPaypalLogo } from "react-icons/pi";
 import {
+  RiDraggable,
   RiFundsBoxLine,
   RiGasStationFill,
   RiMapPin2Line,
   RiMoneyDollarCircleFill,
+  RiPencilFill,
 } from "react-icons/ri";
 import { RxMixerHorizontal } from "react-icons/rx";
 import { SiHiveBlockchain } from "react-icons/si";
@@ -126,6 +129,7 @@ export const icons = {
   Discord: FaDiscord,
   DollarCircle: RiMoneyDollarCircleFill,
   Down: VscTriangleDown,
+  Drag: RiDraggable,
   Email: MdOutlineEmail,
   Exclamation: FaExclamation,
   ExclamationCircleFill: BsExclamationCircleFill,
@@ -165,6 +169,7 @@ export const icons = {
   Next: MdOutlineArrowForwardIos,
   Padlock: MdLockOutline,
   Paypal: PiPaypalLogo,
+  Pencil: RiPencilFill,
   Picture: ImFilePicture,
   Plus: AiOutlinePlus,
   Question: AiOutlineQuestionCircle,
@@ -173,6 +178,7 @@ export const icons = {
   Search: BiSearchAlt2,
   SecurityScan: AiFillSecurityScan,
   Shapes: FaShapes,
+  Star: FaStar,
   StickyNote: MdOutlineStickyNote2,
   Sun: BiSun,
   Sync: GoSync,

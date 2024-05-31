@@ -1,9 +1,9 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
-import type { DafCheckoutStep } from "slices/donation";
+import type { DafCheckoutStep } from "../../types";
 
 export default function ManualDonation(props: DafCheckoutStep) {
-  const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.recipient.id}`;
+  const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
 
   return (
     <>
@@ -14,7 +14,7 @@ export default function ManualDonation(props: DafCheckoutStep) {
         To complete this donation, please email your provider with the following
         information:
       </p>
-      <div className="grid rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed my-4">
+      <div className="grid rounded bg-gray-l4 dark:bg-navy-d3 p-3 text-sm leading-relaxed my-4">
         <p>
           Please make a one-time grant of $
           {props.details.amount + (props.tip ?? 0)} to:
@@ -29,14 +29,14 @@ export default function ManualDonation(props: DafCheckoutStep) {
         <p>Contact Info: Chauncey St. John, Board Member</p>
         <p>Email: hi@better.giving</p>
         <p>
-          Reference: [INTERNAL REF#, if needed] {props.recipient.name} (
+          Reference: [INTERNAL REF#, if needed] {props.init.recipient.name} (
           {profileUrl})
         </p>
       </div>
       <p className="text-sm mb-1">
         You may also need the following information:
       </p>
-      <span className="rounded bg-gray-l5 dark:bg-navy-d3 p-3 text-sm leading-relaxed">
+      <span className="rounded bg-gray-l4 dark:bg-navy-d3 p-3 text-sm leading-relaxed">
         Better Giving is a nonprofit with 501(c)(3) tax-exempt status, Federal
         ID #: 87-3758939.
       </span>
@@ -53,8 +53,12 @@ export default function ManualDonation(props: DafCheckoutStep) {
         information.
       </p>
       <a
-        href={emailLink(props.recipient.name, profileUrl, props.details.amount)}
-        className="mt-1.5 btn btn-blue rounded-full px-4 py-2 justify-self-end text-xs font-normal"
+        href={emailLink(
+          props.init.recipient.name,
+          profileUrl,
+          props.details.amount
+        )}
+        className="mt-1.5 btn btn-blue bg-[--accent-primary] enabled:hover:bg-[--accent-primary] rounded-full px-4 py-2 justify-self-end text-xs font-normal"
       >
         Generate email
       </a>

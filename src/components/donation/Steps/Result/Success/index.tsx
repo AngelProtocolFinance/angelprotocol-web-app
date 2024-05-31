@@ -2,13 +2,13 @@ import char from "assets/images/celebrating-character.png";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { Link } from "react-router-dom";
-import type { DonationRecipient } from "slices/donation";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import type { GuestDonor } from "types/aws";
 import Image from "../../../../Image";
 import Signup from "../../../../Signup";
 import Share from "../../Share";
+import type { DonationRecipient } from "../../types";
 
 type Props = {
   classes?: string;
@@ -18,6 +18,7 @@ type Props = {
 
 export default function Success({ classes, guestDonor, recipient }: Props) {
   const user = useGetter((state) => state.auth.user);
+
   return (
     <div className={`grid justify-items-center ${classes}`}>
       <div
@@ -30,7 +31,9 @@ export default function Success({ classes, guestDonor, recipient }: Props) {
         <Image src={char} />
       </div>
 
-      <p className="uppercase mb-2 text-xs text-blue-d1">Donation successful</p>
+      <p className="uppercase mb-2 text-xs text-[color:var(--accent-primary)]">
+        Donation successful
+      </p>
       <h3 className="text-xl sm:text-2xl mb-2 text-center leading-relaxed text-balance">
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>

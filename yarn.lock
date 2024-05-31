@@ -4201,9 +4201,11 @@ __metadata:
     aws-amplify: "npm:6.2.0"
     cropperjs: "npm:1.6.2"
     decimal.js: "npm:10.4.3"
+    framer-motion: "npm:11.2.5"
     gsap: "npm:3.12.5"
     is-mobile: "npm:4.0.0"
     jsdom: "npm:24.0.0"
+    lefthook: "npm:1.6.12"
     postcss-import: "npm:16.1.0"
     quill: "npm:2.0.1"
     react: "npm:18.2.0"
@@ -4214,6 +4216,7 @@ __metadata:
     react-helmet: "npm:6.1.0"
     react-hook-form: "npm:7.51.3"
     react-icons: "npm:5.2.0"
+    react-player: "npm:2.16.0"
     react-redux: "npm:9.1.2"
     react-router-dom: "npm:6.23.0"
     react-test-renderer: "npm:18.2.0"
@@ -5160,6 +5163,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"deepmerge@npm:^4.0.0":
+  version: 4.3.1
+  resolution: "deepmerge@npm:4.3.1"
+  checksum: 10/058d9e1b0ff1a154468bf3837aea436abcfea1ba1d165ddaaf48ca93765fdd01a30d33c36173da8fbbed951dd0a267602bc782fe288b0fc4b7e1e7091afc4529
+  languageName: node
+  linkType: hard
+
 "define-data-property@npm:^1.0.1, define-data-property@npm:^1.1.2":
   version: 1.1.4
   resolution: "define-data-property@npm:1.1.4"
@@ -5755,6 +5765,26 @@ __metadata:
     combined-stream: "npm:^1.0.8"
     mime-types: "npm:^2.1.12"
   checksum: 10/7264aa760a8cf09482816d8300f1b6e2423de1b02bba612a136857413fdc96d7178298ced106817655facc6b89036c6e12ae31c9eb5bdc16aabf502ae8a5d805
+  languageName: node
+  linkType: hard
+
+"framer-motion@npm:11.2.5":
+  version: 11.2.5
+  resolution: "framer-motion@npm:11.2.5"
+  dependencies:
+    tslib: "npm:^2.4.0"
+  peerDependencies:
+    "@emotion/is-prop-valid": "*"
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  peerDependenciesMeta:
+    "@emotion/is-prop-valid":
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10/d0eaaa7af919f3984e055911e891a0bf4211eb1aefdf2bc2ad8f377296014933c6886c56ff155c2e437c63c05b871689e881c3949a5e3f304c6204582fef8f96
   languageName: node
   linkType: hard
 
@@ -6541,6 +6571,97 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lefthook-darwin-arm64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-darwin-arm64@npm:1.6.12"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-darwin-x64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-darwin-x64@npm:1.6.12"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-arm64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-freebsd-arm64@npm:1.6.12"
+  conditions: os=freebsd & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-freebsd-x64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-freebsd-x64@npm:1.6.12"
+  conditions: os=freebsd & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-arm64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-linux-arm64@npm:1.6.12"
+  conditions: os=linux & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-linux-x64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-linux-x64@npm:1.6.12"
+  conditions: os=linux & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-arm64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-windows-arm64@npm:1.6.12"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"lefthook-windows-x64@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook-windows-x64@npm:1.6.12"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"lefthook@npm:1.6.12":
+  version: 1.6.12
+  resolution: "lefthook@npm:1.6.12"
+  dependencies:
+    lefthook-darwin-arm64: "npm:1.6.12"
+    lefthook-darwin-x64: "npm:1.6.12"
+    lefthook-freebsd-arm64: "npm:1.6.12"
+    lefthook-freebsd-x64: "npm:1.6.12"
+    lefthook-linux-arm64: "npm:1.6.12"
+    lefthook-linux-x64: "npm:1.6.12"
+    lefthook-windows-arm64: "npm:1.6.12"
+    lefthook-windows-x64: "npm:1.6.12"
+  dependenciesMeta:
+    lefthook-darwin-arm64:
+      optional: true
+    lefthook-darwin-x64:
+      optional: true
+    lefthook-freebsd-arm64:
+      optional: true
+    lefthook-freebsd-x64:
+      optional: true
+    lefthook-linux-arm64:
+      optional: true
+    lefthook-linux-x64:
+      optional: true
+    lefthook-windows-arm64:
+      optional: true
+    lefthook-windows-x64:
+      optional: true
+  bin:
+    lefthook: bin/index.js
+  checksum: 10/aa01a64e965a04e956a46040a91284736e82b81411025bc52a6a768029bf3a8d7ad33b6300e8de7b39c21cdfbbb58b47ff253322ad4bed8f0c2677510d025afd
+  languageName: node
+  linkType: hard
+
 "lilconfig@npm:^2.1.0":
   version: 2.1.0
   resolution: "lilconfig@npm:2.1.0"
@@ -6619,6 +6740,13 @@ __metadata:
     lit-element: "npm:^3.3.0"
     lit-html: "npm:^2.8.0"
   checksum: 10/aa64c1136b855ba328d41157dba67657d480345aeec3c1dd829abeb67719d759c9ff2ade9903f9cfb4f9d012b16087034aaa5b33f1182e70c615765562e3251b
+  languageName: node
+  linkType: hard
+
+"load-script@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "load-script@npm:1.0.0"
+  checksum: 10/8458e3f07b4a86f8d9d66e47a987811491a5d013af23ba7b371c6d3c9dc899885b072ccf65abf7874c10cb197d4975eacd8a7a125bfb38dbbcb267539f5dc1e9
   languageName: node
   linkType: hard
 
@@ -6771,6 +6899,13 @@ __metadata:
     inherits: "npm:^2.0.1"
     safe-buffer: "npm:^5.1.2"
   checksum: 10/098494d885684bcc4f92294b18ba61b7bd353c23147fbc4688c75b45cb8590f5a95fd4584d742415dcc52487f7a1ef6ea611cfa1543b0dc4492fe026357f3f0c
+  languageName: node
+  linkType: hard
+
+"memoize-one@npm:^5.1.1":
+  version: 5.2.1
+  resolution: "memoize-one@npm:5.2.1"
+  checksum: 10/b7141dc148b5c6fdd51e77ecf0421fd2581681eb8756e0b3dfbd4fe765b5e2b5a6bc90214bb6f19a96b6aed44de17eda3407142a7be9e24ccd0774bbd9874d1b
   languageName: node
   linkType: hard
 
@@ -7928,7 +8063,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-fast-compare@npm:^3.1.1":
+"react-fast-compare@npm:^3.0.1, react-fast-compare@npm:^3.1.1":
   version: 3.2.2
   resolution: "react-fast-compare@npm:3.2.2"
   checksum: 10/a6826180ba75cefba1c8d3ac539735f9b627ca05d3d307fe155487f5d0228d376dac6c9708d04a283a7b9f9aee599b637446635b79c8c8753d0b4eece56c125c
@@ -8002,6 +8137,21 @@ __metadata:
   version: 18.3.1
   resolution: "react-is@npm:18.3.1"
   checksum: 10/d5f60c87d285af24b1e1e7eaeb123ec256c3c8bdea7061ab3932e3e14685708221bf234ec50b21e10dd07f008f1b966a2730a0ce4ff67905b3872ff2042aec22
+  languageName: node
+  linkType: hard
+
+"react-player@npm:2.16.0":
+  version: 2.16.0
+  resolution: "react-player@npm:2.16.0"
+  dependencies:
+    deepmerge: "npm:^4.0.0"
+    load-script: "npm:^1.0.0"
+    memoize-one: "npm:^5.1.1"
+    prop-types: "npm:^15.7.2"
+    react-fast-compare: "npm:^3.0.1"
+  peerDependencies:
+    react: ">=16.6.0"
+  checksum: 10/d7e2824f9cb52afc71e5661e341360153087fc4fe231ee4b6c0b968fcae1efecc208416cd69bfa24a024265fdca65aee3f74a290a86ccf1e5c0452102b82cb0d
   languageName: node
   linkType: hard
 

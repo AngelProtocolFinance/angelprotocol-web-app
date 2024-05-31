@@ -16,7 +16,7 @@ export type Testimonial = {
 export const testimonials: Testimonial[] = [
   {
     content:
-      "Better Giving is an incredible idea, platform and opportunity.I have loved working with the team",
+      "Better Giving is an incredible idea, platform and opportunity. I have loved working with the team",
     reviewer: "Faith Flanigan",
     reviewer_org_role: "Buckminster Fuller Institute",
     reviewer_org_logo: buck,
@@ -24,7 +24,7 @@ export const testimonials: Testimonial[] = [
   {
     content:
       "I personally like to check our BG balance weekly. Looking at the endowment growth week by week gives me a little spark of inspiration. The network of BG’s audience seems to be incredibly responsive to crypto’s empowerment. We hope to tap into that.",
-    reviewer: "Jenna Edward",
+    reviewer: "Jenna Edwards",
     reviewer_org_role: "The For a Day Foundation",
     reviewer_org_logo: fora,
   },
@@ -51,7 +51,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     content:
-      "The last couple of years have been rough.  Better Giving helped us get back on our feet and helped remind me and the team that the work is never done, and helped aligned us back to our overall purpose.",
+      "The last couple of years have been rough. Better Giving helped us get back on our feet and helped remind me and the team that the work is never done, and helped aligned us back to our overall purpose.",
     reviewer: "Gordon Zhou",
     reviewer_org_role: "PH8 Foundation",
     reviewer_org_logo: ph,

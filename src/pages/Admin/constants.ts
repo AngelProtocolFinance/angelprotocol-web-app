@@ -50,6 +50,14 @@ const linkGroup2: LinkGroup = {
       },
     },
     {
+      title: "Media",
+      to: sidebarRoutes.media,
+      icon: {
+        type: "Picture",
+        size: 18,
+      },
+    },
+    {
       title: "Banking",
       to: sidebarRoutes.banking,
       icon: {
