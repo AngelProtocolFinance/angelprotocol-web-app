@@ -74,11 +74,13 @@ export default function Form(props: Props) {
         tooltip="The minimum donation amount will depend on your DAF provider."
       />
 
-      <ProgramSelector
-        endowId={props.init.recipient.id}
-        program={program.value}
-        onChange={program.onChange}
-      />
+      {(props.init.recipient.progDonationsAllowed ?? true) && (
+        <ProgramSelector
+          endowId={props.init.recipient.id}
+          program={program.value}
+          onChange={program.onChange}
+        />
+      )}
 
       <p className="text-sm text-navy-d4 dark:text-navy-l2 mt-4">
         Please click the button below and follow the instructions provided to

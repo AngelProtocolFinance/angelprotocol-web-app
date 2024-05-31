@@ -8,11 +8,12 @@ import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import { ProgramSelector } from "../../common/ProgramSelector";
+import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
 import { initToken } from "./constants";
 import type { DonateValues } from "./types";
 
-export default function Form({ endowId }: { endowId: number }) {
+export default function Form(props: CryptoFormStep) {
   const { setState } = useDonationState();
 
   const { watch, reset, setValue, handleSubmit, control } =
@@ -73,12 +74,14 @@ export default function Form({ endowId }: { endowId: number }) {
         withMininum
       />
 
-      <ProgramSelector
-        classes="my-2"
-        endowId={endowId}
-        program={program.value}
-        onChange={program.onChange}
-      />
+      {(props.init.recipient.progDonationsAllowed ?? true) && (
+        <ProgramSelector
+          classes="my-2"
+          endowId={props.init.recipient.id}
+          program={program.value}
+          onChange={program.onChange}
+        />
+      )}
 
       <ContinueBtn className="mt-auto" type="submit" />
     </form>

@@ -124,12 +124,14 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         <Incrementers code={currency.value.code} rate={currency.value.rate} />
       )}
 
-      <ProgramSelector
-        classes="mt-4"
-        endowId={props.init.recipient.id}
-        program={program.value}
-        onChange={program.onChange}
-      />
+      {(props.init.recipient.progDonationsAllowed ?? true) && (
+        <ProgramSelector
+          classes="mt-4"
+          endowId={props.init.recipient.id}
+          program={program.value}
+          onChange={program.onChange}
+        />
+      )}
 
       <p className="text-sm dark:text-navy-l2 mt-4">
         Please click the button below and follow the instructions provided to
