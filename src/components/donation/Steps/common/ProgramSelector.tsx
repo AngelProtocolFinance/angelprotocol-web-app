@@ -26,7 +26,7 @@ export function ProgramSelector({
       as="div"
       className={`grid ${classes} group has-[[data-error]]:hidden has-[[data-empty]]:hidden has-[[data-loading]]:hidden`}
     >
-      <Listbox.Label className="block font-medium mb-2 text-navy-d4">
+      <Listbox.Label className="block font-semibold font-heading mb-2 text-navy-d4">
         Select program
       </Listbox.Label>
 

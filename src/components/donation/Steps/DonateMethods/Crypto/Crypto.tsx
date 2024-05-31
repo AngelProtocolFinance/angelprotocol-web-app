@@ -31,7 +31,7 @@ export default function Crypto(props: Props) {
   });
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form endowId={props.init.recipient.id} />
     </FormProvider>
   );
 }
