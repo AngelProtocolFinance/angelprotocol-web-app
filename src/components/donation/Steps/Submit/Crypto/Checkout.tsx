@@ -49,7 +49,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
         continueBtn={
           <ContinueBtn
             onClick={() => setMethod("direct")}
-            className="bg-blue-l4 text-blue enabled:hover:bg-blue-l3 justify-self-stretch"
+            className="justify-self-stretch"
             text="Donate directly to wallet address"
           />
         }
