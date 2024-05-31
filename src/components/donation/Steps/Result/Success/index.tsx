@@ -31,7 +31,9 @@ export default function Success({ classes, guestDonor, recipient }: Props) {
         <Image src={char} />
       </div>
 
-      <p className="uppercase mb-2 text-xs text-blue-d1">Donation successful</p>
+      <p className="uppercase mb-2 text-xs text-[color:var(--accent-primary)]">
+        Donation successful
+      </p>
       <h3 className="text-xl sm:text-2xl mb-2 text-center leading-relaxed text-balance">
         Your generosity knows no bounds! Thank you for making a difference!
       </h3>

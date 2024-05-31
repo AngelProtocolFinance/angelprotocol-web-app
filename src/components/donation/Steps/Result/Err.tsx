@@ -31,7 +31,7 @@ export default function Err({ classes = "", ...props }: Props) {
         <button
           type="button"
           onClick={() => setState({ ...props, step: "donate-form" })}
-          className="w-full btn-blue btn-donate px-5"
+          className="w-full btn-blue btn-donate bg-[--accent-primary] hover:enabled:bg-[--accent-primary] px-5"
         >
           Change payment details
         </button>

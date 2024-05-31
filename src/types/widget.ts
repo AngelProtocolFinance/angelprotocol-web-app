@@ -10,6 +10,10 @@ export type WidgetConfig = {
   splitDisabled: boolean;
   liquidSplitPct: number;
   methods: TDonateMethod[];
+  /** hex color without alpha */
+  accentPrimary?: string;
+  /** hex color without alpha */
+  accentSecondary?: string;
 };
 
 export type WidgetURLSearchParams = {
@@ -25,4 +29,7 @@ export type WidgetURLSearchParams = {
   /** set to "true" if not defined */
   isTitleShown?: "true" | "false";
   description?: string;
+  /** csv of colors arranged as primary,secondary */
+  accentPrimary?: string;
+  accentSecondary?: string;
 };

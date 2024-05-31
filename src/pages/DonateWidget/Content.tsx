@@ -1,36 +1,24 @@
 import ExtLink from "components/ExtLink";
 import Seo from "components/Seo";
-import { ErrorStatus } from "components/Status";
 import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import type { EndowmentProfile } from "types/aws";
-import parseConfig from "./parseConfig";
+import type { Parsed } from "./parseConfig";
 
 type Props = {
   profile: EndowmentProfile;
-  searchParams: URLSearchParams;
+  config: Parsed;
   classes?: string;
 };
 
-export default function Content({
-  profile,
-  searchParams,
-  classes = "",
-}: Props) {
+export default function Content({ profile, config, classes = "" }: Props) {
   const recipient: DonationRecipient = {
     id: profile.id,
     name: profile.name,
     hide_bg_tip: !!profile.hide_bg_tip,
   };
-
-  const config = parseConfig(searchParams);
-
-  //validation error
-  if ("error" in config) {
-    return <ErrorStatus classes="h-full">{config.error}</ErrorStatus>;
-  }
 
   return (
     <div
