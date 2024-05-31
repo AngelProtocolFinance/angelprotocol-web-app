@@ -6,6 +6,7 @@ import { schema, stringNumber } from "schemas/shape";
 import type { DetailedCurrency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import { EMPTY_PROGRAM } from "../../common/constants";
 import { nextFormState } from "../helpers";
 import type { FormValues as FV, Props } from "./types";
 
@@ -21,6 +22,7 @@ export default function Form(props: Props) {
   const initial: FV = {
     amount: "",
     currency: USD_CURRENCY,
+    program: EMPTY_PROGRAM,
   };
 
   const methods = useForm<FV>({

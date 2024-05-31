@@ -37,6 +37,7 @@ export default function Preview({ classes = "", config }: Props) {
       amount: "100",
       currency: { code: "usd", rate: 1, min: 1 },
       frequency: "subscription",
+      program: { label: "General donation", value: "" },
     },
   };
 

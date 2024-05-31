@@ -1,12 +1,17 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form as FormContainer } from "components/form";
-import { type UseFormReturn, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { optionType, schema } from "schemas/shape";
 import { requiredString } from "schemas/string";
-import { object } from "yup";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
-import type { StockFormStep } from "../../types";
+import { EMPTY_PROGRAM } from "../../common/constants";
+import type { StockFormStep, StocksDonationDetails } from "../../types";
 import { nextFormState } from "../helpers";
+
+type FV = Omit<StocksDonationDetails, "method" | "numShares"> & {
+  numShares: string;
+};
 
 export default function Form(props: StockFormStep) {
   const { setState } = useDonationState();
@@ -15,20 +20,21 @@ export default function Form(props: StockFormStep) {
       ? {
           symbol: props.details.symbol,
           numShares: props.details.numShares.toString(),
+          program: props.details.program,
         }
       : {
           symbol: "",
           numShares: "",
+          program: EMPTY_PROGRAM,
         },
     resolver: yupResolver(
-      object({
+      schema<FV>({
         symbol: requiredString.trim(),
         numShares: requiredString.trim().matches(/^[1-9]\d*$/, "invalid"),
+        program: optionType(),
       })
     ),
   });
-
-  type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
 
   return (
     <FormContainer
