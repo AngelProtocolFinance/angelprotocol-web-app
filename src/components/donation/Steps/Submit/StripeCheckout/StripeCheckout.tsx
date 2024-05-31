@@ -34,6 +34,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     splitLiq: liquidSplitPct,
     donor: props.donor,
     source: init.source,
+    ...(details.program.value && { programId: details.program.value }),
   });
 
   return (
