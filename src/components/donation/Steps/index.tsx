@@ -3,7 +3,6 @@ import type { ChainID } from "types/chain";
 import type { DonationSource } from "types/lists";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
-import { EMPTY_PROGRAM } from "./common/constants";
 import type {
   Config,
   DonationRecipient,
@@ -70,8 +69,8 @@ function initialState({
           amount: `${intent.amount}`,
           ...intent.token,
         },
-        //TODO: donation intent gets program name
-        program: EMPTY_PROGRAM,
+        //label will be overriden in selector as options are by="value"
+        program: { label: "General donation", value: intent.programId ?? "" },
       },
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
@@ -90,8 +89,8 @@ function initialState({
         rate: intent.currency.rate,
       },
       frequency: intent.frequency,
-      //TODO: donation intent gets program name
-      program: EMPTY_PROGRAM,
+      //label will be overriden in selector as options are by="value"
+      program: { label: "General donation", value: intent.programId ?? "" },
     },
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },

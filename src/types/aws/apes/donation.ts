@@ -26,6 +26,7 @@ export type ReceiptPayload = {
 
 export type CryptoDonation = {
   transactionId?: string;
+  programId?: string;
   amount: number;
   tipAmount: number;
   denomination: string;
@@ -41,6 +42,7 @@ export type CryptoDonation = {
 
 export type FiatDonation = {
   transactionId?: string;
+  programId?: string;
   /** Denominated in USD. */
   amount: number;
   tipAmount: number;
