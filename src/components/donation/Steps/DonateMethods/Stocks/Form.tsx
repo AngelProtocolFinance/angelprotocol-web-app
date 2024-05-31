@@ -1,10 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form as FormContainer } from "components/form";
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 import { optionType, schema } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import { ProgramSelector } from "../../common/ProgramSelector";
 import { EMPTY_PROGRAM } from "../../common/constants";
 import type { StockFormStep, StocksDonationDetails } from "../../types";
 import { nextFormState } from "../helpers";
@@ -34,6 +35,12 @@ export default function Form(props: StockFormStep) {
         program: optionType(),
       })
     ),
+  });
+
+  const { control } = methods;
+  const { field: program } = useController<FV, "program">({
+    control: control,
+    name: "program",
   });
 
   return (
@@ -68,6 +75,13 @@ export default function Form(props: StockFormStep) {
           container: "mt-6 field-donate",
           error: "left-0",
         }}
+      />
+
+      <ProgramSelector
+        classes="mt-6 mb-4"
+        endowId={props.init.recipient.id}
+        program={program.value}
+        onChange={program.onChange}
       />
 
       <h4 className="mt-6 mb-2">Benefits of donating appreciated stock</h4>
