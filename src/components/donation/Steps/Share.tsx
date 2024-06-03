@@ -96,9 +96,7 @@ function Prompt({ type, iconSize, recipientName }: ShareBtnProps) {
       >
         I just donated to <span className="font-bold">{recipientName}</span> on{" "}
         <span className="font-bold">@BetterDotGiving</span>!{" "}
-        {`Every gift is
-        invested to provide sustainable funding for nonprofits: Give once, give
-        forever. Help join the cause: ${BASE_URL}`}
+        {`Every gift is invested to provide sustainable funding for nonprofits: Give once, give forever. Help join the cause: ${BASE_URL}.`}
       </p>
       <ExtLink
         href={generateShareLink(shareText, type)}
