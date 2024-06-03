@@ -1,8 +1,16 @@
-import type { Chain, Chains, CosmosChainID, EVMChainID } from "types/chain";
+import type {
+  Chains,
+  CosmosChainID,
+  EVMChainID,
+  SupportedChain,
+  UnsupportedChain,
+  UnsupportedChains,
+} from "types/chain";
+import { IS_TEST } from "./env";
 
 const baseProxyURL = "https://59vigz9r91.execute-api.us-east-1.amazonaws.com";
 //mainnets
-export const polygon: Chain = {
+export const polygon: SupportedChain = {
   isTest: false,
   id: "137",
   brand: "polygon",
@@ -18,7 +26,7 @@ export const polygon: Chain = {
   },
 };
 
-export const ethereum: Chain = {
+export const ethereum: SupportedChain = {
   isTest: false,
   id: "1",
   brand: "ethereum",
@@ -34,7 +42,7 @@ export const ethereum: Chain = {
   },
 };
 
-export const arbitrum: Chain = {
+export const arbitrum: SupportedChain = {
   isTest: false,
   id: "42161",
   brand: "arbitrum",
@@ -50,7 +58,7 @@ export const arbitrum: Chain = {
   },
 };
 
-export const binance: Chain = {
+export const binance: SupportedChain = {
   isTest: false,
   id: "56",
   brand: "binance",
@@ -66,7 +74,7 @@ export const binance: Chain = {
   },
 };
 
-export const juno: Chain = {
+export const juno: SupportedChain = {
   isTest: false,
   id: "juno-1",
   brand: "juno",
@@ -82,7 +90,7 @@ export const juno: Chain = {
   },
 };
 
-export const terraMainnet: Chain = {
+export const terraMainnet: SupportedChain = {
   isTest: false,
   id: "phoenix-1",
   brand: "terra",
@@ -99,7 +107,7 @@ export const terraMainnet: Chain = {
 };
 
 //testnets
-export const polygonAmoy: Chain = {
+export const polygonAmoy: SupportedChain = {
   isTest: true,
   id: "80002",
   brand: "polygonAmoy",
@@ -115,7 +123,7 @@ export const polygonAmoy: Chain = {
   },
 };
 
-export const sepolia: Chain = {
+export const sepolia: SupportedChain = {
   isTest: true,
   id: "11155111",
   brand: "sepolia",
@@ -131,7 +139,7 @@ export const sepolia: Chain = {
   },
 };
 
-export const arbitrumSepolia: Chain = {
+export const arbitrumSepolia: SupportedChain = {
   isTest: true,
   id: "421614",
   brand: "arbitrum",
@@ -147,7 +155,7 @@ export const arbitrumSepolia: Chain = {
   },
 };
 
-export const binanceTestnet: Chain = {
+export const binanceTestnet: SupportedChain = {
   isTest: true,
   id: "97",
   brand: "binance",
@@ -163,7 +171,7 @@ export const binanceTestnet: Chain = {
   },
 };
 
-export const terraTestnet: Chain = {
+export const terraTestnet: SupportedChain = {
   isTest: true,
   id: "pisco-1",
   brand: "terra",
@@ -179,7 +187,35 @@ export const terraTestnet: Chain = {
   },
 };
 
-export const chainList: Chain[] = [
+export const bitcoin: UnsupportedChain = {
+  isTest: IS_TEST,
+  id: `btc-${IS_TEST ? "testnet" : "mainnet"}`,
+  name: "Bitcoin",
+  blockExplorer: "https://btcscan.org",
+};
+
+export const solana: UnsupportedChain = {
+  isTest: IS_TEST,
+  id: `sol-${IS_TEST ? "testnet" : "mainnet"}`,
+  name: "Solana",
+  blockExplorer: "https://solscan.io",
+};
+
+export const ripple: UnsupportedChain = {
+  isTest: IS_TEST,
+  id: `xrp-${IS_TEST ? "testnet" : "mainnet"}`,
+  name: "Ripple",
+  blockExplorer: "https://xrpscan.com",
+};
+
+export const doge: UnsupportedChain = {
+  isTest: IS_TEST,
+  id: `doge-${IS_TEST ? "testnet" : "mainnet"}`,
+  name: "Doge",
+  blockExplorer: "https://dogechain.info",
+};
+
+const supportedChainList: SupportedChain[] = [
   polygon,
   ethereum,
   arbitrum,
@@ -193,7 +229,20 @@ export const chainList: Chain[] = [
   terraTestnet,
 ];
 
-export const chains: Chains = chainList.reduce(
+const unsupportedChainList: UnsupportedChain[] = [
+  bitcoin,
+  doge,
+  solana,
+  ripple,
+];
+
+export const chainList = [...supportedChainList, ...unsupportedChainList];
+
+export const unsupportedChains = unsupportedChainList.reduce(
+  (prev, curr) => ({ ...prev, [curr.id]: curr }),
+  {} as UnsupportedChains
+);
+export const chains = chainList.reduce(
   (prev, curr) => ({ ...prev, [curr.id]: curr }),
   {} as Chains
 );

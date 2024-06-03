@@ -32,7 +32,9 @@ export type CryptoDonation = {
   denomination: string;
   endowmentId: number;
   chainId: string;
-  walletAddress: string;
+  /** may be empty */
+  walletAddress?: string;
+  /**  */
   /** 1 - 100 */
   splitLiq: number;
   chainName: string;

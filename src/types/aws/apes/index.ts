@@ -2,13 +2,20 @@
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
 
-type TokenType =
+export type QrTokenType =
+  | "btc-native"
+  | "doge-native"
+  | "sol-native"
+  | "xrp-native";
+
+export type TokenType =
   | "juno-native"
   | "terra-native"
   | "evm-native"
   | "erc20"
   | "cw20"
-  | "ibc";
+  | "ibc"
+  | QrTokenType;
 
 export type Token = {
   approved: boolean; // true

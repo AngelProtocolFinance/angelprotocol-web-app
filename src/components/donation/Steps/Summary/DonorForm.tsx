@@ -67,6 +67,7 @@ export default function DonorForm({
         required
       />
       <ContinueBtn
+        type="submit"
         disabled={mode === "preview"}
         className="px-4 col-span-full mt-6"
         text="Checkout"

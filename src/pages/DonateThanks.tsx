@@ -11,15 +11,15 @@ import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import type { GuestDonor } from "types/aws";
 
-export type DonateFiatThanksState = {
+export type DonateThanksState = {
   guestDonor?: GuestDonor;
   recipientName?: string;
   recipientId?: number;
 };
 
-export default function DonateFiatThanks({ widgetVersion = false }) {
+export default function DonateThanks({ widgetVersion = false }) {
   const location = useLocation();
-  const state: DonateFiatThanksState | undefined = location.state;
+  const state: DonateThanksState | undefined = location.state;
   const user = useGetter((state) => state.auth.user);
 
   return (

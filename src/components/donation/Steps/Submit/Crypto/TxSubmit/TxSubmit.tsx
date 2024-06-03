@@ -4,6 +4,7 @@ import { chains } from "constants/chains";
 import { humanize } from "helpers";
 import { useEffect, useState } from "react";
 import { useCreateCryptoIntentQuery } from "services/apes";
+import { chainIdIsNotSupported } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
 import { useDonationState } from "../../../Context";
 import ContinueBtn from "../../../common/ContinueBtn";
@@ -25,13 +26,18 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   const sender = wallet?.address;
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
+
+    const chainId = details.chainId.value;
+
+    if (chainIdIsNotSupported(chainId)) {
+      return setEstimate(undefined);
+    }
+
     setEstimate("loading");
-    estimateDonation(
-      details.token,
-      details.chainId.value,
-      sender,
-      tip?.value ?? 0
-    ).then((estimate) => setEstimate(estimate));
+
+    estimateDonation(details.token, chainId, sender, tip?.value ?? 0).then(
+      (estimate) => setEstimate(estimate)
+    );
   }, [sender, details, tip]);
 
   const {
@@ -82,7 +88,6 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
         ))}
 
       <ContinueBtn
-        type="button"
         onClick={
           intentId && wallet && estimate && isSuccess(estimate)
             ? () =>

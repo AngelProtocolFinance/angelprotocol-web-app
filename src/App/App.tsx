@@ -12,7 +12,7 @@ const Profile = lazy(() => import("pages/Profile"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));
-const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
+const DonateThanks = lazy(() => import("pages/DonateThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
@@ -46,8 +46,8 @@ export default function App() {
         <Route path={appRoutes.donate_widget}>
           <Route path=":id" element={<DonateWidget />} />
           <Route
-            path={donateWidgetRoutes.donate_fiat_thanks}
-            element={<DonateFiatThanks widgetVersion />}
+            path={donateWidgetRoutes.donate_thanks}
+            element={<DonateThanks widgetVersion />}
           />
           <Route
             path={donateWidgetRoutes.stripe_payment_status}
@@ -82,10 +82,7 @@ export default function App() {
             element={<Application />}
           />
           <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
-          <Route
-            path={appRoutes.donate_fiat_thanks}
-            element={<DonateFiatThanks />}
-          />
+          <Route path={appRoutes.donate_thanks} element={<DonateThanks />} />
           <Route
             path={appRoutes.stripe_payment_status}
             element={<StripePaymentStatus />}

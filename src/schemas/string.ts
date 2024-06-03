@@ -1,4 +1,4 @@
-import type { ChainID } from "types/chain";
+import type { SupportedChainId } from "types/chain";
 import * as Yup from "yup";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
@@ -8,7 +8,7 @@ const evmAddrPattern = /^0x[a-fA-F0-9]{40}$/;
 
 export const requiredString = Yup.string().required("required");
 
-export const walletAddr = (chainId: ChainID) =>
+export const walletAddr = (chainId: SupportedChainId) =>
   Yup.lazy((val) =>
     val === ""
       ? Yup.string()
@@ -33,7 +33,7 @@ export const url = Yup.string()
     return "invalid url";
   });
 
-export function walletAddrPatten(chainId: ChainID) {
+export function walletAddrPatten(chainId: SupportedChainId) {
   switch (chainId) {
     case "1":
     case "11155111":
@@ -50,6 +50,7 @@ export function walletAddrPatten(chainId: ChainID) {
     case "juno-1":
     case "uni-6":
       return junoAddrPattern;
+
     default:
       const x: never = chainId;
       throw new Error(`unhandled ${x}`);

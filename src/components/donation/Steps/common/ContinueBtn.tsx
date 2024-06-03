@@ -3,6 +3,7 @@ import Icon from "../../../Icon";
 
 export default function ContinueBtn({
   className,
+  type = "button",
   text = "Continue",
   ...props
 }: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> & {
@@ -11,10 +12,11 @@ export default function ContinueBtn({
   return (
     <button
       {...props}
+      type={type}
       className={`btn-blue bg-[--accent-primary] hover:enabled:bg-[--accent-primary] btn-donate ${className}`}
     >
       <span className="mr-4">{text}</span>
-      <Icon type="ArrowRight" className="text-white text-lg" />
+      <Icon type="ArrowRight" className="text-lg" />
     </button>
   );
 }

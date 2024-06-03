@@ -16,13 +16,37 @@ export type CosmosChainID = "juno-1" | "uni-6";
 //would remove this type once terra tooling is unified to that of cosmos (keplr)
 export type TerraChainID = "phoenix-1" | "pisco-1";
 
-export type ChainID = EVMChainID | CosmosChainID | TerraChainID;
+export type SupportedChainId = EVMChainID | CosmosChainID | TerraChainID;
+
+const unsupportedChainIds = [
+  "doge-mainnet",
+  "doge-testnet",
+  "sol-mainnet",
+  "sol-testnet",
+  "xrp-mainnet",
+  "xrp-testnet",
+  "btc-mainnet",
+  "btc-testnet",
+] as const;
+export type UnsupportedChainId = (typeof unsupportedChainIds)[number];
+
+export type ChainID =
+  | EVMChainID
+  | CosmosChainID
+  | TerraChainID
+  | UnsupportedChainId;
+
+export const chainIdIsNotSupported = (
+  chainId: ChainID
+): chainId is UnsupportedChainId =>
+  unsupportedChainIds.includes(chainId as any);
+
 type NativeAtomicUnit = string; //ujunox uluna
 type IBCDenom = string;
 
-export type Chain = {
+export type SupportedChain = {
   isTest: boolean;
-  id: ChainID;
+  id: SupportedChainId;
   brand: string; //
   name: string;
   rpc: string;
@@ -33,7 +57,19 @@ export type Chain = {
     symbol: string;
     decimals: number;
     coinGeckoId: string;
+    logo?: string;
   };
 };
 
-export type Chains = Record<ChainID, Chain>;
+export type UnsupportedChain = Pick<
+  SupportedChain,
+  "isTest" | "name" | "blockExplorer"
+> & {
+  id: UnsupportedChainId;
+};
+export type SupportedChains = { [K in SupportedChainId]: SupportedChain };
+export type UnsupportedChains = {
+  [K in UnsupportedChainId]: UnsupportedChain;
+};
+
+export type Chains = SupportedChains & UnsupportedChains;

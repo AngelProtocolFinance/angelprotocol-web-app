@@ -16,6 +16,7 @@ const container =
   "border border-gray-l4 p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
 export default function TokenOptions({ classes = "", selectedChainId }: Props) {
   const [searchText, setSearchText] = useState("");
+
   const {
     data: tokens = [],
     isLoading,
@@ -54,7 +55,7 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
         <Icon type="Search" size={20} />
         <Combobox.Input
           placeholder="Search..."
-          aria-disabled={tokens.length <= 1}
+          aria-disabled={tokens.length < 1}
           className="text-left text-sm focus:outline-none bg-transparent w-20"
           onChange={(event) => setSearchText(event.target.value)}
         />

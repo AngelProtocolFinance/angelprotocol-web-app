@@ -1,6 +1,6 @@
 import type { Keplr } from "@keplr-wallet/types";
 import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
-import type { ChainID } from "./chain";
+import type { SupportedChainId } from "./chain";
 import type { RequestArguments } from "./evm";
 
 export type InjectedProviderID = "binance-wallet" | "metamask" | "xdefi-evm";
@@ -44,7 +44,7 @@ type Loading = { status: "loading" };
 export type Connector = { connect(...args: any[]): void };
 type Disconnector = { disconnect(): void };
 type ChainSwitcher = {
-  switchChain: ((chainId: ChainID) => void) | null;
+  switchChain: ((chainId: SupportedChainId) => void) | null;
 };
 
 export type EVMProviderState = EVMConnected | Disconnected | Loading;
@@ -60,7 +60,7 @@ export type WalletState =
 export type WalletMeta = {
   logo: string;
   name: string;
-  supportedChains: ChainID[];
+  supportedChains: SupportedChainId[];
 };
 
 export type Wallet = WalletMeta & WalletState;

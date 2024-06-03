@@ -12,7 +12,7 @@ export enum appRoutes {
   profile = "/profile",
   donations = "/donations",
   donate = "/donate",
-  donate_fiat_thanks = "/donate-fiat-thanks",
+  donate_thanks = "/donate-thanks",
   stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",
   gift = "/gift",
@@ -42,7 +42,7 @@ export const adminRoutes = {
 } as const;
 
 export enum donateWidgetRoutes {
-  donate_fiat_thanks = "donate-fiat-thanks",
+  donate_thanks = "donate-thanks",
   stripe_payment_status = "stripe-payment-status",
 }
 
