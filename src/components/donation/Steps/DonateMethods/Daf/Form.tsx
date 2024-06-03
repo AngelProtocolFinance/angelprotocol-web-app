@@ -1,11 +1,13 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import { Field, Form as FormContainer } from "components/form";
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import type { DetailedCurrency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import { ProgramSelector } from "../../common/ProgramSelector";
+import { DEFAULT_PROGRAM } from "../../common/constants";
 import { nextFormState } from "../helpers";
 import type { FormValues as FV, Props } from "./types";
 
@@ -21,6 +23,7 @@ export default function Form(props: Props) {
   const initial: FV = {
     amount: "",
     currency: USD_CURRENCY,
+    program: DEFAULT_PROGRAM,
   };
 
   const methods = useForm<FV>({
@@ -34,7 +37,12 @@ export default function Form(props: Props) {
       })
     ),
   });
-  const { handleSubmit } = methods;
+  const { handleSubmit, control } = methods;
+
+  const { field: program } = useController<FV, "program">({
+    control: control,
+    name: "program",
+  });
 
   return (
     <FormContainer
@@ -65,6 +73,14 @@ export default function Form(props: Props) {
         required
         tooltip="The minimum donation amount will depend on your DAF provider."
       />
+
+      {(props.init.recipient.progDonationsAllowed ?? true) && (
+        <ProgramSelector
+          endowId={props.init.recipient.id}
+          program={program.value}
+          onChange={program.onChange}
+        />
+      )}
 
       <p className="text-sm text-navy-d4 dark:text-navy-l2 mt-4">
         Please click the button below and follow the instructions provided to

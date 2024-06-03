@@ -51,6 +51,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       endowmentId: init.recipient.id,
       source: init.config ? "bg-widget" : "bg-marketplace",
       donor,
+      ...(details.program.value && { programId: details.program.value }),
     },
     { skip: !wallet?.address }
   );

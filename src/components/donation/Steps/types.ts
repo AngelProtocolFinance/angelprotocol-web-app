@@ -14,15 +14,23 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
   "step" | U
 > & { [key in U]?: T[key] };
 
-export type DonationRecipient = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
+export type DonationRecipient = Pick<
+  Endowment,
+  "id" | "name" | "hide_bg_tip" | "progDonationsAllowed"
+>;
 
-export type CryptoDonationDetails = {
+type BaseDonationDetails = {
+  /** value is "" if no program is selected   */
+  program: OptionType<string>;
+};
+
+export type CryptoDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
   token: TokenWithAmount;
   chainId: OptionType<ChainID>;
 };
 
-type FiatDonationDetails = {
+type FiatDonationDetails = BaseDonationDetails & {
   amount: string;
   currency: DetailedCurrency;
 };
@@ -32,7 +40,7 @@ export type StripeDonationDetails = {
   frequency: FiatPaymentFrequency;
 } & FiatDonationDetails;
 
-export type StocksDonationDetails = {
+export type StocksDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "stocks">;
   symbol: string;
   numShares: number;

@@ -1,26 +1,33 @@
 import { Label } from "components/form";
 import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
-import { useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import type { ChainID } from "types/chain";
 import { Selector } from "../../../../Selector";
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import { ProgramSelector } from "../../common/ProgramSelector";
+import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
 import { initToken } from "./constants";
 import type { DonateValues } from "./types";
 
-export default function Form() {
+export default function Form(props: CryptoFormStep) {
   const { setState } = useDonationState();
 
-  const { watch, reset, setValue, handleSubmit } =
+  const { watch, reset, setValue, handleSubmit, control } =
     useFormContext<DonateValues>();
 
   function submit(data: DonateValues) {
     setState((prev) => nextFormState(prev, { ...data, method: "crypto" }));
     reset();
   }
+
+  const { field: program } = useController<DonateValues, "program">({
+    control: control,
+    name: "program",
+  });
 
   const chainId = watch("chainId");
 
@@ -66,6 +73,15 @@ export default function Form() {
         }}
         withMininum
       />
+
+      {(props.init.recipient.progDonationsAllowed ?? true) && (
+        <ProgramSelector
+          classes="my-2"
+          endowId={props.init.recipient.id}
+          program={program.value}
+          onChange={program.onChange}
+        />
+      )}
 
       <ContinueBtn className="mt-auto" type="submit" />
     </form>

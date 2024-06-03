@@ -12,6 +12,8 @@ import { userIsSignedIn } from "types/auth";
 import type { Currency, DetailedCurrency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import { ProgramSelector } from "../../common/ProgramSelector";
+import { DEFAULT_PROGRAM } from "../../common/constants";
 import { nextFormState } from "../helpers";
 import Frequency from "./Frequency";
 import Incrementers from "./Incrementers";
@@ -49,6 +51,7 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
     amount: "",
     currency: defaultCurr || { code: USD_CODE, min: 1, rate: 1 },
     frequency: "subscription",
+    program: DEFAULT_PROGRAM,
   };
 
   const currencyKey: keyof FV = "currency";
@@ -74,11 +77,14 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
   });
   const { control, handleSubmit } = methods;
 
-  const {
-    field: { value: currency, onChange: onCurrencyChange },
-  } = useController<FV, "currency">({
+  const { field: currency } = useController<FV, "currency">({
     control: control,
     name: "currency",
+  });
+
+  const { field: program } = useController<FV, "program">({
+    control: control,
+    name: "program",
   });
 
   return (
@@ -95,9 +101,9 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         label="Currency"
         onChange={(c) => {
           setCookie(bgCookies.prefCode, c.code.toUpperCase());
-          onCurrencyChange(c);
+          currency.onChange(c);
         }}
-        value={currency}
+        value={currency.value}
         classes={{
           label: "font-semibold",
           combobox: "field-container-donate rounded-lg",
@@ -112,10 +118,19 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         classes={{ label: "font-semibold", container: "field-donate" }}
         required
         // validation must be dynamicly set depending on which exact currency is selected
-        tooltip={createTooltip(currency)}
+        tooltip={createTooltip(currency.value)}
       />
-      {currency.rate && (
-        <Incrementers code={currency.code} rate={currency.rate} />
+      {currency.value.rate && (
+        <Incrementers code={currency.value.code} rate={currency.value.rate} />
+      )}
+
+      {(props.init.recipient.progDonationsAllowed ?? true) && (
+        <ProgramSelector
+          classes="mt-4"
+          endowId={props.init.recipient.id}
+          program={program.value}
+          onChange={program.onChange}
+        />
       )}
 
       <p className="text-sm dark:text-navy-l2 mt-4">
