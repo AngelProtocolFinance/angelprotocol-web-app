@@ -32,10 +32,13 @@ export default function useSubmit(initProgram: Program) {
         banner: imageURL,
         description: fv.description.value,
         title: fv.title,
-        targetRaise: +fv.targetRaise || null,
       };
 
-      await updateProgram({ endowId: id, ...cleanObject(update) }).unwrap();
+      await updateProgram({
+        endowId: id,
+        ...cleanObject(update),
+        targetRaise: +fv.targetRaise || null,
+      }).unwrap();
       showModal(Prompt, {
         type: "success",
         children: "Program information updated",
