@@ -2,7 +2,9 @@ import { Listbox } from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { useProgramsQuery } from "services/aws/programs";
+import type { Program } from "types/aws";
 import type { OptionType } from "types/components";
+import { EMPTY_PROGRAM } from "./constants";
 
 type Props = {
   endowId: number;
@@ -71,20 +73,31 @@ function Options({ endowId, classes = "" }: OptionsProps) {
         <Listbox.Options
           className={`${classes} bg-white w-full border border-gray-l4 px-5 py-3.5 rounded-lg mt-2 grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1`}
         >
-          {options.map((o) => (
-            <Listbox.Option
-              key={o.id}
-              value={
-                {
-                  label: o.title,
-                  value: o.id,
-                } satisfies OptionType<string>
-              }
-              className="select-none hover:text-[color:var(--accent-primary)] aria-selected:text-[color:var(--accent-primary)]"
-            >
-              <span>{o.title}</span>
-            </Listbox.Option>
-          ))}
+          {(
+            [
+              {
+                id: "", //prepend list with general option
+                title: EMPTY_PROGRAM.label,
+                description: "",
+                milestones: [] as Program["milestones"],
+              },
+            ] satisfies Program[]
+          )
+            .concat(options)
+            .map((o) => (
+              <Listbox.Option
+                key={o.id}
+                value={
+                  {
+                    label: o.title,
+                    value: o.id,
+                  } satisfies OptionType<string>
+                }
+                className="select-none hover:text-[color:var(--accent-primary)] aria-selected:text-[color:var(--accent-primary)]"
+              >
+                <span>{o.title}</span>
+              </Listbox.Option>
+            ))}
         </Listbox.Options>
       )}
     </QueryLoader>
