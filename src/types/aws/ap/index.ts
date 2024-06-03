@@ -19,6 +19,8 @@ export type Program = {
   id: string;
   title: string;
   milestones: Milestone[];
+  targetRaise?: number;
+  totalDonations?: number;
 };
 
 export type Media = {
