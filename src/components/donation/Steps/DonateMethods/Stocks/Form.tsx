@@ -1,12 +1,18 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form as FormContainer } from "components/form";
-import { type UseFormReturn, useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
+import { optionType, schema } from "schemas/shape";
 import { requiredString } from "schemas/string";
-import { object } from "yup";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
-import type { StockFormStep } from "../../types";
+import { ProgramSelector } from "../../common/ProgramSelector";
+import { DEFAULT_PROGRAM } from "../../common/constants";
+import type { StockFormStep, StocksDonationDetails } from "../../types";
 import { nextFormState } from "../helpers";
+
+type FV = Omit<StocksDonationDetails, "method" | "numShares"> & {
+  numShares: string;
+};
 
 export default function Form(props: StockFormStep) {
   const { setState } = useDonationState();
@@ -15,20 +21,27 @@ export default function Form(props: StockFormStep) {
       ? {
           symbol: props.details.symbol,
           numShares: props.details.numShares.toString(),
+          program: props.details.program,
         }
       : {
           symbol: "",
           numShares: "",
+          program: DEFAULT_PROGRAM,
         },
     resolver: yupResolver(
-      object({
+      schema<FV>({
         symbol: requiredString.trim(),
         numShares: requiredString.trim().matches(/^[1-9]\d*$/, "invalid"),
+        program: optionType(),
       })
     ),
   });
 
-  type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
+  const { control } = methods;
+  const { field: program } = useController<FV, "program">({
+    control: control,
+    name: "program",
+  });
 
   return (
     <FormContainer
@@ -63,6 +76,15 @@ export default function Form(props: StockFormStep) {
           error: "left-0",
         }}
       />
+
+      {(props.init.recipient.progDonationsAllowed ?? true) && (
+        <ProgramSelector
+          classes="mt-6 mb-4"
+          endowId={props.init.recipient.id}
+          program={program.value}
+          onChange={program.onChange}
+        />
+      )}
 
       <h4 className="mt-6 mb-2">Benefits of donating appreciated stock</h4>
       <p className="text-sm">

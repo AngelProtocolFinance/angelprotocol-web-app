@@ -17,6 +17,7 @@ export default function Widget({ endowId = 0 }: { endowId?: number }) {
     [
       "id",
       "hide_bg_tip",
+      "progDonationsAllowed",
       "logo",
       "name",
       "overview",
@@ -53,7 +54,6 @@ function Content({
     endowment: endowment || {
       id: 0,
       name: "this nonprofit",
-      hide_bg_tip: false,
     },
     isDescriptionTextShown: true,
     isTitleShown: true,

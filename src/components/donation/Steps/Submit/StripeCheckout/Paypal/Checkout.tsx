@@ -85,6 +85,7 @@ export default function Checkout(props: StripeCheckoutStep) {
           splitLiq: liquidSplitPct,
           donor,
           source: init.source,
+          ...(details.program.value && { programId: details.program.value }),
         }).unwrap()
       }
     />

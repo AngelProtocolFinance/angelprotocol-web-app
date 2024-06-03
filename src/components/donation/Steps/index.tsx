@@ -69,6 +69,8 @@ function initialState({
           amount: `${intent.amount}`,
           ...intent.token,
         },
+        //label will be overriden in selector as options are by="value"
+        program: { label: "General donation", value: intent.programId ?? "" },
       },
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
@@ -87,6 +89,8 @@ function initialState({
         rate: intent.currency.rate,
       },
       frequency: intent.frequency,
+      //label will be overriden in selector as options are by="value"
+      program: { label: "General donation", value: intent.programId ?? "" },
     },
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },
