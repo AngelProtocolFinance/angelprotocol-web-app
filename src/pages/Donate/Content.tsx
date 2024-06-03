@@ -48,6 +48,7 @@ function Content({ intent, endowment }: Props) {
               id: endowment.id,
               name: endowment.name,
               hide_bg_tip: endowment.hide_bg_tip,
+              progDonationsAllowed: endowment.progDonationsAllowed,
             }}
             config={{
               splitDisabled: endowment.splitFixed ?? false,
