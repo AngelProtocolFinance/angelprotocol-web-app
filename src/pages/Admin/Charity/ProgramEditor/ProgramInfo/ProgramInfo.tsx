@@ -20,6 +20,7 @@ export default function ProgramInfo(props: Program) {
         preview: props.banner ?? "",
       },
       description: { value: props.description },
+      targetRaise: props.targetRaise?.toString() ?? "",
     },
     resolver: yupResolver(schema),
   });
@@ -65,6 +66,13 @@ export default function ProgramInfo(props: Program) {
             error: "static field-error -mt-4",
             charCounter: "text-navy-l1 dark:text-navy-l2",
           }}
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="targetRaise"
+          label="Target raise"
+          placeholder="e.g. $1000"
+          required
         />
         <button
           disabled={!isDirty}

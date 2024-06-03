@@ -32,6 +32,7 @@ export default function useSubmit(initProgram: Program) {
         banner: imageURL,
         description: fv.description.value,
         title: fv.title,
+        targetRaise: +fv.targetRaise,
       };
 
       await updateProgram({ endowId: id, ...cleanObject(update) }).unwrap();
