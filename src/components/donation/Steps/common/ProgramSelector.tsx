@@ -4,7 +4,7 @@ import QueryLoader from "components/QueryLoader";
 import { useProgramsQuery } from "services/aws/programs";
 import type { Program } from "types/aws";
 import type { OptionType } from "types/components";
-import { EMPTY_PROGRAM } from "./constants";
+import { DEFAULT_PROGRAM } from "./constants";
 
 type Props = {
   endowId: number;
@@ -77,7 +77,7 @@ function Options({ endowId, classes = "" }: OptionsProps) {
             [
               {
                 id: "", //prepend list with general option
-                title: EMPTY_PROGRAM.label,
+                title: DEFAULT_PROGRAM.label,
                 description: "",
                 milestones: [] as Program["milestones"],
               },

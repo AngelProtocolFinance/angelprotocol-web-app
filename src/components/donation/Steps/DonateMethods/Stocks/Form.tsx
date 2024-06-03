@@ -6,7 +6,7 @@ import { requiredString } from "schemas/string";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import { ProgramSelector } from "../../common/ProgramSelector";
-import { EMPTY_PROGRAM } from "../../common/constants";
+import { DEFAULT_PROGRAM } from "../../common/constants";
 import type { StockFormStep, StocksDonationDetails } from "../../types";
 import { nextFormState } from "../helpers";
 
@@ -26,7 +26,7 @@ export default function Form(props: StockFormStep) {
       : {
           symbol: "",
           numShares: "",
-          program: EMPTY_PROGRAM,
+          program: DEFAULT_PROGRAM,
         },
     resolver: yupResolver(
       schema<FV>({

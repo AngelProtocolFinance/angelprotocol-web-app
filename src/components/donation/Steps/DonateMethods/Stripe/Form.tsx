@@ -13,7 +13,7 @@ import type { Currency, DetailedCurrency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import { ProgramSelector } from "../../common/ProgramSelector";
-import { EMPTY_PROGRAM } from "../../common/constants";
+import { DEFAULT_PROGRAM } from "../../common/constants";
 import { nextFormState } from "../helpers";
 import Frequency from "./Frequency";
 import Incrementers from "./Incrementers";
@@ -51,7 +51,7 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
     amount: "",
     currency: defaultCurr || { code: USD_CODE, min: 1, rate: 1 },
     frequency: "subscription",
-    program: EMPTY_PROGRAM,
+    program: DEFAULT_PROGRAM,
   };
 
   const currencyKey: keyof FV = "currency";
