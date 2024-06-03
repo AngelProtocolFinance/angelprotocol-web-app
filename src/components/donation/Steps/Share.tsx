@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import ExtLink from "../../ExtLink";
 import Icon, { type IconType } from "../../Icon";
 import Modal from "../../Modal";
-import type { DonationRecipient } from "./types";
 
 type SocialMedia = Extract<
   IconType,
@@ -19,7 +18,7 @@ const socials: [SocialMedia, number][] = [
 ];
 
 type ShareProps = {
-  recipient: DonationRecipient;
+  recipientName: string;
   className?: string;
 };
 
@@ -39,7 +38,7 @@ export default function ShareContainer(props: ShareProps) {
             key={type}
             iconSize={size}
             type={type}
-            recipient={props.recipient}
+            recipientName={props.recipientName}
           />
         ))}
       </div>
@@ -50,7 +49,7 @@ export default function ShareContainer(props: ShareProps) {
 type ShareBtnProps = {
   type: SocialMedia;
   iconSize: number;
-  recipient: DonationRecipient;
+  recipientName: string;
 };
 
 function Share(props: ShareBtnProps) {
@@ -69,7 +68,7 @@ function Share(props: ShareBtnProps) {
   );
 }
 
-function Prompt({ type, iconSize, recipient: { name } }: ShareBtnProps) {
+function Prompt({ type, iconSize, recipientName }: ShareBtnProps) {
   const { closeModal } = useModalContext();
 
   //shareText will always hold some value
@@ -95,7 +94,7 @@ function Prompt({ type, iconSize, recipient: { name } }: ShareBtnProps) {
         ref={msgRef}
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l4 rounded"
       >
-        I just donated to <span className="font-bold">{name}</span> on{" "}
+        I just donated to <span className="font-bold">{recipientName}</span> on{" "}
         <span className="font-bold">"@BetterDotGiving</span>!{" "}
         {`Every gift is
         invested to provide sustainable funding for nonprofits: Give once, give
