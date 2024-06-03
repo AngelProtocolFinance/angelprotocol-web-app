@@ -95,7 +95,7 @@ function Prompt({ type, iconSize, recipientName }: ShareBtnProps) {
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l4 rounded"
       >
         I just donated to <span className="font-bold">{recipientName}</span> on{" "}
-        <span className="font-bold">"@BetterDotGiving</span>!{" "}
+        <span className="font-bold">@BetterDotGiving</span>!{" "}
         {`Every gift is
         invested to provide sustainable funding for nonprofits: Give once, give
         forever. Help join the cause: ${BASE_URL}`}
