@@ -70,7 +70,7 @@ export default function ProgramInfo(props: Program) {
         <Field<FV>
           classes="field-admin"
           name="targetRaise"
-          label="Target raise"
+          label="Target amount to raise (USD)"
           placeholder="e.g. $1000"
           required
         />
