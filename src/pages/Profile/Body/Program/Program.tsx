@@ -29,12 +29,12 @@ export default function Program({ className = "" }) {
               readOnly
               classes={{ container: "m-6" }}
             />
-            {p.targetRaise && (
+            {p.targetRaise ? (
               <TargetProgress
                 target={p.targetRaise}
                 total={p.totalDonations ?? 0}
               />
-            )}
+            ) : null}
           </Container>
           <Milestones
             classes="self-start lg:sticky lg:top-28"

@@ -19,7 +19,7 @@ export type Program = {
   id: string;
   title: string;
   milestones: Milestone[];
-  targetRaise?: number;
+  targetRaise?: number | null;
   totalDonations?: number;
 };
 
@@ -155,7 +155,7 @@ export type NewProgram = Omit<Program, "id" | "milestones"> & {
 export type ProgramUpdate = PartialExcept<
   Omit<Program, "milestones" | "targetRaise">,
   "id"
-> & { targetRaise?: number };
+> & { targetRaise?: number | null /** unsets the target */ };
 
 export type NewMilestone = Omit<Milestone, "id">;
 export type MilestoneUpdate = PartialExcept<Milestone, "id">;

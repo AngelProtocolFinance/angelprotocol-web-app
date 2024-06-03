@@ -68,11 +68,10 @@ export default function ProgramInfo(props: Program) {
           }}
         />
         <Field<FV>
-          classes="field-admin"
+          classes="field-admin mb-4"
           name="targetRaise"
           label="Target raise"
           placeholder="e.g. $1000"
-          required
         />
         <button
           disabled={!isDirty}
