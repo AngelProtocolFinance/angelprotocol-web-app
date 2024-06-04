@@ -5,4 +5,6 @@ export type FV = {
   title: string;
   image: ImgLink;
   description: RichTextContent;
+  /** USD  */
+  targetRaise: string;
 };

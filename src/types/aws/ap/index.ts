@@ -19,6 +19,8 @@ export type Program = {
   id: string;
   title: string;
   milestones: Milestone[];
+  targetRaise?: number | null;
+  totalDonations?: number;
 };
 
 export type Media = {
@@ -150,7 +152,10 @@ export type EndowmentSettingsUpdate = Pick<
 export type NewProgram = Omit<Program, "id" | "milestones"> & {
   milestones: Omit<Milestone, "id">[];
 };
-export type ProgramUpdate = PartialExcept<Omit<Program, "milestones">, "id">;
+export type ProgramUpdate = PartialExcept<
+  Omit<Program, "milestones" | "targetRaise">,
+  "id"
+> & { targetRaise?: number | null /** unsets the target */ };
 
 export type NewMilestone = Omit<Milestone, "id">;
 export type MilestoneUpdate = PartialExcept<Milestone, "id">;
