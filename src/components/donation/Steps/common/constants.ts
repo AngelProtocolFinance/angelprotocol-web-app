@@ -2,7 +2,9 @@ import { polygon, polygonAmoy } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
+import type { DonateMethodId } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
+import type { DonationDetails } from "../types";
 
 export const DEFAULT_PROGRAM: OptionType<""> = {
   label: "General Donation",
@@ -26,3 +28,48 @@ export const usdOption: DetailedCurrency = { code: "usd", min: 1, rate: 1 };
 export const initChainIdOption: OptionType<ChainID> = IS_TEST
   ? { label: polygonAmoy.name, value: polygonAmoy.id }
   : { label: polygon.name, value: polygon.id };
+
+export const initDetails = (
+  methodId: DonateMethodId,
+  programIdOrOption?: string | OptionType<string>
+): DonationDetails => {
+  const program: OptionType<string> =
+    typeof programIdOrOption === "string" || !programIdOrOption
+      ? {
+          //label would be replaced once program options are loaded
+          label: "General Donation",
+          value: programIdOrOption ?? "",
+        }
+      : programIdOrOption;
+
+  switch (methodId) {
+    case "crypto": {
+      return {
+        method: "crypto",
+        token: initTokenOption,
+        program,
+        chainId: initChainIdOption,
+      };
+    }
+    case "daf": {
+      return { method: "daf", amount: "", currency: usdOption, program };
+    }
+    case "stocks": {
+      return {
+        method: "stocks",
+        numShares: "",
+        program,
+        symbol: "",
+      };
+    }
+    default: {
+      return {
+        method: "stripe",
+        amount: "",
+        currency: usdOption,
+        frequency: "subscription",
+        program,
+      };
+    }
+  }
+};

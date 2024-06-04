@@ -4,14 +4,9 @@ import type { OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
-import {
-  initChainIdOption,
-  initTokenOption,
-  usdOption,
-} from "./common/constants";
+import { initDetails } from "./common/constants";
 import type {
   Config,
-  DonationDetails,
   DonationRecipient,
   DonationState,
   Init,
@@ -63,49 +58,13 @@ function initialState({
   };
 
   if (!intent) {
-    const program: OptionType<string> = {
-      //label would be replaced once program options are loaded
-      label: "General Donation",
-      value: programId ?? "",
-    };
-
-    const initDetails: DonationDetails = (() => {
-      switch (config?.methodIds?.at(0)) {
-        case "crypto": {
-          return {
-            method: "crypto",
-            token: initTokenOption,
-            program,
-            chainId: initChainIdOption,
-          };
-        }
-        case "daf": {
-          return { method: "daf", amount: "", currency: usdOption, program };
-        }
-        case "stripe": {
-          return {
-            method: "stripe",
-            amount: "",
-            currency: usdOption,
-            frequency: "subscription",
-            program,
-          };
-        }
-        default: {
-          return {
-            method: "stocks",
-            numShares: "",
-            program,
-            symbol: "",
-          };
-        }
-      }
-    })();
-
     return {
       step: "donate-form",
       init,
-      details: initDetails,
+      details: initDetails(
+        init.config?.methodIds?.at(0) ?? "stripe",
+        programId
+      ),
     };
   }
 

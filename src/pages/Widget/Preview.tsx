@@ -2,7 +2,7 @@ import character from "assets/laira/laira-waiving.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import Image from "components/Image/Image";
-import { type DonationState, Steps } from "components/donation";
+import { type DonationState, Steps, initDetails } from "components/donation";
 import { APP_NAME } from "constants/env";
 import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import { useEndowment } from "services/aws/useEndowment";
@@ -36,13 +36,7 @@ export default function Preview({ classes = "", config }: Props) {
         methodIds: methods.filter((m) => !m.disabled).map((m) => m.id),
       },
     },
-    details: {
-      method: "stripe",
-      amount: "100",
-      currency: { code: "usd", rate: 1, min: 1 },
-      frequency: "subscription",
-      program: { label: "General donation", value: "" },
-    },
+    details: initDetails(methods.at(0)?.id ?? "stripe", restConfig.program),
   };
 
   const { accentPrimary, accentSecondary } = restConfig;
