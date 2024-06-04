@@ -44,6 +44,7 @@ const widgetURLfn = (config: WidgetConfig) => {
       .join(","),
     isTitleShown: config.isTitleShown ? "true" : "false",
     title: config.title ?? "",
+    programId: config.program.value,
     description: config.description ?? "",
     accentPrimary: config.accentPrimary ?? "",
     accentSecondary: config.accentSecondary ?? "",
