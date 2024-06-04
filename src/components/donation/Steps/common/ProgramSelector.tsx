@@ -55,7 +55,6 @@ export function ProgramSelector({
         endowId={endowId}
         classes="absolute top-full left-0 z-10"
         onOptionsLoaded={(options) => {
-          console.log({ options, program });
           const selectedProgram = options.find((o) => o.id === program.value);
           if (!selectedProgram) return;
           onChange({ label: selectedProgram.title, value: selectedProgram.id });

@@ -1,10 +1,17 @@
 import type { DonationIntent } from "types/aws";
 import type { ChainID } from "types/chain";
+import type { OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
+import {
+  initChainIdOption,
+  initTokenOption,
+  usdOption,
+} from "./common/constants";
 import type {
   Config,
+  DonationDetails,
   DonationRecipient,
   DonationState,
   Init,
@@ -16,6 +23,7 @@ type Components = {
   mode: Mode;
   config: Config | null;
   recipient: DonationRecipient;
+  programId?: string;
   intent?: DonationIntent;
 };
 type InitState = {
@@ -43,6 +51,7 @@ function initialState({
   intent,
   config,
   recipient,
+  programId,
   mode,
 }: Components): DonationState {
   const init: Init = {
@@ -53,7 +62,58 @@ function initialState({
     intentId: intent?.transactionId,
   };
 
-  if (!intent) return { step: "donate-form", init };
+  if (!intent) {
+    const program: OptionType<string> = {
+      //label would be replaced once program options are loaded
+      label: "General Donation",
+      value: programId ?? "",
+    };
+
+    const initDetails: DonationDetails = (() => {
+      switch (config?.methodIds?.at(0)) {
+        case "crypto": {
+          return {
+            method: "crypto",
+            token: initTokenOption,
+            program,
+            chainId: initChainIdOption,
+          };
+        }
+        case "daf": {
+          return { method: "daf", amount: "", currency: usdOption, program };
+        }
+        case "stripe": {
+          return {
+            method: "stripe",
+            amount: "",
+            currency: usdOption,
+            frequency: "subscription",
+            program,
+          };
+        }
+        default: {
+          return {
+            method: "stocks",
+            numShares: "",
+            program,
+            symbol: "",
+          };
+        }
+      }
+    })();
+
+    return {
+      step: "donate-form",
+      init,
+      details: initDetails,
+    };
+  }
+
+  const program: OptionType<string> = {
+    //label would be replaced once program options are loaded
+    label: "General donation",
+    value: intent.programId ?? programId ?? "",
+  };
 
   if ("chainId" in intent) {
     return {
@@ -69,8 +129,8 @@ function initialState({
           amount: `${intent.amount}`,
           ...intent.token,
         },
-        //label will be overriden in selector as options are by="value"
-        program: { label: "General donation", value: intent.programId ?? "" },
+
+        program,
       },
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
@@ -89,8 +149,7 @@ function initialState({
         rate: intent.currency.rate,
       },
       frequency: intent.frequency,
-      //label will be overriden in selector as options are by="value"
-      program: { label: "General donation", value: intent.programId ?? "" },
+      program,
     },
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },

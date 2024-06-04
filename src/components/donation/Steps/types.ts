@@ -43,7 +43,7 @@ export type StripeDonationDetails = {
 export type StocksDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "stocks">;
   symbol: string;
-  numShares: number;
+  numShares: string;
 };
 export type DafDonationDetails = {
   method: Extract<DonateMethodId, "daf">;

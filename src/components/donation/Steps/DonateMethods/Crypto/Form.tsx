@@ -8,9 +8,9 @@ import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import { ProgramSelector } from "../../common/ProgramSelector";
+import { initTokenOption } from "../../common/constants";
 import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
-import { initToken } from "./constants";
 import type { DonateValues } from "./types";
 
 export default function Form(props: CryptoFormStep) {
@@ -53,7 +53,7 @@ export default function Form(props: CryptoFormStep) {
             value: id,
           }))}
         onOptionChange={() => {
-          setValue("token", initToken);
+          setValue("token", initTokenOption);
           setValue("token.amount", "0");
         }}
         classes={{
