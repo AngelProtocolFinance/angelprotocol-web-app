@@ -1,6 +1,7 @@
 import { fill } from "components/DonateMethods";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
+import { DEFAULT_PROGRAM } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -37,6 +38,7 @@ function Content({ endowment }: { endowment?: Endowment }) {
     methods: fill(endowment?.donateMethods),
     accentPrimary: "#2D89C8",
     accentSecondary: "#E6F1F9",
+    program: DEFAULT_PROGRAM,
   });
 
   return (
@@ -58,7 +60,11 @@ function Content({ endowment }: { endowment?: Endowment }) {
         website and you're ready to go!
       </p>
       <div className="w-full">
-        <Configurer config={state} setConfig={setState} />
+        <Configurer
+          config={state}
+          setConfig={setState}
+          programDonationAllowed={endowment?.progDonationsAllowed}
+        />
         <Snippet config={state} classes="mt-10" />
       </div>
       <Preview
