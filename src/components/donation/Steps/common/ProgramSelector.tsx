@@ -102,6 +102,7 @@ interface ILoadedOptions {
 }
 
 function LoadedOptions({ options, classes, onOptionsLoaded }: ILoadedOptions) {
+  //biome-ignore lint: only run effect on mount
   useEffect(() => {
     onOptionsLoaded(options);
   }, []);
