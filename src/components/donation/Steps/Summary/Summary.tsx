@@ -20,7 +20,7 @@ export default function Summary(props: SummaryStep) {
       //stocks skips summary (straight to submit), as donor info is not saved in DB
       case "stocks": {
         const { numShares, symbol } = details;
-        return [numShares, currency({ code: symbol, rate: null })];
+        return [+numShares, currency({ code: symbol, rate: null })];
       }
       default:
         return [+details.amount, currency(details.currency)];
