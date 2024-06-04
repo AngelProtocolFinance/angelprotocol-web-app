@@ -12,20 +12,9 @@ import Preview from "./Preview";
 import Snippet from "./Snippet";
 
 export default function Widget({ endowId = 0 }: { endowId?: number }) {
-  const queryState = useEndowment(
-    { id: endowId },
-    [
-      "id",
-      "hide_bg_tip",
-      "progDonationsAllowed",
-      "logo",
-      "name",
-      "overview",
-      "splitFixed",
-      "splitLiqPct",
-    ],
-    { skip: !endowId }
-  );
+  const queryState = useEndowment({ id: endowId }, undefined, {
+    skip: !endowId,
+  });
 
   return (
     <QueryLoader queryState={queryState} dataRequired={false}>
@@ -34,21 +23,7 @@ export default function Widget({ endowId = 0 }: { endowId?: number }) {
   );
 }
 
-function Content({
-  endowment,
-}: {
-  endowment?: Pick<
-    Endowment,
-    | "id"
-    | "hide_bg_tip"
-    | "logo"
-    | "name"
-    | "overview"
-    | "splitFixed"
-    | "splitLiqPct"
-    | "donateMethods"
-  >;
-}) {
+function Content({ endowment }: { endowment?: Endowment }) {
   const location = useLocation();
   const [state, setState] = useState<WidgetConfig>({
     endowment: endowment || {
