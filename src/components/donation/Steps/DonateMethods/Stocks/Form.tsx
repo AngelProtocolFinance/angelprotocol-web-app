@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Field, Form as FormContainer } from "components/form";
 import { useController, useForm } from "react-hook-form";
-import { optionType, schema } from "schemas/shape";
+import { optionType, schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -31,7 +31,10 @@ export default function Form(props: StockFormStep) {
     resolver: yupResolver(
       schema<FV>({
         symbol: requiredString.trim(),
-        numShares: requiredString.trim().matches(/^[1-9]\d*$/, "invalid"),
+        numShares: stringNumber(
+          (s) => s.required("required"),
+          (n) => n.positive("must be greater than 0")
+        ),
         program: optionType(),
       })
     ),
@@ -52,7 +55,6 @@ export default function Form(props: StockFormStep) {
           nextFormState(prev, {
             ...fv,
             method: "stocks",
-            numShares: +fv.numShares,
           })
         )
       )}

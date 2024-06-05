@@ -33,7 +33,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
         url={`${BASE_URL}/${appRoutes.donate_widget}/${profile.id}`}
       />
       {config.isTitleShown && (
-        <h1 className="flex justify-center items-center gap-10 w-full z-20 text-lg sm:text-3xl">
+        <h1 className="text-center w-full z-20 text-lg sm:text-3xl text-pretty">
           {config.title || `Donate to ${profile.name}`}
         </h1>
       )}
@@ -51,6 +51,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
         className="w-full md:w-3/4 border border-gray-l4"
         recipient={recipient}
         config={config}
+        programId={config.programId}
       />
       <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
         By making a donation to {APP_NAME}, you agree to our{" "}

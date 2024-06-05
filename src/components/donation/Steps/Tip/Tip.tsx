@@ -46,7 +46,7 @@ export default function Tip(props: TipStep) {
       case "daf":
         return ["usd", +details.amount];
       case "stocks":
-        return [details.symbol, details.numShares];
+        return [details.symbol, +details.numShares];
       case "crypto":
         return [details.token.symbol, +details.token.amount, 4];
     }
