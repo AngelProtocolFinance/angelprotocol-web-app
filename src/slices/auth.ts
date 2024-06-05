@@ -27,6 +27,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       const session = await fetchAuthSession();
       const idToken = session.tokens?.idToken;
       if (!idToken) return null;
+      if (!idToken.payload.exp) return null;
 
       type Payload = {
         /** csv */
@@ -54,6 +55,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
 
       return {
         token: idToken.toString(),
+        tokenExpiry: idToken.payload.exp,
         groups,
         endowments: endows?.split(",").map(Number) ?? [],
         email: userEmail,

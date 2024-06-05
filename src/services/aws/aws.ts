@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
+import { fetchAuthSession } from "aws-amplify/auth";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { apiEnv } from "services/constants";
@@ -33,13 +34,26 @@ const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
     mode: "cors",
-    prepareHeaders(headers, { getState }) {
+    async prepareHeaders(headers, { getState }) {
       const {
         auth: { user },
       } = getState() as RootState;
 
       if (headers.get("authorization") === TEMP_JWT) {
-        headers.set("authorization", userIsSignedIn(user) ? user.token : "");
+        if (!userIsSignedIn(user)) return headers;
+        const nowSeconds = Math.round(+new Date() / 1000);
+
+        const token =
+          nowSeconds < user.tokenExpiry
+            ? user.token
+            : /** fetching session fires "tokenRefresh event in hub" */
+              await fetchAuthSession({ forceRefresh: true }).then((res) =>
+                res.tokens?.idToken?.toString()
+              );
+
+        if (!token) return headers;
+
+        headers.set("authorization", token);
       }
       return headers;
     },
