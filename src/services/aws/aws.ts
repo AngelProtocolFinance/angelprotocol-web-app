@@ -46,7 +46,7 @@ const awsBaseQuery = retry(
         const token =
           nowSeconds < user.tokenExpiry
             ? user.token
-            : /** fetching session fires "tokenRefresh event in hub" */
+            : /** fetching session fires `tokenRefresh` event in Hub */
               await fetchAuthSession({ forceRefresh: true }).then((res) =>
                 res.tokens?.idToken?.toString()
               );
