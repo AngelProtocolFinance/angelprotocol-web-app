@@ -4,6 +4,7 @@ import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { lazy } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { usePingQuery } from "services/aws/aws";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("pages/Admin"));
@@ -35,6 +36,14 @@ const NonprofitInfo = lazy(() => import("pages/informational/NonprofitInfo"));
 const DonorInfo = lazy(() => import("pages/informational/DonorInfo"));
 
 export default function App() {
+  /**
+   * ping AWS api every 5 minutes,
+   * this invokes token refresh and fires refresh events: tokenRefresh | tokenRefresh_failure.
+   * if tokenRefresh_failure, `A.` user state is set to null
+   * when `A.` happens and user is on a protected page (wrapped with `withAuth` HOC),
+   * user will be redirected to the signin page
+   */
+  usePingQuery({}, { pollingInterval: 5 * 60 * 60 });
   const location = useLocation();
   useScrollTop(location.pathname);
 

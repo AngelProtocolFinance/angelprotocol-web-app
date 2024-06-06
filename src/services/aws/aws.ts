@@ -46,7 +46,7 @@ const awsBaseQuery = retry(
         const token =
           nowSeconds < user.tokenExpiry
             ? user.token
-            : /** fetching session fires `tokenRefresh` event in Hub */
+            : /** fetching session fires `tokenRefresh | tokenRefresh_failure` event in Hub */
               await fetchAuthSession({ forceRefresh: true }).then((res) =>
                 res.tokens?.idToken?.toString()
               );
@@ -86,6 +86,13 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
+    ping: builder.query({
+      query: () => ({
+        url: "",
+        method: "OPTIONS",
+        headers: { authorization: TEMP_JWT },
+      }),
+    }),
     endowmentCards: builder.query<
       EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
       EndowmentsQueryParams
@@ -221,6 +228,7 @@ export const aws = createApi({
 });
 
 export const {
+  usePingQuery,
   useWalletProfileQuery,
   useToggleBookmarkMutation,
   useEndowmentQuery,
