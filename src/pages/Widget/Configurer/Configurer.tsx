@@ -185,7 +185,7 @@ export default function Configurer({
             type="submit"
             className="btn-blue @max-sm/configurer:mx-auto w-40"
           >
-            Update Snippet
+            Update Form
           </button>
         </div>
       </div>

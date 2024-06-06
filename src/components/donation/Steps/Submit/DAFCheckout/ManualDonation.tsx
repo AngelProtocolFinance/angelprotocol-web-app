@@ -17,11 +17,11 @@ export default function ManualDonation(props: DafCheckoutStep) {
       <div className="grid rounded bg-gray-l4 dark:bg-navy-d3 p-3 text-sm leading-relaxed my-4">
         <p>
           Please make a one-time grant of $
-          {props.details.amount + (props.tip ?? 0)} to:
+          {props.details.amount + (props.tip ? props.tip.value : 0)} to:
         </p>
         <br />
         <p>Altruistic Partners Empowering Society Inc (EIN: 87-3758939)</p>
-        <p>16192 Costal Highway Lewes, DE 19958 USA</p>
+        <p>16192 Coastal Highway Lewes, DE 19958 USA</p>
         <p>
           Memo: For Altruistic Partners Empowering Society Inc (DBA: Better
           Giving)
