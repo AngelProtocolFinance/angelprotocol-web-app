@@ -187,13 +187,6 @@ export type EndowmentBookmark = {
   logo?: string; // old bookmarks do not have this field saved yet
 };
 
-export type WalletProfile = {
-  wallet: string;
-  network: APIEnvironment;
-  admin: EndowmentBookmark[];
-  bookmarks: EndowmentBookmark[];
-};
-
 export type UserAttributes = {
   familyName: string;
   givenName: string;

@@ -3,29 +3,41 @@ import Tooltip from "components/Tooltip";
 import { useErrorContext } from "contexts/ErrorContext";
 import { type PropsWithChildren, useRef, useState } from "react";
 import {
-  useToggleBookmarkMutation,
-  useWalletProfileQuery,
+  useAddUserBookmarkMutation,
+  useDeleteUserBookmarkMutation,
+  useUserBookmarksQuery,
 } from "services/aws/aws";
+import { useGetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
 type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
 
 export default function BookmarkBtn({ endowId, children }: Props) {
+  const { user } = useGetter((state) => state.auth);
+  const userEmail = userIsSignedIn(user) ? user.email : "";
   const [isHovered, setHovered] = useState(false);
   const ref = useRef<HTMLButtonElement>(null);
 
   const {
     data,
-    isLoading: isProfileLoading,
+    isLoading: isBookmarksLoading,
     isFetching,
     //FUTURE: wallet is may not be needed to edit bookmarks
-  } = useWalletProfileQuery("", {
-    skip: true,
-  });
+  } = useUserBookmarksQuery(
+    { userId: userEmail ?? "" },
+    {
+      skip: !userEmail,
+    }
+  );
   const { handleError } = useErrorContext();
-  const [toggle, { isLoading: isToggling }] = useToggleBookmarkMutation();
+  const [addBookmark, { isLoading: isAddingBookmark }] =
+    useAddUserBookmarkMutation();
+  const [deleteBookmark, { isLoading: isDeletingBookmark }] =
+    useDeleteUserBookmarkMutation();
 
-  const isLoading = isProfileLoading || isFetching || isToggling;
+  const isLoading =
+    isBookmarksLoading || isFetching || isAddingBookmark || isDeletingBookmark;
 
   const bookmark = data?.bookmarks?.find((d) => d.endowId === endowId);
   const isBookmarked = bookmark !== undefined;
