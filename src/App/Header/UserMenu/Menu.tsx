@@ -3,7 +3,6 @@ import { Separator } from "components/Separator";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { useRecipientQuery } from "services/aws/wise";
 import type { AuthenticatedUser } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
 import EndowmentLink from "./EndowmentLink";
