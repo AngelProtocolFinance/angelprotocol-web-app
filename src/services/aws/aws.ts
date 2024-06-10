@@ -92,38 +92,34 @@ export const aws = createApi({
         return res.Items;
       },
     }),
-    userBookmarks: builder.query<number[], { userId: string }>({
+    userBookmarks: builder.query<number[], unknown>({
       providesTags: ["user-bookmarks"],
-      query: ({ userId }) => `users/${userId}/bookmarks`,
+      query: () => ({
+        url: "`bookmarks",
+        //get user id from jwt
+        headers: { authorization: TEMP_JWT },
+      }),
     }),
-    addUserBookmark: builder.mutation<
-      unknown,
-      {
-        userId: string;
-        endowId: number;
-      }
-    >({
+    addUserBookmark: builder.mutation<unknown, { endowId: number }>({
       invalidatesTags: ["user-bookmarks"],
-      query: ({ userId, endowId }) => {
+      query: ({ endowId }) => {
         return {
-          url: `users/${userId}/bookmarks`,
+          url: `bookmarks`,
           method: "POST",
           body: { endowId },
+          //get user id from jwt
+          headers: { authorization: TEMP_JWT },
         };
       },
     }),
-    deleteUserBookmark: builder.mutation<
-      unknown,
-      {
-        userId: string;
-        bookmarkId: number;
-      }
-    >({
+    deleteUserBookmark: builder.mutation<unknown, { bookmarkId: number }>({
       invalidatesTags: ["user-bookmarks"],
-      query: ({ userId, bookmarkId }) => {
+      query: ({ bookmarkId }) => {
         return {
-          url: `users/${userId}/bookmarks/${bookmarkId}`,
+          url: `bookmarks/${bookmarkId}`,
           method: "DELETE",
+          //get user id from jwt
+          headers: { authorization: TEMP_JWT },
         };
       },
     }),

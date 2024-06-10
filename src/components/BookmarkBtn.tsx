@@ -43,9 +43,9 @@ export default function BookmarkBtn({ endowId, children }: Props) {
   async function toogleBookmark() {
     try {
       if (isBookmarked) {
-        await deleteBookmark({ bookmarkId: endowId, userId: userEmail });
+        await deleteBookmark({ bookmarkId: endowId });
       }
-      await addBookmark({ userId: userEmail, endowId });
+      await addBookmark({ endowId });
     } catch (err) {
       handleError(err, { context: "changing bookmark" });
     }
