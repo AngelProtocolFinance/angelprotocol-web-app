@@ -20,12 +20,11 @@ export default function BookmarkBtn({ endowId, children }: Props) {
   const ref = useRef<HTMLButtonElement>(null);
 
   const {
-    data,
+    data: bookmarks = [],
     isLoading: isBookmarksLoading,
     isFetching,
-    //FUTURE: wallet is may not be needed to edit bookmarks
   } = useUserBookmarksQuery(
-    { userId: userEmail ?? "" },
+    { userId: userEmail },
     {
       skip: !userEmail,
     }
@@ -39,16 +38,14 @@ export default function BookmarkBtn({ endowId, children }: Props) {
   const isLoading =
     isBookmarksLoading || isFetching || isAddingBookmark || isDeletingBookmark;
 
-  const bookmark = data?.bookmarks?.find((d) => d.endowId === endowId);
-  const isBookmarked = bookmark !== undefined;
+  const isBookmarked = bookmarks.includes(endowId);
 
   async function toogleBookmark() {
     try {
-      await toggle({
-        endowId,
-        type: isBookmarked ? "delete" : "add",
-        wallet: "", //FUTURE: wallet may not be needed to edit bookmarks
-      }).unwrap();
+      if (isBookmarked) {
+        await deleteBookmark({ bookmarkId: endowId, userId: userEmail });
+      }
+      await addBookmark({ userId: userEmail, endowId });
     } catch (err) {
       handleError(err, { context: "changing bookmark" });
     }

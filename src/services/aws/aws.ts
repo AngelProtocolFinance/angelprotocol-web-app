@@ -92,7 +92,7 @@ export const aws = createApi({
         return res.Items;
       },
     }),
-    userBookmarks: builder.query<any[], { userId: string }>({
+    userBookmarks: builder.query<number[], { userId: string }>({
       providesTags: ["user-bookmarks"],
       query: ({ userId }) => `users/${userId}/bookmarks`,
     }),
