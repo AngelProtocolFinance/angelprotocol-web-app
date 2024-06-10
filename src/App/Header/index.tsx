@@ -31,13 +31,10 @@ export default function Header({ links, classes }: Props) {
       <div className="grid relative items-center grid-cols-2 gap-4 padded-container bg-white rounded-full py-2">
         <DappLogo classes="w-48 h-12" />
         {location.pathname !== appRoutes.marketplace && (
-          <Link
-            to={appRoutes.marketplace}
-            className="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 btn-blue capitalize items-center px-4 py-1 text-sm gap-1 rounded-full font-heading"
-          >
+          <div className="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 btn-blue capitalize items-center px-4 py-1 text-sm gap-1 rounded-full font-heading">
             <Icon type="Search" className="mr-1 text-lg" />
-            <span>Explore all causes</span>
-          </Link>
+            <input type="text" placeholder="Search causes" />
+          </div>
         )}
         <div className="flex gap-2 md:gap-4 justify-self-end items-center">
           {!(
@@ -48,6 +45,9 @@ export default function Header({ links, classes }: Props) {
           ) && <UserMenu />}
           <NavDropdown links={links} />
         </div>
+      </div>
+      <div className="absolute bg-white mt-4 container left-1/2 -translate-x-1/2">
+        form
       </div>
     </header>
   );
