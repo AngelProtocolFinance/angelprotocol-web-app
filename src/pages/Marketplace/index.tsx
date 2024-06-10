@@ -1,5 +1,7 @@
+import ModalContext from "contexts/ModalContext";
 import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";
+import { Context } from "./Context";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
 
@@ -11,9 +13,13 @@ export default function Marketplace() {
       </div>
 
       <div className="grid gap-y-4 content-start padded-container min-h-screen">
-        <Toolbar classes="mt-10" />
-        <ActiveFilters />
-        <Cards />
+        <Context>
+          <ModalContext>
+            <Toolbar classes="mt-10" />
+            <ActiveFilters />
+            <Cards />
+          </ModalContext>
+        </Context>
       </div>
     </div>
   );

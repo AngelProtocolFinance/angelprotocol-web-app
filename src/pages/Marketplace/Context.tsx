@@ -12,7 +12,7 @@ import type {
 } from "types/aws";
 import type { SDGGroup } from "types/lists";
 
-interface Sort {
+export interface Sort {
   key: EndowmentsSortKey;
   direction: SortDirection;
 }
@@ -21,10 +21,10 @@ type Update =
   | {
       searchText: string;
     }
-  | { endowDesignation: EndowDesignation[] }
+  | { endow_designation: EndowDesignation[] }
   | { sort?: Sort }
   | { sdgGroups: SDGGroup[] }
-  | { kycOnly: boolean[] }
+  | { kyc_only: boolean[] }
   | { verified: boolean[] }
   | { countries: string[] };
 
@@ -32,29 +32,32 @@ type State = UnionToIntersection<Update>;
 
 interface IContext {
   state: State;
-  dispatch: React.Dispatch<Update>;
+  update: React.Dispatch<Update | "reset">;
 }
 
-function reducer(state: State, update: Update): State {
-  return Object.assign(state, update);
+const initialState: State = {
+  sdgGroups: [],
+  countries: [],
+  searchText: "",
+  endow_designation: [],
+  kyc_only: [],
+  verified: [],
+  sort: undefined,
+};
+
+function reducer(state: State, update: Update | "reset"): State {
+  if (update === "reset") return initialState;
+  return { ...state, ...update };
 }
 
 const INIT = "INIT" as any;
 const context = createContext(INIT as IContext);
 
 export function Context(props: PropsWithChildren) {
-  const initialState: State = {
-    sdgGroups: [],
-    countries: [],
-    searchText: "",
-    endowDesignation: [],
-    kycOnly: [],
-    verified: [],
-    sort: undefined,
-  };
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, update] = useReducer(reducer, initialState);
+  console.log({ state });
   return (
-    <context.Provider value={{ state, dispatch }}>
+    <context.Provider value={{ state, update }}>
       {props.children}
     </context.Provider>
   );

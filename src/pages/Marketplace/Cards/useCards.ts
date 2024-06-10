@@ -5,13 +5,13 @@ import {
   useEndowmentCardsQuery,
   useLazyEndowmentCardsQuery,
 } from "services/aws/aws";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
+import { useMarketplaceContext } from "../Context";
 
 export default function useCards() {
+  const { state } = useMarketplaceContext();
   const dispatch = useSetter();
-  const { sort, searchText, sdgGroups, verified, ...params } = useGetter(
-    (state) => state.component.marketFilter
-  );
+  const { sort, searchText, sdgGroups, verified, ...params } = state;
 
   const sdgs = sdgGroups.flatMap((g) => categories[g].sdgs);
 

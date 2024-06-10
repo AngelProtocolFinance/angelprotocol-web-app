@@ -2,11 +2,11 @@ import { QueryStatus } from "@reduxjs/toolkit/query";
 import Icon from "components/Icon";
 import useDebouncer from "hooks/useDebouncer";
 import { useEffect, useState } from "react";
-import { setSearchText } from "slices/components/marketFilter";
-import { useGetter, useSetter } from "store/accessors";
+import { useGetter } from "store/accessors";
+import { useMarketplaceContext } from "../Context";
 
 export default function Search({ classes = "" }: { classes?: string }) {
-  const dispatch = useSetter();
+  const { update } = useMarketplaceContext();
   const [query, setQuery] = useState("");
 
   const queryStatus = useGetter(
@@ -16,8 +16,8 @@ export default function Search({ classes = "" }: { classes?: string }) {
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
   useEffect(() => {
-    dispatch(setSearchText(debouncedQuery));
-  }, [debouncedQuery, dispatch]);
+    update({ searchText: debouncedQuery });
+  }, [debouncedQuery, update]);
 
   const isLoading = queryStatus === QueryStatus.pending || isDebouncing;
 
