@@ -32,10 +32,10 @@ export default function Menu({ user, signOut }: Props) {
             My Organizations
           </h5>
           {user.endowments.map((endowId) => (
-            <EndowmentLink key={endowId} endowId={endowId} />
+            <EndowmentLink key={endowId} endowId={endowId} route="admin" />
           ))}
         </div>
-        <Bookmarks classes="mt-6" userId={user.email} />
+        <Bookmarks classes="mt-6" />
         <div className="hidden [&:has(a)]:block mt-6">
           <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
           {user.groups.includes(groups["ap-admin"]) && (

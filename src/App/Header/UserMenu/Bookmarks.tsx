@@ -7,7 +7,7 @@ export function Bookmarks({ classes = "" }) {
     <div className={`${classes} hidden [&:has(a)]:grid mt-6 gap-2`}>
       <h5 className="uppercase text-xs text-navy-l1 -mb-1">My Favorites</h5>
       {bookmarks.map((endowId) => (
-        <EndowmentLink key={endowId} endowId={endowId} />
+        <EndowmentLink key={endowId} endowId={endowId} route="profile" />
       ))}
     </div>
   );

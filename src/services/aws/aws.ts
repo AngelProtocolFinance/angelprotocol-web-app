@@ -95,7 +95,7 @@ export const aws = createApi({
     userBookmarks: builder.query<number[], unknown>({
       providesTags: ["user-bookmarks"],
       query: () => ({
-        url: "`bookmarks",
+        url: `${v(1)}/bookmarks`,
         //get user id from jwt
         headers: { authorization: TEMP_JWT },
       }),
@@ -104,7 +104,7 @@ export const aws = createApi({
       invalidatesTags: ["user-bookmarks"],
       query: ({ endowId }) => {
         return {
-          url: `bookmarks`,
+          url: `${v(1)}/bookmarks`,
           method: "POST",
           body: { endowId },
           //get user id from jwt
@@ -116,7 +116,7 @@ export const aws = createApi({
       invalidatesTags: ["user-bookmarks"],
       query: ({ bookmarkId }) => {
         return {
-          url: `bookmarks/${bookmarkId}`,
+          url: `${v(1)}/bookmarks/${bookmarkId}`,
           method: "DELETE",
           //get user id from jwt
           headers: { authorization: TEMP_JWT },
