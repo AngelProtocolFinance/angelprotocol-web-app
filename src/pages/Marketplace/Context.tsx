@@ -55,7 +55,6 @@ const context = createContext(INIT as IContext);
 
 export function Context(props: PropsWithChildren) {
   const [state, update] = useReducer(reducer, initialState);
-  console.log({ state });
   return (
     <context.Provider value={{ state, update }}>
       {props.children}
