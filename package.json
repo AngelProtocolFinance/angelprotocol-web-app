@@ -40,7 +40,7 @@
     "@hookform/resolvers": "3.3.4",
     "@keplr-wallet/proto-types": "0.12.83",
     "@keplr-wallet/wc-qrcode-modal": "0.12.83",
-    "@paypal/react-paypal-js": "8.3.0",
+    "@paypal/react-paypal-js": "8.4.0",
     "@radix-ui/react-slider": "1.1.2",
     "@reduxjs/toolkit": "2.2.3",
     "@sentry/react": "7.89.0",
