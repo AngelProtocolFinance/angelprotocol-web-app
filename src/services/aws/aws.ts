@@ -100,7 +100,7 @@ export const aws = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    addUserBookmark: builder.mutation<unknown, { endowId: number }>({
+    toogleUserBookmark: builder.mutation<unknown, { endowId: number }>({
       invalidatesTags: ["user-bookmarks"],
       query: ({ endowId }) => {
         return {
@@ -112,17 +112,30 @@ export const aws = createApi({
         };
       },
     }),
-    deleteUserBookmark: builder.mutation<unknown, { bookmarkId: number }>({
+    toggleUserBookmark: builder.mutation<
+      unknown,
+      { endowId: number; action: "add" | "delete" }
+    >({
       invalidatesTags: ["user-bookmarks"],
-      query: ({ bookmarkId }) => {
+      query: ({ endowId, action }) => {
+        if (action === "add") {
+          return {
+            url: `${v(1)}/bookmarks`,
+            method: "POST",
+            body: { endowId },
+            headers: { authorization: TEMP_JWT },
+          };
+        }
+
         return {
-          url: `${v(1)}/bookmarks/${bookmarkId}`,
+          url: `${v(1)}/bookmarks/${endowId}`,
           method: "DELETE",
           //get user id from jwt
           headers: { authorization: TEMP_JWT },
         };
       },
     }),
+
     endowment: builder.query<
       Endowment,
       IdOrSlug & { fields?: (keyof Endowment)[] }
@@ -206,8 +219,7 @@ export const aws = createApi({
 
 export const {
   useUserBookmarksQuery,
-  useAddUserBookmarkMutation,
-  useDeleteUserBookmarkMutation,
+  useToggleUserBookmarkMutation,
   useEndowmentQuery,
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,

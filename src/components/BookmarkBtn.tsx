@@ -3,8 +3,7 @@ import Tooltip from "components/Tooltip";
 import { useErrorContext } from "contexts/ErrorContext";
 import { type PropsWithChildren, useRef, useState } from "react";
 import {
-  useAddUserBookmarkMutation,
-  useDeleteUserBookmarkMutation,
+  useToggleUserBookmarkMutation,
   useUserBookmarksQuery,
 } from "services/aws/aws";
 import { useGetter } from "store/accessors";
@@ -30,22 +29,20 @@ export default function BookmarkBtn({ endowId, children }: Props) {
     }
   );
   const { handleError } = useErrorContext();
-  const [addBookmark, { isLoading: isAddingBookmark }] =
-    useAddUserBookmarkMutation();
-  const [deleteBookmark, { isLoading: isDeletingBookmark }] =
-    useDeleteUserBookmarkMutation();
 
-  const isLoading =
-    isBookmarksLoading || isFetching || isAddingBookmark || isDeletingBookmark;
+  const [toggle, { isLoading: isTogglingBookmark }] =
+    useToggleUserBookmarkMutation();
+
+  const isLoading = isBookmarksLoading || isFetching || isTogglingBookmark;
 
   const isBookmarked = bookmarks.includes(endowId);
 
   async function toogleBookmark() {
     try {
-      if (isBookmarked) {
-        await deleteBookmark({ bookmarkId: endowId });
-      }
-      await addBookmark({ endowId });
+      await toggle({
+        endowId,
+        action: isBookmarked ? "delete" : "add",
+      }).unwrap();
     } catch (err) {
       handleError(err, { context: "changing bookmark" });
     }
