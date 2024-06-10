@@ -17,17 +17,9 @@ import type {
   EndowmentOption,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
-  WalletProfile,
 } from "types/aws";
 import { version as v } from "../helpers";
-import type {
-  EndowmentUpdate,
-  IdOrSlug,
-  VersionSpecificWalletProfile,
-} from "../types";
-
-const getWalletProfileQuery = (walletAddr: string) =>
-  `/${v(2)}/profile/${apiEnv}/user/${walletAddr}`;
+import type { EndowmentUpdate, IdOrSlug } from "../types";
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -52,7 +44,6 @@ export const aws = createApi({
   tagTypes: [
     "airdrop",
     "admin",
-    "walletProfile",
     "endowment",
     "endowments",
     "strategy",
@@ -68,6 +59,7 @@ export const aws = createApi({
     "endow-admins",
     "donations",
     "user",
+    "user-bookmarks",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -100,30 +92,50 @@ export const aws = createApi({
         return res.Items;
       },
     }),
-    walletProfile: builder.query<VersionSpecificWalletProfile, string>({
-      providesTags: ["walletProfile"],
-      query: getWalletProfileQuery,
-      transformResponse(res: WalletProfile, _meta, walletAddr) {
-        return {
-          ...res,
-          version: walletAddr.startsWith("juno") ? "legacy" : "latest",
-        };
-      },
+    userBookmarks: builder.query<number[], unknown>({
+      providesTags: ["user-bookmarks"],
+      query: () => ({
+        url: `${v(1)}/bookmarks`,
+        //get user id from jwt
+        headers: { authorization: TEMP_JWT },
+      }),
     }),
-    toggleBookmark: builder.mutation<
-      unknown,
-      { type: "add" | "delete"; wallet: string; endowId: number }
-    >({
-      invalidatesTags: ["walletProfile"],
-      query: ({ endowId, type, wallet }) => {
+    toogleUserBookmark: builder.mutation<unknown, { endowId: number }>({
+      invalidatesTags: ["user-bookmarks"],
+      query: ({ endowId }) => {
         return {
-          url: `${getWalletProfileQuery(wallet)}/bookmarks`,
-          method: type === "add" ? "POST" : "DELETE",
+          url: `${v(1)}/bookmarks`,
+          method: "POST",
           body: { endowId },
+          //get user id from jwt
+          headers: { authorization: TEMP_JWT },
         };
       },
-      transformResponse: (response: { data: any }) => response,
     }),
+    toggleUserBookmark: builder.mutation<
+      unknown,
+      { endowId: number; action: "add" | "delete" }
+    >({
+      invalidatesTags: ["user-bookmarks"],
+      query: ({ endowId, action }) => {
+        if (action === "add") {
+          return {
+            url: `${v(1)}/bookmarks`,
+            method: "POST",
+            body: { endowId },
+            headers: { authorization: TEMP_JWT },
+          };
+        }
+
+        return {
+          url: `${v(1)}/bookmarks/${endowId}`,
+          method: "DELETE",
+          //get user id from jwt
+          headers: { authorization: TEMP_JWT },
+        };
+      },
+    }),
+
     endowment: builder.query<
       Endowment,
       IdOrSlug & { fields?: (keyof Endowment)[] }
@@ -146,8 +158,7 @@ export const aws = createApi({
     }),
 
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
-      invalidatesTags: (_, error) =>
-        error ? [] : ["endowments", "endowment", "walletProfile"],
+      invalidatesTags: (_, error) => (error ? [] : ["endowments", "endowment"]),
       query: ({ id, ...payload }) => {
         return {
           url: `/${v(7)}/endowments/${id}`,
@@ -207,8 +218,8 @@ export const aws = createApi({
 });
 
 export const {
-  useWalletProfileQuery,
-  useToggleBookmarkMutation,
+  useUserBookmarksQuery,
+  useToggleUserBookmarkMutation,
   useEndowmentQuery,
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,

@@ -4,7 +4,6 @@ import type {
   EndowmentSettingsUpdate,
   FSASignerDocumentation,
   V2RecipientAccount,
-  WalletProfile,
 } from "types/aws";
 import type { SemiPartial } from "types/utils";
 
@@ -30,10 +29,6 @@ export type FiscalSponsorhipAgreementSigner =
       docs: FSASignerDocumentation;
     }
   | string; //signerEID;
-
-export type VersionSpecificWalletProfile = WalletProfile & {
-  version: "legacy" | "latest";
-};
 
 export type BankingApplicationDetails = BankingApplication & V2RecipientAccount;
 

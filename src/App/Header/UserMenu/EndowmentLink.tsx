@@ -5,18 +5,21 @@ import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 
-type Props = { endowId: number };
-export default function EndowmentLink({ endowId }: Props) {
+interface IEndowmentLink {
+  endowId: number;
+  route: "admin" | "profile";
+}
+export default function EndowmentLink({ endowId, route }: IEndowmentLink) {
   const query = useEndowment({ id: endowId }, ["logo", "name"]);
   return (
     <QueryLoader
       queryState={query}
       messages={{
         loading: <Skeleton />,
-        error: <_Link id={endowId} />,
+        error: <_Link id={endowId} route={route} />,
       }}
     >
-      {(endow) => <_Link {...endow} id={endowId} />}
+      {(endow) => <_Link {...endow} id={endowId} route={route} />}
     </QueryLoader>
   );
 }
@@ -25,10 +28,14 @@ type LinkProps = {
   id: number;
   name?: string;
   logo?: string;
+  route: IEndowmentLink["route"];
 };
 const _Link = (props: LinkProps) => (
   <Link
-    to={appRoutes.admin + `/${props.id}`}
+    to={
+      (props.route === "admin" ? appRoutes.admin : appRoutes.marketplace) +
+      `/${props.id}`
+    }
     className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
     <Image src={props.logo} className="object-cover h-[20px] w-[20px]" />
