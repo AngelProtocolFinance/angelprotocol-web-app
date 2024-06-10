@@ -1,7 +1,6 @@
 import character from "assets/laira/laira-waiving.png";
 import Copier from "components/Copier";
 import Image from "components/Image";
-import BottomCta from "./BottomCta";
 
 export default function WpPlugin() {
   return (
