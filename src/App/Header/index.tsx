@@ -53,7 +53,7 @@ export default function Header({ links, classes }: Props) {
           <NavDropdown links={links} />
         </div>
       </div>
-      <div className="absolute hidden group-has-[input:focus]:block bg-white mt-4 container left-1/2 -translate-x-1/2">
+      <div className="absolute hidden group-has-[input:focus]:block hover:block bg-white mt-4 container left-1/2 -translate-x-1/2 rounded-lg p-10">
         form
       </div>
     </header>
