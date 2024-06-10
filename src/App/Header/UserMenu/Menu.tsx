@@ -3,7 +3,9 @@ import { Separator } from "components/Separator";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
+import { useRecipientQuery } from "services/aws/wise";
 import type { AuthenticatedUser } from "types/auth";
+import { Bookmarks } from "./Bookmarks";
 import EndowmentLink from "./EndowmentLink";
 
 type Props = {
@@ -34,6 +36,7 @@ export default function Menu({ user, signOut }: Props) {
             <EndowmentLink key={endowId} endowId={endowId} />
           ))}
         </div>
+        <Bookmarks classes="mt-6" userId={user.email} />
         <div className="hidden [&:has(a)]:block mt-6">
           <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
           {user.groups.includes(groups["ap-admin"]) && (
