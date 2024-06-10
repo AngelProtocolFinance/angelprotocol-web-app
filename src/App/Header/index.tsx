@@ -31,15 +31,15 @@ export default function Header({ links, classes }: Props) {
       <div className="grid relative items-center grid-cols-2 gap-4 padded-container bg-white rounded-full py-2">
         <DappLogo classes="w-48 h-12" />
         {location.pathname !== appRoutes.marketplace && (
-          <div className="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center px-4 py-1 text-sm gap-1 rounded-full font-heading">
+          <div className="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center px-4 py-1 text-sm gap-1 font-heading">
             <label htmlFor="__endow-search">
-              <Icon type="Search" className="mr-1 text-lg" />
+              <Icon type="Search" className="mr-1 text-2xl text-gray" />
             </label>
             <input
               id="__endow-search"
               type="text"
               placeholder="Search causes..."
-              className="focus:outline-none"
+              className="focus:outline-none text-lg placeholder:text-gray text-navy-l1"
             />
           </div>
         )}
