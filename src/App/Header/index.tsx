@@ -1,4 +1,3 @@
-import Icon from "components/Icon";
 import Image, { DappLogo } from "components/Image";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
@@ -9,6 +8,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
 import type { Link as TLink } from "../types";
 import NavDropdown from "./NavDropdown";
+import SearchField from "./SearchField";
 import UserMenu from "./UserMenu";
 
 type Props = { links: TLink[]; classes?: string };
@@ -30,6 +30,8 @@ export default function Header({ links, classes }: Props) {
   const isCategoriesShown =
     !query && !isDebouncing && !isLoading && !isFetching;
 
+  const hasMoreItems = (currentData?.NumOfPages ?? 1) > 1;
+
   return (
     <header
       className={`${classes} group`}
@@ -50,19 +52,11 @@ export default function Header({ links, classes }: Props) {
       <div className="grid relative items-center grid-cols-2 gap-4 padded-container bg-white rounded-full py-2">
         <DappLogo classes="w-48 h-12" />
         {location.pathname === appRoutes.home && (
-          <div className="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center px-4 py-1 text-sm gap-1 font-heading">
-            <label htmlFor="__endow-search">
-              <Icon type="Search" className="mr-1 text-2xl text-gray" />
-            </label>
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              id="__endow-search"
-              type="text"
-              placeholder="Search causes..."
-              className="focus:outline-none text-lg placeholder:text-gray text-navy-l1"
-            />
-          </div>
+          <SearchField
+            classes="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            text={query}
+            onChange={(text) => setQuery(text)}
+          />
         )}
         <div className="flex gap-2 md:gap-4 justify-self-end items-center">
           {!(
@@ -75,7 +69,7 @@ export default function Header({ links, classes }: Props) {
         </div>
       </div>
       {location.pathname === appRoutes.home && (
-        <div className="absolute hidden group-has-[input:focus]:block hover:block bg-white mt-4 container left-1/2 -translate-x-1/2 rounded-lg p-10 shadow-2xl shadow-black/20">
+        <div className="absolute hidden group-has-[input:focus]:block hover:block bg-white mt-4 container left-1/2 -translate-x-1/2 rounded-lg p-6 shadow-2xl shadow-black/20">
           {isCategoriesShown ? (
             <>
               <h4 className="mb-4">Top categories</h4>
@@ -112,7 +106,7 @@ export default function Header({ links, classes }: Props) {
               }}
             >
               {(endows) => (
-                <div className="flex items-center gap-4">
+                <div className="flex flex-wrap items-center gap-4">
                   {endows.map((endow) => (
                     <Link
                       to={`${appRoutes.marketplace}/${endow.id}`}
@@ -126,6 +120,12 @@ export default function Header({ links, classes }: Props) {
                       <span>{endow.name}</span>
                     </Link>
                   ))}
+                  <Link
+                    className="w-full text-blue-d1 font-medium text-lg text-center mt-8 block"
+                    to={appRoutes.marketplace}
+                  >
+                    View all results
+                  </Link>
                 </div>
               )}
             </QueryLoader>
