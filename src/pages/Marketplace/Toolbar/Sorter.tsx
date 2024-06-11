@@ -1,8 +1,7 @@
 import { Listbox } from "@headlessui/react";
 import Icon, { DrawerIcon } from "components/Icon";
-import { type Sort, setSort } from "slices/components/marketFilter";
-import { useGetter, useSetter } from "store/accessors";
 import type { EndowmentsSortKey } from "types/aws";
+import { type Sort, useMarketplaceContext } from "../Context";
 
 type Option = { name: string; key: EndowmentsSortKey };
 const options: Option[] = [
@@ -11,30 +10,33 @@ const options: Option[] = [
 ];
 
 export default function Sorter() {
-  const dispatch = useSetter();
-  const sort = useGetter((state) => state.component.marketFilter.sort);
+  const {
+    state: { sort },
+    update,
+  } = useMarketplaceContext();
   const isSortKeySelected = sort !== undefined;
 
   function handleSortChange(value: EndowmentsSortKey) {
-    dispatch(
-      setSort({
+    update({
+      sort: {
         key: value,
-        direction: "desc" /** default dir when sort is not specified is 'asc'*/,
-      })
-    );
+        direction:
+          "desc" /** default direction when sort is not defined is 'asc' */,
+      },
+    });
   }
 
   function resetSort() {
-    dispatch(setSort(undefined));
+    update({ sort: undefined });
   }
 
   function toggleDirection(sort: Sort) {
-    dispatch(
-      setSort({
+    update({
+      sort: {
         ...sort,
         direction: sort.direction === "asc" ? "desc" : "asc",
-      })
-    );
+      },
+    });
   }
 
   const activeSortName =

@@ -15,7 +15,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
   return (
     <QueryLoader
       queryState={{
-        data: data?.Items,
+        data: data?.Items || [],
         isLoading,
         isFetching,
         isError,

@@ -7,14 +7,12 @@ import { aws } from "services/aws/aws";
 import { coingecko } from "services/coingecko";
 import { wordpress } from "services/wordpress";
 import auth, { loadSession, reset } from "slices/auth";
-import { componentReducer } from "slices/components";
 import gift from "slices/gift";
 
 export const store = configureStore({
   reducer: {
     gift,
     auth,
-    component: componentReducer,
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,
     [coingecko.reducerPath]: coingecko.reducer,

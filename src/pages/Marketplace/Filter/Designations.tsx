@@ -1,6 +1,5 @@
-import { setDesignations } from "slices/components/marketFilter";
-import { useGetter, useSetter } from "store/accessors";
 import type { EndowDesignation } from "types/aws";
+import { useMarketplaceContext } from "../Context";
 import { type FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<EndowDesignation>[] = [
@@ -16,17 +15,14 @@ const options: FilterOption<EndowDesignation>[] = [
 ];
 
 export default function Designations() {
-  const designations = useGetter(
-    (state) => state.component.marketFilter.endow_designation
-  );
-  const dispatch = useSetter();
+  const { state, update } = useMarketplaceContext();
 
   return (
     <FlatFilter
       label="NPO Type"
-      selectedValues={designations}
+      selectedValues={state.endow_designation}
       options={options}
-      onChange={(value) => dispatch(setDesignations(value))}
+      onChange={(value) => update({ endow_designation: value })}
     />
   );
 }
