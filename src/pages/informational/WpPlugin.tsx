@@ -1,6 +1,7 @@
 import character from "assets/laira/laira-waiving.png";
 import Copier from "components/Copier";
 import Image from "components/Image";
+import TableSection, { Cells } from "components/TableSection";
 
 export default function WpPlugin() {
   return (
@@ -78,128 +79,129 @@ export default function WpPlugin() {
           The following are additional, optional configuration arguments that
           may be passed to further customize and configure your Donation Form
           settings and appearance from the default:
-          <table className="table-fixed border border-gray-l2 mt-5">
-            <thead className="border border-gray-l2 bg-blue-l3">
-              <tr className="uppercase text-lg">
-                <th>Name</th>
-                <th>Description</th>
-                <th>Allowed Values</th>
-                <th>Example</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="even:bg-gray-l4 border border-gray-l3">
-                <td>
-                  <Code snippet="currentsplitpct" />
-                </td>
-                <td>
+          <table
+            className={`w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
+          >
+            <TableSection
+              type="thead"
+              rowClass="bg-blue-l4 divide-x divide-blue-l2"
+            >
+              <Cells
+                type="th"
+                cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
+              >
+                <>Name</>
+                <>Description</>
+                <>Allowed Values</>
+                <>Example</>
+              </Cells>
+            </TableSection>
+            <TableSection
+              type="tbody"
+              rowClass="even:bg-blue-l5 divide-x divide-blue-l2"
+              selectedClass="bg-blue-l4 dark:bg-blue-d4"
+            >
+              <Cells
+                type="td"
+                cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate`}
+              >
+                <Code snippet="currentsplitpct" />
+                <>
                   Set a percentage of a to be split to the current account.
                   Donors can still adjust the split from this starting suggested
                   value. Defaults to 50%.
-                </td>
-                <td>0-100</td>
-                <td>
-                  <CodeCopy snippet="currentsplitpct=20" />
-                </td>
-              </tr>
-              <tr className="even:bg-gray-l4 border border-gray-l3">
-                <td>
-                  <Code snippet="splitdisabled" />
-                </td>
-                <td>
+                </>
+                <>0-100</>
+                <CodeCopy snippet="currentsplitpct=20" />
+              </Cells>
+              <Cells
+                type="td"
+                cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br`}
+              >
+                <Code snippet="splitdisabled" />
+                <>
                   Locks split to current percentage, preventing donors from
                   changing it. This will hide the split slider screen. Defaults
                   to 0.
-                </td>
-                <td>0 (not disabled) OR 1 (disabled)</td>
-                <td>
-                  <CodeCopy snippet="splitdisabled=1" />
-                </td>
-              </tr>
-              <tr className="even:bg-gray-l4 border border-gray-l3">
-                <td>
-                  <Code snippet="showdescription" />
-                </td>
-                <td>Show or hide the description text. Defaults to shown.</td>
-                <td>0 (not shown) OR 1 (shown)</td>
-                <td>
-                  <CodeCopy snippet="showdescription=0" />
-                </td>
-              </tr>
-              <tr className="even:bg-gray-l4 border border-gray-l3">
-                <td>
-                  <Code snippet="showtitle" />
-                </td>
-                <td>Show or hide the title text. Defaults to shown.</td>
-                <td>0 (not shown) OR 1 (shown)</td>
-                <td>
-                  <CodeCopy snippet="showtitle=0" />
-                </td>
-              </tr>
-              <tr className="even:bg-gray-l4 border border-gray-l3">
-                <td>
-                  <Code snippet="description" />
-                </td>
-                <td>Custom description text to show under the title.</td>
-                <td></td>
-                <td>
-                  <CodeCopy snippet={`description="Custom description..."`} />
-                </td>
-              </tr>
-              <tr className="even:bg-gray-l4 border border-gray-l3">
-                <td>
-                  <Code snippet="title" />
-                </td>
-                <td>
-                  Custom title text to show at the top of the donation form.
-                </td>
-                <td></td>
-                <td>
-                  <CodeCopy snippet={`title="Custom title"`} />
-                </td>
-              </tr>
-              <tr className="even:bg-gray-l4 border border-gray-l3">
-                <td>
-                  <Code snippet="methods" />
-                </td>
-                <td>
+                </>
+                <>0 (not disabled) OR 1 (disabled)</>
+                <CodeCopy snippet="splitdisabled=1" />
+              </Cells>
+              <Cells
+                type="td"
+                cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate`}
+              >
+                <Code snippet="showdescription" />
+                <>Show or hide the description text. Defaults to shown.</>
+                <>0 (not shown) OR 1 (shown)</>
+                <CodeCopy snippet="showdescription=0" />
+              </Cells>
+              <Cells
+                type="td"
+                cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate`}
+              >
+                <Code snippet="showtitle" />
+                <>Show or hide the title text. Defaults to shown.</>
+                <>0 (not shown) OR 1 (shown)</>
+                <CodeCopy snippet="showtitle=0" />
+              </Cells>
+              <Cells
+                type="td"
+                cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate`}
+              >
+                <Code snippet="description" />
+                <>Custom description text to show under the title.</>
+                <></>
+                <CodeCopy snippet={`description="Custom description..."`} />
+              </Cells>
+              <Cells
+                type="td"
+                cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate`}
+              >
+                <Code snippet="title" />
+                <>Custom title text to show at the top of the donation form.</>
+                <></>
+                <CodeCopy snippet={`title="Custom title"`} />
+              </Cells>
+              <Cells
+                type="td"
+                cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate`}
+              >
+                <Code snippet="methods" />
+                <>
                   Define the payment method tabs to show and their order via a
                   comma separated string.
-                </td>
-                <td>
+                </>
+                <>
                   Valid methods: "stocks", "daf", "stripe" (ie. credit cards),
                   "crypto"
-                </td>
-                <td>
-                  <CodeCopy snippet={`methods="crypto,stripe"`} />
-                </td>
-              </tr>
-              <tr className="even:bg-gray-l4 border border-gray-l3">
-                <td>
-                  <Code snippet="accentprimary" />
-                </td>
-                <td>
+                </>
+                <CodeCopy snippet={`methods="crypto,stripe"`} />
+              </Cells>
+              <Cells
+                type="td"
+                cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate`}
+              >
+                <Code snippet="accentprimary" />
+                <>
                   Set the primary accent color to your Nonprofit's brand color.
-                </td>
-                <td>HEX color 3 or 6 digits (must start with '#')</td>
-                <td>
-                  <CodeCopy snippet={`accentprimary=#dd8943"`} />
-                </td>
-              </tr>
-              <tr className="even:bg-gray-l4 border border-gray-l3">
-                <td>
-                  <Code snippet="accentsecondary" />
-                </td>
-                <td>
+                </>
+                <>HEX color 3 or 6 digits (must start with '#')</>
+                <CodeCopy snippet={`accentprimary=#dd8943"`} />
+              </Cells>
+              <Cells
+                type="td"
+                cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate`}
+              >
+                <Code snippet="accentsecondary" />
+                <>
                   Set the secondary accent color to your Nonprofit's brand
                   color.
-                </td>
-                <td>HEX color 3 or 6 digits (must start with '#')</td>
-                <td>
-                  <CodeCopy snippet={`accentsecondary="#dd8943"`} />
-                </td>
-              </tr>
-            </tbody>
+                </>
+                <>HEX color 3 or 6 digits (must start with '#')</>
+                <CodeCopy snippet={`accentsecondary="#dd8943"`} />
+              </Cells>
+            </TableSection>
           </table>
         </div>
       </div>
