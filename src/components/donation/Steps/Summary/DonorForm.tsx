@@ -4,6 +4,7 @@ import { CheckField, Field, Form, Label } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import type { Donor, Donor as FV } from "types/aws";
+import type { DonateMethodId } from "types/lists";
 import { string } from "yup";
 import ContinueBtn from "../common/ContinueBtn";
 import type { Mode } from "../types";
@@ -13,6 +14,7 @@ type Props = {
   classes?: string;
   donor?: Donor;
   mode: Mode;
+  method: DonateMethodId;
 };
 const ukTaxResidentKey: keyof FV = "ukTaxResident";
 const titleOptions: FV["title"][] = [
@@ -28,6 +30,7 @@ export default function DonorForm({
   onSubmit,
   donor,
   mode,
+  method,
 }: Props) {
   const methods = useForm<FV>({
     defaultValues: donor || { firstName: "", lastName: "", email: "" },
@@ -94,9 +97,11 @@ export default function DonorForm({
         }}
         required
       />
-      <CheckField<FV> name="ukTaxResident" classes="col-span-full mt-4">
-        UK Taxpayer? Supercharge your donation with gift aid
-      </CheckField>
+      {method !== "crypto" && (
+        <CheckField<FV> name="ukTaxResident" classes="col-span-full mt-4">
+          UK Taxpayer? Supercharge your donation with gift aid
+        </CheckField>
+      )}
       {ukTaxResident && (
         <>
           <Field<FV>
