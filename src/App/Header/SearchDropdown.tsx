@@ -45,7 +45,7 @@ export default function SearchDropdown({ classes = "", query }: Props) {
                   } satisfies EndowFilterState
                 }
                 key={v.name}
-                className="border border-blue-d1 px-6 py-2 rounded-full text-sm"
+                className="border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
                 to={appRoutes.marketplace}
               >
                 {v.name}
@@ -79,13 +79,13 @@ export default function SearchDropdown({ classes = "", query }: Props) {
                 <Link
                   to={`${appRoutes.marketplace}/${endow.id}`}
                   key={endow.id}
-                  className="flex items-center gap-4 border border-gray-l4 pr-6 rounded-full overflow-clip"
+                  className="flex items-center gap-4 border border-gray-l4 hover:bg-blue-l4 pr-6 rounded-full overflow-clip h-10"
                 >
                   <Image
                     src={endow.card_img}
-                    className="h-10 w-14 object-contain"
+                    className="h-full aspect-video object-cover hover:"
                   />
-                  <span>{endow.name}</span>
+                  <span className="text-navy-l1">{endow.name}</span>
                 </Link>
               ))}
               {hasMoreItems && (
