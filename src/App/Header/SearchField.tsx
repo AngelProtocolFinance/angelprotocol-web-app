@@ -1,15 +1,11 @@
 import Icon from "components/Icon";
 
-interface ISearchField {
+interface Props {
   text: string;
   onChange: (text: string) => void;
   classes?: string;
 }
-export default function SearchField({
-  classes = "",
-  text,
-  onChange,
-}: ISearchField) {
+export default function SearchField({ classes = "", text, onChange }: Props) {
   return (
     <div
       className={`${classes} flex items-center px-4 py-1 text-sm gap-1 font-heading`}
