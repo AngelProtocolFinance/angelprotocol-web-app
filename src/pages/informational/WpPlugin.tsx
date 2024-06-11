@@ -77,7 +77,7 @@ export default function WpPlugin() {
           The following are additional, optional configuration arguments that
           may be passed to further customize and configure your Donation Form
           settings and appearance from the default:
-          <div class="overflow-x-auto">
+          <div className="overflow-x-auto">
             <table className="w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2">
               <TableSection
                 type="thead"
