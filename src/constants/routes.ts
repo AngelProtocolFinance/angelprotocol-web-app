@@ -26,6 +26,7 @@ export enum appRoutes {
   //informational
   nonprofit_info = "/nonprofit",
   donor_info = "/donor",
+  wp_plugin = "/wp-plugin",
 }
 
 export const adminRoutes = {
