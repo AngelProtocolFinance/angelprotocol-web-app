@@ -62,6 +62,10 @@ export default function Summary(props: SummaryStep) {
                 lastName: user.lastName ?? "",
                 firstName: user.firstName ?? "",
                 email: user.email,
+                ukTaxResident: false,
+                title: { label: "Select Title", value: "" },
+                zipCode: "",
+                streetAddress: "",
               }
             : undefined)
         }

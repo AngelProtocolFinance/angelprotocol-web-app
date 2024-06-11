@@ -1,3 +1,4 @@
+import type { OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import type { Ensure } from "types/utils";
 import type { Token } from ".";
@@ -6,6 +7,12 @@ export type Donor = {
   email: string;
   firstName: string;
   lastName: string;
+  title: OptionType<"Mr" | "Mrs" | "Ms" | "Mx" | "">;
+  ukTaxResident: boolean;
+  /** initially `""` */
+  zipCode: string;
+  /** initially `""` */
+  streetAddress: string;
 };
 
 export type GuestDonor = {
