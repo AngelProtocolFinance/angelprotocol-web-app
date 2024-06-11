@@ -1,7 +1,8 @@
 import Icon from "components/Icon";
 import { DappLogo } from "components/Image";
 import { appRoutes } from "constants/routes";
-import { useLocation } from "react-router-dom";
+import { categories } from "constants/unsdgs";
+import { Link, useLocation } from "react-router-dom";
 import type { Link as TLink } from "../types";
 import NavDropdown from "./NavDropdown";
 import UserMenu from "./UserMenu";
@@ -53,9 +54,27 @@ export default function Header({ links, classes }: Props) {
           <NavDropdown links={links} />
         </div>
       </div>
-      <div className="absolute hidden group-has-[input:focus]:block hover:block bg-white mt-4 container left-1/2 -translate-x-1/2 rounded-lg p-10">
-        form
-      </div>
+      {location.pathname !== appRoutes.marketplace && (
+        <div className="absolute hidden group-has-[input:focus]:block hover:block bg-white mt-4 container left-1/2 -translate-x-1/2 rounded-lg p-10 shadow-2xl shadow-black/20">
+          <h4 className="mb-4">Top categories</h4>
+          <div className="flex flex-wrap gap-2">
+            {Object.values(categories).map((v) => (
+              <Link
+                className="border border-blue-d1 px-6 py-2 rounded-full text-sm"
+                to={appRoutes.marketplace}
+              >
+                {v.name}
+              </Link>
+            ))}
+          </div>
+          <Link
+            className="text-blue-d1 font-medium text-lg text-center mt-8 block"
+            to={appRoutes.marketplace}
+          >
+            Explore all Categories
+          </Link>
+        </div>
+      )}
     </header>
   );
 }
