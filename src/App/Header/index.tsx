@@ -18,19 +18,17 @@ export default function Header({ links, classes }: Props) {
   const [query, setQuery] = useState("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
-  const { data, currentData, ...searchState } = useEndowmentCardsQuery(
-    {
-      query: debouncedQuery,
-      page: 1,
-    },
-    { skip: isDebouncing }
-  );
+  const { currentData, isLoading, isFetching, isError, isUninitialized } =
+    useEndowmentCardsQuery(
+      {
+        query: debouncedQuery,
+        page: 1,
+      },
+      { skip: isDebouncing }
+    );
 
   const isCategoriesShown =
-    !query &&
-    !isDebouncing &&
-    !searchState.isLoading &&
-    !searchState.isFetching;
+    !query && !isDebouncing && !isLoading && !isFetching;
 
   return (
     <header
@@ -51,7 +49,7 @@ export default function Header({ links, classes }: Props) {
     >
       <div className="grid relative items-center grid-cols-2 gap-4 padded-container bg-white rounded-full py-2">
         <DappLogo classes="w-48 h-12" />
-        {!location.pathname.startsWith(appRoutes.marketplace) && (
+        {location.pathname === appRoutes.home && (
           <div className="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex items-center px-4 py-1 text-sm gap-1 font-heading">
             <label htmlFor="__endow-search">
               <Icon type="Search" className="mr-1 text-2xl text-gray" />
@@ -76,7 +74,7 @@ export default function Header({ links, classes }: Props) {
           <NavDropdown links={links} />
         </div>
       </div>
-      {!location.pathname.startsWith(appRoutes.marketplace) && (
+      {location.pathname === appRoutes.home && (
         <div className="absolute hidden group-has-[input:focus]:block hover:block bg-white mt-4 container left-1/2 -translate-x-1/2 rounded-lg p-10 shadow-2xl shadow-black/20">
           {isCategoriesShown ? (
             <>
@@ -103,11 +101,13 @@ export default function Header({ links, classes }: Props) {
             <QueryLoader
               queryState={{
                 data: currentData?.Items || [],
-                ...searchState,
+                isLoading: isLoading || isUninitialized,
+                isFetching: isFetching || isUninitialized,
+                isError,
               }}
               messages={{
-                loading: "Searching..",
-                fetching: "Searching..",
+                loading: "Searching...",
+                fetching: "Searching...",
                 empty: "No endowments found",
               }}
             >
