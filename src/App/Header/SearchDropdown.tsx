@@ -5,6 +5,8 @@ import { categories } from "constants/unsdgs";
 import useDebouncer from "hooks/useDebouncer";
 import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
+import type { EndowFilterState } from "types/app";
+import type { SDGGroup } from "types/lists";
 
 interface Props {
   query: string;
@@ -34,8 +36,14 @@ export default function SearchDropdown({ classes = "", query }: Props) {
         <>
           <h4 className="mb-4">Top categories</h4>
           <div className="flex flex-wrap gap-2">
-            {Object.values(categories).map((v) => (
+            {Object.entries(categories).map(([group, v]) => (
               <Link
+                state={
+                  {
+                    sdgGroup: +group as SDGGroup,
+                    searchText: "",
+                  } satisfies EndowFilterState
+                }
                 key={v.name}
                 className="border border-blue-d1 px-6 py-2 rounded-full text-sm"
                 to={appRoutes.marketplace}
@@ -84,6 +92,9 @@ export default function SearchDropdown({ classes = "", query }: Props) {
                 <Link
                   className="w-full text-blue-d1 font-medium text-lg text-center mt-8 block"
                   to={appRoutes.marketplace}
+                  state={
+                    { searchText: debouncedQuery } satisfies EndowFilterState
+                  }
                 >
                   View all results
                 </Link>

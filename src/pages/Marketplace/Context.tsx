@@ -28,7 +28,7 @@ type Update =
   | { verified: boolean[] }
   | { countries: string[] };
 
-type State = UnionToIntersection<Update>;
+export type State = UnionToIntersection<Update>;
 
 interface IContext {
   state: State;
@@ -53,8 +53,11 @@ function reducer(state: State, update: Update | "reset"): State {
 const INIT = "INIT" as any;
 const context = createContext(INIT as IContext);
 
-export function Context(props: PropsWithChildren) {
-  const [state, update] = useReducer(reducer, initialState);
+export function Context(props: PropsWithChildren<{ init?: Partial<State> }>) {
+  const [state, update] = useReducer(reducer, {
+    ...initialState,
+    ...props.init,
+  });
   return (
     <context.Provider value={{ state, update }}>
       {props.children}
