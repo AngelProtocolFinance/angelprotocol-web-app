@@ -3,12 +3,10 @@ import countries from "assets/countries/all.json";
 import Icon from "components/Icon";
 import { isEmpty } from "helpers";
 import { useState } from "react";
-import { setCountries } from "slices/components/marketFilter";
-import { useGetter, useSetter } from "store/accessors";
+import { useMarketplaceContext } from "../Context";
 
 export default function Countries() {
-  const dispatch = useSetter();
-  const selected = useGetter((state) => state.component.marketFilter.countries);
+  const { state, update } = useMarketplaceContext();
   const [searchText, setSearchText] = useState("");
 
   const filteredOptions = countries
@@ -16,12 +14,12 @@ export default function Countries() {
     .filter((c) => c.toLowerCase().includes(searchText.toLowerCase()));
 
   function handleChange(countries: string[]) {
-    dispatch(setCountries(countries));
+    update({ countries });
   }
 
   return (
     <Combobox
-      value={selected}
+      value={state.countries}
       onChange={handleChange}
       as="div"
       className="relative"
@@ -32,11 +30,11 @@ export default function Countries() {
         className="flex items-center field-input justify-between cursor-pointer p-1 focus-within:border-gray-d1 focus-within:dark:border-blue-l2"
       >
         <div className="flex flex-wrap gap-2 h-full">
-          {selected.map((opt) => (
+          {state.countries.map((opt) => (
             <SelectedOption
               key={opt}
               option={opt}
-              selected={selected}
+              selected={state.countries}
               onChange={handleChange}
             />
           ))}
