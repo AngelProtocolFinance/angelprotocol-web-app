@@ -4,6 +4,7 @@ import type { SDGGroup } from "./lists";
 
 export type EndowFilterState = {
   sdgGroup?: SDGGroup;
+  country?: string;
   /** may be empty */
   searchText: string;
 };

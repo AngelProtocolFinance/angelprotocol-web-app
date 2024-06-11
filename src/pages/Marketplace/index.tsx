@@ -9,11 +9,15 @@ import Toolbar from "./Toolbar";
 
 export default function Marketplace() {
   const { state } = useLocation();
-  const { searchText = "", sdgGroup } =
-    (state as undefined | EndowFilterState) || {};
+  const {
+    searchText = "",
+    sdgGroup,
+    country,
+  } = (state as undefined | EndowFilterState) || {};
   const initState: Partial<State> = {
     searchText,
     sdgGroups: sdgGroup ? [sdgGroup] : [],
+    countries: country ? [country] : [],
   };
 
   return (
