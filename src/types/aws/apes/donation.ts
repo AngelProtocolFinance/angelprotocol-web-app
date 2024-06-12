@@ -1,19 +1,23 @@
-import type { OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import type { Ensure } from "types/utils";
 import type { Token } from ".";
+
+export type DonorTitle = "Mr" | "Mrs" | "Ms" | "Mx" | "";
+
+export type UkDonorAttributes =
+  | {
+      ukTaxResident: true;
+      title: DonorTitle;
+      zipCode: string;
+      streetAddress: string;
+    }
+  | { ukTaxResident?: never };
 
 export type Donor = {
   email: string;
   firstName: string;
   lastName: string;
-  title: OptionType<"Mr" | "Mrs" | "Ms" | "Mx" | "">;
-  ukTaxResident: boolean;
-  /** initially `""` */
-  zipCode: string;
-  /** initially `""` */
-  streetAddress: string;
-};
+} & UkDonorAttributes;
 
 export type GuestDonor = {
   email: string;

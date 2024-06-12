@@ -4,6 +4,7 @@ import { useDonationState } from "../Context";
 import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
+import { initDonorTitleOption } from "../common/constants";
 import type { SummaryStep } from "../types";
 import DonorForm from "./DonorForm";
 
@@ -64,7 +65,7 @@ export default function Summary(props: SummaryStep) {
                 firstName: user.firstName ?? "",
                 email: user.email,
                 ukTaxResident: false,
-                title: { label: "Select Title", value: "" },
+                title: initDonorTitleOption,
                 zipCode: "",
                 streetAddress: "",
               }

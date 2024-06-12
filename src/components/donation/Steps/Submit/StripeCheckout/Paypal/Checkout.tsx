@@ -9,12 +9,13 @@ import {
   useCapturePayPalOrderMutation,
   usePaypalOrderMutation,
 } from "services/apes";
+import { toDonor } from "../../../common/constants";
 import type { StripeCheckoutStep } from "../../../types";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout(props: StripeCheckoutStep) {
-  const { details, liquidSplitPct, tip, donor, init } = props;
+  const { details, liquidSplitPct, tip, donor: fvDonor, init } = props;
 
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
@@ -83,7 +84,7 @@ export default function Checkout(props: StripeCheckoutStep) {
           currency: details.currency.code,
           endowmentId: init.recipient.id,
           splitLiq: liquidSplitPct,
-          donor,
+          donor: toDonor(fvDonor),
           source: init.source,
           ...(details.program.value && { programId: details.program.value }),
         }).unwrap()

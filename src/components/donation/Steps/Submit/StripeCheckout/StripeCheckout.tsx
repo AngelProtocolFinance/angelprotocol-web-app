@@ -7,6 +7,7 @@ import { useStripePaymentIntentQuery } from "services/apes";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
+import { toDonor } from "../../common/constants";
 import type { StripeCheckoutStep } from "../../types";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
@@ -16,7 +17,7 @@ import Checkout from "./Checkout";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { init, details, liquidSplitPct, tip } = props;
+  const { init, details, liquidSplitPct, tip, donor: fvDonor } = props;
   const { setState } = useDonationState();
 
   const {
@@ -32,7 +33,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     currency: details.currency.code,
     endowmentId: init.recipient.id,
     splitLiq: liquidSplitPct,
-    donor: props.donor,
+    donor: toDonor(fvDonor),
     source: init.source,
     ...(details.program.value && { programId: details.program.value }),
   });

@@ -4,11 +4,12 @@ import type { OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
-import { initDetails } from "./common/constants";
+import { initDetails, initDonorTitleOption } from "./common/constants";
 import type {
   Config,
   DonationRecipient,
   DonationState,
+  FormDonor,
   Init,
   Mode,
 } from "./types";
@@ -74,6 +75,19 @@ function initialState({
     value: intent.programId ?? programId ?? "",
   };
 
+  const { email, firstName, lastName, ...d } = intent.donor;
+  const formDonor: FormDonor = {
+    email,
+    firstName,
+    lastName,
+    ukTaxResident: d.ukTaxResident ?? false,
+    title: d.ukTaxResident
+      ? { label: d.title, value: d.title }
+      : initDonorTitleOption,
+    streetAddress: d.ukTaxResident ? d.streetAddress : "",
+    zipCode: d.ukTaxResident ? d.zipCode : "",
+  };
+
   if ("chainId" in intent) {
     return {
       init,
@@ -93,7 +107,7 @@ function initialState({
       },
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
-      donor: intent.donor,
+      donor: formDonor,
     };
   }
   return {
@@ -112,6 +126,6 @@ function initialState({
     },
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },
-    donor: intent.donor,
+    donor: formDonor,
   };
 }

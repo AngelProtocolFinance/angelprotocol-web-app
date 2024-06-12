@@ -3,22 +3,24 @@ import { Selector } from "components/Selector";
 import { CheckField, Field, Form, Label } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
-import type { Donor, Donor as FV } from "types/aws";
 import type { DonateMethodId } from "types/lists";
 import { string } from "yup";
 import ContinueBtn from "../common/ContinueBtn";
-import type { Mode } from "../types";
+import { initDonorTitleOption } from "../common/constants";
+import type { FormDonor, Mode } from "../types";
+
+type FV = FormDonor;
 
 type Props = {
   onSubmit(donor: FV): void;
   classes?: string;
-  donor?: Donor;
+  donor?: FormDonor;
   mode: Mode;
   method: DonateMethodId;
 };
 const ukTaxResidentKey: keyof FV = "ukTaxResident";
 const titleOptions: FV["title"][] = [
-  { label: "Select title", value: "" },
+  initDonorTitleOption,
   { label: "Mr", value: "Mr" },
   { label: "Mrs", value: "Mrs" },
   { label: "Ms", value: "Ms" },
@@ -33,7 +35,15 @@ export default function DonorForm({
   method,
 }: Props) {
   const methods = useForm<FV>({
-    defaultValues: donor || { firstName: "", lastName: "", email: "" },
+    defaultValues: donor || {
+      firstName: "",
+      lastName: "",
+      email: "",
+      ukTaxResident: false,
+      title: initDonorTitleOption,
+      streetAddress: "",
+      zipCode: "",
+    },
     resolver: yupResolver(
       schema<FV>({
         firstName: string().required("Please enter your first name"),

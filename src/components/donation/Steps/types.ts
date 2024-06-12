@@ -1,5 +1,6 @@
 import type {
   Donor,
+  DonorTitle,
   Endowment,
   FiatPaymentFrequency,
   GuestDonor,
@@ -101,9 +102,17 @@ export type TipStep = {
   tip?: { value: number; format: TipFormat };
 } & From<SplitsStep>;
 
+export type FormDonor = Pick<Donor, "email" | "firstName" | "lastName"> & {
+  ukTaxResident: boolean;
+  title: OptionType<DonorTitle>;
+  /** initially empty `''` */
+  zipCode: string;
+  /** initially empty `''` */
+  streetAddress: string;
+};
 export type SummaryStep = {
   step: "summary";
-  donor?: Donor;
+  donor?: FormDonor;
 } & From<TipStep, "tip">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
