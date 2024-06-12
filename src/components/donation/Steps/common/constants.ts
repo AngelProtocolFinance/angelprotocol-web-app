@@ -82,14 +82,16 @@ export const initDonorTitleOption: OptionType<FormDonor["title"]["value"]> = {
 
 export const toDonor = (fv: FormDonor): Donor => {
   return {
+    title: fv.title.value,
     email: fv.email,
     firstName: fv.firstName,
     lastName: fv.lastName,
-    ukDonorDetails: fv.ukTaxResident
+    address: fv.ukTaxResident
       ? {
-          title: fv.title.value,
           streetAddress: fv.streetAddress,
+          city: "",
           zipCode: fv.zipCode,
+          country: "United Kingdom",
         }
       : undefined,
   };

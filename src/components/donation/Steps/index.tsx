@@ -80,12 +80,10 @@ function initialState({
     email,
     firstName,
     lastName,
-    ukTaxResident: !!d.ukDonorDetails,
-    title: d.ukDonorDetails
-      ? { label: d.ukDonorDetails.title, value: d.ukDonorDetails.title }
-      : initDonorTitleOption,
-    streetAddress: d.ukDonorDetails?.streetAddress ?? "",
-    zipCode: d.ukDonorDetails?.zipCode ?? "",
+    ukTaxResident: d.address?.country === "United Kingdom",
+    title: d.title ? { label: d.title, value: d.title } : initDonorTitleOption,
+    streetAddress: d.address?.streetAddress ?? "",
+    zipCode: d.address?.zipCode ?? "",
   };
 
   if ("chainId" in intent) {
