@@ -1,6 +1,6 @@
 import { polygon, polygonAmoy } from "constants/chains";
 import { IS_TEST } from "constants/env";
-import type { Donor, UkDonorAttributes } from "types/aws";
+import type { Donor } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonateMethodId } from "types/lists";
@@ -80,25 +80,17 @@ export const initDonorTitleOption: OptionType<FormDonor["title"]["value"]> = {
   value: "",
 };
 
-export const toDonor = ({
-  email,
-  firstName,
-  lastName,
-  ...fv
-}: FormDonor): Donor => {
-  const ukAttributes: UkDonorAttributes = fv.ukTaxResident
-    ? {
-        ukTaxResident: true,
-        title: fv.title.value,
-        streetAddress: fv.streetAddress,
-        zipCode: fv.zipCode,
-      }
-    : {};
-
+export const toDonor = (fv: FormDonor): Donor => {
   return {
-    email,
-    firstName,
-    lastName,
-    ...ukAttributes,
+    email: fv.email,
+    firstName: fv.firstName,
+    lastName: fv.lastName,
+    ukDonorDetails: fv.ukTaxResident
+      ? {
+          title: fv.title.value,
+          streetAddress: fv.streetAddress,
+          zipCode: fv.zipCode,
+        }
+      : undefined,
   };
 };

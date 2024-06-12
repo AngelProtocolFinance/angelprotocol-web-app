@@ -4,20 +4,18 @@ import type { Token } from ".";
 
 export type DonorTitle = "Mr" | "Mrs" | "Ms" | "Mx" | "";
 
-export type UkDonorAttributes =
-  | {
-      ukTaxResident: true;
-      title: DonorTitle;
-      zipCode: string;
-      streetAddress: string;
-    }
-  | { ukTaxResident?: never };
+export interface UkDonorDetails {
+  title: DonorTitle;
+  zipCode: string;
+  streetAddress: string;
+}
 
 export type Donor = {
   email: string;
   firstName: string;
   lastName: string;
-} & UkDonorAttributes;
+  ukDonorDetails?: UkDonorDetails;
+};
 
 export type GuestDonor = {
   email: string;
