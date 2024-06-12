@@ -43,7 +43,7 @@ export default function App() {
    * when `A.` happens and user is on a protected page (wrapped with `withAuth` HOC),
    * user will be redirected to the signin page
    */
-  usePingQuery({}, { pollingInterval: 5 * 60 * 60 });
+  usePingQuery({}, { pollingInterval: 5 * 60 * 60 * 1000 });
   const location = useLocation();
   useScrollTop(location.pathname);
 
