@@ -1,10 +1,11 @@
 import { polygon, polygonAmoy } from "constants/chains";
 import { IS_TEST } from "constants/env";
+import type { Donor } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonateMethodId } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
-import type { DonationDetails } from "../types";
+import type { DonationDetails, FormDonor } from "../types";
 
 export const DEFAULT_PROGRAM: OptionType<""> = {
   label: "General Donation",
@@ -72,4 +73,26 @@ export const initDetails = (
       };
     }
   }
+};
+
+export const initDonorTitleOption: OptionType<FormDonor["title"]["value"]> = {
+  label: "Select title",
+  value: "",
+};
+
+export const toDonor = (fv: FormDonor): Donor => {
+  return {
+    title: fv.title.value,
+    email: fv.email,
+    firstName: fv.firstName,
+    lastName: fv.lastName,
+    address: fv.ukTaxResident
+      ? {
+          streetAddress: fv.streetAddress,
+          city: "",
+          zipCode: fv.zipCode,
+          country: "United Kingdom",
+        }
+      : undefined,
+  };
 };

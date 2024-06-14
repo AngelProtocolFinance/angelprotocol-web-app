@@ -8,6 +8,7 @@ import { chainIdIsNotSupported } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
 import { useDonationState } from "../../../Context";
 import ContinueBtn from "../../../common/ContinueBtn";
+import { toDonor } from "../../../common/constants";
 import type { CryptoSubmitStep } from "../../../types";
 import { type EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
@@ -22,7 +23,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   const { submitCrypto } = useDonationState();
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
-  const { details, tip, liquidSplitPct, donor, init } = donation;
+  const { details, tip, liquidSplitPct, donor: fvDonor, init } = donation;
   const sender = wallet?.address;
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
@@ -56,7 +57,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       walletAddress: wallet?.address ?? "",
       endowmentId: init.recipient.id,
       source: init.config ? "bg-widget" : "bg-marketplace",
-      donor,
+      donor: toDonor(fvDonor),
       ...(details.program.value && { programId: details.program.value }),
     },
     { skip: !wallet?.address }

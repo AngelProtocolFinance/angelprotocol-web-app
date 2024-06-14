@@ -8,6 +8,7 @@ import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
 import { useCreateCryptoIntentQuery } from "services/apes";
 import ContinueBtn from "../../common/ContinueBtn";
+import { toDonor } from "../../common/constants";
 import type { CryptoSubmitStep } from "../../types";
 
 type Props = {
@@ -17,7 +18,7 @@ type Props = {
 export default function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
 
-  const { details, init, tip, liquidSplitPct, donor } = donation;
+  const { details, init, tip, liquidSplitPct, donor: fvDonor } = donation;
 
   const { data: intent, ...intentState } = useCreateCryptoIntentQuery({
     transactionId: init.intentId,
@@ -29,7 +30,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     splitLiq: liquidSplitPct,
     endowmentId: init.recipient.id,
     source: init.config ? "bg-widget" : "bg-marketplace",
-    donor,
+    donor: toDonor(fvDonor),
   });
 
   return (

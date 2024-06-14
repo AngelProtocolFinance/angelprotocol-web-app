@@ -3,6 +3,7 @@ import type { ChainID } from "types/chain";
 type DonorAddress = {
   line1: string;
   line2?: string;
+  /** may be empty `""` */
   city?: string;
   state?: string;
   zipCode?: string;

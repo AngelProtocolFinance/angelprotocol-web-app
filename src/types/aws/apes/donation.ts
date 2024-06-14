@@ -2,10 +2,23 @@ import type { DonationSource } from "types/lists";
 import type { Ensure } from "types/utils";
 import type { Token } from ".";
 
+export type DonorTitle = "Mr" | "Mrs" | "Ms" | "Mx" | "";
+
+export interface DonorAddress {
+  streetAddress: string;
+  /** may be empty */
+  city: string;
+  state?: String;
+  zipCode: string;
+  country: string;
+}
+
 export type Donor = {
+  title?: DonorTitle;
   email: string;
   firstName: string;
   lastName: string;
+  address?: DonorAddress;
 };
 
 export type GuestDonor = {
