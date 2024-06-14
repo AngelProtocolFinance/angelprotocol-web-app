@@ -123,7 +123,7 @@ export default function DonorForm({
           />
           <Field<FV>
             name="zipCode"
-            label="Zip code"
+            label="Postal code"
             placeholder="e.g. BG21 1BG"
             classes={{ container: "col-span-full field-donate" }}
             required
