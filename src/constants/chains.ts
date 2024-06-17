@@ -13,6 +13,7 @@ const baseProxyURL = "https://59vigz9r91.execute-api.us-east-1.amazonaws.com";
 export const polygon: SupportedChain = {
   isTest: false,
   id: "137",
+  coingeckoPlatformId: "polygon-pos",
   brand: "polygon",
   name: "Polygon",
   rpc: baseProxyURL + "/polygon",
@@ -29,6 +30,7 @@ export const polygon: SupportedChain = {
 export const ethereum: SupportedChain = {
   isTest: false,
   id: "1",
+  coingeckoPlatformId: "ethereum",
   brand: "ethereum",
   name: "Ethereum",
   rpc: baseProxyURL + "/ethereum",
@@ -45,6 +47,7 @@ export const ethereum: SupportedChain = {
 export const arbitrum: SupportedChain = {
   isTest: false,
   id: "42161",
+  coingeckoPlatformId: "arbitrum-one",
   brand: "arbitrum",
   name: "Arbitrum One",
   rpc: baseProxyURL + "/arbitrum",
@@ -61,6 +64,7 @@ export const arbitrum: SupportedChain = {
 export const binance: SupportedChain = {
   isTest: false,
   id: "56",
+  coingeckoPlatformId: "binance-smart-chain",
   brand: "binance",
   name: "Binance",
   rpc: baseProxyURL + "/bsc",
@@ -77,6 +81,7 @@ export const binance: SupportedChain = {
 export const juno: SupportedChain = {
   isTest: false,
   id: "juno-1",
+  coingeckoPlatformId: "juno",
   brand: "juno",
   name: "Juno",
   lcd: "https://juno-api.polkachu.com",
@@ -93,6 +98,7 @@ export const juno: SupportedChain = {
 export const terraMainnet: SupportedChain = {
   isTest: false,
   id: "phoenix-1",
+  coingeckoPlatformId: "terra",
   brand: "terra",
   name: "Terra",
   lcd: "https://phoenix-lcd.terra.dev",
@@ -111,6 +117,7 @@ export const polygonAmoy: SupportedChain = {
   isTest: true,
   id: "80002",
   brand: "polygonAmoy",
+  coingeckoPlatformId: "polygon-pos",
   name: "Polygon Amoy Testnet",
   rpc: baseProxyURL + "/polygonAmoy",
   lcd: "",
@@ -126,6 +133,7 @@ export const polygonAmoy: SupportedChain = {
 export const sepolia: SupportedChain = {
   isTest: true,
   id: "11155111",
+  coingeckoPlatformId: "ethereum",
   brand: "sepolia",
   name: "Ethereum Sepolia Testnet",
   rpc: baseProxyURL + "/sepolia",
@@ -142,6 +150,7 @@ export const sepolia: SupportedChain = {
 export const arbitrumSepolia: SupportedChain = {
   isTest: true,
   id: "421614",
+  coingeckoPlatformId: "arbitrum-one",
   brand: "arbitrum",
   name: "Arbitrum Sepolia",
   rpc: baseProxyURL + "/arbitrum-test",
@@ -158,6 +167,7 @@ export const arbitrumSepolia: SupportedChain = {
 export const binanceTestnet: SupportedChain = {
   isTest: true,
   id: "97",
+  coingeckoPlatformId: "binance-smart-chain",
   brand: "binance",
   name: "Binance Testnet",
   rpc: baseProxyURL + "/bsc-test",
@@ -174,6 +184,7 @@ export const binanceTestnet: SupportedChain = {
 export const terraTestnet: SupportedChain = {
   isTest: true,
   id: "pisco-1",
+  coingeckoPlatformId: "terra",
   brand: "terra",
   name: "Terra Pisco",
   lcd: "https://pisco-lcd.terra.dev",
@@ -192,11 +203,13 @@ export const bitcoin: UnsupportedChain = {
   id: `btc-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Bitcoin",
   blockExplorer: "https://btcscan.org",
+  coingeckoPlatformId: null,
 };
 
 export const solana: UnsupportedChain = {
   isTest: IS_TEST,
   id: `sol-${IS_TEST ? "testnet" : "mainnet"}`,
+  coingeckoPlatformId: "solana",
   name: "Solana",
   blockExplorer: "https://solscan.io",
 };
@@ -205,12 +218,14 @@ export const ripple: UnsupportedChain = {
   isTest: IS_TEST,
   id: `xrp-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Ripple",
+  coingeckoPlatformId: "xrp",
   blockExplorer: "https://xrpscan.com",
 };
 
 export const doge: UnsupportedChain = {
   isTest: IS_TEST,
   id: `doge-${IS_TEST ? "testnet" : "mainnet"}`,
+  coingeckoPlatformId: null,
   name: "Doge",
   blockExplorer: "https://dogechain.info",
 };

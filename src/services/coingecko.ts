@@ -11,12 +11,10 @@ type Coin = {
   id: string;
   /** e.g. Ethereum */
   name: string;
-  /** e.g. ethereum */
-  api_symbol: "ethereum";
   /** e.g. ETH */
   symbol: string;
-  /** e.g. 2 */
-  market_cap_rank: number;
+  /**  */
+  platforms: { [platformId: string]: string };
   /** images */
   thumb: string;
   large: string;
@@ -32,8 +30,8 @@ export const coingecko = createApi({
       query: (coinId) => `api/v3/simple/price?ids=${coinId}&vs_currencies=usd`,
       transformResponse: (res: Quotation, _, coinId) => res[coinId].usd,
     }),
-    tokens: builder.query<Coin[], string>({
-      query: (searchText) => `api/v3/search?query=${searchText}`,
+    tokens: builder.query<Coin[], unknown>({
+      query: () => `api/v3/coins-list?include_platform=true&status=active`,
       transformResponse: (res: { coins: Coin[] }) => res.coins,
     }),
   }),

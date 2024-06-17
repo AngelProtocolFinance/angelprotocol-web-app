@@ -1,5 +1,4 @@
 import { Combobox } from "@headlessui/react";
-import { DrawerIcon } from "components/Icon";
 import { Label } from "components/form";
 import { unpack } from "helpers";
 import { useState } from "react";
@@ -51,16 +50,6 @@ export default function TokenSearch(props: Props) {
           onChange={(event) => setQuery(event.target.value)}
           spellCheck={false}
         />
-        <Combobox.Button className="flex items-center px-2">
-          {({ open }) => (
-            <DrawerIcon
-              isOpen={open}
-              size={25}
-              className="h-full w-full"
-              aria-hidden
-            />
-          )}
-        </Combobox.Button>
 
         <Options
           searchText={query}

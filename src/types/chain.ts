@@ -47,6 +47,7 @@ type IBCDenom = string;
 export type SupportedChain = {
   isTest: boolean;
   id: SupportedChainId;
+  coingeckoPlatformId: string;
   brand: string; //
   name: string;
   rpc: string;
@@ -66,6 +67,8 @@ export type UnsupportedChain = Pick<
   "isTest" | "name" | "blockExplorer"
 > & {
   id: UnsupportedChainId;
+  /** null: erc20 token doesn't exist */
+  coingeckoPlatformId: string | null;
 };
 export type SupportedChains = { [K in SupportedChainId]: SupportedChain };
 export type UnsupportedChains = {
