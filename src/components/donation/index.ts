@@ -4,5 +4,9 @@ export { Steps } from "./Steps";
 export { default as Share } from "./Steps/Share";
 export { StepsCarousel } from "./StepsCarousel";
 export { ProgramSelector } from "./Steps/common/ProgramSelector";
-export { DEFAULT_PROGRAM, initDetails } from "./Steps/common/constants";
+export {
+  DEFAULT_PROGRAM,
+  initDetails,
+  initTokenOption,
+} from "./Steps/common/constants";
 export { LockedSplitSlider } from "./Steps/Splits";

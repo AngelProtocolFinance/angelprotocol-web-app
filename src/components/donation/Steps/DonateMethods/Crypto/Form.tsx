@@ -11,6 +11,7 @@ import { ProgramSelector } from "../../common/ProgramSelector";
 import { initTokenOption } from "../../common/constants";
 import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
+import TokenSearch from "./TokenSearch";
 import type { DonateValues } from "./types";
 
 export default function Form(props: CryptoFormStep) {
@@ -73,6 +74,8 @@ export default function Form(props: CryptoFormStep) {
         }}
         withMininum
       />
+
+      <TokenSearch value={initTokenOption} onChange={(v) => console.log(v)} />
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
         <ProgramSelector
