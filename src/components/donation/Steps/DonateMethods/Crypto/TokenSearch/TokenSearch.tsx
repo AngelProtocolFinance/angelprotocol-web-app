@@ -16,6 +16,7 @@ type Props = {
   classes?: Classes;
   disabled?: boolean;
   required?: boolean;
+  coinGeckoPlatformId: string;
   value: TokenWithAmount;
   onChange: (token: TokenWithAmount) => void;
 };
@@ -54,6 +55,7 @@ export default function TokenSearch(props: Props) {
         <Options
           searchText={query}
           classes={`col-span-full mt-2 ${style.options}`}
+          platFormId={props.coinGeckoPlatformId}
         />
       </Combobox>
     </div>

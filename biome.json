@@ -4,7 +4,12 @@
     "enabled": true
   },
   "files": {
-    "ignore": ["./package.json", "./public/scripts/*"]
+    "ignore": [
+      "./biome.json",
+      "./package.json",
+      "./public/scripts/*",
+      "./src/components/donation/Steps/DonateMethods/Crypto/TokenSearch/coins.json"
+    ]
   },
   "linter": {
     "enabled": true,
