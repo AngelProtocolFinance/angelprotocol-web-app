@@ -4,12 +4,7 @@
     "enabled": true
   },
   "files": {
-    "ignore": [
-      "./biome.json",
-      "./package.json",
-      "./public/scripts/*",
-      "./src/components/donation/Steps/DonateMethods/Crypto/TokenSearch/coins.json"
-    ]
+    "ignore": ["./package.json", "./public/scripts/*"]
   },
   "linter": {
     "enabled": true,
