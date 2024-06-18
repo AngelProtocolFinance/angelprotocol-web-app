@@ -35,7 +35,7 @@ export default function TokenSearch(props: Props) {
   const submitDisabled = isGettingTokenDetails || token.id === initToken.id;
 
   return (
-    <Modal className="grid field fixed-center z-10 bg-white p-4 rounded">
+    <Modal className="grid field w-[95%] max-w-xs fixed-center z-10 bg-white px-6 py-4 rounded-lg">
       <Label htmlFor="coingecko-search-text">Search token</Label>
       <Combobox
         by="id"

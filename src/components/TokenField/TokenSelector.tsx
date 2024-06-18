@@ -22,7 +22,6 @@ export default function TokenSelector({
       </Combobox.Button>
 
       <TokenOptions
-        amount={selectedToken.amount}
         onChange={onChange}
         classes="absolute right-0 top-2 z-10 mt-10"
         selectedChainId={selectedChainId}

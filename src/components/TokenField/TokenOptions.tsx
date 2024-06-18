@@ -13,7 +13,6 @@ import TokenSearch from "./TokenSearch";
 
 type Props = {
   selectedChainId: ChainID;
-  amount: string;
   onChange: (token: TokenWithAmount) => void;
   classes?: string;
 };
@@ -23,7 +22,6 @@ const container =
 export default function TokenOptions({
   classes = "",
   selectedChainId,
-  amount,
   onChange,
 }: Props) {
   const [searchText, setSearchText] = useState("");
@@ -112,7 +110,7 @@ export default function TokenOptions({
                     coingeckoPlatformId === terraMainnet.coingeckoPlatformId
                       ? "cw20"
                       : "erc20",
-                  amount,
+                  amount: "", //should reset previously selected amount
                 };
                 onChange(option);
               },
