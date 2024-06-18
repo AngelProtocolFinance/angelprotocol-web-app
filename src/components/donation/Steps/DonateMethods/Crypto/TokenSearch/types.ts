@@ -5,6 +5,6 @@ export type CoinGeckoToken = {
   symbol: string;
   /** e.g. `Zus` */
   name: string;
-  /** e.g. `{ "ethereum": "0x123..."}` */
+  /** e.g. `{ "ethereum": "0x1234..."}` */
   platforms: { [platformId: string]: string };
 };
