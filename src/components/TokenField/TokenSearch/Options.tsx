@@ -19,10 +19,7 @@ export default function Options({
   const fuse = useMemo(() => {
     return new Fuse<CoinGeckoToken>(
       coins.filter((f) => platFormId in f.platforms),
-      {
-        keys: ["name", "symbol"],
-        minMatchCharLength: 2,
-      }
+      { keys: ["name", "symbol"] }
     );
   }, [platFormId]);
 
