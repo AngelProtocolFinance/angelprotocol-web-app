@@ -135,6 +135,9 @@ export const apes = createApi({
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
     }),
+    topCountries: builder.query<string[], unknown>({
+      query: () => "top-countries",
+    }),
   }),
 });
 
@@ -149,6 +152,7 @@ export const {
   useEndowBalanceQuery,
   useStripePaymentStatusQuery,
   useTokensQuery,
+  useTopCountriesQuery,
   util: {
     invalidateTags: invalidateApesTags,
     updateQueryData: updateApesQueryData,
