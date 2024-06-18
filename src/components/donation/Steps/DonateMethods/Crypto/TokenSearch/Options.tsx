@@ -1,7 +1,8 @@
 import { Combobox } from "@headlessui/react";
 import { initTokenOption } from "components/donation";
+import Fuse from "fuse.js/basic";
 import useDebouncer from "hooks/useDebouncer";
-import React from "react";
+import React, { useMemo } from "react";
 import coins from "./coins.json";
 import type { CoinGeckoToken } from "./types";
 
@@ -16,25 +17,23 @@ export default function Options({
   searchText,
   platFormId,
 }: Props) {
-  const [debounced] = useDebouncer(searchText, 500);
+  const fuse = useMemo(() => {
+    return new Fuse<CoinGeckoToken>(
+      coins.filter((f) => platFormId in f.platforms),
+      {
+        keys: ["name", "symbol"],
+        minMatchCharLength: 2,
+      }
+    );
+  }, [platFormId]);
 
-  const filtered =
-    !debounced || debounced.length < 2
-      ? []
-      : (coins as CoinGeckoToken[])
-          .filter((f) => platFormId in f.platforms)
-          .filter((f) => {
-            const q = debounced.trim().toLowerCase();
-            const name = f.name.trim().toLowerCase();
-            const symbol = f.symbol.trim();
-            return symbol.includes(q) || name.includes(q);
-          });
+  const [debounced] = useDebouncer(searchText, 500);
 
   return (
     <Combobox.Options
       className={`${classes} grid grid-cols-[auto_1fr] w-full bg-white dark:bg-blue-d6 shadow-lg rounded max-h-52 overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none`}
     >
-      {filtered.map((item) => (
+      {fuse.search(debounced, { limit: 10 }).map(({ item }) => (
         <Combobox.Option
           key={item.id}
           value={initTokenOption}
