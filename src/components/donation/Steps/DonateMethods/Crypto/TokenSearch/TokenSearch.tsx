@@ -2,8 +2,8 @@ import { Combobox } from "@headlessui/react";
 import { Label } from "components/form";
 import { unpack } from "helpers";
 import { useState } from "react";
-import type { TokenWithAmount } from "types/tx";
 import Options from "./Options";
+import type { CoinGeckoToken } from "./types";
 
 type Classes = {
   combobox?: string;
@@ -17,8 +17,15 @@ type Props = {
   disabled?: boolean;
   required?: boolean;
   coinGeckoPlatformId: string;
-  value: TokenWithAmount;
-  onChange: (token: TokenWithAmount) => void;
+  value?: CoinGeckoToken;
+  onChange: (token: CoinGeckoToken) => void;
+};
+
+const initToken: CoinGeckoToken = {
+  id: "",
+  name: "",
+  symbol: "",
+  platforms: {},
 };
 
 export default function TokenSearch(props: Props) {
@@ -29,7 +36,7 @@ export default function TokenSearch(props: Props) {
   return (
     <div className={`field ${style.container}`}>
       <Label
-        htmlFor="wise__currency"
+        htmlFor="coingecko-search-text"
         className={style.label}
         required={props.required}
         aria-required={props.required}
@@ -38,16 +45,17 @@ export default function TokenSearch(props: Props) {
       </Label>
       <Combobox
         disabled={props.disabled}
-        by="token_id"
-        value={props.value}
+        by="id"
+        value={props.value ?? initToken}
         onChange={props.onChange}
         as="div"
         className={`relative items-center grid grid-cols-[1fr_auto] field-container ${style.combobox}`}
       >
         <Combobox.Input
-          id="wise__currency"
+          placeholder="e.g. BTC"
+          id="coingecko-search-text"
           className="w-full border-r border-gray-l3 dark:border-navy px-4 py-3.5 text-sm leading-5 focus:ring-0"
-          displayValue={(token: TokenWithAmount) => token.symbol}
+          displayValue={(token: CoinGeckoToken) => token.symbol}
           onChange={(event) => setQuery(event.target.value)}
           spellCheck={false}
         />

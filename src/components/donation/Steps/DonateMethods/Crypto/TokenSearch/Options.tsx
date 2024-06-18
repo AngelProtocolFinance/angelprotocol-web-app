@@ -1,5 +1,4 @@
 import { Combobox } from "@headlessui/react";
-import { initTokenOption } from "components/donation";
 import Fuse from "fuse.js/basic";
 import useDebouncer from "hooks/useDebouncer";
 import React, { useMemo } from "react";
@@ -34,11 +33,7 @@ export default function Options({
       className={`${classes} grid grid-cols-[auto_1fr] w-full bg-white dark:bg-blue-d6 shadow-lg rounded max-h-52 overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none`}
     >
       {fuse.search(debounced, { limit: 10 }).map(({ item }) => (
-        <Combobox.Option
-          key={item.id}
-          value={initTokenOption}
-          as={React.Fragment}
-        >
+        <Combobox.Option key={item.id} value={item} as={React.Fragment}>
           {({ active, selected }) => (
             <div
               className={`${active ? "bg-[--accent-secondary]" : ""} ${

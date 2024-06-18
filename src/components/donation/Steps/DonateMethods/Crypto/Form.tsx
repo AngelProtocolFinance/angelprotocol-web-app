@@ -78,7 +78,6 @@ export default function Form(props: CryptoFormStep) {
 
       {platformId && (
         <TokenSearch
-          value={initTokenOption}
           onChange={(v) => console.log(v)}
           coinGeckoPlatformId={platformId}
         />
