@@ -64,6 +64,7 @@ export const arbitrum: SupportedChain = {
 export const optimism: SupportedChain = {
   isTest: false,
   id: "10",
+  coingeckoPlatformId: "optimistic-ethereum",
   brand: "optimism",
   name: "Optimism",
   rpc: "https://mainnet.optimism.io",
@@ -80,6 +81,7 @@ export const optimism: SupportedChain = {
 export const base: SupportedChain = {
   isTest: false,
   id: "8453",
+  coingeckoPlatformId: "base",
   brand: "base",
   name: "Base",
   rpc: "https://mainnet.base.org",
@@ -130,6 +132,7 @@ export const juno: SupportedChain = {
 export const stargaze: SupportedChain = {
   isTest: false,
   id: "stargaze-1",
+  coingeckoPlatformId: "stargaze",
   brand: "stargaze",
   name: "Stargaze",
   lcd: "https://stargaze-rest.publicnode.com",
@@ -146,6 +149,7 @@ export const stargaze: SupportedChain = {
 export const kujira: SupportedChain = {
   isTest: false,
   id: "kaiyo-1",
+  coingeckoPlatformId: "kujira",
   brand: "kujira",
   name: "Kujira",
   lcd: "https://kujira-rpc.publicnode.com",
@@ -181,7 +185,7 @@ export const polygonAmoy: SupportedChain = {
   isTest: true,
   id: "80002",
   brand: "polygonAmoy",
-  coingeckoPlatformId: "polygon-pos",
+  coingeckoPlatformId: polygon.coingeckoPlatformId,
   name: "Polygon Amoy Testnet",
   rpc: baseProxyURL + "/polygonAmoy",
   lcd: "",
@@ -197,7 +201,7 @@ export const polygonAmoy: SupportedChain = {
 export const sepolia: SupportedChain = {
   isTest: true,
   id: "11155111",
-  coingeckoPlatformId: "ethereum",
+  coingeckoPlatformId: ethereum.coingeckoPlatformId,
   brand: "sepolia",
   name: "Ethereum Sepolia",
   rpc: baseProxyURL + "/sepolia",
@@ -214,7 +218,7 @@ export const sepolia: SupportedChain = {
 export const arbitrumSepolia: SupportedChain = {
   isTest: true,
   id: "421614",
-  coingeckoPlatformId: "arbitrum-one",
+  coingeckoPlatformId: arbitrum.coingeckoPlatformId,
   brand: "arbitrum",
   name: "Arbitrum Sepolia",
   rpc: baseProxyURL + "/arbitrum-test",
@@ -231,6 +235,7 @@ export const arbitrumSepolia: SupportedChain = {
 export const optimismSepolia: SupportedChain = {
   isTest: true,
   id: "11155420",
+  coingeckoPlatformId: optimism.coingeckoPlatformId,
   brand: "optimism",
   name: "Optimism Sepolia",
   rpc: "https://sepolia.optimism.io",
@@ -247,6 +252,7 @@ export const optimismSepolia: SupportedChain = {
 export const baseSepolia: SupportedChain = {
   isTest: true,
   id: "84532",
+  coingeckoPlatformId: base.coingeckoPlatformId,
   brand: "base",
   name: "Base Sepolia",
   rpc: "https://sepolia.base.org",
@@ -263,7 +269,7 @@ export const baseSepolia: SupportedChain = {
 export const binanceTestnet: SupportedChain = {
   isTest: true,
   id: "97",
-  coingeckoPlatformId: "binance-smart-chain",
+  coingeckoPlatformId: binance.coingeckoPlatformId,
   brand: "binance",
   name: "Binance Testnet",
   rpc: baseProxyURL + "/bsc-test",
@@ -280,7 +286,7 @@ export const binanceTestnet: SupportedChain = {
 export const terraTestnet: SupportedChain = {
   isTest: true,
   id: "pisco-1",
-  coingeckoPlatformId: "terra",
+  coingeckoPlatformId: terraMainnet.coingeckoPlatformId,
   brand: "terra",
   name: "Terra Pisco",
   lcd: "https://pisco-lcd.terra.dev",
@@ -298,6 +304,7 @@ export const stargazeTestnet: SupportedChain = {
   isTest: true,
   id: "elgafar-1",
   brand: "stargaze",
+  coingeckoPlatformId: stargaze.coingeckoPlatformId,
   name: "Stargaze Testnet",
   lcd: "https://rest.elgafar-1.stargaze-apis.com",
   rpc: "https://rpc.elgafar-1.stargaze-apis.com",
@@ -313,6 +320,7 @@ export const stargazeTestnet: SupportedChain = {
 export const kujiraTestnet: SupportedChain = {
   isTest: true,
   id: "harpoon-4",
+  coingeckoPlatformId: kujira.coingeckoPlatformId,
   brand: "kujira",
   name: "Kujira Testnet",
   lcd: "https://test-lcd-kujira.mintthemoon.xyz",
