@@ -1,5 +1,5 @@
 import { Combobox } from "@headlessui/react";
-import { chains } from "constants/chains";
+import { chains, juno, terraMainnet } from "constants/chains";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
 import { useState } from "react";
@@ -20,7 +20,12 @@ type Props = {
 
 const container =
   "border border-gray-l4 p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
-export default function TokenOptions({ classes = "", selectedChainId }: Props) {
+export default function TokenOptions({
+  classes = "",
+  selectedChainId,
+  amount,
+  onChange,
+}: Props) {
   const [searchText, setSearchText] = useState("");
 
   const { showModal } = useModalContext();
@@ -93,7 +98,24 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
           onClick={() =>
             showModal(TokenSearch, {
               coingeckoPlatformId,
-              onSubmit: (token) => {},
+              onSubmit: (token, details) => {
+                const option: TokenWithAmount = {
+                  approved: false,
+                  decimals: details.decimals,
+                  logo: details.logo,
+                  min_donation_amnt: 0,
+                  symbol: token.symbol.toUpperCase(),
+                  token_id: details.address,
+                  coingecko_denom: token.id,
+                  type:
+                    coingeckoPlatformId === juno.coingeckoPlatformId ||
+                    coingeckoPlatformId === terraMainnet.coingeckoPlatformId
+                      ? "cw20"
+                      : "erc20",
+                  amount,
+                };
+                onChange(option);
+              },
             })
           }
           type="button"
