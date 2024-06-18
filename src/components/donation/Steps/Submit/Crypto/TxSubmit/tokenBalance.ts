@@ -18,6 +18,8 @@ export const tokenBalance = async (
   switch (type) {
     case "juno-native":
     case "terra-native":
+    case "stargaze-native":
+    case "kujira-native":
     case "ibc": {
       return fetch(
         lcd +

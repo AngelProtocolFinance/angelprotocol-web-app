@@ -5,8 +5,12 @@ export type DonationSource = "bg-marketplace" | "bg-widget";
 export type Chains =
   | "terra"
   | "juno"
+  | "stargaze"
+  | "kujira"
   | "ethereum"
   | "arbitrum"
+  | "optimism"
+  | "base"
   | "binance"
   | "polygon";
 export type UNSDG_NUMS =
