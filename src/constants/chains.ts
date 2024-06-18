@@ -209,7 +209,7 @@ export const bitcoin: UnsupportedChain = {
 export const solana: UnsupportedChain = {
   isTest: IS_TEST,
   id: `sol-${IS_TEST ? "testnet" : "mainnet"}`,
-  coingeckoPlatformId: "solana",
+  coingeckoPlatformId: null,
   name: "Solana",
   blockExplorer: "https://solscan.io",
 };
@@ -218,7 +218,7 @@ export const ripple: UnsupportedChain = {
   isTest: IS_TEST,
   id: `xrp-${IS_TEST ? "testnet" : "mainnet"}`,
   name: "Ripple",
-  coingeckoPlatformId: "xrp",
+  coingeckoPlatformId: null,
   blockExplorer: "https://xrpscan.com",
 };
 

@@ -29,7 +29,7 @@ export default function Form(props: CryptoFormStep) {
     name: "program",
   });
 
-  const chainId = watch("chainId.value");
+  const chainId = watch("chainId");
 
   return (
     <form
@@ -64,7 +64,7 @@ export default function Form(props: CryptoFormStep) {
       />
       <TokenField<DonateValues, "token">
         name="token"
-        selectedChainId={chainId}
+        selectedChainId={chainId.value}
         withBalance
         label="Donation amount"
         classes={{

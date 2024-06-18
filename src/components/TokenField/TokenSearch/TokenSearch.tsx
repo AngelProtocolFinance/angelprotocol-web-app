@@ -65,6 +65,7 @@ export default function TokenSearch(props: Props) {
             const details = await getToken(token.id).unwrap();
             const info = details.detail_platforms[props.coingeckoPlatformId];
 
+            console.log({ info });
             props.onSubmit(token, {
               decimals: info.decimal_place,
               address: info.contract_address,
