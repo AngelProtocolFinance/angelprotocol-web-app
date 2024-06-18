@@ -246,16 +246,12 @@ export const {
 const endowCardObj: {
   [key in keyof EndowmentCard]: ""; //we care only for keys
 } = {
-  hq_country: "",
-  endow_designation: "",
-  active_in_countries: "",
-  sdgs: "",
   id: "",
   card_img: "",
-  kyc_donors_only: "",
   name: "",
   tagline: "",
   claimed: "",
+  contributions_total: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 
