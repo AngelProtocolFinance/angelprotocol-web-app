@@ -10,9 +10,21 @@ export type EVMChainID =
   | "421614"
   //binance
   | "56"
-  | "97";
+  | "97"
+  //optimism
+  | "10"
+  | "11155420"
+  //base
+  | "8453"
+  | "84532";
 
-export type CosmosChainID = "juno-1" | "uni-6";
+export type CosmosChainID =
+  | "juno-1"
+  | "uni-6"
+  | "kaiyo-1"
+  | "stargaze-1"
+  | "harpoon-4"
+  | "elgafar-1";
 //would remove this type once terra tooling is unified to that of cosmos (keplr)
 export type TerraChainID = "phoenix-1" | "pisco-1";
 

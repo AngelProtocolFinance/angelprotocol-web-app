@@ -29,12 +29,22 @@ export async function estimateDonation(
     // ///////////// GET TX CONTENT ///////////////
 
     switch (chainID) {
+      //juno
       case "juno-1":
-      case "uni-6": {
+      case "uni-6":
+      //kujira
+      case "kaiyo-1":
+      case "harpoon-4":
+      //stargaze
+      case "stargaze-1":
+      case "elgafar-1": {
         const scaledAmount = scaleToStr(grossAmount, token.decimals);
         const to = apWallets.junoDeposit;
         const msg =
-          token.type === "juno-native" || token.type === "ibc"
+          token.type === "juno-native" ||
+          token.type === "kujira-native" ||
+          token.type === "stargaze-native" ||
+          token.type === "ibc"
             ? createCosmosMsg(sender, "recipient.send", {
                 recipient: to,
                 amount: scaledAmount,
@@ -49,7 +59,6 @@ export async function estimateDonation(
         toEstimate = { chainID, val: [msg] };
         break;
       }
-
       case "pisco-1":
       case "phoenix-1": {
         const scaledAmount = scaleToStr(grossAmount, token.decimals);
