@@ -7,31 +7,12 @@ import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
 import type { EndowFilterState } from "types/app";
 import type { SDGGroup } from "types/lists";
+import { TopCountries } from "./TopCountries";
 
 interface Props {
   query: string;
   classes?: string;
 }
-
-const topCountries = [
-  "United States",
-  "Singapore",
-  "United Kingdom",
-  "Germany",
-  "Sierra Leone",
-  "Indonesia",
-  "India",
-  "Australia",
-  "Uganda",
-  "Nigeria",
-  "France",
-  "Sweden",
-  "DR Congo",
-  "New Zealand",
-  "Kenya",
-  "Switzerland",
-  "Tanzania",
-];
 
 export default function SearchDropdown({ classes = "", query }: Props) {
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
@@ -73,23 +54,7 @@ export default function SearchDropdown({ classes = "", query }: Props) {
             ))}
           </div>
           <h4 className="mb-4 mt-8">Top countries</h4>
-          <div className="flex flex-wrap gap-2">
-            {topCountries.map((country) => (
-              <Link
-                state={
-                  {
-                    country,
-                    searchText: "",
-                  } satisfies EndowFilterState
-                }
-                key={country}
-                className="border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
-                to={appRoutes.marketplace}
-              >
-                {country}
-              </Link>
-            ))}
-          </div>
+          <TopCountries />
 
           <Link
             className="text-blue-d1 font-medium text-lg text-center mt-8 block"
