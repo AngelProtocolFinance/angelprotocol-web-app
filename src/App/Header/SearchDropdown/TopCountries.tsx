@@ -17,8 +17,8 @@ export function TopCountries() {
             <>
               {Array(10)
                 .fill(0)
-                .map(() => (
-                  <ContentLoader className="w-32 h-10 rounded-full" />
+                .map((_, idx) => (
+                  <ContentLoader key={idx} className="w-32 h-10 rounded-full" />
                 ))}
             </>
           ),

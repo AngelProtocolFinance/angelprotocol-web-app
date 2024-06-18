@@ -1,5 +1,5 @@
 import { Combobox } from "@headlessui/react";
-import { chains, juno, terraMainnet } from "constants/chains";
+import { chains, juno, kujira, stargaze, terraMainnet } from "constants/chains";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
 import { useState } from "react";
@@ -107,7 +107,9 @@ export default function TokenOptions({
                   coingecko_denom: token.id,
                   type:
                     coingeckoPlatformId === juno.coingeckoPlatformId ||
-                    coingeckoPlatformId === terraMainnet.coingeckoPlatformId
+                    coingeckoPlatformId === terraMainnet.coingeckoPlatformId ||
+                    coingeckoPlatformId === stargaze.coingeckoPlatformId ||
+                    coingeckoPlatformId === kujira.coingeckoPlatformId
                       ? "cw20"
                       : "erc20",
                   amount: "", //should reset previously selected amount

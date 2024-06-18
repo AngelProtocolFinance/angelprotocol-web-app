@@ -7,21 +7,21 @@ import type { CoinGeckoToken } from "./types";
 
 type Props = {
   classes?: string;
-  platFormId: string;
+  platformId: string;
   searchText: string;
 };
 
 export default function Options({
   classes = "",
   searchText,
-  platFormId,
+  platformId,
 }: Props) {
   const fuse = useMemo(() => {
     return new Fuse<CoinGeckoToken>(
-      coins.filter((f) => platFormId in f.platforms),
+      coins.filter((f) => platformId in f.platforms),
       { keys: ["name", "symbol"] }
     );
-  }, [platFormId]);
+  }, [platformId]);
 
   const [debounced] = useDebouncer(searchText, 500);
 
