@@ -5,7 +5,7 @@
   },
   "files": {
     "ignore": ["./package.json", "./public/scripts/*"],
-    "maxSize": 1600000
+    "maxSize": 2000000
   },
   "linter": {
     "enabled": true,

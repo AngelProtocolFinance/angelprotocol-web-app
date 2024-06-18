@@ -1,5 +1,5 @@
 import { Label } from "components/form";
-import { chainList, chains } from "constants/chains";
+import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import { useController, useFormContext } from "react-hook-form";
 import type { ChainID } from "types/chain";
@@ -11,7 +11,6 @@ import { ProgramSelector } from "../../common/ProgramSelector";
 import { initTokenOption } from "../../common/constants";
 import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
-import TokenSearch from "./TokenSearch";
 import type { DonateValues } from "./types";
 
 export default function Form(props: CryptoFormStep) {
@@ -31,7 +30,6 @@ export default function Form(props: CryptoFormStep) {
   });
 
   const chainId = watch("chainId.value");
-  const platformId = chains[chainId].coingeckoPlatformId;
 
   return (
     <form
@@ -75,13 +73,6 @@ export default function Form(props: CryptoFormStep) {
         }}
         withMininum
       />
-
-      {platformId && (
-        <TokenSearch
-          onChange={(v) => console.log(v)}
-          coinGeckoPlatformId={platformId}
-        />
-      )}
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
         <ProgramSelector
