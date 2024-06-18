@@ -283,6 +283,38 @@ export const terraTestnet: SupportedChain = {
   },
 };
 
+export const stargazeTestnet: SupportedChain = {
+  isTest: true,
+  id: "elgafar-1",
+  brand: "stargaze",
+  name: "Stargaze Testnet",
+  lcd: "https://rest.elgafar-1.stargaze-apis.com",
+  rpc: "https://rpc.elgafar-1.stargaze-apis.com",
+  blockExplorer: "https://www.mintscan.io/stargaze",
+  nativeToken: {
+    id: "ustars",
+    symbol: "STARS",
+    decimals: 6,
+    coinGeckoId: "stargaze",
+  },
+};
+
+export const kujiraTestnet: SupportedChain = {
+  isTest: true,
+  id: "harpoon-4",
+  brand: "kujira",
+  name: "Kujira Testnet",
+  lcd: "https://test-lcd-kujira.mintthemoon.xyz",
+  rpc: "https://rpc-kujira.mintthemoon.xyz",
+  blockExplorer: "https://finder.kujira.network/harpoon-4",
+  nativeToken: {
+    id: "ukuji",
+    symbol: "KUJI",
+    decimals: 6,
+    coinGeckoId: "kujira",
+  },
+};
+
 export const bitcoin: UnsupportedChain = {
   isTest: IS_TEST,
   id: `btc-${IS_TEST ? "testnet" : "mainnet"}`,
@@ -329,6 +361,8 @@ const supportedChainList: SupportedChain[] = [
   baseSepolia,
   binanceTestnet,
   terraTestnet,
+  kujiraTestnet,
+  stargazeTestnet,
 ];
 
 const unsupportedChainList: UnsupportedChain[] = [
@@ -367,5 +401,7 @@ export const cosmosChains: CosmosChainID[] = [
   "juno-1",
   "uni-6",
   "stargaze-1",
+  "elgafar-1",
   "kaiyo-1",
+  "harpoon-4",
 ];

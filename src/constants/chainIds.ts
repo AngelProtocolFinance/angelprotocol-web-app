@@ -10,6 +10,8 @@ export const chainIds: { [key in Chains]: ChainID } = IS_TEST
       binance: "97",
       ethereum: "11155111",
       juno: "uni-6",
+      stargaze: "elgafar-1",
+      kujira: "harpoon-4",
       polygon: "80002",
       terra: "pisco-1",
     }
