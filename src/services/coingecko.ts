@@ -6,20 +6,6 @@ type Quotation = {
   };
 };
 
-type Coin = {
-  /** e.g. ethereum */
-  id: string;
-  /** e.g. Ethereum */
-  name: string;
-  /** e.g. ETH */
-  symbol: string;
-  /**  */
-  platforms: { [platformId: string]: string };
-  /** images */
-  thumb: string;
-  large: string;
-};
-
 export const coingecko = createApi({
   reducerPath: "coingecko",
   baseQuery: fetchBaseQuery({
@@ -30,11 +16,7 @@ export const coingecko = createApi({
       query: (coinId) => `api/v3/simple/price?ids=${coinId}&vs_currencies=usd`,
       transformResponse: (res: Quotation, _, coinId) => res[coinId].usd,
     }),
-    tokens: builder.query<Coin[], unknown>({
-      query: () => `api/v3/coins-list?include_platform=true&status=active`,
-      transformResponse: (res: { coins: Coin[] }) => res.coins,
-    }),
   }),
 });
 
-export const { useUsdRateQuery, useTokensQuery } = coingecko;
+export const { useUsdRateQuery } = coingecko;
