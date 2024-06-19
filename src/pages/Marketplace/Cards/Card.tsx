@@ -50,7 +50,7 @@ export default function Card({
 
           <p className="text-sm mt-auto flex items-center gap-1">
             <span>Total contribution:</span>
-            <span>${humanize(contributions_total, 2)}</span>
+            <span>${humanize(contributions_total, 0)}</span>
           </p>
         </div>
       </Link>
