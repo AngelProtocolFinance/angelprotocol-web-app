@@ -110,7 +110,7 @@ export type EndowmentCard = Pick<
   Endowment,
   "id" | "card_img" | "name" | "tagline" | "claimed"
   /** available but need not fetched */
-
+  // "claimed"
   // "hq_country"
   // "sdgs"
   // "active_in_countries"
