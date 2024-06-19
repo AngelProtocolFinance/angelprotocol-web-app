@@ -18,15 +18,18 @@ export default function Card({
   contributions_total,
 }: EndowmentCard) {
   return (
-    <div className="relative overflow-clip rounded-lg border border-gray-l4">
-      <div className="grid grid-rows-[auto_1fr] h-full">
+    <div className="relative">
+      <Link
+        to={`${appRoutes.marketplace}/${id}`}
+        className="grid grid-rows-[auto_1fr] h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
+      >
         <Image
           loading="lazy"
           src={card_img || flying_character}
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />
-        <div className="flex flex-col p-3 pb-4 gap-3">
+        <div className="flex flex-col p-3 pb-16 gap-3">
           {/* nonprofit NAME */}
           <h3 className="text-ellipsis line-clamp-2 text-center mb-2">
             {claimed && (
@@ -49,18 +52,17 @@ export default function Card({
             <span>Total contribution:</span>
             <span>${humanize(contributions_total, 2)}</span>
           </p>
-
-          <div className="grid grid-cols-[1fr_auto_1fr] mt-2">
-            <div>share btn</div>
-            <Link
-              to={`${appRoutes.marketplace}/${id}`}
-              className="btn-blue px-4 py-1 rounded-full text-sm normal-case"
-            >
-              Donate
-            </Link>
-            <BookmarkBtn endowId={id} classes="justify-self-end" />
-          </div>
         </div>
+      </Link>
+      <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
+        <div />
+        <Link
+          to={`${appRoutes.donate}/${id}`}
+          className="btn-blue px-4 py-1 rounded-full text-sm normal-case"
+        >
+          Donate
+        </Link>
+        <BookmarkBtn endowId={id} classes="justify-self-end" />
       </div>
     </div>
   );
