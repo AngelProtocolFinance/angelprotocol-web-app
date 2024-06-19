@@ -1,41 +1,27 @@
 import flying_character from "assets/images/flying-character.png";
-import Icon from "components/Icon";
+import BookmarkBtn from "components/BookmarkBtn";
 import Image from "components/Image";
-import Tooltip from "components/Tooltip";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
-import { unsdgs } from "constants/unsdgs";
-import { isEmpty } from "helpers";
-import { useRef } from "react";
+import { humanize } from "helpers";
 import { Link } from "react-router-dom";
 import type { EndowmentCard } from "types/aws";
-import type { UNSDG_NUMS } from "types/lists";
 
 const PLACEHOLDER_TAGLINE = " ";
 
 export default function Card({
-  active_in_countries = [],
   name,
   card_img,
   id,
-  endow_designation,
-  sdgs,
   tagline,
-  hq_country,
-  kyc_donors_only,
   claimed,
+  contributions_total,
 }: EndowmentCard) {
   return (
-    <div className="relative overflow-clip dark:bg-blue-d6 rounded-lg border border-gray-l4 hover:border-blue dark:hover:border-blue">
-      <div className="absolute top-[14px] left-[14px] right-[14px] flex justify-between gap-3">
-        <p className="bg-blue-d1 text-white font-semibold text-2xs rounded-sm uppercase px-2 py-0.5 font-heading">
-          {endow_designation}
-        </p>
-        {kyc_donors_only && <KYCIcon className="ml-auto" />}
-      </div>
+    <div className="relative">
       <Link
         to={`${appRoutes.marketplace}/${id}`}
-        className="grid grid-rows-[auto_1fr] h-full"
+        className="grid grid-rows-[auto_1fr] h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
       >
         <Image
           loading="lazy"
@@ -43,9 +29,9 @@ export default function Card({
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />
-        <div className="flex flex-col p-3 pb-4 gap-3">
+        <div className="flex flex-col p-3 pb-16 gap-3">
           {/* nonprofit NAME */}
-          <h3 className="text-ellipsis line-clamp-2">
+          <h3 className="text-ellipsis line-clamp-2 text-center mb-2">
             {claimed && (
               <VerifiedIcon
                 classes="inline relative bottom-px mr-1"
@@ -57,65 +43,28 @@ export default function Card({
 
           {/* TAGLINE */}
           {tagline && tagline !== PLACEHOLDER_TAGLINE ? (
-            <p className="peer text-navy-l1 dark:text-navy-l2 text-sm -mt-2">
+            <p className="peer text-navy-l1 dark:text-navy-l2 text-sm -mt-2 mb-4">
               {tagline}
             </p>
           ) : null}
-          {/* HQ & ACTIVE-IN COUNTRIES */}
-          <div className="text-navy-l1 dark:text-navy-l2 text-sm">
-            <p>
-              <span className="font-semibold">HQ:</span> {hq_country}
-            </p>
-            <p className="line-clamp-2">
-              <span className="font-semibold">Active in:</span>{" "}
-              {isEmpty(active_in_countries)
-                ? hq_country
-                : active_in_countries.join(", ")}
-            </p>
-          </div>
-          <div className="mt-auto empty:hidden grid gap-3">
-            {/** UN SDGs - always on bottom */}
-            {!isEmpty(sdgs) && (
-              <div className="flex flex-wrap text-3xs font-bold uppercase gap-1 h-max-[40px]">
-                {sdgs.map((s) => (
-                  <SDG num={s} key={s} />
-                ))}
-              </div>
-            )}
-          </div>
+
+          <p className="text-sm mt-auto flex items-center gap-1">
+            <span>Total contribution:</span>
+            <span>${humanize(contributions_total, 0)}</span>
+          </p>
         </div>
       </Link>
+      {/** absolute so above whole `Link` card */}
+      <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
+        <div /> {/** future: share button  */}
+        <Link
+          to={`${appRoutes.donate}/${id}`}
+          className="btn-blue px-4 py-1 rounded-full text-sm normal-case"
+        >
+          Donate
+        </Link>
+        <BookmarkBtn endowId={id} classes="justify-self-end" />
+      </div>
     </div>
-  );
-}
-
-function SDG({ num }: { num: UNSDG_NUMS }) {
-  const ref = useRef<HTMLDivElement>(null);
-  return (
-    <>
-      <Tooltip anchorRef={ref} content={unsdgs[num].title} />
-      <div
-        ref={ref}
-        className="whitespace-nowrap bg-blue-l4 hover:bg-blue-l3 dark:bg-blue-d4 hover:dark:bg-blue-d3 px-1 py-1 border border-gray-l4 rounded-lg"
-      >
-        SDG #{num}
-      </div>
-    </>
-  );
-}
-
-function KYCIcon({ className = "" }) {
-  const ref = useRef<HTMLDivElement>(null);
-  return (
-    <>
-      <Tooltip anchorRef={ref} content="Verification Required" />
-      <div ref={ref} className={className}>
-        <Icon
-          type="AdminPanel"
-          size={18}
-          className="text-white hover:text-blue-d1 cursor-pointer"
-        />
-      </div>
-    </>
   );
 }
