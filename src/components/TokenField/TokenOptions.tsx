@@ -96,12 +96,12 @@ export default function TokenOptions({
           onClick={() =>
             showModal(TokenSearch, {
               coingeckoPlatformId,
-              onSubmit: (token, details) => {
+              onSubmit: (token, usdRate, details) => {
                 const option: TokenWithAmount = {
                   approved: false,
                   decimals: details.decimals,
                   logo: details.logo,
-                  min_donation_amnt: 0,
+                  min_donation_amnt: Math.ceil(25 / usdRate),
                   symbol: token.symbol.toUpperCase(),
                   token_id: details.address,
                   coingecko_denom: token.id,

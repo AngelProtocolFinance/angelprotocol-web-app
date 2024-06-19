@@ -32,4 +32,8 @@ export const coingecko = createApi({
   }),
 });
 
-export const { useUsdRateQuery, useLazyTokenDetailsQuery } = coingecko;
+export const {
+  useUsdRateQuery,
+  useLazyUsdRateQuery,
+  useLazyTokenDetailsQuery,
+} = coingecko;

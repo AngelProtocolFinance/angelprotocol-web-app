@@ -3,7 +3,10 @@ import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
 import { logger } from "helpers";
 import { useState } from "react";
-import { useLazyTokenDetailsQuery } from "services/coingecko";
+import {
+  useLazyTokenDetailsQuery,
+  useLazyUsdRateQuery,
+} from "services/coingecko";
 import { Label } from "../../form";
 import Options from "./Options";
 import type { CoinGeckoToken } from "./types";
@@ -15,7 +18,7 @@ type Details = {
 };
 type Props = {
   coingeckoPlatformId: string;
-  onSubmit: (token: CoinGeckoToken, details: Details) => void;
+  onSubmit: (token: CoinGeckoToken, usdRate: number, details: Details) => void;
 };
 
 const initToken: CoinGeckoToken = {
@@ -28,10 +31,11 @@ const initToken: CoinGeckoToken = {
 export default function TokenSearch(props: Props) {
   const [query, setQuery] = useState("");
   const [token, setToken] = useState(initToken);
-  const [getToken, { isLoading, isError, isFetching }] =
-    useLazyTokenDetailsQuery();
+  const [getToken, detailsState] = useLazyTokenDetailsQuery();
+  const [getUsdRate, usdRateState] = useLazyUsdRateQuery();
   const { closeModal } = useModalContext();
-  const isGettingTokenDetails = isLoading || isFetching;
+  const isGettingTokenDetails =
+    detailsState.status === "pending" || usdRateState.status === "pending";
   const submitDisabled = isGettingTokenDetails || token.id === initToken.id;
 
   return (
@@ -63,9 +67,10 @@ export default function TokenSearch(props: Props) {
         onClick={async () => {
           try {
             const details = await getToken(token.id).unwrap();
+            const usdRate = await getUsdRate(token.id).unwrap();
             const info = details.detail_platforms[props.coingeckoPlatformId];
 
-            props.onSubmit(token, {
+            props.onSubmit(token, usdRate, {
               decimals: info.decimal_place,
               address: info.contract_address,
               logo: details.image.thumb,
@@ -81,7 +86,9 @@ export default function TokenSearch(props: Props) {
       >
         {isGettingTokenDetails ? "Setting.." : "Proceed"}
       </button>
-      {isError && <span className="text-xs text-red">failed to set token</span>}
+      {(detailsState.isError || usdRateState.isError) && (
+        <span className="text-xs text-red">failed to set token</span>
+      )}
     </Modal>
   );
 }
