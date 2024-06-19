@@ -24,12 +24,9 @@ export default function BookmarkBtn({
   const ref = useRef<HTMLButtonElement>(null);
 
   const { data: bookmarks = [], isLoading: isBookmarksLoading } =
-    useUserBookmarksQuery(
-      { userId: userEmail },
-      {
-        skip: !userEmail,
-      }
-    );
+    useUserBookmarksQuery(null, {
+      skip: !userEmail,
+    });
   const { handleError, displayError } = useErrorContext();
 
   const [toggle, { isLoading: isTogglingBookmark }] =

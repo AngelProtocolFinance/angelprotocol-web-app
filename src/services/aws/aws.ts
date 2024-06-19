@@ -92,25 +92,13 @@ export const aws = createApi({
         return res.Items;
       },
     }),
-    userBookmarks: builder.query<number[], unknown>({
+    userBookmarks: builder.query<number[], null>({
       providesTags: ["user-bookmarks"],
       query: () => ({
         url: `${v(1)}/bookmarks`,
         //get user id from jwt
         headers: { authorization: TEMP_JWT },
       }),
-    }),
-    toogleUserBookmark: builder.mutation<unknown, { endowId: number }>({
-      invalidatesTags: ["user-bookmarks"],
-      query: ({ endowId }) => {
-        return {
-          url: `${v(1)}/bookmarks`,
-          method: "POST",
-          body: { endowId },
-          //get user id from jwt
-          headers: { authorization: TEMP_JWT },
-        };
-      },
     }),
     toggleUserBookmark: builder.mutation<
       unknown,
@@ -133,6 +121,25 @@ export const aws = createApi({
           //get user id from jwt
           headers: { authorization: TEMP_JWT },
         };
+      },
+      async onQueryStarted({ endowId, action }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          aws.util.updateQueryData("userBookmarks", null, (draft) => {
+            if (action === "add") {
+              draft.push(endowId);
+            } else {
+              const idx = draft.indexOf(endowId);
+              if (idx !== -1) {
+                draft.splice(idx, 1);
+              }
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
       },
     }),
 
