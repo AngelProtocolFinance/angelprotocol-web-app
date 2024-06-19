@@ -54,8 +54,9 @@ export default function Card({
           </p>
         </div>
       </Link>
+      {/** absolute so above whole `Link` card */}
       <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
-        <div />
+        <div /> {/** future: share button  */}
         <Link
           to={`${appRoutes.donate}/${id}`}
           className="btn-blue px-4 py-1 rounded-full text-sm normal-case"
