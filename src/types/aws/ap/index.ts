@@ -108,18 +108,18 @@ export type EndowmentProfile = Endowment;
 /** from CloudSearch index instead of DB */
 export type EndowmentCard = Pick<
   Endowment,
-  | "id"
-  | "card_img"
-  | "name"
-  | "tagline"
-  | "hq_country"
-  | "sdgs"
-  | "active_in_countries"
-  | "endow_designation"
-  //icons
-  | "kyc_donors_only"
-  | "claimed"
->;
+  "id" | "card_img" | "name" | "tagline" | "claimed"
+  /** available but need not fetched */
+  // "claimed"
+  // "hq_country"
+  // "sdgs"
+  // "active_in_countries"
+  // "endow_designation"
+  // "kyc_donors_only"
+> & {
+  contributions_total: number;
+  // contributions_count:number
+};
 export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
 export type EndowmentSettingsAttributes = Extract<
