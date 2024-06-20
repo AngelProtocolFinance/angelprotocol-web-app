@@ -22,19 +22,19 @@ export const ChainSelector = forwardRef<HTMLInputElement, Props>(
         onChange={props.onChange}
         as="div"
         by="name"
-        className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d6"
+        className="relative items-center flex w-full field-container field-container-donate min-h-[3rem] bg-white dark:bg-blue-d6"
       >
         <Combobox.Input
           ref={ref}
           placeholder="Search network"
           onChange={(event) => setSearchText(event.target.value)}
           displayValue={(value: Chain) => value.name}
-          className="pl-4 w-full"
+          className="field-input-donate"
         />
 
         <Combobox.Button>
           {({ open }) => (
-            <DrawerIcon isOpen={open} size={25} className="ml-auto mr-1" />
+            <DrawerIcon isOpen={open} size={25} className="ml-auto mr-5" />
           )}
         </Combobox.Button>
 
