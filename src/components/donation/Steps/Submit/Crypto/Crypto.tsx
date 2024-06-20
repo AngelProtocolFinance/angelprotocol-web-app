@@ -42,9 +42,7 @@ export default function Crypto(props: CryptoSubmitStep) {
 
           <dl className="text-navy-l1 py-3 flex items-center justify-between">
             <dt className="mr-auto">Blockchain</dt>
-            <dd className="text-navy-d4">
-              {chains[details.chainId.value].name}
-            </dd>
+            <dd className="text-navy-d4">{chains[details.chainId].name}</dd>
           </dl>
         </>
       }

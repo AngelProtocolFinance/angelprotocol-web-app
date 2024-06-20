@@ -34,9 +34,9 @@ export default function Form(props: CryptoFormStep) {
   });
 
   const chain: Chain = {
-    id: chainId.value.value,
-    name: chains[chainId.value.value].name,
-    logo: chains[chainId.value.value].logo,
+    id: chainId.value,
+    name: chains[chainId.value].name,
+    logo: chains[chainId.value].logo,
   };
 
   return (
@@ -68,7 +68,7 @@ export default function Form(props: CryptoFormStep) {
 
       <TokenField<DonateValues, "token">
         name="token"
-        selectedChainId={chainId.value.value}
+        selectedChainId={chainId.value}
         withBalance
         label="Donation amount"
         classes={{

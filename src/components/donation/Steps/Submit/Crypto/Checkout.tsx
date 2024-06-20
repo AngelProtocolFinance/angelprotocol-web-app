@@ -16,7 +16,7 @@ type Props = CryptoSubmitStep & { classes?: string };
 
 export default function Checkout({ classes = "", ...props }: Props) {
   const wallet = useWalletContext();
-  const chainID = props.details.chainId.value;
+  const chainID = props.details.chainId;
 
   type Method = "direct" | "with-wallet";
   //state to allow opting for direct donation
