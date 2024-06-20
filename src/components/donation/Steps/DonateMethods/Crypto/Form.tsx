@@ -1,8 +1,7 @@
 import { Label } from "components/form";
 import { chains } from "constants/chains";
 import { useController, useFormContext } from "react-hook-form";
-import type { ChainID } from "types/chain";
-import type { OptionType } from "types/components";
+
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -55,10 +54,7 @@ export default function Form(props: CryptoFormStep) {
       <ChainSelector
         value={chain}
         onChange={(chain) => {
-          chainId.onChange({
-            value: chain.id,
-            label: chain.name,
-          } satisfies OptionType<ChainID>);
+          chainId.onChange(chain.id);
 
           //reset selected token
           setValue("token", initTokenOption);
