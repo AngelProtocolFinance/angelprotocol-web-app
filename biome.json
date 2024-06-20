@@ -4,7 +4,11 @@
     "enabled": true
   },
   "files": {
-    "ignore": ["./package.json", "./public/scripts/*"]
+    "ignore": [
+      "./package.json",
+      "./public/scripts/*",
+      "./src/components/TokenField/TokenSearch/coins.json"
+    ]
   },
   "linter": {
     "enabled": true,

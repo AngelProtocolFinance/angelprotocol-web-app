@@ -1,21 +1,32 @@
 import { Combobox } from "@headlessui/react";
+import { chains, juno, kujira, stargaze, terraMainnet } from "constants/chains";
+import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useTokensQuery } from "services/apes";
 import type { ChainID } from "types/chain";
+import type { TokenWithAmount } from "types/tx";
 import Icon from "../Icon";
 import Image from "../Image";
 import { ErrorStatus, LoadingStatus } from "../Status";
+import TokenSearch from "./TokenSearch";
 
 type Props = {
   selectedChainId: ChainID;
+  onChange: (token: TokenWithAmount) => void;
   classes?: string;
 };
 
 const container =
   "border border-gray-l4 p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
-export default function TokenOptions({ classes = "", selectedChainId }: Props) {
+export default function TokenOptions({
+  classes = "",
+  selectedChainId,
+  onChange,
+}: Props) {
   const [searchText, setSearchText] = useState("");
+
+  const { showModal } = useModalContext();
 
   const {
     data: tokens = [],
@@ -49,6 +60,8 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
     );
   }
 
+  const coingeckoPlatformId = chains[selectedChainId].coingeckoPlatformId;
+
   return (
     <Combobox.Options className={`${classes} ${container}`}>
       <div className="flex p-2 gap-2 border border-gray-l4 rounded mb-1">
@@ -77,6 +90,39 @@ export default function TokenOptions({ classes = "", selectedChainId }: Props) {
             <span className="text-sm">{token.symbol}</span>
           </Combobox.Option>
         ))
+      )}
+      {coingeckoPlatformId && (
+        <button
+          onClick={() =>
+            showModal(TokenSearch, {
+              coingeckoPlatformId,
+              onSubmit: (token, usdRate, details) => {
+                const option: TokenWithAmount = {
+                  approved: false,
+                  decimals: details.decimals,
+                  logo: details.logo,
+                  min_donation_amnt: Math.ceil(25 / usdRate),
+                  symbol: token.symbol.toUpperCase(),
+                  token_id: details.address,
+                  coingecko_denom: token.id,
+                  type:
+                    coingeckoPlatformId === juno.coingeckoPlatformId ||
+                    coingeckoPlatformId === terraMainnet.coingeckoPlatformId ||
+                    coingeckoPlatformId === stargaze.coingeckoPlatformId ||
+                    coingeckoPlatformId === kujira.coingeckoPlatformId
+                      ? "cw20"
+                      : "erc20",
+                  amount: "", //should reset previously selected amount
+                };
+                onChange(option);
+              },
+            })
+          }
+          type="button"
+          className="text-xs text-blue-d1 px-3 pb-1"
+        >
+          Not listed?
+        </button>
       )}
     </Combobox.Options>
   );
