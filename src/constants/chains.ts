@@ -44,7 +44,7 @@ export const ethereum: SupportedChain = {
     decimals: 18,
     coinGeckoId: "ethereum",
   },
-  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.svg?v=032",
+  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=032",
 };
 
 export const arbitrum: SupportedChain = {
