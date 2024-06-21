@@ -55,7 +55,12 @@ export function useKeplrWC(): Wallet {
         requiredNamespaces: {
           cosmos: {
             methods: ["cosmos_signDirect", "cosmos_signAmino"],
-            chains: ["cosmos:juno-1", "cosmos:kaiyo-1", "cosmos:stargaze-1"],
+            chains: [
+              "cosmos:juno-1",
+              "cosmos:kaiyo-1",
+              "cosmos:stargaze-1",
+              "cosmos:osmosis-1",
+            ],
             events: [],
           },
         },
@@ -100,7 +105,7 @@ export function useKeplrWC(): Wallet {
   const meta: WalletMeta = {
     logo: keplrIcon,
     name: "Keplr mobile",
-    supportedChains: ["juno-1", "kaiyo-1", "stargaze-1"],
+    supportedChains: ["juno-1", "kaiyo-1", "stargaze-1", "osmosis-1"],
   };
 
   return {
