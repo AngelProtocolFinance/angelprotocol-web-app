@@ -18,7 +18,7 @@ type Props = {
 };
 
 const container =
-  "w-max border border-gray-l4 p-1 h-52 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
+  "w-max border border-gray-l4 p-1 [--anchor-max-height:13rem] w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
 export default function TokenOptions({ selectedChainId, onChange }: Props) {
   const [searchText, setSearchText] = useState("");
 

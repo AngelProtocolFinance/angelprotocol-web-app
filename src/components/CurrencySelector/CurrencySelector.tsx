@@ -65,7 +65,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
           onChange={(event) => setQuery(event.target.value)}
           spellCheck={false}
         />
-        <ComboboxButton className="flex items-center px-2">
+        <ComboboxButton className="flex items-center absolute inset-y-0 right-2">
           {({ open }) =>
             isCurrencyLoading ? (
               <Icon
@@ -77,7 +77,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
               <DrawerIcon
                 isOpen={open}
                 size={25}
-                className={`h-full w-full ${isCurrencyError ? "text-red" : ""}`}
+                className={`${isCurrencyError ? "text-red" : ""}`}
                 aria-hidden
               />
             )
