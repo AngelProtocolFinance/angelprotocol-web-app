@@ -1,4 +1,9 @@
-import { Combobox } from "@headlessui/react";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+} from "@headlessui/react";
 import countries from "assets/countries/all.json";
 import Icon from "components/Icon";
 import { isEmpty } from "helpers";
@@ -25,10 +30,7 @@ export default function Countries() {
       className="relative"
       multiple
     >
-      <Combobox.Button
-        as="div"
-        className="flex items-center field-input justify-between cursor-pointer p-1 focus-within:border-gray-d1 focus-within:dark:border-blue-l2"
-      >
+      <div className="flex items-center field-input justify-between cursor-pointer p-1 focus-within:border-gray-d1 focus-within:dark:border-blue-l2">
         <div className="flex flex-wrap gap-2 h-full">
           {state.countries.map((opt) => (
             <SelectedOption
@@ -41,33 +43,27 @@ export default function Countries() {
 
           <div className="inline-flex p-1 items-center gap-2 bg-blue-l5 text-navy-l1 dark:text-navy-l2 rounded">
             <Icon type="Search" size={18} />
-            <Combobox.Input
+            <ComboboxInput
               className="appearance-none bg-transparent focus:outline-none"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
           </div>
         </div>
-      </Combobox.Button>
-      <Combobox.Options className="rounded-sm text-sm border border-gray-l4 absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
+      </div>
+      <ComboboxOptions className="rounded-sm text-sm border border-gray-l4 absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller">
         {!isEmpty(filteredOptions) &&
           filteredOptions.map((name) => (
-            <Combobox.Option
-              key={name}
-              value={name}
-              className={({ active, selected }) =>
-                optionStyle(selected, active)
-              }
-            >
+            <ComboboxOption key={name} value={name} className={optionStyle}>
               {name}
-            </Combobox.Option>
+            </ComboboxOption>
           ))}
         {isEmpty(filteredOptions) && (
           <p className="text-navy-l1 dark:text-navy-l2 text-sm px-4 py-2">
             No options found
           </p>
         )}
-      </Combobox.Options>
+      </ComboboxOptions>
     </Combobox>
   );
 }
@@ -78,10 +74,8 @@ type SelectedProps = {
   onChange(value: string[]): void;
 };
 
-const optionStyle = (selected: boolean, active: boolean) =>
-  `px-4 py-2 cursor-pointer text-sm ${
-    selected ? "bg-blue-l4" : active ? "cursor-pointer bg-blue-l5" : ""
-  }`;
+const optionStyle =
+  "px-4 py-2 cursor-pointer text-sm data-[selected]:bg-blue-l4 hover:cursor-pointer hover:bg-blue-l5";
 
 function SelectedOption({ selected, onChange, option }: SelectedProps) {
   const handleRemove = (value: string) =>
