@@ -50,7 +50,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
         disabled={props.disabled || isCurrencyLoading || isCurrencyError}
         by={"code" as any}
         value={props.value}
-        onChange={props.onChange}
+        onChange={(val) => val && props.onChange(val)}
         as="div"
         className={`relative items-center grid grid-cols-[1fr_auto] field-container ${style.combobox}`}
       >

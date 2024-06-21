@@ -70,48 +70,44 @@ export function MultiSelector<
         multiple
       >
         <FocusableInput ref={ref} />
-        <ComboboxButton
+        <div
           aria-invalid={invalid}
           aria-disabled={isDisabled}
-          as="div"
-          className={`${cls.button} ${styles.selectorButton} focus-within:ring-2 ring-blue-d1 ring-offset-1 aria-invalid:border-red p-1`}
+          className={`${cls.button} ${styles.selectorButton} flex flex-wrap gap-2 h-full focus-within:ring-2 ring-blue-d1 ring-offset-1 aria-invalid:border-red p-1`}
         >
-          {({ open }) => (
-            <>
-              <span className="flex flex-wrap gap-2 h-full">
-                {selected.map((opt) => (
-                  <SelectedOption
-                    key={opt.value}
-                    option={opt}
-                    selected={selected}
-                    onChange={onSelectedChange}
-                  />
-                ))}
-                {searchable ? (
-                  <div className="inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 bg-white/5 rounded">
-                    <Icon type="Search" size={20} />
-                    <ComboboxInput
-                      className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
-                      value={searchText}
-                      onChange={(e) => setSearchText(e.target.value)}
-                    />
-                  </div>
-                ) : (
-                  //this will receive focus if search input is not rendered
-                  <input
-                    aria-disabled={true}
-                    className="w-0 h-0 appearance-none"
-                  />
-                )}
-              </span>
-              <DrawerIcon
-                isOpen={open}
-                size={25}
-                className="justify-self-end dark:text-navy-l2 shrink-0"
+          <div className="flex flex-wrap gap-2 h-full">
+            {selected.map((opt) => (
+              <SelectedOption
+                key={opt.value}
+                option={opt}
+                selected={selected}
+                onChange={onSelectedChange}
               />
-            </>
-          )}
-        </ComboboxButton>
+            ))}
+            {searchable ? (
+              <div className="bg-blue-l5 inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 rounded">
+                <Icon type="Search" size={20} />
+                <ComboboxInput
+                  className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
+                  value={searchText}
+                  onChange={(e) => setSearchText(e.target.value)}
+                />
+              </div>
+            ) : (
+              //this will receive focus if search input is not rendered
+              <input aria-disabled={true} className="w-0 h-0 appearance-none" />
+            )}
+          </div>
+          <ComboboxButton
+            className={`${
+              selected.length > 0
+                ? "justify-self-end dark:text-navy-l2 shrink-0"
+                : "absolute inset-0 flex justify-end items-center pr-2 rounded active:ring-2 ring-blue-d1 ring-offset-1"
+            }`}
+          >
+            {({ open }) => <DrawerIcon isOpen={open} size={25} className="" />}
+          </ComboboxButton>
+        </div>
         <ComboboxOptions className={`${styles.options} ${cls.options}`}>
           {optionsAvailable && (
             <div className="flex justify-between p-4">

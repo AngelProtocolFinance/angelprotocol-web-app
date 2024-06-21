@@ -47,7 +47,7 @@ export default function CountrySelector<
     <Combobox
       disabled={props.disabled || isSubmitting}
       value={country}
-      onChange={onCountryChange}
+      onChange={(c) => c && onCountryChange(c)}
       as="div"
       className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${
         props.classes?.container || ""

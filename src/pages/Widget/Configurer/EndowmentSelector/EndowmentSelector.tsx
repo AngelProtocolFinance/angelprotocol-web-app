@@ -26,7 +26,7 @@ export default function EndowmentSelector() {
     <Combobox
       disabled={isSubmitting}
       value={endowment}
-      onChange={onEndowmentChange}
+      onChange={(val) => val && onEndowmentChange(val)}
       as="div"
       by="name"
       className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d6"

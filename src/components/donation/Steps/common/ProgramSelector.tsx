@@ -89,11 +89,7 @@ function Options({ endowId, classes = "", onOptionsLoaded }: OptionsProps) {
       }}
     >
       {(options) => (
-        <LoadedOptions
-          options={options}
-          classes={classes}
-          onOptionsLoaded={onOptionsLoaded}
-        />
+        <LoadedOptions options={options} onOptionsLoaded={onOptionsLoaded} />
       )}
     </QueryLoader>
   );
