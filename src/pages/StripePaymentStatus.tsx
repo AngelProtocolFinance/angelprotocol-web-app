@@ -1,4 +1,5 @@
 import type { PaymentIntent } from "@stripe/stripe-js";
+import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
@@ -34,7 +35,7 @@ export default function StripePaymentStatus() {
       }}
       classes={{ container: "place-self-center" }}
     >
-      {({ status, guestDonor, recipientName, recipientId }) => (
+      {({ status, guestDonor, recipientName, recipientId, url }) => (
         <Content
           status={status}
           onMount={handleProcessing}
@@ -42,6 +43,7 @@ export default function StripePaymentStatus() {
           guestDonor={guestDonor}
           recipientName={recipientName}
           recipientId={recipientId}
+          url={url}
         />
       )}
     </QueryLoader>
@@ -55,6 +57,7 @@ function Content(props: {
   guestDonor?: GuestDonor;
   recipientName?: string;
   recipientId?: number;
+  url?: string;
 }) {
   switch (props.status) {
     case "succeeded":
@@ -75,6 +78,8 @@ function Content(props: {
       );
     case "processing":
       return <Processing onMount={props.onMount} />;
+    case "requires_action":
+      return <RequiresAction url={props.url} />;
     case "canceled":
       return <Unsuccessful recipientId={props.recipientId} />;
     default:
@@ -89,6 +94,25 @@ function Processing({ onMount = () => {} }) {
         isLoading
         text="Your donation is still processing, please wait..."
       />
+    </div>
+  );
+}
+
+function RequiresAction({ url }: { url?: string }) {
+  return (
+    <div className="justify-self-center display-block m-auto max-w-[35rem] pt-8 sm:pt-20 pb-20 scroll-mt-6">
+      <h3 className="text-2xl sm:text-3xl mb-8 sm:mb-12 text-center">
+        Requires further action
+      </h3>
+      <p className="text-center mb-8">
+        Pending manual verification, please verify your bank account.
+      </p>
+      <ExtLink
+        href={url ?? ""}
+        className="w-full sm:w-auto btn-blue btn-donate h-10 rounded-lg"
+      >
+        Verify bank account
+      </ExtLink>
     </div>
   );
 }
