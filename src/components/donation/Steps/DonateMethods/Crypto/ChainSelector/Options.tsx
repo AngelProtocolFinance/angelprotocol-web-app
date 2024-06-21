@@ -18,7 +18,10 @@ export function Options({ searchText }: Props) {
     : chains;
 
   return (
-    <ComboboxOptions className="absolute left-0 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller h-40 grid grid-cols-[auto_1fr] content-start">
+    <ComboboxOptions
+      anchor={{ to: "bottom", gap: 10 }}
+      className="w-[var(--input-width)] bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller h-40 grid grid-cols-[auto_1fr] content-start"
+    >
       {opts.map((opt) => (
         <ComboboxOption
           className="grid grid-cols-subgrid col-span-2 data-[selected]:bg-blue-l2 hover:bg-blue-l2 cursor-pointer gap-2 p-2 font-normal"
