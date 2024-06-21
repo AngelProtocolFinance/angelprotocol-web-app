@@ -19,11 +19,17 @@ export type EVMChainID =
   | "84532";
 
 export type CosmosChainID =
+  //juno
   | "juno-1"
   | "uni-6"
+  //kujira
   | "kaiyo-1"
-  | "stargaze-1"
   | "harpoon-4"
+  //osmosis
+  | "osmosis-1"
+  | "osmo-test-5"
+  //stargaze
+  | "stargaze-1"
   | "elgafar-1";
 //would remove this type once terra tooling is unified to that of cosmos (keplr)
 export type TerraChainID = "phoenix-1" | "pisco-1";

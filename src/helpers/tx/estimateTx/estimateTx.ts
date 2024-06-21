@@ -16,6 +16,9 @@ export default async function estimateTx(
       //kujira
       case "kaiyo-1":
       case "harpoon-4":
+      //osmosis
+      case "osmosis-1":
+      case "osmo-test-5":
       //stargaze
       case "stargaze-1":
       case "elgafar-1": {
