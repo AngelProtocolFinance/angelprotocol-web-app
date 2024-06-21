@@ -1,4 +1,9 @@
-import { Popover, Transition } from "@headlessui/react";
+import {
+  Popover,
+  PopoverButton,
+  PopoverPanel,
+  Transition,
+} from "@headlessui/react";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
@@ -20,7 +25,7 @@ export default function NavDropdown({ links }: Props) {
     <Popover className="relative">
       {({ open }) => (
         <>
-          <Popover.Button
+          <PopoverButton
             data-testid="nav_dropdown"
             className={`${
               open ? "text-white" : "text-white/90"
@@ -42,7 +47,7 @@ export default function NavDropdown({ links }: Props) {
               } max-sm:hidden transition duration-150 ease-in-out group-hover:text-blue-d7/80`}
               aria-hidden="true"
             />
-          </Popover.Button>
+          </PopoverButton>
           <Transition
             as={Fragment}
             enter="transition ease-out duration-200"
@@ -52,7 +57,7 @@ export default function NavDropdown({ links }: Props) {
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1"
           >
-            <Popover.Panel className="absolute right-0 z-10 mt-3 sm:w-screen max-w-80 shadow-[0px_8px_20px] shadow-gray-d1 rounded-lg bg-gray-l6 dark:bg-blue-d6 transform">
+            <PopoverPanel className="absolute right-0 z-10 mt-3 sm:w-screen max-w-80 shadow-[0px_8px_20px] shadow-gray-d1 rounded-lg bg-gray-l6 dark:bg-blue-d6 transform">
               {({ close }) => (
                 <nav className="overflow-hidden grid gap-y-2 w-full p-6">
                   {links.map((link) =>
@@ -88,7 +93,7 @@ export default function NavDropdown({ links }: Props) {
                   )}
                 </nav>
               )}
-            </Popover.Panel>
+            </PopoverPanel>
           </Transition>
         </>
       )}

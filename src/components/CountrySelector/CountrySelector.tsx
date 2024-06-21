@@ -1,4 +1,4 @@
-import { Combobox } from "@headlessui/react";
+import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { useState } from "react";
 import {
@@ -57,11 +57,11 @@ export default function CountrySelector<
         {country.flag || null}
       </span>
 
-      <Combobox.Button>
+      <ComboboxButton>
         {({ open }) => <DrawerIcon isOpen={open} size={25} className="mr-1" />}
-      </Combobox.Button>
+      </ComboboxButton>
 
-      <Combobox.Input
+      <ComboboxInput
         ref={ref}
         placeholder={props.placeholder}
         onChange={(event) => setQuery(event.target.value as any)}
