@@ -1,4 +1,9 @@
-import { Listbox } from "@headlessui/react";
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
 import { unpack } from "helpers";
 import { useEffect } from "react";
 import { useProgramsQuery } from "services/aws/programs";
@@ -30,13 +35,13 @@ export function ProgramSelector({
       as="div"
       className={`relative grid ${styles.container} group has-[[data-error]]:hidden has-[[data-empty]]:hidden has-[[data-loading]]:hidden`}
     >
-      <Listbox.Label
+      <label
         className={`${styles.label} block font-semibold font-heading mb-2 text-navy-d4`}
       >
         Select program
-      </Listbox.Label>
+      </label>
 
-      <Listbox.Button
+      <ListboxButton
         as="button"
         className="flex items-center justify-between border border-gray-l4 py-3.5 pl-5 pr-2 rounded-lg focus:ring-2 focus:ring-blue-d1 ring-offset-1"
       >
@@ -50,7 +55,7 @@ export function ProgramSelector({
             />
           </>
         )}
-      </Listbox.Button>
+      </ListboxButton>
       <Options
         endowId={endowId}
         classes="absolute top-full left-0 z-10"
@@ -107,7 +112,7 @@ function LoadedOptions({ options, classes, onOptionsLoaded }: ILoadedOptions) {
     onOptionsLoaded(options);
   }, []);
   return (
-    <Listbox.Options
+    <ListboxOptions
       className={`${classes} bg-white w-full border border-gray-l4 px-5 py-3.5 rounded-lg mt-2 grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1`}
     >
       {(
@@ -122,7 +127,7 @@ function LoadedOptions({ options, classes, onOptionsLoaded }: ILoadedOptions) {
       )
         .concat(options)
         .map((o) => (
-          <Listbox.Option
+          <ListboxOption
             key={o.id}
             value={
               {
@@ -133,8 +138,8 @@ function LoadedOptions({ options, classes, onOptionsLoaded }: ILoadedOptions) {
             className="select-none hover:text-[color:var(--accent-primary)] aria-selected:text-[color:var(--accent-primary)]"
           >
             <span>{o.title}</span>
-          </Listbox.Option>
+          </ListboxOption>
         ))}
-    </Listbox.Options>
+    </ListboxOptions>
   );
 }

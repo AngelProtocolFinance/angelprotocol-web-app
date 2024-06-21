@@ -7,15 +7,8 @@ export const styles = {
     "flex items-center field-input min-h-[3rem] justify-between cursor-pointer",
   error:
     "absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2",
-  //FUTURE: import OptionRenderArg once available
-  option: (selected: boolean, active: boolean) =>
-    `px-4 py-2 cursor-pointer ${
-      selected
-        ? "bg-[--accent-secondary]"
-        : active
-          ? "cursor-pointer bg-[--accent-secondary]"
-          : ""
-    }`,
+  option:
+    "data-[selected]:bg-[--accent-secondary] hover:cursor-pointer hover:bg-[--accent-secondary]",
   options:
     "font-heading rounded-sm border border-gray-l4 absolute top-full mt-2 z-10 bg-gray-l6 dark:bg-blue-d6 w-full max-h-[10rem] overflow-y-auto scroller",
 };

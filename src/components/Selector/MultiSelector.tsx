@@ -1,4 +1,10 @@
-import { Combobox } from "@headlessui/react";
+import {
+  Combobox,
+  ComboboxButton,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+} from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import Icon, { DrawerIcon } from "components/Icon";
 import { isEmpty } from "helpers";
@@ -64,7 +70,7 @@ export function MultiSelector<
         multiple
       >
         <FocusableInput ref={ref} />
-        <Combobox.Button
+        <ComboboxButton
           aria-invalid={invalid}
           aria-disabled={isDisabled}
           as="div"
@@ -84,7 +90,7 @@ export function MultiSelector<
                 {searchable ? (
                   <div className="inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 bg-white/5 rounded">
                     <Icon type="Search" size={20} />
-                    <Combobox.Input
+                    <ComboboxInput
                       className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
                       value={searchText}
                       onChange={(e) => setSearchText(e.target.value)}
@@ -105,8 +111,8 @@ export function MultiSelector<
               />
             </>
           )}
-        </Combobox.Button>
-        <Combobox.Options className={`${styles.options} ${cls.options}`}>
+        </ComboboxButton>
+        <ComboboxOptions className={`${styles.options} ${cls.options}`}>
           {optionsAvailable && (
             <div className="flex justify-between p-4">
               {isAllSelected ? (
@@ -125,22 +131,16 @@ export function MultiSelector<
 
           {optionsAvailable &&
             filteredOptions.map((o) => (
-              <Combobox.Option
-                key={o.value}
-                value={o}
-                className={({ active, selected }) =>
-                  styles.option(selected, active)
-                }
-              >
+              <ComboboxOption key={o.value} value={o} className={styles.option}>
                 {o.label}
-              </Combobox.Option>
+              </ComboboxOption>
             ))}
           {!optionsAvailable && (
             <p className="text-navy-l1 dark:text-navy-l2 text-sm px-4 py-2">
               No options found
             </p>
           )}
-        </Combobox.Options>
+        </ComboboxOptions>
         <ErrorMessage
           name={name}
           errors={errors}

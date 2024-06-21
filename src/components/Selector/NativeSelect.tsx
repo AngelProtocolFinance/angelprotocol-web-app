@@ -1,4 +1,9 @@
-import { Listbox } from "@headlessui/react";
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
 import { unpack } from "helpers";
 import { type AriaAttributes, forwardRef } from "react";
@@ -31,7 +36,7 @@ export const NativeSelect = forwardRef(function Select<V extends ValKey>(
       className="relative"
     >
       <FocusableInput ref={ref} />
-      <Listbox.Button
+      <ListboxButton
         aria-invalid={props["aria-invalid"]}
         aria-disabled={props.disabled}
         id={props.id}
@@ -48,20 +53,18 @@ export const NativeSelect = forwardRef(function Select<V extends ValKey>(
             />
           </>
         )}
-      </Listbox.Button>
-      <Listbox.Options className={`${styles.options} ${cls.options}`}>
+      </ListboxButton>
+      <ListboxOptions className={`${styles.options} ${cls.options}`}>
         {(props.options ?? []).map((o) => (
-          <Listbox.Option
+          <ListboxOption
             key={o.value}
             value={o.value}
-            className={({ active, selected }) =>
-              styles.option(selected, active)
-            }
+            className={styles.option}
           >
             {o.label}
-          </Listbox.Option>
+          </ListboxOption>
         ))}
-      </Listbox.Options>
+      </ListboxOptions>
     </Listbox>
   );
 });

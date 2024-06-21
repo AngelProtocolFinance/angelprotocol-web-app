@@ -1,4 +1,4 @@
-import { Combobox } from "@headlessui/react";
+import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
 import { forwardRef, useState } from "react";
 import { Options } from "./Options";
@@ -19,12 +19,12 @@ export const ChainSelector = forwardRef<HTMLInputElement, Props>(
       <Combobox
         disabled={props.disabled}
         value={props.value}
-        onChange={props.onChange}
+        onChange={(x) => x && props.onChange(x)}
         as="div"
         by="name"
         className="relative items-center flex w-full field-container field-container-donate min-h-[3rem] bg-white dark:bg-blue-d6"
       >
-        <Combobox.Input
+        <ComboboxInput
           ref={ref}
           placeholder="Search network"
           onChange={(event) => setSearchText(event.target.value)}
@@ -32,11 +32,11 @@ export const ChainSelector = forwardRef<HTMLInputElement, Props>(
           className="field-input-donate"
         />
 
-        <Combobox.Button>
+        <ComboboxButton>
           {({ open }) => (
             <DrawerIcon isOpen={open} size={25} className="ml-auto mr-5" />
           )}
-        </Combobox.Button>
+        </ComboboxButton>
 
         <Options searchText={searchText} />
         {props.error && (

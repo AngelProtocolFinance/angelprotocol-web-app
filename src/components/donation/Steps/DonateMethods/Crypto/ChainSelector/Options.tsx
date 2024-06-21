@@ -1,9 +1,8 @@
-import { Combobox } from "@headlessui/react";
+import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import Image from "components/Image";
 import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import Fuse from "fuse.js";
-import { Fragment } from "react";
 import type { Chain } from "./types";
 
 interface Props {
@@ -19,10 +18,10 @@ export function Options({ searchText }: Props) {
     : chains;
 
   return (
-    <Combobox.Options className="absolute left-0 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll h-40 grid grid-cols-[auto_1fr] content-start">
+    <ComboboxOptions className="absolute left-0 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller h-40 grid grid-cols-[auto_1fr] content-start">
       {opts.map((opt) => (
-        <Combobox.Option
-          as={Fragment}
+        <ComboboxOption
+          className="grid grid-cols-subgrid col-span-2 data-[selected]:bg-blue-l2 hover:bg-blue-l2 cursor-pointer gap-2 p-2 font-normal"
           key={opt.name}
           value={
             {
@@ -32,23 +31,15 @@ export function Options({ searchText }: Props) {
             } satisfies Chain
           }
         >
-          {({ active }) => (
-            <li
-              className={`${
-                active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-              } grid grid-cols-subgrid col-span-2 cursor-pointer gap-2 p-2 font-normal`}
-            >
-              <Image
-                src={opt.logo}
-                width={20}
-                height={20}
-                className="object-contain mr-1"
-              />
-              <span>{opt.name}</span>
-            </li>
-          )}
-        </Combobox.Option>
+          <Image
+            src={opt.logo}
+            width={20}
+            height={20}
+            className="object-contain mr-1"
+          />
+          <span>{opt.name}</span>
+        </ComboboxOption>
       ))}
-    </Combobox.Options>
+    </ComboboxOptions>
   );
 }
