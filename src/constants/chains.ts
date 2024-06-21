@@ -393,7 +393,7 @@ export const osmosisTestnet: SupportedChain = {
 export const bitcoin: UnsupportedChain = {
   isTest: IS_TEST,
   id: `btc-${IS_TEST ? "testnet" : "mainnet"}`,
-  name: "Bitcoin",
+  name: `Bitcoin${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://btcscan.org",
   coingeckoPlatformId: null,
   logo: "https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=032",
@@ -403,7 +403,7 @@ export const solana: UnsupportedChain = {
   isTest: IS_TEST,
   id: `sol-${IS_TEST ? "testnet" : "mainnet"}`,
   coingeckoPlatformId: null,
-  name: "Solana",
+  name: `Solana${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://solscan.io",
   logo: "https://cryptologos.cc/logos/solana-sol-logo.svg?v=032",
 };
@@ -411,7 +411,7 @@ export const solana: UnsupportedChain = {
 export const ripple: UnsupportedChain = {
   isTest: IS_TEST,
   id: `xrp-${IS_TEST ? "testnet" : "mainnet"}`,
-  name: "Ripple",
+  name: `XRP Ledger${IS_TEST ? " Testnet" : ""}`,
   coingeckoPlatformId: null,
   blockExplorer: "https://xrpscan.com",
   logo: "https://avatars.githubusercontent.com/u/3165523?s=200&v=4",
@@ -421,7 +421,7 @@ export const doge: UnsupportedChain = {
   isTest: IS_TEST,
   id: `doge-${IS_TEST ? "testnet" : "mainnet"}`,
   coingeckoPlatformId: null,
-  name: "Doge",
+  name: `Doge${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://dogechain.info",
   logo: "https://cryptologos.cc/logos/dogecoin-doge-logo.svg?v=032",
 };
