@@ -1,4 +1,4 @@
-import { Combobox } from "@headlessui/react";
+import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { DrawerIcon } from "components/Icon";
 import useDebouncer from "hooks/useDebouncer";
@@ -31,7 +31,7 @@ export default function EndowmentSelector() {
       by="name"
       className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d6"
     >
-      <Combobox.Input
+      <ComboboxInput
         ref={ref}
         placeholder="Search for an organization..."
         onChange={(event) => setSearchText(event.target.value)}
@@ -39,11 +39,11 @@ export default function EndowmentSelector() {
         className="pl-4 w-full"
       />
 
-      <Combobox.Button>
+      <ComboboxButton>
         {({ open }) => (
           <DrawerIcon isOpen={open} size={25} className="ml-auto mr-1" />
         )}
-      </Combobox.Button>
+      </ComboboxButton>
 
       <Options searchText={debouncedQuery} isDebouncing={isDebouncing} />
       <ErrorMessage
