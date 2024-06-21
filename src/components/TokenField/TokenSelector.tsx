@@ -1,4 +1,5 @@
-import { Combobox, ComboboxButton } from "@headlessui/react";
+import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
+import type { TokenWithAmount } from "types/tx";
 import { DrawerIcon } from "../Icon";
 import TokenOptions from "./TokenOptions";
 import type { SelectorProps } from "./types";
@@ -13,19 +14,17 @@ export default function TokenSelector({
       value={selectedToken}
       onChange={onChange}
       as="div"
-      className="flex items-center gap-1 w-full dark:text-navy-l2"
+      className="relative gap-1 flex justify-end dark:text-navy-l2 h-full"
     >
-      <span className="font-medium">{selectedToken.symbol}</span>
-
-      <ComboboxButton>
+      <ComboboxInput
+        displayValue={(x: TokenWithAmount) => x.symbol}
+        readOnly
+        className="focus:outline-none text-right pr-8 w-32 supports-[field-sizing]:[field-sizing:content] supports-[field-sizing]:w-auto"
+      />
+      <ComboboxButton className="absolute inset-y-0">
         {({ open }) => <DrawerIcon isOpen={open} size={24} />}
       </ComboboxButton>
-
-      <TokenOptions
-        onChange={onChange}
-        classes="absolute right-0 top-2 z-10 mt-10"
-        selectedChainId={selectedChainId}
-      />
+      <TokenOptions onChange={onChange} selectedChainId={selectedChainId} />
     </Combobox>
   );
 }

@@ -18,12 +18,8 @@ type Props = {
 };
 
 const container =
-  "border border-gray-l4 p-1 max-h-60 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
-export default function TokenOptions({
-  classes = "",
-  selectedChainId,
-  onChange,
-}: Props) {
+  "w-max border border-gray-l4 p-1 h-52 w-max overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
+export default function TokenOptions({ selectedChainId, onChange }: Props) {
   const [searchText, setSearchText] = useState("");
 
   const { showModal } = useModalContext();
@@ -44,7 +40,7 @@ export default function TokenOptions({
 
   if (isLoading || isFetching) {
     return (
-      <ComboboxOptions className={`${classes} ${container}`}>
+      <ComboboxOptions anchor="bottom" className={container}>
         <LoadingStatus classes="text-sm text-navy-d4 dark:text-navy-l2 p-2">
           Loading..
         </LoadingStatus>
@@ -54,7 +50,7 @@ export default function TokenOptions({
 
   if (isError) {
     return (
-      <ComboboxOptions className={`${classes} ${container}`}>
+      <ComboboxOptions anchor="bottom" className={container}>
         <ErrorStatus classes="text-sm p-2">Failed to load tokens</ErrorStatus>
       </ComboboxOptions>
     );
@@ -63,7 +59,10 @@ export default function TokenOptions({
   const coingeckoPlatformId = chains[selectedChainId].coingeckoPlatformId;
 
   return (
-    <ComboboxOptions className={`${classes} ${container} scroller`}>
+    <ComboboxOptions
+      anchor={{ to: "bottom", gap: 10 }}
+      className={`${container} scroller`}
+    >
       <div className="flex p-2 gap-2 border border-gray-l4 rounded mb-1">
         <Icon type="Search" size={20} />
         <input
