@@ -6,7 +6,7 @@ import { schema, tokenShape } from "schemas/shape";
 import { object } from "yup";
 import {
   DEFAULT_PROGRAM,
-  initChainIdOption,
+  initChainId,
   initTokenOption,
 } from "../../common/constants";
 import type { CryptoFormStep } from "../../types";
@@ -18,7 +18,7 @@ export default function Crypto(props: Props) {
   const initial: DonateValues = {
     program: DEFAULT_PROGRAM,
     token: initTokenOption,
-    chainId: initChainIdOption,
+    chainId: initChainId,
   };
 
   const methods = useForm<DonateValues>({

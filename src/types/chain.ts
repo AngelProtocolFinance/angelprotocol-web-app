@@ -57,6 +57,7 @@ type NativeAtomicUnit = string; //ujunox uluna
 type IBCDenom = string;
 
 export type SupportedChain = {
+  logo: string;
   isTest: boolean;
   id: SupportedChainId;
   coingeckoPlatformId: string;
@@ -76,7 +77,7 @@ export type SupportedChain = {
 
 export type UnsupportedChain = Pick<
   SupportedChain,
-  "isTest" | "name" | "blockExplorer"
+  "isTest" | "name" | "blockExplorer" | "logo"
 > & {
   id: UnsupportedChainId;
   /** null: erc20 token doesn't exist */

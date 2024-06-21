@@ -9,6 +9,7 @@ import type {
 import { IS_TEST } from "./env";
 
 const baseProxyURL = "https://59vigz9r91.execute-api.us-east-1.amazonaws.com";
+
 //mainnets
 export const polygon: SupportedChain = {
   isTest: false,
@@ -25,6 +26,7 @@ export const polygon: SupportedChain = {
     decimals: 18,
     coinGeckoId: "matic-network",
   },
+  logo: "https://cryptologos.cc/logos/polygon-matic-logo.svg?v=032",
 };
 
 export const ethereum: SupportedChain = {
@@ -42,6 +44,7 @@ export const ethereum: SupportedChain = {
     decimals: 18,
     coinGeckoId: "ethereum",
   },
+  logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=032",
 };
 
 export const arbitrum: SupportedChain = {
@@ -59,6 +62,7 @@ export const arbitrum: SupportedChain = {
     decimals: 18,
     coinGeckoId: "ethereum",
   },
+  logo: "https://cryptologos.cc/logos/arbitrum-arb-logo.svg?v=032",
 };
 
 export const optimism: SupportedChain = {
@@ -76,6 +80,7 @@ export const optimism: SupportedChain = {
     decimals: 18,
     coinGeckoId: "ethereum",
   },
+  logo: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.svg?v=032",
 };
 
 export const base: SupportedChain = {
@@ -93,6 +98,7 @@ export const base: SupportedChain = {
     decimals: 18,
     coinGeckoId: "ethereum",
   },
+  logo: "https://avatars.githubusercontent.com/u/108554348?s=200&v=4",
 };
 
 export const binance: SupportedChain = {
@@ -110,6 +116,7 @@ export const binance: SupportedChain = {
     decimals: 18,
     coinGeckoId: "binancecoin",
   },
+  logo: "https://cryptologos.cc/logos/bnb-bnb-logo.svg?v=032",
 };
 
 export const juno: SupportedChain = {
@@ -127,6 +134,7 @@ export const juno: SupportedChain = {
     decimals: 6,
     coinGeckoId: "juno-network",
   },
+  logo: "https://avatars.githubusercontent.com/u/79813271?s=200&v=4",
 };
 
 export const stargaze: SupportedChain = {
@@ -144,6 +152,7 @@ export const stargaze: SupportedChain = {
     decimals: 6,
     coinGeckoId: "stargaze",
   },
+  logo: "https://app.osmosis.zone/tokens/generated/stars.svg",
 };
 
 export const kujira: SupportedChain = {
@@ -161,6 +170,7 @@ export const kujira: SupportedChain = {
     decimals: 6,
     coinGeckoId: "kujira",
   },
+  logo: "https://avatars.githubusercontent.com/u/84391088?s=200&v=4",
 };
 
 export const terraMainnet: SupportedChain = {
@@ -178,6 +188,7 @@ export const terraMainnet: SupportedChain = {
     decimals: 6,
     coinGeckoId: "terra-luna-2",
   },
+  logo: "https://avatars.githubusercontent.com/u/38208150?s=200&v=4",
 };
 
 //testnets
@@ -196,6 +207,7 @@ export const polygonAmoy: SupportedChain = {
     decimals: 18,
     coinGeckoId: "matic-network",
   },
+  logo: polygon.logo,
 };
 
 export const sepolia: SupportedChain = {
@@ -213,6 +225,7 @@ export const sepolia: SupportedChain = {
     decimals: 18,
     coinGeckoId: "ethereum",
   },
+  logo: ethereum.logo,
 };
 
 export const arbitrumSepolia: SupportedChain = {
@@ -230,6 +243,7 @@ export const arbitrumSepolia: SupportedChain = {
     decimals: 18,
     coinGeckoId: "ethereum",
   },
+  logo: arbitrum.logo,
 };
 
 export const optimismSepolia: SupportedChain = {
@@ -247,6 +261,7 @@ export const optimismSepolia: SupportedChain = {
     decimals: 18,
     coinGeckoId: "ethereum",
   },
+  logo: optimism.logo,
 };
 
 export const baseSepolia: SupportedChain = {
@@ -264,6 +279,7 @@ export const baseSepolia: SupportedChain = {
     decimals: 18,
     coinGeckoId: "ethereum",
   },
+  logo: base.logo,
 };
 
 export const binanceTestnet: SupportedChain = {
@@ -281,6 +297,7 @@ export const binanceTestnet: SupportedChain = {
     decimals: 18,
     coinGeckoId: "binancecoin",
   },
+  logo: binance.logo,
 };
 
 export const terraTestnet: SupportedChain = {
@@ -298,6 +315,7 @@ export const terraTestnet: SupportedChain = {
     decimals: 6,
     coinGeckoId: "terra-luna-2",
   },
+  logo: terraMainnet.logo,
 };
 
 export const stargazeTestnet: SupportedChain = {
@@ -315,6 +333,7 @@ export const stargazeTestnet: SupportedChain = {
     decimals: 6,
     coinGeckoId: "stargaze",
   },
+  logo: stargaze.logo,
 };
 
 export const kujiraTestnet: SupportedChain = {
@@ -332,6 +351,7 @@ export const kujiraTestnet: SupportedChain = {
     decimals: 6,
     coinGeckoId: "kujira",
   },
+  logo: kujira.logo,
 };
 
 export const bitcoin: UnsupportedChain = {
@@ -340,6 +360,7 @@ export const bitcoin: UnsupportedChain = {
   name: "Bitcoin",
   blockExplorer: "https://btcscan.org",
   coingeckoPlatformId: null,
+  logo: "https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=032",
 };
 
 export const solana: UnsupportedChain = {
@@ -348,6 +369,7 @@ export const solana: UnsupportedChain = {
   coingeckoPlatformId: null,
   name: "Solana",
   blockExplorer: "https://solscan.io",
+  logo: "https://cryptologos.cc/logos/solana-sol-logo.svg?v=032",
 };
 
 export const ripple: UnsupportedChain = {
@@ -356,6 +378,7 @@ export const ripple: UnsupportedChain = {
   name: "Ripple",
   coingeckoPlatformId: null,
   blockExplorer: "https://xrpscan.com",
+  logo: "https://avatars.githubusercontent.com/u/3165523?s=200&v=4",
 };
 
 export const doge: UnsupportedChain = {
@@ -364,6 +387,7 @@ export const doge: UnsupportedChain = {
   coingeckoPlatformId: null,
   name: "Doge",
   blockExplorer: "https://dogechain.info",
+  logo: "https://cryptologos.cc/logos/dogecoin-doge-logo.svg?v=032",
 };
 
 const supportedChainList: SupportedChain[] = [

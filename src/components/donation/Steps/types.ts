@@ -28,7 +28,7 @@ type BaseDonationDetails = {
 export type CryptoDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
   token: TokenWithAmount;
-  chainId: OptionType<ChainID>;
+  chainId: ChainID;
 };
 
 type FiatDonationDetails = BaseDonationDetails & {

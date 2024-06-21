@@ -26,9 +26,7 @@ export const initTokenOption: TokenWithAmount = {
 
 export const usdOption: DetailedCurrency = { code: "usd", min: 1, rate: 1 };
 
-export const initChainIdOption: OptionType<ChainID> = IS_TEST
-  ? { label: polygonAmoy.name, value: polygonAmoy.id }
-  : { label: polygon.name, value: polygon.id };
+export const initChainId: ChainID = IS_TEST ? polygonAmoy.id : polygon.id;
 
 export const initDetails = (
   methodId: DonateMethodId,
@@ -49,7 +47,7 @@ export const initDetails = (
         method: "crypto",
         token: initTokenOption,
         program,
-        chainId: initChainIdOption,
+        chainId: initChainId,
       };
     }
     case "daf": {

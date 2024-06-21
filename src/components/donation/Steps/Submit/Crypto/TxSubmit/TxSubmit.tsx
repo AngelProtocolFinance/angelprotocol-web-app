@@ -28,7 +28,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
 
-    const chainId = details.chainId.value;
+    const chainId = details.chainId;
 
     if (chainIdIsNotSupported(chainId)) {
       return setEstimate(undefined);
@@ -50,8 +50,8 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       transactionId: init.intentId,
       amount: +details.token.amount,
       tipAmount: tip?.value ?? 0,
-      chainId: chains[details.chainId.value].id,
-      chainName: chains[details.chainId.value].name,
+      chainId: chains[details.chainId].id,
+      chainName: chains[details.chainId].name,
       denomination: details.token.symbol,
       splitLiq: liquidSplitPct,
       walletAddress: wallet?.address ?? "",

@@ -92,10 +92,7 @@ function initialState({
       step: "submit",
       details: {
         method: "crypto",
-        chainId: {
-          label: intent.chainName,
-          value: intent.chainId as ChainID,
-        },
+        chainId: intent.chainId as ChainID,
         token: {
           amount: `${intent.amount}`,
           ...intent.token,
