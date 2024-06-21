@@ -125,11 +125,12 @@ export const apes = createApi({
         guestDonor?: GuestDonor;
         recipientName?: string;
         recipientId?: number;
+        url?: string;
       },
       { paymentIntentId: string }
     >({
       query: ({ paymentIntentId }) => ({
-        url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
+        url: `stripe-proxy?payment_intent=${paymentIntentId}`,
       }),
     }),
     tokens: builder.query<Token[], ChainID>({
