@@ -58,7 +58,6 @@ export function ProgramSelector({
       </ListboxButton>
       <Options
         endowId={endowId}
-        classes="absolute top-full left-0 z-10"
         onOptionsLoaded={(options) => {
           const selectedProgram = options.find((o) => o.id === program.value);
           if (!selectedProgram) return;
@@ -102,18 +101,18 @@ function Options({ endowId, classes = "", onOptionsLoaded }: OptionsProps) {
 
 interface ILoadedOptions {
   options: Program[];
-  classes?: string;
   onOptionsLoaded: OptionsLoadedCb;
 }
 
-function LoadedOptions({ options, classes, onOptionsLoaded }: ILoadedOptions) {
+function LoadedOptions({ options, onOptionsLoaded }: ILoadedOptions) {
   //biome-ignore lint: only run effect on mount
   useEffect(() => {
     onOptionsLoaded(options);
   }, []);
   return (
     <ListboxOptions
-      className={`${classes} bg-white w-full border border-gray-l4 px-5 py-3.5 rounded-lg mt-2 grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1`}
+      anchor={{ to: "bottom", gap: 8 }}
+      className="bg-white w-[var(--button-width)] border border-gray-l4 px-5 py-3.5 rounded-lg grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
     >
       {(
         [
