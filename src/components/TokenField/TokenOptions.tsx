@@ -1,4 +1,4 @@
-import { Combobox } from "@headlessui/react";
+import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import { chains, juno, kujira, stargaze, terraMainnet } from "constants/chains";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
@@ -44,29 +44,29 @@ export default function TokenOptions({
 
   if (isLoading || isFetching) {
     return (
-      <Combobox.Options className={`${classes} ${container}`}>
+      <ComboboxOptions className={`${classes} ${container}`}>
         <LoadingStatus classes="text-sm text-navy-d4 dark:text-navy-l2 p-2">
           Loading..
         </LoadingStatus>
-      </Combobox.Options>
+      </ComboboxOptions>
     );
   }
 
   if (isError) {
     return (
-      <Combobox.Options className={`${classes} ${container}`}>
+      <ComboboxOptions className={`${classes} ${container}`}>
         <ErrorStatus classes="text-sm p-2">Failed to load tokens</ErrorStatus>
-      </Combobox.Options>
+      </ComboboxOptions>
     );
   }
 
   const coingeckoPlatformId = chains[selectedChainId].coingeckoPlatformId;
 
   return (
-    <Combobox.Options className={`${classes} ${container}`}>
+    <ComboboxOptions className={`${classes} ${container} scroller`}>
       <div className="flex p-2 gap-2 border border-gray-l4 rounded mb-1">
         <Icon type="Search" size={20} />
-        <Combobox.Input
+        <input
           placeholder="Search..."
           aria-disabled={tokens.length < 1}
           className="text-left text-sm focus:outline-none bg-transparent w-20"
@@ -79,7 +79,7 @@ export default function TokenOptions({
         </div>
       ) : (
         searchResult.map((token) => (
-          <Combobox.Option
+          <ComboboxOption
             key={token.token_id + token.type}
             className={
               "flex items-center gap-2 p-3 hover:bg-[--accent-secondary] cursor-pointer"
@@ -88,7 +88,7 @@ export default function TokenOptions({
           >
             <Image src={token.logo} className="w-6 h-6" />
             <span className="text-sm">{token.symbol}</span>
-          </Combobox.Option>
+          </ComboboxOption>
         ))
       )}
       {coingeckoPlatformId && (
@@ -124,6 +124,6 @@ export default function TokenOptions({
           Not listed?
         </button>
       )}
-    </Combobox.Options>
+    </ComboboxOptions>
   );
 }

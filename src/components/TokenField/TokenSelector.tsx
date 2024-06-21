@@ -1,4 +1,4 @@
-import { Combobox } from "@headlessui/react";
+import { Combobox, ComboboxButton } from "@headlessui/react";
 import { DrawerIcon } from "../Icon";
 import TokenOptions from "./TokenOptions";
 import type { SelectorProps } from "./types";
@@ -17,9 +17,9 @@ export default function TokenSelector({
     >
       <span className="font-medium">{selectedToken.symbol}</span>
 
-      <Combobox.Button>
+      <ComboboxButton>
         {({ open }) => <DrawerIcon isOpen={open} size={24} />}
-      </Combobox.Button>
+      </ComboboxButton>
 
       <TokenOptions
         onChange={onChange}
