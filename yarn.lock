@@ -1324,7 +1324,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react@npm:^0.26.13":
+"@floating-ui/react@npm:^0.26.16":
   version: 0.26.17
   resolution: "@floating-ui/react@npm:0.26.17"
   dependencies:
@@ -1355,18 +1355,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@headlessui/react@npm:2.0.4":
-  version: 2.0.4
-  resolution: "@headlessui/react@npm:2.0.4"
+"@headlessui/react@npm:2.1.0":
+  version: 2.1.0
+  resolution: "@headlessui/react@npm:2.1.0"
   dependencies:
-    "@floating-ui/react": "npm:^0.26.13"
-    "@react-aria/focus": "npm:^3.16.2"
-    "@react-aria/interactions": "npm:^3.21.1"
+    "@floating-ui/react": "npm:^0.26.16"
+    "@react-aria/focus": "npm:^3.17.1"
+    "@react-aria/interactions": "npm:^3.21.3"
     "@tanstack/react-virtual": "npm:3.5.0"
   peerDependencies:
     react: ^18
     react-dom: ^18
-  checksum: 10/1419c35eccfce133b8daafa786fa66fc8271dfbc696458679fb24acaf74e7646e57228e36e69c512891e44a05b845ae3c151dc7bff27e6fb56fa74aadd3ecb48
+  checksum: 10/9d5101c18c6cf98ceb804fcaeb074cb6b3ed1fec754dcdde8f23c6cd340a71b20c8ce99df78d1591385646e4a21001dd95a062a889ff003914e3c9e00b46546e
   languageName: node
   linkType: hard
 
@@ -2185,7 +2185,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-aria/focus@npm:^3.16.2":
+"@react-aria/focus@npm:^3.17.1":
   version: 3.17.1
   resolution: "@react-aria/focus@npm:3.17.1"
   dependencies:
@@ -2200,7 +2200,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-aria/interactions@npm:^3.21.1, @react-aria/interactions@npm:^3.21.3":
+"@react-aria/interactions@npm:^3.21.3":
   version: 3.21.3
   resolution: "@react-aria/interactions@npm:3.21.3"
   dependencies:
@@ -4337,7 +4337,7 @@ __metadata:
     "@ethersproject/abi": "npm:5.7.0"
     "@ethersproject/bignumber": "npm:5.7.0"
     "@gsap/react": "npm:2.1.1"
-    "@headlessui/react": "npm:2.0.4"
+    "@headlessui/react": "npm:2.1.0"
     "@hookform/error-message": "npm:2.0.1"
     "@hookform/resolvers": "npm:3.3.4"
     "@keplr-wallet/proto-types": "npm:0.12.83"
