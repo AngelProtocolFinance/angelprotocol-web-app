@@ -96,6 +96,7 @@ export default function useInjectedWallet(
     } catch (err) {
       logger.error(err);
       alert("Failed to switch chain");
+      setState({ ...state, isSwitching: false });
     }
   }
 
