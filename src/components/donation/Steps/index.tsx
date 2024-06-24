@@ -84,8 +84,6 @@ function initialState({
     title: d.title ? { label: d.title, value: d.title } : initDonorTitleOption,
     streetAddress: d.address?.streetAddress ?? "",
     zipCode: d.address?.zipCode ?? "",
-    withHonorary: !!intent.inHonorOf,
-    honoraryFullName: intent.inHonorOf ?? "",
   };
 
   if ("chainId" in intent) {
@@ -105,6 +103,10 @@ function initialState({
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
       donor: formDonor,
+      honorary: {
+        withHonorary: !!intent.inHonorOf,
+        honoraryFullName: intent.inHonorOf ?? "",
+      },
     };
   }
   return {
@@ -124,5 +126,9 @@ function initialState({
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },
     donor: formDonor,
+    honorary: {
+      withHonorary: !!intent.inHonorOf,
+      honoraryFullName: intent.inHonorOf ?? "",
+    },
   };
 }

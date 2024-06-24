@@ -53,6 +53,8 @@ export type CryptoDonation = {
   chainName: string;
   source: DonationSource;
   donor: Donor;
+  /** honorary full name - may be empty `""` */
+  inHonorOf?: string;
 };
 
 export type FiatDonation = {
@@ -67,18 +69,17 @@ export type FiatDonation = {
   splitLiq: number;
   donor: Donor;
   source: DonationSource;
-};
-
-export type DonationIntent = {
   /** honorary full name - may be empty `""` */
   inHonorOf?: string;
-} & ( //donation records always have transactionId
+};
+
+export type DonationIntent =
+  //donation records always have transactionId
   | (Ensure<CryptoDonation, "transactionId"> & { token: Token })
   | (Ensure<FiatDonation, "transactionId"> & {
       currency: Currency;
       frequency: FiatPaymentFrequency;
-    })
-);
+    });
 
 export type FiatPaymentFrequency = "one-time" | "subscription";
 

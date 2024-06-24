@@ -17,7 +17,14 @@ import Checkout from "./Checkout";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { init, details, liquidSplitPct, tip, donor: fvDonor } = props;
+  const {
+    init,
+    details,
+    liquidSplitPct,
+    tip,
+    donor: fvDonor,
+    honorary,
+  } = props;
   const { setState } = useDonationState();
 
   const {
@@ -35,6 +42,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     splitLiq: liquidSplitPct,
     donor: toDonor(fvDonor),
     source: init.source,
+    ...(honorary.honoraryFullName && { inHonorOf: honorary.honoraryFullName }),
     ...(details.program.value && { programId: details.program.value }),
   });
 

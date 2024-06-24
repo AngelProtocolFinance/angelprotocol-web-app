@@ -23,7 +23,14 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   const { submitCrypto } = useDonationState();
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
-  const { details, tip, liquidSplitPct, donor: fvDonor, init } = donation;
+  const {
+    details,
+    tip,
+    liquidSplitPct,
+    donor: fvDonor,
+    honorary,
+    init,
+  } = donation;
   const sender = wallet?.address;
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
@@ -58,6 +65,9 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       endowmentId: init.recipient.id,
       source: init.config ? "bg-widget" : "bg-marketplace",
       donor: toDonor(fvDonor),
+      ...(honorary.honoraryFullName && {
+        inHonorOf: honorary.honoraryFullName,
+      }),
       ...(details.program.value && { programId: details.program.value }),
     },
     { skip: !wallet?.address }

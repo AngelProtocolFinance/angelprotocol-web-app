@@ -110,13 +110,18 @@ export type FormDonor = Pick<Donor, "email" | "firstName" | "lastName"> & {
   zipCode: string;
   /** initially empty `''` */
   streetAddress: string;
+};
+
+export type Honorary = {
   withHonorary: boolean;
   /** initially empty `''` */
   honoraryFullName: string;
 };
+
 export type SummaryStep = {
   step: "summary";
   donor?: FormDonor;
+  honorary?: Honorary;
 } & From<TipStep, "tip">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
