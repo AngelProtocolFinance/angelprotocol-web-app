@@ -7,18 +7,20 @@ import type { DonateMethodId } from "types/lists";
 import { string } from "yup";
 import ContinueBtn from "../common/ContinueBtn";
 import { initDonorTitleOption } from "../common/constants";
-import type { FormDonor, Mode } from "../types";
+import type { FormDonor, Honorary, Mode } from "../types";
 
-type FV = FormDonor;
+type FV = FormDonor & Honorary;
 
 type Props = {
-  onSubmit(donor: FV): void;
+  onSubmit(formValues: FV): void;
   classes?: string;
   donor?: FormDonor;
+  honorary?: Honorary;
   mode: Mode;
   method: DonateMethodId;
 };
 const ukTaxResidentKey: keyof FV = "ukTaxResident";
+const withHonoraryKey: keyof FV = "withHonorary";
 const titleOptions: FV["title"][] = [
   initDonorTitleOption,
   { label: "Mr", value: "Mr" },
@@ -27,23 +29,16 @@ const titleOptions: FV["title"][] = [
   { label: "Mx", value: "Mx" },
 ];
 
-export default function DonorForm({
+export default function SummaryForm({
   classes = "",
   onSubmit,
   donor,
+  honorary,
   mode,
   method,
 }: Props) {
   const methods = useForm<FV>({
-    defaultValues: donor || {
-      firstName: "",
-      lastName: "",
-      email: "",
-      ukTaxResident: false,
-      title: initDonorTitleOption,
-      streetAddress: "",
-      zipCode: "",
-    },
+    defaultValues: { ...donor, ...honorary },
     resolver: yupResolver(
       schema<FV>({
         firstName: string().required("Please enter your first name"),
@@ -59,12 +54,17 @@ export default function DonorForm({
           const [ukTaxResident] = values as [boolean];
           return ukTaxResident ? schema.required("required") : schema;
         }),
+        honoraryFullName: string().when(withHonoraryKey, (values, schema) => {
+          const [withHonorary] = values as [boolean];
+          return withHonorary ? schema.required("required") : schema;
+        }),
       })
     ),
   });
 
   const { handleSubmit, watch } = methods;
   const ukTaxResident = watch("ukTaxResident");
+  const withHonorary = watch("withHonorary");
 
   return (
     <Form
@@ -118,7 +118,7 @@ export default function DonorForm({
             name="streetAddress"
             label="House number"
             placeholder="e.g. 100 Better Giving Rd"
-            classes={{ container: "col-span-full field-donate mt-4" }}
+            classes={{ container: "col-span-full field-donate" }}
             required
           />
           <Field<FV>
@@ -129,6 +129,20 @@ export default function DonorForm({
             required
           />
         </>
+      )}
+
+      <CheckField<FV> name="withHonorary" classes="col-span-full mt-4">
+        Donating in honor of someone?
+      </CheckField>
+
+      {withHonorary && (
+        <Field<FV>
+          name="honoraryFullName"
+          label="In Honor Of"
+          placeholder="e.g. Jane Doe"
+          classes={{ container: "col-span-full field-donate" }}
+          required
+        />
       )}
       <ContinueBtn
         type="submit"

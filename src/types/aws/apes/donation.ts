@@ -53,6 +53,8 @@ export type CryptoDonation = {
   chainName: string;
   source: DonationSource;
   donor: Donor;
+  /** honorary full name - may be empty `""` */
+  inHonorOf?: string;
 };
 
 export type FiatDonation = {
@@ -67,6 +69,8 @@ export type FiatDonation = {
   splitLiq: number;
   donor: Donor;
   source: DonationSource;
+  /** honorary full name - may be empty `""` */
+  inHonorOf?: string;
 };
 
 export type DonationIntent =
