@@ -206,5 +206,12 @@
   .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
+  
+  /** tailwind classes of children of this wrapper can still override this styles */
+  .override-wp-overrides {
+    @apply [&_*]:font-body [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_h4]:font-heading [&_h5]:font-heading [&_h6]:font-heading [&_a]:text-navy-d4
+  }
 }
+
+
 

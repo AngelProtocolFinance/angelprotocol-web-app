@@ -86,7 +86,6 @@ function Loaded(post: Wordpress.Post) {
       <div className="w-full h-px bg-gray-l4 my-4" />
 
       <div
-        className="wp-post"
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: post.content.rendered }}
       />
