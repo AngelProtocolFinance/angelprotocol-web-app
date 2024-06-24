@@ -18,7 +18,11 @@ export default function TokenSelector({
           </>
         )}
       </PopoverButton>
-      <TokenOptions onChange={onChange} selectedChainId={selectedChainId} />
+      <TokenOptions
+        token={selectedToken}
+        onChange={onChange}
+        selectedChainId={selectedChainId}
+      />
     </Popover>
   );
 }

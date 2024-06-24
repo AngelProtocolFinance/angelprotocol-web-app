@@ -1,4 +1,5 @@
 import {
+  CloseButton,
   Combobox,
   ComboboxInput,
   ComboboxOption,
@@ -21,12 +22,17 @@ import TokenSearch from "./TokenSearch";
 type Props = {
   selectedChainId: ChainID;
   onChange: (token: TokenWithAmount) => void;
+  token: TokenWithAmount;
   classes?: string;
 };
 
 const container =
-  "w-40 border border-gray-l4 p-1 [--anchor-max-height:13rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
-export default function TokenOptions({ selectedChainId, onChange }: Props) {
+  "w-56 border border-gray-l4 p-1 [--anchor-max-height:13rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
+export default function TokenOptions({
+  selectedChainId,
+  onChange,
+  token,
+}: Props) {
   const {
     data: tokens = [],
     isLoading,
@@ -53,8 +59,12 @@ export default function TokenOptions({ selectedChainId, onChange }: Props) {
   }
 
   return (
-    <PopoverPanel anchor={{ to: "bottom end", gap: 5 }} className={container}>
+    <PopoverPanel
+      anchor={{ to: "bottom end", gap: 8, offset: 20 }}
+      className={container}
+    >
       <TokenCombobox
+        token={token}
         tokens={tokens}
         coingeckoPlatformId={chains[selectedChainId].coingeckoPlatformId}
         onChange={onChange}
@@ -63,11 +73,12 @@ export default function TokenOptions({ selectedChainId, onChange }: Props) {
   );
 }
 
-interface ITokenSearch extends Pick<Props, "onChange"> {
+interface ITokenSearch extends Pick<Props, "onChange" | "token"> {
   tokens: Token[];
   coingeckoPlatformId: string | null;
 }
 function TokenCombobox({
+  token,
   tokens,
   coingeckoPlatformId,
   onChange,
@@ -82,9 +93,8 @@ function TokenCombobox({
         });
 
   return (
-    <Combobox onChange={onChange}>
-      <div className="flex p-2 gap-2 rounded mb-1">
-        <Icon type="Search" size={20} />
+    <Combobox value={token} onChange={onChange}>
+      <div className="grid grid-cols-[1fr_auto] p-2 gap-2 rounded mb-1 border border-gray-l4">
         <ComboboxInput
           value={searchText}
           placeholder="Search..."
@@ -92,15 +102,17 @@ function TokenCombobox({
           className="text-left text-sm focus:outline-none bg-transparent w-20"
           onChange={(event) => setSearchText(event.target.value)}
         />
+        <Icon type="Search" size={20} />
       </div>
       {isEmpty(searchResult) && searchText !== "" ? (
         <div className="relative cursor-default select-none py-2 px-4 text-sm">
           {searchText} not found
         </div>
       ) : (
-        <ComboboxOptions>
+        <ComboboxOptions static>
           {searchResult.map((token) => (
-            <ComboboxOption
+            <CloseButton
+              as={ComboboxOption}
               key={token.token_id + token.type}
               className={
                 "flex items-center gap-2 p-3 hover:bg-[--accent-secondary] cursor-pointer"
@@ -109,7 +121,7 @@ function TokenCombobox({
             >
               <Image src={token.logo} className="w-6 h-6" />
               <span className="text-sm">{token.symbol}</span>
-            </ComboboxOption>
+            </CloseButton>
           ))}
         </ComboboxOptions>
       )}
