@@ -73,7 +73,7 @@ export default function TokenOptions({
   );
 }
 
-interface ITokenSearch extends Pick<Props, "onChange" | "token"> {
+interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {
   tokens: Token[];
   coingeckoPlatformId: string | null;
 }
@@ -82,7 +82,7 @@ function TokenCombobox({
   tokens,
   coingeckoPlatformId,
   onChange,
-}: ITokenSearch) {
+}: ITokenCombobox) {
   const { showModal } = useModalContext();
   const [searchText, setSearchText] = useState("");
   const searchResult =
