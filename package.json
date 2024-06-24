@@ -50,7 +50,7 @@
     "@terra-money/wallet-provider": "3.11.2",
     "@walletconnect/modal": "2.6.2",
     "@walletconnect/sign-client": "2.10.5",
-    "aws-amplify": "6.2.0",
+    "aws-amplify": "6.3.7",
     "cropperjs": "1.6.2",
     "decimal.js": "10.4.3",
     "framer-motion": "11.2.5",
