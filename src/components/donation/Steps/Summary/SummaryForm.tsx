@@ -7,14 +7,15 @@ import type { DonateMethodId } from "types/lists";
 import { string } from "yup";
 import ContinueBtn from "../common/ContinueBtn";
 import { initDonorTitleOption } from "../common/constants";
-import type { FormDonor, Mode } from "../types";
+import type { FormDonor, Honorary, Mode } from "../types";
 
-type FV = FormDonor;
+type FV = FormDonor & Honorary;
 
 type Props = {
-  onSubmit(donor: FV): void;
+  onSubmit(formValues: FV): void;
   classes?: string;
   donor?: FormDonor;
+  honorary?: Honorary;
   mode: Mode;
   method: DonateMethodId;
 };
@@ -28,23 +29,16 @@ const titleOptions: FV["title"][] = [
   { label: "Mx", value: "Mx" },
 ];
 
-export default function DonorForm({
+export default function SummaryForm({
   classes = "",
   onSubmit,
   donor,
+  honorary,
   mode,
   method,
 }: Props) {
   const methods = useForm<FV>({
-    defaultValues: donor || {
-      firstName: "",
-      lastName: "",
-      email: "",
-      ukTaxResident: false,
-      title: initDonorTitleOption,
-      streetAddress: "",
-      zipCode: "",
-    },
+    defaultValues: { ...donor, ...honorary },
     resolver: yupResolver(
       schema<FV>({
         firstName: string().required("Please enter your first name"),

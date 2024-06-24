@@ -6,10 +6,10 @@ import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
 import { initDonorTitleOption } from "../common/constants";
 import type { SummaryStep } from "../types";
-import DonorForm from "./DonorForm";
+import SummaryForm from "./SummaryForm";
 
 export default function Summary(props: SummaryStep) {
-  const { details, liquidSplitPct, donor, tip, init } = props;
+  const { details, liquidSplitPct, donor, honorary, tip, init } = props;
   const { setState } = useDonationState();
   const user = useGetter((state) => state.auth.user);
 
@@ -54,7 +54,7 @@ export default function Summary(props: SummaryStep) {
           : undefined
       }
     >
-      <DonorForm
+      <SummaryForm
         method={details.method}
         mode={init.mode}
         donor={
@@ -68,12 +68,23 @@ export default function Summary(props: SummaryStep) {
                 title: initDonorTitleOption,
                 zipCode: "",
                 streetAddress: "",
-                withHonorary: false,
-                honoraryFullName: "",
               }
             : undefined)
         }
-        onSubmit={(donor) => setState({ ...props, step: "submit", donor })}
+        honorary={
+          honorary || {
+            withHonorary: false,
+            honoraryFullName: "",
+          }
+        }
+        onSubmit={({ withHonorary, honoraryFullName, ...donor }) =>
+          setState({
+            ...props,
+            step: "submit",
+            donor,
+            honorary: { withHonorary, honoraryFullName },
+          })
+        }
         classes="mt-6"
       />
     </SummaryContainer>
