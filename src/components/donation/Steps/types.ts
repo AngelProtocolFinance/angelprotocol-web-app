@@ -104,11 +104,15 @@ export type TipStep = {
 
 export type FormDonor = Pick<Donor, "email" | "firstName" | "lastName"> & {
   ukTaxResident: boolean;
+
   title: OptionType<DonorTitle>;
   /** initially empty `''` */
   zipCode: string;
   /** initially empty `''` */
   streetAddress: string;
+  withHonorary: boolean;
+  /** initially empty `''` */
+  honoraryFullName: string;
 };
 export type SummaryStep = {
   step: "summary";

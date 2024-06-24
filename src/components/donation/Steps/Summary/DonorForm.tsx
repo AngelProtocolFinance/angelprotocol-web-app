@@ -65,6 +65,7 @@ export default function DonorForm({
 
   const { handleSubmit, watch } = methods;
   const ukTaxResident = watch("ukTaxResident");
+  const withHonorary = watch("withHonorary");
 
   return (
     <Form
@@ -129,6 +130,20 @@ export default function DonorForm({
             required
           />
         </>
+      )}
+
+      <CheckField<FV> name="withHonorary" classes="col-span-full mt-4">
+        Donating in honor of someone?
+      </CheckField>
+
+      {withHonorary && (
+        <Field<FV>
+          name="honoraryFullName"
+          label="In Honor Of"
+          placeholder="e.g. Jane Doe"
+          classes={{ container: "col-span-full field-donate mt-4" }}
+          required
+        />
       )}
       <ContinueBtn
         type="submit"
