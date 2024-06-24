@@ -10,6 +10,21 @@ import type { Wordpress } from "types/wordpress";
 
 const containerStyle = "w-full padded-container max-w-4xl mx-auto pb-4";
 
+const wpStyles = [
+  "animate.min.css",
+  "bootstrap.min.css",
+  "bootstrap.rtl.min.css",
+  "custom-animation.css",
+  "fontawesome.min.css",
+  "gainioz-core.css",
+  "gainioz-custom.css",
+  "gainioz-unit.css",
+  "magnific-popup.css",
+  "meanmenu.css",
+  "nice-select.css",
+  "swiper-bundle.css",
+];
+
 export default function Post() {
   const { slug = "" } = useParams<{ slug: string }>();
 
@@ -17,36 +32,14 @@ export default function Post() {
 
   return (
     <div className={containerStyle}>
-      <Helmet>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="/wordpress/animate.min.css"
-        />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="/wordpress/bootstrap.min.css"
-        />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="/wordpress/bootstrap.rtl.min.css"
-        />
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="/wordpress/custom-animation.css"
-        />
-        <link rel="stylesheet" type="text/css" href="/fontawesome.min.css" />
-        <link rel="stylesheet" type="text/css" href="/gainioz-core.css" />
-        <link rel="stylesheet" type="text/css" href="/gainioz-custom.css" />
-        <link rel="stylesheet" type="text/css" href="/gainioz-unit.css" />
-        <link rel="stylesheet" type="text/css" href="/magnific-popup.css" />
-        <link rel="stylesheet" type="text/css" href="/meanmenu.css" />
-        <link rel="stylesheet" type="text/css" href="/nice-select.css" />
-        <link rel="stylesheet" type="text/css" href="/swiper-bundle.css" />
-      </Helmet>
+      <Helmet
+        link={wpStyles.map((w) => ({
+          rel: "stylesheet",
+          type: "text/css",
+          href: `/wordpress/${w}`,
+        }))}
+      />
+
       <Link
         to={".."}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
