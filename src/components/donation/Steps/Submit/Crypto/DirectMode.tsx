@@ -64,6 +64,18 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         )}
       </QueryLoader>
 
+      <p className="text-sm text-gray-l1 mt-4 indent-4">
+        Please note that manual donations of cryptocurrencies using the QR code
+        may take up to 1 business day to process. Due to market fluctuations,
+        the value of your cryptocurrency donation may vary between the time it
+        is sent and the time it is received. Donors are responsible for ensuring
+        they send the correct token and amount pledged, as incorrect submissions
+        may result in processing errors and/or a permanent loss of funds. Better
+        Giving takes no responsibility for any variance in value of the donation
+        made during the processing period, or any loss of funds caused by donor
+        error when the donation is made.
+      </p>
+
       <ContinueBtn
         disabled={intentState.isError || intentState.isLoading}
         onClick={() =>
