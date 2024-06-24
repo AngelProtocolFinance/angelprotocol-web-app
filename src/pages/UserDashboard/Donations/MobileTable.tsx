@@ -1,7 +1,9 @@
-import { Disclosure } from "@headlessui/react";
-import ExtLink from "components/ExtLink";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
 import Icon, { DrawerIcon } from "components/Icon";
-import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
 import type { PropsWithChildren } from "react";
@@ -44,7 +46,7 @@ export default function MobileTable({
         >
           {({ open }) => (
             <>
-              <Disclosure.Button
+              <DisclosureButton
                 className={`${
                   open ? "bg-blue-l5 dark:bg-blue-d4" : ""
                 } w-full grid grid-cols-[auto_1fr_auto] divide-x divide-blue-l2`}
@@ -62,8 +64,8 @@ export default function MobileTable({
                 <div className="p-4 text-center text-sm w-28">
                   {new Date(row.date).toLocaleDateString()}
                 </div>
-              </Disclosure.Button>
-              <Disclosure.Panel className="w-full divide-y divide-blue-l2">
+              </DisclosureButton>
+              <DisclosurePanel className="w-full divide-y divide-blue-l2">
                 <Row title="Network">{row.viaName}</Row>
                 <Row title="Currency">{row.symbol}</Row>
                 <Row title="Amount">{humanize(row.initAmount, 3)}</Row>
@@ -89,7 +91,7 @@ export default function MobileTable({
                     </button>
                   </Row>
                 )}
-              </Disclosure.Panel>
+              </DisclosurePanel>
             </>
           )}
         </Disclosure>

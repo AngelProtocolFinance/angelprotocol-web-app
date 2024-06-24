@@ -1,7 +1,6 @@
-import { Combobox } from "@headlessui/react";
+import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import QueryLoader from "components/QueryLoader";
 import { unsdgs } from "constants/unsdgs";
-import { Fragment } from "react";
 import { useEndowmentOptionsQuery } from "services/aws/aws";
 
 type Props = {
@@ -18,7 +17,7 @@ export default function Options({ searchText, isDebouncing = false }: Props) {
   });
 
   return (
-    <Combobox.Options className="absolute left-0 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller">
+    <ComboboxOptions className="absolute left-0 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll scroller">
       <QueryLoader
         queryState={{
           ...queryState,
@@ -34,25 +33,17 @@ export default function Options({ searchText, isDebouncing = false }: Props) {
         {(endowments) => (
           <>
             {endowments.map((endowment) => (
-              <Combobox.Option
-                as={Fragment}
+              <ComboboxOption
+                className="data-[selected]:bg-blue-l2 cursor-pointer flex gap-2 p-2 text-sm"
                 key={endowment.name}
                 value={endowment}
               >
-                {({ active }) => (
-                  <li
-                    className={`${
-                      active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                    } cursor-pointer flex gap-2 p-2 text-sm`}
-                  >
-                    <span>{endowment.name}</span>
-                  </li>
-                )}
-              </Combobox.Option>
+                {endowment.name}
+              </ComboboxOption>
             ))}
           </>
         )}
       </QueryLoader>
-    </Combobox.Options>
+    </ComboboxOptions>
   );
 }

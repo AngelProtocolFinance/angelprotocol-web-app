@@ -19,7 +19,7 @@ type Props = {
 
 function Content({ intent, endowment }: Props) {
   return (
-    <div className="fixed inset-0 overflow-y-auto w-full z-50 bg-[#F6F7F8]">
+    <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
         <DappLogo classes="h-[2.036rem]" />
         <Link
