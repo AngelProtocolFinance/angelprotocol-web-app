@@ -1,3 +1,7 @@
+import coinbaseIcon from "assets/icons/wallets/coinbase.png";
+import metamaskIcon from "assets/icons/wallets/metamask.png";
+import trustIcon from "assets/icons/wallets/trust.png";
+import xdefiIcon from "assets/icons/wallets/xdefi.png";
 import { EVMChains } from "constants/chains";
 import isMobile from "is-mobile";
 import { type PropsWithChildren, createContext, useContext } from "react";
@@ -7,10 +11,6 @@ import useInjectedProvider from "./useInjectedProvider";
 import useKeplr from "./useKeplr";
 import useTerra from "./useTerra";
 import { useEVMWC, useKeplrWC } from "./wallet-connect";
-
-const binanceWalletIcon = "/icons/wallets/binance.png";
-const metamaskIcon = "/icons/wallets/metamask.png";
-const xdefiIcon = "/icons/wallets/xdefi.jpg";
 
 export default function WalletContext(props: PropsWithChildren<{}>) {
   const metamask = useInjectedProvider(
@@ -23,14 +23,24 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
   );
 
-  const binance = useInjectedProvider(
-    "binance-wallet",
+  const trust = useInjectedProvider(
+    "trust-wallet",
     {
-      name: "Binance wallet",
-      logo: binanceWalletIcon,
-      supportedChains: ["56", "97"],
+      name: "Trust wallet",
+      logo: trustIcon,
+      supportedChains: EVMChains,
     },
-    "https://chrome.google.com/webstore/detail/binance-wallet/fhbohimaelbohpjbbldcngcnapndodjp"
+    "https://chromewebstore.google.com/detail/trust-wallet/egjidjbpglichdcondbcbdnbeeppgdph?hl=en"
+  );
+
+  const coinbase = useInjectedProvider(
+    "coinbase",
+    {
+      name: "Coinbase",
+      logo: coinbaseIcon,
+      supportedChains: EVMChains,
+    },
+    "https://chromewebstore.google.com/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad?hl=en"
   );
 
   const xdefiEvm = useInjectedProvider(
@@ -54,8 +64,9 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
         keplr,
         metamask,
         evmWC,
+        coinbase,
         keplrWC,
-        binance,
+        trust,
         xdefiEvm,
         ...extensions,
         stationMobile,

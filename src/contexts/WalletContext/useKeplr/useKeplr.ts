@@ -1,3 +1,4 @@
+import keplrIcon from "assets/icons/wallets/keplr.png";
 import {
   juno,
   kujira,
@@ -12,7 +13,6 @@ import { retrieveUserAction, saveUserAction } from "../helpers";
 
 const actionKey = `keplr__pref`;
 const INSTALL_URL = "https://www.keplr.app/download";
-const keplrIcon = "/icons/wallets/keplr.png";
 const meta: WalletMeta = {
   name: "Keplr",
   logo: keplrIcon,

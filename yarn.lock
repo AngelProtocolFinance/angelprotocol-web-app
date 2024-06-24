@@ -4377,6 +4377,7 @@ __metadata:
     is-mobile: "npm:4.0.0"
     jsdom: "npm:24.1.0"
     lefthook: "npm:1.6.15"
+    mipd: "npm:0.0.7"
     postcss-import: "npm:16.1.0"
     qrcode.react: "npm:3.1.0"
     quill: "npm:2.0.2"
@@ -7270,6 +7271,18 @@ __metadata:
     minipass: "npm:^3.0.0"
     yallist: "npm:^4.0.0"
   checksum: 10/ae0f45436fb51344dcb87938446a32fbebb540d0e191d63b35e1c773d47512e17307bf54aa88326cc6d176594d00e4423563a091f7266c2f9a6872cdc1e234d1
+  languageName: node
+  linkType: hard
+
+"mipd@npm:0.0.7":
+  version: 0.0.7
+  resolution: "mipd@npm:0.0.7"
+  peerDependencies:
+    typescript: ">=5.0.4"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/c14dffef0ef7a3e71469aee553f5735f4a6a9f9a2b47ca02798040f2e006261c2e7e8b26ee0dc56a815c04d5612eb4be1eed474e7bb4e496eb0f5ada2fe1d2e7
   languageName: node
   linkType: hard
 
