@@ -1,4 +1,9 @@
-import { Listbox } from "@headlessui/react";
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { DrawerIcon } from "components/Icon";
 import { unpack } from "helpers";
@@ -48,7 +53,7 @@ export function Selector<
         className={`relative ${cls.container}`}
       >
         <FocusableInput ref={ref} />
-        <Listbox.Button
+        <ListboxButton
           aria-invalid={!!get(errors, valuePath)?.message}
           aria-disabled={isDisabled}
           as="button"
@@ -64,22 +69,16 @@ export function Selector<
               />
             </>
           )}
-        </Listbox.Button>
-        <Listbox.Options className={`${styles.options} ${cls.options}`}>
+        </ListboxButton>
+        <ListboxOptions className={`${styles.options} ${cls.options}`}>
           {options
             .filter((o) => !!o.value)
             .map((o) => (
-              <Listbox.Option
-                key={o.value}
-                value={o}
-                className={({ active, selected }) =>
-                  styles.option(selected, active)
-                }
-              >
+              <ListboxOption key={o.value} value={o} className={styles.option}>
                 {o.label}
-              </Listbox.Option>
+              </ListboxOption>
             ))}
-        </Listbox.Options>
+        </ListboxOptions>
         <ErrorMessage
           name={valuePath}
           errors={errors}

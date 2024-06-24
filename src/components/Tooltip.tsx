@@ -42,6 +42,7 @@ export default function Tooltip<T extends HTMLElement>({
 
   return createPortal(
     <Transition
+      as="div"
       show={isHovered}
       enter="transition-opacity duration-500"
       enterFrom="opacity-0"

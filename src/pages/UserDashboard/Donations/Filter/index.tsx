@@ -1,4 +1,4 @@
-import { Popover } from "@headlessui/react";
+import { Popover, PopoverButton } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Icon, { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
@@ -65,7 +65,7 @@ export default function Filter({
   };
   return (
     <Popover className={`${classes} flex relative items-center`}>
-      <Popover.Button
+      <PopoverButton
         ref={buttonRef}
         disabled={isDisabled}
         className="w-full @5xl:w-[22.3rem] flex justify-center items-center p-3 rounded bg-blue-d1 text-white @5xl:text-navy-l1 @5xl:bg-white @5xl:justify-between disabled:bg-gray @5xl:disabled:bg-gray-l3 @5xl:dark:disabled:bg-navy-d3 @5xl:border @5xl:border-gray-l4"
@@ -83,13 +83,13 @@ export default function Filter({
             />
           </>
         )}
-      </Popover.Button>
+      </PopoverButton>
 
       <FormProvider {...methods}>
         <Form
           submit={handleSubmit(submit)}
           onReset={onReset}
-          classes="fixed @5xl:absolute @5xl:static inset-x-0 top-0 @5xl:top-full  @5xl:mt-1 z-40"
+          classes="fixed @5xl:absolute inset-x-0 top-0 @5xl:top-full @5xl:mt-1 z-40"
         />
       </FormProvider>
     </Popover>

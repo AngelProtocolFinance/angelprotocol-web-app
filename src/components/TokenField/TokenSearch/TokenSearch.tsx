@@ -1,4 +1,4 @@
-import { Combobox } from "@headlessui/react";
+import { Combobox, ComboboxInput } from "@headlessui/react";
 import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
 import { logger } from "helpers";
@@ -44,14 +44,14 @@ export default function TokenSearch(props: Props) {
       <Combobox
         by="id"
         value={token}
-        onChange={(val) => setToken(val)}
+        onChange={(val) => val && setToken(val)}
         as="div"
         className="relative items-center grid grid-cols-[1fr_auto] field-container"
       >
-        <Combobox.Input
+        <ComboboxInput
           placeholder="e.g. BTC"
           id="coingecko-search-text"
-          className="w-full border-r border-gray-l3 dark:border-navy px-4 py-3.5 text-sm leading-5 focus:ring-0"
+          className="w-full dark:border-navy px-4 py-3.5 text-sm leading-5 focus:ring-0"
           displayValue={(token: CoinGeckoToken) => token.symbol.toUpperCase()}
           onChange={(event) => setQuery(event.target.value)}
           spellCheck={false}

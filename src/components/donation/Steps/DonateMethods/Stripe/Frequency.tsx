@@ -1,4 +1,4 @@
-import { RadioGroup as RG } from "@headlessui/react";
+import { Radio, RadioGroup } from "@headlessui/react";
 import Icon from "components/Icon";
 import { useController, useFormContext } from "react-hook-form";
 import type { FormValues as FV } from "./types";
@@ -23,22 +23,23 @@ export default function Frequency() {
   });
 
   return (
-    <RG value={value} onChange={onChange} className="@container/frequency">
-      <RG.Label className="mb-2 block font-semibold font-heading">
+    <RadioGroup
+      value={value}
+      onChange={onChange}
+      className="@container/frequency"
+    >
+      <label className="mb-2 block font-semibold font-heading">
         Frequency <span className="text-red">*</span>
-      </RG.Label>
+      </label>
       <div className="grid grid-cols-2 gap-2 @[21rem]/frequency:flex">
-        <RG.Option
-          value={"subscription" satisfies Freq}
-          className={styles.option}
-        >
+        <Radio value={"subscription" satisfies Freq} className={styles.option}>
           <span>Give Monthly</span>
           <Icon type="Check" className={styles.icon} />
-        </RG.Option>
-        <RG.Option value={"one-time" satisfies Freq} className={styles.option}>
+        </Radio>
+        <Radio value={"one-time" satisfies Freq} className={styles.option}>
           <span>Give Once</span>
           <Icon type="Check" className={styles.icon} />
-        </RG.Option>
+        </Radio>
       </div>
       {error?.message && (
         <p className="field-error static text-left mt-1">{error.message}</p>
@@ -48,6 +49,6 @@ export default function Frequency() {
         nonprofits focus on mission and long-term impact, not fundraising.
         Cancel anytime.
       </p>
-    </RG>
+    </RadioGroup>
   );
 }

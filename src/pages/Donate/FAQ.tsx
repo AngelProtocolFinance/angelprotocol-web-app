@@ -1,4 +1,8 @@
-import { Disclosure } from "@headlessui/react";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
 import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
@@ -18,7 +22,7 @@ export default function FAQ({ classes = "" }) {
         <Disclosure as="div" key={faq.id}>
           {({ open }) => (
             <>
-              <Disclosure.Button className="flex items-start justify-between gap-2 mb-2 w-full">
+              <DisclosureButton className="flex items-start justify-between gap-2 mb-2 w-full">
                 <span
                   className={`text-left text-sm ${open ? "font-semibold" : ""}`}
                 >
@@ -28,9 +32,9 @@ export default function FAQ({ classes = "" }) {
                   isOpen={open}
                   className="shrink-0 -mt-0.5 text-xl"
                 />
-              </Disclosure.Button>
+              </DisclosureButton>
               {open && (
-                <Disclosure.Panel
+                <DisclosurePanel
                   as="div"
                   static
                   className="text-sm grid gap-3 text-navy-l1 mb-6"
@@ -38,7 +42,7 @@ export default function FAQ({ classes = "" }) {
                   {faq.paragraphs.map((p, idx) => (
                     <Fragment key={idx}>{p}</Fragment>
                   ))}
-                </Disclosure.Panel>
+                </DisclosurePanel>
               )}
             </>
           )}

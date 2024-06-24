@@ -26,7 +26,7 @@
       "last 1 safari version"
     ]
   },
-  "packageManager": "yarn@4.3.0",
+  "packageManager": "yarn@4.2.2",
   "engines": {
     "node": "18.16.1"
   },
@@ -35,7 +35,7 @@
     "@ethersproject/abi": "5.7.0",
     "@ethersproject/bignumber": "5.7.0",
     "@gsap/react": "2.1.1",
-    "@headlessui/react": "1.7.19",
+    "@headlessui/react": "2.1.0",
     "@hookform/error-message": "2.0.1",
     "@hookform/resolvers": "3.3.4",
     "@keplr-wallet/proto-types": "0.12.83",
