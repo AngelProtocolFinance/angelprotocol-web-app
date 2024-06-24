@@ -69,13 +69,16 @@ export type FiatDonation = {
   source: DonationSource;
 };
 
-export type DonationIntent =
-  //donation records always have transactionId
+export type DonationIntent = {
+  /** honorary full name - may be empty `""` */
+  inHonorOf?: string;
+} & ( //donation records always have transactionId
   | (Ensure<CryptoDonation, "transactionId"> & { token: Token })
   | (Ensure<FiatDonation, "transactionId"> & {
       currency: Currency;
       frequency: FiatPaymentFrequency;
-    });
+    })
+);
 
 export type FiatPaymentFrequency = "one-time" | "subscription";
 

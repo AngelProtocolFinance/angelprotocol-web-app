@@ -84,6 +84,8 @@ function initialState({
     title: d.title ? { label: d.title, value: d.title } : initDonorTitleOption,
     streetAddress: d.address?.streetAddress ?? "",
     zipCode: d.address?.zipCode ?? "",
+    withHonorary: !!intent.inHonorOf,
+    honoraryFullName: intent.inHonorOf ?? "",
   };
 
   if ("chainId" in intent) {
