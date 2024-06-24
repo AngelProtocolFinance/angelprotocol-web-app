@@ -19,6 +19,7 @@ type Props = {
   method: DonateMethodId;
 };
 const ukTaxResidentKey: keyof FV = "ukTaxResident";
+const withHonoraryKey: keyof FV = "withHonorary";
 const titleOptions: FV["title"][] = [
   initDonorTitleOption,
   { label: "Mr", value: "Mr" },
@@ -58,6 +59,10 @@ export default function DonorForm({
         zipCode: string().when(ukTaxResidentKey, (values, schema) => {
           const [ukTaxResident] = values as [boolean];
           return ukTaxResident ? schema.required("required") : schema;
+        }),
+        honoraryFullName: string().when(withHonoraryKey, (values, schema) => {
+          const [withHonorary] = values as [boolean];
+          return withHonorary ? schema.required("required") : schema;
         }),
       })
     ),
@@ -141,7 +146,7 @@ export default function DonorForm({
           name="honoraryFullName"
           label="In Honor Of"
           placeholder="e.g. Jane Doe"
-          classes={{ container: "col-span-full field-donate mt-4" }}
+          classes={{ container: "col-span-full field-donate" }}
           required
         />
       )}
