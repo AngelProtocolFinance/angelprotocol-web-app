@@ -37,13 +37,17 @@ export async function estimateDonation(
       case "harpoon-4":
       //stargaze
       case "stargaze-1":
-      case "elgafar-1": {
+      case "elgafar-1":
+      //osmosis
+      case "osmosis-1":
+      case "osmo-test-5": {
         const scaledAmount = scaleToStr(grossAmount, token.decimals);
         const to = apWallets.junoDeposit;
         const msg =
           token.type === "juno-native" ||
           token.type === "kujira-native" ||
           token.type === "stargaze-native" ||
+          token.type === "osmosis-native" ||
           token.type === "ibc"
             ? createCosmosMsg(sender, "recipient.send", {
                 recipient: to,

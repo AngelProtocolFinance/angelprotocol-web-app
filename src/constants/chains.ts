@@ -173,6 +173,24 @@ export const kujira: SupportedChain = {
   logo: "https://avatars.githubusercontent.com/u/84391088?s=200&v=4",
 };
 
+export const osmosis: SupportedChain = {
+  isTest: false,
+  id: "osmosis-1",
+  coingeckoPlatformId: "osmosis",
+  brand: "osmosis",
+  name: "Osmosis",
+  lcd: "https://lcd.osmosis.zone",
+  rpc: "https://rpc.osmosis.zone:443",
+  blockExplorer: "https://www.mintscan.io/osmosis",
+  nativeToken: {
+    id: "uosmo",
+    symbol: "OSMO",
+    decimals: 6,
+    coinGeckoId: "osmosis",
+  },
+  logo: "https://cryptologos.cc/logos/osmosis-osmo-logo.png?v=032",
+};
+
 export const terraMainnet: SupportedChain = {
   isTest: false,
   id: "phoenix-1",
@@ -354,10 +372,28 @@ export const kujiraTestnet: SupportedChain = {
   logo: kujira.logo,
 };
 
+export const osmosisTestnet: SupportedChain = {
+  isTest: true,
+  id: "osmo-test-5",
+  coingeckoPlatformId: "osmosis",
+  brand: "osmosis",
+  name: "Osmosis Testnet",
+  lcd: "https://lcd.testnet.osmosis.zone",
+  rpc: "https://rpc.testnet.osmosis.zone",
+  blockExplorer: "https://www.mintscan.io/osmosis",
+  nativeToken: {
+    id: "uosmo",
+    symbol: "OSMO",
+    decimals: 6,
+    coinGeckoId: "osmosis",
+  },
+  logo: "https://cryptologos.cc/logos/osmosis-osmo-logo.png?v=032",
+};
+
 export const bitcoin: UnsupportedChain = {
   isTest: IS_TEST,
   id: `btc-${IS_TEST ? "testnet" : "mainnet"}`,
-  name: "Bitcoin",
+  name: `Bitcoin${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://btcscan.org",
   coingeckoPlatformId: null,
   logo: "https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=032",
@@ -367,7 +403,7 @@ export const solana: UnsupportedChain = {
   isTest: IS_TEST,
   id: `sol-${IS_TEST ? "testnet" : "mainnet"}`,
   coingeckoPlatformId: null,
-  name: "Solana",
+  name: `Solana${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://solscan.io",
   logo: "https://cryptologos.cc/logos/solana-sol-logo.svg?v=032",
 };
@@ -375,7 +411,7 @@ export const solana: UnsupportedChain = {
 export const ripple: UnsupportedChain = {
   isTest: IS_TEST,
   id: `xrp-${IS_TEST ? "testnet" : "mainnet"}`,
-  name: "Ripple",
+  name: `XRP Ledger${IS_TEST ? " Testnet" : ""}`,
   coingeckoPlatformId: null,
   blockExplorer: "https://xrpscan.com",
   logo: "https://avatars.githubusercontent.com/u/3165523?s=200&v=4",
@@ -385,7 +421,7 @@ export const doge: UnsupportedChain = {
   isTest: IS_TEST,
   id: `doge-${IS_TEST ? "testnet" : "mainnet"}`,
   coingeckoPlatformId: null,
-  name: "Doge",
+  name: `Doge${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://dogechain.info",
   logo: "https://cryptologos.cc/logos/dogecoin-doge-logo.svg?v=032",
 };
@@ -399,6 +435,7 @@ const supportedChainList: SupportedChain[] = [
   binance,
   juno,
   kujira,
+  osmosis,
   stargaze,
   terraMainnet,
   sepolia,
@@ -408,6 +445,7 @@ const supportedChainList: SupportedChain[] = [
   baseSepolia,
   binanceTestnet,
   terraTestnet,
+  osmosisTestnet,
   kujiraTestnet,
   stargazeTestnet,
 ];
@@ -451,4 +489,6 @@ export const cosmosChains: CosmosChainID[] = [
   "elgafar-1",
   "kaiyo-1",
   "harpoon-4",
+  "osmosis-1",
+  "osmo-test-5",
 ];
