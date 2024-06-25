@@ -43,7 +43,7 @@ const isApToken = (
 ): token is TokenWithAmount => "min_donation_amnt" in token;
 
 const container =
-  "w-56 border border-gray-l4 p-1 [--anchor-max-height:13rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
+  "w-56 border border-gray-l4 p-1 [--anchor-max-height:15rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
 export default function TokenOptions({
   selectedChainId,
   onChange,
@@ -166,7 +166,7 @@ function TokenCombobox({
           {searchText} not found
         </div>
       ) : (
-        <ComboboxOptions className="p-1 w-full" static>
+        <ComboboxOptions className="py-1 w-full" static>
           {({ option }) => {
             const token = option as MixedToken;
             return (
@@ -174,15 +174,16 @@ function TokenCombobox({
                 as={CloseButton}
                 key={token.token_id + token.type}
                 className={
-                  "flex w-full items-center gap-2 p-3 hover:bg-[--accent-secondary] cursor-pointer"
+                  "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-[--accent-secondary] data-[selected]:bg-[--accent-secondary] cursor-pointer"
                 }
                 value={{ ...token, amount: "0" }}
               >
                 <Image
                   src={"logo" in token ? token.logo : tokenLogoPlaceholder}
-                  className="w-6 h-6 rounded-full"
+                  className="w-6 h-6 rounded-full row-span-2"
                 />
                 <span className="text-sm">{token.symbol}</span>
+                <p className="text-xs text-gray col-start-2">{token.name}</p>
               </ComboboxOption>
             );
           }}
