@@ -79,6 +79,9 @@ export default function Table({
             USD Value
           </HeaderButton>
           {status === "intent" ? <></> : <>TX Hash</>}
+          {status === "pending" && (
+            <span className="flex justify-center">Verify Bank Account</span>
+          )}
           {status === "final" && (
             <span className="flex justify-center">Receipt</span>
           )}
@@ -130,6 +133,14 @@ export default function Table({
                   className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
                 >
                   {row.id}
+                </ExtLink>
+              )}
+              {status === "pending" && (
+                <ExtLink
+                  href={row.bankVerificationUrl}
+                  className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
+                >
+                  {row.bankVerificationUrl}
                 </ExtLink>
               )}
               {status === "final" && (

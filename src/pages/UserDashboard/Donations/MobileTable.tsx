@@ -79,6 +79,16 @@ export default function MobileTable({
                 ) : (
                   <Row title="TX Hash">{row.id}</Row>
                 )}
+                {status === "pending" && (
+                  <Row title="Verify Bank Account" className="rounded-b">
+                    <ExtLink
+                      href={row.bankVerificationUrl}
+                      className="btn-blue px-3 py-1 text-xs"
+                    >
+                      Verify Bank Account
+                    </ExtLink>
+                  </Row>
+                )}
                 {status === "final" && (
                   <Row title="Receipt" className="rounded-b">
                     <button
