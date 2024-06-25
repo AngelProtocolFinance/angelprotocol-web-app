@@ -6,6 +6,7 @@ export type Chains =
   | "terra"
   | "juno"
   | "stargaze"
+  | "osmosis"
   | "kujira"
   | "ethereum"
   | "arbitrum"
@@ -13,6 +14,7 @@ export type Chains =
   | "base"
   | "binance"
   | "polygon";
+
 export type UNSDG_NUMS =
   | 1
   | 2

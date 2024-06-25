@@ -11,6 +11,7 @@ export type QrTokenType =
 export type TokenType =
   | "juno-native"
   | "stargaze-native"
+  | "osmosis-native"
   | "kujira-native"
   | "terra-native"
   | "evm-native"

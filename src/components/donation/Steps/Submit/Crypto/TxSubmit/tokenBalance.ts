@@ -17,6 +17,7 @@ export const tokenBalance = async (
 
   switch (type) {
     case "juno-native":
+    case "osmosis-native":
     case "terra-native":
     case "stargaze-native":
     case "kujira-native":

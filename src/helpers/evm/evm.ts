@@ -1,17 +1,23 @@
+import { createStore } from "mipd";
 import type { InjectedProvider, RequestArguments } from "types/evm";
 import type { InjectedProviderID } from "types/wallet";
 
-export async function injectedProvider(
+const store = createStore();
+const provider = (rdns: string) => store.findProvider({ rdns })?.provider;
+
+export function injectedProvider(
   id: InjectedProviderID
-): Promise<InjectedProvider | undefined> {
+): InjectedProvider | undefined {
   switch (id) {
-    case "binance-wallet":
-      return window.BinanceChain;
+    case "trust-wallet":
+      return provider("com.trustwallet.app");
     case "metamask":
-      return window.ethereum;
+      return provider("io.metamask");
     /** only used in sendTx */
     case "xdefi-evm":
-      return window.xfi?.ethereum as InjectedProvider;
+      return provider("io.xdefi");
+    case "coinbase":
+      return provider("com.coinbase.wallet");
     default:
       const x: never = id;
       throw new Error(`${x} not used`);

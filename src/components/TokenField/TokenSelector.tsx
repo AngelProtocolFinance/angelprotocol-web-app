@@ -1,4 +1,4 @@
-import { Combobox } from "@headlessui/react";
+import { Popover, PopoverButton } from "@headlessui/react";
 import { DrawerIcon } from "../Icon";
 import TokenOptions from "./TokenOptions";
 import type { SelectorProps } from "./types";
@@ -9,23 +9,20 @@ export default function TokenSelector({
   selectedToken,
 }: SelectorProps) {
   return (
-    <Combobox
-      value={selectedToken}
-      onChange={onChange}
-      as="div"
-      className="flex items-center gap-1 w-full dark:text-navy-l2"
-    >
-      <span className="font-medium">{selectedToken.symbol}</span>
-
-      <Combobox.Button>
-        {({ open }) => <DrawerIcon isOpen={open} size={24} />}
-      </Combobox.Button>
-
+    <Popover className="relative gap-1 flex justify-end dark:text-navy-l2 h-full">
+      <PopoverButton className="flex items-center gap-1 focus:outline-none">
+        {({ open }) => (
+          <>
+            <span>{selectedToken.symbol}</span>
+            <DrawerIcon isOpen={open} size={24} />
+          </>
+        )}
+      </PopoverButton>
       <TokenOptions
+        token={selectedToken}
         onChange={onChange}
-        classes="absolute right-0 top-2 z-10 mt-10"
         selectedChainId={selectedChainId}
       />
-    </Combobox>
+    </Popover>
   );
 }

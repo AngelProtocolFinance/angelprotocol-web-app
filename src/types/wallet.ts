@@ -3,7 +3,11 @@ import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/walle
 import type { SupportedChainId } from "./chain";
 import type { RequestArguments } from "./evm";
 
-export type InjectedProviderID = "binance-wallet" | "metamask" | "xdefi-evm";
+export type InjectedProviderID =
+  | "trust-wallet"
+  | "metamask"
+  | "xdefi-evm"
+  | "coinbase";
 export type EVMWalletID = InjectedProviderID | "evm-wc";
 
 export type TerraWalletID =
@@ -73,7 +77,8 @@ export type DisconnectedWallet = WalletMeta & Disconnected & Connector;
 export type WithWallet<T> = T & { wallet: ConnectedWallet };
 
 const types: { [key in WalletID]: "cosmos" | "terra" | "evm" } = {
-  "binance-wallet": "evm",
+  "trust-wallet": "evm",
+  coinbase: "evm",
   "evm-wc": "evm",
   metamask: "evm",
   "xdefi-evm": "evm",

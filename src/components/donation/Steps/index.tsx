@@ -103,6 +103,10 @@ function initialState({
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
       donor: formDonor,
+      honorary: {
+        withHonorary: !!intent.inHonorOf,
+        honoraryFullName: intent.inHonorOf ?? "",
+      },
     };
   }
   return {
@@ -122,5 +126,9 @@ function initialState({
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },
     donor: formDonor,
+    honorary: {
+      withHonorary: !!intent.inHonorOf,
+      honoraryFullName: intent.inHonorOf ?? "",
+    },
   };
 }
