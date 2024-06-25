@@ -26,6 +26,7 @@ export type Token = {
   logo: string; // "https://cryptologos.cc/sample/only/lunax.png"
   min_donation_amnt: number;
   symbol: string; // DB Partition key ex., "LunaX"
+  name: string;
   token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
   coingecko_denom: string;
   type: TokenType;

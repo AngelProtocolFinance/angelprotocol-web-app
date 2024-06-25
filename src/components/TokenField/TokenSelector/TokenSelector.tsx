@@ -3,11 +3,12 @@ import type { ChainID } from "types/chain";
 import type { TokenWithAmount } from "types/tx";
 import { DrawerIcon } from "../../Icon";
 import TokenOptions from "./TokenOptions";
+import type { OnTokenChange } from "./types";
 
 interface Props {
   selectedChainId: ChainID;
   selectedToken: TokenWithAmount;
-  onChange(token: TokenWithAmount): void;
+  onChange: OnTokenChange;
 }
 export default function TokenSelector({
   selectedChainId,

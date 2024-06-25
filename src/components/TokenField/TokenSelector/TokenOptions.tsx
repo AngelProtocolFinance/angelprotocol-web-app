@@ -7,22 +7,40 @@ import {
   PopoverPanel,
 } from "@headlessui/react";
 import { chains } from "constants/chains";
+import Fuse from "fuse.js";
 import { isEmpty } from "helpers";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTokensQuery } from "services/apes";
+import {
+  useLazyTokenDetailsQuery,
+  useLazyUsdRateQuery,
+} from "services/coingecko";
 import type { Token } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { TokenWithAmount } from "types/tx";
 import Icon from "../../Icon";
 import Image from "../../Image";
 import { ErrorStatus, LoadingStatus } from "../../Status";
+import coingeckoTokensPerPlatform from "../TokenSearch/coins.json";
+import type { OnTokenChange } from "./types";
 
 type Props = {
   selectedChainId: ChainID;
-  onChange: (token: TokenWithAmount) => void;
-  token: TokenWithAmount;
+  onChange: OnTokenChange;
+  token: TokenWithAmount | BasicToken;
   classes?: string;
 };
+
+type BasicToken = Pick<
+  Token,
+  "name" | "symbol" | "token_id" | "type" | "coingecko_denom"
+>;
+
+type AllTokens = (BasicToken | Token)[];
+
+const isApToken = (
+  token: TokenWithAmount | BasicToken
+): token is TokenWithAmount => "min_donation_amnt" in token;
 
 const container =
   "w-56 border border-gray-l4 p-1 [--anchor-max-height:13rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
@@ -56,6 +74,14 @@ export default function TokenOptions({
     );
   }
 
+  const platformId = chains[selectedChainId].coingeckoPlatformId;
+  const coinsMap = coingeckoTokensPerPlatform as {
+    [platformId: string]: BasicToken[];
+  };
+  const allTokens = platformId
+    ? (tokens as AllTokens).concat(coinsMap[platformId])
+    : tokens;
+
   return (
     <PopoverPanel
       anchor={{ to: "bottom end", gap: 8, offset: 20 }}
@@ -63,8 +89,8 @@ export default function TokenOptions({
     >
       <TokenCombobox
         token={token}
-        tokens={tokens}
-        coingeckoPlatformId={chains[selectedChainId].coingeckoPlatformId}
+        tokens={allTokens}
+        coingeckoPlatformId={platformId}
         onChange={onChange}
       />
     </PopoverPanel>
@@ -72,20 +98,54 @@ export default function TokenOptions({
 }
 
 interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {
-  tokens: Token[];
+  tokens: AllTokens;
   coingeckoPlatformId: string | null;
 }
-function TokenCombobox({ token, tokens, onChange }: ITokenCombobox) {
+function TokenCombobox({
+  token,
+  tokens,
+  onChange,
+  coingeckoPlatformId,
+}: ITokenCombobox) {
+  const [getToken] = useLazyTokenDetailsQuery();
+  const [getUsdRate] = useLazyUsdRateQuery();
   const [searchText, setSearchText] = useState("");
+
+  const fuse = useMemo(
+    () => new Fuse(tokens, { keys: ["name", "symbol"] }),
+    []
+  );
+
   const searchResult =
     searchText === ""
       ? tokens
-      : tokens.filter((t) => {
-          return t.symbol.toLowerCase().includes(searchText.toLowerCase());
-        });
+      : fuse.search(searchText).map(({ item }) => item);
 
   return (
-    <Combobox value={token} onChange={onChange}>
+    <Combobox
+      by="token_id"
+      value={token}
+      virtual={{ options: searchResult }}
+      onChange={async (token) => {
+        if (!token) return;
+        if (isApToken(token)) return onChange(token);
+
+        // basic token woudn't be included in list if no platform id
+        if (!coingeckoPlatformId) return;
+
+        const details = await getToken(token.coingecko_denom).unwrap();
+        const usdRate = await getUsdRate(token.coingecko_denom).unwrap();
+
+        onChange({
+          ...token,
+          min_donation_amnt: Math.ceil(25 / usdRate),
+          approved: true,
+          logo: details.image.thumb,
+          decimals: details.detail_platforms[coingeckoPlatformId].decimal_place,
+          amount: "",
+        });
+      }}
+    >
       <div className="grid grid-cols-[1fr_auto] p-2 gap-2 rounded mb-1 border border-gray-l4">
         <ComboboxInput
           value={searchText}
@@ -111,7 +171,10 @@ function TokenCombobox({ token, tokens, onChange }: ITokenCombobox) {
               }
               value={{ ...token, amount: "0" }}
             >
-              <Image src={token.logo} className="w-6 h-6" />
+              <Image
+                src={"logo" in token ? token.logo : undefined}
+                className="w-6 h-6 rounded-full"
+              />
               <span className="text-sm">{token.symbol}</span>
             </CloseButton>
           ))}
