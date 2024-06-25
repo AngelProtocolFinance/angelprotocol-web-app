@@ -1,5 +1,4 @@
 import {
-  CloseButton,
   Combobox,
   ComboboxInput,
   ComboboxOption,
@@ -24,19 +23,18 @@ import { ErrorStatus, LoadingStatus } from "../../Status";
 import coingeckoTokensPerPlatform from "../TokenSearch/coins.json";
 import type { OnTokenChange } from "./types";
 
-type Props = {
-  selectedChainId: ChainID;
-  onChange: OnTokenChange;
-  token: TokenWithAmount | BasicToken;
-  classes?: string;
-};
-
 type BasicToken = Pick<
   Token,
   "name" | "symbol" | "token_id" | "type" | "coingecko_denom"
 >;
+type MixedToken = BasicToken | Token;
 
-type AllTokens = (BasicToken | Token)[];
+type Props = {
+  selectedChainId: ChainID;
+  onChange: OnTokenChange;
+  token: MixedToken;
+  classes?: string;
+};
 
 const isApToken = (
   token: TokenWithAmount | BasicToken
@@ -79,7 +77,7 @@ export default function TokenOptions({
     [platformId: string]: BasicToken[];
   };
   const allTokens = platformId
-    ? (tokens as AllTokens).concat(coinsMap[platformId])
+    ? (tokens as MixedToken[]).concat(coinsMap[platformId])
     : tokens;
 
   return (
@@ -98,7 +96,7 @@ export default function TokenOptions({
 }
 
 interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {
-  tokens: AllTokens;
+  tokens: MixedToken[];
   coingeckoPlatformId: string | null;
 }
 function TokenCombobox({
@@ -151,7 +149,7 @@ function TokenCombobox({
           value={searchText}
           placeholder="Search..."
           aria-disabled={tokens.length < 1}
-          className="text-left text-sm focus:outline-none bg-transparent w-20"
+          className="text-left text-sm focus:outline-none bg-transparent"
           onChange={(event) => setSearchText(event.target.value)}
         />
         <Icon type="Search" size={20} />
@@ -161,23 +159,25 @@ function TokenCombobox({
           {searchText} not found
         </div>
       ) : (
-        <ComboboxOptions static>
-          {searchResult.map((token) => (
-            <CloseButton
-              as={ComboboxOption}
-              key={token.token_id + token.type}
-              className={
-                "flex items-center gap-2 p-3 hover:bg-[--accent-secondary] cursor-pointer"
-              }
-              value={{ ...token, amount: "0" }}
-            >
-              <Image
-                src={"logo" in token ? token.logo : undefined}
-                className="w-6 h-6 rounded-full"
-              />
-              <span className="text-sm">{token.symbol}</span>
-            </CloseButton>
-          ))}
+        <ComboboxOptions className="p-1" static>
+          {({ option }) => {
+            const token = option as MixedToken;
+            return (
+              <ComboboxOption
+                key={token.token_id + token.type}
+                className={
+                  "flex items-center gap-2 p-3 hover:bg-[--accent-secondary] cursor-pointer"
+                }
+                value={{ ...token, amount: "0" }}
+              >
+                <Image
+                  src={"logo" in token ? token.logo : undefined}
+                  className="w-6 h-6 rounded-full"
+                />
+                <span className="text-sm">{token.symbol}</span>
+              </ComboboxOption>
+            );
+          }}
         </ComboboxOptions>
       )}
     </Combobox>
