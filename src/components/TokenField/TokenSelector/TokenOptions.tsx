@@ -6,6 +6,7 @@ import {
   ComboboxOptions,
   PopoverPanel,
 } from "@headlessui/react";
+import tokenLogoPlaceholder from "assets/icons/token-placeholder.svg";
 import { chains } from "constants/chains";
 import Fuse from "fuse.js";
 import { isEmpty } from "helpers";
@@ -178,7 +179,7 @@ function TokenCombobox({
                 value={{ ...token, amount: "0" }}
               >
                 <Image
-                  src={"logo" in token ? token.logo : undefined}
+                  src={"logo" in token ? token.logo : tokenLogoPlaceholder}
                   className="w-6 h-6 rounded-full"
                 />
                 <span className="text-sm">{token.symbol}</span>
