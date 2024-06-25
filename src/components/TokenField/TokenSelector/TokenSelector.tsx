@@ -1,13 +1,19 @@
 import { Popover, PopoverButton } from "@headlessui/react";
-import { DrawerIcon } from "../Icon";
+import type { ChainID } from "types/chain";
+import type { TokenWithAmount } from "types/tx";
+import { DrawerIcon } from "../../Icon";
 import TokenOptions from "./TokenOptions";
-import type { SelectorProps } from "./types";
 
+interface Props {
+  selectedChainId: ChainID;
+  selectedToken: TokenWithAmount;
+  onChange(token: TokenWithAmount): void;
+}
 export default function TokenSelector({
   selectedChainId,
   onChange,
   selectedToken,
-}: SelectorProps) {
+}: Props) {
   return (
     <Popover className="relative gap-1 flex justify-end dark:text-navy-l2 h-full">
       <PopoverButton className="flex items-center gap-1 focus:outline-none">

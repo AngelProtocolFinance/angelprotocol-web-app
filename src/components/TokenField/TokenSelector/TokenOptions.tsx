@@ -6,18 +6,16 @@ import {
   ComboboxOptions,
   PopoverPanel,
 } from "@headlessui/react";
-import { chains, juno, kujira, stargaze, terraMainnet } from "constants/chains";
-import { useModalContext } from "contexts/ModalContext";
+import { chains } from "constants/chains";
 import { isEmpty } from "helpers";
 import { useState } from "react";
 import { useTokensQuery } from "services/apes";
 import type { Token } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { TokenWithAmount } from "types/tx";
-import Icon from "../Icon";
-import Image from "../Image";
-import { ErrorStatus, LoadingStatus } from "../Status";
-import TokenSearch from "./TokenSearch";
+import Icon from "../../Icon";
+import Image from "../../Image";
+import { ErrorStatus, LoadingStatus } from "../../Status";
 
 type Props = {
   selectedChainId: ChainID;
@@ -77,13 +75,7 @@ interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {
   tokens: Token[];
   coingeckoPlatformId: string | null;
 }
-function TokenCombobox({
-  token,
-  tokens,
-  coingeckoPlatformId,
-  onChange,
-}: ITokenCombobox) {
-  const { showModal } = useModalContext();
+function TokenCombobox({ token, tokens, onChange }: ITokenCombobox) {
   const [searchText, setSearchText] = useState("");
   const searchResult =
     searchText === ""
@@ -124,39 +116,6 @@ function TokenCombobox({
             </CloseButton>
           ))}
         </ComboboxOptions>
-      )}
-      {coingeckoPlatformId && (
-        <button
-          onClick={() =>
-            showModal(TokenSearch, {
-              coingeckoPlatformId,
-              onSubmit: (token, usdRate, details) => {
-                const option: TokenWithAmount = {
-                  approved: false,
-                  decimals: details.decimals,
-                  logo: details.logo,
-                  min_donation_amnt: Math.ceil(25 / usdRate),
-                  symbol: token.symbol.toUpperCase(),
-                  token_id: details.address,
-                  coingecko_denom: token.id,
-                  type:
-                    coingeckoPlatformId === juno.coingeckoPlatformId ||
-                    coingeckoPlatformId === terraMainnet.coingeckoPlatformId ||
-                    coingeckoPlatformId === stargaze.coingeckoPlatformId ||
-                    coingeckoPlatformId === kujira.coingeckoPlatformId
-                      ? "cw20"
-                      : "erc20",
-                  amount: "", //should reset previously selected amount
-                };
-                onChange(option);
-              },
-            })
-          }
-          type="button"
-          className="text-xs text-blue-d1 px-3 pb-1"
-        >
-          Not listed?
-        </button>
       )}
     </Combobox>
   );
