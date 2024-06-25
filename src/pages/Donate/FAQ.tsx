@@ -134,6 +134,19 @@ const faqs = [
       </p>,
     ],
   },
+  {
+    id: 4,
+    question: "How do I donate by Check?",
+    paragraphs: [
+      <p>
+        For gifts by check: Make your check out to "Altruistic Partners
+        Empowering Society Inc", write &#123;&nbsp;endowment id&nbsp;&#125; ($
+        {donation.liqSplit * 100}
+        %)" in the memo section of the check, and send it to: Miscellaneous
+        Account Services PNC Bank P.O. Box 8108 Philadelphia, PA 19101-8108
+      </p>,
+    ],
+  },
 ];
 
 function Em({
