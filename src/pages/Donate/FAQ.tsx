@@ -9,7 +9,12 @@ import { appRoutes } from "constants/routes";
 import { Fragment, type PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 
-export default function FAQ({ classes = "" }) {
+interface Props {
+  classes?: string;
+  endowId: number;
+}
+
+export default function FAQ({ classes = "", endowId }: Props) {
   return (
     <div
       className={
@@ -18,7 +23,7 @@ export default function FAQ({ classes = "" }) {
       }
     >
       <h2 id="faqs">Frequently asked questions</h2>
-      {faqs.map((faq) => (
+      {faqs(endowId).map((faq) => (
         <Disclosure as="div" key={faq.id}>
           {({ open }) => (
             <>
@@ -52,7 +57,7 @@ export default function FAQ({ classes = "" }) {
   );
 }
 
-const faqs = [
+const faqs = (endowId: number) => [
   {
     id: 1,
     question: "How does my donation work to benefit nonprofits?",
@@ -138,12 +143,25 @@ const faqs = [
     id: 4,
     question: "How do I donate by Check?",
     paragraphs: [
-      <p>
-        For gifts by check: Make your check out to "Altruistic Partners
-        Empowering Society Inc", write &#123;&nbsp;endowment id&nbsp;&#125; ($
-        {donation.liqSplit * 100}
-        %)" in the memo section of the check, and send it to: Miscellaneous
-        Account Services PNC Bank P.O. Box 8108 Philadelphia, PA 19101-8108
+      <p className="leading-normal">
+        For gifts by check: Make your check out to{" "}
+        <Em classes="text-navy-d4">
+          Altruistic Partners Empowering Society Inc
+        </Em>
+        ,<br /> write{" "}
+        <Em classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5 mr-2">
+          endowment:{endowId}
+        </Em>
+        <Em classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5">
+          donation&nbsp;split:__%
+        </Em>{" "}
+        in the memo section of the check, and send it to:{" "}
+        <Em intensity={1} classes="text-navy-d4 block mt-2">
+          Miscellaneous Account Services
+          <br /> PNC Bank
+          <br /> P.O. Box 8108
+          <br /> Philadelphia, PA 19101-8108
+        </Em>
       </p>,
     ],
   },
