@@ -18,8 +18,11 @@ export default function Form(props: CryptoFormStep) {
   const { reset, setValue, handleSubmit, control } =
     useFormContext<DonateValues>();
 
-  function submit(data: DonateValues) {
-    setState((prev) => nextFormState(prev, { ...data, method: "crypto" }));
+  function submit({ chainId, ...data }: DonateValues) {
+    if (!chainId) throw "dev: chainId should be validated";
+    setState((prev) =>
+      nextFormState(prev, { ...data, method: "crypto", chainId })
+    );
     reset();
   }
 
@@ -32,11 +35,13 @@ export default function Form(props: CryptoFormStep) {
     name: "chainId",
   });
 
-  const chain: Chain = {
-    id: chainId.value,
-    name: chains[chainId.value].name,
-    logo: chains[chainId.value].logo,
-  };
+  const chain: Chain = chainId.value
+    ? {
+        id: chainId.value,
+        name: chains[chainId.value].name,
+        logo: chains[chainId.value].logo,
+      }
+    : { id: "", name: "", logo: "" };
 
   return (
     <form
