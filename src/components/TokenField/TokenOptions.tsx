@@ -38,11 +38,10 @@ export default function TokenOptions({
     data: tokens = [],
     isLoading,
     isFetching,
-    isUninitialized,
     isError,
   } = useTokensQuery(!selectedChainId ? skipToken : selectedChainId);
 
-  if (selectedChainId === "") {
+  if (!selectedChainId) {
     return (
       <PopoverPanel anchor="bottom end" className={container}>
         <ErrorStatus classes="text-sm p-2">No network selected</ErrorStatus>
