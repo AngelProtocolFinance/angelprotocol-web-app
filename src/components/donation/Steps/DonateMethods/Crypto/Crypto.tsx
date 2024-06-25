@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
-import { object } from "yup";
+import { object, string } from "yup";
 import { DEFAULT_PROGRAM, initTokenOption } from "../../common/constants";
 import type { CryptoFormStep } from "../../types";
 import Form from "./Form";
@@ -20,6 +20,7 @@ export default function Crypto(props: Props) {
     resolver: yupResolver(
       schema<DonateValues>({
         token: object(tokenShape()),
+        chainId: string().required("Please select network"),
         //no need to validate split, restricted by slider
       })
     ),
