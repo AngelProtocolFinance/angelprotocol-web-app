@@ -103,6 +103,7 @@ function TokenCombobox({
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText] = useDebouncer(searchText, 500);
 
+  //biome-ignore lint: coinGeckoPlatformId is the only thing changing
   const [fuse, subset] = useMemo(() => {
     const coinGeckoTokens = require(
       `./coins/${coingeckoPlatformId}.json`
@@ -116,6 +117,7 @@ function TokenCombobox({
     return [fuse, allTokens.slice(0, 10)];
   }, [coingeckoPlatformId]);
 
+  //biome-ignore lint: debounced search text is the only thing changing
   const searchResult = useMemo(() => {
     if (!debouncedSearchText) return subset;
     return fuse
