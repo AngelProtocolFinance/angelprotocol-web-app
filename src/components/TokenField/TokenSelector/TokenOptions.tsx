@@ -1,4 +1,5 @@
 import {
+  CloseButton,
   Combobox,
   ComboboxInput,
   ComboboxOption,
@@ -8,6 +9,7 @@ import {
 import { chains } from "constants/chains";
 import Fuse from "fuse.js";
 import { isEmpty } from "helpers";
+import useDebouncer from "hooks/useDebouncer";
 import { useMemo, useState } from "react";
 import { useTokensQuery } from "services/apes";
 import {
@@ -20,7 +22,6 @@ import type { TokenWithAmount } from "types/tx";
 import Icon from "../../Icon";
 import Image from "../../Image";
 import { ErrorStatus, LoadingStatus } from "../../Status";
-import coingeckoTokensPerPlatform from "../TokenSearch/coins.json";
 import type { OnTokenChange } from "./types";
 
 type BasicToken = Pick<
@@ -72,14 +73,6 @@ export default function TokenOptions({
     );
   }
 
-  const platformId = chains[selectedChainId].coingeckoPlatformId;
-  const coinsMap = coingeckoTokensPerPlatform as {
-    [platformId: string]: BasicToken[];
-  };
-  const allTokens = platformId
-    ? (tokens as MixedToken[]).concat(coinsMap[platformId])
-    : tokens;
-
   return (
     <PopoverPanel
       anchor={{ to: "bottom end", gap: 8, offset: 20 }}
@@ -87,8 +80,8 @@ export default function TokenOptions({
     >
       <TokenCombobox
         token={token}
-        tokens={allTokens}
-        coingeckoPlatformId={platformId}
+        apTokens={tokens}
+        coingeckoPlatformId={chains[selectedChainId].coingeckoPlatformId}
         onChange={onChange}
       />
     </PopoverPanel>
@@ -96,28 +89,39 @@ export default function TokenOptions({
 }
 
 interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {
-  tokens: MixedToken[];
+  apTokens: Token[];
   coingeckoPlatformId: string | null;
 }
 function TokenCombobox({
   token,
-  tokens,
+  apTokens,
   onChange,
   coingeckoPlatformId,
 }: ITokenCombobox) {
   const [getToken] = useLazyTokenDetailsQuery();
   const [getUsdRate] = useLazyUsdRateQuery();
   const [searchText, setSearchText] = useState("");
+  const [debouncedSearchText] = useDebouncer(searchText, 500);
 
-  const fuse = useMemo(
-    () => new Fuse(tokens, { keys: ["name", "symbol"] }),
-    []
-  );
+  const [fuse, subset] = useMemo(() => {
+    const coinGeckoTokens = require(
+      `./coins/${coingeckoPlatformId}.json`
+    ) as any[];
 
-  const searchResult =
-    searchText === ""
-      ? tokens
-      : fuse.search(searchText).map(({ item }) => item);
+    const allTokens: MixedToken[] = coingeckoPlatformId
+      ? apTokens.concat(coinGeckoTokens)
+      : apTokens;
+
+    const fuse = new Fuse<MixedToken>(allTokens, { keys: ["name", "symbol"] });
+    return [fuse, allTokens.slice(0, 10)];
+  }, [coingeckoPlatformId]);
+
+  const searchResult = useMemo(() => {
+    if (!debouncedSearchText) return subset;
+    return fuse
+      .search(debouncedSearchText, { limit: 10 })
+      .map(({ item }) => item);
+  }, [debouncedSearchText]);
 
   return (
     <Combobox
@@ -148,25 +152,26 @@ function TokenCombobox({
         <ComboboxInput
           value={searchText}
           placeholder="Search..."
-          aria-disabled={tokens.length < 1}
           className="text-left text-sm focus:outline-none bg-transparent"
           onChange={(event) => setSearchText(event.target.value)}
         />
         <Icon type="Search" size={20} />
       </div>
+
       {isEmpty(searchResult) && searchText !== "" ? (
         <div className="relative cursor-default select-none py-2 px-4 text-sm">
           {searchText} not found
         </div>
       ) : (
-        <ComboboxOptions className="p-1" static>
+        <ComboboxOptions className="p-1 w-full" static>
           {({ option }) => {
             const token = option as MixedToken;
             return (
               <ComboboxOption
+                as={CloseButton}
                 key={token.token_id + token.type}
                 className={
-                  "flex items-center gap-2 p-3 hover:bg-[--accent-secondary] cursor-pointer"
+                  "flex w-full items-center gap-2 p-3 hover:bg-[--accent-secondary] cursor-pointer"
                 }
                 value={{ ...token, amount: "0" }}
               >
