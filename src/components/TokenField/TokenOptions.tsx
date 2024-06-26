@@ -6,6 +6,7 @@ import {
   ComboboxOptions,
   PopoverPanel,
 } from "@headlessui/react";
+import { skipToken } from "@reduxjs/toolkit/query";
 import { chains, juno, kujira, stargaze, terraMainnet } from "constants/chains";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
@@ -20,7 +21,7 @@ import { ErrorStatus, LoadingStatus } from "../Status";
 import TokenSearch from "./TokenSearch";
 
 type Props = {
-  selectedChainId: ChainID;
+  selectedChainId: ChainID | "";
   onChange: (token: TokenWithAmount) => void;
   token: TokenWithAmount;
   classes?: string;
@@ -38,7 +39,15 @@ export default function TokenOptions({
     isLoading,
     isFetching,
     isError,
-  } = useTokensQuery(selectedChainId);
+  } = useTokensQuery(!selectedChainId ? skipToken : selectedChainId);
+
+  if (!selectedChainId) {
+    return (
+      <PopoverPanel anchor="bottom end" className={container}>
+        <ErrorStatus classes="text-sm p-2">No network selected</ErrorStatus>
+      </PopoverPanel>
+    );
+  }
 
   if (isLoading || isFetching) {
     return (

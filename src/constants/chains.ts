@@ -457,7 +457,9 @@ const unsupportedChainList: UnsupportedChain[] = [
   ripple,
 ];
 
-export const chainList = [...supportedChainList, ...unsupportedChainList];
+export const chainList = [...supportedChainList, ...unsupportedChainList].sort(
+  (a, b) => a.name.localeCompare(b.name)
+);
 
 export const unsupportedChains = unsupportedChainList.reduce(
   (prev, curr) => ({ ...prev, [curr.id]: curr }),
