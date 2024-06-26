@@ -1,5 +1,6 @@
 import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
+import { FocusableInput } from "components/Selector";
 import { forwardRef, useState } from "react";
 import { Options } from "./Options";
 import type { Chain } from "./types";
@@ -24,8 +25,8 @@ export const ChainSelector = forwardRef<HTMLInputElement, Props>(
         by="name"
         className="relative items-center flex w-full field-container field-container-donate min-h-[3rem] bg-white dark:bg-blue-d6"
       >
+        <FocusableInput ref={ref} />
         <ComboboxInput
-          ref={ref}
           placeholder="Search network"
           onChange={(event) => setSearchText(event.target.value)}
           displayValue={(value: Chain) => value.name}

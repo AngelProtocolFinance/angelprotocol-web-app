@@ -1,5 +1,3 @@
-import { polygon, polygonAmoy } from "constants/chains";
-import { IS_TEST } from "constants/env";
 import type { Donor } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
@@ -26,8 +24,6 @@ export const initTokenOption: TokenWithAmount = {
 
 export const usdOption: DetailedCurrency = { code: "usd", min: 1, rate: 1 };
 
-export const initChainId: ChainID = IS_TEST ? polygonAmoy.id : polygon.id;
-
 export const initDetails = (
   methodId: DonateMethodId,
   programIdOrOption?: string | OptionType<string>
@@ -47,7 +43,9 @@ export const initDetails = (
         method: "crypto",
         token: initTokenOption,
         program,
-        chainId: initChainId,
+        /** cast here, propagating chainId:`""` in donation state is impractical
+         * as it should have been ruled out in crypto form  */
+        chainId: "" as ChainID,
       };
     }
     case "daf": {
