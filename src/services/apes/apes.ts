@@ -126,6 +126,7 @@ export const apes = createApi({
         recipientName?: string;
         recipientId?: number;
         arrivalDate?: number;
+        url?: string;
       },
       { paymentIntentId: string }
     >({

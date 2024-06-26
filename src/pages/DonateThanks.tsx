@@ -15,7 +15,8 @@ export type DonateThanksState = {
   guestDonor?: GuestDonor;
   recipientName?: string;
   recipientId?: number;
-  arrivalDate?: number;
+  bankVerificationUrl?: string;
+  microdepositArrivalDate?: number;
 };
 
 export default function DonateThanks({ widgetVersion = false }) {
@@ -55,8 +56,8 @@ export default function DonateThanks({ widgetVersion = false }) {
       />
 
       <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
-        {state?.arrivalDate
-          ? "hello"
+        {state?.microdepositArrivalDate
+          ? `The microdeposit is expected to arrive at your nominated bank account on ${new Date(state.microdepositArrivalDate * 1000)}. You can access the bank verification link from the "Pending" tab on your`
           : "If you need a receipt for your donation, please fill out the KYC form for this transaction on your"}{" "}
         {widgetVersion ? (
           <ExtLink href={`${BASE_URL}${appRoutes.user_dashboard}/donations`}>

@@ -34,7 +34,14 @@ export default function StripePaymentStatus() {
       }}
       classes={{ container: "place-self-center" }}
     >
-      {({ status, guestDonor, recipientName, recipientId, arrivalDate }) => (
+      {({
+        status,
+        guestDonor,
+        recipientName,
+        recipientId,
+        arrivalDate,
+        url,
+      }) => (
         <Content
           status={status}
           onMount={handleProcessing}
@@ -42,7 +49,8 @@ export default function StripePaymentStatus() {
           guestDonor={guestDonor}
           recipientName={recipientName}
           recipientId={recipientId}
-          arrivalDate={arrivalDate}
+          bankVerificationUrl={url}
+          microdepositArrivalDate={arrivalDate}
         />
       )}
     </QueryLoader>
@@ -56,7 +64,8 @@ function Content(props: {
   guestDonor?: GuestDonor;
   recipientName?: string;
   recipientId?: number;
-  arrivalDate?: number;
+  bankVerificationUrl?: string;
+  microdepositArrivalDate?: number;
 }) {
   switch (props.status) {
     case "succeeded":
@@ -89,7 +98,8 @@ function Content(props: {
               guestDonor: props.guestDonor,
               recipientName: props.recipientName,
               recipientId: props.recipientId,
-              arrivalDate: props.arrivalDate,
+              bankVerificationUrl: props.bankVerificationUrl,
+              microdepositArrivalDate: props.microdepositArrivalDate,
             } satisfies DonateThanksState
           }
         />
