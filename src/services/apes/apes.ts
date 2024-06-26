@@ -125,7 +125,7 @@ export const apes = createApi({
         guestDonor?: GuestDonor;
         recipientName?: string;
         recipientId?: number;
-        url?: string;
+        arrivalDate?: number;
       },
       { paymentIntentId: string }
     >({

@@ -34,7 +34,7 @@ export default function StripePaymentStatus() {
       }}
       classes={{ container: "place-self-center" }}
     >
-      {({ status, guestDonor, recipientName, recipientId }) => (
+      {({ status, guestDonor, recipientName, recipientId, arrivalDate }) => (
         <Content
           status={status}
           onMount={handleProcessing}
@@ -42,6 +42,7 @@ export default function StripePaymentStatus() {
           guestDonor={guestDonor}
           recipientName={recipientName}
           recipientId={recipientId}
+          arrivalDate={arrivalDate}
         />
       )}
     </QueryLoader>
@@ -55,6 +56,7 @@ function Content(props: {
   guestDonor?: GuestDonor;
   recipientName?: string;
   recipientId?: number;
+  arrivalDate?: number;
 }) {
   switch (props.status) {
     case "succeeded":
@@ -75,6 +77,23 @@ function Content(props: {
       );
     case "processing":
       return <Processing onMount={props.onMount} />;
+    case "requires_action":
+      const _to = props.isInWidget
+        ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}`
+        : appRoutes.donate_thanks;
+      return (
+        <Navigate
+          to={_to}
+          state={
+            {
+              guestDonor: props.guestDonor,
+              recipientName: props.recipientName,
+              recipientId: props.recipientId,
+              arrivalDate: props.arrivalDate,
+            } satisfies DonateThanksState
+          }
+        />
+      );
     case "canceled":
       return <Unsuccessful recipientId={props.recipientId} />;
     default:

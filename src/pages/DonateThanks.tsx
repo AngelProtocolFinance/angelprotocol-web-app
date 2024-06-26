@@ -15,6 +15,7 @@ export type DonateThanksState = {
   guestDonor?: GuestDonor;
   recipientName?: string;
   recipientId?: number;
+  arrivalDate?: number;
 };
 
 export default function DonateThanks({ widgetVersion = false }) {
@@ -54,8 +55,9 @@ export default function DonateThanks({ widgetVersion = false }) {
       />
 
       <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
-        If you need a receipt for your donation, please fill out the KYC form
-        for this transaction on your{" "}
+        {state?.arrivalDate
+          ? "hello"
+          : "If you need a receipt for your donation, please fill out the KYC form for this transaction on your"}{" "}
         {widgetVersion ? (
           <ExtLink href={`${BASE_URL}${appRoutes.user_dashboard}/donations`}>
             My Donations
