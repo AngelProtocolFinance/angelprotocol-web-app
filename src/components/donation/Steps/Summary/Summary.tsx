@@ -58,18 +58,15 @@ export default function Summary(props: SummaryStep) {
         method={details.method}
         mode={init.mode}
         donor={
-          donor ||
-          (userIsSignedIn(user)
-            ? {
-                lastName: user.lastName ?? "",
-                firstName: user.firstName ?? "",
-                email: user.email,
-                ukTaxResident: false,
-                title: initDonorTitleOption,
-                zipCode: "",
-                streetAddress: "",
-              }
-            : undefined)
+          donor || {
+            lastName: userIsSignedIn(user) ? user.lastName ?? "" : "",
+            firstName: userIsSignedIn(user) ? user.firstName ?? "" : "",
+            email: userIsSignedIn(user) ? user.email : "",
+            ukTaxResident: false,
+            title: initDonorTitleOption,
+            zipCode: "",
+            streetAddress: "",
+          }
         }
         honorary={
           honorary || {
