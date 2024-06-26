@@ -11,7 +11,7 @@ type Classes = {
 export type Props<T extends FieldValues, K extends Path<T>> = {
   name: PathValue<T, K> extends TokenWithAmount ? K : never;
   label: string;
-  selectedChainId: ChainID;
+  selectedChainId: ChainID | "";
   classes?: Classes;
   disabled?: boolean;
 

@@ -6,7 +6,7 @@ import TokenOptions from "./TokenOptions";
 import type { OnTokenChange } from "./types";
 
 interface Props {
-  selectedChainId: ChainID;
+  selectedChainId: ChainID | "";
   selectedToken: TokenWithAmount;
   onChange: OnTokenChange;
 }

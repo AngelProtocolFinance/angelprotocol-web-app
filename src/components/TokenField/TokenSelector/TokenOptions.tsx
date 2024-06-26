@@ -6,6 +6,7 @@ import {
   ComboboxOptions,
   PopoverPanel,
 } from "@headlessui/react";
+import { skipToken } from "@reduxjs/toolkit/query";
 import tokenLogoPlaceholder from "assets/icons/token-placeholder.svg";
 import { chains } from "constants/chains";
 import Fuse from "fuse.js";
@@ -32,7 +33,7 @@ type BasicToken = Pick<
 type MixedToken = BasicToken | Token;
 
 type Props = {
-  selectedChainId: ChainID;
+  selectedChainId: ChainID | "";
   onChange: OnTokenChange;
   token: MixedToken;
   classes?: string;
@@ -54,7 +55,15 @@ export default function TokenOptions({
     isLoading,
     isFetching,
     isError,
-  } = useTokensQuery(selectedChainId);
+  } = useTokensQuery(selectedChainId || skipToken);
+
+  if (!selectedChainId) {
+    return (
+      <PopoverPanel anchor="bottom end" className={container}>
+        <ErrorStatus classes="text-sm p-2">No network selected</ErrorStatus>
+      </PopoverPanel>
+    );
+  }
 
   if (isLoading || isFetching) {
     return (
