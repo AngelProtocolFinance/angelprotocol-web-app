@@ -1,7 +1,6 @@
 import { Label } from "components/form";
 import { chains } from "constants/chains";
-import { get, useController, useFormContext } from "react-hook-form";
-
+import { useController, useFormContext } from "react-hook-form";
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -39,6 +38,10 @@ export default function Form(props: CryptoFormStep) {
     control: control,
     name: "chainId",
   });
+  const { field: token } = useController<DonateValues, "token">({
+    control: control,
+    name: "token",
+  });
 
   const chain: Chain = chainId.value
     ? {
@@ -64,19 +67,20 @@ export default function Form(props: CryptoFormStep) {
       <ChainSelector
         ref={chainId.ref}
         value={chain}
-        error={get(errors, "chainId")?.message}
+        error={errors.chainId?.message}
         onChange={(chain) => {
           chainId.onChange(chain.id);
-
           //reset selected token
           setValue("token", initTokenOption);
-          setValue("token.amount", "0");
         }}
       />
 
-      <TokenField<DonateValues, "token">
-        name="token"
-        selectedChainId={chainId.value}
+      <TokenField
+        ref={token.ref}
+        token={token.value}
+        onChange={token.onChange}
+        chainId={chainId.value}
+        error={errors.token?.amount?.message || errors.token?.token_id?.message}
         withBalance
         label="Donation amount"
         classes={{
