@@ -18,9 +18,3 @@ export type Props<T extends FieldValues, K extends Path<T>> = {
   withBalance?: true;
   withMininum?: true;
 };
-
-export type SelectorProps = {
-  selectedChainId: ChainID | "";
-  selectedToken: TokenWithAmount;
-  onChange(token: TokenWithAmount): void;
-};
