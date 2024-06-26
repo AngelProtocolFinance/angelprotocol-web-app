@@ -14,8 +14,8 @@ type FV = FormDonor & Honorary;
 type Props = {
   onSubmit(formValues: FV): void;
   classes?: string;
-  donor?: FormDonor;
-  honorary?: Honorary;
+  donor: FormDonor;
+  honorary: Honorary;
   mode: Mode;
   method: DonateMethodId;
 };
