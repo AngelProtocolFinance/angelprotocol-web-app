@@ -3,7 +3,6 @@ import Image from "components/Image";
 import { chainList } from "constants/chains";
 import { IS_TEST } from "constants/env";
 import Fuse from "fuse.js";
-import type { Chain } from "./types";
 
 interface Props {
   searchText: string;
@@ -25,14 +24,8 @@ export function Options({ searchText }: Props) {
       {opts.map((opt) => (
         <ComboboxOption
           className="grid grid-cols-subgrid col-span-2 data-[selected]:bg-blue-l2 hover:bg-blue-l2 cursor-pointer gap-2 p-2 font-normal"
-          key={opt.name}
-          value={
-            {
-              id: opt.id,
-              name: opt.name,
-              logo: opt.logo,
-            } satisfies Chain
-          }
+          key={opt.id}
+          value={opt.id}
         >
           <Image
             src={opt.logo}

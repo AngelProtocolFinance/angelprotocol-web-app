@@ -1,5 +1,4 @@
 import { Label } from "components/form";
-import { chains } from "constants/chains";
 import { useController, useFormContext } from "react-hook-form";
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
@@ -8,7 +7,7 @@ import { ProgramSelector } from "../../common/ProgramSelector";
 import { initTokenOption } from "../../common/constants";
 import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
-import { type Chain, ChainSelector } from "./ChainSelector";
+import { ChainSelector } from "./ChainSelector";
 import type { DonateValues } from "./types";
 
 export default function Form(props: CryptoFormStep) {
@@ -43,14 +42,6 @@ export default function Form(props: CryptoFormStep) {
     name: "token",
   });
 
-  const chain: Chain = chainId.value
-    ? {
-        id: chainId.value,
-        name: chains[chainId.value].name,
-        logo: chains[chainId.value].logo,
-      }
-    : { id: "", name: "", logo: "" };
-
   return (
     <form
       onSubmit={handleSubmit(submit)}
@@ -66,10 +57,10 @@ export default function Form(props: CryptoFormStep) {
       </Label>
       <ChainSelector
         ref={chainId.ref}
-        value={chain}
+        value={chainId.value}
         error={errors.chainId?.message}
-        onChange={(chain) => {
-          chainId.onChange(chain.id);
+        onChange={(id) => {
+          chainId.onChange(id);
           //reset selected token
           setValue("token", initTokenOption);
         }}
