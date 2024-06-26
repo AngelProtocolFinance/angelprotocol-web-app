@@ -58,7 +58,10 @@ function Content({ intent, endowment }: Props) {
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
         </div>
-        <FAQ classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]" />
+        <FAQ
+          classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]"
+          endowId={endowment.id}
+        />
         <p className="max-md:border-t max-md:border-gray-l3 max-md:px-4 max-md:pt-4 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
           By making a donation to {APP_NAME}, you agree to our{" "}
           <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
