@@ -1,5 +1,4 @@
 import { Label } from "components/form";
-import { useController, useFormContext } from "react-hook-form";
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -9,17 +8,13 @@ import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
 import { ChainSelector } from "./ChainSelector";
 import type { DonateValues } from "./types";
+import { useRhf } from "./useRhf";
 
 export default function Form(props: CryptoFormStep) {
   const { setState } = useDonationState();
 
-  const {
-    reset,
-    setValue,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useFormContext<DonateValues>();
+  const { handleSubmit, reset, setValue, program, token, chainId, errors } =
+    useRhf(props);
 
   function submit({ chainId, ...data }: DonateValues) {
     if (!chainId) throw "dev: chainId should be validated";
@@ -28,19 +23,6 @@ export default function Form(props: CryptoFormStep) {
     );
     reset();
   }
-
-  const { field: program } = useController<DonateValues, "program">({
-    control: control,
-    name: "program",
-  });
-  const { field: chainId } = useController<DonateValues, "chainId">({
-    control: control,
-    name: "chainId",
-  });
-  const { field: token } = useController<DonateValues, "token">({
-    control: control,
-    name: "token",
-  });
 
   return (
     <form
@@ -58,7 +40,7 @@ export default function Form(props: CryptoFormStep) {
       <ChainSelector
         ref={chainId.ref}
         value={chainId.value}
-        error={errors.chainId?.message}
+        error={errors.chainId}
         onChange={(id) => {
           chainId.onChange(id);
           //reset selected token
@@ -71,7 +53,7 @@ export default function Form(props: CryptoFormStep) {
         token={token.value}
         onChange={token.onChange}
         chainId={chainId.value}
-        error={errors.token?.amount?.message || errors.token?.token_id?.message}
+        error={errors.token}
         withBalance
         label="Donation amount"
         classes={{
