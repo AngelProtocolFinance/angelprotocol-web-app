@@ -19,6 +19,7 @@ export const ChainSelector = forwardRef<HTMLInputElement, Props>(
     return (
       <Combobox
         disabled={props.disabled}
+        immediate
         value={props.value}
         onChange={(x) => x && props.onChange(x)}
         as="div"
