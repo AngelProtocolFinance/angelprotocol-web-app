@@ -140,18 +140,18 @@ function TokenCombobox({
       by="token_id"
       value={token}
       virtual={{ options: searchResult }}
-      onChange={async (token) => {
-        if (!token) return;
-        if (isApToken(token)) return onChange(token);
+      onChange={async (tkn) => {
+        if (!tkn) return;
+        if (isApToken(tkn)) return onChange({ ...tkn, amount: "" });
 
         // basic token woudn't be included in list if no platform id
         if (!coingeckoPlatformId) return;
 
-        const details = await getToken(token.coingecko_denom).unwrap();
-        const usdRate = await getUsdRate(token.coingecko_denom).unwrap();
+        const details = await getToken(tkn.coingecko_denom).unwrap();
+        const usdRate = await getUsdRate(tkn.coingecko_denom).unwrap();
 
         onChange({
-          ...token,
+          ...tkn,
           min_donation_amnt: Math.ceil(25 / usdRate),
           approved: true,
           logo: details.image.thumb,
@@ -185,7 +185,7 @@ function TokenCombobox({
                 className={
                   "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-[--accent-secondary] data-[selected]:bg-[--accent-secondary] cursor-pointer"
                 }
-                value={{ ...token, amount: "0" }}
+                value={{ ...token, amount: "" }}
               >
                 <Image
                   src={"logo" in token ? token.logo : tokenLogoPlaceholder}

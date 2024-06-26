@@ -1,34 +1,28 @@
 import { Popover, PopoverButton } from "@headlessui/react";
-import type { ChainID } from "types/chain";
-import type { TokenWithAmount } from "types/tx";
 import { DrawerIcon } from "../../Icon";
+import type { Props } from "../types";
 import TokenOptions from "./TokenOptions";
-import type { OnTokenChange } from "./types";
 
-interface Props {
-  selectedChainId: ChainID | "";
-  selectedToken: TokenWithAmount;
-  onChange: OnTokenChange;
-}
+type TTokenSelector = Pick<Props, "chainId" | "token" | "onChange">;
 export default function TokenSelector({
-  selectedChainId,
   onChange,
-  selectedToken,
-}: Props) {
+  token,
+  chainId,
+}: TTokenSelector) {
   return (
     <Popover className="relative gap-1 flex justify-end dark:text-navy-l2 h-full">
       <PopoverButton className="flex items-center gap-1 focus:outline-none">
         {({ open }) => (
           <>
-            <span>{selectedToken.symbol}</span>
+            <span>{token.symbol}</span>
             <DrawerIcon isOpen={open} size={24} />
           </>
         )}
       </PopoverButton>
       <TokenOptions
-        token={selectedToken}
+        token={token}
         onChange={onChange}
-        selectedChainId={selectedChainId}
+        selectedChainId={chainId}
       />
     </Popover>
   );
