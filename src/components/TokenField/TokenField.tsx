@@ -1,43 +1,22 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { unpack } from "helpers";
-import {
-  type FieldValues,
-  type Path,
-  useController,
-  useFormContext,
-} from "react-hook-form";
-import type { TokenWithAmount } from "types/tx";
+import { forwardRef } from "react";
 import TokenSelector from "./TokenSelector";
 import type { Props } from "./types";
 
-const amountKey: keyof TokenWithAmount = "amount";
-const tokenIDkey: keyof TokenWithAmount = "token_id";
-type BaseFormValue = { [index: string]: TokenWithAmount };
-
-export default function TokenField<T extends FieldValues, K extends Path<T>>({
-  label,
-  name,
-  classes,
-  disabled,
-  selectedChainId,
-
-  //flags
-  withMininum,
-}: Props<T, K>) {
-  const {
-    getValues,
-    register,
-    formState: { errors, isSubmitting },
-  } = useFormContext<T>();
-  const {
-    field: { onChange, value: token },
-  } = useController<BaseFormValue>({
-    name: name,
-  });
-
-  const amountField: any = `${name}.${amountKey}`;
-  const tokenIDField: any = `${name}.${tokenIDkey}`;
-
+const TokenField: React.ForwardRefRenderFunction<HTMLInputElement, Props> = (
+  {
+    label,
+    classes,
+    disabled,
+    chainId,
+    token,
+    onChange,
+    error,
+    //flags
+    withMininum,
+  },
+  ref
+) => {
   const style = unpack(classes);
 
   return (
@@ -53,36 +32,22 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
         className={`${style.inputContainer} relative grid grid-cols-[1fr_auto] items-center gap-2 field-container peer`}
       >
         <input
-          {...register(amountField)}
-          disabled={disabled || isSubmitting}
+          ref={ref}
+          value={token.amount}
+          onChange={(e) => onChange({ ...token, amount: e.target.value })}
+          disabled={disabled}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder="Enter amount"
           className="text-sm py-3.5 dark:text-navy-l2"
         />
-        <TokenSelector
-          selectedChainId={selectedChainId}
-          selectedToken={token}
-          onChange={(token) => {
-            //preserve previously provided amount
-            onChange({ ...token, [amountKey]: getValues(amountField) });
-          }}
-        />
-        <ErrorMessage
-          data-error
-          errors={errors}
-          name={amountField}
-          as="p"
-          className="field-error left-0 text-left"
-        />
-        <ErrorMessage
-          data-error
-          errors={errors}
-          name={tokenIDField}
-          as="p"
-          className="field-error"
-        />
+        <TokenSelector chainId={chainId} token={token} onChange={onChange} />
+        {error && (
+          <p data-error className="field-error left-0 text-left">
+            {error}
+          </p>
+        )}
       </div>
       {withMininum && token.min_donation_amnt !== 0 && (
         <p className="text-xs mt-2 peer-has-[[data-error]]:mt-5">
@@ -91,4 +56,6 @@ export default function TokenField<T extends FieldValues, K extends Path<T>>({
       )}
     </div>
   );
-}
+};
+
+export default forwardRef(TokenField);

@@ -1,7 +1,4 @@
 import { Label } from "components/form";
-import { chains } from "constants/chains";
-import { get, useController, useFormContext } from "react-hook-form";
-
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -9,19 +6,15 @@ import { ProgramSelector } from "../../common/ProgramSelector";
 import { initTokenOption } from "../../common/constants";
 import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
-import { type Chain, ChainSelector } from "./ChainSelector";
+import { ChainSelector } from "./ChainSelector";
 import type { DonateValues } from "./types";
+import { useRhf } from "./useRhf";
 
 export default function Form(props: CryptoFormStep) {
   const { setState } = useDonationState();
 
-  const {
-    reset,
-    setValue,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useFormContext<DonateValues>();
+  const { handleSubmit, reset, setValue, program, token, chainId, errors } =
+    useRhf(props);
 
   function submit({ chainId, ...data }: DonateValues) {
     if (!chainId) throw "dev: chainId should be validated";
@@ -30,23 +23,6 @@ export default function Form(props: CryptoFormStep) {
     );
     reset();
   }
-
-  const { field: program } = useController<DonateValues, "program">({
-    control: control,
-    name: "program",
-  });
-  const { field: chainId } = useController<DonateValues, "chainId">({
-    control: control,
-    name: "chainId",
-  });
-
-  const chain: Chain = chainId.value
-    ? {
-        id: chainId.value,
-        name: chains[chainId.value].name,
-        logo: chains[chainId.value].logo,
-      }
-    : { id: "", name: "", logo: "" };
 
   return (
     <form
@@ -63,20 +39,21 @@ export default function Form(props: CryptoFormStep) {
       </Label>
       <ChainSelector
         ref={chainId.ref}
-        value={chain}
-        error={get(errors, "chainId")?.message}
-        onChange={(chain) => {
-          chainId.onChange(chain.id);
-
+        value={chainId.value}
+        error={errors.chainId}
+        onChange={(id) => {
+          chainId.onChange(id);
           //reset selected token
           setValue("token", initTokenOption);
-          setValue("token.amount", "0");
         }}
       />
 
-      <TokenField<DonateValues, "token">
-        name="token"
-        selectedChainId={chainId.value}
+      <TokenField
+        ref={token.ref}
+        token={token.value}
+        onChange={token.onChange}
+        chainId={chainId.value}
+        error={errors.token}
         withBalance
         label="Donation amount"
         classes={{

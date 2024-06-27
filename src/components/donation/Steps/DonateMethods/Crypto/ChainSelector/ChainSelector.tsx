@@ -1,12 +1,13 @@
 import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
+import { chains } from "constants/chains";
 import { forwardRef, useState } from "react";
+import type { MaybeEmptyChainId } from "../types";
 import { Options } from "./Options";
-import type { Chain } from "./types";
 
 interface Props {
-  value: Chain;
-  onChange: (chain: Chain) => void;
+  value: MaybeEmptyChainId;
+  onChange: (chain: MaybeEmptyChainId) => void;
   disabled?: boolean;
   error?: string;
 }
@@ -22,14 +23,14 @@ export const ChainSelector = forwardRef<HTMLInputElement, Props>(
         value={props.value}
         onChange={(x) => x && props.onChange(x)}
         as="div"
-        by="name"
         className="relative items-center flex w-full field-container field-container-donate min-h-[3rem] bg-white dark:bg-blue-d6"
       >
         <ComboboxInput
+          type="text"
           ref={ref}
           placeholder="Search network"
           onChange={(event) => setSearchText(event.target.value)}
-          displayValue={(value: Chain) => value.name}
+          displayValue={(id: MaybeEmptyChainId) => (id ? chains[id].name : "")}
           className="field-input-donate"
         />
 
