@@ -180,7 +180,6 @@ function TokenCombobox({
             const token = option as MixedToken;
             return (
               <ComboboxOption
-                data-testid="token-option"
                 as={CloseButton}
                 key={token.token_id + token.type}
                 className={
