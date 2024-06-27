@@ -1,5 +1,6 @@
 export type AuthenticatedUser = {
   token: string;
+  tokenExpiry: number;
   groups: string[];
   endowments: number[];
   email: string;

@@ -41,7 +41,7 @@ export default function Success({ classes, guestDonor, recipient }: Props) {
         The donation process is complete, and we are grateful for your support.
       </p>
 
-      <Share recipient={recipient} className="mt-2" />
+      <Share recipientName={recipient.name} className="mt-2" />
 
       {!userIsSignedIn(user) && guestDonor && (
         <Signup

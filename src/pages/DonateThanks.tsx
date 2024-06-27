@@ -49,7 +49,7 @@ export default function DonateThanks({ widgetVersion = false }) {
       </p>
 
       <Share
-        recipient={{ id: 1, name: "Hello world" }}
+        recipientName={state?.recipientName ?? "a nonprofit"}
         className="mt-6 border border-gray-l3 rounded-xl"
       />
 
