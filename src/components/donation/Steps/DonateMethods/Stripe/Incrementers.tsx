@@ -1,6 +1,6 @@
 import { humanize, roundDownToNum } from "helpers";
+import type { OnIncrement } from "./types";
 
-type OnIncrement = (increment: number) => void;
 interface Props {
   rate: number;
   code: string;

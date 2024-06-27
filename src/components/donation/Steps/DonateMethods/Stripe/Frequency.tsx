@@ -1,9 +1,8 @@
 import { Radio, RadioGroup } from "@headlessui/react";
 import Icon from "components/Icon";
-import type { FiatPaymentFrequency } from "types/aws";
-import type { FormValues as FV } from "./types";
+import type { FormValues } from "./types";
 
-type Freq = FV["frequency"];
+type Freq = FormValues["frequency"];
 
 const styles = {
   icon: "hidden @[21rem]/frequency:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
@@ -12,8 +11,8 @@ const styles = {
 };
 
 interface Props {
-  value: FiatPaymentFrequency;
-  onChange: (freq: FiatPaymentFrequency) => void;
+  value: Freq;
+  onChange: (freq: Freq) => void;
   error?: string;
 }
 export default function Frequency({ value, onChange, error }: Props) {

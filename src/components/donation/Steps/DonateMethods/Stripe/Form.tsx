@@ -1,25 +1,20 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import QueryLoader from "components/QueryLoader";
 import { Form as FormContainer, NativeField } from "components/form";
 import { bgCookies, setCookie } from "helpers/cookie";
-import { useController, useForm } from "react-hook-form";
-import { schema, stringNumber } from "schemas/shape";
-import { requiredString } from "schemas/string";
 import { useFiatCurrenciesQuery } from "services/apes";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
-import type { Currency, DetailedCurrency } from "types/components";
+import type { Currency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import { ProgramSelector } from "../../common/ProgramSelector";
-import { DEFAULT_PROGRAM } from "../../common/constants";
+import { USD_CODE } from "../../common/constants";
 import { nextFormState } from "../helpers";
 import Frequency from "./Frequency";
 import Incrementers from "./Incrementers";
-import type { FormValues as FV, Props } from "./types";
-
-const USD_CODE = "usd";
+import type { FormProps, Props } from "./types";
+import { useRhf } from "./useRhf";
 
 export default function Loader(props: Props) {
   const user = useGetter((state) => state.auth.user);
@@ -39,65 +34,14 @@ export default function Loader(props: Props) {
   );
 }
 
-type FormProps = Props & {
-  currencies: DetailedCurrency[];
-  defaultCurr?: DetailedCurrency;
-};
-
 function Form({ currencies, defaultCurr, ...props }: FormProps) {
   const { setState } = useDonationState();
 
-  const initial: FV = {
-    amount: "",
-    currency: defaultCurr || { code: USD_CODE, min: 1, rate: 1 },
-    frequency: "subscription",
-    program: DEFAULT_PROGRAM,
-  };
-
-  const currencyKey: keyof FV = "currency";
-  const {
-    control,
-    handleSubmit,
-    register,
-    setValue,
-    getValues,
-    trigger,
-    formState: { errors },
-  } = useForm<FV>({
-    defaultValues: props.details || initial,
-    resolver: yupResolver(
-      schema<FV>({
-        frequency: requiredString,
-        amount: stringNumber(
-          (s) => s.required("Please enter an amount"),
-          (n) =>
-            n
-              .positive("Amount must be greater than 0")
-              .when(currencyKey, (values, schema) => {
-                const [currency] = values as [Currency | undefined];
-                return currency?.min
-                  ? schema.min(currency.min, "less than min")
-                  : schema;
-              })
-        ),
-      })
-    ),
-  });
-
-  const { field: frequency } = useController<FV, "frequency">({
-    control: control,
-    name: "frequency",
-  });
-
-  const { field: currency } = useController<FV, "currency">({
-    control: control,
-    name: "currency",
-  });
-
-  const { field: program } = useController<FV, "program">({
-    control: control,
-    name: "program",
-  });
+  const { handleSubmit, currency, register, program, frequency, errors } =
+    useRhf({
+      ...props,
+      defaultCurr,
+    });
 
   return (
     <FormContainer
@@ -138,11 +82,7 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
       />
       {currency.value.rate && (
         <Incrementers
-          onIncrement={(inc) => {
-            const amntNum = Number(getValues("amount"));
-            if (Number.isNaN(amntNum)) return trigger("amount");
-            setValue("amount", `${inc + amntNum}`);
-          }}
+          onIncrement={(inc) => {}}
           code={currency.value.code}
           rate={currency.value.rate}
         />
