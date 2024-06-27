@@ -37,32 +37,28 @@ export default function Loader(props: Props) {
 function Form({ currencies, defaultCurr, ...props }: FormProps) {
   const { setState } = useDonationState();
 
-  const { handleSubmit, currency, register, program, frequency, errors } =
-    useRhf({
-      ...props,
-      defaultCurr,
-    });
+  const rhf = useRhf({ ...props, defaultCurr });
 
   return (
     <FormContainer
-      onSubmit={handleSubmit((fv) =>
+      onSubmit={rhf.handleSubmit((fv) =>
         setState((prev) => nextFormState(prev, { ...fv, method: "stripe" }))
       )}
       className="grid gap-4"
     >
       <Frequency
-        value={frequency.value}
-        onChange={frequency.onChange}
-        error={errors.frequency?.message}
+        value={rhf.frequency.value}
+        onChange={rhf.frequency.onChange}
+        error={rhf.errors.frequency?.message}
       />
       <CurrencySelector
         currencies={currencies}
         label="Currency"
         onChange={(c) => {
           setCookie(bgCookies.prefCode, c.code.toUpperCase());
-          currency.onChange(c);
+          rhf.currency.onChange(c);
         }}
-        value={currency.value}
+        value={rhf.currency.value}
         classes={{
           label: "font-semibold",
           combobox: "field-container-donate rounded-lg",
@@ -71,20 +67,20 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         required
       />
       <NativeField
-        {...register("amount")}
+        {...rhf.register("amount")}
         label="Donation amount"
         placeholder="Enter amount"
         classes={{ label: "font-semibold", container: "field-donate" }}
-        error={errors.amount?.message}
+        error={rhf.errors.amount?.message}
         required
         // validation must be dynamicly set depending on which exact currency is selected
-        tooltip={createTooltip(currency.value)}
+        tooltip={createTooltip(rhf.currency.value)}
       />
-      {currency.value.rate && (
+      {rhf.currency.value.rate && (
         <Incrementers
-          onIncrement={(inc) => {}}
-          code={currency.value.code}
-          rate={currency.value.rate}
+          onIncrement={rhf.onIncrement}
+          code={rhf.currency.value.code}
+          rate={rhf.currency.value.rate}
         />
       )}
 
@@ -92,8 +88,8 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         <ProgramSelector
           classes="mt-4"
           endowId={props.init.recipient.id}
-          program={program.value}
-          onChange={program.onChange}
+          program={rhf.program.value}
+          onChange={rhf.program.onChange}
         />
       )}
 
