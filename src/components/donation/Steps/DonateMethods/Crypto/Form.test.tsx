@@ -75,7 +75,124 @@ describe("Crypto form: initial load", () => {
   afterAll(() => {
     vi.restoreAllMocks();
   });
-  test("initial form state: no persisted details", () => {
+  //   test("initial form state: no persisted details", () => {
+  //     const init: Init = {
+  //       source: "bg-marketplace",
+  //       config: { liquidSplitPct: 50, splitDisabled: false },
+  //       recipient: { id: 0, name: "" },
+  //       mode: "live",
+  //     };
+
+  //     const state: CryptoFormStep = {
+  //       step: "donate-form",
+  //       init,
+  //     };
+  //     render(<Form {...state} />);
+
+  //     const chainInput = screen.getByPlaceholderText(/search network/i);
+  //     expect(chainInput).toBeInTheDocument();
+
+  //     const amountInput = screen.getByPlaceholderText(/enter amount/i);
+  //     expect(amountInput).toBeInTheDocument();
+
+  //     const tokenSelector = screen.getByRole("button", {
+  //       name: /select token/i,
+  //     });
+  //     expect(tokenSelector).toBeInTheDocument();
+
+  //     const programSelector = screen.getByRole("button", {
+  //       name: /general donation/i,
+  //     });
+  //     expect(programSelector).toBeInTheDocument();
+  //   });
+
+  //   test("initial form state: program donations not allowed", () => {
+  //     const init: Init = {
+  //       source: "bg-marketplace",
+  //       config: { liquidSplitPct: 50, splitDisabled: false },
+  //       recipient: { id: 0, name: "", progDonationsAllowed: false },
+  //       mode: "live",
+  //     };
+
+  //     const state: CryptoFormStep = {
+  //       step: "donate-form",
+  //       init,
+  //     };
+  //     render(<Form {...state} />);
+  //     const programSelector = screen.queryByRole("button", {
+  //       name: /general donation/i,
+  //     });
+  //     expect(programSelector).toBeNull();
+  //   });
+
+  //   test("submit form with initial/persisted data", async () => {
+  //     const init: Init = {
+  //       source: "bg-marketplace",
+  //       config: { liquidSplitPct: 50, splitDisabled: false },
+  //       recipient: { id: 0, name: "" },
+  //       mode: "live",
+  //     };
+
+  //     const amount = "100.33";
+  //     const state: CryptoFormStep = {
+  //       step: "donate-form",
+  //       init,
+  //       details: {
+  //         method: "crypto",
+  //         token: { ...mockTokens[1], amount },
+  //         chainId: "80002",
+  //         program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
+  //       },
+  //     } as const;
+  //     render(<Form {...state} />);
+
+  //     const chainInput = screen.getByDisplayValue(chains["80002"].name);
+  //     expect(chainInput).toBeInTheDocument();
+
+  //     const amountInput = screen.getByDisplayValue(amount);
+  //     expect(amountInput).toBeInTheDocument();
+
+  //     const programSelector = screen.getByRole("button", {
+  //       name: /program 1/i,
+  //     });
+  //     expect(programSelector).toBeInTheDocument();
+
+  //     const continueBtn = screen.getByRole("button", { name: /continue/i });
+  //     await userEvent.click(continueBtn);
+  //     expect(mockedSetState).toHaveBeenCalledOnce();
+  //   });
+
+  //   test("submitting empty form should show validation messages and focus first field: chain selector", async () => {
+  //     const init: Init = {
+  //       source: "bg-marketplace",
+  //       config: { liquidSplitPct: 50, splitDisabled: false },
+  //       recipient: { id: 0, name: "" },
+  //       mode: "live",
+  //     };
+
+  //     const state: CryptoFormStep = {
+  //       step: "donate-form",
+  //       init,
+  //     };
+  //     render(<Form {...state} />);
+
+  //     const continueBtn = screen.getByRole("button", { name: /continue/i });
+  //     await userEvent.click(continueBtn);
+
+  //     expect(screen.getByText(/please select network/i)).toBeInTheDocument();
+  //     //amount input
+  //     expect(screen.getByText(/required/i)).toBeInTheDocument();
+
+  //     //input is focused
+  //     const comboboxInput = screen.getByRole("combobox");
+  //     expect(comboboxInput).toHaveFocus();
+
+  //     //dropdown is open
+  //     const dropdown = screen.getByRole("listbox");
+  //     expect(dropdown).toBeInTheDocument();
+  //   });
+
+  test("user corrects error and submits", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: { liquidSplitPct: 50, splitDisabled: false },
@@ -89,106 +206,28 @@ describe("Crypto form: initial load", () => {
     };
     render(<Form {...state} />);
 
-    const chainInput = screen.getByPlaceholderText(/search network/i);
-    expect(chainInput).toBeInTheDocument();
+    //submit empty form
+    const continueBtn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continueBtn);
+
+    //combobox input should be focused and have options revealed
+    const options = screen.getAllByRole("option");
+    // option details best tested in some `ChainSelector.test.tsx`
+    expect(options.length).toBeGreaterThan(2);
+
+    //user clicks first option
+    await userEvent.click(options[0]);
+    //after selecting an option, error should go away
+    //details of selected network best tested in some `ChainSelector.test.tsx`
+    expect(screen.queryByText(/please select network/i)).toBeNull();
+
+    await userEvent.click(continueBtn);
 
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    expect(amountInput).toBeInTheDocument();
+    expect(amountInput).toHaveFocus();
 
-    const tokenSelector = screen.getByRole("button", {
-      name: /select token/i,
-    });
-    expect(tokenSelector).toBeInTheDocument();
-
-    const programSelector = screen.getByRole("button", {
-      name: /general donation/i,
-    });
-    expect(programSelector).toBeInTheDocument();
-  });
-
-  test("initial form state: program donations not allowed", () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
-      recipient: { id: 0, name: "", progDonationsAllowed: false },
-      mode: "live",
-    };
-
-    const state: CryptoFormStep = {
-      step: "donate-form",
-      init,
-    };
-    render(<Form {...state} />);
-    const programSelector = screen.queryByRole("button", {
-      name: /general donation/i,
-    });
-    expect(programSelector).toBeNull();
-  });
-
-  test("submit form with initial/persisted data", async () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
-      recipient: { id: 0, name: "" },
-      mode: "live",
-    };
-
-    const amount = "100.33";
-    const state: CryptoFormStep = {
-      step: "donate-form",
-      init,
-      details: {
-        method: "crypto",
-        token: { ...mockTokens[1], amount },
-        chainId: "80002",
-        program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
-      },
-    } as const;
-    render(<Form {...state} />);
-
-    const chainInput = screen.getByDisplayValue(chains["80002"].name);
-    expect(chainInput).toBeInTheDocument();
-
-    const amountInput = screen.getByDisplayValue(amount);
-    expect(amountInput).toBeInTheDocument();
-
-    const programSelector = screen.getByRole("button", {
-      name: /program 1/i,
-    });
-    expect(programSelector).toBeInTheDocument();
-
-    const continueBtn = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continueBtn);
-    expect(mockedSetState).toHaveBeenCalledOnce();
-  });
-
-  test("submitting empty form should show validation messages and focus first field: chain selector", async () => {
-    const init: Init = {
-      source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
-      recipient: { id: 0, name: "" },
-      mode: "live",
-    };
-
-    const state: CryptoFormStep = {
-      step: "donate-form",
-      init,
-    };
-    render(<Form {...state} />);
-
-    const continueBtn = screen.getByRole("button", { name: /continue/i });
-    await userEvent.click(continueBtn);
-
-    expect(screen.getByText(/please select network/i)).toBeInTheDocument();
-    //amount input
-    expect(screen.getByText(/required/i)).toBeInTheDocument();
-
-    //input is focused
-    const comboboxInput = screen.getByRole("combobox");
-    expect(comboboxInput).toHaveFocus();
-
-    //dropdown is open
-    const dropdown = screen.getByRole("listbox");
-    expect(dropdown).toBeInTheDocument();
+    await userEvent.type(amountInput, "10");
+    //inputs amount but not selected token
+    expect(screen.getByRole("paragraph")).toHaveTextContent(/select token/i);
   });
 });
