@@ -95,7 +95,9 @@ describe("Crypto form: initial load", () => {
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toBeInTheDocument();
 
-    const tokenSelector = screen.getByRole("button", { name: /select token/i });
+    const tokenSelector = screen.getByRole("button", {
+      name: /select token/i,
+    });
     expect(tokenSelector).toBeInTheDocument();
 
     const programSelector = screen.getByRole("button", {
@@ -158,5 +160,35 @@ describe("Crypto form: initial load", () => {
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
     expect(mockedSetState).toHaveBeenCalledOnce();
+  });
+
+  test("submitting empty form should show validation messages and focus first field: chain selector", async () => {
+    const init: Init = {
+      source: "bg-marketplace",
+      config: { liquidSplitPct: 50, splitDisabled: false },
+      recipient: { id: 0, name: "" },
+      mode: "live",
+    };
+
+    const state: CryptoFormStep = {
+      step: "donate-form",
+      init,
+    };
+    render(<Form {...state} />);
+
+    const continueBtn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continueBtn);
+
+    expect(screen.getByText(/please select network/i)).toBeInTheDocument();
+    //amount input
+    expect(screen.getByText(/required/i)).toBeInTheDocument();
+
+    //input is focused
+    const comboboxInput = screen.getByRole("combobox");
+    expect(comboboxInput).toHaveFocus();
+
+    //dropdown is open
+    const dropdown = screen.getByRole("listbox");
+    expect(dropdown).toBeInTheDocument();
   });
 });
