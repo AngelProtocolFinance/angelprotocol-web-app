@@ -131,6 +131,7 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         label="Donation amount"
         placeholder="Enter amount"
         classes={{ label: "font-semibold", container: "field-donate" }}
+        error={errors.amount?.message}
         required
         // validation must be dynamicly set depending on which exact currency is selected
         tooltip={createTooltip(currency.value)}
