@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import QueryLoader from "components/QueryLoader";
-import { Field, Form as FormContainer } from "components/form";
+import { Form as FormContainer, NativeField } from "components/form";
 import { bgCookies, setCookie } from "helpers/cookie";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
@@ -55,7 +55,15 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
   };
 
   const currencyKey: keyof FV = "currency";
-  const methods = useForm<FV>({
+  const {
+    control,
+    handleSubmit,
+    register,
+    setValue,
+    getValues,
+    trigger,
+    formState: { errors },
+  } = useForm<FV>({
     defaultValues: props.details || initial,
     resolver: yupResolver(
       schema<FV>({
@@ -75,7 +83,11 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
       })
     ),
   });
-  const { control, handleSubmit } = methods;
+
+  const { field: frequency } = useController<FV, "frequency">({
+    control: control,
+    name: "frequency",
+  });
 
   const { field: currency } = useController<FV, "currency">({
     control: control,
@@ -89,13 +101,16 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
 
   return (
     <FormContainer
-      methods={methods}
       onSubmit={handleSubmit((fv) =>
         setState((prev) => nextFormState(prev, { ...fv, method: "stripe" }))
       )}
       className="grid gap-4"
     >
-      <Frequency />
+      <Frequency
+        value={frequency.value}
+        onChange={frequency.onChange}
+        error={errors.frequency?.message}
+      />
       <CurrencySelector
         currencies={currencies}
         label="Currency"
@@ -111,8 +126,8 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         }}
         required
       />
-      <Field<FV>
-        name="amount"
+      <NativeField
+        {...register("amount")}
         label="Donation amount"
         placeholder="Enter amount"
         classes={{ label: "font-semibold", container: "field-donate" }}
@@ -121,7 +136,15 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         tooltip={createTooltip(currency.value)}
       />
       {currency.value.rate && (
-        <Incrementers code={currency.value.code} rate={currency.value.rate} />
+        <Incrementers
+          onIncrement={(inc) => {
+            const amntNum = Number(getValues("amount"));
+            if (Number.isNaN(amntNum)) return trigger("amount");
+            setValue("amount", `${inc + amntNum}`);
+          }}
+          code={currency.value.code}
+          rate={currency.value.rate}
+        />
       )}
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
