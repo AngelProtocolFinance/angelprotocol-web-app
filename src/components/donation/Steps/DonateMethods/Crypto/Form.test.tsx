@@ -123,7 +123,7 @@ describe("Crypto form: initial load", () => {
     expect(programSelector).toBeNull();
   });
 
-  test("submit form with initial/persisted data", () => {
+  test("submit form with initial/persisted data", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: { liquidSplitPct: 50, splitDisabled: false },
@@ -131,23 +131,23 @@ describe("Crypto form: initial load", () => {
       mode: "live",
     };
 
+    const amount = "100.33";
     const state: CryptoFormStep = {
       step: "donate-form",
       init,
       details: {
         method: "crypto",
-        token: { ...mockTokens[1], amount: "10" },
+        token: { ...mockTokens[1], amount },
         chainId: "80002",
         program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
       },
     } as const;
     render(<Form {...state} />);
-    screen.debug();
 
     const chainInput = screen.getByDisplayValue(chains["80002"].name);
     expect(chainInput).toBeInTheDocument();
 
-    const amountInput = screen.getByDisplayValue("10");
+    const amountInput = screen.getByDisplayValue(amount);
     expect(amountInput).toBeInTheDocument();
 
     const programSelector = screen.getByRole("button", {
@@ -156,8 +156,7 @@ describe("Crypto form: initial load", () => {
     expect(programSelector).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
-    userEvent.click(continueBtn);
-
-    expect(mockedSetState).toHaveBeenCalled();
+    await userEvent.click(continueBtn);
+    expect(mockedSetState).toHaveBeenCalledOnce();
   });
 });
