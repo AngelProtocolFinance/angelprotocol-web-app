@@ -61,7 +61,7 @@ export function useRhf(props: Omit<FormProps, "currencies">) {
 
   const onIncrement: OnIncrement = (inc) => {
     const amntNum = Number(getValues("amount"));
-    if (Number.isNaN(amntNum)) return trigger("amount");
+    if (Number.isNaN(amntNum)) return trigger("amount", { shouldFocus: true });
     setValue("amount", `${inc + amntNum}`);
   };
 
