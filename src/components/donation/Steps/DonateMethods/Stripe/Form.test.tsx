@@ -100,6 +100,24 @@ describe("Stripe form test", () => {
     });
     expect(programSelector).toBeInTheDocument();
   });
+  test("form is loading", () => {
+    currenciesQuery.mockReturnValueOnce({
+      refetch: () => ({}) as any,
+      data: undefined,
+      isLoading: true,
+    });
+    render(<Form step="donate-form" init={init} />);
+    expect(screen.getByText(/loading donate form/i));
+  });
+  test("failed to get currencies", () => {
+    currenciesQuery.mockReturnValueOnce({
+      refetch: () => ({}) as any,
+      isLoading: false,
+      isError: true,
+    });
+    render(<Form step="donate-form" init={init} />);
+    expect(screen.getByText(/failed to load donate form/i));
+  });
   test("blank state: program donations not allowed", () => {
     const init: Init = {
       source: "bg-marketplace",
