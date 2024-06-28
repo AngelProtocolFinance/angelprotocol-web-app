@@ -15,7 +15,6 @@ import type {
 } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency } from "types/components";
-import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
 
