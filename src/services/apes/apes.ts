@@ -18,6 +18,12 @@ import type { DetailedCurrency } from "types/components";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
 
+type StripeRequiresBankVerification = {
+  /** timestamp in seconds: only present when status ===  "requires_action"*/
+  arrivalDate?: number;
+  url?: string;
+};
+
 type StripePaymentIntentParams = FiatDonation & {
   type: "one-time" | "subscription";
 };
@@ -120,13 +126,12 @@ export const apes = createApi({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
     stripePaymentStatus: builder.query<
-      Pick<PaymentIntent, "status"> & {
-        guestDonor?: GuestDonor;
-        recipientName?: string;
-        recipientId?: number;
-        arrivalDate?: number;
-        url?: string;
-      },
+      Pick<PaymentIntent, "status"> &
+        StripeRequiresBankVerification & {
+          guestDonor?: GuestDonor;
+          recipientName?: string;
+          recipientId?: number;
+        },
       { paymentIntentId: string }
     >({
       query: ({ paymentIntentId }) => ({
