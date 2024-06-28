@@ -22,6 +22,7 @@ export default function Checkout(props: StripeCheckoutStep) {
     donor: fvDonor,
     honorary,
     init,
+    feeAllowance,
   } = props;
 
   const navigate = useNavigate();
@@ -88,8 +89,7 @@ export default function Checkout(props: StripeCheckoutStep) {
           transactionId: init.intentId,
           amount: +details.amount,
           tipAmount: tip?.value ?? 0,
-          //TODO: set
-          feeAllowance: 0,
+          feeAllowance,
           currency: details.currency.code,
           endowmentId: init.recipient.id,
           splitLiq: liquidSplitPct,

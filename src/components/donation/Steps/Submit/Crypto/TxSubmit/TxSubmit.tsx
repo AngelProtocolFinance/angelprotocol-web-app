@@ -30,6 +30,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
     donor: fvDonor,
     honorary,
     init,
+    feeAllowance,
   } = donation;
   const sender = wallet?.address;
   useEffect(() => {
@@ -57,8 +58,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       transactionId: init.intentId,
       amount: +details.token.amount,
       tipAmount: tip?.value ?? 0,
-      //TODO: set this
-      feeAllowance: 0,
+      feeAllowance,
       chainId: chains[details.chainId].id,
       chainName: chains[details.chainId].name,
       denomination: details.token.symbol,

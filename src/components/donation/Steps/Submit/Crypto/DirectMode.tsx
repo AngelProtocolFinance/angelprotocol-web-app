@@ -31,7 +31,6 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     transactionId: init.intentId,
     amount: +details.token.amount,
     tipAmount: tip?.value ?? 0,
-    //TODO: input actual
     feeAllowance,
     chainId: chains[details.chainId].id,
     chainName: chains[details.chainId].name,
