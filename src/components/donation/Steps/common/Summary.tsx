@@ -81,14 +81,24 @@ export default function Summary({
           </div>
         )}
 
-        {(locked > 0 || (props.tip && props.tip.value > 0)) && (
+        {props.feeAllowance ? (
+          <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
+            <dt className="mr-auto">Processing Fees Covered</dt>
+            <Amount classes="text-sm" amount={props.feeAllowance} />
+          </div>
+        ) : null}
+
+        {
+          //biome-ignore format:
+          (locked > 0 || (props.tip && props.tip.value > 0) || props.feeAllowance) && (
           <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
             <dt className="mr-auto text-navy-d4">
               Total {frequency === "subscription" ? "monthly " : ""}charge
             </dt>
-            <Amount amount={props.amount + (props.tip?.value ?? 0)} />
+            <Amount amount={props.amount + (props.tip?.value ?? 0) + (props.feeAllowance ?? 0)} />
           </div>
-        )}
+        )
+        }
       </dl>
       {locked > 0 && (
         <div className="flex py-3">
