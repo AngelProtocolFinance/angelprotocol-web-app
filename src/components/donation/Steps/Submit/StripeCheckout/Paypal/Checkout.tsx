@@ -88,6 +88,8 @@ export default function Checkout(props: StripeCheckoutStep) {
           transactionId: init.intentId,
           amount: +details.amount,
           tipAmount: tip?.value ?? 0,
+          //TODO: set
+          feeAllowance: 0,
           currency: details.currency.code,
           endowmentId: init.recipient.id,
           splitLiq: liquidSplitPct,

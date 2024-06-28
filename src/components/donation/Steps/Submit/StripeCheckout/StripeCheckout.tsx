@@ -37,6 +37,8 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     type: details.frequency,
     amount: +details.amount,
     tipAmount: tip?.value ?? 0,
+    //TODO: set
+    feeAllowance: 0,
     currency: details.currency.code,
     endowmentId: init.recipient.id,
     splitLiq: liquidSplitPct,

@@ -18,12 +18,21 @@ type Props = {
 export default function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
 
-  const { details, init, tip, liquidSplitPct, donor: fvDonor } = donation;
+  const {
+    details,
+    init,
+    tip,
+    liquidSplitPct,
+    donor: fvDonor,
+    coverFee,
+  } = donation;
 
   const { data: intent, ...intentState } = useCreateCryptoIntentQuery({
     transactionId: init.intentId,
     amount: +details.token.amount,
     tipAmount: tip?.value ?? 0,
+    //TODO: input actual
+    feeAllowance: coverFee ? 0 : 0,
     chainId: chains[details.chainId].id,
     chainName: chains[details.chainId].name,
     denomination: details.token.symbol,
