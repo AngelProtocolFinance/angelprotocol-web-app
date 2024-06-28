@@ -11,6 +11,7 @@ import SummaryForm from "./SummaryForm";
 export default function Summary(props: SummaryStep) {
   const { details, liquidSplitPct, donor, honorary, tip, init, coverFee } =
     props;
+
   const { setState } = useDonationState();
   const user = useGetter((state) => state.auth.user);
 
@@ -57,6 +58,8 @@ export default function Summary(props: SummaryStep) {
       <SummaryForm
         method={details.method}
         mode={init.mode}
+        coverFee={tip && tip.value > 0 ? "tipped" : coverFee ?? false}
+        nonprofitName={init.recipient.name}
         donor={
           donor || {
             lastName: userIsSignedIn(user) ? user.lastName ?? "" : "",
@@ -74,15 +77,20 @@ export default function Summary(props: SummaryStep) {
             honoraryFullName: "",
           }
         }
-        onSubmit={({ withHonorary, honoraryFullName, ...donor }) =>
+        onSubmit={({
+          withHonorary,
+          honoraryFullName,
+          coverFee: fvCoverFee,
+          ...donor
+        }) => {
           setState({
             ...props,
             step: "submit",
             donor,
             honorary: { withHonorary, honoraryFullName },
-            coverFee: coverFee ?? false,
-          })
-        }
+            coverFee: fvCoverFee,
+          });
+        }}
         classes="mt-6"
       />
     </SummaryContainer>
