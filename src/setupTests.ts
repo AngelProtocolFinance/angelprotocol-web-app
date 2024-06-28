@@ -38,3 +38,12 @@ Object.defineProperty(window, "matchMedia", {
     dispatchEvent: vi.fn(),
   }),
 });
+
+/** used by @headlessui/react */
+class ResizeObserverMock {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+global.ResizeObserver = ResizeObserverMock;
