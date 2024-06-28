@@ -16,6 +16,7 @@ export const initTokenOption: TokenWithAmount = {
   logo: "",
   min_donation_amnt: 0,
   symbol: "Select token",
+  name: "",
   token_id: "",
   coingecko_denom: "",
   type: "erc20",

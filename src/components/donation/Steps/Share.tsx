@@ -1,10 +1,9 @@
-import { BASE_URL } from "constants/env";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { useModalContext } from "contexts/ModalContext";
 import { useCallback, useState } from "react";
 import ExtLink from "../../ExtLink";
 import Icon, { type IconType } from "../../Icon";
 import Modal from "../../Modal";
-import type { DonationRecipient } from "./types";
 
 type SocialMedia = Extract<
   IconType,
@@ -19,7 +18,7 @@ const socials: [SocialMedia, number][] = [
 ];
 
 type ShareProps = {
-  recipient: DonationRecipient;
+  recipientName: string;
   className?: string;
 };
 
@@ -39,7 +38,7 @@ export default function ShareContainer(props: ShareProps) {
             key={type}
             iconSize={size}
             type={type}
-            recipient={props.recipient}
+            recipientName={props.recipientName}
           />
         ))}
       </div>
@@ -50,7 +49,7 @@ export default function ShareContainer(props: ShareProps) {
 type ShareBtnProps = {
   type: SocialMedia;
   iconSize: number;
-  recipient: DonationRecipient;
+  recipientName: string;
 };
 
 function Share(props: ShareBtnProps) {
@@ -69,7 +68,18 @@ function Share(props: ShareBtnProps) {
   );
 }
 
-function Prompt({ type, iconSize, recipient: { name } }: ShareBtnProps) {
+const handles: { [K in SocialMedia]: string } = {
+  FacebookCircle: APP_NAME,
+  /**
+   * programmatic mentions in linkedin is not possible. Mentions
+   * only work when done inside their post editor
+   */
+  Linkedin: APP_NAME,
+  Twitter: "@BetterDotGiving",
+  Telegram: "@bettergiving",
+};
+
+function Prompt({ type, iconSize, recipientName }: ShareBtnProps) {
   const { closeModal } = useModalContext();
 
   //shareText will always hold some value
@@ -95,11 +105,9 @@ function Prompt({ type, iconSize, recipient: { name } }: ShareBtnProps) {
         ref={msgRef}
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l4 rounded"
       >
-        I just donated to <span className="font-bold">{name}</span> on{" "}
-        <span className="font-bold">"@BetterDotGiving</span>!{" "}
-        {`Every gift is
-        invested to provide sustainable funding for nonprofits: Give once, give
-        forever. Help join the cause: ${BASE_URL}`}
+        I just donated to <span className="font-bold">{recipientName}</span> on{" "}
+        <span className="font-bold">{handles[type]}</span>!{" "}
+        {`Every gift is invested to provide sustainable funding for nonprofits: Give once, give forever. Help join the cause: ${BASE_URL}.`}
       </p>
       <ExtLink
         href={generateShareLink(shareText, type)}
@@ -124,7 +132,7 @@ function generateShareLink(rawText: string, type: SocialMedia) {
     /**
      * feed description is depracated
      * https://developers.facebook.com/docs/sharing/reference/feed-dialog#response
-     * must rely on OpenGraph metadata
+     * NOTE 6/3/2024: must rely on OpenGraph metadata
      */
     case "FacebookCircle":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
