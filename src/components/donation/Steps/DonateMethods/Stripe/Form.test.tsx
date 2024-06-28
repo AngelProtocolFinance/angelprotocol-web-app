@@ -1,11 +1,11 @@
 import { afterEach } from "node:test";
-import { getByRole, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import * as apes from "services/apes";
 import * as programs from "services/aws/programs";
 import type { Program } from "types/aws";
 import type { DetailedCurrency } from "types/components";
-import { afterAll, describe, expect, test, vi } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import type { Init, StripeDonationDetails } from "../../types";
 import Form from "./Form";
 
@@ -62,7 +62,7 @@ vi.mock("store/accessors", () => ({
 
 const mockSetState = vi.hoisted(() => vi.fn());
 vi.mock("../../Context", () => ({
-  useDonationState: vi.fn(() => ({ setState: mockSetState })),
+  useDonationState: vi.fn(() => ({ setState: mockSetState, state: {} })),
 }));
 
 const init: Init = {
@@ -77,7 +77,7 @@ const init: Init = {
 
 describe("Stripe form test", () => {
   afterEach(() => {
-    vi.resetAllMocks();
+    vi.restoreAllMocks();
   });
 
   test("initial state", () => {
@@ -99,9 +99,8 @@ describe("Stripe form test", () => {
       name: /general donation/i,
     });
     expect(programSelector).toBeInTheDocument();
-    screen.debug();
   });
-  test("initial state: program donations not allowed", () => {
+  test("blank state: program donations not allowed", () => {
     const init: Init = {
       source: "bg-marketplace",
       mode: "live",
@@ -118,10 +117,9 @@ describe("Stripe form test", () => {
       name: /general donation/i,
     });
     expect(programSelector).toBeNull();
-    screen.debug();
   });
 
-  test("initial state: no default currency specified", () => {
+  test("blank state: no default currency specified", () => {
     currenciesQuery.mockReturnValueOnce({
       refetch: () => ({}) as any,
       data: { currencies: mockCurrencies },
@@ -131,7 +129,7 @@ describe("Stripe form test", () => {
     expect(currencySelector).toHaveDisplayValue(/usd/i);
   });
 
-  test("form has initial state and user was able to continue", async () => {
+  test("prefilled state: user was able to continue", async () => {
     const details: StripeDonationDetails = {
       amount: "60",
       currency: defaultCurrency,
@@ -153,5 +151,55 @@ describe("Stripe form test", () => {
     await userEvent.click(continueBtn);
 
     expect(mockSetState).toHaveBeenCalledOnce();
+    mockSetState.mockReset();
+  });
+
+  test("user corrects validation errors", async () => {
+    render(<Form step="donate-form" init={init} />);
+    const continueBtn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continueBtn);
+    expect(mockSetState).not.toHaveBeenCalled();
+
+    expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
+    const amountInput = screen.getByPlaceholderText(/enter amount/i);
+    expect(amountInput).toHaveFocus();
+
+    await userEvent.type(amountInput, "abc");
+    expect(screen.getByText(/must be a number/i)).toBeInTheDocument();
+
+    await userEvent.clear(amountInput);
+    expect(screen.getByText(/please enter an amount/i)).toBeInTheDocument();
+
+    await userEvent.type(amountInput, "20");
+    expect(screen.getByText(/less than min/i)).toBeInTheDocument();
+
+    await userEvent.clear(amountInput);
+    await userEvent.type(amountInput, "50");
+    expect(screen.queryByText(/please enter an amount/i)).toBeNull();
+
+    await userEvent.click(continueBtn);
+    expect(mockSetState).toHaveBeenCalledOnce();
+    mockSetState.mockReset();
+  });
+
+  test("incrementers", async () => {
+    render(<Form step="donate-form" init={init} />);
+
+    const amountInput = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amountInput, "abc");
+
+    //user tries to increment invalid input
+    const incrementers = screen.getAllByTestId("incrementer");
+    await userEvent.click(incrementers[0]);
+    expect(screen.getByText(/must be a number/i)).toBeInTheDocument();
+    expect(amountInput).toHaveFocus();
+
+    await userEvent.clear(amountInput);
+    await userEvent.type(amountInput, "13");
+    await userEvent.click(incrementers[0]); // 50PHP * 40
+    expect(amountInput).toHaveDisplayValue("2013");
+
+    await userEvent.click(incrementers[1]); // 50PHP * 100
+    expect(amountInput).toHaveDisplayValue("7013");
   });
 });

@@ -28,6 +28,7 @@ function Incrementer({ rate, inc, code, onIncrement }: IIncrementer) {
   const roundedVal = roundDownToNum(value, 0);
   return (
     <button
+      data-testid="incrementer"
       type="button"
       className="text-sm font-medium border border-gray-l4 hover:border-gray-l3 rounded-full w-[7rem] h-10"
       onClick={() => onIncrement(roundedVal)}
