@@ -42,7 +42,6 @@ export type DonationRecord = {
   finalAmountUsd?: number;
   splitLiqPct: number;
 
-  // bank verification url
   bankVerificationUrl?: string;
 } & (
   | {
