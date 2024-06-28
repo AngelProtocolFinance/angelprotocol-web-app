@@ -80,7 +80,7 @@ export default function Table({
           </HeaderButton>
           {status === "intent" ? <></> : <>TX Hash</>}
           {status === "pending" && (
-            <span className="flex justify-center">Verify Bank Account</span>
+            <span className="flex justify-center">Action</span>
           )}
           {status === "final" && (
             <span className="flex justify-center">Receipt</span>
