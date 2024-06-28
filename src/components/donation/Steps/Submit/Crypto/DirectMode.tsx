@@ -24,7 +24,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     tip,
     liquidSplitPct,
     donor: fvDonor,
-    coverFee,
+    feeAllowance,
   } = donation;
 
   const { data: intent, ...intentState } = useCreateCryptoIntentQuery({
@@ -32,7 +32,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     amount: +details.token.amount,
     tipAmount: tip?.value ?? 0,
     //TODO: input actual
-    feeAllowance: coverFee ? 0 : 0,
+    feeAllowance,
     chainId: chains[details.chainId].id,
     chainName: chains[details.chainId].name,
     denomination: details.token.symbol,

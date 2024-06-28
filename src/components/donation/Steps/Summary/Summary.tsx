@@ -7,9 +7,10 @@ import { token } from "../common/Token";
 import { initDonorTitleOption } from "../common/constants";
 import type { SummaryStep } from "../types";
 import SummaryForm from "./SummaryForm";
+import { processingFee } from "./helpers";
 
 export default function Summary(props: SummaryStep) {
-  const { details, liquidSplitPct, donor, honorary, tip, init, coverFee } =
+  const { details, liquidSplitPct, donor, honorary, tip, init, feeAllowance } =
     props;
 
   const { setState } = useDonationState();
@@ -32,6 +33,7 @@ export default function Summary(props: SummaryStep) {
 
   return (
     <SummaryContainer
+      // feeAllowance : don't show fee allowance as it's being set in this step
       frequency={details.method === "stripe" ? details.frequency : "one-time"}
       classes="grid content-start p-4 @md/steps:p-8"
       Amount={Amount}
@@ -58,7 +60,7 @@ export default function Summary(props: SummaryStep) {
       <SummaryForm
         method={details.method}
         mode={init.mode}
-        coverFee={tip && tip.value > 0 ? "tipped" : coverFee ?? false}
+        coverFee={tip && tip.value > 0 ? "tipped" : !!feeAllowance}
         nonprofitName={init.recipient.name}
         donor={
           donor || {
@@ -83,12 +85,20 @@ export default function Summary(props: SummaryStep) {
           coverFee: fvCoverFee,
           ...donor
         }) => {
+          const feeAllowance =
+            fvCoverFee &&
+            (details.method === "crypto" || details.method === "stripe")
+              ? processingFee(
+                  amount,
+                  details.method === "stripe" ? "stripe" : details.chainId
+                )
+              : 0;
           setState({
             ...props,
             step: "submit",
             donor,
             honorary: { withHonorary, honoraryFullName },
-            coverFee: fvCoverFee,
+            feeAllowance,
           });
         }}
         classes="mt-6"

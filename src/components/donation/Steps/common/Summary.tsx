@@ -18,6 +18,7 @@ type Props = {
   amount: number;
   splitLiq: number;
   tip?: { value: number; charityName: string };
+  feeAllowance?: number;
 
   Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
   onBack(): void;
