@@ -44,9 +44,13 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
 
     setEstimate("loading");
 
-    estimateDonation(details.token, chainId, sender, tip?.value ?? 0).then(
-      (estimate) => setEstimate(estimate)
-    );
+    estimateDonation(
+      details.token,
+      chainId,
+      sender,
+      tip?.value ?? 0,
+      feeAllowance
+    ).then((estimate) => setEstimate(estimate));
   }, [sender, details, tip]);
 
   const {
