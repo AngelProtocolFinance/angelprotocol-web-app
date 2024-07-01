@@ -89,7 +89,7 @@ export const base: SupportedChain = {
   coingeckoPlatformId: "base",
   brand: "base",
   name: "Base",
-  rpc: "https://mainnet.base.org",
+  rpc: baseProxyURL + "/base",
   lcd: "",
   blockExplorer: "https://mainnet.basescan.org",
   nativeToken: {
@@ -288,7 +288,7 @@ export const baseSepolia: SupportedChain = {
   coingeckoPlatformId: base.coingeckoPlatformId,
   brand: "base",
   name: "Base Sepolia",
-  rpc: "https://sepolia.base.org",
+  rpc: baseProxyURL + "/base-test",
   lcd: "",
   blockExplorer: "https://sepolia.basescan.org",
   nativeToken: {
