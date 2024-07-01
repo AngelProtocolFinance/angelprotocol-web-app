@@ -73,7 +73,7 @@ export const optimism: SupportedChain = {
   name: "Optimism",
   rpc: "https://mainnet.optimism.io",
   lcd: "",
-  blockExplorer: "https://optimistic.etherscan.io",
+  blockExplorer: baseProxyURL + "/optimism",
   nativeToken: {
     id: "10",
     symbol: "ETH",
@@ -270,7 +270,7 @@ export const optimismSepolia: SupportedChain = {
   coingeckoPlatformId: optimism.coingeckoPlatformId,
   brand: "optimism",
   name: "Optimism Sepolia",
-  rpc: "https://sepolia.optimism.io",
+  rpc: baseProxyURL + "/optimism-sepolia",
   lcd: "",
   blockExplorer: "https://sepolia-optimistic.etherscan.io",
   nativeToken: {
