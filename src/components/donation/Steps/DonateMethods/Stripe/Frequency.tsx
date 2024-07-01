@@ -1,9 +1,8 @@
 import { Radio, RadioGroup } from "@headlessui/react";
 import Icon from "components/Icon";
-import { useController, useFormContext } from "react-hook-form";
-import type { FormValues as FV } from "./types";
+import type { FormValues } from "./types";
 
-type Freq = FV["frequency"];
+type Freq = FormValues["frequency"];
 
 const styles = {
   icon: "hidden @[21rem]/frequency:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
@@ -11,17 +10,12 @@ const styles = {
     "group border-gray-l3 rounded-lg px-2 @[21rem]/frequency:px-6 border h-[2.625rem] flex items-center justify-center @[21rem]/frequency:justify-start aria-checked:bg-[--accent-primary] aria-checked:text-white aria-checked:border-none select-none",
 };
 
-export default function Frequency() {
-  const { control } = useFormContext<FV>();
-
-  const {
-    field: { value, onChange },
-    fieldState: { error },
-  } = useController<FV, "frequency">({
-    control: control,
-    name: "frequency",
-  });
-
+interface Props {
+  value: Freq;
+  onChange: (freq: Freq) => void;
+  error?: string;
+}
+export default function Frequency({ value, onChange, error }: Props) {
   return (
     <RadioGroup
       value={value}
@@ -41,9 +35,7 @@ export default function Frequency() {
           <Icon type="Check" className={styles.icon} />
         </Radio>
       </div>
-      {error?.message && (
-        <p className="field-error static text-left mt-1">{error.message}</p>
-      )}
+      {error && <p className="field-error static text-left mt-1">{error}</p>}
       <p className="text-navy-l1 mt-3">
         <span className="text-navy-d4 font-medium">Monthly donations</span> help
         nonprofits focus on mission and long-term impact, not fundraising.
