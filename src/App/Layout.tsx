@@ -4,7 +4,7 @@ import { appRoutes } from "constants/routes";
 import ErrorBoundary from "errors/ErrorBoundary";
 import { Suspense } from "react";
 import { Outlet, useLocation } from "react-router-dom";
-import Footer from "./Footer/FooterV2";
+import Footer from "./Footer";
 import Header from "./Header";
 import { CHARITY_LINKS } from "./constants";
 import useHeaderLinks from "./useHeaderLinks";

@@ -1,40 +1,39 @@
 import { humanize, roundDownToNum } from "helpers";
-import { useFormContext } from "react-hook-form";
-import type { FormValues } from "./types";
+import type { OnIncrement } from "./types";
 
-export default function Incrementers({
-  rate,
-  code,
-}: {
+interface Props {
   rate: number;
   code: string;
-}) {
+  onIncrement: OnIncrement;
+}
+
+const increments = [40, 100, 200];
+
+export default function Incrementers(props: Props) {
   return (
     <div className="flex justify-center flex-wrap gap-3">
-      <Incrementer value={40 * rate} curr={code} />
-      <Incrementer value={100 * rate} curr={code} />
-      <Incrementer value={200 * rate} curr={code} />
+      {increments.map((inc) => (
+        <Incrementer key={inc} inc={inc} {...props} />
+      ))}
     </div>
   );
 }
 
-function Incrementer({ value, curr }: { value: number; curr: string }) {
+interface IIncrementer extends Props {
+  inc: number;
+}
+
+function Incrementer({ rate, inc, code, onIncrement }: IIncrementer) {
+  const value = rate * inc;
   const roundedVal = roundDownToNum(value, 0);
-  const { setValue, trigger, getValues } = useFormContext<FormValues>();
   return (
     <button
+      data-testid="incrementer"
       type="button"
       className="text-sm font-medium border border-gray-l4 hover:border-gray-l3 rounded-full w-[7rem] h-10"
-      onClick={() => {
-        const amount = Number(getValues("amount"));
-        if (Number.isNaN(amount)) {
-          trigger("amount");
-        } else {
-          setValue("amount", `${amount + roundedVal}`);
-        }
-      }}
+      onClick={() => onIncrement(roundedVal)}
     >
-      +{shortenHumanize(roundedVal)} {curr.toUpperCase()}
+      +{shortenHumanize(roundedVal)} {code.toUpperCase()}
     </button>
   );
 }

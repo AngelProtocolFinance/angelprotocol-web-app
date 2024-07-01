@@ -23,7 +23,9 @@ export const initTokenOption: TokenWithAmount = {
   amount: "",
 };
 
-export const usdOption: DetailedCurrency = { code: "usd", min: 1, rate: 1 };
+export const USD_CODE = "usd";
+
+export const usdOption: DetailedCurrency = { code: USD_CODE, min: 1, rate: 1 };
 
 export const initDetails = (
   methodId: DonateMethodId,

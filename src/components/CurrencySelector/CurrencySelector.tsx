@@ -1,11 +1,16 @@
-import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
+import {
+  Combobox,
+  ComboboxButton,
+  ComboboxInput,
+  Field,
+  Label,
+} from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { unpack } from "helpers";
 import { useState } from "react";
 import type { CurrencyOption } from "types/components";
 import { type QueryState, isQuery } from "types/third-party/redux";
 import { DrawerIcon } from "../Icon";
-import { Label } from "../form";
 import CurrencyOptions from "./CurrencyOptions";
 
 type Classes = {
@@ -37,25 +42,25 @@ export default function CurrencySelector<T extends CurrencyOption>({
   const style = unpack(props.classes);
 
   return (
-    <div className={`field ${style.container}`}>
+    <Field
+      disabled={props.disabled || isCurrencyLoading || isCurrencyError}
+      className={`field ${style.container}`}
+    >
       <Label
-        htmlFor="wise__currency"
-        className={style.label}
-        required={props.required}
+        className={`${style.label} label`}
+        data-required={props.required}
         aria-required={props.required}
       >
         {props.label}
       </Label>
       <Combobox
-        disabled={props.disabled || isCurrencyLoading || isCurrencyError}
-        by={"code" as any}
+        by="code"
         value={props.value}
         onChange={(val) => val && props.onChange(val)}
         as="div"
         className={`relative items-center grid grid-cols-[1fr_auto] field-container ${style.combobox}`}
       >
         <ComboboxInput
-          id="wise__currency"
           className="w-full dark:border-navy px-4 py-3.5 text-sm leading-5 focus:ring-0"
           displayValue={(currency: T) =>
             !!currency.name
@@ -90,6 +95,6 @@ export default function CurrencySelector<T extends CurrencyOption>({
           currencies={currencies}
         />
       </Combobox>
-    </div>
+    </Field>
   );
 }

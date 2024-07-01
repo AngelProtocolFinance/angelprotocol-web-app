@@ -1,25 +1,20 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import CurrencySelector from "components/CurrencySelector";
 import QueryLoader from "components/QueryLoader";
-import { Field, Form as FormContainer } from "components/form";
+import { Form as FormContainer, NativeField } from "components/form";
 import { bgCookies, setCookie } from "helpers/cookie";
-import { useController, useForm } from "react-hook-form";
-import { schema, stringNumber } from "schemas/shape";
-import { requiredString } from "schemas/string";
 import { useFiatCurrenciesQuery } from "services/apes";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
-import type { Currency, DetailedCurrency } from "types/components";
+import type { Currency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import { ProgramSelector } from "../../common/ProgramSelector";
-import { DEFAULT_PROGRAM } from "../../common/constants";
+import { USD_CODE } from "../../common/constants";
 import { nextFormState } from "../helpers";
 import Frequency from "./Frequency";
 import Incrementers from "./Incrementers";
-import type { FormValues as FV, Props } from "./types";
-
-const USD_CODE = "usd";
+import type { FormProps, Props } from "./types";
+import { useRhf } from "./useRhf";
 
 export default function Loader(props: Props) {
   const user = useGetter((state) => state.auth.user);
@@ -39,71 +34,31 @@ export default function Loader(props: Props) {
   );
 }
 
-type FormProps = Props & {
-  currencies: DetailedCurrency[];
-  defaultCurr?: DetailedCurrency;
-};
-
 function Form({ currencies, defaultCurr, ...props }: FormProps) {
   const { setState } = useDonationState();
 
-  const initial: FV = {
-    amount: "",
-    currency: defaultCurr || { code: USD_CODE, min: 1, rate: 1 },
-    frequency: "subscription",
-    program: DEFAULT_PROGRAM,
-  };
-
-  const currencyKey: keyof FV = "currency";
-  const methods = useForm<FV>({
-    defaultValues: props.details || initial,
-    resolver: yupResolver(
-      schema<FV>({
-        frequency: requiredString,
-        amount: stringNumber(
-          (s) => s.required("Please enter an amount"),
-          (n) =>
-            n
-              .positive("Amount must be greater than 0")
-              .when(currencyKey, (values, schema) => {
-                const [currency] = values as [Currency | undefined];
-                return currency?.min
-                  ? schema.min(currency.min, "less than min")
-                  : schema;
-              })
-        ),
-      })
-    ),
-  });
-  const { control, handleSubmit } = methods;
-
-  const { field: currency } = useController<FV, "currency">({
-    control: control,
-    name: "currency",
-  });
-
-  const { field: program } = useController<FV, "program">({
-    control: control,
-    name: "program",
-  });
+  const rhf = useRhf({ ...props, defaultCurr });
 
   return (
     <FormContainer
-      methods={methods}
-      onSubmit={handleSubmit((fv) =>
+      onSubmit={rhf.handleSubmit((fv) =>
         setState((prev) => nextFormState(prev, { ...fv, method: "stripe" }))
       )}
       className="grid gap-4"
     >
-      <Frequency />
+      <Frequency
+        value={rhf.frequency.value}
+        onChange={rhf.frequency.onChange}
+        error={rhf.errors.frequency?.message}
+      />
       <CurrencySelector
         currencies={currencies}
         label="Currency"
         onChange={(c) => {
           setCookie(bgCookies.prefCode, c.code.toUpperCase());
-          currency.onChange(c);
+          rhf.currency.onChange(c);
         }}
-        value={currency.value}
+        value={rhf.currency.value}
         classes={{
           label: "font-semibold",
           combobox: "field-container-donate rounded-lg",
@@ -111,25 +66,30 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         }}
         required
       />
-      <Field<FV>
-        name="amount"
+      <NativeField
+        {...rhf.register("amount")}
         label="Donation amount"
         placeholder="Enter amount"
         classes={{ label: "font-semibold", container: "field-donate" }}
+        error={rhf.errors.amount?.message}
         required
         // validation must be dynamicly set depending on which exact currency is selected
-        tooltip={createTooltip(currency.value)}
+        tooltip={createTooltip(rhf.currency.value)}
       />
-      {currency.value.rate && (
-        <Incrementers code={currency.value.code} rate={currency.value.rate} />
+      {rhf.currency.value.rate && (
+        <Incrementers
+          onIncrement={rhf.onIncrement}
+          code={rhf.currency.value.code}
+          rate={rhf.currency.value.rate}
+        />
       )}
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
         <ProgramSelector
           classes="mt-4"
           endowId={props.init.recipient.id}
-          program={program.value}
-          onChange={program.onChange}
+          program={rhf.program.value}
+          onChange={rhf.program.onChange}
         />
       )}
 
