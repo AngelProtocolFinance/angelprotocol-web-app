@@ -2265,11 +2265,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@rsbuild/plugin-node-polyfill@npm:0.5.9":
-  version: 0.5.9
-  resolution: "@rsbuild/plugin-node-polyfill@npm:0.5.9"
+"@rsbuild/plugin-node-polyfill@npm:0.7.10":
+  version: 0.7.10
+  resolution: "@rsbuild/plugin-node-polyfill@npm:0.7.10"
   dependencies:
-    "@rsbuild/shared": "npm:0.5.9"
     assert: "npm:^2.1.0"
     browserify-zlib: "npm:^0.2.0"
     buffer: "npm:^5.7.1"
@@ -2294,8 +2293,8 @@ __metadata:
     util: "npm:^0.12.5"
     vm-browserify: "npm:^1.1.2"
   peerDependencies:
-    "@rsbuild/core": ^0.5.9
-  checksum: 10/72d1c3ba072907248072e3485348218684fc69ba07f30f19cbdbd549c3093c6a7dd9820c073ae9aa1dbf74e52f56cd6a22b716c86fc78ffc26b791525a23bfd7
+    "@rsbuild/core": ^0.7.10
+  checksum: 10/40728d42a6e333df49a074622a0e908608c11324d0ad8d20850173dc40207040d34dea3650377103e648250df4218aa3955b25c0c1ff2f7cf71b222cd480b075
   languageName: node
   linkType: hard
 
@@ -4176,7 +4175,7 @@ __metadata:
     "@radix-ui/react-slider": "npm:1.1.2"
     "@reduxjs/toolkit": "npm:2.2.3"
     "@rsbuild/core": "npm:0.5.9"
-    "@rsbuild/plugin-node-polyfill": "npm:0.5.9"
+    "@rsbuild/plugin-node-polyfill": "npm:0.7.10"
     "@rsbuild/plugin-react": "npm:0.5.9"
     "@sentry/react": "npm:7.89.0"
     "@stripe/react-stripe-js": "npm:2.7.0"
