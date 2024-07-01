@@ -60,7 +60,7 @@ export default function Summary(props: SummaryStep) {
       <SummaryForm
         method={details.method}
         mode={init.mode}
-        coverFee={tip && tip.value > 0 ? "tipped" : !!feeAllowance}
+        coverFee={!!feeAllowance}
         nonprofitName={init.recipient.name}
         donor={
           donor || {

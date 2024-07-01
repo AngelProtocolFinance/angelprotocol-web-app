@@ -16,7 +16,7 @@ type Props = {
   classes?: string;
   donor: FormDonor;
   honorary: Honorary;
-  coverFee: boolean | "tipped"; //user already tipped
+  coverFee: boolean;
   nonprofitName: string;
   mode: Mode;
   method: DonateMethodId;
@@ -45,7 +45,7 @@ export default function SummaryForm({
     defaultValues: {
       ...donor,
       ...honorary,
-      coverFee: coverFee === "tipped" ? false : coverFee,
+      coverFee,
     },
     resolver: yupResolver(
       schema<FV>({
@@ -115,15 +115,14 @@ export default function SummaryForm({
         }}
         required
       />
-      {coverFee !== "tipped" &&
-        (method === "crypto" || method === "stripe") && (
-          <CheckField<FV> name="coverFee" classes="col-span-full">
-            Cover payment processing fees for your donation{" "}
-            <span className="text-navy-l1 text-sm">
-              (&nbsp;{nonprofitName} receives the full amount&nbsp;)
-            </span>
-          </CheckField>
-        )}
+      {coverFee && (method === "crypto" || method === "stripe") && (
+        <CheckField<FV> name="coverFee" classes="col-span-full">
+          Cover payment processing fees for your donation{" "}
+          <span className="text-navy-l1 text-sm">
+            (&nbsp;{nonprofitName} receives the full amount&nbsp;)
+          </span>
+        </CheckField>
+      )}
       {method !== "crypto" && (
         <CheckField<FV> name="ukTaxResident" classes="col-span-full">
           UK Taxpayer? Supercharge your donation with gift aid
