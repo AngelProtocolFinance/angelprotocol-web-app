@@ -7,8 +7,9 @@ import type {
   UnsupportedChains,
 } from "types/chain";
 import { IS_TEST } from "./env";
+import { APIs } from "./urls";
 
-const baseProxyURL = "https://59vigz9r91.execute-api.us-east-1.amazonaws.com";
+const baseProxyURL = APIs.nodeProxy;
 
 //mainnets
 export const polygon: SupportedChain = {
@@ -197,7 +198,7 @@ export const terraMainnet: SupportedChain = {
   coingeckoPlatformId: "terra",
   brand: "terra",
   name: "Terra",
-  lcd: "https://phoenix-lcd.terra.dev",
+  lcd: baseProxyURL + "/terra/lcd/main",
   rpc: "",
   blockExplorer: "https://finder.terra.money/mainnet",
   nativeToken: {
@@ -324,7 +325,7 @@ export const terraTestnet: SupportedChain = {
   coingeckoPlatformId: terraMainnet.coingeckoPlatformId,
   brand: "terra",
   name: "Terra Pisco",
-  lcd: "https://pisco-lcd.terra.dev",
+  lcd: baseProxyURL + "/terra/lcd/test",
   rpc: "",
   blockExplorer: "https://finder.terra.money/testnet",
   nativeToken: {
