@@ -206,47 +206,12 @@
   .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
   }
-}
-
-/* WORDPRESS-ONLY Components */
-@layer components {
-  .wp-post h5,
-  .wp-post h6 {
-    @apply my-4 mb-2 text-pretty;
-  }
-
-  .wp-post p {
-    @apply my-3;
-  }
-
-  .wp-post .elementor-widget-container {
-    @apply my-4;
-  }
-
-  .wp-post ul {
-    @apply pl-4;
-  }
-  .wp-post ul li {
-    @apply my-2;
-  }
-
-  .wp-post figure {
-    @apply my-6;
-  }
-
-  .wp-post img:not(figure img) {
-    @apply my-6;
-  }
-
-  .wp-post figure figcaption {
-    @apply text-sm mt-2;
-  }
-
-  .wp-post > p {
-    @apply mt-0 mb-4;
-  }
-
-  .wp-post a {
-    @apply text-blue-d1 hover:underline;
+  
+  /** tailwind classes of children of this wrapper can still override this styles */
+  .override-wp-overrides {
+    @apply [&_*]:font-body [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_h4]:font-heading [&_h5]:font-heading [&_h6]:font-heading [&_a]:text-navy-d4
   }
 }
+
+
+
