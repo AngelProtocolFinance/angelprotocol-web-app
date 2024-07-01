@@ -18,7 +18,7 @@ export async function sendCosmosTx(
   doc: SignDoc,
   sign: Keplr["signDirect"]
 ): Promise<TxResult> {
-  const { lcd } = chains[chainID];
+  const { nodeUrl } = chains[chainID];
   const { signature, signed } = await sign(chainID, sender, doc);
 
   const tx: TxRaw = {
@@ -27,7 +27,7 @@ export async function sendCosmosTx(
     signatures: [u8aFromBase64(signature.signature)],
   };
 
-  const result = await fetch(lcd + "/cosmos/tx/v1beta1/txs", {
+  const result = await fetch(nodeUrl + "/cosmos/tx/v1beta1/txs", {
     method: "POST",
     body: JSON.stringify({
       tx_bytes: base64FromU8a(TxRaw.encode(tx).finish()),
@@ -48,7 +48,7 @@ export async function sendCosmosTx(
   }
 
   const receipt = await _receipt(
-    lcd + `/cosmos/tx/v1beta1/txs/${txhash}`,
+    nodeUrl + `/cosmos/tx/v1beta1/txs/${txhash}`,
     10,
     txhash,
     chainID

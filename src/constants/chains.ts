@@ -18,8 +18,7 @@ export const polygon: SupportedChain = {
   coingeckoPlatformId: "polygon-pos",
   brand: "polygon",
   name: "Polygon",
-  rpc: baseProxyURL + "/polygon",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/polygon",
   blockExplorer: "https://polygonscan.com",
   nativeToken: {
     id: "137",
@@ -36,8 +35,7 @@ export const ethereum: SupportedChain = {
   coingeckoPlatformId: "ethereum",
   brand: "ethereum",
   name: "Ethereum",
-  rpc: baseProxyURL + "/ethereum",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/ethereum",
   blockExplorer: "https://etherscan.io",
   nativeToken: {
     id: "1",
@@ -54,8 +52,7 @@ export const arbitrum: SupportedChain = {
   coingeckoPlatformId: "arbitrum-one",
   brand: "arbitrum",
   name: "Arbitrum One",
-  rpc: baseProxyURL + "/arbitrum",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/arbitrum",
   blockExplorer: "https://arbiscan.io",
   nativeToken: {
     id: "42161",
@@ -72,8 +69,7 @@ export const optimism: SupportedChain = {
   coingeckoPlatformId: "optimistic-ethereum",
   brand: "optimism",
   name: "Optimism",
-  rpc: baseProxyURL + "/optimism",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/optimism",
   blockExplorer: "https://optimistic.etherscan.io",
   nativeToken: {
     id: "10",
@@ -90,8 +86,7 @@ export const base: SupportedChain = {
   coingeckoPlatformId: "base",
   brand: "base",
   name: "Base",
-  rpc: baseProxyURL + "/base",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/base",
   blockExplorer: "https://mainnet.basescan.org",
   nativeToken: {
     id: "8453",
@@ -108,8 +103,7 @@ export const binance: SupportedChain = {
   coingeckoPlatformId: "binance-smart-chain",
   brand: "binance",
   name: "Binance",
-  rpc: baseProxyURL + "/bsc",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/bsc",
   blockExplorer: "https://bscscan.com",
   nativeToken: {
     id: "56",
@@ -126,8 +120,7 @@ export const juno: SupportedChain = {
   coingeckoPlatformId: "juno",
   brand: "juno",
   name: "Juno",
-  lcd: "https://juno-api.polkachu.com",
-  rpc: "https://juno-rpc.polkachu.com",
+  nodeUrl: baseProxyURL + "/juno",
   blockExplorer: "https://www.mintscan.io/juno",
   nativeToken: {
     id: "ujuno",
@@ -144,8 +137,7 @@ export const stargaze: SupportedChain = {
   coingeckoPlatformId: "stargaze",
   brand: "stargaze",
   name: "Stargaze",
-  lcd: "https://stargaze-rest.publicnode.com",
-  rpc: "https://stargaze-rpc.publicnode.com:443",
+  nodeUrl: baseProxyURL + "/stargaze",
   blockExplorer: "https://www.mintscan.io/stargaze",
   nativeToken: {
     id: "ustars",
@@ -162,8 +154,7 @@ export const kujira: SupportedChain = {
   coingeckoPlatformId: "kujira",
   brand: "kujira",
   name: "Kujira",
-  lcd: "https://kujira-rpc.publicnode.com",
-  rpc: "https://kujira-rpc.publicnode.com:443",
+  nodeUrl: "https://kujira-rpc.publicnode.com",
   blockExplorer: "https://finder.kujira.network/kaiyo-1",
   nativeToken: {
     id: "ukuji",
@@ -180,8 +171,7 @@ export const osmosis: SupportedChain = {
   coingeckoPlatformId: "osmosis",
   brand: "osmosis",
   name: "Osmosis",
-  lcd: "https://lcd.osmosis.zone",
-  rpc: "https://rpc.osmosis.zone:443",
+  nodeUrl: "https://lcd.osmosis.zone",
   blockExplorer: "https://www.mintscan.io/osmosis",
   nativeToken: {
     id: "uosmo",
@@ -198,8 +188,7 @@ export const terraMainnet: SupportedChain = {
   coingeckoPlatformId: "terra",
   brand: "terra",
   name: "Terra",
-  lcd: baseProxyURL + "/terra/lcd/main",
-  rpc: "",
+  nodeUrl: baseProxyURL + "/terra/lcd/main",
   blockExplorer: "https://finder.terra.money/mainnet",
   nativeToken: {
     id: "uluna",
@@ -217,8 +206,7 @@ export const polygonAmoy: SupportedChain = {
   brand: "polygonAmoy",
   coingeckoPlatformId: polygon.coingeckoPlatformId,
   name: "Polygon Amoy Testnet",
-  rpc: baseProxyURL + "/polygonAmoy",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/polygonAmoy",
   blockExplorer: "https://amoy.polygonscan.com",
   nativeToken: {
     id: "80002",
@@ -235,8 +223,7 @@ export const sepolia: SupportedChain = {
   coingeckoPlatformId: ethereum.coingeckoPlatformId,
   brand: "sepolia",
   name: "Ethereum Sepolia",
-  rpc: baseProxyURL + "/sepolia",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/sepolia",
   blockExplorer: "https://sepolia.etherscan.io",
   nativeToken: {
     id: "11155111",
@@ -253,8 +240,7 @@ export const arbitrumSepolia: SupportedChain = {
   coingeckoPlatformId: arbitrum.coingeckoPlatformId,
   brand: "arbitrum",
   name: "Arbitrum Sepolia",
-  rpc: baseProxyURL + "/arbitrum-test",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/arbitrum-test",
   blockExplorer: "https://sepolia.arbiscan.io",
   nativeToken: {
     id: "421614",
@@ -271,8 +257,7 @@ export const optimismSepolia: SupportedChain = {
   coingeckoPlatformId: optimism.coingeckoPlatformId,
   brand: "optimism",
   name: "Optimism Sepolia",
-  rpc: baseProxyURL + "/optimism-test",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/optimism-test",
   blockExplorer: "https://sepolia-optimistic.etherscan.io",
   nativeToken: {
     id: "11155420",
@@ -289,8 +274,7 @@ export const baseSepolia: SupportedChain = {
   coingeckoPlatformId: base.coingeckoPlatformId,
   brand: "base",
   name: "Base Sepolia",
-  rpc: baseProxyURL + "/base-test",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/base-test",
   blockExplorer: "https://sepolia.basescan.org",
   nativeToken: {
     id: "84532",
@@ -307,8 +291,7 @@ export const binanceTestnet: SupportedChain = {
   coingeckoPlatformId: binance.coingeckoPlatformId,
   brand: "binance",
   name: "Binance Testnet",
-  rpc: baseProxyURL + "/bsc-test",
-  lcd: "",
+  nodeUrl: baseProxyURL + "/bsc-test",
   blockExplorer: "https://testnet.bscscan.com",
   nativeToken: {
     id: "97",
@@ -325,8 +308,7 @@ export const terraTestnet: SupportedChain = {
   coingeckoPlatformId: terraMainnet.coingeckoPlatformId,
   brand: "terra",
   name: "Terra Pisco",
-  lcd: baseProxyURL + "/terra/lcd/test",
-  rpc: "",
+  nodeUrl: baseProxyURL + "/terra/lcd/test",
   blockExplorer: "https://finder.terra.money/testnet",
   nativeToken: {
     id: "uluna",
@@ -343,8 +325,7 @@ export const stargazeTestnet: SupportedChain = {
   brand: "stargaze",
   coingeckoPlatformId: stargaze.coingeckoPlatformId,
   name: "Stargaze Testnet",
-  lcd: "https://rest.elgafar-1.stargaze-apis.com",
-  rpc: "https://rpc.elgafar-1.stargaze-apis.com",
+  nodeUrl: baseProxyURL + "/stargaze-test",
   blockExplorer: "https://www.mintscan.io/stargaze",
   nativeToken: {
     id: "ustars",
@@ -361,8 +342,7 @@ export const kujiraTestnet: SupportedChain = {
   coingeckoPlatformId: kujira.coingeckoPlatformId,
   brand: "kujira",
   name: "Kujira Testnet",
-  lcd: "https://test-lcd-kujira.mintthemoon.xyz",
-  rpc: "https://rpc-kujira.mintthemoon.xyz",
+  nodeUrl: "https://test-lcd-kujira.mintthemoon.xyz",
   blockExplorer: "https://finder.kujira.network/harpoon-4",
   nativeToken: {
     id: "ukuji",
@@ -379,8 +359,7 @@ export const osmosisTestnet: SupportedChain = {
   coingeckoPlatformId: "osmosis",
   brand: "osmosis",
   name: "Osmosis Testnet",
-  lcd: "https://lcd.testnet.osmosis.zone",
-  rpc: "https://rpc.testnet.osmosis.zone",
+  nodeUrl: "https://lcd.testnet.osmosis.zone",
   blockExplorer: "https://www.mintscan.io/osmosis",
   nativeToken: {
     id: "uosmo",
