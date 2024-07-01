@@ -41,6 +41,8 @@ export type DonationRecord = {
   initAmountUsd?: number;
   finalAmountUsd?: number;
   splitLiqPct: number;
+
+  bankVerificationUrl?: string;
 } & (
   | {
       //medium

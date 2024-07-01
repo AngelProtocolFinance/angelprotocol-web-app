@@ -3,6 +3,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
+import ExtLink from "components/ExtLink";
 import Icon, { DrawerIcon } from "components/Icon";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
@@ -80,6 +81,16 @@ export default function MobileTable({
                   </Row>
                 ) : (
                   <Row title="TX Hash">{row.id}</Row>
+                )}
+                {status === "pending" && (
+                  <Row title="Action" className="rounded-b">
+                    <ExtLink
+                      href={row.bankVerificationUrl}
+                      className="btn-blue px-3 py-1 text-xs"
+                    >
+                      Verify Bank Account
+                    </ExtLink>
+                  </Row>
                 )}
                 {status === "final" && (
                   <Row title="Receipt" className="rounded-b">

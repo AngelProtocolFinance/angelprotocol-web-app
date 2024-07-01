@@ -1,4 +1,4 @@
-import { BASE_URL, ENVIRONMENT, IS_TEST } from "./env";
+import { BASE_URL, ENVIRONMENT } from "./env";
 
 export const APIs = {
   aws: "https://ap-api.better.giving",
