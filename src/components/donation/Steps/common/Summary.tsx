@@ -37,6 +37,9 @@ export default function Summary({
   const liq = props.amount * (props.splitLiq / 100);
   const locked = props.amount - liq;
 
+  const tipValue = props.tip?.value ?? 0;
+  const oneTimeTip = frequency === "subscription" ? 0 : tipValue;
+
   return (
     <div className={container}>
       <BackBtn type="button" onClick={props.onBack} />
@@ -47,14 +50,13 @@ export default function Summary({
       {props.preSplitContent}
 
       <dl
-        className={`text-navy-l1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 ${splitClass}`}
+        className={`group text-navy-l1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 ${splitClass}`}
       >
         <dt className="mr-auto text-navy-d4">
-          {props.tip && props.tip.value > 0
+          {props.tip && tipValue > 0
             ? `Donation for ${props.tip.charityName}`
-            : "Total donation"}
+            : `Total donation`}
         </dt>
-
         <Amount amount={props.amount} classes="text-navy-d4" />
 
         {locked > 0 && (
@@ -67,17 +69,17 @@ export default function Summary({
           </div>
         )}
 
-        {locked > 0 && (
+        {locked > 0 && ( //show 0 liquid even if 100% locked
           <div className="flex items-center justify-between col-span-full">
             <dt className="mr-auto text-sm">Direct Donation</dt>
             <Amount classes="text-sm" amount={liq} />
           </div>
         )}
 
-        {props.tip && props.tip.value > 0 && (
+        {tipValue > 0 && (
           <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
             <dt className="mr-auto">Donation for Better Giving</dt>
-            <Amount classes="text-sm" amount={props.tip.value} />
+            <Amount classes="text-sm" amount={tipValue} />
           </div>
         )}
 
@@ -88,17 +90,14 @@ export default function Summary({
           </div>
         ) : null}
 
-        {
-          //biome-ignore format:
-          (locked > 0 || (props.tip && props.tip.value > 0) || props.feeAllowance) && (
-          <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
-            <dt className="mr-auto text-navy-d4">
-              Total {frequency === "subscription" ? "monthly " : ""}charge
-            </dt>
-            <Amount amount={props.amount + (props.tip?.value ?? 0) + (props.feeAllowance ?? 0)} />
-          </div>
-        )
-        }
+        <div className="grid col-span-full grid-cols-[1fr_auto] pt-1 font-medium">
+          <dt className="mr-auto text-navy-d4">
+            Total {frequency === "subscription" ? "monthly " : ""}charge
+          </dt>
+          <Amount
+            amount={props.amount + oneTimeTip + (props.feeAllowance ?? 0)}
+          />
+        </div>
       </dl>
       {locked > 0 && (
         <div className="flex py-3">
