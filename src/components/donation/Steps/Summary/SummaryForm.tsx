@@ -115,7 +115,7 @@ export default function SummaryForm({
         }}
         required
       />
-      {coverFee && (method === "crypto" || method === "stripe") && (
+      {(method === "crypto" || method === "stripe") && (
         <CheckField<FV> name="coverFee" classes="col-span-full">
           Cover payment processing fees for your donation{" "}
           <span className="text-navy-l1 text-sm">
