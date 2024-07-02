@@ -112,16 +112,19 @@ export type FormDonor = Pick<Donor, "email" | "firstName" | "lastName"> & {
   streetAddress: string;
 };
 
+export type TributeNotif = {
+  toFullName: string;
+  toEmail: string;
+  /** may be empty */
+  fromMsg: string;
+};
+
 export type Honorary = {
   withHonorary: boolean;
   /** initially empty `''` */
   honoraryFullName: string;
   withTributeNotif: boolean;
-  tributeNotif: {
-    toFullName: string;
-    toEmail: string;
-    fromMsg: string;
-  };
+  tributeNotif: TributeNotif;
 };
 
 export type SummaryStep = {

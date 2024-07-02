@@ -38,6 +38,13 @@ export type ReceiptPayload = {
   transactionId: string; // tx hash
 };
 
+export type TributeNotif = {
+  toFullName: string;
+  toEmail: string;
+  /** may be empty */
+  fromMsg: string;
+};
+
 export type CryptoDonation = {
   transactionId?: string;
   programId?: string;
@@ -56,6 +63,7 @@ export type CryptoDonation = {
   donor: Donor;
   /** honorary full name - may be empty `""` */
   inHonorOf?: string;
+  tributeNotif?: TributeNotif;
 };
 
 export type FiatDonation = {
@@ -72,6 +80,7 @@ export type FiatDonation = {
   source: DonationSource;
   /** honorary full name - may be empty `""` */
   inHonorOf?: string;
+  tributeNotif?: TributeNotif;
 };
 
 export type DonationIntent =
