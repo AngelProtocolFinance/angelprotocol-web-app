@@ -91,7 +91,6 @@ export const NativeField = forwardRef(_Field) as typeof _Field;
 export function Field<T extends FieldValues, K extends InputType = InputType>({
   name,
   disabled,
-  type,
   ...rest
 }: Omit<Props<K>, "name"> & { name: Path<T> }) {
   const {
