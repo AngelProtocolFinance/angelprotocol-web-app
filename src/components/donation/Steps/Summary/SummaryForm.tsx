@@ -4,7 +4,7 @@ import { CheckField, Field, Form, Label } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import type { DonateMethodId } from "types/lists";
-import { string } from "yup";
+import { mixed, object, string } from "yup";
 import ContinueBtn from "../common/ContinueBtn";
 import { initDonorTitleOption } from "../common/constants";
 import type { FormDonor, Honorary, Mode } from "../types";
@@ -21,6 +21,7 @@ type Props = {
 };
 const ukTaxResidentKey: keyof FV = "ukTaxResident";
 const withHonoraryKey: keyof FV = "withHonorary";
+const withTributeNotifKey: keyof FV = "withTributeNotif";
 const titleOptions: FV["title"][] = [
   initDonorTitleOption,
   { label: "Mr", value: "Mr" },
@@ -58,6 +59,16 @@ export default function SummaryForm({
           const [withHonorary] = values as [boolean];
           return withHonorary ? schema.required("required") : schema;
         }),
+        tributeNotif: mixed().when(withTributeNotifKey, (values, obj) => {
+          const [withTributeNotif] = values as [boolean];
+          return !withTributeNotif
+            ? obj.optional()
+            : schema<FV["tributeNotif"]>({
+                toFullName: string().required("required"),
+                toEmail: string().required("required").email("invalid email"),
+                fromMsg: string().max(250, "must be less than 250 characters"),
+              });
+        }),
       })
     ),
   });
@@ -71,15 +82,15 @@ export default function SummaryForm({
     <Form
       methods={methods}
       onSubmit={handleSubmit(onSubmit)}
-      className={`grid grid-cols-2 gap-4 ${classes}`}
+      className={`grid grid-cols-2 gap-x-4 ${classes}`}
     >
-      <Label className="-mb-2 text-base font-medium">Title</Label>
+      <Label className="mb-2 text-base font-medium">Title</Label>
       <Selector<FV, "title", string>
         name="title"
         options={titleOptions}
         classes={{
           button: "field-input-donate",
-          container: "col-span-full",
+          container: "col-span-full mb-4",
         }}
       />
       <Field<FV>
@@ -96,7 +107,7 @@ export default function SummaryForm({
         name="lastName"
         label=""
         placeholder="Last Name"
-        classes={{ container: "field-donate" }}
+        classes={{ container: "field-donate mb-4" }}
       />
       <Field<FV>
         name="email"
@@ -104,40 +115,39 @@ export default function SummaryForm({
         placeholder="Email address"
         classes={{
           label: "font-medium text-base",
-          container: "col-span-full field-donate",
+          container: "col-span-full field-donate mb-4",
         }}
         required
       />
       {method !== "crypto" && (
-        <CheckField<FV> name="ukTaxResident" classes="col-span-full mt-4">
+        <CheckField<FV> name="ukTaxResident" classes="col-span-full">
           UK Taxpayer? Supercharge your donation with gift aid
         </CheckField>
       )}
       {ukTaxResident && (
-        <>
+        <div className="grid col-span-full gap-y-4 mt-2 mb-6">
           <Field<FV>
             name="streetAddress"
             label="House number"
             placeholder="e.g. 100 Better Giving Rd"
-            classes={{ container: "col-span-full field-donate" }}
+            classes={{ container: "field-donate" }}
             required
           />
           <Field<FV>
             name="zipCode"
             label="Postal code"
             placeholder="e.g. BG21 1BG"
-            classes={{ container: "col-span-full field-donate" }}
+            classes={{ container: "field-donate" }}
             required
           />
-        </>
+        </div>
       )}
-
       <CheckField<FV> name="withHonorary" classes="col-span-full mt-4">
         Dedicate my donation
       </CheckField>
 
       {withHonorary && (
-        <div className="col-span-full p-4 bg-blue-l5 rounded">
+        <div className="col-span-full p-4 bg-blue-l5 rounded-lg mt-2 shadow-inner">
           <Field<FV>
             name="honoraryFullName"
             label="Honoree's name"
@@ -147,13 +157,13 @@ export default function SummaryForm({
           />
           <CheckField<FV>
             name="withTributeNotif"
-            classes="col-span-full mt-2 text-sm"
+            classes="col-span-full mt-3 text-sm"
           >
             Notify someone about this tribute
           </CheckField>
 
           {withTributeNotif && (
-            <div className="grid gap-y-3 mt-4 rounded p-4 bg-white">
+            <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
               <Field<FV>
                 name="tributeNotif.toFullName"
                 label="Recipient name"
@@ -164,7 +174,7 @@ export default function SummaryForm({
               <Field<FV>
                 name="tributeNotif.toEmail"
                 label="Email address"
-                placeholder="e.g. Jane Doe"
+                placeholder="e.g. janedoe@better.giving"
                 classes="field-donate [&_label]:text-sm [&_input]:text-sm"
                 required
               />
@@ -173,7 +183,10 @@ export default function SummaryForm({
                 name="tributeNotif.fromMsg"
                 label="Custom message"
                 placeholder="Message to recipient"
-                classes="field-donate [&_label]:text-sm [&_input]:text-sm"
+                classes={{
+                  container: "field-donate [&_label]:text-sm [&_input]:text-sm",
+                  input: "supports-[field-sizing]:[field-sizing:content]",
+                }}
                 required={false}
               />
             </div>
