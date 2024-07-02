@@ -4,7 +4,7 @@ import { CheckField, Field, Form, Label } from "components/form";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import type { DonateMethodId } from "types/lists";
-import { mixed, object, string } from "yup";
+import { mixed, string } from "yup";
 import ContinueBtn from "../common/ContinueBtn";
 import { initDonorTitleOption } from "../common/constants";
 import type { FormDonor, Honorary, Mode } from "../types";
