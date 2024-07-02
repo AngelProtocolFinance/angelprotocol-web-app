@@ -4,7 +4,7 @@ import { useDonationState } from "../Context";
 import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
-import { initDonorTitleOption } from "../common/constants";
+import { initDonorTitleOption, initTributeNotif } from "../common/constants";
 import type { SummaryStep } from "../types";
 import SummaryForm from "./SummaryForm";
 
@@ -72,14 +72,27 @@ export default function Summary(props: SummaryStep) {
           honorary || {
             withHonorary: false,
             honoraryFullName: "",
+            withTributeNotif: false,
+            tributeNotif: initTributeNotif,
           }
         }
-        onSubmit={({ withHonorary, honoraryFullName, ...donor }) =>
+        onSubmit={({
+          withHonorary,
+          honoraryFullName,
+          withTributeNotif,
+          tributeNotif,
+          ...donor
+        }) =>
           setState({
             ...props,
             step: "submit",
             donor,
-            honorary: { withHonorary, honoraryFullName },
+            honorary: {
+              withHonorary,
+              honoraryFullName,
+              withTributeNotif,
+              tributeNotif,
+            },
           })
         }
         classes="mt-6"
