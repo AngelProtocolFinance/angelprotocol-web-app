@@ -12,21 +12,21 @@ export async function estimateEVMFee(
   sender: string,
   tx: SimulTx
 ): Promise<EstimateResult> {
-  const { rpc, nativeToken } = chains[chainID];
+  const { nodeUrl, nativeToken } = chains[chainID];
   const [nonce, gas, gasPrice] = await Promise.all([
     request({
       method: EIPMethods.eth_getTransactionCount,
       params: [sender, "latest"],
-      rpcURL: rpc,
+      rpcURL: nodeUrl,
     }),
     request({
       method: EIPMethods.eth_estimateGas,
       params: [tx],
-      rpcURL: rpc,
+      rpcURL: nodeUrl,
     }),
     request({
       method: EIPMethods.eth_gasPrice,
-      rpcURL: rpc,
+      rpcURL: nodeUrl,
     }),
   ]);
 

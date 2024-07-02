@@ -87,7 +87,7 @@ export default function useInjectedWallet(
                     symbol: chain.nativeToken.symbol,
                     decimals: chain.nativeToken.decimals,
                   },
-                  rpcUrls: [chain.rpc],
+                  rpcUrls: [chain.nodeUrl],
                   blockExplorerUrls: [chain.blockExplorer],
                 },
               ],
