@@ -69,8 +69,8 @@ export type SupportedChain = {
   coingeckoPlatformId: string;
   brand: string; //
   name: string;
-  rpc: string;
-  lcd: string;
+  /** evm: rpc, cosmos: lcd */
+  nodeUrl: string;
   blockExplorer: string;
   nativeToken: {
     id: ChainID | NativeAtomicUnit | IBCDenom;

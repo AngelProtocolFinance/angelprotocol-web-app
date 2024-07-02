@@ -3,7 +3,8 @@ import { BASE_URL, ENVIRONMENT } from "./env";
 export const APIs = {
   aws: "https://ap-api.better.giving",
   apes: `https://apes-api.better.giving/${ENVIRONMENT}`,
-  wordpress: `https://wp-blog.better.giving/wp-json/wp/v2`,
+  wordpress: "https://wp-blog.better.giving/wp-json/wp/v2",
+  nodeProxy: "https://59vigz9r91.execute-api.us-east-1.amazonaws.com",
 };
 
 export const LITEPAPER = `${BASE_URL}/docs/litepaper-introduction/`;
