@@ -72,14 +72,31 @@ export default function Summary(props: SummaryStep) {
           honorary || {
             withHonorary: false,
             honoraryFullName: "",
+            withTributeNotif: false,
+            tributeNotif: {
+              toEmail: "",
+              toFullName: "",
+              fromMsg: "",
+            },
           }
         }
-        onSubmit={({ withHonorary, honoraryFullName, ...donor }) =>
+        onSubmit={({
+          withHonorary,
+          honoraryFullName,
+          withTributeNotif,
+          tributeNotif,
+          ...donor
+        }) =>
           setState({
             ...props,
             step: "submit",
             donor,
-            honorary: { withHonorary, honoraryFullName },
+            honorary: {
+              withHonorary,
+              honoraryFullName,
+              withTributeNotif,
+              tributeNotif,
+            },
           })
         }
         classes="mt-6"

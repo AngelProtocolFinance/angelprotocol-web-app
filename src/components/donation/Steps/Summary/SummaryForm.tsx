@@ -65,6 +65,7 @@ export default function SummaryForm({
   const { handleSubmit, watch } = methods;
   const ukTaxResident = watch("ukTaxResident");
   const withHonorary = watch("withHonorary");
+  const withTributeNotif = watch("withTributeNotif");
 
   return (
     <Form
@@ -132,17 +133,52 @@ export default function SummaryForm({
       )}
 
       <CheckField<FV> name="withHonorary" classes="col-span-full mt-4">
-        Donating in honor of someone?
+        Dedicate my donation
       </CheckField>
 
       {withHonorary && (
-        <Field<FV>
-          name="honoraryFullName"
-          label="In Honor Of"
-          placeholder="e.g. Jane Doe"
-          classes={{ container: "col-span-full field-donate" }}
-          required
-        />
+        <div className="col-span-full p-4 bg-blue-l5 rounded">
+          <Field<FV>
+            name="honoraryFullName"
+            label="Honoree's name"
+            placeholder="e.g. Jane Doe"
+            classes="w-full field-donate [&_input]:bg-white"
+            required
+          />
+          <CheckField<FV>
+            name="withTributeNotif"
+            classes="col-span-full mt-2 text-sm"
+          >
+            Notify someone about this tribute
+          </CheckField>
+
+          {withTributeNotif && (
+            <div className="grid gap-y-3 mt-4 rounded p-4 bg-white">
+              <Field<FV>
+                name="tributeNotif.toFullName"
+                label="Recipient name"
+                placeholder="e.g. Jane Doe"
+                classes="field-donate [&_label]:text-sm [&_input]:text-sm"
+                required
+              />
+              <Field<FV>
+                name="tributeNotif.toEmail"
+                label="Email address"
+                placeholder="e.g. Jane Doe"
+                classes="field-donate [&_label]:text-sm [&_input]:text-sm"
+                required
+              />
+              <Field<FV, "textarea">
+                type="textarea"
+                name="tributeNotif.fromMsg"
+                label="Custom message"
+                placeholder="Message to recipient"
+                classes="field-donate [&_label]:text-sm [&_input]:text-sm"
+                required={false}
+              />
+            </div>
+          )}
+        </div>
       )}
       <ContinueBtn
         type="submit"

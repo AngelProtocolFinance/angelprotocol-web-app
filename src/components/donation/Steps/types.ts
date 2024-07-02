@@ -116,6 +116,12 @@ export type Honorary = {
   withHonorary: boolean;
   /** initially empty `''` */
   honoraryFullName: string;
+  withTributeNotif: boolean;
+  tributeNotif: {
+    toFullName: string;
+    toEmail: string;
+    fromMsg: string;
+  };
 };
 
 export type SummaryStep = {
