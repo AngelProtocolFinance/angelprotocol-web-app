@@ -188,7 +188,7 @@ export const terraMainnet: SupportedChain = {
   coingeckoPlatformId: "terra",
   brand: "terra",
   name: "Terra",
-  nodeUrl: baseProxyURL + "/terra/lcd/main",
+  nodeUrl: baseProxyURL + "/terra",
   blockExplorer: "https://finder.terra.money/mainnet",
   nativeToken: {
     id: "uluna",
@@ -308,7 +308,7 @@ export const terraTestnet: SupportedChain = {
   coingeckoPlatformId: terraMainnet.coingeckoPlatformId,
   brand: "terra",
   name: "Terra Pisco",
-  nodeUrl: baseProxyURL + "/terra/lcd/test",
+  nodeUrl: baseProxyURL + "/terra-test",
   blockExplorer: "https://finder.terra.money/testnet",
   nativeToken: {
     id: "uluna",
