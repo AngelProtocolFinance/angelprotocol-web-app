@@ -154,7 +154,7 @@ export const kujira: SupportedChain = {
   coingeckoPlatformId: "kujira",
   brand: "kujira",
   name: "Kujira",
-  nodeUrl: "https://kujira-rpc.publicnode.com",
+  nodeUrl: baseProxyURL + "/kujira",
   blockExplorer: "https://finder.kujira.network/kaiyo-1",
   nativeToken: {
     id: "ukuji",
@@ -342,7 +342,7 @@ export const kujiraTestnet: SupportedChain = {
   coingeckoPlatformId: kujira.coingeckoPlatformId,
   brand: "kujira",
   name: "Kujira Testnet",
-  nodeUrl: "https://test-lcd-kujira.mintthemoon.xyz",
+  nodeUrl: baseProxyURL + "/kujira-test",
   blockExplorer: "https://finder.kujira.network/harpoon-4",
   nativeToken: {
     id: "ukuji",
