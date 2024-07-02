@@ -171,7 +171,7 @@ export const osmosis: SupportedChain = {
   coingeckoPlatformId: "osmosis",
   brand: "osmosis",
   name: "Osmosis",
-  nodeUrl: "https://lcd.osmosis.zone",
+  nodeUrl: baseProxyURL + "/osmosis",
   blockExplorer: "https://www.mintscan.io/osmosis",
   nativeToken: {
     id: "uosmo",
@@ -359,7 +359,7 @@ export const osmosisTestnet: SupportedChain = {
   coingeckoPlatformId: "osmosis",
   brand: "osmosis",
   name: "Osmosis Testnet",
-  nodeUrl: "https://lcd.testnet.osmosis.zone",
+  nodeUrl: baseProxyURL + "/osmosis-test",
   blockExplorer: "https://www.mintscan.io/osmosis",
   nativeToken: {
     id: "uosmo",
