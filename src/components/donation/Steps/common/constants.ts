@@ -93,5 +93,6 @@ export const toDonor = (fv: FormDonor): Donor => {
           country: "United Kingdom",
         }
       : undefined,
+    ukGiftAid: fv.ukTaxResident,
   };
 };
