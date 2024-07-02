@@ -19,6 +19,7 @@ export type Donor = {
   firstName: string;
   lastName: string;
   address?: DonorAddress;
+  ukGiftAid?: boolean;
 };
 
 export type GuestDonor = {
