@@ -9,10 +9,10 @@ export default async function estimateTerraFee(
   sender: string,
   msgs: Msg[]
 ): Promise<EstimateResult> {
-  const { lcd, nativeToken } = chains[chainID];
+  const { nodeUrl, nativeToken } = chains[chainID];
   const client = new LCDClient({
     chainID,
-    URL: lcd,
+    URL: nodeUrl,
     gasAdjustment: 1.6,
     //https://station-assets.terra.money/chains.json
     gasPrices: [new Coin("uluna", 0.015)],

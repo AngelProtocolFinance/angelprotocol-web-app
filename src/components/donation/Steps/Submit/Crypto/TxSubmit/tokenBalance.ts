@@ -13,7 +13,7 @@ export const tokenBalance = async (
   chainID: SupportedChainId,
   holder: string
 ): Promise<number> => {
-  const { lcd, rpc } = chains[chainID];
+  const { nodeUrl } = chains[chainID];
 
   switch (type) {
     case "juno-native":
@@ -23,19 +23,19 @@ export const tokenBalance = async (
     case "kujira-native":
     case "ibc": {
       return fetch(
-        lcd +
+        nodeUrl +
           `/cosmos/bank/v1beta1/balances/${holder}/by_denom?denom=${token_id}`
       )
         .then<CosmosBalance>((res) => res.json())
         .then((d) => condenseToNum(d.balance.amount, decimals));
     }
     case "cw20":
-      return cw20Balance(token_id, holder, lcd).then((bal) =>
+      return cw20Balance(token_id, holder, nodeUrl).then((bal) =>
         condenseToNum(bal, decimals)
       );
 
     case "erc20":
-      return erc20Balance(token_id, holder, rpc).then((bal) =>
+      return erc20Balance(token_id, holder, nodeUrl).then((bal) =>
         condenseToNum(bal, decimals)
       );
 
@@ -43,7 +43,7 @@ export const tokenBalance = async (
       return request({
         method: "eth_getBalance",
         params: [holder, "latest"],
-        rpcURL: rpc,
+        rpcURL: nodeUrl,
       }).then((hex) => condenseToNum(hex, decimals));
     }
     default: {
