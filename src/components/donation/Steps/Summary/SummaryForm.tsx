@@ -9,13 +9,15 @@ import ContinueBtn from "../common/ContinueBtn";
 import { initDonorTitleOption } from "../common/constants";
 import type { FormDonor, Honorary, Mode } from "../types";
 
-type FV = FormDonor & Honorary;
+type FV = FormDonor & Honorary & { coverFee: boolean };
 
 type Props = {
   onSubmit(formValues: FV): void;
   classes?: string;
   donor: FormDonor;
   honorary: Honorary;
+  coverFee: boolean;
+  nonprofitName: string;
   mode: Mode;
   method: DonateMethodId;
 };
@@ -34,11 +36,17 @@ export default function SummaryForm({
   onSubmit,
   donor,
   honorary,
+  coverFee,
+  nonprofitName,
   mode,
   method,
 }: Props) {
   const methods = useForm<FV>({
-    defaultValues: { ...donor, ...honorary },
+    defaultValues: {
+      ...donor,
+      ...honorary,
+      coverFee,
+    },
     resolver: yupResolver(
       schema<FV>({
         firstName: string().required("Please enter your first name"),
@@ -107,8 +115,16 @@ export default function SummaryForm({
         }}
         required
       />
+      {(method === "crypto" || method === "stripe") && (
+        <CheckField<FV> name="coverFee" classes="col-span-full">
+          Cover payment processing fees for your donation{" "}
+          <span className="text-navy-l1 text-sm">
+            (&nbsp;{nonprofitName} receives the full amount&nbsp;)
+          </span>
+        </CheckField>
+      )}
       {method !== "crypto" && (
-        <CheckField<FV> name="ukTaxResident" classes="col-span-full mt-4">
+        <CheckField<FV> name="ukTaxResident" classes="col-span-full">
           UK Taxpayer? Supercharge your donation with gift aid
         </CheckField>
       )}

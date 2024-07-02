@@ -107,6 +107,7 @@ function initialState({
         withHonorary: !!intent.inHonorOf,
         honoraryFullName: intent.inHonorOf ?? "",
       },
+      feeAllowance: intent.feeAllowance,
     };
   }
   return {
@@ -130,5 +131,6 @@ function initialState({
       withHonorary: !!intent.inHonorOf,
       honoraryFullName: intent.inHonorOf ?? "",
     },
+    feeAllowance: intent.feeAllowance,
   };
 }

@@ -79,11 +79,12 @@ export type SupportedChain = {
     coinGeckoId: string;
     logo?: string;
   };
+  processingRate: number;
 };
 
 export type UnsupportedChain = Pick<
   SupportedChain,
-  "isTest" | "name" | "blockExplorer" | "logo"
+  "isTest" | "name" | "blockExplorer" | "logo" | "processingRate"
 > & {
   id: UnsupportedChainId;
   /** null: erc20 token doesn't exist */

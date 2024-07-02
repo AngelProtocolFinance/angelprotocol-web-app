@@ -11,7 +11,7 @@ import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
   const { setState } = useDonationState();
-  const { details, tip } = props;
+  const { details, tip, feeAllowance } = props;
   const Amount = token(details.token.coingecko_denom);
 
   return (
@@ -20,6 +20,7 @@ export default function Crypto(props: CryptoSubmitStep) {
       onBack={() => setState({ ...props, step: "summary" })}
       Amount={Amount}
       amount={+details.token.amount}
+      feeAllowance={feeAllowance}
       splitLiq={props.liquidSplitPct}
       tip={
         tip
