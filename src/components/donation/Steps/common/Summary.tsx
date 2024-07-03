@@ -87,7 +87,7 @@ export default function Summary({
 
         {props.feeAllowance ? (
           <div className="col-span-full grid grid-cols-[1fr_auto] py-3">
-            <dt className="mr-auto">Processing Fees Covered</dt>
+            <dt className="mr-auto">Covered Payment Processing Fees</dt>
             <Amount classes="text-sm" amount={props.feeAllowance} />
           </div>
         ) : null}
