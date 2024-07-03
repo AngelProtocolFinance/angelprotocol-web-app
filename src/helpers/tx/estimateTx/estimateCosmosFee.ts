@@ -89,7 +89,9 @@ export async function estimateCosmosFee(
   const authInfoWithFee: AuthInfo = {
     ...authInfo,
     fee: {
-      amount: [{ amount: `${atomicFeeAmount}`, denom: chain.nativeToken.id }],
+      amount: [
+        { amount: `${atomicFeeAmount}`, denom: chain.nativeToken.token_id },
+      ],
       gasLimit: `${adjustedGas}`,
       granter: "",
       payer: sender,
@@ -101,7 +103,7 @@ export async function estimateCosmosFee(
     fee: {
       amount: condensedFeeAmount,
       symbol: chain.nativeToken.symbol,
-      coinGeckoId: chain.nativeToken.coinGeckoId,
+      coinGeckoId: chain.nativeToken.coingecko_denom,
     },
 
     chainID,

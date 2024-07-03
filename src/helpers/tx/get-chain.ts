@@ -4,14 +4,5 @@ import type { Chain } from "types/aws";
 export const getChain = async <T extends string>(
   chainId: T
 ): Promise<Chain<T>> => {
-  return {
-    id: chainId,
-    nodeUrl: "",
-    nativeToken: {
-      id: chainId,
-      symbol: "MATIC",
-      decimals: 18,
-      coinGeckoId: "matic-network",
-    },
-  };
+  return {} as any;
 };

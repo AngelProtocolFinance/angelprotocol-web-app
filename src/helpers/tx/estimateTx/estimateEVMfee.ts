@@ -38,7 +38,7 @@ export async function estimateEVMFee(
     fee: {
       amount: fee,
       symbol: nativeToken.symbol,
-      coinGeckoId: nativeToken.coinGeckoId,
+      coinGeckoId: nativeToken.coingecko_denom,
     },
     chainID,
     toSend: { ...tx, nonce, gas: adjusted.toHex(), gasPrice },

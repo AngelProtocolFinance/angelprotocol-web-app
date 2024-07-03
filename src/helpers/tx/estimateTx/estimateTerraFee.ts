@@ -21,15 +21,15 @@ export default async function estimateTerraFee(
   const account = await client.auth.accountInfo(sender);
   const fee = await client.tx.estimateFee(
     [{ sequenceNumber: account.getSequenceNumber() }],
-    { msgs, feeDenoms: [nativeToken.id] }
+    { msgs, feeDenoms: [nativeToken.token_id] }
   );
-  const amount = extractFeeAmount(fee, nativeToken.id);
+  const amount = extractFeeAmount(fee, nativeToken.token_id);
 
   return {
     fee: {
       amount,
       symbol: nativeToken.symbol,
-      coinGeckoId: nativeToken.coinGeckoId,
+      coinGeckoId: nativeToken.coingecko_denom,
     },
     chainID,
     toSend: { fee, msgs },
