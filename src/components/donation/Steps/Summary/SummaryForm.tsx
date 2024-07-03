@@ -136,7 +136,7 @@ export default function SummaryForm({
         </CheckField>
       )}
       {method !== "crypto" && (
-        <CheckField<FV> name="ukTaxResident" classes="col-span-full">
+        <CheckField<FV> name="ukTaxResident" classes="col-span-full mt-4">
           UK Taxpayer? Supercharge your donation with gift aid
         </CheckField>
       )}
