@@ -32,6 +32,25 @@ export type Token = {
   type: TokenType;
 };
 
+interface NativeToken {
+  /**
+   * for EVM chains: `chainId` @example `"137"`
+   * for cosmos chains: atomic unit @example `uluna`
+   * */
+  id: string;
+  /** e.g. USDC.e */
+  symbol: string;
+  decimals: number;
+  /** e.g. matic-network */
+  coinGeckoId: string;
+  logo?: string;
+}
+export interface Chain<T extends string> {
+  id: T;
+  nodeUrl: string;
+  nativeToken: NativeToken;
+}
+
 export type EndowmentBalances = {
   contributionsCount: number;
   donationsBal: number;

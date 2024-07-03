@@ -7,13 +7,13 @@ import {
   TxRaw,
 } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
-import { chains } from "constants/chains";
 import { condenseToNum } from "helpers/decimal";
 import { base64FromU8a } from "helpers/encoding";
 import Long from "long";
 import type { CosmosChainID } from "types/chain";
 import type { JSONAccount, SimulateRes } from "types/cosmos";
 import type { EstimateResult } from "types/tx";
+import { getChain } from "../get-chain";
 
 const GAS_PRICE = "0.075";
 
@@ -26,7 +26,7 @@ export async function estimateCosmosFee(
   sender: string,
   msgs: Any[]
 ): Promise<EstimateResult> {
-  const chain = chains[chainID];
+  const chain = await getChain(chainID);
   const { account } = await fetch(
     chain.nodeUrl + `/cosmos/auth/v1beta1/accounts/${sender}`
   ).then<{ account: JSONAccount }>((res) => res.json());

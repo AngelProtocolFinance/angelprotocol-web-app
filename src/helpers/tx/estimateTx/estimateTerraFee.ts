@@ -1,15 +1,15 @@
 import { Coin, type Fee, LCDClient, type Msg } from "@terra-money/terra.js";
-import { chains } from "constants/chains";
 import type { TerraChainID } from "types/chain";
 import type { EstimateResult } from "types/tx";
 import { condenseToNum } from "../../decimal";
+import { getChain } from "../get-chain";
 
 export default async function estimateTerraFee(
   chainID: TerraChainID,
   sender: string,
   msgs: Msg[]
 ): Promise<EstimateResult> {
-  const { nodeUrl, nativeToken } = chains[chainID];
+  const { nodeUrl, nativeToken } = await getChain(chainID);
   const client = new LCDClient({
     chainID,
     URL: nodeUrl,
