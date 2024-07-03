@@ -24,6 +24,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     tip,
     donor: fvDonor,
     honorary,
+    feeAllowance,
   } = props;
   const { setState } = useDonationState();
 
@@ -37,6 +38,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     type: details.frequency,
     amount: +details.amount,
     tipAmount: tip?.value ?? 0,
+    feeAllowance,
     currency: details.currency.code,
     endowmentId: init.recipient.id,
     splitLiq: liquidSplitPct,
@@ -48,13 +50,11 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
 
   return (
     <Summary
-      classes={{
-        container: "grid content-start p-4 @md/steps:p-8",
-        split: "mb-4",
-      }}
+      classes="grid content-start p-4 @md/steps:p-8"
       onBack={() => setState({ ...props, step: "summary" })}
       Amount={currency(details.currency)}
       amount={+details.amount}
+      feeAllowance={feeAllowance}
       splitLiq={liquidSplitPct}
       frequency={details.frequency}
       tip={

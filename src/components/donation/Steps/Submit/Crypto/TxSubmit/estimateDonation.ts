@@ -15,10 +15,11 @@ export async function estimateDonation(
   token: TokenWithAmount,
   chainID: SupportedChainId,
   sender: string,
-  tipAmount: number
+  tipAmount: number,
+  feeAllowance: number
 ): Promise<Exclude<EstimateStatus, "loading">> {
   try {
-    const grossAmount = +token.amount + tipAmount;
+    const grossAmount = +token.amount + tipAmount + feeAllowance;
 
     const balance = await tokenBalance(token, chainID, sender);
     if (balance < grossAmount) {

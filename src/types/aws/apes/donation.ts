@@ -50,6 +50,7 @@ export type CryptoDonation = {
   programId?: string;
   amount: number;
   tipAmount: number;
+  feeAllowance: number;
   denomination: string;
   endowmentId: number;
   chainId: string;
@@ -72,6 +73,7 @@ export type FiatDonation = {
   /** Denominated in USD. */
   amount: number;
   tipAmount: number;
+  feeAllowance: number;
   /**ISO 3166-1 alpha-3 code. */
   currency: string;
   endowmentId: number;

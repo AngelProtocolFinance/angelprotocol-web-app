@@ -113,6 +113,7 @@ function initialState({
         withTributeNotif: !!intent.tributeNotif,
         tributeNotif: intent.tributeNotif ?? initTributeNotif,
       },
+      feeAllowance: intent.feeAllowance,
     };
   }
   return {
@@ -138,5 +139,6 @@ function initialState({
       withTributeNotif: !!intent.tributeNotif,
       tributeNotif: intent.tributeNotif ?? initTributeNotif,
     },
+    feeAllowance: intent.feeAllowance,
   };
 }
