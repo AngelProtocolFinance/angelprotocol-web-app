@@ -73,6 +73,9 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       donor: toDonor(fvDonor),
       ...(honorary.honoraryFullName && {
         inHonorOf: honorary.honoraryFullName,
+        tributeNotif: honorary.withTributeNotif
+          ? honorary.tributeNotif
+          : undefined,
       }),
       ...(details.program.value && { programId: details.program.value }),
     },
