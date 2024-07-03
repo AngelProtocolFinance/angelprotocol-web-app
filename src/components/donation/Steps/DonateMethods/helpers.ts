@@ -29,13 +29,22 @@ export const nextFormState = (
         { init: prev.init, step: "donate-form" };
 
   if (prev.init.config?.splitDisabled) {
+    if (prev.init.recipient.hide_bg_tip) {
+      return {
+        ...toPersist,
+        details,
+        step: "summary",
+        liquidSplitPct: prev.init.config.liquidSplitPct,
+      };
+    }
+
     return {
       ...toPersist,
       details,
-      //also skip tip if applicable
-      step: prev.init.recipient.hide_bg_tip ? "summary" : "tip",
+      step: "tip",
       liquidSplitPct: prev.init.config.liquidSplitPct,
     };
   }
+
   return { ...toPersist, details, step: "splits" };
 };

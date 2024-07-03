@@ -6,6 +6,7 @@ import type {
   UnsupportedChain,
   UnsupportedChains,
 } from "types/chain";
+import { PROCESSING_RATES } from "./common";
 import { IS_TEST } from "./env";
 import { APIs } from "./urls";
 
@@ -27,6 +28,7 @@ export const polygon: SupportedChain = {
     coinGeckoId: "matic-network",
   },
   logo: "https://cryptologos.cc/logos/polygon-matic-logo.svg?v=032",
+  processingRate: PROCESSING_RATES.crypto.evm,
 };
 
 export const ethereum: SupportedChain = {
@@ -44,6 +46,7 @@ export const ethereum: SupportedChain = {
     coinGeckoId: "ethereum",
   },
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=032",
+  processingRate: PROCESSING_RATES.crypto.ethereum,
 };
 
 export const arbitrum: SupportedChain = {
@@ -61,6 +64,7 @@ export const arbitrum: SupportedChain = {
     coinGeckoId: "ethereum",
   },
   logo: "https://cryptologos.cc/logos/arbitrum-arb-logo.svg?v=032",
+  processingRate: PROCESSING_RATES.crypto.evm,
 };
 
 export const optimism: SupportedChain = {
@@ -78,6 +82,7 @@ export const optimism: SupportedChain = {
     coinGeckoId: "ethereum",
   },
   logo: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.svg?v=032",
+  processingRate: PROCESSING_RATES.crypto.evm,
 };
 
 export const base: SupportedChain = {
@@ -95,6 +100,7 @@ export const base: SupportedChain = {
     coinGeckoId: "ethereum",
   },
   logo: "https://avatars.githubusercontent.com/u/108554348?s=200&v=4",
+  processingRate: PROCESSING_RATES.crypto.evm,
 };
 
 export const binance: SupportedChain = {
@@ -112,6 +118,7 @@ export const binance: SupportedChain = {
     coinGeckoId: "binancecoin",
   },
   logo: "https://cryptologos.cc/logos/bnb-bnb-logo.svg?v=032",
+  processingRate: PROCESSING_RATES.crypto.evm,
 };
 
 export const juno: SupportedChain = {
@@ -129,6 +136,7 @@ export const juno: SupportedChain = {
     coinGeckoId: "juno-network",
   },
   logo: "https://avatars.githubusercontent.com/u/79813271?s=200&v=4",
+  processingRate: PROCESSING_RATES.crypto.cosmos,
 };
 
 export const stargaze: SupportedChain = {
@@ -146,6 +154,7 @@ export const stargaze: SupportedChain = {
     coinGeckoId: "stargaze",
   },
   logo: "https://app.osmosis.zone/tokens/generated/stars.svg",
+  processingRate: PROCESSING_RATES.crypto.cosmos,
 };
 
 export const kujira: SupportedChain = {
@@ -163,6 +172,7 @@ export const kujira: SupportedChain = {
     coinGeckoId: "kujira",
   },
   logo: "https://avatars.githubusercontent.com/u/84391088?s=200&v=4",
+  processingRate: PROCESSING_RATES.crypto.cosmos,
 };
 
 export const osmosis: SupportedChain = {
@@ -180,6 +190,7 @@ export const osmosis: SupportedChain = {
     coinGeckoId: "osmosis",
   },
   logo: "https://cryptologos.cc/logos/osmosis-osmo-logo.png?v=032",
+  processingRate: PROCESSING_RATES.crypto.cosmos,
 };
 
 export const terraMainnet: SupportedChain = {
@@ -197,6 +208,7 @@ export const terraMainnet: SupportedChain = {
     coinGeckoId: "terra-luna-2",
   },
   logo: "https://avatars.githubusercontent.com/u/38208150?s=200&v=4",
+  processingRate: PROCESSING_RATES.crypto.cosmos,
 };
 
 //testnets
@@ -215,6 +227,7 @@ export const polygonAmoy: SupportedChain = {
     coinGeckoId: "matic-network",
   },
   logo: polygon.logo,
+  processingRate: polygon.processingRate,
 };
 
 export const sepolia: SupportedChain = {
@@ -232,6 +245,7 @@ export const sepolia: SupportedChain = {
     coinGeckoId: "ethereum",
   },
   logo: ethereum.logo,
+  processingRate: ethereum.processingRate,
 };
 
 export const arbitrumSepolia: SupportedChain = {
@@ -249,6 +263,7 @@ export const arbitrumSepolia: SupportedChain = {
     coinGeckoId: "ethereum",
   },
   logo: arbitrum.logo,
+  processingRate: arbitrum.processingRate,
 };
 
 export const optimismSepolia: SupportedChain = {
@@ -266,6 +281,7 @@ export const optimismSepolia: SupportedChain = {
     coinGeckoId: "ethereum",
   },
   logo: optimism.logo,
+  processingRate: optimism.processingRate,
 };
 
 export const baseSepolia: SupportedChain = {
@@ -283,6 +299,7 @@ export const baseSepolia: SupportedChain = {
     coinGeckoId: "ethereum",
   },
   logo: base.logo,
+  processingRate: base.processingRate,
 };
 
 export const binanceTestnet: SupportedChain = {
@@ -300,6 +317,7 @@ export const binanceTestnet: SupportedChain = {
     coinGeckoId: "binancecoin",
   },
   logo: binance.logo,
+  processingRate: binance.processingRate,
 };
 
 export const terraTestnet: SupportedChain = {
@@ -317,6 +335,7 @@ export const terraTestnet: SupportedChain = {
     coinGeckoId: "terra-luna-2",
   },
   logo: terraMainnet.logo,
+  processingRate: terraMainnet.processingRate,
 };
 
 export const stargazeTestnet: SupportedChain = {
@@ -334,6 +353,7 @@ export const stargazeTestnet: SupportedChain = {
     coinGeckoId: "stargaze",
   },
   logo: stargaze.logo,
+  processingRate: stargaze.processingRate,
 };
 
 export const kujiraTestnet: SupportedChain = {
@@ -351,6 +371,7 @@ export const kujiraTestnet: SupportedChain = {
     coinGeckoId: "kujira",
   },
   logo: kujira.logo,
+  processingRate: kujira.processingRate,
 };
 
 export const osmosisTestnet: SupportedChain = {
@@ -368,6 +389,7 @@ export const osmosisTestnet: SupportedChain = {
     coinGeckoId: "osmosis",
   },
   logo: "https://cryptologos.cc/logos/osmosis-osmo-logo.png?v=032",
+  processingRate: osmosis.processingRate,
 };
 
 export const bitcoin: UnsupportedChain = {
@@ -377,6 +399,7 @@ export const bitcoin: UnsupportedChain = {
   blockExplorer: "https://btcscan.org",
   coingeckoPlatformId: null,
   logo: "https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=032",
+  processingRate: PROCESSING_RATES.crypto.others,
 };
 
 export const solana: UnsupportedChain = {
@@ -386,6 +409,7 @@ export const solana: UnsupportedChain = {
   name: `Solana${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://solscan.io",
   logo: "https://cryptologos.cc/logos/solana-sol-logo.svg?v=032",
+  processingRate: PROCESSING_RATES.crypto.others,
 };
 
 export const ripple: UnsupportedChain = {
@@ -395,6 +419,7 @@ export const ripple: UnsupportedChain = {
   coingeckoPlatformId: null,
   blockExplorer: "https://xrpscan.com",
   logo: "https://avatars.githubusercontent.com/u/3165523?s=200&v=4",
+  processingRate: PROCESSING_RATES.crypto.others,
 };
 
 export const doge: UnsupportedChain = {
@@ -404,6 +429,7 @@ export const doge: UnsupportedChain = {
   name: `Doge${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://dogechain.info",
   logo: "https://cryptologos.cc/logos/dogecoin-doge-logo.svg?v=032",
+  processingRate: PROCESSING_RATES.crypto.others,
 };
 
 const supportedChainList: SupportedChain[] = [

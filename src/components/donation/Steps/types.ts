@@ -122,6 +122,7 @@ export type SummaryStep = {
   step: "summary";
   donor?: FormDonor;
   honorary?: Honorary;
+  feeAllowance?: number;
 } & From<TipStep, "tip">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
