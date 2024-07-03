@@ -44,7 +44,12 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     splitLiq: liquidSplitPct,
     donor: toDonor(fvDonor),
     source: init.source,
-    ...(honorary.honoraryFullName && { inHonorOf: honorary.honoraryFullName }),
+    ...(honorary.honoraryFullName && {
+      inHonorOf: honorary.honoraryFullName,
+      tributeNotif: honorary.withTributeNotif
+        ? honorary.tributeNotif
+        : undefined,
+    }),
     ...(details.program.value && { programId: details.program.value }),
   });
 
