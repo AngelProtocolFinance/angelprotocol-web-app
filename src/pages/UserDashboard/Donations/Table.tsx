@@ -61,6 +61,7 @@ export default function Table({
           >
             Network
           </HeaderButton>
+          <>Recurring</>
           <>Currency</>
           <HeaderButton
             onClick={handleHeaderClick("initAmount")}
@@ -116,6 +117,7 @@ export default function Table({
               </Link>
               <>{new Date(row.date).toLocaleDateString()}</>
               <>{row.viaName}</>
+              <>{row.isRecurring ? "YES" : "NO"}</>
               <span className="text-sm">{row.symbol}</span>
               <>{humanize(row.initAmount, 3)}</>
               <>
