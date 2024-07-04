@@ -34,7 +34,10 @@ export default function Layout() {
           <Outlet />
         </ErrorBoundary>
       </Suspense>
-      <Footer socials={SOCIAL_MEDIA_LINKS} />
+      <Footer
+        socials={SOCIAL_MEDIA_LINKS}
+        classes={isWp ? "override-wp-overrides" : ""}
+      />
     </div>
   );
 }
