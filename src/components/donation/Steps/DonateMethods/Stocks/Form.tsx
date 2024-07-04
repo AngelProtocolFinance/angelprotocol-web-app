@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Field, Form as FormContainer } from "components/form";
+import { NativeField as Field, Form as FormContainer } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
@@ -16,7 +16,12 @@ type FV = Omit<StocksDonationDetails, "method" | "numShares"> & {
 
 export default function Form(props: StockFormStep) {
   const { setState } = useDonationState();
-  const methods = useForm({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
     defaultValues: props.details
       ? {
           symbol: props.details.symbol,
@@ -40,7 +45,6 @@ export default function Form(props: StockFormStep) {
     ),
   });
 
-  const { control } = methods;
   const { field: program } = useController<FV, "program">({
     control: control,
     name: "program",
@@ -48,9 +52,8 @@ export default function Form(props: StockFormStep) {
 
   return (
     <FormContainer
-      methods={methods}
       className="grid"
-      onSubmit={methods.handleSubmit((fv) =>
+      onSubmit={handleSubmit((fv) =>
         setState((prev) =>
           nextFormState(prev, {
             ...fv,
@@ -59,17 +62,19 @@ export default function Form(props: StockFormStep) {
         )
       )}
     >
-      <Field<FV>
+      <Field
         required
-        name="symbol"
+        {...register("symbol")}
+        error={errors.symbol?.message}
         label="Symbol name of share"
         placeholder="Ex. AAPL"
         classes={{ label: "font-semibold", container: "field-donate" }}
       />
 
-      <Field<FV>
+      <Field
         required
-        name="numShares"
+        {...register("numShares")}
+        error={errors.numShares?.message}
         label="Number of shares you are donating"
         placeholder="Enter quantity"
         classes={{
@@ -110,11 +115,7 @@ export default function Form(props: StockFormStep) {
         be up to 20% larger because you avoid the taxes you'd incur from selling
         and donating the cash.
       </p>
-      <ContinueBtn
-        disabled={methods.formState.isSubmitting}
-        className="mt-6"
-        type="submit"
-      />
+      <ContinueBtn disabled={isSubmitting} className="mt-6" type="submit" />
     </FormContainer>
   );
 }
