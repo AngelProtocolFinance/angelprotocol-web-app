@@ -4,7 +4,11 @@ import type { OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
-import { initDetails, initDonorTitleOption } from "./common/constants";
+import {
+  initDetails,
+  initDonorTitleOption,
+  initTributeNotif,
+} from "./common/constants";
 import type {
   Config,
   DonationRecipient,
@@ -106,6 +110,8 @@ function initialState({
       honorary: {
         withHonorary: !!intent.inHonorOf,
         honoraryFullName: intent.inHonorOf ?? "",
+        withTributeNotif: !!intent.tributeNotif,
+        tributeNotif: intent.tributeNotif ?? initTributeNotif,
       },
       feeAllowance: intent.feeAllowance,
     };
@@ -130,6 +136,8 @@ function initialState({
     honorary: {
       withHonorary: !!intent.inHonorOf,
       honoraryFullName: intent.inHonorOf ?? "",
+      withTributeNotif: !!intent.tributeNotif,
+      tributeNotif: intent.tributeNotif ?? initTributeNotif,
     },
     feeAllowance: intent.feeAllowance,
   };

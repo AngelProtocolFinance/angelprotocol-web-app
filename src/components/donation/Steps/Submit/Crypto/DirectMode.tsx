@@ -25,6 +25,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     liquidSplitPct,
     donor: fvDonor,
     feeAllowance,
+    honorary,
   } = donation;
 
   const { data: intent, ...intentState } = useCreateCryptoIntentQuery({
@@ -39,6 +40,13 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     endowmentId: init.recipient.id,
     source: init.config ? "bg-widget" : "bg-marketplace",
     donor: toDonor(fvDonor),
+    ...(honorary.honoraryFullName && {
+      inHonorOf: honorary.honoraryFullName,
+      tributeNotif: honorary.withTributeNotif
+        ? honorary.tributeNotif
+        : undefined,
+    }),
+    ...(details.program.value && { programId: details.program.value }),
   });
 
   return (

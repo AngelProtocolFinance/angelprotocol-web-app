@@ -3,6 +3,7 @@ import type React from "react";
 import {
   type ForwardedRef,
   type HTMLInputTypeAttribute,
+  type ReactElement,
   type ReactNode,
   createElement,
   forwardRef,
@@ -28,7 +29,7 @@ type Props<T extends InputType> = Omit<
 > & {
   classes?: Classes | string;
   tooltip?: ReactNode;
-  label: string;
+  label: string | ReactElement;
   type?: T;
 };
 
@@ -91,7 +92,6 @@ export const NativeField = forwardRef(_Field) as typeof _Field;
 export function Field<T extends FieldValues, K extends InputType = InputType>({
   name,
   disabled,
-  type,
   ...rest
 }: Omit<Props<K>, "name"> & { name: Path<T> }) {
   const {
