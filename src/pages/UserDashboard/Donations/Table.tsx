@@ -79,6 +79,22 @@ export default function Table({
           >
             USD Value
           </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("directDonateAmount")}
+            _activeSortKey={sortKey}
+            _sortKey="directDonateAmount"
+            _sortDirection={sortDirection}
+          >
+            Direct Donation
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("sfDonateAmount")}
+            _activeSortKey={sortKey}
+            _sortKey="sfDonateAmount"
+            _sortDirection={sortDirection}
+          >
+            SF Donation
+          </HeaderButton>
           {status === "intent" ? <></> : <>TX Hash</>}
           {status === "pending" && (
             <span className="flex justify-center">Action</span>
@@ -123,6 +139,16 @@ export default function Table({
               <>
                 {row.initAmountUsd
                   ? `$${humanize(row.initAmountUsd, 2)}`
+                  : "--"}
+              </>
+              <>
+                {row.directDonateAmount
+                  ? `$${humanize(row.directDonateAmount, 2)}`
+                  : "--"}
+              </>
+              <>
+                {row.sfDonateAmount
+                  ? `$${humanize(row.sfDonateAmount, 2)}`
                   : "--"}
               </>
               {status === "intent" ? (

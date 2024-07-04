@@ -76,6 +76,16 @@ export default function MobileTable({
                     ? `$${humanize(row.initAmountUsd, 2)}`
                     : "--"}
                 </Row>
+                <Row title="Direct Donation">
+                  {row.directDonateAmount
+                    ? `$${humanize(row.directDonateAmount, 2)}`
+                    : "--"}
+                </Row>
+                <Row title="SF Donation">
+                  {row.sfDonateAmount
+                    ? `$${humanize(row.sfDonateAmount, 2)}`
+                    : "--"}
+                </Row>
                 {status === "intent" ? (
                   <Row title="Finish Paying" className="rounded-b">
                     <IntentResumer intentId={row.id} />
