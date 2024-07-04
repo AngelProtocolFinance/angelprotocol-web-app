@@ -52,6 +52,14 @@ export default function Table({
             Donation Origin
           </HeaderButton>
           <HeaderButton
+            onClick={handleHeaderClick("paymentMethod")}
+            _activeSortKey={sortKey}
+            _sortKey="paymentMethod"
+            _sortDirection={sortDirection}
+          >
+            Donation Type
+          </HeaderButton>
+          <HeaderButton
             onClick={handleHeaderClick("viaName")}
             _activeSortKey={sortKey}
             _sortKey="viaName"

@@ -18,7 +18,7 @@ export default function Row(
       </span>
 
       <>{props.appUsed === "bg-widget" ? "Donation Form" : "Marketplace"}</>
-
+      <>{props.paymentMethod ?? "--"}</>
       <>{props.viaId === "fiat" ? "Fiat donation" : props.viaName}</>
 
       <Amount type="total" />
