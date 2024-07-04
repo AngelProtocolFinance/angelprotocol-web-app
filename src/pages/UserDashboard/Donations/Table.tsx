@@ -135,13 +135,19 @@ export default function Table({
                   {row.id}
                 </ExtLink>
               )}
-              {status === "pending" && (
-                <ExtLink
-                  href={row.bankVerificationUrl}
-                  className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
-                >
-                  {row.bankVerificationUrl}
-                </ExtLink>
+              {status === "pending" && row.viaId === "fiat" ? (
+                row.bankVerificationUrl ? (
+                  <ExtLink
+                    href={row.bankVerificationUrl}
+                    className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
+                  >
+                    Verify Bank Account
+                  </ExtLink>
+                ) : (
+                  <>- - -</>
+                )
+              ) : (
+                <>- - -</>
               )}
               {status === "final" && (
                 <button
