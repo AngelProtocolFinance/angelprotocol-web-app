@@ -42,6 +42,7 @@ export default function SummaryForm({
   mode,
   method,
 }: Props) {
+  const CUSTOM_MSG_MAX_LENGTH = 250;
   const methods = useForm<FV>({
     defaultValues: {
       ...donor,
@@ -74,17 +75,25 @@ export default function SummaryForm({
             : schema<FV["tributeNotif"]>({
                 toFullName: string().required("required"),
                 toEmail: string().required("required").email("invalid email"),
-                fromMsg: string().max(250, "must be less than 250 characters"),
+                fromMsg: string().max(
+                  CUSTOM_MSG_MAX_LENGTH,
+                  "must be less than 250 characters"
+                ),
               });
         }),
       })
     ),
   });
 
-  const { handleSubmit, watch } = methods;
+  const {
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = methods;
   const ukTaxResident = watch("ukTaxResident");
   const withHonorary = watch("withHonorary");
   const withTributeNotif = watch("withTributeNotif");
+  const customMsg = watch("tributeNotif.fromMsg");
 
   return (
     <Form
@@ -205,6 +214,12 @@ export default function SummaryForm({
                 }}
                 required={false}
               />
+              <p
+                data-exceed={errors.tributeNotif?.fromMsg?.type === "max"}
+                className="text-xs text-navy-l4 -mt-2 data-[exceed='true']:text-red"
+              >
+                {customMsg.length}/{CUSTOM_MSG_MAX_LENGTH}
+              </p>
             </div>
           )}
         </div>
