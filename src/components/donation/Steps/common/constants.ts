@@ -3,7 +3,7 @@ import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonateMethodId } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
-import type { DonationDetails, FormDonor } from "../types";
+import type { DonationDetails, FormDonor, TributeNotif } from "../types";
 
 export const DEFAULT_PROGRAM: OptionType<""> = {
   label: "General Donation",
@@ -95,4 +95,10 @@ export const toDonor = (fv: FormDonor): Donor => {
       : undefined,
     ukGiftAid: fv.ukTaxResident,
   };
+};
+
+export const initTributeNotif: TributeNotif = {
+  toEmail: "",
+  toFullName: "",
+  fromMsg: "",
 };
