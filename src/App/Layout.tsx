@@ -3,7 +3,7 @@ import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import ErrorBoundary from "errors/ErrorBoundary";
 import { Suspense } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useMatch } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 import { CHARITY_LINKS } from "./constants";
@@ -14,8 +14,8 @@ const { SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
 export default function Layout() {
   const headerLinks = useHeaderLinks();
   const { key, pathname } = useLocation();
+  const isWpPost = !!useMatch(`${appRoutes.blog}/:slug`);
   const isHome = pathname === appRoutes.home;
-  const isWp = pathname.startsWith(appRoutes.blog);
   return (
     <div
       className={`grid ${
@@ -26,7 +26,7 @@ export default function Layout() {
       <Header
         links={headerLinks}
         classes={`${isHome ? "mt-8 px-4" : ""} ${
-          isWp ? "override-wp-overrides" : ""
+          isWpPost ? "override-wp-overrides" : ""
         } sticky z-40 top-[-1px]`}
       />
       <Suspense fallback={<LoaderComponent />}>
@@ -36,7 +36,7 @@ export default function Layout() {
       </Suspense>
       <Footer
         socials={SOCIAL_MEDIA_LINKS}
-        classes={isWp ? "override-wp-overrides" : ""}
+        classes={isWpPost ? "override-wp-overrides" : ""}
       />
     </div>
   );
