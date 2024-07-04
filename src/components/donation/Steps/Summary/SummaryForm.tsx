@@ -195,13 +195,13 @@ export default function SummaryForm({
                 required
               />
               <Field<FV, "textarea">
+                rows={2}
                 type="textarea"
                 name="tributeNotif.fromMsg"
                 label="Custom message"
                 placeholder="Message to recipient"
                 classes={{
                   container: "field-donate [&_label]:text-sm [&_input]:text-sm",
-                  input: "supports-[field-sizing]:[field-sizing:content]",
                 }}
                 required={false}
               />
