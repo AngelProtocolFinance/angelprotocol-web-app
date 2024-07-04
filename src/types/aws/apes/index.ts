@@ -43,9 +43,7 @@ export interface Chain<T extends string> {
   nativeToken: Pick<
     Token,
     "token_id" | "decimals" | "symbol" | "coingecko_denom"
-  > & {
-    nodeUrl: string;
-  };
+  >;
 }
 
 export type EndowmentBalances = {
