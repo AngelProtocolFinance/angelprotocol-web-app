@@ -60,6 +60,14 @@ export default function Table({
             Donation Type
           </HeaderButton>
           <HeaderButton
+            onClick={handleHeaderClick("isRecurring")}
+            _activeSortKey={sortKey}
+            _sortKey="isRecurring"
+            _sortDirection={sortDirection}
+          >
+            Recurring Donation
+          </HeaderButton>
+          <HeaderButton
             onClick={handleHeaderClick("viaName")}
             _activeSortKey={sortKey}
             _sortKey="viaName"

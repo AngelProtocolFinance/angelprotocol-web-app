@@ -19,6 +19,7 @@ export default function Row(
 
       <>{props.appUsed === "bg-widget" ? "Donation Form" : "Marketplace"}</>
       <>{props.paymentMethod ?? "--"}</>
+      <>{props.isRecurring ? "Yes" : "No"}</>
       <>{props.viaId === "fiat" ? "Fiat donation" : props.viaName}</>
 
       <Amount type="total" />
