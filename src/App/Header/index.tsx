@@ -17,7 +17,7 @@ export default function Header({ links, classes }: Props) {
 
   return (
     <header
-      className={`${classes} group override-wp-overrides`}
+      className={`${classes} group`}
       ref={(node) => {
         if (!node) return;
         const observer = new IntersectionObserver(

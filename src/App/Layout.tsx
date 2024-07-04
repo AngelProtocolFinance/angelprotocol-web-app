@@ -15,6 +15,7 @@ export default function Layout() {
   const headerLinks = useHeaderLinks();
   const { key, pathname } = useLocation();
   const isHome = pathname === appRoutes.home;
+  const isWp = pathname.startsWith(appRoutes.blog);
   return (
     <div
       className={`grid ${
@@ -24,7 +25,9 @@ export default function Layout() {
       <Seo /> {/* Load all defaults for SEO meta tags */}
       <Header
         links={headerLinks}
-        classes={`${isHome ? "mt-8 px-4" : ""} sticky z-40 top-[-1px]`}
+        classes={`${isHome ? "mt-8 px-4" : ""} ${
+          isWp ? "override-wp-overrides" : ""
+        } sticky z-40 top-[-1px]`}
       />
       <Suspense fallback={<LoaderComponent />}>
         <ErrorBoundary key={key} /** allows for recovery when changing page */>
