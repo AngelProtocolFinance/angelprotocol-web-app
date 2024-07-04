@@ -17,6 +17,8 @@ export default function Row(
         {new Date(props.date).toLocaleDateString()}
       </span>
 
+      <>{props.appUsed === "bg-widget" ? "Donation Form" : "Marketplace"}</>
+
       <>{props.viaId === "fiat" ? "Fiat donation" : props.viaName}</>
 
       <Amount type="total" />

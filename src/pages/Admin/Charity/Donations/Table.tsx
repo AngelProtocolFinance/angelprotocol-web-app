@@ -44,6 +44,14 @@ export default function Table({
             Date
           </HeaderButton>
           <HeaderButton
+            onClick={handleHeaderClick("appUsed")}
+            _activeSortKey={sortKey}
+            _sortKey="appUsed"
+            _sortDirection={sortDirection}
+          >
+            Donation Origin
+          </HeaderButton>
+          <HeaderButton
             onClick={handleHeaderClick("viaName")}
             _activeSortKey={sortKey}
             _sortKey="viaName"
