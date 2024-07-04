@@ -84,12 +84,16 @@ export default function MobileTable({
                 )}
                 {status === "pending" && (
                   <Row title="Action" className="rounded-b">
-                    <ExtLink
-                      href={row.bankVerificationUrl}
-                      className="btn-blue px-3 py-1 text-xs"
-                    >
-                      Verify Bank Account
-                    </ExtLink>
+                    {row.viaId === "fiat" && row.bankVerificationUrl ? (
+                      <ExtLink
+                        href={row.bankVerificationUrl}
+                        className="btn-blue px-3 py-1 text-xs"
+                      >
+                        Verify Bank Account
+                      </ExtLink>
+                    ) : (
+                      "--"
+                    )}
                   </Row>
                 )}
                 {status === "final" && (
