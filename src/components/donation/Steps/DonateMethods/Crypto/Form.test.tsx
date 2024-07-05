@@ -196,6 +196,7 @@ describe("Crypto form: initial load", () => {
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
     expect(mockedSetState).toHaveBeenCalledOnce();
+    mockedSetState.mockReset();
   });
 
   test("submitting empty form should show validation messages and focus first field: chain selector", async () => {
@@ -295,6 +296,6 @@ describe("Crypto form: initial load", () => {
     //user should be able to submit now
     await userEvent.click(continueBtn);
     //second click now
-    expect(mockedSetState).toHaveBeenCalledTimes(2);
+    expect(mockedSetState).toHaveBeenCalledOnce();
   });
 });
