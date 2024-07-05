@@ -1,2 +1,2 @@
-export * from "./programs.js";
-export * from "./mock.js";
+export * from "./programs";
+export * from "./mock";
