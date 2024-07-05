@@ -1,33 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import * as programs from "services/aws/programs";
-import type { Program } from "types/aws";
+import { Provider } from "react-redux";
+import { mockPrograms } from "services/aws/programs";
+import { store } from "store/store";
 import { describe, expect, test, vi } from "vitest";
 import type { Init, StocksDonationDetails } from "../../types";
 import Form from "./Form";
-
-const mockPrograms: Program[] = [
-  {
-    id: "program-1",
-    title: "Program 1",
-    description: "Description for Program 1",
-    milestones: [],
-  },
-  {
-    id: "program-2",
-    title: "Program 2",
-    description: "Description for Program 2",
-    milestones: [],
-  },
-];
-
-vi.spyOn(programs, "useProgramsQuery").mockReturnValue({
-  data: mockPrograms,
-  isLoading: false,
-  isFetching: false,
-  isError: false,
-  refetch: () => ({}) as any,
-});
 
 const mockedSetState = vi.hoisted(() => vi.fn());
 vi.mock("../../Context", () => ({
@@ -35,6 +13,10 @@ vi.mock("../../Context", () => ({
     .fn()
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
+
+const _Form: typeof Form = (props) => (
+  <Provider store={store}>{<Form {...props} />}</Provider>
+);
 
 describe("stocks form test", () => {
   test("initial state: blank", () => {
@@ -44,7 +26,7 @@ describe("stocks form test", () => {
       recipient: { id: 0, name: "" },
       mode: "live",
     };
-    render(<Form init={init} step="donate-form" />);
+    render(<_Form init={init} step="donate-form" />);
     const symbolInput = screen.getByPlaceholderText(/ex. aapl/i);
     expect(symbolInput).toHaveDisplayValue("");
 
@@ -63,7 +45,7 @@ describe("stocks form test", () => {
       recipient: { id: 0, name: "", progDonationsAllowed: false },
       mode: "live",
     };
-    render(<Form init={init} step="donate-form" />);
+    render(<_Form init={init} step="donate-form" />);
     const programSelector = screen.queryByRole("button", {
       name: /general donation/i,
     });
@@ -82,7 +64,7 @@ describe("stocks form test", () => {
       numShares: "10",
       program: { value: mockPrograms[1].id, label: mockPrograms[1].title },
     };
-    render(<Form init={init} step="donate-form" details={details} />);
+    render(<_Form init={init} step="donate-form" details={details} />);
     const symbolInput = screen.getByPlaceholderText(/ex. aapl/i);
     expect(symbolInput).toHaveDisplayValue("BG");
 
@@ -105,7 +87,7 @@ describe("stocks form test", () => {
       recipient: { id: 0, name: "", progDonationsAllowed: false },
       mode: "live",
     };
-    render(<Form init={init} step="donate-form" />);
+    render(<_Form init={init} step="donate-form" />);
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
 
