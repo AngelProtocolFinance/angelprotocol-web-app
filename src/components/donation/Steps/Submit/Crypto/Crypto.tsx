@@ -1,7 +1,8 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { chainOptions } from "constants/chainOptions";
+import QueryLoader from "components/QueryLoader";
 import { chains } from "constants/chains";
 import WalletContext from "contexts/WalletContext/WalletContext";
+import { useChainOptionsQuery } from "services/terra";
 import Image from "../../../../Image";
 import { useDonationState } from "../../Context";
 import Summary from "../../common/Summary";
@@ -48,11 +49,26 @@ export default function Crypto(props: CryptoSubmitStep) {
         </>
       }
     >
-      <WalletProvider {...chainOptions}>
-        <WalletContext>
-          <Checkout {...props} classes="mt-4" />
-        </WalletContext>
-      </WalletProvider>
+      <TerraLoadedCheckout {...props} />
     </Summary>
+  );
+}
+
+function TerraLoadedCheckout(props: CryptoSubmitStep) {
+  // simply using `useChainOptions` from terra lib would call `getOptions` every mount */
+  const query = useChainOptionsQuery();
+  return (
+    <QueryLoader
+      queryState={query}
+      messages={{ loading: "loading form...", error: "failed to load form" }}
+    >
+      {(chainOptions) => (
+        <WalletProvider {...chainOptions}>
+          <WalletContext>
+            <Checkout {...props} classes="mt-4" />
+          </WalletContext>
+        </WalletProvider>
+      )}
+    </QueryLoader>
   );
 }

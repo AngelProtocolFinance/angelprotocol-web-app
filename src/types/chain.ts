@@ -59,26 +59,14 @@ export const chainIdIsNotSupported = (
 ): chainId is UnsupportedChainId =>
   unsupportedChainIds.includes(chainId as any);
 
-type NativeAtomicUnit = string; //ujunox uluna
-type IBCDenom = string;
-
 export type SupportedChain = {
   logo: string;
   isTest: boolean;
   id: SupportedChainId;
   coingeckoPlatformId: string;
-  brand: string; //
   name: string;
   /** evm: rpc, cosmos: lcd */
-  nodeUrl: string;
   blockExplorer: string;
-  nativeToken: {
-    id: ChainID | NativeAtomicUnit | IBCDenom;
-    symbol: string;
-    decimals: number;
-    coinGeckoId: string;
-    logo?: string;
-  };
   processingRate: number;
 };
 

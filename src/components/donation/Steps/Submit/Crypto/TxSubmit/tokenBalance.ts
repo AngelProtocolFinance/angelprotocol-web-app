@@ -1,8 +1,8 @@
 import type { BigNumber } from "@ethersproject/bignumber";
-import { chains } from "constants/chains";
 import { EIPMethods } from "constants/evm";
 import { erc20 } from "contracts/evm/ERC20";
 import { condenseToNum, objToBase64, request } from "helpers";
+import { getChain } from "helpers/tx/get-chain";
 import type { QrTokenType, Token } from "types/aws";
 import type { SupportedChainId } from "types/chain";
 import type { CW20Balance } from "types/contracts";
@@ -13,7 +13,7 @@ export const tokenBalance = async (
   chainID: SupportedChainId,
   holder: string
 ): Promise<number> => {
-  const { nodeUrl } = chains[chainID];
+  const { nodeUrl } = await getChain(chainID);
 
   switch (type) {
     case "juno-native":

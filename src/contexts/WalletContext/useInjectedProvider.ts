@@ -2,6 +2,7 @@ import { chains } from "constants/chains";
 import { EIPMethods } from "constants/evm";
 import Decimal from "decimal.js";
 import { injectedProvider, isEmpty, logger } from "helpers";
+import { getChain } from "helpers/tx/get-chain";
 import { useEffect, useState } from "react";
 import type { SupportedChainId } from "types/chain";
 import type { AccountChangeHandler, ChainChangeHandler } from "types/evm";
@@ -68,7 +69,8 @@ export default function useInjectedWallet(
       return alert("Wallet is not connected");
     }
     try {
-      const chain = chains[chainID];
+      const staticChain = chains[chainID];
+      const chain = await getChain(chainID);
       await state
         .request({
           method: EIPMethods.wallet_switchEthereumChain,
@@ -81,14 +83,14 @@ export default function useInjectedWallet(
               params: [
                 {
                   chainId: toPrefixedHex(chainID),
-                  chainName: chain.name,
+                  chainName: staticChain.name,
                   nativeCurrency: {
                     name: chain.nativeToken.symbol,
                     symbol: chain.nativeToken.symbol,
                     decimals: chain.nativeToken.decimals,
                   },
                   rpcUrls: [chain.nodeUrl],
-                  blockExplorerUrls: [chain.blockExplorer],
+                  blockExplorerUrls: [staticChain.blockExplorer],
                 },
               ],
             })
