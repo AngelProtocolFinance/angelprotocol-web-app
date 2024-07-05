@@ -114,7 +114,7 @@ export default function Table({
           .concat(
             hasMore ? (
               <td
-                colSpan={9}
+                colSpan={19}
                 key="load-more-btn"
                 className="border-t border-blue-l2 rounded-b"
               >
