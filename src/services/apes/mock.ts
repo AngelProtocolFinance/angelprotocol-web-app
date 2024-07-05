@@ -44,8 +44,16 @@ export const endpoints = {
   fiatCurrencies: `${APIs.apes}/fiat-currencies`,
 };
 
-export const fiatCurrenciesHandler = {
-  ok: http.get(endpoints.fiatCurrencies, ({ request }) => {
+export const fiatCurrenciesErrorHandler = http.get(
+  endpoints.fiatCurrencies,
+  () => HttpResponse.error()
+);
+
+export const handlers = [
+  http.get(endpoints.tokens, () => {
+    return HttpResponse.json(mockTokens);
+  }),
+  http.get(endpoints.fiatCurrencies, ({ request }) => {
     const url = new URL(request.url);
     const prefCode = url.searchParams.get("prefCode");
 
@@ -54,15 +62,5 @@ export const fiatCurrenciesHandler = {
       currencies: mockCurrencies,
     };
     return HttpResponse.json(data);
-  }),
-  error: http.get(
-    endpoints.fiatCurrencies,
-    () => new HttpResponse(null, { status: 500 })
-  ),
-};
-
-export const handlers = [
-  http.get(endpoints.tokens, () => {
-    return HttpResponse.json(mockTokens);
   }),
 ];
