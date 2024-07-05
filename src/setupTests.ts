@@ -1,6 +1,9 @@
+import { setupServer } from "msw/node";
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 import "@testing-library/jest-dom";
-import { vi } from "vitest";
+import { handlers as programsHandlers } from "services/aws/programs";
+import { afterAll, afterEach, beforeAll, vi } from "vitest";
+import { handlers as apesHandlers } from "./services/apes/mock";
 
 vi.mock("@walletconnect/modal", () => ({
   WalletConnectModal: vi.fn(),
@@ -47,3 +50,14 @@ class ResizeObserverMock {
 }
 
 global.ResizeObserver = ResizeObserverMock;
+
+export const mswServer = setupServer(...programsHandlers, ...apesHandlers);
+
+// Start server before all tests
+beforeAll(() => mswServer.listen({ onUnhandledRequest: "error" }));
+
+//  Close server after all tests
+afterAll(() => mswServer.close());
+
+// Reset handlers after each test `important for test isolation`
+afterEach(() => mswServer.resetHandlers());

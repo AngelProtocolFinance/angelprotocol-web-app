@@ -1,12 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { APIs } from "constants/urls";
 
-type Quotation = {
+export type Quotation = {
   [index: string]: {
     usd: number;
   };
 };
 
-type TokenDetails = {
+export type TokenDetails = {
   detail_platforms: {
     [platformId: string]: { decimal_place: number; contract_address: string };
   };
@@ -18,7 +19,7 @@ type TokenDetails = {
 export const coingecko = createApi({
   reducerPath: "coingecko",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://api.coingecko.com",
+    baseUrl: APIs.coingecko,
   }),
   endpoints: (builder) => ({
     usdRate: builder.query<number, string>({
