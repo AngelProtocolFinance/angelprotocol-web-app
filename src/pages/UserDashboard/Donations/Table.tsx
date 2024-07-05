@@ -2,7 +2,7 @@ import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
-import { chainIds } from "constants/chainIds";
+import { juno } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";
 import useSort from "hooks/useSort";
@@ -120,9 +120,7 @@ export default function Table({
             >
               <Link
                 to={`${
-                  appRoutes[
-                    row.viaId === chainIds.juno ? "profile" : "marketplace"
-                  ]
+                  appRoutes[row.viaId === juno.id ? "profile" : "marketplace"]
                 }/${row.recipientId}`}
                 className="flex items-center justify-between gap-1 cursor-pointer text-sm hover:underline"
               >
