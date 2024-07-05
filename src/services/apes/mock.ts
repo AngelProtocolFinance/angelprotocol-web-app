@@ -50,9 +50,13 @@ export const fiatCurrenciesErrorHandler = http.get(
 );
 
 export const handlers = [
+  http.get(`${APIs.apes}/top-countries`, () => {
+    return HttpResponse.json([] satisfies string[]);
+  }),
   http.get(endpoints.tokens, () => {
     return HttpResponse.json(mockTokens);
   }),
+
   http.get(endpoints.fiatCurrencies, ({ request }) => {
     const url = new URL(request.url);
     const prefCode = url.searchParams.get("prefCode");
