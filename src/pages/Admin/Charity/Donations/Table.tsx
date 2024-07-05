@@ -68,25 +68,34 @@ export default function Table({
             Recurring Donation
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("viaName")}
+            onClick={handleHeaderClick("symbol")}
             _activeSortKey={sortKey}
-            _sortKey="viaName"
+            _sortKey="symbol"
             _sortDirection={sortDirection}
           >
-            Source
+            Donation Asset
           </HeaderButton>
+          <>Donation Amount</>
           <HeaderButton
             onClick={handleHeaderClick("finalAmountUsd")}
             _activeSortKey={sortKey}
             _sortKey="amount"
             _sortDirection={sortDirection}
           >
-            Total Amount
+            Donation Value USD
           </HeaderButton>
-          <>Current Portion</>
-          <>Sustainability Portion</>
-          <>Transaction</>
-          <>Receipt provided</>
+          <>Direct Donation</>
+          <>SF Donation</>
+          <>Transaction Hash</>
+          <>Receipt Provided</>
+          <>Full Name</>
+          <>Email</>
+          <>Address Line 1</>
+          <>Address Line 2</>
+          <>City</>
+          <>State</>
+          <>Zip Code</>
+          <>Country</>
         </Cells>
       </TableSection>
       <TableSection
