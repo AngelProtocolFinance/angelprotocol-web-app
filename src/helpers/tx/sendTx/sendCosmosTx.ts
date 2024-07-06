@@ -1,6 +1,5 @@
 import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import type { Keplr } from "@keplr-wallet/types";
-import { chains } from "constants/chains";
 import { base64FromU8a, u8aFromBase64 } from "helpers/encoding";
 import type { ChainID, CosmosChainID } from "types/chain";
 import {
@@ -11,6 +10,7 @@ import {
   isBroadcastError,
 } from "types/cosmos";
 import type { TxError, TxResult } from "types/tx";
+import { getChain } from "../get-chain";
 
 export async function sendCosmosTx(
   chainID: CosmosChainID,
@@ -18,7 +18,7 @@ export async function sendCosmosTx(
   doc: SignDoc,
   sign: Keplr["signDirect"]
 ): Promise<TxResult> {
-  const { nodeUrl } = chains[chainID];
+  const { nodeUrl } = await getChain(chainID);
   const { signature, signed } = await sign(chainID, sender, doc);
 
   const tx: TxRaw = {

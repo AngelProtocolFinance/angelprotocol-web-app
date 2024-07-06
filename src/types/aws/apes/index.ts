@@ -27,10 +27,24 @@ export type Token = {
   min_donation_amnt: number;
   symbol: string; // DB Partition key ex., "LunaX"
   name: string;
-  token_id: string; // "ujuno" | "0xaSD123..." | "ibc/ASH3438hfd..."
+  /**
+   * EVM: contract address - e.g. `0xaSD123...`
+   * COSMOS: denom - e.g. `ibc/ASH3438hfd...`
+   */
+  token_id: string;
+  /** e.g. `matic-network` */
   coingecko_denom: string;
   type: TokenType;
 };
+
+export interface Chain<T extends string> {
+  id: T;
+  nodeUrl: string;
+  nativeToken: Pick<
+    Token,
+    "token_id" | "decimals" | "symbol" | "coingecko_denom"
+  >;
+}
 
 export type EndowmentBalances = {
   contributionsCount: number;
