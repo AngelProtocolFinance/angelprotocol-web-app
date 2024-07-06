@@ -1,4 +1,11 @@
-import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import {
+  Description,
+  Tab,
+  TabGroup,
+  TabList,
+  TabPanel,
+  TabPanels,
+} from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { Label } from "components/form";
 import type { ReactNode } from "react";
@@ -54,6 +61,7 @@ export default function DonateMethods(props: FormStep) {
 
   return (
     <TabGroup
+      data-testid="donate-methods"
       manual
       as="div"
       className="grid @md/steps:grid-cols-[auto_1fr]"

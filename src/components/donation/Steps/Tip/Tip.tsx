@@ -82,6 +82,7 @@ export default function Tip(props: TipStep) {
 
   return (
     <form
+      data-testid="tip-form"
       onSubmit={handleSubmit((fv) =>
         setState({
           ...props,
