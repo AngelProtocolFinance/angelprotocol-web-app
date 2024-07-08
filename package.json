@@ -37,7 +37,7 @@
     "@gsap/react": "2.1.1",
     "@headlessui/react": "1.7.19",
     "@hookform/error-message": "2.0.1",
-    "@hookform/resolvers": "3.3.4",
+    "@hookform/resolvers": "3.9.0",
     "@keplr-wallet/proto-types": "0.12.83",
     "@keplr-wallet/wc-qrcode-modal": "0.12.83",
     "@paypal/react-paypal-js": "8.3.0",
