@@ -1,4 +1,5 @@
 import type { ChainID } from "types/chain";
+import type { DonationSource } from "types/lists";
 
 type DonorAddress = {
   line1: string;
@@ -18,6 +19,8 @@ type DonorDetails = {
 
 export type KYCData = Required<Omit<DonorDetails, "address"> & DonorAddress>;
 
+export type PaymentMethod = "Bank" | "Card" | "Crypto";
+
 export type FiatRamp = "STRIPE" | "PAYPAL";
 
 export type DonationRecord = {
@@ -36,13 +39,16 @@ export type DonationRecord = {
   //details
   /** ISODate string */
   date: string;
+  paymentMethod?: PaymentMethod;
   symbol: string;
   initAmount: number;
   initAmountUsd?: number;
   finalAmountUsd?: number;
+  directDonateAmount?: number;
+  sfDonateAmount?: number;
   splitLiqPct: number;
-
-  bankVerificationUrl?: string;
+  isRecurring?: boolean;
+  appUsed: DonationSource;
 } & (
   | {
       //medium
@@ -50,6 +56,7 @@ export type DonationRecord = {
       viaName: string;
     }
   | {
+      bankVerificationUrl?: string;
       viaId: "fiat";
       viaName: FiatRamp;
     }
