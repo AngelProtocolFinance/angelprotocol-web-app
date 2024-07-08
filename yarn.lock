@@ -3262,10 +3262,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stripe/stripe-js@npm:3.3.0":
-  version: 3.3.0
-  resolution: "@stripe/stripe-js@npm:3.3.0"
-  checksum: 10/2278479abb038945fdcf9e073ae547b519056124fff18d1f4d8dac464eefb52931334ca53f7904f1fb4ebf43f7338a6aa35be3581e8a475daf0c47af4e3239b8
+"@stripe/stripe-js@npm:4.1.0":
+  version: 4.1.0
+  resolution: "@stripe/stripe-js@npm:4.1.0"
+  checksum: 10/99d6e80a4819f7f6ccbcb3d91bbf5ac4bb34fe35a25a659091fc2420a13d93ec3cb1876b7a3473e9ada086a8996e2307aa635c067682bdace4d2c99edf4407d9
   languageName: node
   linkType: hard
 
@@ -4180,7 +4180,7 @@ __metadata:
     "@rsbuild/plugin-react": "npm:0.5.9"
     "@sentry/react": "npm:7.89.0"
     "@stripe/react-stripe-js": "npm:2.7.0"
-    "@stripe/stripe-js": "npm:3.3.0"
+    "@stripe/stripe-js": "npm:4.1.0"
     "@tailwindcss/container-queries": "npm:0.1.1"
     "@terra-money/terra.js": "npm:3.1.10"
     "@terra-money/wallet-provider": "npm:3.11.2"
