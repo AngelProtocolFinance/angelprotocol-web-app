@@ -112,17 +112,9 @@ describe("donation flow", () => {
     };
     render(<_Steps init={state} />);
 
-    //user back on splits step
     await userEvent.click(
-      screen.getByRole("button", {
-        name: /go back/i,
-      })
-    );
-
-    //user back on donate methods
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /go back/i,
+      await screen.findByRole("button", {
+        name: /continue/i,
       })
     );
 
