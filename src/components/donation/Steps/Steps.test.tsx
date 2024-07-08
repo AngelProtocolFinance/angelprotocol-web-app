@@ -188,4 +188,81 @@ describe("donation flow", () => {
     const tipSlider = screen.getByRole("slider");
     expect(tipSlider).toHaveAttribute("aria-valuenow", "0.17");
   });
+
+  test("tip, split reset when changing donation method", async () => {
+    const state: DonationState = {
+      step: "tip",
+      init: {
+        recipient: { id: 1, name: "test" },
+        source: "bg-marketplace",
+        mode: "live",
+        config: null,
+      },
+      details: stripeDonation,
+      liquidSplitPct: 63,
+      tip: { value: 50, format: "pct" },
+    };
+
+    render(<_Steps init={state} />);
+
+    //back to splits
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: /go back/i,
+      })
+    );
+    // back to donate methods
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: /go back/i,
+      })
+    );
+
+    //select crypto
+    const cryptoTab = screen.getByRole("tab", { name: /crypto/i });
+    await userEvent.click(cryptoTab);
+
+    //select network
+    const networkSelector = screen.getByRole("combobox");
+    await userEvent.click(networkSelector);
+    const networkOptions = screen.getAllByRole("option");
+    await userEvent.click(networkOptions[0]);
+
+    //select token
+    const tokenSelectorOpener = screen.getByRole("button", {
+      name: /select token/i,
+    });
+    await userEvent.click(tokenSelectorOpener);
+    //wait for token dropdown to load
+    const tokenSearchInput = await screen.findByPlaceholderText("Search...");
+    await userEvent.click(tokenSearchInput);
+    const tokenOptions = screen.getAllByRole("option");
+    await userEvent.click(tokenOptions[0]);
+
+    //input amount
+    const amountInput = screen.getByPlaceholderText(/enter amount/i);
+    await userEvent.type(amountInput, "150");
+
+    //continue to splits
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: /continue/i,
+      })
+    );
+
+    //split reset to 50%
+    const liqSplitSlider = screen.getByRole("slider");
+    expect(liqSplitSlider).toHaveAttribute("aria-valuenow", "50");
+
+    //continue to tip
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: /continue/i,
+      })
+    );
+
+    //tip is reverted to 17%
+    const tipSlider = screen.getByRole("slider");
+    expect(tipSlider).toHaveAttribute("aria-valuenow", "0.17");
+  });
 });
