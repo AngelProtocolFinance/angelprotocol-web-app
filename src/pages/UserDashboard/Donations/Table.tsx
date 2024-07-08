@@ -61,6 +61,7 @@ export default function Table({
           >
             Network
           </HeaderButton>
+          <>Recurring</>
           <>Currency</>
           <HeaderButton
             onClick={handleHeaderClick("initAmount")}
@@ -77,6 +78,22 @@ export default function Table({
             _sortDirection={sortDirection}
           >
             USD Value
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("directDonateAmount")}
+            _activeSortKey={sortKey}
+            _sortKey="directDonateAmount"
+            _sortDirection={sortDirection}
+          >
+            Direct Donation
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("sfDonateAmount")}
+            _activeSortKey={sortKey}
+            _sortKey="sfDonateAmount"
+            _sortDirection={sortDirection}
+          >
+            SF Donation
           </HeaderButton>
           {status === "intent" ? <></> : <>TX Hash</>}
           {status === "pending" && (
@@ -114,11 +131,22 @@ export default function Table({
               </Link>
               <>{new Date(row.date).toLocaleDateString()}</>
               <>{row.viaName}</>
+              <>{row.isRecurring ? "YES" : "NO"}</>
               <span className="text-sm">{row.symbol}</span>
               <>{humanize(row.initAmount, 3)}</>
               <>
                 {row.initAmountUsd
                   ? `$${humanize(row.initAmountUsd, 2)}`
+                  : "--"}
+              </>
+              <>
+                {row.directDonateAmount
+                  ? `$${humanize(row.directDonateAmount, 2)}`
+                  : "--"}
+              </>
+              <>
+                {row.sfDonateAmount
+                  ? `$${humanize(row.sfDonateAmount, 2)}`
                   : "--"}
               </>
               {status === "intent" ? (
@@ -133,13 +161,19 @@ export default function Table({
                   {row.id}
                 </ExtLink>
               )}
-              {status === "pending" && (
-                <ExtLink
-                  href={row.bankVerificationUrl}
-                  className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
-                >
-                  {row.bankVerificationUrl}
-                </ExtLink>
+              {status === "pending" && row.viaId === "fiat" ? (
+                row.bankVerificationUrl ? (
+                  <ExtLink
+                    href={row.bankVerificationUrl}
+                    className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
+                  >
+                    Verify Bank Account
+                  </ExtLink>
+                ) : (
+                  <>- - -</>
+                )
+              ) : (
+                <>- - -</>
               )}
               {status === "final" && (
                 <button
