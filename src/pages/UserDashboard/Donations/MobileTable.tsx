@@ -68,11 +68,22 @@ export default function MobileTable({
               </DisclosureButton>
               <DisclosurePanel className="w-full divide-y divide-blue-l2">
                 <Row title="Network">{row.viaName}</Row>
+                <Row title="Recurring">{row.isRecurring ? "YES" : "NO"}</Row>
                 <Row title="Currency">{row.symbol}</Row>
                 <Row title="Amount">{humanize(row.initAmount, 3)}</Row>
                 <Row title="USD Value">
                   {row.initAmountUsd
                     ? `$${humanize(row.initAmountUsd, 2)}`
+                    : "--"}
+                </Row>
+                <Row title="Direct Donation">
+                  {row.directDonateAmount
+                    ? `$${humanize(row.directDonateAmount, 2)}`
+                    : "--"}
+                </Row>
+                <Row title="SF Donation">
+                  {row.sfDonateAmount
+                    ? `$${humanize(row.sfDonateAmount, 2)}`
                     : "--"}
                 </Row>
                 {status === "intent" ? (
@@ -84,12 +95,16 @@ export default function MobileTable({
                 )}
                 {status === "pending" && (
                   <Row title="Action" className="rounded-b">
-                    <ExtLink
-                      href={row.bankVerificationUrl}
-                      className="btn-blue px-3 py-1 text-xs"
-                    >
-                      Verify Bank Account
-                    </ExtLink>
+                    {row.viaId === "fiat" && row.bankVerificationUrl ? (
+                      <ExtLink
+                        href={row.bankVerificationUrl}
+                        className="btn-blue px-3 py-1 text-xs"
+                      >
+                        Verify Bank Account
+                      </ExtLink>
+                    ) : (
+                      "--"
+                    )}
                   </Row>
                 )}
                 {status === "final" && (
