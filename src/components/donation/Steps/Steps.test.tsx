@@ -7,9 +7,6 @@ import { DEFAULT_PROGRAM } from "./common/constants";
 import { Steps } from "./index";
 import type { DonationState, StripeDonationDetails } from "./types";
 
-window.HTMLElement.prototype.setPointerCapture = vi.fn();
-window.HTMLElement.prototype.hasPointerCapture = vi.fn();
-
 const _Steps: typeof Steps = (props) => (
   <Provider store={store}>{<Steps {...props} />}</Provider>
 );
