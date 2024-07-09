@@ -1,4 +1,5 @@
 import { APIs } from "constants/urls";
+import { version as v } from "services/helpers";
 import { isEmpty } from "./isEmpty";
 import { jwtToken } from "./jwt-token";
 
@@ -20,7 +21,7 @@ export async function uploadFiles(
 
   await Promise.all(
     files.map((f, idx) =>
-      fetch(APIs.aws + "/v2/file-upload", {
+      fetch(APIs.aws + `/${v(2)}/file-upload`, {
         method: "POST",
         body: JSON.stringify({
           bucket,
