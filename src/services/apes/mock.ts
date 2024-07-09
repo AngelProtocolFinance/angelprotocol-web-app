@@ -67,4 +67,11 @@ export const handlers = [
     };
     return HttpResponse.json(data);
   }),
+
+  http.post(`${APIs.apes}/fiat-donation/stripe`, () => {
+    return HttpResponse.json({
+      clientSecret:
+        "pi_3PaYLoJBsJzBirEI0f431tfO_secret_Q7OjjC31Dh79Rsows3YacrNlm",
+    });
+  }),
 ];
