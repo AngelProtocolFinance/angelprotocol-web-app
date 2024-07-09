@@ -1,64 +1,18 @@
-import { afterEach } from "node:test";
+import { beforeEach } from "node:test";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import * as apes from "services/apes";
-import * as programs from "services/aws/programs";
-import type { Program } from "types/aws";
-import type { DetailedCurrency } from "types/components";
+import { Provider } from "react-redux";
+import {
+  fiatCurrenciesErrorHandler,
+  mockPhpCurrency,
+} from "services/apes/mock";
+import { mockPrograms } from "services/aws/programs";
+import { mswServer } from "setupTests";
+import { store } from "store/store";
+import type { AuthenticatedUser } from "types/auth";
 import { describe, expect, test, vi } from "vitest";
 import type { Init, StripeDonationDetails } from "../../types";
 import Form from "./Form";
-
-const defaultCurrency: DetailedCurrency = {
-  code: "PHP",
-  rate: 50,
-  min: 50,
-};
-const mockCurrencies: DetailedCurrency[] = [
-  { code: "EUR", rate: 0.92, min: 0.92 },
-  { code: "USD", rate: 1, min: 1 },
-  { code: "GBP", rate: 0.79, min: 0.79 },
-];
-
-const currenciesQuery = vi
-  .spyOn(apes, "useFiatCurrenciesQuery")
-  .mockReturnValue({
-    data: {
-      currencies: mockCurrencies,
-      defaultCurr: defaultCurrency,
-    },
-    isLoading: false,
-    isError: false,
-    error: null,
-    refetch: () => ({}) as any,
-  });
-
-const mockPrograms: Program[] = [
-  {
-    id: "program-1",
-    title: "Program 1",
-    description: "Description for Program 1",
-    milestones: [],
-  },
-  {
-    id: "program-2",
-    title: "Program 2",
-    description: "Description for Program 2",
-    milestones: [],
-  },
-];
-
-vi.spyOn(programs, "useProgramsQuery").mockReturnValue({
-  data: mockPrograms,
-  isLoading: false,
-  isFetching: false,
-  isError: false,
-  refetch: () => ({}) as any,
-});
-
-vi.mock("store/accessors", () => ({
-  useGetter: vi.fn(() => null),
-}));
 
 const mockSetState = vi.hoisted(() => vi.fn());
 vi.mock("../../Context", () => ({
@@ -75,16 +29,44 @@ const init: Init = {
   config: null,
 };
 
+const _Form: typeof Form = (props) => (
+  <Provider store={store}>{<Form {...props} />}</Provider>
+);
+
+const mockUseGetter = vi.hoisted(() => vi.fn());
+vi.mock("store/accessors", () => ({
+  useGetter: mockUseGetter,
+}));
+
 describe("Stripe form test", () => {
-  afterEach(() => {
-    vi.restoreAllMocks();
+  beforeEach(() => vi.restoreAllMocks());
+
+  test("failed to get currencies", async () => {
+    mswServer.use(fiatCurrenciesErrorHandler);
+    render(<_Form step="donate-form" init={init} />);
+    expect(screen.getByText(/loading donate form/i));
+    //after loading
+    expect(await screen.findByText(/failed to load donate form/i));
   });
 
-  test("initial state", () => {
-    render(<Form step="donate-form" init={init} />);
+  test("blank state: no default currency specified", async () => {
+    mockUseGetter.mockReturnValue(null);
+    render(<_Form step="donate-form" init={init} />);
+    const currencySelector = await screen.findByRole("combobox");
+    expect(currencySelector).toHaveDisplayValue(/usd/i);
+  });
+
+  test("initial state: user has preferred currency", async () => {
+    const user: Partial<AuthenticatedUser> = {
+      token: "1231",
+      prefCurrencyCode: "php",
+    };
+    mockUseGetter.mockReturnValue(user);
+
+    render(<_Form step="donate-form" init={init} />);
 
     //give monthly is frequency default option
-    const freqOptions = screen.getAllByRole("radio");
+    const freqOptions = await screen.findAllByRole("radio");
     expect(freqOptions[0]).toHaveTextContent(/give monthly/i);
     expect(freqOptions[0]).toBeChecked();
 
@@ -98,26 +80,12 @@ describe("Stripe form test", () => {
     const programSelector = screen.getByRole("button", {
       name: /general donation/i,
     });
+
     expect(programSelector).toBeInTheDocument();
   });
-  test("form is loading", () => {
-    currenciesQuery.mockReturnValueOnce({
-      refetch: () => ({}) as any,
-      data: undefined,
-      isLoading: true,
-    });
-    render(<Form step="donate-form" init={init} />);
-    expect(screen.getByText(/loading donate form/i));
-  });
-  test("failed to get currencies", () => {
-    currenciesQuery.mockReturnValueOnce({
-      refetch: () => ({}) as any,
-      isLoading: false,
-      isError: true,
-    });
-    render(<Form step="donate-form" init={init} />);
-    expect(screen.getByText(/failed to load donate form/i));
-  });
+
+  //currencies is cached at this point
+
   test("blank state: program donations not allowed", () => {
     const init: Init = {
       source: "bg-marketplace",
@@ -129,7 +97,7 @@ describe("Stripe form test", () => {
       },
       config: null,
     };
-    render(<Form step="donate-form" init={init} />);
+    render(<_Form step="donate-form" init={init} />);
 
     const programSelector = screen.queryByRole("button", {
       name: /general donation/i,
@@ -137,25 +105,16 @@ describe("Stripe form test", () => {
     expect(programSelector).toBeNull();
   });
 
-  test("blank state: no default currency specified", () => {
-    currenciesQuery.mockReturnValueOnce({
-      refetch: () => ({}) as any,
-      data: { currencies: mockCurrencies },
-    });
-    render(<Form step="donate-form" init={init} />);
-    const currencySelector = screen.getByRole("combobox");
-    expect(currencySelector).toHaveDisplayValue(/usd/i);
-  });
-
   test("prefilled state: user was able to continue", async () => {
+    const { currency_code, minimum_amount, rate } = mockPhpCurrency;
     const details: StripeDonationDetails = {
       amount: "60",
-      currency: defaultCurrency,
+      currency: { code: currency_code, min: minimum_amount, rate },
       frequency: "subscription",
       method: "stripe",
       program: { value: mockPrograms[0].id, label: mockPrograms[0].title },
     };
-    render(<Form step="donate-form" init={init} details={details} />);
+    render(<_Form step="donate-form" init={init} details={details} />);
 
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("60");
@@ -173,7 +132,7 @@ describe("Stripe form test", () => {
   });
 
   test("user corrects validation errors", async () => {
-    render(<Form step="donate-form" init={init} />);
+    render(<_Form step="donate-form" init={init} />);
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
     expect(mockSetState).not.toHaveBeenCalled();
@@ -201,7 +160,7 @@ describe("Stripe form test", () => {
   });
 
   test("incrementers", async () => {
-    render(<Form step="donate-form" init={init} />);
+    render(<_Form step="donate-form" init={init} />);
 
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     await userEvent.type(amountInput, "abc");

@@ -95,7 +95,7 @@ export type DonationIntent =
 
 export type FiatPaymentFrequency = "one-time" | "subscription";
 
-type Currency = {
+export type Currency = {
   /** ISO 3166-1 alpha-3 code */
   currency_code: string;
   minimum_amount: number;
