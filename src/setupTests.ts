@@ -51,6 +51,24 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
   disconnect: vi.fn(),
 }));
 
+/** 
+Mocking the `getBoundingClientRect` method for the virtual tests otherwise
+the `Virtualizer` from `@tanstack/react-virtual` will not work as expected
+because it couldn't measure the elements correctly. 
+@see https://github.com/tailwindlabs/headlessui/blob/main/packages/%40headlessui-react/src/components/combobox/combobox.test.tsx
+*/
+vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(() => ({
+  width: 120,
+  height: 40,
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0,
+  x: 0,
+  y: 0,
+  toJSON: () => {},
+}));
+
 export const mswServer = setupServer(
   ...programsHandlers,
   ...apesHandlers,

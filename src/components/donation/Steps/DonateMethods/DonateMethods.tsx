@@ -54,6 +54,7 @@ export default function DonateMethods(props: FormStep) {
 
   return (
     <TabGroup
+      data-testid="donate-methods"
       manual
       as="div"
       className="grid @md/steps:grid-cols-[auto_1fr]"

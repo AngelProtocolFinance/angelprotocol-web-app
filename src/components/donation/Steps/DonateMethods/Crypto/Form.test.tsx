@@ -9,24 +9,6 @@ import { afterAll, describe, expect, test, vi } from "vitest";
 import type { CryptoFormStep, Init } from "../../types";
 import Form from "./Form";
 
-/** 
-Mocking the `getBoundingClientRect` method for the virtual tests otherwise
-the `Virtualizer` from `@tanstack/react-virtual` will not work as expected
-because it couldn't measure the elements correctly. 
-@see https://github.com/tailwindlabs/headlessui/blob/main/packages/%40headlessui-react/src/components/combobox/combobox.test.tsx
-*/
-vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(() => ({
-  width: 120,
-  height: 40,
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0,
-  x: 0,
-  y: 0,
-  toJSON: () => {},
-}));
-
 const mockedSetState = vi.hoisted(() => vi.fn());
 vi.mock("../../Context", () => ({
   useDonationState: vi
