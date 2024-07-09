@@ -123,7 +123,7 @@ describe("stripe checkout", () => {
 
   test("card error", async () => {
     render(<Checkout {...state} feeAllowance={5} />);
-    const continueBtn = await screen.findByRole("button", {
+    const donateBtn = await screen.findByRole("button", {
       name: /donate now/i,
     });
 
@@ -134,14 +134,14 @@ describe("stripe checkout", () => {
     confirmPaymentMock.mockResolvedValueOnce({ error: err });
 
     //user sees modal on card error
-    await userEvent.click(continueBtn);
+    await userEvent.click(donateBtn);
     const errorModal = screen.getByRole("dialog");
     expect(errorModal).toHaveTextContent(/invalid card/i);
   });
 
   test("unexpected error", async () => {
     render(<Checkout {...state} feeAllowance={5} />);
-    const continueBtn = await screen.findByRole("button", {
+    const donateBtn = await screen.findByRole("button", {
       name: /donate now/i,
     });
 
@@ -151,7 +151,7 @@ describe("stripe checkout", () => {
     };
 
     confirmPaymentMock.mockResolvedValueOnce({ error: err });
-    await userEvent.click(continueBtn);
+    await userEvent.click(donateBtn);
     screen.debug();
 
     const errorModal = screen.getByRole("dialog");
