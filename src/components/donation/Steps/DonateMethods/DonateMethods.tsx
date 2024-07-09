@@ -1,11 +1,4 @@
-import {
-  Description,
-  Tab,
-  TabGroup,
-  TabList,
-  TabPanel,
-  TabPanels,
-} from "@headlessui/react";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { Label } from "components/form";
 import type { ReactNode } from "react";
