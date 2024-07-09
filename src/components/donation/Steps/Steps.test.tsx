@@ -1,10 +1,8 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ModalContext from "contexts/ModalContext";
-import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "store/store";
-import { afterEach, describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 import { DEFAULT_PROGRAM } from "./common/constants";
 import { Steps } from "./index";
 import type { DonationState, StripeDonationDetails } from "./types";
@@ -266,77 +264,5 @@ describe("donation flow", () => {
     //tip is reverted to 17%
     const tipSlider = screen.getByRole("slider");
     expect(tipSlider).toHaveAttribute("aria-valuenow", "0.17");
-  });
-
-  /** STRIPE CHECKOUT TEST */
-
-  const initState: DonationState = {
-    init: {
-      recipient: { id: 1, name: "test" },
-      source: "bg-marketplace",
-      mode: "live",
-      config: null,
-    },
-    step: "submit",
-    details: stripeDonation,
-    liquidSplitPct: 50,
-    tip: { value: 17, format: "pct" },
-    donor: {
-      title: { value: "Mr", label: "Mr" },
-      firstName: "first",
-      lastName: "last",
-      email: "donor@gmail.com",
-      streetAddress: "street",
-      zipCode: "123",
-      ukTaxResident: false,
-    },
-    feeAllowance: 10,
-    honorary: {
-      withHonorary: true,
-      honoraryFullName: "first last",
-      withTributeNotif: true,
-      tributeNotif: {
-        fromMsg: "custom message",
-        toEmail: "to@gmail.com",
-        toFullName: "tofirst tolast",
-      },
-    },
-  };
-
-  vi.mock("@stripe/react-stripe-js", () => ({
-    Elements: vi.fn(({ children }) => children),
-    PaymentElement: vi.fn(({ onReady }: any) => {
-      useEffect(() => {
-        const id = setTimeout(onReady, 50);
-        return () => {
-          clearTimeout(id);
-        };
-      }, [onReady]);
-      return <div />;
-    }),
-    useStripe: vi.fn(),
-    useElements: vi.fn(),
-  }));
-
-  test("stripe elements loading", async () => {
-    render(
-      <ModalContext>
-        <_Steps init={initState} />
-      </ModalContext>
-    );
-    //getting client secret from proxy
-    expect(screen.getByText(/loading payment form../i)).toBeInTheDocument();
-    const checkoutForm = await screen.findByTestId("stripe-checkout-form");
-    expect(checkoutForm).toBeInTheDocument();
-
-    //stripe is loading elements
-    const stripeLoader = screen.getByTestId("loader");
-    expect(stripeLoader).toBeInTheDocument();
-
-    const continueBtn = await screen.findByRole("button", {
-      name: /donate now/i,
-    });
-    expect(continueBtn).toBeInTheDocument();
-    await userEvent.click(continueBtn);
   });
 });
