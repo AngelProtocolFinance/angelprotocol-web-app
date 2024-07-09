@@ -1,3 +1,4 @@
+import type { Stripe, StripeError } from "@stripe/stripe-js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import ModalContext from "contexts/ModalContext";
@@ -18,6 +19,8 @@ vi.mock("../../Context", () => ({
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
 
+const confirmPaymentMock = vi.hoisted(() => vi.fn());
+
 vi.mock("@stripe/react-stripe-js", () => ({
   Elements: vi.fn(({ children }) => children),
   PaymentElement: vi.fn(({ onReady }: any) => {
@@ -29,8 +32,13 @@ vi.mock("@stripe/react-stripe-js", () => ({
     }, [onReady]);
     return <div />;
   }),
-  useStripe: vi.fn(),
-  useElements: vi.fn(),
+  useStripe: vi.fn(() => {
+    const stripe: Stripe = {
+      confirmPayment: confirmPaymentMock,
+    } as any;
+    return stripe;
+  }),
+  useElements: vi.fn(() => ({})),
 }));
 
 const Checkout: typeof StripeCheckout = (props) => (
@@ -111,6 +119,44 @@ describe("stripe checkout", () => {
       name: /donate now/i,
     });
     expect(continueBtn).toBeInTheDocument();
+  });
+
+  test("card error", async () => {
+    render(<Checkout {...state} feeAllowance={5} />);
+    const continueBtn = await screen.findByRole("button", {
+      name: /donate now/i,
+    });
+
+    const err: StripeError = {
+      type: "card_error",
+      message: "invalid card",
+    };
+    confirmPaymentMock.mockResolvedValueOnce({ error: err });
+
+    //user sees modal on card error
     await userEvent.click(continueBtn);
+    const errorModal = screen.getByRole("dialog");
+    expect(errorModal).toHaveTextContent(/invalid card/i);
+  });
+
+  test("unexpected error", async () => {
+    render(<Checkout {...state} feeAllowance={5} />);
+    const continueBtn = await screen.findByRole("button", {
+      name: /donate now/i,
+    });
+
+    const err: StripeError = {
+      type: "idempotency_error",
+      message: "unhelpful error message that won't be shown",
+    };
+
+    confirmPaymentMock.mockResolvedValueOnce({ error: err });
+    await userEvent.click(continueBtn);
+    screen.debug();
+
+    const errorModal = screen.getByRole("dialog");
+    const genericError =
+      "An unexpected error occurred while processing payment and has been reported. Please get in touch with support@better.giving if the problem persists.";
+    expect(errorModal).toHaveTextContent(genericError);
   });
 });
