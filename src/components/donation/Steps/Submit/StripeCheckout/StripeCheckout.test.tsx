@@ -152,7 +152,6 @@ describe("stripe checkout", () => {
 
     confirmPaymentMock.mockResolvedValueOnce({ error: err });
     await userEvent.click(donateBtn);
-    screen.debug();
 
     const errorModal = screen.getByRole("dialog");
     const genericError =
