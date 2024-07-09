@@ -49,6 +49,11 @@ export const fiatCurrenciesErrorHandler = http.get(
   () => HttpResponse.error()
 );
 
+export const fiatDonationIntentCreationErrorHandler = http.post(
+  `${APIs.apes}/fiat-donation/stripe`,
+  () => HttpResponse.error()
+);
+
 export const handlers = [
   http.get(`${APIs.apes}/top-countries`, () => {
     return HttpResponse.json([] satisfies string[]);
@@ -70,8 +75,8 @@ export const handlers = [
 
   http.post(`${APIs.apes}/fiat-donation/stripe`, () => {
     return HttpResponse.json({
-      clientSecret:
-        "pi_3PaYLoJBsJzBirEI0f431tfO_secret_Q7OjjC31Dh79Rsows3YacrNlm",
+      //stripe.Element is mocked and doesn't need real intent id
+      clientSecret: "fake_intent_id",
     });
   }),
 ];

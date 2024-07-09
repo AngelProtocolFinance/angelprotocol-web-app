@@ -3,6 +3,8 @@ import userEvent from "@testing-library/user-event";
 import ModalContext from "contexts/ModalContext";
 import { useEffect } from "react";
 import { Provider } from "react-redux";
+import { fiatDonationIntentCreationErrorHandler } from "services/apes/mock";
+import { mswServer } from "setupTests";
 import { store } from "store/store";
 import { describe, expect, test, vi } from "vitest";
 import { DEFAULT_PROGRAM } from "../../common/constants";
@@ -79,8 +81,22 @@ const state: StripeCheckoutStep = {
 };
 
 describe("stripe checkout", () => {
-  test("stripe loading", async () => {
+  test("failed to get client secret", async () => {
+    //suppress expected error boundary error
+    vi.spyOn(console, "error").mockImplementation(() => null);
+    mswServer.use(fiatDonationIntentCreationErrorHandler);
     render(<Checkout {...state} />);
+
+    //getting client secret from proxy
+    expect(screen.getByText(/loading payment form../i)).toBeInTheDocument();
+
+    const errorMsg =
+      "An unexpected error occurred and has been reported. Please get in touch with support@better.giving if the problem persists.";
+    expect(await screen.findByText(errorMsg)).toBeInTheDocument();
+  });
+
+  test("stripe loading", async () => {
+    render(<Checkout {...state} feeAllowance={5} /** reset cache */ />);
 
     //getting client secret from proxy
     expect(screen.getByText(/loading payment form../i)).toBeInTheDocument();
