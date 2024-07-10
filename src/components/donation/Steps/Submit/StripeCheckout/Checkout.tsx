@@ -69,7 +69,11 @@ export default function Checkout(props: StripeCheckoutStep) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="contents">
+    <form
+      data-testid="stripe-checkout-form"
+      onSubmit={handleSubmit}
+      className="contents"
+    >
       <PaymentElement
         options={{ layout: "tabs" }}
         onReady={() => setStatus("ready")}

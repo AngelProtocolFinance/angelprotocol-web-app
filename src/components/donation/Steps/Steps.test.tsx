@@ -2,7 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { store } from "store/store";
-import { describe, expect, test, vi } from "vitest";
+import { describe, expect, test } from "vitest";
 import { DEFAULT_PROGRAM } from "./common/constants";
 import { Steps } from "./index";
 import type { DonationState, StripeDonationDetails } from "./types";
