@@ -48,12 +48,12 @@ export default function Content({ profile, config, classes = "" }: Props) {
       <Steps
         source="bg-widget"
         mode="live"
-        className="w-full md:w-3/4 border border-gray-l4"
+        className="w-full md:w-3/4 border border-gray-l4 rounded-lg"
         recipient={recipient}
         config={config}
         programId={config.programId}
       />
-      <p className="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
+      <p className="px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
         By making a donation to {APP_NAME}, you agree to our{" "}
         <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
         <A href={PRIVACY_POLICY}>Privacy Policy</A>. 100% of your donation is
