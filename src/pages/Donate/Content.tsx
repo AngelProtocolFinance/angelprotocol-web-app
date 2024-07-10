@@ -92,6 +92,9 @@ function Content({ intent, endowment }: Props) {
   );
 }
 
+//memoize to prevent useEffect ( based on props ) from running when parent re-renders with the same props
+export default memo(Content);
+
 const A: typeof ExtLink = ({ className, ...props }) => {
   return (
     <ExtLink
@@ -100,6 +103,3 @@ const A: typeof ExtLink = ({ className, ...props }) => {
     />
   );
 };
-
-//memoize to prevent useEffect ( based on props ) from running when parent re-renders with the same props
-export default memo(Content);
