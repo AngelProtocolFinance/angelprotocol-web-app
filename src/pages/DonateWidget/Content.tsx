@@ -1,9 +1,9 @@
+import { DonationTerms } from "components/DonationTerms";
 import ExtLink from "components/ExtLink";
 import Seo from "components/Seo";
 import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
 import type { EndowmentProfile } from "types/aws";
 import type { Parsed } from "./parseConfig";
 
@@ -37,14 +37,12 @@ export default function Content({ profile, config, classes = "" }: Props) {
           {config.title || `Donate to ${profile.name}`}
         </h1>
       )}
-
       {config.isDescriptionTextShown && (
         <p className="text-xs text-center sm:text-base">
           {config.description ||
             "Check out the many crypto and fiat donation options. Provide your personal details to receive an immediate tax receipt."}
         </p>
       )}
-
       <Steps
         source="bg-widget"
         mode="live"
@@ -53,17 +51,11 @@ export default function Content({ profile, config, classes = "" }: Props) {
         config={config}
         programId={config.programId}
       />
-      <p className="px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
-        By making a donation to {APP_NAME}, you agree to our{" "}
-        <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
-        <A href={PRIVACY_POLICY}>Privacy Policy</A>. 100% of your donation is
-        tax-deductible to the extent allowed by US law. Your donation is made to{" "}
-        {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants unrestricted
-        funds to {profile.name} on your behalf. As a legal matter, {APP_NAME}{" "}
-        must provide any donations to {profile.name} on an unrestricted basis,
-        regardless of any designations or restrictions made by you.{" "}
-        <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
-      </p>
+      <DonationTerms
+        Link={A}
+        endowName={profile.name}
+        classes="px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2"
+      />
     </div>
   );
 }

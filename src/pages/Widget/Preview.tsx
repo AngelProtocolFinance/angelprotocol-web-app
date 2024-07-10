@@ -79,7 +79,7 @@ export default function Preview({ classes = "", config }: Props) {
           <DonationTerms
             endowName={endowName}
             Link={A}
-            classes="max-md:border-t max-md:border-gray-l3 px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2"
+            classes="px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2"
           />
           <footer className="mt-auto grid place-items-center h-20 w-full bg-[--accent-primary]">
             <DappLogo classes="w-40" color="white" />
