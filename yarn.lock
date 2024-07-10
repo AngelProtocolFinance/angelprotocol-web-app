@@ -4497,6 +4497,7 @@ __metadata:
     qrcode.react: "npm:3.1.0"
     quill: "npm:2.0.2"
     react: "npm:18.2.0"
+    react-chariot-connect: "npm:1.0.8"
     react-csv: "npm:2.2.2"
     react-dom: "npm:18.2.0"
     react-dropzone: "npm:14.2.3"
@@ -8477,6 +8478,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-chariot-connect@npm:1.0.8":
+  version: 1.0.8
+  resolution: "react-chariot-connect@npm:1.0.8"
+  dependencies:
+    react-script-hook: "npm:^1.7.2"
+  peerDependencies:
+    react: ">=18"
+  checksum: 10/5f2849bbd7898bc97c8f623812ffcc52d6d90cd959af79e4ec61cb2764e9574ae45588c31f559fe779d56d0cc255b4b8f1b4d71a3067f54a8f0adf7856506228
+  languageName: node
+  linkType: hard
+
 "react-csv@npm:2.2.2":
   version: 2.2.2
   resolution: "react-csv@npm:2.2.2"
@@ -8648,6 +8660,16 @@ __metadata:
   peerDependencies:
     react: ">=16.8"
   checksum: 10/1b5228bec63147b3cf5c645ed7eac5eeca5561c70f348b61ed3af9acf86b1a181ec4af28320419eadad626c6e725defd7eb8d7418cc6080384fc7956e0325947
+  languageName: node
+  linkType: hard
+
+"react-script-hook@npm:^1.7.2":
+  version: 1.7.2
+  resolution: "react-script-hook@npm:1.7.2"
+  peerDependencies:
+    react: ^16.8.6 || 17 - 18
+    react-dom: ^16.8.6 || 17 - 18
+  checksum: 10/a9ed431997fa9df629bd3ec51302141173d8d1d77fa561127fa8fee088769af9af25f14b7e655715e3c9ee9b5fc161dfab413706d9ddbb72c577021959654482
   languageName: node
   linkType: hard
 
