@@ -87,22 +87,28 @@ function Method({
         <Icon type="Drag" />
       </button>
 
-      {value.name}
+      <div>
+        <span>{value.name}</span>
+        <span>{value.tooltip}</span>
+      </div>
     </Reorder.Item>
   );
 }
 
-const names: { [K in DonateMethodId]: string } = {
-  crypto: "Crypto",
-  daf: "DAF",
-  stocks: "Stocks",
-  stripe: "Card",
+const methodDetails: {
+  [K in DonateMethodId]: Pick<TDonateMethod, "name" | "tooltip">;
+} = {
+  crypto: { name: "Crypto" },
+  daf: { name: "DAF", tooltip: "requires card payment" },
+  stocks: { name: "Stocks" },
+  stripe: { name: "Card" },
 };
 const toMethods = (ids: DonateMethodId[], disabled = false): TDonateMethod[] =>
   ids.map((id) => ({
     id,
-    name: names[id],
+    name: methodDetails[id].name,
     disabled,
+    tooltip: methodDetails[id].tooltip,
   }));
 
 const all: DonateMethodId[] = ["stripe", "stocks", "daf", "crypto"];

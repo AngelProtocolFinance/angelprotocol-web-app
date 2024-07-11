@@ -62,4 +62,5 @@ export type TDonateMethod = {
   id: DonateMethodId;
   name: string;
   disabled: boolean;
+  tooltip?: string;
 };
