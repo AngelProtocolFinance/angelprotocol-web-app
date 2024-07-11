@@ -81,7 +81,7 @@ export default function MobileTable({
                     ? `$${humanize(row.directDonateAmount, 2)}`
                     : "--"}
                 </Row>
-                <Row title="SF Donation">
+                <Row title="Donation to Sustainability Fund">
                   {row.sfDonateAmount
                     ? `$${humanize(row.sfDonateAmount, 2)}`
                     : "--"}

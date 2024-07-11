@@ -93,7 +93,7 @@ export default function Table({
             _sortKey="sfDonateAmount"
             _sortDirection={sortDirection}
           >
-            SF Donation
+            Donation to Sustainability Fund
           </HeaderButton>
           {status === "intent" ? <></> : <>TX Hash</>}
           {status === "pending" && (
