@@ -65,7 +65,6 @@ export const NativeCheckField = fixedForwardRef(_CheckField);
 
 export function CheckField<T extends FieldValues>({
   name,
-  children,
   onChange,
   disabled,
   ...props
