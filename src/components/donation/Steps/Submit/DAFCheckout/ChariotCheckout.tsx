@@ -1,4 +1,5 @@
 import { CHARIOT_CONNECT_ID } from "constants/env";
+import { useErrorContext } from "contexts/ErrorContext";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ChariotConnect from "react-chariot-connect";
 import { useLazyChariotGrantQuery } from "services/apes";
@@ -19,6 +20,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
     feeAllowance,
   } = props;
   const { setState } = useDonationState();
+  const { handleError } = useErrorContext();
   const [createGrant, { isLoading }] = useLazyChariotGrantQuery();
 
   return (
@@ -52,26 +54,30 @@ export function ChariotCheckout(props: DafCheckoutStep) {
           // This hook should be used to update our internal donation DB
           // see https://givechariot.readme.io/reference/integrating-connect#capture-your-grant-intent
           onSuccess={async (r: { detail: { workflowSessionId: string } }) => {
-            await createGrant({
-              transactionId: r.detail.workflowSessionId,
-              amount: +details.amount,
-              tipAmount: tip?.value ?? 0,
-              feeAllowance,
-              currency: details.currency.code,
-              endowmentId: init.recipient.id,
-              splitLiq: liquidSplitPct,
-              donor: toDonor(fvDonor),
-              source: init.source,
-              ...(honorary.honoraryFullName && {
-                inHonorOf: honorary.honoraryFullName,
-                tributeNotif: honorary.withTributeNotif
-                  ? honorary.tributeNotif
-                  : undefined,
-              }),
-              ...(details.program.value && {
-                programId: details.program.value,
-              }),
-            }).unwrap();
+            try {
+              await createGrant({
+                transactionId: r.detail.workflowSessionId,
+                amount: +details.amount,
+                tipAmount: tip?.value ?? 0,
+                feeAllowance,
+                currency: details.currency.code,
+                endowmentId: init.recipient.id,
+                splitLiq: liquidSplitPct,
+                donor: toDonor(fvDonor),
+                source: init.source,
+                ...(honorary.honoraryFullName && {
+                  inHonorOf: honorary.honoraryFullName,
+                  tributeNotif: honorary.withTributeNotif
+                    ? honorary.tributeNotif
+                    : undefined,
+                }),
+                ...(details.program.value && {
+                  programId: details.program.value,
+                }),
+              }).unwrap();
+            } catch (err) {
+              handleError(err, { context: "processing donation" });
+            }
           }}
         />
       </ErrorBoundary>
