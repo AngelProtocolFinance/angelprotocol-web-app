@@ -9,15 +9,7 @@ import { confetti } from "helpers/confetti";
 import { Link, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
-import type { GuestDonor } from "types/aws";
-
-export type DonateThanksState = {
-  guestDonor?: GuestDonor;
-  recipientName?: string;
-  recipientId?: number;
-  bankVerificationUrl?: string;
-  microdepositArrivalDate?: number;
-};
+import type { DonateThanksState } from "types/pages";
 
 export default function DonateThanks({ widgetVersion = false }) {
   const location = useLocation();

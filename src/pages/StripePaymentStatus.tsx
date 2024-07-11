@@ -8,7 +8,7 @@ import { useCallback, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useStripePaymentStatusQuery } from "services/apes";
 import type { GuestDonor } from "types/aws";
-import type { DonateThanksState } from "./DonateThanks";
+import type { DonateThanksState } from "types/pages";
 
 export default function StripePaymentStatus() {
   const paymentIntentId =
