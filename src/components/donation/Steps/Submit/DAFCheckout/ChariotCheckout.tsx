@@ -1,3 +1,4 @@
+import ContentLoader from "components/ContentLoader";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { useErrorContext } from "contexts/ErrorContext";
 import ErrorBoundary from "errors/ErrorBoundary";
@@ -25,7 +26,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
 
   return (
     <Summary
-      classes="grid content-start p-4 @md/steps:p-8"
+      classes="group grid content-start p-4 @md/steps:p-8 [&_#connectContainer]:mt-8"
       onBack={() => setState({ ...props, step: "summary" })}
       Amount={currency(details.currency)}
       amount={+details.amount}
@@ -43,6 +44,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
     >
       <ErrorBoundary>
         <ChariotConnect
+          theme="LightBlueTheme"
           disabled={isLoading}
           cid={CHARIOT_CONNECT_ID}
           onDonationRequest={async () => ({
@@ -81,6 +83,7 @@ export function ChariotCheckout(props: DafCheckoutStep) {
           }}
         />
       </ErrorBoundary>
+      <ContentLoader className="h-12 mt-4 block group-has-[chariot-connect]:hidden" />
     </Summary>
   );
 }
