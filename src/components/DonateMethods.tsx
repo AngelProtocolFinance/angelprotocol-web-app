@@ -41,9 +41,33 @@ export function DonateMethods({ values, onChange, error, classes }: Props) {
           <Method
             value={v}
             key={v.id}
-            updator={(updated) =>
-              onChange(values.map((v) => (v.id === updated.id ? updated : v)))
-            }
+            updator={(updated) => {
+              const _methods = values.map((v) => {
+                if (v.id === updated.id) return updated;
+
+                //if DAF is enabled, also enable card + lock
+                if (
+                  updated.id === "daf" &&
+                  !updated.disabled &&
+                  v.id === "stripe"
+                ) {
+                  return { ...v, disabled: false, locked: true };
+                }
+
+                //if DAF is disabled, remove lock from card
+                if (
+                  updated.id === "daf" &&
+                  updated.disabled &&
+                  v.id === "stripe"
+                ) {
+                  return { ...v, locked: false };
+                }
+
+                return v;
+              });
+
+              onChange(_methods);
+            }}
           />
         ))}
       </Reorder.Group>
@@ -73,6 +97,7 @@ function Method({
       <input
         type="checkbox"
         className="accent-blue-d1 size-3.5"
+        disabled={value.locked}
         checked={!value.disabled}
         onChange={(e) => {
           updator({ ...value, disabled: !e.target.checked });
@@ -89,7 +114,7 @@ function Method({
 
       <div>
         <span>{value.name}</span>
-        <span>{value.tooltip}</span>
+        <span className="text-gray-l1 text-sm ml-2">{value.tooltip}</span>
       </div>
     </Reorder.Item>
   );
