@@ -1,1 +1,1 @@
-export { default } from "./DAFCheckout";
+export { default } from "./ChariotCheckout";

@@ -15,7 +15,7 @@ import Summary from "../../common/Summary";
 import { toDonor } from "../../common/constants";
 import type { DafCheckoutStep } from "../../types";
 
-export function ChariotCheckout(props: DafCheckoutStep) {
+export default function ChariotCheckout(props: DafCheckoutStep) {
   const {
     init,
     details,
