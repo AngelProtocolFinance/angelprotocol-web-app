@@ -55,7 +55,10 @@ export default function DonationsTable({ classes = "" }) {
                       const amt = amount(d.splitLiqPct, d.finalAmountUsd);
                       return fill({
                         date: d.date,
-                        appUsed: d.appUsed,
+                        appUsed:
+                          d.appUsed === "bg-widget"
+                            ? "Donation Form"
+                            : "Marketplace",
                         paymentMethod: paymentMethod(d.paymentMethod),
                         isRecurring: d.isRecurring ? "Yes" : "No",
                         symbol: d.symbol,
