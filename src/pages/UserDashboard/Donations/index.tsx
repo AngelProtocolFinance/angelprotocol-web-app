@@ -1,8 +1,7 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import { isEmpty } from "helpers";
-import { replaceWithEmptyString as fill } from "helpers/replaceWithEmptyString";
+import { replaceWithEmptyString as fill, isEmpty } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { AuthenticatedUser } from "types/auth";
 import type { DonationRecord } from "types/aws";

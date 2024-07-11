@@ -1,7 +1,7 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import { replaceWithEmptyString as fill } from "helpers/replaceWithEmptyString";
+import { replaceWithEmptyString as fill, paymentMethod } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { DonationRecord, KYCData } from "types/aws";
 import type { Ensure } from "types/utils";
@@ -56,7 +56,7 @@ export default function DonationsTable({ classes = "" }) {
                       return fill({
                         date: d.date,
                         appUsed: d.appUsed,
-                        paymentMethod: d.paymentMethod,
+                        paymentMethod: paymentMethod(d.paymentMethod),
                         isRecurring: d.isRecurring ? "Yes" : "No",
                         symbol: d.symbol,
                         initAmount: d.initAmount,
