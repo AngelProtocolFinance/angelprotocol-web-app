@@ -1,6 +1,7 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import { replaceWithEmptyString as fill } from "helpers/replaceWithEmptyString";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { DonationRecord, KYCData } from "types/aws";
 import type { Ensure } from "types/utils";
@@ -123,15 +124,4 @@ function amount(splitLiqPct: number, amount = 0) {
   const directDonate = amount * (splitLiqPct / 100);
   const sfDonate = amount - directDonate;
   return { directDonate, sfDonate };
-}
-
-/** fill undefined with "" */
-function fill<T extends object>(
-  obj: T
-): { [K in keyof T]-?: NonNullable<T[K]> } {
-  return new Proxy(obj, {
-    get(target: any, key) {
-      return target[key] ?? "";
-    },
-  });
 }
