@@ -1,6 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { List } from "components/Selector";
-import { CheckField, NativeField as Field, Form, Label } from "components/form";
+import {
+  NativeCheckField as CheckField,
+  NativeField as Field,
+  Form,
+  Label,
+} from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import type { DonateMethodId } from "types/lists";
@@ -146,7 +151,7 @@ export default function SummaryForm({
         required
       />
       {(method === "crypto" || method === "stripe") && (
-        <CheckField<FV> name="coverFee" classes="col-span-full">
+        <CheckField {...register("coverFee")} classes="col-span-full">
           Cover payment processing fees for your donation{" "}
           <span className="text-navy-l1 text-sm">
             (&nbsp;{nonprofitName} receives the full amount&nbsp;)
@@ -154,7 +159,7 @@ export default function SummaryForm({
         </CheckField>
       )}
       {method !== "crypto" && (
-        <CheckField<FV> name="ukTaxResident" classes="col-span-full mt-4">
+        <CheckField {...register("ukTaxResident")} classes="col-span-full mt-4">
           UK Taxpayer? Supercharge your donation with gift aid
         </CheckField>
       )}
@@ -178,7 +183,7 @@ export default function SummaryForm({
           />
         </div>
       )}
-      <CheckField<FV> name="withHonorary" classes="col-span-full mt-4">
+      <CheckField {...register("withHonorary")} classes="col-span-full mt-4">
         Dedicate my donation
       </CheckField>
 
@@ -192,8 +197,8 @@ export default function SummaryForm({
             required
             error={errors.honoraryFullName?.message}
           />
-          <CheckField<FV>
-            name="withTributeNotif"
+          <CheckField
+            {...register("withTributeNotif")}
             classes="col-span-full mt-3 text-sm"
           >
             Notify someone about this tribute
