@@ -105,7 +105,7 @@ const csvHeaders: {
   { key: "initAmount", label: "Donation Amount" },
   { key: "finalAmountUsd", label: "Donation Value USD" },
   { key: "directDonateAmount", label: "Direct Donation" },
-  { key: "sfDonateAmount", label: "SF Donation" },
+  { key: "sfDonateAmount", label: "Donation to Sustainability Fund" },
   { key: "id", label: "Transaction Hash" },
   { key: "receipt", label: "Receipt Provided" },
   { key: "fullName", label: "Full Name" },
