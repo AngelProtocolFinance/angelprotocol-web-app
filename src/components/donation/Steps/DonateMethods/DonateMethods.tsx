@@ -48,8 +48,15 @@ const tabClasses = (selected: boolean) =>
 
 export default function DonateMethods(props: FormStep) {
   const { details, step, init } = props;
+  const methodIds = init.config?.methodIds;
 
-  const tabs = init.config?.methodIds || allMethodIds;
+  const tabs =
+    methodIds?.concat(
+      methodIds.includes("daf") && !methodIds.includes("stripe")
+        ? ["stripe"]
+        : []
+    ) || allMethodIds;
+
   const tabIdxFound = tabs.findIndex((t) => t === details?.method);
 
   return (
