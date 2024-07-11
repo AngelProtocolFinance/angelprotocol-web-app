@@ -1,9 +1,14 @@
 import ContentLoader from "components/ContentLoader";
 import { CHARIOT_CONNECT_ID } from "constants/env";
+import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ChariotConnect from "react-chariot-connect";
+import { useNavigate } from "react-router-dom";
 import { useLazyChariotGrantQuery } from "services/apes";
+import { useGetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
+import type { DonateThanksState } from "types/pages";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
@@ -23,6 +28,8 @@ export function ChariotCheckout(props: DafCheckoutStep) {
   const { setState } = useDonationState();
   const { handleError } = useErrorContext();
   const [createGrant, { isLoading }] = useLazyChariotGrantQuery();
+  const navigate = useNavigate();
+  const user = useGetter((state) => state.auth.user);
 
   return (
     <Summary
@@ -77,6 +84,19 @@ export function ChariotCheckout(props: DafCheckoutStep) {
                   programId: details.program.value,
                 }),
               }).unwrap();
+
+              navigate(`${appRoutes.donate_thanks}`, {
+                state: {
+                  guestDonor: userIsSignedIn(user)
+                    ? undefined
+                    : {
+                        email: fvDonor.email,
+                        fullName: `${fvDonor.firstName} ${fvDonor.lastName}`,
+                      },
+                  recipientId: init.recipient.id,
+                  recipientName: init.recipient.name,
+                } satisfies DonateThanksState,
+              });
             } catch (err) {
               handleError(err, { context: "processing donation" });
             }
