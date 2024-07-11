@@ -14,6 +14,7 @@ import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
 import { toDonor } from "../../common/constants";
 import type { DafCheckoutStep } from "../../types";
+import { toPlatformValues } from "./toPlatformValues";
 
 export default function ChariotCheckout(props: DafCheckoutStep) {
   const {
@@ -30,6 +31,8 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   const [createGrant, { isLoading }] = useLazyChariotGrantQuery();
   const navigate = useNavigate();
   const user = useGetter((state) => state.auth.user);
+
+  const platformAmount = +details.amount + feeAllowance + (tip?.value ?? 0);
 
   return (
     <Summary
@@ -54,21 +57,30 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           theme="LightBlueTheme"
           disabled={isLoading}
           cid={CHARIOT_CONNECT_ID}
+          // https://givechariot.readme.io/reference/integrating-connect#pre-populate-data-into-your-connect-session
           onDonationRequest={async () => ({
-            amount: +details.amount * 100, //in cents
+            amount: platformAmount * 100, //in cents
             firstName: fvDonor.firstName,
             lastName: fvDonor.lastName,
             email: fvDonor.email,
           })}
-          // This hook should be used to update our internal donation DB
           // see https://givechariot.readme.io/reference/integrating-connect#capture-your-grant-intent
-          onSuccess={async (r: { detail: { workflowSessionId: string } }) => {
+          onSuccess={async (ev) => {
+            const { detail, grantIntent } = ev;
+            /** user may input amount different from our donate form */
+            const grantAmount: number = grantIntent.amount / 100;
+            const adjusted = toPlatformValues(grantAmount, {
+              amount: +details.amount,
+              tip: tip?.value ?? 0,
+              feeAllowance,
+            });
+
             try {
               await createGrant({
-                transactionId: r.detail.workflowSessionId,
-                amount: +details.amount,
-                tipAmount: tip?.value ?? 0,
-                feeAllowance,
+                transactionId: detail.workflowSessionId,
+                amount: adjusted.amount,
+                tipAmount: adjusted.tip,
+                feeAllowance: adjusted.feeAllowance,
                 currency: details.currency.code,
                 endowmentId: init.recipient.id,
                 splitLiq: liquidSplitPct,
