@@ -54,7 +54,7 @@ export default function DonationsTable({ classes = "" }) {
                     ({ donorDetails: donor, ...d }) => {
                       const amt = amount(d.splitLiqPct, d.finalAmountUsd);
                       return fill({
-                        date: d.date,
+                        date: new Date(d.date).toLocaleDateString(),
                         appUsed:
                           d.appUsed === "bg-widget"
                             ? "Donation Form"

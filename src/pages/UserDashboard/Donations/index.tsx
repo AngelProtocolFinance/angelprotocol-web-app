@@ -48,7 +48,7 @@ export default function Donations({ user }: { user: AuthenticatedUser }) {
           data?.Items.map((item) => {
             return fill({
               recipientName: item.recipientName,
-              date: item.date,
+              date: new Date(item.date).toLocaleDateString(),
               viaName: item.viaName,
               isRecurring: item.isRecurring ? "Yes" : "No",
               symbol: item.symbol,
