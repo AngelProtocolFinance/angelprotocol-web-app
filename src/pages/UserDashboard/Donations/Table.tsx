@@ -165,8 +165,9 @@ export default function Table({
                   {row.id}
                 </ExtLink>
               )}
-              {status === "pending" && row.viaId === "fiat" ? (
-                row.bankVerificationUrl ? (
+              {status === "pending" &&
+                row.viaId === "fiat" &&
+                (row.bankVerificationUrl ? (
                   <ExtLink
                     href={row.bankVerificationUrl}
                     className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
@@ -175,10 +176,7 @@ export default function Table({
                   </ExtLink>
                 ) : (
                   <>- - -</>
-                )
-              ) : (
-                <>- - -</>
-              )}
+                ))}
               {status === "final" && (
                 <button
                   className="w-full flex justify-center"
