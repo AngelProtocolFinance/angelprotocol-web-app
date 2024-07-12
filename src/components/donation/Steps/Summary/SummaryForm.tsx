@@ -16,7 +16,7 @@ import type { FormDonor, Honorary, Mode } from "../types";
 
 type FV = FormDonor & Honorary & { coverFee: boolean };
 
-type Props = {
+export type Props = {
   onSubmit(formValues: FV): void;
   classes?: string;
   donor: FormDonor;
