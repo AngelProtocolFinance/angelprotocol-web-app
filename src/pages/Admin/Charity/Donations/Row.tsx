@@ -1,13 +1,7 @@
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
-import {
-  getTxUrl,
-  humanize,
-  maskAddress,
-  paymentMethod,
-  roundDownToNum,
-} from "helpers";
+import { getTxUrl, humanize, maskAddress, roundDownToNum } from "helpers";
 import type { DonationRecord } from "types/aws";
 
 export default function Row(
@@ -24,7 +18,7 @@ export default function Row(
       </span>
 
       <>{props.appUsed === "bg-widget" ? "Donation Form" : "Marketplace"}</>
-      <>{paymentMethod(props.paymentMethod)}</>
+      <>{props.paymentMethod ?? "--"}</>
       <>{props.isRecurring ? "Yes" : "No"}</>
       <>{props.symbol}</>
       <>{humanize(props.initAmount)}</>

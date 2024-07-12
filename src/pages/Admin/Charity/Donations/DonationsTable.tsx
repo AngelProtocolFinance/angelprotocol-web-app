@@ -1,11 +1,7 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import {
-  replaceWithEmptyString as fill,
-  humanize,
-  paymentMethod,
-} from "helpers";
+import { replaceWithEmptyString as fill, humanize } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { DonationRecord, KYCData } from "types/aws";
 import type { Ensure } from "types/utils";
@@ -63,7 +59,7 @@ export default function DonationsTable({ classes = "" }) {
                           d.appUsed === "bg-widget"
                             ? "Donation Form"
                             : "Marketplace",
-                        paymentMethod: paymentMethod(d.paymentMethod),
+                        paymentMethod: d.paymentMethod,
                         isRecurring: d.isRecurring ? "Yes" : "No",
                         symbol: d.symbol,
                         initAmount: humanize(d.initAmount, 2),
