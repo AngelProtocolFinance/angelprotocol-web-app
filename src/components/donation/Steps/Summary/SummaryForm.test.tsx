@@ -65,6 +65,65 @@ describe("summary form: fields based on donation method", () => {
 });
 
 describe("summary form: expandable fields", async () => {
+  test("top fields validation", async () => {
+    render(<SummaryForm {...props} />);
+
+    //user submits blank form
+    const checkoutBtn = screen.getByRole("button", { name: /checkout/i });
+    await userEvent.click(checkoutBtn);
+    expect(mockOnSubmit).not.toHaveBeenCalled();
+
+    const firstNameInput = screen.getByLabelText(/your name/i);
+    const lastNameInput = screen.getByPlaceholderText(/last name/i);
+    const emailInput = screen.getByLabelText(/your email/i);
+
+    expect(firstNameInput).toHaveAccessibleErrorMessage(
+      /please enter your first name/i
+    );
+    expect(firstNameInput).toHaveFocus();
+    expect(lastNameInput).toHaveAccessibleErrorMessage(
+      /please enter your last name/i
+    );
+    expect(emailInput).toHaveAccessibleErrorMessage(/please enter your email/i);
+
+    //user inputs required fields
+    await userEvent.type(firstNameInput, "first");
+    await userEvent.type(lastNameInput, "last");
+    await userEvent.type(emailInput, "email");
+
+    //user submits again by email is incorrect
+    await userEvent.click(checkoutBtn);
+    expect(mockOnSubmit).not.toHaveBeenCalled();
+    expect(emailInput).toHaveAccessibleErrorMessage(
+      /please check your email for correctness/i
+    );
+    expect(emailInput).toHaveFocus();
+
+    //user correct email input
+    await userEvent.clear(emailInput);
+    expect(emailInput).toHaveAccessibleErrorMessage(/please enter your email/i);
+    await userEvent.type(emailInput, "email@mail.com");
+    expect(emailInput).not.toHaveAccessibleErrorMessage();
+
+    //user submits
+    await userEvent.click(checkoutBtn);
+    expect(mockOnSubmit).toHaveBeenCalledOnce();
+    mockOnSubmit.mockClear();
+
+    //user may also select title
+    const titlesOpener = screen.getByRole("button", { expanded: false });
+    await userEvent.click(titlesOpener);
+    const options = screen.getAllByRole("option");
+    //select Mr.
+    await userEvent.click(options[0]);
+    expect(titlesOpener).toHaveTextContent(/mr/i);
+
+    //submit again
+    await userEvent.click(checkoutBtn);
+    expect(mockOnSubmit).toHaveBeenCalledOnce();
+    mockOnSubmit.mockClear();
+  });
+
   test("checking uk gift aid, shows additional fields", async () => {
     render(
       <SummaryForm
