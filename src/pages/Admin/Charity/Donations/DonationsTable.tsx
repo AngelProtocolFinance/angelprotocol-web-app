@@ -1,7 +1,11 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import { replaceWithEmptyString as fill, paymentMethod } from "helpers";
+import {
+  replaceWithEmptyString as fill,
+  humanize,
+  paymentMethod,
+} from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { DonationRecord, KYCData } from "types/aws";
 import type { Ensure } from "types/utils";
@@ -62,10 +66,10 @@ export default function DonationsTable({ classes = "" }) {
                         paymentMethod: paymentMethod(d.paymentMethod),
                         isRecurring: d.isRecurring ? "Yes" : "No",
                         symbol: d.symbol,
-                        initAmount: d.initAmount,
-                        finalAmountUsd: d.finalAmountUsd,
-                        directDonateAmount: amt.directDonate,
-                        sfDonateAmount: amt.sfDonate,
+                        initAmount: humanize(d.initAmount, 2),
+                        finalAmountUsd: humanize(d.finalAmountUsd ?? 0, 2),
+                        directDonateAmount: humanize(amt.directDonate, 2),
+                        sfDonateAmount: humanize(amt.sfDonate, 2),
                         id: d.id,
                         receipt: donor.address?.country ? "Yes" : "No",
                         fullName: donor.fullName,

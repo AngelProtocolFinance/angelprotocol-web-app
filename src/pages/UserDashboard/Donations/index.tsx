@@ -1,7 +1,7 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import { replaceWithEmptyString as fill, isEmpty } from "helpers";
+import { replaceWithEmptyString as fill, humanize, isEmpty } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { AuthenticatedUser } from "types/auth";
 import type { DonationRecord } from "types/aws";
@@ -52,10 +52,10 @@ export default function Donations({ user }: { user: AuthenticatedUser }) {
               viaName: item.viaName,
               isRecurring: item.isRecurring ? "Yes" : "No",
               symbol: item.symbol,
-              initAmount: item.initAmount,
-              initAmountUsd: item.initAmountUsd,
-              directDonateAmount: item.directDonateAmount,
-              sfDonateAmount: item.sfDonateAmount,
+              initAmount: humanize(item.initAmount, 2),
+              initAmountUsd: humanize(item.initAmountUsd ?? 0, 2),
+              directDonateAmount: humanize(item.directDonateAmount ?? 0, 2),
+              sfDonateAmount: humanize(item.sfDonateAmount ?? 0, 2),
               id: item.id,
               receipt: item.donorDetails?.address?.country
                 ? "Yes"
