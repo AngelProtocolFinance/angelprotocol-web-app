@@ -170,7 +170,7 @@ export default function Table({
                 (row.bankVerificationUrl ? (
                   <ExtLink
                     href={row.bankVerificationUrl}
-                    className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
+                    className="btn-blue px-3 py-1 text-xs"
                   >
                     Verify Bank Account
                   </ExtLink>
