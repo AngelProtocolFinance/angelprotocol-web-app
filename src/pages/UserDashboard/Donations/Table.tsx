@@ -95,7 +95,11 @@ export default function Table({
           >
             Donation to Sustainability Fund
           </HeaderButton>
-          {status === "intent" ? <></> : <>TX Hash</>}
+          {status === "intent" ? (
+            <span className="flex justify-center">Action</span>
+          ) : (
+            <>TX Hash</>
+          )}
           {status === "pending" && (
             <span className="flex justify-center">Action</span>
           )}
