@@ -59,7 +59,7 @@ export default function Table({
             _sortKey="viaName"
             _sortDirection={sortDirection}
           >
-            Network
+            Donation Type
           </HeaderButton>
           <>Recurring</>
           <>Currency</>
@@ -134,7 +134,7 @@ export default function Table({
                 <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
               <>{new Date(row.date).toLocaleDateString()}</>
-              <>{row.viaName}</>
+              <>{row.paymentMethod ?? "- - -"}</>
               <>{row.isRecurring ? "YES" : "NO"}</>
               <span className="text-sm">{row.symbol}</span>
               <>{humanize(row.initAmount, 3)}</>

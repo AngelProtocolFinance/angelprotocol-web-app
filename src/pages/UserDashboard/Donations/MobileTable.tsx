@@ -67,7 +67,7 @@ export default function MobileTable({
                 </div>
               </DisclosureButton>
               <DisclosurePanel className="w-full divide-y divide-blue-l2">
-                <Row title="Network">{row.viaName}</Row>
+                <Row title="Donation Type">{row.paymentMethod ?? "--"}</Row>
                 <Row title="Recurring">{row.isRecurring ? "YES" : "NO"}</Row>
                 <Row title="Currency">{row.symbol}</Row>
                 <Row title="Amount">{humanize(row.initAmount, 3)}</Row>
