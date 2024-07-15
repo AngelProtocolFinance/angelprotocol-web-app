@@ -53,7 +53,7 @@ export default function Summary({
         className={`text-navy-l1 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 divide-y divide-gray-l4 ${splitClass}`}
       >
         <div className="grid grid-cols-[1fr_auto] py-3 gap-y-1">
-          <dt className="mr-auto text-navy-d4">
+          <dt aria-label="amount" className="mr-auto text-navy-d4">
             {props.tip && tipValue > 0
               ? `Donation for ${props.tip.charityName}`
               : `Total donation`}
@@ -63,7 +63,9 @@ export default function Summary({
           {locked > 0 && (
             <div className="flex items-center justify-between col-span-full">
               <div className="mr-auto flex">
-                <dt className="text-sm mt-2">Sustainability Fund</dt>
+                <dt aria-label="sustainability fund" className="text-sm mt-2">
+                  Sustainability Fund
+                </dt>
                 <Image src={character} className="inline-block px-1 h-8" />
               </div>
               <Amount classes="text-sm" amount={locked} />
@@ -72,7 +74,9 @@ export default function Summary({
 
           {locked > 0 && ( //show 0 liquid even if 100% locked
             <div className="flex items-center justify-between col-span-full">
-              <dt className="mr-auto text-sm">Direct Donation</dt>
+              <dt aria-label="direct donation" className="mr-auto text-sm">
+                Direct Donation
+              </dt>
               <Amount classes="text-sm" amount={liq} />
             </div>
           )}
@@ -80,20 +84,24 @@ export default function Summary({
 
         {tipValue > 0 && (
           <div className="col-span-full grid grid-cols-[1fr_auto] py-3">
-            <dt className="mr-auto">Donation for Better Giving</dt>
+            <dt className="mr-auto" aria-label="tip">
+              Donation for Better Giving
+            </dt>
             <Amount classes="text-sm" amount={tipValue} />
           </div>
         )}
 
         {props.feeAllowance ? (
           <div className="col-span-full grid grid-cols-[1fr_auto] py-3">
-            <dt className="mr-auto">Covered Payment Processing Fees</dt>
+            <dt className="mr-auto" aria-label="fee allowance">
+              Covered Payment Processing Fees
+            </dt>
             <Amount classes="text-sm" amount={props.feeAllowance} />
           </div>
         ) : null}
 
         <div className="grid col-span-full grid-cols-[1fr_auto] font-medium py-3">
-          <dt className="mr-auto text-navy-d4">
+          <dt className="mr-auto text-navy-d4" aria-label="total">
             Total {frequency === "subscription" ? "monthly " : ""}charge
           </dt>
           <Amount
