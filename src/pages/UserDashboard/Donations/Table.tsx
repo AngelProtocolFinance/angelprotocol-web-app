@@ -59,7 +59,7 @@ export default function Table({
             _sortKey="viaName"
             _sortDirection={sortDirection}
           >
-            Network
+            Donation Type
           </HeaderButton>
           <>Recurring</>
           <>Currency</>
@@ -93,9 +93,13 @@ export default function Table({
             _sortKey="sfDonateAmount"
             _sortDirection={sortDirection}
           >
-            SF Donation
+            Donation to Sustainability Fund
           </HeaderButton>
-          {status === "intent" ? <></> : <>TX Hash</>}
+          {status === "intent" ? (
+            <span className="flex justify-center">Action</span>
+          ) : (
+            <>TX Hash</>
+          )}
           {status === "pending" && (
             <span className="flex justify-center">Action</span>
           )}
@@ -130,7 +134,7 @@ export default function Table({
                 <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
               <>{new Date(row.date).toLocaleDateString()}</>
-              <>{row.viaName}</>
+              <>{row.paymentMethod ?? "- - -"}</>
               <>{row.isRecurring ? "YES" : "NO"}</>
               <span className="text-sm">{row.symbol}</span>
               <>{humanize(row.initAmount, 3)}</>
@@ -161,20 +165,18 @@ export default function Table({
                   {row.id}
                 </ExtLink>
               )}
-              {status === "pending" && row.viaId === "fiat" ? (
-                row.bankVerificationUrl ? (
+              {status === "pending" &&
+                row.viaId === "fiat" &&
+                (row.bankVerificationUrl ? (
                   <ExtLink
                     href={row.bankVerificationUrl}
-                    className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
+                    className="btn-blue px-3 py-1 text-xs"
                   >
                     Verify Bank Account
                   </ExtLink>
                 ) : (
                   <>- - -</>
-                )
-              ) : (
-                <>- - -</>
-              )}
+                ))}
               {status === "final" && (
                 <button
                   className="w-full flex justify-center"

@@ -1,6 +1,7 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import { replaceWithEmptyString as fill, humanize } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { DonationRecord, KYCData } from "types/aws";
 import type { Ensure } from "types/utils";
@@ -53,15 +54,18 @@ export default function DonationsTable({ classes = "" }) {
                     ({ donorDetails: donor, ...d }) => {
                       const amt = amount(d.splitLiqPct, d.finalAmountUsd);
                       return fill({
-                        date: d.date,
-                        appUsed: d.appUsed,
+                        date: new Date(d.date).toLocaleDateString(),
+                        appUsed:
+                          d.appUsed === "bg-widget"
+                            ? "Donation Form"
+                            : "Marketplace",
                         paymentMethod: d.paymentMethod,
                         isRecurring: d.isRecurring ? "Yes" : "No",
                         symbol: d.symbol,
-                        initAmount: d.initAmount,
-                        finalAmountUsd: d.finalAmountUsd,
-                        directDonateAmount: amt.directDonate,
-                        sfDonateAmount: amt.sfDonate,
+                        initAmount: humanize(d.initAmount, 2),
+                        finalAmountUsd: humanize(d.finalAmountUsd ?? 0, 2),
+                        directDonateAmount: humanize(amt.directDonate, 2),
+                        sfDonateAmount: humanize(amt.sfDonate, 2),
                         id: d.id,
                         receipt: donor.address?.country ? "Yes" : "No",
                         fullName: donor.fullName,
@@ -105,7 +109,7 @@ const csvHeaders: {
   { key: "initAmount", label: "Donation Amount" },
   { key: "finalAmountUsd", label: "Donation Value USD" },
   { key: "directDonateAmount", label: "Direct Donation" },
-  { key: "sfDonateAmount", label: "SF Donation" },
+  { key: "sfDonateAmount", label: "Donation to Sustainability Fund" },
   { key: "id", label: "Transaction Hash" },
   { key: "receipt", label: "Receipt Provided" },
   { key: "fullName", label: "Full Name" },
@@ -123,15 +127,4 @@ function amount(splitLiqPct: number, amount = 0) {
   const directDonate = amount * (splitLiqPct / 100);
   const sfDonate = amount - directDonate;
   return { directDonate, sfDonate };
-}
-
-/** fill undefined with "" */
-function fill<T extends object>(
-  obj: T
-): { [K in keyof T]-?: NonNullable<T[K]> } {
-  return new Proxy(obj, {
-    get(target: any, key) {
-      return target[key] ?? "";
-    },
-  });
 }
