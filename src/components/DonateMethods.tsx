@@ -126,7 +126,7 @@ const methodDetails: {
   crypto: { name: "Crypto" },
   daf: { name: "DAF", tooltip: "requires card payment" },
   stocks: { name: "Stocks" },
-  stripe: { name: "Card" },
+  stripe: { name: "Card/Bank" },
 };
 const toMethods = (ids: DonateMethodId[], disabled = false): TDonateMethod[] =>
   ids.map((id) => ({
