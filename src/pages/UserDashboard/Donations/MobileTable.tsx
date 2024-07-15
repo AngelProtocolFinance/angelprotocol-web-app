@@ -87,7 +87,7 @@ export default function MobileTable({
                     : "--"}
                 </Row>
                 {status === "intent" ? (
-                  <Row title="Finish Paying" className="rounded-b">
+                  <Row title="Action" className="rounded-b">
                     <IntentResumer intentId={row.id} />
                   </Row>
                 ) : (
