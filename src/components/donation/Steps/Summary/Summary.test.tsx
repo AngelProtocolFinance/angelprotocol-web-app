@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "store/store";
 import type { AuthenticatedUser } from "types/auth";
@@ -172,9 +172,9 @@ describe("summary step", () => {
     //dollar amount is loading
     expect(donationTerm.nextSibling).toHaveTextContent("100.0000 ($--)");
     //dollar amount is loaded
-
-    await new Promise((r) => setTimeout(r, 50));
-    expect(donationTerm.nextSibling).toHaveTextContent("100.0000 ($100.00)");
+    await waitFor(() => {
+      expect(donationTerm.nextSibling).toHaveTextContent("100.0000 ($100.00)");
+    });
   });
 
   const user: Partial<AuthenticatedUser> = {
