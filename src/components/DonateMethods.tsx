@@ -128,13 +128,19 @@ const methodDetails: {
   stocks: { name: "Stocks" },
   stripe: { name: "Card/Bank" },
 };
-const toMethods = (ids: DonateMethodId[], disabled = false): TDonateMethod[] =>
-  ids.map((id) => ({
+const toMethods = (
+  ids: DonateMethodId[],
+  disabled = false
+): TDonateMethod[] => {
+  const withDaf = ids.includes("daf");
+  return ids.map((id) => ({
     id,
     name: methodDetails[id].name,
     disabled,
     tooltip: methodDetails[id].tooltip,
+    locked: id === "stripe" ? withDaf : undefined,
   }));
+};
 
 const all: DonateMethodId[] = ["stripe", "stocks", "daf", "crypto"];
 export function fill(sub = all): TDonateMethod[] {
