@@ -49,7 +49,7 @@ export default function Donations({ user }: { user: AuthenticatedUser }) {
             return fill({
               recipientName: item.recipientName,
               date: new Date(item.date).toLocaleDateString(),
-              viaName: item.viaName,
+              paymentMethod: item.paymentMethod,
               isRecurring: item.isRecurring ? "Yes" : "No",
               symbol: item.symbol,
               initAmount: humanize(item.initAmount, 2),
@@ -146,7 +146,7 @@ export default function Donations({ user }: { user: AuthenticatedUser }) {
 const csvHeaders: { key: keyof DonationRecord | "receipt"; label: string }[] = [
   { key: "recipientName", label: "Recipient" },
   { key: "date", label: "Date" },
-  { key: "viaName", label: "Network" },
+  { key: "paymentMethod", label: "Donation Type" },
   { key: "isRecurring", label: "Recurring" },
   { key: "symbol", label: "Currency" },
   { key: "initAmount", label: "Amount" },
