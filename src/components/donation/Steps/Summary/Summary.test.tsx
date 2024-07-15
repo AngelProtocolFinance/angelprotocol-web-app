@@ -54,7 +54,7 @@ const props: SummaryStep = {
 const coverFeeCheckboxLabel =
   /cover payment processing fees for your donation \( example charity receives the full amount \)/i;
 
-describe("summary items", () => {
+describe("summary step", () => {
   test("donation amount text if no tip", () => {
     render(<Summary {...props} />);
     const totalRow = screen.getByRole("term", { name: /amount/i });
