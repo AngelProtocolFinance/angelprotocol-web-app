@@ -1,10 +1,12 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "store/store";
+import type { AuthenticatedUser } from "types/auth";
 import { describe, expect, test, vi } from "vitest";
 import { initTokenOption } from "../common/constants";
 import type {
   CryptoDonationDetails,
+  FormDonor,
   StripeDonationDetails,
   SummaryStep,
 } from "../types";
@@ -25,6 +27,16 @@ const oneTimeStripeDetails: StripeDonationDetails = {
   amount: "100.00",
   currency: { code: "usd", min: 1, rate: 1 },
   program: { value: "prog_789", label: "Education Initiative" },
+};
+
+const donor: FormDonor = {
+  email: "john@doe.com",
+  firstName: "John",
+  lastName: "Doe",
+  ukTaxResident: false,
+  title: { value: "Mr", label: "Mr" },
+  zipCode: "12345",
+  streetAddress: "123 Main St, Anytown, USA",
 };
 
 const props: SummaryStep = {
@@ -163,5 +175,42 @@ describe("summary items", () => {
 
     await new Promise((r) => setTimeout(r, 50));
     expect(donationTerm.nextSibling).toHaveTextContent("100.0000 ($100.00)");
+  });
+
+  const user: Partial<AuthenticatedUser> = {
+    token: "123", //determinant if user is logged in
+    lastName: "last",
+    firstName: "first",
+    email: "first@last.mail",
+  };
+
+  test("donor information is pre-filled when user is logged in and donor info is not manually set previously", () => {
+    mockUseGetter.mockReturnValue(user);
+    render(<Summary {...props} />);
+
+    const firstNameInput = screen.getByLabelText(/your name/i);
+    const lastNameInput = screen.getByPlaceholderText(/last name/i);
+    const emailInput = screen.getByLabelText(/your email/i);
+
+    expect(firstNameInput).toHaveDisplayValue("first");
+    expect(lastNameInput).toHaveDisplayValue("last");
+    expect(emailInput).toHaveDisplayValue("first@last.mail");
+
+    mockUseGetter.mockClear();
+  });
+
+  test("previously set donor information is always used", () => {
+    mockUseGetter.mockReturnValue(user);
+    render(<Summary {...props} donor={donor} />);
+
+    const firstNameInput = screen.getByLabelText(/your name/i);
+    const lastNameInput = screen.getByPlaceholderText(/last name/i);
+    const emailInput = screen.getByLabelText(/your email/i);
+
+    expect(firstNameInput).toHaveDisplayValue("John");
+    expect(lastNameInput).toHaveDisplayValue("Doe");
+    expect(emailInput).toHaveDisplayValue("john@doe.com");
+
+    mockUseGetter.mockClear();
   });
 });
