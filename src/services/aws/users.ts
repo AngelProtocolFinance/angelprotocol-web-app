@@ -22,9 +22,11 @@ const endowAdmins = aws.injectEndpoints({
         };
       },
     }),
-    detailedUserEndows: builder.query<DetailedUserEndow[], number[]>({
-      queryFn: async (arg, _api, _extraOpts, baseQuery) => {
-        const endowIds: number[] = [];
+    detailedUserEndows: builder.query<
+      DetailedUserEndow[],
+      { endowIds: number[]; userId: string }
+    >({
+      queryFn: async ({ endowIds, userId }, _api, _extraOpts, baseQuery) => {
         const userEndows: DetailedUserEndow[] = [];
         for (const endowId of endowIds) {
           const [res1, res2] = await Promise.all([
@@ -36,7 +38,7 @@ const endowAdmins = aws.injectEndpoints({
               },
             }),
             baseQuery({
-              url: `endowments/${endowId}/users/{userId}`,
+              url: `endowments/${endowId}/users/${userId}`,
               headers: { authorization: TEMP_JWT },
             }),
           ]);
