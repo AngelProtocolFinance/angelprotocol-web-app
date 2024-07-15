@@ -5,6 +5,7 @@ import { handlers as programsHandlers } from "services/aws/programs";
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import { handlers as apesHandlers } from "./services/apes/mock";
 import { handlers as awsHandlers } from "./services/aws/mock";
+import { handlers as coinGeckoHandlers } from "./services/coingecko/mock";
 import { handlers as wordpressHandlers } from "./services/wordpress/mock";
 
 vi.mock("@walletconnect/modal", () => ({
@@ -73,7 +74,8 @@ export const mswServer = setupServer(
   ...programsHandlers,
   ...apesHandlers,
   ...awsHandlers,
-  ...wordpressHandlers
+  ...wordpressHandlers,
+  ...coinGeckoHandlers
 );
 
 // Start server before all tests
