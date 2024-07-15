@@ -1,6 +1,6 @@
 import type { Except } from "type-fest";
 import type { PartialExcept } from "types/utils";
-import type { APIEnvironment, DonateMethodId, UNSDG_NUMS } from "../../lists";
+import type { DonateMethodId, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
@@ -104,6 +104,18 @@ export type Endowment = {
 };
 
 export type EndowmentProfile = Endowment;
+
+export type UserEndowMeta = Pick<Endowment, "name" | "logo">;
+export type UserEndow = {
+  endowID: number;
+  email: string;
+  alertPref?: {
+    banking: boolean;
+    donation: boolean;
+  };
+};
+
+export type DetailedUserEndow = UserEndowMeta & UserEndow;
 
 /** from CloudSearch index instead of DB */
 export type EndowmentCard = Pick<
