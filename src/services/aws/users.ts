@@ -1,5 +1,5 @@
 import { TEMP_JWT } from "constants/auth";
-import type { UserUpdate } from "types/aws";
+import type { UserEndow, UserUpdate } from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
@@ -16,7 +16,7 @@ const endowAdmins = aws.injectEndpoints({
         };
       },
     }),
-    userEndows: builder.query<any, string>({
+    userEndows: builder.query<UserEndow[], string>({
       query: (userId) => ({
         url: `/${v(2)}/users/${userId}/endowments`,
         headers: { authorization: TEMP_JWT },

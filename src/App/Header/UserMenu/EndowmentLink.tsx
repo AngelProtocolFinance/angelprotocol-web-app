@@ -1,27 +1,18 @@
-import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
-import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { useEndowment } from "services/aws/useEndowment";
+import type { UserEndow } from "types/aws";
 
-interface IEndowmentLink {
-  endowId: number;
+interface IEndowmentLink extends UserEndow {
   route: "admin" | "profile";
 }
-export default function EndowmentLink({ endowId, route }: IEndowmentLink) {
-  const query = useEndowment({ id: endowId }, ["logo", "name"]);
-  return (
-    <QueryLoader
-      queryState={query}
-      messages={{
-        loading: <Skeleton />,
-        error: <_Link id={endowId} route={route} />,
-      }}
-    >
-      {(endow) => <_Link {...endow} id={endowId} route={route} />}
-    </QueryLoader>
-  );
+export default function EndowmentLink({
+  endowID,
+  logo,
+  name,
+  route,
+}: IEndowmentLink) {
+  return <_Link id={endowID} logo={logo} name={name} route={route} />;
 }
 
 type LinkProps = {
@@ -42,16 +33,3 @@ const _Link = (props: LinkProps) => (
     <span>{props.name ?? `Endowment: ${props.id}`}</span>
   </Link>
 );
-
-function Skeleton() {
-  return (
-    <a
-      href={"/"}
-      className="flex items-center gap-1 pointer-events-none"
-      aria-disabled={true}
-    >
-      <ContentLoader className="w-[20px] h-[20px] rounded-full" />
-      <ContentLoader className="h-[20px] w-40 rounded" />
-    </a>
-  );
-}
