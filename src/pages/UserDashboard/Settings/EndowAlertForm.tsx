@@ -1,6 +1,8 @@
+import Prompt from "components/Prompt";
 import { ErrorStatus, Info, LoadingStatus } from "components/Status";
 import { NativeCheckField as CheckField, Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import {
   useUpdateUserEndowsMutation,
@@ -25,6 +27,7 @@ export default function EndowAlertForm({ classes = "", user }: Props) {
   const [updateUserEndows, { isLoading: isUpdatingUseEndows }] =
     useUpdateUserEndowsMutation();
   const { handleError } = useErrorContext();
+  const { showModal } = useModalContext();
 
   const {
     register,
@@ -71,6 +74,10 @@ export default function EndowAlertForm({ classes = "", user }: Props) {
           banking: item.alertPref?.banking ?? true,
           donation: item.alertPref?.banking ?? true,
         })),
+      });
+      showModal(Prompt, {
+        type: "success",
+        children: "Email preference updated!",
       });
     } catch (err) {
       handleError(err, { context: "updating alert preferences" });
