@@ -44,7 +44,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
 
       //use user attributes from DB
       const res = await fetch(
-        `${APIs.aws}/${IS_TEST ? "staging" : "v2"}/users/${userEmail}`,
+        `${APIs.aws}/${IS_TEST ? "staging" : "v3"}/users/${userEmail}`,
         {
           headers: { authorization: idToken.toString() },
         }
