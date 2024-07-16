@@ -1,4 +1,5 @@
 import type { AuthenticatedUser } from "types/auth";
+import EndowAlertForm from "./EndowAlertForm";
 
 interface Props {
   user: AuthenticatedUser;
@@ -12,6 +13,7 @@ export default function Settings(props: Props) {
         Here you can update the various settings that relate to the nonprofit(s)
         you are member of.
       </p>
+      <EndowAlertForm user={props.user} classes="mt-8" />
     </div>
   );
 }
