@@ -1,25 +1,38 @@
+import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
+import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
+import { useEndowment } from "services/aws/useEndowment";
 import type { UserEndow } from "types/aws";
 
-interface IEndowmentLink extends UserEndow {
-  route: "admin" | "profile";
+interface IBookmarkLink {
+  endowId: number;
 }
-export default function EndowmentLink({
-  endowID,
-  logo,
-  name,
-  route,
-}: IEndowmentLink) {
-  return <_Link id={endowID} logo={logo} name={name} route={route} />;
+export function BookmarkLink({ endowId }: IBookmarkLink) {
+  const query = useEndowment({ id: endowId }, ["logo", "name"]);
+  return (
+    <QueryLoader
+      queryState={query}
+      messages={{
+        loading: <Skeleton />,
+        error: <_Link id={endowId} route="profile" />,
+      }}
+    >
+      {(endow) => <_Link {...endow} id={endowId} route="profile" />}
+    </QueryLoader>
+  );
+}
+
+export function EndowmentLink({ endowID, logo, name }: UserEndow) {
+  return <_Link id={endowID} logo={logo} name={name} route="profile" />;
 }
 
 type LinkProps = {
   id: number;
   name?: string;
   logo?: string;
-  route: IEndowmentLink["route"];
+  route: "admin" | "profile";
 };
 const _Link = (props: LinkProps) => (
   <Link
@@ -33,3 +46,16 @@ const _Link = (props: LinkProps) => (
     <span>{props.name ?? `Endowment: ${props.id}`}</span>
   </Link>
 );
+
+export function Skeleton() {
+  return (
+    <a
+      href={"/"}
+      className="flex items-center gap-1 pointer-events-none"
+      aria-disabled={true}
+    >
+      <ContentLoader className="w-[20px] h-[20px] rounded-full" />
+      <ContentLoader className="h-[20px] w-40 rounded" />
+    </a>
+  );
+}

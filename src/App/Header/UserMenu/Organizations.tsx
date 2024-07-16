@@ -1,6 +1,5 @@
-import ContentLoader from "components/ContentLoader";
 import { useUserEndowsQuery } from "services/aws/users";
-import EndowmentLink from "./EndowmentLink";
+import { EndowmentLink, Skeleton } from "./EndowmentLink";
 
 interface Props {
   userId: string;
@@ -19,23 +18,8 @@ export function Organizations({ userId, classes = "" }: Props) {
           <Skeleton />
         </>
       ) : (
-        endows.map((endow) => (
-          <EndowmentLink key={endow.endowID} {...endow} route="admin" />
-        ))
+        endows.map((endow) => <EndowmentLink key={endow.endowID} {...endow} />)
       )}
     </div>
-  );
-}
-
-function Skeleton() {
-  return (
-    <a
-      href={"/"}
-      className="flex items-center gap-1 pointer-events-none"
-      aria-disabled={true}
-    >
-      <ContentLoader className="w-[20px] h-[20px] rounded-full" />
-      <ContentLoader className="h-[20px] w-40 rounded" />
-    </a>
   );
 }
