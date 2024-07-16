@@ -106,8 +106,8 @@ export type Endowment = {
 export type EndowmentProfile = Endowment;
 
 export type UserEndow = {
-  name: string;
-  logo: string;
+  name?: string;
+  logo?: string;
   email: string;
   endowID: number;
   alertPref?: {

@@ -11,37 +11,9 @@ interface Props {
 
 type FV = { items: UserEndow[] };
 
-const userEndow1: UserEndow = {
-  endowID: 1,
-  email: "mail@mail.com",
-  name: "Better Giving",
-  logo: "",
-  alertPref: {
-    banking: true,
-    donation: false,
-  },
-};
-const userEndow2: UserEndow = {
-  endowID: 5,
-  email: "mail@mail2.com",
-  name: "Best Giving",
-  logo: "",
-};
-
-const userEndow3: UserEndow = {
-  endowID: 10,
-  email: "mail@mail3.com",
-  name: "Good Giving",
-  logo: "",
-  alertPref: {
-    banking: true,
-    donation: false,
-  },
-};
-
-const userEndows = [userEndow1, userEndow2, userEndow3];
-
 export default function EndowAlertForm({ classes = "", user }: Props) {
+  const { data: userEndows = [] } = useUserEndowsQuery(user.email);
+
   const {
     register,
     control,
@@ -49,13 +21,15 @@ export default function EndowAlertForm({ classes = "", user }: Props) {
     reset,
     formState: { isSubmitting },
   } = useForm<FV>({
-    defaultValues: {
-      items: userEndows,
+    values: {
+      items: userEndows.map((endow) => ({
+        ...endow,
+        //if preference is not specified, set to `true`
+        alertPref: endow.alertPref ?? { banking: true, donation: true },
+      })),
     },
   });
 
-  const { data } = useUserEndowsQuery(user.email);
-  console.log({ data });
   const { fields } = useFieldArray({ control, name: "items" });
   return (
     <Form
@@ -77,7 +51,9 @@ export default function EndowAlertForm({ classes = "", user }: Props) {
           key={field.id}
           className="grid grid-cols-subgrid col-span-3 divide-x divide-gray-l4"
         >
-          <div className="p-3">{field.name}</div>
+          <div className="p-3">
+            {field.name ?? `Endowment: ${field.endowID}`}
+          </div>
           {
             <CheckField
               classes="px-4"
