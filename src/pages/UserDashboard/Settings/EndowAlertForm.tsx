@@ -95,7 +95,7 @@ export default function EndowAlertForm({ classes = "", user }: Props) {
       className={`${classes} grid grid-cols-[3fr_2fr_2fr] divide-y divide-gray-l4`}
     >
       <div className="grid grid-cols-subgrid col-span-3 py-3 font-bold text-sm">
-        <h5 className="pl-3">Alerts from</h5>
+        <h5 className="pl-3">Receive Email Alerts for</h5>
         <h5>New donations</h5>
         <h5>Banking changes</h5>
       </div>
