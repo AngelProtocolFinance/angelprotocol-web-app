@@ -1,11 +1,5 @@
 import { TEMP_JWT } from "constants/auth";
-import { IS_TEST } from "constants/env";
-import type {
-  DetailedUserEndow,
-  UserEndow,
-  UserEndowMeta,
-  UserUpdate,
-} from "types/aws";
+import type { UserUpdate } from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
@@ -22,36 +16,13 @@ const endowAdmins = aws.injectEndpoints({
         };
       },
     }),
-    detailedUserEndows: builder.query<
-      DetailedUserEndow[],
-      { endowIds: number[]; userId: string }
-    >({
-      queryFn: async ({ endowIds, userId }, _api, _extraOpts, baseQuery) => {
-        const userEndows: DetailedUserEndow[] = [];
-        for (const endowId of endowIds) {
-          const [res1, res2] = await Promise.all([
-            baseQuery({
-              url: `v8/endowments/${endowId}`,
-              params: {
-                env: IS_TEST ? "staging" : "production",
-                fields: ["name", "logo"],
-              },
-            }),
-            baseQuery({
-              url: `endowments/${endowId}/users/${userId}`,
-              headers: { authorization: TEMP_JWT },
-            }),
-          ]);
-
-          const meta = res1.data as UserEndowMeta;
-          const userEndow = res2.data as UserEndow;
-          userEndows.push({ ...meta, ...userEndow });
-        }
-
-        return { data: userEndows };
-      },
+    userEndows: builder.query<any, string>({
+      query: (userId) => ({
+        url: `/${v(2)}/users/${userId}/endowments`,
+        headers: { authorization: TEMP_JWT },
+      }),
     }),
   }),
 });
 
-export const { useEditUserMutation } = endowAdmins;
+export const { useEditUserMutation, useUserEndowsQuery } = endowAdmins;

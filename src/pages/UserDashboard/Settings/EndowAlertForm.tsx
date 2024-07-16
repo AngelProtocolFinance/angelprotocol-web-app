@@ -1,34 +1,38 @@
 import { NativeCheckField as CheckField, Form } from "components/form";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useUserEndowsQuery } from "services/aws/users";
 import type { AuthenticatedUser } from "types/auth";
-import type { DetailedUserEndow } from "types/aws";
+import type { UserEndow } from "types/aws";
 
 interface Props {
   user: AuthenticatedUser;
   classes?: string;
 }
 
-type FV = { items: DetailedUserEndow[] };
+type FV = { items: UserEndow[] };
 
-const userEndow1: DetailedUserEndow = {
+const userEndow1: UserEndow = {
   endowID: 1,
   email: "mail@mail.com",
   name: "Better Giving",
+  logo: "",
   alertPref: {
     banking: true,
     donation: false,
   },
 };
-const userEndow2: DetailedUserEndow = {
+const userEndow2: UserEndow = {
   endowID: 5,
   email: "mail@mail2.com",
   name: "Best Giving",
+  logo: "",
 };
 
-const userEndow3: DetailedUserEndow = {
+const userEndow3: UserEndow = {
   endowID: 10,
   email: "mail@mail3.com",
   name: "Good Giving",
+  logo: "",
   alertPref: {
     banking: true,
     donation: false,
@@ -37,7 +41,7 @@ const userEndow3: DetailedUserEndow = {
 
 const userEndows = [userEndow1, userEndow2, userEndow3];
 
-export default function EndowAlertForm({ classes = "" }: Props) {
+export default function EndowAlertForm({ classes = "", user }: Props) {
   const {
     register,
     control,
@@ -49,6 +53,9 @@ export default function EndowAlertForm({ classes = "" }: Props) {
       items: userEndows,
     },
   });
+
+  const { data } = useUserEndowsQuery(user.email);
+  console.log({ data });
   const { fields } = useFieldArray({ control, name: "items" });
   return (
     <Form

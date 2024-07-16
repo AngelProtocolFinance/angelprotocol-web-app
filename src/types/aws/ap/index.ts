@@ -105,17 +105,16 @@ export type Endowment = {
 
 export type EndowmentProfile = Endowment;
 
-export type UserEndowMeta = Pick<Endowment, "name" | "logo">;
 export type UserEndow = {
-  endowID: number;
+  name: string;
+  logo: string;
   email: string;
+  endowID: number;
   alertPref?: {
     banking: boolean;
     donation: boolean;
   };
 };
-
-export type DetailedUserEndow = UserEndowMeta & UserEndow;
 
 /** from CloudSearch index instead of DB */
 export type EndowmentCard = Pick<
