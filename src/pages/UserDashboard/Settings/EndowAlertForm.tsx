@@ -1,4 +1,4 @@
-import { NativeCheckField as CheckField } from "components/form";
+import { NativeCheckField as CheckField, Form } from "components/form";
 import { useFieldArray, useForm } from "react-hook-form";
 import type { AuthenticatedUser } from "types/auth";
 import type { DetailedUserEndow } from "types/aws";
@@ -38,18 +38,29 @@ const userEndow3: DetailedUserEndow = {
 const userEndows = [userEndow1, userEndow2, userEndow3];
 
 export default function EndowAlertForm({ classes = "" }: Props) {
-  const { register, control } = useForm<FV>({
+  const {
+    register,
+    control,
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = useForm<FV>({
     defaultValues: {
       items: userEndows,
     },
   });
-
   const { fields } = useFieldArray({ control, name: "items" });
   return (
-    <form
-      className={`${classes} grid grid-cols-[3fr_2fr_2fr] divide-y divide-gray-l4 border border-gray-l4`}
+    <Form
+      disabled={isSubmitting}
+      onSubmit={handleSubmit((fv) => console.log({ fv }))}
+      onReset={(e) => {
+        e.preventDefault();
+        reset();
+      }}
+      className={`${classes} grid grid-cols-[3fr_2fr_2fr] divide-y divide-gray-l4`}
     >
-      <div className="grid grid-cols-subgrid col-span-3 py-2 font-bold text-sm">
+      <div className="grid grid-cols-subgrid col-span-3 py-3 font-bold text-sm">
         <h5 className="pl-3">Alerts from</h5>
         <h5>New donations</h5>
         <h5>Banking changes</h5>
@@ -74,6 +85,15 @@ export default function EndowAlertForm({ classes = "" }: Props) {
           }
         </div>
       ))}
-    </form>
+
+      <div className="col-span-full flex justify-end items-center gap-4 pt-4">
+        <button type="submit" className="btn-blue text-sm px-6 py-2">
+          save
+        </button>
+        <button type="reset" className="btn-outline-filled text-sm px-6 py-2">
+          reset
+        </button>
+      </div>
+    </Form>
   );
 }
