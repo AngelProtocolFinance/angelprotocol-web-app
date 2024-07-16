@@ -74,6 +74,7 @@ export const aws = createApi({
     "donations",
     "user",
     "user-bookmarks",
+    "user-endows",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,

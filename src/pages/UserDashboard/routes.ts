@@ -4,6 +4,7 @@ export const routes = {
   index: "",
   edit_profile: "edit-profile",
   donations: "donations",
+  settings: "settings",
 };
 
 export const linkGroups: LinkGroup[] = [
@@ -23,6 +24,14 @@ export const linkGroups: LinkGroup[] = [
         icon: {
           type: "User",
           size: 20.5,
+        },
+      },
+      {
+        title: "Settings",
+        to: routes.settings,
+        icon: {
+          type: "Gear",
+          size: 21,
         },
       },
     ],

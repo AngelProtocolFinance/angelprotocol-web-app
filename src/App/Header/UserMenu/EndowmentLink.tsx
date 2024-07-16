@@ -4,31 +4,35 @@ import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
+import type { UserEndow } from "types/aws";
 
-interface IEndowmentLink {
+interface IBookmarkLink {
   endowId: number;
-  route: "admin" | "profile";
 }
-export default function EndowmentLink({ endowId, route }: IEndowmentLink) {
+export function BookmarkLink({ endowId }: IBookmarkLink) {
   const query = useEndowment({ id: endowId }, ["logo", "name"]);
   return (
     <QueryLoader
       queryState={query}
       messages={{
         loading: <Skeleton />,
-        error: <_Link id={endowId} route={route} />,
+        error: <_Link id={endowId} route="profile" />,
       }}
     >
-      {(endow) => <_Link {...endow} id={endowId} route={route} />}
+      {(endow) => <_Link {...endow} id={endowId} route="profile" />}
     </QueryLoader>
   );
+}
+
+export function EndowmentLink({ endowID, logo, name }: UserEndow) {
+  return <_Link id={endowID} logo={logo} name={name} route="admin" />;
 }
 
 type LinkProps = {
   id: number;
   name?: string;
   logo?: string;
-  route: IEndowmentLink["route"];
+  route: "admin" | "profile";
 };
 const _Link = (props: LinkProps) => (
   <Link
@@ -43,7 +47,7 @@ const _Link = (props: LinkProps) => (
   </Link>
 );
 
-function Skeleton() {
+export function Skeleton() {
   return (
     <a
       href={"/"}

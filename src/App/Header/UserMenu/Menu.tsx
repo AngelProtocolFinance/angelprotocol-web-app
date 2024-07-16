@@ -5,7 +5,7 @@ import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import type { AuthenticatedUser } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
-import EndowmentLink from "./EndowmentLink";
+import { Organizations } from "./Organizations";
 
 type Props = {
   classes?: string;
@@ -27,14 +27,7 @@ export default function Menu({ user, signOut }: Props) {
           <Icon type="Money" className="text-lg" />
           <span>My Donations</span>
         </Link>
-        <div className="hidden [&:has(a)]:grid mt-6 gap-2">
-          <h5 className="uppercase text-xs text-navy-l1 -mb-1">
-            My Organizations
-          </h5>
-          {user.endowments.map((endowId) => (
-            <EndowmentLink key={endowId} endowId={endowId} route="admin" />
-          ))}
-        </div>
+        <Organizations userId={user.email} classes="mt-6" />
         <Bookmarks classes="mt-6" />
         <div className="hidden [&:has(a)]:block mt-6">
           <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
