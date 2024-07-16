@@ -25,7 +25,7 @@ export function BookmarkLink({ endowId }: IBookmarkLink) {
 }
 
 export function EndowmentLink({ endowID, logo, name }: UserEndow) {
-  return <_Link id={endowID} logo={logo} name={name} route="profile" />;
+  return <_Link id={endowID} logo={logo} name={name} route="admin" />;
 }
 
 type LinkProps = {

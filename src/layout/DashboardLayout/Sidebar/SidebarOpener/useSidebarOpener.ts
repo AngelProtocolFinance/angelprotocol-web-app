@@ -1,4 +1,3 @@
-import { appRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
