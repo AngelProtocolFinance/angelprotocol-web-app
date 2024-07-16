@@ -105,6 +105,12 @@ export type Endowment = {
 
 export type EndowmentProfile = Endowment;
 
+export type AletPrefUpdate = {
+  endowId: number;
+  banking: boolean;
+  donation: boolean;
+};
+
 export type UserEndow = {
   name?: string;
   logo?: string;
