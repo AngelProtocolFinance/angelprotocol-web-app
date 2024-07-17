@@ -1,5 +1,5 @@
 import { useModalContext } from "contexts/ModalContext";
-import { type MouseEventHandler, useRef } from "react";
+import type { MouseEventHandler } from "react";
 import type { DropzoneOptions } from "react-dropzone";
 import ImgCropper from "./ImgCropper";
 import type { ControlledProps } from "./types";
@@ -9,9 +9,9 @@ export default function useImgEditor({
   onChange,
   aspect,
   accept,
+  rounded,
 }: ControlledProps) {
   const { showModal } = useModalContext();
-  const initRef = useRef(curr);
 
   const handleCropResult = (cropped: File) =>
     onChange({
@@ -46,8 +46,10 @@ export default function useImgEditor({
     showModal(ImgCropper, {
       file: newFile,
       aspect,
-      type: newFile.type,
       onSave: handleCropResult,
+      classes: rounded
+        ? "[&_.cropper-crop-box,_.cropper-view-box]:border-full"
+        : "",
     });
   };
 
@@ -61,15 +63,5 @@ export default function useImgEditor({
     });
   };
 
-  const handleReset: MouseEventHandler<HTMLButtonElement> = (e) => {
-    //prevent container dropzone from catching click event
-    e.stopPropagation();
-    onChange(initRef.current);
-  };
-
-  return {
-    onDrop,
-    handleOpenCropper,
-    handleReset,
-  };
+  return { onDrop, handleOpenCropper };
 }

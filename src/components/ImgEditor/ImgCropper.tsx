@@ -6,12 +6,18 @@ import Cropper from "cropperjs";
 import { useCallback, useRef } from "react";
 
 type Props = {
+  classes?: string;
   file: File;
   aspect: [number, number];
   onSave(cropped: File): void;
 };
 
-export default function ImgCropper({ file, aspect: [x, y], onSave }: Props) {
+export default function ImgCropper({
+  file,
+  aspect: [x, y],
+  onSave,
+  classes = "",
+}: Props) {
   const { closeModal } = useModalContext();
 
   const cropperRef = useRef<Cropper>();
@@ -41,7 +47,9 @@ export default function ImgCropper({ file, aspect: [x, y], onSave }: Props) {
   }
 
   return (
-    <Modal className="grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm">
+    <Modal
+      className={`${classes} grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm`}
+    >
       <div className="bg-white flex items-center justify-end gap-2 p-1">
         <button
           type="button"

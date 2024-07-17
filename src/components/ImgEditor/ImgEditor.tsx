@@ -16,7 +16,7 @@ import useImgEditor from "./useImgEditor";
 const BYTES_IN_MB = 1e6;
 
 function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
-  const { handleOpenCropper, handleReset, onDrop } = useImgEditor(props);
+  const { handleOpenCropper, onDrop } = useImgEditor(props);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     disabled: props.disabled,
@@ -72,7 +72,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             {
               /** only show controls if new file is uploaded */
               props.value.file && (
-                <IconButton disabled={props.disabled} onClick={handleReset}>
+                <IconButton disabled={props.disabled} onClick={props.onUndo}>
                   <Icon type="Undo" />
                 </IconButton>
               )
@@ -122,6 +122,7 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
   const { name, ...rest } = props;
   const {
     trigger,
+    resetField,
     formState: { errors, isSubmitting },
   } = useFormContext<T>();
 
@@ -140,6 +141,11 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
       onChange={(v) => {
         onChange(v);
         trigger(filePath as any);
+      }}
+      onUndo={(e) => {
+        ////prevent container dropzone from catching click event
+        e.stopPropagation();
+        resetField(name);
       }}
       error={get(errors, filePath)?.message}
       disabled={isSubmitting}
