@@ -73,8 +73,6 @@ export default function Form(props: Props) {
     },
   });
 
-  console.log({ errors });
-
   const { field: prefCurrency } = useController<FV, "prefCurrency">({
     control,
     name: "prefCurrency",

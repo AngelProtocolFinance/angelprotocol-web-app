@@ -13,6 +13,8 @@ export default function useImgEditor({
 }: ControlledProps) {
   const { showModal } = useModalContext();
 
+  const roundedClasses = rounded ? "[&_.cropper-view-box]:rounded-full" : "";
+
   const handleCropResult = (cropped: File) =>
     onChange({
       file: cropped,
@@ -47,9 +49,7 @@ export default function useImgEditor({
       file: newFile,
       aspect,
       onSave: handleCropResult,
-      classes: rounded
-        ? "[&_.cropper-crop-box,_.cropper-view-box]:border-full"
-        : "",
+      classes: roundedClasses,
     });
   };
 
@@ -60,6 +60,7 @@ export default function useImgEditor({
       file: curr.file ?? new File([], "default file"),
       aspect,
       onSave: handleCropResult,
+      classes: roundedClasses,
     });
   };
 
