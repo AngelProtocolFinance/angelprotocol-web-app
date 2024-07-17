@@ -61,6 +61,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         email: userEmail,
         firstName: userAttributes.givenName,
         lastName: userAttributes.familyName,
+        avatarUrl: userAttributes.avatarUrl,
         prefCurrencyCode: userAttributes.prefCurrencyCode,
         isSigningOut: false,
       };

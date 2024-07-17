@@ -5,7 +5,7 @@ import { NativeField as Field, Label, Form as _Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
-import { uploadFiles } from "helpers/uploadFiles";
+import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { useEditUserMutation } from "services/aws/users";
 import { updateUserAttributes } from "slices/auth";
 import { useSetter } from "store/accessors";
@@ -37,9 +37,11 @@ export default function Form(props: Props) {
               type: "loading",
               children: "Uploading avatar...",
             });
-            const url = await uploadFiles([file], "bg-user");
+            const baseUrl = await uploadFiles([file], "bg-user");
+            if (!baseUrl) return closeModal();
+
             closeModal();
-            return url;
+            return getFullURL(baseUrl, file.name);
           })();
 
           const update: Required<UserAttributes> = {
