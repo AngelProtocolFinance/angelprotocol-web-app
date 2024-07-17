@@ -1,51 +1,47 @@
 import { useModalContext } from "contexts/ModalContext";
-import type { MouseEventHandler } from "react";
+import { type MouseEventHandler, useRef } from "react";
 import type { DropzoneOptions } from "react-dropzone";
-import { useController, useFormContext } from "react-hook-form";
-import type { Path } from "react-hook-form";
 import ImgCropper from "./ImgCropper";
-import type { ImgLink, Props } from "./types";
+import type { ControlledProps } from "./types";
 
-type Base = { [index: string]: ImgLink };
-
-export default function useImgEditor<T extends Base, K extends Path<T>>({
-  name,
+export default function useImgEditor({
+  value: curr,
+  onChange,
   aspect,
   accept,
-}: Props<T, K>) {
-  const path = (sub: Path<ImgLink>): Path<T> => `${name}.${sub}` as any;
-
-  const { setValue, watch, resetField, trigger } = useFormContext<T>();
+}: ControlledProps) {
   const { showModal } = useModalContext();
-  const {
-    field: {
-      value: currFile = new File([], "default file"),
-      onChange: onFileChange,
-      ref,
-    },
-  } = useController<Base, `${string}.file`>({
-    name: `${name}.file`,
-  });
+  const initRef = useRef(curr);
 
-  const { publicUrl, preview }: ImgLink = watch(name as any);
-  const isInitial = preview === publicUrl;
-  const noneUploaded = !publicUrl && !preview;
+  const handleCropResult = (cropped: File) =>
+    onChange({
+      file: cropped,
+      name: cropped.name,
+      preview: URL.createObjectURL(cropped),
+      publicUrl: "",
+    });
 
   const onDrop: DropzoneOptions["onDrop"] = (files: File[]) => {
     const newFile = files[0];
     if (!newFile) return;
 
-    // set the file, and validate immediately
-    onFileChange(newFile);
-    trigger(name);
-
-    //don't show cropper if file is unsupported, render blank preview
     if (!accept.includes(newFile.type as any)) {
-      return setValue(path("preview"), "" as any);
+      //don't show cropper, render blank preview
+      return onChange({
+        file: newFile,
+        name: newFile.name,
+        preview: "broken preview url",
+        publicUrl: "",
+      });
     }
 
-    //set pre-crop file preview
-    setValue(path("preview"), URL.createObjectURL(newFile) as any);
+    // set the file, and validate immediately
+    onChange({
+      file: newFile,
+      name: newFile.name,
+      preview: URL.createObjectURL(newFile),
+      publicUrl: "",
+    });
 
     showModal(ImgCropper, {
       file: newFile,
@@ -59,34 +55,21 @@ export default function useImgEditor<T extends Base, K extends Path<T>>({
     //prevent container dropzone from catching click event
     e.stopPropagation();
     showModal(ImgCropper, {
-      file: currFile,
+      file: curr.file ?? new File([], "default file"),
       aspect,
       onSave: handleCropResult,
     });
   };
 
-  function handleCropResult(cropped: File) {
-    setValue(path("preview"), URL.createObjectURL(cropped) as any);
-    onFileChange(cropped);
-    trigger(name);
-  }
-
   const handleReset: MouseEventHandler<HTMLButtonElement> = (e) => {
     //prevent container dropzone from catching click event
     e.stopPropagation();
-    resetField(name);
-    resetField(path("file"));
+    onChange(initRef.current);
   };
 
   return {
     onDrop,
     handleOpenCropper,
-    isInitial,
-    noneUploaded,
     handleReset,
-    preview,
-    file: currFile,
-    filePath: path("file") as any,
-    ref,
   };
 }

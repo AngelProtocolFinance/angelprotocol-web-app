@@ -22,3 +22,14 @@ export type Props<T extends FieldValues, K extends Path<T>> = {
    */
   maxSize?: number;
 };
+
+export type ControlledProps = {
+  value: ImgLink;
+  onChange: (value: ImgLink) => void;
+  accept: ImageMIMEType[];
+  aspect: [number, number];
+  maxSize?: number;
+  classes?: Classes;
+  disabled?: boolean;
+  error?: string;
+};
