@@ -5,6 +5,7 @@ import { NativeField as Field, Label, Form as _Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
+import { uploadFiles } from "helpers/uploadFiles";
 import { useEditUserMutation } from "services/aws/users";
 import { updateUserAttributes } from "slices/auth";
 import { useSetter } from "store/accessors";
@@ -15,7 +16,7 @@ import { AVATAR_MAX_SIZE_BYTES, AVATAR_MIME_TYPE, useRhf } from "./useRhf";
 export default function Form(props: Props) {
   const dispatch = useSetter();
   const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
+  const { showModal, closeModal } = useModalContext();
   const [editUser] = useEditUserMutation();
 
   const rhf = useRhf(props);
@@ -29,10 +30,23 @@ export default function Form(props: Props) {
       }}
       onSubmit={rhf.handleSubmit(async (fv) => {
         try {
+          const newAvatarUrl = await (async () => {
+            const file = fv.avatar.file;
+            if (!file) return;
+            showModal(Prompt, {
+              type: "loading",
+              children: "Uploading avatar...",
+            });
+            const url = await uploadFiles([file], "bg-user");
+            closeModal();
+            return url;
+          })();
+
           const update: Required<UserAttributes> = {
             givenName: fv.firstName,
             familyName: fv.lastName,
             prefCurrencyCode: fv.prefCurrency.code,
+            avatarUrl: newAvatarUrl ?? "",
           };
           const updated = await editUser({
             ...cleanObject(update),
