@@ -5,7 +5,7 @@ import createCosmosMsg from "contracts/createCosmosMsg";
 import { createTx } from "contracts/createTx/createTx";
 import { logger, scale, scaleToStr } from "helpers";
 import { estimateTx } from "helpers/tx";
-import type { ChainID } from "types/chain";
+import type { SupportedChainId } from "types/chain";
 import type { SimulContractTx, SimulSendNativeTx } from "types/evm";
 import type { EstimateInput, TokenWithAmount } from "types/tx";
 import type { EstimateStatus } from "../types";
@@ -13,12 +13,13 @@ import { tokenBalance } from "./tokenBalance";
 
 export async function estimateDonation(
   token: TokenWithAmount,
-  chainID: ChainID,
+  chainID: SupportedChainId,
   sender: string,
-  tipAmount: number
+  tipAmount: number,
+  feeAllowance: number
 ): Promise<Exclude<EstimateStatus, "loading">> {
   try {
-    const grossAmount = +token.amount + tipAmount;
+    const grossAmount = +token.amount + tipAmount + feeAllowance;
 
     const balance = await tokenBalance(token, chainID, sender);
     if (balance < grossAmount) {
@@ -29,12 +30,26 @@ export async function estimateDonation(
     // ///////////// GET TX CONTENT ///////////////
 
     switch (chainID) {
+      //juno
       case "juno-1":
-      case "uni-6": {
+      case "uni-6":
+      //kujira
+      case "kaiyo-1":
+      case "harpoon-4":
+      //stargaze
+      case "stargaze-1":
+      case "elgafar-1":
+      //osmosis
+      case "osmosis-1":
+      case "osmo-test-5": {
         const scaledAmount = scaleToStr(grossAmount, token.decimals);
         const to = apWallets.junoDeposit;
         const msg =
-          token.type === "juno-native" || token.type === "ibc"
+          token.type === "juno-native" ||
+          token.type === "kujira-native" ||
+          token.type === "stargaze-native" ||
+          token.type === "osmosis-native" ||
+          token.type === "ibc"
             ? createCosmosMsg(sender, "recipient.send", {
                 recipient: to,
                 amount: scaledAmount,
@@ -49,7 +64,6 @@ export async function estimateDonation(
         toEstimate = { chainID, val: [msg] };
         break;
       }
-
       case "pisco-1":
       case "phoenix-1": {
         const scaledAmount = scaleToStr(grossAmount, token.decimals);

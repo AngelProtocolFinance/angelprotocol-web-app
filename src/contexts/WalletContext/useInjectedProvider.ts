@@ -2,8 +2,9 @@ import { chains } from "constants/chains";
 import { EIPMethods } from "constants/evm";
 import Decimal from "decimal.js";
 import { injectedProvider, isEmpty, logger } from "helpers";
+import { getChain } from "helpers/tx/get-chain";
 import { useEffect, useState } from "react";
-import type { ChainID } from "types/chain";
+import type { SupportedChainId } from "types/chain";
 import type { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import type {
   EVMProviderState,
@@ -13,7 +14,6 @@ import type {
 } from "types/wallet";
 import { toPrefixedHex } from "./helpers";
 import { retrieveUserAction, saveUserAction } from "./helpers";
-import { isXdefiPrioritized } from "./helpers/isXdefiPrioritized";
 
 export default function useInjectedWallet(
   providerID: InjectedProviderID,
@@ -33,19 +33,22 @@ export default function useInjectedWallet(
     const shouldReconnect = lastAction === "connect";
     shouldReconnect && connect(false);
     return () => {
-      injectedProvider(providerID).then((provider) => {
-        if (provider && provider.removeListener) {
-          provider.removeListener("accountsChanged", handleAccountsChange);
-          provider.removeListener("chainChanged", handleChainChange);
-        }
-      });
+      const provider = injectedProvider(providerID);
+      if (provider && provider.removeListener) {
+        provider.removeListener("accountsChanged", handleAccountsChange);
+        provider.removeListener("chainChanged", handleChainChange);
+      }
     };
   }, []);
 
   const handleChainChange: ChainChangeHandler = (hexChainId) => {
     setState((prev) => {
       if (prev.status !== "connected") return prev;
-      return { ...prev, chainId: new Decimal(hexChainId).toString() };
+      return {
+        ...prev,
+        chainId: new Decimal(hexChainId).toString(),
+        isSwitching: false,
+      };
     });
   };
 
@@ -61,13 +64,13 @@ export default function useInjectedWallet(
     });
   };
 
-  async function switchChain(chainID: ChainID) {
+  async function switchChain(chainID: SupportedChainId) {
     if (state.status !== "connected") {
       return alert("Wallet is not connected");
     }
     try {
-      setState({ ...state, isSwitching: true });
-      const chain = chains[chainID];
+      const staticChain = chains[chainID];
+      const chain = await getChain(chainID);
       await state
         .request({
           method: EIPMethods.wallet_switchEthereumChain,
@@ -80,14 +83,14 @@ export default function useInjectedWallet(
               params: [
                 {
                   chainId: toPrefixedHex(chainID),
-                  chainName: chain.name,
+                  chainName: staticChain.name,
                   nativeCurrency: {
                     name: chain.nativeToken.symbol,
                     symbol: chain.nativeToken.symbol,
                     decimals: chain.nativeToken.decimals,
                   },
-                  rpcUrls: [chain.rpc],
-                  blockExplorerUrls: [chain.blockExplorer],
+                  rpcUrls: [chain.nodeUrl],
+                  blockExplorerUrls: [staticChain.blockExplorer],
                 },
               ],
             })
@@ -95,28 +98,18 @@ export default function useInjectedWallet(
     } catch (err) {
       logger.error(err);
       alert("Failed to switch chain");
-    } finally {
       setState({ ...state, isSwitching: false });
     }
   }
 
   async function connect(isUserInitiated = true) {
     try {
-      const provider = await injectedProvider(providerID);
+      const provider = injectedProvider(providerID);
       if (!provider) {
         if (!isUserInitiated) return; /** dont alert on persistent connection */
         return window.open(installURL, "_blank", "noopener noreferrer");
       }
       /** isMobile check not needed, just hide this wallet on mobile */
-
-      /** xdefi checks */
-      if (providerID === "xdefi-evm" && !isXdefiPrioritized()) {
-        if (!isUserInitiated) return;
-        return alert("Kindly prioritize Xdefi and reload the page");
-      } else if (providerID !== "xdefi-evm" && isXdefiPrioritized()) {
-        if (!isUserInitiated) return;
-        return alert("Kindly remove priority to Xdefi and reload the page");
-      }
 
       setState({ status: "loading" });
       /** request access */
@@ -151,7 +144,7 @@ export default function useInjectedWallet(
   }
 
   async function disconnect() {
-    const provider = await injectedProvider(providerID);
+    const provider = injectedProvider(providerID);
     if (provider) {
       setState({ status: "disconnected" });
       saveUserAction(actionKey, "disconnect");

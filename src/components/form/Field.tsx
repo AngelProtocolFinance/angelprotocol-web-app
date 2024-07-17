@@ -1,9 +1,12 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { unpack } from "helpers";
+import type React from "react";
 import {
+  type ForwardedRef,
   type HTMLInputTypeAttribute,
+  type ReactElement,
   type ReactNode,
   createElement,
+  forwardRef,
 } from "react";
 import {
   type FieldValues,
@@ -18,52 +21,49 @@ const textarea = "textarea" as const;
 type TextArea = typeof textarea;
 type InputType = HTMLInputTypeAttribute | TextArea;
 
-type FieldProps<T extends FieldValues, K extends InputType> = Omit<
-  K extends TextArea
+type Props<T extends InputType> = Omit<
+  T extends TextArea
     ? React.TextareaHTMLAttributes<HTMLTextAreaElement>
     : React.InputHTMLAttributes<HTMLInputElement>,
-  "autoComplete" | "className" | "name" | "id" | "spellCheck" | "type"
+  "autoComplete" | "className" | "id" | "spellCheck" | "type"
 > & {
-  name: Path<T>;
   classes?: Classes | string;
   tooltip?: ReactNode;
-  label: string;
-  type?: K;
+  label: string | ReactElement;
+  type?: T;
 };
 
-export function Field<T extends FieldValues, K extends InputType = InputType>({
-  type = "text" as K,
-  label,
-  name,
-  classes,
-  tooltip,
-  required,
-  disabled,
-  ...props
-}: FieldProps<T, K>) {
-  const {
-    register,
-    formState: { errors, isSubmitting },
-  } = useFormContext();
-
+function _Field<T extends InputType = InputType>(
+  {
+    type = "text" as T,
+    label,
+    classes,
+    tooltip,
+    required, //extract from props to disable native validation
+    error,
+    ...props
+  }: Props<T> & { error?: string },
+  ref: ForwardedRef<HTMLInputElement | HTMLTextAreaElement>
+) {
   const style = unpack(classes);
 
-  const id = "__" + String(name);
+  const id = "__" + String(props.name);
+  const errorId = "__error_" + String(props.name);
 
   return (
-    <div className={style.container + " field"} aria-required={required}>
+    <div className={style.container + " field"}>
       <Label className={style.label} required={required} htmlFor={id}>
         {label}
       </Label>
 
       {createElement(type === textarea ? textarea : "input", {
+        ref,
         ...props,
-        ...register(name, { valueAsNumber: type === "number" }),
         ...(type === textarea ? {} : { type }),
         id,
-        "aria-invalid": !!get(errors, name)?.message,
-        disabled: isSubmitting || disabled,
-        "aria-disabled": isSubmitting || disabled,
+        "aria-invalid": !!error,
+        "aria-disabled": props.disabled,
+        "aria-errormessage": errorId,
         className: style.input,
         autoComplete: "off",
         spellCheck: false,
@@ -76,22 +76,40 @@ export function Field<T extends FieldValues, K extends InputType = InputType>({
           ) : (
             tooltip
           )}{" "}
-          <ErrorMessage
-            errors={errors}
-            name={name}
-            as="span"
-            className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
-          />
+          <span
+            id={errorId}
+            className="empty:hidden text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
+          >
+            {error}
+          </span>
         </p>
       )) || (
-        <ErrorMessage
-          data-error
-          errors={errors}
-          name={name}
-          as="span"
-          className={style.error}
-        />
+        <span id={errorId} data-error className={style.error + " empty:hidden"}>
+          {error}
+        </span>
       )}
     </div>
+  );
+}
+
+export const NativeField = forwardRef(_Field) as typeof _Field;
+
+export function Field<T extends FieldValues, K extends InputType = InputType>({
+  name,
+  disabled,
+  ...rest
+}: Omit<Props<K>, "name"> & { name: Path<T> }) {
+  const {
+    register,
+    formState: { errors, isSubmitting },
+  } = useFormContext();
+
+  return (
+    <NativeField
+      {...register(name)}
+      {...rest}
+      disabled={disabled || isSubmitting}
+      error={get(errors, name)?.message}
+    />
   );
 }

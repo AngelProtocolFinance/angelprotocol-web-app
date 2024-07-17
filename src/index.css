@@ -13,6 +13,7 @@
 @import "tailwindcss/components";
 @import "./styles/components.css";
 
+
 @import "tailwindcss/utilities";
 @import "./styles/utilities.css";
 
@@ -20,3 +21,4 @@
     --accent-primary: theme(colors.blue.d1);
     --accent-secondary:theme(colors.blue.l4);
   }
+

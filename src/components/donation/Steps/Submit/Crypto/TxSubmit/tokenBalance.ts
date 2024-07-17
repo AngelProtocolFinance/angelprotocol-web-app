@@ -1,38 +1,41 @@
 import type { BigNumber } from "@ethersproject/bignumber";
-import { chains } from "constants/chains";
 import { EIPMethods } from "constants/evm";
 import { erc20 } from "contracts/evm/ERC20";
 import { condenseToNum, objToBase64, request } from "helpers";
-import type { Token } from "types/aws";
-import type { ChainID } from "types/chain";
+import { getChain } from "helpers/tx/get-chain";
+import type { QrTokenType, Token } from "types/aws";
+import type { SupportedChainId } from "types/chain";
 import type { CW20Balance } from "types/contracts";
 
 type CosmosBalance = { balance: { denom: string; amount: string } };
 export const tokenBalance = async (
   { decimals, token_id, type }: Token,
-  chainID: ChainID,
+  chainID: SupportedChainId,
   holder: string
 ): Promise<number> => {
-  const { lcd, rpc } = chains[chainID];
+  const { nodeUrl } = await getChain(chainID);
 
   switch (type) {
     case "juno-native":
+    case "osmosis-native":
     case "terra-native":
+    case "stargaze-native":
+    case "kujira-native":
     case "ibc": {
       return fetch(
-        lcd +
+        nodeUrl +
           `/cosmos/bank/v1beta1/balances/${holder}/by_denom?denom=${token_id}`
       )
         .then<CosmosBalance>((res) => res.json())
         .then((d) => condenseToNum(d.balance.amount, decimals));
     }
     case "cw20":
-      return cw20Balance(token_id, holder, lcd).then((bal) =>
+      return cw20Balance(token_id, holder, nodeUrl).then((bal) =>
         condenseToNum(bal, decimals)
       );
 
     case "erc20":
-      return erc20Balance(token_id, holder, rpc).then((bal) =>
+      return erc20Balance(token_id, holder, nodeUrl).then((bal) =>
         condenseToNum(bal, decimals)
       );
 
@@ -40,12 +43,12 @@ export const tokenBalance = async (
       return request({
         method: "eth_getBalance",
         params: [holder, "latest"],
-        rpcURL: rpc,
+        rpcURL: nodeUrl,
       }).then((hex) => condenseToNum(hex, decimals));
     }
     default: {
-      const x: never = type;
-      throw new Error(`${x} not handled`);
+      const x = type satisfies QrTokenType;
+      throw `should not fetch balance for ${x}: unsupported`;
     }
   }
 };

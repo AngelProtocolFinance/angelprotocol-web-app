@@ -1,5 +1,4 @@
-import { setVerified } from "slices/components/marketFilter";
-import { useGetter, useSetter } from "store/accessors";
+import { useMarketplaceContext } from "../Context";
 import { type FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<boolean>[] = [
@@ -8,15 +7,14 @@ const options: FilterOption<boolean>[] = [
 ];
 
 export default function VerificationFilter() {
-  const verified = useGetter((state) => state.component.marketFilter.verified);
-  const dispatch = useSetter();
+  const { state, update } = useMarketplaceContext();
 
   return (
     <FlatFilter
       label="Verification status"
-      selectedValues={verified}
+      selectedValues={state.verified}
       options={options}
-      onChange={(options) => dispatch(setVerified(options))}
+      onChange={(options) => update({ verified: options })}
     />
   );
 }

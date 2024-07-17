@@ -1,8 +1,7 @@
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
-import { reset } from "slices/components/marketFilter";
-import { useSetter } from "store/accessors";
+import { useMarketplaceContext } from "../Context";
 import Categories from "./Categories";
 import Countries from "./Countries";
 import Designations from "./Designations";
@@ -11,7 +10,7 @@ import VerificationFilter from "./VerificationFilter";
 
 export default function Filter({ classes = "" }: { classes?: string }) {
   const { closeModal } = useModalContext();
-  const dispatch = useSetter();
+  const { update } = useMarketplaceContext();
 
   return (
     <Modal
@@ -22,7 +21,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         <button
           type="button"
           title="Reset all filters to their default values."
-          onClick={() => dispatch(reset())}
+          onClick={() => update("reset")}
           className="text-navy-l1 dark:text-navy-l5 text-sm mr-4"
         >
           Clear Filters

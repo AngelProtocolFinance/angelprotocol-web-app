@@ -18,17 +18,9 @@ import type {
   EndowmentOption,
   EndowmentsQueryParams,
   PaginatedAWSQueryRes,
-  WalletProfile,
 } from "types/aws";
 import { version as v } from "../helpers";
-import type {
-  EndowmentUpdate,
-  IdOrSlug,
-  VersionSpecificWalletProfile,
-} from "../types";
-
-const getWalletProfileQuery = (walletAddr: string) =>
-  `/${v(2)}/profile/${apiEnv}/user/${walletAddr}`;
+import type { EndowmentUpdate, IdOrSlug } from "../types";
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -66,7 +58,6 @@ export const aws = createApi({
   tagTypes: [
     "airdrop",
     "admin",
-    "walletProfile",
     "endowment",
     "endowments",
     "strategy",
@@ -82,6 +73,8 @@ export const aws = createApi({
     "endow-admins",
     "donations",
     "user",
+    "user-bookmarks",
+    "user-endows",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -121,30 +114,57 @@ export const aws = createApi({
         return res.Items;
       },
     }),
-    walletProfile: builder.query<VersionSpecificWalletProfile, string>({
-      providesTags: ["walletProfile"],
-      query: getWalletProfileQuery,
-      transformResponse(res: WalletProfile, _meta, walletAddr) {
-        return {
-          ...res,
-          version: walletAddr.startsWith("juno") ? "legacy" : "latest",
-        };
-      },
+    userBookmarks: builder.query<number[], null>({
+      providesTags: ["user-bookmarks"],
+      query: () => ({
+        url: `${v(1)}/bookmarks`,
+        //get user id from jwt
+        headers: { authorization: TEMP_JWT },
+      }),
     }),
-    toggleBookmark: builder.mutation<
+    toggleUserBookmark: builder.mutation<
       unknown,
-      { type: "add" | "delete"; wallet: string; endowId: number }
+      { endowId: number; action: "add" | "delete" }
     >({
-      invalidatesTags: ["walletProfile"],
-      query: ({ endowId, type, wallet }) => {
+      invalidatesTags: ["user-bookmarks"],
+      query: ({ endowId, action }) => {
+        if (action === "add") {
+          return {
+            url: `${v(1)}/bookmarks`,
+            method: "POST",
+            body: { endowId },
+            headers: { authorization: TEMP_JWT },
+          };
+        }
+
         return {
-          url: `${getWalletProfileQuery(wallet)}/bookmarks`,
-          method: type === "add" ? "POST" : "DELETE",
-          body: { endowId },
+          url: `${v(1)}/bookmarks/${endowId}`,
+          method: "DELETE",
+          //get user id from jwt
+          headers: { authorization: TEMP_JWT },
         };
       },
-      transformResponse: (response: { data: any }) => response,
+      async onQueryStarted({ endowId, action }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          aws.util.updateQueryData("userBookmarks", null, (draft) => {
+            if (action === "add") {
+              draft.push(endowId);
+            } else {
+              const idx = draft.indexOf(endowId);
+              if (idx !== -1) {
+                draft.splice(idx, 1);
+              }
+            }
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
+      },
     }),
+
     endowment: builder.query<
       Endowment,
       IdOrSlug & { fields?: (keyof Endowment)[] }
@@ -167,8 +187,7 @@ export const aws = createApi({
     }),
 
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
-      invalidatesTags: (_, error) =>
-        error ? [] : ["endowments", "endowment", "walletProfile"],
+      invalidatesTags: (_, error) => (error ? [] : ["endowments", "endowment"]),
       query: ({ id, ...payload }) => {
         return {
           url: `/${v(7)}/endowments/${id}`,
@@ -228,9 +247,9 @@ export const aws = createApi({
 });
 
 export const {
+  useUserBookmarksQuery,
+  useToggleUserBookmarkMutation,
   usePingQuery,
-  useWalletProfileQuery,
-  useToggleBookmarkMutation,
   useEndowmentQuery,
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,
@@ -257,16 +276,12 @@ export const {
 const endowCardObj: {
   [key in keyof EndowmentCard]: ""; //we care only for keys
 } = {
-  hq_country: "",
-  endow_designation: "",
-  active_in_countries: "",
-  sdgs: "",
   id: "",
   card_img: "",
-  kyc_donors_only: "",
   name: "",
   tagline: "",
   claimed: "",
+  contributions_total: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 

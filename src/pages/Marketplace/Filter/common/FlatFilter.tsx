@@ -1,4 +1,4 @@
-import { Listbox } from "@headlessui/react";
+import { Listbox, ListboxOption, ListboxOptions } from "@headlessui/react";
 import type { GroupProps } from "./types";
 
 export function FlatFilter<T>(props: GroupProps<T>) {
@@ -10,12 +10,12 @@ export function FlatFilter<T>(props: GroupProps<T>) {
       value={props.selectedValues}
       onChange={props.onChange}
     >
-      <Listbox.Label className="font-bold text-xs font-heading uppercase mb-2">
+      <label className="font-bold text-xs font-heading uppercase mb-2">
         {props.label}
-      </Listbox.Label>
-      <Listbox.Options static className="flex flex-wrap gap-x-1 gap-y-2">
+      </label>
+      <ListboxOptions static className="flex flex-wrap gap-x-1 gap-y-2">
         {props.options.map((option) => (
-          <Listbox.Option
+          <ListboxOption
             value={option.value}
             key={option.key}
             className={({ selected }) =>
@@ -27,9 +27,9 @@ export function FlatFilter<T>(props: GroupProps<T>) {
             }
           >
             {option.displayText}
-          </Listbox.Option>
+          </ListboxOption>
         ))}
-      </Listbox.Options>
+      </ListboxOptions>
     </Listbox>
   );
 }

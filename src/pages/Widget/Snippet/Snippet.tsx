@@ -23,7 +23,10 @@ export default function Snippet({ classes = "", config }: Props) {
         <div className="w-full text-sm sm:text-base font-mono break-all py-4">
           {iframeURL}
         </div>
-        <Copier classes="w-10 h-10 hover:text-blue-d1" text={iframeURL} />
+        <Copier
+          classes={{ icon: "w-10 h-10 hover:text-blue-d1" }}
+          text={iframeURL}
+        />
       </div>
     </div>
   );
@@ -41,6 +44,7 @@ const widgetURLfn = (config: WidgetConfig) => {
       .join(","),
     isTitleShown: config.isTitleShown ? "true" : "false",
     title: config.title ?? "",
+    programId: config.program.value,
     description: config.description ?? "",
     accentPrimary: config.accentPrimary ?? "",
     accentSecondary: config.accentSecondary ?? "",

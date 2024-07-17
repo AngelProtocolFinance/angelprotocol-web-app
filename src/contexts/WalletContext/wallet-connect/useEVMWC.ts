@@ -1,6 +1,7 @@
 import { WalletConnectModal } from "@walletconnect/modal";
 import type { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import type { SessionTypes, SignClientTypes } from "@walletconnect/types";
+import metamaskIcon from "assets/icons/wallets/metamask.png";
 import { EIPMethods } from "constants/evm";
 import { logger } from "helpers";
 import { _pairing, _session, account } from "helpers/wallet-connect";
@@ -28,7 +29,7 @@ const wcModal = new WalletConnectModal({
     },
   ],
   walletImages: {
-    metamask: "/icons/wallets/metamask.png",
+    metamask: metamaskIcon,
   },
 });
 

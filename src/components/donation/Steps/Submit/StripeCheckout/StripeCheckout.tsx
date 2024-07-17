@@ -7,6 +7,7 @@ import { useStripePaymentIntentQuery } from "services/apes";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
+import { toDonor } from "../../common/constants";
 import type { StripeCheckoutStep } from "../../types";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
@@ -16,7 +17,15 @@ import Checkout from "./Checkout";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const { init, details, liquidSplitPct, tip } = props;
+  const {
+    init,
+    details,
+    liquidSplitPct,
+    tip,
+    donor: fvDonor,
+    honorary,
+    feeAllowance,
+  } = props;
   const { setState } = useDonationState();
 
   const {
@@ -29,22 +38,28 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     type: details.frequency,
     amount: +details.amount,
     tipAmount: tip?.value ?? 0,
+    feeAllowance,
     currency: details.currency.code,
     endowmentId: init.recipient.id,
     splitLiq: liquidSplitPct,
-    donor: props.donor,
+    donor: toDonor(fvDonor),
     source: init.source,
+    ...(honorary.honoraryFullName && {
+      inHonorOf: honorary.honoraryFullName,
+      tributeNotif: honorary.withTributeNotif
+        ? honorary.tributeNotif
+        : undefined,
+    }),
+    ...(details.program.value && { programId: details.program.value }),
   });
 
   return (
     <Summary
-      classes={{
-        container: "grid content-start p-4 @md/steps:p-8",
-        split: "mb-4",
-      }}
+      classes="grid content-start p-4 @md/steps:p-8"
       onBack={() => setState({ ...props, step: "summary" })}
       Amount={currency(details.currency)}
       amount={+details.amount}
+      feeAllowance={feeAllowance}
       splitLiq={liquidSplitPct}
       frequency={details.frequency}
       tip={

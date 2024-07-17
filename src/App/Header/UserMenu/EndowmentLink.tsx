@@ -4,31 +4,42 @@ import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
+import type { UserEndow } from "types/aws";
 
-type Props = { endowId: number };
-export default function EndowmentLink({ endowId }: Props) {
+interface IBookmarkLink {
+  endowId: number;
+}
+export function BookmarkLink({ endowId }: IBookmarkLink) {
   const query = useEndowment({ id: endowId }, ["logo", "name"]);
   return (
     <QueryLoader
       queryState={query}
       messages={{
         loading: <Skeleton />,
-        error: <_Link id={endowId} />,
+        error: <_Link id={endowId} route="profile" />,
       }}
     >
-      {(endow) => <_Link {...endow} id={endowId} />}
+      {(endow) => <_Link {...endow} id={endowId} route="profile" />}
     </QueryLoader>
   );
+}
+
+export function EndowmentLink({ endowID, logo, name }: UserEndow) {
+  return <_Link id={endowID} logo={logo} name={name} route="admin" />;
 }
 
 type LinkProps = {
   id: number;
   name?: string;
   logo?: string;
+  route: "admin" | "profile";
 };
 const _Link = (props: LinkProps) => (
   <Link
-    to={appRoutes.admin + `/${props.id}`}
+    to={
+      (props.route === "admin" ? appRoutes.admin : appRoutes.marketplace) +
+      `/${props.id}`
+    }
     className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
     <Image src={props.logo} className="object-cover h-[20px] w-[20px]" />
@@ -36,7 +47,7 @@ const _Link = (props: LinkProps) => (
   </Link>
 );
 
-function Skeleton() {
+export function Skeleton() {
   return (
     <a
       href={"/"}

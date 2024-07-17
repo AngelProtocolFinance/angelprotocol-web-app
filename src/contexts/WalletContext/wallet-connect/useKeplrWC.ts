@@ -2,6 +2,7 @@ import { TxRaw } from "@keplr-wallet/proto-types/cosmos/tx/v1beta1/tx";
 import { KeplrQRCodeModalV2 } from "@keplr-wallet/wc-qrcode-modal";
 import type { SignClient } from "@walletconnect/sign-client/dist/types/client";
 import type { SessionTypes } from "@walletconnect/types";
+import keplrIcon from "assets/icons/wallets/keplr.png";
 import { _pairing, _session, account } from "helpers/wallet-connect";
 import { useEffect, useRef, useState } from "react";
 import type { SignDoc, WCSignDirectRes } from "types/cosmos";
@@ -11,9 +12,6 @@ import type {
   Wallet,
   WalletMeta,
 } from "types/wallet";
-
-const keplrIcon = "/icons/wallets/keplr.png";
-
 /** NOTE: only use this wallet in mainnet */
 export function useKeplrWC(): Wallet {
   const [state, setState] = useState<CosmosProviderState>({
@@ -55,7 +53,12 @@ export function useKeplrWC(): Wallet {
         requiredNamespaces: {
           cosmos: {
             methods: ["cosmos_signDirect", "cosmos_signAmino"],
-            chains: ["cosmos:juno-1"],
+            chains: [
+              "cosmos:juno-1",
+              "cosmos:kaiyo-1",
+              "cosmos:stargaze-1",
+              "cosmos:osmosis-1",
+            ],
             events: [],
           },
         },
@@ -100,7 +103,7 @@ export function useKeplrWC(): Wallet {
   const meta: WalletMeta = {
     logo: keplrIcon,
     name: "Keplr mobile",
-    supportedChains: ["juno-1"],
+    supportedChains: ["juno-1", "kaiyo-1", "stargaze-1", "osmosis-1"],
   };
 
   return {

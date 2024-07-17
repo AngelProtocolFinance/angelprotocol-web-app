@@ -10,11 +10,22 @@ export default async function estimateTx(
 ): Promise<EstimateResult | null> {
   try {
     switch (toEstimate.chainID) {
+      //juno
       case "juno-1":
-      case "uni-6": {
+      case "uni-6":
+      //kujira
+      case "kaiyo-1":
+      case "harpoon-4":
+      //osmosis
+      case "osmosis-1":
+      case "osmo-test-5":
+      //stargaze
+      case "stargaze-1":
+      case "elgafar-1": {
         const { val, chainID } = toEstimate;
         return estimateCosmosFee(chainID, sender.address, val);
       }
+      //terra
       case "phoenix-1":
       case "pisco-1": {
         const { chainID, val } = toEstimate;

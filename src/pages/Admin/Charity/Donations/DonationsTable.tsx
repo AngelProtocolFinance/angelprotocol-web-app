@@ -1,6 +1,7 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import { replaceWithEmptyString as fill, humanize } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { DonationRecord, KYCData } from "types/aws";
 import type { Ensure } from "types/utils";
@@ -43,32 +44,40 @@ export default function DonationsTable({ classes = "" }) {
             <div className="grid w-full sm:flex items-center sm:justify-end mb-2 gap-2">
               <CsvExporter
                 classes="border border-blue text-blue-d1 hover:border-blue-l2 hover:text-blue rounded px-4 py-2 text-sm"
-                headers={csvHeadersDonations}
-                data={donations}
-                filename="received_donations.csv"
-              >
-                <Icon type="FileCSV" size={17} className="text-2xl" />
-                Donation Records
-              </CsvExporter>
-              <CsvExporter
-                classes="border border-blue text-blue-d1 hover:border-blue-l2 hover:text-blue rounded px-4 py-2 text-sm"
-                headers={csvHeadersReceipts}
+                headers={csvHeaders}
                 data={donations
                   .filter(
                     (d): d is Ensure<DonationRecord, "donorDetails"> =>
                       !!d.donorDetails
                   )
-                  .map<KYCData>(({ donorDetails: d }) =>
-                    fill({
-                      ...d.address,
-                      fullName: d.fullName,
-                      kycEmail: d.kycEmail,
-                    })
+                  .map<DonationRecord | KYCData>(
+                    ({ donorDetails: donor, ...d }) => {
+                      const amt = amount(d.splitLiqPct, d.finalAmountUsd);
+                      return fill({
+                        date: new Date(d.date).toLocaleDateString(),
+                        appUsed:
+                          d.appUsed === "bg-widget"
+                            ? "Donation Form"
+                            : "Marketplace",
+                        paymentMethod: d.paymentMethod,
+                        isRecurring: d.isRecurring ? "Yes" : "No",
+                        symbol: d.symbol,
+                        initAmount: humanize(d.initAmount, 2),
+                        finalAmountUsd: humanize(d.finalAmountUsd ?? 0, 2),
+                        directDonateAmount: humanize(amt.directDonate, 2),
+                        sfDonateAmount: humanize(amt.sfDonate, 2),
+                        id: d.id,
+                        receipt: donor.address?.country ? "Yes" : "No",
+                        fullName: donor.fullName,
+                        kycEmail: donor.kycEmail,
+                        ...donor.address,
+                      });
+                    }
                   )}
-                filename="receipts.csv"
+                filename="received_donations.csv"
               >
                 <Icon type="FileCSV" size={17} className="text-2xl" />
-                Donor Information
+                Donation Records
               </CsvExporter>
             </div>
 
@@ -88,34 +97,34 @@ export default function DonationsTable({ classes = "" }) {
   );
 }
 
-const csvHeadersDonations: {
-  key: keyof DonationRecord;
+const csvHeaders: {
+  key: keyof DonationRecord | keyof KYCData | "receipt";
   label: string;
 }[] = [
-  { key: "viaName", label: "Source" },
-  { key: "finalAmountUsd", label: "Total amount (USD)" },
-  { key: "date", label: "Date" },
+  { key: "date", label: "Datetime" },
+  { key: "appUsed", label: "Donation Origin" },
+  { key: "paymentMethod", label: "Donation Type" },
+  { key: "isRecurring", label: "Recurring Donation" },
+  { key: "symbol", label: "Donation Asset" },
+  { key: "initAmount", label: "Donation Amount" },
+  { key: "finalAmountUsd", label: "Donation Value USD" },
+  { key: "directDonateAmount", label: "Direct Donation" },
+  { key: "sfDonateAmount", label: "Donation to Sustainability Fund" },
   { key: "id", label: "Transaction Hash" },
-];
-
-/** fill undefined with "" */
-function fill<T extends object>(
-  obj: T
-): { [K in keyof T]-?: NonNullable<T[K]> } {
-  return new Proxy(obj, {
-    get(target: any, key) {
-      return target[key] ?? "";
-    },
-  });
-}
-
-const csvHeadersReceipts: { key: keyof KYCData; label: string }[] = [
+  { key: "receipt", label: "Receipt Provided" },
   { key: "fullName", label: "Full Name" },
   { key: "kycEmail", label: "Email" },
-  { key: "line1", label: "Address line 1" },
-  { key: "line2", label: "Address line 2" },
+  { key: "line1", label: "Address Line 1" },
+  { key: "line2", label: "Address Line 2" },
   { key: "city", label: "City" },
-  { key: "zipCode", label: "Zip Code" },
   { key: "state", label: "State" },
+  { key: "zipCode", label: "Zip Code" },
   { key: "country", label: "Country" },
 ];
+
+/** compute for direct and SF donation amounts */
+function amount(splitLiqPct: number, amount = 0) {
+  const directDonate = amount * (splitLiqPct / 100);
+  const sfDonate = amount - directDonate;
+  return { directDonate, sfDonate };
+}

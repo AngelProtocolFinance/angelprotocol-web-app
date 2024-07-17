@@ -1,4 +1,4 @@
-import { Combobox } from "@headlessui/react";
+import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import QueryLoader from "components/QueryLoader";
 import type { CurrencyOption } from "types/components";
 import type { QueryState } from "types/third-party/redux";
@@ -48,25 +48,20 @@ export default function CurrencyOptions({
       }}
     >
       {(currencies) => (
-        <Combobox.Options
-          className={`${classes} w-full bg-white dark:bg-blue-d6 shadow-lg rounded max-h-52 overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none`}
+        <ComboboxOptions
+          anchor="bottom"
+          className={`${classes} w-[var(--input-width)] bg-white dark:bg-blue-d6 shadow-lg rounded [--anchor-max-height:13rem] overflow-y-auto scroller text-base ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
           {currencies.map(({ code, name, min, rate }) => (
-            <Combobox.Option key={code} value={{ code, name, min, rate }}>
-              {({ active, selected }) => (
-                <div
-                  className={`${active ? "bg-[--accent-secondary]" : ""} ${
-                    selected ? "font-semibold" : "font-normal"
-                  } flex items-center gap-2 p-2 cursor-pointer truncate`}
-                >
-                  {!!name
-                    ? `${code.toUpperCase()} - ${name}`
-                    : code.toUpperCase()}
-                </div>
-              )}
-            </Combobox.Option>
+            <ComboboxOption
+              key={code}
+              value={{ code, name, min, rate }}
+              className="flex items-center gap-2 p-2 cursor-pointer truncate data-[selected]:bg-[--accent-secondary] hover:bg-[--accent-secondary]"
+            >
+              {!!name ? `${code.toUpperCase()} - ${name}` : code.toUpperCase()}
+            </ComboboxOption>
           ))}
-        </Combobox.Options>
+        </ComboboxOptions>
       )}
     </QueryLoader>
   );

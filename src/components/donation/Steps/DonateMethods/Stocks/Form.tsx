@@ -1,60 +1,80 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Field, Form as FormContainer } from "components/form";
-import { type UseFormReturn, useForm } from "react-hook-form";
+import { NativeField as Field, Form as FormContainer } from "components/form";
+import { useController, useForm } from "react-hook-form";
+import { optionType, schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
-import { object } from "yup";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
-import type { StockFormStep } from "../../types";
+import { ProgramSelector } from "../../common/ProgramSelector";
+import { DEFAULT_PROGRAM } from "../../common/constants";
+import type { StockFormStep, StocksDonationDetails } from "../../types";
 import { nextFormState } from "../helpers";
+
+type FV = Omit<StocksDonationDetails, "method" | "numShares"> & {
+  numShares: string;
+};
 
 export default function Form(props: StockFormStep) {
   const { setState } = useDonationState();
-  const methods = useForm({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm({
     defaultValues: props.details
       ? {
           symbol: props.details.symbol,
           numShares: props.details.numShares.toString(),
+          program: props.details.program,
         }
       : {
           symbol: "",
           numShares: "",
+          program: DEFAULT_PROGRAM,
         },
     resolver: yupResolver(
-      object({
+      schema<FV>({
         symbol: requiredString.trim(),
-        numShares: requiredString.trim().matches(/^[1-9]\d*$/, "invalid"),
+        numShares: stringNumber(
+          (s) => s.required("required"),
+          (n) => n.positive("must be greater than 0")
+        ),
+        program: optionType(),
       })
     ),
   });
 
-  type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
+  const { field: program } = useController<FV, "program">({
+    control: control,
+    name: "program",
+  });
 
   return (
     <FormContainer
-      methods={methods}
       className="grid"
-      onSubmit={methods.handleSubmit((fv) =>
+      onSubmit={handleSubmit((fv) =>
         setState((prev) =>
           nextFormState(prev, {
             ...fv,
             method: "stocks",
-            numShares: +fv.numShares,
           })
         )
       )}
     >
-      <Field<FV>
+      <Field
         required
-        name="symbol"
+        {...register("symbol")}
+        error={errors.symbol?.message}
         label="Symbol name of share"
         placeholder="Ex. AAPL"
         classes={{ label: "font-semibold", container: "field-donate" }}
       />
 
-      <Field<FV>
+      <Field
         required
-        name="numShares"
+        {...register("numShares")}
+        error={errors.numShares?.message}
         label="Number of shares you are donating"
         placeholder="Enter quantity"
         classes={{
@@ -63,6 +83,15 @@ export default function Form(props: StockFormStep) {
           error: "left-0",
         }}
       />
+
+      {(props.init.recipient.progDonationsAllowed ?? true) && (
+        <ProgramSelector
+          classes="mt-6 mb-4"
+          endowId={props.init.recipient.id}
+          program={program.value}
+          onChange={program.onChange}
+        />
+      )}
 
       <h4 className="mt-6 mb-2">Benefits of donating appreciated stock</h4>
       <p className="text-sm">
@@ -86,11 +115,7 @@ export default function Form(props: StockFormStep) {
         be up to 20% larger because you avoid the taxes you'd incur from selling
         and donating the cash.
       </p>
-      <ContinueBtn
-        disabled={methods.formState.isSubmitting}
-        className="mt-6"
-        type="submit"
-      />
+      <ContinueBtn disabled={isSubmitting} className="mt-6" type="submit" />
     </FormContainer>
   );
 }

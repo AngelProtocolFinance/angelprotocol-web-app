@@ -1,31 +1,21 @@
 import Icon from "components/Icon";
 import { categories } from "constants/unsdgs";
 import type { PropsWithChildren } from "react";
-import {
-  reset,
-  setCountries,
-  setDesignations,
-  setKYCOnly,
-  setSDGgroups,
-  setVerified,
-} from "slices/components/marketFilter";
-import { useGetter, useSetter } from "store/accessors";
+import { useMarketplaceContext } from "./Context";
 
 export default function ActiveFilters() {
-  const { endow_designation, sdgGroups, countries, kyc_only, verified } =
-    useGetter((state) => state.component.marketFilter);
-
-  const dispatch = useSetter();
+  const { state, update } = useMarketplaceContext();
+  const { endow_designation, sdgGroups, countries, kyc_only, verified } = state;
 
   const endowDesignations = endow_designation.map((designation) => (
     <Item
       key={designation}
       onRemove={() =>
-        dispatch(
-          setDesignations(
-            endow_designation.filter((val) => val !== designation)
-          )
-        )
+        update({
+          endow_designation: endow_designation.filter(
+            (val) => val !== designation
+          ),
+        })
       }
     >
       {designation}
@@ -36,7 +26,7 @@ export default function ActiveFilters() {
     <Item
       key={groupNum}
       onRemove={() =>
-        dispatch(setSDGgroups(sdgGroups.filter((s) => s !== groupNum)))
+        update({ sdgGroups: sdgGroups.filter((s) => s !== groupNum) })
       }
     >
       {categories[groupNum].name}
@@ -47,7 +37,7 @@ export default function ActiveFilters() {
     <Item
       key={country}
       onRemove={() =>
-        dispatch(setCountries(countries.filter((c) => c !== country)))
+        update({ countries: countries.filter((c) => c !== country) })
       }
     >
       {country}
@@ -57,7 +47,7 @@ export default function ActiveFilters() {
   const kycFilters = kyc_only.map((kyc) => (
     <Item
       key={`${kyc}`}
-      onRemove={() => dispatch(setKYCOnly(kyc_only.filter((v) => v !== kyc)))}
+      onRemove={() => update({ kyc_only: kyc_only.filter((v) => v !== kyc) })}
     >
       {kyc ? "KYC" : "No KYC"}
     </Item>
@@ -67,7 +57,7 @@ export default function ActiveFilters() {
     <Item
       key={`${isVerified}`}
       onRemove={() =>
-        dispatch(setVerified(verified.filter((v) => v !== isVerified)))
+        update({ verified: verified.filter((v) => v !== isVerified) })
       }
     >
       {isVerified ? "Verified" : "Not verified"}
@@ -86,7 +76,7 @@ export default function ActiveFilters() {
       {filters.length >= 2 && (
         <button
           type="button"
-          onClick={() => dispatch(reset())}
+          onClick={() => update("reset")}
           className="text-blue hover:text-blue-l1 text-sm ml-1"
         >
           Clear all

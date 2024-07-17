@@ -5,6 +5,7 @@ import {
   WalletStatus,
   useWallet,
 } from "@terra-money/wallet-provider";
+import terraIcon from "assets/icons/wallets/terra-extension.jpg";
 import type {
   TerraProviderState,
   TerraWalletID,
@@ -76,7 +77,7 @@ export default function useTerra() {
   const terraWC: TerraConnection = {
     name: "Terra mobile",
     type: ConnectType.WALLETCONNECT,
-    icon: "/icons/wallets/terra-extension.jpg",
+    icon: terraIcon,
   };
 
   return {

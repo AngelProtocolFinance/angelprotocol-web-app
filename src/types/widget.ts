@@ -1,11 +1,12 @@
 import type { EndowmentOption } from "./aws";
-import type { TDonateMethod } from "./components";
+import type { OptionType, TDonateMethod } from "./components";
 
 export type WidgetConfig = {
   title?: string;
   isTitleShown: boolean;
   description?: string;
   endowment: EndowmentOption;
+  program: OptionType<string>;
   isDescriptionTextShown: boolean;
   splitDisabled: boolean;
   liquidSplitPct: number;
@@ -32,4 +33,5 @@ export type WidgetURLSearchParams = {
   /** csv of colors arranged as primary,secondary */
   accentPrimary?: string;
   accentSecondary?: string;
+  programId?: string;
 };

@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods } from "components/DonateMethods";
-import { LockedSplitSlider } from "components/donation";
+import { LockedSplitSlider, ProgramSelector } from "components/donation";
 import { CheckField, Field, Form } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
@@ -14,9 +14,15 @@ type Props = {
   classes?: string;
   config: WidgetConfig;
   setConfig: Dispatch<SetStateAction<WidgetConfig>>;
+  programDonationAllowed?: boolean;
 };
 
-export default function Configurer({ classes = "", config, setConfig }: Props) {
+export default function Configurer({
+  classes = "",
+  config,
+  setConfig,
+  programDonationAllowed,
+}: Props) {
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
     //set new config as default, so user would need to make a change to be able to update again
@@ -44,6 +50,11 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
     name: "methods",
   });
 
+  const { field: program } = useController({
+    control: methods.control,
+    name: "program",
+  });
+
   const isDescriptionTextShown = watch("isDescriptionTextShown");
   const isTitleShown = watch("isTitleShown");
 
@@ -66,6 +77,15 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
           Nonprofit name:
         </label>
         <EndowmentSelector />
+
+        {programDonationAllowed && (
+          <ProgramSelector
+            classes={{ container: "mt-6", label: "text-base font-medium" }}
+            onChange={program.onChange}
+            program={program.value}
+            endowId={config.endowment.id}
+          />
+        )}
 
         <Field<FormValues, "textarea">
           type="textarea"
@@ -165,7 +185,7 @@ export default function Configurer({ classes = "", config, setConfig }: Props) {
             type="submit"
             className="btn-blue @max-sm/configurer:mx-auto w-40"
           >
-            Update Snippet
+            Update Form
           </button>
         </div>
       </div>

@@ -1,28 +1,28 @@
 import { Label } from "components/form";
-import { chainList } from "constants/chains";
-import { IS_TEST } from "constants/env";
-import { useFormContext } from "react-hook-form";
-import type { ChainID } from "types/chain";
-import { Selector } from "../../../../Selector";
 import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import { ProgramSelector } from "../../common/ProgramSelector";
+import { initTokenOption } from "../../common/constants";
+import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
-import { initToken } from "./constants";
+import { ChainSelector } from "./ChainSelector";
 import type { DonateValues } from "./types";
+import { useRhf } from "./useRhf";
 
-export default function Form() {
+export default function Form(props: CryptoFormStep) {
   const { setState } = useDonationState();
 
-  const { watch, reset, setValue, handleSubmit } =
-    useFormContext<DonateValues>();
+  const { handleSubmit, reset, setValue, program, token, chainId, errors } =
+    useRhf(props);
 
-  function submit(data: DonateValues) {
-    setState((prev) => nextFormState(prev, { ...data, method: "crypto" }));
+  function submit({ chainId, ...data }: DonateValues) {
+    if (!chainId) throw "dev: chainId should be validated";
+    setState((prev) =>
+      nextFormState(prev, { ...data, method: "crypto", chainId })
+    );
     reset();
   }
-
-  const chainId = watch("chainId");
 
   return (
     <form
@@ -37,27 +37,23 @@ export default function Form() {
       >
         Network
       </Label>
-      <Selector<DonateValues, "chainId", ChainID>
-        name="chainId"
-        options={chainList
-          .filter((chain) => chain.isTest === IS_TEST)
-          .map(({ name, id }) => ({
-            label: name,
-            value: id,
-          }))}
-        onOptionChange={() => {
-          setValue("token", initToken);
-          setValue("token.amount", "0");
-        }}
-        classes={{
-          container: "bg-white dark:bg-blue-d6",
-          button: "field-input-donate",
-          options: "text-sm",
+      <ChainSelector
+        ref={chainId.ref}
+        value={chainId.value}
+        error={errors.chainId}
+        onChange={(id) => {
+          chainId.onChange(id);
+          //reset selected token
+          setValue("token", initTokenOption);
         }}
       />
-      <TokenField<DonateValues, "token">
-        name="token"
-        selectedChainId={chainId.value}
+
+      <TokenField
+        ref={token.ref}
+        token={token.value}
+        onChange={token.onChange}
+        chainId={chainId.value}
+        error={errors.token}
         withBalance
         label="Donation amount"
         classes={{
@@ -66,6 +62,15 @@ export default function Form() {
         }}
         withMininum
       />
+
+      {(props.init.recipient.progDonationsAllowed ?? true) && (
+        <ProgramSelector
+          classes="my-2"
+          endowId={props.init.recipient.id}
+          program={program.value}
+          onChange={program.onChange}
+        />
+      )}
 
       <ContinueBtn className="mt-auto" type="submit" />
     </form>

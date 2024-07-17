@@ -1,17 +1,19 @@
 import { categories } from "constants/unsdgs";
 import { isEmpty } from "helpers";
+import useDebouncer from "hooks/useDebouncer";
 import {
   updateAWSQueryData,
   useEndowmentCardsQuery,
   useLazyEndowmentCardsQuery,
 } from "services/aws/aws";
-import { useGetter, useSetter } from "store/accessors";
+import { useSetter } from "store/accessors";
+import { useMarketplaceContext } from "../Context";
 
 export default function useCards() {
+  const { state } = useMarketplaceContext();
   const dispatch = useSetter();
-  const { sort, searchText, sdgGroups, verified, ...params } = useGetter(
-    (state) => state.component.marketFilter
-  );
+  const { sort, searchText, sdgGroups, verified, ...params } = state;
+  const [debouncedSearchText, isDebouncing] = useDebouncer(searchText, 500);
 
   const sdgs = sdgGroups.flatMap((g) => categories[g].sdgs);
 
@@ -23,9 +25,16 @@ export default function useCards() {
     {}
   );
 
-  const { isLoading, isFetching, data, isError, originalArgs } =
-    useEndowmentCardsQuery({
-      query: searchText,
+  const {
+    isLoading,
+    isFetching,
+    isUninitialized,
+    data,
+    isError,
+    originalArgs,
+  } = useEndowmentCardsQuery(
+    {
+      query: debouncedSearchText,
       sort: sort ? `${sort.key}+${sort.direction}` : undefined,
       page: 1, // always starts at page 1
       sdgs: sdgs.join(","),
@@ -33,7 +42,9 @@ export default function useCards() {
         /** search for both verified/unverified if user didn't explicitly narrow verified status */
         searchText && isEmpty(verified) ? "true,false" : verified.join(","),
       ..._params,
-    });
+    },
+    { skip: isDebouncing }
+  );
 
   const [loadMore, { isLoading: isLoadingNextPage }] =
     useLazyEndowmentCardsQuery();
@@ -66,8 +77,8 @@ export default function useCards() {
 
   return {
     hasMore,
-    isLoading,
-    isFetching,
+    isLoading: isLoading || isUninitialized,
+    isFetching: isFetching || isUninitialized,
     isLoadingNextPage,
     loadNextPage,
     data,

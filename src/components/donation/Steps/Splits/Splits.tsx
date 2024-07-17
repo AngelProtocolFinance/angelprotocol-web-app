@@ -45,7 +45,10 @@ export default function Split(props: Props) {
   const DECIMALS = details.method === "crypto" ? 4 : 2;
 
   return (
-    <div className="grid content-start p-4 @md/steps:p-8">
+    <div
+      data-testid="split-step"
+      className="grid content-start p-4 @md/steps:p-8"
+    >
       <BackBtn
         type="button"
         onClick={() => setState({ ...props, step: "donate-form" })}

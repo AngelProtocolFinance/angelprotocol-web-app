@@ -1,41 +1,48 @@
 import Icon from "components/Icon";
 import Tooltip from "components/Tooltip";
 import { useErrorContext } from "contexts/ErrorContext";
-import { type PropsWithChildren, useRef, useState } from "react";
+import { type PropsWithChildren, useRef } from "react";
 import {
-  useToggleBookmarkMutation,
-  useWalletProfileQuery,
+  useToggleUserBookmarkMutation,
+  useUserBookmarksQuery,
 } from "services/aws/aws";
+import { useGetter } from "store/accessors";
+import { userIsSignedIn } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
-type Props = PropsWithChildren<Pick<EndowmentBookmark, "endowId">>;
+type Props = PropsWithChildren<
+  Pick<EndowmentBookmark, "endowId"> & { classes?: string }
+>;
 
-export default function BookmarkBtn({ endowId, children }: Props) {
-  const [isHovered, setHovered] = useState(false);
+export default function BookmarkBtn({
+  endowId,
+  children,
+  classes = "",
+}: Props) {
+  const { user } = useGetter((state) => state.auth);
+  const userEmail = userIsSignedIn(user) ? user.email : "";
   const ref = useRef<HTMLButtonElement>(null);
 
-  const {
-    data,
-    isLoading: isProfileLoading,
-    isFetching,
-    //FUTURE: wallet is may not be needed to edit bookmarks
-  } = useWalletProfileQuery("", {
-    skip: true,
-  });
-  const { handleError } = useErrorContext();
-  const [toggle, { isLoading: isToggling }] = useToggleBookmarkMutation();
+  const { data: bookmarks = [], isLoading: isBookmarksLoading } =
+    useUserBookmarksQuery(null, {
+      skip: !userEmail,
+    });
+  const { handleError, displayError } = useErrorContext();
 
-  const isLoading = isProfileLoading || isFetching || isToggling;
+  const [toggle, { isLoading: isTogglingBookmark }] =
+    useToggleUserBookmarkMutation();
 
-  const bookmark = data?.bookmarks?.find((d) => d.endowId === endowId);
-  const isBookmarked = bookmark !== undefined;
+  const isBookmarked = bookmarks.includes(endowId);
 
   async function toogleBookmark() {
     try {
+      if (!userEmail) {
+        return displayError("Kindly login to save your favorites");
+      }
+
       await toggle({
         endowId,
-        type: isBookmarked ? "delete" : "add",
-        wallet: "", //FUTURE: wallet may not be needed to edit bookmarks
+        action: isBookmarked ? "delete" : "add",
       }).unwrap();
     } catch (err) {
       handleError(err, { context: "changing bookmark" });
@@ -44,36 +51,18 @@ export default function BookmarkBtn({ endowId, children }: Props) {
 
   return (
     <>
-      <Tooltip anchorRef={ref} content="Add to favorites" />
+      {!isBookmarked && <Tooltip anchorRef={ref} content="Add to favorites" />}
       <button
         ref={ref}
         type="button"
         aria-label="Add to favorites button"
         onClick={toogleBookmark}
-        disabled={isLoading}
-        className={`flex items-center gap-1 ${
-          isBookmarked || isHovered ? "text-red" : ""
-        }`}
-        onMouseOver={(e) => {
-          e.preventDefault();
-          setHovered(true);
-        }}
-        onMouseLeave={(e) => {
-          e.preventDefault();
-          setHovered(false);
-        }}
+        disabled={isBookmarksLoading || isTogglingBookmark}
+        className={`flex items-center gap-1 disabled:text-gray-l4 ${
+          isBookmarked ? "text-red" : ""
+        } ${classes}`}
       >
-        <Icon
-          type={
-            isLoading
-              ? "Loading"
-              : isBookmarked || isHovered
-                ? "HeartFill"
-                : "HeartOutline"
-          }
-          className={isLoading ? "animate-spin" : ""}
-          size={20}
-        />
+        <Icon type={isBookmarked ? "HeartFill" : "HeartOutline"} size={20} />
         {children}
       </button>
     </>

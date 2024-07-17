@@ -1,5 +1,4 @@
-import { setKYCOnly } from "slices/components/marketFilter";
-import { useGetter, useSetter } from "store/accessors";
+import { useMarketplaceContext } from "../Context";
 import { type FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<boolean>[] = [
@@ -8,15 +7,14 @@ const options: FilterOption<boolean>[] = [
 ];
 
 export default function KYCFilter() {
-  const kycOnly = useGetter((state) => state.component.marketFilter.kyc_only);
-  const dispatch = useSetter();
+  const { state, update } = useMarketplaceContext();
 
   return (
     <FlatFilter
       label="Donor verification"
-      selectedValues={kycOnly}
+      selectedValues={state.kyc_only}
       options={options}
-      onChange={(options) => dispatch(setKYCOnly(options))}
+      onChange={(options) => update({ kyc_only: options })}
     />
   );
 }

@@ -27,6 +27,14 @@ export interface Props<
   children?: (selected: OptionType<V>) => ReactNode;
 }
 
+export interface ControlledProps<T extends ValKey> extends BaseProps {
+  value: OptionType<T>;
+  onChange: (opt: OptionType<T>) => void;
+  options: OptionType<T>[];
+  children?: (selected: OptionType<T>) => ReactNode;
+  error?: string;
+}
+
 export interface MultiselectorProps<
   T extends FieldValues,
   K extends Path<T>,
