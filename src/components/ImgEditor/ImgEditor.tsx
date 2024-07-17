@@ -15,7 +15,7 @@ import useImgEditor from "./useImgEditor";
 
 const BYTES_IN_MB = 1e6;
 
-function _ImgEditor(props: ControlledProps, ref: React.Ref<any>) {
+function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
   const { handleOpenCropper, handleReset, onDrop } = useImgEditor(props);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
