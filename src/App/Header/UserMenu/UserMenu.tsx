@@ -1,4 +1,5 @@
 import Icon from "components/Icon";
+import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
 import { Link, useLocation } from "react-router-dom";
@@ -37,8 +38,19 @@ export default function UserMenu() {
   }
 
   return (
-    <Link to={appRoutes.user_dashboard} className="cursor-pointer contents">
-      <Icon size={24} type="User" className="text-blue disabled:text-navy-l2" />
+    <Link
+      to={`${appRoutes.user_dashboard}/edit-profile`}
+      className="cursor-pointer contents"
+    >
+      {user.avatarUrl ? (
+        <Image src={user.avatarUrl} className="rounded-full size-8" />
+      ) : (
+        <Icon
+          size={24}
+          type="User"
+          className="text-blue disabled:text-navy-l2"
+        />
+      )}
     </Link>
   );
 }
