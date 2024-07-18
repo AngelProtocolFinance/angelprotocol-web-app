@@ -1,4 +1,5 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
+import { DonationTerms } from "components/DonationTerms";
 import QueryLoader from "components/QueryLoader";
 import { chains } from "constants/chains";
 import WalletContext from "contexts/WalletContext/WalletContext";
@@ -50,6 +51,7 @@ export default function Crypto(props: CryptoSubmitStep) {
       }
     >
       <TerraLoadedCheckout {...props} />
+      <DonationTerms endowName={props.init.recipient.name} classes="mt-5" />
     </Summary>
   );
 }

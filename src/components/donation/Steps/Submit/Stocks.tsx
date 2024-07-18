@@ -1,3 +1,4 @@
+import { DonationTerms } from "components/DonationTerms";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useDonationState } from "../Context";
@@ -65,6 +66,10 @@ export default function Stocks(props: StockCheckoutStep) {
       >
         Generate email
       </a>
+      <DonationTerms
+        endowName={props.init.recipient.name}
+        classes="mt-5 border-t border-gray-l4 pt-4"
+      />
     </div>
   );
 }

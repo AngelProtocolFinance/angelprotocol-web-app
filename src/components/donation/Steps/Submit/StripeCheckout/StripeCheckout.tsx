@@ -1,5 +1,6 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { DonationTerms } from "components/DonationTerms";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
@@ -102,6 +103,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
           </Elements>
         )}
       </ErrorBoundary>
+      <DonationTerms endowName={props.init.recipient.name} classes="mt-5" />
     </Summary>
   );
 }
