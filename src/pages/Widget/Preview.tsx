@@ -1,5 +1,4 @@
 import character from "assets/laira/laira-waiving.png";
-import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import Image from "components/Image/Image";
 import { type DonationState, Steps, initDetails } from "components/donation";
@@ -83,12 +82,3 @@ export default function Preview({ classes = "", config }: Props) {
     </section>
   );
 }
-
-const A: typeof ExtLink = ({ className, ...props }) => {
-  return (
-    <ExtLink
-      {...props}
-      className={className + " font-medium hover:underline"}
-    />
-  );
-};
