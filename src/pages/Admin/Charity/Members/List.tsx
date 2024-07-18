@@ -18,7 +18,7 @@ export default function List() {
 
   const queryState = useEndowAdminsQuery(id);
   return (
-    <div>
+    <div className="overflow-x-auto">
       <button
         type="button"
         disabled={queryState.isLoading}
