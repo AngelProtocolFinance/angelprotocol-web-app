@@ -34,7 +34,11 @@ export default function useSubmit(initProgram: Program) {
         title: fv.title,
       };
 
-      await updateProgram({ endowId: id, ...cleanObject(update) }).unwrap();
+      await updateProgram({
+        endowId: id,
+        ...cleanObject(update),
+        targetRaise: +fv.targetRaise || null,
+      }).unwrap();
       showModal(Prompt, {
         type: "success",
         children: "Program information updated",

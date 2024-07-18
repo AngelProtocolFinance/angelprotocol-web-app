@@ -1,12 +1,19 @@
 import type { DonationIntent } from "types/aws";
 import type { ChainID } from "types/chain";
+import type { OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import Context from "./Context";
 import CurrentStep from "./CurrentStep";
+import {
+  initDetails,
+  initDonorTitleOption,
+  initTributeNotif,
+} from "./common/constants";
 import type {
   Config,
   DonationRecipient,
   DonationState,
+  FormDonor,
   Init,
   Mode,
 } from "./types";
@@ -16,6 +23,7 @@ type Components = {
   mode: Mode;
   config: Config | null;
   recipient: DonationRecipient;
+  programId?: string;
   intent?: DonationIntent;
 };
 type InitState = {
@@ -43,6 +51,7 @@ function initialState({
   intent,
   config,
   recipient,
+  programId,
   mode,
 }: Components): DonationState {
   const init: Init = {
@@ -53,7 +62,33 @@ function initialState({
     intentId: intent?.transactionId,
   };
 
-  if (!intent) return { step: "donate-form", init };
+  if (!intent) {
+    return {
+      step: "donate-form",
+      init,
+      details: initDetails(
+        init.config?.methodIds?.at(0) ?? "stripe",
+        programId
+      ),
+    };
+  }
+
+  const program: OptionType<string> = {
+    //label would be replaced once program options are loaded
+    label: "General donation",
+    value: intent.programId ?? programId ?? "",
+  };
+
+  const { email, firstName, lastName, ...d } = intent.donor;
+  const formDonor: FormDonor = {
+    email,
+    firstName,
+    lastName,
+    ukTaxResident: d.address?.country === "United Kingdom",
+    title: d.title ? { label: d.title, value: d.title } : initDonorTitleOption,
+    streetAddress: d.address?.streetAddress ?? "",
+    zipCode: d.address?.zipCode ?? "",
+  };
 
   if ("chainId" in intent) {
     return {
@@ -61,18 +96,24 @@ function initialState({
       step: "submit",
       details: {
         method: "crypto",
-        chainId: {
-          label: intent.chainName,
-          value: intent.chainId as ChainID,
-        },
+        chainId: intent.chainId as ChainID,
         token: {
           amount: `${intent.amount}`,
           ...intent.token,
         },
+
+        program,
       },
       liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
-      donor: intent.donor,
+      donor: formDonor,
+      honorary: {
+        withHonorary: !!intent.inHonorOf,
+        honoraryFullName: intent.inHonorOf ?? "",
+        withTributeNotif: !!intent.tributeNotif,
+        tributeNotif: intent.tributeNotif ?? initTributeNotif,
+      },
+      feeAllowance: intent.feeAllowance,
     };
   }
   return {
@@ -87,9 +128,17 @@ function initialState({
         rate: intent.currency.rate,
       },
       frequency: intent.frequency,
+      program,
     },
     liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },
-    donor: intent.donor,
+    donor: formDonor,
+    honorary: {
+      withHonorary: !!intent.inHonorOf,
+      honoraryFullName: intent.inHonorOf ?? "",
+      withTributeNotif: !!intent.tributeNotif,
+      tributeNotif: intent.tributeNotif ?? initTributeNotif,
+    },
+    feeAllowance: intent.feeAllowance,
   };
 }

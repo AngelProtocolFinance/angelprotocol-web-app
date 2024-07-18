@@ -18,6 +18,7 @@ type Props = {
   amount: number;
   splitLiq: number;
   tip?: { value: number; charityName: string };
+  feeAllowance?: number;
 
   Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
   onBack(): void;
@@ -36,6 +37,9 @@ export default function Summary({
   const liq = props.amount * (props.splitLiq / 100);
   const locked = props.amount - liq;
 
+  const tipValue = props.tip?.value ?? 0;
+  const oneTimeTip = frequency === "subscription" ? 0 : tipValue;
+
   return (
     <div className={container}>
       <BackBtn type="button" onClick={props.onBack} />
@@ -46,44 +50,63 @@ export default function Summary({
       {props.preSplitContent}
 
       <dl
-        className={`text-navy-l1 py-3 gap-y-2 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 ${splitClass}`}
+        className={`text-navy-l1 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 divide-y divide-gray-l4 ${splitClass}`}
       >
-        {(props.tip || locked > 0) && (
-          <>
-            <dt className="mr-auto text-navy-d4">
-              {props.tip
-                ? `Donation for ${props.tip.charityName}`
-                : "Total donation"}
-            </dt>
-            <Amount amount={props.amount} classes="text-navy-d4" />
-            {locked > 0 && (
-              <>
-                <div className="flex items-center justify-between col-span-full">
-                  <div className="mr-auto flex">
-                    <dt className="text-sm mt-2">Sustainability Fund</dt>
-                    <Image src={character} className="inline-block px-1 h-8" />
-                  </div>
-                  <Amount classes="text-sm" amount={locked} />
-                </div>
-                <div className="flex items-center justify-between col-span-full">
-                  <dt className="mr-auto text-sm">Direct Donation</dt>
-                  <Amount classes="text-sm" amount={liq} />
-                </div>
-              </>
-            )}
-            {props.tip && (
-              <div className="col-span-full grid grid-cols-[1fr_auto] border-y border-gray-l4 py-3">
-                <dt className="mr-auto">Donation for Better Giving</dt>
-                <Amount classes="text-sm" amount={props.tip.value} />
+        <div className="grid grid-cols-[1fr_auto] py-3 gap-y-1">
+          <dt aria-label="amount" className="mr-auto text-navy-d4">
+            {props.tip && tipValue > 0
+              ? `Donation for ${props.tip.charityName}`
+              : `Total donation`}
+          </dt>
+          <Amount amount={props.amount} classes="text-navy-d4" />
+
+          {locked > 0 && (
+            <div className="flex items-center justify-between col-span-full">
+              <div className="mr-auto flex">
+                <dt aria-label="sustainability fund" className="text-sm mt-2">
+                  Sustainability Fund
+                </dt>
+                <Image src={character} className="inline-block px-1 h-8" />
               </div>
-            )}
-          </>
+              <Amount classes="text-sm" amount={locked} />
+            </div>
+          )}
+
+          {locked > 0 && ( //show 0 liquid even if 100% locked
+            <div className="flex items-center justify-between col-span-full">
+              <dt aria-label="direct donation" className="mr-auto text-sm">
+                Direct Donation
+              </dt>
+              <Amount classes="text-sm" amount={liq} />
+            </div>
+          )}
+        </div>
+
+        {tipValue > 0 && (
+          <div className="col-span-full grid grid-cols-[1fr_auto] py-3">
+            <dt className="mr-auto" aria-label="tip">
+              Donation for Better Giving
+            </dt>
+            <Amount classes="text-sm" amount={tipValue} />
+          </div>
         )}
-        <div className="col-span-full grid grid-cols-[1fr_auto] pt-1 font-medium">
-          <dt className="mr-auto text-navy-d4">
+
+        {props.feeAllowance ? (
+          <div className="col-span-full grid grid-cols-[1fr_auto] py-3">
+            <dt className="mr-auto" aria-label="fee allowance">
+              Covered Payment Processing Fees
+            </dt>
+            <Amount classes="text-sm" amount={props.feeAllowance} />
+          </div>
+        ) : null}
+
+        <div className="grid col-span-full grid-cols-[1fr_auto] font-medium py-3">
+          <dt className="mr-auto text-navy-d4" aria-label="total">
             Total {frequency === "subscription" ? "monthly " : ""}charge
           </dt>
-          <Amount amount={props.amount + (props.tip ? props.tip.value : 0)} />
+          <Amount
+            amount={props.amount + oneTimeTip + (props.feeAllowance ?? 0)}
+          />
         </div>
       </dl>
       {locked > 0 && (

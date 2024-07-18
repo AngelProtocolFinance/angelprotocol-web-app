@@ -1,7 +1,8 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { chainOptions } from "constants/chainOptions";
+import QueryLoader from "components/QueryLoader";
 import { chains } from "constants/chains";
 import WalletContext from "contexts/WalletContext/WalletContext";
+import { useChainOptionsQuery } from "services/terra";
 import Image from "../../../../Image";
 import { useDonationState } from "../../Context";
 import Summary from "../../common/Summary";
@@ -11,7 +12,7 @@ import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
   const { setState } = useDonationState();
-  const { details, tip } = props;
+  const { details, tip, feeAllowance } = props;
   const Amount = token(details.token.coingecko_denom);
 
   return (
@@ -20,6 +21,7 @@ export default function Crypto(props: CryptoSubmitStep) {
       onBack={() => setState({ ...props, step: "summary" })}
       Amount={Amount}
       amount={+details.token.amount}
+      feeAllowance={feeAllowance}
       splitLiq={props.liquidSplitPct}
       tip={
         tip
@@ -42,18 +44,31 @@ export default function Crypto(props: CryptoSubmitStep) {
 
           <dl className="text-navy-l1 py-3 flex items-center justify-between">
             <dt className="mr-auto">Blockchain</dt>
-            <dd className="text-navy-d4">
-              {chains[details.chainId.value].name}
-            </dd>
+            <dd className="text-navy-d4">{chains[details.chainId].name}</dd>
           </dl>
         </>
       }
     >
-      <WalletProvider {...chainOptions}>
-        <WalletContext>
-          <Checkout {...props} classes="mt-4" />
-        </WalletContext>
-      </WalletProvider>
+      <TerraLoadedCheckout {...props} />
     </Summary>
+  );
+}
+
+function TerraLoadedCheckout(props: CryptoSubmitStep) {
+  // simply using `useChainOptions` from terra lib would call `getOptions` every mount */
+  const query = useChainOptionsQuery();
+  return (
+    <QueryLoader
+      queryState={query}
+      messages={{ loading: "loading form...", error: "failed to load form" }}
+    >
+      {(chainOptions) => (
+        <WalletProvider {...chainOptions}>
+          <WalletContext>
+            <Checkout {...props} classes="mt-4" />
+          </WalletContext>
+        </WalletProvider>
+      )}
+    </QueryLoader>
   );
 }

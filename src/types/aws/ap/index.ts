@@ -1,6 +1,6 @@
 import type { Except } from "type-fest";
 import type { PartialExcept } from "types/utils";
-import type { APIEnvironment, DonateMethodId, UNSDG_NUMS } from "../../lists";
+import type { DonateMethodId, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
 
@@ -19,6 +19,8 @@ export type Program = {
   id: string;
   title: string;
   milestones: Milestone[];
+  targetRaise?: number | null;
+  totalDonations?: number;
 };
 
 export type Media = {
@@ -103,21 +105,38 @@ export type Endowment = {
 
 export type EndowmentProfile = Endowment;
 
+export type AletPrefUpdate = {
+  endowId: number;
+  banking: boolean;
+  donation: boolean;
+};
+
+export type UserEndow = {
+  name?: string;
+  logo?: string;
+  email: string;
+  endowID: number;
+  alertPref?: {
+    banking: boolean;
+    donation: boolean;
+  };
+};
+
 /** from CloudSearch index instead of DB */
 export type EndowmentCard = Pick<
   Endowment,
-  | "id"
-  | "card_img"
-  | "name"
-  | "tagline"
-  | "hq_country"
-  | "sdgs"
-  | "active_in_countries"
-  | "endow_designation"
-  //icons
-  | "kyc_donors_only"
-  | "claimed"
->;
+  "id" | "card_img" | "name" | "tagline" | "claimed"
+  /** available but need not fetched */
+  // "claimed"
+  // "hq_country"
+  // "sdgs"
+  // "active_in_countries"
+  // "endow_designation"
+  // "kyc_donors_only"
+> & {
+  contributions_total: number;
+  // contributions_count:number
+};
 export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
 export type EndowmentSettingsAttributes = Extract<
@@ -150,7 +169,10 @@ export type EndowmentSettingsUpdate = Pick<
 export type NewProgram = Omit<Program, "id" | "milestones"> & {
   milestones: Omit<Milestone, "id">[];
 };
-export type ProgramUpdate = PartialExcept<Omit<Program, "milestones">, "id">;
+export type ProgramUpdate = PartialExcept<
+  Omit<Program, "milestones" | "targetRaise">,
+  "id"
+> & { targetRaise?: number | null /** unsets the target */ };
 
 export type NewMilestone = Omit<Milestone, "id">;
 export type MilestoneUpdate = PartialExcept<Milestone, "id">;
@@ -182,17 +204,11 @@ export type EndowmentBookmark = {
   logo?: string; // old bookmarks do not have this field saved yet
 };
 
-export type WalletProfile = {
-  wallet: string;
-  network: APIEnvironment;
-  admin: EndowmentBookmark[];
-  bookmarks: EndowmentBookmark[];
-};
-
 export type UserAttributes = {
   familyName: string;
   givenName: string;
   prefCurrencyCode?: string;
+  avatarUrl?: string;
 };
 
 export type UserUpdate = Partial<UserAttributes>;

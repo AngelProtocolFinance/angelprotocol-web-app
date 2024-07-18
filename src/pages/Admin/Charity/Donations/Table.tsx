@@ -44,25 +44,58 @@ export default function Table({
             Date
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("viaName")}
+            onClick={handleHeaderClick("appUsed")}
             _activeSortKey={sortKey}
-            _sortKey="viaName"
+            _sortKey="appUsed"
             _sortDirection={sortDirection}
           >
-            Source
+            Donation Origin
           </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("paymentMethod")}
+            _activeSortKey={sortKey}
+            _sortKey="paymentMethod"
+            _sortDirection={sortDirection}
+          >
+            Donation Type
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("isRecurring")}
+            _activeSortKey={sortKey}
+            _sortKey="isRecurring"
+            _sortDirection={sortDirection}
+          >
+            Recurring Donation
+          </HeaderButton>
+          <HeaderButton
+            onClick={handleHeaderClick("symbol")}
+            _activeSortKey={sortKey}
+            _sortKey="symbol"
+            _sortDirection={sortDirection}
+          >
+            Donation Asset
+          </HeaderButton>
+          <>Donation Amount</>
           <HeaderButton
             onClick={handleHeaderClick("finalAmountUsd")}
             _activeSortKey={sortKey}
             _sortKey="amount"
             _sortDirection={sortDirection}
           >
-            Total Amount
+            Donation Value USD
           </HeaderButton>
-          <>Current Portion</>
-          <>Sustainability Portion</>
-          <>Transaction</>
-          <>Receipt provided</>
+          <>Direct Donation</>
+          <>Donation to Sustainability Fund</>
+          <>Transaction Hash</>
+          <>Receipt Provided</>
+          <>Full Name</>
+          <>Email</>
+          <>Address Line 1</>
+          <>Address Line 2</>
+          <>City</>
+          <>State</>
+          <>Zip Code</>
+          <>Country</>
         </Cells>
       </TableSection>
       <TableSection
@@ -81,7 +114,7 @@ export default function Table({
           .concat(
             hasMore ? (
               <td
-                colSpan={9}
+                colSpan={19}
                 key="load-more-btn"
                 className="border-t border-blue-l2 rounded-b"
               >

@@ -4,11 +4,15 @@ import { useDonationState } from "../Context";
 import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
+import { initDonorTitleOption, initTributeNotif } from "../common/constants";
 import type { SummaryStep } from "../types";
-import DonorForm from "./DonorForm";
+import SummaryForm from "./SummaryForm";
+import { processingFee } from "./helpers";
 
 export default function Summary(props: SummaryStep) {
-  const { details, liquidSplitPct, donor, tip, init } = props;
+  const { details, liquidSplitPct, donor, honorary, tip, init, feeAllowance } =
+    props;
+
   const { setState } = useDonationState();
   const user = useGetter((state) => state.auth.user);
 
@@ -20,7 +24,7 @@ export default function Summary(props: SummaryStep) {
       //stocks skips summary (straight to submit), as donor info is not saved in DB
       case "stocks": {
         const { numShares, symbol } = details;
-        return [numShares, currency({ code: symbol, rate: null })];
+        return [+numShares, currency({ code: symbol, rate: null })];
       }
       default:
         return [+details.amount, currency(details.currency)];
@@ -29,21 +33,21 @@ export default function Summary(props: SummaryStep) {
 
   return (
     <SummaryContainer
+      // feeAllowance : don't show fee allowance as it's being set in this step
       frequency={details.method === "stripe" ? details.frequency : "one-time"}
       classes="grid content-start p-4 @md/steps:p-8"
       Amount={Amount}
       amount={amount}
       splitLiq={liquidSplitPct}
-      onBack={() =>
-        setState({
-          ...props,
-          step: init.recipient.hide_bg_tip
-            ? init.config?.splitDisabled
-              ? "donate-form"
-              : "splits"
-            : "tip",
-        })
-      }
+      onBack={() => {
+        if (init.recipient.hide_bg_tip) {
+          if (init.config?.splitDisabled) {
+            return setState({ ...props, step: "donate-form" });
+          }
+          return setState({ ...props, step: "splits" });
+        }
+        return setState({ ...props, step: "tip" });
+      }}
       tip={
         tip
           ? {
@@ -53,19 +57,59 @@ export default function Summary(props: SummaryStep) {
           : undefined
       }
     >
-      <DonorForm
+      <SummaryForm
+        method={details.method}
         mode={init.mode}
+        coverFee={!!feeAllowance}
+        nonprofitName={init.recipient.name}
         donor={
-          donor ||
-          (userIsSignedIn(user)
-            ? {
-                lastName: user.lastName ?? "",
-                firstName: user.firstName ?? "",
-                email: user.email,
-              }
-            : undefined)
+          donor || {
+            lastName: userIsSignedIn(user) ? user.lastName ?? "" : "",
+            firstName: userIsSignedIn(user) ? user.firstName ?? "" : "",
+            email: userIsSignedIn(user) ? user.email : "",
+            ukTaxResident: false,
+            title: initDonorTitleOption,
+            zipCode: "",
+            streetAddress: "",
+          }
         }
-        onSubmit={(donor) => setState({ ...props, step: "submit", donor })}
+        honorary={
+          honorary || {
+            withHonorary: false,
+            honoraryFullName: "",
+            withTributeNotif: false,
+            tributeNotif: initTributeNotif,
+          }
+        }
+        onSubmit={({
+          withHonorary,
+          honoraryFullName,
+          coverFee: fvCoverFee,
+          withTributeNotif,
+          tributeNotif,
+          ...donor
+        }) => {
+          const feeAllowance =
+            fvCoverFee &&
+            (details.method === "crypto" || details.method === "stripe")
+              ? processingFee(
+                  amount,
+                  details.method === "stripe" ? "stripe" : details.chainId
+                )
+              : 0;
+          setState({
+            ...props,
+            step: "submit",
+            donor,
+            honorary: {
+              withHonorary,
+              honoraryFullName,
+              withTributeNotif,
+              tributeNotif,
+            },
+            feeAllowance,
+          });
+        }}
         classes="mt-6"
       />
     </SummaryContainer>

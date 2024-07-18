@@ -10,30 +10,77 @@ export type EVMChainID =
   | "421614"
   //binance
   | "56"
-  | "97";
+  | "97"
+  //optimism
+  | "10"
+  | "11155420"
+  //base
+  | "8453"
+  | "84532";
 
-export type CosmosChainID = "juno-1" | "uni-6";
+export type CosmosChainID =
+  //juno
+  | "juno-1"
+  | "uni-6"
+  //kujira
+  | "kaiyo-1"
+  | "harpoon-4"
+  //osmosis
+  | "osmosis-1"
+  | "osmo-test-5"
+  //stargaze
+  | "stargaze-1"
+  | "elgafar-1";
 //would remove this type once terra tooling is unified to that of cosmos (keplr)
 export type TerraChainID = "phoenix-1" | "pisco-1";
 
-export type ChainID = EVMChainID | CosmosChainID | TerraChainID;
-type NativeAtomicUnit = string; //ujunox uluna
-type IBCDenom = string;
+export type SupportedChainId = EVMChainID | CosmosChainID | TerraChainID;
 
-export type Chain = {
+const unsupportedChainIds = [
+  "doge-mainnet",
+  "doge-testnet",
+  "sol-mainnet",
+  "sol-testnet",
+  "xrp-mainnet",
+  "xrp-testnet",
+  "btc-mainnet",
+  "btc-testnet",
+] as const;
+export type UnsupportedChainId = (typeof unsupportedChainIds)[number];
+
+export type ChainID =
+  | EVMChainID
+  | CosmosChainID
+  | TerraChainID
+  | UnsupportedChainId;
+
+export const chainIdIsNotSupported = (
+  chainId: ChainID
+): chainId is UnsupportedChainId =>
+  unsupportedChainIds.includes(chainId as any);
+
+export type SupportedChain = {
+  logo: string;
   isTest: boolean;
-  id: ChainID;
-  brand: string; //
+  id: SupportedChainId;
+  coingeckoPlatformId: string;
   name: string;
-  rpc: string;
-  lcd: string;
+  /** evm: rpc, cosmos: lcd */
   blockExplorer: string;
-  nativeToken: {
-    id: ChainID | NativeAtomicUnit | IBCDenom;
-    symbol: string;
-    decimals: number;
-    coinGeckoId: string;
-  };
+  processingRate: number;
 };
 
-export type Chains = Record<ChainID, Chain>;
+export type UnsupportedChain = Pick<
+  SupportedChain,
+  "isTest" | "name" | "blockExplorer" | "logo" | "processingRate"
+> & {
+  id: UnsupportedChainId;
+  /** null: erc20 token doesn't exist */
+  coingeckoPlatformId: string | null;
+};
+export type SupportedChains = { [K in SupportedChainId]: SupportedChain };
+export type UnsupportedChains = {
+  [K in UnsupportedChainId]: UnsupportedChain;
+};
+
+export type Chains = SupportedChains & UnsupportedChains;

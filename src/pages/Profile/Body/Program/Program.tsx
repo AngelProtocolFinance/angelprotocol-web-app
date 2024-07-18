@@ -1,6 +1,7 @@
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import RichText from "components/RichText";
+import { humanize } from "helpers";
 import { useProfileContext } from "pages/Profile/ProfileContext";
 import { useParams } from "react-router-dom";
 import { useProgramQuery } from "services/aws/programs";
@@ -28,6 +29,12 @@ export default function Program({ className = "" }) {
               readOnly
               classes={{ container: "m-6" }}
             />
+            {p.targetRaise ? (
+              <TargetProgress
+                target={p.targetRaise}
+                total={p.totalDonations ?? 0}
+              />
+            ) : null}
           </Container>
           <Milestones
             classes="self-start lg:sticky lg:top-28"
@@ -51,6 +58,31 @@ function Skeleton({ className = "" }) {
         <ContentLoader className="h-40" />
         <ContentLoader className="h-40" />
       </div>
+    </div>
+  );
+}
+
+type ProgressProps = {
+  target: number;
+  total: number;
+};
+function TargetProgress({ target, total }: ProgressProps) {
+  const progressPct = Math.min(1, total / target) * 100;
+  return (
+    <div className="m-6 border-t border-gray-l4 pt-2 font-heading">
+      <div className="mb-2 flex items-center gap-2">
+        <p className="font-medium">Target raise:</p>
+        <p className="font-bold text-navy-l1">${humanize(target)}</p>
+      </div>
+      <div className="h-4 rounded-full bg-gray-l4 relative overflow-clip">
+        <div className="h-full bg-green" style={{ width: `${progressPct}%` }} />
+      </div>
+      {total ? (
+        <div className="mt-1 flex items-center gap-2 text-sm text-navy-l1">
+          <p>Donations received</p>
+          <p>${humanize(total)}</p>
+        </div>
+      ) : null}
     </div>
   );
 }

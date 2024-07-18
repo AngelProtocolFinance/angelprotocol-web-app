@@ -1,6 +1,6 @@
 import TokenField from "components/TokenField";
 import { appRoutes } from "constants/routes";
-import { useFormContext } from "react-hook-form";
+import { useController, useFormContext } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { setDetails } from "slices/gift";
@@ -13,7 +13,13 @@ export default function Form({ classes = "" }) {
     handleSubmit,
     getValues,
     formState: { isValid, isDirty, isSubmitting },
+    control,
   } = useFormContext<FV>();
+
+  const { field: token } = useController<FV, "token">({
+    name: "token",
+    control,
+  });
 
   const dispatch = useDispatch();
   function submit(data: FV) {
@@ -29,9 +35,11 @@ export default function Form({ classes = "" }) {
       className={`grid rounded-md w-full ${classes}`}
       autoComplete="off"
     >
-      <TokenField<FV, "token">
-        name="token"
-        selectedChainId="80002"
+      <TokenField
+        token={token.value}
+        onChange={token.onChange}
+        ref={token.ref}
+        chainId="80002"
         label="Enter the donation amount:"
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withBalance

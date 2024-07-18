@@ -1,8 +1,12 @@
-import { Listbox } from "@headlessui/react";
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
 import Icon, { DrawerIcon } from "components/Icon";
-import { type Sort, setSort } from "slices/components/marketFilter";
-import { useGetter, useSetter } from "store/accessors";
 import type { EndowmentsSortKey } from "types/aws";
+import { type Sort, useMarketplaceContext } from "../Context";
 
 type Option = { name: string; key: EndowmentsSortKey };
 const options: Option[] = [
@@ -11,30 +15,33 @@ const options: Option[] = [
 ];
 
 export default function Sorter() {
-  const dispatch = useSetter();
-  const sort = useGetter((state) => state.component.marketFilter.sort);
+  const {
+    state: { sort },
+    update,
+  } = useMarketplaceContext();
   const isSortKeySelected = sort !== undefined;
 
   function handleSortChange(value: EndowmentsSortKey) {
-    dispatch(
-      setSort({
+    update({
+      sort: {
         key: value,
-        direction: "desc" /** default dir when sort is not specified is 'asc'*/,
-      })
-    );
+        direction:
+          "desc" /** default direction when sort is not defined is 'asc' */,
+      },
+    });
   }
 
   function resetSort() {
-    dispatch(setSort(undefined));
+    update({ sort: undefined });
   }
 
   function toggleDirection(sort: Sort) {
-    dispatch(
-      setSort({
+    update({
+      sort: {
         ...sort,
         direction: sort.direction === "asc" ? "desc" : "asc",
-      })
-    );
+      },
+    });
   }
 
   const activeSortName =
@@ -48,7 +55,7 @@ export default function Sorter() {
       className="relative min-w-[10rem]"
     >
       <div className="w-full h-full flex items-center justify-between text-[0.9375rem] py-2 pl-3 dark:text-navy-l5 border border-gray-l4 rounded-lg font-bold">
-        <Listbox.Button className="upppercase flex items-center justify-between w-full">
+        <ListboxButton className="upppercase flex items-center justify-between w-full">
           {({ open }) => (
             <>
               <span className="uppercase">{activeSortName}</span>
@@ -57,7 +64,7 @@ export default function Sorter() {
               )}
             </>
           )}
-        </Listbox.Button>
+        </ListboxButton>
 
         {sort && (
           //show sort controls
@@ -79,17 +86,17 @@ export default function Sorter() {
           </>
         )}
       </div>
-      <Listbox.Options className="absolute grid bg-gray-l6 dark:bg-blue-d3 w-full py-2 mt-1 z-20 rounded-md shadow-lg border-gray-l2 dark:border-navy">
+      <ListboxOptions className="absolute grid bg-gray-l6 dark:bg-blue-d3 w-full py-2 mt-1 z-20 rounded-md shadow-lg border-gray-l2 dark:border-navy">
         {options.map(({ key, name }) => (
-          <Listbox.Option
+          <ListboxOption
             key={key}
             value={key}
             className="text-sm px-3 py-1 hover:bg-blue-l3 dark:hover:text-blue-d3 dark:text-white cursor-pointer"
           >
             {name}
-          </Listbox.Option>
+          </ListboxOption>
         ))}
-      </Listbox.Options>
+      </ListboxOptions>
     </Listbox>
   );
 }

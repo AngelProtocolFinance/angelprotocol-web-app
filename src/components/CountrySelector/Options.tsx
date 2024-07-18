@@ -1,6 +1,5 @@
-import { Combobox } from "@headlessui/react";
+import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
 import { isEmpty } from "helpers";
-import React from "react";
 import type { Country } from "types/components";
 
 const containerStyle =
@@ -16,29 +15,21 @@ export default function Options({ query, options }: Props) {
     o.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
   );
   return (
-    <Combobox.Options
+    <ComboboxOptions
       className={containerStyle}
       style={{ height: options.length <= 10 ? "auto" : "10rem" }}
     >
       {(!isEmpty(options) &&
         filtered.map((country) => (
-          <Combobox.Option
-            as={React.Fragment}
+          <ComboboxOption
+            className="data-[selected]:bg-blue-l2 hover:bg-blue-l2 flex items-center gap-2 p-2 text-sm font-heading"
             key={country.name}
             value={country}
           >
-            {({ active }) => (
-              <li
-                className={`${
-                  active ? "bg-blue-l2 dark:bg-blue-d1" : ""
-                } flex items-center gap-2 p-2 text-sm font-heading`}
-              >
-                <span className="text-2xl">{country.flag}</span>
-                <span>{country.name}</span>
-              </li>
-            )}
-          </Combobox.Option>
+            <span className="text-2xl">{country.flag}</span>
+            <span>{country.name}</span>
+          </ComboboxOption>
         ))) || <div className="p-2 text-sm">{query} not found</div>}
-    </Combobox.Options>
+    </ComboboxOptions>
   );
 }

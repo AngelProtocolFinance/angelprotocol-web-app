@@ -1,2 +1,2 @@
-export { default } from "./ImgEditor";
+export { default, ControlledImgEditor } from "./ImgEditor";
 export * from "./types";

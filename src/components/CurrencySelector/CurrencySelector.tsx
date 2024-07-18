@@ -1,11 +1,16 @@
-import { Combobox } from "@headlessui/react";
+import {
+  Combobox,
+  ComboboxButton,
+  ComboboxInput,
+  Field,
+  Label,
+} from "@headlessui/react";
 import Icon from "components/Icon/Icon";
 import { unpack } from "helpers";
 import { useState } from "react";
 import type { CurrencyOption } from "types/components";
 import { type QueryState, isQuery } from "types/third-party/redux";
 import { DrawerIcon } from "../Icon";
-import { Label } from "../form";
 import CurrencyOptions from "./CurrencyOptions";
 
 type Classes = {
@@ -37,26 +42,26 @@ export default function CurrencySelector<T extends CurrencyOption>({
   const style = unpack(props.classes);
 
   return (
-    <div className={`field ${style.container}`}>
+    <Field
+      disabled={props.disabled || isCurrencyLoading || isCurrencyError}
+      className={`field ${style.container}`}
+    >
       <Label
-        htmlFor="wise__currency"
-        className={style.label}
-        required={props.required}
+        className={`${style.label} label`}
+        data-required={props.required}
         aria-required={props.required}
       >
         {props.label}
       </Label>
       <Combobox
-        disabled={props.disabled || isCurrencyLoading || isCurrencyError}
-        by={"code" as any}
+        by="code"
         value={props.value}
-        onChange={props.onChange}
+        onChange={(val) => val && props.onChange(val)}
         as="div"
         className={`relative items-center grid grid-cols-[1fr_auto] field-container ${style.combobox}`}
       >
-        <Combobox.Input
-          id="wise__currency"
-          className="w-full border-r border-gray-l3 dark:border-navy px-4 py-3.5 text-sm leading-5 focus:ring-0"
+        <ComboboxInput
+          className="w-full dark:border-navy px-4 py-3.5 text-sm leading-5 focus:ring-0"
           displayValue={(currency: T) =>
             !!currency.name
               ? `${currency.code.toUpperCase()} - ${currency.name}`
@@ -65,7 +70,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
           onChange={(event) => setQuery(event.target.value)}
           spellCheck={false}
         />
-        <Combobox.Button className="flex items-center px-2">
+        <ComboboxButton className="flex items-center absolute inset-y-0 right-2">
           {({ open }) =>
             isCurrencyLoading ? (
               <Icon
@@ -77,12 +82,12 @@ export default function CurrencySelector<T extends CurrencyOption>({
               <DrawerIcon
                 isOpen={open}
                 size={25}
-                className={`h-full w-full ${isCurrencyError ? "text-red" : ""}`}
+                className={`${isCurrencyError ? "text-red" : ""}`}
                 aria-hidden
               />
             )
           }
-        </Combobox.Button>
+        </ComboboxButton>
 
         <CurrencyOptions
           query={query}
@@ -90,6 +95,6 @@ export default function CurrencySelector<T extends CurrencyOption>({
           currencies={currencies}
         />
       </Combobox>
-    </div>
+    </Field>
   );
 }

@@ -15,9 +15,14 @@ import type {
 } from "types/aws";
 import type { ChainID } from "types/chain";
 import type { DetailedCurrency } from "types/components";
-import { apiEnv } from "../constants";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
+
+type StripeRequiresBankVerification = {
+  /** timestamp in seconds: only present when status ===  "requires_action"*/
+  arrivalDate?: number;
+  url?: string;
+};
 
 type StripePaymentIntentParams = FiatDonation & {
   type: "one-time" | "subscription";
@@ -41,7 +46,11 @@ export const apes = createApi({
       }),
     }),
     createCryptoIntent: builder.query<
-      { transactionId: string },
+      {
+        transactionId: string;
+        /** defined if !CryptoDonation.walletAddress */
+        recipientAddress?: string;
+      },
       CryptoDonation
     >({
       query: (params) => ({
@@ -117,19 +126,23 @@ export const apes = createApi({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
     stripePaymentStatus: builder.query<
-      Pick<PaymentIntent, "status"> & {
-        guestDonor?: GuestDonor;
-        recipientName?: string;
-        recipientId?: number;
-      },
+      Pick<PaymentIntent, "status"> &
+        StripeRequiresBankVerification & {
+          guestDonor?: GuestDonor;
+          recipientName?: string;
+          recipientId?: number;
+        },
       { paymentIntentId: string }
     >({
       query: ({ paymentIntentId }) => ({
-        url: `v2/fiat/stripe-proxy/${apiEnv}?payment_intent=${paymentIntentId}`,
+        url: `stripe-proxy?payment_intent=${paymentIntentId}`,
       }),
     }),
     tokens: builder.query<Token[], ChainID>({
       query: (chainID) => `v1/tokens/${chainID}`,
+    }),
+    topCountries: builder.query<string[], unknown>({
+      query: () => "top-countries",
     }),
   }),
 });
@@ -145,6 +158,7 @@ export const {
   useEndowBalanceQuery,
   useStripePaymentStatusQuery,
   useTokensQuery,
+  useTopCountriesQuery,
   util: {
     invalidateTags: invalidateApesTags,
     updateQueryData: updateApesQueryData,

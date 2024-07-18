@@ -5,12 +5,6 @@ import { store } from "store/store";
 import { describe, expect, test, vi } from "vitest";
 import App from "../App";
 
-global.ResizeObserver = vi.fn().mockImplementation(() => ({
-  observe: vi.fn(),
-  unobserve: vi.fn(),
-  disconnect: vi.fn(),
-}));
-
 const homeHeroText = /Simplified Giving/i;
 const marketplaceHeroText = /better giving redefines/i;
 

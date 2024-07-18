@@ -26,14 +26,11 @@ describe("Copier component test:", () => {
     const button = screen.getByRole("button");
 
     // Clicks the copy button
-    userEvent.click(button);
+    await userEvent.click(button);
 
-    await waitFor(() => {
-      // Expects mock Clipboard API to be invoked
-      expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
-        "S4mple-Text+2_Copy0"
-      );
-    });
+    expect(navigator.clipboard.writeText).toHaveBeenCalledWith(
+      "S4mple-Text+2_Copy0"
+    );
 
     // Expects the button to change appearance once clicked
     expect(await screen.findByTitle("Copied!")).toBeInTheDocument();

@@ -92,7 +92,7 @@ export default function Context({
 export function useDonationState(): State {
   const val: any = useContext(context);
   if (val === INIT) {
-    throw "useDonationStateState can only be used in components inside Donation context";
+    throw "useDonationState can only be used in components inside Donation context";
   }
 
   return val;

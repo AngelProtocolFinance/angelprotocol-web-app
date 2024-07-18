@@ -18,11 +18,13 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   accentPrimary: string().matches(hexColor, "invalid color format"),
   accentSecondary: string().matches(hexColor, "invalid color format"),
   title: string().max(100),
+  programId: string().uuid(),
   description: string().max(300),
 });
 
-export type Parsed = Omit<WidgetConfig, "endowment" | "methods"> & {
+export type Parsed = Omit<WidgetConfig, "endowment" | "methods" | "program"> & {
   methodIds?: DonateMethodId[];
+  programId?: string;
 };
 
 export default function parseConfig(
@@ -44,6 +46,7 @@ export default function parseConfig(
       isDescriptionTextShown: config.isDescriptionTextShown === "true",
       splitDisabled: config.splitDisabled === "true",
       liquidSplitPct: +config.liquidSplitPct,
+      programId: config.programId,
       methodIds,
       title: config.title,
       isTitleShown: (config.isTitleShown ?? "true") === "true",

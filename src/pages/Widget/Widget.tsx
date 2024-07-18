@@ -1,6 +1,7 @@
 import { fill } from "components/DonateMethods";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
+import { DEFAULT_PROGRAM } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -12,19 +13,9 @@ import Preview from "./Preview";
 import Snippet from "./Snippet";
 
 export default function Widget({ endowId = 0 }: { endowId?: number }) {
-  const queryState = useEndowment(
-    { id: endowId },
-    [
-      "id",
-      "hide_bg_tip",
-      "logo",
-      "name",
-      "overview",
-      "splitFixed",
-      "splitLiqPct",
-    ],
-    { skip: !endowId }
-  );
+  const queryState = useEndowment({ id: endowId }, undefined, {
+    skip: !endowId,
+  });
 
   return (
     <QueryLoader queryState={queryState} dataRequired={false}>
@@ -33,35 +24,30 @@ export default function Widget({ endowId = 0 }: { endowId?: number }) {
   );
 }
 
-function Content({
-  endowment,
-}: {
-  endowment?: Pick<
-    Endowment,
-    | "id"
-    | "hide_bg_tip"
-    | "logo"
-    | "name"
-    | "overview"
-    | "splitFixed"
-    | "splitLiqPct"
-    | "donateMethods"
-  >;
-}) {
+function Content({ endowment }: { endowment?: Endowment }) {
   const location = useLocation();
+
+  const _methods = endowment?.donateMethods;
+
   const [state, setState] = useState<WidgetConfig>({
     endowment: endowment || {
       id: 0,
       name: "this nonprofit",
-      hide_bg_tip: false,
     },
     isDescriptionTextShown: true,
     isTitleShown: true,
     liquidSplitPct: endowment?.splitLiqPct ?? 50,
     splitDisabled: endowment?.splitFixed ?? false,
-    methods: fill(endowment?.donateMethods),
+    methods: fill(
+      _methods?.concat(
+        _methods.includes("daf") && !_methods.includes("stripe")
+          ? ["stripe"]
+          : []
+      )
+    ),
     accentPrimary: "#2D89C8",
     accentSecondary: "#E6F1F9",
+    program: DEFAULT_PROGRAM,
   });
 
   return (
@@ -83,7 +69,11 @@ function Content({
         website and you're ready to go!
       </p>
       <div className="w-full">
-        <Configurer config={state} setConfig={setState} />
+        <Configurer
+          config={state}
+          setConfig={setState}
+          programDonationAllowed={endowment?.progDonationsAllowed}
+        />
         <Snippet config={state} classes="mt-10" />
       </div>
       <Preview

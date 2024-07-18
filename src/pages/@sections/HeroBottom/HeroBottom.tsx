@@ -10,7 +10,7 @@ import frame2 from "./characters/frame_2.png";
 import frame3 from "./characters/frame_3.png";
 import frame4 from "./characters/frame_4.png";
 import frame6 from "./characters/frame_6.png";
-import mappng from "./map.png";
+import mappng from "./map.webp";
 import s from "./styles.module.css";
 
 const HeroBottom = ({ className = "" }) => {

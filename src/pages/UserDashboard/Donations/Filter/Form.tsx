@@ -1,4 +1,4 @@
-import { Popover } from "@headlessui/react";
+import { PopoverButton, PopoverPanel } from "@headlessui/react";
 import Icon from "components/Icon";
 import { DateInput } from "components/form";
 import type { FC, FormEventHandler } from "react";
@@ -15,7 +15,7 @@ type Props = {
 
 const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
   return (
-    <Popover.Panel
+    <PopoverPanel
       as="form"
       onSubmit={submit}
       onReset={onReset}
@@ -23,9 +23,9 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
     >
       <div className="@5xl:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
         <span className="text-blue-d1">Filters</span>
-        <Popover.Button className="absolute top-1/2 -translate-y-1/2 right-2">
+        <PopoverButton className="absolute top-1/2 -translate-y-1/2 right-2">
           <Icon type="Close" size={33} />
-        </Popover.Button>
+        </PopoverButton>
       </div>
 
       <div className="grid gap-x-[1.125rem] grid-cols-2 px-4 @5xl:px-6 @5xl:pt-6">
@@ -52,7 +52,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
           Submit
         </button>
       </div>
-    </Popover.Panel>
+    </PopoverPanel>
   );
 };
 

@@ -8,7 +8,7 @@ import { useCallback, useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useStripePaymentStatusQuery } from "services/apes";
 import type { GuestDonor } from "types/aws";
-import type { DonateFiatThanksState } from "./DonateFiatThanks";
+import type { DonateThanksState } from "./DonateThanks";
 
 export default function StripePaymentStatus() {
   const paymentIntentId =
@@ -34,7 +34,14 @@ export default function StripePaymentStatus() {
       }}
       classes={{ container: "place-self-center" }}
     >
-      {({ status, guestDonor, recipientName, recipientId }) => (
+      {({
+        status,
+        guestDonor,
+        recipientName,
+        recipientId,
+        arrivalDate,
+        url,
+      }) => (
         <Content
           status={status}
           onMount={handleProcessing}
@@ -42,6 +49,8 @@ export default function StripePaymentStatus() {
           guestDonor={guestDonor}
           recipientName={recipientName}
           recipientId={recipientId}
+          bankVerificationUrl={url}
+          microdepositArrivalDate={arrivalDate}
         />
       )}
     </QueryLoader>
@@ -55,12 +64,14 @@ function Content(props: {
   guestDonor?: GuestDonor;
   recipientName?: string;
   recipientId?: number;
+  bankVerificationUrl?: string;
+  microdepositArrivalDate?: number;
 }) {
   switch (props.status) {
     case "succeeded":
       const to = props.isInWidget
-        ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
-        : appRoutes.donate_fiat_thanks;
+        ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}`
+        : appRoutes.donate_thanks;
       return (
         <Navigate
           to={to}
@@ -69,12 +80,30 @@ function Content(props: {
               guestDonor: props.guestDonor,
               recipientName: props.recipientName,
               recipientId: props.recipientId,
-            } satisfies DonateFiatThanksState
+            } satisfies DonateThanksState
           }
         />
       );
     case "processing":
       return <Processing onMount={props.onMount} />;
+    case "requires_action":
+      const _to = props.isInWidget
+        ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}`
+        : appRoutes.donate_thanks;
+      return (
+        <Navigate
+          to={_to}
+          state={
+            {
+              guestDonor: props.guestDonor,
+              recipientName: props.recipientName,
+              recipientId: props.recipientId,
+              bankVerificationUrl: props.bankVerificationUrl,
+              microdepositArrivalDate: props.microdepositArrivalDate,
+            } satisfies DonateThanksState
+          }
+        />
+      );
     case "canceled":
       return <Unsuccessful recipientId={props.recipientId} />;
     default:

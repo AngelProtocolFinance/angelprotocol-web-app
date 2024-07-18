@@ -3,18 +3,27 @@ import ContentLoader from "components/ContentLoader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import type { DonateFiatThanksState } from "pages/DonateFiatThanks";
+import type { DonateThanksState } from "pages/DonateThanks";
 import { useNavigate } from "react-router-dom";
 import {
   useCapturePayPalOrderMutation,
   usePaypalOrderMutation,
 } from "services/apes";
+import { toDonor } from "../../../common/constants";
 import type { StripeCheckoutStep } from "../../../types";
 
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 export default function Checkout(props: StripeCheckoutStep) {
-  const { details, liquidSplitPct, tip, donor, init } = props;
+  const {
+    details,
+    liquidSplitPct,
+    tip,
+    donor: fvDonor,
+    honorary,
+    init,
+    feeAllowance,
+  } = props;
 
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
@@ -63,15 +72,15 @@ export default function Checkout(props: StripeCheckoutStep) {
 
         /// No problem with order
 
-        const state: DonateFiatThanksState = {
+        const state: DonateThanksState = {
           guestDonor: order.guestDonor,
           recipientName: init.recipient.name,
         };
 
         const route =
           props.init.source === "bg-widget"
-            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_fiat_thanks}`
-            : appRoutes.donate_fiat_thanks;
+            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}`
+            : appRoutes.donate_thanks;
 
         navigate(route, { state });
       }}
@@ -80,11 +89,16 @@ export default function Checkout(props: StripeCheckoutStep) {
           transactionId: init.intentId,
           amount: +details.amount,
           tipAmount: tip?.value ?? 0,
+          feeAllowance,
           currency: details.currency.code,
           endowmentId: init.recipient.id,
           splitLiq: liquidSplitPct,
-          donor,
+          donor: toDonor(fvDonor),
           source: init.source,
+          ...(honorary.honoraryFullName && {
+            inHonorOf: honorary.honoraryFullName,
+          }),
+          ...(details.program.value && { programId: details.program.value }),
         }).unwrap()
       }
     />

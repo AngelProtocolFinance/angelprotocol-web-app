@@ -1,4 +1,8 @@
-import { Disclosure } from "@headlessui/react";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DrawerIcon } from "components/Icon";
 import ImgEditor from "components/ImgEditor/ImgEditor";
@@ -43,12 +47,12 @@ export default function Milestone(props: Props) {
     >
       <div className="relative py-3 px-4 text-center bg-blue-l5 dark:bg-blue-d7">
         <span className="text-xl font-bold font-heading">{props.title}</span>
-        <Disclosure.Button className="absolute right-4 top-1/2 -translate-y-1/2">
+        <DisclosureButton className="absolute right-4 top-1/2 -translate-y-1/2">
           {({ open }) => <DrawerIcon isOpen={open} size={24} />}
-        </Disclosure.Button>
+        </DisclosureButton>
       </div>
 
-      <Disclosure.Panel
+      <DisclosurePanel
         as={Form}
         className={({ open }) =>
           `${
@@ -114,7 +118,7 @@ export default function Milestone(props: Props) {
             Save changes
           </button>
         </div>
-      </Disclosure.Panel>
+      </DisclosurePanel>
     </Disclosure>
   );
 }

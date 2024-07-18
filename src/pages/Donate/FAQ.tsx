@@ -1,11 +1,20 @@
-import { Disclosure } from "@headlessui/react";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
 import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { Fragment, type PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 
-export default function FAQ({ classes = "" }) {
+interface Props {
+  classes?: string;
+  endowId: number;
+}
+
+export default function FAQ({ classes = "", endowId }: Props) {
   return (
     <div
       className={
@@ -14,11 +23,11 @@ export default function FAQ({ classes = "" }) {
       }
     >
       <h2 id="faqs">Frequently asked questions</h2>
-      {faqs.map((faq) => (
+      {faqs(endowId).map((faq) => (
         <Disclosure as="div" key={faq.id}>
           {({ open }) => (
             <>
-              <Disclosure.Button className="flex items-start justify-between gap-2 mb-2 w-full">
+              <DisclosureButton className="flex items-start justify-between gap-2 mb-2 w-full">
                 <span
                   className={`text-left text-sm ${open ? "font-semibold" : ""}`}
                 >
@@ -28,9 +37,9 @@ export default function FAQ({ classes = "" }) {
                   isOpen={open}
                   className="shrink-0 -mt-0.5 text-xl"
                 />
-              </Disclosure.Button>
+              </DisclosureButton>
               {open && (
-                <Disclosure.Panel
+                <DisclosurePanel
                   as="div"
                   static
                   className="text-sm grid gap-3 text-navy-l1 mb-6"
@@ -38,7 +47,7 @@ export default function FAQ({ classes = "" }) {
                   {faq.paragraphs.map((p, idx) => (
                     <Fragment key={idx}>{p}</Fragment>
                   ))}
-                </Disclosure.Panel>
+                </DisclosurePanel>
               )}
             </>
           )}
@@ -48,7 +57,7 @@ export default function FAQ({ classes = "" }) {
   );
 }
 
-const faqs = [
+const faqs = (endowId: number) => [
   {
     id: 1,
     question: "How does my donation work to benefit nonprofits?",
@@ -127,6 +136,32 @@ const faqs = [
       <p>
         Blockchain transaction fees may apply, but these can be fractions of a
         cent depending on the chain.
+      </p>,
+    ],
+  },
+  {
+    id: 4,
+    question: "How do I donate by Check?",
+    paragraphs: [
+      <p className="leading-normal">
+        For gifts by check: Make your check out to{" "}
+        <Em classes="text-navy-d4">
+          Altruistic Partners Empowering Society Inc
+        </Em>
+        ,<br /> write{" "}
+        <Em classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5 mr-2">
+          endowment:{endowId}
+        </Em>
+        <Em classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5">
+          donation&nbsp;split:__%
+        </Em>{" "}
+        in the memo section of the check, and send it to:{" "}
+        <Em intensity={1} classes="text-navy-d4 block mt-2">
+          Miscellaneous Account Services
+          <br /> PNC Bank
+          <br /> P.O. Box 8108
+          <br /> Philadelphia, PA 19101-8108
+        </Em>
       </p>,
     ],
   },

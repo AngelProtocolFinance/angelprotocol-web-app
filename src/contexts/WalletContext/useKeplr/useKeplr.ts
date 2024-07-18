@@ -1,4 +1,11 @@
-import { juno, terraMainnet } from "constants/chains";
+import keplrIcon from "assets/icons/wallets/keplr.png";
+import {
+  juno,
+  kujira,
+  osmosis,
+  stargaze,
+  terraMainnet,
+} from "constants/chains";
 import { useEffect, useState } from "react";
 import type { ChainID } from "types/chain";
 import type { CosmosProviderState, Wallet, WalletMeta } from "types/wallet";
@@ -6,11 +13,16 @@ import { retrieveUserAction, saveUserAction } from "../helpers";
 
 const actionKey = `keplr__pref`;
 const INSTALL_URL = "https://www.keplr.app/download";
-const keplrIcon = "/icons/wallets/keplr.png";
 const meta: WalletMeta = {
   name: "Keplr",
   logo: keplrIcon,
-  supportedChains: ["juno-1", "phoenix-1"],
+  supportedChains: [
+    "juno-1",
+    "phoenix-1",
+    "kaiyo-1",
+    "stargaze-1",
+    "osmosis-1",
+  ],
 };
 
 export default function useKeplr(): Wallet {
@@ -30,7 +42,13 @@ export default function useKeplr(): Wallet {
         return window.open(INSTALL_URL, "_blank", "noopener noreferrer");
       }
       setState({ status: "loading" });
-      await window.keplr.enable([juno.id, terraMainnet.id]);
+      await window.keplr.enable([
+        juno.id,
+        terraMainnet.id,
+        stargaze.id,
+        kujira.id,
+        osmosis.id,
+      ]);
       const key = await window.keplr.getKey(juno.id);
 
       setState({

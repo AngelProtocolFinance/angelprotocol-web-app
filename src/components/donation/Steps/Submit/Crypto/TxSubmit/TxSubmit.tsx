@@ -4,9 +4,11 @@ import { chains } from "constants/chains";
 import { humanize } from "helpers";
 import { useEffect, useState } from "react";
 import { useCreateCryptoIntentQuery } from "services/apes";
+import { chainIdIsNotSupported } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
 import { useDonationState } from "../../../Context";
 import ContinueBtn from "../../../common/ContinueBtn";
+import { toDonor } from "../../../common/constants";
 import type { CryptoSubmitStep } from "../../../types";
 import { type EstimateStatus, isSuccess } from "../types";
 import { estimateDonation } from "./estimateDonation";
@@ -21,18 +23,35 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
   const { submitCrypto } = useDonationState();
   const [estimate, setEstimate] = useState<EstimateStatus>();
 
-  const { details, tip, liquidSplitPct, donor, init } = donation;
+  const {
+    details,
+    tip,
+    liquidSplitPct,
+    donor: fvDonor,
+    honorary,
+    init,
+    feeAllowance,
+  } = donation;
   const sender = wallet?.address;
   useEffect(() => {
     if (!sender) return setEstimate(undefined);
+
+    const chainId = details.chainId;
+
+    if (chainIdIsNotSupported(chainId)) {
+      return setEstimate(undefined);
+    }
+
     setEstimate("loading");
+
     estimateDonation(
       details.token,
-      details.chainId.value,
+      chainId,
       sender,
-      tip?.value ?? 0
+      tip?.value ?? 0,
+      feeAllowance
     ).then((estimate) => setEstimate(estimate));
-  }, [sender, details, tip]);
+  }, [sender, details, tip, feeAllowance]);
 
   const {
     data: intent,
@@ -43,14 +62,22 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
       transactionId: init.intentId,
       amount: +details.token.amount,
       tipAmount: tip?.value ?? 0,
-      chainId: chains[details.chainId.value].id,
-      chainName: chains[details.chainId.value].name,
+      feeAllowance,
+      chainId: chains[details.chainId].id,
+      chainName: chains[details.chainId].name,
       denomination: details.token.symbol,
       splitLiq: liquidSplitPct,
       walletAddress: wallet?.address ?? "",
       endowmentId: init.recipient.id,
       source: init.source,
-      donor,
+      donor: toDonor(fvDonor),
+      ...(honorary.honoraryFullName && {
+        inHonorOf: honorary.honoraryFullName,
+        tributeNotif: honorary.withTributeNotif
+          ? honorary.tributeNotif
+          : undefined,
+      }),
+      ...(details.program.value && { programId: details.program.value }),
     },
     { skip: !wallet?.address }
   );
@@ -81,7 +108,6 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
         ))}
 
       <ContinueBtn
-        type="button"
         onClick={
           intentId && wallet && estimate && isSuccess(estimate)
             ? () =>

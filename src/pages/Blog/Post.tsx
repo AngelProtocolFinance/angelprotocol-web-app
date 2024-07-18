@@ -2,12 +2,28 @@ import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
 import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
+import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { usePostQuery, useUserQuery } from "services/wordpress";
 import type { Wordpress } from "types/wordpress";
 
 const containerStyle = "w-full padded-container max-w-4xl mx-auto pb-4";
+
+const wpStyles = [
+  "animate.min.css",
+  "bootstrap.min.css",
+  "bootstrap.rtl.min.css",
+  "custom-animation.css",
+  "fontawesome.min.css",
+  "gainioz-core.css",
+  "gainioz-custom.css",
+  "gainioz-unit.css",
+  "magnific-popup.css",
+  "meanmenu.css",
+  "nice-select.css",
+  "swiper-bundle.css",
+];
 
 export default function Post() {
   const { slug = "" } = useParams<{ slug: string }>();
@@ -16,6 +32,14 @@ export default function Post() {
 
   return (
     <div className={containerStyle}>
+      <Helmet
+        link={wpStyles.map((w) => ({
+          rel: "stylesheet",
+          type: "text/css",
+          href: `/wordpress/${w}`,
+        }))}
+      />
+
       <Link
         to={".."}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
@@ -62,7 +86,6 @@ function Loaded(post: Wordpress.Post) {
       <div className="w-full h-px bg-gray-l4 my-4" />
 
       <div
-        className="wp-post"
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: post.content.rendered }}
       />

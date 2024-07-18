@@ -1,5 +1,6 @@
 import type {
   Donor,
+  DonorTitle,
   Endowment,
   FiatPaymentFrequency,
   GuestDonor,
@@ -14,15 +15,23 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
   "step" | U
 > & { [key in U]?: T[key] };
 
-export type DonationRecipient = Pick<Endowment, "id" | "name" | "hide_bg_tip">;
+export type DonationRecipient = Pick<
+  Endowment,
+  "id" | "name" | "hide_bg_tip" | "progDonationsAllowed"
+>;
 
-export type CryptoDonationDetails = {
-  method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
-  token: TokenWithAmount;
-  chainId: OptionType<ChainID>;
+type BaseDonationDetails = {
+  /** value is "" if no program is selected   */
+  program: OptionType<string>;
 };
 
-type FiatDonationDetails = {
+export type CryptoDonationDetails = BaseDonationDetails & {
+  method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
+  token: TokenWithAmount;
+  chainId: ChainID;
+};
+
+type FiatDonationDetails = BaseDonationDetails & {
   amount: string;
   currency: DetailedCurrency;
 };
@@ -32,10 +41,10 @@ export type StripeDonationDetails = {
   frequency: FiatPaymentFrequency;
 } & FiatDonationDetails;
 
-export type StocksDonationDetails = {
+export type StocksDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "stocks">;
   symbol: string;
-  numShares: number;
+  numShares: string;
 };
 export type DafDonationDetails = {
   method: Extract<DonateMethodId, "daf">;
@@ -93,9 +102,36 @@ export type TipStep = {
   tip?: { value: number; format: TipFormat };
 } & From<SplitsStep>;
 
+export type FormDonor = Pick<Donor, "email" | "firstName" | "lastName"> & {
+  ukTaxResident: boolean;
+
+  title: OptionType<DonorTitle>;
+  /** initially empty `''` */
+  zipCode: string;
+  /** initially empty `''` */
+  streetAddress: string;
+};
+
+export type TributeNotif = {
+  toFullName: string;
+  toEmail: string;
+  /** may be empty */
+  fromMsg: string;
+};
+
+export type Honorary = {
+  withHonorary: boolean;
+  /** initially empty `''` */
+  honoraryFullName: string;
+  withTributeNotif: boolean;
+  tributeNotif: TributeNotif;
+};
+
 export type SummaryStep = {
   step: "summary";
-  donor?: Donor;
+  donor?: FormDonor;
+  honorary?: Honorary;
+  feeAllowance?: number;
 } & From<TipStep, "tip">;
 
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {

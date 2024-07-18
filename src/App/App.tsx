@@ -13,7 +13,7 @@ const Profile = lazy(() => import("pages/Profile"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
 const Donate = lazy(() => import("pages/Donate"));
-const DonateFiatThanks = lazy(() => import("pages/DonateFiatThanks"));
+const DonateThanks = lazy(() => import("pages/DonateThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Signin = lazy(() => import("pages/Signin"));
@@ -34,6 +34,7 @@ const TermsDonors = lazy(() => import("pages/Legal/TermsDonors"));
 const TermsNonprofits = lazy(() => import("pages/Legal/TermsNonprofits"));
 const NonprofitInfo = lazy(() => import("pages/informational/NonprofitInfo"));
 const DonorInfo = lazy(() => import("pages/informational/DonorInfo"));
+const WpPlugin = lazy(() => import("pages/informational/WpPlugin"));
 
 export default function App() {
   /**
@@ -52,11 +53,12 @@ export default function App() {
   return (
     <ModalContext>
       <SentryRoutes>
+        <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
         <Route path={appRoutes.donate_widget}>
           <Route path=":id" element={<DonateWidget />} />
           <Route
-            path={donateWidgetRoutes.donate_fiat_thanks}
-            element={<DonateFiatThanks widgetVersion />}
+            path={donateWidgetRoutes.donate_thanks}
+            element={<DonateThanks widgetVersion />}
           />
           <Route
             path={donateWidgetRoutes.stripe_payment_status}
@@ -90,11 +92,8 @@ export default function App() {
             path={appRoutes.applications + "/:id"}
             element={<Application />}
           />
-          <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
-          <Route
-            path={appRoutes.donate_fiat_thanks}
-            element={<DonateFiatThanks />}
-          />
+
+          <Route path={appRoutes.donate_thanks} element={<DonateThanks />} />
           <Route
             path={appRoutes.stripe_payment_status}
             element={<StripePaymentStatus />}
@@ -136,6 +135,7 @@ export default function App() {
           <Route path={appRoutes.terms_donors} element={<TermsDonors />} />
           <Route path={appRoutes.nonprofit_info} element={<NonprofitInfo />} />
           <Route path={appRoutes.donor_info} element={<DonorInfo />} />
+          <Route path={appRoutes.wp_plugin} element={<WpPlugin />} />
           <Route index element={<Home />} />
         </Route>
         <Route path="*" element={<Navigate replace to={appRoutes.home} />} />

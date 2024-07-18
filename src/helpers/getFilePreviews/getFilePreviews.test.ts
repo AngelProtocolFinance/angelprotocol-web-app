@@ -31,7 +31,6 @@ const result3: FileObject = {
 };
 
 const uploadFiles = vi.fn();
-global.fetch = vi.fn() as any;
 
 describe("get documentation file previews", () => {
   test("correct preview mapping for new uploads", async () => {

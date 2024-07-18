@@ -17,7 +17,11 @@ export default function Row(
         {new Date(props.date).toLocaleDateString()}
       </span>
 
-      <>{props.viaId === "fiat" ? "Fiat donation" : props.viaName}</>
+      <>{props.appUsed === "bg-widget" ? "Donation Form" : "Marketplace"}</>
+      <>{props.paymentMethod ?? "--"}</>
+      <>{props.isRecurring ? "Yes" : "No"}</>
+      <>{props.symbol}</>
+      <>{humanize(props.initAmount)}</>
 
       <Amount type="total" />
       <Amount type="liq" />
@@ -51,6 +55,15 @@ export default function Row(
           />
         )}
       </td>
+
+      <>{props.donorDetails?.fullName ?? "--"}</>
+      <>{props.donorDetails?.kycEmail ?? "--"}</>
+      <>{props.donorDetails?.address?.line1 ?? "--"}</>
+      <>{props.donorDetails?.address?.line2 ?? "--"}</>
+      <>{props.donorDetails?.address?.city || "--"}</>
+      <>{props.donorDetails?.address?.state ?? "--"}</>
+      <>{props.donorDetails?.address?.zipCode ?? "--"}</>
+      <>{props.donorDetails?.address?.country ?? "--"}</>
     </Cells>
   );
 }
