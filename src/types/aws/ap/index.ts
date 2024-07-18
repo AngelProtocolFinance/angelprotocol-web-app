@@ -122,6 +122,12 @@ export type UserEndow = {
   };
 };
 
+export interface EndowAdmin {
+  email: string;
+  familyName?: string;
+  givenName?: string;
+}
+
 /** from CloudSearch index instead of DB */
 export type EndowmentCard = Pick<
   Endowment,
