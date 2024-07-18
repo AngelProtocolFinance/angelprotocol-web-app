@@ -214,6 +214,7 @@ export type UserAttributes = {
   familyName: string;
   givenName: string;
   prefCurrencyCode?: string;
+  avatarUrl?: string;
 };
 
 export type UserUpdate = Partial<UserAttributes>;
