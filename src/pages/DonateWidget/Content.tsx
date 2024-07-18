@@ -1,5 +1,3 @@
-import { DonationTerms } from "components/DonationTerms";
-import ExtLink from "components/ExtLink";
 import Seo from "components/Seo";
 import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
@@ -51,20 +49,6 @@ export default function Content({ profile, config, classes = "" }: Props) {
         config={config}
         programId={config.programId}
       />
-      <DonationTerms
-        Link={A}
-        endowName={profile.name}
-        classes="px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2"
-      />
     </div>
   );
 }
-
-const A: typeof ExtLink = ({ className, ...props }) => {
-  return (
-    <ExtLink
-      {...props}
-      className={className + " font-medium hover:underline"}
-    />
-  );
-};
