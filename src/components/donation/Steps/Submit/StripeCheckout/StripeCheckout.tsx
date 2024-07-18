@@ -1,6 +1,5 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { DonationTerms } from "components/DonationTerms";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
@@ -10,6 +9,7 @@ import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
 import { toDonor } from "../../common/constants";
 import type { StripeCheckoutStep } from "../../types";
+import { DonationTerms } from "../DonationTerms";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
 

@@ -1,5 +1,4 @@
 import { WalletProvider } from "@terra-money/wallet-provider";
-import { DonationTerms } from "components/DonationTerms";
 import QueryLoader from "components/QueryLoader";
 import { chains } from "constants/chains";
 import WalletContext from "contexts/WalletContext/WalletContext";
@@ -9,6 +8,7 @@ import { useDonationState } from "../../Context";
 import Summary from "../../common/Summary";
 import { token } from "../../common/Token";
 import type { CryptoSubmitStep } from "../../types";
+import { DonationTerms } from "../DonationTerms";
 import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
