@@ -61,6 +61,7 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
         email: userEmail,
         firstName: userAttributes.givenName,
         lastName: userAttributes.familyName,
+        avatarUrl: userAttributes.avatarUrl,
         prefCurrencyCode: userAttributes.prefCurrencyCode,
         isSigningOut: false,
       };
@@ -85,7 +86,7 @@ const auth = createSlice({
     },
     updateUserAttributes: (state, { payload }: PayloadAction<UserUpdate>) => {
       if (userIsSignedIn(state.user)) {
-        const { familyName, givenName, prefCurrencyCode } = payload;
+        const { familyName, givenName, prefCurrencyCode, avatarUrl } = payload;
         if (givenName) {
           state.user.firstName = givenName;
         }
@@ -94,6 +95,9 @@ const auth = createSlice({
         }
         if (prefCurrencyCode) {
           state.user.prefCurrencyCode = prefCurrencyCode;
+        }
+        if (avatarUrl) {
+          state.user.avatarUrl = avatarUrl;
         }
       }
     },
