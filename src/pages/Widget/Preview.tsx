@@ -1,5 +1,4 @@
 import character from "assets/laira/laira-waiving.png";
-import { DonationTerms } from "components/DonationTerms";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import Image from "components/Image/Image";
@@ -75,11 +74,6 @@ export default function Preview({ classes = "", config }: Props) {
             key={JSON.stringify(initState)}
             init={initState}
             className="my-5 @md/preview:w-3/4 border border-gray-l4"
-          />
-          <DonationTerms
-            endowName={endowName}
-            Link={A}
-            classes="px-4 mb-5 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2"
           />
           <footer className="mt-auto grid place-items-center h-20 w-full bg-[--accent-primary]">
             <DappLogo classes="w-40" color="white" />
