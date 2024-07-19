@@ -3,6 +3,7 @@ import { appRoutes } from "constants/routes";
 import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
 import type { StockCheckoutStep } from "../types";
+import { DonationTerms } from "./DonationTerms";
 
 export default function Stocks(props: StockCheckoutStep) {
   const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
@@ -65,6 +66,10 @@ export default function Stocks(props: StockCheckoutStep) {
       >
         Generate email
       </a>
+      <DonationTerms
+        endowName={props.init.recipient.name}
+        classes="mt-5 border-t border-gray-l4 pt-4"
+      />
     </div>
   );
 }

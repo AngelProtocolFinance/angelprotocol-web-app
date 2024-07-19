@@ -9,6 +9,7 @@ import {
   useDeleteEndowAdminMutation,
   useEndowAdminsQuery,
 } from "services/aws/endow-admins";
+import type { EndowAdmin } from "types/aws";
 import AddForm from "./AddForm";
 
 export default function List() {
@@ -17,13 +18,16 @@ export default function List() {
 
   const queryState = useEndowAdminsQuery(id);
   return (
-    <div>
+    <div className="overflow-x-auto">
       <button
         type="button"
         disabled={queryState.isLoading}
         className="justify-self-end btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
         onClick={() =>
-          showModal(AddForm, { added: queryState.data || [], endowID: id })
+          showModal(AddForm, {
+            added: (queryState.data || []).map((admin) => admin.email),
+            endowID: id,
+          })
         }
       >
         <Icon type="Plus" />
@@ -45,7 +49,7 @@ export default function List() {
 
 type LoadedProps = {
   classes?: string;
-  members: string[];
+  members: EndowAdmin[];
 };
 function Loaded({ members, classes = "" }: LoadedProps) {
   const { email: user } = useAuthenticatedUser();
@@ -74,6 +78,8 @@ function Loaded({ members, classes = "" }: LoadedProps) {
         >
           <td className="w-8" />
           <>Email</>
+          <>First name</>
+          <>Last name</>
         </Cells>
       </TableSection>
       <TableSection
@@ -83,14 +89,14 @@ function Loaded({ members, classes = "" }: LoadedProps) {
       >
         {members.map((member) => (
           <Cells
-            key={member}
+            key={member.email}
             type="td"
             cellClass="p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
             <td className="relative">
               <button
                 disabled={isLoading}
-                onClick={() => handleRemove(member)}
+                onClick={() => handleRemove(member.email)}
                 type="button"
                 className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
               >
@@ -98,7 +104,9 @@ function Loaded({ members, classes = "" }: LoadedProps) {
               </button>
             </td>
 
-            <>{member}</>
+            <>{member.email}</>
+            <>{member.givenName ?? "-"}</>
+            <>{member.familyName ?? "-"}</>
           </Cells>
         ))}
       </TableSection>

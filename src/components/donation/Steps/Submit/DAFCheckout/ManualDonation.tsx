@@ -1,6 +1,7 @@
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes } from "constants/routes";
 import type { DafCheckoutStep } from "../../types";
+import { DonationTerms } from "../DonationTerms";
 
 export default function ManualDonation(props: DafCheckoutStep) {
   const profileUrl = `${window.location.origin}${appRoutes.donate}/${props.init.recipient.id}`;
@@ -62,6 +63,11 @@ export default function ManualDonation(props: DafCheckoutStep) {
       >
         Generate email
       </a>
+
+      <DonationTerms
+        endowName={props.init.recipient.name}
+        classes="border-t border-gray-l4 mt-5 pt-4 "
+      />
     </>
   );
 }
