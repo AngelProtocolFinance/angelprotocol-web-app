@@ -7,7 +7,6 @@ import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { memo } from "react";
 import { Link } from "react-router-dom";
-
 import { order } from "components/DonateMethods";
 import type { DonationIntent, Endowment } from "types/aws";
 import FAQ from "./FAQ";
