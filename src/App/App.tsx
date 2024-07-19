@@ -62,7 +62,7 @@ export default function App() {
           />
           <Route
             path={donateWidgetRoutes.stripe_payment_status}
-            element={<StripePaymentStatus />}
+            element={<StripePaymentStatus isInWidget />}
           />
         </Route>
         <Route element={<Layout />}>
