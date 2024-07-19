@@ -8,7 +8,6 @@ import { PRIVACY_POLICY } from "constants/urls";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
-import { DonationTerms } from "components/DonationTerms";
 import type { DonationIntent, Endowment } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
@@ -62,12 +61,6 @@ function Content({ intent, endowment }: Props) {
         <FAQ
           classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]"
           endowId={endowment.id}
-        />
-
-        <DonationTerms
-          Link={A}
-          endowName={endowment.name}
-          classes="max-md:border-t max-md:border-gray-l3 max-md:px-4 max-md:pt-4 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2"
         />
 
         <p className="max-md:px-4 mb-4 max-mbcol-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">

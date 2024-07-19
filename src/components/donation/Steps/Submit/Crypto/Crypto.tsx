@@ -8,6 +8,7 @@ import { useDonationState } from "../../Context";
 import Summary from "../../common/Summary";
 import { token } from "../../common/Token";
 import type { CryptoSubmitStep } from "../../types";
+import { DonationTerms } from "../DonationTerms";
 import Checkout from "./Checkout";
 
 export default function Crypto(props: CryptoSubmitStep) {
@@ -50,6 +51,7 @@ export default function Crypto(props: CryptoSubmitStep) {
       }
     >
       <TerraLoadedCheckout {...props} />
+      <DonationTerms endowName={props.init.recipient.name} classes="mt-5" />
     </Summary>
   );
 }
