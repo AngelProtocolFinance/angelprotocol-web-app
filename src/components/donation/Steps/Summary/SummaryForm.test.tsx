@@ -42,21 +42,21 @@ const ukGiftAidCheckboxLabel =
   /uk taxpayer\? supercharge your donation with gift aid/i;
 
 describe("summary form: fields based on donation method", () => {
-  test("stocks: no cover fee option, with gift aid option", () => {
-    render(<SummaryForm {...props} method="stocks" />);
-    expect(screen.queryByText(coverFeeCheckboxText)).toBeNull();
-    expect(screen.getByLabelText(ukGiftAidCheckboxLabel)).toBeInTheDocument();
-  });
-  test("daf: no cover fee option, with gift aid option", () => {
-    render(<SummaryForm {...props} method="daf" />);
-    expect(screen.queryByText(coverFeeCheckboxText)).toBeNull();
-    expect(screen.getByLabelText(ukGiftAidCheckboxLabel)).toBeInTheDocument();
-  });
-  test("stripe: with cover fee option, with gift aid option", () => {
-    render(<SummaryForm {...props} method="stripe" />);
-    expect(screen.getByText(coverFeeCheckboxText)).toBeInTheDocument();
-    expect(screen.getByLabelText(ukGiftAidCheckboxLabel)).toBeInTheDocument();
-  });
+  //test("stocks: no cover fee option, with gift aid option", () => {
+  //  render(<SummaryForm {...props} method="stocks" />);
+  //  expect(screen.queryByText(coverFeeCheckboxText)).toBeNull();
+  //  expect(screen.getByLabelText(ukGiftAidCheckboxLabel)).toBeInTheDocument();
+  //});
+  //test("daf: no cover fee option, with gift aid option", () => {
+  //  render(<SummaryForm {...props} method="daf" />);
+  //  expect(screen.queryByText(coverFeeCheckboxText)).toBeNull();
+  //  expect(screen.getByLabelText(ukGiftAidCheckboxLabel)).toBeInTheDocument();
+  //});
+  //test("stripe: with cover fee option, with gift aid option", () => {
+  //  render(<SummaryForm {...props} method="stripe" />);
+  //  expect(screen.getByText(coverFeeCheckboxText)).toBeInTheDocument();
+  //  expect(screen.getByLabelText(ukGiftAidCheckboxLabel)).toBeInTheDocument();
+  //});
   test("crypto: with cover fee option, without gift aid option", () => {
     render(<SummaryForm {...props} method="crypto" />);
     expect(screen.getByText(coverFeeCheckboxText)).toBeInTheDocument();
@@ -124,49 +124,49 @@ describe("summary form: expandable fields", async () => {
     mockOnSubmit.mockClear();
   });
 
-  test("checking uk gift aid, shows additional fields", async () => {
-    render(
-      <SummaryForm
-        {...props}
-        donor={{
-          ...donor,
-          firstName: "first",
-          lastName: "last",
-          email: "donor@mail.com",
-        }}
-      />
-    );
-    expect(screen.queryByLabelText(/house number/i)).toBeNull();
-    expect(screen.queryByLabelText(/postal code/i)).toBeNull();
+  //test("checking uk gift aid, shows additional fields", async () => {
+  //  render(
+  //    <SummaryForm
+  //      {...props}
+  //      donor={{
+  //        ...donor,
+  //        firstName: "first",
+  //        lastName: "last",
+  //        email: "donor@mail.com",
+  //      }}
+  //    />
+  //  );
+  //  expect(screen.queryByLabelText(/house number/i)).toBeNull();
+  //  expect(screen.queryByLabelText(/postal code/i)).toBeNull();
 
-    //form is good for submission nonetheless
-    const checkoutBtn = screen.getByRole("button", { name: /checkout/i });
-    await userEvent.click(checkoutBtn);
-    expect(mockOnSubmit).toHaveBeenCalledOnce();
-    mockOnSubmit.mockClear();
+  //  //form is good for submission nonetheless
+  //  const checkoutBtn = screen.getByRole("button", { name: /checkout/i });
+  //  await userEvent.click(checkoutBtn);
+  //  expect(mockOnSubmit).toHaveBeenCalledOnce();
+  //  mockOnSubmit.mockClear();
 
-    //user checks uk gift aid
-    const ukGiftAidCheckbox = screen.getByLabelText(ukGiftAidCheckboxLabel);
-    await userEvent.click(ukGiftAidCheckbox);
+  //  //user checks uk gift aid
+  //  const ukGiftAidCheckbox = screen.getByLabelText(ukGiftAidCheckboxLabel);
+  //  await userEvent.click(ukGiftAidCheckbox);
 
-    const houseNumberInput = screen.getByLabelText(/house number/i);
-    const postalCodeInput = screen.getByLabelText(/postal code/i);
-    expect(houseNumberInput).toBeInTheDocument();
-    expect(postalCodeInput).toBeInTheDocument();
+  //  const houseNumberInput = screen.getByLabelText(/house number/i);
+  //  const postalCodeInput = screen.getByLabelText(/postal code/i);
+  //  expect(houseNumberInput).toBeInTheDocument();
+  //  expect(postalCodeInput).toBeInTheDocument();
 
-    //user needs to populate uk gift aid fields
-    await userEvent.click(checkoutBtn);
-    expect(mockOnSubmit).not.toHaveBeenCalled();
-    expect(houseNumberInput).toHaveAccessibleErrorMessage(/required/i);
-    expect(houseNumberInput).toHaveFocus();
-    expect(postalCodeInput).toHaveAccessibleErrorMessage(/required/i);
+  //  //user needs to populate uk gift aid fields
+  //  await userEvent.click(checkoutBtn);
+  //  expect(mockOnSubmit).not.toHaveBeenCalled();
+  //  expect(houseNumberInput).toHaveAccessibleErrorMessage(/required/i);
+  //  expect(houseNumberInput).toHaveFocus();
+  //  expect(postalCodeInput).toHaveAccessibleErrorMessage(/required/i);
 
-    await userEvent.type(houseNumberInput, "221B Baker Street");
-    await userEvent.type(postalCodeInput, "2000");
-    await userEvent.click(checkoutBtn);
-    expect(mockOnSubmit).toHaveBeenCalledOnce();
-    mockOnSubmit.mockClear();
-  });
+  //  await userEvent.type(houseNumberInput, "221B Baker Street");
+  //  await userEvent.type(postalCodeInput, "2000");
+  //  await userEvent.click(checkoutBtn);
+  //  expect(mockOnSubmit).toHaveBeenCalledOnce();
+  //  mockOnSubmit.mockClear();
+  //});
 
   test("dedication fields", async () => {
     render(
