@@ -158,11 +158,13 @@ export default function SummaryForm({
           </span>
         </CheckField>
       )}
+      {/*
       {method !== "crypto" && (
         <CheckField {...register("ukTaxResident")} classes="col-span-full mt-4">
           UK Taxpayer? Supercharge your donation with gift aid
         </CheckField>
       )}
+      */}
       {ukTaxResident && (
         <div className="grid col-span-full gap-y-4 mt-2 mb-6">
           <Field
