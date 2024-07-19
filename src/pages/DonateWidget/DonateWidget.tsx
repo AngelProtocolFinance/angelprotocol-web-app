@@ -1,5 +1,6 @@
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
+import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
 import { idParamToNum, setToLightMode } from "helpers";
 import { useEffect } from "react";
@@ -47,6 +48,7 @@ export default function DonateWidget() {
       }}
       className="grid grid-rows-[1fr_auto] justify-items-center gap-10"
     >
+      <Seo scripts={[]} />
       <QueryLoader
         queryState={queryState}
         messages={{
