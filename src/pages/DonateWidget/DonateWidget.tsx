@@ -49,7 +49,7 @@ export default function DonateWidget() {
       }}
       className="grid grid-rows-[1fr_auto] justify-items-center gap-10"
     >
-      <Seo />
+      <Seo scripts={[]} />
       <QueryLoader
         queryState={queryState}
         messages={{
