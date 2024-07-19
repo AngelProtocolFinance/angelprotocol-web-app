@@ -1,4 +1,5 @@
 import { TEMP_JWT } from "constants/auth";
+import type { EndowAdmin } from "types/aws";
 import type {
   DeleteEndowAdminPayload,
   NewEndowAdminPayload,
@@ -8,11 +9,11 @@ import { aws } from "./aws";
 
 const endowAdmins = aws.injectEndpoints({
   endpoints: (builder) => ({
-    endowAdmins: builder.query<string[], number>({
+    endowAdmins: builder.query<EndowAdmin[], number>({
       providesTags: ["endow-admins"],
       query: (endowID) => {
         return {
-          url: `/${v(1)}/endowments/${endowID}/admins`,
+          url: `/${v(2)}/endowments/${endowID}/admins`,
           headers: { Authorization: TEMP_JWT },
         };
       },
@@ -22,7 +23,7 @@ const endowAdmins = aws.injectEndpoints({
       query: ({ endowID, ...payload }) => {
         return {
           method: "POST",
-          url: `/${v(1)}/endowments/${endowID}/admins`,
+          url: `/${v(2)}/endowments/${endowID}/admins`,
           body: payload,
           headers: { Authorization: TEMP_JWT },
         };
@@ -33,7 +34,7 @@ const endowAdmins = aws.injectEndpoints({
       query: ({ endowID, ...payload }) => {
         return {
           method: "DELETE",
-          url: `/${v(1)}/endowments/${endowID}/admins/${payload.email}`,
+          url: `/${v(2)}/endowments/${endowID}/admins/${payload.email}`,
           headers: { Authorization: TEMP_JWT },
         };
       },
