@@ -65,10 +65,6 @@ export default function App() {
             element={<StripePaymentStatus />}
           />
         </Route>
-        <Route
-          path={`${appRoutes.donate_widget}/:id`}
-          element={<DonateWidget />}
-        />
         <Route element={<Layout />}>
           <Route
             path={`${appRoutes.profile}/:id/*`}
