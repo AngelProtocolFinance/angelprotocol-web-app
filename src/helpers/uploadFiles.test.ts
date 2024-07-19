@@ -1,4 +1,3 @@
-import { APIs } from "constants/urls";
 import { afterEach, describe, expect, test, vi } from "vitest";
 import { type Bucket, bucketURL, uploadFiles } from "./uploadFiles";
 

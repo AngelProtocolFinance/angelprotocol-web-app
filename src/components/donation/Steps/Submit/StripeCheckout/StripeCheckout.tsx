@@ -9,6 +9,7 @@ import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
 import { toDonor } from "../../common/constants";
 import type { StripeCheckoutStep } from "../../types";
+import { DonationTerms } from "../DonationTerms";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
 
@@ -102,6 +103,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
           </Elements>
         )}
       </ErrorBoundary>
+      <DonationTerms endowName={props.init.recipient.name} classes="mt-5" />
     </Summary>
   );
 }

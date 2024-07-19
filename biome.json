@@ -47,6 +47,7 @@
         "noSwitchDeclarations": "off",
         "noChildrenProp": "off",
         "noUnusedVariables": "warn",
+        "noUnusedImports":"warn",
         "useJsxKeyInIterable": "off"
       },
       "a11y": {
