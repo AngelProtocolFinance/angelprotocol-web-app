@@ -18,15 +18,13 @@ interface SignUpOpts {
 }
 
 export function getAuthRedirect(
-  signInRouteState: SignInRouteState | undefined,
+  fromState: SignInRouteState | undefined,
   signupOpts?: SignUpOpts
 ): AuthRedirect {
-  const search = signInRouteState?.search || "";
+  const search = fromState?.search || "";
   const pathname =
-    signupOpts &&
-    signupOpts.isNpo &&
-    signInRouteState?.from === appRoutes.register
+    signupOpts && signupOpts.isNpo && fromState?.from === appRoutes.register
       ? `${appRoutes.register}/${regRoutes.welcome}`
-      : signInRouteState?.from || "/marketplace";
-  return { path: pathname, search, data: signInRouteState?.data };
+      : fromState?.from || "/marketplace";
+  return { path: pathname, search, data: fromState?.data };
 }

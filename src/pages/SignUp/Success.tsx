@@ -8,8 +8,8 @@ import type { UserType } from "./types";
 type Props = { userType: UserType };
 
 export default function Success({ userType }: Props) {
-  const { state } = useLocation();
-  const authRedirect = getAuthRedirect(state);
+  const { state: fromState } = useLocation();
+  const authRedirect = getAuthRedirect(fromState);
   // donors get redirected to the route which they originally attempted to
   // access; nonprofits get redirected to the page to register their NPO
   const signInRouteState: SignInRouteState = {

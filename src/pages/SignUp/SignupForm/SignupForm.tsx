@@ -24,6 +24,10 @@ type Props = {
 };
 
 export default function SignupForm(props: Props) {
+  const location = useLocation();
+  const fromState: SignInRouteState | undefined = location.state;
+  const isRegistrant = fromState?.from === appRoutes.register;
+
   const { handleError, displayError } = useErrorContext();
   const {
     register,
@@ -184,7 +188,7 @@ export default function SignupForm(props: Props) {
           Already have an account?
           <Link
             to={appRoutes.signin}
-            state={state}
+            state={fromState}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >
