@@ -22,9 +22,19 @@ export function getAuthRedirect(
   signupOpts?: SignUpOpts
 ): AuthRedirect {
   const search = fromState?.search || "";
-  const pathname =
-    signupOpts && signupOpts.isNpo && fromState?.from === appRoutes.register
-      ? `${appRoutes.register}/${regRoutes.welcome}`
-      : fromState?.from || "/marketplace";
-  return { path: pathname, search, data: fromState?.data };
+  const data = fromState?.data;
+
+  if (fromState?.from === appRoutes.register) {
+    return { path: `${appRoutes.register}/${regRoutes.welcome}`, search, data };
+  }
+
+  if (signupOpts?.isNpo) {
+    return { path: appRoutes.register, search, data };
+  }
+
+  return {
+    path: fromState?.from || "/marketplace",
+    search,
+    data: fromState?.data,
+  };
 }
