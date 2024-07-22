@@ -1,11 +1,11 @@
 import LoaderRing from "components/LoaderRing";
 import { Navigate, useLocation } from "react-router-dom";
-import type { StoredRouteState } from "types/auth";
+import type { OAuthState } from "types/auth";
 
 export default function OAuthRedirector() {
   const location = useLocation();
 
-  const state: StoredRouteState | null = location.state
+  const state: OAuthState | null = location.state
     ? JSON.parse(location.state)
     : null;
 

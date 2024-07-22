@@ -8,12 +8,12 @@ import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { determineAuthRedirectPath } from "helpers";
+import { getAuthRedirect } from "helpers";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
-import type { StoredRouteState } from "types/auth";
+import type { OAuthState } from "types/auth";
 import { object } from "yup";
 
 type FormValues = {
@@ -37,9 +37,7 @@ export default function Signin() {
   });
 
   const { state } = useLocation();
-  const { redirectPath, data } = determineAuthRedirectPath(state, {
-    isSigningUp: false,
-  });
+  const redirect = getAuthRedirect(state);
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
@@ -51,7 +49,7 @@ export default function Signin() {
   }
 
   if (currUser) {
-    return <Navigate to={redirectPath} state={data} replace />;
+    return <Navigate to={redirect.path} state={redirect.data} replace />;
   }
 
   async function submit(fv: FormValues) {
@@ -88,9 +86,9 @@ export default function Signin() {
           className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
           type="button"
           onClick={() => {
-            const routeState: StoredRouteState = {
-              pathname: redirectPath.pathname,
-              data,
+            const routeState: OAuthState = {
+              pathname: redirect.path,
+              data: redirect.data,
             };
             signInWithRedirect({
               provider: "Google",

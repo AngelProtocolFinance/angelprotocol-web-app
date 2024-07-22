@@ -8,12 +8,12 @@ import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { determineAuthRedirectPath } from "helpers";
+import { getAuthRedirect } from "helpers";
 import { useController, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
-import type { StoredRouteState } from "types/auth";
+import type { OAuthState } from "types/auth";
 import { mixed, object } from "yup";
 import type { FormValues, StateSetter, UserType } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
@@ -46,7 +46,9 @@ export default function SignupForm(props: Props) {
   const { field: userType } = useController({ name: "userType", control });
 
   const { state } = useLocation();
-  const { redirectPath, data } = determineAuthRedirectPath(state);
+  const redirect = getAuthRedirect(state, {
+    isNpo: userType.value === "non-profit",
+  });
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
@@ -54,7 +56,7 @@ export default function SignupForm(props: Props) {
   }
 
   if (currUser) {
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate to={redirect.path} replace />;
   }
 
   async function submit(fv: FormValues) {
@@ -115,9 +117,9 @@ export default function SignupForm(props: Props) {
           className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
           type="button"
           onClick={() => {
-            const stored: StoredRouteState = {
-              pathname: redirectPath.pathname,
-              data,
+            const stored: OAuthState = {
+              pathname: redirect.path,
+              data: redirect.data,
             };
             signInWithRedirect({
               provider: "Google",

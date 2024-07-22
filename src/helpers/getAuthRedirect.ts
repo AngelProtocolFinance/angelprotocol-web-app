@@ -6,22 +6,27 @@ import type { SignInRouteState } from "types/auth";
  * @param isSigningUp defaults to `true`
  */
 
-type Return = {
-  redirectPath: {
-    pathname: string;
-    search: string;
-  };
+interface AuthRedirect {
+  path: string;
+  search: string;
   data?: unknown;
-};
+}
 
-export function determineAuthRedirectPath(
+/** only provide if user is signing up */
+interface SignUpOpts {
+  isNpo: boolean;
+}
+
+export function getAuthRedirect(
   signInRouteState: SignInRouteState | undefined,
-  { isSigningUp } = { isSigningUp: true }
-): Return {
+  signupOpts?: SignUpOpts
+): AuthRedirect {
   const search = signInRouteState?.search || "";
   const pathname =
-    isSigningUp && signInRouteState?.from === appRoutes.register
+    signupOpts &&
+    signupOpts.isNpo &&
+    signInRouteState?.from === appRoutes.register
       ? `${appRoutes.register}/${regRoutes.welcome}`
       : signInRouteState?.from || "/marketplace";
-  return { redirectPath: { pathname, search }, data: signInRouteState?.data };
+  return { path: pathname, search, data: signInRouteState?.data };
 }
