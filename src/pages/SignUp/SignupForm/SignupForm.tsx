@@ -33,6 +33,7 @@ export default function SignupForm(props: Props) {
     register,
     formState: { isSubmitting, errors },
     handleSubmit,
+    trigger,
     control,
   } = useForm<FormValues>({
     resolver: yupResolver(
@@ -120,7 +121,10 @@ export default function SignupForm(props: Props) {
         <button
           className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
           type="button"
-          onClick={() => {
+          onClick={async () => {
+            const valid = await trigger("userType");
+            if (!valid) return;
+
             const stored: OAuthState = {
               pathname: redirect.path,
               data: redirect.data,
