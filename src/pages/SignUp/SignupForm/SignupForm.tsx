@@ -198,7 +198,7 @@ export default function SignupForm(props: Props) {
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >
-            Sign in
+            Login
           </Link>
         </span>
       </Form>
