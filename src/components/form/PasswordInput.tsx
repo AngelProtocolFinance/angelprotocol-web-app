@@ -3,7 +3,8 @@ import { type InputHTMLAttributes, forwardRef, useState } from "react";
 import { fieldClasses } from "./constants";
 
 type El = HTMLInputElement;
-interface Props extends Omit<InputHTMLAttributes<El>, "className" | "type"> {
+interface Props
+  extends Omit<InputHTMLAttributes<El>, "className" | "type" | "autoComplete"> {
   error?: string;
 }
 
@@ -19,6 +20,7 @@ export const PasswordInput = forwardRef<El, Props>((props, ref) => {
           ref={ref}
           {...rest}
           type={isPasswordShown ? "text" : "password"}
+          autoComplete="current-password"
           className="w-full h-full placeholder:font-medium placeholder:font-heading placeholder:text-navy-l3 max-sm:placeholder:text-sm focus:outline-none bg-transparent"
           aria-invalid={!!error}
         />
