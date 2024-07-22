@@ -36,8 +36,8 @@ export default function Signin() {
     ),
   });
 
-  const { state } = useLocation();
-  const redirect = getAuthRedirect(state);
+  const { state: fromState } = useLocation();
+  const redirect = getAuthRedirect(fromState);
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
@@ -120,7 +120,7 @@ export default function Signin() {
           <Link
             to={appRoutes.reset_password}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"
-            state={state}
+            state={fromState}
           >
             Forgot password?
           </Link>
@@ -135,7 +135,7 @@ export default function Signin() {
           Don't have an account?
           <Link
             to={appRoutes.signup}
-            state={state}
+            state={fromState}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >
