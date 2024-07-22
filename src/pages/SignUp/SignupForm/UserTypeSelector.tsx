@@ -34,7 +34,7 @@ export default function UserTypeSelector() {
           type="button"
           onClick={() => onChange("non-profit")}
         >
-          Non-profit
+          Nonprofit
         </button>
       </div>
       {error && <p className="text-xs text-red mt-1">{error.message}</p>}
