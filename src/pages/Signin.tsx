@@ -108,6 +108,7 @@ export default function Signin() {
           <Input
             {...register("email")}
             placeholder="Email address"
+            autoComplete="username"
             icon="Email"
             error={errors.email?.message}
           />

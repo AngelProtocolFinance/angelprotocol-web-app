@@ -152,6 +152,7 @@ export default function SignupForm(props: Props) {
           </div>
           <Input
             {...register("email")}
+            autoComplete="username"
             placeholder="Email address"
             icon="Email"
             error={errors.email?.message}
