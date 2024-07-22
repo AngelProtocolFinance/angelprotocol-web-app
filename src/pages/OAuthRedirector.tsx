@@ -9,6 +9,10 @@ export default function OAuthRedirector() {
     ? JSON.parse(location.state)
     : null;
 
+  /** when provider (`A.`) redirects back to our app thru `/oauth-redirector` it doesn't pass `state`
+   * `A.` - Amplify is configured in src/index.tsx
+   *  App.tsx listens to `auth.customOAuthState` event and navigates to `/oauth-redirector`, this time with `state`
+   */
   if (!state) {
     return (
       <LoaderRing
