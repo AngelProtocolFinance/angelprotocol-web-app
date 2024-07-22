@@ -6,7 +6,6 @@ import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
-import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { determineAuthRedirectPath } from "helpers";
@@ -95,11 +94,10 @@ export default function Signin() {
               pathname: redirectPath.pathname,
               data,
             };
-            localStorage.setItem(
-              OAUTH_PATH_STORAGE_KEY,
-              JSON.stringify(routeState)
-            );
-            signInWithRedirect({ provider: "Google" });
+            signInWithRedirect({
+              provider: "Google",
+              customState: JSON.stringify(routeState),
+            });
           }}
         >
           <Image src={googleIcon} height={18} width={18} />

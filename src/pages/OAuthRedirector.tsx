@@ -1,16 +1,23 @@
-import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
-import { Navigate } from "react-router-dom";
+import LoaderRing from "components/LoaderRing";
+import { Navigate, useLocation } from "react-router-dom";
 import type { StoredRouteState } from "types/auth";
 
 export default function OAuthRedirector() {
-  const retrieved: StoredRouteState | null = (() => {
-    try {
-      const item = localStorage.getItem(OAUTH_PATH_STORAGE_KEY);
-      return item && JSON.parse(item);
-    } catch (_) {
-      return null;
-    }
-  })();
-  const { pathname = "/", data } = retrieved || {};
+  const location = useLocation();
+
+  const state: StoredRouteState | null = location.state
+    ? JSON.parse(location.state)
+    : null;
+
+  if (!state) {
+    return (
+      <LoaderRing
+        thickness={10}
+        classes={{ container: "w-32 place-self-center" }}
+      />
+    );
+  }
+
+  const { pathname = "/", data } = state || {};
   return <Navigate to={pathname} state={data} />;
 }
