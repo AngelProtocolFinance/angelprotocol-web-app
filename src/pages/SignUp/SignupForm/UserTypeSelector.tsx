@@ -8,14 +8,20 @@ const btnClass = (isSelected: boolean) =>
   }`;
 
 interface Props {
+  classes?: string;
   value: UserType;
   onChange: (type: UserType) => void;
   error?: string;
 }
-export default function UserTypeSelector({ value, onChange, error }: Props) {
+export default function UserTypeSelector({
+  value,
+  onChange,
+  error,
+  classes,
+}: Props) {
   return (
     <div>
-      <div className="grid grid-cols-2 gap-3">
+      <div className={`${classes} grid grid-cols-2 gap-3`}>
         <button
           className={btnClass(value === "donor")}
           type="button"

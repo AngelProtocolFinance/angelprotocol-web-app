@@ -13,7 +13,7 @@ import { useController, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
-import type { OAuthState } from "types/auth";
+import type { OAuthState, SignInRouteState } from "types/auth";
 import { mixed, object } from "yup";
 import type { FormValues, StateSetter, UserType } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
@@ -36,13 +36,16 @@ export default function SignupForm(props: Props) {
     trigger,
     control,
   } = useForm<FormValues>({
+    defaultValues: {
+      userType: isRegistrant ? "non-profit" : undefined,
+    },
     resolver: yupResolver(
       object({
         email: requiredString.trim().email("invalid email format"),
         firstName: requiredString.trim(),
         lastName: requiredString.trim(),
         userType: mixed<UserType>()
-          .required("required")
+          .required("Please select an option to proceed")
           .oneOf(["donor", "non-profit"]),
         password: password,
       })
@@ -50,16 +53,15 @@ export default function SignupForm(props: Props) {
   });
   const { field: userType } = useController({ name: "userType", control });
 
-  const { state } = useLocation();
-  const redirect = getAuthRedirect(state, {
-    isNpo: userType.value === "non-profit",
-  });
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
     return <LoaderRing thickness={12} classes="w-32 mt-8" />;
   }
 
+  const redirect = getAuthRedirect(fromState, {
+    isNpo: userType.value === "non-profit",
+  });
   if (currUser) {
     return <Navigate to={redirect.path} replace />;
   }
@@ -118,6 +120,15 @@ export default function SignupForm(props: Props) {
           nonprofit.
         </p>
 
+        {!isRegistrant && (
+          <UserTypeSelector
+            classes="mt-5"
+            value={userType.value}
+            onChange={userType.onChange}
+            error={errors.userType?.message}
+          />
+        )}
+
         <button
           className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
           type="button"
@@ -171,15 +182,6 @@ export default function SignupForm(props: Props) {
             error={errors.password?.message}
           />
         </div>
-
-        <span className="mt-7 mb-3 font-normal max-sm:text-sm">
-          You are signing up as
-        </span>
-        <UserTypeSelector
-          value={userType.value}
-          onChange={userType.onChange}
-          error={errors.userType?.message}
-        />
 
         <button
           type="submit"
