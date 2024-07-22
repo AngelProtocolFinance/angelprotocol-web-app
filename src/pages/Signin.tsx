@@ -23,7 +23,11 @@ type FormValues = {
 
 export default function Signin() {
   const { handleError, displayError } = useErrorContext();
-  const methods = useForm<FormValues>({
+  const {
+    register,
+    formState: { isSubmitting, errors },
+    handleSubmit,
+  } = useForm<FormValues>({
     resolver: yupResolver(
       object({
         email: requiredString.trim().email("invalid email format"),
@@ -67,16 +71,10 @@ export default function Signin() {
     }
   }
 
-  const {
-    formState: { isSubmitting },
-    handleSubmit,
-  } = methods;
-
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
       <Form
         className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
-        methods={methods}
         disabled={isSubmitting}
         onSubmit={handleSubmit(submit)}
       >
@@ -109,12 +107,17 @@ export default function Signin() {
           OR
         </Separator>
         <div className="grid gap-3">
-          <Input<FormValues>
-            name="email"
+          <Input
+            {...register("email")}
             placeholder="Email address"
             icon="Email"
+            error={errors.email?.message}
           />
-          <PasswordInput<FormValues> name="password" placeholder="Password" />
+          <PasswordInput
+            {...register("password")}
+            error={errors.password?.message}
+            placeholder="Password"
+          />
           <Link
             to={appRoutes.reset_password}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"

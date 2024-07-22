@@ -9,7 +9,7 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { determineAuthRedirectPath } from "helpers";
-import { useForm } from "react-hook-form";
+import { useController, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
@@ -25,7 +25,12 @@ type Props = {
 
 export default function SignupForm(props: Props) {
   const { handleError, displayError } = useErrorContext();
-  const methods = useForm<FormValues>({
+  const {
+    register,
+    formState: { isSubmitting, errors },
+    handleSubmit,
+    control,
+  } = useForm<FormValues>({
     resolver: yupResolver(
       object({
         email: requiredString.trim().email("invalid email format"),
@@ -38,6 +43,7 @@ export default function SignupForm(props: Props) {
       })
     ),
   });
+  const { field: userType } = useController({ name: "userType", control });
 
   const { state } = useLocation();
   const { redirectPath, data } = determineAuthRedirectPath(state);
@@ -90,16 +96,10 @@ export default function SignupForm(props: Props) {
     }
   }
 
-  const {
-    formState: { isSubmitting },
-    handleSubmit,
-  } = methods;
-
   return (
     <div className="grid justify-items-center gap-3.5">
       <Form
         className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
-        methods={methods}
         disabled={isSubmitting}
         onSubmit={handleSubmit(submit)}
       >
@@ -137,24 +137,38 @@ export default function SignupForm(props: Props) {
 
         <div className="grid gap-3">
           <div className="flex gap-3">
-            <Input<FormValues> name="firstName" placeholder="First Name" />
-            <Input<FormValues> name="lastName" placeholder="Last Name" />
+            <Input
+              {...register("firstName")}
+              placeholder="First Name"
+              error={errors.firstName?.message}
+            />
+            <Input
+              {...register("lastName")}
+              placeholder="Last Name"
+              error={errors.lastName?.message}
+            />
           </div>
-          <Input<FormValues>
-            name="email"
+          <Input
+            {...register("email")}
             placeholder="Email address"
             icon="Email"
+            error={errors.email?.message}
           />
-          <PasswordInput<FormValues>
-            name="password"
+          <PasswordInput
+            {...register("password")}
             placeholder="Create password"
+            error={errors.password?.message}
           />
         </div>
 
         <span className="mt-7 mb-3 font-normal max-sm:text-sm">
           You are signing up as
         </span>
-        <UserTypeSelector />
+        <UserTypeSelector
+          value={userType.value}
+          onChange={userType.onChange}
+          error={errors.userType?.message}
+        />
 
         <button
           type="submit"

@@ -1,5 +1,4 @@
-import { useController, useFormContext } from "react-hook-form";
-import type { FormValues } from "../types";
+import type { UserType } from "../types";
 
 const btnClass = (isSelected: boolean) =>
   `flex items-center justify-center btn-outline-2 h-[42px] ${
@@ -8,17 +7,12 @@ const btnClass = (isSelected: boolean) =>
       : "font-medium"
   }`;
 
-export default function UserTypeSelector() {
-  const { control } = useFormContext<FormValues>();
-
-  const {
-    field: { value, onChange },
-    fieldState: { error },
-  } = useController<FormValues, "userType">({
-    control: control,
-    name: "userType",
-  });
-
+interface Props {
+  value: UserType;
+  onChange: (type: UserType) => void;
+  error?: string;
+}
+export default function UserTypeSelector({ value, onChange, error }: Props) {
   return (
     <div>
       <div className="grid grid-cols-2 gap-3">
@@ -37,7 +31,7 @@ export default function UserTypeSelector() {
           Non-profit
         </button>
       </div>
-      {error && <p className="text-xs text-red mt-1">{error.message}</p>}
+      {error && <p className="text-xs text-red mt-1">{error}</p>}
     </div>
   );
 }
