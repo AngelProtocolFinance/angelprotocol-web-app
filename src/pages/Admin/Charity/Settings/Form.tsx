@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DonateMethods, fill } from "components/DonateMethods";
+import { DonateMethods, fill, order } from "components/DonateMethods";
 import { LockedSplitSlider } from "components/donation";
 import { CheckField, Field, Form as _Form } from "components/form";
 import { useController, useForm } from "react-hook-form";
@@ -45,7 +45,7 @@ export default function Form(props: Props) {
       splitLockPct: 100 - (props.splitLiqPct ?? 50),
       splitFixed: props.splitFixed ?? false,
       payout_minimum: `${props.payout_minimum ?? 50}`,
-      donateMethods: fill(props.donateMethods),
+      donateMethods: order(fill(props.donateMethods)),
     },
   });
 
