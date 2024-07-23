@@ -7,6 +7,8 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "store/store";
 import "./index.css";
+import { Amplify } from "aws-amplify";
+import amplifyConfig from "constants/aws";
 
 //set theme immediately, so even suspense loaders and can use it
 // NOTE: Turning off option for Dark theme for now
@@ -20,6 +22,8 @@ const LoaderComponent = () => (
 
 const container = document.getElementById("root");
 const root = createRoot(container as Element);
+
+Amplify.configure(amplifyConfig);
 
 Sentry.init({
   dsn: process.env.PUBLIC_SENTRY_DSN,

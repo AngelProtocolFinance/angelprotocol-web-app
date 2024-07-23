@@ -24,8 +24,9 @@ export default function ConfirmForm(props: Props) {
     resolver: yupResolver(object({ code: requiredString })),
   });
   const {
+    register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = methods;
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
@@ -77,7 +78,6 @@ export default function ConfirmForm(props: Props) {
     <Form
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
       disabled={isSubmitting || isRequestingNewCode}
-      methods={methods}
       onSubmit={handleSubmit(submit)}
     >
       <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4">
@@ -87,11 +87,12 @@ export default function ConfirmForm(props: Props) {
         You are almost there! 6-digit security code has been sent to{" "}
         <span className="font-medium">{props.codeRecipientEmail.obscured}</span>
       </p>
-      <Input<FV>
-        name="code"
+      <Input
+        {...register("code")}
         placeholder="Enter 6-digit code"
         classes={{ container: "my-6" }}
         autoComplete="one-time-code"
+        error={errors.code?.message}
       />
 
       <span className="flex items-center justify-between text-xs sm:text-sm font-medium">

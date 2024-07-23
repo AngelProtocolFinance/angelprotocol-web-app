@@ -1,13 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { Amplify } from "aws-amplify";
-import { Hub } from "aws-amplify/utils";
-import amplifyConfig from "constants/aws";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
 import { coingecko } from "services/coingecko";
 import { terra } from "services/terra";
 import { wordpress } from "services/wordpress";
-import auth, { loadSession, reset } from "slices/auth";
+import auth from "slices/auth";
 import gift from "slices/gift";
 
 export const store = configureStore({
@@ -28,26 +25,6 @@ export const store = configureStore({
       wordpress.middleware,
       terra.middleware,
     ]),
-});
-
-Amplify.configure(amplifyConfig);
-
-store.dispatch(loadSession());
-Hub.listen("auth", async ({ payload }) => {
-  switch (payload.event) {
-    case "signedIn":
-      store.dispatch(loadSession(payload.data));
-      break;
-    case "signedOut":
-      store.dispatch(reset());
-      break;
-    case "tokenRefresh":
-      store.dispatch(loadSession());
-      break;
-    case "tokenRefresh_failure":
-      store.dispatch(reset());
-      break;
-  }
 });
 
 export type RootState = ReturnType<typeof store.getState>;
