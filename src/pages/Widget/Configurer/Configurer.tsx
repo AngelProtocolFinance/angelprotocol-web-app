@@ -33,7 +33,7 @@ export default function Configurer({
     handleSubmit,
     reset: hookFormReset,
     resetField,
-    formState: { isDirty, errors },
+    formState: { isDirty, errors, isSubmitting },
     setValue,
     watch,
     register,
@@ -57,14 +57,16 @@ export default function Configurer({
   const isDescriptionTextShown = watch("isDescriptionTextShown");
   const isTitleShown = watch("isTitleShown");
 
-  const submit: SubmitHandler<FormValues> = ({ methods, ...fv }) => {
+  const submit: SubmitHandler<FormValues> = async ({ methods, ...fv }) => {
     const ordered = order(methods);
     setConfig({ ...fv, methods: ordered });
+    await new Promise((r) => setTimeout(r, 1000));
     resetField("methods", { defaultValue: ordered });
   };
 
   return (
     <Form
+      disabled={isSubmitting}
       className={`${classes} @container/configurer`}
       methods={methods}
       onSubmit={handleSubmit(submit)}
@@ -190,7 +192,7 @@ export default function Configurer({
             type="submit"
             className="btn-blue @max-sm/configurer:mx-auto w-40"
           >
-            Update Form
+            {isSubmitting ? "Updating.." : "Update Form"}
           </button>
         </div>
       </div>
