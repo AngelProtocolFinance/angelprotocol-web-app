@@ -49,6 +49,7 @@ export default function Crypto(props: CryptoSubmitStep) {
           </dl>
         </>
       }
+      program={props.details.program}
     >
       <TerraLoadedCheckout {...props} />
       <DonationTerms endowName={props.init.recipient.name} classes="mt-5" />
