@@ -8,6 +8,7 @@ import { PRIVACY_POLICY } from "constants/urls";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
+import { order } from "components/DonateMethods";
 import type { DonationIntent, Endowment } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
@@ -53,7 +54,9 @@ function Content({ intent, endowment }: Props) {
             config={{
               splitDisabled: endowment.splitFixed ?? false,
               liquidSplitPct: endowment.splitLiqPct ?? 50,
-              methodIds: endowment.donateMethods,
+              methodIds: endowment.donateMethods
+                ? order(endowment.donateMethods)
+                : undefined,
             }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
