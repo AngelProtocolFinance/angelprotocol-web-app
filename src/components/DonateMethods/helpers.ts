@@ -5,7 +5,7 @@ const methodDetails: {
   [K in DonateMethodId]: Pick<TDonateMethod, "name" | "tooltip">;
 } = {
   crypto: { name: "Crypto" },
-  daf: { name: "DAF", tooltip: "requires card payment" },
+  daf: { name: "DAF", tooltip: "requires card payment and must be next to it" },
   stocks: { name: "Stocks" },
   stripe: { name: "Card/Bank" },
 };
@@ -40,22 +40,12 @@ export function order<T extends DonateMethodId | TDonateMethod>(arr: T[]): T[] {
   const dafIndex = result.findIndex((item) => getId(item) === "daf");
 
   if (stripeIndex !== -1 && dafIndex !== -1) {
-    const stripe = result[stripeIndex];
-    const daf = result[dafIndex];
+    // Remove 'daf' from its current position
+    const [daf] = result.splice(dafIndex, 1);
 
-    // Remove both items
-    result.splice(Math.max(stripeIndex, dafIndex), 1);
-    result.splice(Math.min(stripeIndex, dafIndex), 1);
-
-    // If 'daf' was first or it's just 'stripe' and 'daf', put 'stripe' first, then 'daf'
-    if (dafIndex === 0 || result.length === 0) {
-      result.unshift(daf);
-      result.unshift(stripe);
-    } else {
-      // Otherwise, insert 'stripe' then 'daf' at the position of the first removed item
-      const insertIndex = Math.min(stripeIndex, dafIndex);
-      result.splice(insertIndex, 0, stripe, daf);
-    }
+    // Insert 'daf' next to 'stripe'
+    const newStripeIndex = result.findIndex((item) => getId(item) === "stripe");
+    result.splice(newStripeIndex + 1, 0, daf);
   }
 
   return result;

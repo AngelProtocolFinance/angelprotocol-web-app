@@ -12,24 +12,12 @@ describe("donate methods ordering", () => {
     ]);
   });
 
-  test("stripe first, then daf when daf is first, regardless of stripe position", () => {
+  test("daf next to stripe when daf comes before stripe", () => {
     expect(order(["daf", "stocks", "crypto", "stripe"])).toEqual([
-      "stripe",
-      "daf",
       "stocks",
       "crypto",
-    ]);
-    expect(order(["daf", "stocks", "stripe", "crypto"])).toEqual([
       "stripe",
       "daf",
-      "stocks",
-      "crypto",
-    ]);
-    expect(order(["daf", "stripe", "stocks", "crypto"])).toEqual([
-      "stripe",
-      "daf",
-      "stocks",
-      "crypto",
     ]);
   });
 
@@ -72,26 +60,25 @@ describe("donate methods ordering", () => {
   test("should maintain relative positions of other elements when daf is not first", () => {
     expect(order(["stocks", "daf", "crypto", "stripe"])).toEqual([
       "stocks",
+      "crypto",
       "stripe",
       "daf",
-      "crypto",
     ]);
   });
 
   test("should work with {id: T} input", () => {
     expect(
       order([
-        //only id is used in the function
         { id: "daf" } as TDonateMethod,
         { id: "stocks" } as TDonateMethod,
         { id: "crypto" } as TDonateMethod,
         { id: "stripe" } as TDonateMethod,
       ])
     ).toEqual([
-      { id: "stripe" },
-      { id: "daf" },
       { id: "stocks" },
       { id: "crypto" },
+      { id: "stripe" },
+      { id: "daf" },
     ]);
   });
 });
