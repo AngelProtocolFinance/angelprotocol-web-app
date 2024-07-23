@@ -4,6 +4,7 @@ import Image from "components/Image/Image";
 import { unpack } from "helpers";
 import type { ReactNode } from "react";
 import type { FiatPaymentFrequency } from "types/aws";
+import type { OptionType } from "types/components";
 import Icon from "../../../Icon";
 import BackBtn from "./BackBtn";
 
@@ -26,6 +27,7 @@ type Props = {
   classes?: Classes;
   children?: ReactNode;
   preSplitContent?: ReactNode;
+  program?: OptionType<string>;
 };
 
 export default function Summary({
@@ -52,11 +54,18 @@ export default function Summary({
       <dl
         className={`text-navy-l1 grid grid-cols-[1fr_auto] items-center justify-between border-y border-gray-l4 divide-y divide-gray-l4 ${splitClass}`}
       >
+        {props.program && props.program.value && (
+          <p className="text-navy-l1 col-span-full py-2 text-sm">
+            Program: {props.program.label}
+          </p>
+        )}
         <div className="grid grid-cols-[1fr_auto] py-3 gap-y-1">
           <dt aria-label="amount" className="mr-auto text-navy-d4">
-            {props.tip && tipValue > 0
-              ? `Donation for ${props.tip.charityName}`
-              : `Total donation`}
+            <span>
+              {props.tip && tipValue > 0
+                ? `Donation for ${props.tip.charityName}`
+                : "Total donation"}
+            </span>
           </dt>
           <Amount amount={props.amount} classes="text-navy-d4" />
 
