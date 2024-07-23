@@ -71,6 +71,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
             }
           : undefined
       }
+      program={details.program}
     >
       <ErrorBoundary>
         {isLoading ? (
