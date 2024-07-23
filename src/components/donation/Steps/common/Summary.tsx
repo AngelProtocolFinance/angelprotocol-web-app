@@ -4,6 +4,7 @@ import Image from "components/Image/Image";
 import { unpack } from "helpers";
 import type { ReactNode } from "react";
 import type { FiatPaymentFrequency } from "types/aws";
+import type { OptionType } from "types/components";
 import Icon from "../../../Icon";
 import BackBtn from "./BackBtn";
 
@@ -26,6 +27,7 @@ type Props = {
   classes?: Classes;
   children?: ReactNode;
   preSplitContent?: ReactNode;
+  program?: OptionType<string>;
 };
 
 export default function Summary({
