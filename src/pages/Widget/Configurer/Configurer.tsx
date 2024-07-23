@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DonateMethods } from "components/DonateMethods";
+import { DonateMethods, order } from "components/DonateMethods";
 import { LockedSplitSlider, ProgramSelector } from "components/donation";
 import { CheckField, Field, Form } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
@@ -29,11 +29,10 @@ export default function Configurer({
     values: config,
   });
 
-  const submit: SubmitHandler<FormValues> = (fv) => setConfig(fv);
-
   const {
     handleSubmit,
     reset: hookFormReset,
+    resetField,
     formState: { isDirty, errors },
     setValue,
     watch,
@@ -57,6 +56,12 @@ export default function Configurer({
 
   const isDescriptionTextShown = watch("isDescriptionTextShown");
   const isTitleShown = watch("isTitleShown");
+
+  const submit: SubmitHandler<FormValues> = ({ methods, ...fv }) => {
+    const ordered = order(methods);
+    setConfig({ ...fv, methods: ordered });
+    resetField("methods", { defaultValue: ordered });
+  };
 
   return (
     <Form

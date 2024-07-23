@@ -45,13 +45,14 @@ export default function Form(props: Props) {
       splitLockPct: 100 - (props.splitLiqPct ?? 50),
       splitFixed: props.splitFixed ?? false,
       payout_minimum: `${props.payout_minimum ?? 50}`,
-      donateMethods: order(fill(props.donateMethods)),
+      donateMethods: fill(props.donateMethods),
     },
   });
 
   const {
     reset,
     handleSubmit,
+    resetField,
     formState: { isSubmitting, isDirty, errors },
     control,
   } = methods;
@@ -79,19 +80,22 @@ export default function Form(props: Props) {
           programDonateDisabled,
           splitLockPct,
           payout_minimum,
-          donateMethods,
+          donateMethods: dms,
           ...fv
         }) => {
+          const ordered = order(dms);
+          const ids = ordered.filter((m) => !m.disabled).map((m) => m.id);
+
           await updateEndow({
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
             splitLiqPct: 100 - splitLockPct,
             id: props.id,
             payout_minimum: +payout_minimum,
-            donateMethods: donateMethods
-              .filter((m) => !m.disabled)
-              .map((m) => m.id),
+            donateMethods: order(ids),
           });
+
+          resetField("donateMethods", { defaultValue: ordered });
         }
       )}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
