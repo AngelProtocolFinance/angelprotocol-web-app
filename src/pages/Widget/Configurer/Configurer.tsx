@@ -60,6 +60,12 @@ export default function Configurer({
   const submit: SubmitHandler<FormValues> = async ({ methods, ...fv }) => {
     const ordered = order(methods);
     setConfig({ ...fv, methods: ordered });
+
+    /** manually re-set the `methods` to trigger animation which doesnt' trigger in ff scenario
+     *  1. init order-a: [ stripe, daf, crypto, stocks ]
+     *  2. reordered [stripe, crypto, stocks, daf]
+     *  3. submit: becomes order-a (no change - animation doesn't run)
+     */
     await new Promise((r) => setTimeout(r, 1000));
     resetField("methods", { defaultValue: ordered });
   };
