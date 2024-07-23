@@ -36,8 +36,9 @@ export default function SetPasswordForm(props: Props) {
     ),
   });
   const {
+    register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = methods;
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
@@ -94,7 +95,6 @@ export default function SetPasswordForm(props: Props) {
     <Form
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
       disabled={isSubmitting || isRequestingNewCode}
-      methods={methods}
       onSubmit={handleSubmit(submit)}
     >
       <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4">
@@ -114,10 +114,11 @@ export default function SetPasswordForm(props: Props) {
       </p>
 
       <div className="mt-6 grid gap-3">
-        <Input<FV>
-          name="code"
+        <Input
+          {...register("code")}
           placeholder="Enter 6-digit code"
           autoComplete="one-time-code"
+          error={errors.code?.message}
         />
 
         <span className="mb-3 flex items-center justify-between text-xs sm:text-sm font-medium">
@@ -132,9 +133,14 @@ export default function SetPasswordForm(props: Props) {
           </button>
         </span>
 
-        <PasswordInput<FV> name="password" placeholder="New Password" />
-        <PasswordInput<FV>
-          name="passwordConfirmation"
+        <PasswordInput
+          {...register("password")}
+          error={errors.password?.message}
+          placeholder="New Password"
+        />
+        <PasswordInput
+          {...register("passwordConfirmation")}
+          error={errors.passwordConfirmation?.message}
           placeholder="Confirm New Password"
         />
       </div>

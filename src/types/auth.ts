@@ -26,7 +26,7 @@ export type SignInRouteState = {
   data?: unknown;
 };
 
-export type StoredRouteState = {
+export type OAuthState = {
   pathname: string;
   data?: unknown;
 };
