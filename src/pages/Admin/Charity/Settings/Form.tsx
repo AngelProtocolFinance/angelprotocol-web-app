@@ -46,6 +46,7 @@ export default function Form(props: Props) {
       splitFixed: props.splitFixed ?? false,
       payout_minimum: `${props.payout_minimum ?? 50}`,
       donateMethods: fill(props.donateMethods),
+      fundOptOut: !props.fundOptIn,
     },
   });
 
@@ -81,6 +82,7 @@ export default function Form(props: Props) {
           splitLockPct,
           payout_minimum,
           donateMethods: dms,
+          fundOptOut,
           ...fv
         }) => {
           const ordered = order(dms);
@@ -88,6 +90,7 @@ export default function Form(props: Props) {
 
           await updateEndow({
             ...fv,
+            fundOptIn: !fundOptOut,
             progDonationsAllowed: !programDonateDisabled,
             splitLiqPct: 100 - splitLockPct,
             id: props.id,
@@ -136,6 +139,10 @@ export default function Form(props: Props) {
 
       <HideBGTipCheckbox />
 
+      <CheckField<FV> name="fundOptOut" classes="font-medium">
+        Opt out of fundraisers
+      </CheckField>
+
       <Field
         placeholder={`$${PAYOUT_MIN_USD}`}
         required
@@ -161,7 +168,6 @@ export default function Form(props: Props) {
         onChange={splitLockPct.onChange}
         value={splitLockPct.value}
       />
-
       <div className="mt-2">
         <CheckField<FV> name="splitFixed" classes="font-medium">
           Disable changing the split value

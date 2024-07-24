@@ -95,6 +95,7 @@ export type Endowment = {
   hide_bg_tip?: boolean;
   sfCompounded?: boolean;
   published?: boolean;
+  fundOptIn?: boolean;
   /** allowed by default */
   progDonationsAllowed?: boolean;
   splitLiqPct?: number;
@@ -149,6 +150,7 @@ export type EndowmentSettingsAttributes = Extract<
   keyof Endowment,
   | "receiptMsg"
   | "sfCompounded"
+  | "fundOptIn"
   | "hide_bg_tip"
   | "progDonationsAllowed"
   | "splitLiqPct"
