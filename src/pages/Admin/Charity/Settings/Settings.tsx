@@ -14,7 +14,7 @@ const fields = Object.keys({
   splitFixed: "",
   payout_minimum: "",
   donateMethods: "",
-  fundOptIn: "",
+  fund_opt_in: "",
 } satisfies { [k in K]: "" }) as K[];
 
 export default function Settings() {

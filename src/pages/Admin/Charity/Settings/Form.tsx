@@ -46,7 +46,7 @@ export default function Form(props: Props) {
       splitFixed: props.splitFixed ?? false,
       payout_minimum: `${props.payout_minimum ?? 50}`,
       donateMethods: fill(props.donateMethods),
-      fundOptOut: !props.fundOptIn,
+      fundOptOut: !props.fund_opt_in,
     },
   });
 
@@ -90,7 +90,7 @@ export default function Form(props: Props) {
 
           await updateEndow({
             ...fv,
-            fundOptIn: !fundOptOut,
+            fund_opt_in: !fundOptOut,
             progDonationsAllowed: !programDonateDisabled,
             splitLiqPct: 100 - splitLockPct,
             id: props.id,
