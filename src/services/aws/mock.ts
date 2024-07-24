@@ -7,7 +7,7 @@ export const handlers = [
     console.log(request.body);
     return HttpResponse.json();
   }),
-  http.get(APIs.aws + "/cloudsearch-nonprofits", () => {
+  http.get(APIs.aws + "/v2/cloudsearch-nonprofits", () => {
     const data: EndowListPaginatedAWSQueryRes<EndowmentCard[]> = {
       Items: [],
       NumOfPages: 1,

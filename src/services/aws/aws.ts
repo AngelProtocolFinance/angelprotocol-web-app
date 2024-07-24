@@ -93,7 +93,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "cloudsearch-nonprofits",
+          url: "v2/cloudsearch-nonprofits",
           params: {
             ...params,
             fields: endowCardFields,
@@ -106,7 +106,7 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "cloudsearch-nonprofits",
+          url: "v2/cloudsearch-nonprofits",
           params: { ...params, fields: endowSelectorOptionFields, env: apiEnv },
         };
       },
