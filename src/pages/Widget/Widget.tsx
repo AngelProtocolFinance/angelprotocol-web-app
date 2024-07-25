@@ -1,4 +1,4 @@
-import { fill } from "components/DonateMethods";
+import { fill, order } from "components/DonateMethods";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { DEFAULT_PROGRAM } from "components/donation";
@@ -26,6 +26,14 @@ export default function Widget({ endowId = 0 }: { endowId?: number }) {
 
 function Content({ endowment }: { endowment?: Endowment }) {
   const location = useLocation();
+
+  const _methods = endowment?.donateMethods;
+  const filled = fill(
+    _methods?.concat(
+      _methods.includes("daf") && !_methods.includes("stripe") ? ["stripe"] : []
+    )
+  );
+
   const [state, setState] = useState<WidgetConfig>({
     endowment: endowment || {
       id: 0,
@@ -35,7 +43,7 @@ function Content({ endowment }: { endowment?: Endowment }) {
     isTitleShown: true,
     liquidSplitPct: endowment?.splitLiqPct ?? 50,
     splitDisabled: endowment?.splitFixed ?? false,
-    methods: fill(endowment?.donateMethods),
+    methods: order(filled),
     accentPrimary: "#2D89C8",
     accentSecondary: "#E6F1F9",
     program: DEFAULT_PROGRAM,

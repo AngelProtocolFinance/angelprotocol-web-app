@@ -6,15 +6,14 @@ import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
-import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { determineAuthRedirectPath } from "helpers";
+import { getAuthRedirect } from "helpers";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
-import type { StoredRouteState } from "types/auth";
+import type { OAuthState } from "types/auth";
 import { object } from "yup";
 
 type FormValues = {
@@ -24,7 +23,11 @@ type FormValues = {
 
 export default function Signin() {
   const { handleError, displayError } = useErrorContext();
-  const methods = useForm<FormValues>({
+  const {
+    register,
+    formState: { isSubmitting, errors },
+    handleSubmit,
+  } = useForm<FormValues>({
     resolver: yupResolver(
       object({
         email: requiredString.trim().email("invalid email format"),
@@ -33,10 +36,8 @@ export default function Signin() {
     ),
   });
 
-  const { state } = useLocation();
-  const { redirectPath, data } = determineAuthRedirectPath(state, {
-    isSigningUp: false,
-  });
+  const { state: fromState } = useLocation();
+  const redirect = getAuthRedirect(fromState);
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
@@ -48,7 +49,7 @@ export default function Signin() {
   }
 
   if (currUser) {
-    return <Navigate to={redirectPath} state={data} replace />;
+    return <Navigate to={redirect.path} state={redirect.data} replace />;
   }
 
   async function submit(fv: FormValues) {
@@ -68,16 +69,10 @@ export default function Signin() {
     }
   }
 
-  const {
-    formState: { isSubmitting },
-    handleSubmit,
-  } = methods;
-
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
       <Form
         className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
-        methods={methods}
         disabled={isSubmitting}
         onSubmit={handleSubmit(submit)}
       >
@@ -91,15 +86,14 @@ export default function Signin() {
           className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
           type="button"
           onClick={() => {
-            const routeState: StoredRouteState = {
-              pathname: redirectPath.pathname,
-              data,
+            const routeState: OAuthState = {
+              pathname: redirect.path,
+              data: redirect.data,
             };
-            localStorage.setItem(
-              OAUTH_PATH_STORAGE_KEY,
-              JSON.stringify(routeState)
-            );
-            signInWithRedirect({ provider: "Google" });
+            signInWithRedirect({
+              provider: "Google",
+              customState: JSON.stringify(routeState),
+            });
           }}
         >
           <Image src={googleIcon} height={18} width={18} />
@@ -111,16 +105,22 @@ export default function Signin() {
           OR
         </Separator>
         <div className="grid gap-3">
-          <Input<FormValues>
-            name="email"
+          <Input
+            {...register("email")}
             placeholder="Email address"
+            autoComplete="username"
             icon="Email"
+            error={errors.email?.message}
           />
-          <PasswordInput<FormValues> name="password" placeholder="Password" />
+          <PasswordInput
+            {...register("password")}
+            error={errors.password?.message}
+            placeholder="Password"
+          />
           <Link
             to={appRoutes.reset_password}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"
-            state={state}
+            state={fromState}
           >
             Forgot password?
           </Link>
@@ -135,7 +135,7 @@ export default function Signin() {
           Don't have an account?
           <Link
             to={appRoutes.signup}
-            state={state}
+            state={fromState}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

@@ -46,7 +46,9 @@ describe("Stripe form test", () => {
     render(<_Form step="donate-form" init={init} />);
     expect(screen.getByText(/loading donate form/i));
     //after loading
-    expect(await screen.findByText(/failed to load donate form/i));
+    expect(
+      await screen.findByText(/failed to load donate form/i)
+    ).toBeInTheDocument();
   });
 
   test("blank state: no default currency specified", async () => {

@@ -1,4 +1,3 @@
-import type { ChainID } from "types/chain";
 import type { DisconnectedWallet } from "types/wallet";
 import Wallet from "./Wallet";
 

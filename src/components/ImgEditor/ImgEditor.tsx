@@ -1,57 +1,41 @@
-import { ErrorMessage } from "@hookform/error-message";
 import Icon from "components/Icon";
-import { humanize } from "helpers";
+import { humanize, unpack } from "helpers";
+import { fixedForwardRef } from "helpers/react";
 import type React from "react";
 import { useDropzone } from "react-dropzone";
 import {
   type FieldValues,
   type Path,
   get,
+  useController,
   useFormContext,
 } from "react-hook-form";
-import type { Props } from "./types";
+import type { ControlledProps, Props } from "./types";
 import useImgEditor from "./useImgEditor";
 
 const BYTES_IN_MB = 1e6;
 
-export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
-  props: Props<T, K>
-) {
-  const { name, classes, maxSize, accept } = props;
-
-  const {
-    formState: { errors, isSubmitting },
-  } = useFormContext<T>();
-
-  const {
-    handleOpenCropper,
-    handleReset,
-    file,
-    filePath,
-    isInitial,
-    noneUploaded,
-    onDrop,
-    preview,
-    ref,
-  } = useImgEditor(props);
+function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
+  const { handleOpenCropper, onDrop } = useImgEditor(props);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    disabled: isSubmitting,
+    disabled: props.disabled,
     multiple: false,
     onDrop,
   });
 
-  const invalid = !!get(errors, name);
+  const styles = unpack(props.classes);
+
   const overlay = `before:content-[''] before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 `;
 
   return (
-    <div className={`${classes?.container ?? ""} grid grid-rows-[1fr_auto]`}>
+    <div className={`${styles.container} grid grid-rows-[1fr_auto]`}>
       <div
-        data-invalid={invalid}
+        data-invalid={!!props.error}
         data-drag={isDragActive}
-        data-disabled={isSubmitting}
+        data-disabled={props.disabled}
         {...getRootProps({
-          className: `relative ${overlay} ${classes?.dropzone ?? ""} group rounded border border-gray-l2 border-dashed 
+          className: `relative ${overlay} ${styles.dropzone} group rounded border border-gray-l2 border-dashed 
           focus:outline-none focus:ring-2 data-[drag="true"]:ring-2 has-[:active]:ring-2 ring-blue-d1 ring-offset-2 
           hover:bg-blue-l5
           data-[disabled="true"]:bg-gray-l5 data-[disabled="true"]:pointer-events-none
@@ -60,12 +44,12 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
           ref,
         })}
         style={{
-          background: preview
-            ? `url('${preview}') center/cover no-repeat`
+          background: props.value.preview
+            ? `url('${props.value.preview}') center/cover no-repeat`
             : undefined,
         }}
       >
-        {noneUploaded ? (
+        {!props.value.preview ? (
           <div
             className="absolute-center grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none"
             tabIndex={-1}
@@ -87,14 +71,14 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
             </div>
             {
               /** only show controls if new file is uploaded */
-              !isInitial && (
-                <IconButton disabled={isSubmitting} onClick={handleReset}>
+              props.value.file && (
+                <IconButton disabled={props.disabled} onClick={props.onUndo}>
                   <Icon type="Undo" />
                 </IconButton>
               )
             }
-            {!isInitial && (
-              <IconButton onClick={handleOpenCropper} disabled={isSubmitting}>
+            {props.value.file && !props.error && (
+              <IconButton onClick={handleOpenCropper} disabled={props.disabled}>
                 <Icon type="Crop" />
               </IconButton>
             )}
@@ -104,30 +88,69 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
       <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
         <span>
           Valid types are:{" "}
-          {accept
+          {props.accept
             .map((m) => m.split("/")[1].toUpperCase().replace(/\+xml/gi, ""))
             .join(", ")}
           .{" "}
-          {maxSize ? (
+          {props.maxSize ? (
             <>
-              Image should be less than {maxSize / BYTES_IN_MB}MB in size.
+              Image should be less than {props.maxSize / BYTES_IN_MB}MB in size.
               <br />
-              {file.size
-                ? `Current image size: ${humanize(file.size / BYTES_IN_MB)}MB.`
+              {props.value.file?.size
+                ? `Current image size: ${humanize(
+                    props.value.file?.size / BYTES_IN_MB
+                  )}MB.`
                 : ""}
             </>
           ) : (
             ""
           )}
         </span>{" "}
-        <ErrorMessage
-          errors={errors}
-          name={filePath}
-          as="span"
-          className="text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden"
-        />
+        <span className="empty:hidden text-red dark:text-red-l2 text-xs before:content-['('] before:mr-0.5 after:content-[')'] after:ml-0.5 empty:before:hidden empty:after:hidden">
+          {props.error}
+        </span>
       </p>
     </div>
+  );
+}
+
+export const ControlledImgEditor = fixedForwardRef(_ImgEditor);
+
+export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
+  props: Props<T, K>
+) {
+  const { name, ...rest } = props;
+  const {
+    trigger,
+    resetField,
+    formState: { errors, isSubmitting },
+  } = useFormContext<T>();
+
+  const {
+    field: { value, onChange, ref },
+  } = useController<T, typeof name>({
+    name,
+  });
+
+  const filePath = `${name}.file`;
+
+  return (
+    <ControlledImgEditor
+      ref={ref}
+      value={value}
+      onChange={(v) => {
+        onChange(v);
+        trigger(filePath as any);
+      }}
+      onUndo={(e) => {
+        ////prevent container dropzone from catching click event
+        e.stopPropagation();
+        resetField(name);
+      }}
+      error={get(errors, filePath)?.message}
+      disabled={isSubmitting}
+      {...rest}
+    />
   );
 }
 

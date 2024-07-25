@@ -4,9 +4,10 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { ErrorMessage } from "@hookform/error-message";
 import { DrawerIcon } from "components/Icon";
 import { unpack } from "helpers";
+import { fixedForwardRef } from "helpers/react";
+import type { ForwardedRef } from "react";
 import {
   type FieldValues,
   type Path,
@@ -16,52 +17,34 @@ import {
 import type { OptionType, ValKey } from "types/components";
 import FocusableInput from "./FocusableInput";
 import { styles, valueKey } from "./constants";
-import type { Props } from "./types";
+import type { ControlledProps, Props } from "./types";
 
-export function Selector<
-  T extends FieldValues,
-  K extends Path<T>,
-  V extends ValKey,
->({
-  name,
-  disabled,
-  options,
-  children,
-  classes,
-  onOptionChange,
-}: Props<T, K, V>) {
-  const cls = unpack(classes);
-  const {
-    formState: { isSubmitting, errors },
-    field: { value: selected, onChange, ref },
-  } = useController<{ [index: string]: OptionType<V> }>({ name });
+function _List<T extends ValKey>(
+  props: ControlledProps<T>,
+  ref: ForwardedRef<HTMLInputElement>
+) {
+  const cls = unpack(props.classes);
 
-  const valuePath = `${name}.${valueKey}`;
-
-  const isDisabled = isSubmitting || disabled;
   return (
     <>
       <Listbox
-        disabled={isDisabled}
-        value={selected}
+        disabled={props.disabled}
+        value={props.value}
         by={valueKey}
-        onChange={(option: OptionType<V>) => {
-          onOptionChange?.();
-          onChange(option);
-        }}
+        onChange={props.onChange}
         as="div"
         className={`relative ${cls.container}`}
       >
         <FocusableInput ref={ref} />
         <ListboxButton
-          aria-invalid={!!get(errors, valuePath)?.message}
-          aria-disabled={isDisabled}
+          aria-invalid={!!props.error}
+          aria-disabled={props.disabled}
           as="button"
           className={`${cls.button} ${styles.selectorButton} peer-focus:shadow peer-focus:shadow-red`}
         >
           {({ open }) => (
             <>
-              <span>{selected.label}</span>
+              <span>{props.value.label}</span>
               <DrawerIcon
                 isOpen={open}
                 size={25}
@@ -71,7 +54,7 @@ export function Selector<
           )}
         </ListboxButton>
         <ListboxOptions className={`${styles.options} ${cls.options}`}>
-          {options
+          {props.options
             .filter((o) => !!o.value)
             .map((o) => (
               <ListboxOption key={o.value} value={o} className={styles.option}>
@@ -79,14 +62,43 @@ export function Selector<
               </ListboxOption>
             ))}
         </ListboxOptions>
-        <ErrorMessage
-          name={valuePath}
-          errors={errors}
-          as="p"
-          className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2"
-        />
+        <p className="absolute -bottom-5 right-0 text-right text-xs text-red dark:text-red-l2 empty:hidden">
+          {props.error}
+        </p>
       </Listbox>
-      {children && children(selected)}
+      {props.children?.(props.value)}
     </>
+  );
+}
+
+export const List = fixedForwardRef(_List);
+
+export function Selector<
+  T extends FieldValues,
+  K extends Path<T>,
+  V extends ValKey,
+>(props: Props<T, K, V>) {
+  const { name, disabled, onOptionChange, ...rest } = props;
+  const {
+    formState: { isSubmitting, errors },
+    field: { value: selected, onChange, ref },
+  } = useController<{ [index: string]: OptionType<V> }>({ name });
+
+  const valuePath = `${name}.${valueKey}`;
+
+  const isDisabled = isSubmitting || disabled;
+
+  return (
+    <List<V>
+      ref={ref}
+      value={selected}
+      onChange={(opt) => {
+        onChange(opt);
+        onOptionChange?.();
+      }}
+      disabled={isDisabled}
+      error={get(errors, valuePath)?.message}
+      {...rest}
+    />
   );
 }

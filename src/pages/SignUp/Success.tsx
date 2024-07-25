@@ -1,6 +1,6 @@
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
-import { determineAuthRedirectPath } from "helpers";
+import { getAuthRedirect } from "helpers";
 import { Link, useLocation } from "react-router-dom";
 import type { SignInRouteState } from "types/auth";
 import type { UserType } from "./types";
@@ -8,12 +8,12 @@ import type { UserType } from "./types";
 type Props = { userType: UserType };
 
 export default function Success({ userType }: Props) {
-  const { state } = useLocation();
-  const { redirectPath } = determineAuthRedirectPath(state);
+  const { state: fromState } = useLocation();
+  const authRedirect = getAuthRedirect(fromState);
   // donors get redirected to the route which they originally attempted to
   // access; nonprofits get redirected to the page to register their NPO
   const signInRouteState: SignInRouteState = {
-    from: userType === "donor" ? redirectPath.pathname : appRoutes.register,
+    from: userType === "donor" ? authRedirect.path : appRoutes.register,
   };
 
   return (

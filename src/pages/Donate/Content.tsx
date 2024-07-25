@@ -2,12 +2,13 @@ import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import { Steps } from "components/donation";
-import { APP_NAME, INTERCOM_HELP } from "constants/env";
+import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { PRIVACY_POLICY, TERMS_OF_USE_DONOR } from "constants/urls";
+import { PRIVACY_POLICY } from "constants/urls";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
+import { order } from "components/DonateMethods";
 import type { DonationIntent, Endowment } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
@@ -53,7 +54,9 @@ function Content({ intent, endowment }: Props) {
             config={{
               splitDisabled: endowment.splitFixed ?? false,
               liquidSplitPct: endowment.splitLiqPct ?? 50,
-              methodIds: endowment.donateMethods,
+              methodIds: endowment.donateMethods
+                ? order(endowment.donateMethods)
+                : undefined,
             }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
@@ -62,17 +65,6 @@ function Content({ intent, endowment }: Props) {
           classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]"
           endowId={endowment.id}
         />
-        <p className="max-md:border-t max-md:border-gray-l3 max-md:px-4 max-md:pt-4 col-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
-          By making a donation to {APP_NAME}, you agree to our{" "}
-          <A href={TERMS_OF_USE_DONOR}>Terms of Service</A>,{" "}
-          <A href={PRIVACY_POLICY}>Privacy Policy</A>. 100% of your donation is
-          tax-deductible to the extent allowed by US law. Your donation is made
-          to {APP_NAME}, a tax-exempt US 501(c)(3) charity that grants
-          unrestricted funds to {endowment.name} on your behalf. As a legal
-          matter, {APP_NAME} must provide any donations to {endowment.name} on
-          an unrestricted basis, regardless of any designations or restrictions
-          made by you. <A href={TERMS_OF_USE_DONOR}>See Terms.</A>
-        </p>
         <p className="max-md:px-4 mb-4 max-mbcol-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
           <span className="block mb-0.5">
             Need help? See{" "}

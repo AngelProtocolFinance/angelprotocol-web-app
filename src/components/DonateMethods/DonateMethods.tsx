@@ -3,7 +3,6 @@ import { Reorder, useDragControls, useMotionValue } from "framer-motion";
 import { unpack } from "helpers/unpack";
 import type { ReactNode } from "react";
 import type { TDonateMethod } from "types/components";
-import type { DonateMethodId } from "types/lists";
 
 type Updator = (methods: TDonateMethod[]) => void;
 type Classes = {
@@ -41,9 +40,33 @@ export function DonateMethods({ values, onChange, error, classes }: Props) {
           <Method
             value={v}
             key={v.id}
-            updator={(updated) =>
-              onChange(values.map((v) => (v.id === updated.id ? updated : v)))
-            }
+            updator={(updated) => {
+              const _methods = values.map((v) => {
+                if (v.id === updated.id) return updated;
+
+                //if DAF is enabled, also enable card + lock
+                if (
+                  updated.id === "daf" &&
+                  !updated.disabled &&
+                  v.id === "stripe"
+                ) {
+                  return { ...v, disabled: false, locked: true };
+                }
+
+                //if DAF is disabled, remove lock from card
+                if (
+                  updated.id === "daf" &&
+                  updated.disabled &&
+                  v.id === "stripe"
+                ) {
+                  return { ...v, locked: false };
+                }
+
+                return v;
+              });
+
+              onChange(_methods);
+            }}
           />
         ))}
       </Reorder.Group>
@@ -73,6 +96,7 @@ function Method({
       <input
         type="checkbox"
         className="accent-blue-d1 size-3.5"
+        disabled={value.locked}
         checked={!value.disabled}
         onChange={(e) => {
           updator({ ...value, disabled: !e.target.checked });
@@ -87,27 +111,10 @@ function Method({
         <Icon type="Drag" />
       </button>
 
-      {value.name}
+      <div>
+        <span>{value.name}</span>
+        <span className="text-gray-l1 text-sm ml-2">{value.tooltip}</span>
+      </div>
     </Reorder.Item>
   );
-}
-
-const names: { [K in DonateMethodId]: string } = {
-  crypto: "Crypto",
-  daf: "DAF",
-  stocks: "Stocks",
-  stripe: "Card",
-};
-const toMethods = (ids: DonateMethodId[], disabled = false): TDonateMethod[] =>
-  ids.map((id) => ({
-    id,
-    name: names[id],
-    disabled,
-  }));
-
-const all: DonateMethodId[] = ["stripe", "stocks", "daf", "crypto"];
-export function fill(sub = all): TDonateMethod[] {
-  const existing = sub.filter((x) => all.includes(x));
-  const missing = all.filter((x) => !sub.includes(x));
-  return toMethods(existing).concat(toMethods(missing, true));
 }

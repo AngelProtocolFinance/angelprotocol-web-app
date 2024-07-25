@@ -74,6 +74,7 @@ export const aws = createApi({
     "donations",
     "user",
     "user-bookmarks",
+    "user-endows",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
@@ -82,6 +83,7 @@ export const aws = createApi({
       query: () => ({
         url: "",
         method: "OPTIONS",
+        mode: "no-cors",
         headers: { authorization: TEMP_JWT },
       }),
     }),
@@ -189,7 +191,7 @@ export const aws = createApi({
       invalidatesTags: (_, error) => (error ? [] : ["endowments", "endowment"]),
       query: ({ id, ...payload }) => {
         return {
-          url: `/${v(7)}/endowments/${id}`,
+          url: `/${v(8)}/endowments/${id}`,
           method: "PATCH",
           headers: { authorization: TEMP_JWT },
           body: payload,

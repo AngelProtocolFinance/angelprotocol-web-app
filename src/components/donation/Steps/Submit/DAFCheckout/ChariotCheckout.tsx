@@ -14,6 +14,7 @@ import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
 import { toDonor } from "../../common/constants";
 import type { DafCheckoutStep } from "../../types";
+import { DonationTerms } from "../DonationTerms";
 import { toPlatformValues } from "./toPlatformValues";
 
 export default function ChariotCheckout(props: DafCheckoutStep) {
@@ -116,6 +117,10 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
         />
       </ErrorBoundary>
       <ContentLoader className="h-12 mt-4 block group-has-[chariot-connect]:hidden" />
+      <DonationTerms
+        endowName={props.init.recipient.name}
+        classes="border-t border-gray-l4 mt-5 pt-4 "
+      />
     </Summary>
   );
 }

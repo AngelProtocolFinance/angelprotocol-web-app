@@ -1,7 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Selector } from "components/Selector";
-import { CheckField, Field, Form, Label } from "components/form";
-import { useForm } from "react-hook-form";
+import { List } from "components/Selector";
+import {
+  NativeCheckField as CheckField,
+  NativeField as Field,
+  Form,
+  Label,
+} from "components/form";
+import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
 import type { DonateMethodId } from "types/lists";
 import { mixed, string } from "yup";
@@ -11,7 +16,7 @@ import type { FormDonor, Honorary, Mode } from "../types";
 
 type FV = FormDonor & Honorary & { coverFee: boolean };
 
-type Props = {
+export type Props = {
   onSubmit(formValues: FV): void;
   classes?: string;
   donor: FormDonor;
@@ -43,7 +48,13 @@ export default function SummaryForm({
   method,
 }: Props) {
   const CUSTOM_MSG_MAX_LENGTH = 250;
-  const methods = useForm<FV>({
+  const {
+    handleSubmit,
+    watch,
+    formState: { errors },
+    register,
+    control,
+  } = useForm<FV>({
     defaultValues: {
       ...donor,
       ...honorary,
@@ -85,11 +96,11 @@ export default function SummaryForm({
     ),
   });
 
-  const {
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = methods;
+  const { field: title } = useController<FV, "title">({
+    name: "title",
+    control,
+  });
+
   const ukTaxResident = watch("ukTaxResident");
   const withHonorary = watch("withHonorary");
   const withTributeNotif = watch("withTributeNotif");
@@ -97,21 +108,21 @@ export default function SummaryForm({
 
   return (
     <Form
-      methods={methods}
       onSubmit={handleSubmit(onSubmit)}
       className={`grid grid-cols-2 gap-x-4 ${classes}`}
     >
       <Label className="mb-2 text-base font-medium">Title</Label>
-      <Selector<FV, "title", string>
-        name="title"
+      <List
+        value={title.value}
+        onChange={title.onChange}
         options={titleOptions}
         classes={{
           button: "field-input-donate",
           container: "col-span-full mb-4",
         }}
       />
-      <Field<FV>
-        name="firstName"
+      <Field
+        {...register("firstName")}
         label="Your name"
         placeholder="First Name"
         required
@@ -119,69 +130,77 @@ export default function SummaryForm({
           label: "font-semibold text-base font-heading",
           container: "field-donate",
         }}
+        error={errors.firstName?.message}
       />
-      <Field<FV>
-        name="lastName"
+      <Field
+        {...register("lastName")}
         label=""
         placeholder="Last Name"
         classes={{ container: "field-donate mb-4" }}
+        error={errors.lastName?.message}
       />
-      <Field<FV>
-        name="email"
+      <Field
+        {...register("email")}
         label="Your email"
         placeholder="Email address"
         classes={{
           label: "font-medium text-base",
           container: "col-span-full field-donate mb-4",
         }}
+        error={errors.email?.message}
         required
       />
       {(method === "crypto" || method === "stripe") && (
-        <CheckField<FV> name="coverFee" classes="col-span-full">
+        <CheckField {...register("coverFee")} classes="col-span-full">
           Cover payment processing fees for your donation{" "}
           <span className="text-navy-l1 text-sm">
             (&nbsp;{nonprofitName} receives the full amount&nbsp;)
           </span>
         </CheckField>
       )}
+      {/*
       {method !== "crypto" && (
-        <CheckField<FV> name="ukTaxResident" classes="col-span-full mt-4">
+        <CheckField {...register("ukTaxResident")} classes="col-span-full mt-4">
           UK Taxpayer? Supercharge your donation with gift aid
         </CheckField>
       )}
+      */}
       {ukTaxResident && (
         <div className="grid col-span-full gap-y-4 mt-2 mb-6">
-          <Field<FV>
-            name="streetAddress"
+          <Field
+            {...register("streetAddress")}
             label="House number"
             placeholder="e.g. 100 Better Giving Rd"
             classes={{ container: "field-donate" }}
             required
+            error={errors.streetAddress?.message}
           />
-          <Field<FV>
-            name="zipCode"
+          <Field
+            {...register("zipCode")}
             label="Postal code"
             placeholder="e.g. BG21 1BG"
             classes={{ container: "field-donate" }}
             required
+            error={errors.zipCode?.message}
           />
         </div>
       )}
-      <CheckField<FV> name="withHonorary" classes="col-span-full mt-4">
+      <CheckField {...register("withHonorary")} classes="col-span-full mt-4">
         Dedicate my donation
       </CheckField>
 
       {withHonorary && (
         <div className="col-span-full p-4 bg-blue-l5 rounded-lg mt-2 shadow-inner">
-          <Field<FV>
-            name="honoraryFullName"
+          <Field
+            {...register("honoraryFullName")}
             label="Honoree's name"
             placeholder="e.g. Jane Doe"
             classes="w-full field-donate [&_input]:bg-white"
             required
+            error={errors.honoraryFullName?.message}
           />
-          <CheckField<FV>
-            name="withTributeNotif"
+          <CheckField
+            {...register("withTributeNotif")}
             classes="col-span-full mt-3 text-sm"
           >
             Notify someone about this tribute
@@ -189,30 +208,33 @@ export default function SummaryForm({
 
           {withTributeNotif && (
             <div className="grid gap-y-3 mt-4 rounded-lg p-4 bg-white shadow-inner">
-              <Field<FV>
-                name="tributeNotif.toFullName"
+              <Field
+                {...register("tributeNotif.toFullName")}
                 label="Recipient name"
                 placeholder="e.g. Jane Doe"
                 classes="field-donate [&_label]:text-sm [&_input]:text-sm"
                 required
+                error={errors.tributeNotif?.toFullName?.message}
               />
-              <Field<FV>
-                name="tributeNotif.toEmail"
+              <Field
+                {...register("tributeNotif.toEmail")}
                 label="Email address"
                 placeholder="e.g. janedoe@better.giving"
                 classes="field-donate [&_label]:text-sm [&_input]:text-sm"
                 required
+                error={errors.tributeNotif?.toEmail?.message}
               />
-              <Field<FV, "textarea">
+              <Field
+                {...register("tributeNotif.fromMsg")}
                 rows={2}
                 type="textarea"
-                name="tributeNotif.fromMsg"
                 label="Custom message"
                 placeholder="Message to recipient"
                 classes={{
                   container: "field-donate [&_label]:text-sm [&_input]:text-sm",
                 }}
                 required={false}
+                error={errors.tributeNotif?.fromMsg?.message}
               />
               <p
                 data-exceed={errors.tributeNotif?.fromMsg?.type === "max"}

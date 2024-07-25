@@ -1,14 +1,17 @@
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
+import Prompt from "components/Prompt";
 import QueryLoader from "components/QueryLoader";
 import TableSection, { Cells } from "components/TableSection";
 import { useAuthenticatedUser } from "contexts/Auth";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useAdminContext } from "pages/Admin/Context";
 import {
   useDeleteEndowAdminMutation,
   useEndowAdminsQuery,
 } from "services/aws/endow-admins";
+import type { EndowAdmin } from "types/aws";
 import AddForm from "./AddForm";
 
 export default function List() {
@@ -17,13 +20,16 @@ export default function List() {
 
   const queryState = useEndowAdminsQuery(id);
   return (
-    <div>
+    <div className="overflow-x-auto">
       <button
         type="button"
         disabled={queryState.isLoading}
         className="justify-self-end btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
         onClick={() =>
-          showModal(AddForm, { added: queryState.data || [], endowID: id })
+          showModal(AddForm, {
+            added: (queryState.data || []).map((admin) => admin.email),
+            endowID: id,
+          })
         }
       >
         <Icon type="Plus" />
@@ -45,19 +51,29 @@ export default function List() {
 
 type LoadedProps = {
   classes?: string;
-  members: string[];
+  members: EndowAdmin[];
 };
 function Loaded({ members, classes = "" }: LoadedProps) {
   const { email: user } = useAuthenticatedUser();
   const { id } = useAdminContext();
   const [removeUser, { isLoading }] = useDeleteEndowAdminMutation();
+  const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
 
   async function handleRemove(toRemove: string) {
-    if (toRemove === user) return window.alert("Can't delete self");
+    if (toRemove === user)
+      return showModal(Prompt, {
+        type: "error",
+        children: "Can't delete self",
+      });
+
     if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
 
-    const result = await removeUser({ email: toRemove, endowID: id });
-    if ("error" in result) return window.alert("Failed to remove user");
+    try {
+      await removeUser({ email: toRemove, endowID: id }).unwrap();
+    } catch (err) {
+      handleError(err, { context: "removing member" });
+    }
   }
 
   return (
@@ -74,6 +90,8 @@ function Loaded({ members, classes = "" }: LoadedProps) {
         >
           <td className="w-8" />
           <>Email</>
+          <>First name</>
+          <>Last name</>
         </Cells>
       </TableSection>
       <TableSection
@@ -83,14 +101,14 @@ function Loaded({ members, classes = "" }: LoadedProps) {
       >
         {members.map((member) => (
           <Cells
-            key={member}
+            key={member.email}
             type="td"
             cellClass="p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
             <td className="relative">
               <button
                 disabled={isLoading}
-                onClick={() => handleRemove(member)}
+                onClick={() => handleRemove(member.email)}
                 type="button"
                 className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
               >
@@ -98,7 +116,9 @@ function Loaded({ members, classes = "" }: LoadedProps) {
               </button>
             </td>
 
-            <>{member}</>
+            <>{member.email}</>
+            <>{member.givenName ?? "-"}</>
+            <>{member.familyName ?? "-"}</>
           </Cells>
         ))}
       </TableSection>

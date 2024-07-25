@@ -1,6 +1,7 @@
 import char from "assets/images/celebrating-character.png";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
+import Seo from "components/Seo";
 import Signup from "components/Signup";
 import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
@@ -18,6 +19,8 @@ export default function DonateThanks({ widgetVersion = false }) {
 
   return (
     <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
+      {/** override default scripts when used inside iframe */}
+      <Seo scripts={widgetVersion ? [] : undefined} />
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {
@@ -49,7 +52,9 @@ export default function DonateThanks({ widgetVersion = false }) {
 
       <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
         {state?.microdepositArrivalDate
-          ? `The microdeposit is expected to arrive at your nominated bank account on ${new Date(state.microdepositArrivalDate * 1000)}. You can access the bank verification link from the "Pending" tab on your`
+          ? `The microdeposit is expected to arrive at your nominated bank account on ${new Date(
+              state.microdepositArrivalDate * 1000
+            )}. You can access the bank verification link from the "Pending" tab on your`
           : "If you need a receipt for your donation, please fill out the KYC form for this transaction on your"}{" "}
         {widgetVersion ? (
           <ExtLink href={`${BASE_URL}${appRoutes.user_dashboard}/donations`}>

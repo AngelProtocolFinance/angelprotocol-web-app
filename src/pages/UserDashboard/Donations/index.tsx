@@ -1,7 +1,7 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
-import { isEmpty } from "helpers";
+import { replaceWithEmptyString as fill, humanize, isEmpty } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { AuthenticatedUser } from "types/auth";
 import type { DonationRecord } from "types/aws";
@@ -44,7 +44,25 @@ export default function Donations({ user }: { user: AuthenticatedUser }) {
         aria-disabled={isLoadingOrError || isEmpty(data?.Items ?? [])}
         classes="row-start-5 @5xl:row-auto col-span-full @5xl:col-span-1 @5xl:justify-self-end btn-blue px-8 py-3"
         headers={csvHeaders}
-        data={data?.Items || []}
+        data={
+          data?.Items.map((item) => {
+            return fill({
+              recipientName: item.recipientName,
+              date: new Date(item.date).toLocaleDateString(),
+              paymentMethod: item.paymentMethod,
+              isRecurring: item.isRecurring ? "Yes" : "No",
+              symbol: item.symbol,
+              initAmount: humanize(item.initAmount, 2),
+              initAmountUsd: humanize(item.initAmountUsd ?? 0, 2),
+              directDonateAmount: humanize(item.directDonateAmount ?? 0, 2),
+              sfDonateAmount: humanize(item.sfDonateAmount ?? 0, 2),
+              id: item.id,
+              receipt: item.donorDetails?.address?.country
+                ? "Yes"
+                : "No" ?? "No",
+            });
+          }) ?? []
+        }
         filename={
           status === "final" ? "donations.csv" : "pending-donations.csv"
         }
@@ -125,10 +143,16 @@ export default function Donations({ user }: { user: AuthenticatedUser }) {
   );
 }
 
-const csvHeaders: { key: keyof DonationRecord; label: string }[] = [
+const csvHeaders: { key: keyof DonationRecord | "receipt"; label: string }[] = [
+  { key: "recipientName", label: "Recipient" },
+  { key: "date", label: "Date" },
+  { key: "paymentMethod", label: "Donation Type" },
+  { key: "isRecurring", label: "Recurring" },
+  { key: "symbol", label: "Currency" },
   { key: "initAmount", label: "Amount" },
   { key: "initAmountUsd", label: "USD Value" },
-  { key: "symbol", label: "Currency" },
-  { key: "date", label: "Date" },
+  { key: "directDonateAmount", label: "Direct Donation" },
+  { key: "sfDonateAmount", label: "Donation to Sustainability Fund" },
   { key: "id", label: "Transaction Hash" },
+  { key: "receipt", label: "Receipt" },
 ];

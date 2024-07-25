@@ -62,7 +62,8 @@ export default function Form({ initSlug = "" }) {
           classes="field-admin"
           name="name"
           label="Name of your organization"
-          required
+          disabled
+          tooltip="The name field reflects your organization's legal name as provided on your initial application. If you need to change your name please contact support@better.giving and provide documentation supporting the legal name change or D.B.A. records."
         />
         <Field<FV>
           classes="field-admin"

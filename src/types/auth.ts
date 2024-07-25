@@ -6,6 +6,7 @@ export type AuthenticatedUser = {
   email: string;
   firstName?: string;
   lastName?: string;
+  avatarUrl?: string;
   isSigningOut: boolean;
   /** lowercase */
   prefCurrencyCode?: string;
@@ -25,7 +26,7 @@ export type SignInRouteState = {
   data?: unknown;
 };
 
-export type StoredRouteState = {
+export type OAuthState = {
   pathname: string;
   data?: unknown;
 };

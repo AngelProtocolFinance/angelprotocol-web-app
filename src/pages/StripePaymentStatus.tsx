@@ -2,6 +2,7 @@ import type { PaymentIntent } from "@stripe/stripe-js";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
+import Seo from "components/Seo";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useCallback, useEffect } from "react";
@@ -10,7 +11,7 @@ import { useStripePaymentStatusQuery } from "services/apes";
 import type { GuestDonor } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 
-export default function StripePaymentStatus() {
+export default function StripePaymentStatus({ isInWidget = false }) {
   const paymentIntentId =
     new URLSearchParams(window.location.search).get("payment_intent") ?? "";
 
@@ -22,8 +23,6 @@ export default function StripePaymentStatus() {
   const { refetch } = queryState;
 
   const handleProcessing = useCallback(() => refetch(), [refetch]);
-
-  const isInWidget = window.location.pathname.includes(appRoutes.donate_widget);
 
   return (
     <QueryLoader
@@ -42,16 +41,20 @@ export default function StripePaymentStatus() {
         arrivalDate,
         url,
       }) => (
-        <Content
-          status={status}
-          onMount={handleProcessing}
-          isInWidget={isInWidget}
-          guestDonor={guestDonor}
-          recipientName={recipientName}
-          recipientId={recipientId}
-          bankVerificationUrl={url}
-          microdepositArrivalDate={arrivalDate}
-        />
+        <>
+          {/** override default scripts when used inside iframe */}
+          <Seo scripts={isInWidget ? [] : undefined} />
+          <Content
+            status={status}
+            onMount={handleProcessing}
+            isInWidget={isInWidget}
+            guestDonor={guestDonor}
+            recipientName={recipientName}
+            recipientId={recipientId}
+            bankVerificationUrl={url}
+            microdepositArrivalDate={arrivalDate}
+          />
+        </>
       )}
     </QueryLoader>
   );
