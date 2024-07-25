@@ -4,7 +4,7 @@ export type FV = {
   receiptMsg: string;
   hide_bg_tip: boolean;
   sfCompounded: boolean;
-  fundOptOut: boolean;
+  fundOptIn: boolean;
   programDonateDisabled: boolean;
   splitLockPct: number;
   splitFixed: boolean;

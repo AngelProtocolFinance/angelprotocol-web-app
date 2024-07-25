@@ -46,7 +46,7 @@ export default function Form(props: Props) {
       splitFixed: props.splitFixed ?? false,
       payout_minimum: `${props.payout_minimum ?? 50}`,
       donateMethods: fill(props.donateMethods),
-      fundOptOut: !props.fund_opt_in,
+      fundOptIn: props.fund_opt_in ?? false,
     },
   });
 
@@ -82,7 +82,7 @@ export default function Form(props: Props) {
           splitLockPct,
           payout_minimum,
           donateMethods: dms,
-          fundOptOut,
+          fundOptIn,
           ...fv
         }) => {
           const ordered = order(dms);
@@ -90,7 +90,7 @@ export default function Form(props: Props) {
 
           await updateEndow({
             ...fv,
-            fund_opt_in: !fundOptOut,
+            fund_opt_in: fundOptIn,
             progDonationsAllowed: !programDonateDisabled,
             splitLiqPct: 100 - splitLockPct,
             id: props.id,
@@ -139,9 +139,18 @@ export default function Form(props: Props) {
 
       <HideBGTipCheckbox />
 
-      <CheckField<FV> name="fundOptOut" classes="font-medium">
-        Opt out of fundraisers
-      </CheckField>
+      <div>
+        <CheckField<FV> name="fundOptIn" classes="font-medium">
+          Include nonprofit as a potential member for Fundraisers
+        </CheckField>
+        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+          Inclusion as an eligible Fundraiser Index member is optional for all
+          Better Giving Nonprofits. By opting in, this nonprofit will appear in
+          the search area of the Fundraiser Builder, will be able to be added to
+          a Fundraiser, and will receive funds donated via Fundraisers of which
+          the nonprofit is a member.
+        </p>
+      </div>
 
       <Field
         placeholder={`$${PAYOUT_MIN_USD}`}
