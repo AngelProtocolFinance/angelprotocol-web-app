@@ -67,18 +67,18 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           })}
           // see https://givechariot.readme.io/reference/integrating-connect#capture-your-grant-intent
           onSuccess={async (ev) => {
-            const { detail, grantIntent } = ev;
-            /** user may input amount different from our donate form */
-            const grantAmount: number = grantIntent.amount / 100;
-            const adjusted = toPlatformValues(grantAmount, {
-              amount: +details.amount,
-              tip: tip?.value ?? 0,
-              feeAllowance,
-            });
-
             try {
+              const { grantIntent, workflowSessionId } = ev.detail;
+              /** user may input amount different from our donate form */
+              const grantAmount: number = grantIntent.amount / 100;
+              const adjusted = toPlatformValues(grantAmount, {
+                amount: +details.amount,
+                tip: tip?.value ?? 0,
+                feeAllowance,
+              });
+
               await createGrant({
-                transactionId: detail.workflowSessionId,
+                transactionId: workflowSessionId,
                 amount: adjusted.amount,
                 tipAmount: adjusted.tip,
                 feeAllowance: adjusted.feeAllowance,
