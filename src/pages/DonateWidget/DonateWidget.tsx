@@ -1,7 +1,6 @@
 import { DappLogo } from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
-import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { idParamToNum, setToLightMode } from "helpers";
@@ -50,7 +49,6 @@ export default function DonateWidget() {
       }}
       className="grid grid-rows-[1fr_auto] justify-items-center gap-10"
     >
-      <Seo scripts={[]} />
       <QueryLoader
         queryState={queryState}
         messages={{
