@@ -29,6 +29,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
         name={profile.name}
         image={profile.logo}
         url={`${BASE_URL}/${appRoutes.donate_widget}/${profile.id}`}
+        scripts={[]}
       />
       {config.isTitleShown && (
         <h1 className="text-center w-full z-20 text-lg sm:text-3xl text-pretty">
