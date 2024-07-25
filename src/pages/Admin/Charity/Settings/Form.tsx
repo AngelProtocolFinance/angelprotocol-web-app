@@ -41,6 +41,7 @@ export default function Form(props: Props) {
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
       donateMethods: fill(props.donateMethods),
       increments: props.increments ?? [],
+      fundOptIn: props.fund_opt_in ?? false,
     },
   });
 
@@ -65,7 +66,7 @@ export default function Form(props: Props) {
         reset();
       }}
       onSubmit={handleSubmit(
-        async ({ programDonateDisabled, donateMethods, ...fv }) => {
+        async ({ programDonateDisabled, donateMethods, fundOptIn, ...fv }) => {
           if (props.id === BG_ID && fv.hide_bg_tip === false) {
             return displayError(
               "BG donation flow should not show BG tip screen"
@@ -74,6 +75,7 @@ export default function Form(props: Props) {
 
           await updateEndow({
             ...fv,
+            fund_opt_in: fundOptIn,
             progDonationsAllowed: !programDonateDisabled,
             id: props.id,
             donateMethods: donateMethods

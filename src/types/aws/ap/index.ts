@@ -130,6 +130,7 @@ export type Endowment = {
   //can be optional, default false and need not be explicit
   hide_bg_tip?: boolean;
   published?: boolean;
+  fund_opt_in?: boolean;
   /** allowed by default */
   progDonationsAllowed?: boolean;
   donateMethods?: DonateMethodId[];
@@ -185,6 +186,7 @@ export type EndowmentSettingsAttributes = keyof Pick<
   | "progDonationsAllowed"
   | "donateMethods"
   | "increments"
+  | "fund_opt_in"
 >;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..

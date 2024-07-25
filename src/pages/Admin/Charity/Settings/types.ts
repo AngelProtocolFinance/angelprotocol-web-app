@@ -12,6 +12,7 @@ export const schema = v.object({
       ({ requirement }) => `cannot exceed ${requirement} characters`
     )
   ),
+  fundOptIn: v.boolean(),
   hide_bg_tip: v.boolean(),
   programDonateDisabled: v.boolean(),
   increments: v.array(increment),
