@@ -83,6 +83,7 @@ export const aws = createApi({
       query: () => ({
         url: "",
         method: "OPTIONS",
+        mode: "no-cors",
         headers: { authorization: TEMP_JWT },
       }),
     }),
