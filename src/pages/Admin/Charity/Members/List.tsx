@@ -1,8 +1,10 @@
 import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
+import Prompt from "components/Prompt";
 import QueryLoader from "components/QueryLoader";
 import TableSection, { Cells } from "components/TableSection";
 import { useAuthenticatedUser } from "contexts/Auth";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useAdminContext } from "pages/Admin/Context";
 import {
@@ -55,13 +57,23 @@ function Loaded({ members, classes = "" }: LoadedProps) {
   const { email: user } = useAuthenticatedUser();
   const { id } = useAdminContext();
   const [removeUser, { isLoading }] = useDeleteEndowAdminMutation();
+  const { showModal } = useModalContext();
+  const { handleError } = useErrorContext();
 
   async function handleRemove(toRemove: string) {
-    if (toRemove === user) return window.alert("Can't delete self");
+    if (toRemove === user)
+      return showModal(Prompt, {
+        type: "error",
+        children: "Can't delete self",
+      });
+
     if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
 
-    const result = await removeUser({ email: toRemove, endowID: id });
-    if ("error" in result) return window.alert("Failed to remove user");
+    try {
+      await removeUser({ email: toRemove, endowID: id }).unwrap();
+    } catch (err) {
+      handleError(err, { context: "removing member" });
+    }
   }
 
   return (

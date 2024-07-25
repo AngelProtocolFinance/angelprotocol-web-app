@@ -21,8 +21,9 @@ export default function InitForm(props: Props) {
     ),
   });
   const {
+    register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = methods;
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
@@ -61,7 +62,6 @@ export default function InitForm(props: Props) {
     <Form
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
       disabled={isSubmitting}
-      methods={methods}
       onSubmit={handleSubmit(submit)}
     >
       <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4">
@@ -71,11 +71,12 @@ export default function InitForm(props: Props) {
         Enter your registered email to reset password
       </p>
 
-      <Input<FV>
-        name="email"
+      <Input
+        {...register("email")}
         placeholder="Email address"
         classes={{ container: "mt-6" }}
         icon="Email"
+        error={errors.email?.message}
       />
 
       <button

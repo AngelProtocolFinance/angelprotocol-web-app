@@ -28,7 +28,7 @@ export default function withAuth<Props>(
         from: location.pathname,
         data: location.state,
       };
-      return <Navigate to={appRoutes.signin} state={state} replace />;
+      return <Navigate to={appRoutes.signup} state={state} replace />;
     }
 
     if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {

@@ -84,7 +84,7 @@ function Footer({ socials, classes = "" }: Props) {
       <div className="col-span-2 xl:col-span-5 max-lg:flex-col py-2 px-4 md:px-10 md:py-4 flex gap-y-2 items-center justify-between text-[#316B9C] font-medium bg-[#F1FAFF]">
         <p className="text-[0.93rem] text-center">
           © Copyright {new Date().getFullYear()} {APP_NAME}, A Registered
-          Charitable 501(C)(3) (EIN 87-3758939)
+          Charitable 501(c)(3) (EIN 87-3758939)
         </p>
         <Socials links={socials} />
       </div>

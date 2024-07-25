@@ -1,10 +1,19 @@
 import * as Sentry from "@sentry/react";
+import { Hub } from "aws-amplify/utils";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
-import { lazy } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { lazy, useEffect } from "react";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { usePingQuery } from "services/aws/aws";
+import * as auth from "slices/auth";
+import { useSetter } from "store/accessors";
 import Layout from "./Layout";
 
 const Admin = lazy(() => import("pages/Admin"));
@@ -48,6 +57,33 @@ export default function App() {
   const location = useLocation();
   useScrollTop(location.pathname);
 
+  const dispatch = useSetter();
+  const navigate = useNavigate();
+  useEffect(() => {
+    dispatch(auth.loadSession());
+    const unsubscribe = Hub.listen("auth", async ({ payload }) => {
+      switch (payload.event) {
+        case "signedIn":
+          dispatch(auth.loadSession(payload.data));
+          break;
+        case "signedOut":
+          dispatch(auth.reset());
+          break;
+        case "tokenRefresh":
+          dispatch(auth.loadSession());
+          break;
+        case "tokenRefresh_failure":
+          dispatch(auth.reset());
+          break;
+        case "customOAuthState":
+          navigate(appRoutes.auth_redirector, { state: payload.data });
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch, navigate]);
+
   const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
   return (
@@ -62,13 +98,9 @@ export default function App() {
           />
           <Route
             path={donateWidgetRoutes.stripe_payment_status}
-            element={<StripePaymentStatus />}
+            element={<StripePaymentStatus isInWidget />}
           />
         </Route>
-        <Route
-          path={`${appRoutes.donate_widget}/:id`}
-          element={<DonateWidget />}
-        />
         <Route element={<Layout />}>
           <Route
             path={`${appRoutes.profile}/:id/*`}

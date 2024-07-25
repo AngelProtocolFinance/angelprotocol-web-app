@@ -1,6 +1,6 @@
 export * from "./createNavLinkStyler";
 export * from "./decimal";
-export * from "./determineAuthRedirectPath";
+export * from "./getAuthRedirect";
 export * from "./evm";
 export * from "./getFilePreviews";
 export * from "./getTxUrl";

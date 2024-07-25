@@ -6,15 +6,14 @@ import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
-import { OAUTH_PATH_STORAGE_KEY } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { determineAuthRedirectPath } from "helpers";
-import { useForm } from "react-hook-form";
+import { getAuthRedirect } from "helpers";
+import { useController, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
-import type { StoredRouteState } from "types/auth";
+import type { OAuthState, SignInRouteState } from "types/auth";
 import { mixed, object } from "yup";
 import type { FormValues, StateSetter, UserType } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
@@ -25,31 +24,46 @@ type Props = {
 };
 
 export default function SignupForm(props: Props) {
+  const location = useLocation();
+  const fromState: SignInRouteState | undefined = location.state;
+  const isRegistrant = fromState?.from === appRoutes.register;
+
   const { handleError, displayError } = useErrorContext();
-  const methods = useForm<FormValues>({
+  const {
+    register,
+    formState: { isSubmitting, errors },
+    handleSubmit,
+    trigger,
+    control,
+  } = useForm<FormValues>({
+    defaultValues: {
+      userType: isRegistrant ? "non-profit" : undefined,
+    },
     resolver: yupResolver(
       object({
         email: requiredString.trim().email("invalid email format"),
         firstName: requiredString.trim(),
         lastName: requiredString.trim(),
         userType: mixed<UserType>()
-          .required("required")
+          .required("Please select an option to proceed")
           .oneOf(["donor", "non-profit"]),
         password: password,
       })
     ),
   });
+  const { field: userType } = useController({ name: "userType", control });
 
-  const { state } = useLocation();
-  const { redirectPath, data } = determineAuthRedirectPath(state);
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
     return <LoaderRing thickness={12} classes="w-32 mt-8" />;
   }
 
+  const redirect = getAuthRedirect(fromState, {
+    isNpo: userType.value === "non-profit",
+  });
   if (currUser) {
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate to={redirect.path} replace />;
   }
 
   async function submit(fv: FormValues) {
@@ -91,16 +105,10 @@ export default function SignupForm(props: Props) {
     }
   }
 
-  const {
-    formState: { isSubmitting },
-    handleSubmit,
-  } = methods;
-
   return (
     <div className="grid justify-items-center gap-3.5">
       <Form
         className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
-        methods={methods}
         disabled={isSubmitting}
         onSubmit={handleSubmit(submit)}
       >
@@ -112,19 +120,30 @@ export default function SignupForm(props: Props) {
           nonprofit.
         </p>
 
+        {!isRegistrant && (
+          <UserTypeSelector
+            classes="mt-5"
+            value={userType.value}
+            onChange={userType.onChange}
+            error={errors.userType?.message}
+          />
+        )}
+
         <button
           className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
           type="button"
-          onClick={() => {
-            const stored: StoredRouteState = {
-              pathname: redirectPath.pathname,
-              data,
+          onClick={async () => {
+            const valid = await trigger("userType");
+            if (!valid) return;
+
+            const stored: OAuthState = {
+              pathname: redirect.path,
+              data: redirect.data,
             };
-            localStorage.setItem(
-              OAUTH_PATH_STORAGE_KEY,
-              JSON.stringify(stored)
-            );
-            signInWithRedirect({ provider: "Google" });
+            signInWithRedirect({
+              provider: "Google",
+              customState: JSON.stringify(stored),
+            });
           }}
         >
           <Image src={googleIcon} height={18} width={18} />
@@ -139,24 +158,30 @@ export default function SignupForm(props: Props) {
 
         <div className="grid gap-3">
           <div className="flex gap-3">
-            <Input<FormValues> name="firstName" placeholder="First Name" />
-            <Input<FormValues> name="lastName" placeholder="Last Name" />
+            <Input
+              {...register("firstName")}
+              placeholder="First Name"
+              error={errors.firstName?.message}
+            />
+            <Input
+              {...register("lastName")}
+              placeholder="Last Name"
+              error={errors.lastName?.message}
+            />
           </div>
-          <Input<FormValues>
-            name="email"
+          <Input
+            {...register("email")}
+            autoComplete="username"
             placeholder="Email address"
             icon="Email"
+            error={errors.email?.message}
           />
-          <PasswordInput<FormValues>
-            name="password"
+          <PasswordInput
+            {...register("password")}
             placeholder="Create password"
+            error={errors.password?.message}
           />
         </div>
-
-        <span className="mt-7 mb-3 font-normal max-sm:text-sm">
-          You are signing up as
-        </span>
-        <UserTypeSelector />
 
         <button
           type="submit"
@@ -169,11 +194,11 @@ export default function SignupForm(props: Props) {
           Already have an account?
           <Link
             to={appRoutes.signin}
-            state={state}
+            state={fromState}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >
-            Sign in
+            Login
           </Link>
         </span>
       </Form>
