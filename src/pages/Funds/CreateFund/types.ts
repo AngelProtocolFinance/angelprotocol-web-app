@@ -6,4 +6,5 @@ export interface FormValues {
   logo: ImgLink;
   banner: ImgLink;
   expiration: string;
+  featured: boolean;
 }

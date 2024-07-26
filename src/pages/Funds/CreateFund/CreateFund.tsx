@@ -1,6 +1,11 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
-import { NativeField as Field, Form, Label } from "components/form";
+import {
+  NativeCheckField as CheckField,
+  NativeField as Field,
+  Form,
+  Label,
+} from "components/form";
 import {
   AVATAR_MAX_SIZE_BYTES,
   AVATAR_MIME_TYPE,
@@ -21,6 +26,7 @@ export default function CreateFund() {
     defaultValues: {
       banner: { preview: "", publicUrl: "" },
       logo: { preview: "", publicUrl: "" },
+      featured: true,
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
@@ -102,6 +108,11 @@ export default function CreateFund() {
           classes={{ input: "uppercase" }}
           error={errors.expiration?.message}
         />
+
+        <CheckField {...register("featured")} classes="col-span-full mt-4">
+          Featured in funds page
+        </CheckField>
+
         <button type="submit">submit</button>
       </Form>
     </div>
