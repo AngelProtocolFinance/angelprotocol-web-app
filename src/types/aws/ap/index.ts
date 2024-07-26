@@ -196,7 +196,6 @@ export type EndowmentsSortKey = "name_internal" | "overall";
 export type EndowmentsQueryParams = {
   /** can be empty string */
   query: string;
-  sort?: `${EndowmentsSortKey}+${SortDirection}`;
   page: number; //to load next page, set to Page + 1
   endow_designation?: string; // comma separated EndowDesignation values
   sdgs?: string; // comma separated sdg values.
