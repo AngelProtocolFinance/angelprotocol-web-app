@@ -13,6 +13,7 @@ import {
   AVATAR_MIME_TYPE,
 } from "pages/UserDashboard/EditProfile/useRhf";
 import { useController, useForm } from "react-hook-form";
+import { EndowmentSelector } from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
 export default function CreateFund() {
@@ -35,6 +36,7 @@ export default function CreateFund() {
       //donation settings
       liquidSplitPct: 50,
       allowBgTip: true,
+      endowMembers: [],
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
@@ -42,6 +44,10 @@ export default function CreateFund() {
   const { field: liquidSplitPct } = useController({
     control,
     name: "liquidSplitPct",
+  });
+  const { field: endowMembers } = useController({
+    control,
+    name: "endowMembers",
   });
   return (
     <div className="w-full padded-container">
@@ -127,6 +133,11 @@ export default function CreateFund() {
         </CheckField>
 
         <h4 className="font-bold text-xl mb-4 mt-12">Donate form settings</h4>
+
+        <EndowmentSelector
+          values={endowMembers.value}
+          onChange={endowMembers.onChange}
+        />
 
         <label className="block mb-4 mt-8 font-medium text-base">
           Define default split value:

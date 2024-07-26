@@ -1,5 +1,11 @@
 import type { ImgLink } from "components/ImgEditor";
 
+export interface FundMember {
+  id: number;
+  name: string;
+  logo?: string;
+}
+
 export interface FormValues {
   name: string;
   description: string;
@@ -10,4 +16,5 @@ export interface FormValues {
   /** 1 - 100*/
   liquidSplitPct: number;
   allowBgTip: boolean;
+  endowMembers: FundMember[];
 }
