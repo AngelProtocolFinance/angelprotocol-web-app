@@ -47,7 +47,7 @@ export function useSingleEndowSetting(
         logger.error(err);
       }
     })();
-  }, [endowSettingSource, onSettingsReceived]);
+  }, [endowSettingSource, onSettingsReceived, getEndow]);
 
   return singleMemberSetting;
 }
