@@ -38,7 +38,7 @@ export default function CreateFund() {
           console.log(fv.expiration);
         })}
         disabled={isSubmitting}
-        className="border border-gray-l4 rounded-lg p-4 mt-4"
+        className="border border-gray-l4 rounded-lg p-4 my-4"
       >
         <h4 className="font-bold text-xl mb-4">Fund information</h4>
         <Field
@@ -110,7 +110,7 @@ export default function CreateFund() {
           error={errors.expiration?.message}
         />
 
-        <CheckField {...register("featured")} classes="col-span-full mt-4">
+        <CheckField {...register("featured")} classes="col-span-full my-6">
           Featured in funds page
         </CheckField>
 
