@@ -29,18 +29,24 @@ export default function CreateFund() {
     <div className="w-full padded-container">
       <Form
         onSubmit={handleSubmit((fv) => {
-          console.log(fv);
+          console.log(fv.expiration);
         })}
         disabled={isSubmitting}
         className="border border-gray-l4 rounded-lg p-4 mt-4"
       >
-        <Field {...register("name")} label="Name" required />
+        <Field
+          {...register("name")}
+          label="Name"
+          required
+          error={errors.name?.message}
+        />
         <Field
           type="textarea"
           {...register("description")}
           label="Description"
           required
           classes="mt-4"
+          error={errors.description?.message}
         />
 
         <Label className="mt-6 mb-2" required>
@@ -87,6 +93,14 @@ export default function CreateFund() {
           }}
           maxSize={AVATAR_MAX_SIZE_BYTES}
           error={errors.banner?.file?.message}
+        />
+
+        <Field
+          {...register("expiration")}
+          label="Expiration"
+          type="date"
+          classes={{ input: "uppercase" }}
+          error={errors.expiration?.message}
         />
         <button type="submit">submit</button>
       </Form>

@@ -3,6 +3,7 @@ import { genFileSchema } from "schemas/file";
 import { schema as schemaFn } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import type { ImageMIMEType } from "types/lists";
+import { string } from "yup";
 import type { FormValues as FV } from "./types";
 
 export const VALID_MIME_TYPES: ImageMIMEType[] = [
@@ -24,4 +25,15 @@ export const schema = schemaFn<FV>({
   description: requiredString,
   banner: fileObj,
   logo: fileObj,
+  expiration: string()
+    .transform((v) => {
+      if (!v) return "";
+      return new Date(v).toISOString();
+    })
+    .datetime("invalid date")
+    .test(
+      "",
+      "must be in the future",
+      (v) => !v || v >= new Date().toISOString()
+    ),
 });
