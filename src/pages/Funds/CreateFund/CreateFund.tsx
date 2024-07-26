@@ -40,6 +40,7 @@ export default function CreateFund() {
         disabled={isSubmitting}
         className="border border-gray-l4 rounded-lg p-4 mt-4"
       >
+        <h4 className="font-bold text-xl mb-4">Fund information</h4>
         <Field
           {...register("name")}
           label="Name"
@@ -112,6 +113,8 @@ export default function CreateFund() {
         <CheckField {...register("featured")} classes="col-span-full mt-4">
           Featured in funds page
         </CheckField>
+
+        <h4 className="font-bold text-xl mb-4 mt-12">Donate form settings</h4>
 
         <button type="submit">submit</button>
       </Form>
