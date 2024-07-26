@@ -12,11 +12,15 @@ import {
   AVATAR_MAX_SIZE_BYTES,
   AVATAR_MIME_TYPE,
 } from "pages/UserDashboard/EditProfile/useRhf";
+import { useCallback } from "react";
 import { useController, useForm } from "react-hook-form";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
-import { useSingleEndowSetting } from "./useSingleEndowSetting";
+import {
+  type SingleEndowSetting,
+  useSingleEndowSetting,
+} from "./useSingleEndowSetting";
 
 export default function CreateFund() {
   const {
@@ -53,14 +57,17 @@ export default function CreateFund() {
     name: "endowMembers",
   });
 
-  const singleEndowmentSetting = useSingleEndowSetting(
-    endowMembers.value,
-    (settings) => {
+  const onSingleEndowSettings = useCallback(
+    (settings: SingleEndowSetting) => {
       setValue("allowBgTip", !settings?.hide_bg_tip);
       setValue("liquidSplitPct", settings?.splitLiqPct ?? 50);
-    }
+    },
+    [setValue]
   );
-
+  const singleEndowmentSetting = useSingleEndowSetting(
+    endowMembers.value,
+    onSingleEndowSettings
+  );
   const donationSettingsDisabled = typeof singleEndowmentSetting === "object";
 
   return (

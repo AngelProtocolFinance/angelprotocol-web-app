@@ -4,7 +4,7 @@ import { useLazyProfileQuery } from "services/aws/aws";
 import type { Endowment } from "types/aws";
 import type { FundMember } from "./types";
 
-type SingleEndowSetting = Pick<Endowment, "splitLiqPct" | "hide_bg_tip">;
+export type SingleEndowSetting = Pick<Endowment, "splitLiqPct" | "hide_bg_tip">;
 
 export function useSingleEndowSetting(
   members: FundMember[],
@@ -47,7 +47,7 @@ export function useSingleEndowSetting(
         logger.error(err);
       }
     })();
-  }, [endowSettingSource]);
+  }, [endowSettingSource, onSettingsReceived]);
 
   return singleMemberSetting;
 }
