@@ -93,7 +93,7 @@ interface ISelectedOption extends EndowmentOption {
 function SelectedOption({ onDeselect, ...props }: ISelectedOption) {
   return (
     <div className="flex items-center px-3 gap-2 h-10 border border-gray-l4 rounded font-semibold text-navy-l1 dark:text-navy-l2">
-      <Image src={props.logo} className="size-6 object-contain" />
+      <Image src={props.logo} className="w-8" />
       <span className="max-w-[200px] truncate">{props.name}</span>
       <button
         type="button"

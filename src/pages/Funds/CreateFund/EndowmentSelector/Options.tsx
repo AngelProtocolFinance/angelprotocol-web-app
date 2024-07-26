@@ -56,7 +56,7 @@ export function Options({ classes = "", searchText }: Props) {
           }
           className="flex gap-x-2 p-2 data-[selected]:text-blue-d1 hover:bg-blue-l4 select-none"
         >
-          <Image src={o.card_img} className="size-6 object-contain" />
+          <Image src={o.card_img} className="w-8" />
           <span>{o.name}</span>
         </ComboboxOption>
       ))}
