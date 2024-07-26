@@ -4,11 +4,14 @@ import { useLazyProfileQuery } from "services/aws/aws";
 import type { Endowment } from "types/aws";
 import type { FundMember } from "./types";
 
-export function useSingleEndowSetting(members: FundMember[]) {
+type SingleEndowSetting = Pick<Endowment, "splitLiqPct" | "hide_bg_tip">;
+
+export function useSingleEndowSetting(
+  members: FundMember[],
+  onSettingsReceived: (settings: SingleEndowSetting) => void
+) {
   /** set donate settings for single endowment */
   const [getEndow] = useLazyProfileQuery();
-
-  type SingleEndowSetting = Pick<Endowment, "splitLiqPct" | "hide_bg_tip">;
 
   const [singleMemberSetting, setSingleMemberSetting] = useState<
     SingleEndowSetting | "loading" | "error"
@@ -27,13 +30,17 @@ export function useSingleEndowSetting(members: FundMember[]) {
 
         if (numId === 0) return;
         if (numLength === 0) return;
-        if (numLength > 1) return;
+        if (numLength > 1) return setSingleMemberSetting(undefined);
 
         setSingleMemberSetting("loading");
-        const { hide_bg_tip, splitLiqPct } = await getEndow({
-          id: numId,
-          fields: ["hide_bg_tip", "splitLiqPct"],
-        }).unwrap();
+        const { hide_bg_tip, splitLiqPct } = await getEndow(
+          {
+            id: numId,
+            fields: ["hide_bg_tip", "splitLiqPct"],
+          },
+          true
+        ).unwrap();
+        onSettingsReceived({ hide_bg_tip, splitLiqPct });
         setSingleMemberSetting({ hide_bg_tip, splitLiqPct });
       } catch (err) {
         setSingleMemberSetting("error");

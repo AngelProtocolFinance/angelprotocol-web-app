@@ -25,6 +25,7 @@ export default function CreateFund() {
     trigger,
     resetField,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<FV>({
     resolver: yupResolver(schema),
@@ -52,7 +53,15 @@ export default function CreateFund() {
     name: "endowMembers",
   });
 
-  const singleEndowmentSetting = useSingleEndowSetting(endowMembers.value);
+  const singleEndowmentSetting = useSingleEndowSetting(
+    endowMembers.value,
+    (settings) => {
+      setValue("allowBgTip", !settings?.hide_bg_tip);
+      setValue("liquidSplitPct", settings?.splitLiqPct ?? 50);
+    }
+  );
+
+  const donationSettingsDisabled = typeof singleEndowmentSetting === "object";
 
   return (
     <div className="w-full padded-container">
@@ -152,11 +161,16 @@ export default function CreateFund() {
           Define default split value:
         </label>
         <LockedSplitSlider
+          disabled={donationSettingsDisabled}
           value={100 - liquidSplitPct.value}
           onChange={(lockedPct) => liquidSplitPct.onChange(100 - lockedPct)}
         />
 
-        <CheckField {...register("allowBgTip")} classes="font-medium mt-8">
+        <CheckField
+          {...register("allowBgTip")}
+          disabled={donationSettingsDisabled}
+          classes="font-medium mt-8"
+        >
           Allow tips to {APP_NAME}
         </CheckField>
         <p className="text-xs sm:text-sm text-navy-l1 mt-2">
