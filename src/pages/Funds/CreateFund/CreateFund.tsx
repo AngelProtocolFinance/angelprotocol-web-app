@@ -16,6 +16,8 @@ import { useController, useForm } from "react-hook-form";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
+import { useSingleEndowSetting } from "./useSingleEndowSetting";
+
 export default function CreateFund() {
   const {
     register,
@@ -49,6 +51,9 @@ export default function CreateFund() {
     control,
     name: "endowMembers",
   });
+
+  const singleEndowmentSetting = useSingleEndowSetting(endowMembers.value);
+
   return (
     <div className="w-full padded-container">
       <Form
