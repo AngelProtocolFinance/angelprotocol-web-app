@@ -1,4 +1,5 @@
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
+import useDebouncer from "hooks/useDebouncer";
 import { useEndowmentCardsQuery } from "services/aws/aws";
 
 interface Props {
@@ -6,10 +7,18 @@ interface Props {
 }
 
 export function Options(props: Props) {
-  const endowments = useEndowmentCardsQuery({
-    query: props.searchText,
-    page: 1,
-  });
+  const [debouncedSearchText, isDebouncing] = useDebouncer(
+    props.searchText,
+    200
+  );
+
+  const endowments = useEndowmentCardsQuery(
+    {
+      query: debouncedSearchText,
+      page: 1,
+    },
+    { skip: isDebouncing }
+  );
 
   if (endowments.isLoading) {
     return (
