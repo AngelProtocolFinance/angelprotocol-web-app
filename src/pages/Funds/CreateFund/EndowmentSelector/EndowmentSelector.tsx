@@ -1,5 +1,12 @@
-import { Combobox, ComboboxInput, Field, Label } from "@headlessui/react";
+import {
+  Combobox,
+  ComboboxInput,
+  Description,
+  Field,
+  Label,
+} from "@headlessui/react";
 import Icon from "components/Icon";
+import Image from "components/Image";
 import { forwardRef, useState } from "react";
 import type { FundMember } from "../types";
 import { Options } from "./Options";
@@ -22,7 +29,8 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
 
   return (
     <Field className={props.classes ?? "relative"}>
-      <Label className="mb-2 block font-medium">Select endowments</Label>
+      <Label className="block font-medium mb-2">Select endowments</Label>
+
       <Combobox
         immediate
         disabled={props.disabled}
@@ -65,10 +73,15 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
 
         <Options
           searchText={searchText}
-          classes="absolute inset-x-0 bg-white border border-gray-l4 z-10 h-40 scroller overflow-y-auto"
+          classes="absolute top-[calc(100%+10px)] inset-x-0 bg-white border border-gray-l4 z-10 max-h-40 scroller overflow-y-auto rounded-lg shadow-xl shadow-black/5"
         />
       </Combobox>
       <p className="text-red text-xs empty:hidden mt-1">{props.error}</p>
+      <Description className="text-sm text-navy-l1 mt-1">
+        Inclusion as an eligible Fundraiser Index nonprofit is optional for all
+        Better Giving Nonprofits. If you don't see a nonprofit of interest on
+        this list, it means that they have not opted-in at this time.
+      </Description>
     </Field>
   );
 });
@@ -79,7 +92,8 @@ interface ISelectedOption extends EndowmentOption {
 
 function SelectedOption({ onDeselect, ...props }: ISelectedOption) {
   return (
-    <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-gray-l4 rounded font-semibold text-navy-l1 dark:text-navy-l2 uppercase">
+    <div className="flex items-center px-3 gap-2 h-10 border border-gray-l4 rounded font-semibold text-navy-l1 dark:text-navy-l2">
+      <Image src={props.logo} className="size-6 object-contain" />
       <span className="max-w-[200px] truncate">{props.name}</span>
       <button
         type="button"
