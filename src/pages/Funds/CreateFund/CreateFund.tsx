@@ -135,6 +135,7 @@ export default function CreateFund() {
         <h4 className="font-bold text-xl mb-4 mt-12">Donate form settings</h4>
 
         <EndowmentSelector
+          ref={endowMembers.ref}
           values={endowMembers.value}
           onChange={endowMembers.onChange}
           error={errors.endowMembers?.message}
@@ -151,7 +152,7 @@ export default function CreateFund() {
         <CheckField {...register("allowBgTip")} classes="font-medium mt-8">
           Allow tips to {APP_NAME}
         </CheckField>
-        <p className="text-xs sm:text-sm italic text-navy-l1 mt-2">
+        <p className="text-xs sm:text-sm text-navy-l1 mt-2">
           During the donation flow, there is a step in which users can choose to
           tip {APP_NAME} any amount they desire alongside their donation to this
           fund. The amount they tip will not affect the donation amount this
