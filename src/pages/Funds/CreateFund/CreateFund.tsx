@@ -7,6 +7,7 @@ import {
   Form,
   Label,
 } from "components/form";
+import { APP_NAME } from "constants/env";
 import {
   AVATAR_MAX_SIZE_BYTES,
   AVATAR_MIME_TYPE,
@@ -25,10 +26,15 @@ export default function CreateFund() {
   } = useForm<FV>({
     resolver: yupResolver(schema),
     defaultValues: {
-      banner: { preview: "", publicUrl: "" },
+      name: "",
+      description: "",
       logo: { preview: "", publicUrl: "" },
+      banner: { preview: "", publicUrl: "" },
+      expiration: "",
       featured: true,
+      //donation settings
       liquidSplitPct: 50,
+      allowBgTip: true,
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
@@ -44,7 +50,7 @@ export default function CreateFund() {
           console.log(fv.expiration);
         })}
         disabled={isSubmitting}
-        className="border border-gray-l4 rounded-lg p-4 my-4"
+        className="border border-gray-l4 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
         <h4 className="font-bold text-xl mb-4">Fund information</h4>
         <Field
@@ -130,7 +136,21 @@ export default function CreateFund() {
           onChange={(lockedPct) => liquidSplitPct.onChange(100 - lockedPct)}
         />
 
-        <button type="submit">submit</button>
+        <CheckField {...register("allowBgTip")} classes="font-medium mt-8">
+          Allow tips to {APP_NAME}
+        </CheckField>
+        <p className="text-xs sm:text-sm italic text-navy-l1 mt-2">
+          During the donation flow, there is a step in which users can choose to
+          tip {APP_NAME} any amount they desire alongside their donation to this
+          fund. The amount they tip will not affect the donation amount this
+          fund receives. You may choose to turn this step off in the donation
+          flow and we will instead apply a fixed 2.9% fee to the amount donated
+          to this fund.
+        </p>
+
+        <button type="submit" className="mt-8">
+          submit
+        </button>
       </Form>
     </div>
   );

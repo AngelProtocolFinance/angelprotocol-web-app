@@ -9,4 +9,5 @@ export interface FormValues {
   featured: boolean;
   /** 1 - 100*/
   liquidSplitPct: number;
+  allowBgTip: boolean;
 }
