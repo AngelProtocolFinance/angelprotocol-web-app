@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
+import { LockedSplitSlider } from "components/donation";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
@@ -27,10 +28,15 @@ export default function CreateFund() {
       banner: { preview: "", publicUrl: "" },
       logo: { preview: "", publicUrl: "" },
       featured: true,
+      liquidSplitPct: 50,
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
   const { field: logo } = useController({ control, name: "logo" });
+  const { field: liquidSplitPct } = useController({
+    control,
+    name: "liquidSplitPct",
+  });
   return (
     <div className="w-full padded-container">
       <Form
@@ -115,6 +121,14 @@ export default function CreateFund() {
         </CheckField>
 
         <h4 className="font-bold text-xl mb-4 mt-12">Donate form settings</h4>
+
+        <label className="block mb-4 mt-8 font-medium text-base">
+          Define default split value:
+        </label>
+        <LockedSplitSlider
+          value={100 - liquidSplitPct.value}
+          onChange={(lockedPct) => liquidSplitPct.onChange(100 - lockedPct)}
+        />
 
         <button type="submit">submit</button>
       </Form>

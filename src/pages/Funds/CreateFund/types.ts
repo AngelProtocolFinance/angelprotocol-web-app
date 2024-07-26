@@ -7,4 +7,6 @@ export interface FormValues {
   banner: ImgLink;
   expiration: string;
   featured: boolean;
+  /** 1 - 100*/
+  liquidSplitPct: number;
 }
