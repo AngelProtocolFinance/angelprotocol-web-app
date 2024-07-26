@@ -23,4 +23,5 @@ export const schema = schemaFn<FV>({
   name: requiredString,
   description: requiredString,
   banner: fileObj,
+  logo: fileObj,
 });
