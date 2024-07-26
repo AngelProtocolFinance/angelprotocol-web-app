@@ -137,6 +137,7 @@ export default function CreateFund() {
         <EndowmentSelector
           values={endowMembers.value}
           onChange={endowMembers.onChange}
+          error={errors.endowMembers?.message}
         />
 
         <label className="block mb-4 mt-8 font-medium text-base">

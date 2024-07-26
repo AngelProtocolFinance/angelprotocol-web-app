@@ -4,50 +4,56 @@ import { useEndowmentCardsQuery } from "services/aws/aws";
 
 interface Props {
   searchText: string;
+  classes?: string;
 }
 
-export function Options(props: Props) {
-  const [debouncedSearchText, isDebouncing] = useDebouncer(
-    props.searchText,
-    200
-  );
+export function Options({ classes = "", searchText }: Props) {
+  const [debouncedSearchText] = useDebouncer(searchText, 200);
 
   const endowments = useEndowmentCardsQuery(
-    {
-      query: debouncedSearchText,
-      page: 1,
-    },
-    { skip: isDebouncing }
+    debouncedSearchText
+      ? {
+          query: debouncedSearchText,
+          page: 1,
+          fund_opt_in: "true",
+        }
+      : {
+          query: debouncedSearchText,
+          page: 1,
+        }
   );
 
   if (endowments.isLoading) {
     return (
-      <ComboboxOptions anchor="bottom start">Loading options..</ComboboxOptions>
+      <ComboboxOptions className={classes}>Loading options..</ComboboxOptions>
     );
   }
 
   if (endowments.isError) {
     return (
-      <ComboboxOptions anchor="bottom start">
+      <ComboboxOptions className={classes}>
         Failed to load endowments
       </ComboboxOptions>
     );
   }
 
   const endows = endowments.data?.Items;
+  if (!endows) return null;
 
-  if (!endows || endows.length === 0) {
+  if (endows.length === 0) {
     return (
-      <ComboboxOptions anchor="bottom start">
-        No endowments found
-      </ComboboxOptions>
+      <ComboboxOptions className={classes}>No endowments found</ComboboxOptions>
     );
   }
 
   return (
-    <ComboboxOptions anchor="bottom start" className="">
+    <ComboboxOptions className={classes}>
       {endows.map((o) => (
-        <ComboboxOption key={o.id} value={o} className="">
+        <ComboboxOption
+          key={o.id}
+          value={o}
+          className="p-2 data-[selected]:text-blue-d1 hover:bg-blue-l4"
+        >
           {o.name}
         </ComboboxOption>
       ))}

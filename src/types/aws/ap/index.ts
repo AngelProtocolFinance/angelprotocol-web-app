@@ -204,6 +204,8 @@ export type EndowmentsQueryParams = {
   countries?: string; //comma separated country names
   /** boolean csv */
   claimed?: string;
+  /** boolean csv */
+  fund_opt_in?: string;
 };
 
 export type EndowmentBookmark = {

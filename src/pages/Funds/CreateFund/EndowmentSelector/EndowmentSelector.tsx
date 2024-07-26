@@ -1,5 +1,5 @@
-import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
-import Icon, { DrawerIcon } from "components/Icon";
+import { Combobox, ComboboxInput, Field, Label } from "@headlessui/react";
+import Icon from "components/Icon";
 import { forwardRef, useState } from "react";
 import type { FundMember } from "../types";
 import { Options } from "./Options";
@@ -21,14 +21,16 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
   const [searchText, setSearchText] = useState("");
 
   return (
-    <>
+    <Field className={props.classes ?? "relative"}>
+      <Label className="mb-2 block font-medium">Select endowments</Label>
       <Combobox
+        immediate
         disabled={props.disabled}
         value={props.values}
         by="id"
         onChange={props.onChange}
         as="div"
-        className={`relative ${props.classes ?? ""}`}
+        className="relative"
         multiple
       >
         <div
@@ -59,22 +61,15 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
               />
             </div>
           </div>
-          <ComboboxButton
-            className={`${
-              props.values.length > 0
-                ? "justify-self-end dark:text-navy-l2 shrink-0"
-                : "absolute inset-0 flex justify-end items-center pr-2 rounded active:ring-2 ring-blue-d1 ring-offset-1"
-            }`}
-          >
-            {({ open }) => <DrawerIcon isOpen={open} size={25} className="" />}
-          </ComboboxButton>
         </div>
 
-        <Options searchText={searchText} />
-
-        <p className="text-red text-xs empty:hidden">{props.error}</p>
+        <Options
+          searchText={searchText}
+          classes="absolute inset-x-0 bg-white border border-gray-l4 z-10 h-40 scroller overflow-y-auto"
+        />
       </Combobox>
-    </>
+      <p className="text-red text-xs empty:hidden mt-1">{props.error}</p>
+    </Field>
   );
 });
 
