@@ -1,7 +1,9 @@
 import ContentLoader from "components/ContentLoader";
+import Prompt from "components/Prompt";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ChariotConnect from "react-chariot-connect";
 import { useNavigate } from "react-router-dom";
@@ -29,6 +31,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   } = props;
   const { setState } = useDonationState();
   const { handleError } = useErrorContext();
+  const { showModal, closeModal } = useModalContext();
   const [createGrant, { isLoading }] = useLazyChariotGrantQuery();
   const navigate = useNavigate();
   const user = useGetter((state) => state.auth.user);
@@ -68,6 +71,11 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           // see https://givechariot.readme.io/reference/integrating-connect#capture-your-grant-intent
           onSuccess={async (ev) => {
             try {
+              showModal(Prompt, {
+                type: "loading",
+                children: "Processing payment..",
+              });
+
               const { grantIntent, workflowSessionId } = ev.detail;
               /** user may input amount different from our donate form */
               const grantAmount: number = grantIntent.amount / 100;
@@ -97,6 +105,8 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                   programId: details.program.value,
                 }),
               }).unwrap();
+
+              closeModal();
 
               navigate(`${appRoutes.donate_thanks}`, {
                 state: {
