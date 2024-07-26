@@ -64,14 +64,23 @@ export default function CreateFund() {
           label="Name"
           required
           error={errors.name?.message}
+          classes={{ label: "font-medium" }}
         />
         <Field
           type="textarea"
           {...register("description")}
           label="Description"
           required
-          classes="mt-4"
+          classes={{ container: "mt-4", label: "font-medium" }}
           error={errors.description?.message}
+        />
+
+        <EndowmentSelector
+          classes="mt-4"
+          ref={endowMembers.ref}
+          values={endowMembers.value}
+          onChange={endowMembers.onChange}
+          error={errors.endowMembers?.message}
         />
 
         <Label className="mt-6 mb-2" required>
@@ -133,13 +142,6 @@ export default function CreateFund() {
         </CheckField>
 
         <h4 className="font-bold text-xl mb-4 mt-12">Donate form settings</h4>
-
-        <EndowmentSelector
-          ref={endowMembers.ref}
-          values={endowMembers.value}
-          onChange={endowMembers.onChange}
-          error={errors.endowMembers?.message}
-        />
 
         <label className="block mb-4 mt-8 font-medium text-base">
           Define default split value:
