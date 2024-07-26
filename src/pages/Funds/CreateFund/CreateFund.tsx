@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import { NativeField as Field, Form, Label } from "components/form";
 import {
@@ -5,6 +6,7 @@ import {
   AVATAR_MIME_TYPE,
 } from "pages/UserDashboard/EditProfile/useRhf";
 import { useController, useForm } from "react-hook-form";
+import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
 export default function CreateFund() {
   const {
@@ -12,8 +14,10 @@ export default function CreateFund() {
     control,
     trigger,
     resetField,
-    formState: { errors },
+    handleSubmit,
+    formState: { errors, isSubmitting },
   } = useForm<FV>({
+    resolver: yupResolver(schema),
     defaultValues: {
       banner: { preview: "", publicUrl: "" },
       logo: { preview: "", publicUrl: "" },
@@ -23,7 +27,13 @@ export default function CreateFund() {
   const { field: logo } = useController({ control, name: "logo" });
   return (
     <div className="w-full padded-container">
-      <Form className="border border-gray-l4 rounded-lg p-4 mt-4">
+      <Form
+        onSubmit={handleSubmit((fv) => {
+          console.log(fv);
+        })}
+        disabled={isSubmitting}
+        className="border border-gray-l4 rounded-lg p-4 mt-4"
+      >
         <Field {...register("name")} label="Name" required />
         <Field
           type="textarea"
@@ -78,6 +88,7 @@ export default function CreateFund() {
           maxSize={AVATAR_MAX_SIZE_BYTES}
           error={errors.banner?.file?.message}
         />
+        <button type="submit">submit</button>
       </Form>
     </div>
   );

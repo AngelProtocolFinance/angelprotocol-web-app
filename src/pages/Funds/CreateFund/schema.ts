@@ -16,7 +16,7 @@ export const MAX_SIZE_IN_BYTES = 1e6;
 export const MAX_CHARS = 4000;
 
 const fileObj = schemaFn<ImgLink>({
-  file: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES),
+  file: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES).required("required"),
 });
 
 export const schema = schemaFn<FV>({

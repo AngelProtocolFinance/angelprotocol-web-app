@@ -5,4 +5,5 @@ export interface FormValues {
   description: string;
   logo: ImgLink;
   banner: ImgLink;
+  expiration: string;
 }
