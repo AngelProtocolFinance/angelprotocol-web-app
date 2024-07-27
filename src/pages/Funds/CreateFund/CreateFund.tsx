@@ -62,7 +62,6 @@ export default function CreateFund() {
   //revert to it when endow is no longer 1
   const customSplitRef = useRef(50);
   const customAllowBgTipRef = useRef(true);
-  const endowRequestIdRef = useRef<string>();
 
   const [getEndow] = useLazyProfileQuery();
   const settings = watch("settings");
