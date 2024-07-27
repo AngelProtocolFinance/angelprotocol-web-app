@@ -17,10 +17,7 @@ import { useController, useForm } from "react-hook-form";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
-import {
-  type SingleEndowSetting,
-  useSingleEndowSetting,
-} from "./useSingleEndowSetting";
+import { type EndowConfig, useEndowConfig } from "./useEndowConfig";
 
 export default function CreateFund() {
   const {
@@ -57,18 +54,15 @@ export default function CreateFund() {
     name: "endowMembers",
   });
 
-  const onSingleEndowSettings = useCallback(
-    (settings: SingleEndowSetting) => {
-      setValue("allowBgTip", !settings?.hide_bg_tip);
-      setValue("liquidSplitPct", settings?.splitLiqPct ?? 50);
+  const onConfigSet = useCallback(
+    (config: EndowConfig) => {
+      setValue("allowBgTip", !config?.hide_bg_tip);
+      setValue("liquidSplitPct", config?.splitLiqPct ?? 50);
     },
     [setValue]
   );
-  const singleEndowmentSetting = useSingleEndowSetting(
-    endowMembers.value,
-    onSingleEndowSettings
-  );
-  const donationSettingsDisabled = typeof singleEndowmentSetting === "object";
+  const endowConfig = useEndowConfig(endowMembers.value, onConfigSet);
+  const noEndowConfig = endowConfig === "error" || endowConfig === "loading";
 
   return (
     <div className="w-full padded-container">
@@ -168,14 +162,14 @@ export default function CreateFund() {
           Define default split value:
         </label>
         <LockedSplitSlider
-          disabled={donationSettingsDisabled}
+          disabled={!noEndowConfig}
           value={100 - liquidSplitPct.value}
           onChange={(lockedPct) => liquidSplitPct.onChange(100 - lockedPct)}
         />
 
         <CheckField
           {...register("allowBgTip")}
-          disabled={donationSettingsDisabled}
+          disabled={!noEndowConfig}
           classes="font-medium mt-8"
         >
           Allow tips to {APP_NAME}
