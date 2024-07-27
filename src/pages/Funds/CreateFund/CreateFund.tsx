@@ -8,6 +8,7 @@ import {
   Label,
 } from "components/form";
 import { APP_NAME } from "constants/env";
+import withAuth from "contexts/Auth";
 import { logger } from "helpers";
 import {
   AVATAR_MAX_SIZE_BYTES,
@@ -20,7 +21,7 @@ import { EndowmentSelector } from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
 
-export default function CreateFund() {
+export default withAuth(function CreateFund() {
   const {
     register,
     control,
@@ -244,7 +245,7 @@ export default function CreateFund() {
       </Form>
     </div>
   );
-}
+});
 
 const withPossesive = (name: string) =>
   name.endsWith("s") ? `${name}'` : `${name}'s`;
