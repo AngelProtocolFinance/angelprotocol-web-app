@@ -6,6 +6,13 @@ export interface FundMember {
   logo?: string;
 }
 
+export interface Settings {
+  /** endowname or fund */
+  from: string;
+  liquidSplit: number;
+  allowBgTip: boolean;
+}
+
 export interface FormValues {
   name: string;
   description: string;
@@ -13,8 +20,6 @@ export interface FormValues {
   banner: ImgLink;
   expiration: string;
   featured: boolean;
-  /** 1 - 100*/
-  liquidSplitPct: number;
-  allowBgTip: boolean;
   members: FundMember[];
+  settings: Settings;
 }
