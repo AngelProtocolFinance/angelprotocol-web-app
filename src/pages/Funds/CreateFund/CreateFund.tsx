@@ -62,6 +62,7 @@ export default function CreateFund() {
   //revert to it when endow is no longer 1
   const customSplitRef = useRef(50);
   const customAllowBgTipRef = useRef(true);
+  const endowReqRef = useRef<string>();
 
   const [getEndow] = useLazyProfileQuery();
   const settings = watch("settings");
@@ -99,6 +100,8 @@ export default function CreateFund() {
           onChange={async (curr) => {
             members.onChange(curr);
             if (curr.length === 0 || curr.length > 1) {
+              //invalidate pending request
+              endowReqRef.current = undefined;
               return setValue("settings", {
                 from: "fund",
                 liquidSplit: customSplitRef.current,
@@ -109,13 +112,20 @@ export default function CreateFund() {
             //set settings if applicable
             try {
               const [opt] = curr;
-              const endow = await getEndow(
+              const endowReq = getEndow(
                 {
                   id: opt.id,
                   fields: ["hide_bg_tip", "splitLiqPct", "name"],
                 },
                 true
-              ).unwrap();
+              );
+
+              endowReqRef.current = endowReq.requestId;
+
+              const endow = await endowReq.unwrap();
+
+              // more recent onChange invalidated this result
+              if (!endowReqRef.current) return;
 
               setValue("settings", {
                 from: endow.name,
