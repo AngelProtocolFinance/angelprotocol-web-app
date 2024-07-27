@@ -4,46 +4,46 @@ import { useLazyProfileQuery } from "services/aws/aws";
 import type { Endowment } from "types/aws";
 import type { FundMember } from "./types";
 
-export type EndowConfig = Pick<Endowment, "splitLiqPct" | "hide_bg_tip">;
+export type Endow = Pick<Endowment, "splitLiqPct" | "hide_bg_tip" | "name">;
 
-export function useEndowConfig(
+export function useEndow(
   members: FundMember[],
-  onConfigSet: (config: EndowConfig) => void
+  onEndowSet: (endow: Endow) => void
 ) {
   /** set donate settings for single endowment */
   const [getEndow] = useLazyProfileQuery();
 
-  const [config, setConfig] = useState<EndowConfig | "loading" | "error">();
+  const [endow, setEndow] = useState<Endow | "loading" | "error">();
 
   const configSource = `${members.at(0)?.id ?? 0}-${members.length}` as const;
 
   useEffect(() => {
     (async () => {
       try {
-        setConfig(undefined);
+        setEndow(undefined);
         const [id, length] = configSource.split("-");
         const numId = +id;
         const numLength = +length;
 
         if (numId === 0 || numLength === 0) return;
-        if (numLength > 1) return setConfig(undefined);
+        if (numLength > 1) return setEndow(undefined);
 
-        setConfig("loading");
-        const { hide_bg_tip, splitLiqPct } = await getEndow(
+        setEndow("loading");
+        const { hide_bg_tip, splitLiqPct, name } = await getEndow(
           {
             id: numId,
-            fields: ["hide_bg_tip", "splitLiqPct"],
+            fields: ["hide_bg_tip", "splitLiqPct", "name"],
           },
           true
         ).unwrap();
-        onConfigSet({ hide_bg_tip, splitLiqPct });
-        setConfig({ hide_bg_tip, splitLiqPct });
+        onEndowSet({ hide_bg_tip, splitLiqPct, name });
+        setEndow({ hide_bg_tip, splitLiqPct, name });
       } catch (err) {
-        setConfig("error");
+        setEndow("error");
         logger.error(err);
       }
     })();
-  }, [configSource, onConfigSet, getEndow]);
+  }, [configSource, onEndowSet, getEndow]);
 
-  return config;
+  return endow;
 }

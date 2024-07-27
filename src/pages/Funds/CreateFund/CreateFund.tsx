@@ -17,7 +17,7 @@ import { useController, useForm } from "react-hook-form";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
-import { type EndowConfig, useEndowConfig } from "./useEndowConfig";
+import { type Endow, useEndow } from "./useEndow";
 
 export default function CreateFund() {
   const {
@@ -54,15 +54,15 @@ export default function CreateFund() {
     name: "members",
   });
 
-  const onConfigSet = useCallback(
-    (config: EndowConfig) => {
-      setValue("allowBgTip", !config?.hide_bg_tip);
-      setValue("liquidSplitPct", config?.splitLiqPct ?? 50);
+  const onEndowSet = useCallback(
+    (endow: Endow) => {
+      setValue("allowBgTip", !endow?.hide_bg_tip);
+      setValue("liquidSplitPct", endow?.splitLiqPct ?? 50);
     },
     [setValue]
   );
-  const endowConfig = useEndowConfig(members.value, onConfigSet);
-  const withEndowConfig = endowConfig && typeof endowConfig !== "string";
+  const endow = useEndow(members.value, onEndowSet);
+  const withEndowConfig = endow && typeof endow !== "string";
 
   return (
     <div className="w-full padded-container">
@@ -156,9 +156,14 @@ export default function CreateFund() {
           Featured in funds page
         </CheckField>
 
-        <h4 className="font-bold text-xl mb-4 mt-12">Donate form settings</h4>
+        <h4 className="font-bold text-xl mb-2 mt-12">Donate form settings</h4>
+        <p className="text-sm text-navy-l1">
+          {endow &&
+            typeof endow !== "string" &&
+            `${withPossesive(endow.name)} config has been applied`}
+        </p>
 
-        <label className="block mb-4 mt-8 font-medium text-base">
+        <label className="block mb-4 mt-10 font-medium text-base">
           Define default split value:
         </label>
         <LockedSplitSlider
@@ -190,3 +195,6 @@ export default function CreateFund() {
     </div>
   );
 }
+
+const withPossesive = (name: string) =>
+  name.endsWith("s") ? `${name}'` : `${name}'s`;
