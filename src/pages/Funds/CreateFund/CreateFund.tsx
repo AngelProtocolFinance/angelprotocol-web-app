@@ -71,7 +71,7 @@ export default function CreateFund() {
           console.log(fv.expiration);
         })}
         disabled={isSubmitting}
-        className="border border-gray-l4 rounded-lg p-6 my-4 w-full max-w-4xl"
+        className="grid border border-gray-l4 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
         <h4 className="font-bold text-xl mb-4">Fund information</h4>
         <Field
@@ -188,8 +188,11 @@ export default function CreateFund() {
           to this fund.
         </p>
 
-        <button type="submit" className="mt-8">
-          submit
+        <button
+          type="submit"
+          className="mt-8 btn-blue text-sm font-medium px-4 py-2 justify-self-end"
+        >
+          Create Fund
         </button>
       </Form>
     </div>
