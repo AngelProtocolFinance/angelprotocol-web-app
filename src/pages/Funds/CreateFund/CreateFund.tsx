@@ -73,6 +73,7 @@ export default withAuth(function CreateFund() {
       <Form
         onSubmit={handleSubmit((fv) => {
           console.log(fv.expiration);
+          alert("TODO: save to server");
         })}
         disabled={isSubmitting}
         className="grid border border-gray-l4 rounded-lg p-6 my-4 w-full max-w-4xl"
