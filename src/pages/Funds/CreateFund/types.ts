@@ -16,5 +16,5 @@ export interface FormValues {
   /** 1 - 100*/
   liquidSplitPct: number;
   allowBgTip: boolean;
-  endowMembers: FundMember[];
+  members: FundMember[];
 }

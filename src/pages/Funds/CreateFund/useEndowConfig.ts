@@ -25,8 +25,7 @@ export function useEndowConfig(
         const numId = +id;
         const numLength = +length;
 
-        if (numId === 0) return;
-        if (numLength === 0) return;
+        if (numId === 0 || numLength === 0) return;
         if (numLength > 1) return setConfig(undefined);
 
         setConfig("loading");

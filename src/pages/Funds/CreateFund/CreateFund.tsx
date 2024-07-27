@@ -40,7 +40,7 @@ export default function CreateFund() {
       //donation settings
       liquidSplitPct: 50,
       allowBgTip: true,
-      endowMembers: [],
+      members: [],
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
@@ -49,9 +49,9 @@ export default function CreateFund() {
     control,
     name: "liquidSplitPct",
   });
-  const { field: endowMembers } = useController({
+  const { field: members } = useController({
     control,
-    name: "endowMembers",
+    name: "members",
   });
 
   const onConfigSet = useCallback(
@@ -61,8 +61,8 @@ export default function CreateFund() {
     },
     [setValue]
   );
-  const endowConfig = useEndowConfig(endowMembers.value, onConfigSet);
-  const noEndowConfig = endowConfig === "error" || endowConfig === "loading";
+  const endowConfig = useEndowConfig(members.value, onConfigSet);
+  const withEndowConfig = endowConfig && typeof endowConfig !== "string";
 
   return (
     <div className="w-full padded-container">
@@ -92,10 +92,10 @@ export default function CreateFund() {
 
         <EndowmentSelector
           classes="mt-4"
-          ref={endowMembers.ref}
-          values={endowMembers.value}
-          onChange={endowMembers.onChange}
-          error={errors.endowMembers?.message}
+          ref={members.ref}
+          values={members.value}
+          onChange={members.onChange}
+          error={errors.members?.message}
         />
 
         <Label className="mt-6 mb-2" required>
@@ -162,14 +162,14 @@ export default function CreateFund() {
           Define default split value:
         </label>
         <LockedSplitSlider
-          disabled={!noEndowConfig}
+          disabled={withEndowConfig}
           value={100 - liquidSplitPct.value}
           onChange={(lockedPct) => liquidSplitPct.onChange(100 - lockedPct)}
         />
 
         <CheckField
           {...register("allowBgTip")}
-          disabled={!noEndowConfig}
+          disabled={withEndowConfig}
           classes="font-medium mt-8"
         >
           Allow tips to {APP_NAME}
