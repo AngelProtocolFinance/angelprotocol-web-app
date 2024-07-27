@@ -11,7 +11,7 @@ interface Props {
 }
 
 export function Options({ classes = "", searchText }: Props) {
-  const [debouncedSearchText] = useDebouncer(searchText, 200);
+  const [debouncedSearchText, isDebouncing] = useDebouncer(searchText, 200);
 
   const endowments = useEndowmentCardsQuery({
     query: debouncedSearchText,
@@ -19,7 +19,7 @@ export function Options({ classes = "", searchText }: Props) {
     fund_opt_in: "true",
   });
 
-  if (endowments.isLoading) {
+  if (endowments.isLoading || isDebouncing) {
     return (
       <LoadingStatus classes={classes + " p-2"}>
         Loading options...
