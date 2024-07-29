@@ -9,14 +9,19 @@ import {
 } from "components/form";
 import { APP_NAME } from "constants/env";
 import withAuth from "contexts/Auth";
+import { useErrorContext } from "contexts/ErrorContext";
+import { useModalContext } from "contexts/ModalContext";
 import { logger } from "helpers";
+import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import {
   AVATAR_MAX_SIZE_BYTES,
   AVATAR_MIME_TYPE,
 } from "pages/UserDashboard/EditProfile/useRhf";
 import { useRef } from "react";
-import { useController, useForm } from "react-hook-form";
+import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import { useLazyProfileQuery } from "services/aws/aws";
+import { useCreateFundMutation } from "services/aws/funds";
+import type { Fund } from "types/aws";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
@@ -66,7 +71,39 @@ export default withAuth(function CreateFund() {
   const endowReqRef = useRef<string>();
 
   const [getEndow] = useLazyProfileQuery();
+  const [createFund] = useCreateFundMutation();
+  const { handleError } = useErrorContext();
+  const { showModal } = useModalContext();
   const settings = watch("settings");
+
+  const onSubmit: SubmitHandler<FV> = async ({ banner, logo, ...fv }) => {
+    try {
+      if (!banner.file || !logo.file) {
+        throw `dev: banner must be required`;
+      }
+
+      const uploadBaseUrl = await uploadFiles(
+        [banner.file, logo.file],
+        "funds"
+      );
+      if (!uploadBaseUrl) throw `upload failed`;
+
+      const fund: Fund.New = {
+        name: fv.name,
+        description: fv.description,
+        banner: getFullURL(uploadBaseUrl, banner.file.name),
+        logo: getFullURL(uploadBaseUrl, logo.file.name),
+        members: fv.members.map((m) => m.id),
+        featured: fv.featured,
+        settings: {
+          liquidSplitPct: fv.settings.liquidSplit,
+          allowBgTip: fv.settings.allowBgTip,
+        },
+      };
+
+      const res = await createFund(fund);
+    } catch (err) {}
+  };
 
   return (
     <div className="w-full padded-container">
