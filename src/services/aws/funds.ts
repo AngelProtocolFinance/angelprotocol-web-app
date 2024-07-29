@@ -5,7 +5,7 @@ import { aws } from "./aws";
 
 export const funds = aws.injectEndpoints({
   endpoints: (builder) => ({
-    createFund: builder.mutation<any, Fund.New>({
+    createFund: builder.mutation<{ id: string }, Fund.New>({
       invalidatesTags: ["funds"],
       query: (payload) => {
         return {

@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
+import Prompt from "components/Prompt";
 import { LockedSplitSlider } from "components/donation";
 import {
   NativeCheckField as CheckField,
@@ -8,6 +9,7 @@ import {
   Label,
 } from "components/form";
 import { APP_NAME } from "constants/env";
+import { appRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
@@ -19,6 +21,7 @@ import {
 } from "pages/UserDashboard/EditProfile/useRhf";
 import { useRef } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { useLazyProfileQuery } from "services/aws/aws";
 import { useCreateFundMutation } from "services/aws/funds";
 import type { Fund } from "types/aws";
@@ -82,11 +85,15 @@ export default withAuth(function CreateFund() {
         throw `dev: banner must be required`;
       }
 
+      showModal(Prompt, { type: "loading", children: "Uploading..." });
+
       const uploadBaseUrl = await uploadFiles(
         [banner.file, logo.file],
         "bg-funds"
       );
       if (!uploadBaseUrl) throw `upload failed`;
+
+      showModal(Prompt, { type: "loading", children: "Creating fund..." });
 
       const fund: Fund.New = {
         name: fv.name,
@@ -101,7 +108,26 @@ export default withAuth(function CreateFund() {
         },
       };
 
-      const res = await createFund(fund);
+      const res = await createFund(fund).unwrap();
+
+      showModal(Prompt, {
+        type: "success",
+        children: (
+          <p>
+            Your <Link to={appRoutes.funds + `/${res.id}`}>fund</Link> is
+            created
+            {fv.featured ? (
+              <>
+                and is now listed in{" "}
+                <Link to={appRoutes.funds}>funds page</Link>
+              </>
+            ) : (
+              ""
+            )}
+            !. To get access to this fund, kindly login again.
+          </p>
+        ),
+      });
     } catch (err) {
       handleError(err, { context: "creating fund" });
     }
