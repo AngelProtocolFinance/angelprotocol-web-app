@@ -122,6 +122,14 @@ export const apes = createApi({
       }),
       transformResponse: (res: { clientSecret: string }) => res.clientSecret,
     }),
+    chariotGrant: builder.query<string, FiatDonation>({
+      query: (data) => ({
+        url: "fiat-donation/chariot",
+        method: "POST",
+        body: JSON.stringify(data),
+      }),
+      transformResponse: (res: { grantId: string }) => res.grantId,
+    }),
     endowBalance: builder.query<EndowmentBalances, number>({
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
@@ -154,6 +162,7 @@ export const {
   useLazyIntentQuery,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
+  useLazyChariotGrantQuery,
   usePaypalOrderMutation,
   useEndowBalanceQuery,
   useStripePaymentStatusQuery,
