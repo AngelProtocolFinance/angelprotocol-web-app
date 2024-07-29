@@ -255,7 +255,13 @@ export namespace Fund {
   export interface New
     extends Pick<
       Fund,
-      "name" | "description" | "banner" | "logo" | "featured" | "settings"
+      | "name"
+      | "description"
+      | "banner"
+      | "logo"
+      | "featured"
+      | "settings"
+      | "expiration"
     > {
     /** endowment ids */
     members: number[];

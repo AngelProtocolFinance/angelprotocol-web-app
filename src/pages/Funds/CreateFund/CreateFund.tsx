@@ -106,6 +106,7 @@ export default withAuth(function CreateFund() {
           liquidSplitPct: fv.settings.liquidSplit,
           allowBgTip: fv.settings.allowBgTip,
         },
+        expiration: fv.expiration,
       };
 
       const res = await createFund(fund).unwrap();
