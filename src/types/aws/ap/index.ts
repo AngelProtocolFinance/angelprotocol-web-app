@@ -128,7 +128,8 @@ export interface UserFund {
   name?: string;
   logo: string;
   email: string;
-  fundId: string;
+  /** uuidv4 */
+  id: string;
 }
 
 export interface EndowAdmin {

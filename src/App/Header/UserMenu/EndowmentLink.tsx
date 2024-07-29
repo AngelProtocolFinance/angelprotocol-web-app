@@ -28,8 +28,8 @@ export function EndowmentLink({ endowID, logo, name }: UserEndow) {
   return <_Link id={endowID} logo={logo} name={name} route={appRoutes.admin} />;
 }
 
-export function FundLink({ fundId, logo, name }: UserFund) {
-  return <_Link id={fundId} logo={logo} name={name} route={appRoutes.admin} />;
+export function FundLink({ id, logo, name }: UserFund) {
+  return <_Link id={id} logo={logo} name={name} route={appRoutes.funds} />;
 }
 
 type LinkProps = {
