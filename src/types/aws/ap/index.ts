@@ -124,6 +124,13 @@ export type UserEndow = {
   };
 };
 
+export interface UserFund {
+  name?: string;
+  logo: string;
+  email: string;
+  fundId: string;
+}
+
 export interface EndowAdmin {
   email: string;
   familyName?: string;
