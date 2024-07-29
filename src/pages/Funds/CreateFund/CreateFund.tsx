@@ -114,10 +114,14 @@ export default withAuth(function CreateFund() {
         type: "success",
         children: (
           <p>
-            Your <Link to={appRoutes.funds + `/${res.id}`}>fund</Link> is
-            created
+            Your{" "}
+            <Link to={appRoutes.funds + `/${res.id}`} className="text-blue-d1">
+              fund
+            </Link>{" "}
+            is created
             {fv.featured ? (
               <>
+                {" "}
                 and is now listed in{" "}
                 <Link to={appRoutes.funds}>funds page</Link>
               </>
