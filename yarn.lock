@@ -4487,7 +4487,7 @@ __metadata:
     aws-amplify: "npm:6.3.6"
     cropperjs: "npm:1.6.2"
     decimal.js: "npm:10.4.3"
-    framer-motion: "npm:11.2.10"
+    framer-motion: "npm:11.3.19"
     fuse.js: "npm:7.0.0"
     gsap: "npm:3.12.5"
     is-mobile: "npm:4.0.0"
@@ -6098,9 +6098,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:11.2.10":
-  version: 11.2.10
-  resolution: "framer-motion@npm:11.2.10"
+"framer-motion@npm:11.3.19":
+  version: 11.3.19
+  resolution: "framer-motion@npm:11.3.19"
   dependencies:
     tslib: "npm:^2.4.0"
   peerDependencies:
@@ -6114,7 +6114,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10/3f09356c08700f5f405b6259617d9eb3f49d49770efe15a81211bc41625001485f242fe2b44f6de657e707cd2ac766ca243bab72192dc948672525d331628a5d
+  checksum: 10/05db4f4b6ad0a63e8494d122b2261412b8db7a4a2971ece1d58693dd51885e0a1405e684d730c45e8194bfbceccfa13a707db3744d870902a768285615f892b1
   languageName: node
   linkType: hard
 
