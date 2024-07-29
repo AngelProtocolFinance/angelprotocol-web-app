@@ -84,7 +84,7 @@ export default withAuth(function CreateFund() {
 
       const uploadBaseUrl = await uploadFiles(
         [banner.file, logo.file],
-        "funds"
+        "bg-funds"
       );
       if (!uploadBaseUrl) throw `upload failed`;
 
@@ -110,10 +110,7 @@ export default withAuth(function CreateFund() {
   return (
     <div className="w-full padded-container">
       <Form
-        onSubmit={handleSubmit((fv) => {
-          console.log(fv.expiration);
-          alert("TODO: save to server");
-        })}
+        onSubmit={handleSubmit(onSubmit)}
         disabled={isSubmitting}
         className="grid border border-gray-l4 rounded-lg p-6 my-4 w-full max-w-4xl"
       >

@@ -3,7 +3,7 @@ import { version as v } from "services/helpers";
 import { isEmpty } from "./isEmpty";
 import { jwtToken } from "./jwt-token";
 
-export type Bucket = "endow-profiles" | "endow-reg" | "bg-user" | "funds";
+export type Bucket = "endow-profiles" | "endow-reg" | "bg-user" | "bg-funds";
 export const bucketURL = "s3.amazonaws.com";
 
 const SPACES = /\s+/g;
