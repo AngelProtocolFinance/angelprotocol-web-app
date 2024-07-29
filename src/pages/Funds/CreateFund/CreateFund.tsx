@@ -102,7 +102,9 @@ export default withAuth(function CreateFund() {
       };
 
       const res = await createFund(fund);
-    } catch (err) {}
+    } catch (err) {
+      handleError(err, { context: "creating fund" });
+    }
   };
 
   return (
