@@ -267,4 +267,30 @@ export namespace Fund {
     /** endowment ids */
     members: number[];
   }
+
+  export interface Card
+    extends Pick<
+      Fund,
+      | "id"
+      | "name"
+      | "description"
+      | "env"
+      | "logo"
+      | "featured"
+      | "active"
+      | "verified"
+      | "donation_total_usd"
+      | "members"
+    > {}
+
+  export interface CardsPage {
+    items: Card[];
+    page: number;
+    numPages: number;
+  }
+
+  export interface CardsQueryParams {
+    query?: string;
+    page?: number;
+  }
 }
