@@ -18,7 +18,7 @@ export function Funds({ userId, classes = "" }: Props) {
           <Skeleton />
         </>
       ) : (
-        funds.map((fund) => <FundLink key={fund.fundId} {...fund} />)
+        funds.map((fund) => <FundLink key={fund.id} {...fund} />)
       )}
     </div>
   );
