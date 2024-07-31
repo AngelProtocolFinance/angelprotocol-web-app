@@ -26,6 +26,7 @@ import { useLazyProfileQuery } from "services/aws/aws";
 import { useCreateFundMutation } from "services/aws/funds";
 import type { Fund } from "types/aws";
 import { EndowmentSelector } from "./EndowmentSelector";
+import GoalSelector from "./GoalSelector";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
 
@@ -38,6 +39,7 @@ export default withAuth(function CreateFund() {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
+    setFocus,
     watch,
   } = useForm<FV>({
     resolver: yupResolver(schema),
@@ -54,6 +56,7 @@ export default withAuth(function CreateFund() {
         allowBgTip: true,
         liquidSplit: 50,
       },
+      targetType: "smart",
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
@@ -65,6 +68,10 @@ export default withAuth(function CreateFund() {
   const { field: members } = useController({
     control,
     name: "members",
+  });
+  const { field: targetType } = useController({
+    control,
+    name: "targetType",
   });
 
   //keep track of what user previously set
@@ -207,6 +214,23 @@ export default withAuth(function CreateFund() {
           }}
           error={errors.members?.message}
         />
+
+        <label className="block mt-6 text-sm font-medium">
+          Fundraiser goal
+        </label>
+        <GoalSelector
+          classes="mt-2 mb-2"
+          value={targetType.value}
+          onChange={targetType.onChange}
+        />
+        {targetType.value === "fixed" && (
+          <Field
+            {...register("fixedTarget")}
+            label="How much money do you want to raise?"
+            classes="mt-2"
+            error={errors.fixedTarget?.message}
+          />
+        )}
 
         <Label className="mt-6 mb-2" required>
           Banner
