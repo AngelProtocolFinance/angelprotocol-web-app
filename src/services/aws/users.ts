@@ -1,5 +1,10 @@
 import { TEMP_JWT } from "constants/auth";
-import type { AletPrefUpdate, UserEndow, UserUpdate } from "types/aws";
+import type {
+  AletPrefUpdate,
+  UserEndow,
+  UserFund,
+  UserUpdate,
+} from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
@@ -23,6 +28,13 @@ const endowAdmins = aws.injectEndpoints({
         headers: { authorization: TEMP_JWT },
       }),
     }),
+    userFunds: builder.query<UserFund[], string>({
+      providesTags: ["user-endows"],
+      query: (userId) => ({
+        url: `/${v(3)}/users/${userId}/funds`,
+        headers: { authorization: TEMP_JWT },
+      }),
+    }),
     updateUserEndows: builder.mutation<
       unknown,
       { userId: string; alertPrefs: AletPrefUpdate[] }
@@ -43,5 +55,6 @@ const endowAdmins = aws.injectEndpoints({
 export const {
   useEditUserMutation,
   useUserEndowsQuery,
+  useUserFundsQuery,
   useUpdateUserEndowsMutation,
 } = endowAdmins;
