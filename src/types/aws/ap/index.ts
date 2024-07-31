@@ -125,7 +125,7 @@ export type UserEndow = {
 };
 
 export interface UserFund {
-  name?: string;
+  name: string;
   logo: string;
   email: string;
   /** uuidv4 */
