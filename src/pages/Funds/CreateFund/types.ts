@@ -14,6 +14,8 @@ export interface Settings {
   allowBgTip: boolean;
 }
 
+export type TargetType = "fixed" | "none" | "smart";
+
 export interface FormValues {
   name: string;
   description: string;
