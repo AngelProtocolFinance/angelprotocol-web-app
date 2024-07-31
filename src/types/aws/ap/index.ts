@@ -251,6 +251,10 @@ export interface Fund {
   expiration?: string;
   verified: boolean;
   donation_total_usd: number;
+  /** undefined: no target */
+  target?: "smart" | `${number}`;
+  /** endowIds that allows this fundraiser on their profile */
+  approvers: number[];
 }
 export namespace Fund {
   export interface New
@@ -263,6 +267,7 @@ export namespace Fund {
       | "featured"
       | "settings"
       | "expiration"
+      | "target"
     > {
     /** endowment ids */
     members: number[];
@@ -281,6 +286,8 @@ export namespace Fund {
       | "verified"
       | "donation_total_usd"
       | "members"
+      | "target"
+      | "approvers"
     > {}
 
   export interface CardsPage {
