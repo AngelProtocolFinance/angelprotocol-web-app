@@ -251,6 +251,8 @@ export interface Fund {
   expiration?: string;
   verified: boolean;
   donation_total_usd: number;
+  /** undefined: no target */
+  target?: "smart" | `${number}`;
 }
 export namespace Fund {
   export interface New
@@ -263,6 +265,7 @@ export namespace Fund {
       | "featured"
       | "settings"
       | "expiration"
+      | "target"
     > {
     /** endowment ids */
     members: number[];

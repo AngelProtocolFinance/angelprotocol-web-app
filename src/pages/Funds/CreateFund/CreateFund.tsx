@@ -112,8 +112,14 @@ export default withAuth(function CreateFund() {
           liquidSplitPct: fv.settings.liquidSplit,
           allowBgTip: fv.settings.allowBgTip,
         },
-        expiration: fv.expiration,
       };
+
+      if (fv.expiration) fund.expiration = fv.expiration;
+
+      if (fv.targetType !== "none") {
+        fund.target =
+          fv.targetType === "fixed" ? (fv.fixedTarget as `${number}`) : "smart";
+      }
 
       const res = await createFund(fund).unwrap();
 
@@ -227,6 +233,7 @@ export default withAuth(function CreateFund() {
             {...register("fixedTarget")}
             label="How much money do you want to raise?"
             classes="mt-2"
+            placeholder="$"
             error={errors.fixedTarget?.message}
           />
         )}
