@@ -3,12 +3,12 @@ import ContentLoader from "components/ContentLoader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import type { DonateThanksState } from "pages/DonateThanks";
 import { useNavigate } from "react-router-dom";
 import {
   useCapturePayPalOrderMutation,
   usePaypalOrderMutation,
 } from "services/apes";
+import type { DonateThanksState } from "types/pages";
 import { toDonor } from "../../../common/constants";
 import type { StripeCheckoutStep } from "../../../types";
 
