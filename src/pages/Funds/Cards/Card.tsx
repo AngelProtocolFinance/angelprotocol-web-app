@@ -2,9 +2,9 @@ import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
-import { humanize } from "helpers";
 import { Link } from "react-router-dom";
 import type { Fund } from "types/aws";
+import { Progress } from "./Progress";
 
 export default function Card({
   name,
@@ -13,6 +13,7 @@ export default function Card({
   description,
   verified,
   donation_total_usd,
+  target,
 }: Fund.Card) {
   return (
     <div className="relative">
@@ -42,10 +43,7 @@ export default function Card({
             {description}
           </p>
 
-          <p className="text-sm mt-auto flex items-center gap-1">
-            <span>Total donations:</span>
-            <span>${humanize(donation_total_usd, 0)}</span>
-          </p>
+          <Progress target={target} donation_total_usd={donation_total_usd} />
         </div>
       </Link>
       {/** absolute so above whole `Link` card */}
