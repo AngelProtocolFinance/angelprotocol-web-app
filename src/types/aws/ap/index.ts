@@ -1,5 +1,6 @@
 import type { Except } from "type-fest";
 import type { PartialExcept } from "types/utils";
+import type { Environment } from "vitest";
 import type { DonateMethodId, UNSDG_NUMS } from "../../lists";
 
 export type EndowmentTierNum = 1 | 2 | 3;
@@ -123,6 +124,13 @@ export type UserEndow = {
   };
 };
 
+export interface UserFund {
+  name?: string;
+  logo: string;
+  email: string;
+  fundId: string;
+}
+
 export interface EndowAdmin {
   email: string;
   familyName?: string;
@@ -203,6 +211,8 @@ export type EndowmentsQueryParams = {
   countries?: string; //comma separated country names
   /** boolean csv */
   claimed?: string;
+  /** boolean csv */
+  fund_opt_in?: string;
 };
 
 export type EndowmentBookmark = {
@@ -219,3 +229,41 @@ export type UserAttributes = {
 };
 
 export type UserUpdate = Partial<UserAttributes>;
+
+export interface Fund {
+  /** uuidv4 */
+  id: string;
+  env: Environment;
+  name: string;
+  description: string;
+  banner: string;
+  logo: string;
+  members: Pick<Endowment, "id" | "name" | "card_img">[];
+  featured: boolean;
+  active: boolean;
+  settings: {
+    /** 1 - 100 */
+    liquidSplitPct: number;
+    allowBgTip: boolean;
+  };
+  /** iso */
+  expiration?: string;
+  verified: boolean;
+  donation_total_usd: number;
+}
+export namespace Fund {
+  export interface New
+    extends Pick<
+      Fund,
+      | "name"
+      | "description"
+      | "banner"
+      | "logo"
+      | "featured"
+      | "settings"
+      | "expiration"
+    > {
+    /** endowment ids */
+    members: number[];
+  }
+}
