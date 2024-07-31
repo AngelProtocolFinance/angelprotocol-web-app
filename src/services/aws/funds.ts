@@ -16,7 +16,20 @@ export const funds = aws.injectEndpoints({
         };
       },
     }),
+    funds: builder.query<Fund.CardsPage, Fund.CardsQueryParams>({
+      query: (params) => {
+        return {
+          url: `${v(1)}/funds`,
+          params,
+        };
+      },
+    }),
   }),
 });
 
-export const { useCreateFundMutation } = funds;
+export const {
+  useCreateFundMutation,
+  useLazyFundsQuery,
+  useFundsQuery,
+  util: { updateQueryData: updateAwsQueryData },
+} = funds;
