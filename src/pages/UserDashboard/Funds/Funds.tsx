@@ -1,5 +1,6 @@
 import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
+import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useUserFundsQuery } from "services/aws/users";
@@ -10,20 +11,35 @@ interface Props {
   classes?: string;
 }
 export function Funds({ userId, classes = "" }: Props) {
-  const { data: funds = [], isLoading } = useUserFundsQuery(userId);
+  const query = useUserFundsQuery(userId);
   return (
-    <div className={`${classes} hidden [&:has(a)]:grid gap-2`}>
-      <h5 className="uppercase text-xs text-navy-l1">My Fundraisers</h5>
+    <div
+      className={`${classes} grid gap-y-4 grid-cols-[auto_1fr_auto_auto] justify-items-start`}
+    >
+      <h3 className="text-3xl mb-2 col-span-full">My Fundraisers</h3>
 
-      {isLoading ? (
-        <>
-          <Skeleton />
-          <Skeleton />
-          <Skeleton />
-        </>
-      ) : (
-        funds.map((fund) => <Fund key={fund.id} {...fund} />)
-      )}
+      <QueryLoader
+        messages={{
+          loading: (
+            <>
+              <Skeleton />
+              <Skeleton />
+              <Skeleton />
+            </>
+          ),
+          error: "Failed to get fundraisers",
+          empty: "You currently don't have any fundraisers",
+        }}
+        queryState={query}
+      >
+        {(funds) => (
+          <>
+            {funds.map((fund) => (
+              <Fund key={fund.id} {...fund} />
+            ))}
+          </>
+        )}
+      </QueryLoader>
     </div>
   );
 }
@@ -34,13 +50,19 @@ interface IFundLink {
   logo: string;
 }
 const Fund = (props: IFundLink) => (
-  <div className="hover:text-blue-d1 text-sm flex items-center gap-2">
-    <Image src={props.logo} className="object-cover h-[20px] w-[20px]" />
-    <span>{props.name}</span>
-    <Link className="text-sm" to={`${routes.funds}/${props.id}`}>
+  <div className="grid grid-cols-subgrid col-span-4 items-center gap-3 rounded border border-gray-l4">
+    <Image src={props.logo} className="object-cover h-full w-10" />
+    <span className="mr-4 p-1.5 font-medium text-navy-l1">{props.name}</span>
+    <Link
+      className="text-sm hover:text-blue-d1 text-blue uppercase p-3"
+      to={`${routes.funds}/${props.id}`}
+    >
       edit
     </Link>
-    <Link className="text-sm" to={`${appRoutes.funds}/${props.id}`}>
+    <Link
+      className="text-sm hover:text-blue-d1 text-blue uppercase p-3"
+      to={`${appRoutes.funds}/${props.id}`}
+    >
       view
     </Link>
   </div>
@@ -48,13 +70,12 @@ const Fund = (props: IFundLink) => (
 
 export function Skeleton() {
   return (
-    <a
-      href={"/"}
-      className="flex items-center gap-1 pointer-events-none"
+    <div
+      className="flex items-center gap-x-2 w-full col-span-full"
       aria-disabled={true}
     >
-      <ContentLoader className="w-[20px] h-[20px] rounded-full" />
-      <ContentLoader className="h-[20px] w-40 rounded" />
-    </a>
+      <ContentLoader className="size-10 rounded-full" />
+      <ContentLoader className="w-full h-10 rounded" />
+    </div>
   );
 }
