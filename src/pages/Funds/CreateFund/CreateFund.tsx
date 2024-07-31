@@ -39,7 +39,6 @@ export default withAuth(function CreateFund() {
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-    setFocus,
     watch,
   } = useForm<FV>({
     resolver: yupResolver(schema),
