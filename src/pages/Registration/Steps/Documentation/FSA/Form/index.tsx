@@ -34,7 +34,7 @@ export default function Form(props: Props) {
       />
 
       <Label className="mb-2 mt-10 font-semibold" required>
-        Proof of registration as a 501(C)(3) nonprofit or equivalent
+        Proof of registration as a 501(c)(3) nonprofit or equivalent
       </Label>
       <FileDropzone<FV, "ProofOfRegistration">
         name="ProofOfRegistration"

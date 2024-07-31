@@ -28,7 +28,7 @@
   },
   "packageManager": "yarn@4.2.2",
   "engines": {
-    "node": "18.16.1"
+    "node": "20.16.0"
   },
   "dependencies": {
     "@cosmjs/encoding": "0.32.3",
@@ -61,6 +61,7 @@
     "qrcode.react": "3.1.0",
     "quill": "2.0.2",
     "react": "18.2.0",
+    "react-chariot-connect": "1.0.8",
     "react-csv": "2.2.2",
     "react-dom": "18.2.0",
     "react-dropzone": "14.2.3",

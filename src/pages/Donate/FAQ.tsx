@@ -64,7 +64,7 @@ const faqs = (endowId: number) => [
     paragraphs: [
       <p>
         Donations are made to Altruistic Partners Empowering Society, DBA Better
-        Giving. This is a US 501(c) (3) non profit.
+        Giving, a registered charitable 501(c)(3) (EIN 87-3758939).
       </p>,
       <p>
         <Em intensity={2}>For immediate donations</Em>, Better Giving grants out
@@ -124,18 +124,40 @@ const faqs = (endowId: number) => [
     question: "How much does Better Giving charge?",
     paragraphs: [
       <p>
-        It is free to set up and start using a Better Giving account. No
-        subscriptions. No upfront costs. There are no ongoing donation fees to
-        any nonprofits unless a nonprofit has opted out of offering donors a
-        voluntary donation to Better Giving.
+        It is free to set up and use a Better Giving account. No subscriptions.
+        No upfront costs. No platform fees (unless a nonprofit has opted out of
+        offering donors a voluntary donation to Better Giving).
       </p>,
       <p>
         For fiscally sponsored accounts (mainly non-US charities), there is a
         fiscal sponsorship fee of 2.9%.
       </p>,
-      <p>
-        Blockchain transaction fees may apply, but these can be fractions of a
-        cent depending on the chain.
+      <p>Payment processing fees from 3rd parties may apply.</p>,
+    ],
+  },
+  {
+    id: 4,
+    question: "How do I donate by Check?",
+    paragraphs: [
+      <p className="leading-normal">
+        For gifts by check: Make your check out to{" "}
+        <Em classes="text-navy-d4">
+          Altruistic Partners Empowering Society Inc
+        </Em>
+        ,<br /> write{" "}
+        <Em classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5 mr-2">
+          endowment:{endowId}
+        </Em>
+        <Em classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5">
+          donation&nbsp;split:__%
+        </Em>{" "}
+        in the memo section of the check, and send it to:{" "}
+        <Em intensity={1} classes="text-navy-d4 block mt-2">
+          Miscellaneous Account Services
+          <br /> PNC Bank
+          <br /> P.O. Box 8108
+          <br /> Philadelphia, PA 19101-8108
+        </Em>
       </p>,
     ],
   },
