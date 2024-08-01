@@ -15,10 +15,6 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { logger } from "helpers";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
-import {
-  AVATAR_MAX_SIZE_BYTES,
-  AVATAR_MIME_TYPE,
-} from "pages/UserDashboard/EditProfile/useRhf";
 import { useRef } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -27,7 +23,7 @@ import { useCreateFundMutation } from "services/aws/funds";
 import type { Fund } from "types/aws";
 import { EndowmentSelector } from "./EndowmentSelector";
 import GoalSelector from "./GoalSelector";
-import { schema } from "./schema";
+import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES, schema } from "./schema";
 import type { FormValues as FV } from "./types";
 
 export default withAuth(function CreateFund() {
@@ -251,13 +247,13 @@ export default withAuth(function CreateFund() {
             e.stopPropagation();
             resetField("banner");
           }}
-          accept={AVATAR_MIME_TYPE}
+          accept={VALID_MIME_TYPES}
           aspect={[4, 1]}
           classes={{
             container: "mb-4",
             dropzone: "aspect-[4/1]",
           }}
-          maxSize={AVATAR_MAX_SIZE_BYTES}
+          maxSize={MAX_SIZE_IN_BYTES}
           error={errors.banner?.file?.message}
         />
 
@@ -274,13 +270,13 @@ export default withAuth(function CreateFund() {
             e.stopPropagation();
             resetField("logo");
           }}
-          accept={AVATAR_MIME_TYPE}
+          accept={VALID_MIME_TYPES}
           aspect={[1, 1]}
           classes={{
             container: "mb-4",
             dropzone: "aspect-[1/1] w-60",
           }}
-          maxSize={AVATAR_MAX_SIZE_BYTES}
+          maxSize={MAX_SIZE_IN_BYTES}
           error={errors.banner?.file?.message}
         />
 
