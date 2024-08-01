@@ -1,18 +1,10 @@
+import ContentForm from "./ContentForm";
 import ImgForm from "./ImgForm";
 
 export default function EditFund() {
   return (
     <div className="padded-container mt-8 grid">
       <h2 className="text-3xl mb-4">Edit fund</h2>
-      <ImgForm
-        label="Banner"
-        aspect={[4, 1]}
-        classes="mb-6"
-        imgClasses={{ container: "w-full aspect-[4/1]" }}
-        bannerUrl=""
-        onSubmit={async (f) => console.log(f)}
-      />
-
       <ImgForm
         label="Logo"
         classes="justify-self-start"
@@ -21,6 +13,15 @@ export default function EditFund() {
         bannerUrl=""
         onSubmit={async (f) => console.log(f)}
       />
+      <ImgForm
+        label="Banner"
+        aspect={[4, 1]}
+        classes="mt-6"
+        imgClasses={{ container: "w-full aspect-[4/1]" }}
+        bannerUrl=""
+        onSubmit={async (f) => console.log(f)}
+      />
+      <ContentForm onSubmit={async (f) => console.log(f)} />
     </div>
   );
 }

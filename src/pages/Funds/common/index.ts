@@ -1,5 +1,7 @@
 import type { ImageMIMEType } from "types/lists";
 
+export * from "./GoalSelector";
+
 export const VALID_MIME_TYPES: ImageMIMEType[] = [
   "image/jpeg",
   "image/png",

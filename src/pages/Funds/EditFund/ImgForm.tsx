@@ -51,6 +51,7 @@ export default function ImgForm({
     },
   });
   const { field: img } = useController({ control, name: "img" });
+
   return (
     <form
       className={`${classes} border border-gray-l4 p-4 rounded-lg grid`}
@@ -59,13 +60,14 @@ export default function ImgForm({
         await onSubmit(fv.img.file);
       })}
     >
-      <label className="font-medium block text-sm mb-1">{label}</label>
+      <label className="text-lg font-medium block mb-1">{label}</label>
 
       <ImgEditor
         value={img.value}
-        onChange={(v) => {
+        onChange={async (v) => {
           img.onChange(v);
-          trigger("img.file");
+          const valid = await trigger("img.file");
+          if (!valid) return;
         }}
         onUndo={(e) => {
           e.stopPropagation();
@@ -79,10 +81,10 @@ export default function ImgForm({
       />
       <button
         disabled={isSubmitting || !isDirty}
-        className="btn-blue py-1.5 px-4 text-xs uppercase justify-self-end"
+        className="btn-blue py-2 px-4 text-sm uppercase justify-self-end"
         type="submit"
       >
-        save
+        {isSubmitting ? "Updating..." : "Save"}
       </button>
     </form>
   );
