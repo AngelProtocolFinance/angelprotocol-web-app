@@ -5,14 +5,7 @@ export default function EditFund() {
   return (
     <div className="padded-container mt-8 grid">
       <h2 className="text-3xl mb-4">Edit fund</h2>
-      <ImgForm
-        label="Logo"
-        classes="justify-self-start"
-        aspect={[1, 1]}
-        imgClasses={{ container: "w-80 aspect-[1/1]" }}
-        bannerUrl=""
-        onSubmit={async (f) => console.log(f)}
-      />
+      <ContentForm onSubmit={async (f) => console.log(f)} />
       <ImgForm
         label="Banner"
         aspect={[4, 1]}
@@ -21,7 +14,14 @@ export default function EditFund() {
         bannerUrl=""
         onSubmit={async (f) => console.log(f)}
       />
-      <ContentForm onSubmit={async (f) => console.log(f)} />
+      <ImgForm
+        label="Logo"
+        classes="justify-self-start"
+        aspect={[1, 1]}
+        imgClasses={{ container: "w-80 aspect-[1/1]" }}
+        bannerUrl=""
+        onSubmit={async (f) => console.log(f)}
+      />
     </div>
   );
 }
