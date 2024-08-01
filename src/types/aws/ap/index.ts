@@ -255,6 +255,8 @@ export interface Fund {
   target?: "smart" | `${number}`;
   /** endowIds that allows this fundraiser on their profile */
   approvers: number[];
+
+  owners: string[];
 }
 export namespace Fund {
   export interface New
@@ -272,6 +274,14 @@ export namespace Fund {
     /** endowment ids */
     members: number[];
   }
+
+  export interface Update
+    extends Partial<
+      Pick<
+        Fund,
+        "name" | "description" | "banner" | "logo" | "featured" | "target"
+      >
+    > {}
 
   export interface Card
     extends Pick<
