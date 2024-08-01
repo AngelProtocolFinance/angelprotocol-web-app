@@ -2,14 +2,25 @@ import ImgForm from "./ImgForm";
 
 export default function EditFund() {
   return (
-    <div>
-      <h2>Edit fund</h2>
+    <div className="padded-container mt-8 grid">
+      <h2 className="text-3xl mb-4">Edit fund</h2>
+      <ImgForm
+        label="Banner"
+        aspect={[4, 1]}
+        classes="mb-6"
+        imgClasses={{ container: "w-full aspect-[4/1]" }}
+        bannerUrl=""
+        onSubmit={async (f) => console.log(f)}
+      />
 
-      <h4>Banner</h4>
-      <ImgForm bannerUrl="" onSubmit={async (f) => console.log(f)} />
-
-      <h4>Logo</h4>
-      <ImgForm bannerUrl="" onSubmit={async (f) => console.log(f)} />
+      <ImgForm
+        label="Logo"
+        classes="justify-self-start"
+        aspect={[1, 1]}
+        imgClasses={{ container: "w-80 aspect-[1/1]" }}
+        bannerUrl=""
+        onSubmit={async (f) => console.log(f)}
+      />
     </div>
   );
 }

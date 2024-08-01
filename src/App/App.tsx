@@ -3,7 +3,7 @@ import { Hub } from "aws-amplify/utils";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
-import Funds, { CreateFund, Fund } from "pages/Funds";
+import Funds, { CreateFund, EditFund, Fund } from "pages/Funds";
 import { lazy, useEffect } from "react";
 import {
   Navigate,
@@ -174,6 +174,7 @@ export default function App() {
           <Route path={appRoutes.funds}>
             <Route path="new" element={<CreateFund />} />
             <Route path=":id" element={<Fund />} />
+            <Route path=":id/edit" element={<EditFund />} />
             <Route index element={<Funds />} />
           </Route>
           <Route index element={<Home />} />

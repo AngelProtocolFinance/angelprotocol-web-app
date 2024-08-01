@@ -4,7 +4,6 @@ import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useUserFundsQuery } from "services/aws/users";
-import { routes } from "../routes";
 
 interface Props {
   userId: string;
@@ -55,7 +54,7 @@ const Fund = (props: IFundLink) => (
     <span className="mr-4 p-1.5 font-medium text-navy-l1">{props.name}</span>
     <Link
       className="text-sm hover:text-blue-d1 text-blue uppercase p-3"
-      to={`${routes.funds}/${props.id}`}
+      to={`${appRoutes.funds}/${props.id}/edit`}
     >
       edit
     </Link>

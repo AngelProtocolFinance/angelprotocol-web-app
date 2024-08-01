@@ -7,7 +7,7 @@ export type ImgLink = FileObject & {
   preview: string;
 };
 
-type Classes = { container?: string; dropzone?: string };
+export type Classes = { container?: string; dropzone?: string };
 
 export type Props<T extends FieldValues, K extends Path<T>> = {
   // we get common props with this intersection,

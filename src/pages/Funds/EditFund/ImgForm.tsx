@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
+  type Classes,
   ControlledImgEditor as ImgEditor,
   type ImgLink,
 } from "components/ImgEditor";
@@ -15,19 +16,30 @@ interface FV {
 interface Props {
   bannerUrl?: string;
   onSubmit: (img: File) => Promise<void>;
+  classes?: string;
+  imgClasses: Classes;
+  aspect: [number, number];
+  label: string;
 }
 
 const fileObj = schema<ImgLink>({
   file: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES),
 });
 
-export default function ImgForm({ bannerUrl, onSubmit }: Props) {
+export default function ImgForm({
+  bannerUrl,
+  onSubmit,
+  imgClasses,
+  classes,
+  aspect,
+  label,
+}: Props) {
   const {
     control,
     trigger,
     resetField,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<FV>({
     resolver: yupResolver(schema<FV>({ img: fileObj })),
     values: {
@@ -41,11 +53,14 @@ export default function ImgForm({ bannerUrl, onSubmit }: Props) {
   const { field: img } = useController({ control, name: "img" });
   return (
     <form
+      className={`${classes} border border-gray-l4 p-4 rounded-lg grid`}
       onSubmit={handleSubmit(async (fv) => {
         if (!fv.img.file) throw `dev: must have file`;
         await onSubmit(fv.img.file);
       })}
     >
+      <label className="font-medium block text-sm mb-1">{label}</label>
+
       <ImgEditor
         value={img.value}
         onChange={(v) => {
@@ -57,16 +72,18 @@ export default function ImgForm({ bannerUrl, onSubmit }: Props) {
           resetField("img");
         }}
         accept={VALID_MIME_TYPES}
-        aspect={[4, 1]}
-        classes={{
-          container: "mb-4",
-          dropzone: "aspect-[4/1]",
-        }}
+        aspect={aspect}
+        classes={imgClasses}
         maxSize={MAX_SIZE_IN_BYTES}
         error={errors.img?.file?.message}
       />
-
-      <button>save</button>
+      <button
+        disabled={isSubmitting || !isDirty}
+        className="btn-blue py-1.5 px-4 text-xs uppercase justify-self-end"
+        type="submit"
+      >
+        save
+      </button>
     </form>
   );
 }
