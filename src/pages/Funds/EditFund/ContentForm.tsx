@@ -1,4 +1,8 @@
-import { NativeField as Field, Form } from "components/form";
+import {
+  NativeCheckField as CheckField,
+  NativeField as Field,
+  Form,
+} from "components/form";
 import { useController, useForm } from "react-hook-form";
 import type { Fund } from "types/aws";
 import { GoalSelector, type TargetType } from "../common";
@@ -36,18 +40,18 @@ export default function ContentForm(props: Props) {
         label="Name"
         required
         error={errors.name?.message}
-        classes={{ label: "font-medium" }}
+        classes={{ label: "font-medium text-base" }}
       />
       <Field
         type="textarea"
         {...register("description")}
         label="Description"
         required
-        classes={{ container: "mt-4", label: "font-medium" }}
+        classes={{ container: "mt-4", label: "font-medium text-base" }}
         error={errors.description?.message}
       />
 
-      <label className="block mt-4 text-sm font-medium">
+      <label className="block mt-4 font-medium">
         Fundraiser goal <span className="text-red">*</span>
       </label>
       <GoalSelector
@@ -64,6 +68,13 @@ export default function ContentForm(props: Props) {
           error={errors.fixedTarget?.message}
         />
       )}
+
+      <CheckField
+        {...register("featured")}
+        classes="col-span-full my-6 font-medium"
+      >
+        Featured in funds page
+      </CheckField>
 
       <button
         type="submit"
