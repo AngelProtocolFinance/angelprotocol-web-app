@@ -71,14 +71,14 @@ export default function ContentForm(props: Props) {
 
       <CheckField
         {...register("featured")}
-        classes="col-span-full my-6 font-medium"
+        classes="col-span-full mt-8 font-medium"
       >
         Featured in funds page
       </CheckField>
 
       <button
         type="submit"
-        className="mt-8 btn-blue text-sm font-medium px-4 py-2 justify-self-end"
+        className="btn-blue text-sm font-medium px-4 py-2 justify-self-end"
       >
         Save
       </button>

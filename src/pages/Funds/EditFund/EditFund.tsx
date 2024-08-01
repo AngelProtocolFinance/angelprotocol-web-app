@@ -16,7 +16,7 @@ export default function EditFund() {
       />
       <ImgForm
         label="Logo"
-        classes="justify-self-start"
+        classes="justify-self-start mt-6"
         aspect={[1, 1]}
         imgClasses={{ container: "w-80 aspect-[1/1]" }}
         bannerUrl=""
