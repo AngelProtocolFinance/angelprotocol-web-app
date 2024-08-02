@@ -41,7 +41,16 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   return (
     <Summary
       classes="group grid content-start p-4 @md/steps:p-8 [&_#connectContainer]:mt-8"
-      onBack={() => setState({ ...props, step: "summary" })}
+      onBack={() => {
+        //summary is skipped for chariot, also skip when going back
+        if (init.recipient.hide_bg_tip) {
+          if (init.config?.splitDisabled) {
+            return setState({ ...props, step: "donate-form" });
+          }
+          return setState({ ...props, step: "splits" });
+        }
+        return setState({ ...props, step: "tip" });
+      }}
       Amount={currency(details.currency)}
       amount={+details.amount}
       feeAllowance={feeAllowance}

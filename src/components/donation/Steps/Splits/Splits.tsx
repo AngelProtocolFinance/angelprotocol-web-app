@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
+import { summaryData } from "../common/constants";
 import type { SplitsStep } from "../types";
 import { LockedSplitSlider } from "./LockedSplitSlider";
 
@@ -94,13 +95,41 @@ export default function Split(props: Props) {
 
       <ContinueBtn
         type="button"
-        onClick={() =>
+        onClick={() => {
+          if (props.init.recipient.hide_bg_tip) {
+            // go straight to summary: donor info is retrieved from donor's DAF account
+            if (props.details.method === "daf") {
+              return setState({
+                ...props,
+                ...summaryData(props),
+                step: "submit",
+                liquidSplitPct: liqSplitPct,
+              });
+            }
+
+            return setState({
+              ...props,
+              step: "summary",
+              liquidSplitPct: liqSplitPct,
+            });
+          }
+
+          // go straight to summary: donor info is retrieved from donor's DAF account
+          if (props.details.method === "daf") {
+            return setState({
+              ...props,
+              ...summaryData(props),
+              step: "submit",
+              liquidSplitPct: liqSplitPct,
+            });
+          }
+
           setState({
             ...props,
-            step: props.init.recipient.hide_bg_tip ? "summary" : "tip",
+            step: "tip",
             liquidSplitPct: liqSplitPct,
-          })
-        }
+          });
+        }}
         className="mt-6"
       />
     </div>

@@ -1,3 +1,4 @@
+import { summaryData } from "../common/constants";
 import type { DonationDetails, DonationState } from "../types";
 
 const tokenId = (details: DonationDetails) => {
@@ -30,6 +31,18 @@ export const nextFormState = (
 
   if (prev.init.config?.splitDisabled) {
     if (prev.init.recipient.hide_bg_tip) {
+      // donor info is retrieved from donor's DAF account
+      if (details?.method === "daf") {
+        console.log("daf");
+        return {
+          ...toPersist,
+          ...summaryData(prev),
+          details,
+          step: "submit",
+          liquidSplitPct: prev.init.config.liquidSplitPct,
+        };
+      }
+
       return {
         ...toPersist,
         details,
