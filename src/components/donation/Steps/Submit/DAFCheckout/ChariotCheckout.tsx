@@ -47,7 +47,7 @@ const CUSTOM_MSG_MAX_LENGTH = 250;
 export default function ChariotCheckout(props: DafCheckoutStep) {
   const { setState } = useDonationState();
   const { handleError } = useErrorContext();
-  const { showModal, closeModal } = useModalContext();
+  const { showModal, closeModal, setModalOption } = useModalContext();
   const [createGrant, { isLoading }] = useLazyChariotGrantQuery();
   const navigate = useNavigate();
 
@@ -252,13 +252,14 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 children: "Processing payment..",
               });
 
+              setModalOption("isDismissible", false);
+
               const {
                 grantIntent,
                 workflowSessionId,
                 user: grantor,
               } = ev.detail;
               const meta = grantIntent.metadata as GrantMetaData;
-              console.log(meta);
               /** user may input amount different from our donate form */
               const grantAmount: number = grantIntent.amount / 100;
 
@@ -303,6 +304,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 }),
               }).unwrap();
 
+              setModalOption("isDismissible", true);
               closeModal();
 
               navigate(`${appRoutes.donate_thanks}`, {
