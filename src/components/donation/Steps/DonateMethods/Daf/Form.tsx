@@ -14,7 +14,7 @@ import type { FormValues as FV, Props } from "./types";
 /**
  * Only USD donations are permissible for DAF donations.
  * The minimum amount differs depending on which provider is selected.
- *  $50 min is common
+ * $50 min is common
  */
 const USD_CURRENCY: DetailedCurrency = { code: "usd", rate: 1, min: 50 };
 
@@ -33,7 +33,10 @@ export default function Form(props: Props) {
       schema<FV>({
         amount: stringNumber(
           (s) => s.required("Please enter an amount"),
-          (n) => n.positive("Amount must be greater than 0")
+          (n) =>
+            n
+              .positive("Amount must be greater than 0")
+              .min(USD_CURRENCY.min, `minimum donation is $${USD_CURRENCY.min}`)
         ),
       })
     ),
