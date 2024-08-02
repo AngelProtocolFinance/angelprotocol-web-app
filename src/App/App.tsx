@@ -59,6 +59,8 @@ export default function App() {
 
   const dispatch = useSetter();
   const navigate = useNavigate();
+
+  //biome-ignore lint: on-mount only
   useEffect(() => {
     dispatch(auth.loadSession());
     const unsubscribe = Hub.listen("auth", async ({ payload }) => {
@@ -82,7 +84,7 @@ export default function App() {
     return () => {
       unsubscribe();
     };
-  }, [dispatch, navigate]);
+  }, []);
 
   const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
