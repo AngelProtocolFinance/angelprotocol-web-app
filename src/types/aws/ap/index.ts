@@ -255,8 +255,6 @@ export interface Fund {
   target?: "smart" | `${number}`;
   /** endowIds that allows this fundraiser on their profile */
   approvers: number[];
-
-  owners: string[];
 }
 export namespace Fund {
   export interface New
