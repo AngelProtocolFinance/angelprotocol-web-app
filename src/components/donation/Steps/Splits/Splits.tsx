@@ -114,16 +114,6 @@ export default function Split(props: Props) {
             });
           }
 
-          // go straight to summary: donor info is retrieved from donor's DAF account
-          if (props.details.method === "daf") {
-            return setState({
-              ...props,
-              ...summaryData(props),
-              step: "submit",
-              liquidSplitPct: liqSplitPct,
-            });
-          }
-
           setState({
             ...props,
             step: "tip",

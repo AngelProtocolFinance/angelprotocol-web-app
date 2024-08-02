@@ -18,7 +18,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { schema } from "schemas/shape";
 import { useLazyChariotGrantQuery } from "services/apes";
-import { userIsSignedIn } from "types/auth";
 import type { DonateThanksState } from "types/pages";
 import { mixed, string } from "yup";
 import { useDonationState } from "../../Context";
@@ -46,16 +45,6 @@ const withTributeNotifKey: keyof FV = "withTributeNotif";
 const CUSTOM_MSG_MAX_LENGTH = 250;
 
 export default function ChariotCheckout(props: DafCheckoutStep) {
-  const {
-    init,
-    details,
-    liquidSplitPct,
-    tip,
-    donor: fvDonor,
-    honorary,
-    feeAllowance,
-  } = props;
-
   const { setState } = useDonationState();
   const { handleError } = useErrorContext();
   const { showModal, closeModal } = useModalContext();
@@ -70,13 +59,13 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
     getValues,
   } = useForm<FV>({
     defaultValues: {
-      ...(honorary || {
+      ...(props.honorary || {
         withHonorary: false,
         honoraryFullName: "",
         withTributeNotif: false,
         tributeNotif: initTributeNotif,
       }),
-      coverFee: !!feeAllowance,
+      coverFee: !!props.feeAllowance,
       ukTaxResident: false,
     },
     resolver: yupResolver(
@@ -110,15 +99,17 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   const fvCoverFee = watch("coverFee");
   const customMsg = watch("tributeNotif.fromMsg");
 
-  const newFvFeeAllowance = fvCoverFee
-    ? +details.amount * PROCESSING_RATES.chariot
+  const newFeeAllowance = fvCoverFee
+    ? +props.details.amount * PROCESSING_RATES.chariot
     : 0;
 
   return (
     <Summary
-      program={details.program}
+      program={props.details.program}
       classes="group grid content-start p-4 @md/steps:p-8 [&_#connectContainer]:mt-8"
-      onBack={() => {
+      onBack={async () => {
+        const { init } = props;
+
         //summary is skipped for chariot, also skip when going back
         if (init.recipient.hide_bg_tip) {
           if (init.config?.splitDisabled) {
@@ -128,16 +119,16 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
         }
         return setState({ ...props, step: "tip" });
       }}
-      Amount={currency(details.currency)}
-      amount={adjusted?.amount || +details.amount}
-      feeAllowance={adjusted?.feeAllowance || newFvFeeAllowance}
-      splitLiq={liquidSplitPct}
+      Amount={currency(props.details.currency)}
+      amount={adjusted?.amount || +props.details.amount}
+      feeAllowance={adjusted?.feeAllowance || newFeeAllowance}
+      splitLiq={props.liquidSplitPct}
       frequency="one-time"
       tip={
-        tip
+        props.tip
           ? {
-              value: adjusted?.tip || tip.value,
-              charityName: init.recipient.name,
+              value: adjusted?.tip || props.tip.value,
+              charityName: props.init.recipient.name,
             }
           : undefined
       }
@@ -147,7 +138,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           <CheckField {...register("coverFee")} classes="col-span-full">
             Cover payment processing fees for your donation{" "}
             <span className="text-navy-l1 text-sm">
-              (&nbsp;{init.recipient.name} receives the full amount&nbsp;)
+              (&nbsp;{props.init.recipient.name} receives the full amount&nbsp;)
             </span>
           </CheckField>
           {/*
@@ -234,10 +225,9 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
             if (!isValid) throw `invalid`;
 
             //always use recent values
-
             const _tip = adjusted?.tip || (props.tip?.value ?? 0);
-            const _fee = adjusted?.feeAllowance || newFvFeeAllowance;
-            const _amount = adjusted?.amount || +details.amount;
+            const _fee = adjusted?.feeAllowance || newFeeAllowance;
+            const _amount = adjusted?.amount || +props.details.amount;
             const _total = _fee + _tip + _amount;
 
             const _totalCents = Math.ceil(_total) * 100;
@@ -262,7 +252,11 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 children: "Processing payment..",
               });
 
-              const { grantIntent, workflowSessionId, user } = ev.detail;
+              const {
+                grantIntent,
+                workflowSessionId,
+                user: grantor,
+              } = ev.detail;
               const meta = grantIntent.metadata as GrantMetaData;
               console.log(meta);
               /** user may input amount different from our donate form */
@@ -276,30 +270,30 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               setAdjusted(adjusted);
 
-              const { postalCode, line1, line2, city, state } = user.address;
+              const { postalCode, line1, line2, city, state } = grantor.address;
 
               await createGrant({
                 transactionId: workflowSessionId,
                 amount: adjusted.amount,
                 tipAmount: adjusted.tip,
                 feeAllowance: adjusted.feeAllowance,
-                currency: details.currency.code,
-                endowmentId: init.recipient.id,
-                splitLiq: liquidSplitPct,
+                currency: props.details.currency.code,
+                endowmentId: props.init.recipient.id,
+                splitLiq: props.liquidSplitPct,
                 donor: toDonor({
                   title: initDonorTitleOption,
-                  email: user.email,
-                  firstName: user.firstName,
-                  lastName: user.lastName,
+                  email: grantor.email,
+                  firstName: grantor.firstName,
+                  lastName: grantor.lastName,
                   zipCode: postalCode,
                   streetAddress: [line1, line2, city, state]
                     .filter(Boolean)
                     .join(", "),
                   ukTaxResident: meta.ukTaxResident,
                 }),
-                source: init.source,
-                ...(details.program.value && {
-                  programId: details.program.value,
+                source: props.init.source,
+                ...(props.details.program.value && {
+                  programId: props.details.program.value,
                 }),
                 ...(meta.honoraryFullName && {
                   inHonorOf: meta.honoraryFullName,
@@ -313,14 +307,12 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               navigate(`${appRoutes.donate_thanks}`, {
                 state: {
-                  guestDonor: userIsSignedIn(user)
-                    ? undefined
-                    : {
-                        email: fvDonor.email,
-                        fullName: `${fvDonor.firstName} ${fvDonor.lastName}`,
-                      },
-                  recipientId: init.recipient.id,
-                  recipientName: init.recipient.name,
+                  guestDonor: {
+                    email: grantor.email,
+                    fullName: `${grantor.firstName} ${grantor.lastName}`,
+                  },
+                  recipientId: props.init.recipient.id,
+                  recipientName: props.init.recipient.name,
                 } satisfies DonateThanksState,
               });
             } catch (err) {
