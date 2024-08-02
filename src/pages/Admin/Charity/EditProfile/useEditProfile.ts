@@ -25,7 +25,7 @@ export default function useEditProfile(init: FV) {
     control,
     trigger,
     watch,
-    formState: { isSubmitting, errors, isDirty, dirtyFields },
+    formState: { isSubmitting, errors, isDirty },
   } = useForm<FV>({ defaultValues: init, resolver: yupResolver(schema) });
 
   const { showModal } = useModalContext();
