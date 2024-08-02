@@ -25,7 +25,7 @@ export default function useEditProfile(init: FV) {
     control,
     trigger,
     watch,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isDirty, dirtyFields },
   } = useForm<FV>({ defaultValues: init, resolver: yupResolver(schema) });
 
   const { showModal } = useModalContext();
@@ -35,8 +35,8 @@ export default function useEditProfile(init: FV) {
 
   const slug = watch("slug");
   const { field: card_img } = useController({ control, name: "card_img" });
-  const { field: image } = useController({ control, name: "image" });
-  const { field: logo } = useController({ control, name: "image" });
+  const { field: banner } = useController({ control, name: "image" });
+  const { field: logo } = useController({ control, name: "logo" });
   const { field: overview } = useController({ control, name: "overview" });
   const { field: sdgs } = useController({ control, name: "sdgs" });
   const { field: designation } = useController({
@@ -115,10 +115,11 @@ export default function useEditProfile(init: FV) {
     resetField,
     isSubmitting,
     trigger,
+    isDirty,
     //controllers
     card_img,
     logo,
-    image,
+    banner,
     overview,
     slug,
     sdgs,

@@ -57,6 +57,7 @@ export default function Form({ initSlug = "", init }: Props) {
           disabled
           tooltip="The name field reflects your organization's legal name as provided on your initial application. If you need to change your name please contact support@better.giving and provide documentation supporting the legal name change or D.B.A. records."
           error={rhf.errors.name?.message}
+          required
         />
         <Field
           {...rhf.register("tagline")}
@@ -72,12 +73,13 @@ export default function Form({ initSlug = "", init }: Props) {
           name="registration_number"
           label="Organization’s registration number"
           error={rhf.errors.registration_number?.message}
+          required
         />
         <Label className="-mb-4">Banner image of your organization</Label>
         <ImgEditor
-          value={rhf.image.value}
+          value={rhf.banner.value}
           onChange={(img) => {
-            rhf.image.onChange(img);
+            rhf.banner.onChange(img);
             rhf.trigger("image.file");
           }}
           onUndo={(e) => {
@@ -331,14 +333,14 @@ export default function Form({ initSlug = "", init }: Props) {
 
       <div className="flex gap-3 group-disabled:hidden">
         <button
-          disabled={rhf.isSubmitting}
+          disabled={rhf.isSubmitting || !rhf.isDirty}
           type="reset"
           className="px-6 btn-outline-filled text-sm"
         >
           Reset changes
         </button>
         <button
-          disabled={rhf.isSubmitting}
+          disabled={rhf.isSubmitting || !rhf.isDirty}
           type="submit"
           className="px-6 btn-blue text-sm"
         >
