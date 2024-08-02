@@ -230,7 +230,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
             const _amount = adjusted?.amount || +props.details.amount;
             const _total = _fee + _tip + _amount;
 
-            const _totalCents = Math.ceil(_total) * 100;
+            const _totalCents = Math.floor(_total) * 100;
             const metadata: GrantMetaData = {
               ...getValues(),
               _tip,
