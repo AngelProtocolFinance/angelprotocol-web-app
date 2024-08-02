@@ -35,6 +35,18 @@ export interface ControlledProps<T extends ValKey> extends BaseProps {
   error?: string;
 }
 
+export interface ControlledMultiSelectorProps<T extends ValKey>
+  extends BaseProps {
+  value: OptionType<T>[];
+  onChange: (opts: OptionType<T>[]) => void;
+  onReset: () => void;
+  error?: string;
+
+  options: OptionType<T>[];
+  children?: (selected: OptionType<T>[]) => ReactNode;
+  searchable?: true;
+}
+
 export interface MultiselectorProps<
   T extends FieldValues,
   K extends Path<T>,

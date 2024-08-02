@@ -5,11 +5,11 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
-import { ErrorMessage } from "@hookform/error-message";
 import Icon, { DrawerIcon } from "components/Icon";
 import { isEmpty } from "helpers";
 import { unpack } from "helpers";
-import { type PropsWithChildren, useState } from "react";
+import { fixedForwardRef } from "helpers/react";
+import { type ForwardedRef, type PropsWithChildren, useState } from "react";
 import {
   type FieldValues,
   type Path,
@@ -19,72 +19,56 @@ import {
 } from "react-hook-form";
 import type { OptionType, ValKey } from "types/components";
 import FocusableInput from "./FocusableInput";
-import { styles, valueKey } from "./constants";
-import type { MultiselectorProps } from "./types";
+import { styles } from "./constants";
+import type { ControlledMultiSelectorProps, MultiselectorProps } from "./types";
 
-export function MultiSelector<
-  T extends FieldValues,
-  K extends Path<T>,
-  V extends ValKey,
->({
-  name,
-  disabled,
-  options,
-  children,
-  classes,
-  searchable,
-}: MultiselectorProps<T, K, V>) {
-  const cls = unpack(classes);
-
-  ///// ***HOOK FORM*** /////
-  const {
-    formState: { isSubmitting, errors },
-    field: { value: selected, onChange: onSelectedChange, ref },
-  } = useController<{ [index: string]: OptionType<V>[] }>({ name: name });
-  const { resetField } = useFormContext<T>();
-
-  /// **SEARCH** ///
+function _MultiList<T extends ValKey>(
+  { children, ...props }: ControlledMultiSelectorProps<T>,
+  ref: ForwardedRef<HTMLInputElement>
+) {
+  const cls = unpack(props.classes);
   const [searchText, setSearchText] = useState("");
   const filteredOptions =
-    searchable && searchText
-      ? options.filter((o) =>
+    props.searchable && searchText
+      ? props.options.filter((o) =>
           o.label.toLowerCase().includes(searchText.toLowerCase())
         )
-      : options;
+      : props.options;
 
   const optionsAvailable = !searchText || !isEmpty(filteredOptions);
 
-  const isAllSelected = selected.length === options.length;
-  const isDisabled = isSubmitting || disabled;
-  const invalid = !!get(errors, name)?.message;
+  const isAllSelected = props.value.length === props.options.length;
 
   return (
     <>
       <Combobox
-        disabled={isDisabled}
-        value={selected}
-        by={valueKey}
-        onChange={onSelectedChange}
+        disabled={props.disabled}
+        value={props.value}
+        by="value"
+        onChange={props.onChange}
         as="div"
         className={`relative ${cls.container}`}
         multiple
       >
         <FocusableInput ref={ref} />
         <div
-          aria-invalid={invalid}
-          aria-disabled={isDisabled}
+          aria-invalid={!!props.error}
+          aria-disabled={props.disabled}
           className={`${cls.button} ${styles.selectorButton} flex flex-wrap gap-2 h-full focus-within:ring-2 ring-blue-d1 ring-offset-1 aria-invalid:border-red p-1`}
         >
           <div className="flex flex-wrap gap-2 h-full">
-            {selected.map((opt) => (
+            {props.value.map((opt) => (
               <SelectedOption
                 key={opt.value}
-                option={opt}
-                selected={selected}
-                onChange={onSelectedChange}
+                {...opt}
+                onDeselect={(opt) =>
+                  props.onChange(
+                    props.value.filter((v) => v.value !== opt.value)
+                  )
+                }
               />
             ))}
-            {searchable ? (
+            {props.searchable ? (
               <div className="bg-blue-l5 inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 rounded">
                 <Icon type="Search" size={20} />
                 <ComboboxInput
@@ -100,7 +84,7 @@ export function MultiSelector<
           </div>
           <ComboboxButton
             className={`${
-              selected.length > 0
+              props.value.length > 0
                 ? "justify-self-end dark:text-navy-l2 shrink-0"
                 : "absolute inset-0 flex justify-end items-center pr-2 rounded active:ring-2 ring-blue-d1 ring-offset-1"
             }`}
@@ -112,16 +96,13 @@ export function MultiSelector<
           {optionsAvailable && (
             <div className="flex justify-between p-4">
               {isAllSelected ? (
-                <Action onClick={() => onSelectedChange([])}>
-                  Deselect All
-                </Action>
+                <Action onClick={() => props.onChange([])}>Deselect All</Action>
               ) : (
-                <Action onClick={() => onSelectedChange(options)}>
+                <Action onClick={() => props.onChange(props.options)}>
                   Select All
                 </Action>
               )}
-
-              <Action onClick={() => resetField(name)}>Reset</Action>
+              <Action onClick={props.onReset}>Reset</Action>
             </div>
           )}
 
@@ -137,32 +118,48 @@ export function MultiSelector<
             </p>
           )}
         </ComboboxOptions>
-        <ErrorMessage
-          name={name}
-          errors={errors}
-          as="p"
-          className={styles.error}
-        />
+        <p className={styles.error + " empty:hidden"}>{props.error}</p>
       </Combobox>
-      {children && children(selected)}
+      {children && children(props.value)}
     </>
   );
 }
 
-type SelectedProps<T extends ValKey> = {
-  option: OptionType<T>;
-  selected: OptionType<T>[];
-  onChange(value: OptionType<T>[]): void;
+export const MultiList = fixedForwardRef(_MultiList);
+
+export function MultiSelector<
+  T extends FieldValues,
+  K extends Path<T>,
+  V extends ValKey,
+>({ name, disabled, ...props }: MultiselectorProps<T, K, V>) {
+  ///// ***HOOK FORM*** /////
+  const {
+    formState: { isSubmitting, errors },
+    field: { value: selected, onChange: onSelectedChange, ref },
+  } = useController<{ [index: string]: OptionType<V>[] }>({ name: name });
+  const { resetField } = useFormContext<T>();
+
+  return (
+    <MultiList
+      value={selected}
+      onChange={onSelectedChange}
+      ref={ref}
+      onReset={() => resetField(name)}
+      error={get(errors, name)?.message}
+      disabled={disabled || isSubmitting}
+      {...props}
+    />
+  );
+}
+
+type SelectedProps<T extends ValKey> = OptionType<T> & {
+  onDeselect: (option: OptionType<T>) => void;
 };
 
 function SelectedOption<T extends ValKey>({
-  selected,
-  onChange,
-  option,
+  onDeselect,
+  ...option
 }: SelectedProps<T>) {
-  const handleRemove = (value: T) =>
-    onChange(selected.filter((s) => s.value !== value));
-
   return (
     <div className="flex items-center px-3 gap-2 h-10 bg-blue-l4 dark:bg-blue-d4 border border-gray-l4 rounded font-semibold text-navy-l1 dark:text-navy-l2 uppercase">
       <span className="max-w-[200px] truncate">{option.label}</span>
@@ -170,7 +167,7 @@ function SelectedOption<T extends ValKey>({
         type="button"
         onClick={(e) => {
           e.preventDefault();
-          handleRemove(option.value);
+          onDeselect(option);
         }}
       >
         <Icon type="Close" size={20} />

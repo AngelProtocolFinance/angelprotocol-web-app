@@ -1,9 +1,7 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { country } from "components/CountrySelector";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { FormProvider, useForm } from "react-hook-form";
 import { useEndowment } from "services/aws/useEndowment";
 import type {
   EndowmentProfileUpdate,
@@ -13,7 +11,6 @@ import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import { schema } from "./schema";
 import type { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
@@ -77,14 +74,5 @@ function FormWithContext(props: TProfile & { id: number }) {
     initial: init,
   };
 
-  const methods = useForm<FV>({
-    defaultValues: defaults,
-    resolver: yupResolver(schema),
-  });
-
-  return (
-    <FormProvider {...methods}>
-      <Form initSlug={props.slug} isPublished={props.published} />
-    </FormProvider>
-  );
+  return <Form initSlug={props.slug} init={defaults} />;
 }

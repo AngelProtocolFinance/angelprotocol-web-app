@@ -1,9 +1,10 @@
 import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
-import { ErrorMessage } from "@hookform/error-message";
-import { useState } from "react";
+import { unpack } from "helpers";
+import { forwardRef, useState } from "react";
 import {
   type FieldValues,
   type Path,
+  get,
   useController,
   useFormContext,
 } from "react-hook-form";
@@ -12,49 +13,40 @@ import Icon, { DrawerIcon } from "../Icon";
 import Options from "./Options";
 import { placeHolderCountryOption } from "./constants";
 
-type BaseFormShape = { [index: string]: Country };
+type El = HTMLInputElement;
 
-const nameKey: keyof Country = "name";
-
-export default function CountrySelector<
-  T extends FieldValues,
-  K extends Path<T>,
->(props: {
-  countries: Country[];
+interface BaseProps {
+  options: Country[];
+  onReset?: () => void;
   disabled?: boolean;
-  fieldName: T[K] extends Country ? K : never;
-  onReset?(): void;
   placeholder?: string;
   classes?: {
     container?: string;
     input?: string;
     error?: string;
   };
-}) {
-  const {
-    formState: { errors, isSubmitting },
-  } = useFormContext<BaseFormShape>();
+}
+interface Props extends BaseProps {
+  value: Country;
+  onChange: (country: Country) => void;
+  error?: string;
+}
 
-  const {
-    field: { value: country, onChange: onCountryChange, ref },
-  } = useController<Record<string, Country>>({
-    name: props.fieldName,
-  });
-
-  const [query, setQuery] = useState(country.name);
-
+export const ControlledCountrySelector = forwardRef<El, Props>((props, ref) => {
+  const cls = unpack(props.classes);
+  const [query, setQuery] = useState(props.value.name);
   return (
     <Combobox
-      disabled={props.disabled || isSubmitting}
-      value={country}
-      onChange={(c) => c && onCountryChange(c)}
+      disabled={props.disabled}
+      value={props.value}
+      onChange={(c) => c && props.onChange(c)}
       as="div"
       className={`relative items-center grid grid-cols-[auto_auto_1fr] w-full field-container ${
         props.classes?.container || ""
       }`}
     >
       <span className="mr-1 empty:hidden text-3xl relative -bottom-0.5">
-        {country.flag || null}
+        {props.value.flag || null}
       </span>
 
       <ComboboxButton>
@@ -69,28 +61,56 @@ export default function CountrySelector<
         className={props.classes?.input}
       />
 
-      {country.name /** not placeholder */ && (
+      {props.value.name /** not placeholder */ && (
         <button
           className="absolute right-2 top-1/2 -translate-y-1/2 transform text-red hover:text-red-l1 active:text-red-d1 "
           onClick={() => {
-            onCountryChange(placeHolderCountryOption);
+            props.onChange(placeHolderCountryOption);
             setQuery("");
-            props.onReset && props.onReset();
+            props.onReset?.();
           }}
         >
           <Icon type="Close" size={16} />
         </button>
       )}
 
-      <Options query={query} options={props.countries} />
+      <Options query={query} options={props.options} />
 
-      <ErrorMessage
-        data-error
-        errors={errors}
-        name={`${props.fieldName}.${nameKey}`}
-        as="span"
-        className={props.classes?.error}
-      />
+      <span data-error className={cls.error + " empty:hidden"}>
+        {props.error}
+      </span>
     </Combobox>
+  );
+});
+
+type BaseFormShape = { [index: string]: Country };
+const nameKey: keyof Country = "name";
+export default function CountrySelector<
+  T extends FieldValues,
+  K extends Path<T>,
+>({
+  fieldName,
+  disabled,
+  ...props
+}: BaseProps & { fieldName: T[K] extends Country ? K : never }) {
+  const {
+    formState: { errors, isSubmitting },
+  } = useFormContext<BaseFormShape>();
+
+  const {
+    field: { value: country, onChange: onCountryChange, ref },
+  } = useController<Record<string, Country>>({
+    name: fieldName,
+  });
+
+  return (
+    <ControlledCountrySelector
+      value={country}
+      onChange={onCountryChange}
+      disabled={disabled || isSubmitting}
+      ref={ref}
+      error={get(errors, `${fieldName}.${nameKey}`)?.message}
+      {...props}
+    />
   );
 }

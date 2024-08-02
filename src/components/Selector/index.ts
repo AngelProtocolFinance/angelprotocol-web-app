@@ -1,7 +1,7 @@
 import { styles } from "./constants";
 
 export { default as FocusableInput } from "./FocusableInput";
-export { MultiSelector } from "./MultiSelector";
+export { MultiSelector, MultiList } from "./MultiSelector";
 export { NativeSelect } from "./NativeSelect";
 export { Selector, List } from "./Selector";
 

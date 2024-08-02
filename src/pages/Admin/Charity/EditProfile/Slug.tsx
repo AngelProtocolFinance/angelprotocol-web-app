@@ -1,26 +1,21 @@
-import { Field } from "components/form";
 import { appRoutes } from "constants/routes";
-import { useFormContext } from "react-hook-form";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import type { FV } from "./types";
 
 const genLink = (slug: string) =>
   `${window.origin}${appRoutes.marketplace}/${slug}`;
 
-export default function Slug({ initSlug = "" }) {
-  const { watch } = useFormContext<FV>();
+interface Props {
+  initSlug?: string;
+  newSlug: string;
+  slugField: ReactNode;
+}
+export default function Slug({ initSlug = "", newSlug, slugField }: Props) {
   const link = initSlug && genLink(initSlug);
-
-  const newSlug = watch("slug");
 
   return (
     <div>
-      <Field<FV>
-        classes="field-admin"
-        name="slug"
-        label="Custom Profile URL"
-        placeholder="myNonprofit"
-      />
+      {slugField}
       {link && (
         <div className="text-sm italic mt-1">
           <span>Current URL:</span>{" "}

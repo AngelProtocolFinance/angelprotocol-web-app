@@ -33,7 +33,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
         <CountrySelector<FV, "hqCountry">
           placeholder="Select a country"
           fieldName="hqCountry"
-          countries={countries}
+          options={countries}
           classes={{
             container: "px-2 dark:bg-blue-d6",
             input: "text-sm py-3.5",
