@@ -2,6 +2,7 @@ import character from "assets/laira/laira-waiving.png";
 import { DappLogo } from "components/Image";
 import Image from "components/Image/Image";
 import { type DonationState, Steps, initDetails } from "components/donation";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { useEndowment } from "services/aws/useEndowment";
 import type { WidgetConfig } from "types/widget";
 
@@ -75,7 +76,11 @@ export default function Preview({ classes = "", config }: Props) {
             className="my-5 @md/preview:w-3/4 border border-gray-l4"
           />
           <footer className="mt-auto grid place-items-center h-20 w-full bg-[--accent-primary]">
-            <DappLogo classes="w-40" color="white" />
+            <DappLogo
+              classes="w-40"
+              color="white"
+              to={{ href: BASE_URL, title: `Go to ${APP_NAME}` }}
+            />
           </footer>
         </div>
       </div>

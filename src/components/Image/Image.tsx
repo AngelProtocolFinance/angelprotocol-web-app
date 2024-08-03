@@ -1,7 +1,7 @@
 import ContentLoader from "components/ContentLoader";
-import ExtLink from "components/ExtLink";
 import React, {
-  type PropsWithChildren,
+  type ReactElement,
+  type ReactNode,
   useImperativeHandle,
   useRef,
   useState,
@@ -10,11 +10,12 @@ import ImagePlaceholder from "./ImagePlaceholder";
 
 export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   isSrcLoading?: boolean;
-} & ({ href: string; title: string } | { href?: never; title?: never });
+  render?: (img: ReactNode) => ReactElement;
+};
 
 const Image = React.forwardRef<HTMLImageElement, ImageProps>(
   (
-    { alt = "", className, isSrcLoading, href, title, onError, ...props },
+    { alt = "", className, isSrcLoading, render, onError, ...props },
     forwardRef
   ) => {
     const ref = useRef<HTMLImageElement>(null);
@@ -66,7 +67,8 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
          * wrapping the `img`.
          *
          */}
-        <WithLink className={commonClasses} href={href} title={title}>
+
+        {render?.(
           <img
             ref={ref}
             className={`object-contain ${commonClasses}`}
@@ -74,29 +76,18 @@ const Image = React.forwardRef<HTMLImageElement, ImageProps>(
             onError={(e) => (onError ? onError(e) : setError(true))}
             {...props}
           />
-        </WithLink>
+        ) || (
+          <img
+            ref={ref}
+            className={`object-contain ${commonClasses}`}
+            alt={alt}
+            onError={(e) => (onError ? onError(e) : setError(true))}
+            {...props}
+          />
+        )}
       </>
     );
   }
 );
-
-function WithLink({
-  className,
-  href,
-  title,
-  children,
-}: PropsWithChildren<{
-  className?: string;
-  href?: string;
-  title?: string;
-}>) {
-  return href ? (
-    <ExtLink href={href} title={title} className={className}>
-      {children}
-    </ExtLink>
-  ) : (
-    <>{children}</>
-  );
-}
 
 export default Image;
