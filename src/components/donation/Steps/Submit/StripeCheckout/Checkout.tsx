@@ -75,7 +75,23 @@ export default function Checkout(props: StripeCheckoutStep) {
       className="contents"
     >
       <PaymentElement
-        options={{ layout: "tabs" }}
+        options={{
+          layout: "tabs",
+          defaultValues: {
+            billingDetails: {
+              name: `${props.donor.firstName} ${props.donor.lastName}`,
+              email: props.donor.email,
+              /** we only collect address when donor wants to opt for uk gift aid */
+              ...(props.donor.ukTaxResident && {
+                address: {
+                  line1: props.donor.streetAddress,
+                  postal_code: props.donor.zipCode,
+                  country: "United Kingdom",
+                },
+              }),
+            },
+          },
+        }}
         onReady={() => setStatus("ready")}
         onLoadError={(error) => setStatus({ error })}
         onLoaderStart={() => setStatus("loading")}
