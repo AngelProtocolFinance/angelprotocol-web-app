@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import type { Props } from "./types";
 
 export default function RichText(props: Props) {
-  const [numChars, setNumChars] = useState(0);
+  const [numChars, setNumChars] = useState(props.content.length ?? 0);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   const containerRef = useCallback((container: HTMLDivElement | null) => {
@@ -22,38 +22,22 @@ export default function RichText(props: Props) {
       },
     });
 
-    try {
-      quill.setContents(JSON.parse(props.content.value));
-    } catch (_) {
-      //previous rich text format based on draft-js will throw parse error
-      //in this case just set it to blank
-      quill.setContents(quill.getContents());
-    } finally {
-      // set initial number of chars
-      setNumChars(quill.getLength() - 1);
-    }
+    quill.setContents(JSON.parse(props.content.value));
 
-    if (!props.readOnly) {
-      /** even if quill is empty, it's string value for form purposes is not.
-      after mounting, set form value to "", so that form state with initially empty quill value
-      will be blocked by validation on re-submit
-      */
-      if (quill.getLength() <= 1) {
-        props.onInit({ value: "", length: 0 });
-      }
+    if (props.readOnly) return;
 
-      quill.on("editor-change", function handleChange() {
-        //quill content min length is 1
-        const numChars = quill.getLength() - 1;
-        setNumChars(numChars);
+    quill.on("editor-change", function handleChange() {
+      console.log("change");
+      //quill content min length is 1
+      const numChars = quill.getLength() - 1;
+      setNumChars(numChars);
 
-        props.onChange({
-          //quill clean state has residual `\n`
-          value: numChars <= 0 ? "" : JSON.stringify(quill.getContents()),
-          length: numChars,
-        });
+      props.onChange({
+        //quill clean state has residual `\n`
+        value: numChars <= 0 ? "" : JSON.stringify(quill.getContents()),
+        length: numChars,
       });
-    }
+    });
   }, []);
 
   return (

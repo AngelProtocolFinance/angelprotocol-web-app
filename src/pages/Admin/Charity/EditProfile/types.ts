@@ -17,4 +17,4 @@ export type FV = OverrideProperties<
     active_in_countries: OptionType<string>[];
     overview: RichTextContent;
   }
-> & { initial: EndowmentProfileUpdate };
+>;

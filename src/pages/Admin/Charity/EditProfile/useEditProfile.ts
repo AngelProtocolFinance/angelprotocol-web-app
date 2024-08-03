@@ -4,7 +4,6 @@ import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
-import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import { useLazyProfileQuery } from "services/aws/aws";
@@ -13,7 +12,6 @@ import { useAdminContext } from "../../Context";
 import { useUpdateEndowment } from "../common";
 import { schema } from "./schema";
 import type { FV } from "./types";
-import { toProfileUpdate } from "./update";
 
 export default function useEditProfile(init: FV) {
   const { id } = useAdminContext();
@@ -56,12 +54,8 @@ export default function useEditProfile(init: FV) {
     name: "published",
   });
 
-  const editProfile: SubmitHandler<FV> = async ({ initial, ...fv }) => {
+  const editProfile: SubmitHandler<FV> = async (fv) => {
     try {
-      /** special case for edit profile: since upload happens prior
-       * to tx submission. Other users of useTxSender
-       */
-
       const [bannerUrl, logoUrl, cardImgUrl] = await uploadImgs(
         [fv.image, fv.logo, fv.card_img],
         () => {
@@ -73,15 +67,7 @@ export default function useEditProfile(init: FV) {
         }
       );
 
-      const update = toProfileUpdate({
-        type: "final",
-        data: { ...fv, id },
-        urls: { image: bannerUrl, logo: logoUrl, card_img: cardImgUrl },
-      });
-
-      const diffs = getPayloadDiff(initial, update);
-
-      if (isEmpty(diffs)) return displayError("No changes detected");
+      const update: Partial<EndowmentProfileUpdate> = {};
 
       //dont check hit if unsetting
       if (update.slug && update.slug !== initial.slug) {

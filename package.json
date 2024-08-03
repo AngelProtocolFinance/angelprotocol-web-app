@@ -55,6 +55,7 @@
     "nprogress": "0.2.0",
     "qrcode.react": "3.1.0",
     "quill": "2.0.2",
+    "quill-delta": "^5.1.0",
     "react": "18.2.0",
     "react-chariot-connect": "1.0.8",
     "react-csv": "2.2.2",
