@@ -134,6 +134,10 @@ export type SummaryStep = {
   feeAllowance?: number;
 } & From<TipStep, "tip">;
 
+export type FinishedSummaryData = Required<
+  Pick<SummaryStep, "donor" | "honorary" | "feeAllowance">
+>;
+
 export type SubmitStep<T extends DonationDetails = DonationDetails> = {
   step: "submit";
 } & Omit<From<SummaryStep, "tip">, "details"> & { details: T };

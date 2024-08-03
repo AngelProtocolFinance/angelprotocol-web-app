@@ -5,6 +5,7 @@ export const GENERIC_ERROR_MESSAGE = `An unexpected error occurred and has been 
 export const BYTES_IN_MB = 1e6;
 
 export const PROCESSING_RATES = {
+  chariot: 0.029,
   stripe: 0.024,
   crypto: {
     ethereum: 0.02,
