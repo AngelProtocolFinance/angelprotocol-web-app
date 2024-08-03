@@ -2,6 +2,7 @@ import { DappLogo } from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { ErrorStatus } from "components/Status";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { idParamToNum, setToLightMode } from "helpers";
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
@@ -67,7 +68,11 @@ export default function DonateWidget() {
         {(profile) => <Content profile={profile} config={config} />}
       </QueryLoader>
       <footer className="grid place-items-center h-20 w-full bg-[--accent-primary]">
-        <DappLogo classes="w-40" color="white" />
+        <DappLogo
+          classes="w-40"
+          color="white"
+          to={{ href: BASE_URL, title: `Go to ${APP_NAME}` }}
+        />
       </footer>
     </div>
   );
