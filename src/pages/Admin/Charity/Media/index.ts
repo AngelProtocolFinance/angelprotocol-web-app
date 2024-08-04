@@ -1,1 +1,1 @@
-export { default } from "./routes";
+export { mediaRoute } from "./Media";

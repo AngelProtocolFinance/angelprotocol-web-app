@@ -1,6 +1,7 @@
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
+import { adminRoute } from "pages/Admin";
 import { routes as blogRoutes } from "pages/Blog";
 import { legalRoutes } from "pages/Legal";
 import OAuthRedirector from "pages/OAuthRedirector";
@@ -30,6 +31,7 @@ const widgetRoutes: RO[] = [
 
 //routes between header/footer
 const _appRoutes: RO[] = [
+  adminRoute,
   regRoute,
   ...blogRoutes,
   ...legalRoutes,
@@ -40,7 +42,7 @@ const _appRoutes: RO[] = [
       { path: `${appRoutes.profile}/:id/*`, lazy: () => endowProfile },
     ],
   },
-  { path: `${appRoutes.admin}/:id/*`, lazy: () => import("pages/Admin") },
+
   {
     path: `${appRoutes.user_dashboard}/*`,
     lazy: () => import("pages/UserDashboard"),
