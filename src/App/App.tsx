@@ -10,7 +10,12 @@ import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { userDashboardRoute } from "pages/UserDashboard";
 import { infoRoutes } from "pages/informational";
-import { Outlet, type RouteObject as RO, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  type RouteObject as RO,
+  useLocation,
+} from "react-router-dom";
 import { usePingQuery } from "services/aws/aws";
 import Layout from "./Layout";
 
@@ -96,10 +101,8 @@ const rootRoutes: RO[] = [
 ];
 
 export const routes: RO[] = [
-  {
-    element: <RootLayout />,
-    children: rootRoutes,
-  },
+  { element: <RootLayout />, children: rootRoutes },
+  { path: "*", element: <Navigate to="/" /> },
 ];
 
 function RootLayout() {
