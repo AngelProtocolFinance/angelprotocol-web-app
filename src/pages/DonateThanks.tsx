@@ -13,7 +13,7 @@ import { userIsSignedIn } from "types/auth";
 import type { DonateThanksState } from "types/pages";
 
 export function Component() {
-  const widgetVersion = useOutletContext<boolean>();
+  const widgetVersion = useOutletContext<true | undefined>();
   const location = useLocation();
   const state: DonateThanksState | undefined = location.state;
   const user = useGetter((state) => state.auth.user);

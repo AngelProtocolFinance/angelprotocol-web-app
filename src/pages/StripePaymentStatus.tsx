@@ -12,7 +12,7 @@ import type { GuestDonor } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 
 export function Component() {
-  const isInWidget = useOutletContext<boolean>();
+  const isInWidget = useOutletContext<true | undefined>();
   const paymentIntentId =
     new URLSearchParams(window.location.search).get("payment_intent") ?? "";
 
@@ -48,7 +48,7 @@ export function Component() {
           <Content
             status={status}
             onMount={handleProcessing}
-            isInWidget={isInWidget}
+            isInWidget={isInWidget ?? false}
             guestDonor={guestDonor}
             recipientName={recipientName}
             recipientId={recipientId}
