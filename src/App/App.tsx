@@ -1,7 +1,9 @@
-import { appRoutes, donateWidgetRoutes } from "constants/routes";
+import { appRoutes, donateWidgetRoutes, regRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import OAuthRedirector from "pages/OAuthRedirector";
+import SignResult from "pages/Registration/SigningResult";
+import Signup from "pages/Registration/Signup";
 import {
   Outlet,
   Route,
@@ -62,10 +64,31 @@ export const routes = createRoutesFromElements(
         path={appRoutes.stripe_payment_status}
         lazy={() => import("pages/StripePaymentStatus")}
       />
+
       <Route
-        path={`${appRoutes.register}/*`}
+        path={appRoutes.register}
         lazy={() => import("pages/Registration")}
-      />
+      >
+        <Route
+          path={regRoutes.welcome}
+          lazy={() => import("pages/Registration/Welcome")}
+        />
+        <Route
+          path={regRoutes.steps + "/*"}
+          lazy={() => import("pages/Registration/Steps")}
+        />
+        <Route
+          path={regRoutes.resume}
+          lazy={() => import("pages/Registration/Resume")}
+        />
+        <Route
+          path={regRoutes.success}
+          lazy={() => import("pages/Registration/Success")}
+        />
+        <Route path={regRoutes.sign_result} element={<SignResult />} />
+        <Route index element={<Signup />} />
+      </Route>
+
       <Route path={`${appRoutes.gift}/*`} lazy={() => import("pages/Gift")} />
       <Route path={appRoutes.signin} lazy={() => import("pages/Signin")} />
       <Route path={appRoutes.signup} lazy={() => import("pages/SignUp")} />
