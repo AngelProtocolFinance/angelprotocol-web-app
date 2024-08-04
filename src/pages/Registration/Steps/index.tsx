@@ -1,15 +1,27 @@
 import ExtLink from "components/ExtLink";
 import { ErrorStatus, LoadingStatus } from "components/Status";
-import { appRoutes } from "constants/routes";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { appRoutes, regRoutes } from "constants/routes";
+import {
+  Navigate,
+  Outlet,
+  type RouteObject,
+  useLocation,
+} from "react-router-dom";
 import { useRegQuery } from "services/aws/registration";
+import { steps } from "../routes";
 import type { InitReg, RegStep4, RegistrationState } from "../types";
+import Banking from "./Banking";
+import ContactDetails from "./ContactDetails";
+import Dashboard from "./Dashboard";
+import Documentation from "./Documentation";
+import FSAInquiry from "./FSAInquiry";
+import OrgDetails from "./OrgDetails";
 import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
 import type { StepGuardProps } from "./StepGuard";
 import { getRegistrationState } from "./getRegistrationState";
 
-export function Component() {
+function Layout() {
   const { state } = useLocation();
   const initReg = state as InitReg | undefined;
 
@@ -96,3 +108,16 @@ function getClaim(reg: RegistrationState) {
 
   return doc?.Claim || reg.data.init.claim;
 }
+
+export const route: RouteObject = {
+  path: regRoutes.steps,
+  element: <Layout />,
+  children: [
+    { path: steps.contact, element: <ContactDetails step={1} /> },
+    { path: steps.orgDetails, element: <OrgDetails step={2} /> },
+    { path: steps.fsaInquiry, element: <FSAInquiry step={3} /> },
+    { path: steps.docs, element: <Documentation step={4} /> },
+    { path: steps.banking, element: <Banking step={5} /> },
+    { path: steps.summary, element: <Dashboard step={6} /> },
+  ],
+};
