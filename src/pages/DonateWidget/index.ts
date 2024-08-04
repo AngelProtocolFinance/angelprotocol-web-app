@@ -1,1 +1,1 @@
-export { DonateWidget as Component } from "./DonateWidget";
+export { default as Component } from "./DonateWidget";

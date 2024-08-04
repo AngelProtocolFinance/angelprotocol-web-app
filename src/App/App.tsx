@@ -19,6 +19,7 @@ const stripePaymentStatus = import("pages/StripePaymentStatus");
 const widget = import("pages/Widget");
 
 const widgetRoutes: RO[] = [
+  { path: ":id", lazy: () => import("pages/DonateWidget") },
   { path: donateWidgetRoutes.donate_thanks, lazy: () => donateThanks },
   {
     path: donateWidgetRoutes.stripe_payment_status,
