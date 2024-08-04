@@ -1,1 +1,1 @@
-export { Component } from "./UserDashboard";
+export { UserDashboard as Component } from "./UserDashboard";

@@ -36,6 +36,7 @@ const NonprofitInfo = lazy(() => import("pages/informational/NonprofitInfo"));
 const DonorInfo = lazy(() => import("pages/informational/DonorInfo"));
 const WpPlugin = lazy(() => import("pages/informational/WpPlugin"));
 
+const WidgetPromise = import("pages/Widget");
 export const routes = createRoutesFromElements(
   <Route element={<RootLayout />}>
     <Route
@@ -54,10 +55,12 @@ export const routes = createRoutesFromElements(
       />
     </Route>
     <Route element={<Layout />}>
-      <Route
-        path={`${appRoutes.profile}/:id/*`}
-        lazy={() => import("pages/Profile/legacy")}
-      />
+      <Route element={<Outlet context={true} />}>
+        <Route
+          path={`${appRoutes.profile}/:id/*`}
+          lazy={() => import("pages/Profile")}
+        ></Route>
+      </Route>
       <Route
         path={`${appRoutes.admin}/:id/*`}
         lazy={() => import("pages/Admin")}
@@ -92,10 +95,20 @@ export const routes = createRoutesFromElements(
         <Route path=":id/*" lazy={() => import("pages/Profile")} />
         <Route index lazy={() => import("pages/Marketplace")} />
       </Route>
+
       <Route
-        path={appRoutes.widget_config}
-        lazy={() => import("pages/Widget/public")}
-      />
+        // Widget.tsx is also used as one of the Admin pages and so
+        // where its styles depend on the width of the parent component;
+        // We copy/paste src/pages/Admin/Layout.tsx container setup & styles
+        // here so that Widget.tsx styles are applied correctly on both pages.
+        element={
+          <div className="px-6 py-8 md:p-10 @container">
+            <Outlet />
+          </div>
+        }
+      >
+        <Route path={appRoutes.widget_config} lazy={() => WidgetPromise} />
+      </Route>
       <Route path={appRoutes.blog}>
         <Route path=":slug" element={<BlogPost />} />
         <Route index element={<BlogPosts />} />

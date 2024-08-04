@@ -4,7 +4,7 @@ import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate, useOutletContext, useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import Body from "./Body";
 import PageError from "./PageError";
@@ -12,7 +12,8 @@ import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
 const slug = /\D/;
-export function Profile({ legacy = false }) {
+export function Profile() {
+  const legacy = useOutletContext<boolean>();
   const { id = "" } = useParams<{ id: string }>();
 
   const { isLoading, isError, data } = useEndowment(
