@@ -11,6 +11,7 @@ import "./index.css";
 import { Amplify } from "aws-amplify";
 import { Hub } from "aws-amplify/utils";
 import amplifyConfig from "constants/aws";
+import type { OAuthState } from "types/auth";
 import { router } from "./App/App";
 
 //set theme immediately, so even suspense loaders and can use it
@@ -42,7 +43,9 @@ Hub.listen("auth", async ({ payload }) => {
       store.dispatch(auth.reset());
       break;
     case "customOAuthState":
-      console.log("oauth state");
+      const state: OAuthState = JSON.parse(payload.data);
+      const { pathname = "/", data } = state;
+      router.navigate({ pathname }, { state: data });
   }
 });
 
