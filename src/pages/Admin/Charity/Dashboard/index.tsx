@@ -1,1 +1,1 @@
-export { default } from "./Dashboard";
+export { default as Component } from "./Dashboard";

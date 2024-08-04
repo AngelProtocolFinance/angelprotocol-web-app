@@ -6,14 +6,7 @@ import { useAdminContext } from "../Context";
 import SidebarHeader from "../SidebarHeader";
 import { linkGroups } from "../constants";
 import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";
-import Dashboard from "./Dashboard";
-import Donations from "./Donations";
-import EditProfile from "./EditProfile";
 import { mediaRoutes } from "./Media";
-import Members from "./Members/Members";
-import ProgramEditor from "./ProgramEditor";
-import Programs from "./Programs";
-import Settings from "./Settings";
 
 export const charityRoute: RouteObject = {
   element: (
@@ -24,12 +17,12 @@ export const charityRoute: RouteObject = {
     />
   ),
   children: [
-    { path: adminRoutes.donations, element: <Donations /> },
-    { path: adminRoutes.edit_profile, element: <EditProfile /> },
-    { path: adminRoutes.programs, element: <Programs /> },
-    { path: adminRoutes.program_editor, element: <ProgramEditor /> },
-    { path: adminRoutes.settings, element: <Settings /> },
-    { path: adminRoutes.members, element: <Members /> },
+    { path: adminRoutes.donations, lazy: () => import("./Donations") },
+    { path: adminRoutes.edit_profile, lazy: () => import("./EditProfile") },
+    { path: adminRoutes.programs, lazy: () => import("./Programs") },
+    { path: adminRoutes.program_editor, lazy: () => import("./ProgramEditor") },
+    { path: adminRoutes.settings, lazy: () => import("./Settings") },
+    { path: adminRoutes.members, lazy: () => import("./Members") },
     {
       path: adminRoutes.banking,
       children: [
@@ -39,7 +32,7 @@ export const charityRoute: RouteObject = {
       ],
     },
     { path: adminRoutes.widget_config, element: <EndowWidget /> },
-    { index: true, element: <Dashboard /> },
+    { index: true, lazy: () => import("./Dashboard") },
     ...mediaRoutes,
   ],
 };
