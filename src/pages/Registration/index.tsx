@@ -32,5 +32,6 @@ export const route: RouteObject = {
     { path: regRoutes.resume, lazy: () => import("./Resume") },
     { path: regRoutes.success, lazy: () => import("./Success") },
     { path: regRoutes.sign_result, element: <SigningResult /> },
+    { index: true, lazy: () => import("./Signup") },
   ],
 };
