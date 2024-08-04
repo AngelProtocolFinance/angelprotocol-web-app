@@ -1,5 +1,4 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { store } from "store/store";
@@ -40,7 +39,7 @@ describe("App.tsx tests", () => {
       name: marketLink,
     });
 
-    await userEvent.click(marketplaceLinks[0]);
+    fireEvent.click(marketplaceLinks[0]);
 
     expect(
       await screen.findByRole("heading", { name: marketplaceHeroText })
