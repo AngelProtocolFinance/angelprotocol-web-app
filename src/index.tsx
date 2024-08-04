@@ -21,6 +21,8 @@ import amplifyConfig from "constants/aws";
 import type { OAuthState } from "types/auth";
 import { routes } from "./App/App";
 
+Amplify.configure(amplifyConfig);
+
 //set theme immediately, so even suspense loaders and can use it
 // NOTE: Turning off option for Dark theme for now
 // initTheme();
@@ -48,7 +50,6 @@ const sentryCreateBrowserRouter =
 
 const router = sentryCreateBrowserRouter(routes);
 
-Amplify.configure(amplifyConfig);
 store.dispatch(auth.loadSession());
 Hub.listen("auth", async ({ payload }) => {
   switch (payload.event) {
