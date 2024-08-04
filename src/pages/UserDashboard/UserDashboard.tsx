@@ -7,7 +7,7 @@ import EditProfile from "./EditProfile";
 import Settings from "./Settings";
 import { linkGroups, routes } from "./routes";
 
-export default withAuth(function UserDashboard({ user }) {
+export const Component = withAuth(function UserDashboard({ user }) {
   return (
     <Routes>
       <Route

@@ -14,8 +14,6 @@ import {
 import { usePingQuery } from "services/aws/aws";
 import Layout from "./Layout";
 
-const Admin = lazy(() => import("pages/Admin"));
-const UserDashboard = lazy(() => import("pages/UserDashboard"));
 const Profile = lazy(() => import("pages/Profile"));
 const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
@@ -58,10 +56,13 @@ export const routes = createRoutesFromElements(
     </Route>
     <Route element={<Layout />}>
       <Route path={`${appRoutes.profile}/:id/*`} element={<Profile legacy />} />
-      <Route path={`${appRoutes.admin}/:id/*`} element={<Admin />} />
+      <Route
+        path={`${appRoutes.admin}/:id/*`}
+        lazy={() => import("pages/Admin")}
+      />
       <Route
         path={`${appRoutes.user_dashboard}/*`}
-        element={<UserDashboard />}
+        lazy={() => import("pages/UserDashboard")}
       />
       <Route
         path={appRoutes.banking_applications}

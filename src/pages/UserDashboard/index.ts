@@ -1,1 +1,1 @@
-export { default } from "./UserDashboard";
+export { Component } from "./UserDashboard";
