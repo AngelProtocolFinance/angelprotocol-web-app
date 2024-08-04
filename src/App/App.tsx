@@ -14,10 +14,7 @@ import {
 import { usePingQuery } from "services/aws/aws";
 import Layout from "./Layout";
 
-const Profile = lazy(() => import("pages/Profile"));
-const Marketplace = lazy(() => import("pages/Marketplace"));
 const Registration = lazy(() => import("pages/Registration"));
-const Donate = lazy(() => import("pages/Donate"));
 const DonateThanks = lazy(() => import("pages/DonateThanks"));
 const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
@@ -29,7 +26,6 @@ const Application = lazy(() => import("pages/Application"));
 const BankingApplications = lazy(() => import("pages/BankingApplications"));
 const BankingApplication = lazy(() => import("pages/BankingApplication"));
 const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
-const Widget = lazy(() => import("pages/Widget"));
 const BlogPosts = lazy(() => import("pages/Blog/Posts"));
 const BlogPost = lazy(() => import("pages/Blog/Post"));
 const Home = lazy(() => import("pages/Home"));
@@ -42,7 +38,10 @@ const WpPlugin = lazy(() => import("pages/informational/WpPlugin"));
 
 export const routes = createRoutesFromElements(
   <Route element={<RootLayout />}>
-    <Route path={`${appRoutes.donate}/:id`} element={<Donate />} />
+    <Route
+      path={`${appRoutes.donate}/:id`}
+      lazy={() => import("pages/Donate")}
+    />
     <Route path={appRoutes.donate_widget}>
       <Route path=":id" element={<DonateWidget />} />
       <Route
@@ -55,7 +54,10 @@ export const routes = createRoutesFromElements(
       />
     </Route>
     <Route element={<Layout />}>
-      <Route path={`${appRoutes.profile}/:id/*`} element={<Profile legacy />} />
+      <Route
+        path={`${appRoutes.profile}/:id/*`}
+        lazy={() => import("pages/Profile/legacy")}
+      />
       <Route
         path={`${appRoutes.admin}/:id/*`}
         lazy={() => import("pages/Admin")}
@@ -87,20 +89,12 @@ export const routes = createRoutesFromElements(
       <Route path={appRoutes.reset_password} element={<ResetPassword />} />
       <Route path={appRoutes.auth_redirector} element={<OAuthRedirector />} />
       <Route path={appRoutes.marketplace}>
-        <Route path=":id/*" element={<Profile />} />
-        <Route index element={<Marketplace />} />
+        <Route path=":id/*" lazy={() => import("pages/Profile")} />
+        <Route index lazy={() => import("pages/Marketplace")} />
       </Route>
       <Route
         path={appRoutes.widget_config}
-        element={
-          // Widget.tsx is also used as one of the Admin pages and so
-          // where its styles depend on the width of the parent component;
-          // We copy/paste src/pages/Admin/Layout.tsx container setup & styles
-          // here so that Widget.tsx styles are applied correctly on both pages.
-          <div className="px-6 py-8 md:p-10 @container">
-            <Widget />
-          </div>
-        }
+        lazy={() => import("pages/Widget/public")}
       />
       <Route path={appRoutes.blog}>
         <Route path=":slug" element={<BlogPost />} />

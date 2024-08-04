@@ -1,7 +1,7 @@
 import { adminRoutes, appRoutes } from "constants/routes";
 import Layout from "layout/DashboardLayout";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Widget from "../../Widget";
+import { Component as Widget } from "../../Widget";
 import { useAdminContext } from "../Context";
 import SidebarHeader from "../SidebarHeader";
 import { linkGroups } from "../constants";

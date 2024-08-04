@@ -12,7 +12,7 @@ import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
 const slug = /\D/;
-export default function Profile({ legacy = false }) {
+export function Profile({ legacy = false }) {
   const { id = "" } = useParams<{ id: string }>();
 
   const { isLoading, isError, data } = useEndowment(
