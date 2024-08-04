@@ -16,7 +16,7 @@ const Layout = withAuth(function Admin({ user }) {
 });
 
 export const adminRoute: RouteObject = {
-  path: appRoutes.admin + "/:id/*",
+  path: appRoutes.admin + "/:id",
   element: <Layout />,
   children: [charityRoute],
 };

@@ -35,7 +35,7 @@ export const charityRoute: RouteObject = {
       children: [
         { index: true, element: <Banking /> },
         { path: "new", element: <NewPayoutMethod /> },
-        { path: ":id", element: <PayoutMethodDetails /> },
+        { path: ":bankId", element: <PayoutMethodDetails /> },
       ],
     },
     { path: adminRoutes.widget_config, element: <EndowWidget /> },

@@ -4,13 +4,13 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
-import { Route, Routes } from "react-router-dom";
+import { Outlet, type RouteObject } from "react-router-dom";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
 import Program from "./Program";
 
-export default function Body() {
+function Body() {
   const p = useProfileContext();
 
   return (
@@ -68,21 +68,22 @@ export default function Body() {
           </div>
         </div>
 
-        <Routes>
-          <Route
-            index
-            element={
-              <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />
-            }
-          />
-          <Route
-            path="program/:id"
-            element={
-              <Program className="order-4 lg:col-span-2 w-full h-full" />
-            }
-          />
-        </Routes>
+        <Outlet />
       </div>
     </div>
   );
 }
+
+export const bodyRoute: RouteObject = {
+  element: <Body />,
+  children: [
+    {
+      index: true,
+      element: <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />,
+    },
+    {
+      path: "program/:programId",
+      element: <Program className="order-4 lg:col-span-2 w-full h-full" />,
+    },
+  ],
+};

@@ -6,6 +6,7 @@ import { routes as blogRoutes } from "pages/Blog";
 import { giftRoute } from "pages/Gift";
 import { legalRoutes } from "pages/Legal";
 import OAuthRedirector from "pages/OAuthRedirector";
+import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { infoRoutes } from "pages/informational";
 import {
@@ -19,7 +20,6 @@ import Layout from "./Layout";
 
 const donateThanks = import("pages/DonateThanks");
 const stripePaymentStatus = import("pages/StripePaymentStatus");
-const endowProfile = import("pages/Profile");
 const widget = import("pages/Widget");
 
 const widgetRoutes: RO[] = [
@@ -40,11 +40,8 @@ const _appRoutes: RO[] = [
   ...infoRoutes,
   {
     element: <Outlet context={true} />, //outlet-value: legacy
-    children: [
-      { path: `${appRoutes.profile}/:id/*`, lazy: () => endowProfile },
-    ],
+    children: [{ path: appRoutes.profile + "/:id", ...profileRoute }],
   },
-
   {
     path: `${appRoutes.user_dashboard}/*`,
     lazy: () => import("pages/UserDashboard"),
@@ -73,7 +70,7 @@ const _appRoutes: RO[] = [
     path: appRoutes.marketplace,
     children: [
       { index: true, lazy: () => import("pages/Marketplace") },
-      { path: ":id/*", lazy: () => import("pages/Profile") },
+      { path: ":id", ...profileRoute },
     ],
   },
   {
