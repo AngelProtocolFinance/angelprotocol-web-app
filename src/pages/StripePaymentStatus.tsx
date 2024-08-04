@@ -11,7 +11,7 @@ import { useStripePaymentStatusQuery } from "services/apes";
 import type { GuestDonor } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 
-function StripePaymentStatus() {
+export function Component() {
   const isInWidget = useOutletContext<boolean>();
   const paymentIntentId =
     new URLSearchParams(window.location.search).get("payment_intent") ?? "";
@@ -166,5 +166,3 @@ function SomethingWentWrong({ recipientId }: { recipientId?: number }) {
     </div>
   );
 }
-
-export const Component = StripePaymentStatus;

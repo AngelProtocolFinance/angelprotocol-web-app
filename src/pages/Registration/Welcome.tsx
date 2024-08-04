@@ -12,7 +12,7 @@ import type { EndowClaim } from "types/aws";
 import { steps } from "./routes";
 import type { InitReg } from "./types";
 
-export default function Welcome({ classes = "" }: { classes?: string }) {
+export function Component() {
   const { email } = useAuthenticatedUser();
   const { state } = useLocation();
   const claim = state as EndowClaim | undefined;
@@ -28,7 +28,7 @@ export default function Welcome({ classes = "" }: { classes?: string }) {
   }, [reg]);
 
   return (
-    <div className={`${classes} grid justify-items-center`}>
+    <div className="grid justify-items-center mx-6">
       <Icon type="CheckCircle" className="text-green" size={80} />
       <h1 className="text-[2rem] mt-10 text-center">
         Thank you for joining {APP_NAME}!

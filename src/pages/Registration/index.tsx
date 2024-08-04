@@ -6,8 +6,6 @@ import { Suspense } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import SignResult from "./SigningResult";
 import Signup from "./Signup";
-import Steps from "./Steps";
-import Welcome from "./Welcome";
 
 function Registration() {
   return (
@@ -18,14 +16,8 @@ function Registration() {
           url={`${BASE_URL}/register`}
         />
         <Routes>
-          <Route
-            path={regRoutes.welcome}
-            element={<Welcome classes="mx-6" />}
-          />
-          <Route
-            path={regRoutes.steps + "/*"}
-            element={<Steps classes="max-md:-my-20" />}
-          />
+          <Route path={regRoutes.welcome} lazy={() => import("./Welcome")} />
+          <Route path={regRoutes.steps + "/*"} lazy={() => import("./Steps")} />
           <Route path={regRoutes.resume} lazy={() => import("./Resume")} />
           <Route path={regRoutes.success} lazy={() => import("./Success")} />
           <Route path={regRoutes.sign_result} element={<SignResult />} />

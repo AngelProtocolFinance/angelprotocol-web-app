@@ -1,1 +1,1 @@
-export { Component } from "./DonorInfo";
+export { DonorInfo as Component } from "./DonorInfo";

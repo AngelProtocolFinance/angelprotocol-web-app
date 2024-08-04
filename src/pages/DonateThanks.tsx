@@ -12,7 +12,7 @@ import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import type { DonateThanksState } from "types/pages";
 
-function DonateThanks() {
+export function Component() {
   const widgetVersion = useOutletContext<boolean>();
   const location = useLocation();
   const state: DonateThanksState | undefined = location.state;
@@ -98,5 +98,3 @@ function DonateThanks() {
     </div>
   );
 }
-
-export const Component = DonateThanks;

@@ -25,7 +25,7 @@ const wpStyles = [
   "swiper-bundle.css",
 ];
 
-function Post() {
+export function Component() {
   const { slug = "" } = useParams<{ slug: string }>();
 
   const query = usePostQuery(slug, { skip: !slug });
@@ -123,5 +123,3 @@ function Skeleton() {
     </>
   );
 }
-
-export const Component = Post;

@@ -16,7 +16,7 @@ import Reference from "./Reference";
 import type { StepGuardProps } from "./StepGuard";
 import { getRegistrationState } from "./getRegistrationState";
 
-export default function Steps({ classes = "" }: { classes?: string }) {
+export function Component() {
   const { state } = useLocation();
   const initReg = state as InitReg | undefined;
 
@@ -59,9 +59,7 @@ export default function Steps({ classes = "" }: { classes?: string }) {
   const claim = getClaim(regState);
 
   return (
-    <div
-      className={`w-full md:w-[90%] max-w-[62.5rem] [&]:has-[[data-claim='true']]:pt-0 pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l4 rounded-none md:rounded-lg bg-white dark:bg-blue-d6 ${classes}`}
-    >
+    <div className="max-md:-my-20 w-full md:w-[90%] max-w-[62.5rem] [&]:has-[[data-claim='true']]:pt-0 pt-8 grid md:grid-cols-[auto_1fr] md:border border-gray-l4 rounded-none md:rounded-lg bg-white dark:bg-blue-d6">
       {claim && (
         <div
           data-claim
