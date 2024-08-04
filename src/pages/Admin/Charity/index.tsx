@@ -20,7 +20,10 @@ export const charityRoute: RouteObject = {
     { path: adminRoutes.donations, lazy: () => import("./Donations") },
     { path: adminRoutes.edit_profile, lazy: () => import("./EditProfile") },
     { path: adminRoutes.programs, lazy: () => import("./Programs") },
-    { path: adminRoutes.program_editor, lazy: () => import("./ProgramEditor") },
+    {
+      path: adminRoutes.program_editor + "/:programId",
+      lazy: () => import("./ProgramEditor"),
+    },
     { path: adminRoutes.settings, lazy: () => import("./Settings") },
     { path: adminRoutes.members, lazy: () => import("./Members") },
     {

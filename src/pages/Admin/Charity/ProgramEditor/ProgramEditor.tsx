@@ -8,7 +8,7 @@ import { useAdminContext } from "../../Context";
 import Form from "./Form";
 
 export default function ProgramEditor() {
-  const { id: programId = "" } = useParams();
+  const { programId = "" } = useParams();
   const { id: endowId } = useAdminContext();
   const programQuery = useProgramQuery(
     { endowId, programId },
