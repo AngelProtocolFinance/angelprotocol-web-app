@@ -3,7 +3,7 @@ import ModalContext from "contexts/ModalContext";
 import Charity from "./Charity";
 import { Context } from "./Context";
 
-export const Admin = withAuth(function Admin({ user }) {
+export const Component = withAuth(function Admin({ user }) {
   return (
     <Context user={user}>
       <ModalContext>

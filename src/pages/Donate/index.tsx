@@ -8,7 +8,7 @@ import { useEndowment } from "services/aws/useEndowment";
 import type { DonationIntent } from "types/aws";
 import Content from "./Content";
 
-export function Donate() {
+export function Component() {
   const location = useLocation();
 
   //setter of this should make sure that intent.endowmentId is the same as this page's param.id.

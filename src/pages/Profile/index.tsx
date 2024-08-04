@@ -12,7 +12,7 @@ import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
 const slug = /\D/;
-export function Profile() {
+export function Component() {
   const legacy = useOutletContext<boolean>();
   const { id = "" } = useParams<{ id: string }>();
 
