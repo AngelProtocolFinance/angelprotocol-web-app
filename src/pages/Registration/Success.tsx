@@ -4,7 +4,7 @@ import { Navigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import type { CompleteRegistration } from "./types";
 
-export default function Success({ classes = "" }: { classes?: string }) {
+export function Component({ classes = "" }: { classes?: string }) {
   const { state } = useLocation();
   const reg = state as CompleteRegistration | undefined;
 

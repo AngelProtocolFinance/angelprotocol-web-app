@@ -34,4 +34,4 @@ function Application() {
   );
 }
 
-export default withAuth(Application, ["ap-admin"]);
+export const Component = withAuth(Application, ["ap-admin"]);

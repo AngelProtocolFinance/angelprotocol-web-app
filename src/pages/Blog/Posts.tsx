@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import type { Wordpress } from "types/wordpress";
 import usePagination from "./usePagination";
 
-export default function Posts() {
+function Posts() {
   const {
     data,
     hasMore,
@@ -104,3 +104,5 @@ function CardSkeleton() {
     </div>
   );
 }
+
+export const Component = Posts;

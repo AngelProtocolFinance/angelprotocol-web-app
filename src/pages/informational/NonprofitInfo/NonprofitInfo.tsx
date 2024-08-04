@@ -8,7 +8,7 @@ import Hero from "./Hero";
 import Testimonials from "./Testimonials";
 import WhyBG from "./WhyBG";
 
-export default function Nonprofits() {
+export function Component() {
   return (
     <main className="w-full grid content-start pb-16 @container">
       <Hero className="padded-container px-10" />

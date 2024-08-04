@@ -5,7 +5,7 @@ import BottomCta from "./BottomCta";
 import DonationFormInfo from "./DonationFormInfo";
 import Hero from "./Hero";
 
-export default function DonorInfo({ className = "" }) {
+export function Component({ className = "" }) {
   return (
     <main className={`${className} grid @container`}>
       <Hero className="padded-container px-10" />

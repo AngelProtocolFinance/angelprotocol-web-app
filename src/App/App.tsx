@@ -2,9 +2,7 @@ import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import OAuthRedirector from "pages/OAuthRedirector";
-import { lazy } from "react";
 import {
-  Navigate,
   Outlet,
   Route,
   createBrowserRouter,
@@ -13,20 +11,6 @@ import {
 } from "react-router-dom";
 import { usePingQuery } from "services/aws/aws";
 import Layout from "./Layout";
-
-const Applications = lazy(() => import("pages/Applications"));
-const Application = lazy(() => import("pages/Application"));
-const BankingApplications = lazy(() => import("pages/BankingApplications"));
-const BankingApplication = lazy(() => import("pages/BankingApplication"));
-const BlogPosts = lazy(() => import("pages/Blog/Posts"));
-const BlogPost = lazy(() => import("pages/Blog/Post"));
-const Home = lazy(() => import("pages/Home"));
-const PrivacyPolicy = lazy(() => import("pages/Legal/PrivacyPolicy"));
-const TermsDonors = lazy(() => import("pages/Legal/TermsDonors"));
-const TermsNonprofits = lazy(() => import("pages/Legal/TermsNonprofits"));
-const NonprofitInfo = lazy(() => import("pages/informational/NonprofitInfo"));
-const DonorInfo = lazy(() => import("pages/informational/DonorInfo"));
-const WpPlugin = lazy(() => import("pages/informational/WpPlugin"));
 
 export const routes = createRoutesFromElements(
   <Route element={<RootLayout />}>
@@ -50,7 +34,7 @@ export const routes = createRoutesFromElements(
         <Route
           path={`${appRoutes.profile}/:id/*`}
           lazy={() => import("pages/Profile")}
-        ></Route>
+        />
       </Route>
       <Route
         path={`${appRoutes.admin}/:id/*`}
@@ -60,16 +44,15 @@ export const routes = createRoutesFromElements(
         path={`${appRoutes.user_dashboard}/*`}
         lazy={() => import("pages/UserDashboard")}
       />
-      <Route
-        path={appRoutes.banking_applications}
-        element={<BankingApplications />}
-      />
-      <Route
-        path={appRoutes.banking_applications + "/:id"}
-        element={<BankingApplication />}
-      />
-      <Route path={appRoutes.applications} element={<Applications />} />
-      <Route path={appRoutes.applications + "/:id"} element={<Application />} />
+      <Route path={appRoutes.banking_applications}>
+        <Route path=":id" lazy={() => import("pages/BankingApplications")} />
+        <Route index lazy={() => import("pages/BankingApplications")} />
+      </Route>
+
+      <Route path={appRoutes.applications}>
+        <Route path=":id" lazy={() => import("pages/Application")} />
+        <Route index lazy={() => import("pages/Applications")} />
+      </Route>
 
       <Route
         path={appRoutes.donate_thanks}
@@ -113,18 +96,36 @@ export const routes = createRoutesFromElements(
         />
       </Route>
       <Route path={appRoutes.blog}>
-        <Route path=":slug" element={<BlogPost />} />
-        <Route index element={<BlogPosts />} />
+        <Route path=":slug" lazy={() => import("pages/Blog/Post")} />
+        <Route index lazy={() => import("pages/Blog/Posts")} />
       </Route>
-      <Route path={appRoutes.privacy_policy} element={<PrivacyPolicy />} />
-      <Route path={appRoutes.terms_nonprofits} element={<TermsNonprofits />} />
-      <Route path={appRoutes.terms_donors} element={<TermsDonors />} />
-      <Route path={appRoutes.nonprofit_info} element={<NonprofitInfo />} />
-      <Route path={appRoutes.donor_info} element={<DonorInfo />} />
-      <Route path={appRoutes.wp_plugin} element={<WpPlugin />} />
-      <Route index element={<Home />} />
+      <Route
+        path={appRoutes.privacy_policy}
+        lazy={() => import("pages/Legal/PrivacyPolicy")}
+      />
+      <Route
+        path={appRoutes.terms_nonprofits}
+        lazy={() => import("pages/Legal/TermsNonprofits")}
+      />
+      <Route
+        path={appRoutes.terms_donors}
+        lazy={() => import("pages/Legal/TermsDonors")}
+      />
+      <Route
+        path={appRoutes.nonprofit_info}
+        lazy={() => import("pages/informational/NonprofitInfo")}
+      />
+      <Route
+        path={appRoutes.donor_info}
+        lazy={() => import("pages/informational/DonorInfo")}
+      />
+      <Route
+        path={appRoutes.wp_plugin}
+        lazy={() => import("pages/informational/WpPlugin")}
+      />
+      <Route index lazy={() => import("pages/Home")} />
     </Route>
-    <Route path="*" element={<Navigate replace to={appRoutes.home} />} />
+    <Route path="*" lazy={() => import("pages/Home")} />
   </Route>
 );
 

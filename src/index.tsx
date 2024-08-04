@@ -45,7 +45,7 @@ Hub.listen("auth", async ({ payload }) => {
     case "customOAuthState":
       const state: OAuthState = JSON.parse(payload.data);
       const { pathname = "/", data } = state;
-      router.navigate({ pathname }, { state: data });
+      router.navigate({ pathname }, { state: data, replace: true });
   }
 });
 
