@@ -10,12 +10,7 @@ import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { userDashboardRoute } from "pages/UserDashboard";
 import { infoRoutes } from "pages/informational";
-import {
-  Outlet,
-  type RouteObject as RO,
-  createBrowserRouter,
-  useLocation,
-} from "react-router-dom";
+import { Outlet, type RouteObject as RO, useLocation } from "react-router-dom";
 import { usePingQuery } from "services/aws/aws";
 import Layout from "./Layout";
 
@@ -105,8 +100,6 @@ export const routes: RO[] = [
     children: rootRoutes,
   },
 ];
-
-export const router = createBrowserRouter(routes);
 
 function RootLayout() {
   /**

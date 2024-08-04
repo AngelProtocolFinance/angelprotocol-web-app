@@ -1,10 +1,17 @@
 import * as Sentry from "@sentry/react";
 import Loader from "components/Loader";
 import ErrorBoundary from "errors/ErrorBoundary";
-import { StrictMode } from "react";
+import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
-import { RouterProvider } from "react-router-dom";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromChildren,
+  matchRoutes,
+  useLocation,
+  useNavigationType,
+} from "react-router-dom";
 import * as auth from "slices/auth";
 import { store } from "store/store";
 import "./index.css";
@@ -12,7 +19,7 @@ import { Amplify } from "aws-amplify";
 import { Hub } from "aws-amplify/utils";
 import amplifyConfig from "constants/aws";
 import type { OAuthState } from "types/auth";
-import { router } from "./App/App";
+import { routes } from "./App/App";
 
 //set theme immediately, so even suspense loaders and can use it
 // NOTE: Turning off option for Dark theme for now
@@ -24,7 +31,22 @@ const root = createRoot(container as Element);
 Sentry.init({
   dsn: process.env.PUBLIC_SENTRY_DSN,
   environment: process.env.PUBLIC_ENVIRONMENT,
+  integrations: [
+    Sentry.reactRouterV6BrowserTracingIntegration({
+      useEffect,
+      useLocation,
+      useNavigationType,
+      createRoutesFromChildren,
+      matchRoutes,
+    }),
+  ],
+  tracesSampleRate: 1.0,
 });
+
+const sentryCreateBrowserRouter =
+  Sentry.wrapCreateBrowserRouter(createBrowserRouter);
+
+const router = sentryCreateBrowserRouter(routes);
 
 Amplify.configure(amplifyConfig);
 store.dispatch(auth.loadSession());
