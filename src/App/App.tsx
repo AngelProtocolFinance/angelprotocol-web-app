@@ -43,7 +43,7 @@ const _appRoutes: RO[] = [
   {
     path: appRoutes.banking_applications,
     children: [
-      { path: ":id", lazy: () => import("pages/BankingApplications") },
+      { path: ":id", lazy: () => import("pages/BankingApplication") },
       { index: true, lazy: () => import("pages/BankingApplications") },
     ],
   },
