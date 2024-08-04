@@ -1,1 +1,0 @@
-export { mediaRoute } from "./Media";

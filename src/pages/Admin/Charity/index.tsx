@@ -9,7 +9,7 @@ import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";
 import Dashboard from "./Dashboard";
 import Donations from "./Donations";
 import EditProfile from "./EditProfile";
-import { mediaRoute } from "./Media/Media";
+import { mediaRoutes } from "./Media";
 import Members from "./Members/Members";
 import ProgramEditor from "./ProgramEditor";
 import Programs from "./Programs";
@@ -40,7 +40,7 @@ export const charityRoute: RouteObject = {
     },
     { path: adminRoutes.widget_config, element: <EndowWidget /> },
     { index: true, element: <Dashboard /> },
-    mediaRoute,
+    ...mediaRoutes,
   ],
 };
 

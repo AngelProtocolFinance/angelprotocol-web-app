@@ -1,13 +1,11 @@
 import Icon from "components/Icon";
-import { adminRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
-import { Link, type RouteObject } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAdminContext } from "../../Context";
 import FeaturedVideos from "./FeaturedVideos";
 import VideoEditor from "./VideoEditor";
-import Videos from "./Videos";
 
-function Layout() {
+export default function Media() {
   const { id } = useAdminContext();
   const { showModal } = useModalContext();
 
@@ -38,14 +36,3 @@ function Layout() {
     </div>
   );
 }
-
-export const mediaRoute: RouteObject = {
-  path: adminRoutes.media,
-  element: <Layout />,
-  children: [
-    {
-      path: "videos",
-      element: <Videos />,
-    },
-  ],
-};
