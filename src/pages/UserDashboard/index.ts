@@ -1,1 +1,1 @@
-export { UserDashboard as Component } from "./UserDashboard";
+export { userDashboardRoute } from "./UserDashboard";

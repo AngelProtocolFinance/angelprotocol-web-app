@@ -1,10 +1,11 @@
 import QueryLoader from "components/QueryLoader";
+import { useAuthenticatedUser } from "contexts/Auth";
 import { useFiatCurrenciesQuery } from "services/apes";
-import type { AuthenticatedUser } from "types/auth";
 import Form from "./Form";
 
-export default function EditProfile(props: AuthenticatedUser) {
-  const query = useFiatCurrenciesQuery(props.prefCurrencyCode);
+export default function EditProfile() {
+  const user = useAuthenticatedUser();
+  const query = useFiatCurrenciesQuery(user.prefCurrencyCode);
   return (
     <QueryLoader
       queryState={query}
@@ -13,7 +14,7 @@ export default function EditProfile(props: AuthenticatedUser) {
         error: "failed to load form",
       }}
     >
-      {(data) => <Form {...data} user={props} />}
+      {(data) => <Form {...data} user={user} />}
     </QueryLoader>
   );
 }

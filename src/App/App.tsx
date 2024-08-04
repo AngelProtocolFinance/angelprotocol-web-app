@@ -8,6 +8,7 @@ import { legalRoutes } from "pages/Legal";
 import OAuthRedirector from "pages/OAuthRedirector";
 import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
+import { userDashboardRoute } from "pages/UserDashboard";
 import { infoRoutes } from "pages/informational";
 import {
   Outlet,
@@ -35,6 +36,7 @@ const _appRoutes: RO[] = [
   adminRoute,
   regRoute,
   giftRoute,
+  userDashboardRoute,
   ...blogRoutes,
   ...legalRoutes,
   ...infoRoutes,
@@ -42,10 +44,7 @@ const _appRoutes: RO[] = [
     element: <Outlet context={true} />, //outlet-value: legacy
     children: [{ path: appRoutes.profile + "/:id", ...profileRoute }],
   },
-  {
-    path: `${appRoutes.user_dashboard}/*`,
-    lazy: () => import("pages/UserDashboard"),
-  },
+
   {
     path: appRoutes.banking_applications,
     children: [
