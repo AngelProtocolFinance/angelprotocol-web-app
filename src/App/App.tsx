@@ -14,7 +14,6 @@ import {
 import { usePingQuery } from "services/aws/aws";
 import Layout from "./Layout";
 
-const DonateWidget = lazy(() => import("pages/DonateWidget"));
 const Applications = lazy(() => import("pages/Applications"));
 const Application = lazy(() => import("pages/Application"));
 const BankingApplications = lazy(() => import("pages/BankingApplications"));
@@ -36,7 +35,7 @@ export const routes = createRoutesFromElements(
       lazy={() => import("pages/Donate")}
     />
     <Route path={appRoutes.donate_widget} element={<Outlet context={true} />}>
-      <Route path=":id" element={<DonateWidget />} />
+      <Route path=":id" lazy={() => import("pages/DonateWidget")} />
       <Route
         path={donateWidgetRoutes.donate_thanks}
         lazy={() => import("pages/DonateThanks")}

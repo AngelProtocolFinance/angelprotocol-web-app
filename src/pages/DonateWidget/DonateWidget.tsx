@@ -13,7 +13,7 @@ import parseConfig from "./parseConfig";
 //light mode by default
 setToLightMode();
 
-export default function DonateWidget() {
+export function DonateWidget() {
   const routeParams = useParams();
   const [searchParams] = useSearchParams();
   const endowId = idParamToNum(routeParams.id);
