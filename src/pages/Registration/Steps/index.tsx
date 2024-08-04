@@ -1,16 +1,9 @@
 import ExtLink from "components/ExtLink";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { appRoutes } from "constants/routes";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useRegQuery } from "services/aws/registration";
-import { steps } from "../routes";
 import type { InitReg, RegStep4, RegistrationState } from "../types";
-import Banking from "./Banking";
-import Contact from "./ContactDetails";
-import Dashboard from "./Dashboard";
-import Documentation from "./Documentation";
-import FSAInquiry from "./FSAInquiry/";
-import OrgDetails from "./OrgDetails";
 import ProgressIndicator from "./ProgressIndicator";
 import Reference from "./Reference";
 import type { StepGuardProps } from "./StepGuard";
@@ -51,7 +44,7 @@ export function Component() {
   }
 
   const { state: regState } = getRegistrationState(data);
-  const guardProps: Omit<StepGuardProps, "step"> = {
+  const guardProps: StepGuardProps = {
     init: initReg,
     state: regState,
   };
@@ -81,32 +74,7 @@ export function Component() {
       />
 
       <div className="grid z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l3/80 dark:shadow-blue-d7">
-        <Routes>
-          <Route
-            path={steps.contact}
-            element={<Contact {...guardProps} step={1} />}
-          />
-          <Route
-            path={steps.orgDetails}
-            element={<OrgDetails {...guardProps} step={2} />}
-          />
-          <Route
-            path={steps.fsaInquiry}
-            element={<FSAInquiry {...guardProps} step={3} />}
-          />
-          <Route
-            path={steps.docs}
-            element={<Documentation {...guardProps} step={4} />}
-          />
-          <Route
-            path={steps.banking}
-            element={<Banking {...guardProps} step={5} />}
-          />
-          <Route
-            path={steps.summary}
-            element={<Dashboard {...guardProps} step={6} />}
-          />
-        </Routes>
+        <Outlet context={guardProps} />
       </div>
       <Reference id={initReg.reference} classes="col-span-full md:mt-8" />
     </div>

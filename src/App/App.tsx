@@ -4,6 +4,13 @@ import useScrollTop from "hooks/useScrollTop";
 import OAuthRedirector from "pages/OAuthRedirector";
 import SignResult from "pages/Registration/SigningResult";
 import Signup from "pages/Registration/Signup";
+import Banking from "pages/Registration/Steps/Banking";
+import Contact from "pages/Registration/Steps/ContactDetails";
+import Dashboard from "pages/Registration/Steps/Dashboard";
+import Documentation from "pages/Registration/Steps/Documentation";
+import FSAInquiry from "pages/Registration/Steps/FSAInquiry/";
+import OrgDetails from "pages/Registration/Steps/OrgDetails";
+import { steps } from "pages/Registration/routes";
 import {
   Outlet,
   Route,
@@ -74,9 +81,16 @@ export const routes = createRoutesFromElements(
           lazy={() => import("pages/Registration/Welcome")}
         />
         <Route
-          path={regRoutes.steps + "/*"}
+          path={regRoutes.steps}
           lazy={() => import("pages/Registration/Steps")}
-        />
+        >
+          <Route path={steps.contact} element={<Contact step={1} />} />
+          <Route path={steps.orgDetails} element={<OrgDetails step={2} />} />
+          <Route path={steps.fsaInquiry} element={<FSAInquiry step={3} />} />
+          <Route path={steps.docs} element={<Documentation step={4} />} />
+          <Route path={steps.banking} element={<Banking step={5} />} />
+          <Route path={steps.summary} element={<Dashboard step={6} />} />
+        </Route>
         <Route
           path={regRoutes.resume}
           lazy={() => import("pages/Registration/Resume")}
