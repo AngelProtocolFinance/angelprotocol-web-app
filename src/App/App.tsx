@@ -3,6 +3,7 @@ import ModalContext from "contexts/ModalContext";
 import useScrollTop from "hooks/useScrollTop";
 import { adminRoute } from "pages/Admin";
 import { routes as blogRoutes } from "pages/Blog";
+import { giftRoute } from "pages/Gift";
 import { legalRoutes } from "pages/Legal";
 import OAuthRedirector from "pages/OAuthRedirector";
 import { route as regRoute } from "pages/Registration";
@@ -33,6 +34,7 @@ const widgetRoutes: RO[] = [
 const _appRoutes: RO[] = [
   adminRoute,
   regRoute,
+  giftRoute,
   ...blogRoutes,
   ...legalRoutes,
   ...infoRoutes,
@@ -65,7 +67,6 @@ const _appRoutes: RO[] = [
   { path: appRoutes.stripe_payment_status, lazy: () => stripePaymentStatus },
   { path: appRoutes.signin, lazy: () => import("pages/Signin") },
   { path: appRoutes.signup, lazy: () => import("pages/SignUp") },
-  { path: `${appRoutes.gift}/*`, lazy: () => import("pages/Gift") },
   { path: appRoutes.reset_password, lazy: () => import("pages/ResetPassword") },
   { path: appRoutes.auth_redirector, element: <OAuthRedirector /> },
   {
