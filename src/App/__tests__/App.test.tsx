@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
-import { MemoryRouter } from "react-router-dom";
+import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { store } from "store/store";
 import { describe, expect, test, vi } from "vitest";
-import App from "../App";
+import { routes } from "../App";
 
 const homeHeroText = /Simplified Giving/i;
 const marketplaceHeroText = /better giving redefines/i;
@@ -17,12 +17,11 @@ describe("App.tsx tests", () => {
   window.scrollTo = vi.fn() as any;
 
   test("Visit top level pages", async () => {
+    const router = createMemoryRouter(routes);
     render(
-      <MemoryRouter>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     );
     // footer is immediately rendered
     // role here https://www.w3.org/TR/html-aria/#docconformance
