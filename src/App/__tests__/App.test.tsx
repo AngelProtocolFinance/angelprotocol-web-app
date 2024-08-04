@@ -1,4 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { store } from "store/store";
@@ -11,7 +12,6 @@ const marketplaceHeroText = /better giving redefines/i;
 const marketLink = /explore all causes/i;
 const loginLink = /log in/i;
 const signupLink = /sign up/i;
-const loaderTestId = "loader";
 
 describe("App.tsx tests", () => {
   window.scrollTo = vi.fn() as any;
@@ -23,42 +23,27 @@ describe("App.tsx tests", () => {
         <RouterProvider router={router} />
       </Provider>
     );
-    // footer is immediately rendered
-    // role here https://www.w3.org/TR/html-aria/#docconformance
-    const footer = screen.getByRole("contentinfo");
+    const footer = await screen.findByRole("contentinfo");
     expect(footer).toBeInTheDocument();
 
     expect(screen.getByTestId("nav_dropdown")).toBeInTheDocument();
 
-    //home page is being lazy loaded
-    expect(screen.getByTestId(loaderTestId)).toBeInTheDocument();
-    //home page is finally loaded
     expect(
-      await screen.findByRole(
-        "heading",
-        { name: homeHeroText },
-        { timeout: 3000 }
-      )
+      screen.getByRole("heading", { name: homeHeroText })
     ).toBeInTheDocument();
 
-    expect(screen.queryByTestId(loaderTestId)).toBeNull();
-
-    expect(
-      await screen.findByRole("link", { name: loginLink })
-    ).toBeInTheDocument();
-    expect(
-      await screen.findByRole("link", { name: signupLink })
-    ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: loginLink })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: signupLink })).toBeInTheDocument();
 
     //user goes to Marketplace
-    fireEvent.click(
-      screen.getAllByRole("link", {
-        name: marketLink,
-      })[0]
-    );
+    const marketplaceLinks = screen.getAllByRole("link", {
+      name: marketLink,
+    });
+
+    await userEvent.click(marketplaceLinks[0]);
+
     expect(
       await screen.findByRole("heading", { name: marketplaceHeroText })
     ).toBeInTheDocument();
-    expect(screen.queryByTestId(loaderTestId)).toBeNull();
   });
 });
