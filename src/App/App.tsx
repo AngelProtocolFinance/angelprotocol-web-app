@@ -14,18 +14,11 @@ import {
 import { usePingQuery } from "services/aws/aws";
 import Layout from "./Layout";
 
-const Registration = lazy(() => import("pages/Registration"));
-const DonateThanks = lazy(() => import("pages/DonateThanks"));
-const Gift = lazy(() => import("pages/Gift"));
 const DonateWidget = lazy(() => import("pages/DonateWidget"));
-const Signin = lazy(() => import("pages/Signin"));
-const SignUp = lazy(() => import("pages/SignUp"));
-const ResetPassword = lazy(() => import("pages/ResetPassword"));
 const Applications = lazy(() => import("pages/Applications"));
 const Application = lazy(() => import("pages/Application"));
 const BankingApplications = lazy(() => import("pages/BankingApplications"));
 const BankingApplication = lazy(() => import("pages/BankingApplication"));
-const StripePaymentStatus = lazy(() => import("pages/StripePaymentStatus"));
 const BlogPosts = lazy(() => import("pages/Blog/Posts"));
 const BlogPost = lazy(() => import("pages/Blog/Post"));
 const Home = lazy(() => import("pages/Home"));
@@ -36,22 +29,21 @@ const NonprofitInfo = lazy(() => import("pages/informational/NonprofitInfo"));
 const DonorInfo = lazy(() => import("pages/informational/DonorInfo"));
 const WpPlugin = lazy(() => import("pages/informational/WpPlugin"));
 
-const WidgetPromise = import("pages/Widget");
 export const routes = createRoutesFromElements(
   <Route element={<RootLayout />}>
     <Route
       path={`${appRoutes.donate}/:id`}
       lazy={() => import("pages/Donate")}
     />
-    <Route path={appRoutes.donate_widget}>
+    <Route path={appRoutes.donate_widget} element={<Outlet context={true} />}>
       <Route path=":id" element={<DonateWidget />} />
       <Route
         path={donateWidgetRoutes.donate_thanks}
-        element={<DonateThanks widgetVersion />}
+        lazy={() => import("pages/DonateThanks")}
       />
       <Route
         path={donateWidgetRoutes.stripe_payment_status}
-        element={<StripePaymentStatus isInWidget />}
+        lazy={() => import("pages/StripePaymentStatus")}
       />
     </Route>
     <Route element={<Layout />}>
@@ -80,16 +72,25 @@ export const routes = createRoutesFromElements(
       <Route path={appRoutes.applications} element={<Applications />} />
       <Route path={appRoutes.applications + "/:id"} element={<Application />} />
 
-      <Route path={appRoutes.donate_thanks} element={<DonateThanks />} />
+      <Route
+        path={appRoutes.donate_thanks}
+        lazy={() => import("pages/DonateThanks")}
+      />
       <Route
         path={appRoutes.stripe_payment_status}
-        element={<StripePaymentStatus />}
+        lazy={() => import("pages/StripePaymentStatus")}
       />
-      <Route path={`${appRoutes.register}/*`} element={<Registration />} />
-      <Route path={`${appRoutes.gift}/*`} element={<Gift />} />
-      <Route path={appRoutes.signin} element={<Signin />} />
-      <Route path={appRoutes.signup} element={<SignUp />} />
-      <Route path={appRoutes.reset_password} element={<ResetPassword />} />
+      <Route
+        path={`${appRoutes.register}/*`}
+        lazy={() => import("pages/Registration")}
+      />
+      <Route path={`${appRoutes.gift}/*`} lazy={() => import("pages/Gift")} />
+      <Route path={appRoutes.signin} lazy={() => import("pages/Signin")} />
+      <Route path={appRoutes.signup} lazy={() => import("pages/SignUp")} />
+      <Route
+        path={appRoutes.reset_password}
+        lazy={() => import("pages/ResetPassword")}
+      />
       <Route path={appRoutes.auth_redirector} element={<OAuthRedirector />} />
       <Route path={appRoutes.marketplace}>
         <Route path=":id/*" lazy={() => import("pages/Profile")} />
@@ -107,7 +108,10 @@ export const routes = createRoutesFromElements(
           </div>
         }
       >
-        <Route path={appRoutes.widget_config} lazy={() => WidgetPromise} />
+        <Route
+          path={appRoutes.widget_config}
+          lazy={() => import("pages/Widget")}
+        />
       </Route>
       <Route path={appRoutes.blog}>
         <Route path=":slug" element={<BlogPost />} />

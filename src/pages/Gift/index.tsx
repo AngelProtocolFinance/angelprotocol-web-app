@@ -4,7 +4,7 @@ import Mailer from "./Mailer";
 import Purchase from "./Purchase";
 import { routes } from "./routes";
 
-export default function Gift() {
+function Gift() {
   return (
     <div className="grid ">
       <div
@@ -28,3 +28,5 @@ export default function Gift() {
     </div>
   );
 }
+
+export const Component = Gift;

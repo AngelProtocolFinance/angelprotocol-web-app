@@ -40,4 +40,4 @@ function Registration() {
   );
 }
 
-export default withAuth(Registration);
+export const Component = withAuth(Registration);
