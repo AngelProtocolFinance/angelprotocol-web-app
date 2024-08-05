@@ -17,7 +17,7 @@ import { schema } from "./schema";
 import type { FV } from "./types";
 import { toProfileUpdate } from "./update";
 
-export default function EditProfile() {
+export function Component() {
   const { id } = useAdminContext();
   const {
     data: profile,

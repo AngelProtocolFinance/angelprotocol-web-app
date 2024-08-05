@@ -1,1 +1,1 @@
-export { default } from "./ProgramEditor";
+export { default as Component } from "./ProgramEditor";

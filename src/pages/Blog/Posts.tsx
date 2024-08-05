@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import type { Wordpress } from "types/wordpress";
 import usePagination from "./usePagination";
 
-export default function Posts() {
+export function Component() {
   const {
     data,
     hasMore,

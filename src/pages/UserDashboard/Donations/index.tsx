@@ -1,9 +1,9 @@
 import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import { useAuthenticatedUser } from "contexts/Auth";
 import { replaceWithEmptyString as fill, humanize, isEmpty } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
-import type { AuthenticatedUser } from "types/auth";
 import type { DonationRecord } from "types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
@@ -11,7 +11,8 @@ import NoDonations from "./NoDonations";
 import StatusTabs from "./StatusTabs";
 import Table from "./Table";
 
-export default function Donations({ user }: { user: AuthenticatedUser }) {
+export default function Donations() {
+  const user = useAuthenticatedUser();
   const queryState = usePaginatedDonationRecords({
     email: user.email,
   });

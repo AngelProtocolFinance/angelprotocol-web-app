@@ -74,4 +74,4 @@ function Applications() {
     </div>
   );
 }
-export default withAuth(Applications, ["ap-admin"]);
+export const Component = withAuth(Applications, ["ap-admin"]);

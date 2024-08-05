@@ -10,7 +10,7 @@ import Milestones from "./Milestones";
 
 export default function Program({ className = "" }) {
   const { id: endowId } = useProfileContext();
-  const { id: programId = "" } = useParams();
+  const { programId = "" } = useParams();
   const query = useProgramQuery({ endowId, programId }, { skip: !programId });
 
   return (

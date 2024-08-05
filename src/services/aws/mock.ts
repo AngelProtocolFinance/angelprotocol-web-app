@@ -3,8 +3,7 @@ import { http, HttpResponse } from "msw";
 import type { EndowListPaginatedAWSQueryRes, EndowmentCard } from "types/aws";
 
 export const handlers = [
-  http.post(APIs.aws + "/v2/file/upload", ({ request }) => {
-    console.log(request.body);
+  http.post(APIs.aws + "/v2/file/upload", () => {
     return HttpResponse.json();
   }),
   http.get(APIs.aws + "/cloudsearch-nonprofits", () => {
