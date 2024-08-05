@@ -7,7 +7,7 @@ import { Context, type State } from "./Context";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
 
-export default function Marketplace() {
+export function Component() {
   const { state } = useLocation();
   const {
     searchText = "",

@@ -1,1 +1,1 @@
-export { default } from "./DonateWidget";
+export { default as Component } from "./DonateWidget";

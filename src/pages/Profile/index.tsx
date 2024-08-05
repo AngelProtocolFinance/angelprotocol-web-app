@@ -4,15 +4,22 @@ import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { Navigate, useParams } from "react-router-dom";
+import {
+  Navigate,
+  Outlet,
+  type RouteObject,
+  useOutletContext,
+  useParams,
+} from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
-import Body from "./Body";
+import { bodyRoute } from "./Body";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
 const slug = /\D/;
-export default function Profile({ legacy = false }) {
+function Profile() {
+  const legacy = useOutletContext<true | undefined>();
   const { id = "" } = useParams<{ id: string }>();
 
   const { isLoading, isError, data } = useEndowment(
@@ -46,7 +53,7 @@ export default function Profile({ legacy = false }) {
       <section className="grid grid-rows-[auto_auto_1fr] items-center isolate w-full h-full">
         <Banner />
         <Logo />
-        <Body />
+        <Outlet />
       </section>
     </ProfileContext.Provider>
   );
@@ -75,3 +82,8 @@ function Logo() {
     </div>
   );
 }
+
+export const profileRoute: RouteObject = {
+  element: <Profile />,
+  children: [bodyRoute],
+};

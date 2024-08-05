@@ -1,8 +1,6 @@
-import Loader from "components/Loader";
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import ErrorBoundary from "errors/ErrorBoundary";
-import { Suspense } from "react";
 import { Outlet, useLocation, useMatch } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
@@ -29,11 +27,9 @@ export default function Layout() {
           isWpPost ? "override-wp-overrides" : ""
         } sticky z-40 top-[-1px]`}
       />
-      <Suspense fallback={<LoaderComponent />}>
-        <ErrorBoundary key={key} /** allows for recovery when changing page */>
-          <Outlet />
-        </ErrorBoundary>
-      </Suspense>
+      <ErrorBoundary key={key} /** allows for recovery when changing page */>
+        <Outlet />
+      </ErrorBoundary>
       <Footer
         socials={SOCIAL_MEDIA_LINKS}
         classes={isWpPost ? "override-wp-overrides" : ""}
@@ -41,7 +37,3 @@ export default function Layout() {
     </div>
   );
 }
-
-const LoaderComponent = () => (
-  <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
-);

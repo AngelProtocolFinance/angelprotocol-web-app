@@ -33,7 +33,6 @@ export const nextFormState = (
     if (prev.init.recipient.hide_bg_tip) {
       // donor info is retrieved from donor's DAF account
       if (details?.method === "daf") {
-        console.log("daf");
         return {
           ...toPersist,
           ...summaryData(prev),
