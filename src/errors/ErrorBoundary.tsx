@@ -5,6 +5,7 @@ import {
   type PropsWithChildren,
   type ReactNode,
 } from "react";
+import { useRouteError } from "react-router-dom";
 import DefaultFallback from "./DefaultFallback";
 
 type Props = PropsWithChildren<{ fallback?: ReactNode }>;
@@ -32,4 +33,10 @@ export default class ErrorBoundary extends Component<Props, State> {
       ? this.props.fallback || <DefaultFallback />
       : this.props.children;
   }
+}
+
+export function RouterErrorBoundary() {
+  const error = useRouteError();
+  logger.error(error);
+  return <DefaultFallback />;
 }
