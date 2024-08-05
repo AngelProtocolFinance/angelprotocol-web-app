@@ -1,1 +1,1 @@
-export { default } from "./BankingApplications";
+export { Component } from "./BankingApplications";

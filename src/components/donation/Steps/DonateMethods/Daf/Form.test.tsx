@@ -93,10 +93,10 @@ describe("DAF form test", () => {
 
     await userEvent.clear(amountInput);
     await userEvent.type(amountInput, "-5");
-    expect(screen.getByText(/must be greater than 0/i)).toBeInTheDocument();
+    expect(screen.getByText(/minimum donation is \$50/i)).toBeInTheDocument();
 
     await userEvent.clear(amountInput);
-    await userEvent.type(amountInput, "10");
+    await userEvent.type(amountInput, "50");
 
     await userEvent.click(continueBtn);
     expect(mockedSetState).toHaveBeenCalledOnce();

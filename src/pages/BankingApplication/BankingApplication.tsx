@@ -37,4 +37,4 @@ function BankingApplication() {
   );
 }
 
-export default withAuth(BankingApplication);
+export const Component = withAuth(BankingApplication);

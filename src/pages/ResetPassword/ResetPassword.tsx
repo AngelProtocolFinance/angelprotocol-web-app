@@ -4,7 +4,7 @@ import SetPasswordForm from "./SetPasswordForm";
 import Success from "./Success";
 import type { Steps } from "./types";
 
-export default function ResetPassword() {
+export function ResetPassword() {
   const [step, setStep] = useState<Steps>({ type: "init" });
 
   const content = (() => {

@@ -57,4 +57,4 @@ function BankingApplications() {
     </div>
   );
 }
-export default withAuth(BankingApplications, ["ap-admin"]);
+export const Component = withAuth(BankingApplications, ["ap-admin"]);

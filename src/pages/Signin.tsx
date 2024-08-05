@@ -21,7 +21,7 @@ type FormValues = {
   password: string;
 };
 
-export default function Signin() {
+export function Component() {
   const { handleError, displayError } = useErrorContext();
   const {
     register,

@@ -1,1 +1,1 @@
-export { default } from "./Body";
+export { bodyRoute } from "./Body";
