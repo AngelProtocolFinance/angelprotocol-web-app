@@ -36,6 +36,21 @@ export const url = Yup.string()
     return "invalid url";
   });
 
+export const segment = Yup.string()
+  .trim()
+  .test("not-id", "should not be an id", (v) =>
+    v ? /^(?!^\d+$)/.test(v) : true
+  )
+  .test("valid-char", "invalid segment", (v) =>
+    v ? /^[a-zA-Z0-9-._~]+$/.test(v) : true
+  )
+  .test("no double period", "invalid segment", (v) => !v?.includes(".."))
+  .test(
+    "no-starting-ending-period",
+    "invalid segment",
+    (v) => !v?.startsWith(".") && !v?.endsWith(".")
+  );
+
 export function walletAddrPatten(chainId: SupportedChainId) {
   switch (chainId) {
     case "1":
