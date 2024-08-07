@@ -2,7 +2,7 @@ import type { ImgLink } from "components/ImgEditor";
 import { MAX_SDGS } from "constants/unsdgs";
 import { genFileSchema } from "schemas/file";
 import { optionType, richTextContent } from "schemas/shape";
-import { url, alphanumeric, requiredString } from "schemas/string";
+import { url, alphanumeric, requiredString, segment } from "schemas/string";
 import type { SchemaShape } from "schemas/types";
 import type { ImageMIMEType } from "types/lists";
 import { type ObjectSchema, array, object, string } from "yup";
@@ -49,8 +49,5 @@ export const schema = object<any, SchemaShape<FV>>({
     tiktok: url,
   }),
   overview: richTextContent({ maxChars: MAX_CHARS }),
-  slug: string()
-    .trim()
-    .max(30, "max 30 characters")
-    .matches(/\D|^$/, "can't use id as slug"),
+  slug: segment.max(30, "max 30 characters"),
 }) as ObjectSchema<FV>;
