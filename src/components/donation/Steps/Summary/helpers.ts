@@ -1,13 +1,15 @@
 import { chains } from "constants/chains";
 import { PROCESSING_RATES } from "constants/common";
-import type { ChainID } from "types/chain";
-import type { DonateMethodId } from "types/lists";
+import type { DonationDetails } from "../types";
 
-export const processingFee = (
-  amount: number,
-  platform: Extract<DonateMethodId, "stripe"> | ChainID
-) =>
-  amount *
-  (platform === "stripe"
-    ? PROCESSING_RATES.stripe
-    : chains[platform].processingRate);
+export const processingFee = (details: DonationDetails): number => {
+  if (details.method === "crypto") {
+    return +details.token.amount * chains[details.chainId].processingRate;
+  }
+
+  if (details.method !== "stripe") return 0;
+
+  /** @see https://stripe.com/pricing */
+  const fixedFeeUnits = 0.3 /** 30cents */ * details.currency.rate;
+  return PROCESSING_RATES.stripe * +details.amount + fixedFeeUnits;
+};
