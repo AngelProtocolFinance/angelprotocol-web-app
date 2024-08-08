@@ -77,6 +77,12 @@ module.exports = {
         l5: "#F9FBFA", //white-200
         l6: "#FFFFFF",
       },
+      amber: {
+        DEFAULT: "#f59e0b",
+        l3: "#fcd34d",
+        l4: "#fef3c7",
+        l5: "#fffbeb",
+      },
       white: "#FFFFFF",
 
       //standard sdg colors

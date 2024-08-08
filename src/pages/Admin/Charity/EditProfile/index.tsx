@@ -84,7 +84,7 @@ function FormWithContext(props: TProfile & { id: number }) {
 
   return (
     <FormProvider {...methods}>
-      <Form initSlug={props.slug} />
+      <Form initSlug={props.slug} isPublished={props.published} />
     </FormProvider>
   );
 }

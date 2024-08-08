@@ -79,14 +79,6 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    ping: builder.query({
-      query: () => ({
-        url: "",
-        method: "OPTIONS",
-        mode: "no-cors",
-        headers: { authorization: TEMP_JWT },
-      }),
-    }),
     endowmentCards: builder.query<
       EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
       EndowmentsQueryParams
@@ -250,7 +242,6 @@ export const aws = createApi({
 export const {
   useUserBookmarksQuery,
   useToggleUserBookmarkMutation,
-  usePingQuery,
   useEndowmentQuery,
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,
