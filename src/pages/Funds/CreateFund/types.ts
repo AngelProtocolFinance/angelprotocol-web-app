@@ -1,5 +1,5 @@
 import type { ImgLink } from "components/ImgEditor";
-import type { TargetType } from "../common";
+import { TargetType } from "../common";
 
 export interface FundMember {
   id: number;
@@ -13,8 +13,6 @@ export interface Settings {
   liquidSplit: number;
   allowBgTip: boolean;
 }
-
-export type TargetType = "fixed" | "none" | "smart";
 
 export interface FormValues {
   name: string;

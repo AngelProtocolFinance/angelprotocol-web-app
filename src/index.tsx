@@ -30,8 +30,6 @@ Amplify.configure(amplifyConfig);
 const container = document.getElementById("root");
 const root = createRoot(container as Element);
 
-Amplify.configure(amplifyConfig);
-
 Sentry.init({
   dsn: process.env.PUBLIC_SENTRY_DSN,
   environment: process.env.PUBLIC_ENVIRONMENT,

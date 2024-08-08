@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 
-export function Fund() {
+export function Component() {
   const params = useParams();
-  return <p>WIP: Fund: {params.id}</p>;
+  return <p>WIP: Fund: {params.fundId}</p>;
 }
