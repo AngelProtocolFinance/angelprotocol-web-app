@@ -14,7 +14,6 @@ import type { FormValues as FV, Props } from "./types";
 /**
  * Only USD donations are permissible for DAF donations.
  * The minimum amount differs depending on which provider is selected.
- * $50 min is common
  */
 const USD_CURRENCY: DetailedCurrency = { code: "usd", rate: 1, min: 50 };
 

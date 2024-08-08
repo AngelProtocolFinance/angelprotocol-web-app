@@ -1,6 +1,8 @@
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
+import { RouterErrorBoundary } from "errors/ErrorBoundary";
 import useScrollTop from "hooks/useScrollTop";
+import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
 import { routes as blogRoutes } from "pages/Blog";
 import { fundsRoute } from "pages/Funds";
@@ -11,11 +13,13 @@ import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { userDashboardRoute } from "pages/UserDashboard";
 import { infoRoutes } from "pages/informational";
+import { useEffect } from "react";
 import {
   Navigate,
   Outlet,
   type RouteObject as RO,
   useLocation,
+  useNavigation,
 } from "react-router-dom";
 import { usePingQuery } from "services/aws/aws";
 import Layout from "./Layout";
@@ -103,11 +107,28 @@ const rootRoutes: RO[] = [
 ];
 
 export const routes: RO[] = [
-  { element: <RootLayout />, children: rootRoutes },
+  {
+    element: <RootLayout />,
+    children: rootRoutes,
+    ErrorBoundary: RouterErrorBoundary,
+  },
   { path: "*", element: <Navigate to="/" /> },
 ];
 
+NProgress.configure({
+  showSpinner: false,
+});
+
 function RootLayout() {
+  const transition = useNavigation();
+  useEffect(() => {
+    // when the state is idle then we can to complete the progress bar
+    if (transition.state === "idle") NProgress.done();
+    // and when it's something else it means it's either submitting a form or
+    // waiting for the loaders of the next location so we start it
+    else NProgress.start();
+  }, [transition.state]);
+
   /**
    * ping AWS api every 5 minutes,
    * this invokes token refresh and fires refresh events: tokenRefresh | tokenRefresh_failure.

@@ -12,7 +12,7 @@ import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import ErrorBoundary from "errors/ErrorBoundary";
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -57,6 +57,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
     register,
     trigger,
     getValues,
+    resetField,
   } = useForm<FV>({
     defaultValues: {
       ...(props.honorary || {
@@ -150,7 +151,14 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
       */}
 
           <CheckField
-            {...register("withHonorary")}
+            {...register("withHonorary", {
+              onChange: (e: ChangeEvent<HTMLInputElement>) => {
+                if (!e.target.checked) {
+                  resetField("withTributeNotif");
+                  resetField("tributeNotif");
+                }
+              },
+            })}
             classes="col-span-full mt-4"
           >
             Dedicate my donation
