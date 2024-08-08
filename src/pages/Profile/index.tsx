@@ -11,19 +11,19 @@ import {
   useOutletContext,
   useParams,
 } from "react-router-dom";
+import { segment } from "schemas/string";
 import { useEndowment } from "services/aws/useEndowment";
 import { bodyRoute } from "./Body";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import Skeleton from "./Skeleton";
 
-const slug = /\D/;
 function Profile() {
   const legacy = useOutletContext<true | undefined>();
   const { id = "" } = useParams<{ id: string }>();
 
   const { isLoading, isError, data } = useEndowment(
-    slug.test(id) ? { slug: id } : { id: Number(id) }
+    segment.isValidSync(id) ? { slug: id } : { id: Number(id) }
   );
 
   if (isLoading) return <Skeleton />;

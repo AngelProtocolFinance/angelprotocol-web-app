@@ -40,7 +40,6 @@ export default function Summary({
   const locked = props.amount - liq;
 
   const tipValue = props.tip?.value ?? 0;
-  const oneTimeTip = frequency === "subscription" ? 0 : tipValue;
 
   return (
     <div className={container}>
@@ -114,7 +113,7 @@ export default function Summary({
             Total {frequency === "subscription" ? "monthly " : ""}charge
           </dt>
           <Amount
-            amount={props.amount + oneTimeTip + (props.feeAllowance ?? 0)}
+            amount={props.amount + tipValue + (props.feeAllowance ?? 0)}
           />
         </div>
       </dl>
