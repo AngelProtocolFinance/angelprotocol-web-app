@@ -215,14 +215,14 @@ export default function Form({ initSlug = "", isPublished = false }) {
         className={`flex flex-wrap justify-between items-center border rounded p-3 gap-4 ${
           isPublished
             ? "bg-green-l5 border-green-l2"
-            : "bg-amber-l5  border-amber-l3"
+            : "bg-amber-l5 border-amber-l3"
         }`}
       >
         {isPublished ? (
-          <Confirmed>Your endowment profile is published</Confirmed>
+          <Confirmed>Your endowment is visible in the marketplace</Confirmed>
         ) : (
           <Info classes="text-amber">
-            Your endowment profile is not yet published
+            Your endowment is not visible in the marketplace
           </Info>
         )}
         <div className="flex items-center gap-x-2">
@@ -235,14 +235,13 @@ export default function Form({ initSlug = "", isPublished = false }) {
           >
             Publish profile
           </Toggle>
-          {isPublished && (
-            <ExtLink
-              href={`${appRoutes.marketplace}/${id}`}
-              className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
-            >
-              View Profile
-            </ExtLink>
-          )}
+
+          <ExtLink
+            href={`${appRoutes.marketplace}/${id}`}
+            className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
+          >
+            View Profile
+          </ExtLink>
         </div>
       </div>
 
