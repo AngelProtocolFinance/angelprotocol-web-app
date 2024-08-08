@@ -4,7 +4,7 @@ import SignupForm from "./SignupForm";
 import Success from "./Success";
 import type { SignupState } from "./types";
 
-export default function SignUp() {
+export function SignUp() {
   const [state, setState] = useState<SignupState>({ type: "init" });
 
   const content = (() => {

@@ -6,7 +6,7 @@ import { object } from "yup";
 import Form from "./Form";
 import type { FormValues } from "./types";
 
-export default function Resume({ classes = "" }: { classes?: string }) {
+export function Component({ classes = "" }: { classes?: string }) {
   const methods = useForm<FormValues>({
     defaultValues: {
       reference: getSavedRegistrationReference() || "",

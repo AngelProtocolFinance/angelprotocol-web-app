@@ -6,13 +6,13 @@ import { useBankingApplicationQuery } from "services/aws/banking-applications";
 import Loaded from "./Loaded";
 
 export default function PayoutMethod() {
-  const { id = "" } = useParams();
+  const { bankId = "" } = useParams();
   const { id: endowID } = useAdminContext();
 
   const queryState = useBankingApplicationQuery(
-    { uuid: id, requestor: "endowment", endowmentID: endowID },
+    { uuid: bankId, requestor: "endowment", endowmentID: endowID },
     {
-      skip: !id,
+      skip: !bankId,
     }
   );
 

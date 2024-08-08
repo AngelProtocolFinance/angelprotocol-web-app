@@ -11,6 +11,7 @@ import { schema, stringNumber } from "schemas/shape";
 import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
 import ContinueBtn from "../common/ContinueBtn";
+import { summaryData } from "../common/constants";
 import type { TipFormat, TipStep } from "../types";
 
 const DEFAULT_PCT = "0.17";
@@ -83,7 +84,20 @@ export default function Tip(props: TipStep) {
   return (
     <form
       data-testid="tip-form"
-      onSubmit={handleSubmit((fv) =>
+      onSubmit={handleSubmit((fv) => {
+        // go straight to summary: donor info is retrieved from donor's DAF account
+        if (props.details.method === "daf") {
+          return setState({
+            ...props,
+            ...summaryData(props),
+            step: "submit",
+            tip: {
+              value: Number(fv.tip.amount),
+              format,
+            },
+          });
+        }
+
         setState({
           ...props,
           step: "summary",
@@ -91,8 +105,8 @@ export default function Tip(props: TipStep) {
             value: Number(fv.tip.amount),
             format,
           },
-        })
-      )}
+        });
+      })}
       className="grid content-start p-4 @md/steps:p-8"
     >
       <BackBtn

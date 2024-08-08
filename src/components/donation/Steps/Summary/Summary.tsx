@@ -90,14 +90,6 @@ export default function Summary(props: SummaryStep) {
           tributeNotif,
           ...donor
         }) => {
-          const feeAllowance =
-            fvCoverFee &&
-            (details.method === "crypto" || details.method === "stripe")
-              ? processingFee(
-                  amount,
-                  details.method === "stripe" ? "stripe" : details.chainId
-                )
-              : 0;
           setState({
             ...props,
             step: "submit",
@@ -108,7 +100,7 @@ export default function Summary(props: SummaryStep) {
               withTributeNotif,
               tributeNotif,
             },
-            feeAllowance,
+            feeAllowance: processingFee(details),
           });
         }}
         classes="mt-6"

@@ -6,7 +6,7 @@ import Brands from "./Brands";
 import Hero from "./Hero";
 import Testimonials from "./Testimonials";
 import Video from "./Video";
-const Home = () => {
+export const Component = () => {
   return (
     <>
       <Hero classes="-mt-24" />
@@ -20,5 +20,3 @@ const Home = () => {
     </>
   );
 };
-
-export default Home;

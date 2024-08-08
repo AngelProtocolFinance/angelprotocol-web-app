@@ -1,1 +1,1 @@
-export { default } from "./UserDashboard";
+export { userDashboardRoute } from "./UserDashboard";
