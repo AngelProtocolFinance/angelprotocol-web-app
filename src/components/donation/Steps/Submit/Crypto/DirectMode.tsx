@@ -49,10 +49,14 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     ...(details.program.value && { programId: details.program.value }),
   });
 
+  const totalDisplayAmount =
+    +details.token.amount + (tip?.value ?? 0) + feeAllowance;
+
   return (
     <div className={`${classes} grid justify-items-center`}>
       <p className="text-navy-l1 text-balance text-center mb-3.5 max-w-sm">
-        To complete your donation, send {details.token.amount}&nbsp;
+        To complete your donation, send {totalDisplayAmount}
+        &nbsp;
         {details.token.symbol} from your crypto wallet to the address below
       </p>
       <QueryLoader
