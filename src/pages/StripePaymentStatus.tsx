@@ -6,12 +6,13 @@ import Seo from "components/Seo";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useCallback, useEffect } from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useOutletContext } from "react-router-dom";
 import { useStripePaymentStatusQuery } from "services/apes";
 import type { GuestDonor } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 
-export default function StripePaymentStatus({ isInWidget = false }) {
+export function Component() {
+  const isInWidget = useOutletContext<true | undefined>();
   const paymentIntentId =
     new URLSearchParams(window.location.search).get("payment_intent") ?? "";
 
@@ -47,7 +48,7 @@ export default function StripePaymentStatus({ isInWidget = false }) {
           <Content
             status={status}
             onMount={handleProcessing}
-            isInWidget={isInWidget}
+            isInWidget={isInWidget ?? false}
             guestDonor={guestDonor}
             recipientName={recipientName}
             recipientId={recipientId}

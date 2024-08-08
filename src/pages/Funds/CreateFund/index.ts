@@ -1,1 +1,1 @@
-export { default } from "./CreateFund";
+export { default as Component } from "./CreateFund";

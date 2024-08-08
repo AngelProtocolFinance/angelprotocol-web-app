@@ -1,11 +1,8 @@
-import type { AuthenticatedUser } from "types/auth";
+import { useAuthenticatedUser } from "contexts/Auth";
 import EndowAlertForm from "./EndowAlertForm";
 
-interface Props {
-  user: AuthenticatedUser;
-}
-
-export default function Settings(props: Props) {
+export default function Settings() {
+  const user = useAuthenticatedUser();
   return (
     <div className="grid">
       <h2 className="text-3xl">Settings</h2>
@@ -13,7 +10,7 @@ export default function Settings(props: Props) {
         Here, you can update various settings relating to any nonprofit that you
         are a member of.
       </p>
-      <EndowAlertForm user={props.user} classes="mt-4 justify-self-start" />
+      <EndowAlertForm user={user} classes="mt-4 justify-self-start" />
     </div>
   );
 }

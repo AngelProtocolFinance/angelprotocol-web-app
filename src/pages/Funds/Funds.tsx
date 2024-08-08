@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { useState } from "react";
 import Cards from "./Cards";
 
-export default function Funds() {
+export function Component() {
   const [search, setSearch] = useState("");
   return (
     <div className="padded-container mt-8">
