@@ -187,20 +187,14 @@ export default function Form({ initSlug = "" }) {
         <Field<FV>
           classes="field-admin"
           name="social_media_urls.linkedin"
-          label="Linkedin"
+          label="LinkedIn"
           placeholder="https://linkedin.com/"
         />
         <Field<FV>
           classes="field-admin"
           name="social_media_urls.twitter"
-          label="Twitter"
-          placeholder="https://twitter.com/"
-        />
-        <Field<FV>
-          classes="field-admin"
-          name="social_media_urls.discord"
-          label="Discord"
-          placeholder="https://discord.com/"
+          label="X (fka Twitter)"
+          placeholder="https://x.com/"
         />
         <Field<FV>
           classes="field-admin"
@@ -217,8 +211,14 @@ export default function Form({ initSlug = "" }) {
         <Field<FV>
           classes="field-admin"
           name="social_media_urls.tiktok"
-          label="Tiktok"
+          label="TikTok"
           placeholder="https://tiktok.com/"
+        />
+        <Field<FV>
+          classes="field-admin"
+          name="social_media_urls.discord"
+          label="Discord"
+          placeholder="https://discord.com/"
         />
       </Group>
 
