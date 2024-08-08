@@ -1,4 +1,4 @@
-_linkedin_partner_id = "4969890";
+_linkedin_partner_id = "6373172";
 window._linkedin_data_partner_ids = window._linkedin_data_partner_ids || [];
 window._linkedin_data_partner_ids.push(_linkedin_partner_id);
 
