@@ -5,6 +5,7 @@ import useScrollTop from "hooks/useScrollTop";
 import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
 import { routes as blogRoutes } from "pages/Blog";
+import { fundsRoute } from "pages/Funds";
 import { giftRoute } from "pages/Gift";
 import { legalRoutes } from "pages/Legal";
 import OAuthRedirector from "pages/OAuthRedirector";
@@ -40,6 +41,7 @@ const _appRoutes: RO[] = [
   adminRoute,
   regRoute,
   giftRoute,
+  fundsRoute,
   userDashboardRoute,
   ...blogRoutes,
   ...legalRoutes,
