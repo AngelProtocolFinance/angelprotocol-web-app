@@ -6,6 +6,7 @@ import Group from "components/Group";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { MultiSelector, Selector } from "components/Selector";
+import { Confirmed, Info } from "components/Status";
 import Toggle from "components/Toggle";
 import { Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
@@ -30,7 +31,7 @@ const endowDesignations: EndowDesignation[] = [
   "Other",
 ];
 
-export default function Form({ initSlug = "" }) {
+export default function Form({ initSlug = "", isPublished = false }) {
   const { isSubmitting, id, editProfile, reset } = useEditProfile();
   return (
     <form
@@ -41,18 +42,6 @@ export default function Form({ initSlug = "" }) {
       onSubmit={editProfile}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
-      <div className="flex justify-between items-center">
-        <ExtLink
-          href={`${appRoutes.marketplace}/${id}`}
-          className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
-        >
-          View Profile
-        </ExtLink>
-        <Toggle<FV> name="published" classes={{ container: "ml-auto text-sm" }}>
-          Publish profile
-        </Toggle>
-      </div>
-
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public
@@ -221,6 +210,41 @@ export default function Form({ initSlug = "" }) {
           placeholder="https://discord.com/"
         />
       </Group>
+
+      <div
+        className={`flex flex-wrap justify-between items-center border rounded p-3 gap-4 ${
+          isPublished
+            ? "bg-green-l5 border-green-l2"
+            : "bg-amber-l5  border-amber-l3"
+        }`}
+      >
+        {isPublished ? (
+          <Confirmed>Your endowment profile is published</Confirmed>
+        ) : (
+          <Info classes="text-amber">
+            Your endowment profile is not yet published
+          </Info>
+        )}
+        <div className="flex items-center gap-x-2">
+          <Toggle<FV>
+            name="published"
+            classes={{
+              container:
+                "ml-auto text-sm bg-white border rounded-full border-gray-l4 py-1 pl-1 pr-4",
+            }}
+          >
+            Publish profile
+          </Toggle>
+          {isPublished && (
+            <ExtLink
+              href={`${appRoutes.marketplace}/${id}`}
+              className="text-blue-d1 hover:text-navy text-sm flex items-center gap-1"
+            >
+              View Profile
+            </ExtLink>
+          )}
+        </div>
+      </div>
 
       <div className="flex gap-3 group-disabled:hidden">
         <button
