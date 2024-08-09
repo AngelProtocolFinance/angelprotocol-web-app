@@ -81,6 +81,7 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
           onIncrement={rhf.onIncrement}
           code={rhf.currency.value.code}
           rate={rhf.currency.value.rate}
+          increments={props.init.config?.increments}
         />
       )}
 

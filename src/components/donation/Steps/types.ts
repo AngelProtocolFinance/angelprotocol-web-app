@@ -67,6 +67,7 @@ export type Config = {
   accentPrimary?: string;
   /** hex color without alpha */
   accentSecondary?: string;
+  increments?: number[];
 };
 
 export type Init = {

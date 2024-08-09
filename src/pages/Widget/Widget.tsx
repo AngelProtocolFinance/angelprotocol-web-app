@@ -47,6 +47,7 @@ function Content({ endowment }: { endowment?: Endowment }) {
     accentPrimary: "#2D89C8",
     accentSecondary: "#E6F1F9",
     program: DEFAULT_PROGRAM,
+    increments: [{ value: "40" }, { value: "100" }, { value: "200" }],
   });
 
   return (

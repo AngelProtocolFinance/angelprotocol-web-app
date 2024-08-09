@@ -48,6 +48,10 @@ const widgetURLfn = (config: WidgetConfig) => {
     description: config.description ?? "",
     accentPrimary: config.accentPrimary ?? "",
     accentSecondary: config.accentSecondary ?? "",
+    increments:
+      config.increments.length === 0
+        ? "40,100,200"
+        : config.increments.join(","),
   };
   return (
     window.location.origin +
