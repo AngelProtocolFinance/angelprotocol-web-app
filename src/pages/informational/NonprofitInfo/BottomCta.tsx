@@ -1,6 +1,6 @@
 import waivingLira from "assets/laira/laira-waiving.png";
 import Image from "components/Image";
-import { INTERCOM_HELP } from "constants/env";
+import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 
@@ -25,7 +25,7 @@ export default function BottomCta({ className = "" }) {
             Start today
           </Link>
           <Link
-            to={INTERCOM_HELP}
+            to={BOOK_A_DEMO}
             className="btn-outline-blue bg-white border-2 rounded-full px-8 py-3 @5xl:px-12 @5xl:py-6 @5xl:text-xl"
           >
             Book a Demo
