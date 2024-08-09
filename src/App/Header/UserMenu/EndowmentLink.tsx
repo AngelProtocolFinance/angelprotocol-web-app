@@ -4,7 +4,7 @@ import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
-import type { UserEndow, UserFund } from "types/aws";
+import type { UserEndow } from "types/aws";
 
 interface IBookmarkLink {
   endowId: number;
@@ -26,10 +26,6 @@ export function BookmarkLink({ endowId }: IBookmarkLink) {
 
 export function EndowmentLink({ endowID, logo, name }: UserEndow) {
   return <_Link id={endowID} logo={logo} name={name} route={appRoutes.admin} />;
-}
-
-export function FundLink({ id, logo, name }: UserFund) {
-  return <_Link id={id} logo={logo} name={name} route={appRoutes.admin} />;
 }
 
 type LinkProps = {

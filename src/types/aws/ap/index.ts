@@ -125,7 +125,7 @@ export type UserEndow = {
 };
 
 export interface UserFund {
-  name?: string;
+  name: string;
   logo: string;
   email: string;
   /** uuidv4 */
@@ -272,6 +272,14 @@ export namespace Fund {
     /** endowment ids */
     members: number[];
   }
+
+  export interface Update
+    extends Partial<
+      Pick<
+        Fund,
+        "name" | "description" | "banner" | "logo" | "featured" | "target"
+      >
+    > {}
 
   export interface Card
     extends Pick<
