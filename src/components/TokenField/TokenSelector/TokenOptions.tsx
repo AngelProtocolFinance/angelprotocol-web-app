@@ -115,9 +115,9 @@ function TokenCombobox({
 
   //biome-ignore lint: coinGeckoPlatformId is the only thing changing
   const [fuse, subset] = useMemo(() => {
-    const coinGeckoTokens = require(
-      `./coins/${coingeckoPlatformId}.json`
-    ) as any[];
+    const coinGeckoTokens: any[] = coingeckoPlatformId
+      ? require(`./coins/${coingeckoPlatformId}.json`)
+      : [];
 
     const allTokens: MixedToken[] = coingeckoPlatformId
       ? apTokens.concat(coinGeckoTokens)

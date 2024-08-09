@@ -1,7 +1,7 @@
 import ContentForm from "./ContentForm";
 import ImgForm from "./ImgForm";
 
-export default function EditFund() {
+export function EditFund() {
   return (
     <div className="padded-container mt-8 grid">
       <h2 className="text-3xl mb-4">Edit fund</h2>

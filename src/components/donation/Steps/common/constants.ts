@@ -3,7 +3,13 @@ import type { ChainID } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonateMethodId } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
-import type { DonationDetails, FormDonor, TributeNotif } from "../types";
+import type {
+  DonationDetails,
+  DonationState,
+  FinishedSummaryData,
+  FormDonor,
+  TributeNotif,
+} from "../types";
 
 export const DEFAULT_PROGRAM: OptionType<""> = {
   label: "General Donation",
@@ -101,4 +107,39 @@ export const initTributeNotif: TributeNotif = {
   toEmail: "",
   toFullName: "",
   fromMsg: "",
+};
+
+export const summaryData = (state: DonationState): FinishedSummaryData => {
+  if ("donor" in state) {
+    if (state.donor && state.honorary && state.feeAllowance) {
+      return {
+        donor: state.donor,
+        honorary: state.honorary,
+        feeAllowance: state.feeAllowance,
+      };
+    }
+  }
+
+  return {
+    feeAllowance: 0,
+    donor: {
+      title: initDonorTitleOption,
+      firstName: "",
+      lastName: "",
+      email: "",
+      ukTaxResident: false,
+      streetAddress: "",
+      zipCode: "",
+    },
+    honorary: {
+      honoraryFullName: "",
+      withHonorary: false,
+      withTributeNotif: false,
+      tributeNotif: {
+        fromMsg: "",
+        toEmail: "",
+        toFullName: "",
+      },
+    },
+  };
 };

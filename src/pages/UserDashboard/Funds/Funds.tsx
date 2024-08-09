@@ -2,19 +2,15 @@ import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
+import { useAuthenticatedUser } from "contexts/Auth";
 import { Link } from "react-router-dom";
 import { useUserFundsQuery } from "services/aws/users";
 
-interface Props {
-  userId: string;
-  classes?: string;
-}
-export function Funds({ userId, classes = "" }: Props) {
-  const query = useUserFundsQuery(userId);
+export function Funds() {
+  const user = useAuthenticatedUser();
+  const query = useUserFundsQuery(user.email);
   return (
-    <div
-      className={`${classes} grid gap-y-4 grid-cols-[auto_1fr_auto_auto] justify-items-start`}
-    >
+    <div className="grid gap-y-4 grid-cols-[auto_1fr_auto_auto] justify-items-start">
       <h3 className="text-3xl mb-2 col-span-full">My Fundraisers</h3>
 
       <QueryLoader

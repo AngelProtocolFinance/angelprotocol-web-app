@@ -1,1 +1,1 @@
-export { Funds } from "./Funds";
+export { Funds as Component } from "./Funds";
