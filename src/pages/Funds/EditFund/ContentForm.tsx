@@ -7,21 +7,34 @@ import { useController, useForm } from "react-hook-form";
 import type { Fund } from "types/aws";
 import { GoalSelector, type TargetType } from "../common";
 
-interface FV extends Pick<Fund, "name" | "description" | "featured"> {
+export interface FV extends Pick<Fund, "name" | "description" | "featured"> {
   targetType: TargetType;
   fixedTarget: string;
 }
 
 interface Props {
+  init: Fund;
   onSubmit: (fv: FV) => void;
 }
-export default function ContentForm(props: Props) {
+export default function ContentForm({ init, onSubmit }: Props) {
   const {
     register,
     handleSubmit,
     control,
     formState: { isSubmitting, errors },
-  } = useForm<FV>();
+  } = useForm<FV>({
+    values: {
+      name: init.name,
+      description: init.description,
+      featured: init.featured,
+      targetType: !init.target
+        ? "none"
+        : init.target === "smart"
+          ? "smart"
+          : "fixed",
+      fixedTarget: init.target === "smart" ? "" : init.target ?? "",
+    },
+  });
 
   const { field: targetType } = useController({
     control,
@@ -30,7 +43,7 @@ export default function ContentForm(props: Props) {
 
   return (
     <Form
-      onSubmit={handleSubmit(props.onSubmit)}
+      onSubmit={handleSubmit(onSubmit)}
       disabled={isSubmitting}
       className="grid border border-gray-l4 rounded-lg p-6 my-4 w-full"
     >
