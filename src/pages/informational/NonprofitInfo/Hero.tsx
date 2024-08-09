@@ -1,5 +1,5 @@
 import Image from "components/Image";
-import { INTERCOM_HELP } from "constants/env";
+import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { Link } from "react-router-dom";
@@ -28,7 +28,7 @@ export default function Hero({ className = "" }) {
             Start today
           </Link>
           <Link
-            to={INTERCOM_HELP}
+            to={BOOK_A_DEMO}
             className="btn-outline-blue border-2 rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl hover:shadow-2xl hover:shadow-blue/50"
           >
             Book a Demo
