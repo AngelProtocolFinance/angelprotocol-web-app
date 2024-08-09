@@ -36,4 +36,6 @@ export type WidgetURLSearchParams = {
   accentPrimary?: string;
   accentSecondary?: string;
   programId?: string;
+  /** csv of increments e.g. 40, 100, 500 */
+  increments?: string;
 };

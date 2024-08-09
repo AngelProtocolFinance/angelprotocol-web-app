@@ -5,14 +5,13 @@ interface Props {
   rate: number;
   code: string;
   onIncrement: OnIncrement;
+  increments?: number[];
 }
-
-const increments = [40, 100, 200];
 
 export default function Incrementers(props: Props) {
   return (
     <div className="flex justify-center flex-wrap gap-3">
-      {increments.map((inc) => (
+      {(props.increments ?? [40, 100, 200]).map((inc) => (
         <Incrementer key={inc} inc={inc} {...props} />
       ))}
     </div>

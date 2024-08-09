@@ -11,7 +11,7 @@ type Props = {
   config: WidgetConfig;
 };
 export default function Preview({ classes = "", config }: Props) {
-  const { endowment, methods, ...restConfig } = config;
+  const { endowment, methods, increments, ...restConfig } = config;
   const endowName = config.endowment.name;
 
   const { data } = useEndowment({ id: endowment.id }, [
@@ -32,6 +32,7 @@ export default function Preview({ classes = "", config }: Props) {
       config: {
         ...restConfig,
         methodIds: methods.filter((m) => !m.disabled).map((m) => m.id),
+        increments: increments.map(({ value }) => +value),
       },
     },
     details: initDetails(methods.at(0)?.id ?? "stripe", restConfig.program),
