@@ -52,7 +52,7 @@ const widgetURLfn = (config: WidgetConfig) => {
     increments:
       config.increments.length === 0
         ? DONATION_INCREMENTS.join(",")
-        : config.increments.join(","),
+        : config.increments.map((inc) => inc.value).join(","),
   };
   return (
     window.location.origin +

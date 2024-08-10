@@ -55,9 +55,9 @@ export default function Preview({ classes = "", config }: Props) {
       className={`${classes} @container/preview pb-4`}
     >
       <div>
-        <p className="flex text-navy-d4 text-lg font-medium font-heading">
+        <p className="flex text-navy-d4 text-lg font-heading">
           <Image src={character} className="h-[45px] mr-2 pb-2" />
-          Check out the LIVE preview of your Donation Form!
+          <span className="uppercase font-bold">Live form preview</span>
         </p>
       </div>
       <div className="grid h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-navy-d4 bg-white">
