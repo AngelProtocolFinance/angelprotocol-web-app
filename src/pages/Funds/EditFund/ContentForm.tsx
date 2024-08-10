@@ -45,9 +45,8 @@ export default function ContentForm({ init, onSubmit }: Props) {
     <Form
       onSubmit={handleSubmit(onSubmit)}
       disabled={isSubmitting}
-      className="grid border border-gray-l4 rounded-lg p-6 my-4 w-full"
+      className="grid my-4 w-full"
     >
-      <h4 className="font-bold text-xl mb-4">Fund information</h4>
       <Field
         {...register("name")}
         label="Name"

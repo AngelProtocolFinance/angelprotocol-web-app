@@ -58,15 +58,6 @@ export function EditFund() {
         <ErrorStatus>Failed to get fund</ErrorStatus>
       ) : (
         <>
-          <ContentForm onSubmit={editInfo} init={data} />
-          <ImgForm
-            label="Banner"
-            aspect={[4, 1]}
-            classes="mt-6"
-            imgClasses={{ container: "w-full aspect-[4/1]" }}
-            init={data.banner}
-            onSubmit={async (f) => upload(f, "banner")}
-          />
           <ImgForm
             label="Logo"
             classes="justify-self-start mt-6"
@@ -75,6 +66,15 @@ export function EditFund() {
             init={data.logo}
             onSubmit={async (f) => upload(f, "logo")}
           />
+          <ImgForm
+            label="Banner"
+            aspect={[4, 1]}
+            classes="mt-6"
+            imgClasses={{ container: "w-full aspect-[4/1]" }}
+            init={data.banner}
+            onSubmit={async (f) => upload(f, "banner")}
+          />
+          <ContentForm onSubmit={editInfo} init={data} />
         </>
       )}
     </div>
