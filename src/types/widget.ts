@@ -15,6 +15,8 @@ export type WidgetConfig = {
   accentPrimary?: string;
   /** hex color without alpha */
   accentSecondary?: string;
+  /** string integers */
+  increments: { value: string }[];
 };
 
 export type WidgetURLSearchParams = {
@@ -34,4 +36,6 @@ export type WidgetURLSearchParams = {
   accentPrimary?: string;
   accentSecondary?: string;
   programId?: string;
+  /** csv of increments e.g. 40, 100, 500 */
+  increments?: string;
 };
