@@ -6,7 +6,8 @@ import type { ControlledProps } from "./types";
 
 export default function useImgEditor({
   value: curr,
-  onChange,
+  onSet,
+  onSave,
   aspect,
   accept,
   rounded,
@@ -16,7 +17,7 @@ export default function useImgEditor({
   const roundedClasses = rounded ? "[&_.cropper-view-box]:rounded-full" : "";
 
   const handleCropResult = (cropped: File) =>
-    onChange({
+    onSave({
       file: cropped,
       name: cropped.name,
       preview: URL.createObjectURL(cropped),
@@ -29,7 +30,7 @@ export default function useImgEditor({
 
     if (!accept.includes(newFile.type as any)) {
       //don't show cropper, render blank preview
-      return onChange({
+      return onSet({
         file: newFile,
         name: newFile.name,
         preview: "broken preview url",
@@ -38,7 +39,7 @@ export default function useImgEditor({
     }
 
     // set the file, and validate immediately
-    onChange({
+    onSet({
       file: newFile,
       name: newFile.name,
       preview: URL.createObjectURL(newFile),

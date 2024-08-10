@@ -27,7 +27,8 @@ export type Props<T extends FieldValues, K extends Path<T>> = {
 export interface ControlledProps extends Omit<Props<any, any>, "name"> {
   value: ImgLink;
   /** optional: also run some validation */
-  onChange: (value: ImgLink) => void;
+  onSet: (value: ImgLink) => void;
+  onSave: (value: ImgLink) => void;
   onUndo: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   classes?: Classes;
   disabled?: boolean;

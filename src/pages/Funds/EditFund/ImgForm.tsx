@@ -4,6 +4,7 @@ import {
   ControlledImgEditor as ImgEditor,
   type ImgLink,
 } from "components/ImgEditor";
+import { useRef } from "react";
 import { useController, useForm } from "react-hook-form";
 import { genFileSchema } from "schemas/file";
 import { schema } from "schemas/shape";
@@ -39,7 +40,7 @@ export default function ImgForm({
     trigger,
     resetField,
     handleSubmit,
-    formState: { errors, isSubmitting, isDirty },
+    formState: { errors, isSubmitting },
   } = useForm<FV>({
     resolver: yupResolver(schema<FV>({ img: fileObj })),
     values: {
@@ -52,22 +53,27 @@ export default function ImgForm({
   });
   const { field: img } = useController({ control, name: "img" });
 
+  const submitRef = useRef<HTMLButtonElement>(null);
+
   return (
     <form
-      className={`${classes} border border-gray-l4 p-4 rounded-lg grid`}
+      className={`${classes} grid`}
       onSubmit={handleSubmit(async (fv) => {
         if (!fv.img.file) throw `dev: must have file`;
         await onSubmit(fv.img.file);
       })}
     >
       <label className="text-lg font-medium block mb-1">{label}</label>
-
+      {isSubmitting && <p>uploading...</p>}
       <ImgEditor
         value={img.value}
-        onChange={async (v) => {
+        onSet={(v) => {
           img.onChange(v);
-          const valid = await trigger("img.file");
-          if (!valid) return;
+          trigger("img.file");
+        }}
+        onSave={(v) => {
+          img.onChange(v);
+          submitRef.current?.click();
         }}
         onUndo={(e) => {
           e.stopPropagation();
@@ -79,13 +85,7 @@ export default function ImgForm({
         maxSize={MAX_SIZE_IN_BYTES}
         error={errors.img?.file?.message}
       />
-      <button
-        disabled={isSubmitting || !isDirty}
-        className="btn-blue py-2 px-4 text-sm uppercase justify-self-end"
-        type="submit"
-      >
-        {isSubmitting ? "Updating..." : "Save"}
-      </button>
+      <button ref={submitRef} type="submit" className="invisible" />
     </form>
   );
 }
