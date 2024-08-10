@@ -64,16 +64,16 @@ export function EditFund() {
             aspect={[4, 1]}
             classes="mt-6"
             imgClasses={{ container: "w-full aspect-[4/1]" }}
-            bannerUrl=""
-            onSubmit={async (f) => await upload(f, "banner")}
+            init={data.banner}
+            onSubmit={async (f) => upload(f, "banner")}
           />
           <ImgForm
             label="Logo"
             classes="justify-self-start mt-6"
             aspect={[1, 1]}
             imgClasses={{ container: "w-80 aspect-[1/1]" }}
-            bannerUrl=""
-            onSubmit={async (f) => await upload(f, "logo")}
+            init={data.logo}
+            onSubmit={async (f) => upload(f, "logo")}
           />
         </>
       )}

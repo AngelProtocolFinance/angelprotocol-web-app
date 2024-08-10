@@ -15,7 +15,7 @@ interface FV {
 }
 
 interface Props {
-  bannerUrl?: string;
+  init?: string;
   onSubmit: (img: File) => Promise<void>;
   classes?: string;
   imgClasses: Classes;
@@ -28,7 +28,7 @@ const fileObj = schema<ImgLink>({
 });
 
 export default function ImgForm({
-  bannerUrl,
+  init,
   onSubmit,
   imgClasses,
   classes,
@@ -45,8 +45,8 @@ export default function ImgForm({
     resolver: yupResolver(schema<FV>({ img: fileObj })),
     values: {
       img: {
-        preview: bannerUrl ?? "",
-        publicUrl: bannerUrl ?? "",
+        preview: init ?? "",
+        publicUrl: init ?? "",
         name: "",
       },
     },
@@ -66,6 +66,7 @@ export default function ImgForm({
       <label className="text-lg font-medium block mb-1">{label}</label>
       {isSubmitting && <p>uploading...</p>}
       <ImgEditor
+        disabled={isSubmitting}
         value={img.value}
         onSet={(v) => {
           img.onChange(v);
