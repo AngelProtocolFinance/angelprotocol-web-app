@@ -59,7 +59,11 @@ export default function ContentForm({ init, onSubmit }: Props) {
         {...register("description")}
         label="Description"
         required
-        classes={{ container: "mt-4", label: "font-medium text-base" }}
+        classes={{
+          container: "mt-4",
+          label: "font-medium text-base",
+          input: "whitespace-pre",
+        }}
         error={errors.description?.message}
       />
 
