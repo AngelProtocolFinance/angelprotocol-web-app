@@ -4,6 +4,7 @@ import {
   ControlledImgEditor as ImgEditor,
   type ImgLink,
 } from "components/ImgEditor";
+import { LoadingStatus } from "components/Status";
 import { useRef } from "react";
 import { useController, useForm } from "react-hook-form";
 import { genFileSchema } from "schemas/file";
@@ -64,7 +65,11 @@ export default function ImgForm({
       })}
     >
       <label className="text-lg font-medium block mb-1">{label}</label>
-      {isSubmitting && <p>uploading...</p>}
+      {isSubmitting && (
+        <LoadingStatus classes="text-sm mb-2 text-navy-l1">
+          uploading...
+        </LoadingStatus>
+      )}
       <ImgEditor
         disabled={isSubmitting}
         value={img.value}
