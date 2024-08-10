@@ -15,9 +15,11 @@ export default function Incrementers({
 }: Props) {
   return (
     <div className="flex justify-center flex-wrap gap-3">
-      {increments.map((inc) => (
-        <Incrementer key={inc} inc={inc} {...props} />
-      ))}
+      {increments
+        .toSorted((a, b) => a - b)
+        .map((inc) => (
+          <Incrementer key={inc} inc={inc} {...props} />
+        ))}
     </div>
   );
 }
