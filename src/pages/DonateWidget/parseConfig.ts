@@ -1,3 +1,4 @@
+import { DONATION_INCREMENTS } from "constants/common";
 import type { SchemaShape } from "schemas/types";
 import type { DonateMethodId } from "types/lists";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
@@ -15,6 +16,11 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
       allMethodIds.includes(id as DonateMethodId)
     );
   }),
+  increments: string().test("valid csv", "invalid increments", (val) => {
+    return val
+      ?.split(",")
+      .every((val) => number().positive().isValidSync(+val));
+  }),
   accentPrimary: string().matches(hexColor, "invalid color format"),
   accentSecondary: string().matches(hexColor, "invalid color format"),
   title: string().max(100),
@@ -22,8 +28,12 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   description: string().max(300),
 });
 
-export type Parsed = Omit<WidgetConfig, "endowment" | "methods" | "program"> & {
+export type Parsed = Omit<
+  WidgetConfig,
+  "endowment" | "methods" | "program" | "increments"
+> & {
   methodIds?: DonateMethodId[];
+  increments: number[];
   programId?: string;
 };
 
@@ -53,6 +63,8 @@ export default function parseConfig(
       description: config.description,
       accentPrimary: config.accentPrimary,
       accentSecondary: config.accentSecondary,
+      increments:
+        config.increments?.split(",").map(Number) || DONATION_INCREMENTS,
     };
   } catch (error) {
     const message = (error as ValidationError).message;
