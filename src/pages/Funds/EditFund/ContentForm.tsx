@@ -21,7 +21,7 @@ export default function ContentForm({ init, onSubmit }: Props) {
     register,
     handleSubmit,
     control,
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isDirty },
   } = useForm<FV>({
     values: {
       name: init.name,
@@ -89,10 +89,11 @@ export default function ContentForm({ init, onSubmit }: Props) {
       </CheckField>
 
       <button
+        disabled={!isDirty}
         type="submit"
         className="btn-blue text-sm font-medium px-4 py-2 justify-self-end"
       >
-        Save
+        Update fund
       </button>
     </Form>
   );
