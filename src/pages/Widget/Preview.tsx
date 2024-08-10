@@ -2,6 +2,7 @@ import character from "assets/laira/laira-waiving.png";
 import { DappLogo } from "components/Image";
 import Image from "components/Image/Image";
 import { type DonationState, Steps, initDetails } from "components/donation";
+import { DONATION_INCREMENTS } from "constants/common";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useEndowment } from "services/aws/useEndowment";
 import type { WidgetConfig } from "types/widget";
@@ -32,7 +33,10 @@ export default function Preview({ classes = "", config }: Props) {
       config: {
         ...restConfig,
         methodIds: methods.filter((m) => !m.disabled).map((m) => m.id),
-        increments: increments.map(({ value }) => +value),
+        increments:
+          increments.length === 0
+            ? DONATION_INCREMENTS
+            : increments.map(({ value }) => +value),
       },
     },
     details: initDetails(methods.at(0)?.id ?? "stripe", restConfig.program),

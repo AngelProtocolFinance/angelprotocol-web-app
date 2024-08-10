@@ -2,6 +2,7 @@ import { fill, order } from "components/DonateMethods";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { DEFAULT_PROGRAM } from "components/donation";
+import { DONATION_INCREMENTS } from "constants/common";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
@@ -47,7 +48,7 @@ function Content({ endowment }: { endowment?: Endowment }) {
     accentPrimary: "#2D89C8",
     accentSecondary: "#E6F1F9",
     program: DEFAULT_PROGRAM,
-    increments: [{ value: "40" }, { value: "100" }, { value: "200" }],
+    increments: DONATION_INCREMENTS.map((inc) => ({ value: `${inc}` })),
   });
 
   return (

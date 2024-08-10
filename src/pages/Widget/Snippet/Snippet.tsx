@@ -1,4 +1,5 @@
 import Copier from "components/Copier";
+import { DONATION_INCREMENTS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { cleanObject } from "helpers/cleanObject";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
@@ -50,7 +51,7 @@ const widgetURLfn = (config: WidgetConfig) => {
     accentSecondary: config.accentSecondary ?? "",
     increments:
       config.increments.length === 0
-        ? "40,100,200"
+        ? DONATION_INCREMENTS.join(",")
         : config.increments.join(","),
   };
   return (

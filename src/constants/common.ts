@@ -14,3 +14,5 @@ export const PROCESSING_RATES = {
     others: 0.015,
   },
 };
+
+export const DONATION_INCREMENTS = [40, 100, 200];

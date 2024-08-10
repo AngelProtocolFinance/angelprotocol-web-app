@@ -1,3 +1,4 @@
+import { DONATION_INCREMENTS } from "constants/common";
 import type { SchemaShape } from "schemas/types";
 import type { DonateMethodId } from "types/lists";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
@@ -62,7 +63,8 @@ export default function parseConfig(
       description: config.description,
       accentPrimary: config.accentPrimary,
       accentSecondary: config.accentSecondary,
-      increments: config.increments?.split(",").map(Number) || [40, 100, 200],
+      increments:
+        config.increments?.split(",").map(Number) || DONATION_INCREMENTS,
     };
   } catch (error) {
     const message = (error as ValidationError).message;
