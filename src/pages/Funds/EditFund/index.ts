@@ -1,1 +1,1 @@
-export { EditFund as Component } from "./EditFund";
+export { default as Component } from "./EditFund";
