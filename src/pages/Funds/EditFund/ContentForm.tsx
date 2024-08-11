@@ -1,10 +1,13 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
   Form,
 } from "components/form";
 import { useController, useForm } from "react-hook-form";
+import { schema as schemaFn, stringNumber } from "schemas/shape";
 import type { Fund } from "types/aws";
+import { string } from "yup";
 import { GoalSelector, type TargetType } from "../common";
 
 export interface FV extends Pick<Fund, "name" | "description" | "featured"> {
@@ -16,6 +19,29 @@ interface Props {
   init: Fund;
   onSubmit: (fv: FV) => void;
 }
+
+const targetTypeKey: keyof FV = "targetType";
+const schema = schemaFn<FV>({
+  name: string().required("required"),
+  description: string().required("required"),
+  fixedTarget: stringNumber(
+    (str) => {
+      return str.when(targetTypeKey, (values, schema) => {
+        const [type] = values as [TargetType];
+        return type === "fixed" ? schema.required("required") : schema;
+      });
+    },
+    (n) => {
+      return n.when(targetTypeKey, (values, schema) => {
+        const [type] = values as [TargetType];
+        return type === "fixed"
+          ? schema.positive("must be greater than 0")
+          : schema;
+      });
+    }
+  ),
+});
+
 export default function ContentForm({ init, onSubmit }: Props) {
   const {
     register,
@@ -23,6 +49,7 @@ export default function ContentForm({ init, onSubmit }: Props) {
     control,
     formState: { isSubmitting, errors, isDirty },
   } = useForm<FV>({
+    resolver: yupResolver(schema),
     values: {
       name: init.name,
       description: init.description,
