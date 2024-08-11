@@ -162,7 +162,7 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
         <Field
           {...rhf.register("fixedTarget", { shouldUnregister: true })}
           label="How much money do you want to raise?"
-          classes="mt-2"
+          classes="mt-2 mb-6"
           placeholder="$"
           error={rhf.errors.fixedTarget?.message}
         />

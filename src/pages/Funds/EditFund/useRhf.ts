@@ -59,7 +59,7 @@ export function useRhf(init: Fund) {
           : init.target === "smart"
             ? "smart"
             : "fixed",
-      fixedTarget: init.target === "smart" ? "smart" : init.target,
+      fixedTarget: init.target === "smart" ? "" : init.target,
       logo: { name: "", preview: init.logo, publicUrl: init.logo },
       banner: { name: "", preview: init.banner, publicUrl: init.banner },
     },
