@@ -39,7 +39,7 @@ export default function Card({
             <span className="inline">{name}</span>
           </h3>
 
-          <p className="peer text-navy-l1 dark:text-navy-l2 text-sm -mt-2 mb-4">
+          <p className="peer text-navy-l1 dark:text-navy-l2 text-sm -mt-2 mb-4 line-clamp-3">
             {description}
           </p>
 
