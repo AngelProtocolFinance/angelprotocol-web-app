@@ -62,7 +62,8 @@ export default function ContentForm({ init, onSubmit }: Props) {
         classes={{
           container: "mt-4",
           label: "font-medium text-base",
-          input: "whitespace-pre",
+          input:
+            "whitespace-pre-wrap supports-[field-sizing]:[field-sizing:content]",
         }}
         error={errors.description?.message}
       />

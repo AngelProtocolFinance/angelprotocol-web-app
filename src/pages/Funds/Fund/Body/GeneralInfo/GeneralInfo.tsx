@@ -11,7 +11,7 @@ export default function GeneralInfo({ className = "" }) {
     >
       <div className="flex flex-col gap-8 w-full h-full">
         <Container title="Overview">
-          <pre className="w-full h-full px-8 py-10 font-body">
+          <pre className="w-full h-full px-8 py-10 font-body text-wrap">
             {fund.description}
           </pre>
         </Container>
