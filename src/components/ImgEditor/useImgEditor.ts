@@ -46,12 +46,16 @@ export default function useImgEditor({
       publicUrl: "",
     });
 
-    showModal(ImgCropper, {
-      file: newFile,
-      aspect,
-      onSave: handleCropResult,
-      classes: roundedClasses,
-    });
+    showModal(
+      ImgCropper,
+      {
+        file: newFile,
+        aspect,
+        onSave: handleCropResult,
+        classes: roundedClasses,
+      },
+      { isDismissible: false }
+    );
   };
 
   const handleOpenCropper: MouseEventHandler<HTMLButtonElement> = (e) => {
