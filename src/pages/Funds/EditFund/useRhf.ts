@@ -53,13 +53,13 @@ export function useRhf(init: Fund) {
     values: {
       name: init.name,
       description: init.description,
-      featured: init.featured,
-      targetType: !init.target
-        ? "none"
-        : init.target === "smart"
-          ? "smart"
-          : "fixed",
-      fixedTarget: init.target === "smart" ? "" : init.target ?? "",
+      targetType:
+        init.target === "0"
+          ? "none"
+          : init.target === "smart"
+            ? "smart"
+            : "fixed",
+      fixedTarget: init.target === "smart" ? "smart" : init.target,
       logo: { name: "", preview: init.logo, publicUrl: init.logo },
       banner: { name: "", preview: init.banner, publicUrl: init.banner },
     },

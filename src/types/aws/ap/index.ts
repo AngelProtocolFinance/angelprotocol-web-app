@@ -251,8 +251,8 @@ export interface Fund {
   expiration?: string;
   verified: boolean;
   donation_total_usd: number;
-  /** undefined: no target */
-  target?: "smart" | `${number}`;
+  /** "0": no target */
+  target: "smart" | `${number}`;
   /** endowIds that allows this fundraiser on their profile */
   approvers: number[];
 }

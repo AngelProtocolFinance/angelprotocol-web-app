@@ -108,14 +108,15 @@ export default withAuth(function CreateFund() {
           liquidSplitPct: fv.settings.liquidSplit,
           allowBgTip: fv.settings.allowBgTip,
         },
+        target:
+          fv.targetType === "none"
+            ? `${0}`
+            : fv.targetType === "smart"
+              ? "smart"
+              : `${+fv.fixedTarget}`,
       };
 
       if (fv.expiration) fund.expiration = fv.expiration;
-
-      if (fv.targetType !== "none") {
-        fund.target =
-          fv.targetType === "fixed" ? (fv.fixedTarget as `${number}`) : "smart";
-      }
 
       const res = await createFund(fund).unwrap();
 
@@ -226,7 +227,7 @@ export default withAuth(function CreateFund() {
         />
         {targetType.value === "fixed" && (
           <Field
-            {...register("fixedTarget")}
+            {...register("fixedTarget", { shouldUnregister: true })}
             label="How much money do you want to raise?"
             classes="mt-2"
             placeholder="$"

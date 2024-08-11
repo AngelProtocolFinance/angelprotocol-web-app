@@ -3,11 +3,7 @@ import {
   type ImgLink,
 } from "components/ImgEditor";
 import Prompt from "components/Prompt";
-import {
-  NativeCheckField as CheckField,
-  NativeField as Field,
-  Form as Frm,
-} from "components/form";
+import { NativeField as Field, Form as Frm } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
@@ -15,6 +11,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { useEditFundMutation } from "services/aws/funds";
 import type { Fund } from "types/aws";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
+import { FeatureBanner } from "./FeatureBanner";
 import type { FV } from "./types";
 import { useRhf } from "./useRhf";
 
@@ -23,7 +20,7 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
   const { handleError } = useErrorContext();
   const rhf = useRhf(props);
 
-  const [edit] = useEditFundMutation();
+  const [editFund, { isLoading: isEditingFund }] = useEditFundMutation();
 
   const onSubmit: SubmitHandler<FV> = async ({
     targetType,
@@ -47,7 +44,7 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
       if (rhf.dirtyFields.targetType || rhf.dirtyFields.fixedTarget) {
         update.target =
           targetType === "none"
-            ? undefined
+            ? "0"
             : targetType === "smart"
               ? "smart"
               : (fixedTarget as `${number}`);
@@ -57,9 +54,8 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
       if (rhf.dirtyFields.logo) update.logo = logoUrl;
       if (rhf.dirtyFields.name) update.name = fv.name;
       if (rhf.dirtyFields.description) update.description = fv.description;
-      if (rhf.dirtyFields.featured) update.featured = fv.featured;
 
-      await edit({
+      await editFund({
         ...update,
         id: props.id,
       }).unwrap();
@@ -76,14 +72,47 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
     <Frm
       onSubmit={rhf.handleSubmit(onSubmit)}
       disabled={rhf.isSubmitting}
-      className={classes}
+      className={classes + " pb-4"}
     >
-      <div className="mb-4 border-b border-gray-l4 flex items-center justify-between">
-        <h4 className="mb-4 text-3xl ">{props.name}</h4>
-        <button className="btn-red px-4 py-2 text-sm">Close fund</button>
-      </div>
+      <FeatureBanner
+        isToggling={isEditingFund}
+        fundId={props.id}
+        featured={props.featured}
+        onToggle={async () => {
+          try {
+            await editFund({
+              id: props.id,
+              featured: !props.featured,
+            }).unwrap();
+          } catch (err) {
+            handleError(err, { context: "updating fund" });
+          }
+        }}
+        classes="my-4"
+      />
 
-      <label className="text-lg font-medium block mb-2">Logo</label>
+      <Field
+        {...rhf.register("name")}
+        label="Name"
+        required
+        error={rhf.errors.name?.message}
+        classes={{ label: "font-medium text-base" }}
+      />
+      <Field
+        type="textarea"
+        {...rhf.register("description")}
+        label="Description"
+        required
+        classes={{
+          container: "mt-4",
+          label: "font-medium text-base",
+          input:
+            "whitespace-pre-wrap supports-[field-sizing]:[field-sizing:content]",
+        }}
+        error={rhf.errors.description?.message}
+      />
+
+      <label className="text-lg font-medium block mb-2 mt-4">Logo</label>
       <ImgEditor
         disabled={rhf.isSubmitting}
         value={rhf.logo.value}
@@ -121,27 +150,6 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
         error={rhf.errors.banner?.file?.message}
       />
 
-      <Field
-        {...rhf.register("name")}
-        label="Name"
-        required
-        error={rhf.errors.name?.message}
-        classes={{ label: "font-medium text-base", container: "mt-6" }}
-      />
-      <Field
-        type="textarea"
-        {...rhf.register("description")}
-        label="Description"
-        required
-        classes={{
-          container: "mt-4",
-          label: "font-medium text-base",
-          input:
-            "whitespace-pre-wrap supports-[field-sizing]:[field-sizing:content]",
-        }}
-        error={rhf.errors.description?.message}
-      />
-
       <label className="block mt-4 font-medium">
         Fundraiser goal <span className="text-red">*</span>
       </label>
@@ -152,20 +160,13 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
       />
       {rhf.targetType.value === "fixed" && (
         <Field
-          {...rhf.register("fixedTarget")}
+          {...rhf.register("fixedTarget", { shouldUnregister: true })}
           label="How much money do you want to raise?"
           classes="mt-2"
           placeholder="$"
           error={rhf.errors.fixedTarget?.message}
         />
       )}
-
-      <CheckField
-        {...rhf.register("featured")}
-        classes="col-span-full mt-8 font-medium"
-      >
-        Featured in funds page
-      </CheckField>
 
       <button
         disabled={!rhf.isDirty}
