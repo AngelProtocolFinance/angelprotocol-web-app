@@ -138,11 +138,10 @@ export default function ImgEditor<T extends FieldValues, K extends Path<T>>(
     <ControlledImgEditor
       ref={ref}
       value={value}
-      onSet={(v) => {
+      onChange={(v) => {
         onChange(v);
         trigger(filePath as any);
       }}
-      onSave={onChange}
       onUndo={(e) => {
         ////prevent container dropzone from catching click event
         e.stopPropagation();

@@ -6,8 +6,7 @@ import type { ControlledProps } from "./types";
 
 export default function useImgEditor({
   value: curr,
-  onSet,
-  onSave,
+  onChange,
   aspect,
   accept,
   rounded,
@@ -17,7 +16,7 @@ export default function useImgEditor({
   const roundedClasses = rounded ? "[&_.cropper-view-box]:rounded-full" : "";
 
   const handleCropResult = (cropped: File) =>
-    onSave({
+    onChange({
       file: cropped,
       name: cropped.name,
       preview: URL.createObjectURL(cropped),
@@ -30,7 +29,7 @@ export default function useImgEditor({
 
     if (!accept.includes(newFile.type as any)) {
       //don't show cropper, render blank preview
-      return onSet({
+      return onChange({
         file: newFile,
         name: newFile.name,
         preview: "broken preview url",
@@ -39,23 +38,19 @@ export default function useImgEditor({
     }
 
     // set the file, and validate immediately
-    onSet({
+    onChange({
       file: newFile,
       name: newFile.name,
       preview: URL.createObjectURL(newFile),
       publicUrl: "",
     });
 
-    showModal(
-      ImgCropper,
-      {
-        file: newFile,
-        aspect,
-        onSave: handleCropResult,
-        classes: roundedClasses,
-      },
-      { isDismissible: false }
-    );
+    showModal(ImgCropper, {
+      file: newFile,
+      aspect,
+      onSave: handleCropResult,
+      classes: roundedClasses,
+    });
   };
 
   const handleOpenCropper: MouseEventHandler<HTMLButtonElement> = (e) => {

@@ -239,11 +239,10 @@ export default withAuth(function CreateFund() {
         </Label>
         <ImgEditor
           value={banner.value}
-          onSet={(v) => {
+          onChange={(v) => {
             banner.onChange(v);
             trigger("banner.file");
           }}
-          onSave={banner.onChange}
           onUndo={(e) => {
             e.stopPropagation();
             resetField("banner");
@@ -263,12 +262,12 @@ export default withAuth(function CreateFund() {
         </Label>
         <ImgEditor
           value={logo.value}
-          onSet={(v) => {
+          onChange={(v) => {
             logo.onChange(v);
             trigger("logo.file");
           }}
-          onSave={logo.onChange}
           onUndo={(e) => {
+            ``;
             e.stopPropagation();
             resetField("logo");
           }}

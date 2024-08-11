@@ -71,11 +71,10 @@ export default function Form(props: Props) {
       <ImgEditor
         rounded
         value={rhf.avatar.value}
-        onSet={(v) => {
+        onChange={(v) => {
           rhf.avatar.onChange(v);
           rhf.trigger("avatar.file");
         }}
-        onSave={rhf.avatar.onChange}
         onUndo={(e) => {
           e.stopPropagation();
           rhf.resetField("avatar");

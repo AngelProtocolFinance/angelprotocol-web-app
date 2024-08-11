@@ -42,7 +42,6 @@ export default function ImgCropper({
       //nothing is cropped
       if (!blob) return onSave(file);
       onSave(new File([blob], file.name, { type: file.type }));
-      setModalOption("isDismissible", true);
       closeModal();
     }, file.type);
   }
