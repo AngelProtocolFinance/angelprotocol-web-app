@@ -18,9 +18,7 @@ import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import type { FV } from "./types";
 import { useRhf } from "./useRhf";
 
-const containerClass = "padded-container mt-8 grid content-start";
-
-export function Form(props: Fund) {
+export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
   const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
   const rhf = useRhf(props);
@@ -78,14 +76,14 @@ export function Form(props: Fund) {
     <Frm
       onSubmit={rhf.handleSubmit(onSubmit)}
       disabled={rhf.isSubmitting}
-      className={containerClass}
+      className={classes}
     >
       <div className="mb-4 border-b border-gray-l4 flex items-center justify-between">
         <h4 className="mb-4 text-3xl ">{props.name}</h4>
         <button className="btn-red px-4 py-2 text-sm">Close fund</button>
       </div>
 
-      <label className="text-lg font-medium block mb-1">Logo</label>
+      <label className="text-lg font-medium block mb-2">Logo</label>
       <ImgEditor
         disabled={rhf.isSubmitting}
         value={rhf.logo.value}
@@ -104,7 +102,7 @@ export function Form(props: Fund) {
         error={rhf.errors.logo?.file?.message}
       />
 
-      <label className="text-lg font-medium block mb-1">Banner</label>
+      <label className="text-lg font-medium block mt-6 mb-2">Banner</label>
       <ImgEditor
         disabled={rhf.isSubmitting}
         value={rhf.banner.value}
@@ -128,7 +126,7 @@ export function Form(props: Fund) {
         label="Name"
         required
         error={rhf.errors.name?.message}
-        classes={{ label: "font-medium text-base" }}
+        classes={{ label: "font-medium text-base", container: "mt-6" }}
       />
       <Field
         type="textarea"

@@ -267,7 +267,6 @@ export default withAuth(function CreateFund() {
             trigger("logo.file");
           }}
           onUndo={(e) => {
-            ``;
             e.stopPropagation();
             resetField("logo");
           }}

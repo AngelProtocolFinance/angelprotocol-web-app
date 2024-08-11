@@ -37,5 +37,5 @@ export default withAuth(function EditFund({ user }) {
     );
   }
 
-  return <Form {...data} />;
+  return <Form {...data} classes={containerClass} />;
 });
