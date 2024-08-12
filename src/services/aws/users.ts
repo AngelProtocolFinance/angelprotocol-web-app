@@ -29,7 +29,7 @@ const endowAdmins = aws.injectEndpoints({
       }),
     }),
     userFunds: builder.query<UserFund[], string>({
-      providesTags: ["user-endows"],
+      providesTags: ["user-funds"],
       query: (userId) => ({
         url: `/${v(3)}/users/${userId}/funds`,
         headers: { authorization: TEMP_JWT },
