@@ -1,5 +1,6 @@
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import type { TargetType } from "../common";
+
+export type TargetType = "fixed" | "none" | "smart";
 
 const options: { [T in TargetType]: string } = {
   smart: "Use smart milestones",
@@ -12,7 +13,7 @@ interface Props {
   onChange: (type: TargetType) => void;
   classes?: string;
 }
-export default function GoalSelector(props: Props) {
+export function GoalSelector(props: Props) {
   return (
     <RadioGroup
       value={props.value}

@@ -156,11 +156,12 @@ export type UserEndow = {
 };
 
 export interface UserFund {
-  name?: string;
+  name: string;
   logo: string;
   email: string;
   /** uuidv4 */
   id: string;
+  active: boolean;
 }
 
 export interface EndowAdmin {
@@ -284,8 +285,8 @@ export interface Fund {
   expiration?: string;
   verified: boolean;
   donation_total_usd: number;
-  /** undefined: no target */
-  target?: "smart" | `${number}`;
+  /** "0": no target */
+  target: "smart" | `${number}`;
   /** endowIds that allows this fundraiser on their profile */
   approvers: number[];
 }
@@ -305,6 +306,14 @@ export namespace Fund {
     /** endowment ids */
     members: number[];
   }
+
+  export interface Update
+    extends Partial<
+      Pick<
+        Fund,
+        "name" | "description" | "banner" | "logo" | "featured" | "target"
+      >
+    > {}
 
   export interface Card
     extends Pick<
