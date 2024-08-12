@@ -19,6 +19,7 @@ import type {
   EndowmentCard,
   EndowmentOption,
   EndowmentsQueryParams,
+  Fund,
 } from "types/aws";
 import { version as v } from "../helpers";
 import type { EndowmentUpdate, IdOrSlug } from "../types";
@@ -157,7 +158,14 @@ export const aws = createApi({
         }
       },
     }),
-
+    fundsEndowMemberOf: builder.query<Fund.Card[], { endowId: number }>({
+      providesTags: ["endowment"],
+      query: ({ endowId }) => {
+        return {
+          url: `${v(8)}/endowments/${endowId}/funds`,
+        };
+      },
+    }),
     endowment: builder.query<
       Endowment,
       IdOrSlug & { fields?: (keyof Endowment)[] }
@@ -248,6 +256,7 @@ export const {
   useDonationsQuery,
   useLazyDonationsQuery,
   useLazyEndowWithEinQuery,
+  useFundsEndowMemberOfQuery,
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },

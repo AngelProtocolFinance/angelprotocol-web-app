@@ -106,6 +106,14 @@ const linkGroup3: LinkGroup = {
         size: 25,
       },
     },
+    {
+      title: "Fundraisers",
+      to: sidebarRoutes.funds,
+      icon: {
+        type: "HeartFill",
+        size: 21,
+      },
+    },
   ],
 };
 
