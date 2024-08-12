@@ -39,7 +39,7 @@ export function Body() {
             </div>
 
             <pre className="w-full font-normal text-lg">
-              tagline tagline tagline
+              {p.members.map((m) => `${m.id}:${m.name}`).join()}
             </pre>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
