@@ -330,7 +330,10 @@ export namespace Fund {
       | "members"
       | "target"
       | "approvers"
-    > {}
+    > {
+    /** iso | "9999-12-31T23:59:59.000Z" year 9999 */
+    expiration: string;
+  }
 
   export interface CardsPage {
     items: Card[];
