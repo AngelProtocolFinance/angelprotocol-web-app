@@ -5,7 +5,6 @@ import { CircleDollarSign, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { AuthenticatedUser } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
-import { Funds } from "./Funds";
 import { Organizations } from "./Organizations";
 
 type Props = {
@@ -29,7 +28,6 @@ export default function Menu({ user, signOut, classes }: Props) {
           <span>My Donations</span>
         </MenuItem>
         <Organizations userId={user.email} classes="mt-6" />
-        <Funds userId={user.email} classes="mt-6" />
         <Bookmarks classes="mt-6" />
         <div className="hidden [&:has(a)]:block mt-6">
           <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
