@@ -23,7 +23,6 @@ import { useCreateFundMutation } from "services/aws/funds";
 import type { Fund } from "types/aws";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { EndowmentSelector } from "./EndowmentSelector";
-import GoalSelector from "./GoalSelector";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
 
