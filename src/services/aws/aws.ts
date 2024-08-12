@@ -75,6 +75,7 @@ export const aws = createApi({
     "user",
     "user-bookmarks",
     "user-endows",
+    "user-funds",
     "funds",
     "fund",
   ],

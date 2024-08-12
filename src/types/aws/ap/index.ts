@@ -130,6 +130,7 @@ export interface UserFund {
   email: string;
   /** uuidv4 */
   id: string;
+  active: boolean;
 }
 
 export interface EndowAdmin {

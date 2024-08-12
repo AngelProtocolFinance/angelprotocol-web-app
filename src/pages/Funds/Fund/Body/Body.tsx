@@ -35,6 +35,11 @@ export function Body() {
                   />
                 )}
                 <span>{p.name}</span>
+                {!p.active && (
+                  <span className="ml-2 px-3 py-1 text-2xs bg-red-l4 text-red relative inline bottom-1 uppercase rounded-full">
+                    closed
+                  </span>
+                )}
               </h3>
             </div>
 

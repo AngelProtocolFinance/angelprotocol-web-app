@@ -8,7 +8,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import type { SubmitHandler } from "react-hook-form";
-import { useEditFundMutation } from "services/aws/funds";
+import { useCloseFundMutation, useEditFundMutation } from "services/aws/funds";
 import type { Fund } from "types/aws";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { FeatureBanner } from "./FeatureBanner";
@@ -21,6 +21,7 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
   const rhf = useRhf(props);
 
   const [editFund, { isLoading: isEditingFund }] = useEditFundMutation();
+  const [closeFund, { isLoading: isClosingFund }] = useCloseFundMutation();
 
   const onSubmit: SubmitHandler<FV> = async ({
     targetType,
@@ -168,13 +169,36 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
         />
       )}
 
-      <button
-        disabled={!rhf.isDirty}
-        type="submit"
-        className="btn-blue text-sm font-medium px-4 py-2 justify-self-end"
-      >
-        Update fund
-      </button>
+      <div className="flex items-center justify-end gap-4 mt-4 mb-8">
+        <button
+          onClick={async () => {
+            try {
+              const fundNameConfirmation = window.prompt(
+                "Type the name of this fund to confirm"
+              );
+              if (!fundNameConfirmation) return;
+              if (fundNameConfirmation !== props.name) {
+                return window.alert("Fund not closed: name is not confirmed");
+              }
+
+              await closeFund(props.id).unwrap();
+            } catch (err) {
+              handleError(err, { context: "closing fund" });
+            }
+          }}
+          type="button"
+          className="btn-red text-sm font-medium px-4 py-2 justify-self-end"
+        >
+          {isClosingFund ? "Closing.." : "Close fund"}
+        </button>
+        <button
+          disabled={!rhf.isDirty}
+          type="submit"
+          className="btn-blue text-sm font-medium px-4 py-2 justify-self-end"
+        >
+          Update fund
+        </button>
+      </div>
     </Frm>
   );
 }

@@ -27,6 +27,16 @@ export const funds = aws.injectEndpoints({
         };
       },
     }),
+    closeFund: builder.mutation<unknown, string>({
+      invalidatesTags: ["funds", "fund", "user-funds"],
+      query: (fundId) => {
+        return {
+          url: `${v(1)}/funds/${fundId}/close`,
+          method: "POST",
+          headers: { authorization: TEMP_JWT },
+        };
+      },
+    }),
     funds: builder.query<Fund.CardsPage, Fund.CardsQueryParams>({
       providesTags: ["funds"],
       query: (params) => {
@@ -49,5 +59,6 @@ export const {
   useFundsQuery,
   useFundQuery,
   useEditFundMutation,
+  useCloseFundMutation,
   util: { updateQueryData: updateAwsQueryData },
 } = funds;
