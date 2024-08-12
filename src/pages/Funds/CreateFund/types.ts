@@ -1,5 +1,5 @@
 import type { ImgLink } from "components/ImgEditor";
-import { TargetType } from "../common";
+import type { TargetType } from "../common";
 
 export interface FundMember {
   id: number;
