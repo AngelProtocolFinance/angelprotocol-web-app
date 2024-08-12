@@ -4,7 +4,7 @@ import type { Fund } from "types/aws";
 export function Progress(
   props: Pick<Fund.Card, "target" | "donation_total_usd">
 ) {
-  if (!props.target) {
+  if (props.target === "0") {
     if (!props.donation_total_usd) return;
     return (
       <p className="text-sm text-navy-l1">
