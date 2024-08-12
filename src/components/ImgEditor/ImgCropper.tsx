@@ -18,7 +18,7 @@ export default function ImgCropper({
   onSave,
   classes = "",
 }: Props) {
-  const { closeModal, setModalOption } = useModalContext();
+  const { closeModal } = useModalContext();
 
   const cropperRef = useRef<Cropper>();
 
