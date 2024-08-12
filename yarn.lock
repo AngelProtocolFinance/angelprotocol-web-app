@@ -4500,7 +4500,7 @@ __metadata:
     gsap: "npm:3.12.5"
     is-mobile: "npm:4.0.0"
     jsdom: "npm:24.1.0"
-    lefthook: "npm:1.6.15"
+    lefthook: "npm:1.7.12"
     mipd: "npm:0.0.7"
     msw: "npm:2.3.1"
     nprogress: "npm:0.2.0"
@@ -6942,74 +6942,74 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lefthook-darwin-arm64@npm:1.6.15":
-  version: 1.6.15
-  resolution: "lefthook-darwin-arm64@npm:1.6.15"
+"lefthook-darwin-arm64@npm:1.7.12":
+  version: 1.7.12
+  resolution: "lefthook-darwin-arm64@npm:1.7.12"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"lefthook-darwin-x64@npm:1.6.15":
-  version: 1.6.15
-  resolution: "lefthook-darwin-x64@npm:1.6.15"
+"lefthook-darwin-x64@npm:1.7.12":
+  version: 1.7.12
+  resolution: "lefthook-darwin-x64@npm:1.7.12"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"lefthook-freebsd-arm64@npm:1.6.15":
-  version: 1.6.15
-  resolution: "lefthook-freebsd-arm64@npm:1.6.15"
+"lefthook-freebsd-arm64@npm:1.7.12":
+  version: 1.7.12
+  resolution: "lefthook-freebsd-arm64@npm:1.7.12"
   conditions: os=freebsd & cpu=arm64
   languageName: node
   linkType: hard
 
-"lefthook-freebsd-x64@npm:1.6.15":
-  version: 1.6.15
-  resolution: "lefthook-freebsd-x64@npm:1.6.15"
+"lefthook-freebsd-x64@npm:1.7.12":
+  version: 1.7.12
+  resolution: "lefthook-freebsd-x64@npm:1.7.12"
   conditions: os=freebsd & cpu=x64
   languageName: node
   linkType: hard
 
-"lefthook-linux-arm64@npm:1.6.15":
-  version: 1.6.15
-  resolution: "lefthook-linux-arm64@npm:1.6.15"
+"lefthook-linux-arm64@npm:1.7.12":
+  version: 1.7.12
+  resolution: "lefthook-linux-arm64@npm:1.7.12"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"lefthook-linux-x64@npm:1.6.15":
-  version: 1.6.15
-  resolution: "lefthook-linux-x64@npm:1.6.15"
+"lefthook-linux-x64@npm:1.7.12":
+  version: 1.7.12
+  resolution: "lefthook-linux-x64@npm:1.7.12"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"lefthook-windows-arm64@npm:1.6.15":
-  version: 1.6.15
-  resolution: "lefthook-windows-arm64@npm:1.6.15"
+"lefthook-windows-arm64@npm:1.7.12":
+  version: 1.7.12
+  resolution: "lefthook-windows-arm64@npm:1.7.12"
   conditions: os=win32 & cpu=arm64
   languageName: node
   linkType: hard
 
-"lefthook-windows-x64@npm:1.6.15":
-  version: 1.6.15
-  resolution: "lefthook-windows-x64@npm:1.6.15"
+"lefthook-windows-x64@npm:1.7.12":
+  version: 1.7.12
+  resolution: "lefthook-windows-x64@npm:1.7.12"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"lefthook@npm:1.6.15":
-  version: 1.6.15
-  resolution: "lefthook@npm:1.6.15"
+"lefthook@npm:1.7.12":
+  version: 1.7.12
+  resolution: "lefthook@npm:1.7.12"
   dependencies:
-    lefthook-darwin-arm64: "npm:1.6.15"
-    lefthook-darwin-x64: "npm:1.6.15"
-    lefthook-freebsd-arm64: "npm:1.6.15"
-    lefthook-freebsd-x64: "npm:1.6.15"
-    lefthook-linux-arm64: "npm:1.6.15"
-    lefthook-linux-x64: "npm:1.6.15"
-    lefthook-windows-arm64: "npm:1.6.15"
-    lefthook-windows-x64: "npm:1.6.15"
+    lefthook-darwin-arm64: "npm:1.7.12"
+    lefthook-darwin-x64: "npm:1.7.12"
+    lefthook-freebsd-arm64: "npm:1.7.12"
+    lefthook-freebsd-x64: "npm:1.7.12"
+    lefthook-linux-arm64: "npm:1.7.12"
+    lefthook-linux-x64: "npm:1.7.12"
+    lefthook-windows-arm64: "npm:1.7.12"
+    lefthook-windows-x64: "npm:1.7.12"
   dependenciesMeta:
     lefthook-darwin-arm64:
       optional: true
@@ -7029,7 +7029,7 @@ __metadata:
       optional: true
   bin:
     lefthook: bin/index.js
-  checksum: 10/9c67245bcffa5f0321d1b4e61350636890a1c05e91f13e4d5f38b44b6a7d7b4f4b3c5c0e1ad82a8e67d125a706d023fa9714713cb0a19c889157e5f58c0e9cbb
+  checksum: 10/935f36b2c742c0fa7d30498ce05e93ee7da2fbcc9690bc17b3f653b601ead93d5c20025878fff355488916b1133ad6e6642c59ac71e47f454c4a03a87478bdea
   languageName: node
   linkType: hard
 
