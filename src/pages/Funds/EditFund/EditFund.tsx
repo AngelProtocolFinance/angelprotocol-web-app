@@ -37,5 +37,14 @@ export default withAuth(function EditFund({ user }) {
     );
   }
 
+  if (!data.active) {
+    return (
+      <div className="grid content-start place-items-center pt-40 pb-20">
+        <Icon type="ExclamationCircleFill" size={80} className="text-red" />
+        <p className="text-xl mt-8">This fund is already closed</p>
+      </div>
+    );
+  }
+
   return <Form {...data} classes={containerClass} />;
 });
