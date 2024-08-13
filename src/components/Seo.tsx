@@ -26,11 +26,7 @@ const defaultScripts: Script[] = [
   },
   //performance cookies
   {
-    src: "https://www.googletagmanager.com/gtag/js?id=G-Z2YP33XHHD",
-    "data-cookie-consent": "performance",
-  },
-  {
-    src: "/scripts/gtag-init.js",
+    src: "/scripts/gtm-init.js",
     "data-cookie-consent": "performance",
   },
   {
