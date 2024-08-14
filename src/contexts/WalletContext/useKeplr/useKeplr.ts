@@ -7,7 +7,7 @@ import {
   terraMainnet,
 } from "constants/chains";
 import { useEffect, useState } from "react";
-import type { ChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { CosmosProviderState, Wallet, WalletMeta } from "types/wallet";
 import { retrieveUserAction, saveUserAction } from "../helpers";
 
@@ -69,7 +69,7 @@ export default function useKeplr(): Wallet {
     }
   }
 
-  async function switchChain(chainID: ChainID) {
+  async function switchChain(chainID: Chain.Id.Tier1) {
     if (state.status !== "connected" || !window.keplr) return;
     const key = await window.keplr.getKey(chainID);
     setState({ ...state, address: key.bech32Address, chainId: chainID });

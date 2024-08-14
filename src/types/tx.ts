@@ -3,7 +3,7 @@ import type { Keplr } from "@keplr-wallet/types";
 import type { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import type { Token } from "./aws";
-import type { ChainID, CosmosChainID, EVMChainID, TerraChainID } from "./chain";
+import type { Chain } from "./chain";
 import type { Allowance, Transfer } from "./contracts/erc20";
 import type { SignDoc } from "./cosmos";
 import type { Requester, Tupleable } from "./evm";
@@ -15,13 +15,13 @@ export type TokenWithAmount = Token & {
 
 // //////////// ESTIMATE TX ////////////
 export type EstimateInput =
-  | { chainID: CosmosChainID; val: Any[] }
-  | { chainID: TerraChainID; val: Msg[] }
-  | { chainID: EVMChainID; val: SimulTx };
+  | { chainID: Chain.Id.Cosmos; val: Any[] }
+  | { chainID: Chain.Id.Terra; val: Msg[] }
+  | { chainID: Chain.Id.EVM; val: SimulTx };
 
 // //////////// SEND TX ////////////
 
-export type SubmittedTx = { hash: string; chainID: ChainID };
+export type SubmittedTx = { hash: string; chainID: Chain.Id.All };
 
 type TxLoading = { loading: string };
 export type TxError = { error: string; tx?: SubmittedTx };
@@ -31,9 +31,9 @@ export type TxResult = TxError | TxSuccess;
 
 type Fee = { amount: number; symbol: string; coinGeckoId: string };
 
-type CosmosEstimate = { chainID: CosmosChainID; toSend: SignDoc };
-type EVMEstimate = { chainID: EVMChainID; toSend: EVMTx };
-type TerraEstimate = { chainID: TerraChainID; toSend: CreateTxOptions };
+type CosmosEstimate = { chainID: Chain.Id.Cosmos; toSend: SignDoc };
+type EVMEstimate = { chainID: Chain.Id.EVM; toSend: EVMTx };
+type TerraEstimate = { chainID: Chain.Id.Terra; toSend: CreateTxOptions };
 
 export type EstimateResult = {
   fee: Fee;

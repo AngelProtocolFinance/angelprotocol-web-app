@@ -4,7 +4,7 @@ import { chains } from "constants/chains";
 import { humanize } from "helpers";
 import { useEffect, useState } from "react";
 import { useCreateCryptoIntentQuery } from "services/apes";
-import { chainIdIsNotSupported } from "types/chain";
+import { tier2ChainId } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
 import { useDonationState } from "../../../Context";
 import ContinueBtn from "../../../common/ContinueBtn";
@@ -38,7 +38,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
 
     const chainId = details.chainId;
 
-    if (chainIdIsNotSupported(chainId)) {
+    if (tier2ChainId(chainId)) {
       return setEstimate(undefined);
     }
 

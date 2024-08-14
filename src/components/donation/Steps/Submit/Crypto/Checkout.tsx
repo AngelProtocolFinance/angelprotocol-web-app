@@ -4,7 +4,7 @@ import { chains } from "constants/chains";
 import { isDisconnected, useWalletContext } from "contexts/WalletContext";
 import { maskAddress } from "helpers";
 import { type PropsWithChildren, type ReactNode, useState } from "react";
-import { chainIdIsNotSupported } from "types/chain";
+import { tier2ChainId } from "types/chain";
 import type { ConnectedWallet } from "types/wallet";
 import ContinueBtn from "../../common/ContinueBtn";
 import type { CryptoSubmitStep } from "../../types";
@@ -21,7 +21,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
   type Method = "direct" | "with-wallet";
   //state to allow opting for direct donation
   const [method, setMethod] = useState<Method>(
-    chainIdIsNotSupported(chainID) ? "direct" : "with-wallet"
+    tier2ChainId(chainID) ? "direct" : "with-wallet"
   );
 
   if (wallet === "loading") {
@@ -34,7 +34,7 @@ export default function Checkout({ classes = "", ...props }: Props) {
     );
   }
 
-  if (chainIdIsNotSupported(chainID)) {
+  if (tier2ChainId(chainID)) {
     return <DirectMode classes="mt-6" donation={props} />;
   }
 

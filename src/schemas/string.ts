@@ -1,4 +1,4 @@
-import type { SupportedChainId } from "types/chain";
+import type { Chain } from "types/chain";
 import * as Yup from "yup";
 
 export const junoAddrPattern = /^juno1[a-z0-9]{38,58}$/i;
@@ -11,13 +11,13 @@ const evmAddrPattern = /^0x[a-fA-F0-9]{40}$/;
 
 export const requiredString = Yup.string().required("required");
 
-export const walletAddr = (chainId: SupportedChainId) =>
+export const walletAddr = (chainId: Chain.Id.Tier1) =>
   Yup.lazy((val) =>
     val === ""
       ? Yup.string()
       : Yup.string()
           .trim()
-          .matches(walletAddrPatten(chainId), "wallet address not valid")
+          .matches(walletAddrPattern(chainId), "wallet address not valid")
   );
 
 export const url = Yup.string()
@@ -51,7 +51,7 @@ export const segment = Yup.string()
     (v) => !v?.startsWith(".") && !v?.endsWith(".")
   );
 
-export function walletAddrPatten(chainId: SupportedChainId) {
+export function walletAddrPattern(chainId: Chain.Id.Tier1) {
   switch (chainId) {
     case "1":
     case "11155111":

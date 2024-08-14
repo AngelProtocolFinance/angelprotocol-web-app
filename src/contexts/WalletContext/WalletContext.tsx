@@ -2,7 +2,7 @@ import coinbaseIcon from "assets/icons/wallets/coinbase.png";
 import metamaskIcon from "assets/icons/wallets/metamask.png";
 import trustIcon from "assets/icons/wallets/trust.png";
 import xdefiIcon from "assets/icons/wallets/xdefi.png";
-import { EVMChains } from "constants/chains";
+import { EvmChainIds } from "constants/chains";
 import isMobile from "is-mobile";
 import { type PropsWithChildren, createContext, useContext } from "react";
 import type { ConnectedWallet, DisconnectedWallet, Wallet } from "types/wallet";
@@ -18,7 +18,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     {
       name: "Metamask",
       logo: metamaskIcon,
-      supportedChains: EVMChains,
+      supportedChains: EvmChainIds,
     },
     "https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn"
   );
@@ -28,7 +28,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     {
       name: "Trust wallet",
       logo: trustIcon,
-      supportedChains: EVMChains,
+      supportedChains: EvmChainIds,
     },
     "https://chromewebstore.google.com/detail/trust-wallet/egjidjbpglichdcondbcbdnbeeppgdph?hl=en"
   );
@@ -38,14 +38,14 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
     {
       name: "Coinbase",
       logo: coinbaseIcon,
-      supportedChains: EVMChains,
+      supportedChains: EvmChainIds,
     },
     "https://chromewebstore.google.com/detail/coinbase-wallet-extension/hnfanknocfeofbddgcijnmhnfnkdnaad?hl=en"
   );
 
   const xdefiEvm = useInjectedProvider(
     "xdefi-evm",
-    { logo: xdefiIcon, name: "Xdefi", supportedChains: EVMChains },
+    { logo: xdefiIcon, name: "Xdefi", supportedChains: EvmChainIds },
     "https://chrome.google.com/webstore/detail/xdefi-wallet/hmeobnfnfcmdkdcmlblgagmfpfboieaf?hl=en"
   );
 
@@ -55,7 +55,7 @@ export default function WalletContext(props: PropsWithChildren<{}>) {
   const evmWC = useEVMWC({
     logo: metamaskIcon,
     name: "Metamask Mobile",
-    supportedChains: EVMChains,
+    supportedChains: EvmChainIds,
   });
 
   const wallets: Wallet[] = isMobile()

@@ -1,4 +1,4 @@
-import type { ChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { TokenWithAmount } from "types/tx";
 
 type Classes = {
@@ -10,7 +10,7 @@ type Classes = {
 export type Props = {
   token: TokenWithAmount;
   error?: string;
-  chainId: ChainID | "";
+  chainId: Chain.Id.All | "";
   onChange: (token: TokenWithAmount) => void;
   label: string;
   classes?: Classes;

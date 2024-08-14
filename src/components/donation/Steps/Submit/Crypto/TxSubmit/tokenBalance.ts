@@ -4,13 +4,13 @@ import { erc20 } from "contracts/evm/ERC20";
 import { condenseToNum, objToBase64, request } from "helpers";
 import { getChain } from "helpers/tx/get-chain";
 import type { QrTokenType, Token } from "types/aws";
-import type { SupportedChainId } from "types/chain";
+import type { Chain } from "types/chain";
 import type { CW20Balance } from "types/contracts";
 
 type CosmosBalance = { balance: { denom: string; amount: string } };
 export const tokenBalance = async (
   { decimals, token_id, type }: Token,
-  chainID: SupportedChainId,
+  chainID: Chain.Id.Tier1,
   holder: string
 ): Promise<number> => {
   const { nodeUrl } = await getChain(chainID);

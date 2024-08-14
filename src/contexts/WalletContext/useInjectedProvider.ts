@@ -4,7 +4,7 @@ import Decimal from "decimal.js";
 import { injectedProvider, isEmpty, logger } from "helpers";
 import { getChain } from "helpers/tx/get-chain";
 import { useEffect, useState } from "react";
-import type { SupportedChainId } from "types/chain";
+import type { Chain } from "types/chain";
 import type { AccountChangeHandler, ChainChangeHandler } from "types/evm";
 import type {
   EVMProviderState,
@@ -64,7 +64,7 @@ export default function useInjectedWallet(
     });
   };
 
-  async function switchChain(chainID: SupportedChainId) {
+  async function switchChain(chainID: Chain.Id.Tier1) {
     if (state.status !== "connected") {
       return alert("Wallet is not connected");
     }

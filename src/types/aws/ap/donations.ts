@@ -1,4 +1,4 @@
-import type { ChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { DonationSource } from "types/lists";
 
 type DonorAddress = {
@@ -52,7 +52,7 @@ export type DonationRecord = {
 } & (
   | {
       //medium
-      viaId: ChainID | "staging";
+      viaId: Chain.Id.All | "staging";
       viaName: string;
     }
   | {

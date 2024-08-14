@@ -8,41 +8,24 @@ import {
 } from "@headlessui/react";
 import { skipToken } from "@reduxjs/toolkit/query";
 import tokenLogoPlaceholder from "assets/icons/token-placeholder.svg";
-import { chains } from "constants/chains";
 import Fuse from "fuse.js";
 import { isEmpty } from "helpers";
 import useDebouncer from "hooks/useDebouncer";
 import { useMemo, useState } from "react";
 import { useTokensQuery } from "services/apes";
-import {
-  useLazyTokenDetailsQuery,
-  useLazyUsdRateQuery,
-} from "services/coingecko";
 import type { Token } from "types/aws";
-import type { ChainID } from "types/chain";
-import type { TokenWithAmount } from "types/tx";
+import type { Chain } from "types/chain";
 import Icon from "../../Icon";
 import Image from "../../Image";
 import { ErrorStatus, LoadingStatus } from "../../Status";
 import type { OnTokenChange } from "./types";
 
-type BasicToken = Pick<
-  Token,
-  "name" | "symbol" | "token_id" | "type" | "coingecko_denom"
->;
-type MixedToken = BasicToken | Token;
-
 type Props = {
-  selectedChainId: ChainID | "";
+  selectedChainId: Chain.Id.All | "";
   onChange: OnTokenChange;
-  token: MixedToken;
+  token: Token;
   classes?: string;
 };
-
-const isApToken = (
-  token: TokenWithAmount | BasicToken
-): token is TokenWithAmount => "min_donation_amnt" in token;
-
 const container =
   "w-56 border border-gray-l4 p-1 [--anchor-max-height:15rem] overflow-y-auto rounded-md bg-gray-l5 dark:bg-blue-d7 shadow-lg focus:outline-none";
 export default function TokenOptions({
@@ -90,8 +73,8 @@ export default function TokenOptions({
     >
       <TokenCombobox
         token={token}
-        apTokens={tokens}
-        coingeckoPlatformId={chains[selectedChainId].coingeckoPlatformId}
+        options={tokens}
+        chainId={selectedChainId}
         onChange={onChange}
       />
     </PopoverPanel>
@@ -99,33 +82,18 @@ export default function TokenOptions({
 }
 
 interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {
-  apTokens: Token[];
-  coingeckoPlatformId: string | null;
+  chainId: Chain.Id.All;
+  options: Token[];
 }
-function TokenCombobox({
-  token,
-  apTokens,
-  onChange,
-  coingeckoPlatformId,
-}: ITokenCombobox) {
-  const [getToken] = useLazyTokenDetailsQuery();
-  const [getUsdRate] = useLazyUsdRateQuery();
+function TokenCombobox({ token, options, chainId, onChange }: ITokenCombobox) {
   const [searchText, setSearchText] = useState("");
   const [debouncedSearchText] = useDebouncer(searchText, 500);
 
-  //biome-ignore lint: coinGeckoPlatformId is the only thing changing
+  //biome-ignore lint: chainId is the only thing changing
   const [fuse, subset] = useMemo(() => {
-    const coinGeckoTokens: any[] = coingeckoPlatformId
-      ? require(`./coins/${coingeckoPlatformId}.json`)
-      : [];
-
-    const allTokens: MixedToken[] = coingeckoPlatformId
-      ? apTokens.concat(coinGeckoTokens)
-      : apTokens;
-
-    const fuse = new Fuse<MixedToken>(allTokens, { keys: ["name", "symbol"] });
-    return [fuse, allTokens.slice(0, 10)];
-  }, [coingeckoPlatformId]);
+    const fuse = new Fuse<Token>(options, { keys: ["name", "symbol"] });
+    return [fuse, options.slice(0, 10)];
+  }, [chainId]);
 
   //biome-ignore lint: debounced search text is the only thing changing
   const searchResult = useMemo(() => {
@@ -140,25 +108,7 @@ function TokenCombobox({
       by="token_id"
       value={token}
       virtual={{ options: searchResult }}
-      onChange={async (tkn) => {
-        if (!tkn) return;
-        if (isApToken(tkn)) return onChange({ ...tkn, amount: "" });
-
-        // basic token woudn't be included in list if no platform id
-        if (!coingeckoPlatformId) return;
-
-        const details = await getToken(tkn.coingecko_denom).unwrap();
-        const usdRate = await getUsdRate(tkn.coingecko_denom).unwrap();
-
-        onChange({
-          ...tkn,
-          min_donation_amnt: Math.ceil(25 / usdRate),
-          approved: true,
-          logo: details.image.thumb,
-          decimals: details.detail_platforms[coingeckoPlatformId].decimal_place,
-          amount: "",
-        });
-      }}
+      onChange={async (tkn) => tkn && onChange({ ...tkn, amount: "" })}
     >
       <div className="grid grid-cols-[1fr_auto] p-2 gap-2 rounded mb-1 border border-gray-l4">
         <ComboboxInput
@@ -177,7 +127,7 @@ function TokenCombobox({
       ) : (
         <ComboboxOptions className="py-1 w-full" static>
           {({ option }) => {
-            const token = option as MixedToken;
+            const token = option as Token;
             return (
               <ComboboxOption
                 as={CloseButton}
