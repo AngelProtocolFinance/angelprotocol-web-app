@@ -4,7 +4,7 @@ import * as Slider from "@radix-ui/react-slider";
 import dappLogo from "assets/images/bettergiving-logo.png";
 import waivingLaira from "assets/laira/laira-waiving.png";
 import Image from "components/Image/Image";
-import { humanize } from "helpers";
+import { humanize, roundDown } from "helpers";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
@@ -136,7 +136,7 @@ export default function Tip(props: TipStep) {
           value={[Number(tip.pct)]}
           onValueChange={([pct]) =>
             onTipChange({
-              amount: humanize(amount * pct, decimals),
+              amount: roundDown(amount * pct, decimals),
               pct,
             })
           }
