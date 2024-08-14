@@ -13,7 +13,7 @@ import type {
   PayPalOrder,
   Token,
 } from "types/aws";
-import type { ChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { DetailedCurrency } from "types/components";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
@@ -146,7 +146,7 @@ export const apes = createApi({
         url: `stripe-proxy?payment_intent=${paymentIntentId}`,
       }),
     }),
-    tokens: builder.query<Token[], ChainID>({
+    tokens: builder.query<Token[], Chain.Id.All>({
       query: (chainID) => `v1/tokens/${chainID}`,
     }),
     topCountries: builder.query<string[], unknown>({

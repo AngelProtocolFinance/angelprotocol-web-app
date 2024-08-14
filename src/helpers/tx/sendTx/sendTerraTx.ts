@@ -1,12 +1,12 @@
 import type { CreateTxOptions } from "@terra-money/terra.js";
 import type { ConnectedWallet } from "@terra-money/wallet-provider";
 import { Timeout, TxFailed, UserDenied } from "@terra-money/wallet-provider";
-import type { TerraChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { SubmittedTx, TxResult } from "types/tx";
 import { logger } from "../../logger";
 
 export async function sendTerraTx(
-  chainID: TerraChainID,
+  chainID: Chain.Id.Terra,
   post: ConnectedWallet["post"],
   tx: CreateTxOptions
 ): Promise<TxResult> {

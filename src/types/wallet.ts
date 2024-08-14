@@ -1,6 +1,6 @@
 import type { Keplr } from "@keplr-wallet/types";
 import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
-import type { SupportedChainId } from "./chain";
+import type { Chain } from "./chain";
 import type { RequestArguments } from "./evm";
 
 export type InjectedProviderID =
@@ -48,7 +48,7 @@ type Loading = { status: "loading" };
 export type Connector = { connect(...args: any[]): void };
 type Disconnector = { disconnect(): void };
 type ChainSwitcher = {
-  switchChain: ((chainId: SupportedChainId) => void) | null;
+  switchChain: ((chainId: Chain.Id.Tier1) => void) | null;
 };
 
 export type EVMProviderState = EVMConnected | Disconnected | Loading;
@@ -64,7 +64,7 @@ export type WalletState =
 export type WalletMeta = {
   logo: string;
   name: string;
-  supportedChains: SupportedChainId[];
+  supportedChains: Chain.Id.Tier1[];
 };
 
 export type Wallet = WalletMeta & WalletState;

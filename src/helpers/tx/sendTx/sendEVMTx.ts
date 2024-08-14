@@ -1,6 +1,6 @@
 import { ErrorCode as errors } from "@ethersproject/logger";
 import { EIPMethods } from "constants/evm";
-import type { EVMChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { EVMTx, Requester, TxReceipt } from "types/evm";
 import type { TxResult } from "types/tx";
 import { logger } from "../../logger";
@@ -8,7 +8,7 @@ import { logger } from "../../logger";
 export async function sendEVMTx(
   tx: EVMTx,
   request: Requester,
-  chainID: EVMChainID
+  chainID: Chain.Id.EVM
 ): Promise<TxResult> {
   try {
     const hash = await request<string>({

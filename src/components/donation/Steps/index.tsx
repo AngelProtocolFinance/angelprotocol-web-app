@@ -1,5 +1,5 @@
 import type { DonationIntent } from "types/aws";
-import type { ChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import Context from "./Context";
@@ -96,7 +96,7 @@ function initialState({
       step: "submit",
       details: {
         method: "crypto",
-        chainId: intent.chainId as ChainID,
+        chainId: intent.chainId as Chain.Id.All,
         token: {
           amount: `${intent.amount}`,
           ...intent.token,

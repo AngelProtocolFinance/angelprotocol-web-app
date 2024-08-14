@@ -1,5 +1,5 @@
 import type { Donor } from "types/aws";
-import type { ChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonateMethodId } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
@@ -54,7 +54,7 @@ export const initDetails = (
         program,
         /** cast here, propagating chainId:`""` in donation state is impractical
          * as it should have been ruled out in crypto form  */
-        chainId: "" as ChainID,
+        chainId: "" as Chain.Id.All,
       };
     }
     case "daf": {

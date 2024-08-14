@@ -5,7 +5,7 @@ import type {
   FiatPaymentFrequency,
   GuestDonor,
 } from "types/aws";
-import type { ChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonateMethodId, DonationSource } from "types/lists";
 import type { TokenWithAmount } from "types/tx";
@@ -28,7 +28,7 @@ type BaseDonationDetails = {
 export type CryptoDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
   token: TokenWithAmount;
-  chainId: ChainID;
+  chainId: Chain.Id.All;
 };
 
 type FiatDonationDetails = BaseDonationDetails & {

@@ -1,6 +1,6 @@
 import { EIPMethods } from "constants/evm";
 import Decimal from "decimal.js";
-import type { EVMChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { SimulTx } from "types/evm";
 import type { EstimateResult } from "types/tx";
 import { condense } from "../../decimal";
@@ -8,7 +8,7 @@ import { request } from "../../evm";
 import { getChain } from "../get-chain";
 
 export async function estimateEVMFee(
-  chainID: EVMChainID,
+  chainID: Chain.Id.EVM,
   sender: string,
   tx: SimulTx
 ): Promise<EstimateResult> {

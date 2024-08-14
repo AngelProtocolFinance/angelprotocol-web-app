@@ -10,7 +10,7 @@ import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import { condenseToNum } from "helpers/decimal";
 import { base64FromU8a } from "helpers/encoding";
 import Long from "long";
-import type { CosmosChainID } from "types/chain";
+import type { Chain } from "types/chain";
 import type { JSONAccount, SimulateRes } from "types/cosmos";
 import type { EstimateResult } from "types/tx";
 import { getChain } from "../get-chain";
@@ -22,7 +22,7 @@ const GAS_PRICE = "0.075";
 const GAS_ADJUSTMENT = 1.5;
 
 export async function estimateCosmosFee(
-  chainID: CosmosChainID,
+  chainID: Chain.Id.Cosmos,
   sender: string,
   msgs: Any[]
 ): Promise<EstimateResult> {
