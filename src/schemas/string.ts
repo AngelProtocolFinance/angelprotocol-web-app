@@ -17,7 +17,7 @@ export const walletAddr = (chainId: Chain.Id.Tier1) =>
       ? Yup.string()
       : Yup.string()
           .trim()
-          .matches(walletAddrPatten(chainId), "wallet address not valid")
+          .matches(walletAddrPattern(chainId), "wallet address not valid")
   );
 
 export const url = Yup.string()
@@ -51,7 +51,7 @@ export const segment = Yup.string()
     (v) => !v?.startsWith(".") && !v?.endsWith(".")
   );
 
-export function walletAddrPatten(chainId: Chain.Id.Tier1) {
+export function walletAddrPattern(chainId: Chain.Id.Tier1) {
   switch (chainId) {
     case "1":
     case "11155111":
