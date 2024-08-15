@@ -4,7 +4,7 @@ import QueryLoader from "components/QueryLoader";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { replaceWithEmptyString as fill, humanize, isEmpty } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
-import type { DonationRecord } from "types/aws";
+import type { Donation } from "types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
@@ -91,7 +91,7 @@ export default function Donations() {
         asker={user.email}
         classes="col-span-full @5xl:col-span-1 w-full @5xl:w-auto"
       />
-      <div className="grid col-span-full">
+      <div className="grid col-span-full overflow-x-auto">
         <StatusTabs status={status} changeStatus={setStatus} />
 
         <div className="p-5 bg-gray-l6 border border-gray-l4 rounded-b @2xl:rounded-tr grid">
@@ -144,16 +144,17 @@ export default function Donations() {
   );
 }
 
-const csvHeaders: { key: keyof DonationRecord | "receipt"; label: string }[] = [
-  { key: "recipientName", label: "Recipient" },
-  { key: "date", label: "Date" },
-  { key: "paymentMethod", label: "Donation Type" },
-  { key: "isRecurring", label: "Recurring" },
-  { key: "symbol", label: "Currency" },
-  { key: "initAmount", label: "Amount" },
-  { key: "initAmountUsd", label: "USD Value" },
-  { key: "directDonateAmount", label: "Direct Donation" },
-  { key: "sfDonateAmount", label: "Donation to Sustainability Fund" },
-  { key: "id", label: "Transaction Hash" },
-  { key: "receipt", label: "Receipt" },
-];
+const csvHeaders: { key: keyof Donation.Record | "receipt"; label: string }[] =
+  [
+    { key: "recipientName", label: "Recipient" },
+    { key: "date", label: "Date" },
+    { key: "paymentMethod", label: "Donation Type" },
+    { key: "isRecurring", label: "Recurring" },
+    { key: "symbol", label: "Currency" },
+    { key: "initAmount", label: "Amount" },
+    { key: "initAmountUsd", label: "USD Value" },
+    { key: "directDonateAmount", label: "Direct Donation" },
+    { key: "sfDonateAmount", label: "Donation to Sustainability Fund" },
+    { key: "id", label: "Transaction Hash" },
+    { key: "receipt", label: "Receipt" },
+  ];

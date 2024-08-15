@@ -1,3 +1,4 @@
+import { DONATION_INCREMENTS } from "constants/common";
 import { humanize, roundDownToNum } from "helpers";
 import type { OnIncrement } from "./types";
 
@@ -5,16 +6,20 @@ interface Props {
   rate: number;
   code: string;
   onIncrement: OnIncrement;
+  increments?: number[];
 }
 
-const increments = [40, 100, 200];
-
-export default function Incrementers(props: Props) {
+export default function Incrementers({
+  increments = DONATION_INCREMENTS,
+  ...props
+}: Props) {
   return (
     <div className="flex justify-center flex-wrap gap-3">
-      {increments.map((inc) => (
-        <Incrementer key={inc} inc={inc} {...props} />
-      ))}
+      {increments
+        .toSorted((a, b) => a - b)
+        .map((inc) => (
+          <Incrementer key={inc} inc={inc} {...props} />
+        ))}
     </div>
   );
 }

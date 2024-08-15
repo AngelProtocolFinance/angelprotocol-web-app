@@ -7,6 +7,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import type { WidgetConfig } from "types/widget";
 import EndowmentSelector from "./EndowmentSelector";
+import Increments from "./Increments";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
 
@@ -184,6 +185,8 @@ export default function Configurer({
           />
           <label htmlFor="__accent-sec">Accent secondary</label>
         </div>
+
+        <Increments classes="mt-8 mb-10" />
 
         <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-8">
           <button

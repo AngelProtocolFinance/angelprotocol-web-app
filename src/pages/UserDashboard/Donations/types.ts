@@ -1,11 +1,11 @@
-import type { DonationRecord, DonationsQueryParams } from "types/aws";
+import type { Donation } from "types/aws";
 
 export type TableProps = {
-  donations: DonationRecord[];
+  donations: Donation.Record[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;
   disabled: boolean;
   isLoading: boolean;
-  status: DonationsQueryParams["status"];
+  status: Donation.Status;
 };
