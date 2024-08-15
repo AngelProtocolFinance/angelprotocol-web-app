@@ -25,7 +25,6 @@ export default function MobileTable({
   onLoadMore,
 }: TableProps) {
   const { sorted } = useSort(donations, "date");
-  const showKYCForm = useShowKYCForm();
 
   return (
     <div
