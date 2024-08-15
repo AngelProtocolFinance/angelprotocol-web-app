@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
 import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
-import { lastHeaderName } from "./common";
+import { donationMethod, lastHeaderName } from "./common";
 import type { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
 
@@ -124,7 +124,11 @@ export default function Table({
                 <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
               <>{new Date(row.date).toLocaleDateString()}</>
-              <>{row.paymentMethod ?? "- - -"}</>
+              <span className="capitalize">
+                {donationMethod(
+                  row.paymentMethod ?? { id: row.viaId, name: row.viaName }
+                )}
+              </span>
               <>{row.isRecurring ? "YES" : "NO"}</>
               <span className="text-sm">{row.symbol}</span>
               <>{humanize(row.initAmount, 3)}</>
