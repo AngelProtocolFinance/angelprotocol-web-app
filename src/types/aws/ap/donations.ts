@@ -1,66 +1,69 @@
 import type { Chain } from "types/chain";
 import type { DonationSource } from "types/lists";
 
-type DonorAddress = {
-  line1: string;
-  line2?: string;
-  /** may be empty `""` */
-  city?: string;
-  state?: string;
-  zipCode?: string;
-  country: string;
-};
-
-type DonorDetails = {
-  fullName: string;
-  kycEmail?: string;
-  address?: DonorAddress;
-};
-
-export type KYCData = Required<Omit<DonorDetails, "address"> & DonorAddress>;
-
-export type PaymentMethod = "Bank" | "Card" | "Crypto";
-
-export type FiatRamp = "STRIPE" | "PAYPAL";
-
-export type DonationRecord = {
-  id: string;
-
-  //from
-  /** email */
-  donorId: string;
-  donorDetails?: DonorDetails;
-
-  //to
-  /** endow id  */
-  recipientId: number;
-  recipientName: string;
-
-  //details
-  /** ISODate string */
-  date: string;
-  paymentMethod?: PaymentMethod;
-  symbol: string;
-  initAmount: number;
-  initAmountUsd?: number;
-  finalAmountUsd?: number;
-  directDonateAmount?: number;
-  sfDonateAmount?: number;
-  splitLiqPct: number;
-  isRecurring?: boolean;
-  appUsed: DonationSource;
-} & (
-  | {
-      //medium
-      viaId: Chain.Id.All | "staging";
-      viaName: string;
+export namespace Donation {
+  export namespace Donor {
+    export interface Address {
+      line1: string;
+      line2?: string;
+      /** may be empty `""` */
+      city?: string;
+      state?: string;
+      zipCode?: string;
+      country: string;
     }
-  | {
-      bankVerificationUrl?: string;
-      viaId: "fiat";
-      viaName: FiatRamp;
-    }
-);
+  }
+  export interface Donor {
+    fullName: string;
+    kycEmail?: string;
+    address?: Donor.Address;
+  }
+
+  export type KYC = Required<Omit<Donor, "address"> & Donor.Address>;
+
+  export type Method = "Bank" | "Card" | "Crypto";
+  export type FiatRamp = "STRIPE" | "PAYPAL" | "CHARIOT";
+  export type Status = "final" | "pending" | "intent";
+
+  export type Record = {
+    id: string;
+
+    //from
+    /** email */
+    donorId: string;
+    donorDetails?: Donor;
+
+    //to
+    /** endow id  */
+    recipientId: number;
+    recipientName: string;
+
+    //details
+    /** ISODate string */
+    date: string;
+    paymentMethod?: Method;
+    symbol: string;
+    initAmount: number;
+    initAmountUsd?: number;
+    finalAmountUsd?: number;
+    directDonateAmount?: number;
+    sfDonateAmount?: number;
+    splitLiqPct: number;
+    isRecurring?: boolean;
+    appUsed: DonationSource;
+  } & (
+    | {
+        //medium
+        viaId: Chain.Id.All | "staging";
+        viaName: string;
+      }
+    | {
+        bankVerificationUrl?: string;
+        viaId: "fiat";
+        viaName: FiatRamp;
+      }
+  );
+}
 
 export type DonationsQueryParams = {
   page?: number;
@@ -75,5 +78,5 @@ export type DonationsQueryParams = {
   viaId?: string;
   symbol?: string;
   asker: number | string;
-  status?: "final" | "pending" | "intent";
+  status?: Donation.Status;
 };

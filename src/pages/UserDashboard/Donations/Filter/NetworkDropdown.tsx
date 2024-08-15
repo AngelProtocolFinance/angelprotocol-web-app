@@ -1,12 +1,12 @@
 import { Selector } from "components/Selector";
 import { chains } from "constants/chains";
-import type { DonationRecord } from "types/aws";
+import type { Donation } from "types/aws";
 import type { OptionType } from "types/components";
 import type { FormValues as FV } from "./types";
 
 const fiatNetworks: OptionType<string>[] = [
   { label: "Fiat", value: "fiat" },
-] satisfies OptionType<Extract<DonationRecord["viaId"], "fiat">>[];
+] satisfies OptionType<Extract<Donation.Record["viaId"], "fiat">>[];
 
 export default function NetworkDropdown({ classes = "" }) {
   return (

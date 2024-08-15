@@ -1,11 +1,11 @@
 import { HeaderButton } from "components/HeaderButton";
 import TableSection, { Cells } from "components/TableSection";
 import useSort from "hooks/useSort";
-import type { DonationRecord } from "types/aws";
+import type { Donation } from "types/aws";
 import Row from "./Row";
 
 type Props = {
-  donations: DonationRecord[];
+  donations: Donation.Record[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;
