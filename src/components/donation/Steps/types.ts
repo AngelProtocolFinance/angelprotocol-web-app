@@ -1,10 +1,4 @@
-import type {
-  Donor,
-  DonorTitle,
-  Endowment,
-  FiatPaymentFrequency,
-  GuestDonor,
-} from "types/aws";
+import type { DonationIntent, Donor, Endowment, GuestDonor } from "types/aws";
 import type { Chain } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonateMethodId, DonationSource } from "types/lists";
@@ -38,7 +32,7 @@ type FiatDonationDetails = BaseDonationDetails & {
 
 export type StripeDonationDetails = {
   method: Extract<DonateMethodId, "stripe">;
-  frequency: FiatPaymentFrequency;
+  frequency: DonationIntent.Frequency;
 } & FiatDonationDetails;
 
 export type StocksDonationDetails = BaseDonationDetails & {
@@ -106,7 +100,7 @@ export type TipStep = {
 export type FormDonor = Pick<Donor, "email" | "firstName" | "lastName"> & {
   ukTaxResident: boolean;
 
-  title: OptionType<DonorTitle>;
+  title: OptionType<Donor.Title>;
   /** initially empty `''` */
   zipCode: string;
   /** initially empty `''` */

@@ -3,7 +3,7 @@ import { laira } from "assets/laira/laira";
 import Image from "components/Image/Image";
 import { unpack } from "helpers";
 import type { ReactNode } from "react";
-import type { FiatPaymentFrequency } from "types/aws";
+import type { DonationIntent } from "types/aws";
 import type { OptionType } from "types/components";
 import Icon from "../../../Icon";
 import BackBtn from "./BackBtn";
@@ -23,7 +23,7 @@ type Props = {
 
   Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
   onBack(): void;
-  frequency?: FiatPaymentFrequency;
+  frequency?: DonationIntent.Frequency;
   classes?: Classes;
   children?: ReactNode;
   preSplitContent?: ReactNode;

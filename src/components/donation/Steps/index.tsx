@@ -24,7 +24,7 @@ type Components = {
   config: Config | null;
   recipient: DonationRecipient;
   programId?: string;
-  intent?: DonationIntent;
+  intent?: DonationIntent.ToResume;
 };
 type InitState = {
   init: DonationState;

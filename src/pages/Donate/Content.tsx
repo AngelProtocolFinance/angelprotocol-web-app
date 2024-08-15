@@ -12,7 +12,7 @@ import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
 type Props = {
-  intent?: DonationIntent;
+  intent?: DonationIntent.ToResume;
   endowment: Endowment;
 };
 

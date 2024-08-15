@@ -4,11 +4,9 @@ import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import type {
-  CryptoDonation,
   DonationIntent,
   EndowmentBalances,
   FiatCurrencyData,
-  FiatDonation,
   GuestDonor,
   PayPalOrder,
   Token,
@@ -24,11 +22,11 @@ type StripeRequiresBankVerification = {
   url?: string;
 };
 
-type StripePaymentIntentParams = FiatDonation & {
+type StripePaymentIntentParams = DonationIntent.Fiat & {
   type: "one-time" | "subscription";
 };
 
-type CreatePayPalOrderParams = FiatDonation;
+type CreatePayPalOrderParams = DonationIntent.Fiat;
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -51,7 +49,7 @@ export const apes = createApi({
         /** defined if !CryptoDonation.walletAddress */
         recipientAddress?: string;
       },
-      CryptoDonation
+      DonationIntent.Crypto
     >({
       query: (params) => ({
         url: "crypto-donation",
@@ -71,7 +69,7 @@ export const apes = createApi({
         body: JSON.stringify({ txHash }),
       }),
     }),
-    intent: builder.query<DonationIntent, { transactionId: string }>({
+    intent: builder.query<DonationIntent.ToResume, { transactionId: string }>({
       query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
     }),
     fiatCurrencies: builder.query<
@@ -122,7 +120,7 @@ export const apes = createApi({
       }),
       transformResponse: (res: { clientSecret: string }) => res.clientSecret,
     }),
-    chariotGrant: builder.query<string, FiatDonation>({
+    chariotGrant: builder.query<string, DonationIntent.Fiat>({
       query: (data) => ({
         url: "fiat-donation/chariot",
         method: "POST",
