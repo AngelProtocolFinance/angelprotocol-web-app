@@ -10,7 +10,7 @@ import type {
   ApplicationDetails,
   ApplicationVerdict,
   ApplicationsQueryParams,
-  DonationRecord,
+  Donation,
   DonationsQueryParams,
   EndowListPaginatedAWSQueryRes,
   Endowment,
@@ -224,7 +224,7 @@ export const aws = createApi({
       },
     }),
     donations: builder.query<
-      { Items: DonationRecord[]; nextPage?: number },
+      { Items: Donation.Record[]; nextPage?: number },
       DonationsQueryParams
     >({
       providesTags: ["donations"],

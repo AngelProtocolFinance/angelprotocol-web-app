@@ -3,7 +3,7 @@ import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
-import type { DonationRecord, KYCData } from "types/aws";
+import type { Donation } from "types/aws";
 import type { Ensure } from "types/utils";
 import { useAdminContext } from "../../Context";
 import Table from "./Table";
@@ -47,10 +47,10 @@ export default function DonationsTable({ classes = "" }) {
                 headers={csvHeaders}
                 data={donations
                   .filter(
-                    (d): d is Ensure<DonationRecord, "donorDetails"> =>
+                    (d): d is Ensure<Donation.Record, "donorDetails"> =>
                       !!d.donorDetails
                   )
-                  .map<DonationRecord | KYCData>(
+                  .map<Donation.Record | Donation.KYC>(
                     ({ donorDetails: donor, ...d }) => {
                       const amt = amount(d.splitLiqPct, d.finalAmountUsd);
                       return fill({
@@ -98,7 +98,7 @@ export default function DonationsTable({ classes = "" }) {
 }
 
 const csvHeaders: {
-  key: keyof DonationRecord | keyof KYCData | "receipt";
+  key: keyof Donation.Record | keyof Donation.KYC | "receipt";
   label: string;
 }[] = [
   { key: "date", label: "Datetime" },
