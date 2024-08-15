@@ -91,7 +91,7 @@ export default function Donations() {
         asker={user.email}
         classes="col-span-full @5xl:col-span-1 w-full @5xl:w-auto"
       />
-      <div className="grid col-span-full">
+      <div className="grid col-span-full overflow-x-auto">
         <StatusTabs status={status} changeStatus={setStatus} />
 
         <div className="p-5 bg-gray-l6 border border-gray-l4 rounded-b @2xl:rounded-tr grid">
