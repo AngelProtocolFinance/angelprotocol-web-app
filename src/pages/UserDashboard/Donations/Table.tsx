@@ -7,8 +7,10 @@ import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { Link } from "react-router-dom";
+import type { Donation } from "types/aws";
 import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { lastHeaderName } from "./common";
 import type { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
 
@@ -25,8 +27,6 @@ export default function Table({
     donations,
     "date"
   );
-
-  const showKYCForm = useShowKYCForm();
 
   return (
     <table
@@ -95,17 +95,7 @@ export default function Table({
           >
             Donation to Sustainability Fund
           </HeaderButton>
-          {status === "intent" ? (
-            <span className="flex justify-center">Action</span>
-          ) : (
-            <>TX Hash</>
-          )}
-          {status === "pending" && (
-            <span className="flex justify-center">Action</span>
-          )}
-          {status === "final" && (
-            <span className="flex justify-center">Receipt</span>
-          )}
+          <span className="flex justify-center">{lastHeaderName[status]}</span>
         </Cells>
       </TableSection>
       <TableSection
@@ -153,38 +143,7 @@ export default function Table({
                   ? `$${humanize(row.sfDonateAmount, 2)}`
                   : "--"}
               </>
-              {status === "intent" ? (
-                <IntentResumer intentId={row.id} />
-              ) : row.viaId === "fiat" || row.viaId === "staging" ? (
-                <>- - -</>
-              ) : (
-                <ExtLink
-                  href={getTxUrl(row.viaId, row.id)}
-                  className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
-                >
-                  {row.id}
-                </ExtLink>
-              )}
-              {status === "pending" &&
-                row.viaId === "fiat" &&
-                (row.bankVerificationUrl ? (
-                  <ExtLink
-                    href={row.bankVerificationUrl}
-                    className="btn-blue px-3 py-1 text-xs"
-                  >
-                    Verify Bank Account
-                  </ExtLink>
-                ) : (
-                  <>- - -</>
-                ))}
-              {status === "final" && (
-                <button
-                  className="w-full flex justify-center"
-                  onClick={() => showKYCForm(row.id)}
-                >
-                  <Icon type="FatArrowDownload" className="text-2xl" />
-                </button>
-              )}
+              <LastRowColContent {...row} status={status} />
             </Cells>
           ))
           .concat(
@@ -206,5 +165,55 @@ export default function Table({
           )}
       </TableSection>
     </table>
+  );
+}
+
+function LastRowColContent(
+  props: Donation.Record & { status: Donation.Status }
+) {
+  const showKYCForm = useShowKYCForm();
+  if (props.status === "final") {
+    return (
+      <button
+        className="w-full flex justify-center"
+        onClick={() => showKYCForm(props.id)}
+      >
+        <Icon type="FatArrowDownload" className="text-2xl" />
+      </button>
+    );
+  }
+
+  if (
+    props.status === "intent" &&
+    props.viaId === "fiat" &&
+    props.bankVerificationUrl
+  ) {
+    return (
+      <ExtLink
+        href={props.bankVerificationUrl}
+        className="btn-blue px-3 py-1 text-xs"
+      >
+        Verify Bank Account
+      </ExtLink>
+    );
+  }
+
+  if (props.status === "intent") {
+    return <IntentResumer intentId={props.id} />;
+  }
+
+  /// pending ///
+
+  if (props.viaId === "fiat" || props.viaId === "staging") {
+    return <>---</>;
+  }
+
+  return (
+    <ExtLink
+      href={getTxUrl(props.viaId, props.id)}
+      className="text-center text-blue-d1 hover:text-navy-d1 uppercase text-sm"
+    >
+      {props.id}
+    </ExtLink>
   );
 }

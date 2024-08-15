@@ -8,8 +8,10 @@ import Icon, { DrawerIcon } from "components/Icon";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
 import type { PropsWithChildren } from "react";
+import type { Donation } from "types/aws";
 import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
+import { lastHeaderName } from "./common";
 import type { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
 
@@ -86,37 +88,10 @@ export default function MobileTable({
                     ? `$${humanize(row.sfDonateAmount, 2)}`
                     : "--"}
                 </Row>
-                {status === "intent" ? (
-                  <Row title="Action" className="rounded-b">
-                    <IntentResumer intentId={row.id} />
-                  </Row>
-                ) : (
-                  <Row title="TX Hash">{row.id}</Row>
-                )}
-                {status === "pending" && (
-                  <Row title="Action" className="rounded-b">
-                    {row.viaId === "fiat" && row.bankVerificationUrl ? (
-                      <ExtLink
-                        href={row.bankVerificationUrl}
-                        className="btn-blue px-3 py-1 text-xs"
-                      >
-                        Verify Bank Account
-                      </ExtLink>
-                    ) : (
-                      "--"
-                    )}
-                  </Row>
-                )}
-                {status === "final" && (
-                  <Row title="Receipt" className="rounded-b">
-                    <button
-                      className="block"
-                      onClick={() => showKYCForm(row.id)}
-                    >
-                      <Icon type="FatArrowDownload" className="text-2xl" />
-                    </button>
-                  </Row>
-                )}
+
+                <Row title={lastHeaderName[status]} className="rounded-b">
+                  <LastRowContent {...row} status={status} />
+                </Row>
               </DisclosurePanel>
             </>
           )}
@@ -146,4 +121,42 @@ function Row({
       <span className="truncate max-w-[167px]">{children}</span>
     </div>
   );
+}
+
+function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
+  const showKYCForm = useShowKYCForm();
+  if (props.status === "final") {
+    return (
+      <button className="block" onClick={() => showKYCForm(props.id)}>
+        <Icon type="FatArrowDownload" className="text-2xl" />
+      </button>
+    );
+  }
+
+  if (
+    props.status === "intent" &&
+    props.viaId === "fiat" &&
+    props.bankVerificationUrl
+  ) {
+    return (
+      <ExtLink
+        href={props.bankVerificationUrl}
+        className="btn-blue px-3 py-1 text-xs"
+      >
+        Verify Bank Account
+      </ExtLink>
+    );
+  }
+
+  if (props.status === "intent") {
+    return <IntentResumer intentId={props.id} />;
+  }
+
+  /// pending ///
+
+  if (props.viaId === "fiat" || props.viaId === "staging") {
+    return <>---</>;
+  }
+
+  return props.id;
 }
