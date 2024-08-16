@@ -1,3 +1,3 @@
-import type { TokenWithAmount } from "types/tx";
+import type { TokenWithDetails } from "types/tx";
 
-export type OnTokenChange = (token: TokenWithAmount) => void;
+export type OnTokenChange = (token: TokenWithDetails) => void;

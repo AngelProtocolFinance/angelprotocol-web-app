@@ -1,23 +1,27 @@
 import { unpack } from "helpers";
-import { forwardRef } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import TokenSelector from "./TokenSelector";
+import { tokenEvents } from "./TokenSelector/common";
 import type { Props } from "./types";
 
-const TokenField: React.ForwardRefRenderFunction<HTMLInputElement, Props> = (
-  {
-    label,
-    classes,
-    disabled,
-    chainId,
-    token,
-    onChange,
-    error,
-    //flags
-    withMininum,
-  },
-  ref
-) => {
-  const style = unpack(classes);
+type El = HTMLInputElement;
+type TokenState = "loading" | "error" | "ok";
+const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
+  const style = unpack(props.classes);
+  const [tokenState, setTokenState] = useState<TokenState>("ok");
+  useEffect(() => {
+    const handleLoading = () => setTokenState("loading");
+    const handleOk = () => setTokenState("ok");
+    const handleError = () => setTokenState("error");
+    window.addEventListener(tokenEvents.loading, handleLoading);
+    window.addEventListener(tokenEvents.ok, handleOk);
+    window.addEventListener(tokenEvents.error, handleError);
+    return () => {
+      window.removeEventListener(tokenEvents.loading, handleLoading);
+      window.removeEventListener(tokenEvents.ok, handleOk);
+      window.removeEventListener(tokenEvents.error, handleError);
+    };
+  }, []);
 
   return (
     <div className={`grid ${style.container}`}>
@@ -25,7 +29,7 @@ const TokenField: React.ForwardRefRenderFunction<HTMLInputElement, Props> = (
         htmlFor="amount"
         className={`font-semibold mr-auto mb-2 after:content-['_*'] after:text-red ${style.label}`}
       >
-        {label}
+        {props.label}
       </label>
 
       <div
@@ -33,25 +37,25 @@ const TokenField: React.ForwardRefRenderFunction<HTMLInputElement, Props> = (
       >
         <input
           ref={ref}
-          value={token.amount}
-          onChange={(e) => onChange({ ...token, amount: e.target.value })}
-          disabled={disabled}
+          value={props.token.amount}
+          onChange={(e) =>
+            props.onChange({ ...props.token, amount: e.target.value })
+          }
+          disabled={props.disabled || tokenState === "loading"}
           autoComplete="off"
           id="amount"
           type="text"
           placeholder="Enter amount"
           className="text-sm py-3.5 dark:text-navy-l2"
         />
-        <TokenSelector chainId={chainId} token={token} onChange={onChange} />
-        {error && (
-          <p data-error className="field-error left-0 text-left">
-            {error}
-          </p>
-        )}
+        <TokenSelector token={props.token} onChange={props.onChange} />
+        <p data-error className="field-error left-0 text-left empty:hidden">
+          {props.error}
+        </p>
       </div>
-      {withMininum && token.min_donation_amnt !== 0 && (
+      {props.withMininum && props.token.min !== 0 && (
         <p className="text-xs mt-2 peer-has-[[data-error]]:mt-5">
-          Minimal amount: {token.symbol} {token.min_donation_amnt}
+          Minimal amount: {props.token.code} {props.token.min}
         </p>
       )}
     </div>
