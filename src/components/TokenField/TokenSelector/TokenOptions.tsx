@@ -45,7 +45,6 @@ const subset = tokens.slice(0, 10);
 function TokenCombobox({ token, onChange }: ITokenCombobox) {
   const [searchText, setSearchText] = useState("");
 
-  //biome-ignore lint: searchText is the only thing changing
   const filtered = useMemo(
     () =>
       !searchText
