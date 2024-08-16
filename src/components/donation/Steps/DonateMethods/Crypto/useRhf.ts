@@ -52,7 +52,7 @@ export function useRhf(props: Props) {
     handleSubmit,
     token,
     errors: {
-      token: errors.token?.amount?.message || errors.token?.token_id?.message,
+      token: errors.token?.amount?.message || errors.token?.id?.message,
       chainId: errors.chainId?.message,
     },
   };

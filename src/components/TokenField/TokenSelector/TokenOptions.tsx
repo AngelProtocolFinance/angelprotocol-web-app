@@ -6,7 +6,7 @@ import {
   ComboboxOptions,
   PopoverPanel,
 } from "@headlessui/react";
-import tokenLogoPlaceholder from "assets/icons/token-placeholder.svg";
+import { logoUrl } from "constants/common";
 import Fuse from "fuse.js";
 import { logger } from "helpers";
 import { useMemo, useState } from "react";
@@ -69,7 +69,6 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
             ...tkn,
             amount: "",
             min: 1,
-            usdRate: 1,
           });
           document.dispatchEvent(
             new CustomEvent(tokenEvents.ok, { bubbles: true })
@@ -110,7 +109,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                 value={{ ...token, amount: "" }}
               >
                 <Image
-                  src={"logo" in token ? token.logo : tokenLogoPlaceholder}
+                  src={logoUrl(token.logo)}
                   className="w-6 h-6 rounded-full row-span-2"
                 />
                 <span className="text-sm">{token.symbol}</span>

@@ -49,7 +49,7 @@ export default function Tip(props: TipStep) {
       case "stocks":
         return [details.symbol, +details.numShares];
       case "crypto":
-        return [details.token.symbol, +details.token.amount, 4];
+        return [details.token.code, +details.token.amount, 4];
     }
   })();
 

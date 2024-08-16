@@ -1,7 +1,6 @@
 import ContentLoader from "components/ContentLoader";
 import Copier from "components/Copier";
 import QueryLoader from "components/QueryLoader";
-import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
@@ -33,9 +32,9 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     amount: +details.token.amount,
     tipAmount: tip?.value ?? 0,
     feeAllowance,
-    chainId: chains[details.chainId].id,
-    chainName: chains[details.chainId].name,
-    denomination: details.token.symbol,
+    chainId: details.token.network,
+    chainName: "TODO:remove",
+    denomination: details.token.code,
     splitLiq: liquidSplitPct,
     endowmentId: init.recipient.id,
     source: init.config ? "bg-widget" : "bg-marketplace",
@@ -57,7 +56,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       <p className="text-navy-l1 text-balance text-center mb-3.5 max-w-sm">
         To complete your donation, send {totalDisplayAmount}
         &nbsp;
-        {details.token.symbol} from your crypto wallet to the address below
+        {details.token.code} from your crypto wallet to the address below
       </p>
       <QueryLoader
         queryState={{ data: intent?.recipientAddress, ...intentState }}

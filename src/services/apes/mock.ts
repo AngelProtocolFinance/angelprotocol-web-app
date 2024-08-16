@@ -1,30 +1,28 @@
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
-import type { Token } from "types/aws";
+import type { TokenV2 } from "types/aws";
 import type { Currency, FiatCurrencyData } from "types/aws/apes/donation";
 
-export const mockTokens: Token[] = [
+export const mockTokens: TokenV2[] = [
   {
     name: "Sample Token 1",
-    symbol: "STK1",
-    token_id: "sample-token-1",
-    type: "erc20",
-    coingecko_denom: "sample-token-1",
-    min_donation_amnt: 100,
-    approved: true,
+    code: "STK1",
+    id: "1",
     logo: "https://example.com/sample-token-1-logo.png",
-    decimals: 18,
+    precision: 18,
+    network: "",
+    network_color: "",
+    cg_id: "",
   },
   {
     name: "Sample Token 2",
-    symbol: "STK2",
-    token_id: "sample-token-2",
-    type: "erc20",
-    coingecko_denom: "sample-token-2",
-    min_donation_amnt: 50,
-    approved: true,
+    code: "STK2",
+    id: "2",
     logo: "https://example.com/sample-token-2-logo.png",
-    decimals: 18,
+    precision: 18,
+    network: "",
+    network_color: "",
+    cg_id: "",
   },
 ];
 

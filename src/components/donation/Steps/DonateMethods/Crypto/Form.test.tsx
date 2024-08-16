@@ -89,8 +89,7 @@ describe("Crypto form: initial load", () => {
       init,
       details: {
         method: "crypto",
-        token: { ...mockTokens[1], amount },
-        chainId: "80002",
+        token: { ...mockTokens[1], amount, min: 1 },
         program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
       },
     } as const;

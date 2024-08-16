@@ -1,8 +1,7 @@
 import type { Donor } from "types/aws";
-import type { Chain } from "types/chain";
 import type { DetailedCurrency, OptionType } from "types/components";
 import type { DonateMethodId } from "types/lists";
-import type { TokenWithAmount } from "types/tx";
+import type { TokenWithDetails } from "types/tx";
 import type {
   DonationDetails,
   DonationState,
@@ -16,18 +15,20 @@ export const DEFAULT_PROGRAM: OptionType<""> = {
   value: "",
 };
 
-export const initTokenOption: TokenWithAmount = {
-  approved: false,
-  decimals: 6,
-  logo: "",
-  min_donation_amnt: 0,
-  symbol: "Select token",
+export const initTokenOption: TokenWithDetails = {
+  precision: 6,
+  min: 0,
+  code: "Select token",
   name: "",
-  token_id: "",
-  coingecko_denom: "",
-  type: "erc20",
+  id: "",
   amount: "",
+  network: "",
+  network_color: "",
+  cg_id: "",
+  logo: "",
 };
+
+export const tokenLogo = (code: string) => `https://nowpayments.io/images/`;
 
 export const USD_CODE = "usd";
 
@@ -52,9 +53,6 @@ export const initDetails = (
         method: "crypto",
         token: initTokenOption,
         program,
-        /** cast here, propagating chainId:`""` in donation state is impractical
-         * as it should have been ruled out in crypto form  */
-        chainId: "" as Chain.Id.All,
       };
     }
     case "daf": {

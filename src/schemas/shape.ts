@@ -1,5 +1,5 @@
 import type { OptionType, RichTextContent } from "types/components";
-import type { TokenWithAmount as TWA } from "types/tx";
+import type { TokenWithDetails as TWD } from "types/tx";
 import {
   type NumberSchema,
   type ObjectSchema,
@@ -36,12 +36,12 @@ export function schema<T extends object>(shape: SchemaShape<T>) {
   ) as ObjectSchema<T>;
 }
 
-type Key = keyof TWA;
-type Min = TWA["min_donation_amnt"];
-const minKey: Key = "min_donation_amnt";
+type Key = keyof TWD;
+type Min = TWD["min"];
+const minKey: Key = "min";
 
-export const tokenShape = (withMin = true): SchemaShape<TWA> => ({
-  token_id: string().required("select token"),
+export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
+  id: string().required("required"),
   amount: stringNumber(
     (s) => s.required("required"),
     (num) =>

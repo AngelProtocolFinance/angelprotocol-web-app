@@ -9,7 +9,7 @@ export const polygon: Chain.Tier1 = {
   name: "Polygon",
   blockExplorer: "https://polygonscan.com",
   logo: "https://cryptologos.cc/logos/polygon-matic-logo.svg?v=032",
-  processingRate: PROCESSING_RATES.crypto.evm,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const ethereum: Chain.Tier1 = {
@@ -18,7 +18,7 @@ export const ethereum: Chain.Tier1 = {
   name: "Ethereum",
   blockExplorer: "https://etherscan.io",
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png?v=032",
-  processingRate: PROCESSING_RATES.crypto.ethereum,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const arbitrum: Chain.Tier1 = {
@@ -27,7 +27,7 @@ export const arbitrum: Chain.Tier1 = {
   name: "Arbitrum One",
   blockExplorer: "https://arbiscan.io",
   logo: "https://cryptologos.cc/logos/arbitrum-arb-logo.svg?v=032",
-  processingRate: PROCESSING_RATES.crypto.evm,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const optimism: Chain.Tier1 = {
@@ -36,7 +36,7 @@ export const optimism: Chain.Tier1 = {
   name: "Optimism",
   blockExplorer: "https://optimistic.etherscan.io",
   logo: "https://cryptologos.cc/logos/optimism-ethereum-op-logo.svg?v=032",
-  processingRate: PROCESSING_RATES.crypto.evm,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const base: Chain.Tier1 = {
@@ -45,7 +45,7 @@ export const base: Chain.Tier1 = {
   name: "Base",
   blockExplorer: "https://mainnet.basescan.org",
   logo: "https://avatars.githubusercontent.com/u/108554348?s=200&v=4",
-  processingRate: PROCESSING_RATES.crypto.evm,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const binance: Chain.Tier1 = {
@@ -54,7 +54,7 @@ export const binance: Chain.Tier1 = {
   name: "Binance",
   blockExplorer: "https://bscscan.com",
   logo: "https://cryptologos.cc/logos/bnb-bnb-logo.svg?v=032",
-  processingRate: PROCESSING_RATES.crypto.evm,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const juno: Chain.Tier1 = {
@@ -63,7 +63,7 @@ export const juno: Chain.Tier1 = {
   name: "Juno",
   blockExplorer: "https://www.mintscan.io/juno",
   logo: "https://avatars.githubusercontent.com/u/79813271?s=200&v=4",
-  processingRate: PROCESSING_RATES.crypto.cosmos,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const stargaze: Chain.Tier1 = {
@@ -72,7 +72,7 @@ export const stargaze: Chain.Tier1 = {
   name: "Stargaze",
   blockExplorer: "https://www.mintscan.io/stargaze",
   logo: "https://app.osmosis.zone/tokens/generated/stars.svg",
-  processingRate: PROCESSING_RATES.crypto.cosmos,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const kujira: Chain.Tier1 = {
@@ -81,7 +81,7 @@ export const kujira: Chain.Tier1 = {
   name: "Kujira",
   blockExplorer: "https://finder.kujira.network/kaiyo-1",
   logo: "https://avatars.githubusercontent.com/u/84391088?s=200&v=4",
-  processingRate: PROCESSING_RATES.crypto.cosmos,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const osmosis: Chain.Tier1 = {
@@ -90,7 +90,7 @@ export const osmosis: Chain.Tier1 = {
   name: "Osmosis",
   blockExplorer: "https://www.mintscan.io/osmosis",
   logo: "https://cryptologos.cc/logos/osmosis-osmo-logo.png?v=032",
-  processingRate: PROCESSING_RATES.crypto.cosmos,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const terraMainnet: Chain.Tier1 = {
@@ -99,7 +99,7 @@ export const terraMainnet: Chain.Tier1 = {
   name: "Terra",
   blockExplorer: "https://finder.terra.money/mainnet",
   logo: "https://avatars.githubusercontent.com/u/38208150?s=200&v=4",
-  processingRate: PROCESSING_RATES.crypto.cosmos,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 //testnets
@@ -199,7 +199,7 @@ export const bitcoin: Chain.Tier2 = {
   name: `Bitcoin${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://btcscan.org",
   logo: "https://cryptologos.cc/logos/bitcoin-btc-logo.svg?v=032",
-  processingRate: PROCESSING_RATES.crypto.others,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const solana: Chain.Tier2 = {
@@ -208,7 +208,7 @@ export const solana: Chain.Tier2 = {
   name: `Solana${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://solscan.io",
   logo: "https://cryptologos.cc/logos/solana-sol-logo.svg?v=032",
-  processingRate: PROCESSING_RATES.crypto.others,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const ripple: Chain.Tier2 = {
@@ -217,7 +217,7 @@ export const ripple: Chain.Tier2 = {
   name: `XRP Ledger${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://xrpscan.com",
   logo: "https://avatars.githubusercontent.com/u/3165523?s=200&v=4",
-  processingRate: PROCESSING_RATES.crypto.others,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 export const doge: Chain.Tier2 = {
@@ -226,7 +226,7 @@ export const doge: Chain.Tier2 = {
   name: `Doge${IS_TEST ? " Testnet" : ""}`,
   blockExplorer: "https://dogechain.info",
   logo: "https://cryptologos.cc/logos/dogecoin-doge-logo.svg?v=032",
-  processingRate: PROCESSING_RATES.crypto.others,
+  processingRate: PROCESSING_RATES.crypto,
 };
 
 const tier1ChainList: Chain.Tier1[] = [

@@ -2,7 +2,7 @@ import type { Any } from "@keplr-wallet/proto-types/google/protobuf/any";
 import type { Keplr } from "@keplr-wallet/types";
 import type { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
-import type { Token } from "./aws";
+import type { Token, TokenV2 } from "./aws";
 import type { Chain } from "./chain";
 import type { Allowance, Transfer } from "./contracts/erc20";
 import type { SignDoc } from "./cosmos";
@@ -12,6 +12,11 @@ import type { EVMTx, SimulTx } from "./evm";
 export type TokenWithAmount = Token & {
   amount: string;
 };
+
+export interface TokenWithDetails extends TokenV2 {
+  amount: string;
+  min: number;
+}
 
 // //////////// ESTIMATE TX ////////////
 export type EstimateInput =

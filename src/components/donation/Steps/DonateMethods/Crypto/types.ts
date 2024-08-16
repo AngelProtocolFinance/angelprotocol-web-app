@@ -4,9 +4,6 @@ import type { CryptoDonationDetails } from "../../types";
 
 export type MaybeEmptyChainId = Chain.Id.All | "";
 
-export type DonateValues = Except<
-  CryptoDonationDetails,
-  "method" | "chainId"
-> & {
+export type DonateValues = Except<CryptoDonationDetails, "method"> & {
   chainId: MaybeEmptyChainId;
 };
