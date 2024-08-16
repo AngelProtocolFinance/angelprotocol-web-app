@@ -10,7 +10,7 @@ import { logoUrl } from "constants/common";
 import Fuse from "fuse.js";
 import { logger } from "helpers";
 import { useMemo, useState } from "react";
-import type { Token, TokenV2 } from "types/aws";
+import type { TokenV2 } from "types/aws";
 import Icon from "../../Icon";
 import Image from "../../Image";
 import { tokenEvents } from "./common";
@@ -37,7 +37,9 @@ export default function TokenOptions({ onChange, token }: Props) {
 
 interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {}
 
-const tokensFuse = new Fuse<TokenV2>(tokens, { keys: ["name", "code"] });
+const tokensFuse = new Fuse<TokenV2>(tokens, {
+  keys: ["name", "code", "network"],
+});
 const subset = tokens.slice(0, 10);
 
 function TokenCombobox({ token, onChange }: ITokenCombobox) {
@@ -98,11 +100,12 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
       ) : (
         <ComboboxOptions className="py-1 w-full" static>
           {({ option }) => {
-            const token = option as Token;
+            const token = option as TokenV2;
+            console.log({ option });
             return (
               <ComboboxOption
                 as={CloseButton}
-                key={token.token_id + token.type}
+                key={token.id}
                 className={
                   "w-full grid grid-cols-[auto_1fr] justify-items-start items-center gap-x-2 p-2 hover:bg-[--accent-secondary] data-[selected]:bg-[--accent-secondary] cursor-pointer"
                 }
@@ -112,8 +115,20 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                   src={logoUrl(token.logo)}
                   className="w-6 h-6 rounded-full row-span-2"
                 />
-                <span className="text-sm">{token.symbol}</span>
-                <p className="text-xs text-gray col-start-2">{token.name}</p>
+
+                <div className="flex items-center gap-2 justify-between w-full">
+                  <span className="text-sm">{token.code}</span>
+                  <span
+                    className="text-white text-2xs uppercase px-1"
+                    style={{ background: token.network_color }}
+                  >
+                    {token.network}
+                  </span>
+                </div>
+
+                <p className="text-xs text-gray col-start-2 text-left">
+                  {token.name}
+                </p>
               </ComboboxOption>
             );
           }}
