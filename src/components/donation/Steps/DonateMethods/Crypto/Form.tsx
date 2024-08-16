@@ -12,9 +12,8 @@ export default function Form(props: CryptoFormStep) {
 
   const { handleSubmit, reset, program, token, errors } = useRhf(props);
 
-  function submit({ chainId, ...data }: DonateValues) {
-    if (!chainId) throw "dev: chainId should be validated";
-    setState((prev) => nextFormState(prev, { ...data, method: "crypto" }));
+  function submit(fv: DonateValues) {
+    setState((prev) => nextFormState(prev, { ...fv, method: "crypto" }));
     reset();
   }
 
