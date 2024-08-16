@@ -17,3 +17,5 @@ export type Props = {
   withBalance?: true;
   withMininum?: true;
 };
+
+export type TokenState = "loading" | "error" | "ok";

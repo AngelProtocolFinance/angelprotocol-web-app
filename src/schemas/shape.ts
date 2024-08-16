@@ -50,7 +50,7 @@ export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
         .when([minKey], (values, schema) => {
           const [minAmount] = values as [Min];
           return withMin && !!minAmount
-            ? schema.min(minAmount || 0, `amount must be at least ${minAmount}`)
+            ? schema.min(minAmount || 0, "less than mininum")
             : schema;
         })
         .test(

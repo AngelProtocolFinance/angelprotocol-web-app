@@ -10,6 +10,7 @@ import { logoUrl } from "constants/common";
 import Fuse from "fuse.js";
 import { logger } from "helpers";
 import { useMemo, useState } from "react";
+import { useLazyMinAmountQuery } from "services/aws/crypto";
 import type { TokenV2 } from "types/aws";
 import Icon from "../../Icon";
 import Image from "../../Image";
@@ -44,6 +45,7 @@ const subset = tokens.slice(0, 10);
 
 function TokenCombobox({ token, onChange }: ITokenCombobox) {
   const [searchText, setSearchText] = useState("");
+  const [getMinAmount] = useLazyMinAmountQuery();
 
   const filtered = useMemo(
     () =>
@@ -65,12 +67,8 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
             new CustomEvent(tokenEvents.loading, { bubbles: true })
           );
           //TODO: fetch min amount for this token
-          await new Promise((r) => setTimeout(r, 500));
-          onChange({
-            ...tkn,
-            amount: "",
-            min: 1,
-          });
+          const min = await getMinAmount(tkn.code).unwrap();
+          onChange({ ...tkn, amount: "", min });
           document.dispatchEvent(
             new CustomEvent(tokenEvents.ok, { bubbles: true })
           );
@@ -100,7 +98,6 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
         <ComboboxOptions className="py-1 w-full" static>
           {({ option }) => {
             const token = option as TokenV2;
-            console.log({ option });
             return (
               <ComboboxOption
                 as={CloseButton}
