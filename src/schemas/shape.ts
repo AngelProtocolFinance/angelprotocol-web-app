@@ -4,6 +4,7 @@ import {
   type NumberSchema,
   type ObjectSchema,
   type StringSchema,
+  ValidationError,
   lazy,
   mixed,
   number,
@@ -11,7 +12,6 @@ import {
   string,
 } from "yup";
 import { requiredString } from "./string";
-import { testTokenDigits } from "./tests";
 import type { SchemaShape } from "./types";
 
 /**
@@ -53,11 +53,17 @@ export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
             ? schema.min(minAmount || 0, "less than mininum")
             : schema;
         })
-        .test(
-          "max precision",
-          "must not be greater than 6 digits",
-          testTokenDigits
-        )
+        .test((val, context) => {
+          if (!val) return true;
+          const numDecimals = val.toString().split(".").at(1)?.length ?? 0;
+          const precision = context.parent.precision;
+          if (numDecimals <= precision) return true;
+          return new ValidationError(
+            `can be more than ${precision} decimals`,
+            precision,
+            context.path
+          );
+        })
   ),
 });
 
