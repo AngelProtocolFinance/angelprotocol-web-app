@@ -100,7 +100,7 @@ export default function Summary(props: SummaryStep) {
               withTributeNotif,
               tributeNotif,
             },
-            feeAllowance: processingFee(details),
+            feeAllowance: fvCoverFee ? processingFee(details) : 0,
           });
         }}
         classes="mt-6"
