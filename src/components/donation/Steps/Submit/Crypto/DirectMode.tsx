@@ -27,7 +27,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     honorary,
   } = donation;
 
-  const { data: intent, ...intentState } = useCreateCryptoIntentQuery({
+  const intentQuery = useCreateCryptoIntentQuery({
     transactionId: init.intentId,
     amount: +details.token.amount,
     tipAmount: tip?.value ?? 0,
@@ -59,18 +59,22 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         {details.token.code} from your crypto wallet to the address below
       </p>
       <QueryLoader
-        queryState={{ data: intent?.recipientAddress, ...intentState }}
+        queryState={intentQuery}
         messages={{
           loading: <ContentLoader className="size-48 rounded" />,
           error: "Failed to load donation address",
         }}
       >
-        {(recipient) => (
+        {(payment) => (
           <>
-            <QRCodeSVG value={recipient} className="mb-3.5" size={192} />
-            <p className="text-sm mb-4">{recipient}</p>
+            <QRCodeSVG
+              value={payment.pay_address}
+              className="mb-3.5"
+              size={192}
+            />
+            <p className="text-sm mb-4">{payment.pay_address}</p>
             <Copier
-              text={recipient}
+              text={payment.pay_address}
               classes={{
                 container:
                   "flex items-center gap-2 px-2 py-1.5 rounded-md border border-gray-l4 shadow-md shadow-black/5",
@@ -96,7 +100,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       </p>
 
       <ContinueBtn
-        disabled={intentState.isError || intentState.isLoading}
+        disabled={intentQuery.isError || intentQuery.isLoading}
         onClick={() =>
           navigate(appRoutes.donate_thanks, {
             state: {

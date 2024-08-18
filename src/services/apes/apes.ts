@@ -4,6 +4,7 @@ import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import type {
+  Crypto,
   DonationIntent,
   EndowmentBalances,
   FiatCurrencyData,
@@ -43,14 +44,7 @@ export const apes = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    createCryptoIntent: builder.query<
-      {
-        transactionId: string;
-        /** defined if !CryptoDonation.walletAddress */
-        recipientAddress?: string;
-      },
-      DonationIntent.Crypto
-    >({
+    createCryptoIntent: builder.query<Crypto.Payment, DonationIntent.Crypto>({
       query: (params) => ({
         url: "crypto-donation",
         method: "POST",
