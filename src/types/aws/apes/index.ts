@@ -37,28 +37,6 @@ export type Token = {
   type: TokenType;
 };
 
-/**
- * @example `logo` can be derived from `url/images/coins/{code.toLowerCase()}`
- */
-export interface TokenV2 {
-  id: string;
-  /** @example "BTC" */
-  code: string;
-  /** @example "Bitcoin" */
-  name: string;
-  /** present if token requires additional id e.g. memo  */
-  extra_id_pattern?: string;
-  /** rounding for display: NOT for atomic conversion */
-  precision: number;
-  /** @example /images/coins/logo.png */
-  logo: string;
-  /** @example "btc" */
-  network: string;
-  /** brand color of network */
-  network_color: string;
-  cg_id: string;
-}
-
 export interface Chain<T extends string> {
   id: T;
   nodeUrl: string;

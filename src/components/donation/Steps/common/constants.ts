@@ -23,8 +23,8 @@ export const initTokenOption: TokenWithDetails = {
   id: "",
   amount: "",
   network: "",
-  network_color: "",
   cg_id: "",
+  color: "",
   logo: "",
 };
 

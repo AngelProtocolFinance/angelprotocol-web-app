@@ -102,10 +102,8 @@ function initialState({
           code: intent.denomination,
           cg_id: intent.token.coingecko_denom,
           logo: intent.token.logo,
-          /** 3pp intent won't be resumed via form - but via hosted invoice page */
-          extra_id_pattern: undefined,
           network: "",
-          network_color: "",
+          color: "",
           name: "",
           precision: 0,
         },

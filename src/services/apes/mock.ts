@@ -1,7 +1,7 @@
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
-import type { TokenV2 } from "types/aws";
 import type { Currency, FiatCurrencyData } from "types/aws/apes/donation";
+import type { TokenV2 } from "types/components";
 
 export const mockTokens: TokenV2[] = [
   {
@@ -11,8 +11,8 @@ export const mockTokens: TokenV2[] = [
     logo: "https://example.com/sample-token-1-logo.png",
     precision: 18,
     network: "",
-    network_color: "",
     cg_id: "",
+    color: "",
   },
   {
     name: "Sample Token 2",
@@ -21,8 +21,8 @@ export const mockTokens: TokenV2[] = [
     logo: "https://example.com/sample-token-2-logo.png",
     precision: 18,
     network: "",
-    network_color: "",
     cg_id: "",
+    color: "",
   },
 ];
 

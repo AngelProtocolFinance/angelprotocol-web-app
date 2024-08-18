@@ -1,3 +1,5 @@
+import prod_tokens from "@better-giving/assets/tokens/prod.json";
+import test_tokens from "@better-giving/assets/tokens/test.json";
 import {
   CloseButton,
   Combobox,
@@ -7,15 +9,15 @@ import {
   PopoverPanel,
 } from "@headlessui/react";
 import { logoUrl } from "constants/common";
+import { IS_TEST } from "constants/env";
 import Fuse from "fuse.js";
 import { logger } from "helpers";
 import { useMemo, useState } from "react";
 import { useLazyMinAmountQuery } from "services/aws/crypto";
-import type { TokenV2 } from "types/aws";
+import type { TokenV2 } from "types/components";
 import Icon from "../../Icon";
 import Image from "../../Image";
 import { tokenEvents } from "./common";
-import { tokens } from "./tokens";
 import type { OnTokenChange } from "./types";
 
 type Props = {
@@ -38,6 +40,7 @@ export default function TokenOptions({ onChange, token }: Props) {
 
 interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {}
 
+const tokens = IS_TEST ? test_tokens : prod_tokens;
 const tokensFuse = new Fuse<TokenV2>(tokens, {
   keys: ["name", "code", "network"],
 });
@@ -116,7 +119,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                   <span className="text-sm">{token.code}</span>
                   <span
                     className="text-white text-2xs uppercase px-1"
-                    style={{ background: token.network_color }}
+                    style={{ background: token.color }}
                   >
                     {token.network}
                   </span>
