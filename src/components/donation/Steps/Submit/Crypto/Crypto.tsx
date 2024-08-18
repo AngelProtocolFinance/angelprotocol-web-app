@@ -1,3 +1,5 @@
+import chains from "@better-giving/assets/chains.json";
+import { logoUrl } from "constants/common";
 import Image from "../../../../Image";
 import { useDonationState } from "../../Context";
 import Summary from "../../common/Summary";
@@ -33,9 +35,15 @@ export default function Crypto(props: CryptoSubmitStep) {
             <dt className="mr-auto">Currency</dt>
             <Image
               className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
-              src={details.token.logo}
+              src={logoUrl(details.token.logo)}
             />
             <dd className="text-navy-d4">{details.token.code}</dd>
+          </dl>
+          <dl className="text-navy-l1 py-3 flex items-center justify-between">
+            <dt className="mr-auto">Blockchain</dt>
+            <dd className="text-navy-d4">
+              {chains[details.token.network].name}
+            </dd>
           </dl>
         </>
       }
