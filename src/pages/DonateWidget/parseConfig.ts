@@ -18,9 +18,7 @@ const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
   }),
   increments: string().test("valid csv", "invalid increments", (val) => {
     if (!val) return true;
-    return val
-      ? val.split(",").every((val) => number().positive().isValidSync(+val))
-      : false;
+    return val.split(",").every((val) => number().positive().isValidSync(+val));
   }),
   accentPrimary: string().matches(hexColor, "invalid color format"),
   accentSecondary: string().matches(hexColor, "invalid color format"),
