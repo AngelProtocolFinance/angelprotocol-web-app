@@ -1,3 +1,4 @@
+import chains from "@better-giving/assets/chains.json";
 import prod_tokens from "@better-giving/assets/tokens/prod.json";
 import test_tokens from "@better-giving/assets/tokens/test.json";
 import {
@@ -115,18 +116,13 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                   className="w-6 h-6 rounded-full row-span-2"
                 />
 
-                <div className="flex items-center gap-2 justify-between w-full">
-                  <span className="text-sm">{token.code}</span>
-                  <span
-                    className="text-white text-2xs uppercase px-1"
-                    style={{ background: token.color }}
-                  >
-                    {token.network}
-                  </span>
-                </div>
+                <span className="text-sm">{token.code}</span>
 
-                <p className="text-xs text-gray col-start-2 text-left">
-                  {token.name}
+                <p
+                  style={{ color: token.color }}
+                  className="text-xs col-start-2 text-left"
+                >
+                  {chains[token.network].name}
                 </p>
               </ComboboxOption>
             );
