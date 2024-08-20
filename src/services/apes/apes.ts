@@ -46,7 +46,7 @@ export const apes = createApi({
     }),
     createCryptoIntent: builder.query<Crypto.Payment, DonationIntent.Crypto>({
       query: (params) => ({
-        url: "crypto-donation",
+        url: "crypto-intents",
         method: "POST",
         headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),

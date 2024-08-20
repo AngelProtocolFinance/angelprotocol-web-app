@@ -1,6 +1,7 @@
 import ContentLoader from "components/ContentLoader";
 import Copier from "components/Copier";
 import QueryLoader from "components/QueryLoader";
+import { logoUrl } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
@@ -68,6 +69,12 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         {(payment) => (
           <>
             <QRCodeSVG
+              imageSettings={{
+                src: logoUrl(details.token.logo),
+                height: 20,
+                width: 20,
+                excavate: true,
+              }}
               value={payment.pay_address}
               className="mb-3.5"
               size={192}
