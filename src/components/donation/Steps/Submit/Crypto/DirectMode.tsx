@@ -40,7 +40,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     denomination: details.token.code,
     splitLiq: liquidSplitPct,
     endowmentId: init.recipient.id,
-    source: init.config ? "bg-widget" : "bg-marketplace",
+    source: init.source,
     donor: toDonor(fvDonor),
     ...(honorary.honoraryFullName && {
       inHonorOf: honorary.honoraryFullName,
