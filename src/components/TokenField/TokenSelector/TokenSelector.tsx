@@ -11,7 +11,6 @@ export default function TokenSelector({
   token,
   tokenState,
 }: ITokenSelector) {
-  console.log({ tokenState });
   return (
     <Popover className="relative gap-1 flex justify-end dark:text-navy-l2 h-full">
       <PopoverButton

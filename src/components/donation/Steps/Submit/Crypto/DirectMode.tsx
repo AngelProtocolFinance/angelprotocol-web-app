@@ -4,6 +4,7 @@ import Copier from "components/Copier";
 import QueryLoader from "components/QueryLoader";
 import { logoUrl } from "constants/common";
 import { appRoutes } from "constants/routes";
+import { roundDown } from "helpers";
 import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
 import { useCreateCryptoIntentQuery } from "services/apes";
@@ -50,8 +51,10 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     ...(details.program.value && { programId: details.program.value }),
   });
 
-  const totalDisplayAmount =
-    +details.token.amount + (tip?.value ?? 0) + feeAllowance;
+  const totalDisplayAmount = roundDown(
+    +details.token.amount + (tip?.value ?? 0) + feeAllowance,
+    details.token.precision
+  );
 
   return (
     <div className={`${classes} grid justify-items-center`}>
@@ -91,6 +94,9 @@ export default function DirectMode({ donation, classes = "" }: Props) {
             >
               <span className="capitalize text-sm">Copy address</span>
             </Copier>
+            {payment.payin_extra_id && (
+              <Memo classes="mt-4" val={payment.payin_extra_id} />
+            )}
           </>
         )}
       </QueryLoader>
@@ -120,6 +126,28 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         text="I have completed the payment"
         className="justify-self-stretch mt-8"
       />
+    </div>
+  );
+}
+
+interface IMemo {
+  val: string;
+  classes?: string;
+}
+function Memo({ val, classes = "" }: IMemo) {
+  return (
+    <div className={`grid justify-items-center ${classes}`}>
+      <p className="text-sm mb-2">{val}</p>
+      <Copier
+        text={val}
+        classes={{
+          container:
+            "flex items-center gap-2 px-2 py-1.5 rounded-md border border-gray-l4 shadow-md shadow-black/5",
+          icon: "size-5",
+        }}
+      >
+        <span className="capitalize text-sm">Copy Memo</span>
+      </Copier>
     </div>
   );
 }
