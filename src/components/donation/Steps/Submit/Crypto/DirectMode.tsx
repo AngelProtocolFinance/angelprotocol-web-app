@@ -1,3 +1,4 @@
+import chains from "@better-giving/assets/chains.json";
 import ContentLoader from "components/ContentLoader";
 import Copier from "components/Copier";
 import QueryLoader from "components/QueryLoader";
@@ -34,7 +35,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     tipAmount: tip?.value ?? 0,
     feeAllowance,
     chainId: details.token.network,
-    chainName: "TODO:remove",
+    chainName: chains[details.token.network].name,
     denomination: details.token.code,
     splitLiq: liquidSplitPct,
     endowmentId: init.recipient.id,
