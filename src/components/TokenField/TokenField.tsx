@@ -1,25 +1,20 @@
 import { unpack } from "helpers";
 import { forwardRef, useEffect, useState } from "react";
 import TokenSelector from "./TokenSelector";
-import { tokenEvents } from "./TokenSelector/common";
-import type { Props, TokenState } from "./types";
+import type { Props, Token } from "./types";
 
 type El = HTMLInputElement;
 
 const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
   const style = unpack(props.classes);
-  const [tokenState, setTokenState] = useState<TokenState>("ok");
+  const [tokenState, setTokenState] = useState<Token.State>("ok");
   useEffect(() => {
-    const handleLoading = () => setTokenState("loading");
-    const handleOk = () => setTokenState("ok");
-    const handleError = () => setTokenState("error");
-    window.addEventListener(tokenEvents.loading, handleLoading);
-    window.addEventListener(tokenEvents.ok, handleOk);
-    window.addEventListener(tokenEvents.error, handleError);
+    const eventName = "crypto-token-event" satisfies Token.Event.Name as string;
+    const handler = (ev: CustomEvent<Token.Event.Detail>) =>
+      setTokenState(ev.detail.state);
+    window.addEventListener(eventName, handler as any);
     return () => {
-      window.removeEventListener(tokenEvents.loading, handleLoading);
-      window.removeEventListener(tokenEvents.ok, handleOk);
-      window.removeEventListener(tokenEvents.error, handleError);
+      window.removeEventListener(eventName, handler as any);
     };
   }, []);
 

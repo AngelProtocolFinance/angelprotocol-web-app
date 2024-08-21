@@ -1,10 +1,10 @@
 import { Popover, PopoverButton } from "@headlessui/react";
 import Icon, { DrawerIcon } from "../../Icon";
-import type { Props, TokenState } from "../types";
+import type { Props, Token } from "../types";
 import TokenOptions from "./TokenOptions";
 
 interface ITokenSelector extends Pick<Props, "token" | "onChange"> {
-  tokenState: TokenState;
+  tokenState: Token.State;
 }
 export default function TokenSelector({
   onChange,

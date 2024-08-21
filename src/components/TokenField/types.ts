@@ -18,4 +18,12 @@ export type Props = {
   withMininum?: true;
 };
 
-export type TokenState = "loading" | "error" | "ok";
+export namespace Token {
+  export type State = "loading" | "error" | "ok";
+  export namespace Event {
+    export interface Detail {
+      state: State;
+    }
+    export type Name = "crypto-token-event";
+  }
+}

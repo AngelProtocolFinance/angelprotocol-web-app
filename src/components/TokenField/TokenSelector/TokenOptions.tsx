@@ -18,7 +18,7 @@ import { useLazyMinAmountQuery } from "services/aws/crypto";
 import type { TokenV2 } from "types/components";
 import Icon from "../../Icon";
 import Image from "../../Image";
-import { tokenEvents } from "./common";
+import type { Token } from "../types";
 import type { OnTokenChange } from "./types";
 
 type Props = {
@@ -46,6 +46,14 @@ const tokensFuse = new Fuse<TokenV2>(tokens, {
   keys: ["name", "code", "network"],
 });
 const subset = tokens.slice(0, 10);
+const tokenEv = (state: Token.State) => {
+  document.dispatchEvent(
+    new CustomEvent<Token.Event.Detail>(
+      "crypto-token-event" satisfies Token.Event.Name,
+      { bubbles: true, detail: { state } }
+    )
+  );
+};
 
 function TokenCombobox({ token, onChange }: ITokenCombobox) {
   const [searchText, setSearchText] = useState("");
@@ -67,20 +75,14 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
       onChange={async (tkn) => {
         if (!tkn) return;
         try {
-          document.dispatchEvent(
-            new CustomEvent(tokenEvents.loading, { bubbles: true })
-          );
+          tokenEv("loading");
           //TODO: fetch min amount for this token
           const min = await getMinAmount(tkn.code).unwrap();
           onChange({ ...tkn, amount: "", min });
-          document.dispatchEvent(
-            new CustomEvent(tokenEvents.ok, { bubbles: true })
-          );
+          tokenEv("ok");
         } catch (err) {
           logger.error(err);
-          document.dispatchEvent(
-            new CustomEvent(tokenEvents.error, { bubbles: true })
-          );
+          tokenEv("error");
         }
       }}
     >
