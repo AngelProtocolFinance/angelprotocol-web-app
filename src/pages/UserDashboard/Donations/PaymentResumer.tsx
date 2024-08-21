@@ -10,7 +10,7 @@ import type { Crypto } from "types/aws";
 type Props = { paymentId: number; classes?: string; amount: number };
 export default function PaymentResumer({ paymentId, classes, amount }: Props) {
   const [getPayment, { isLoading, isFetching }] = useLazyPaymentQuery();
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const { showModal } = useModalContext();
 
   return (
@@ -21,6 +21,9 @@ export default function PaymentResumer({ paymentId, classes, amount }: Props) {
       onClick={async () => {
         try {
           const payment = await getPayment(paymentId).unwrap();
+          if (payment.payment_status !== "waiting") {
+            return displayError("Donation is already processing.");
+          }
           showModal(QrModal, { ...payment, orderAmount: amount });
         } catch (err) {
           handleError(err, "parsed");
