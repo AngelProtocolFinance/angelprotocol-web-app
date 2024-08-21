@@ -76,9 +76,9 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
         if (!tkn) return;
         try {
           tokenEv("loading");
-          //TODO: fetch min amount for this token
           const min = await getMinAmount(tkn.code).unwrap();
-          onChange({ ...tkn, amount: "", min });
+          // 3% allowance: min might change and be greater when estimate is made in server
+          onChange({ ...tkn, amount: "", min: min * 1.03 });
           tokenEv("ok");
         } catch (err) {
           logger.error(err);
