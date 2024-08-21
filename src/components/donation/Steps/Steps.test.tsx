@@ -222,12 +222,6 @@ describe("donation flow", () => {
     const cryptoTab = screen.getByRole("tab", { name: /crypto/i });
     await userEvent.click(cryptoTab);
 
-    //select network
-    const networkSelector = screen.getByRole("combobox");
-    await userEvent.click(networkSelector);
-    const networkOptions = screen.getAllByRole("option");
-    await userEvent.click(networkOptions[0]);
-
     //select token
     const tokenSelectorOpener = screen.getByRole("button", {
       name: /select token/i,
