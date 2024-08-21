@@ -41,157 +41,105 @@ export namespace Crypto {
       | "expired";
   }
 
-  /** payment by invoice */
-  export interface Payment {
-    /** Unique identifier for the created payment */
-    payment_id: string;
+  interface Payment {
+    payment_id: number;
 
-    /** Current status of the payment */
-    payment_status: Payment.Status;
+    // order link to payment
+    order_id: string;
+    order_description: string;
 
-    /** Address where the customer should send the payment */
+    // to pay amount in usd
+    price_amount: number;
+    price_currency: string;
+
+    // to pay amount in crypto
+    pay_amount: number;
+    pay_currency: string;
     pay_address: string;
 
-    /** Price amount in the price currency */
-    price_amount: number;
-
-    /** Currency of the price */
-    price_currency: string;
-
-    /** Amount that the customer needs to pay in the payment currency */
-    pay_amount: number;
-
-    /** Currency in which the customer should make the payment */
-    pay_currency: string;
-
-    /** Your order ID */
-    order_id: string;
-
-    /** Description of the order */
-    order_description: string;
-
-    /** URL for the Instant Payment Notification callback */
-    ipn_callback_url: string;
-
-    /** Timestamp of when the payment was created */
-    created_at: string;
-
-    /** Timestamp of the last update to the payment */
-    updated_at: string;
-
-    /** Your purchase ID */
-    purchase_id: string;
-
-    /** Amount received from the customer (null if not received yet) */
-    amount_received: number | null;
-
-    /** Extra ID for the payment input (null if not applicable) */
+    /** e.g. memo */
     payin_extra_id: string | null;
 
-    /** Smart contract address (empty string if not applicable) */
-    smart_contract: string;
-
-    /** Network of the cryptocurrency */
-    network: string;
-
-    /** Precision of the network (number of decimal places) */
-    network_precision: number;
-
-    /** Time limit for the payment (null if no limit) */
-    time_limit: number | null;
-
-    /** Percentage of burning (null if not applicable) */
-    burning_percent: number | null;
-
-    /** Estimated expiration date of the payment */
-    expiration_estimate_date: string;
+    payment_status: Payment.Status;
   }
 
-  export interface Invoice {
-    /** Unique identifier for the invoice */
-    id: string;
+  export interface PaymentStatus extends Payment {
+    invoice_id: number;
+    /** can add additional payments to this purchase_id */
+    purchase_id: number;
 
-    /** Internal token ID */
-    token_id: string;
+    actually_paid: 0;
+    /** only shows up after status:confirmed */
+    actually_paid_fiat?: 0;
 
-    /** Order ID specified in the request */
-    order_id: string;
-
-    /** Order description specified in the request */
-    order_description: string;
-
-    /** Base price in fiat currency */
-    price_amount: string;
-
-    /** Ticker of the base fiat currency */
-    price_currency: string;
-
-    /** Currency the customer will pay with. If 'null', the customer can choose the currency in the web interface */
-    pay_currency: string | null;
-
-    /** Link to your endpoint for IPN notifications catching */
-    ipn_callback_url: string;
-
-    /** Link to the payment page that you can share with your customer */
-    invoice_url: string;
-
-    /** Customer will be redirected to this link once the payment is finished */
-    success_url: string;
-
-    /** Customer will be redirected to this link if the payment fails */
-    cancel_url: string;
-
-    /** Customer will be redirected to this link if the payment gets partially paid */
-    partially_paid_url: string;
-
-    /** Current status of the invoice */
-    status: string;
-
-    /** Ticker of the payout currency */
-    payout_currency: string;
-
-    /** Time of invoice creation */
+    /** iso */
     created_at: string;
-
-    /** Time of latest invoice information update */
     updated_at: string;
 
-    /** True if Fixed Rate option is enabled, false otherwise */
+    outcome_amount: number;
+    outcome_currency: string;
+
+    /** tx: user wallet -> pay_address  */
+    payin_hash: string | null;
+    payout_hash: string | null;
+
+    /**@ignore */
+    type: string;
+    /**@ignore */
+    burning_percent: string;
+  }
+
+  export interface NewPayment extends Omit<Payment, "payment_id"> {
+    payment_id: string;
+    /** can add additional payments to this purchase_id */
+    purchase_id: string;
+
+    /** iso */
+    created_at: string;
+    /** iso */
+    updated_at: string;
+
+    ipn_callback_url: string;
+    is_fee_paid_by_user: boolean;
     is_fixed_rate: boolean;
 
-    /** True if Fee Paid By User option is enabled, false otherwise */
-    is_fee_paid_by_user: boolean;
+    smart_contract: string | null;
+    network_precision: string | null;
+    network: string;
+
+    /** iso */
+    expiration_estimate_date: string;
+    /** iso */
+    valid_until: string;
+    time_limit: number | null;
+
+    /**@ignore */
+    product: string;
+    /**@ignore   */
+    type: string;
+    /**@ignore */
+    burning_percent: null;
   }
 
   export interface Estimate {
-    /** The currency from which the payment is made */
     currency_from: string;
-
-    /** The currency to which the payment is converted */
     currency_to: string;
-
-    /** The minimal amount for payment using the specified currencies */
+    /** denominated in currency_from */
     min_amount: number;
 
-    /** The fiat equivalent for the calculated minimal amount (optional) */
+    /** denominated in params.fiat_equivalent */
     fiat_equivalent?: number;
   }
 
   export namespace Estimate {
     export interface Params {
-      /** The currency from which the payment is made */
       currency_from: string;
-
-      /** The currency to which the payment is converted (optional) */
       currency_to?: string;
-
-      /** The fiat currency for equivalent calculation (optional) */
+      /** e.g. "usd, eur" */
       fiat_equivalent?: string;
 
-      /** Whether the rate is fixed (optional) */
+      //not used in our flows
       is_fixed_rate?: boolean;
-
-      /** Whether the fee is paid by the user (optional) */
       is_fee_paid_by_user?: boolean;
     }
   }

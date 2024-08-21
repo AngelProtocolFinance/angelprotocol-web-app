@@ -1,17 +1,15 @@
 import chains from "@better-giving/assets/chains.json";
 import ContentLoader from "components/ContentLoader";
-import Copier from "components/Copier";
 import QueryLoader from "components/QueryLoader";
-import { logoUrl } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { roundDown } from "helpers";
-import { QRCodeSVG } from "qrcode.react";
 import { useNavigate } from "react-router-dom";
 import { useCreateCryptoIntentQuery } from "services/apes";
 import type { DonateThanksState } from "types/pages";
 import ContinueBtn from "../../common/ContinueBtn";
 import { toDonor } from "../../common/constants";
 import type { CryptoSubmitStep } from "../../types";
+import { PayQr } from "./PayQr";
 
 type Props = {
   classes?: string;
@@ -71,33 +69,12 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         }}
       >
         {(payment) => (
-          <>
-            <QRCodeSVG
-              imageSettings={{
-                src: logoUrl(details.token.logo),
-                height: 20,
-                width: 20,
-                excavate: true,
-              }}
-              value={payment.pay_address}
-              className="mb-3.5"
-              size={192}
-            />
-            <p className="text-sm mb-4">{payment.pay_address}</p>
-            <Copier
-              text={payment.pay_address}
-              classes={{
-                container:
-                  "flex items-center gap-2 px-2 py-1.5 rounded-md border border-gray-l4 shadow-md shadow-black/5",
-                icon: "size-5",
-              }}
-            >
-              <span className="capitalize text-sm">Copy address</span>
-            </Copier>
-            {payment.payin_extra_id && (
-              <Memo classes="mt-4" val={payment.payin_extra_id} />
-            )}
-          </>
+          <PayQr
+            token={details.token}
+            amount={totalDisplayAmount}
+            recipient={payment.pay_address}
+            extraId={payment.payin_extra_id}
+          />
         )}
       </QueryLoader>
 
@@ -126,28 +103,6 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         text="I have completed the payment"
         className="justify-self-stretch mt-8"
       />
-    </div>
-  );
-}
-
-interface IMemo {
-  val: string;
-  classes?: string;
-}
-function Memo({ val, classes = "" }: IMemo) {
-  return (
-    <div className={`grid justify-items-center ${classes}`}>
-      <p className="text-sm mb-2">{val}</p>
-      <Copier
-        text={val}
-        classes={{
-          container:
-            "flex items-center gap-2 px-2 py-1.5 rounded-md border border-gray-l4 shadow-md shadow-black/5",
-          icon: "size-5",
-        }}
-      >
-        <span className="capitalize text-sm">Copy Memo</span>
-      </Copier>
     </div>
   );
 }

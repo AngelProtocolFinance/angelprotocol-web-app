@@ -14,7 +14,7 @@ import { IS_TEST } from "constants/env";
 import Fuse from "fuse.js";
 import { logger } from "helpers";
 import { useMemo, useState } from "react";
-import { useLazyMinAmountQuery } from "services/aws/crypto";
+import { useLazyTokenEstimateQuery } from "services/aws/crypto";
 import type { TokenV2 } from "types/components";
 import Icon from "../../Icon";
 import Image from "../../Image";
@@ -57,7 +57,7 @@ const tokenEv = (state: Token.State) => {
 
 function TokenCombobox({ token, onChange }: ITokenCombobox) {
   const [searchText, setSearchText] = useState("");
-  const [getMinAmount] = useLazyMinAmountQuery();
+  const [estimate] = useLazyTokenEstimateQuery();
 
   const filtered = useMemo(
     () =>
@@ -76,9 +76,20 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
         if (!tkn) return;
         try {
           tokenEv("loading");
-          const min = await getMinAmount(tkn.code).unwrap();
-          // 3% allowance: min might change and be greater when estimate is made in server
-          onChange({ ...tkn, amount: "", min: min * 1.03 });
+          const { min_amount: min, fiat_equivalent: min_usd } = await estimate(
+            tkn.code
+          ).unwrap();
+
+          const usdPerUnit = min_usd / min;
+
+          const BG_MIN = 1;
+          const gtBgMin = min_usd >= BG_MIN ? min : BG_MIN * usdPerUnit;
+          // 3% allowance:
+          // - 0.5% fee
+          // - 2.5% spread in case server estimate is not the same
+          const adjusted = gtBgMin * 1.03;
+
+          onChange({ ...tkn, amount: "", min: adjusted });
           tokenEv("ok");
         } catch (err) {
           logger.error(err);
@@ -118,7 +129,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                   className="w-6 h-6 rounded-full row-span-2"
                 />
 
-                <span className="text-sm">{token.code}</span>
+                <span className="text-sm">{token.name}</span>
 
                 <p
                   style={{ color: token.color }}
