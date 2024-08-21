@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
 import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
+import PaymentResumer from "./PaymentResumer";
 import { donationMethod, lastHeaderName } from "./common";
 import type { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
@@ -202,8 +203,16 @@ function LastRowColContent(
     );
   }
 
-  if (props.status === "intent") {
+  if (props.status === "intent" && props.viaId === "fiat") {
     return <IntentResumer intentId={props.id} />;
+  }
+
+  if (props.status === "intent" && props.viaId !== "fiat") {
+    return props.payment_id ? (
+      <PaymentResumer paymentId={props.payment_id} amount={props.initAmount} />
+    ) : (
+      <>---</>
+    );
   }
 
   /// pending ///

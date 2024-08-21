@@ -28,8 +28,6 @@ export const initTokenOption: TokenWithDetails = {
   logo: "",
 };
 
-export const tokenLogo = (code: string) => `https://nowpayments.io/images/`;
-
 export const USD_CODE = "usd";
 
 export const usdOption: DetailedCurrency = { code: USD_CODE, min: 1, rate: 1 };

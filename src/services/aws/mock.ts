@@ -21,10 +21,11 @@ export const handlers = [
   }),
   http.get(APIs.aws + `/${v(1)}/crypto/v1/min-amount`, ({ request }) => {
     const url = new URL(request.url);
-    const data: Crypto.Estimate = {
+    const data: Required<Crypto.Estimate> = {
       min_amount: 1,
       currency_from: url.searchParams.get("currency_from")!,
       currency_to: "false",
+      fiat_equivalent: 1,
     };
     return HttpResponse.json(data);
   }),

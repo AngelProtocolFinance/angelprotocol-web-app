@@ -44,14 +44,16 @@ export const apes = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    createCryptoIntent: builder.query<Crypto.Payment, DonationIntent.Crypto>({
-      query: (params) => ({
-        url: "crypto-intents",
-        method: "POST",
-        headers: { authorization: TEMP_JWT },
-        body: JSON.stringify(params),
-      }),
-    }),
+    createCryptoIntent: builder.query<Crypto.NewPayment, DonationIntent.Crypto>(
+      {
+        query: (params) => ({
+          url: "crypto-intents",
+          method: "POST",
+          headers: { authorization: TEMP_JWT },
+          body: JSON.stringify(params),
+        }),
+      }
+    ),
     confirmCryptoIntent: builder.mutation<
       { guestDonor: GuestDonor },
       { txId: string; txHash: string }
