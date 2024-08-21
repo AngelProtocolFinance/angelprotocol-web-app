@@ -41,7 +41,7 @@ type Min = TWD["min"];
 const minKey: Key = "min";
 
 export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
-  id: string().required("required"),
+  id: string().required("select token"),
   amount: stringNumber(
     (s) => s.required("required"),
     (num) =>
@@ -50,7 +50,7 @@ export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
         .when([minKey], (values, schema) => {
           const [minAmount] = values as [Min];
           return withMin && !!minAmount
-            ? schema.min(minAmount || 0, "less than mininum")
+            ? schema.min(minAmount || 0, "less than minimum")
             : schema;
         })
         .test((val, context) => {
@@ -59,7 +59,7 @@ export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
           const precision = context.parent.precision;
           if (numDecimals <= precision) return true;
           return new ValidationError(
-            `can be more than ${precision} decimals`,
+            `can't be more than ${precision} decimals`,
             precision,
             context.path
           );

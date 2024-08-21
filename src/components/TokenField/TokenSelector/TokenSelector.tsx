@@ -21,9 +21,19 @@ export default function TokenSelector({
           <>
             {tokenState === "ok" && <span>{token.code}</span>}
             {tokenState === "loading" ? (
-              <Icon type="Loading" className="animate-spin" size={20} />
+              <Icon
+                test-id="token-loader"
+                type="Loading"
+                className="animate-spin"
+                size={20}
+              />
             ) : tokenState === "error" ? (
-              <Icon type="Info" className="text-red" size={20} />
+              <Icon
+                test-id="token-error"
+                type="Info"
+                className="text-red"
+                size={20}
+              />
             ) : (
               <DrawerIcon isOpen={open} size={24} />
             )}
