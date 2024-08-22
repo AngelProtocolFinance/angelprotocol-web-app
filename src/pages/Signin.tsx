@@ -30,7 +30,11 @@ export function Component() {
   } = useForm<FormValues>({
     resolver: yupResolver(
       object({
-        email: requiredString.trim().email("invalid email format"),
+        email: requiredString
+          .trim()
+          .strict()
+          .email("invalid email format")
+          .lowercase("must be lowercased"),
         password: password,
       })
     ),

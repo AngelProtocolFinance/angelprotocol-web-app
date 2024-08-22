@@ -17,7 +17,13 @@ export default function InitForm(props: Props) {
   const { handleError, displayError } = useErrorContext();
   const methods = useForm({
     resolver: yupResolver(
-      object({ email: requiredString.trim().email("invalid email format") })
+      object({
+        email: requiredString
+          .trim()
+          .strict()
+          .email("invalid email format")
+          .lowercase("must be lowercased"),
+      })
     ),
   });
   const {
@@ -46,7 +52,7 @@ export default function InitForm(props: Props) {
       props.setStep({
         type: "set-password",
         codeRecipientEmail: {
-          raw: fv.email,
+          raw: fv.email.toLowerCase(),
           obscured: nextStep.codeDeliveryDetails.destination,
         },
       });
