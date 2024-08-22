@@ -11,7 +11,7 @@ import DirectMode from "./DirectMode";
 export default function Crypto(props: CryptoSubmitStep) {
   const { setState } = useDonationState();
   const { details, tip, feeAllowance } = props;
-  const Amount = token(details.token.cg_id);
+  const Amount = token(details.token.code);
 
   return (
     <Summary
@@ -37,7 +37,7 @@ export default function Crypto(props: CryptoSubmitStep) {
               className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
               src={logoUrl(details.token.logo)}
             />
-            <dd className="text-navy-d4">{details.token.code}</dd>
+            <dd className="text-navy-d4">{details.token.symbol}</dd>
           </dl>
           <dl className="text-navy-l1 py-3 flex items-center justify-between">
             <dt className="mr-auto">Blockchain</dt>

@@ -5,7 +5,6 @@ import { handlers as programsHandlers } from "services/aws/programs";
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import { handlers as apesHandlers } from "./services/apes/mock";
 import { handlers as awsHandlers } from "./services/aws/mock";
-import { handlers as coinGeckoHandlers } from "./services/coingecko/mock";
 import { handlers as wordpressHandlers } from "./services/wordpress/mock";
 
 vi.mock("@walletconnect/modal", () => ({
@@ -52,10 +51,10 @@ global.ResizeObserver = vi.fn().mockImplementation(() => ({
   disconnect: vi.fn(),
 }));
 
-/** 
+/**
 Mocking the `getBoundingClientRect` method for the virtual tests otherwise
 the `Virtualizer` from `@tanstack/react-virtual` will not work as expected
-because it couldn't measure the elements correctly. 
+because it couldn't measure the elements correctly.
 @see https://github.com/tailwindlabs/headlessui/blob/main/packages/%40headlessui-react/src/components/combobox/combobox.test.tsx
 */
 vi.spyOn(Element.prototype, "getBoundingClientRect").mockImplementation(() => ({
@@ -74,8 +73,7 @@ export const mswServer = setupServer(
   ...programsHandlers,
   ...apesHandlers,
   ...awsHandlers,
-  ...wordpressHandlers,
-  ...coinGeckoHandlers
+  ...wordpressHandlers
 );
 
 // Start server before all tests

@@ -29,14 +29,14 @@ export default function Submit(props: WithWallet<SubmitStep>) {
           className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
           src={logoUrl(token.logo)}
         />
-        <span>{token.code}</span>
+        <span>{token.symbol}</span>
       </Row>
       <Row title="Blockchain:">
         <span>Chain name</span>
       </Row>
       <Row title="Amount:">
         <span>
-          {token.code} {humanize(token.amount, 4)}
+          {token.symbol} {humanize(token.amount, 4)}
         </span>
       </Row>
       <TxTotal estimate={estimate} token={token} />
@@ -76,7 +76,7 @@ function TxTotal({
           </Row>
           <Row title="TOTAL">
             <span className="text-red dark:text-red-l2">
-              {token.code} {humanize(token.amount, 4)}
+              {token.symbol} {humanize(token.amount, 4)}
             </span>
           </Row>
           <ErrorStatus classes="my-3 justify-self-center">
@@ -92,7 +92,7 @@ function TxTotal({
           </Row>
           <Row title="TOTAL">
             <span>
-              {token.code} {humanize(token.amount, 4)}
+              {token.symbol} {humanize(token.amount, 4)}
             </span>
           </Row>
           <LoadingStatus classes="my-6 justify-self-center">

@@ -18,9 +18,9 @@ export const DEFAULT_PROGRAM: OptionType<""> = {
 export const initTokenOption: TokenWithDetails = {
   precision: 6,
   min: 0,
-  code: "Select token",
+  code: "",
   name: "",
-  symbol: "",
+  symbol: "Select token",
   id: "",
   amount: "",
   network: "",

@@ -57,7 +57,7 @@ const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
       )}
       {props.withMininum && props.token.min !== 0 && (
         <p className="text-xs mt-2 peer-data-[error=true]:mt-0">
-          Minimum amount: {props.token.code} {props.token.min}
+          Minimum amount: {props.token.symbol} {props.token.min}
         </p>
       )}
     </div>

@@ -19,7 +19,7 @@ export default function TokenSelector({
       >
         {({ open }) => (
           <>
-            {tokenState === "ok" && <span>{token.code}</span>}
+            {tokenState === "ok" && <span>{token.symbol}</span>}
             {tokenState === "loading" ? (
               <Icon
                 test-id="token-loader"
