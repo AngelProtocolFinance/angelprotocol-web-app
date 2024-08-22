@@ -1,4 +1,4 @@
-import Dec from "decimal.js";
+import Dec, { Decimal } from "decimal.js";
 
 /** in most cosmos chains scale
  * 1 user amount = 1_000_000 or 10^(6) transaction amount
@@ -98,6 +98,20 @@ export function roundDown(num: Dec.Value, precision = 2) {
 
 export function roundDownToNum(num: Dec.Value, precision = 2) {
   return +roundDown(num, precision);
+}
+
+export function centsDecimals(usdValue: number, decimals = 2) {
+  //get `x` such that (10^x)cents = rate
+  const x = Dec.log10(new Decimal(usdValue).div(0.01));
+  // make sure display digits is less than token decimals
+  return Dec.min(decimals, Dec.max(x, 0)).floor().toNumber();
+}
+
+export function roundToCents(amount: number, usdValue: number, decimals = 2) {
+  return new Dec(amount).toFixed(
+    centsDecimals(usdValue, decimals),
+    Dec.ROUND_UP
+  );
 }
 
 function shorten(num: Dec): [Dec, string] {

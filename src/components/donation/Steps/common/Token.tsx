@@ -1,26 +1,11 @@
-import { humanize } from "helpers";
-import { useTokenEstimateQuery } from "services/aws/crypto";
+import { humanize, roundToCents } from "helpers";
 
-export const token = (tokenCode: string) =>
+export const token = (usdRate: number, decimals: number) =>
   function Amount(props: { amount: string | number; classes?: string }) {
-    const {
-      data: estimate,
-      isLoading,
-      isError,
-    } = useTokenEstimateQuery(tokenCode);
     return (
       <dd className={props.classes}>
-        {humanize(props.amount, 4)}{" "}
-        {isLoading ? (
-          "($--)"
-        ) : isError || !estimate ? (
-          <span className="text-red">($--)</span>
-        ) : (
-          `($${humanize(
-            +props.amount * (estimate.fiat_equivalent / estimate.min_amount),
-            2
-          )})`
-        )}
+        {roundToCents(+props.amount, usdRate, decimals)}{" "}
+        {`($${humanize(+props.amount * usdRate, 2)})`}
       </dd>
     );
   };

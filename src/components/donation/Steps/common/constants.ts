@@ -27,6 +27,7 @@ export const initTokenOption: TokenWithDetails = {
   cg_id: "",
   color: "",
   logo: "",
+  rate: 1,
 };
 
 export const USD_CODE = "usd";

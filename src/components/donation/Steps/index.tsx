@@ -107,6 +107,7 @@ function initialState({
           name: "",
           precision: 0,
           symbol: "",
+          rate: 0,
         },
 
         program,

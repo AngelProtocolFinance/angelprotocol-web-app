@@ -1,4 +1,4 @@
-import { unpack } from "helpers";
+import { roundToCents, unpack } from "helpers";
 import { forwardRef, useEffect, useState } from "react";
 import TokenSelector from "./TokenSelector";
 import type { Props, Token } from "./types";
@@ -57,7 +57,12 @@ const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
       )}
       {props.withMininum && props.token.min !== 0 && (
         <p className="text-xs mt-2 peer-data-[error=true]:mt-0">
-          Minimum amount: {props.token.symbol} {props.token.min}
+          Minimum amount: {props.token.symbol}{" "}
+          {roundToCents(
+            props.token.min,
+            props.token.rate,
+            props.token.precision
+          )}
         </p>
       )}
     </div>

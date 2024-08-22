@@ -17,6 +17,8 @@ export type TokenWithAmount = Token & {
 export interface TokenWithDetails extends TokenV2 {
   amount: string;
   min: number;
+  /** usd/unit */
+  rate: number;
 }
 
 // //////////// ESTIMATE TX ////////////

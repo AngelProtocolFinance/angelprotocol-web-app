@@ -80,16 +80,16 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
             tkn.code
           ).unwrap();
 
-          const usdPerUnit = min_usd / min;
+          const rate = min_usd / min;
 
           const BG_MIN = 1;
-          const gtBgMin = min_usd >= BG_MIN ? min : BG_MIN * usdPerUnit;
+          const gtBgMin = min_usd >= BG_MIN ? min : BG_MIN * rate;
           // 3% allowance:
           // - 0.5% fee
           // - 2.5% spread in case server estimate is not the same
           const adjusted = gtBgMin * 1.03;
 
-          onChange({ ...tkn, amount: "", min: adjusted });
+          onChange({ ...tkn, amount: "", min: adjusted, rate });
           tokenEv("ok");
         } catch (err) {
           logger.error(err);

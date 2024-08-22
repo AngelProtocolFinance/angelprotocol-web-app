@@ -11,7 +11,7 @@ import DirectMode from "./DirectMode";
 export default function Crypto(props: CryptoSubmitStep) {
   const { setState } = useDonationState();
   const { details, tip, feeAllowance } = props;
-  const Amount = token(details.token.code);
+  const Amount = token(details.token.rate, details.token.precision);
 
   return (
     <Summary

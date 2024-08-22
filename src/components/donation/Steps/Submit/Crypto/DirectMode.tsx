@@ -2,7 +2,7 @@ import chains from "@better-giving/assets/chains.json";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
-import { roundDown } from "helpers";
+import { roundToCents } from "helpers";
 import { useNavigate } from "react-router-dom";
 import { useCreateCryptoIntentQuery } from "services/apes";
 import type { DonateThanksState } from "types/pages";
@@ -49,8 +49,9 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     ...(details.program.value && { programId: details.program.value }),
   });
 
-  const totalDisplayAmount = roundDown(
+  const totalDisplayAmount = roundToCents(
     +details.token.amount + (tip?.value ?? 0) + feeAllowance,
+    details.token.rate,
     details.token.precision
   );
 
