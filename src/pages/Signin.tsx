@@ -55,7 +55,7 @@ export function Component() {
   async function submit(fv: FormValues) {
     try {
       const { nextStep } = await signIn({
-        username: fv.email,
+        username: fv.email.toLowerCase(),
         password: fv.password,
       });
 
