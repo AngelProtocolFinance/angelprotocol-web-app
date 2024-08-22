@@ -1,4 +1,5 @@
 export type CodeRecipientEmail = {
+  /** lowercased */
   raw: string;
   obscured: string;
 };

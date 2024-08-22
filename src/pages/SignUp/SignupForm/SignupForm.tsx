@@ -69,7 +69,7 @@ export default function SignupForm(props: Props) {
   async function submit(fv: FormValues) {
     try {
       const { nextStep } = await signUp({
-        username: fv.email,
+        username: fv.email.toLowerCase(),
         password: fv.password,
         options: {
           userAttributes: {
@@ -91,7 +91,7 @@ export default function SignupForm(props: Props) {
       props.setSignupState({
         type: "confirm",
         codeRecipientEmail: {
-          raw: fv.email,
+          raw: fv.email.toLowerCase(),
           obscured: nextStep.codeDeliveryDetails.destination,
         },
         userType: fv.userType,
