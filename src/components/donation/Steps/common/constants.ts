@@ -20,6 +20,7 @@ export const initTokenOption: TokenWithDetails = {
   min: 0,
   code: "Select token",
   name: "",
+  symbol: "",
   id: "",
   amount: "",
   network: "",

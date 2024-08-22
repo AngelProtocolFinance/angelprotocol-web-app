@@ -13,6 +13,7 @@ export const mockTokens: TokenV2[] = [
     network: "",
     cg_id: "",
     color: "",
+    symbol: "",
   },
   {
     name: "Sample Token 2",
@@ -23,6 +24,7 @@ export const mockTokens: TokenV2[] = [
     network: "",
     cg_id: "",
     color: "",
+    symbol: "",
   },
 ];
 

@@ -43,7 +43,7 @@ interface ITokenCombobox extends Pick<Props, "onChange" | "token"> {}
 
 const tokens = IS_TEST ? test_tokens : prod_tokens;
 const tokensFuse = new Fuse<TokenV2>(tokens, {
-  keys: ["name", "code", "network"],
+  keys: ["name", "code", "network", "symbol"],
 });
 const subset = tokens.slice(0, 10);
 const tokenEv = (state: Token.State) => {
@@ -129,7 +129,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
                   className="w-6 h-6 rounded-full row-span-2"
                 />
 
-                <span className="text-sm">{token.name}</span>
+                <span className="text-sm">{token.symbol}</span>
 
                 <p
                   style={{ color: token.color }}

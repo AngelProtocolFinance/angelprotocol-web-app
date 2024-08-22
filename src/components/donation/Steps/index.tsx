@@ -106,6 +106,7 @@ function initialState({
           color: "",
           name: "",
           precision: 0,
+          symbol: "",
         },
 
         program,
