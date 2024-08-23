@@ -12,7 +12,7 @@ export default function HideBGTipCheckbox() {
         tip Better Giving any amount they desire alongside their donation to you
         - the amount they tip will not affect the donation amount you receive.
         You may choose to turn this step off in the donation flow by ticking the
-        checkbox above and we will instead apply a fixed 2.9% fee to any
+        checkbox above and we will instead apply a fixed 1.5% fee to any
         donation amount you receive.
       </span>
     </div>

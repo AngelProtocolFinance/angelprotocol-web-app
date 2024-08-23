@@ -329,7 +329,7 @@ export function Component() {
             <li className="pt-2">
               Donor Fees. NPOs may elect to have Donor Fees set as either (1) an
               optional donation to Better Giving at the Donor’s sole discretion;
-              or (2) a flat 2.9% fee on all donations made.
+              or (2) a flat 1.5% fee on all donations made.
             </li>
           </ol>
         </p>
