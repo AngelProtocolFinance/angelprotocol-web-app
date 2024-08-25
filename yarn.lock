@@ -815,10 +815,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@better-giving/assets@npm:1.0.10":
-  version: 1.0.10
-  resolution: "@better-giving/assets@npm:1.0.10"
-  checksum: 10/1d42cfb6f26708a3913ed3dbd8700c8f8a8d47af365018c246c598d2dfd3b7cfb14e46d60fa6be3018015fe0f59dc93e603fca991207d5dcce575e087be00e1e
+"@better-giving/assets@npm:1.0.14":
+  version: 1.0.14
+  resolution: "@better-giving/assets@npm:1.0.14"
+  checksum: 10/fa16c87a024d6a555e914c64306aae8e22eed01e84671866eaf14d95387e6556a8fc3cfc30db9709498ffc064a203a02db126b65170500b6575c357be1093e37
   languageName: node
   linkType: hard
 
@@ -4462,7 +4462,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "angelprotocol-web-app@workspace:."
   dependencies:
-    "@better-giving/assets": "npm:1.0.10"
+    "@better-giving/assets": "npm:1.0.14"
     "@biomejs/biome": "npm:1.8.1"
     "@cosmjs/encoding": "npm:0.32.3"
     "@ethersproject/abi": "npm:5.7.0"

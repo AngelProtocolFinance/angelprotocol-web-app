@@ -1,6 +1,6 @@
-import chains from "@better-giving/assets/chains.json";
-import prod_tokens from "@better-giving/assets/tokens/prod.json";
-import test_tokens from "@better-giving/assets/tokens/test.json";
+import chains from "@better-giving/assets/chains";
+import prod_tokens from "@better-giving/assets/tokens";
+import test_tokens from "@better-giving/assets/tokens/test";
 import {
   CloseButton,
   Combobox,

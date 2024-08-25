@@ -1,4 +1,4 @@
-import chains from "@better-giving/assets/chains.json";
+import chains from "@better-giving/assets/chains";
 import { logoUrl } from "constants/common";
 import Image from "../../../../Image";
 import { useDonationState } from "../../Context";

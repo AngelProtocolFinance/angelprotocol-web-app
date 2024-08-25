@@ -1,4 +1,4 @@
-import chains from "@better-giving/assets/chains.json";
+import chains from "@better-giving/assets/chains";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";

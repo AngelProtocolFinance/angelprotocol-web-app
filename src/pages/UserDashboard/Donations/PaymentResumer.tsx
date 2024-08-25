@@ -1,4 +1,4 @@
-import tokens from "@better-giving/assets/tokens/map.json";
+import tokens from "@better-giving/assets/tokens/map";
 import Modal from "components/Modal";
 import { PayQr } from "components/donation";
 import { useErrorContext } from "contexts/ErrorContext";
