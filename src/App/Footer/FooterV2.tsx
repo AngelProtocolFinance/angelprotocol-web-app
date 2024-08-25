@@ -29,7 +29,7 @@ function Footer({ socials, classes = "" }: Props) {
     >
       <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 xl:gap-10 padded-container p-4 md:p-10">
         <div className="flex flex-col md:flex-row gap-y-2 gap-x-4 items-center xl:grid content-start col-start-1 col-span-full xl:col-span-1 xl:max-w-96">
-          <div className="flex items-center gap-x-2 shrink-0">
+          <div className="flex items-center gap-x-6 shrink-0">
             <img
               src={dappLogo}
               height={40}
