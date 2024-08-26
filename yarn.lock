@@ -4514,7 +4514,7 @@ __metadata:
     react-dropzone: "npm:14.2.3"
     react-fast-marquee: "npm:1.6.4"
     react-helmet: "npm:6.1.0"
-    react-hook-form: "npm:7.51.5"
+    react-hook-form: "npm:7.53.0"
     react-icons: "npm:5.2.1"
     react-player: "npm:2.16.0"
     react-redux: "npm:9.1.2"
@@ -8550,12 +8550,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:7.51.5":
-  version: 7.51.5
-  resolution: "react-hook-form@npm:7.51.5"
+"react-hook-form@npm:7.53.0":
+  version: 7.53.0
+  resolution: "react-hook-form@npm:7.53.0"
   peerDependencies:
-    react: ^16.8.0 || ^17 || ^18
-  checksum: 10/f4ff77989202b1faf2dede7a7730210635a6225189dcaeaeb191cea12422bcb97d2adfef0712c50d13bf5c5e14b8debc00fbba16491f86a6d24945a52cacfa59
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10/b7d73696b7c10e042f6ea6fcec01f951091146bfbc89d1378327a970bcd724b968e93fae1657bddada75caf648cfaf8693c5ba03c25e96816b755079d29f65da
   languageName: node
   linkType: hard
 
