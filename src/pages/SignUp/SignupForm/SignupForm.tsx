@@ -51,7 +51,7 @@ export default function SignupForm(props: Props) {
           .strict()
           .email("invalid email format")
           .lowercase("must be lowercased")
-          .oneOf([ref("email")], "email mistmatch"),
+          .oneOf([ref("email")], "email mismatch"),
         firstName: requiredString.trim(),
         lastName: requiredString.trim(),
         userType: mixed<UserType>()
