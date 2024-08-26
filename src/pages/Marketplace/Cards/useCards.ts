@@ -35,7 +35,6 @@ export default function useCards() {
   } = useEndowmentCardsQuery(
     {
       query: debouncedSearchText,
-      sort: sort ? `${sort.key}+${sort.direction}` : undefined,
       page: 1, // always starts at page 1
       sdgs: sdgs.join(","),
       claimed:

@@ -86,12 +86,8 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "cloudsearch-nonprofits",
-          params: {
-            ...params,
-            fields: endowCardFields,
-            env: apiEnv,
-          },
+          url: `${v(1)}/cloudsearch-nonprofits`,
+          params: { ...params, fields: endowCardFields },
         };
       },
     }),
@@ -99,8 +95,8 @@ export const aws = createApi({
       providesTags: ["endowments"],
       query: (params) => {
         return {
-          url: "cloudsearch-nonprofits",
-          params: { ...params, fields: endowSelectorOptionFields, env: apiEnv },
+          url: `${v(1)}/cloudsearch-nonprofits`,
+          params: { ...params, fields: endowSelectorOptionFields },
         };
       },
       transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
