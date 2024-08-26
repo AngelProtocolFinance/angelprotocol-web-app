@@ -11,20 +11,6 @@ export type Link = {
   end?: boolean;
 };
 
-type SocialMedia =
-  | "Twitter"
-  | "Telegram"
-  | "Discord"
-  | "YouTube"
-  | "Medium"
-  | "Facebook"
-  | "Linkedin"
-  | "Instagram";
-
-export type SocialMediaLink = Required<Omit<Link, "external" | "end">> & {
-  title: SocialMedia;
-};
-
 export type LinkGroup = {
   title: string;
   links: {

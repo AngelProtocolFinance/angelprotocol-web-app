@@ -4,10 +4,7 @@ import ErrorBoundary from "errors/ErrorBoundary";
 import { Outlet, useLocation, useMatch } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
-import { CHARITY_LINKS } from "./constants";
 import useHeaderLinks from "./useHeaderLinks";
-
-const { SOCIAL_MEDIA_LINKS } = CHARITY_LINKS;
 
 export default function Layout() {
   const headerLinks = useHeaderLinks();
@@ -30,10 +27,7 @@ export default function Layout() {
       <ErrorBoundary key={key} /** allows for recovery when changing page */>
         <Outlet />
       </ErrorBoundary>
-      <Footer
-        socials={SOCIAL_MEDIA_LINKS}
-        classes={isWpPost ? "override-wp-overrides" : ""}
-      />
+      <Footer classes={isWpPost ? "override-wp-overrides" : ""} />
     </div>
   );
 }

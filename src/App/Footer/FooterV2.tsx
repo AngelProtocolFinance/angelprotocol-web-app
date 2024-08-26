@@ -4,13 +4,12 @@ import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import type { SocialMediaLink } from "../types";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
 
-type Props = { socials: SocialMediaLink[]; classes?: string };
+type Props = { classes?: string };
 
-function Footer({ socials, classes = "" }: Props) {
+function Footer({ classes = "" }: Props) {
   function ref(node: HTMLElement | null) {
     if (!node) return;
     const observer = new IntersectionObserver(
@@ -99,7 +98,7 @@ function Footer({ socials, classes = "" }: Props) {
           © Copyright {new Date().getFullYear()} {APP_NAME}, A Registered
           Charitable 501(c)(3) (EIN 87-3758939)
         </p>
-        <Socials links={socials} />
+        <Socials />
       </div>
     </footer>
   );

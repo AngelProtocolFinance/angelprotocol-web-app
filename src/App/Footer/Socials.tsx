@@ -1,23 +1,43 @@
+import discord from "assets/icons/social/discord.svg";
+import facebook from "assets/icons/social/facebook.png";
+import linkedin from "assets/icons/social/linkedin.png";
+import x from "assets/icons/social/x.png";
+import youtube from "assets/icons/social/youtube.png";
 import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
-import type { SocialMediaLink } from "../types";
 
-type Props = { links: SocialMediaLink[] };
-
-export default function Socials({ links }: Props) {
+export default function Socials() {
   return (
     <div className="flex items-center gap-3 md:gap-6">
-      {links.map(({ title, icon, href }) => {
-        return (
-          <ExtLink
-            key={`social-link-${icon.type}`}
-            href={href}
-            className="hover:scale-110 active:scale-110"
-          >
-            <Icon type={icon.type} size={icon.size} title={title} />
-          </ExtLink>
-        );
-      })}
+      <ExtLink
+        href="https://x.com/BetterDotGiving"
+        className="hover:scale-110 active:scale-110"
+      >
+        <img src={x} alt="x" width={16} />
+      </ExtLink>
+      <ExtLink
+        href="https://discord.gg/RyjzGdwD7s"
+        className="hover:scale-110 active:scale-110"
+      >
+        <img src={discord} alt="discord" width={21} />
+      </ExtLink>
+      <ExtLink
+        href="https://www.youtube.com/@BetterDotGiving"
+        className="hover:scale-110 active:scale-110"
+      >
+        <img src={youtube} alt="youtube" width={21} />
+      </ExtLink>
+      <ExtLink
+        href="https://www.facebook.com/BetterGivingFB/"
+        className="hover:scale-110 active:scale-110"
+      >
+        <img src={facebook} alt="facebook" width={17.8} />
+      </ExtLink>
+      <ExtLink
+        href="https://www.linkedin.com/company/better-giving/"
+        className="hover:scale-110 active:scale-110"
+      >
+        <img src={linkedin} alt="linkedin" width={20} />
+      </ExtLink>
     </div>
   );
 }
