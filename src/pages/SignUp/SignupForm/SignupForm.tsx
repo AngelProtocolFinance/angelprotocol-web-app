@@ -14,7 +14,7 @@ import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
 import type { OAuthState, SignInRouteState } from "types/auth";
-import { mixed, object } from "yup";
+import { mixed, object, ref } from "yup";
 import type { FormValues, StateSetter, UserType } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
 
@@ -46,6 +46,12 @@ export default function SignupForm(props: Props) {
           .strict()
           .email("invalid email format")
           .lowercase("must be lowercased"),
+        emailConfirmation: requiredString
+          .trim()
+          .strict()
+          .email("invalid email format")
+          .lowercase("must be lowercased")
+          .oneOf([ref("email")], "email mistmatch"),
         firstName: requiredString.trim(),
         lastName: requiredString.trim(),
         userType: mixed<UserType>()
@@ -179,6 +185,15 @@ export default function SignupForm(props: Props) {
             placeholder="Email address"
             icon="Email"
             error={errors.email?.message}
+            classes={{ container: "mt-4" }}
+          />
+          <Input
+            {...register("emailConfirmation")}
+            autoComplete="username"
+            placeholder="Confirm email"
+            icon="Email"
+            error={errors.emailConfirmation?.message}
+            classes={{ container: "mb-4" }}
           />
           <PasswordInput
             {...register("password")}

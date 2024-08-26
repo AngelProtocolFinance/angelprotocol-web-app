@@ -26,6 +26,7 @@ export type UserType = "donor" | "non-profit";
 
 export type FormValues = {
   email: string;
+  emailConfirmation: string;
   firstName: string;
   lastName: string;
   password: string;
