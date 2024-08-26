@@ -1,4 +1,5 @@
-import dappLogo from "assets/images/bettergiving-logo.png";
+import dappLogo from "assets/images/bg-logo-503c.png";
+import ExtLink from "components/ExtLink";
 import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
@@ -28,11 +29,23 @@ function Footer({ socials, classes = "" }: Props) {
     >
       <div className="grid grid-cols-subgrid grid-rows-subgrid col-span-2 row-span-3 xl:col-span-5 xl:gap-10 padded-container p-4 md:p-10">
         <div className="flex flex-col md:flex-row gap-y-2 gap-x-4 items-center xl:grid content-start col-start-1 col-span-full xl:col-span-1 xl:max-w-96">
-          <img
-            src={dappLogo}
-            className="h-10 object-cover object-center"
-            alt="logo"
-          />
+          <div className="flex items-center gap-x-6 shrink-0">
+            <img
+              src={dappLogo}
+              height={40}
+              width={170}
+              className="object-contain my-4"
+              alt="logo"
+            />
+            <ExtLink href="https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5">
+              <img
+                src="https://widgets.guidestar.org/TransparencySeal/10103678"
+                width={100}
+                height={100}
+              />
+            </ExtLink>
+          </div>
+
           <p className="text-xs text-[#3D5361]">
             Better Giving simplifies giving with a free platform that lets
             nonprofits around the world easily receive any kind of donation. Our
@@ -78,7 +91,7 @@ function Footer({ socials, classes = "" }: Props) {
           />
         </div>
 
-        <Newsletter classes="row-start-3 col-span-2 xl:row-start-1 xl:col-start-5 col-span-1" />
+        <Newsletter classes="row-start-3 col-span-2 xl:row-start-1 xl:col-start-5" />
       </div>
 
       <div className="col-span-2 xl:col-span-5 max-lg:flex-col py-2 px-4 md:px-10 md:py-4 flex gap-y-2 items-center justify-between text-[#316B9C] font-medium bg-[#F1FAFF]">
