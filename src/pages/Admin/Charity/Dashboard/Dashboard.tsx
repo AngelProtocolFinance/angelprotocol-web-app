@@ -72,7 +72,7 @@ function Loaded({
       </h3>
       <Figure
         title="Pending allocations"
-        icon={<MdOutlineOutput size={19} />}
+        icon={<MdOutlineOutput size={19} className="text-gray" />}
         amount={`$ ${humanize(props.payoutsPending, 2)}`}
       />
       <Schedule
