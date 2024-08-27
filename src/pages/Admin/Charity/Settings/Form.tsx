@@ -44,8 +44,6 @@ export default function Form(props: Props) {
       sfCompounded: props.sfCompounded ?? false,
       hide_bg_tip: props.hide_bg_tip ?? false,
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
-      splitLockPct: 100 - (props.splitLiqPct ?? 50),
-      splitFixed: props.splitFixed ?? false,
       payout_minimum: `${props.payout_minimum ?? 50}`,
       donateMethods: fill(props.donateMethods),
     },
@@ -74,7 +72,6 @@ export default function Form(props: Props) {
       onSubmit={handleSubmit(
         async ({
           programDonateDisabled,
-          splitLockPct,
           payout_minimum,
           donateMethods,
           ...fv
@@ -88,7 +85,7 @@ export default function Form(props: Props) {
           await updateEndow({
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
-            splitLiqPct: 100 - splitLockPct,
+            splitLiqPct: 0,
             id: props.id,
             payout_minimum: +payout_minimum,
             donateMethods: donateMethods
@@ -148,17 +145,6 @@ export default function Form(props: Props) {
       />
 
       <h5 className="mt-12 text-2xl">Marketplace settings</h5>
-
-      <div className="mt-2">
-        <CheckField<FV> name="splitFixed" classes="font-medium">
-          Disable changing the split value
-        </CheckField>
-        <p className="text-xs sm:text-sm italic text-navy-l1 mt-2">
-          Disabling the Split Value means donors will not be able to change it
-          from the default set on the slider above. Checking this box will hide
-          the split screen entirely.
-        </p>
-      </div>
 
       <DonateMethods
         classes={{
