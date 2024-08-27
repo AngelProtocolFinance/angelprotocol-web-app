@@ -1,11 +1,11 @@
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { humanize } from "helpers";
-import { useAdminContext } from "pages/Admin/Context";
 import { BsGraphUpArrow } from "react-icons/bs"; //icon-line-graph-up
 import { IoPeople } from "react-icons/io5"; //icon-people
 import { LiaPiggyBankSolid } from "react-icons/lia"; //icon-piggy-bank
 import { useEndowBalanceQuery } from "services/apes";
+import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Balance from "./Balance";
 
