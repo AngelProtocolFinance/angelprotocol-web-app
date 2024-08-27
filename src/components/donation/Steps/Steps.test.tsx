@@ -27,7 +27,7 @@ describe("donation flow", () => {
         recipient: { id: 1, name: "test" },
         source: "bg-marketplace",
         mode: "live",
-        config: { splitDisabled: true, liquidSplitPct: 50 },
+        config: null,
       },
       details: stripeDonation,
     };
@@ -68,53 +68,6 @@ describe("donation flow", () => {
       })
     );
 
-    expect(screen.getByTestId("split-step")).toBeInTheDocument();
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /continue/i,
-      })
-    );
-
-    expect(
-      screen.getByRole("button", { name: /checkout/i })
-    ).toBeInTheDocument();
-
-    //user back on splits step
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /go back/i,
-      })
-    );
-    expect(screen.getByTestId("split-step")).toBeInTheDocument();
-
-    //user back on donate methods
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /go back/i,
-      })
-    );
-    expect(screen.getByTestId("donate-methods")).toBeInTheDocument();
-  });
-
-  test("tipping and splits is skipped", async () => {
-    const state: DonationState = {
-      step: "donate-form",
-      init: {
-        recipient: { id: 1, name: "test", hide_bg_tip: true },
-        source: "bg-marketplace",
-        mode: "live",
-        config: { splitDisabled: true, liquidSplitPct: 50 },
-      },
-      details: stripeDonation,
-    };
-    render(<_Steps init={state} />);
-
-    await userEvent.click(
-      await screen.findByRole("button", {
-        name: /continue/i,
-      })
-    );
-
     expect(
       screen.getByRole("button", { name: /checkout/i })
     ).toBeInTheDocument();
@@ -125,6 +78,7 @@ describe("donation flow", () => {
         name: /go back/i,
       })
     );
+
     expect(screen.getByTestId("donate-methods")).toBeInTheDocument();
   });
 
@@ -138,18 +92,11 @@ describe("donation flow", () => {
         config: null,
       },
       details: stripeDonation,
-      liquidSplitPct: 63,
       tip: { value: 50, format: "pct" },
     };
 
     render(<_Steps init={state} />);
 
-    //back to splits
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /go back/i,
-      })
-    );
     // back to donate methods
     await userEvent.click(
       screen.getByRole("button", {
@@ -166,18 +113,7 @@ describe("donation flow", () => {
     await userEvent.click(eurOption);
     //amount is the same
 
-    //continue to splits
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /continue/i,
-      })
-    );
-
-    //split should still be the same
-    const liqSplitSlider = screen.getByRole("slider");
-    expect(liqSplitSlider).toHaveAttribute("aria-valuenow", "37");
-
-    //continue to splits
+    //continue to tips
     await userEvent.click(
       screen.getByRole("button", {
         name: /continue/i,
@@ -199,18 +135,11 @@ describe("donation flow", () => {
         config: null,
       },
       details: stripeDonation,
-      liquidSplitPct: 63,
       tip: { value: 50, format: "pct" },
     };
 
     render(<_Steps init={state} />);
 
-    //back to splits
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /go back/i,
-      })
-    );
     // back to donate methods
     await userEvent.click(
       screen.getByRole("button", {
@@ -236,17 +165,6 @@ describe("donation flow", () => {
     //input amount
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     await userEvent.type(amountInput, "150");
-
-    //continue to splits
-    await userEvent.click(
-      screen.getByRole("button", {
-        name: /continue/i,
-      })
-    );
-
-    //split reset to 50%
-    const liqSplitSlider = screen.getByRole("slider");
-    expect(liqSplitSlider).toHaveAttribute("aria-valuenow", "50");
 
     //continue to tip
     await userEvent.click(

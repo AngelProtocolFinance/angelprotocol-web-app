@@ -49,11 +49,7 @@ function Content({ intent, endowment }: Props) {
               hide_bg_tip: endowment.hide_bg_tip,
               progDonationsAllowed: endowment.progDonationsAllowed,
             }}
-            config={{
-              splitDisabled: endowment.splitFixed ?? false,
-              liquidSplitPct: endowment.splitLiqPct ?? 50,
-              methodIds: endowment.donateMethods,
-            }}
+            config={{ methodIds: endowment.donateMethods }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
         </div>

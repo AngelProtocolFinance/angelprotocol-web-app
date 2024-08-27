@@ -48,7 +48,6 @@ const props: SummaryStep = {
     config: null,
   },
   details: oneTimeStripeDetails,
-  liquidSplitPct: 80,
 };
 
 const coverFeeCheckboxLabel =
@@ -98,7 +97,7 @@ describe("summary step", () => {
   });
 
   test("only amount row and total row", () => {
-    render(<Summary {...props} liquidSplitPct={100} />);
+    render(<Summary {...props} />);
     expect(screen.getByRole("term", { name: /amount/i })).toBeInTheDocument();
     expect(
       screen.queryByRole("term", { name: /sustainability fund/i })
@@ -108,13 +107,7 @@ describe("summary step", () => {
     expect(screen.getByRole("term", { name: /total/i })).toBeInTheDocument();
   });
   test("with tip row: and effect to total", () => {
-    render(
-      <Summary
-        {...props}
-        liquidSplitPct={100}
-        tip={{ value: 17, format: "amount" }}
-      />
-    );
+    render(<Summary {...props} tip={{ value: 17, format: "amount" }} />);
     expect(screen.getByRole("term", { name: /amount/i })).toBeInTheDocument();
     expect(
       screen.queryByRole("term", { name: /sustainability fund/i })
@@ -128,30 +121,6 @@ describe("summary step", () => {
     const totalTerm = screen.getByRole("term", { name: /total/i });
     expect(totalTerm).toBeInTheDocument();
     expect(totalTerm.nextSibling).toHaveTextContent(/\$117/i);
-  });
-  test("with tip, splits rows", () => {
-    render(
-      <Summary
-        {...props}
-        liquidSplitPct={60}
-        tip={{ value: 17, format: "amount" }}
-      />
-    );
-    expect(screen.getByRole("term", { name: /amount/i })).toBeInTheDocument();
-
-    const lockTerm = screen.getByRole("term", { name: /sustainability fund/i });
-    expect(lockTerm).toBeInTheDocument();
-    //dt is enclosed by div
-    expect(lockTerm.parentNode?.nextSibling).toHaveTextContent(/\$40/i);
-
-    const liqTerm = screen.getByRole("term", { name: /direct donation/i });
-    expect(liqTerm).toBeInTheDocument();
-    expect(liqTerm.nextSibling).toHaveTextContent(/\$60/i);
-
-    expect(screen.getByRole("term", { name: /tip/i })).toBeInTheDocument();
-    expect(screen.getByRole("term", { name: /total/i })).toBeInTheDocument();
-
-    expect(screen.getByLabelText(coverFeeCheckboxLabel)).not.toBeChecked();
   });
 
   const cryptoDetails: CryptoDonationDetails = {

@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods } from "components/DonateMethods";
-import { LockedSplitSlider, ProgramSelector } from "components/donation";
+import { ProgramSelector } from "components/donation";
 import { CheckField, Field, RhfForm } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
@@ -38,11 +38,6 @@ export default function Configurer({
     watch,
     register,
   } = methods;
-
-  const { field: liquidSplitPct } = useController({
-    control: methods.control,
-    name: "liquidSplitPct",
-  });
 
   const { field: donateMethods } = useController({
     control: methods.control,
@@ -120,25 +115,6 @@ export default function Configurer({
         >
           Show description
         </CheckField>
-
-        <label className="mt-12 mb-4 font-medium text-base">
-          Define default split value:
-        </label>
-        <LockedSplitSlider
-          value={100 - liquidSplitPct.value}
-          onChange={(lockedPct) => liquidSplitPct.onChange(100 - lockedPct)}
-        />
-
-        <div className="mt-6">
-          <CheckField<FormValues> name="splitDisabled">
-            Disable changing the split value
-          </CheckField>
-          <p className="text-xs @4xl/widget:text-sm italic text-navy-l1 mt-2">
-            Disabling the Split Value means donors will not be able to change it
-            from the default set on the slider above. Checking this box will
-            hide the split screen entirely.
-          </p>
-        </div>
 
         <DonateMethods
           classes={{

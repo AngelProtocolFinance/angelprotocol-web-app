@@ -110,20 +110,15 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
       classes="group grid content-start p-4 @md/steps:p-8 [&_#connectContainer]:mt-8"
       onBack={async () => {
         const { init } = props;
-
         //summary is skipped for chariot, also skip when going back
         if (init.recipient.hide_bg_tip) {
-          if (init.config?.splitDisabled) {
-            return setState({ ...props, step: "donate-form" });
-          }
-          return setState({ ...props, step: "splits" });
+          return setState({ ...props, step: "donate-form" });
         }
         return setState({ ...props, step: "tip" });
       }}
       Amount={currency(props.details.currency)}
       amount={adjusted?.amount || +props.details.amount}
       feeAllowance={adjusted?.feeAllowance || newFeeAllowance}
-      splitLiq={props.liquidSplitPct}
       frequency="one-time"
       tip={
         props.tip
@@ -288,7 +283,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 feeAllowance: adjusted.feeAllowance,
                 currency: props.details.currency.code,
                 endowmentId: props.init.recipient.id,
-                splitLiq: props.liquidSplitPct,
+                splitLiq: 0,
                 donor: toDonor({
                   title: initDonorTitleOption,
                   email: grantor.email,

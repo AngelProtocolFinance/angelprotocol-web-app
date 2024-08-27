@@ -27,7 +27,7 @@ describe("Crypto form: initial load", () => {
   test("initial form state: no persisted details", () => {
     const init: Init = {
       source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
+      config: null,
       recipient: { id: 0, name: "" },
       mode: "live",
     };
@@ -42,7 +42,7 @@ describe("Crypto form: initial load", () => {
   test("initial form state: program donations not allowed", () => {
     const init: Init = {
       source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
+      config: null,
       recipient: { id: 0, name: "", progDonationsAllowed: false },
       mode: "live",
     };
@@ -61,7 +61,7 @@ describe("Crypto form: initial load", () => {
   test("submit form with initial/persisted data", async () => {
     const init: Init = {
       source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
+      config: null,
       recipient: { id: 0, name: "" },
       mode: "live",
     };
@@ -95,7 +95,7 @@ describe("Crypto form: initial load", () => {
   test("submitting empty form should show validation messages and focus first field: amount input", async () => {
     const init: Init = {
       source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
+      config: null,
       recipient: { id: 0, name: "" },
       mode: "live",
     };
@@ -119,7 +119,7 @@ describe("Crypto form: initial load", () => {
   test("user corrects error and submits", async () => {
     const init: Init = {
       source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
+      config: null,
       recipient: { id: 0, name: "" },
       mode: "live",
     };

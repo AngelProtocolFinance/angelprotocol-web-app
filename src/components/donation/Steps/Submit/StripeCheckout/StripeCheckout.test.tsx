@@ -64,7 +64,6 @@ const state: StripeCheckoutStep = {
     frequency: "subscription",
     program: DEFAULT_PROGRAM,
   },
-  liquidSplitPct: 50,
   tip: { value: 17, format: "pct" },
   donor: {
     title: { value: "Mr", label: "Mr" },

@@ -10,8 +10,7 @@ import type { SummaryStep } from "../types";
 import SummaryForm from "./SummaryForm";
 
 export default function Summary(props: SummaryStep) {
-  const { details, liquidSplitPct, donor, honorary, tip, init, feeAllowance } =
-    props;
+  const { details, donor, honorary, tip, init, feeAllowance } = props;
 
   const { setState } = useDonationState();
   const user = useGetter((state) => state.auth.user);
@@ -42,14 +41,11 @@ export default function Summary(props: SummaryStep) {
       classes="grid content-start p-4 @md/steps:p-8"
       Amount={Amount}
       amount={amount}
-      splitLiq={liquidSplitPct}
       onBack={() => {
         if (init.recipient.hide_bg_tip) {
-          if (init.config?.splitDisabled) {
-            return setState({ ...props, step: "donate-form" });
-          }
-          return setState({ ...props, step: "splits" });
+          return setState({ ...props, step: "donate-form" });
         }
+
         return setState({ ...props, step: "tip" });
       }}
       tip={

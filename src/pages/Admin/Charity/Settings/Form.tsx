@@ -1,7 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods, fill } from "components/DonateMethods";
-import { LockedSplitSlider } from "components/donation";
 import { CheckField, Field, RhfForm } from "components/form";
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -58,11 +57,6 @@ export default function Form(props: Props) {
     formState: { isSubmitting, isDirty, errors },
     control,
   } = methods;
-
-  const { field: splitLockPct } = useController<FV, "splitLockPct">({
-    control,
-    name: "splitLockPct",
-  });
 
   const { field: donateMethods } = useController<FV, "donateMethods">({
     control,
@@ -154,12 +148,6 @@ export default function Form(props: Props) {
       />
 
       <h5 className="mt-12 text-2xl">Marketplace settings</h5>
-
-      <label className="mt-2 font-medium">Define default split value:</label>
-      <LockedSplitSlider
-        onChange={splitLockPct.onChange}
-        value={splitLockPct.value}
-      />
 
       <div className="mt-2">
         <CheckField<FV> name="splitFixed" classes="font-medium">

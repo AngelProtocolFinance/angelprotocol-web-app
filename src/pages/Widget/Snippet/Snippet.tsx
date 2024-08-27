@@ -37,8 +37,6 @@ export default function Snippet({ classes = "", config }: Props) {
 const widgetURLfn = (config: WidgetConfig) => {
   const params: Required<WidgetURLSearchParams> = {
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
-    splitDisabled: config.splitDisabled ? "true" : "false",
-    liquidSplitPct: config.liquidSplitPct.toString(),
     methods: config.methods
       .filter((m) => !m.disabled)
       .map((m) => m.id)
