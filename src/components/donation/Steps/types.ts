@@ -136,8 +136,4 @@ export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 export type StockCheckoutStep = SubmitStep<StocksDonationDetails>;
 export type DafCheckoutStep = SubmitStep<DafDonationDetails>;
 
-export type DonationState =
-  | FormStep
-  | TipStep
-  | SummaryStep
-  | SubmitStep;
+export type DonationState = FormStep | TipStep | SummaryStep | SubmitStep;

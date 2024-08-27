@@ -85,8 +85,6 @@ export default function Table({
           >
             Donation Value USD
           </HeaderButton>
-          <>Direct Donation</>
-          <>Donation to Sustainability Fund</>
           <>Transaction Hash</>
           <>Receipt Provided</>
           <>Full Name</>

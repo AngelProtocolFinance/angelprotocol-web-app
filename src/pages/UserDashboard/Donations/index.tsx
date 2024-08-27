@@ -55,8 +55,6 @@ export default function Donations() {
               symbol: item.symbol,
               initAmount: humanize(item.initAmount, 2),
               initAmountUsd: humanize(item.initAmountUsd ?? 0, 2),
-              directDonateAmount: humanize(item.directDonateAmount ?? 0, 2),
-              sfDonateAmount: humanize(item.sfDonateAmount ?? 0, 2),
               id: item.id,
               receipt: item.donorDetails?.address?.country
                 ? "Yes"
@@ -153,8 +151,6 @@ const csvHeaders: { key: keyof Donation.Record | "receipt"; label: string }[] =
     { key: "symbol", label: "Currency" },
     { key: "initAmount", label: "Amount" },
     { key: "initAmountUsd", label: "USD Value" },
-    { key: "directDonateAmount", label: "Direct Donation" },
-    { key: "sfDonateAmount", label: "Donation to Sustainability Fund" },
     { key: "id", label: "Transaction Hash" },
     { key: "receipt", label: "Receipt" },
   ];

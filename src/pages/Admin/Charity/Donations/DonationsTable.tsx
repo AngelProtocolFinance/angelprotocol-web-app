@@ -52,7 +52,6 @@ export default function DonationsTable({ classes = "" }) {
                   )
                   .map<Donation.Record | Donation.KYC>(
                     ({ donorDetails: donor, ...d }) => {
-                      const amt = amount(d.splitLiqPct, d.finalAmountUsd);
                       return fill({
                         date: new Date(d.date).toLocaleDateString(),
                         programName: d.programName,
@@ -65,8 +64,6 @@ export default function DonationsTable({ classes = "" }) {
                         symbol: d.symbol,
                         initAmount: humanize(d.initAmount, 2),
                         finalAmountUsd: humanize(d.finalAmountUsd ?? 0, 2),
-                        directDonateAmount: humanize(amt.directDonate, 2),
-                        sfDonateAmount: humanize(amt.sfDonate, 2),
                         id: d.id,
                         receipt: donor.address?.country ? "Yes" : "No",
                         fullName: donor.fullName,
@@ -110,8 +107,6 @@ const csvHeaders: {
   { key: "symbol", label: "Donation Asset" },
   { key: "initAmount", label: "Donation Amount" },
   { key: "finalAmountUsd", label: "Donation Value USD" },
-  { key: "directDonateAmount", label: "Direct Donation" },
-  { key: "sfDonateAmount", label: "Donation to Sustainability Fund" },
   { key: "id", label: "Transaction Hash" },
   { key: "receipt", label: "Receipt Provided" },
   { key: "fullName", label: "Full Name" },
@@ -123,10 +118,3 @@ const csvHeaders: {
   { key: "zipCode", label: "Zip Code" },
   { key: "country", label: "Country" },
 ];
-
-/** compute for direct and SF donation amounts */
-function amount(splitLiqPct: number, amount = 0) {
-  const directDonate = amount * (splitLiqPct / 100);
-  const sfDonate = amount - directDonate;
-  return { directDonate, sfDonate };
-}

@@ -48,9 +48,6 @@ export namespace Donation {
     initAmount: number;
     initAmountUsd?: number;
     finalAmountUsd?: number;
-    directDonateAmount?: number;
-    sfDonateAmount?: number;
-    splitLiqPct: number;
     isRecurring?: boolean;
     appUsed: DonationSource;
   } & (
