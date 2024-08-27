@@ -7,11 +7,11 @@ type Props = {
   amount: string;
 };
 
-export default function Balance(props: Props) {
+export default function Figure(props: Props) {
   return (
     <div className="@container rounded border border-gray-l4 p-4">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="uppercase text-sm">{props.title}</h4>
+        <h4 className="text-sm">{props.title}</h4>
         {props.icon}
       </div>
       <p className="text-2xl font-medium">{props.amount}</p>

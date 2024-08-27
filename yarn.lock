@@ -3097,6 +3097,7 @@ __metadata:
     "@types/react-helmet": "npm:6.1.11"
     aws-amplify: "npm:6.3.6"
     cropperjs: "npm:1.6.2"
+    date-fns: "npm:3.6.0"
     decimal.js: "npm:10.4.3"
     framer-motion: "npm:11.2.10"
     fuse.js: "npm:7.0.0"
@@ -3605,6 +3606,13 @@ __metadata:
     whatwg-mimetype: "npm:^4.0.0"
     whatwg-url: "npm:^14.0.0"
   checksum: 10/5c40568c31b02641a70204ff233bc4e42d33717485d074244a98661e5f2a1e80e38fe05a5755dfaf2ee549f2ab509d6a3af2a85f4b2ad2c984e5d176695eaf46
+  languageName: node
+  linkType: hard
+
+"date-fns@npm:3.6.0":
+  version: 3.6.0
+  resolution: "date-fns@npm:3.6.0"
+  checksum: 10/cac35c58926a3b5d577082ff2b253612ec1c79eb6754fddef46b6a8e826501ea2cb346ecbd211205f1ba382ddd1f9d8c3f00bf433ad63cc3063454d294e3a6b8
   languageName: node
   linkType: hard
 
