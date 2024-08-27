@@ -35,7 +35,10 @@ export function Schedule(props: Props) {
           className="hover:text-blue disabled:text-gray"
           onClick={() => {
             if (!endow) throw "@dev: no endow";
-            showModal(Edit, endow.allocation ?? { cash: 0, liq: 50, lock: 50 });
+            showModal(Edit, {
+              ...(endow.allocation ?? { cash: 0, liq: 50, lock: 50 }),
+              id,
+            });
           }}
         >
           <RiPencilFill className="h-4 w-4" />
@@ -63,20 +66,20 @@ export function Schedule(props: Props) {
           <img src={sendMoney} width={20} className="mr-2" />
           <span>Savings</span>
           <span className="ml-2 text-navy-l1 text-sm">
-            {endow?.allocation?.cash ?? 50} %
+            {endow?.allocation?.liq ?? 50} %
           </span>
           <span className="justify-self-end font-bold">
-            {val(endow ? endow.allocation?.cash ?? 50 : undefined)}
+            {val(endow ? endow.allocation?.liq ?? 50 : undefined)}
           </span>
         </div>
         <div className="grid grid-cols-subgrid col-span-full items-center">
           <img src={leaf} className="mr-2" />
           <span>Investments</span>
           <span className="ml-2 text-navy-l1 text-sm">
-            {endow?.allocation?.cash ?? 50} %
+            {endow?.allocation?.lock ?? 50} %
           </span>
           <span className="justify-self-end font-bold">
-            {val(endow ? endow.allocation?.cash ?? 50 : undefined)}
+            {val(endow ? endow.allocation?.lock ?? 50 : undefined)}
           </span>
         </div>
       </div>

@@ -179,7 +179,7 @@ export const aws = createApi({
       invalidatesTags: (_, error) => (error ? [] : ["endowments", "endowment"]),
       query: ({ id, ...payload }) => {
         return {
-          url: `/${v(8)}/endowments/${id}`,
+          url: `/${v(9)}/endowments/${id}`,
           method: "PATCH",
           headers: { authorization: TEMP_JWT },
           body: payload,

@@ -177,6 +177,7 @@ export type EndowmentSettingsUpdate = Pick<
   Required<Endowment>,
   EndowmentSettingsAttributes
 >;
+export type EndowmentAllocationUpdate = Pick<Required<Endowment>, "allocation">;
 
 export type NewProgram = Omit<Program, "id" | "milestones"> & {
   milestones: Omit<Milestone, "id">[];
