@@ -12,7 +12,7 @@ export default function Dashboard() {
   const queryState = useEndowBalanceQuery(id, { skip: !id });
 
   return (
-    <div className="@container w-full max-w-4xl grid content-start mt-6">
+    <div className="@container w-full max-w-4xl grid content-start">
       <Seo title="Nonprofit Dashboard" />
       <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
       <QueryLoader
