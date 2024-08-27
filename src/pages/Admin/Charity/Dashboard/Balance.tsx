@@ -1,41 +1,20 @@
-import { humanize } from "helpers";
-import type { PropsWithChildren } from "react";
+import type { ReactNode } from "react";
 
 type Props = {
-  type: "Sustainability Fund" | "Donations";
-  current: number;
-  pending: number;
-  paidOut: number;
+  title: string;
+  icon: ReactNode;
+  /** e.g. $100,000 */
+  amount: string;
 };
 
-export default function Balance({ type, current, pending, paidOut }: Props) {
+export default function Balance(props: Props) {
   return (
-    <div className="@container rounded border border-blue-l2 bg-blue-l5 dark:bg-blue-d6 p-4">
-      <h4 className="uppercase text-sm @xs:text-xl font-bold mb-5">{type}</h4>
-      <div className="grid @xs:grid-cols-[auto_1fr] gap-y-5 justify-self-start gap-x-2 @xs:gap-x-8">
-        <Amount title="Total Contributions" classes="col-span-full @xs:mr-auto">
-          {humanize(current, 2)}
-        </Amount>
-        <Amount title="Pending payouts">{humanize(pending, 2)}</Amount>
-        <Amount title="Paid out">{humanize(paidOut, 2)}</Amount>
+    <div className="@container rounded border border-gray-l4 p-4">
+      <div className="flex items-center justify-between mb-4">
+        <h4 className="uppercase text-sm">{props.title}</h4>
+        {props.icon}
       </div>
-    </div>
-  );
-}
-
-function Amount({
-  classes = "",
-  ...props
-}: PropsWithChildren<{ classes?: string; title: string }>) {
-  return (
-    <div className={classes}>
-      <p className="text-2xs @xs:text-xs text-navy-l1 dark:text-navy-l2 @xs:mb-1 uppercase">
-        {props.title}
-      </p>
-      <span className="font-bold text-sm @xs:text-xl font-heading">
-        {props.children}{" "}
-        <span className="text-2xs @xs:text-xs font-normal">USD</span>
-      </span>
+      <p className="text-2xl font-medium">{props.amount}</p>
     </div>
   );
 }
