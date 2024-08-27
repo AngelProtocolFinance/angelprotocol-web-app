@@ -2,15 +2,16 @@ import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { humanize } from "helpers";
 import { BsGraphUpArrow } from "react-icons/bs"; //icon-line-graph-up
-import { IoArrowForwardOutline, IoPeople } from "react-icons/io5"; //icon-people, icon-arrow-right
+import { IoPeople } from "react-icons/io5"; //icon-people
 import { LiaPiggyBankSolid } from "react-icons/lia"; //icon-piggy-bank
 import { MdOutlineOutput } from "react-icons/md"; //icon-output
-import { RiPencilFill } from "react-icons/ri"; //icon-pencil
+
 import { useEndowBalanceQuery } from "services/apes";
 import type { EndowmentBalances } from "types/aws";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Figure from "./Figure";
+import { Schedule } from "./Schedule";
 import { monthPeriod } from "./montPeriod";
 
 export default function Dashboard() {
@@ -60,7 +61,7 @@ function Loaded({
         />
       </div>
 
-      <div className="w-full border-t border-gray-l4 mt-16" />
+      <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
 
       <h3 className="my-4 font-medium">
         <span className="text-sm uppercase font-normal">Period</span>
@@ -73,42 +74,7 @@ function Loaded({
         icon={<MdOutlineOutput size={19} />}
         amount={`$ ${humanize(props.payoutsPending, 2)}`}
       />
-      <div className="p-4 grid rounded border border-gray-l4 mt-4">
-        <div className="flex flex-row items-center justify-between space-y-0">
-          <h4 className="mb-1">Allocation Settings</h4>
-          <button className="h-8 w-8 p-0">
-            <RiPencilFill className="h-4 w-4" />
-            <span className="sr-only">Edit allocation settings</span>
-          </button>
-        </div>
-        <p className="text-sm mb-4 text-gray">
-          Will take effect on: {period.next}{" "}
-          <span className="text-xs bg-gray text-white px-2 py-1 rounded">
-            in {period.distance}
-          </span>
-        </p>
-        <div className="flex justify-between items-center mb-2">
-          <span className="flex items-center">
-            <IoArrowForwardOutline className="h-4 w-4 mr-2" />
-            Grants
-          </span>
-          <span className="font-bold">$20,000</span>
-        </div>
-        <div className="flex justify-between items-center mb-2">
-          <span className="flex items-center">
-            <IoArrowForwardOutline className="h-4 w-4 mr-2" />
-            Savings
-          </span>
-          <span className="font-bold">$20,000</span>
-        </div>
-        <div className="flex justify-between items-center mb-2">
-          <span className="flex items-center">
-            <IoArrowForwardOutline className="h-4 w-4 mr-2" />
-            Investments
-          </span>
-          <span className="font-bold">$60,000</span>
-        </div>
-      </div>
+      <Schedule periodNext={period.next} periodRemaining={period.distance} />
     </div>
   );
 }
