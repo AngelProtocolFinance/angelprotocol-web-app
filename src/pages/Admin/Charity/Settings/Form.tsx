@@ -85,7 +85,6 @@ export default function Form(props: Props) {
           await updateEndow({
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
-            splitLiqPct: 0,
             id: props.id,
             payout_minimum: +payout_minimum,
             donateMethods: donateMethods

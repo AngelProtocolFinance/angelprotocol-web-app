@@ -14,8 +14,6 @@ export default function Settings() {
     "sfCompounded",
     "hide_bg_tip",
     "progDonationsAllowed",
-    "splitLiqPct",
-    "splitFixed",
     "payout_minimum",
     "donateMethods",
   ]);

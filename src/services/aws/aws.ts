@@ -160,7 +160,7 @@ export const aws = createApi({
     >({
       providesTags: ["endowment"],
       query: ({ fields, ...args }) => ({
-        url: "id" in args ? `v8/endowments/${args.id}` : "v8/endowments",
+        url: "id" in args ? `v9/endowments/${args.id}` : "v9/endowments",
         params: {
           env: apiEnv,
           slug: args.slug,

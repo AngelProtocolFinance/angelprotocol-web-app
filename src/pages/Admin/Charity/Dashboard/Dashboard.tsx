@@ -6,6 +6,7 @@ import { IoPeople } from "react-icons/io5"; //icon-people
 import { LiaPiggyBankSolid } from "react-icons/lia"; //icon-piggy-bank
 import { MdOutlineOutput } from "react-icons/md"; //icon-output
 
+import { skipToken } from "@reduxjs/toolkit/query";
 import { useEndowBalanceQuery } from "services/apes";
 import type { EndowmentBalances } from "types/aws";
 import { useAdminContext } from "../../Context";
@@ -16,7 +17,7 @@ import { monthPeriod } from "./montPeriod";
 
 export default function Dashboard() {
   const { id } = useAdminContext();
-  const queryState = useEndowBalanceQuery(id, { skip: !id });
+  const queryState = useEndowBalanceQuery(id || skipToken);
 
   return (
     <div className="@container w-full max-w-4xl grid content-start">
@@ -74,7 +75,11 @@ function Loaded({
         icon={<MdOutlineOutput size={19} />}
         amount={`$ ${humanize(props.payoutsPending, 2)}`}
       />
-      <Schedule periodNext={period.next} periodRemaining={period.distance} />
+      <Schedule
+        amount={props.payoutsPending}
+        periodNext={period.next}
+        periodRemaining={period.distance}
+      />
     </div>
   );
 }

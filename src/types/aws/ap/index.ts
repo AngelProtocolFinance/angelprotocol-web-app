@@ -61,6 +61,16 @@ type SocialMediaURLs = {
   tiktok?: string;
 };
 
+/** sums up to 100 */
+export interface Allocation {
+  /** e.g. 20 */
+  cash: number;
+  /** e.g. 30 */
+  liq: number;
+  /** e.g. 50 */
+  lock: number;
+}
+
 export type Endowment = {
   id: number;
   /** may be empty */
@@ -88,6 +98,7 @@ export type Endowment = {
   kyc_donors_only: boolean;
   fiscal_sponsored: boolean;
   claimed: boolean;
+  allocation?: Allocation;
 
   //can be optional, default false and need not be explicit
   hide_bg_tip?: boolean;
@@ -95,8 +106,6 @@ export type Endowment = {
   published?: boolean;
   /** allowed by default */
   progDonationsAllowed?: boolean;
-  splitLiqPct?: number;
-  splitFixed?: boolean;
   payout_minimum?: number;
   donateMethods?: DonateMethodId[];
 };
@@ -149,8 +158,6 @@ export type EndowmentSettingsAttributes = Extract<
   | "sfCompounded"
   | "hide_bg_tip"
   | "progDonationsAllowed"
-  | "splitLiqPct"
-  | "splitFixed"
   | "payout_minimum"
   | "donateMethods"
 >;
@@ -160,6 +167,7 @@ export type EndowmentProfileUpdate = Except<
   | "endow_designation"
   | "fiscal_sponsored"
   | "claimed"
+  | "allocation"
   | EndowmentSettingsAttributes
 > & {
   endow_designation: EndowDesignation | "";
