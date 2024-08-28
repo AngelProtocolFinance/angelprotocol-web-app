@@ -36,7 +36,7 @@ function Body() {
                 {(p.claimed ?? true) && (
                   <VerifiedIcon
                     classes="relative inline bottom-px mr-2"
-                    size={24}
+                    size={27}
                   />
                 )}
                 <span>{p.name}</span>

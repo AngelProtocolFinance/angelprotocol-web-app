@@ -58,11 +58,13 @@ export default function BookmarkBtn({
         aria-label="Add to favorites button"
         onClick={toogleBookmark}
         disabled={isBookmarksLoading || isTogglingBookmark}
-        className={`flex items-center gap-1 disabled:text-gray-l4 ${
-          isBookmarked ? "text-red fill-red" : ""
-        } ${classes}`}
+        className={`flex items-center gap-1 disabled:text-gray-l4 ${classes}`}
       >
-        <Icon type="Heart" size={19} />
+        <Icon
+          type="Heart"
+          size={19}
+          className={isBookmarked ? "fill-red text-red" : ""}
+        />
         {children}
       </button>
     </>

@@ -35,7 +35,7 @@ export default function Card({
             {claimed && (
               <VerifiedIcon
                 classes="inline relative bottom-px mr-1"
-                size={18}
+                size={21}
               />
             )}
             <span className="inline">{name}</span>
