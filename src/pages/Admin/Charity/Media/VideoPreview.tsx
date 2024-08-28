@@ -64,7 +64,7 @@ export default function VideoPreview(props: Media) {
             }
           }}
         >
-          <Icon type="Delete" />
+          <Icon type="Dash" />
         </CRUDBtn>
       </div>
       {/** render only thumbnails on lists */}
