@@ -17,6 +17,7 @@ import {
   CircleDollarSign,
   CircleHelp,
   CircleUserRound,
+  CircleX,
   Copy,
   CreditCard,
   Crop,
@@ -29,6 +30,7 @@ import {
   Gift,
   Globe,
   GripVertical,
+  Heart,
   HeartHandshake,
   Hospital,
   Hourglass,
@@ -59,12 +61,7 @@ import {
   Wallet,
   X,
 } from "lucide-react";
-import {
-  AiFillHeart,
-  AiFillYoutube,
-  AiOutlineHeart,
-  AiOutlineMedium,
-} from "react-icons/ai";
+import { AiFillYoutube, AiOutlineMedium } from "react-icons/ai";
 import { BsTwitter } from "react-icons/bs";
 import {
   FaBitcoin,
@@ -77,8 +74,6 @@ import {
   FaTiktok,
 } from "react-icons/fa";
 import { GrFacebookOption } from "react-icons/gr";
-import { IoCloseCircle } from "react-icons/io5";
-import { MdOutlineFileDownload, MdOutlineUploadFile } from "react-icons/md";
 
 export const icons = {
   ArrowRight: ArrowRight,
@@ -92,7 +87,7 @@ export const icons = {
   ChevronsUpDown,
   ChevronRight,
   Close: X,
-  CloseCircle: IoCloseCircle,
+  CloseCircle: CircleX,
   Copy,
   CreditCard,
   Crop,
@@ -108,10 +103,8 @@ export const icons = {
   EyeSlashed: EyeOff,
   Facebook: GrFacebookOption,
   FacebookCircle: FaFacebook,
-  FatArrowDownload: ArrowDownToLine,
   FileCSV: FileSpreadsheet,
-  FileDownload: MdOutlineFileDownload,
-  FileUpload: MdOutlineUploadFile,
+  FileDownload: ArrowDownToLine,
   Filter,
   Folder,
   Stocks: ChartSpline,
@@ -119,8 +112,7 @@ export const icons = {
   Gear: Settings,
   Giftcard: Gift,
   Globe,
-  HeartFill: AiFillHeart,
-  HeartOutline: AiOutlineHeart,
+  Heart,
   Hospital,
   HourglassSplit: Hourglass,
   Info: CircleAlert,

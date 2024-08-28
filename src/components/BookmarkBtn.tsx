@@ -59,10 +59,10 @@ export default function BookmarkBtn({
         onClick={toogleBookmark}
         disabled={isBookmarksLoading || isTogglingBookmark}
         className={`flex items-center gap-1 disabled:text-gray-l4 ${
-          isBookmarked ? "text-red" : ""
+          isBookmarked ? "text-red fill-red" : ""
         } ${classes}`}
       >
-        <Icon type={isBookmarked ? "HeartFill" : "HeartOutline"} size={20} />
+        <Icon type="Heart" size={19} />
         {children}
       </button>
     </>

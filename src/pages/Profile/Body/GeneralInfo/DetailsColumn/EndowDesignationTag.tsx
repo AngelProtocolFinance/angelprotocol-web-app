@@ -3,7 +3,7 @@ import type { PropsWithChildren } from "react";
 import type { EndowDesignation, EndowmentProfile } from "types/aws";
 
 const icons: { [key in EndowDesignation]: IconType } = {
-  Charity: "HeartFill",
+  Charity: "Heart",
   "Religious Organization": "ReligiousOrganization",
   University: "University",
   Hospital: "Hospital",
