@@ -50,7 +50,7 @@ export default function Increments({ classes = "" }) {
                   type="button"
                   onClick={() => remove(idx)}
                 >
-                  <Icon strokeWidth={3} type="Dash" />
+                  <Icon strokeWidth={3} type="Dash" size={18} />
                 </button>
               </div>
             );

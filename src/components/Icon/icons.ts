@@ -9,6 +9,7 @@ import {
   CreditCard,
   Crop,
   HeartHandshake,
+  Minus,
 } from "lucide-react";
 import {
   AiFillHeart,
@@ -48,7 +49,7 @@ import {
 } from "react-icons/fa";
 import { FaFileCsv, FaGear, FaMoneyBills, FaShapes } from "react-icons/fa6";
 import { FiMenu, FiMoon } from "react-icons/fi";
-import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
+import { GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdDownload, IoMdListBox } from "react-icons/io";
@@ -105,7 +106,7 @@ export const icons = {
   Copy,
   CreditCard,
   Crop,
-  Dash: GoDash,
+  Dash: Minus,
   Dashboard: MdSpaceDashboard,
   Delete: MdDelete,
   Discord: FaDiscord,
