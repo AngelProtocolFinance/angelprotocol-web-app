@@ -131,7 +131,7 @@ function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
   if (props.status === "final") {
     return (
       <button className="block" onClick={() => showKYCForm(props.id)}>
-        <Icon type="FatArrowDownload" size={20} />
+        <Icon type="FileDownload" size={20} />
       </button>
     );
   }
