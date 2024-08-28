@@ -19,7 +19,7 @@ export function SidebarOpener({
     >
       <Icon {...activeLink.icon} />
       {activeLink.title}
-      <Icon type="ChevronRight" size={24} className="ml-auto" />
+      <Icon type="ChevronRight" size={20} className="ml-auto" />
     </button>
   );
 }

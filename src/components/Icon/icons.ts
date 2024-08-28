@@ -6,6 +6,7 @@ import {
   ChevronRight,
   CircleCheck,
   Copy,
+  CreditCard,
   HeartHandshake,
 } from "lucide-react";
 import {
@@ -20,13 +21,7 @@ import {
   AiOutlineQuestionCircle,
   AiOutlineUpload,
 } from "react-icons/ai";
-import {
-  BiChevronRight,
-  BiGlobe,
-  BiSave,
-  BiSearchAlt2,
-  BiSun,
-} from "react-icons/bi";
+import { BiGlobe, BiSave, BiSearchAlt2, BiSun } from "react-icons/bi";
 import {
   BsExclamationCircleFill,
   BsFilterLeft,
@@ -51,13 +46,12 @@ import {
   FaUserCircle,
 } from "react-icons/fa";
 import { FaFileCsv, FaGear, FaMoneyBills, FaShapes } from "react-icons/fa6";
-import { FiCreditCard, FiMenu, FiMoon } from "react-icons/fi";
+import { FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdDownload, IoMdListBox } from "react-icons/io";
 import {
-  IoChevronBack,
   IoClose,
   IoCloseCircle,
   IoCrop,
@@ -104,13 +98,12 @@ export const icons = {
   Check,
   CheckCircle: CircleCheck,
   ChevronDown,
-  ChevronLeft: IoChevronBack,
-  ChevronRight: BiChevronRight,
+  ChevronRight,
   CircleMinus: AiOutlineMinusCircle,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
   Copy,
-  CreditCard: FiCreditCard,
+  CreditCard,
   Crop: IoCrop,
   Dash: GoDash,
   Dashboard: MdSpaceDashboard,

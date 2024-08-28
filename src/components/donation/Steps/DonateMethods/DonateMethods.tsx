@@ -20,7 +20,7 @@ const methods: {
 } = {
   stripe: {
     name: "Card/Bank",
-    icon: <Icon type="CreditCard" className="shrink-0" size={16} />,
+    icon: <Icon type="CreditCard" className="shrink-0" size={18} />,
     panel: Stripe,
   },
   stocks: {
