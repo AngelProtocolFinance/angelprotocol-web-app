@@ -11,8 +11,10 @@ import {
   Copy,
   CreditCard,
   Crop,
+  GripVertical,
   HeartHandshake,
   LayoutDashboard,
+  Mail,
   Minus,
   X,
 } from "lucide-react";
@@ -68,7 +70,6 @@ import {
 import {
   MdCardGiftcard,
   MdLockOutline,
-  MdOutlineEmail,
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
   MdOutlineFolder,
@@ -79,7 +80,6 @@ import {
 } from "react-icons/md";
 import { PiPaypalLogo } from "react-icons/pi";
 import {
-  RiDraggable,
   RiFundsBoxLine,
   RiGasStationFill,
   RiMapPin2Line,
@@ -110,8 +110,8 @@ export const icons = {
   Dashboard: LayoutDashboard,
   Discord: FaDiscord,
   DollarCircle: CircleDollarSign,
-  Drag: RiDraggable,
-  Email: MdOutlineEmail,
+  Drag: GripVertical,
+  Email: Mail,
   Exclamation: FaExclamation,
   ExclamationCircleFill: BsExclamationCircleFill,
   ExternalLink: GoLinkExternal,

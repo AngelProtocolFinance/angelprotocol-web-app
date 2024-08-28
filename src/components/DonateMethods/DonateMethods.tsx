@@ -108,7 +108,7 @@ function Method({
         onPointerDown={(e) => controls.start(e)}
         disabled={value.disabled}
       >
-        <Icon type="Drag" />
+        <Icon type="Drag" size={20} />
       </button>
 
       <div>
