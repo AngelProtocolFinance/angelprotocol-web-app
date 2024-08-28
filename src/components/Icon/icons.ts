@@ -3,6 +3,7 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  CircleCheck,
   Copy,
   HeartHandshake,
 } from "lucide-react";
@@ -27,7 +28,6 @@ import {
   BiSun,
 } from "react-icons/bi";
 import {
-  BsCheckCircle,
   BsExclamationCircleFill,
   BsFilterLeft,
   BsHourglassSplit,
@@ -102,7 +102,7 @@ export const icons = {
   Blockchain: SiHiveBlockchain,
   Charity: HeartHandshake,
   Check,
-  CheckCircle: BsCheckCircle,
+  CheckCircle: CircleCheck,
   ChevronDown: BiChevronDown,
   ChevronLeft: IoChevronBack,
   ChevronRight: BiChevronRight,
