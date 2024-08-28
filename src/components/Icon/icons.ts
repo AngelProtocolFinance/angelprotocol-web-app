@@ -45,13 +45,7 @@ import {
   FaUniversity,
   FaUserCircle,
 } from "react-icons/fa";
-import {
-  FaArrowRightLong,
-  FaFileCsv,
-  FaGear,
-  FaMoneyBills,
-  FaShapes,
-} from "react-icons/fa6";
+import { FaFileCsv, FaGear, FaMoneyBills, FaShapes } from "react-icons/fa6";
 import { FiCreditCard, FiMenu, FiMoon } from "react-icons/fi";
 import { GoDash, GoLinkExternal, GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
@@ -101,7 +95,6 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export const icons = {
   ArrowRight: ArrowRight,
-  ArrowRightLong: FaArrowRightLong,
   Back: MdOutlineArrowBackIosNew,
   Bitcoin: FaBitcoin,
   Blockchain: SiHiveBlockchain,

@@ -60,7 +60,7 @@ const Path = () => {
         className="mt-8 justify-self-center btn-blue normal-case items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
       >
         <span className="mr-1">Learn more</span>
-        <Icon type="ArrowRightLong" />
+        <Icon type="ArrowRight" size={18} />
       </Link>
     </section>
   );
