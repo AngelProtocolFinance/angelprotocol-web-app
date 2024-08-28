@@ -55,7 +55,7 @@ function Body() {
 
             {p.url && (
               <span className="flex items-center gap-2">
-                <Icon type="Globe" className="h-6 w-6 text-blue-d1" />
+                <Icon type="Globe" className="text-blue-d1" size={20} />
                 <ExtLink
                   href={p.url}
                   title="organization website"

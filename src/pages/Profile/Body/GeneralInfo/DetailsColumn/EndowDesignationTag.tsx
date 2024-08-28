@@ -18,7 +18,7 @@ export default function EndowDesignationTag({
   return (
     <div className="flex flex-col items-start gap-3">
       <Tag>
-        <Icon type={icons[endow_designation]} size={24} /> {endow_designation}
+        <Icon type={icons[endow_designation]} size={22} /> {endow_designation}
       </Tag>
     </div>
   );

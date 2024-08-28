@@ -1,6 +1,7 @@
 import {
   ArrowDownToLine,
   ArrowRight,
+  ChartSpline,
   Check,
   ChevronDown,
   ChevronLeft,
@@ -18,11 +19,17 @@ import {
   FileSpreadsheet,
   Filter,
   Folder,
+  Fuel,
+  Gift,
+  Globe,
   GripVertical,
   HeartHandshake,
+  Hospital,
+  Hourglass,
   LayoutDashboard,
   Mail,
   Minus,
+  Settings,
   SquareArrowOutUpRight,
   X,
 } from "lucide-react";
@@ -37,19 +44,14 @@ import {
   AiOutlineQuestionCircle,
   AiOutlineUpload,
 } from "react-icons/ai";
-import { BiGlobe, BiSave, BiSearchAlt2, BiSun } from "react-icons/bi";
-import {
-  BsExclamationCircleFill,
-  BsHourglassSplit,
-  BsTwitter,
-} from "react-icons/bs";
+import { BiSave, BiSearchAlt2, BiSun } from "react-icons/bi";
+import { BsExclamationCircleFill, BsTwitter } from "react-icons/bs";
 import { CgUndo } from "react-icons/cg";
 import {
   FaBitcoin,
   FaChurch,
   FaDiscord,
   FaFacebook,
-  FaHospital,
   FaInstagram,
   FaLinkedin,
   FaLinkedinIn,
@@ -59,7 +61,7 @@ import {
   FaUniversity,
   FaUserCircle,
 } from "react-icons/fa";
-import { FaGear, FaMoneyBills, FaShapes } from "react-icons/fa6";
+import { FaMoneyBills, FaShapes } from "react-icons/fa6";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
@@ -72,7 +74,6 @@ import {
   IoWarning,
 } from "react-icons/io5";
 import {
-  MdCardGiftcard,
   MdLockOutline,
   MdOutlineFileDownload,
   MdOutlineStickyNote2,
@@ -81,12 +82,7 @@ import {
   MdWidgets,
 } from "react-icons/md";
 import { PiPaypalLogo } from "react-icons/pi";
-import {
-  RiFundsBoxLine,
-  RiGasStationFill,
-  RiMapPin2Line,
-  RiPencilFill,
-} from "react-icons/ri";
+import { RiMapPin2Line, RiPencilFill } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
 import { VscLoading } from "react-icons/vsc";
 
@@ -126,15 +122,15 @@ export const icons = {
   FileUpload: MdOutlineUploadFile,
   Filter,
   Folder,
-  Stocks: RiFundsBoxLine,
-  GasStation: RiGasStationFill,
-  Gear: FaGear,
-  Giftcard: MdCardGiftcard,
-  Globe: BiGlobe,
+  Stocks: ChartSpline,
+  GasStation: Fuel,
+  Gear: Settings,
+  Giftcard: Gift,
+  Globe,
   HeartFill: AiFillHeart,
   HeartOutline: AiOutlineHeart,
-  Hospital: FaHospital,
-  HourglassSplit: BsHourglassSplit,
+  Hospital,
+  HourglassSplit: Hourglass,
   Info: AiOutlineInfoCircle,
   Instagram: FaInstagram,
   Linkedin: FaLinkedin,

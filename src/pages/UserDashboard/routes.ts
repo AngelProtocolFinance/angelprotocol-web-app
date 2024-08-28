@@ -31,7 +31,7 @@ export const linkGroups: LinkGroup[] = [
         to: routes.settings,
         icon: {
           type: "Gear",
-          size: 21,
+          size: 22,
         },
       },
     ],
