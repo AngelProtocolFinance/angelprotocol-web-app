@@ -1,6 +1,7 @@
 import {
   ArrowRight,
   Check,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
@@ -20,7 +21,6 @@ import {
   AiOutlineUpload,
 } from "react-icons/ai";
 import {
-  BiChevronDown,
   BiChevronRight,
   BiGlobe,
   BiSave,
@@ -103,7 +103,7 @@ export const icons = {
   Charity: HeartHandshake,
   Check,
   CheckCircle: CircleCheck,
-  ChevronDown: BiChevronDown,
+  ChevronDown,
   ChevronLeft: IoChevronBack,
   ChevronRight: BiChevronRight,
   CircleMinus: AiOutlineMinusCircle,

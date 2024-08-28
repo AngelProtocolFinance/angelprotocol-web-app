@@ -33,10 +33,7 @@ export default function FAQ({ classes = "", endowId }: Props) {
                 >
                   {faq.question}
                 </span>
-                <DrawerIcon
-                  isOpen={open}
-                  className="shrink-0 -mt-0.5 text-xl"
-                />
+                <DrawerIcon size={18} isOpen={open} className="shrink-0" />
               </DisclosureButton>
               {open && (
                 <DisclosurePanel

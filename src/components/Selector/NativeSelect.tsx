@@ -48,7 +48,7 @@ export const NativeSelect = forwardRef(function Select<V extends ValKey>(
             <span>{props.options?.find((o) => o.value === value)?.label}</span>
             <DrawerIcon
               isOpen={open}
-              size={25}
+              size={18}
               className="justify-self-end dark:text-navy-l2 shrink-0"
             />
           </>

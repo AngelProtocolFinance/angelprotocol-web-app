@@ -105,7 +105,7 @@ export function MultiSelector<
                 : "absolute inset-0 flex justify-end items-center pr-2 rounded active:ring-2 ring-blue-d1 ring-offset-1"
             }`}
           >
-            {({ open }) => <DrawerIcon isOpen={open} size={25} className="" />}
+            {({ open }) => <DrawerIcon isOpen={open} size={20} className="" />}
           </ComboboxButton>
         </div>
         <ComboboxOptions className={`${styles.options} ${cls.options}`}>

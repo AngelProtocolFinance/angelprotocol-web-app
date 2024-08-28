@@ -81,7 +81,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
             ) : (
               <DrawerIcon
                 isOpen={open}
-                size={25}
+                size={20}
                 className={`${isCurrencyError ? "text-red" : ""}`}
                 aria-hidden
               />
