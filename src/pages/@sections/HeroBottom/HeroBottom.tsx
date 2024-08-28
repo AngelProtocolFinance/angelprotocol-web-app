@@ -39,7 +39,7 @@ const HeroBottom = ({ className = "" }) => {
           type="button"
           className="cause-prev p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
         >
-          <Icon type="Back" className="text-2xl" />
+          <Icon type="Back" />
         </button>
         <button
           type="button"

@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import {
   AiFillHeart,
   AiFillSecurityScan,
@@ -66,8 +66,6 @@ import {
   MdCardGiftcard,
   MdDelete,
   MdLockOutline,
-  MdOutlineArrowBackIosNew,
-  MdOutlineArrowForwardIos,
   MdOutlineContentCopy,
   MdOutlineEmail,
   MdOutlineFileDownload,
@@ -95,7 +93,7 @@ import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export const icons = {
   ArrowRight: ArrowRight,
-  Back: MdOutlineArrowBackIosNew,
+  Back: ChevronLeft,
   Bitcoin: FaBitcoin,
   Blockchain: SiHiveBlockchain,
   Charity: FaDonate,
@@ -153,7 +151,7 @@ export const icons = {
   Menu: FiMenu,
   Money: FaMoneyBills,
   Moon: FiMoon,
-  Next: MdOutlineArrowForwardIos,
+  Next: ChevronRight,
   Padlock: MdLockOutline,
   Paypal: PiPaypalLogo,
   Pencil: RiPencilFill,
