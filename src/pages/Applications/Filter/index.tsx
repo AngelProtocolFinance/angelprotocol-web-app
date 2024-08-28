@@ -74,7 +74,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       >
         {({ open }) => (
           <>
-            <Icon className="lg:hidden" type="Filter" size={20} />
+            <Icon className="lg:hidden mr-1" type="Filter" size={16} />
             <div className="uppercase font-semibold text-[0.9375rem] ">
               Filter
             </div>
