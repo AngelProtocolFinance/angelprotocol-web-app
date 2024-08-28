@@ -182,7 +182,7 @@ function LastRowColContent(
         className="w-full flex justify-center"
         onClick={() => showKYCForm(props.id)}
       >
-        <Icon type="FatArrowDownload" className="text-2xl" />
+        <Icon type="FatArrowDownload" size={20} />
       </button>
     );
   }

@@ -1,4 +1,5 @@
 import {
+  ArrowDownToLine,
   ArrowRight,
   Check,
   ChevronDown,
@@ -12,6 +13,9 @@ import {
   Copy,
   CreditCard,
   Crop,
+  Eye,
+  EyeOff,
+  FileSpreadsheet,
   GripVertical,
   HeartHandshake,
   LayoutDashboard,
@@ -54,16 +58,14 @@ import {
   FaUniversity,
   FaUserCircle,
 } from "react-icons/fa";
-import { FaFileCsv, FaGear, FaMoneyBills, FaShapes } from "react-icons/fa6";
+import { FaGear, FaMoneyBills, FaShapes } from "react-icons/fa6";
 import { FiMenu, FiMoon } from "react-icons/fi";
 import { GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
-import { IoMdDownload, IoMdListBox } from "react-icons/io";
+import { IoMdListBox } from "react-icons/io";
 import {
   IoCloseCircle,
-  IoEyeOffOutline,
-  IoEyeOutline,
   IoPeople,
   IoWalletSharp,
   IoWarning,
@@ -116,12 +118,12 @@ export const icons = {
   Exclamation: CircleAlert,
   ExclamationCircleFill: BsExclamationCircleFill,
   ExternalLink: SquareArrowOutUpRight,
-  Eye: IoEyeOutline,
-  EyeSlashed: IoEyeOffOutline,
+  Eye,
+  EyeSlashed: EyeOff,
   Facebook: GrFacebookOption,
   FacebookCircle: FaFacebook,
-  FatArrowDownload: IoMdDownload,
-  FileCSV: FaFileCsv,
+  FatArrowDownload: ArrowDownToLine,
+  FileCSV: FileSpreadsheet,
   FileDownload: MdOutlineFileDownload,
   FileUpload: MdOutlineUploadFile,
   Filter: MdOutlineFilterAlt,
