@@ -16,22 +16,32 @@ export default function Copier({ text, classes, size, children }: Props) {
   const { handleCopy, copied } = useCopier(text);
   const { container, icon } = unpack(classes);
   return (
-    <button className={container} type="button" onClick={handleCopy}>
+    <button
+      className={container + " relative"}
+      type="button"
+      onClick={handleCopy}
+    >
       {(copied && (
         <Icon
           type="Check"
           className={`${icon} cursor-default hover:text-current`}
-          aria-label="Copied!"
           size={size?.check}
+          aria-labelledby="copied"
         />
       )) || (
         <Icon
           type="Copy"
           className={`${icon} cursor-pointer`}
-          aria-label="Copy Address"
           size={size?.copy}
+          aria-labelledby="copy"
         />
       )}
+      <span id="copied" className="invisible absolute">
+        Copied!
+      </span>
+      <span id="copy" className="invisible absolute">
+        Copy Address
+      </span>
       {children}
     </button>
   );
