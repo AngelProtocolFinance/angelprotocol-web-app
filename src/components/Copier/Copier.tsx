@@ -21,14 +21,14 @@ export default function Copier({ text, classes, size, children }: Props) {
         <Icon
           type="Check"
           className={`${icon} cursor-default hover:text-current`}
-          title="Copied!"
+          aria-label="Copied!"
           size={size?.check}
         />
       )) || (
         <Icon
           type="Copy"
           className={`${icon} cursor-pointer`}
-          title="Copy Address"
+          aria-label="Copy Address"
           size={size?.copy}
         />
       )}

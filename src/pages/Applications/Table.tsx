@@ -104,7 +104,7 @@ export default function Table({
                 <Icon
                   size={22}
                   type="Folder"
-                  title="application details"
+                  aria-label="application details"
                   className="inline-block"
                 />
               </Link>

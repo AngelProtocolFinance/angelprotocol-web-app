@@ -56,7 +56,7 @@ export default function Table({ methods, classes = "" }: Props) {
               <Icon
                 size={22}
                 type="Folder"
-                title="bank statement file"
+                aria-label="bank statement file"
                 className="inline-block"
               />
             </Link>

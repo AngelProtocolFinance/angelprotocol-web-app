@@ -18,6 +18,7 @@ import {
   CircleHelp,
   CircleUserRound,
   CircleX,
+  Coins,
   Copy,
   CreditCard,
   Crop,
@@ -61,24 +62,10 @@ import {
   Wallet,
   X,
 } from "lucide-react";
-import { AiFillYoutube, AiOutlineMedium } from "react-icons/ai";
-import { BsTwitter } from "react-icons/bs";
-import {
-  FaBitcoin,
-  FaDiscord,
-  FaFacebook,
-  FaInstagram,
-  FaLinkedin,
-  FaLinkedinIn,
-  FaTelegramPlane,
-  FaTiktok,
-} from "react-icons/fa";
-import { GrFacebookOption } from "react-icons/gr";
 
 export const icons = {
   ArrowRight: ArrowRight,
   Back: ChevronLeft,
-  Bitcoin: FaBitcoin,
   Charity: HeartHandshake,
   Check,
   CheckCircle: CircleCheck,
@@ -88,12 +75,12 @@ export const icons = {
   ChevronRight,
   Close: X,
   CloseCircle: CircleX,
+  Coins,
   Copy,
   CreditCard,
   Crop,
   Dash: Minus,
   Dashboard: LayoutDashboard,
-  Discord: FaDiscord,
   DollarCircle: CircleDollarSign,
   Drag: GripVertical,
   Email: Mail,
@@ -101,8 +88,6 @@ export const icons = {
   ExternalLink: SquareArrowOutUpRight,
   Eye,
   EyeSlashed: EyeOff,
-  Facebook: GrFacebookOption,
-  FacebookCircle: FaFacebook,
   FileCSV: FileSpreadsheet,
   FileDownload: ArrowDownToLine,
   Filter,
@@ -116,13 +101,9 @@ export const icons = {
   Hospital,
   HourglassSplit: Hourglass,
   Info: CircleAlert,
-  Instagram: FaInstagram,
-  Linkedin: FaLinkedin,
-  LinkedinIn: FaLinkedinIn,
   ListBox: ListCheck,
   Loading: LoaderCircle,
   MapPin,
-  Medium: AiOutlineMedium,
   Menu,
   Moon,
   Next: ChevronRight,
@@ -138,9 +119,6 @@ export const icons = {
   Star,
   StickyNote,
   Sun,
-  Telegram: FaTelegramPlane,
-  Tiktok: FaTiktok,
-  Twitter: BsTwitter,
   Undo,
   University,
   Upload: ArrowUpFromLine,
@@ -150,7 +128,6 @@ export const icons = {
   Wallet: Wallet,
   Warning: TriangleAlert,
   Widget: Blocks,
-  Youtube: AiFillYoutube,
 } as const;
 
 export type IconType = keyof typeof icons;
