@@ -60,7 +60,7 @@ export default function DeletePrompt({
           </button>
         )}
       </div>
-      <Icon type="ExclamationCircleFill" size={80} className="mt-6 text-red" />
+      <Icon type="Exclamation" size={80} className="mt-6 text-red" />
 
       <div className="p-6 text-center text-navy-l1 dark:text-navy-l5">
         {message}

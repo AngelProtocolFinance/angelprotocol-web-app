@@ -81,7 +81,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
           </button>
         )}
       </div>
-      <Icon type="ExclamationCircleFill" size={80} className="my-6 text-red" />
+      <Icon type="Exclamation" size={80} className="my-6 text-red" />
 
       <h3 className="text-center text-2xl mb-2 leading-tight px-3 sm:px-8">
         <div className="uppercase">{verdict}</div>
