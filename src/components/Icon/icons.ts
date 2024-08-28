@@ -17,6 +17,7 @@ import {
   EyeOff,
   FileSpreadsheet,
   Filter,
+  Folder,
   GripVertical,
   HeartHandshake,
   LayoutDashboard,
@@ -39,7 +40,6 @@ import {
 import { BiGlobe, BiSave, BiSearchAlt2, BiSun } from "react-icons/bi";
 import {
   BsExclamationCircleFill,
-  BsFilterLeft,
   BsHourglassSplit,
   BsTwitter,
 } from "react-icons/bs";
@@ -75,7 +75,6 @@ import {
   MdCardGiftcard,
   MdLockOutline,
   MdOutlineFileDownload,
-  MdOutlineFolder,
   MdOutlineStickyNote2,
   MdOutlineUploadFile,
   MdVerified,
@@ -88,7 +87,6 @@ import {
   RiMapPin2Line,
   RiPencilFill,
 } from "react-icons/ri";
-import { RxMixerHorizontal } from "react-icons/rx";
 import { SiHiveBlockchain } from "react-icons/si";
 import { VscLoading } from "react-icons/vsc";
 
@@ -127,9 +125,7 @@ export const icons = {
   FileDownload: MdOutlineFileDownload,
   FileUpload: MdOutlineUploadFile,
   Filter,
-  FilterLeft: BsFilterLeft,
-  FilterMixer: RxMixerHorizontal,
-  Folder: MdOutlineFolder,
+  Folder,
   Stocks: RiFundsBoxLine,
   GasStation: RiGasStationFill,
   Gear: FaGear,
