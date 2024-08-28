@@ -1,20 +1,38 @@
+import facebook from "assets/icons/social/facebook.png";
+import linkedin from "assets/icons/social/linkedin.png";
+import telegram from "assets/icons/social/telegram.png";
+import x from "assets/icons/social/x.png";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useModalContext } from "contexts/ModalContext";
 import { useCallback, useState } from "react";
 import ExtLink from "../../ExtLink";
-import Icon, { type IconType } from "../../Icon";
 import Modal from "../../Modal";
 
-type SocialMedia = Extract<
-  IconType,
-  "FacebookCircle" | "Twitter" | "Telegram" | "Linkedin"
->;
+interface SocialMedia {
+  id: "x" | "telegram" | "linkedin" | "fb";
+  title: string;
+  src: string;
+  size: number;
+  handle: string;
+}
 
-const socials: [SocialMedia, number][] = [
-  ["Twitter", 21],
-  ["Telegram", 21],
-  ["Linkedin", 21],
-  ["FacebookCircle", 22],
+const socials: SocialMedia[] = [
+  {
+    id: "linkedin",
+    src: linkedin,
+    title: "LinkedIn",
+    size: 24,
+    handle: APP_NAME,
+  },
+  { id: "fb", src: facebook, title: "Facebook", size: 21, handle: APP_NAME },
+  { id: "x", src: x, title: "X", size: 16, handle: "@BetterDotGiving" },
+  {
+    id: "telegram",
+    src: telegram,
+    title: "Telegram",
+    size: 22,
+    handle: "@bettergiving",
+  },
 ];
 
 type ShareProps = {
@@ -33,27 +51,18 @@ export default function ShareContainer(props: ShareProps) {
         impact through donations.
       </p>
       <div className="flex items-center gap-2 mt-1">
-        {socials.map(([type, size]) => (
-          <Share
-            key={type}
-            iconSize={size}
-            type={type}
-            recipientName={props.recipientName}
-          />
+        {socials.map((s) => (
+          <Share key={s.id} {...s} recipientName={props.recipientName} />
         ))}
       </div>
     </div>
   );
 }
 
-type ShareBtnProps = {
-  type: SocialMedia;
-  iconSize: number;
+interface IShare extends SocialMedia {
   recipientName: string;
-};
-
-function Share(props: ShareBtnProps) {
-  const { type, iconSize } = props;
+}
+function Share(props: IShare) {
   const { showModal } = useModalContext();
 
   return (
@@ -63,23 +72,15 @@ function Share(props: ShareBtnProps) {
       }}
       className="relative size-10 grid place-items-center"
     >
-      <Icon type={type} size={iconSize} className="absolute-center" />
+      <img src={props.src} width={props.size} className="absolute-center" />
     </button>
   );
 }
 
-const handles: { [K in SocialMedia]: string } = {
-  FacebookCircle: APP_NAME,
-  /**
-   * programmatic mentions in linkedin is not possible. Mentions
-   * only work when done inside their post editor
-   */
-  Linkedin: APP_NAME,
-  Twitter: "@BetterDotGiving",
-  Telegram: "@bettergiving",
-};
-
-function Prompt({ type, iconSize, recipientName }: ShareBtnProps) {
+interface IPrompt extends SocialMedia {
+  recipientName: string;
+}
+function Prompt({ recipientName, ...social }: IPrompt) {
   const { closeModal } = useModalContext();
 
   //shareText will always hold some value
@@ -93,12 +94,16 @@ function Prompt({ type, iconSize, recipientName }: ShareBtnProps) {
   return (
     <Modal className="grid content-start fixed-center z-20 border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 text-navy-d4 dark:text-white w-[91%] sm:w-full max-w-[39rem] rounded overflow-hidden">
       <div className="grid place-items-center relative h-16 font-heading font-bold bg-blue-l5 dark:bg-blue-d7 border-b border-gray-l4">
-        Share on {type === "FacebookCircle" ? "Facebook" : type}
+        Share on {social.title}
         <button
           onClick={closeModal}
           className="absolute top-1/2 transform -translate-y-1/2 right-4 w-10 h-10 border border-gray-l4 rounded "
         >
-          <Icon type="Close" className="absolute-center" size={28} />
+          <img
+            src={social.src}
+            className="absolute-center"
+            width={social.size}
+          />
         </button>
       </div>
       <p
@@ -106,15 +111,19 @@ function Prompt({ type, iconSize, recipientName }: ShareBtnProps) {
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l4 rounded"
       >
         I just donated to <span className="font-bold">{recipientName}</span> on{" "}
-        <span className="font-bold">{handles[type]}</span>!{" "}
+        <span className="font-bold">{social.handle}</span>!{" "}
         {`Every gift is invested to provide sustainable funding for nonprofits: Give once, give forever. Help join the cause: ${BASE_URL}.`}
       </p>
       <ExtLink
-        href={generateShareLink(shareText, type)}
-        className="btn-blue btn-donate gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
+        href={generateShareLink(shareText, social.id)}
+        className="btn-outline btn-donate hover:bg-blue-l4 gap-2 min-w-[16rem] mb-6 sm:mb-10 mx-4 sm:justify-self-center sm:w-auto"
       >
         <div className="relative w-8 h-8 grid place-items-center">
-          <Icon type={type} className="absolute-center" size={iconSize} />
+          <img
+            src={social.src}
+            className="absolute-center"
+            width={social.size}
+          />
         </div>
         <span>Share now</span>
       </ExtLink>
@@ -122,25 +131,25 @@ function Prompt({ type, iconSize, recipientName }: ShareBtnProps) {
   );
 }
 
-function generateShareLink(rawText: string, type: SocialMedia) {
+function generateShareLink(rawText: string, type: SocialMedia["id"]) {
   const encodedText = encodeURIComponent(rawText);
   const encodedURL = encodeURIComponent(BASE_URL);
   switch (type) {
-    case "Twitter":
+    case "x":
       //https://developer.twitter.com/en/docs/twitter-for-websites/tweet-button/guides/web-intent
-      return `https://twitter.com/intent/tweet?text=${encodedText}`;
+      return `https://x.com/intent/tweet?text=${encodedText}`;
     /**
      * feed description is depracated
      * https://developers.facebook.com/docs/sharing/reference/feed-dialog#response
      * NOTE 6/3/2024: must rely on OpenGraph metadata
      */
-    case "FacebookCircle":
+    case "fb":
       return `https://www.facebook.com/dialog/share?app_id=1286913222079194&display=popup&href=${encodeURIComponent(
         BASE_URL
       )}&quote=${encodedText}`;
 
     //https://core.telegram.org/widgets/share#custom-buttons
-    case "Telegram":
+    case "telegram":
       return `https://telegram.me/share/url?url=${encodedURL}&text=${encodedText}`;
 
     //Linkedin

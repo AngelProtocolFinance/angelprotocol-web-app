@@ -1,12 +1,11 @@
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
-import type { Link, LinkGroup, SocialMediaLink } from "./types";
+import type { Link, LinkGroup } from "./types";
 
 type LINKS = {
   HEADER_LINKS: Link[];
   HEADER_LINKS_WITH_AUTH: Link[];
   GROUPS_DATA: LinkGroup[];
-  SOCIAL_MEDIA_LINKS: SocialMediaLink[];
 };
 
 const HEADER_LINKS: Link[] = [
@@ -67,48 +66,6 @@ export const CHARITY_LINKS: LINKS = {
         },
         { text: "Terms of Use (Nonprofits)", href: appRoutes.terms_nonprofits },
       ],
-    },
-  ],
-  SOCIAL_MEDIA_LINKS: [
-    {
-      title: "Twitter",
-      icon: {
-        type: "Twitter",
-        size: 24,
-      },
-      href: "https://twitter.com/BetterDotGiving",
-    },
-    {
-      title: "Discord",
-      icon: {
-        type: "Discord",
-        size: 24,
-      },
-      href: "https://discord.gg/RyjzGdwD7s",
-    },
-    {
-      title: "YouTube",
-      icon: {
-        type: "Youtube",
-        size: 24,
-      },
-      href: "https://www.youtube.com/@BetterDotGiving",
-    },
-    {
-      title: "Facebook",
-      icon: {
-        type: "FacebookCircle",
-        size: 21,
-      },
-      href: "https://www.facebook.com/BetterGivingFB/",
-    },
-    {
-      title: "Linkedin",
-      icon: {
-        type: "Linkedin",
-        size: 20,
-      },
-      href: "https://www.linkedin.com/company/better-giving/",
     },
   ],
 };
