@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import { unsdgs } from "constants/unsdgs";
+import { Fingerprint } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import type { EndowmentProfile } from "types/aws";
 import EndowDesignationTag from "./EndowDesignationTag";
@@ -10,7 +10,7 @@ export default function Tags(props: EndowmentProfile) {
       {<EndowDesignationTag {...props} />}
       {props.kyc_donors_only && (
         <Tag>
-          <Icon type="SecurityScan" size={24} /> Donor Verification required
+          <Fingerprint size={20} /> Donor Verification required
         </Tag>
       )}
       {props.sdgs.map((unsdg_num) => (

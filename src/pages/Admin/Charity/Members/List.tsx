@@ -32,7 +32,7 @@ export default function List() {
           })
         }
       >
-        <Icon type="Plus" />
+        <Icon type="Plus" size={16} />
         <span>Invite user</span>
       </button>
       <QueryLoader

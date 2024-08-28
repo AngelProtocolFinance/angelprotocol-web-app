@@ -45,7 +45,7 @@ export default function Summary({
     <div className={container}>
       <BackBtn type="button" onClick={props.onBack} />
       <h4 className="flex items-center text-lg gap-2 my-4">
-        <Icon type="StickyNote" />
+        <Icon type="ListBox" size={20} />
         <span className="font-semibold">Your donation summary</span>
       </h4>
       {props.preSplitContent}

@@ -37,7 +37,7 @@ export default function Menu({ user, signOut, classes }: Props) {
               to={appRoutes.applications}
               className="hover:text-blue-d1 text-sm flex items-center gap-1"
             >
-              <Icon type="SecurityScan" size={22} />
+              <Icon type="SecurityScan" size={18} />
               <span>Applications Dashboard</span>
             </MenuItem>
           )}
@@ -47,7 +47,7 @@ export default function Menu({ user, signOut, classes }: Props) {
               to={appRoutes.banking_applications}
               className="hover:text-blue-d1 text-sm flex items-center gap-1 mt-1"
             >
-              <Icon type="SecurityScan" size={22} />
+              <Icon type="SecurityScan" size={18} />
               <span>Banking applications</span>
             </MenuItem>
           )}

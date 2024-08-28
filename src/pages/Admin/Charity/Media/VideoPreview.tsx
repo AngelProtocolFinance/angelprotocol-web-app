@@ -37,6 +37,7 @@ export default function VideoPreview(props: Media) {
           }}
         >
           <Icon
+            size={19}
             type="Star"
             className={`${
               props.featured ? "text-[#FFA500]" : ""

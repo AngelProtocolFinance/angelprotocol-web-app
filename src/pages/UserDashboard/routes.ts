@@ -15,7 +15,7 @@ export const linkGroups: LinkGroup[] = [
         to: routes.donations,
         icon: {
           type: "DollarCircle",
-          size: 24,
+          size: 22,
         },
       },
       {
@@ -23,7 +23,7 @@ export const linkGroups: LinkGroup[] = [
         to: routes.edit_profile,
         icon: {
           type: "User",
-          size: 20.5,
+          size: 21,
         },
       },
       {

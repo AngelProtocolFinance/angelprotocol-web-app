@@ -54,7 +54,7 @@ const linkGroup2: LinkGroup = {
       to: sidebarRoutes.media,
       icon: {
         type: "Picture",
-        size: 18,
+        size: 20,
       },
     },
     {
@@ -62,7 +62,7 @@ const linkGroup2: LinkGroup = {
       to: sidebarRoutes.banking,
       icon: {
         type: "Wallet",
-        size: 21.7,
+        size: 20,
       },
     },
   ],
@@ -84,7 +84,7 @@ const linkGroup3: LinkGroup = {
       to: "members",
       icon: {
         type: "Users",
-        size: 24,
+        size: 21,
       },
     },
     {
@@ -92,7 +92,7 @@ const linkGroup3: LinkGroup = {
       to: sidebarRoutes.widget_config,
       icon: {
         type: "Widget",
-        size: 24,
+        size: 25,
       },
     },
   ],

@@ -20,6 +20,7 @@ export default function Increments({ classes = "" }) {
         <button type="button" className="text-base font-bold text-green">
           <Icon
             type="Plus"
+            size={17}
             strokeWidth={3}
             onClick={() => append({ value: "0" })}
           />

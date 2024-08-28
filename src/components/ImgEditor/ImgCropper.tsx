@@ -56,7 +56,7 @@ export default function ImgCropper({
           className="text-navy-d4 hover:text-blue"
           onClick={handleSave}
         >
-          <Icon type="Save" size={24} />
+          <Icon type="Save" size={22} />
         </button>
       </div>
       <Image
