@@ -1,5 +1,11 @@
+import discordIcon from "assets/icons/social/discord.svg";
+import facebookIcon from "assets/icons/social/facebook.png";
+import instagramIcon from "assets/icons/social/instagram.png";
+import linkedinIcon from "assets/icons/social/linkedin.png";
+import tiktokIcon from "assets/icons/social/tiktok.png";
+import xIcon from "assets/icons/social/x.png";
+import youtubeIcon from "assets/icons/social/youtube.png";
 import ExtLink from "components/ExtLink";
-import Icon, { type IconType } from "components/Icon";
 import type { EndowmentProfile } from "types/aws";
 
 export default function Socials(
@@ -8,24 +14,22 @@ export default function Socials(
   const { facebook, linkedin, twitter, discord, instagram, youtube, tiktok } =
     props.social_media_urls;
   return (
-    <div className="flex items-center gap-3">
-      {facebook && <SocialsIcon href={facebook} iconType="Facebook" />}
-      {linkedin && <SocialsIcon href={linkedin} iconType="LinkedinIn" />}
-      {twitter && <SocialsIcon href={twitter} iconType="Twitter" />}
-      {discord && <SocialsIcon href={discord} iconType="Discord" />}
-      {instagram && <SocialsIcon href={instagram} iconType="Instagram" />}
-      {youtube && <SocialsIcon href={youtube} iconType="Youtube" />}
-      {tiktok && <SocialsIcon href={tiktok} iconType="Tiktok" />}
+    <div className="flex items-center gap-4">
+      {facebook && <SocialsIcon href={"a"} src={facebookIcon} size={22} />}
+      {linkedin && <SocialsIcon href={linkedin} src={linkedinIcon} size={24} />}
+      {twitter && <SocialsIcon href={twitter} src={xIcon} size={18} />}
+      {discord && <SocialsIcon href={discord} src={discordIcon} size={25} />}
+      {instagram && (
+        <SocialsIcon href={instagram} src={instagramIcon} size={20} />
+      )}
+      {youtube && <SocialsIcon href={youtube} src={youtubeIcon} size={22} />}
+      {tiktok && <SocialsIcon href={tiktok} src={tiktokIcon} size={21} />}
     </div>
   );
 }
 
-const SocialsIcon = (props: { href: string; iconType: IconType }) => (
-  <ExtLink
-    href={props.href}
-    aria-label={props.iconType}
-    className="flex items-center justify-center w-10 h-10 border border-gray-d2 rounded hover:text-blue-d1 hover:border-blue-d1 active:text-blue dark:border-white"
-  >
-    <Icon type={props.iconType} className="w-6 h-6" />
+const SocialsIcon = (props: { href: string; src: string; size: number }) => (
+  <ExtLink href={props.href}>
+    <img src={props.src} width={props.size} />
   </ExtLink>
 );
