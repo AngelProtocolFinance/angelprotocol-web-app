@@ -1,7 +1,9 @@
 import {
   ArrowRight,
+  Check,
   ChevronLeft,
   ChevronRight,
+  Copy,
   HeartHandshake,
 } from "lucide-react";
 import {
@@ -17,7 +19,6 @@ import {
   AiOutlineUpload,
 } from "react-icons/ai";
 import {
-  BiCheck,
   BiChevronDown,
   BiChevronRight,
   BiGlobe,
@@ -70,7 +71,6 @@ import {
   MdCardGiftcard,
   MdDelete,
   MdLockOutline,
-  MdOutlineContentCopy,
   MdOutlineEmail,
   MdOutlineFileDownload,
   MdOutlineFilterAlt,
@@ -101,7 +101,7 @@ export const icons = {
   Bitcoin: FaBitcoin,
   Blockchain: SiHiveBlockchain,
   Charity: HeartHandshake,
-  Check: BiCheck,
+  Check,
   CheckCircle: BsCheckCircle,
   ChevronDown: BiChevronDown,
   ChevronLeft: IoChevronBack,
@@ -109,7 +109,7 @@ export const icons = {
   CircleMinus: AiOutlineMinusCircle,
   Close: IoClose,
   CloseCircle: IoCloseCircle,
-  Copy: MdOutlineContentCopy,
+  Copy,
   CreditCard: FiCreditCard,
   Crop: IoCrop,
   Dash: GoDash,

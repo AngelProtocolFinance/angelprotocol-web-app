@@ -5,7 +5,7 @@ import type { FormValues } from "./types";
 type Freq = FormValues["frequency"];
 
 const styles = {
-  icon: "hidden @[21rem]/frequency:block text-[1.3rem] ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
+  icon: "hidden @[21rem]/frequency:block ml-1 group-aria-checked:text-white text-transparent relative bottom-px",
   option:
     "group border-gray-l3 rounded-lg px-2 @[21rem]/frequency:px-6 border h-[2.625rem] flex items-center justify-center @[21rem]/frequency:justify-start aria-checked:bg-[--accent-primary] aria-checked:text-white aria-checked:border-none select-none",
 };
@@ -28,11 +28,11 @@ export default function Frequency({ value, onChange, error }: Props) {
       <div className="grid grid-cols-2 gap-2 @[21rem]/frequency:flex">
         <Radio value={"subscription" satisfies Freq} className={styles.option}>
           <span>Give Monthly</span>
-          <Icon type="Check" className={styles.icon} />
+          <Icon type="Check" size={16} className={styles.icon} />
         </Radio>
         <Radio value={"one-time" satisfies Freq} className={styles.option}>
           <span>Give Once</span>
-          <Icon type="Check" className={styles.icon} />
+          <Icon type="Check" size={16} className={styles.icon} />
         </Radio>
       </div>
       {error && <p className="field-error static text-left mt-1">{error}</p>}
