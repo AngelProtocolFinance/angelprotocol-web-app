@@ -9,6 +9,7 @@ import {
   CreditCard,
   Crop,
   HeartHandshake,
+  LayoutDashboard,
   Minus,
 } from "lucide-react";
 import {
@@ -72,7 +73,6 @@ import {
   MdOutlineFolder,
   MdOutlineStickyNote2,
   MdOutlineUploadFile,
-  MdSpaceDashboard,
   MdVerified,
   MdWidgets,
 } from "react-icons/md";
@@ -107,7 +107,7 @@ export const icons = {
   CreditCard,
   Crop,
   Dash: Minus,
-  Dashboard: MdSpaceDashboard,
+  Dashboard: LayoutDashboard,
   Delete: MdDelete,
   Discord: FaDiscord,
   DollarCircle: RiMoneyDollarCircleFill,

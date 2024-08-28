@@ -15,7 +15,7 @@ const linkGroup1: LinkGroup = {
       to: sidebarRoutes.dashboard,
       icon: {
         type: "Dashboard",
-        size: 24,
+        size: 20,
       },
       end: true,
     },
