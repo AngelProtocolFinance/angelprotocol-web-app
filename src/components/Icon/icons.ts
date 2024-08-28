@@ -27,8 +27,15 @@ import {
   Hospital,
   Hourglass,
   LayoutDashboard,
+  ListCheck,
+  LoaderCircle,
+  Lock,
   Mail,
+  MapPin,
+  Menu,
   Minus,
+  Moon,
+  Pencil,
   Settings,
   SquareArrowOutUpRight,
   X,
@@ -38,7 +45,6 @@ import {
   AiFillSecurityScan,
   AiFillYoutube,
   AiOutlineHeart,
-  AiOutlineInfoCircle,
   AiOutlineMedium,
   AiOutlinePlus,
   AiOutlineQuestionCircle,
@@ -61,12 +67,10 @@ import {
   FaUniversity,
   FaUserCircle,
 } from "react-icons/fa";
-import { FaMoneyBills, FaShapes } from "react-icons/fa6";
-import { FiMenu, FiMoon } from "react-icons/fi";
+import { FaShapes } from "react-icons/fa6";
 import { GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
-import { IoMdListBox } from "react-icons/io";
 import {
   IoCloseCircle,
   IoPeople,
@@ -74,17 +78,13 @@ import {
   IoWarning,
 } from "react-icons/io5";
 import {
-  MdLockOutline,
   MdOutlineFileDownload,
   MdOutlineStickyNote2,
   MdOutlineUploadFile,
   MdVerified,
   MdWidgets,
 } from "react-icons/md";
-import { PiPaypalLogo } from "react-icons/pi";
-import { RiMapPin2Line, RiPencilFill } from "react-icons/ri";
 import { SiHiveBlockchain } from "react-icons/si";
-import { VscLoading } from "react-icons/vsc";
 
 export const icons = {
   ArrowRight: ArrowRight,
@@ -131,21 +131,19 @@ export const icons = {
   HeartOutline: AiOutlineHeart,
   Hospital,
   HourglassSplit: Hourglass,
-  Info: AiOutlineInfoCircle,
+  Info: CircleAlert,
   Instagram: FaInstagram,
   Linkedin: FaLinkedin,
   LinkedinIn: FaLinkedinIn,
-  ListBox: IoMdListBox,
-  Loading: VscLoading,
-  MapPin: RiMapPin2Line,
+  ListBox: ListCheck,
+  Loading: LoaderCircle,
+  MapPin,
   Medium: AiOutlineMedium,
-  Menu: FiMenu,
-  Money: FaMoneyBills,
-  Moon: FiMoon,
+  Menu,
+  Moon,
   Next: ChevronRight,
-  Padlock: MdLockOutline,
-  Paypal: PiPaypalLogo,
-  Pencil: RiPencilFill,
+  Padlock: Lock,
+  Pencil,
   Picture: ImFilePicture,
   Plus: AiOutlinePlus,
   Question: AiOutlineQuestionCircle,

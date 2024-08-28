@@ -48,7 +48,7 @@ function Body() {
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             {p.hq_country && (
               <span className="flex items-center gap-2 uppercase">
-                <Icon type="MapPin" className="h-6 w-6 text-blue-d1" />
+                <Icon type="MapPin" className="text-blue-d1" size={20} />
                 {p.hq_country}
               </span>
             )}

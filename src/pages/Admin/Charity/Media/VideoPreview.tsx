@@ -51,7 +51,7 @@ export default function VideoPreview(props: Media) {
             })
           }
         >
-          <Icon type="Pencil" />
+          <Icon type="Pencil" size={16} />
         </CRUDBtn>
         <CRUDBtn
           disabled={allControlsDisabled}

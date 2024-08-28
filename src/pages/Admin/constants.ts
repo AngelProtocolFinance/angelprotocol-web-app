@@ -46,7 +46,7 @@ const linkGroup2: LinkGroup = {
       to: sidebarRoutes.programs,
       icon: {
         type: "ListBox",
-        size: 24,
+        size: 22,
       },
     },
     {

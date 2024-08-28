@@ -24,7 +24,7 @@ export default function Menu({ user, signOut, classes }: Props) {
           to={`${appRoutes.user_dashboard}/donations`}
           className=" hover:text-blue-d1 text-sm flex items-center gap-2"
         >
-          <Icon type="Money" className="text-lg" />
+          <Icon type="DollarCircle" size={18} />
           <span>My Donations</span>
         </MenuItem>
         <Organizations userId={user.email} classes="mt-6" />
