@@ -1,6 +1,6 @@
 import facebook from "assets/icons/social/facebook.png";
 import linkedin from "assets/icons/social/linkedin.png";
-import telegram from "assets/icons/social/telegram.svg";
+import telegram from "assets/icons/social/telegram.png";
 import x from "assets/icons/social/x.png";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useModalContext } from "contexts/ModalContext";
@@ -17,14 +17,6 @@ interface SocialMedia {
 }
 
 const socials: SocialMedia[] = [
-  { id: "x", src: x, title: "X", size: 17, handle: "@BetterDotGiving" },
-  {
-    id: "telegram",
-    src: telegram,
-    title: "Telegram",
-    size: 22,
-    handle: "@bettergiving",
-  },
   {
     id: "linkedin",
     src: linkedin,
@@ -33,6 +25,14 @@ const socials: SocialMedia[] = [
     handle: APP_NAME,
   },
   { id: "fb", src: facebook, title: "Facebook", size: 21, handle: APP_NAME },
+  { id: "x", src: x, title: "X", size: 16, handle: "@BetterDotGiving" },
+  {
+    id: "telegram",
+    src: telegram,
+    title: "Telegram",
+    size: 22,
+    handle: "@bettergiving",
+  },
 ];
 
 type ShareProps = {
