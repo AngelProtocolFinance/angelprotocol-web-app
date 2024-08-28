@@ -79,7 +79,7 @@ export default function Table({
           <HeaderButton
             onClick={handleHeaderClick("finalAmountUsd")}
             _activeSortKey={sortKey}
-            _sortKey="amount"
+            _sortKey="finalAmountUsd"
             _sortDirection={sortDirection}
           >
             Donation Value USD

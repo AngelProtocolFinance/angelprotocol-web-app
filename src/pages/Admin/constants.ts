@@ -24,7 +24,7 @@ const linkGroup1: LinkGroup = {
       to: sidebarRoutes.donations,
       icon: {
         type: "DollarCircle",
-        size: 24,
+        size: 22,
       },
     },
   ],

@@ -4,13 +4,17 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
+  ChevronsUpDown,
   CircleCheck,
+  CircleDollarSign,
   Copy,
   CreditCard,
   Crop,
   HeartHandshake,
   LayoutDashboard,
   Minus,
+  X,
 } from "lucide-react";
 import {
   AiFillHeart,
@@ -19,7 +23,6 @@ import {
   AiOutlineHeart,
   AiOutlineInfoCircle,
   AiOutlineMedium,
-  AiOutlineMinusCircle,
   AiOutlinePlus,
   AiOutlineQuestionCircle,
   AiOutlineUpload,
@@ -55,7 +58,6 @@ import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdDownload, IoMdListBox } from "react-icons/io";
 import {
-  IoClose,
   IoCloseCircle,
   IoEyeOffOutline,
   IoEyeOutline,
@@ -65,7 +67,6 @@ import {
 } from "react-icons/io5";
 import {
   MdCardGiftcard,
-  MdDelete,
   MdLockOutline,
   MdOutlineEmail,
   MdOutlineFileDownload,
@@ -82,13 +83,11 @@ import {
   RiFundsBoxLine,
   RiGasStationFill,
   RiMapPin2Line,
-  RiMoneyDollarCircleFill,
   RiPencilFill,
 } from "react-icons/ri";
 import { RxMixerHorizontal } from "react-icons/rx";
 import { SiHiveBlockchain } from "react-icons/si";
-import { TiArrowUnsorted } from "react-icons/ti";
-import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
+import { VscLoading } from "react-icons/vsc";
 
 export const icons = {
   ArrowRight: ArrowRight,
@@ -98,20 +97,19 @@ export const icons = {
   Charity: HeartHandshake,
   Check,
   CheckCircle: CircleCheck,
+  ChevronUp,
   ChevronDown,
+  ChevronsUpDown,
   ChevronRight,
-  CircleMinus: AiOutlineMinusCircle,
-  Close: IoClose,
+  Close: X,
   CloseCircle: IoCloseCircle,
   Copy,
   CreditCard,
   Crop,
   Dash: Minus,
   Dashboard: LayoutDashboard,
-  Delete: MdDelete,
   Discord: FaDiscord,
-  DollarCircle: RiMoneyDollarCircleFill,
-  Down: VscTriangleDown,
+  DollarCircle: CircleDollarSign,
   Drag: RiDraggable,
   Email: MdOutlineEmail,
   Exclamation: FaExclamation,
@@ -170,8 +168,6 @@ export const icons = {
   Twitter: BsTwitter,
   Undo: CgUndo,
   University: FaUniversity,
-  Unsorted: TiArrowUnsorted,
-  Up: VscTriangleUp,
   Upload: AiOutlineUpload,
   User: FaUserCircle,
   Users: IoPeople,

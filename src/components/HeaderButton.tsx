@@ -26,9 +26,9 @@ export function HeaderButton<T>(
         type={
           _activeSortKey === _sortKey
             ? _sortDirection === "asc"
-              ? "Up"
-              : "Down"
-            : "Unsorted"
+              ? "ChevronUp"
+              : "ChevronDown"
+            : "ChevronsUpDown"
         }
         className={`w-4 h-4 shrink-0 ${
           _activeSortKey === _sortKey
