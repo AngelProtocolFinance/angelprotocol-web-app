@@ -1,3 +1,4 @@
+import { ArrowRight } from "lucide-react";
 import {
   AiFillHeart,
   AiFillSecurityScan,
@@ -57,8 +58,6 @@ import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdDownload, IoMdListBox } from "react-icons/io";
 import {
-  IoArrowBackOutline,
-  IoArrowForwardOutline,
   IoChevronBack,
   IoClose,
   IoCloseCircle,
@@ -69,12 +68,10 @@ import {
   IoWalletSharp,
   IoWarning,
 } from "react-icons/io5";
-import { LiaChalkboardTeacherSolid } from "react-icons/lia";
 import {
   MdCardGiftcard,
   MdDelete,
   MdLockOutline,
-  MdOutlineAdminPanelSettings,
   MdOutlineArrowBackIosNew,
   MdOutlineArrowForwardIos,
   MdOutlineContentCopy,
@@ -103,10 +100,7 @@ import { TiArrowUnsorted } from "react-icons/ti";
 import { VscLoading, VscTriangleDown, VscTriangleUp } from "react-icons/vsc";
 
 export const icons = {
-  Advisor: LiaChalkboardTeacherSolid,
-  AdminPanel: MdOutlineAdminPanelSettings,
-  ArrowLeft: IoArrowBackOutline,
-  ArrowRight: IoArrowForwardOutline,
+  ArrowRight: ArrowRight,
   ArrowRightLong: FaArrowRightLong,
   Back: MdOutlineArrowBackIosNew,
   Bitcoin: FaBitcoin,
