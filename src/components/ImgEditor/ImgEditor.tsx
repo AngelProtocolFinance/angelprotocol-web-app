@@ -79,7 +79,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             }
             {props.value.file && !props.error && (
               <IconButton onClick={handleOpenCropper} disabled={props.disabled}>
-                <Icon type="Crop" />
+                <Icon type="Crop" size={16} />
               </IconButton>
             )}
           </div>

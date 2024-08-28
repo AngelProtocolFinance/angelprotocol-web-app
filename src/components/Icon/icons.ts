@@ -7,6 +7,7 @@ import {
   CircleCheck,
   Copy,
   CreditCard,
+  Crop,
   HeartHandshake,
 } from "lucide-react";
 import {
@@ -54,7 +55,6 @@ import { IoMdDownload, IoMdListBox } from "react-icons/io";
 import {
   IoClose,
   IoCloseCircle,
-  IoCrop,
   IoEyeOffOutline,
   IoEyeOutline,
   IoPeople,
@@ -104,7 +104,7 @@ export const icons = {
   CloseCircle: IoCloseCircle,
   Copy,
   CreditCard,
-  Crop: IoCrop,
+  Crop,
   Dash: GoDash,
   Dashboard: MdSpaceDashboard,
   Delete: MdDelete,
