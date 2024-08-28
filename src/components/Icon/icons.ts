@@ -17,6 +17,7 @@ import {
   LayoutDashboard,
   Mail,
   Minus,
+  SquareArrowOutUpRight,
   X,
 } from "lucide-react";
 import {
@@ -55,7 +56,7 @@ import {
 } from "react-icons/fa";
 import { FaFileCsv, FaGear, FaMoneyBills, FaShapes } from "react-icons/fa6";
 import { FiMenu, FiMoon } from "react-icons/fi";
-import { GoLinkExternal, GoSync } from "react-icons/go";
+import { GoSync } from "react-icons/go";
 import { GrFacebookOption } from "react-icons/gr";
 import { ImFilePicture } from "react-icons/im";
 import { IoMdDownload, IoMdListBox } from "react-icons/io";
@@ -114,7 +115,7 @@ export const icons = {
   Email: Mail,
   Exclamation: CircleAlert,
   ExclamationCircleFill: BsExclamationCircleFill,
-  ExternalLink: GoLinkExternal,
+  ExternalLink: SquareArrowOutUpRight,
   Eye: IoEyeOutline,
   EyeSlashed: IoEyeOffOutline,
   Facebook: GrFacebookOption,
