@@ -1,4 +1,9 @@
-import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronLeft,
+  ChevronRight,
+  HeartHandshake,
+} from "lucide-react";
 import {
   AiFillHeart,
   AiFillSecurityScan,
@@ -32,7 +37,6 @@ import {
   FaBitcoin,
   FaChurch,
   FaDiscord,
-  FaDonate,
   FaExclamation,
   FaFacebook,
   FaHospital,
@@ -96,7 +100,7 @@ export const icons = {
   Back: ChevronLeft,
   Bitcoin: FaBitcoin,
   Blockchain: SiHiveBlockchain,
-  Charity: FaDonate,
+  Charity: HeartHandshake,
   Check: BiCheck,
   CheckCircle: BsCheckCircle,
   ChevronDown: BiChevronDown,
