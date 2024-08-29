@@ -47,11 +47,13 @@ function Loaded({
       <div className="grid gap-4 @lg:grid-cols-2">
         <Figure
           title="Savings"
+          tooltip="Funds held in Fidelity Government Money Market (SPAXX)"
           icon={<LiaPiggyBankSolid size={24} />}
           amount={`$ ${humanize(props.donationsBal - props.payoutsMade, 2)}`}
         />
         <Figure
           title="Investments"
+          tooltip="Funds invested in a diversified portfolio comprising (50%) domestic and international equities, (30%) fixed income, (15%) crypto and (10%) cash."
           icon={<BsGraphUpArrow size={16} />}
           amount={`$ ${humanize(props.sustainabilityFundBal, 2)}`}
         />
