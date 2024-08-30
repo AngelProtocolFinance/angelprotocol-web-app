@@ -101,16 +101,18 @@ export default function SetPasswordForm(props: Props) {
         Set new password
       </h3>
       <p className="text-center font-normal max-sm:text-sm mt-2">
-        6-digit security code has been sent to{" "}
-        <span className="font-medium">{props.codeRecipientEmail.obscured}</span>
-        .{" "}
-        <button
-          type="button"
-          className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline hover:cursor-pointer"
-          onClick={() => props.setStep({ type: "init" })}
-        >
-          Edit email
-        </button>
+        <span>6-digit security code has been sent to</span>{" "}
+        <span className="font-medium">{props.codeRecipientEmail.obscured}</span>{" "}
+        <span>- it will take few minutes to arrive</span>
+        <div className="text-center">
+          <button
+            type="button"
+            className="text-center text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline hover:cursor-pointer"
+            onClick={() => props.setStep({ type: "init" })}
+          >
+            Edit email
+          </button>
+        </div>
       </p>
 
       <div className="mt-6 grid gap-3">
@@ -122,7 +124,10 @@ export default function SetPasswordForm(props: Props) {
         />
 
         <span className="mb-3 flex items-center justify-between text-xs sm:text-sm font-medium">
-          <span>Time remaining: 00:{String(counter).padStart(2, "0")}</span>
+          <span>
+            Trouble getting your code? Request a new one in 00:
+            {String(counter).padStart(2, "0")}
+          </span>
           <button
             type="button"
             className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline"
