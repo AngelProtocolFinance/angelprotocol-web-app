@@ -40,11 +40,12 @@ export default function NavDropdown({ links }: Props) {
       </MenuButton>
 
       <MenuItems
+        transition
         anchor={{ to: "bottom end", gap: 10 }}
         as="nav"
-        className="grid isolate z-40 rounded-lg bg-gray-l6 drop-shadow-2xl scroller"
+        className="grid isolate z-40 rounded-lg bg-gray-l6 drop-shadow-2xl scroller origin-top transition duration-100 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
       >
-        <div className="p-5 grid gap-y-2 w-72">
+        <div className="p-5 grid gap-y-2 w-80">
           {links.map((link) => (
             <MenuItem key={link.title}>
               <NavLink to={link.href} end={link.end} className={styler}>
