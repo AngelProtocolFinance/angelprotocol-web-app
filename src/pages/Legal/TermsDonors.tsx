@@ -18,10 +18,10 @@ export function Component() {
       <p className="text-sm text-right mb-6 mt-16 italic">
         Effective August 30, 2024
       </p>
-      <h1 className="text-center font-bold col-span-full text-2xl lg:text-3xl break-words mt-4">
+      <h1 className="text-center font-bold col-span-full text-xl break-words mt-4">
         Donor
       </h1>
-      <h2 className="text-center text-xl mt-4">Terms of Use</h2>
+      <h2 className="text-center text-xl">Terms of Use</h2>
 
       <section className="pt-8">
         <p className="pt-5">
