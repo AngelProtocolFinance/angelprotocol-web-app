@@ -1,3 +1,4 @@
+import { MenuItem } from "@headlessui/react";
 import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import QueryLoader from "components/QueryLoader";
@@ -35,7 +36,8 @@ type LinkProps = {
   route: "admin" | "profile";
 };
 const _Link = (props: LinkProps) => (
-  <Link
+  <MenuItem
+    as={Link}
     to={
       (props.route === "admin" ? appRoutes.admin : appRoutes.marketplace) +
       `/${props.id}`
@@ -44,7 +46,7 @@ const _Link = (props: LinkProps) => (
   >
     <Image src={props.logo} className="object-cover h-[20px] w-[20px]" />
     <span>{props.name ?? `Endowment: ${props.id}`}</span>
-  </Link>
+  </MenuItem>
 );
 
 export function Skeleton() {
