@@ -576,7 +576,7 @@ export function Component() {
           </ol>
         </li>
         <li>
-          <B>8. Miscellaneous Terms and Conditions.</B>
+          <B>9. Miscellaneous Terms and Conditions.</B>
           <ol
             type="a"
             className="list-inside pl-6 indent-4 mt-2 grid gap-y-2 [&>li]:first-letter:font-bold"
