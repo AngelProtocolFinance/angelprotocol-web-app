@@ -604,19 +604,17 @@ export function Component() {
             </li>
             <li>
               d. We may amend this Agreement at any time by posting amended
-              terms. We will send a message to the email address used to
-              register as a NPO, alerting you of such amendments. Except as
-              otherwise expressly stated in such a posting, all amended terms
-              shall automatically be effective and legally binding upon you
-              seven (7) days after having been posted. Your continuation as a
-              NPO will constitute your complete consent and acceptance to all
-              such amended terms. If you do not accept the amended terms you may
-              terminate this Agreement as set forth in Section 9 of this
-              Agreement. Apart from such posting by us, this Agreement may not
-              otherwise be amended except in a written document (i) that
-              expressly references this Agreement and/or any affected amended
-              terms as posted by us and (ii) that is executed by both you and
-              us.
+              terms. Except as otherwise expressly stated in such a posting, all
+              amended terms shall automatically be effective and legally binding
+              upon you seven (7) days after having been posted. Your
+              continuation as a NPO will constitute your complete consent and
+              acceptance to all such amended terms. If you do not accept the
+              amended terms you may terminate this Agreement as set forth in
+              Section 8 of this Agreement. Apart from such posting by us, this
+              Agreement may not otherwise be amended except in a written
+              document (i) that expressly references this Agreement and/or any
+              affected amended terms as posted by us and (ii) that is executed
+              by both you and us.
             </li>
             <li>
               e. Should any provision of this Agreement be held by a court or
