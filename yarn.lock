@@ -924,6 +924,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@bundled-es-modules/tough-cookie@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "@bundled-es-modules/tough-cookie@npm:0.1.6"
+  dependencies:
+    "@types/tough-cookie": "npm:^4.0.5"
+    tough-cookie: "npm:^4.1.4"
+  checksum: 10/4f24a820f02c08c3ca0ff21272317357152093f76f9c8cc182517f61fa426ae53dadc4d68a3d6da5078e8d73f0ff8c0907a9f994c0be756162ba9c7358533e57
+  languageName: node
+  linkType: hard
+
 "@classic-terra/terra.proto@npm:^1.1.0":
   version: 1.1.0
   resolution: "@classic-terra/terra.proto@npm:1.1.0"
@@ -1716,13 +1726,6 @@ __metadata:
     "@motionone/dom": "npm:^10.16.4"
     tslib: "npm:^2.3.1"
   checksum: 10/2400d31bbf5c3e02bc68f4b88d96d9c0672ba646bca0b6566e555cd7e8f14849a645f558f574e658fd90574a0b548b61712ae5edcee055c60288fd9382d711ea
-  languageName: node
-  linkType: hard
-
-"@mswjs/cookies@npm:^1.1.0":
-  version: 1.1.1
-  resolution: "@mswjs/cookies@npm:1.1.1"
-  checksum: 10/85ece5b3e6e480fb86e8970ef35a945fdbc9041cfa2414d9bc15ee407560a8b53175af91d36056bd7ec0b21c6af667dc12989a8f7ba2d59a13b3302e00a624c6
   languageName: node
   linkType: hard
 
@@ -3912,6 +3915,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/tough-cookie@npm:^4.0.5":
+  version: 4.0.5
+  resolution: "@types/tough-cookie@npm:4.0.5"
+  checksum: 10/01fd82efc8202670865928629697b62fe9bf0c0dcbc5b1c115831caeb073a2c0abb871ff393d7df1ae94ea41e256cb87d2a5a91fd03cdb1b0b4384e08d4ee482
+  languageName: node
+  linkType: hard
+
 "@types/trusted-types@npm:^2.0.2":
   version: 2.0.7
   resolution: "@types/trusted-types@npm:2.0.7"
@@ -4502,7 +4512,7 @@ __metadata:
     jsdom: "npm:24.1.0"
     lefthook: "npm:1.6.15"
     mipd: "npm:0.0.7"
-    msw: "npm:2.3.1"
+    msw: "npm:2.4.1"
     nprogress: "npm:0.2.0"
     postcss-import: "npm:16.1.0"
     qrcode.react: "npm:3.1.0"
@@ -6304,13 +6314,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql@npm:^16.8.1":
-  version: 16.9.0
-  resolution: "graphql@npm:16.9.0"
-  checksum: 10/5833f82bb6c31bec120bbf9cd400eda873e1bb7ef5c17974fa262cd82dc68728fda5d4cb859dc8aaa4c4fe4f6fe1103a9c47efc01a12c02ae5cb581d8e4029e2
-  languageName: node
-  linkType: hard
-
 "gsap@npm:3.12.5, gsap@npm:^3.12.5":
   version: 3.12.5
   resolution: "gsap@npm:3.12.5"
@@ -7520,20 +7523,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"msw@npm:2.3.1":
-  version: 2.3.1
-  resolution: "msw@npm:2.3.1"
+"msw@npm:2.4.1":
+  version: 2.4.1
+  resolution: "msw@npm:2.4.1"
   dependencies:
     "@bundled-es-modules/cookie": "npm:^2.0.0"
     "@bundled-es-modules/statuses": "npm:^1.0.1"
+    "@bundled-es-modules/tough-cookie": "npm:^0.1.6"
     "@inquirer/confirm": "npm:^3.0.0"
-    "@mswjs/cookies": "npm:^1.1.0"
     "@mswjs/interceptors": "npm:^0.29.0"
     "@open-draft/until": "npm:^2.1.0"
     "@types/cookie": "npm:^0.6.0"
     "@types/statuses": "npm:^2.0.4"
     chalk: "npm:^4.1.2"
-    graphql: "npm:^16.8.1"
     headers-polyfill: "npm:^4.0.2"
     is-node-process: "npm:^1.2.0"
     outvariant: "npm:^1.4.2"
@@ -7542,13 +7544,16 @@ __metadata:
     type-fest: "npm:^4.9.0"
     yargs: "npm:^17.7.2"
   peerDependencies:
+    graphql: ">= 16.8.x"
     typescript: ">= 4.7.x"
   peerDependenciesMeta:
+    graphql:
+      optional: true
     typescript:
       optional: true
   bin:
     msw: cli/index.js
-  checksum: 10/449df7c48f82eaa3de4b40ca106be232b09dcf7f736b1bb7410109702f803262016db35247b299c1ec378346678f48d1d50752ee18fc90329c2531326cec7ec4
+  checksum: 10/618215e29815cb8305994d5cbaf37d6cdefb247668993957e2515ab822bc92042348a65540de6fc407700e77b3c46dc03ff7bb76ea0ffa44b3583785c9018ee9
   languageName: node
   linkType: hard
 
