@@ -1,6 +1,4 @@
-import lairaJumping from "assets/laira/laira-happy-jump.png";
-import lairaOpenArms from "assets/laira/laira-open-arms.png";
-import lairaSitting from "assets/laira/laira-sitting.png";
+import { laira } from "assets/laira/laira";
 import Image from "components/Image";
 
 type TListItem = {
@@ -15,21 +13,21 @@ const items: TListItem[] = [
     title2: "Built by a nonprofit, for nonprofits",
     description:
       "Register in minutes, we’ll review and get you started right away",
-    image: { src: lairaOpenArms, width: 45 },
+    image: { src: laira.openArms, width: 45 },
   },
   {
     title1: "Simplicity",
     title2: "Less admin work, more funding",
     description:
       "You easily accept all types of donations, we process and grant them out to you while managing all accounting and liability. We remove the hassle of receiving crypto, stock, and DAF funding.",
-    image: { src: lairaSitting, width: 40 },
+    image: { src: laira.sitting, width: 40 },
   },
   {
     title1: "Sustainability",
     title2: "Financial security at your fingertips",
     description:
       "With our innovative Sustainability Fund, you can allow donor gifts to be invested for growth, providing a reliable and growing income stream to provide not just today, but forever",
-    image: { src: lairaJumping, width: 48 },
+    image: { src: laira.jumping, width: 48 },
   },
 ];
 

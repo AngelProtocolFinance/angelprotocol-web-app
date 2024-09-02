@@ -1,4 +1,4 @@
-import character from "assets/laira/laira-waiving.png";
+import { laira } from "assets/laira/laira";
 import Image from "components/Image/Image";
 import { type DonationState, Steps, initDetails } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
@@ -56,7 +56,7 @@ export default function Preview({ classes = "", config }: Props) {
     >
       <div>
         <p className="flex text-navy-d4 text-lg font-heading">
-          <Image src={character} className="h-[45px] mr-2 pb-2" />
+          <Image src={laira.waiving} className="h-[45px] mr-2 pb-2" />
           <span className="uppercase font-bold">Live form preview</span>
         </p>
       </div>
