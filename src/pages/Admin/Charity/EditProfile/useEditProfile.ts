@@ -1,5 +1,5 @@
 import type { ImgLink } from "components/ImgEditor";
-import { TxPrompt } from "components/Prompt";
+import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
@@ -36,8 +36,8 @@ export default function useEditProfile() {
         [fv.image, fv.logo, fv.card_img],
         () => {
           showModal(
-            TxPrompt,
-            { loading: "Uploading images.." },
+            Prompt,
+            { type: "loading", children: "Uploading images.." },
             { isDismissible: false }
           );
         }
