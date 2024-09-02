@@ -41,16 +41,11 @@ export default function SignupForm(props: Props) {
     },
     resolver: yupResolver(
       object({
-        email: requiredString
-          .trim()
-          .strict()
-          .email("invalid email format")
-          .lowercase("must be lowercased"),
+        email: requiredString.trim().strict().email("invalid email format"),
         emailConfirmation: requiredString
           .trim()
           .strict()
           .email("invalid email format")
-          .lowercase("must be lowercased")
           .oneOf([ref("email")], "email mismatch"),
         firstName: requiredString.trim(),
         lastName: requiredString.trim(),
