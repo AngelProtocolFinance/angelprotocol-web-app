@@ -1,3 +1,4 @@
+import { randomLaira } from "assets/laira/laira";
 import Image from "components/Image";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
@@ -85,10 +86,20 @@ export default function SearchDropdown({ classes = "", query }: Props) {
                   key={endow.id}
                   className="flex items-center gap-4 border border-gray-l4 hover:bg-blue-l4 pr-6 rounded-full overflow-clip h-10"
                 >
-                  <Image
-                    src={endow.card_img}
-                    className="h-full aspect-video object-cover hover:"
-                  />
+                  {endow.card_img ? (
+                    <Image
+                      src={endow.card_img}
+                      className="h-full aspect-video object-cover"
+                    />
+                  ) : (
+                    <div className="p-1.5 pr-0 h-full">
+                      <img
+                        src={randomLaira()}
+                        className="h-full object-contain"
+                      />
+                    </div>
+                  )}
+
                   <span className="text-navy-l1">{endow.name}</span>
                 </Link>
               ))}
