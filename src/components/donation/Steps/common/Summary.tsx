@@ -1,5 +1,5 @@
+import { laira } from "assets/laira/laira";
 // TODO: Swap with "pointing" character, once asset is available
-import character from "assets/laira/laira-waiving.png";
 import Image from "components/Image/Image";
 import { unpack } from "helpers";
 import type { ReactNode } from "react";
@@ -74,7 +74,7 @@ export default function Summary({
                 <dt aria-label="sustainability fund" className="text-sm mt-2">
                   Sustainability Fund
                 </dt>
-                <Image src={character} className="inline-block px-1 h-8" />
+                <Image src={laira.waiving} className="inline-block px-1 h-8" />
               </div>
               <Amount classes="text-sm" amount={locked} />
             </div>
@@ -119,7 +119,10 @@ export default function Summary({
       </dl>
       {locked > 0 && (
         <div className="flex py-3">
-          <Image src={character} className="inline-block mt-1 pl-1 pr-2 h-8" />
+          <Image
+            src={laira.waiving}
+            className="inline-block mt-1 pl-1 pr-2 h-8"
+          />
           <div className="mr-auto text-sm text-navy-l3">
             The Sustainability Fund invests your donation for long-term growth
             to provide reliable, ongoing funding. Give today, give forever!

@@ -1,7 +1,4 @@
-import lairaJumping from "assets/laira/laira-happy-jump.png";
-import lairaOpenArms from "assets/laira/laira-open-arms.png";
-import lairaSitting from "assets/laira/laira-sitting.png";
-import lairaStanding from "assets/laira/laira-standing.png";
+import { laira } from "assets/laira/laira";
 import Image from "components/Image";
 import { StepsCarousel } from "components/donation";
 
@@ -15,25 +12,25 @@ const items: TListItem[] = [
     title: "Quick, simple setup",
     description:
       "Register in minutes, we’ll review and get you started right away",
-    image: { src: lairaOpenArms, width: 28 },
+    image: { src: laira.openArms, width: 28 },
   },
   {
     title: "Never miss a donation",
     description:
       "Accept cash, stocks, crypto, and DAF gifts all in one conversion-optimized form",
-    image: { src: lairaSitting, width: 23 },
+    image: { src: laira.sitting, width: 23 },
   },
   {
     title: "Increase funds raised",
     description:
       "Increase funds raised: Choose to have your donations invested to provide sustainable funding",
-    image: { src: lairaJumping, width: 30 },
+    image: { src: laira.jumping, width: 30 },
   },
   {
     title: "Fundraise for free",
     description:
       "Fundraise for free: 100% free. No setup costs, no recurring charges, no platform fees of any kind",
-    image: { src: lairaStanding, width: 20 },
+    image: { src: laira.standing, width: 20 },
   },
 ];
 

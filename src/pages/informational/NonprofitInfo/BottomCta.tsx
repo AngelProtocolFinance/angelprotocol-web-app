@@ -1,4 +1,4 @@
-import waivingLira from "assets/laira/laira-waiving.png";
+import { laira } from "assets/laira/laira";
 import Image from "components/Image";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -33,7 +33,7 @@ export default function BottomCta({ className = "" }) {
         </div>
       </div>
       <Image
-        src={waivingLira}
+        src={laira.waiving}
         className="place-self-center mb-8 order-1 @5xl:order-2"
       />
     </div>

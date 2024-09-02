@@ -1,4 +1,4 @@
-import character from "assets/laira/laira-waiving.png";
+import { laira } from "assets/laira/laira";
 import Image from "components/Image";
 import type { DonationsQueryParams } from "types/aws";
 
@@ -14,7 +14,7 @@ export default function NoDonations({ classes, status }: Props) {
     >
       <Image
         alt="Laira mascot waving"
-        src={character}
+        src={laira.waiving}
         className="max-sm:place-self-center sm:col-start-2 sm:row-start-1 sm:row-span-2"
         width={100}
       />

@@ -1,4 +1,4 @@
-import character from "assets/laira/laira-waiving.png";
+import { laira } from "assets/laira/laira";
 import Copier from "components/Copier";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
@@ -54,7 +54,7 @@ export function Component() {
         <div className="mx-auto flex max-w-md gap-4 bg-blue-l2 p-4 my-4 rounded">
           <Image
             alt="Laira mascot waving"
-            src={character}
+            src={laira.waiving}
             className="max-sm:place-self-center"
             width={30}
           />

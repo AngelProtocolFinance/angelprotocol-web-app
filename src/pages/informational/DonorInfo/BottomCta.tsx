@@ -1,4 +1,4 @@
-import waivingLira from "assets/laira/laira-waiving.png";
+import { laira } from "assets/laira/laira";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
@@ -23,7 +23,7 @@ export default function BottomCta({ className = "" }) {
         </Link>
       </div>
       <Image
-        src={waivingLira}
+        src={laira.waiving}
         className="place-self-center mb-8 order-1 @5xl:order-2"
       />
     </div>
