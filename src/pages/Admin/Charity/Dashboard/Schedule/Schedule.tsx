@@ -59,15 +59,15 @@ export function Schedule(props: Props) {
           <div className="flex items-center">
             <span>Grants</span>
             <Tooltip
-              content={
-                <Content className="max-w-xs bg-navy-d4 p-4 text-white text-sm shadow-lg rounded-lg">
-                  Donations received through Better Giving that will distributed
-                  to your bank account.
-                  <Arrow />
-                </Content>
+              trigger={
+                <Icon type="Question" size={14} className="text-navy-l1 ml-1" />
               }
             >
-              <Icon type="Question" size={14} className="text-navy-l1 ml-1" />
+              <Content className="max-w-xs bg-navy-d4 p-4 text-white text-sm shadow-lg rounded-lg">
+                Donations received through Better Giving that will distributed
+                to your bank account.
+                <Arrow />
+              </Content>
             </Tooltip>
           </div>
 
