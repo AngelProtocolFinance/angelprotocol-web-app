@@ -31,7 +31,7 @@
     "node": "20.16.0"
   },
   "dependencies": {
-    "@better-giving/assets": "1.0.16",
+    "@better-giving/assets": "1.0.17",
     "@cosmjs/encoding": "0.32.3",
     "@ethersproject/abi": "5.7.0",
     "@ethersproject/bignumber": "5.7.0",
