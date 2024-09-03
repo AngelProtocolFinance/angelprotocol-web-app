@@ -3,6 +3,7 @@ import leaf from "assets/icons/leaf.png";
 import sendMoney from "assets/icons/send-money.png";
 import Icon from "components/Icon";
 import Image from "components/Image";
+import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { humanize } from "helpers";
 import type { ReactNode } from "react";
 import type { Allocation } from "types/aws";
@@ -40,7 +41,7 @@ export function AllocationSlider({
   return (
     <div className="grid">
       {/** percentages */}
-      <div className="grid grid-cols-[auto_auto_1fr_auto] gap-x-4 gap-y-2">
+      <div className="grid grid-cols-[auto_auto_1fr_auto_auto] gap-y-2">
         <Row
           title="Grant"
           icon={<Icon type="ArrowRight" className="text-gray" size={20} />}
@@ -90,16 +91,29 @@ interface IRow {
   pct: number;
   amount: number;
 }
-function num(amount: number, pct: number) {
-  return humanize(amount * (pct / 100));
-}
+
 function Row(props: IRow) {
+  const num = props.amount * (props.pct / 100);
+  const isLessThanMin = num !== 0 && num < 50;
   return (
-    <div className="grid grid-cols-subgrid col-span-full items-center">
+    <div className="grid grid-cols-subgrid col-span-full items-center gap-x-1">
       {props.icon}
-      <p className="text-sm">{props.title}</p>
-      <p className="text-gray text-xs text-right">{props.pct}%</p>
-      <p className="text-sm text-right">$ {num(props.amount, props.pct)}</p>
+      <p className="text-sm ml-2">{props.title}</p>
+      <p className="text-gray text-xs text-right mr-2">{props.pct}%</p>
+      <p className={`text-sm text-right ${isLessThanMin ? "text-amber" : ""}`}>
+        $ {humanize(num)}
+      </p>
+
+      {isLessThanMin ? (
+        <Tooltip
+          trigger={<Icon type="Info" size={14} className="text-amber" />}
+        >
+          <Content className="bg-navy-d4 text-white p-3 isolate z-[60] text-xs w-40 rounded-lg">
+            Less than minimum of $50, would be processed next period.
+            <Arrow />
+          </Content>
+        </Tooltip>
+      ) : null}
     </div>
   );
 }

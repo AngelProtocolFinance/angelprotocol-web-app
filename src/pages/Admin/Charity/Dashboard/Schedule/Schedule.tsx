@@ -5,6 +5,7 @@ import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
+import type { ReactNode } from "react";
 import { useEndowmentQuery } from "services/aws/aws";
 import { Edit } from "./Edit";
 
@@ -21,9 +22,6 @@ export function Schedule(props: Props) {
     id,
     fields: ["allocation"],
   });
-
-  const val = (pct?: number) =>
-    pct || pct === 0 ? `$ ${humanize((pct / 100) * props.amount)}` : "---";
 
   return (
     <div className="p-4 grid rounded border border-gray-l4 mt-4">
@@ -52,53 +50,81 @@ export function Schedule(props: Props) {
           in {props.periodRemaining}
         </span>
       </p>
-      <div className="grid grid-cols-[auto_auto_auto_1fr] gap-y-2 gap-x-2">
-        <div className="grid grid-cols-subgrid col-span-full items-center">
-          <Icon type="ArrowRight" className="h-4 w-4 mr-2" />
+      <div className="grid grid-cols-[auto_auto_auto_1fr_auto] gap-y-2 gap-x-2">
+        <Row
+          icon={<Icon type="ArrowRight" className="h-4 w-4 mr-2" />}
+          title={
+            <div className="flex items-center">
+              <span>Grants</span>
+              <Tooltip
+                trigger={
+                  <Icon
+                    type="Question"
+                    size={14}
+                    className="text-navy-l1 ml-1"
+                  />
+                }
+              >
+                <Content className="max-w-xs bg-navy-d4 p-4 text-white text-sm shadow-lg rounded-lg">
+                  Donations received through Better Giving that will distributed
+                  to your bank account.
+                  <Arrow />
+                </Content>
+              </Tooltip>
+            </div>
+          }
+          pct={endow?.allocation?.cash ?? 0}
+          amount={props.amount}
+        />
+        <Row
+          icon={<img src={sendMoney} width={20} className="mr-2" />}
+          title={<span>Savings</span>}
+          pct={endow?.allocation?.liq ?? 50}
+          amount={props.amount}
+        />
 
-          <div className="flex items-center">
-            <span>Grants</span>
-            <Tooltip
-              trigger={
-                <Icon type="Question" size={14} className="text-navy-l1 ml-1" />
-              }
-            >
-              <Content className="max-w-xs bg-navy-d4 p-4 text-white text-sm shadow-lg rounded-lg">
-                Donations received through Better Giving that will distributed
-                to your bank account.
-                <Arrow />
-              </Content>
-            </Tooltip>
-          </div>
-
-          <span className="ml-2 text-navy-l1 text-sm">
-            {endow?.allocation?.cash ?? 0} %
-          </span>
-          <span className="justify-self-end font-bold">
-            {val(endow ? endow.allocation?.cash ?? 0 : undefined)}
-          </span>
-        </div>
-        <div className="grid grid-cols-subgrid col-span-full items-center">
-          <img src={sendMoney} width={20} className="mr-2" />
-          <span>Savings</span>
-          <span className="ml-2 text-navy-l1 text-sm">
-            {endow?.allocation?.liq ?? 50} %
-          </span>
-          <span className="justify-self-end font-bold">
-            {val(endow ? endow.allocation?.liq ?? 50 : undefined)}
-          </span>
-        </div>
-        <div className="grid grid-cols-subgrid col-span-full items-center">
-          <img src={leaf} className="mr-2" />
-          <span>Investments</span>
-          <span className="ml-2 text-navy-l1 text-sm">
-            {endow?.allocation?.lock ?? 50} %
-          </span>
-          <span className="justify-self-end font-bold">
-            {val(endow ? endow.allocation?.lock ?? 50 : undefined)}
-          </span>
-        </div>
+        <Row
+          icon={<img src={leaf} className="mr-2" />}
+          title={<span>Investments</span>}
+          pct={endow?.allocation?.lock ?? 50}
+          amount={props.amount}
+        />
       </div>
+    </div>
+  );
+}
+
+interface IRow {
+  pct: number;
+  icon: ReactNode;
+  title: ReactNode;
+  amount: number;
+}
+function Row({ pct, icon, title, amount }: IRow) {
+  const num = (pct / 100) * amount;
+  const isLessThanMin = num < 50 && num !== 0;
+  return (
+    <div className="grid grid-cols-subgrid col-span-full items-center">
+      {icon}
+      {title}
+      <span className="ml-2 text-navy-l1 text-sm">{pct ?? 50} %</span>
+      <span
+        className={`justify-self-end font-bold ${
+          isLessThanMin ? "text-amber" : ""
+        }`}
+      >
+        $ {humanize((pct / 100) * amount)}
+      </span>
+      {isLessThanMin && (
+        <Tooltip
+          trigger={<Icon type="Info" size={14} className="text-amber" />}
+        >
+          <Content className="p-3 rounded-lg bg-navy-d4 text-white text-sm">
+            Less than min
+            <Arrow />
+          </Content>
+        </Tooltip>
+      )}
     </div>
   );
 }
