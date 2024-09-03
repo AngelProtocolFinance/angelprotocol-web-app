@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DonateMethods, order } from "components/DonateMethods";
+import { DonateMethods } from "components/DonateMethods";
 import { LockedSplitSlider, ProgramSelector } from "components/donation";
 import { CheckField, Field, Form } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
@@ -58,17 +58,8 @@ export default function Configurer({
   const isDescriptionTextShown = watch("isDescriptionTextShown");
   const isTitleShown = watch("isTitleShown");
 
-  const submit: SubmitHandler<FormValues> = async ({ methods, ...fv }) => {
-    const ordered = order(methods);
-    setConfig({ ...fv, methods: ordered });
-
-    /** manually re-set the `methods` to trigger animation which doesnt' trigger in ff scenario
-     *  1. init order-a: [ stripe, daf, crypto, stocks ]
-     *  2. reordered [stripe, crypto, stocks, daf]
-     *  3. submit: becomes order-a (no change - animation doesn't run)
-     */
-    await new Promise((r) => setTimeout(r, 1000));
-    resetField("methods", { defaultValue: ordered });
+  const submit: SubmitHandler<FormValues> = async (fv) => {
+    setConfig(fv);
   };
 
   return (

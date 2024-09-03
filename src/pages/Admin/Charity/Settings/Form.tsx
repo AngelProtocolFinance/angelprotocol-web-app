@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { DonateMethods, fill, order } from "components/DonateMethods";
+import { DonateMethods, fill } from "components/DonateMethods";
 import { LockedSplitSlider } from "components/donation";
 import { CheckField, Field, Form as _Form } from "components/form";
 import { useController, useForm } from "react-hook-form";
@@ -80,28 +80,19 @@ export default function Form(props: Props) {
           programDonateDisabled,
           splitLockPct,
           payout_minimum,
-          donateMethods: dms,
+          donateMethods,
           ...fv
         }) => {
-          const ordered = order(dms);
-          const ids = ordered.filter((m) => !m.disabled).map((m) => m.id);
-
           await updateEndow({
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
             splitLiqPct: 100 - splitLockPct,
             id: props.id,
             payout_minimum: +payout_minimum,
-            donateMethods: order(ids),
+            donateMethods: donateMethods
+              .filter((m) => !m.disabled)
+              .map((m) => m.id),
           });
-
-          /** manually re-set the `methods` to trigger animation which doesnt' trigger in ff scenario
-           *  1. init order-a: [ stripe, daf, crypto, stocks ]
-           *  2. reordered [stripe, crypto, stocks, daf]
-           *  3. submit: becomes order-a (no change - animation doesn't run)
-           */
-          await new Promise((r) => setTimeout(r, 1000));
-          resetField("donateMethods", { defaultValue: ordered });
         }
       )}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"

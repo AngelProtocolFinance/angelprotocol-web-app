@@ -1,4 +1,4 @@
-import { fill, order } from "components/DonateMethods";
+import { fill } from "components/DonateMethods";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { DEFAULT_PROGRAM } from "components/donation";
@@ -44,7 +44,7 @@ function Content({ endowment }: { endowment?: Endowment }) {
     isTitleShown: true,
     liquidSplitPct: endowment?.splitLiqPct ?? 50,
     splitDisabled: endowment?.splitFixed ?? false,
-    methods: order(filled),
+    methods: filled,
     accentPrimary: "#2D89C8",
     accentSecondary: "#E6F1F9",
     program: DEFAULT_PROGRAM,

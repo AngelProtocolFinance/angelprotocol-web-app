@@ -1,5 +1,4 @@
 import flying_character from "assets/images/flying-character.png";
-import { order } from "components/DonateMethods";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import { Steps } from "components/donation";
@@ -53,9 +52,7 @@ function Content({ intent, endowment }: Props) {
             config={{
               splitDisabled: endowment.splitFixed ?? false,
               liquidSplitPct: endowment.splitLiqPct ?? 50,
-              methodIds: endowment.donateMethods
-                ? order(endowment.donateMethods)
-                : undefined,
+              methodIds: endowment.donateMethods,
             }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
