@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import Tooltip from "components/Tooltip";
+import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useErrorContext } from "contexts/ErrorContext";
 import { type PropsWithChildren, useRef } from "react";
 import {
@@ -50,8 +50,16 @@ export default function BookmarkBtn({
   }
 
   return (
-    <>
-      {!isBookmarked && <Tooltip anchorRef={ref} content="Add to favorites" />}
+    <Tooltip
+      content={
+        !isBookmarked ? (
+          <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
+            Add to favorites
+            <Arrow />
+          </Content>
+        ) : null
+      }
+    >
       <button
         ref={ref}
         type="button"
@@ -67,6 +75,6 @@ export default function BookmarkBtn({
         />
         {children}
       </button>
-    </>
+    </Tooltip>
   );
 }

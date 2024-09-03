@@ -1,11 +1,10 @@
 import leaf from "assets/icons/leaf.png";
 import sendMoney from "assets/icons/send-money.png";
 import Icon from "components/Icon";
-import Tooltip from "components/Tooltip";
+import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
-import { useRef } from "react";
 import { useEndowmentQuery } from "services/aws/aws";
 import { Edit } from "./Edit";
 
@@ -25,8 +24,6 @@ export function Schedule(props: Props) {
 
   const val = (pct?: number) =>
     pct || pct === 0 ? `$ ${humanize((pct / 100) * props.amount)}` : "---";
-
-  const grantRef = useRef<HTMLDivElement>(null);
 
   return (
     <div className="p-4 grid rounded border border-gray-l4 mt-4">
@@ -58,16 +55,22 @@ export function Schedule(props: Props) {
       <div className="grid grid-cols-[auto_auto_auto_1fr] gap-y-2 gap-x-2">
         <div className="grid grid-cols-subgrid col-span-full items-center">
           <Icon type="ArrowRight" className="h-4 w-4 mr-2" />
+
           <div className="flex items-center">
             <span>Grants</span>
             <Tooltip
-              anchorRef={grantRef}
-              content="Donations received through Better Giving that will distributed to your bank account."
-            />
-            <div ref={grantRef}>
-              <Icon type="Question" size={14} className="text-navy-l1 ml-0.5" />
-            </div>
+              content={
+                <Content className="max-w-xs bg-navy-d4 p-4 text-white text-sm shadow-lg rounded-lg">
+                  Donations received through Better Giving that will distributed
+                  to your bank account.
+                  <Arrow />
+                </Content>
+              }
+            >
+              <Icon type="Question" size={14} className="text-navy-l1 ml-1" />
+            </Tooltip>
           </div>
+
           <span className="ml-2 text-navy-l1 text-sm">
             {endow?.allocation?.cash ?? 0} %
           </span>

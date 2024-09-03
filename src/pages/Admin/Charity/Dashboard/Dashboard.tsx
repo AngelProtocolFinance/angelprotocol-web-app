@@ -1,9 +1,9 @@
-import ContentLoader from "components/ContentLoader";
-import QueryLoader from "components/QueryLoader";
-import { humanize } from "helpers";
-
 import { skipToken } from "@reduxjs/toolkit/query";
+import ContentLoader from "components/ContentLoader";
 import Icon from "components/Icon";
+import QueryLoader from "components/QueryLoader";
+import { Arrow, Content } from "components/Tooltip";
+import { humanize } from "helpers";
 import { useEndowBalanceQuery } from "services/apes";
 import type { EndowmentBalances } from "types/aws";
 import { useAdminContext } from "../../Context";
@@ -44,13 +44,31 @@ function Loaded({
       <div className="grid gap-4 @lg:grid-cols-2">
         <Figure
           title="Savings"
-          tooltip="Funds held in Fidelity Government Money Market (SPAXX)"
+          tooltip={
+            <Content className="bg-navy-d4 text-white text-sm max-w-xs p-4 rounded-lg">
+              Funds held in Fidelity Government Money Market (SPAXX)
+              <Arrow />
+            </Content>
+          }
           icon={<Icon size={21} type="PiggyBank" strokeWidth={1.5} />}
           amount={`$ ${humanize(props.donationsBal - props.payoutsMade, 2)}`}
         />
         <Figure
           title="Investments"
-          tooltip="Funds invested in a diversified portfolio comprising (50%) domestic and international equities, (30%) fixed income, (15%) crypto and (10%) cash."
+          tooltip={
+            <Content className="bg-navy-d4 text-white text-sm max-w-xs p-4 rounded-lg shadow-lg">
+              <span className="block mb-2">
+                Funds invested in a diversified portfolio comprising
+              </span>
+              <div>
+                <p>50% - domestic and international equities</p>
+                <p>30% - fixed income</p>
+                <p>15% - crypto</p>
+                <p>10% - cash</p>
+              </div>
+              <Arrow />
+            </Content>
+          }
           icon={<Icon type="Stocks" size={16} />}
           amount={`$ ${humanize(props.sustainabilityFundBal, 2)}`}
         />

@@ -1,23 +1,22 @@
-import { useRef } from "react";
 import Icon from "./Icon";
-import Tooltip from "./Tooltip";
-type Props = {
-  classes?: string;
-  size: number;
-};
+import { Arrow, Content, Tooltip } from "./Tooltip";
+type Props = { size: number };
 
-export default function VerifiedIcon({ classes = "", size }: Props) {
-  const ref = useRef<HTMLDivElement>(null);
+export default function VerifiedIcon({ size }: Props) {
   return (
-    <>
-      <Tooltip anchorRef={ref} content="Verified" />
-      <div ref={ref} className={classes}>
-        <Icon
-          type="Verified"
-          size={size}
-          className="text-white inline fill-blue"
-        />
-      </div>
-    </>
+    <Tooltip
+      content={
+        <Content className="bg-navy-d4 text-white px-4 py-2 rounded text-sm">
+          Verified
+          <Arrow className="fill-navy-d4" />
+        </Content>
+      }
+    >
+      <Icon
+        type="Verified"
+        size={size}
+        className="text-white inline fill-blue"
+      />
+    </Tooltip>
   );
 }

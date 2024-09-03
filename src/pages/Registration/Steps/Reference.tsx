@@ -1,5 +1,6 @@
 import Icon, { DrawerIcon } from "components/Icon";
-import { type ReactElement, cloneElement, useState } from "react";
+import { Arrow, Content, Tooltip } from "components/Tooltip";
+import { useState } from "react";
 
 type Props = {
   id: string;
@@ -17,11 +18,20 @@ export default function Reference({ id, classes = "" }: Props) {
         <span className="font-semibold mr-2">Your registration number:</span>
         <span className="block mt-1 md:inline md:mt-0">{id}</span>
 
-        <WithTooltip text={tooltip} classes="before:left-0 before:top-0">
-          <span className="hidden md:inline-block ml-[1.333rem] top-0.5">
-            <Icon type="Question" size={13} />
-          </span>
-        </WithTooltip>
+        <Tooltip
+          content={
+            <Content className="p-3 text-xs bg-navy-d4 text-white max-w-xs rounded">
+              {tooltip}
+              <Arrow />
+            </Content>
+          }
+        >
+          <Icon
+            type="Question"
+            size={13}
+            className="hidden md:inline-block ml-[1.333rem]"
+          />
+        </Tooltip>
         <button
           onClick={() => {
             setIsTooltipOpen((p) => !p);
@@ -42,17 +52,3 @@ export default function Reference({ id, classes = "" }: Props) {
 
 const tooltip =
   "Enter this number on the registration page to continue from where you finished.";
-
-function WithTooltip(props: {
-  classes?: string;
-  children: ReactElement; //note: ::before doesn't seem to work on SVG elements;
-  text: string;
-}) {
-  return cloneElement(props.children, {
-    "data-before-content": props.text,
-    className:
-      props.children.props.className +
-      ` ${props.classes ?? "" /** control position */} relative before:w-48 before:z-10 before:content-[attr(data-before-content)] hover:before:block before:hidden before:absolute  
-      before:text-xs before:bg-gray-l6 before:dark:bg-blue-d6 before:text-navy-l1 before:dark:text-navy-l2 before:border before:border-gray-l4 before:p-2 before:rounded`,
-  });
-}
