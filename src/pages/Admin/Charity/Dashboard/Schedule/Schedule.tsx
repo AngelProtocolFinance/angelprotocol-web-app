@@ -1,13 +1,16 @@
 import leaf from "assets/icons/leaf.png";
 import sendMoney from "assets/icons/send-money.png";
 import Icon from "components/Icon";
+import { Info } from "components/Status";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
 import type { ReactNode } from "react";
 import { useEndowmentQuery } from "services/aws/aws";
+import type { Allocation } from "types/aws";
 import { Edit } from "./Edit";
+import { MIN_PROCESSING_AMOUNT, unprocessed } from "./common";
 
 interface Props {
   amount: number;
@@ -23,6 +26,16 @@ export function Schedule(props: Props) {
     fields: ["allocation"],
   });
 
+  const allocation: Allocation = !endow
+    ? { cash: 0, liq: 50, lock: 50 }
+    : {
+        cash: endow.allocation?.cash ?? 0,
+        liq: endow.allocation?.liq ?? 50,
+        lock: endow.allocation?.lock ?? 50,
+      };
+
+  const leftover = unprocessed(allocation, props.amount);
+
   return (
     <div className="p-4 grid rounded border border-gray-l4 mt-4">
       <div className="flex flex-row items-center justify-between space-y-0">
@@ -33,11 +46,7 @@ export function Schedule(props: Props) {
           className="hover:text-blue disabled:text-gray"
           onClick={() => {
             if (!endow) throw "@dev: no endow";
-            showModal(Edit, {
-              ...(endow.allocation ?? { cash: 0, liq: 50, lock: 50 }),
-              amount: props.amount,
-              id,
-            });
+            showModal(Edit, { ...allocation, amount: props.amount, id });
           }}
         >
           <Icon type="Pencil" className="h-4 w-4" />
@@ -50,6 +59,14 @@ export function Schedule(props: Props) {
           in {props.periodRemaining}
         </span>
       </p>
+      {leftover > 0 && (
+        <Info classes="!text-amber-d1 mb-4">
+          We process donations monthly, with a minimum balance requirement of $
+          {MIN_PROCESSING_AMOUNT} per bucket. If your balance in any bucket is
+          below ${MIN_PROCESSING_AMOUNT}, it will be carried over to the next
+          month until it exceeds $50
+        </Info>
+      )}
       <div className="grid grid-cols-[auto_auto_auto_1fr_auto] gap-y-2 gap-x-2">
         <Row
           icon={<Icon type="ArrowRight" className="h-4 w-4 mr-2" />}
@@ -110,21 +127,11 @@ function Row({ pct, icon, title, amount }: IRow) {
       <span className="ml-2 text-navy-l1 text-sm">{pct ?? 50} %</span>
       <span
         className={`justify-self-end font-bold ${
-          isLessThanMin ? "text-amber" : ""
+          isLessThanMin ? "text-amber-d1" : ""
         }`}
       >
         $ {humanize((pct / 100) * amount)}
       </span>
-      {isLessThanMin && (
-        <Tooltip
-          trigger={<Icon type="Info" size={14} className="text-amber" />}
-        >
-          <Content className="p-3 rounded-lg bg-navy-d4 text-white text-sm">
-            Less than min
-            <Arrow />
-          </Content>
-        </Tooltip>
-      )}
     </div>
   );
 }

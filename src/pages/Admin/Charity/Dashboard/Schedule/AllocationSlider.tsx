@@ -3,7 +3,7 @@ import leaf from "assets/icons/leaf.png";
 import sendMoney from "assets/icons/send-money.png";
 import Icon from "components/Icon";
 import Image from "components/Image";
-import { Arrow, Content, Tooltip } from "components/Tooltip";
+
 import { humanize } from "helpers";
 import type { ReactNode } from "react";
 import type { Allocation } from "types/aws";
@@ -14,6 +14,7 @@ interface Props {
   /** cash, liq, lock */
   value: Allocation;
   onChange: (value: Allocation) => void;
+  classes?: string;
 }
 
 export type Boundary = [number, number];
@@ -35,13 +36,14 @@ export function AllocationSlider({
   value,
   onChange,
   amount,
+  classes = "",
 }: Props) {
   const boundary = toBoundary(value);
 
   return (
-    <div className="grid">
+    <div className={`${classes} grid gap-y-4`}>
       {/** percentages */}
-      <div className="grid grid-cols-[auto_auto_1fr_auto_auto] gap-y-2">
+      <div className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2">
         <Row
           title="Grant"
           icon={<Icon type="ArrowRight" className="text-gray" size={20} />}
@@ -67,7 +69,7 @@ export function AllocationSlider({
         value={boundary}
         minStepsBetweenThumbs={0}
         onValueChange={(b: Boundary) => onChange(toAlloc(b))}
-        className="group/slider relative flex items-center select-none touch-none mt-5"
+        className="group/slider relative flex items-center select-none touch-none mt-2"
         disabled={disabled}
       >
         <Slider.Track
@@ -100,20 +102,11 @@ function Row(props: IRow) {
       {props.icon}
       <p className="text-sm ml-2">{props.title}</p>
       <p className="text-gray text-xs text-right mr-2">{props.pct}%</p>
-      <p className={`text-sm text-right ${isLessThanMin ? "text-amber" : ""}`}>
+      <p
+        className={`text-sm text-right ${isLessThanMin ? "text-amber-d1" : ""}`}
+      >
         $ {humanize(num)}
       </p>
-
-      {isLessThanMin ? (
-        <Tooltip
-          trigger={<Icon type="Info" size={14} className="text-amber" />}
-        >
-          <Content className="bg-navy-d4 text-white p-3 isolate z-[60] text-xs w-40 rounded-lg">
-            Less than minimum of $50, would be processed next period.
-            <Arrow />
-          </Content>
-        </Tooltip>
-      ) : null}
     </div>
   );
 }

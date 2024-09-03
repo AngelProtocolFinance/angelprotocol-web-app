@@ -78,6 +78,8 @@ module.exports = {
         l6: "#FFFFFF",
       },
       amber: {
+        d2: "#b45309",
+        d1: "#d97706",
         DEFAULT: "#f59e0b",
         l3: "#fcd34d",
         l4: "#fef3c7",
