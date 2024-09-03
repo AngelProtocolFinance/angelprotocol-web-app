@@ -6,8 +6,6 @@ import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
 import { useRef } from "react";
-import { IoArrowForwardOutline } from "react-icons/io5"; //icon-arrow-right
-import { RiPencilFill } from "react-icons/ri"; //icon-pencil
 import { useEndowmentQuery } from "services/aws/aws";
 import { Edit } from "./Edit";
 
@@ -46,7 +44,7 @@ export function Schedule(props: Props) {
             });
           }}
         >
-          <RiPencilFill className="h-4 w-4" />
+          <Icon type="Pencil" className="h-4 w-4" />
           <span className="sr-only">Edit allocation settings</span>
         </button>
       </div>
@@ -58,7 +56,7 @@ export function Schedule(props: Props) {
       </p>
       <div className="grid grid-cols-[auto_auto_auto_1fr] gap-y-2 gap-x-2">
         <div className="grid grid-cols-subgrid col-span-full items-center">
-          <IoArrowForwardOutline className="h-4 w-4 mr-2" />
+          <Icon type="ArrowRight" className="h-4 w-4 mr-2" />
           <div className="flex items-center">
             <span>Grants</span>
             <Tooltip

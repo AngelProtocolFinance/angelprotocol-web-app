@@ -1,12 +1,9 @@
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { humanize } from "helpers";
-import { BsGraphUpArrow } from "react-icons/bs"; //icon-line-graph-up
-import { IoPeople } from "react-icons/io5"; //icon-people
-import { LiaPiggyBankSolid } from "react-icons/lia"; //icon-piggy-bank
-import { MdOutlineOutput } from "react-icons/md"; //icon-output
 
 import { skipToken } from "@reduxjs/toolkit/query";
+import Icon from "components/Icon";
 import { useEndowBalanceQuery } from "services/apes";
 import type { EndowmentBalances } from "types/aws";
 import { useAdminContext } from "../../Context";
@@ -48,18 +45,18 @@ function Loaded({
         <Figure
           title="Savings"
           tooltip="Funds held in Fidelity Government Money Market (SPAXX)"
-          icon={<LiaPiggyBankSolid size={24} />}
+          icon={<Icon size={24} type="PiggyBank" />}
           amount={`$ ${humanize(props.donationsBal - props.payoutsMade, 2)}`}
         />
         <Figure
           title="Investments"
           tooltip="Funds invested in a diversified portfolio comprising (50%) domestic and international equities, (30%) fixed income, (15%) crypto and (10%) cash."
-          icon={<BsGraphUpArrow size={16} />}
+          icon={<Icon type="Stocks" size={16} />}
           amount={`$ ${humanize(props.sustainabilityFundBal, 2)}`}
         />
         <Figure
           title="Contributions count"
-          icon={<IoPeople size={17} />}
+          icon={<Icon type="Users" size={17} />}
           amount={props.contributionsCount.toString()}
         />
       </div>
@@ -74,7 +71,7 @@ function Loaded({
       </h3>
       <Figure
         title="Pending allocations"
-        icon={<MdOutlineOutput size={19} className="text-gray" />}
+        icon={<Icon type="Timer" size={19} className="text-gray" />}
         amount={`$ ${humanize(props.payoutsPending, 2)}`}
       />
       <Schedule

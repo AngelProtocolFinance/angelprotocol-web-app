@@ -1,8 +1,8 @@
 import * as Slider from "@radix-ui/react-slider";
 import leaf from "assets/icons/leaf.png";
 import sendMoney from "assets/icons/send-money.png";
+import Icon from "components/Icon";
 import Image from "components/Image";
-import { IoArrowForwardOutline } from "react-icons/io5"; //icon-arrow-right
 import type { Allocation } from "types/aws";
 
 type Props = {
@@ -34,7 +34,7 @@ export function AllocationSlider({ disabled = false, value, onChange }: Props) {
       {/** percentages */}
       <div className="grid grid-cols-[auto_auto_1fr] gap-x-4 gap-y-2">
         <div className="grid grid-cols-subgrid col-span-full items-center">
-          <IoArrowForwardOutline className="text-gray" size={20} />
+          <Icon type="ArrowRight" className="text-gray" size={20} />
           <p className="text-sm">Grant</p>
           <p className="text-right">{value.cash}%</p>
         </div>
