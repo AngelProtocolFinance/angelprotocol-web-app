@@ -5,8 +5,5 @@ export type FV = {
   hide_bg_tip: boolean;
   sfCompounded: boolean;
   programDonateDisabled: boolean;
-
-  /** in USD */
-  payout_minimum: string;
   donateMethods: TDonateMethod[];
 };

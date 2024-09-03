@@ -106,7 +106,6 @@ export type Endowment = {
   published?: boolean;
   /** allowed by default */
   progDonationsAllowed?: boolean;
-  payout_minimum?: number;
   donateMethods?: DonateMethodId[];
 };
 
@@ -158,7 +157,6 @@ export type EndowmentSettingsAttributes = Extract<
   | "sfCompounded"
   | "hide_bg_tip"
   | "progDonationsAllowed"
-  | "payout_minimum"
   | "donateMethods"
 >;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..

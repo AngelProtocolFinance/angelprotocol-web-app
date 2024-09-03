@@ -14,7 +14,6 @@ export default function Settings() {
     "sfCompounded",
     "hide_bg_tip",
     "progDonationsAllowed",
-    "payout_minimum",
     "donateMethods",
   ]);
 

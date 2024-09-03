@@ -1,11 +1,11 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods, fill } from "components/DonateMethods";
-import { CheckField, Field, RhfForm } from "components/form";
+import { CheckField, RhfForm } from "components/form";
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useForm } from "react-hook-form";
-import { schema, stringNumber } from "schemas/shape";
+import { schema } from "schemas/shape";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
 import type { TDonateMethod } from "types/components";
 import { array, string } from "yup";
@@ -16,7 +16,6 @@ import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import type { FV } from "./types";
 
 type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
-const PAYOUT_MIN_USD = 50;
 
 export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();
@@ -26,10 +25,6 @@ export default function Form(props: Props) {
     resolver: yupResolver(
       schema<FV>({
         receiptMsg: string().max(MAX_RECEIPT_MSG_CHAR, "exceeds max"),
-        payout_minimum: stringNumber(
-          (s) => s.required("required"),
-          (n) => n.min(PAYOUT_MIN_USD, `must be greater than ${PAYOUT_MIN_USD}`)
-        ),
         donateMethods: array().test(
           "",
           "at least one payment option should be active",
@@ -44,7 +39,6 @@ export default function Form(props: Props) {
       sfCompounded: props.sfCompounded ?? false,
       hide_bg_tip: props.hide_bg_tip ?? false,
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
-      payout_minimum: `${props.payout_minimum ?? 50}`,
       donateMethods: fill(props.donateMethods),
     },
   });
@@ -70,12 +64,7 @@ export default function Form(props: Props) {
         reset();
       }}
       onSubmit={handleSubmit(
-        async ({
-          programDonateDisabled,
-          payout_minimum,
-          donateMethods,
-          ...fv
-        }) => {
+        async ({ programDonateDisabled, donateMethods, ...fv }) => {
           if (props.id === BG_ID && fv.hide_bg_tip === false) {
             return displayError(
               "BG donation flow should not show BG tip screen"
@@ -86,7 +75,6 @@ export default function Form(props: Props) {
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
             id: props.id,
-            payout_minimum: +payout_minimum,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
               .map((m) => m.id),
@@ -124,24 +112,6 @@ export default function Form(props: Props) {
       </div>
 
       <HideBGTipCheckbox />
-
-      <Field
-        placeholder={`$${PAYOUT_MIN_USD}`}
-        required
-        name="payout_minimum"
-        label="Payout Minimum"
-        classes={{
-          label: "font-medium text-base",
-        }}
-        tooltip={
-          <span className="text-navy-l1 text-sm italic">
-            Minimum amount of funds your current account must reach before
-            triggering a Payout to your Nonprofit's connected Bank Account. For
-            example, it can be useful to reduce the total number of payments
-            made if the receiving bank charges a fee per deposit transaction.
-          </span>
-        }
-      />
 
       <h5 className="mt-12 text-2xl">Marketplace settings</h5>
 
