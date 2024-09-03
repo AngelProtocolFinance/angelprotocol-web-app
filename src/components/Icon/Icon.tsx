@@ -1,7 +1,7 @@
-import type { IconBaseProps } from "react-icons";
+import type { LucideProps } from "lucide-react";
 import { type IconType, icons } from "./icons";
 
-interface IconProps extends IconBaseProps {
+interface IconProps extends LucideProps {
   type: IconType;
 }
 

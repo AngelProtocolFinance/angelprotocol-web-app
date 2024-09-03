@@ -42,7 +42,7 @@ export default function Milestones({ programId, milestones }: Props) {
           type="button"
           className="btn-outline-filled text-sm w-full @md:w-52 py-2"
         >
-          <Icon type="Plus" className="mr-2" />
+          <Icon type="Plus" className="mr-2" size={16} />
           <span>{isLoading ? "Adding.." : "Add"} milestone</span>
         </button>
       </div>

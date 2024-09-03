@@ -16,7 +16,7 @@ export default function ContinueBtn({
       className={`btn-blue bg-[--accent-primary] hover:enabled:bg-[--accent-primary] btn-donate ${className}`}
     >
       <span className="mr-4">{text}</span>
-      <Icon type="ArrowRight" className="text-lg" />
+      <Icon type="ArrowRight" size={18} />
     </button>
   );
 }

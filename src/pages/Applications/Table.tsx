@@ -102,9 +102,9 @@ export default function Table({
                 className="text-center w-full inline-block hover:text-blue-d1"
               >
                 <Icon
-                  size={24}
+                  size={22}
                   type="Folder"
-                  title="application details"
+                  aria-label="application details"
                   className="inline-block"
                 />
               </Link>

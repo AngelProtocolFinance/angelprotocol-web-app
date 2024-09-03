@@ -15,7 +15,7 @@ export default function TokenSelector({
         {({ open }) => (
           <>
             <span>{token.symbol}</span>
-            <DrawerIcon isOpen={open} size={24} />
+            <DrawerIcon isOpen={open} size={20} />
           </>
         )}
       </PopoverButton>

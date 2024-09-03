@@ -81,7 +81,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
           </button>
         )}
       </div>
-      <Icon type="ExclamationCircleFill" size={80} className="my-6 text-red" />
+      <Icon type="Exclamation" size={80} className="my-6 text-red" />
 
       <h3 className="text-center text-2xl mb-2 leading-tight px-3 sm:px-8">
         <div className="uppercase">{verdict}</div>
@@ -109,7 +109,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
 
       <div className="flex items-center gap-2 mb-6">
         <Status classes="bg-gray-d2">Pending</Status>
-        <Icon type="ChevronRight" />
+        <Icon type="ChevronRight" size={20} />
         {verdict === "approve" ? (
           <Status classes="bg-green">Approved</Status>
         ) : (

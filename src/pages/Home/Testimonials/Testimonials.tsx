@@ -21,13 +21,13 @@ const Testimonials = () => {
         type="button"
         className="swip-prev p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-3/4 -translate-y-1/2 right-[90%]"
       >
-        <Icon type="Back" className="text-2xl" />
+        <Icon type="Back" />
       </button>
       <button
         type="button"
         className="swip-next p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-3/4 -translate-y-1/2 left-[90%]"
       >
-        <Icon type="Next" className="text-2xl" />
+        <Icon type="Next" />
       </button>
 
       <Swiper

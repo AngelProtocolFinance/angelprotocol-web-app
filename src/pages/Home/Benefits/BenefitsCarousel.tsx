@@ -11,13 +11,13 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
         type="button"
         className="swip-prev p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-3/4"
       >
-        <Icon type="Back" className="text-2xl" />
+        <Icon type="Back" />
       </button>
       <button
         type="button"
         className="swip-next p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-3/4"
       >
-        <Icon type="Next" className="text-2xl" />
+        <Icon type="Next" />
       </button>
 
       <Swiper

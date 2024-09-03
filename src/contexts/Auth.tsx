@@ -34,7 +34,7 @@ export default function withAuth<Props>(
     if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {
       return (
         <div className="grid content-start place-items-center py-20">
-          <Icon type="ExclamationCircleFill" size={80} className="text-red" />
+          <Icon type="Exclamation" size={80} className="text-red" />
           <p className="text-xl mt-8">Unauthorized</p>
         </div>
       );

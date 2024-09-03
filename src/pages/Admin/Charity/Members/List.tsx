@@ -32,7 +32,7 @@ export default function List() {
           })
         }
       >
-        <Icon type="Plus" />
+        <Icon type="Plus" size={16} />
         <span>Invite user</span>
       </button>
       <QueryLoader
@@ -112,7 +112,7 @@ function Loaded({ members, classes = "" }: LoadedProps) {
                 type="button"
                 className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
               >
-                <Icon type="Delete" size={16} />
+                <Icon type="Dash" size={16} />
               </button>
             </td>
 

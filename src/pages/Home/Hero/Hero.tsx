@@ -28,7 +28,7 @@ const Hero = ({ classes = "" }) => {
         className="mt-8 isolate justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
       >
         <span className="ml-1">Join us</span>
-        <Icon type="ArrowRightLong" />
+        <Icon type="ArrowRight" size={18} />
         <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
       </Link>
     </section>

@@ -37,6 +37,7 @@ export default function VideoPreview(props: Media) {
           }}
         >
           <Icon
+            size={19}
             type="Star"
             className={`${
               props.featured ? "text-[#FFA500]" : ""
@@ -51,7 +52,7 @@ export default function VideoPreview(props: Media) {
             })
           }
         >
-          <Icon type="Pencil" />
+          <Icon type="Pencil" size={16} />
         </CRUDBtn>
         <CRUDBtn
           disabled={allControlsDisabled}
@@ -64,7 +65,7 @@ export default function VideoPreview(props: Media) {
             }
           }}
         >
-          <Icon type="Delete" />
+          <Icon type="Dash" />
         </CRUDBtn>
       </div>
       {/** render only thumbnails on lists */}

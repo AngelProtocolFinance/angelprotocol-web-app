@@ -12,8 +12,8 @@ export function Confirmed({ classes = "", children }: Props) {
       classes={classes + " text-sm text-green mr-2"}
       icon="Check"
       iconOptions={{
-        size: 22,
-        className: "mr-2 bottom-[2px]",
+        size: 16,
+        className: "mr-2",
       }}
     >
       {children}

@@ -35,7 +35,7 @@ export const ChainSelector = forwardRef<HTMLInputElement, Props>(
         />
 
         <ComboboxButton className="absolute inset-y-0 right-5">
-          {({ open }) => <DrawerIcon isOpen={open} size={25} />}
+          {({ open }) => <DrawerIcon isOpen={open} size={20} />}
         </ComboboxButton>
 
         <Options searchText={searchText} />

@@ -33,7 +33,7 @@ export default function NavDropdown({ links }: Props) {
         />
         <Icon
           type="ChevronDown"
-          size={24}
+          size={20}
           className="text-blue-d7 data-[open]:text-blue-d7/70 max-sm:hidden transition duration-150 ease-in-out group-hover:text-blue-d7/80"
           aria-hidden="true"
         />

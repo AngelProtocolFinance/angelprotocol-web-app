@@ -63,11 +63,7 @@ function PromptIcon({
       );
     case "error":
       return (
-        <Icon
-          type="ExclamationCircleFill"
-          size={80}
-          className={common + " text-red"}
-        />
+        <Icon type="Exclamation" size={80} className={common + " text-red"} />
       );
     case "loading":
       return <LoaderRing thickness={12} classes={common + " h-24"} />;

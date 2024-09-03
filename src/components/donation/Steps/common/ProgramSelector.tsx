@@ -50,7 +50,7 @@ export function ProgramSelector({
             <span>{program.label}</span>
             <DrawerIcon
               isOpen={open}
-              size={25}
+              size={20}
               className="justify-self-end shrink-0"
             />
           </>

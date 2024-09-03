@@ -1,5 +1,5 @@
+import type { LucideProps } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import type { IconBaseProps } from "react-icons";
 import type { IconType } from "../Icon";
 
 export type StatusProps<T extends JSX.Element | IconType> = PropsWithChildren<{
@@ -7,5 +7,5 @@ export type StatusProps<T extends JSX.Element | IconType> = PropsWithChildren<{
   inline?: boolean;
   classes?: string;
   gap?: string;
-  iconOptions?: T extends IconType ? IconBaseProps : never;
+  iconOptions?: T extends IconType ? LucideProps : never;
 }>;

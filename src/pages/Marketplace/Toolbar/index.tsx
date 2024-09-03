@@ -15,7 +15,7 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
         onClick={() => showModal(Filter, {})}
         className="btn-blue justify-start justify-self-start rounded-lg px-3 py-2 text-sm"
       >
-        <Icon type="FilterMixer" size={24} className="mr-2" />
+        <Icon type="Filter" size={16} className="mr-2" />
         <span>Filters</span>
       </button>
       <Search classes="order-first col-span-2 md:order-none md:col-span-1" />

@@ -12,7 +12,11 @@ export default function VerifiedIcon({ classes = "", size }: Props) {
     <>
       <Tooltip anchorRef={ref} content="Verified" />
       <div ref={ref} className={classes}>
-        <Icon type="Verified" size={size} className="text-blue inline" />
+        <Icon
+          type="Verified"
+          size={size}
+          className="text-white inline fill-blue"
+        />
       </div>
     </>
   );

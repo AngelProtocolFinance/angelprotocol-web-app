@@ -72,7 +72,7 @@ export default function Filter({
       >
         {({ open }) => (
           <>
-            <Icon className="@5xl:hidden" type="Filter" size={20} />
+            <Icon className="@5xl:hidden mr-1" type="Filter" size={16} />
             <div className="uppercase font-semibold text-[0.9375rem]">
               Filter
             </div>

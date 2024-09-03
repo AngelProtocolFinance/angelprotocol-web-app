@@ -44,7 +44,7 @@ export function Component() {
         to={".."}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
       >
-        <Icon type="ChevronLeft" className="text-[1em]" />
+        <Icon type="Back" className="text-[1em]" />
         <span>Go Back</span>
       </Link>
       <QueryLoader

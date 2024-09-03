@@ -55,6 +55,7 @@ export default function EndowmentStatus({
           <Icon
             type="HourglassSplit"
             className="relative bottom-px inline mr-2"
+            size={18}
           />
           <span className="max-sm:text-center">
             Your application has been submitted for review

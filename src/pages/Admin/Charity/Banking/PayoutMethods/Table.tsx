@@ -54,9 +54,9 @@ export default function Table({ methods, classes = "" }: Props) {
               className="text-center w-full inline-block hover:text-blue-d1"
             >
               <Icon
-                size={24}
+                size={22}
                 type="Folder"
-                title="bank statement file"
+                aria-label="bank statement file"
                 className="inline-block"
               />
             </Link>

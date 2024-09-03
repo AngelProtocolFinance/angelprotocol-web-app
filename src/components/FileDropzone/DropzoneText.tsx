@@ -18,7 +18,7 @@ export default function DropzoneText({
   if (isFilesEmpty && isPreviewsEmpty) {
     return (
       <div className="grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none">
-        <Icon type="FileUpload" size={24} className="mb-[1.125rem]" />
+        <Icon type="Upload" size={20} className="mb-[1.125rem]" />
         <p className="font-semibold mb-1">Upload file</p>
         <span>Click to Browse or Drag &amp; Drop</span>
       </div>

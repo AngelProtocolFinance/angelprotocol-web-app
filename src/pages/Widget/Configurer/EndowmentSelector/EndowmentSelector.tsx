@@ -41,7 +41,7 @@ export default function EndowmentSelector() {
 
       <ComboboxButton>
         {({ open }) => (
-          <DrawerIcon isOpen={open} size={25} className="ml-auto mr-1" />
+          <DrawerIcon isOpen={open} size={20} className="ml-auto mr-1" />
         )}
       </ComboboxButton>
 

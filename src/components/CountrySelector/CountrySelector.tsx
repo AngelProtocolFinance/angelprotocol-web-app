@@ -58,7 +58,7 @@ export default function CountrySelector<
       </span>
 
       <ComboboxButton>
-        {({ open }) => <DrawerIcon isOpen={open} size={25} className="mr-1" />}
+        {({ open }) => <DrawerIcon isOpen={open} size={20} className="mr-1" />}
       </ComboboxButton>
 
       <ComboboxInput

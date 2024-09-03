@@ -47,7 +47,7 @@ function _List<T extends ValKey>(
               <span>{props.value.label}</span>
               <DrawerIcon
                 isOpen={open}
-                size={25}
+                size={20}
                 className="justify-self-end dark:text-navy-l2 shrink-0"
               />
             </>

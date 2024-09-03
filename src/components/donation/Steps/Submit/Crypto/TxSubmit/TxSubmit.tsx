@@ -98,7 +98,7 @@ export default function TxSubmit({ wallet, donation, classes = "" }: Props) {
           <ErrorStatus classes="text-sm">An error occurred</ErrorStatus>
         ) : isSuccess(estimate) ? (
           <p className="text-sm text-navy-l1 flex items-center gap-1">
-            <Icon type="GasStation" className="text-base" />
+            <Icon type="GasStation" size={14} />
             <span>
               {humanize(estimate.fee.amount, 6)} {estimate.fee.symbol}
             </span>

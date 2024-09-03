@@ -39,7 +39,7 @@ const HeroBottom = ({ className = "" }) => {
           type="button"
           className="cause-prev p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
         >
-          <Icon type="Back" className="text-2xl" />
+          <Icon type="Back" />
         </button>
         <button
           type="button"
@@ -90,7 +90,7 @@ const HeroBottom = ({ className = "" }) => {
         className="z-10 mt-16 justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full font-heading relative"
       >
         <span className="ml-1">Explore All Causes</span>
-        <Icon type="ArrowRightLong" className="text-lg" />
+        <Icon type="ArrowRight" size={20} />
       </Link>
       <p className="bg-[#FFEECC] font-gochi text-2xl z-[22] px-4 justify-self-center mt-4">
         from all around the globe

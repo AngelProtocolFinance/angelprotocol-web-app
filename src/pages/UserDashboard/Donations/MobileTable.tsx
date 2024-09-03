@@ -54,7 +54,7 @@ export default function MobileTable({
                 } w-full grid grid-cols-[auto_1fr_auto] divide-x divide-blue-l2`}
               >
                 <DrawerIcon
-                  size={24}
+                  size={20}
                   className={`${
                     open ? "text-blue-d1" : ""
                   } w-12 place-self-center`}
@@ -131,7 +131,7 @@ function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
   if (props.status === "final") {
     return (
       <button className="block" onClick={() => showKYCForm(props.id)}>
-        <Icon type="FatArrowDownload" className="text-2xl" />
+        <Icon type="FileDownload" size={20} />
       </button>
     );
   }

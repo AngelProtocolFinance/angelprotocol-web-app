@@ -81,7 +81,9 @@ export default function Sorter() {
               onClick={() => toggleDirection(sort)}
               className="mr-3"
             >
-              <Icon type={sort.direction === "asc" ? "Up" : "Down"} />
+              <Icon
+                type={sort.direction === "asc" ? "ChevronUp" : "ChevronDown"}
+              />
             </button>
           </>
         )}

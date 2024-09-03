@@ -36,7 +36,7 @@ function Body() {
                 {(p.claimed ?? true) && (
                   <VerifiedIcon
                     classes="relative inline bottom-px mr-2"
-                    size={24}
+                    size={27}
                   />
                 )}
                 <span>{p.name}</span>
@@ -48,14 +48,14 @@ function Body() {
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             {p.hq_country && (
               <span className="flex items-center gap-2 uppercase">
-                <Icon type="MapPin" className="h-6 w-6 text-blue-d1" />
+                <Icon type="MapPin" className="text-blue-d1" size={20} />
                 {p.hq_country}
               </span>
             )}
 
             {p.url && (
               <span className="flex items-center gap-2">
-                <Icon type="Globe" className="h-6 w-6 text-blue-d1" />
+                <Icon type="Globe" className="text-blue-d1" size={20} />
                 <ExtLink
                   href={p.url}
                   title="organization website"

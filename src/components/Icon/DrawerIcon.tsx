@@ -1,11 +1,11 @@
-import type { IconBaseProps } from "react-icons";
+import type { LucideProps } from "lucide-react";
 import Icon from "./Icon";
 
 export function DrawerIcon({
   isOpen,
   className,
   ...props
-}: IconBaseProps & { isOpen: boolean }) {
+}: LucideProps & { isOpen: boolean }) {
   return (
     <Icon
       {...props}

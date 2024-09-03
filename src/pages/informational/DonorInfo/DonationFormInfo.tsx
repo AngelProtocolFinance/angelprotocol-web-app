@@ -47,7 +47,7 @@ function ListItem(props: TListItem) {
         />
       ) : (
         <Icon
-          type="Shapes"
+          type="Star"
           className="col-start-1 row-span-2 text-gray mt-1 text-lg @6xl:text-xl"
         />
       )}

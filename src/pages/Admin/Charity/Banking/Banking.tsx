@@ -54,10 +54,10 @@ export default function Banking() {
   return (
     <>
       <Link
-        to={`../${adminRoutes.banking}`}
+        to={".."}
         className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm uppercase"
       >
-        <Icon type="Back" size={12} />
+        <Icon type="Back" size={18} />
         <span>Back</span>
       </Link>
       <Group

@@ -13,6 +13,7 @@ export function LoadingStatus({
       icon={
         <Icon
           {...icon}
+          size={icon?.size ?? 20}
           type="Loading"
           className={`animate-spin ${icon?.className || ""}`}
         />

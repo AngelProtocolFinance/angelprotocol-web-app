@@ -71,7 +71,7 @@ export default function SubscriptionForm() {
 function SuccessMessage() {
   return (
     <span className="flex gap-1 w-full text-xs">
-      <Icon type="Check" />
+      <Icon type="Check" size={14} />
       <p>
         The form was sent successfully. By doing so, you have agreed to our
         privacy policy
