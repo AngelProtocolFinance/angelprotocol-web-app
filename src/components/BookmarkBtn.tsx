@@ -14,11 +14,7 @@ type Props = PropsWithChildren<
   Pick<EndowmentBookmark, "endowId"> & { classes?: string }
 >;
 
-export default function BookmarkBtn({
-  endowId,
-  children,
-  classes = "",
-}: Props) {
+export default function BookmarkBtn({ endowId, classes = "" }: Props) {
   const { user } = useGetter((state) => state.auth);
   const userEmail = userIsSignedIn(user) ? user.email : "";
   const ref = useRef<HTMLButtonElement>(null);
