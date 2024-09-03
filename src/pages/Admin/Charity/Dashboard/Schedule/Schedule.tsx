@@ -40,6 +40,7 @@ export function Schedule(props: Props) {
             if (!endow) throw "@dev: no endow";
             showModal(Edit, {
               ...(endow.allocation ?? { cash: 0, liq: 50, lock: 50 }),
+              amount: props.amount,
               id,
             });
           }}

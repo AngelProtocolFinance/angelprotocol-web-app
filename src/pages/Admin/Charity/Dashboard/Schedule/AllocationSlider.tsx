@@ -3,14 +3,17 @@ import leaf from "assets/icons/leaf.png";
 import sendMoney from "assets/icons/send-money.png";
 import Icon from "components/Icon";
 import Image from "components/Image";
+import { humanize } from "helpers";
+import type { ReactNode } from "react";
 import type { Allocation } from "types/aws";
 
-type Props = {
+interface Props {
+  amount: number;
   disabled?: boolean;
   /** cash, liq, lock */
   value: Allocation;
   onChange: (value: Allocation) => void;
-};
+}
 
 export type Boundary = [number, number];
 
@@ -26,28 +29,36 @@ const toAlloc = ([b1, b2]: Boundary): Allocation => {
   };
 };
 
-export function AllocationSlider({ disabled = false, value, onChange }: Props) {
+export function AllocationSlider({
+  disabled = false,
+  value,
+  onChange,
+  amount,
+}: Props) {
   const boundary = toBoundary(value);
 
   return (
-    <div className="grid gap-5">
+    <div className="grid">
       {/** percentages */}
-      <div className="grid grid-cols-[auto_auto_1fr] gap-x-4 gap-y-2">
-        <div className="grid grid-cols-subgrid col-span-full items-center">
-          <Icon type="ArrowRight" className="text-gray" size={20} />
-          <p className="text-sm">Grant</p>
-          <p className="text-right">{value.cash}%</p>
-        </div>
-        <div className="grid grid-cols-subgrid col-span-full items-center">
-          <Image src={sendMoney} width={20} />
-          <p className="text-sm">Savings</p>
-          <p className="text-right">{value.liq}%</p>
-        </div>
-        <div className="grid grid-cols-subgrid col-span-full items-center">
-          <Image src={leaf} className="" />
-          <p className="text-sm">Investment</p>
-          <p className="text-right">{value.lock}%</p>
-        </div>
+      <div className="grid grid-cols-[auto_auto_1fr_auto] gap-x-4 gap-y-2">
+        <Row
+          title="Grant"
+          icon={<Icon type="ArrowRight" className="text-gray" size={20} />}
+          pct={value.cash}
+          amount={amount}
+        />
+        <Row
+          title="Savings"
+          icon={<Image src={sendMoney} width={20} />}
+          pct={value.liq}
+          amount={amount}
+        />
+        <Row
+          title="Investment"
+          icon={<Image src={leaf} className="" />}
+          pct={value.lock}
+          amount={amount}
+        />
       </div>
 
       {/** slider */}
@@ -55,7 +66,7 @@ export function AllocationSlider({ disabled = false, value, onChange }: Props) {
         value={boundary}
         minStepsBetweenThumbs={0}
         onValueChange={(b: Boundary) => onChange(toAlloc(b))}
-        className="group/slider relative flex items-center select-none touch-none"
+        className="group/slider relative flex items-center select-none touch-none mt-5"
         disabled={disabled}
       >
         <Slider.Track
@@ -69,6 +80,26 @@ export function AllocationSlider({ disabled = false, value, onChange }: Props) {
         <Slider.Thumb className="block size-5 rounded-full bg-gray-d1 shadow-md  group-aria-disabled/slider:bg-gray" />
         <Slider.Thumb className="block size-5 rounded-full bg-white shadow-md border border-gray-l4 group-aria-disabled/slider:bg-gray" />
       </Slider.Root>
+    </div>
+  );
+}
+
+interface IRow {
+  title: string;
+  icon: ReactNode;
+  pct: number;
+  amount: number;
+}
+function num(amount: number, pct: number) {
+  return humanize(amount * (pct / 100));
+}
+function Row(props: IRow) {
+  return (
+    <div className="grid grid-cols-subgrid col-span-full items-center">
+      {props.icon}
+      <p className="text-sm">{props.title}</p>
+      <p className="text-gray text-xs text-right">{props.pct}%</p>
+      <p className="text-sm text-right">$ {num(props.amount, props.pct)}</p>
     </div>
   );
 }
