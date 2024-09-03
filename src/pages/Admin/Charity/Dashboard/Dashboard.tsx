@@ -45,7 +45,7 @@ function Loaded({
         <Figure
           title="Savings"
           tooltip="Funds held in Fidelity Government Money Market (SPAXX)"
-          icon={<Icon size={24} type="PiggyBank" />}
+          icon={<Icon size={21} type="PiggyBank" strokeWidth={1.5} />}
           amount={`$ ${humanize(props.donationsBal - props.payoutsMade, 2)}`}
         />
         <Figure
