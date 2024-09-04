@@ -49,6 +49,7 @@ export default function Form(props: Props) {
         code={usdOption.code}
         rate={usdOption.rate}
         increments={props.init.config?.increments}
+        classes="mb-4"
       />
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
