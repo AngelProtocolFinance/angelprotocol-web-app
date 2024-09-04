@@ -33,7 +33,6 @@ export default function Configurer({
   const {
     handleSubmit,
     reset: hookFormReset,
-    resetField,
     formState: { isDirty, errors, isSubmitting },
     setValue,
     watch,

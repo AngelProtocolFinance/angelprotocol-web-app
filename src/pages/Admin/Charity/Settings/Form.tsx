@@ -52,7 +52,6 @@ export default function Form(props: Props) {
   const {
     reset,
     handleSubmit,
-    resetField,
     formState: { isSubmitting, isDirty, errors },
     control,
   } = methods;
