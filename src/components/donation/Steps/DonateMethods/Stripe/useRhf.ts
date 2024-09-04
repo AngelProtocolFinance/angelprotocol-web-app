@@ -3,8 +3,9 @@ import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import type { Currency } from "types/components";
+import type { OnIncrement } from "../../common/Incrementers";
 import { DEFAULT_PROGRAM, usdOption } from "../../common/constants";
-import type { FormValues as FV, FormProps, OnIncrement } from "./types";
+import type { FormValues as FV, FormProps } from "./types";
 
 export function useRhf(props: Omit<FormProps, "currencies">) {
   const initial: FV = {

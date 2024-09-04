@@ -1,27 +1,32 @@
 import { type FormHTMLAttributes, forwardRef } from "react";
 import { FormProvider, type UseFormReturn } from "react-hook-form";
 
-type Props = FormHTMLAttributes<HTMLFormElement> & {
-  methods?: UseFormReturn<any, any, any>;
+type El = HTMLFormElement;
+
+interface IForm extends FormHTMLAttributes<El> {
   disabled?: boolean;
-};
-export default forwardRef<HTMLFormElement, Props>(function Form(
-  { methods, disabled, children, ...props },
-  ref
-) {
-  const form = (
-    <form ref={ref} {...props}>
-      {disabled ? (
+}
+
+export const Form = forwardRef<El, IForm>(
+  ({ disabled, children, ...props }, ref) => {
+    return (
+      <form ref={ref} {...props}>
         <fieldset disabled={disabled} className="contents">
           {children}
         </fieldset>
-      ) : (
-        children
-      )}
-    </form>
+      </form>
+    );
+  }
+);
+
+interface Props extends IForm {
+  methods: UseFormReturn<any, any, any>;
+}
+
+export default forwardRef<El, Props>(({ methods, ...props }, ref) => {
+  return (
+    <FormProvider {...methods}>
+      <Form {...props} ref={ref} />
+    </FormProvider>
   );
-
-  if (!methods) return form;
-
-  return <FormProvider {...methods}>{form}</FormProvider>;
 });

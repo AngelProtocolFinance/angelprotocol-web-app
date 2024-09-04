@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods, fill } from "components/DonateMethods";
 import { LockedSplitSlider } from "components/donation";
-import { CheckField, Field, Form as _Form } from "components/form";
+import { CheckField, Field, RhfForm } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
@@ -52,7 +52,6 @@ export default function Form(props: Props) {
   const {
     reset,
     handleSubmit,
-    resetField,
     formState: { isSubmitting, isDirty, errors },
     control,
   } = methods;
@@ -68,7 +67,7 @@ export default function Form(props: Props) {
   });
 
   return (
-    <_Form
+    <RhfForm
       disabled={isSubmitting}
       methods={methods}
       onReset={(e) => {
@@ -198,6 +197,6 @@ export default function Form(props: Props) {
           Submit changes
         </button>
       </div>
-    </_Form>
+    </RhfForm>
   );
 }

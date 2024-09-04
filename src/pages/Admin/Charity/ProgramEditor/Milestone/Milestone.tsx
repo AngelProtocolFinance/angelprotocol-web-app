@@ -7,7 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { DrawerIcon } from "components/Icon";
 import ImgEditor from "components/ImgEditor/ImgEditor";
 import { RichTextEditor } from "components/RichText";
-import { Field, Form, Label, dateToFormFormat } from "components/form";
+import { Field, Label, RhfForm, dateToFormFormat } from "components/form";
 import { useForm } from "react-hook-form";
 import type { Milestone as TMilestone } from "types/aws";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
@@ -53,7 +53,7 @@ export default function Milestone(props: Props) {
       </div>
 
       <DisclosurePanel
-        as={Form}
+        as={RhfForm}
         className={({ open }) =>
           `${
             open ? "border-t border-gray-l4" : ""

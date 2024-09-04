@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods } from "components/DonateMethods";
 import { LockedSplitSlider, ProgramSelector } from "components/donation";
-import { CheckField, Field, Form } from "components/form";
+import { CheckField, Field, RhfForm } from "components/form";
 import type { Dispatch, SetStateAction } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import type { WidgetConfig } from "types/widget";
@@ -33,7 +33,6 @@ export default function Configurer({
   const {
     handleSubmit,
     reset: hookFormReset,
-    resetField,
     formState: { isDirty, errors, isSubmitting },
     setValue,
     watch,
@@ -63,7 +62,7 @@ export default function Configurer({
   };
 
   return (
-    <Form
+    <RhfForm
       disabled={isSubmitting}
       className={`${classes} @container/configurer`}
       methods={methods}
@@ -196,6 +195,6 @@ export default function Configurer({
           </button>
         </div>
       </div>
-    </Form>
+    </RhfForm>
   );
 }
