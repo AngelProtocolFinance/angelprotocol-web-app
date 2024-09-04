@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Icon from "components/Icon";
 import Modal from "components/Modal";
 import Prompt from "components/Prompt";
-import { Field, Form } from "components/form";
+import { Field, RhfForm } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { type UseFormReturn, useForm } from "react-hook-form";
@@ -63,7 +63,7 @@ export default function VideoEditor(props: Props) {
           });
         }
       })}
-      as={Form}
+      as={RhfForm}
       methods={methods}
       className="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >

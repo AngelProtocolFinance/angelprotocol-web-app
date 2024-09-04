@@ -15,7 +15,7 @@ export function useRhf(props: Props) {
     register,
     control,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<FV>({
     defaultValues: props.details || initial,
     resolver: yupResolver(
@@ -37,6 +37,7 @@ export function useRhf(props: Props) {
     handleSubmit,
     isSubmitting,
     register,
+    errors,
     //controllers
     program,
   };

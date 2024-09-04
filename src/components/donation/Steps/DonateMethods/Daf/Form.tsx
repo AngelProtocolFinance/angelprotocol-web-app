@@ -40,6 +40,7 @@ export default function Form(props: Props) {
         classes={{ label: "font-semibold", container: "field-donate mt-1" }}
         required
         tooltip="The minimum donation amount will depend on your DAF provider."
+        error={rhf.errors.amount?.message}
       />
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (

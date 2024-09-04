@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthError, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
-import { Field, Form } from "components/form";
+import { Field, RhfForm } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useState } from "react";
 import { type UseFormReturn, useForm } from "react-hook-form";
@@ -27,7 +27,7 @@ export default function ConfirmForm(props: Props) {
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
 
   return (
-    <Form
+    <RhfForm
       className={`${props.classes ?? ""} grid`}
       disabled={isSubmitting || isRequestingNewCode}
       methods={methods}
@@ -93,6 +93,6 @@ export default function ConfirmForm(props: Props) {
       >
         Resend code
       </button>
-    </Form>
+    </RhfForm>
   );
 }

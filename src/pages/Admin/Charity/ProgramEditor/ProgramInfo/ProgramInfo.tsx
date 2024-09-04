@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import Group from "components/Group";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
-import { Field, Form, Label } from "components/form";
+import { Field, Label, RhfForm } from "components/form";
 import { useForm } from "react-hook-form";
 import type { Program } from "types/aws";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
@@ -33,7 +33,7 @@ export default function ProgramInfo(props: Program) {
 
   return (
     <Group title="Program information">
-      <Form
+      <RhfForm
         onSubmit={handleSubmit(submit)}
         methods={methods}
         disabled={isSubmitting}
@@ -80,7 +80,7 @@ export default function ProgramInfo(props: Program) {
         >
           Save changes
         </button>
-      </Form>
+      </RhfForm>
     </Group>
   );
 }
