@@ -2,6 +2,7 @@ import CurrencySelector from "components/CurrencySelector";
 import { NativeField as Field, Form as FormContainer } from "components/form";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import Incrementers from "../../common/Incrementers";
 import { ProgramSelector } from "../../common/ProgramSelector";
 import { usdOption } from "../../common/constants";
 import { nextFormState } from "../helpers";
@@ -41,6 +42,13 @@ export default function Form(props: Props) {
         required
         tooltip="The minimum donation amount will depend on your DAF provider."
         error={rhf.errors.amount?.message}
+      />
+
+      <Incrementers
+        onIncrement={rhf.onIncrement}
+        code={usdOption.code}
+        rate={usdOption.rate}
+        increments={props.init.config?.increments}
       />
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (

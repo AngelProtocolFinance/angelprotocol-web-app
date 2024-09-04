@@ -1,6 +1,7 @@
 import { DONATION_INCREMENTS } from "constants/common";
 import { humanize, roundDownToNum } from "helpers";
-import type { OnIncrement } from "./types";
+
+export type OnIncrement = (increment: number) => void;
 
 interface Props {
   rate: number;

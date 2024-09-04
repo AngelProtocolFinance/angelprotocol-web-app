@@ -8,5 +8,3 @@ export type FormProps = Props & {
   currencies: DetailedCurrency[];
   defaultCurr?: DetailedCurrency;
 };
-
-export type OnIncrement = (increment: number) => void;

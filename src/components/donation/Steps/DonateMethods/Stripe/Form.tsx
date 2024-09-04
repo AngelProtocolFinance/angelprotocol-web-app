@@ -8,11 +8,11 @@ import { userIsSignedIn } from "types/auth";
 import type { Currency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
+import Incrementers from "../../common/Incrementers";
 import { ProgramSelector } from "../../common/ProgramSelector";
 import { USD_CODE } from "../../common/constants";
 import { nextFormState } from "../helpers";
 import Frequency from "./Frequency";
-import Incrementers from "./Incrementers";
 import type { FormProps, Props } from "./types";
 import { useRhf } from "./useRhf";
 
