@@ -45,8 +45,9 @@ function Loaded({
         <Figure
           title="Savings"
           tooltip={
-            <Content className="bg-navy-d4 text-white text-sm max-w-xs p-4 rounded-lg">
-              Funds held in Fidelity Government Money Market (SPAXX)
+            <Content className="bg-navy-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg">
+              Funds held in Fidelity Government Money Market (SPAXX) consisting
+              of cash, US Government Securities and Repurchase Agreements
               <Arrow />
             </Content>
           }
@@ -56,15 +57,15 @@ function Loaded({
         <Figure
           title="Investments"
           tooltip={
-            <Content className="bg-navy-d4 text-white text-sm max-w-xs p-4 rounded-lg shadow-lg">
+            <Content className="bg-navy-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg shadow-lg">
               <span className="block mb-2">
                 Funds invested in a diversified portfolio comprising
               </span>
               <div>
-                <p>50% - domestic and international equities</p>
-                <p>30% - fixed income</p>
-                <p>15% - crypto</p>
-                <p>10% - cash</p>
+                <p>50% - Domestic and international equities</p>
+                <p>30% - Fixed income</p>
+                <p>15% - Crypto</p>
+                <p>5% - Cash</p>
               </div>
               <Arrow />
             </Content>

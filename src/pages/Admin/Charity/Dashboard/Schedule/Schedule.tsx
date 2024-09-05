@@ -82,7 +82,7 @@ export function Schedule(props: Props) {
                   />
                 }
               >
-                <Content className="max-w-xs bg-navy-d4 p-4 text-white text-sm shadow-lg rounded-lg">
+                <Content className="max-w-xs bg-navy-d4 p-4 text-gray-l4 text-sm shadow-lg rounded-lg">
                   Donations received through Better Giving that will distributed
                   to your bank account.
                   <Arrow />
