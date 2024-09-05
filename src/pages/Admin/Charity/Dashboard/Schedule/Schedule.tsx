@@ -1,16 +1,14 @@
 import leaf from "assets/icons/leaf.png";
 import sendMoney from "assets/icons/send-money.png";
 import Icon from "components/Icon";
-import { Info } from "components/Status";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useModalContext } from "contexts/ModalContext";
-import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
 import type { ReactNode } from "react";
 import { useEndowmentQuery } from "services/aws/aws";
 import type { Allocation } from "types/aws";
 import { Edit } from "./Edit";
-import { MIN_PROCESSING_AMOUNT, unprocessed } from "./common";
+import { MIN_PROCESSING_AMOUNT } from "./common";
 
 interface Props {
   amount: number;
@@ -26,15 +24,10 @@ export function Schedule(props: Props) {
     fields: ["allocation"],
   });
 
-  const allocation: Allocation = !endow
-    ? { cash: 0, liq: 50, lock: 50 }
-    : {
-        cash: endow.allocation?.cash ?? 0,
-        liq: endow.allocation?.liq ?? 50,
-        lock: endow.allocation?.lock ?? 50,
-      };
-
-  const leftover = unprocessed(allocation, props.amount);
+  const allocation: Allocation =
+    !endow || !endow.allocation
+      ? { cash: 0, liq: 100, lock: 0 }
+      : endow.allocation;
 
   return (
     <div className="p-4 grid rounded border border-gray-l4 mt-4">
@@ -58,16 +51,22 @@ export function Schedule(props: Props) {
         <span className="text-xs bg-gray text-white px-2 py-1 rounded">
           in {props.periodRemaining}
         </span>
+        <Tooltip
+          trigger={
+            <Icon type="Info" size={16} className="text-navy-l1 ml-2 inline" />
+          }
+        >
+          <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
+            We process donations monthly, with a minimum balance requirement of
+            ${MIN_PROCESSING_AMOUNT} per bucket. If your balance in any bucket
+            is below ${MIN_PROCESSING_AMOUNT}, it will be carried over to the
+            next month until it exceeds $50
+            <Arrow />
+          </Content>
+        </Tooltip>
       </p>
-      {leftover > 0 && (
-        <Info classes="!text-amber-d1 mb-4">
-          We process donations monthly, with a minimum balance requirement of $
-          {MIN_PROCESSING_AMOUNT} per bucket. If your balance in any bucket is
-          below ${MIN_PROCESSING_AMOUNT}, it will be carried over to the next
-          month until it exceeds $50
-        </Info>
-      )}
-      <div className="grid grid-cols-[auto_auto_auto_1fr_auto] gap-y-2 gap-x-2">
+
+      <div className="grid grid-cols-[auto_auto_1fr] gap-y-3 gap-x-2">
         <Row
           icon={<Icon type="ArrowRight" className="h-4 w-4 mr-2" />}
           title={
@@ -91,20 +90,17 @@ export function Schedule(props: Props) {
             </div>
           }
           pct={endow?.allocation?.cash ?? 0}
-          amount={props.amount}
         />
         <Row
           icon={<img src={sendMoney} width={20} className="mr-2" />}
           title={<span>Savings</span>}
           pct={endow?.allocation?.liq ?? 50}
-          amount={props.amount}
         />
 
         <Row
           icon={<img src={leaf} className="mr-2" />}
           title={<span>Investments</span>}
           pct={endow?.allocation?.lock ?? 50}
-          amount={props.amount}
         />
       </div>
     </div>
@@ -115,22 +111,14 @@ interface IRow {
   pct: number;
   icon: ReactNode;
   title: ReactNode;
-  amount: number;
 }
-function Row({ pct, icon, title, amount }: IRow) {
-  const num = (pct / 100) * amount;
-  const isLessThanMin = num < 50 && num !== 0;
+function Row({ pct, icon, title }: IRow) {
   return (
     <div className="grid grid-cols-subgrid col-span-full items-center">
       {icon}
       {title}
-      <span className="ml-2 text-navy-l1 text-sm">{pct ?? 50} %</span>
-      <span
-        className={`justify-self-end font-bold ${
-          isLessThanMin ? "text-amber-d1" : ""
-        }`}
-      >
-        $ {humanize((pct / 100) * amount)}
+      <span className="ml-2 text-navy-l1 font-medium text-right">
+        {pct ?? 50} %
       </span>
     </div>
   );

@@ -3,13 +3,10 @@ import leaf from "assets/icons/leaf.png";
 import sendMoney from "assets/icons/send-money.png";
 import Icon from "components/Icon";
 import Image from "components/Image";
-
-import { humanize } from "helpers";
 import type { ReactNode } from "react";
 import type { Allocation } from "types/aws";
 
 interface Props {
-  amount: number;
   disabled?: boolean;
   /** cash, liq, lock */
   value: Allocation;
@@ -35,7 +32,6 @@ export function AllocationSlider({
   disabled = false,
   value,
   onChange,
-  amount,
   classes = "",
 }: Props) {
   const boundary = toBoundary(value);
@@ -48,19 +44,16 @@ export function AllocationSlider({
           title="Grant"
           icon={<Icon type="ArrowRight" className="text-gray" size={20} />}
           pct={value.cash}
-          amount={amount}
         />
         <Row
           title="Savings"
           icon={<Image src={sendMoney} width={20} />}
           pct={value.liq}
-          amount={amount}
         />
         <Row
           title="Investment"
           icon={<Image src={leaf} className="" />}
           pct={value.lock}
-          amount={amount}
         />
       </div>
 
@@ -91,22 +84,14 @@ interface IRow {
   title: string;
   icon: ReactNode;
   pct: number;
-  amount: number;
 }
 
 function Row(props: IRow) {
-  const num = props.amount * (props.pct / 100);
-  const isLessThanMin = num !== 0 && num < 50;
   return (
     <div className="grid grid-cols-subgrid col-span-full items-center gap-x-1">
       {props.icon}
       <p className="text-sm ml-2">{props.title}</p>
-      <p className="text-gray text-xs text-right mr-2">{props.pct}%</p>
-      <p
-        className={`text-sm text-right ${isLessThanMin ? "text-amber-d1" : ""}`}
-      >
-        $ {humanize(num)}
-      </p>
+      <p className="text-right mr-2">{props.pct}%</p>
     </div>
   );
 }
