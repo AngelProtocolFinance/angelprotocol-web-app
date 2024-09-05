@@ -81,3 +81,27 @@ export type DonationsQueryParams = {
   asker: number | string;
   status?: Donation.Status;
 };
+
+export interface Payout {
+  /** iso */
+  date: string;
+  endowId: number;
+  /** grant */
+  cash: number;
+  /** savings */
+  liq: number;
+  /** investments */
+  lock: number;
+  total: number;
+  /** Pending balance that did not meet minimum payout threshold */
+  pendingTotal: number;
+}
+export interface PayoutsPage {
+  items: Payout[];
+  nextPageKey?: string;
+}
+
+export interface PayoutsQueryParams {
+  endowId: number;
+  nextPageKey?: string;
+}
