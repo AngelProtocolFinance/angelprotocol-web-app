@@ -5,7 +5,7 @@ interface Script {
   src: string;
   /** no need to set if javascript @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attribute_is_not_set_default_an_empty_string_or_a_javascript_mime_type */
   type?: string;
-  "data-cookie-consent"?: string;
+  "data-category"?: string;
 }
 
 type Props = {
@@ -18,31 +18,23 @@ type Props = {
 };
 
 const defaultScripts: Script[] = [
-  { src: "/scripts/cookie-consent-notice.js" },
+  { src: "/scripts/cookie-consent.js" },
   //functional cookies
-  {
-    src: "/scripts/intercom.js",
-    "data-cookie-consent": "functional",
-  },
-  //performance cookies
-  {
-    src: "/scripts/gtm-init.js",
-    "data-cookie-consent": "performance",
-  },
-  {
-    src: "/scripts/hotjar-tracking.js",
-    "data-cookie-consent": "performance",
-  },
-  //targetting
+  { src: "/scripts/intercom.js", "data-category": "functional" },
+  //analytics
+  { src: "/scripts/gtm-init.js", "data-category": "analytics" },
+
+  //tracking
   {
     src: "/scripts/twitter-conversion-tracking.js",
-    "data-cookie-consent": "targeting",
+    "data-category": "tracking",
   },
   {
     src: "/scripts/meta-pixel.js",
-    "data-cookie-consent": "targeting",
+    "data-category": "tracking",
   },
-  { src: "/scripts/linkedin-tracking.js", "data-cookie-consent": "tracking" },
+  { src: "/scripts/linkedin-tracking.js", "data-category": "tracking" },
+  { src: "/scripts/hotjar-tracking.js", "data-category": "tracking" },
 ];
 
 export default function Seo({

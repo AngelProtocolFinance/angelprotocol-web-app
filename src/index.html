@@ -5,9 +5,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link href='https://fonts.googleapis.com/css?family=Gochi Hand' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css">
+    <style>
+      #cc-main {
+    
+        --cc-font-family: "DM Sans";
+    
+        --cc-btn-primary-bg: #2D89C8;
+        --cc-btn-primary-border-color: #2D89C8;
+        --cc-btn-primary-hover-bg: #54a5dc;
+        --cc-btn-primary-hover-border-color: #54a5dc;
+    
+        /** Also make toggles the same color as the button **/
+        --cc-toggle-on-bg: var(--cc-btn-primary-bg);
+    
+        /** Make the buttons a bit rounder **/
+        --cc-btn-border-radius: 8px;
+      }
+    </style>
   </head>
   <body class="grid min-h-dvh">
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root" class="grid min-h-screen"></div>
+    <script src="https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.umd.js"></script>
   </body>
 </html>
