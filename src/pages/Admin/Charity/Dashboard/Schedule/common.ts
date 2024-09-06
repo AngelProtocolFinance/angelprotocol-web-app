@@ -1,1 +1,0 @@
-export const MIN_PROCESSING_AMOUNT = 50;
