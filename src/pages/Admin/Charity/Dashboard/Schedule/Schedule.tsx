@@ -39,10 +39,23 @@ export function Schedule(props: Props) {
 
   return (
     <div className="p-4 grid rounded border border-gray-l4 mt-4">
-      <div className="flex items-center gap-x-4 pb-2 border-b border-gray-l4 w-full">
+      <div className="flex gap-x-2 items-center pb-2 border-b border-gray-l4 w-full">
         <h4 className="mb-1">Allocation Settings</h4>
+        <Tooltip
+          trigger={
+            <Icon type="Info" size={16} className="text-navy-l1 inline" />
+          }
+        >
+          <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
+            We process donations monthly, with a minimum balance requirement of
+            ${MIN_PROCESSING_AMOUNT} per bucket. If your balance in any bucket
+            is below ${MIN_PROCESSING_AMOUNT}, it will be carried over to the
+            next month until it exceeds $50
+            <Arrow />
+          </Content>
+        </Tooltip>
         {presetOpt ? (
-          <div className="text-sm flex items-center gap-x-1 bg-blue-l4 rounded-full px-3 py-1">
+          <div className="text-sm flex items-center gap-x-1 bg-blue-l4 rounded-full px-3 py-1 ml-2">
             <span className="scale-75">{presetOpt.icon}</span>
             <span className="text-xs text-navy-l1">{presetOpt.label}</span>
           </div>
@@ -99,24 +112,11 @@ export function Schedule(props: Props) {
           pct={endow?.allocation?.lock ?? 50}
         />
       </div>
-      <p className="text-sm text-gray mt-6 text-right">
-        Will take effect on: {props.periodNext}{" "}
-        <span className="text-xs bg-gray text-white px-2 py-1 rounded">
+      <p className="text-sm text-navy-l3 mt-6 text-right">
+        <span>Will take effect on: </span> <span>{props.periodNext}</span>
+        <span className="p-1 px-2 bg-navy-d4 text-gray-l4 text-xs rounded ml-2">
           in {props.periodRemaining}
         </span>
-        <Tooltip
-          trigger={
-            <Icon type="Info" size={16} className="text-navy-l1 ml-2 inline" />
-          }
-        >
-          <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
-            We process donations monthly, with a minimum balance requirement of
-            ${MIN_PROCESSING_AMOUNT} per bucket. If your balance in any bucket
-            is below ${MIN_PROCESSING_AMOUNT}, it will be carried over to the
-            next month until it exceeds $50
-            <Arrow />
-          </Content>
-        </Tooltip>
       </p>
     </div>
   );
