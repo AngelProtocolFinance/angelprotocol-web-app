@@ -47,9 +47,9 @@ export function AllocationOptions(props: Props) {
       icon: <Icon type="Banknote" className="h-6 w-6 shrink-0 text-blue-d1" />,
     },
     {
-      value: "100-000-000",
+      value: "075-025-000",
       label: "Immediate Impact",
-      description: "100% Grant",
+      description: "75% Grant, 25% Savings",
       icon: <Icon type="Zap" className="h-6 w-6 shrink-0 text-amber" />,
     },
   ];
