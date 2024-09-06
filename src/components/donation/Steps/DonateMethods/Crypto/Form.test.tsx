@@ -37,21 +37,6 @@ describe("Crypto form: initial load", () => {
       init,
     };
     render(<_Form {...state} />);
-
-    screen.debug();
-
-    // const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    // expect(amountInput).toBeInTheDocument();
-
-    // const tokenSelector = screen.getByRole("button", {
-    //   name: /select token/i,
-    // });
-    // expect(tokenSelector).toBeInTheDocument();
-
-    // const programSelector = screen.getByRole("button", {
-    //   name: /general donation/i,
-    // });
-    // expect(programSelector).toBeInTheDocument();
   });
 
   test("initial form state: program donations not allowed", () => {
@@ -121,8 +106,6 @@ describe("Crypto form: initial load", () => {
     };
     render(<_Form {...state} />);
 
-    screen.debug();
-
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
 
@@ -183,7 +166,6 @@ describe("Crypto form: initial load", () => {
     await userEvent.click(amountInput);
     await userEvent.type(amountInput, "0.5");
 
-    screen.debug();
     expect(await screen.findByText(/less than minimum/i)).toBeInTheDocument();
 
     //user now inputs amount greater than minimum
