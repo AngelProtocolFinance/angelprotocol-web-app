@@ -1,6 +1,6 @@
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import type { Allocation } from "types/aws";
-import { allocationOptions, toAlloc, toKey } from "./common";
+import { allocationOptions, toAlloc, toAllocOptValue } from "./common";
 
 interface Props {
   value: Allocation;
@@ -9,12 +9,15 @@ interface Props {
 export function AllocationOptions(props: Props) {
   return (
     <RadioGroup
-      value={toKey(props.value)}
+      value={toAllocOptValue(props.value)}
       onChange={(v) => props.onChange(toAlloc(v))}
-      className="grid gap-y-2"
+      className="grid grid-cols-[auto_1fr] gap-y-2"
     >
       {allocationOptions.map((option) => (
-        <Field key={option.value} className="flex items-center group ">
+        <Field
+          key={option.value}
+          className="grid grid-cols-subgrid col-span-full items-center group"
+        >
           <Radio value={option.value} />
           <Label className="flex flex-1 gap-x-3 items-center group-has-[[data-checked]]:bg-blue-l4 border border-gray-l4 group-has-[[data-checked]]:border-blue-l4 group-hover:ring-1 group-hover:border-blue-l3 px-2 py-4 rounded-lg">
             {option.icon}

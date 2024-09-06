@@ -7,7 +7,7 @@ import { useEditEndowmentMutation } from "services/aws/aws";
 import type { Allocation } from "types/aws";
 import { AllocationOptions } from "./AllocationOptions";
 import { AllocationSlider } from "./AllocationSlider";
-import { allocationOptions, toKey } from "./common";
+import { allocationOptions, toAllocOptValue } from "./common";
 
 export function Edit({
   id,
@@ -19,7 +19,7 @@ export function Edit({
   const { handleError } = useErrorContext();
   const [alloc, setAlloc] = useState<Allocation>(props);
   const [isCustom, setIsCustom] = useState(
-    allocationOptions.every((opt) => opt.value !== toKey(props))
+    allocationOptions.every((opt) => opt.value !== toAllocOptValue(props))
   );
 
   return (
