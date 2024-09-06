@@ -4,8 +4,9 @@ import usePagination from "./usePagination";
 
 interface Props {
   endowId: number;
+  classes?: string;
 }
-export function PayoutHistory(props: Props) {
+export function PayoutHistory({ classes = "", endowId }: Props) {
   const {
     data,
     hasMore,
@@ -14,15 +15,13 @@ export function PayoutHistory(props: Props) {
     isLoadingNextPage,
     loadNextPage,
     isFetching,
-  } = usePagination(props.endowId);
+  } = usePagination(endowId);
 
   const isLoadingOrError = isLoading || isLoadingNextPage || isError;
 
   return (
-    <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20 lg:pt-10">
-      <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
-        Payout history
-      </h1>
+    <div className={`${classes} grid content-start`}>
+      <h4 className="text-lg mb-2">Allocation History</h4>
 
       <QueryLoader
         queryState={{
@@ -31,10 +30,11 @@ export function PayoutHistory(props: Props) {
           isFetching,
           isError: isError,
         }}
+        classes={{ container: classes }}
         messages={{
-          loading: "Loading applications...",
-          error: "Failed to get applications",
-          empty: "No applications found.",
+          loading: "Loading records...",
+          error: "Failed to get records",
+          empty: "No record found",
         }}
       >
         {(records) => (

@@ -9,8 +9,9 @@ import type { EndowmentBalances } from "types/aws";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Figure from "./Figure";
+import { PayoutHistory } from "./PayoutHistory";
 import { Schedule } from "./Schedule";
-import { monthPeriod } from "./montPeriod";
+import { monthPeriod } from "./monthPeriod";
 
 export default function Dashboard() {
   const { id } = useAdminContext();
@@ -37,6 +38,7 @@ function Loaded({
   classes = "",
   ...props
 }: EndowmentBalances & { classes?: string }) {
+  const { id } = useAdminContext();
   const period = monthPeriod();
   return (
     <div className={`${classes} mt-6`}>
@@ -98,6 +100,9 @@ function Loaded({
         periodNext={period.next}
         periodRemaining={period.distance}
       />
+
+      <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
+      <PayoutHistory endowId={id} classes="mt-2" />
     </div>
   );
 }

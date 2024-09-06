@@ -13,15 +13,12 @@ export default function Table({
 }: TableProps) {
   return (
     <table
-      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
+      className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-gray-l4`}
     >
-      <TableSection
-        type="thead"
-        rowClass="bg-blue-l4 dark:bg-blue-d7 divide-x divide-blue-l2"
-      >
+      <TableSection type="thead" rowClass="divide-x divide-gray-l4">
         <Cells
           type="th"
-          cellClass="px-3 py-4 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
+          cellClass="px-3 py-2 bg-gray-l5 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <>Date</>
           <>Grant</>
@@ -32,7 +29,7 @@ export default function Table({
       </TableSection>
       <TableSection
         type="tbody"
-        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-blue-l2"
+        rowClass="even:bg-blue-l5 dark:odd:bg-blue-d6 dark:even:bg-blue-d7 divide-x divide-gray-l4"
         selectedClass="bg-blue-l4 dark:bg-blue-d4"
       >
         {records
@@ -40,7 +37,7 @@ export default function Table({
             <Cells
               key={row.date}
               type="td"
-              cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
+              cellClass={`p-3 border-t border-gray-l4 max-w-[256px] truncate ${
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
@@ -56,7 +53,7 @@ export default function Table({
               <td
                 colSpan={9}
                 key="load-more-btn"
-                className="border-t border-blue-l2 rounded-b"
+                className="border-t border-gray-l4 rounded-b"
               >
                 <LoadMoreBtn
                   onLoadMore={onLoadMore}

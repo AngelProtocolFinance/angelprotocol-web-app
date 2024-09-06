@@ -30,7 +30,7 @@ export const {
       query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
     }),
     payouts: builder.query<PayoutsPage, PayoutsQueryParams>({
-      query: (endowId) => `endowments/${endowId}/payouts`,
+      query: ({ endowId }) => `endowments/${endowId}/payouts`,
     }),
   }),
 });
