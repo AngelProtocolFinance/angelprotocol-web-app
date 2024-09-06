@@ -4,6 +4,7 @@ import { useModalContext } from "contexts/ModalContext";
 import { useState } from "react";
 import { useEditEndowmentMutation } from "services/aws/aws";
 import type { Allocation } from "types/aws";
+import { AllocationOptions } from "./AllocationOptions";
 import { AllocationSlider } from "./AllocationSlider";
 
 export function Edit(props: Allocation & { id: number; amount: number }) {
@@ -14,8 +15,9 @@ export function Edit(props: Allocation & { id: number; amount: number }) {
 
   return (
     <Modal className="fixed-center z-10 grid gap-y-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6">
-      <h4 className="border-b border-gray-l4 pb-2">Edit allocation</h4>
+      <h4>Choose allocation</h4>
 
+      <AllocationOptions value={alloc} onChange={(v) => setAlloc(v)} />
       <AllocationSlider
         disabled={isLoading}
         value={alloc}
