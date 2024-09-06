@@ -37,7 +37,9 @@ export function AllocationSlider({
   const boundary = toBoundary(value);
 
   return (
-    <div className={`${classes} grid gap-y-4`}>
+    <div
+      className={`${classes} grid gap-y-4 border border-gray-l4/80 p-4 rounded-lg shadow-inner`}
+    >
       {/** percentages */}
       <div className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2">
         <Row
