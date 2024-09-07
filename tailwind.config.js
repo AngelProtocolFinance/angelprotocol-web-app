@@ -20,7 +20,7 @@ module.exports = {
         DEFAULT: "#54a5dc",
         l1: "#8fc4ea",
         l2: "#c4def3",
-        l3: "#B8D9EF",
+        l3: "#d7e9f7",
         l4: "#E6F1F9", //blue-100, #EAF3FA
         l5: "#F7FAFD", //blue-50
       },
