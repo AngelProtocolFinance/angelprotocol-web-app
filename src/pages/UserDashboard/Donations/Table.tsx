@@ -121,7 +121,6 @@ export default function Table({
                 <span className="truncate max-w-[12rem]">
                   {row.recipientName}
                 </span>
-                <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
               <>{new Date(row.date).toLocaleDateString()}</>
               <span className="capitalize">
