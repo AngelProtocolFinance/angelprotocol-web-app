@@ -4522,7 +4522,7 @@ __metadata:
     react-test-renderer: "npm:18.2.0"
     swiper: "npm:11.1.4"
     tailwindcss: "npm:3.4.3"
-    type-fest: "npm:4.20.0"
+    type-fest: "npm:4.26.1"
     typescript: "npm:5.5"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:2.0.1"
@@ -9647,10 +9647,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:4.20.0":
-  version: 4.20.0
-  resolution: "type-fest@npm:4.20.0"
-  checksum: 10/df037c11f6393312f27825ea6eb2c8cd62b1ba21c31144bed41854648ba2a18dcb8c68a930607c7227dd531b42006cc7c7a60f7f034668d1c92c205523ae1ea2
+"type-fest@npm:4.26.1":
+  version: 4.26.1
+  resolution: "type-fest@npm:4.26.1"
+  checksum: 10/b82676194f80af228cb852e320d2ea8381c89d667d2e4d9f2bdfc8f254bccc039c7741a90c53617a4de0c9fdca8265ed18eb0888cd628f391c5c381c33a9f94b
   languageName: node
   linkType: hard
 
