@@ -4506,7 +4506,7 @@ __metadata:
     msw: "npm:2.3.1"
     nprogress: "npm:0.2.0"
     postcss-import: "npm:16.1.0"
-    qrcode.react: "npm:3.1.0"
+    qrcode.react: "npm:4.0.1"
     quill: "npm:2.0.2"
     react: "npm:18.2.0"
     react-chariot-connect: "npm:1.0.8"
@@ -8353,7 +8353,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"qrcode.react@npm:3.1.0, qrcode.react@npm:^3.1.0":
+"qrcode.react@npm:4.0.1":
+  version: 4.0.1
+  resolution: "qrcode.react@npm:4.0.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+  checksum: 10/786cf24511940079247f0c640daa7760f65b244ada465b54647d35cf666ca2d9efc78082339893cd4dc70711fdaef436306c9310c9c12c719fe823e585f82d4e
+  languageName: node
+  linkType: hard
+
+"qrcode.react@npm:^3.1.0":
   version: 3.1.0
   resolution: "qrcode.react@npm:3.1.0"
   peerDependencies:
