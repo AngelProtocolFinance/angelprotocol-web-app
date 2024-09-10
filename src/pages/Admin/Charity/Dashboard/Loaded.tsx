@@ -3,7 +3,7 @@ import { Arrow, Content } from "components/Tooltip";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
-import type { EndowmentBalances } from "types/aws";
+import type { BalanceMovement, EndowmentBalances } from "types/aws";
 import Figure from "./Figure";
 import { MoveFundForm } from "./MoveFundForm";
 import { Movements } from "./Movements";
@@ -30,7 +30,7 @@ export function Loaded({
     0
   );
   const lockDeductions = Object.entries(mov).reduce(
-    (sum, [k, v]) => (k.startsWith("liq-") ? sum + v : sum),
+    (sum, [k, v]) => (k.startsWith("lock-") ? sum + v : sum),
     0
   );
 
@@ -38,6 +38,12 @@ export function Loaded({
     (sum, [k, v]) => (k.endsWith("-cash") ? sum + v : sum),
     0
   );
+
+  const balances: BalanceMovement = {
+    "liq-cash": props.donationsBal - liqDeductions,
+    "liq-lock": props.donationsBal - liqDeductions,
+    "lock-cash": props.sustainabilityFundBal - lockDeductions,
+  };
 
   return (
     <div className={`${classes} mt-6`}>
@@ -55,13 +61,13 @@ export function Loaded({
           icon={<Icon size={21} type="PiggyBank" strokeWidth={1.5} />}
           amount={`$ ${humanize(props.donationsBal - props.payoutsMade, 2)}`}
           actions={
-            <div className="mt-8 flex justify-end">
+            <div className="mt-8 flex justify-end gap-x-2">
               <button
                 type="button"
                 onClick={() =>
                   showModal(MoveFundForm, {
                     type: "liq-cash",
-                    balance: props.donationsBal - liqDeductions,
+                    balance: balances["liq-cash"],
                     mov,
                     endowId: id,
                     effect: "append",
@@ -70,6 +76,21 @@ export function Loaded({
                 className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
               >
                 withdraw
+              </button>
+              <button
+                type="button"
+                onClick={() =>
+                  showModal(MoveFundForm, {
+                    type: "liq-lock",
+                    balance: balances["liq-lock"],
+                    mov,
+                    endowId: id,
+                    effect: "append",
+                  })
+                }
+                className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
+              >
+                invest
               </button>
             </div>
           }
@@ -92,6 +113,25 @@ export function Loaded({
           }
           icon={<Icon type="Stocks" size={16} />}
           amount={`$ ${humanize(props.sustainabilityFundBal, 2)}`}
+          actions={
+            <div className="mt-8 flex justify-end">
+              <button
+                type="button"
+                onClick={() =>
+                  showModal(MoveFundForm, {
+                    type: "lock-cash",
+                    balance: balances["lock-cash"],
+                    mov,
+                    endowId: id,
+                    effect: "append",
+                  })
+                }
+                className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
+              >
+                withdraw
+              </button>
+            </div>
+          }
         />
         <Figure
           title="Contributions count"
@@ -115,7 +155,7 @@ export function Loaded({
         </p>
       </h3>
 
-      <Movements {...mov} classes="mt-4" />
+      <Movements endowId={id} mov={mov} classes="mt-4" balances={balances} />
       <Schedule
         amount={props.payoutsPending}
         periodNext={period.next}

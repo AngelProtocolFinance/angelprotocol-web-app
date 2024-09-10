@@ -15,6 +15,7 @@ interface IMoveFundForm {
   endowId: number;
   balance: number;
   mov: BalanceMovement;
+  initAmount?: number;
 }
 
 export function MoveFundForm(props: IMoveFundForm) {
@@ -28,12 +29,15 @@ export function MoveFundForm(props: IMoveFundForm) {
     register,
     formState: { errors, isSubmitting },
   } = useForm<FV>({
-    defaultValues: { amount: "" },
+    defaultValues: { amount: props.initAmount?.toString() || "" },
     resolver: yupResolver(
       schema<FV>({
         amount: stringNumber(
           (s) => s.required("required"),
-          (n) => n.positive().max(props.balance, "can't be more than balance")
+          (n) =>
+            n
+              .min(0, "can't be negative")
+              .max(props.balance, "can't be more than balance")
         ),
       })
     ),
@@ -46,7 +50,10 @@ export function MoveFundForm(props: IMoveFundForm) {
           await moveFund({
             endowId: props.endowId,
             ...props.mov,
-            [props.type]: props.mov[props.type] + +fv.amount,
+            [props.type]:
+              props.effect === "append"
+                ? props.mov[props.type] + +fv.amount
+                : +fv.amount,
           }).unwrap();
           closeModal();
         } catch (err) {
