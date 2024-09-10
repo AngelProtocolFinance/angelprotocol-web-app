@@ -21,7 +21,7 @@ export function PayoutHistory({ classes = "", endowId }: Props) {
 
   return (
     <div className={`${classes} grid content-start`}>
-      <h4 className="text-lg mb-2">Allocation History</h4>
+      <h4 className="text-lg mb-2">Transaction history</h4>
 
       <QueryLoader
         queryState={{

@@ -84,17 +84,18 @@ function Loaded({
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
 
-      <h3 className="my-4 font-medium">
+      <h3 className="my-4 font-medium flex items-center">
         <span className="text-sm uppercase font-normal">Period</span>
         <span className="ml-2 uppercase text-sm">
           {period.from} - {period.to}
         </span>
+        <p className="text-sm text-navy-l3 ml-auto">
+          <span>Ends in </span>
+          <span className="p-1 px-2 bg-navy-d4 text-gray-l4 text-xs rounded ml-1">
+            in {period.distance}
+          </span>
+        </p>
       </h3>
-      <Figure
-        title="Pending allocations"
-        icon={<Icon type="Timer" size={19} className="text-gray" />}
-        amount={`$ ${humanize(props.payoutsPending, 2)}`}
-      />
       <Schedule
         amount={props.payoutsPending}
         periodNext={period.next}
