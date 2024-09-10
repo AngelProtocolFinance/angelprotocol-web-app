@@ -46,23 +46,6 @@ export function Schedule(props: Props) {
       </div>
       <div className="flex items-center mt-4 gap-x-2">
         <h4 className="mb-1">Distribution</h4>
-        <Tooltip
-          trigger={
-            <Icon
-              type="Info"
-              size={16}
-              className="text-navy-l1 inline mr-auto"
-            />
-          }
-        >
-          <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
-            We process donations monthly, with a minimum balance requirement of
-            ${MIN_PROCESSING_AMOUNT} per bucket. If your balance in any bucket
-            is below ${MIN_PROCESSING_AMOUNT}, it will be carried over to the
-            next month until it exceeds $50
-            <Arrow />
-          </Content>
-        </Tooltip>
         {presetOpt ? (
           <div className="text-sm flex items-center gap-x-1 bg-blue-l4 rounded-full px-3 py-1">
             <span className="scale-75">{presetOpt.icon}</span>
@@ -84,7 +67,7 @@ export function Schedule(props: Props) {
         </button>
       </div>
 
-      <div className="grid grid-cols-[auto_auto_1fr] gap-y-3 gap-x-2 mt-4">
+      <div className="grid grid-cols-[auto_auto_auto_1fr_auto_auto] gap-y-3 gap-x-2 mt-4">
         <Row
           icon={<Icon type="ArrowRight" className="h-4 w-4 mr-2" />}
           title={
@@ -107,18 +90,42 @@ export function Schedule(props: Props) {
               </Tooltip>
             </div>
           }
-          pct={endow?.allocation?.cash ?? 0}
+          pct={allocation.cash}
+          amount={props.amount}
+          tooltip={(val) =>
+            val !== 0 &&
+            val < MIN_PROCESSING_AMOUNT && (
+              <Tooltip
+                trigger={
+                  <Icon
+                    type="Info"
+                    size={16}
+                    className="inline mr-auto text-amber"
+                  />
+                }
+              >
+                <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
+                  Grant amount of $ {humanize(val)} is less than minimum
+                  processing amount of ${MIN_PROCESSING_AMOUNT} and would be
+                  carried over to the next month.
+                  <Arrow />
+                </Content>
+              </Tooltip>
+            )
+          }
         />
         <Row
           icon={<img src={sendMoney} width={20} className="mr-2" />}
           title={<span>Savings</span>}
-          pct={endow?.allocation?.liq ?? 50}
+          pct={allocation.liq}
+          amount={props.amount}
         />
 
         <Row
           icon={<img src={leaf} className="mr-2" />}
           title={<span>Investments</span>}
-          pct={endow?.allocation?.lock ?? 50}
+          pct={allocation.lock}
+          amount={props.amount}
         />
       </div>
     </div>
@@ -126,18 +133,24 @@ export function Schedule(props: Props) {
 }
 
 interface IRow {
+  amount: number;
   pct: number;
   icon: ReactNode;
   title: ReactNode;
+  tooltip?: (val: number) => ReactNode;
 }
-function Row({ pct, icon, title }: IRow) {
+function Row(props: IRow) {
+  const val = props.amount * (props.pct / 100);
   return (
     <div className="grid grid-cols-subgrid col-span-full items-center">
-      {icon}
-      {title}
-      <span className="ml-2 text-navy-l1 font-medium text-right">
-        {pct ?? 50} %
+      {props.icon}
+      {props.title}
+      <span className="ml-2 text-navy-l1 font-medium text-sm">
+        {props.pct ?? 50} %
       </span>
+      <span className="text-right">$</span>
+      <span className="text-left">{humanize(val)}</span>
+      {props.tooltip?.(val)}
     </div>
   );
 }
