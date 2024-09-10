@@ -11,6 +11,7 @@ import type { PropsWithChildren } from "react";
 import type { Donation } from "types/aws";
 import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
+import PaymentResumer from "./PaymentResumer";
 import { donationMethod, lastHeaderName } from "./common";
 import type { TableProps } from "./types";
 import useShowKYCForm from "./useShowKYCForm";
@@ -151,8 +152,16 @@ function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
     );
   }
 
-  if (props.status === "intent") {
+  if (props.status === "intent" && props.viaId === "fiat") {
     return <IntentResumer intentId={props.id} />;
+  }
+
+  if (props.status === "intent" && props.viaId !== "fiat") {
+    return props.payment_id ? (
+      <PaymentResumer paymentId={props.payment_id} amount={props.initAmount} />
+    ) : (
+      <>---</>
+    );
   }
 
   /// pending ///

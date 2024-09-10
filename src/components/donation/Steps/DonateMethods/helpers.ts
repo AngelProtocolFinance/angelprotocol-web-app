@@ -4,7 +4,7 @@ import type { DonationDetails, DonationState } from "../types";
 const tokenId = (details: DonationDetails) => {
   switch (details.method) {
     case "crypto":
-      return details.token.token_id;
+      return details.token.id;
     case "stocks":
       return details.symbol;
     default:

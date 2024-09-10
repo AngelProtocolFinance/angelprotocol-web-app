@@ -2,25 +2,25 @@ import type { DonationSource } from "types/lists";
 import type { Ensure } from "types/utils";
 import type { Token } from ".";
 
-export type DonorTitle = "Mr" | "Mrs" | "Ms" | "Mx" | "";
-
-export interface DonorAddress {
-  streetAddress: string;
-  /** may be empty */
-  city: string;
-  state?: String;
-  zipCode: string;
-  country: string;
+export namespace Donor {
+  export type Title = "Mr" | "Mrs" | "Ms" | "Mx" | "";
+  export interface Address {
+    streetAddress: string;
+    /** may be empty */
+    city: string;
+    state?: String;
+    zipCode: string;
+    country: string;
+  }
 }
-
-export type Donor = {
-  title?: DonorTitle;
+export interface Donor {
+  title?: Donor.Title;
   email: string;
   firstName: string;
   lastName: string;
-  address?: DonorAddress;
+  address?: Donor.Address;
   ukGiftAid?: boolean;
-};
+}
 
 export type GuestDonor = {
   email: string;
@@ -45,55 +45,49 @@ export type TributeNotif = {
   fromMsg: string;
 };
 
-export type CryptoDonation = {
+export interface DonationIntent {
   transactionId?: string;
   programId?: string;
   amount: number;
   tipAmount: number;
   feeAllowance: number;
-  denomination: string;
   endowmentId: number;
-  chainId: string;
-  /** may be empty */
-  walletAddress?: string;
-  /**  */
   /** 1 - 100 */
   splitLiq: number;
-  chainName: string;
   source: DonationSource;
   donor: Donor;
   /** honorary full name - may be empty `""` */
   inHonorOf?: string;
   tributeNotif?: TributeNotif;
-};
+}
 
-export type FiatDonation = {
-  transactionId?: string;
-  programId?: string;
-  /** Denominated in USD. */
-  amount: number;
-  tipAmount: number;
-  feeAllowance: number;
-  /**ISO 3166-1 alpha-3 code. */
-  currency: string;
-  endowmentId: number;
-  splitLiq: number;
-  donor: Donor;
-  source: DonationSource;
-  /** honorary full name - may be empty `""` */
-  inHonorOf?: string;
-  tributeNotif?: TributeNotif;
-};
+export namespace DonationIntent {
+  export type Frequency = "one-time" | "subscription";
+  export interface Crypto extends DonationIntent {
+    denomination: string;
+    chainId: string;
+    /** may be empty */
+    walletAddress?: string;
+    chainName: string;
+  }
 
-export type DonationIntent =
-  //donation records always have transactionId
-  | (Ensure<CryptoDonation, "transactionId"> & { token: Token })
-  | (Ensure<FiatDonation, "transactionId"> & {
-      currency: Currency;
-      frequency: FiatPaymentFrequency;
-    });
+  export interface Fiat extends DonationIntent {
+    /**ISO 3166-1 alpha-3 code. */
+    currency: string;
+  }
 
-export type FiatPaymentFrequency = "one-time" | "subscription";
+  //donation records always have transactionI
+
+  interface ToResumeCrypto extends Ensure<Crypto, "transactionId"> {
+    token: Token;
+  }
+  interface ToResumeFiat
+    extends Ensure<Omit<Fiat, "currency">, "transactionId"> {
+    currency: Currency;
+    frequency: Frequency;
+  }
+  export type ToResume = ToResumeCrypto | ToResumeFiat;
+}
 
 export type Currency = {
   /** ISO 3166-1 alpha-3 code */

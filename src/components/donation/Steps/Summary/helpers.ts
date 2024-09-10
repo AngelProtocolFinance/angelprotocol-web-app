@@ -1,10 +1,9 @@
-import { chains } from "constants/chains";
 import { PROCESSING_RATES } from "constants/common";
 import type { DonationDetails } from "../types";
 
 export const processingFee = (details: DonationDetails): number => {
   if (details.method === "crypto") {
-    return +details.token.amount * chains[details.chainId].processingRate;
+    return +details.token.amount * PROCESSING_RATES.crypto;
   }
 
   if (details.method !== "stripe") return 0;

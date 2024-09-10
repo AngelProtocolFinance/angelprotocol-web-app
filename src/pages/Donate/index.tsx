@@ -12,7 +12,7 @@ export function Component() {
   const location = useLocation();
 
   //setter of this should make sure that intent.endowmentId is the same as this page's param.id.
-  const intent = location.state as DonationIntent | undefined;
+  const intent = location.state as DonationIntent.ToResume | undefined;
 
   //clear window.history.state after loading the intent into memory
   useEffect(() => {

@@ -1,9 +1,10 @@
 import type { OptionType, RichTextContent } from "types/components";
-import type { TokenWithAmount as TWA } from "types/tx";
+import type { TokenWithDetails as TWD } from "types/tx";
 import {
   type NumberSchema,
   type ObjectSchema,
   type StringSchema,
+  ValidationError,
   lazy,
   mixed,
   number,
@@ -11,7 +12,6 @@ import {
   string,
 } from "yup";
 import { requiredString } from "./string";
-import { testTokenDigits } from "./tests";
 import type { SchemaShape } from "./types";
 
 /**
@@ -36,12 +36,12 @@ export function schema<T extends object>(shape: SchemaShape<T>) {
   ) as ObjectSchema<T>;
 }
 
-type Key = keyof TWA;
-type Min = TWA["min_donation_amnt"];
-const minKey: Key = "min_donation_amnt";
+type Key = keyof TWD;
+type Min = TWD["min"];
+const minKey: Key = "min";
 
-export const tokenShape = (withMin = true): SchemaShape<TWA> => ({
-  token_id: string().required("select token"),
+export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
+  id: string().required("select token"),
   amount: stringNumber(
     (s) => s.required("required"),
     (num) =>
@@ -50,14 +50,20 @@ export const tokenShape = (withMin = true): SchemaShape<TWA> => ({
         .when([minKey], (values, schema) => {
           const [minAmount] = values as [Min];
           return withMin && !!minAmount
-            ? schema.min(minAmount || 0, `amount must be at least ${minAmount}`)
+            ? schema.min(minAmount || 0, "less than minimum")
             : schema;
         })
-        .test(
-          "max precision",
-          "must not be greater than 6 digits",
-          testTokenDigits
-        )
+        .test((val, context) => {
+          if (!val) return true;
+          const numDecimals = val.toString().split(".").at(1)?.length ?? 0;
+          const precision = context.parent.precision;
+          if (numDecimals <= precision) return true;
+          return new ValidationError(
+            `can't be more than ${precision} decimals`,
+            precision,
+            context.path
+          );
+        })
   ),
 });
 

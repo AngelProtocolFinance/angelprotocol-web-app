@@ -1,15 +1,15 @@
+import chains from "@better-giving/assets/chains";
 import ContentLoader from "components/ContentLoader";
-import Copier from "components/Copier";
 import QueryLoader from "components/QueryLoader";
-import { chains } from "constants/chains";
 import { appRoutes } from "constants/routes";
-import { QRCodeSVG } from "qrcode.react";
+import { roundToCents } from "helpers";
 import { useNavigate } from "react-router-dom";
 import { useCreateCryptoIntentQuery } from "services/apes";
 import type { DonateThanksState } from "types/pages";
 import ContinueBtn from "../../common/ContinueBtn";
 import { toDonor } from "../../common/constants";
 import type { CryptoSubmitStep } from "../../types";
+import { PayQr } from "./PayQr";
 
 type Props = {
   classes?: string;
@@ -28,17 +28,17 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     honorary,
   } = donation;
 
-  const { data: intent, ...intentState } = useCreateCryptoIntentQuery({
+  const intentQuery = useCreateCryptoIntentQuery({
     transactionId: init.intentId,
     amount: +details.token.amount,
     tipAmount: tip?.value ?? 0,
     feeAllowance,
-    chainId: chains[details.chainId].id,
-    chainName: chains[details.chainId].name,
-    denomination: details.token.symbol,
+    chainId: details.token.network,
+    chainName: chains[details.token.network].name,
+    denomination: details.token.code,
     splitLiq: liquidSplitPct,
     endowmentId: init.recipient.id,
-    source: init.config ? "bg-widget" : "bg-marketplace",
+    source: init.source,
     donor: toDonor(fvDonor),
     ...(honorary.honoraryFullName && {
       inHonorOf: honorary.honoraryFullName,
@@ -49,38 +49,33 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     ...(details.program.value && { programId: details.program.value }),
   });
 
-  const totalDisplayAmount =
-    +details.token.amount + (tip?.value ?? 0) + feeAllowance;
+  const totalDisplayAmount = roundToCents(
+    +details.token.amount + (tip?.value ?? 0) + feeAllowance,
+    details.token.rate,
+    details.token.precision
+  );
 
   return (
     <div className={`${classes} grid justify-items-center`}>
       <p className="text-navy-l1 text-balance text-center mb-3.5 max-w-sm">
         To complete your donation, send {totalDisplayAmount}
         &nbsp;
-        {details.token.symbol} from your crypto wallet to the address below
+        {details.token.code} from your crypto wallet to the address below
       </p>
       <QueryLoader
-        queryState={{ data: intent?.recipientAddress, ...intentState }}
+        queryState={intentQuery}
         messages={{
           loading: <ContentLoader className="size-48 rounded" />,
           error: "Failed to load donation address",
         }}
       >
-        {(recipient) => (
-          <>
-            <QRCodeSVG value={recipient} className="mb-3.5" size={192} />
-            <p className="text-sm mb-4">{recipient}</p>
-            <Copier
-              text={recipient}
-              classes={{
-                container:
-                  "flex items-center gap-2 px-2 py-1.5 rounded-md border border-gray-l4 shadow-md shadow-black/5",
-                icon: "size-5",
-              }}
-            >
-              <span className="capitalize text-sm">Copy address</span>
-            </Copier>
-          </>
+        {(payment) => (
+          <PayQr
+            token={details.token}
+            amount={totalDisplayAmount}
+            recipient={payment.pay_address}
+            extraId={payment.payin_extra_id}
+          />
         )}
       </QueryLoader>
 
@@ -97,7 +92,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       </p>
 
       <ContinueBtn
-        disabled={intentState.isError || intentState.isLoading}
+        disabled={intentQuery.isError || intentQuery.isLoading}
         onClick={() =>
           navigate(appRoutes.donate_thanks, {
             state: {

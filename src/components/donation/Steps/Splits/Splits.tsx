@@ -1,4 +1,4 @@
-import { humanize } from "helpers";
+import { centsDecimals, humanize } from "helpers";
 import { useState } from "react";
 import { useDonationState } from "../Context";
 import BackBtn from "../common/BackBtn";
@@ -24,26 +24,26 @@ export default function Split(props: Props) {
 
   const liqSplitPct = 100 - lockedSplitPct;
 
-  const [amount, symbol] = (() => {
+  const [amount, symbol, rate, decimals] = (() => {
     switch (details.method) {
       case "crypto": {
-        const { amount, symbol } = details.token;
-        return [amount, symbol];
+        const { amount, symbol, rate, precision } = details.token;
+        return [amount, symbol, rate, precision];
       }
       case "stocks": {
         const { numShares, symbol } = details;
-        return [numShares, symbol];
+        return [numShares, symbol, 1];
       }
       default:
         const { amount, currency } = details;
-        return [amount, currency.code];
+        return [amount, currency.code, currency.rate];
     }
   })();
 
   const liq = +amount * (liqSplitPct / 100);
   //derive locked from liquid to be consistent with checkout
   const locked = +amount - liq;
-  const DECIMALS = details.method === "crypto" ? 4 : 2;
+  const DECIMALS = centsDecimals(rate, decimals);
 
   return (
     <div

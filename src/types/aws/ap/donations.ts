@@ -56,6 +56,8 @@ export namespace Donation {
         //medium
         viaId: Chain.Id.All | "staging";
         viaName: string;
+        //present for 3p payments
+        payment_id?: number;
       }
     | {
         bankVerificationUrl?: string;

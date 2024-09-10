@@ -1,5 +1,4 @@
 import type { DonationIntent } from "types/aws";
-import type { Chain } from "types/chain";
 import type { OptionType } from "types/components";
 import type { DonationSource } from "types/lists";
 import Context from "./Context";
@@ -24,7 +23,7 @@ type Components = {
   config: Config | null;
   recipient: DonationRecipient;
   programId?: string;
-  intent?: DonationIntent;
+  intent?: DonationIntent.ToResume;
 };
 type InitState = {
   init: DonationState;
@@ -96,10 +95,19 @@ function initialState({
       step: "submit",
       details: {
         method: "crypto",
-        chainId: intent.chainId as Chain.Id.All,
         token: {
           amount: `${intent.amount}`,
-          ...intent.token,
+          min: intent.token.min_donation_amnt,
+          id: intent.token.token_id,
+          code: intent.denomination,
+          cg_id: intent.token.coingecko_denom,
+          logo: intent.token.logo,
+          network: "",
+          color: "",
+          name: "",
+          precision: 0,
+          symbol: "",
+          rate: 0,
         },
 
         program,

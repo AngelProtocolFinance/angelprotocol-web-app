@@ -1,19 +1,11 @@
-import { humanize } from "helpers";
-import { useUsdRateQuery } from "services/coingecko";
+import { humanize, roundToCents } from "helpers";
 
-export const token = (coinGeckoId: string) =>
+export const token = (usdRate: number, decimals: number) =>
   function Amount(props: { amount: string | number; classes?: string }) {
-    const { data: rate, isLoading, isError } = useUsdRateQuery(coinGeckoId);
     return (
       <dd className={props.classes}>
-        {humanize(props.amount, 4)}{" "}
-        {isLoading ? (
-          "($--)"
-        ) : isError || !rate ? (
-          <span className="text-red">($--)</span>
-        ) : (
-          `($${humanize(+props.amount * rate, 2)})`
-        )}
+        {roundToCents(+props.amount, usdRate, decimals)}{" "}
+        {`($${humanize(+props.amount * usdRate, 2)})`}
       </dd>
     );
   };

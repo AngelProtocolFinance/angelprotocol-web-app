@@ -4,7 +4,7 @@ import * as Slider from "@radix-ui/react-slider";
 import dappLogo from "assets/images/bettergiving-logo.png";
 import waivingLaira from "assets/laira/laira-waiving.png";
 import Image from "components/Image/Image";
-import { humanize, roundDown } from "helpers";
+import { centsDecimals, humanize, roundDown } from "helpers";
 import { useState } from "react";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
@@ -40,16 +40,17 @@ export default function Tip(props: TipStep) {
   const { details, tip: persistedTip } = props;
   const { setState } = useDonationState();
 
-  const [symbol, amount, decimals = 2] = (() => {
+  const [symbol, amount, rate = 1, decimals = 2] = (() => {
     switch (details.method) {
       case "stripe":
-        return [details.currency.code, +details.amount];
+        return [details.currency.code, +details.amount, details.currency.rate];
       case "daf":
         return ["usd", +details.amount];
       case "stocks":
         return [details.symbol, +details.numShares];
       case "crypto":
-        return [details.token.symbol, +details.token.amount, 4];
+        const { symbol, amount, rate, precision } = details.token;
+        return [symbol, +amount, rate, precision];
     }
   })();
 
@@ -152,7 +153,7 @@ export default function Tip(props: TipStep) {
             <div className="absolute -top-9 px-2 py-0.5 rounded text-sm">
               <span className="text-xs uppercase mr-0.5">{symbol}</span>
               <span className="mr-0.5">
-                {humanize(tip.amount || "0", decimals)}
+                {humanize(tip.amount || "0", centsDecimals(rate, decimals))}
               </span>
               <span className="text-navy-l1 text-xs">
                 ({(Number(tip.pct) * 100).toFixed(0)}%)

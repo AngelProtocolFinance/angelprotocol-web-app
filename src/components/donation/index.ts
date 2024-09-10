@@ -10,3 +10,4 @@ export {
   initTokenOption,
 } from "./Steps/common/constants";
 export { LockedSplitSlider } from "./Steps/Splits";
+export { PayQr } from "./Steps/Submit/Crypto/PayQr";

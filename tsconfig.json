@@ -13,8 +13,7 @@
     "noFallthroughCasesInSwitch": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "strict": true,
-    "types": []
+    "strict": true
   },
   "include": ["./src/**/*.ts", "./src/**/*.tsx"],
   "exclude": ["**/node_modules", "**/.*/"]

@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "store/store";
 import type { AuthenticatedUser } from "types/auth";
@@ -156,8 +156,7 @@ describe("summary step", () => {
 
   const cryptoDetails: CryptoDonationDetails = {
     method: "crypto",
-    chainId: "80002",
-    token: { ...initTokenOption, amount: "100", coingecko_denom: "wagmi" },
+    token: { ...initTokenOption, amount: "100", cg_id: "wagmi" },
     program: props.details.program,
   };
   test("crypto amount + dollar amount", async () => {
@@ -169,12 +168,7 @@ describe("summary step", () => {
 
     const donationTerm = screen.getByRole("term", { name: /amount/i });
     expect(donationTerm).toBeInTheDocument();
-    //dollar amount is loading
-    expect(donationTerm.nextSibling).toHaveTextContent("100.0000 ($--)");
-    //dollar amount is loaded
-    await waitFor(() => {
-      expect(donationTerm.nextSibling).toHaveTextContent("100.0000 ($100.00)");
-    });
+    expect(donationTerm.nextSibling).toHaveTextContent("100.00 ($100.00)");
   });
 
   const user: Partial<AuthenticatedUser> = {

@@ -4,11 +4,10 @@ import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import type {
-  CryptoDonation,
+  Crypto,
   DonationIntent,
   EndowmentBalances,
   FiatCurrencyData,
-  FiatDonation,
   GuestDonor,
   PayPalOrder,
   Token,
@@ -24,11 +23,11 @@ type StripeRequiresBankVerification = {
   url?: string;
 };
 
-type StripePaymentIntentParams = FiatDonation & {
+type StripePaymentIntentParams = DonationIntent.Fiat & {
   type: "one-time" | "subscription";
 };
 
-type CreatePayPalOrderParams = FiatDonation;
+type CreatePayPalOrderParams = DonationIntent.Fiat;
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -45,21 +44,16 @@ export const apes = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    createCryptoIntent: builder.query<
+    createCryptoIntent: builder.query<Crypto.NewPayment, DonationIntent.Crypto>(
       {
-        transactionId: string;
-        /** defined if !CryptoDonation.walletAddress */
-        recipientAddress?: string;
-      },
-      CryptoDonation
-    >({
-      query: (params) => ({
-        url: "crypto-donation",
-        method: "POST",
-        headers: { authorization: TEMP_JWT },
-        body: JSON.stringify(params),
-      }),
-    }),
+        query: (params) => ({
+          url: "crypto-intents",
+          method: "POST",
+          headers: { authorization: TEMP_JWT },
+          body: JSON.stringify(params),
+        }),
+      }
+    ),
     confirmCryptoIntent: builder.mutation<
       { guestDonor: GuestDonor },
       { txId: string; txHash: string }
@@ -71,7 +65,7 @@ export const apes = createApi({
         body: JSON.stringify({ txHash }),
       }),
     }),
-    intent: builder.query<DonationIntent, { transactionId: string }>({
+    intent: builder.query<DonationIntent.ToResume, { transactionId: string }>({
       query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
     }),
     fiatCurrencies: builder.query<
@@ -122,7 +116,7 @@ export const apes = createApi({
       }),
       transformResponse: (res: { clientSecret: string }) => res.clientSecret,
     }),
-    chariotGrant: builder.query<string, FiatDonation>({
+    chariotGrant: builder.query<string, DonationIntent.Fiat>({
       query: (data) => ({
         url: "fiat-donation/chariot",
         method: "POST",

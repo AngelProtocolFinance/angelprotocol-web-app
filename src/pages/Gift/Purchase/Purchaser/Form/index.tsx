@@ -39,7 +39,6 @@ export default function Form({ classes = "" }) {
         token={token.value}
         onChange={token.onChange}
         ref={token.ref}
-        chainId="80002"
         label="Enter the donation amount:"
         classes={{ label: "text-lg", inputContainer: "dark:bg-blue-d6" }}
         withBalance

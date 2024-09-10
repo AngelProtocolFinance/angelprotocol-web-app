@@ -1,12 +1,13 @@
 import Image from "components/Image";
 import { ErrorStatus, LoadingStatus } from "components/Status";
+import { logoUrl } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
 import { type PropsWithChildren, useState } from "react";
 import { Link } from "react-router-dom";
 import { type SubmitStep, setStep } from "slices/gift";
 import { useSetter } from "store/accessors";
-import type { TokenWithAmount } from "types/tx";
+import type { TokenWithDetails } from "types/tx";
 import type { WithWallet } from "types/wallet";
 import CompleteBtn from "./CompleteBtn";
 import type { EstimateStatus } from "./types";
@@ -26,7 +27,7 @@ export default function Submit(props: WithWallet<SubmitStep>) {
       <Row title="Currency:">
         <Image
           className="ml-auto object-cover h-4 w-4 rounded-full mr-1"
-          src={token.logo}
+          src={logoUrl(token.logo)}
         />
         <span>{token.symbol}</span>
       </Row>
@@ -64,7 +65,7 @@ function TxTotal({
   token,
 }: {
   estimate: EstimateStatus;
-  token: TokenWithAmount;
+  token: TokenWithDetails;
 }) {
   switch (estimate) {
     case "error":
@@ -103,9 +104,7 @@ function TxTotal({
     default:
       const { fee } = estimate;
       const total =
-        fee.symbol === token.symbol
-          ? +token.amount + +fee.amount
-          : +token.amount;
+        fee.symbol === token.code ? +token.amount + +fee.amount : +token.amount;
 
       return (
         <>
@@ -114,7 +113,7 @@ function TxTotal({
           </Row>
           <Row title="TOTAL">
             <span>
-              {token.symbol} {humanize(total, 4)}
+              {token.code} {humanize(total, 4)}
             </span>
           </Row>
         </>

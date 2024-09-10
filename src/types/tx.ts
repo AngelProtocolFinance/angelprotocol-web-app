@@ -4,6 +4,7 @@ import type { CreateTxOptions, Msg } from "@terra-money/terra.js";
 import type { ConnectedWallet as TerraConnectedWallet } from "@terra-money/wallet-provider";
 import type { Token } from "./aws";
 import type { Chain } from "./chain";
+import type { TokenV2 } from "./components";
 import type { Allowance, Transfer } from "./contracts/erc20";
 import type { SignDoc } from "./cosmos";
 import type { Requester, Tupleable } from "./evm";
@@ -12,6 +13,13 @@ import type { EVMTx, SimulTx } from "./evm";
 export type TokenWithAmount = Token & {
   amount: string;
 };
+
+export interface TokenWithDetails extends TokenV2 {
+  amount: string;
+  min: number;
+  /** usd/unit */
+  rate: number;
+}
 
 // //////////// ESTIMATE TX ////////////
 export type EstimateInput =

@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { chains } from "constants/chains";
 import { Provider } from "react-redux";
 import { mockTokens } from "services/apes/mock";
 import { mockPrograms } from "services/aws/programs";
@@ -38,22 +37,6 @@ describe("Crypto form: initial load", () => {
       init,
     };
     render(<_Form {...state} />);
-
-    const chainInput = screen.getByPlaceholderText(/search network/i);
-    expect(chainInput).toBeInTheDocument();
-
-    const amountInput = screen.getByPlaceholderText(/enter amount/i);
-    expect(amountInput).toBeInTheDocument();
-
-    const tokenSelector = screen.getByRole("button", {
-      name: /select token/i,
-    });
-    expect(tokenSelector).toBeInTheDocument();
-
-    const programSelector = screen.getByRole("button", {
-      name: /general donation/i,
-    });
-    expect(programSelector).toBeInTheDocument();
   });
 
   test("initial form state: program donations not allowed", () => {
@@ -89,15 +72,11 @@ describe("Crypto form: initial load", () => {
       init,
       details: {
         method: "crypto",
-        token: { ...mockTokens[1], amount },
-        chainId: "80002",
+        token: { ...mockTokens[1], amount, min: 1, rate: 1 },
         program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
       },
     } as const;
     render(<_Form {...state} />);
-
-    const chainInput = screen.getByDisplayValue(chains["80002"].name);
-    expect(chainInput).toBeInTheDocument();
 
     const amountInput = screen.getByDisplayValue(amount);
     expect(amountInput).toBeInTheDocument();
@@ -113,7 +92,7 @@ describe("Crypto form: initial load", () => {
     mockedSetState.mockReset();
   });
 
-  test("submitting empty form should show validation messages and focus first field: chain selector", async () => {
+  test("submitting empty form should show validation messages and focus first field: amount input", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: { liquidSplitPct: 50, splitDisabled: false },
@@ -130,17 +109,11 @@ describe("Crypto form: initial load", () => {
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
 
-    expect(screen.getByText(/please select network/i)).toBeInTheDocument();
     //amount input
     expect(screen.getByText(/required/i)).toBeInTheDocument();
 
-    //input is focused
-    const comboboxInput = screen.getByRole("combobox");
-    expect(comboboxInput).toHaveFocus();
-
-    //dropdown is open
-    const dropdown = screen.getByRole("listbox");
-    expect(dropdown).toBeInTheDocument();
+    const amountInput = screen.getByPlaceholderText(/enter amount/i);
+    expect(amountInput).toHaveFocus();
   });
 
   test("user corrects error and submits", async () => {
@@ -161,23 +134,14 @@ describe("Crypto form: initial load", () => {
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
 
-    //combobox input should be focused and have options revealed
-    const options = screen.getAllByRole("option");
-    // option details best tested in some `ChainSelector.test.tsx`
-    expect(options.length).toBeGreaterThan(0);
-
-    //user clicks first option
-    await userEvent.click(options[0]);
-    //after selecting an option, error should go away
-    //details of selected network best tested in some `ChainSelector.test.tsx`
-    expect(screen.queryByText(/please select network/i)).toBeNull();
-
-    await userEvent.click(continueBtn);
-
+    //amount input required and focused
+    expect(screen.getByText(/required/i)).toBeInTheDocument();
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveFocus();
 
+    //inputs amount but not selected token
     await userEvent.type(amountInput, "10");
+    await userEvent.click(continueBtn);
     //inputs amount but not selected token
     expect(screen.getByRole("paragraph")).toHaveTextContent(/select token/i);
 
@@ -190,7 +154,9 @@ describe("Crypto form: initial load", () => {
     expect(tokenOptions.length).toBeGreaterThan(0);
 
     //user clicks first option
-    await userEvent.click(tokenOptions[0]); //mockToken[0]
+    await userEvent.click(tokenOptions[0]); //Bitcoin
+
+    //token is loading, to get min amount
 
     //details of selected token best tested in some `TokenSelector.test.tsx`
     //when selecting token, amount is reset to `""`, as different tokens have different nominal value
@@ -198,14 +164,15 @@ describe("Crypto form: initial load", () => {
 
     //user now inputs amount but less than minimum
     await userEvent.click(amountInput);
-    await userEvent.type(amountInput, "10");
+    await userEvent.type(amountInput, "0.5");
 
-    expect(screen.getByText(/must be at least 100/i)).toBeInTheDocument();
+    expect(await screen.findByText(/less than minimum/i)).toBeInTheDocument();
 
     //user now inputs amount greater than minimum
     await userEvent.click(amountInput);
-    await userEvent.type(amountInput, "120");
-    expect(screen.queryByText(/must be at least 100/i)).toBeNull();
+    await userEvent.clear(amountInput);
+    await userEvent.type(amountInput, "2");
+    expect(screen.queryByText(/less than minimum/i)).toBeNull();
 
     //user should be able to submit now
     await userEvent.click(continueBtn);

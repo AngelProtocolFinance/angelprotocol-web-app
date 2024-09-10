@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { apes } from "services/apes";
 import { aws } from "services/aws/aws";
-import { coingecko } from "services/coingecko";
 import { terra } from "services/terra";
 import { wordpress } from "services/wordpress";
 import auth from "slices/auth";
@@ -13,7 +12,6 @@ export const store = configureStore({
     auth,
     [aws.reducerPath]: aws.reducer,
     [apes.reducerPath]: apes.reducer,
-    [coingecko.reducerPath]: coingecko.reducer,
     [wordpress.reducerPath]: wordpress.reducer,
     [terra.reducerPath]: terra.reducer,
   },
@@ -21,7 +19,6 @@ export const store = configureStore({
     getDefaultMiddleware().concat([
       aws.middleware,
       apes.middleware,
-      coingecko.middleware,
       wordpress.middleware,
       terra.middleware,
     ]),

@@ -1,5 +1,7 @@
 import type { FileObject } from "./aws";
 import type { DonateMethodId } from "./lists";
+//token selector
+export { type Token as TokenV2 } from "@better-giving/assets/tokens";
 
 //selector
 export type ValKey = string | number;
