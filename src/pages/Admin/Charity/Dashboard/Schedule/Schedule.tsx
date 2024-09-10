@@ -20,6 +20,7 @@ interface Props {
   classes?: string;
   periodNext: string;
   periodRemaining: string;
+  grantFromBal: number;
 }
 export function Schedule(props: Props) {
   const { id } = useAdminContext();
@@ -94,7 +95,8 @@ export function Schedule(props: Props) {
           amount={props.amount}
           tooltip={(val) =>
             val !== 0 &&
-            val < MIN_PROCESSING_AMOUNT && (
+            /** include additional grant from bal */
+            val + props.grantFromBal < MIN_PROCESSING_AMOUNT && (
               <Tooltip
                 trigger={
                   <Icon

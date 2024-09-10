@@ -1,5 +1,7 @@
 import { IS_TEST } from "constants/env";
 import type {
+  BalanceMovement,
+  EndowmentBalances,
   PayoutsPage,
   PayoutsQueryParams,
   ReceiptPayload,
@@ -9,6 +11,7 @@ import { apes } from "../apes";
 
 export const {
   useRequestReceiptMutation,
+  useMoveFundsMutation,
   useCurrenciesQuery,
   usePayoutsQuery,
   useLazyPayoutsQuery,
@@ -31,6 +34,19 @@ export const {
     }),
     payouts: builder.query<PayoutsPage, PayoutsQueryParams>({
       query: ({ endowId }) => `endowments/${endowId}/payouts`,
+    }),
+    moveFunds: builder.mutation<
+      EndowmentBalances,
+      BalanceMovement & { endowId: number }
+    >({
+      invalidatesTags: (_, error) => (error ? [] : ["balance"]),
+      query: ({ endowId, ...payload }) => {
+        return {
+          url: `endowments/${endowId}/move-balance`,
+          method: "PUT",
+          body: payload,
+        };
+      },
     }),
   }),
 });

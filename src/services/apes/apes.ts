@@ -112,6 +112,7 @@ export const apes = createApi({
       transformResponse: (res: { grantId: string }) => res.grantId,
     }),
     endowBalance: builder.query<EndowmentBalances, number>({
+      providesTags: ["balance"],
       query: (endowId) => `${v(1)}/balances/${endowId}`,
     }),
     stripePaymentStatus: builder.query<

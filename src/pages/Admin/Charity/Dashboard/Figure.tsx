@@ -9,6 +9,7 @@ type Props = {
   amount: string;
   /** must be wrapped by tooltip content */
   tooltip?: ReactNode;
+  actions?: ReactNode;
 };
 
 export default function Figure(props: Props) {
@@ -30,6 +31,7 @@ export default function Figure(props: Props) {
         <span className="ml-auto">{props.icon}</span>
       </div>
       <p className="text-2xl font-medium">{props.amount}</p>
+      {props.actions}
     </div>
   );
 }
