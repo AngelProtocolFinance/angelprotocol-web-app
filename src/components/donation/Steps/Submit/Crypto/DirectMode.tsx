@@ -60,7 +60,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       <p className="text-navy-l1 text-balance text-center mb-3.5 max-w-sm">
         To complete your donation, send {totalDisplayAmount}
         &nbsp;
-        {details.token.code} from your crypto wallet to the address below
+        {details.token.symbol} from your crypto wallet to the address below
       </p>
       <QueryLoader
         queryState={intentQuery}
