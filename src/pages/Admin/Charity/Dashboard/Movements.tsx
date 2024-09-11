@@ -31,6 +31,11 @@ const asset: {
     icon: <Icon type="Sprout" className="text-green" />,
     source: "Savings",
   },
+  "lock-liq": {
+    title: "Save",
+    icon: <Icon type="PiggyBank" className="text-navy-l1" />,
+    source: "Investment",
+  },
 };
 
 interface Props {

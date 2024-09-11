@@ -17,6 +17,21 @@ export function LockActions({ classes = "", ...props }: Props) {
         type="button"
         onClick={() =>
           showModal(MoveFundForm, {
+            type: "lock-liq",
+            balance: props.balance,
+            mov: props.mov,
+            endowId: props.endowId,
+            effect: "append",
+          })
+        }
+        className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
+      >
+        save
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          showModal(MoveFundForm, {
             type: "lock-cash",
             balance: props.balance,
             mov: props.mov,

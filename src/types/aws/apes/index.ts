@@ -40,6 +40,8 @@ export interface BalanceMovement {
   "liq-cash": number;
   /** withdrawal from sustainability fund */
   "lock-cash": number;
+  /** savings */
+  "lock-liq": number;
 }
 
 export type EndowmentBalances = {

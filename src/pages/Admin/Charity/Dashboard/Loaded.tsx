@@ -22,6 +22,7 @@ export function Loaded({
     "liq-cash": 0,
     "liq-lock": 0,
     "lock-cash": 0,
+    "lock-liq": 0,
   };
 
   const liqDeductions = Object.entries(mov).reduce(
@@ -42,6 +43,7 @@ export function Loaded({
     "liq-cash": props.donationsBal - liqDeductions,
     "liq-lock": props.donationsBal - liqDeductions,
     "lock-cash": props.sustainabilityFundBal - lockDeductions,
+    "lock-liq": props.sustainabilityFundBal - lockDeductions,
   };
 
   return (
