@@ -43,7 +43,7 @@ export function Schedule(props: Props) {
     <div className="p-4 grid rounded border border-gray-l4 mt-4">
       <div className="grid border-b border-gray-l4 w-full pb-2">
         <h4 className="mb-1">Donations received</h4>
-        <p>$ {humanize(props.amount)}</p>
+        <p className="font-heading font-medium">$ {humanize(props.amount)}</p>
       </div>
       <div className="flex items-center mt-4 gap-x-2">
         <h4 className="mb-1">Distribution</h4>
@@ -147,7 +147,7 @@ function Row(props: IRow) {
     <div className="grid grid-cols-subgrid col-span-full items-center">
       {props.icon}
       {props.title}
-      <span className="ml-2 text-navy-l1 font-medium text-sm">
+      <span className="ml-2 text-navy-l1 font-medium text-sm font-heading">
         {props.pct ?? 50} %
       </span>
       <span className="text-right">$</span>
