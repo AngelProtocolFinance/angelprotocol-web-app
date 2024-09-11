@@ -25,23 +25,13 @@ export function Loaded({
     "lock-liq": 0,
   };
 
-  const liqDeductions = Object.entries(mov).reduce(
-    (sum, [k, v]) => (k.startsWith("liq-") ? sum + v : sum),
-    0
-  );
-  const lockDeductions = Object.entries(mov).reduce(
-    (sum, [k, v]) => (k.startsWith("lock-") ? sum + v : sum),
-    0
-  );
-
-  const grantFromBal = Object.entries(mov).reduce(
-    (sum, [k, v]) => (k.endsWith("-cash") ? sum + v : sum),
-    0
-  );
+  const liqDeductions = mov["liq-cash"] + mov["liq-lock"];
+  const lockDeductions = mov["lock-cash"] + mov["lock-liq"];
+  const grantFromBal = mov["liq-cash"] + mov["lock-cash"];
 
   const balances: BalanceMovement = {
-    "liq-cash": props.donationsBal - liqDeductions,
-    "liq-lock": props.donationsBal - liqDeductions,
+    "liq-cash": (props.liq ?? 0) - liqDeductions,
+    "liq-lock": (props.liq ?? 0) - liqDeductions,
     "lock-cash": props.sustainabilityFundBal - lockDeductions,
     "lock-liq": props.sustainabilityFundBal - lockDeductions,
   };

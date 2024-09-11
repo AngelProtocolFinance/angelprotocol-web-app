@@ -53,6 +53,8 @@ export type EndowmentBalances = {
   totalContributions: number;
   totalEarnings: number;
   movementDetails?: BalanceMovement;
+  /** savings balance */
+  liq?: number;
 };
 
 export * from "./paypal";
