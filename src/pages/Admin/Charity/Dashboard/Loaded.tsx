@@ -68,7 +68,7 @@ export function Loaded({
           tooltip={
             <Content className="bg-navy-d4 text-gray-l4 text-sm max-w-xs p-4 rounded-lg shadow-lg">
               <span className="block mb-2">
-                Funds invested in a diversified portfolio comprising
+                Funds invested in a diversified portfolio comprising:
               </span>
               <div>
                 <p>50% - Domestic and international equities</p>
