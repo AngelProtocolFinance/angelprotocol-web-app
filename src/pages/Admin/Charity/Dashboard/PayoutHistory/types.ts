@@ -1,7 +1,7 @@
-import type { Payout } from "types/aws";
+import type { BalanceTx } from "types/aws";
 
 export interface TableProps {
-  records: Payout[];
+  records: BalanceTx[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;

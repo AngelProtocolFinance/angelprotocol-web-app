@@ -21,10 +21,9 @@ export default function Table({
           cellClass="px-3 py-2 bg-gray-l5 text-xs uppercase font-semibold text-left first:rounded-tl last:rounded-tr"
         >
           <>Date</>
-          <>Grant</>
-          <>Savings</>
-          <>Investment</>
-          <>Unprocessed</>
+          <>Type</>
+          <>From</>
+          <>Amount</>
         </Cells>
       </TableSection>
       <TableSection
@@ -42,10 +41,9 @@ export default function Table({
               }`}
             >
               <>{new Date(row.date).toLocaleDateString()}</>
-              <>$ {humanize(row.cash)}</>
-              <>$ {humanize(row.liq)}</>
-              <>$ {humanize(row.lock)}</>
-              <>$ {humanize(row.pendingTotal)}</>
+              <>{row.to}</>
+              <>{row.from}</>
+              <>$ {humanize(row.amount)}</>
             </Cells>
           ))
           .concat(

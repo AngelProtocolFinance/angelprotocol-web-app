@@ -1,18 +1,18 @@
 import {
   updateDonationsApiQueryData,
-  useLazyPayoutsQuery,
-  usePayoutsQuery,
+  useBalanceTxsQuery,
+  useLazyBalanceTxsQuery,
 } from "services/apes";
 
 import { useSetter } from "store/accessors";
 
 export default function usePagination(endowId: number) {
   const dispatch = useSetter();
-  const queryState = usePayoutsQuery({ endowId });
+  const queryState = useBalanceTxsQuery({ endowId });
   const { isLoading, isFetching, isError, data, originalArgs } = queryState;
 
   const [loadMore, { isLoading: isLoadingNextPage, isError: isErrorNextPage }] =
-    useLazyPayoutsQuery();
+    useLazyBalanceTxsQuery();
 
   async function loadNextPage() {
     //button is hidden when there's no more
@@ -28,10 +28,14 @@ export default function usePagination(endowId: number) {
       if (newPageRes) {
         //pessimistic update to original cache data
         dispatch(
-          updateDonationsApiQueryData("payouts", originalArgs, (prevResult) => {
-            prevResult.items.push(...newPageRes.items);
-            prevResult.nextPageKey = newPageRes.nextPageKey;
-          })
+          updateDonationsApiQueryData(
+            "balanceTxs",
+            originalArgs,
+            (prevResult) => {
+              prevResult.items.push(...newPageRes.items);
+              prevResult.nextPageKey = newPageRes.nextPageKey;
+            }
+          )
         );
       }
     }

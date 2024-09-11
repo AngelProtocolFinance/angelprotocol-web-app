@@ -1,9 +1,9 @@
 import { IS_TEST } from "constants/env";
 import type {
   BalanceMovement,
+  BalanceTxsPage,
+  BalanceTxsQueryParams,
   EndowmentBalances,
-  PayoutsPage,
-  PayoutsQueryParams,
   ReceiptPayload,
   Token,
 } from "types/aws";
@@ -13,8 +13,8 @@ export const {
   useRequestReceiptMutation,
   useMoveFundsMutation,
   useCurrenciesQuery,
-  usePayoutsQuery,
-  useLazyPayoutsQuery,
+  useBalanceTxsQuery,
+  useLazyBalanceTxsQuery,
   util: { updateQueryData: updateDonationsApiQueryData },
 } = apes.injectEndpoints({
   endpoints: (builder) => ({
@@ -32,8 +32,8 @@ export const {
     currencies: builder.query<Token[], void>({
       query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
     }),
-    payouts: builder.query<PayoutsPage, PayoutsQueryParams>({
-      query: ({ endowId }) => `endowments/${endowId}/payouts`,
+    balanceTxs: builder.query<BalanceTxsPage, BalanceTxsQueryParams>({
+      query: ({ endowId }) => `endowments/${endowId}/balance-txs`,
     }),
     moveFunds: builder.mutation<
       EndowmentBalances,
