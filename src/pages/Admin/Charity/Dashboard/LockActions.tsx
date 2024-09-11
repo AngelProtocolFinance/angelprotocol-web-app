@@ -6,12 +6,13 @@ interface Props {
   endowId: number;
   balance: number;
   mov: BalanceMovement;
+  classes?: string;
 }
 
-export function LockActions(props: Props) {
+export function LockActions({ classes = "", ...props }: Props) {
   const { showModal } = useModalContext();
   return (
-    <div className="mt-8 flex justify-end">
+    <div className={`${classes} flex justify-end`}>
       <button
         type="button"
         onClick={() =>

@@ -60,7 +60,12 @@ export function Loaded({
           icon={<Icon size={21} type="PiggyBank" strokeWidth={1.5} />}
           amount={`$ ${humanize(props.donationsBal - props.payoutsMade, 2)}`}
           actions={
-            <LiqActions endowId={id} mov={mov} balance={balances["liq-cash"]} />
+            <LiqActions
+              classes="mt-8"
+              endowId={id}
+              mov={mov}
+              balance={balances["liq-cash"]}
+            />
           }
         />
         <Figure
@@ -83,6 +88,7 @@ export function Loaded({
           amount={`$ ${humanize(props.sustainabilityFundBal, 2)}`}
           actions={
             <LockActions
+              classes="mt-8"
               balance={balances["lock-cash"]}
               endowId={id}
               mov={mov}

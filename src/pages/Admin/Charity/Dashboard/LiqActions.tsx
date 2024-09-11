@@ -3,15 +3,16 @@ import type { BalanceMovement } from "types/aws";
 import { MoveFundForm } from "./MoveFundForm";
 
 interface Props {
+  classes?: string;
   endowId: number;
   balance: number;
   mov: BalanceMovement;
 }
 
-export function LiqActions(props: Props) {
+export function LiqActions({ classes = "", ...props }: Props) {
   const { showModal } = useModalContext();
   return (
-    <div className="mt-8 flex justify-end gap-x-2">
+    <div className={`${classes} flex justify-end gap-x-2`}>
       <button
         type="button"
         onClick={() =>
