@@ -27,7 +27,7 @@ export function MoveFundForm(props: IMoveFundForm) {
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isDirty },
   } = useForm<FV>({
     defaultValues: { amount: props.initAmount?.toString() || "" },
     resolver: yupResolver(
@@ -82,15 +82,15 @@ export function MoveFundForm(props: IMoveFundForm) {
         <Input
           placeholder="e.g. $ 100"
           {...register("amount")}
-          className="px-4 py-3 rounded-lg outline-blue-d1 border border-gray-l3"
+          className="px-4 py-3 rounded-lg outline-blue-d1 border border-gray-l3 font-heading"
         />
         <span className="text-red text-xs text-right empty:hidden mt-1">
           {errors.amount?.message}
         </span>
       </Field>
       <button
-        disabled={isSubmitting || isLoading}
-        className="bg-blue-d1 hover:bg-blue disabled:bg-gray text-white rounded-full px-4 py-2 font-heading uppercase font-bold"
+        disabled={isSubmitting || isLoading || !isDirty}
+        className="bg-blue-d1 text-sm hover:bg-blue disabled:bg-gray text-white rounded-full px-4 py-2 font-heading uppercase font-bold"
       >
         {isLoading ? "Submitting..." : "Submit"}
       </button>
