@@ -37,7 +37,12 @@ export function MoveFundForm(props: IMoveFundForm) {
           (n) =>
             n
               .min(0, "can't be negative")
-              .max(props.balance, "can't be more than balance")
+              .max(
+                props.effect === "append"
+                  ? props.balance
+                  : props.balance + (props.initAmount ?? 0),
+                "can't be more than balance"
+              )
         ),
       })
     ),
@@ -71,7 +76,8 @@ export function MoveFundForm(props: IMoveFundForm) {
       </p>
       <Field className="grid">
         <Label className="font-semibold mb-1">
-          Amount <span className="text-red">*</span>
+          {props.effect === "override" ? "Edit amount" : "Amount"}
+          <span className="text-red"> *</span>
         </Label>
         <Input
           placeholder="e.g. $ 100"
