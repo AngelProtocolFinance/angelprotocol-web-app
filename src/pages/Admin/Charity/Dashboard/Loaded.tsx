@@ -50,7 +50,7 @@ export function Loaded({
             </Content>
           }
           icon={<Icon size={21} type="PiggyBank" strokeWidth={1.5} />}
-          amount={`$ ${humanize(props.donationsBal - props.payoutsMade, 2)}`}
+          amount={`$ ${humanize(props.liq ?? 0, 2)}`}
           actions={
             <LiqActions
               classes="mt-8"
