@@ -125,10 +125,6 @@ const faqs = (endowId: number) => [
         No upfront costs. No platform fees (unless a nonprofit has opted out of
         offering donors a voluntary donation to Better Giving).
       </p>,
-      <p>
-        For fiscally sponsored accounts (mainly non-US charities), there is a
-        fiscal sponsorship fee of 2.9%.
-      </p>,
       <p>Payment processing fees from 3rd parties may apply.</p>,
     ],
   },
