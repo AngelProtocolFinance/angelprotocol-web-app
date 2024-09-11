@@ -1,11 +1,11 @@
 import Icon from "components/Icon";
 import { Arrow, Content } from "components/Tooltip";
-import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
 import type { BalanceMovement, EndowmentBalances } from "types/aws";
 import Figure from "./Figure";
-import { MoveFundForm } from "./MoveFundForm";
+import { LiqActions } from "./LiqActions";
+import { LockActions } from "./LockActions";
 import { Movements } from "./Movements";
 import { PayoutHistory } from "./PayoutHistory";
 import { Schedule } from "./Schedule";
@@ -17,7 +17,6 @@ export function Loaded({
 }: EndowmentBalances & { classes?: string }) {
   const { id } = useAdminContext();
   const period = monthPeriod();
-  const { showModal } = useModalContext();
 
   const mov = props.movementDetails ?? {
     "liq-cash": 0,
@@ -61,38 +60,7 @@ export function Loaded({
           icon={<Icon size={21} type="PiggyBank" strokeWidth={1.5} />}
           amount={`$ ${humanize(props.donationsBal - props.payoutsMade, 2)}`}
           actions={
-            <div className="mt-8 flex justify-end gap-x-2">
-              <button
-                type="button"
-                onClick={() =>
-                  showModal(MoveFundForm, {
-                    type: "liq-cash",
-                    balance: balances["liq-cash"],
-                    mov,
-                    endowId: id,
-                    effect: "append",
-                  })
-                }
-                className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
-              >
-                withdraw
-              </button>
-              <button
-                type="button"
-                onClick={() =>
-                  showModal(MoveFundForm, {
-                    type: "liq-lock",
-                    balance: balances["liq-lock"],
-                    mov,
-                    endowId: id,
-                    effect: "append",
-                  })
-                }
-                className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
-              >
-                invest
-              </button>
-            </div>
+            <LiqActions endowId={id} mov={mov} balance={balances["liq-cash"]} />
           }
         />
         <Figure
@@ -114,23 +82,11 @@ export function Loaded({
           icon={<Icon type="Stocks" size={16} />}
           amount={`$ ${humanize(props.sustainabilityFundBal, 2)}`}
           actions={
-            <div className="mt-8 flex justify-end">
-              <button
-                type="button"
-                onClick={() =>
-                  showModal(MoveFundForm, {
-                    type: "lock-cash",
-                    balance: balances["lock-cash"],
-                    mov,
-                    endowId: id,
-                    effect: "append",
-                  })
-                }
-                className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
-              >
-                withdraw
-              </button>
-            </div>
+            <LockActions
+              balance={balances["lock-cash"]}
+              endowId={id}
+              mov={mov}
+            />
           }
         />
         <Figure
