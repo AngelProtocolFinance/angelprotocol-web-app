@@ -24,9 +24,9 @@ export function LiqActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
+        className="text-xs px-3 py-1 rounded-full font-heading border border-gray-l2 hover:border-gray outline-gray-d1"
       >
-        withdraw
+        Withdraw
       </button>
       <button
         type="button"
@@ -39,9 +39,9 @@ export function LiqActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
+        className="text-green-d1 bg-green-l5 text-xs px-3 py-1 rounded-full font-heading border border-green-l2 hover:border-green-l1 outline-green"
       >
-        invest
+        Invest
       </button>
     </div>
   );

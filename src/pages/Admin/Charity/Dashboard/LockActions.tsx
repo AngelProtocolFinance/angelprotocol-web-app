@@ -12,7 +12,7 @@ interface Props {
 export function LockActions({ classes = "", ...props }: Props) {
   const { showModal } = useModalContext();
   return (
-    <div className={`${classes} flex justify-end`}>
+    <div className={`${classes} flex justify-end gap-x-2`}>
       <button
         type="button"
         onClick={() =>
@@ -24,9 +24,9 @@ export function LockActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
+        className="text-amber-d1 bg-amber-l5 text-xs px-3 py-1 rounded-full font-heading border border-amber-l2 hover:border-amber-l1 outline-amber"
       >
-        save
+        Save
       </button>
       <button
         type="button"
@@ -39,9 +39,9 @@ export function LockActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-xs uppercase bg-blue-d1 text-white px-2 py-1 rounded-sm font-heading hover:bg-blue"
+        className="text-xs px-3 py-1 rounded-full font-heading border border-gray-l2 hover:border-gray outline-blue-d1"
       >
-        withdraw
+        Withdraw
       </button>
     </div>
   );
