@@ -30,7 +30,7 @@ export default function Figure(props: Props) {
 
         <span className="ml-auto">{props.icon}</span>
       </div>
-      <p className="text-2xl font-medium">{props.amount}</p>
+      <p className="text-2xl font-medium font-heading">{props.amount}</p>
       {props.actions}
     </div>
   );

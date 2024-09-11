@@ -151,7 +151,9 @@ function Row(props: IRow) {
         {props.pct ?? 50} %
       </span>
       <span className="text-right">$</span>
-      <span className="text-left">{humanize(val)}</span>
+      <span className="text-left font-heading font-medium">
+        {humanize(val)}
+      </span>
       {props.tooltip?.(val)}
     </div>
   );

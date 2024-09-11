@@ -13,28 +13,28 @@ const asset: {
   [K in Flow]: {
     icon: ReactNode;
     source: string;
-    title: string;
+    title: ReactNode;
   };
 } = {
   "liq-cash": {
-    title: "Grant",
+    title: <span className="text-sm text-navy-l1">Grant</span>,
     icon: <Icon type="ArrowRight" className="text-navy-l1 size-4" />,
     source: "Savings",
   },
   "lock-cash": {
-    title: "Grant",
+    title: <span className="text-sm text-navy-l1">Grant</span>,
     icon: <Icon type="ArrowRight" className="text-navy-l1 size-4" />,
-    source: "Investment",
+    source: "Investments",
   },
   "liq-lock": {
-    title: "Invest",
-    icon: <Icon type="Sprout" className="text-green" />,
+    title: <span className="text-sm text-green">Invest</span>,
+    icon: <Icon type="Sprout" className="text-green size-4" />,
     source: "Savings",
   },
   "lock-liq": {
-    title: "Save",
-    icon: <Icon type="PiggyBank" className="text-navy-l1" />,
-    source: "Investment",
+    title: <span className="text-sm text-amber">Save</span>,
+    icon: <Icon type="PiggyBank" className="text-navy-l1 size-4" />,
+    source: "Investments",
   },
 };
 
@@ -48,6 +48,7 @@ interface Props {
 export function Movements({ classes = "", ...props }: Props) {
   const { showModal } = useModalContext();
   const movs = Object.entries(props.mov).filter(([_, v]) => v > 0);
+
   if (movs.length === 0) return null;
 
   return (
@@ -55,7 +56,7 @@ export function Movements({ classes = "", ...props }: Props) {
       <h4 className="grid border-b border-gray-l4 w-full pb-2">
         Pending transactions
       </h4>
-      <div className="grid grid-cols-[auto_auto_auto_1fr] mt-2">
+      <div className="grid grid-cols-[auto_auto_auto_auto_auto_1fr] mt-4 gap-y-2">
         {movs.map((entry) => {
           const [k, v] = entry as [Flow, number];
           const a = asset[k];
@@ -65,10 +66,10 @@ export function Movements({ classes = "", ...props }: Props) {
               className="grid gap-x-2 grid-cols-subgrid col-span-full items-center"
             >
               {a.icon}
-              <span>{a.title}</span>
-              <span>
-                $ {humanize(v)} from:{a.source}
-              </span>
+              {a.title}
+              <span className="font-heading font-medium">$ {humanize(v)}</span>
+              <span className="text-xs ml-2">from</span>
+              <span className="text-sm">{a.source}</span>
               <button
                 type="button"
                 onClick={() =>
@@ -81,7 +82,7 @@ export function Movements({ classes = "", ...props }: Props) {
                     initAmount: roundDownToNum(v, 2),
                   })
                 }
-                className="text-right"
+                className="text-right bg-gray-l4 text-navy-d4 px-3 py-1 font-heading hover:bg-gray-l3 justify-self-end text-xs rounded-full"
               >
                 edit
               </button>
