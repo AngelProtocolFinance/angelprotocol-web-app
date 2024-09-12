@@ -91,6 +91,7 @@ export interface BalanceTx {
   from: "donation" | "liq" | "lock";
   amount: number;
 }
+
 export interface BalanceTxsPage {
   items: BalanceTx[];
   nextPageKey?: string;

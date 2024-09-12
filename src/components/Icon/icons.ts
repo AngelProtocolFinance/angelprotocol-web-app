@@ -1,5 +1,7 @@
 import {
   ArrowDownToLine,
+  ArrowLeft,
+  ArrowLeftRight,
   ArrowRight,
   ArrowUpFromLine,
   BadgeCheck,
@@ -71,6 +73,8 @@ import {
 } from "lucide-react";
 
 export const icons = {
+  ArrowLeft,
+  ArrowLeftRight,
   ArrowRight: ArrowRight,
   Back: ChevronLeft,
   Banknote,

@@ -33,7 +33,12 @@ export const {
       query: () => `v1/tokens/list${IS_TEST ? "/test" : ""}`,
     }),
     balanceTxs: builder.query<BalanceTxsPage, BalanceTxsQueryParams>({
-      query: ({ endowId }) => `endowments/${endowId}/balance-txs`,
+      query: ({ endowId, ...params }) => {
+        return {
+          url: `endowments/${endowId}/balance-txs`,
+          params,
+        };
+      },
     }),
     moveFunds: builder.mutation<
       EndowmentBalances,
