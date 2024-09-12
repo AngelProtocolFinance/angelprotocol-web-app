@@ -22,7 +22,7 @@ type SuccessState = {
 export type SignupState = InitState | ConfirmState | SuccessState;
 export type StateSetter = React.Dispatch<React.SetStateAction<SignupState>>;
 
-export type UserType = "donor" | "non-profit";
+export type UserType = "donor" | "nonprofit";
 
 export type FormValues = {
   email: string;

@@ -8,10 +8,11 @@ import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { getAuthRedirect } from "helpers";
+import { getAuthRedirect, logger } from "helpers";
 import { useController, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
+import { useSaveSignupMutation } from "services/aws/hubspot";
 import { useGetter } from "store/accessors";
 import type { OAuthState, SignInRouteState } from "types/auth";
 import { mixed, object, ref } from "yup";
@@ -24,6 +25,7 @@ type Props = {
 };
 
 export default function SignupForm(props: Props) {
+  const [savetoHubspot] = useSaveSignupMutation();
   const location = useLocation();
   const fromState: SignInRouteState | undefined = location.state;
   const isRegistrant = fromState?.from === appRoutes.register;
@@ -37,7 +39,7 @@ export default function SignupForm(props: Props) {
     control,
   } = useForm<FormValues>({
     defaultValues: {
-      userType: isRegistrant ? "non-profit" : undefined,
+      userType: isRegistrant ? "nonprofit" : undefined,
     },
     resolver: yupResolver(
       object({
@@ -51,7 +53,7 @@ export default function SignupForm(props: Props) {
         lastName: requiredString.trim(),
         userType: mixed<UserType>()
           .required("Please select an option to proceed")
-          .oneOf(["donor", "non-profit"]),
+          .oneOf(["donor", "nonprofit"]),
         password: password,
       })
     ),
@@ -65,7 +67,7 @@ export default function SignupForm(props: Props) {
   }
 
   const redirect = getAuthRedirect(fromState, {
-    isNpo: userType.value === "non-profit",
+    isNpo: userType.value === "nonprofit",
   });
   if (currUser) {
     return <Navigate to={redirect.path} replace />;
@@ -73,6 +75,17 @@ export default function SignupForm(props: Props) {
 
   async function submit(fv: FormValues) {
     try {
+      try {
+        await savetoHubspot({
+          email: fv.email,
+          firstName: fv.firstName,
+          lastName: fv.lastName,
+          type: fv.userType,
+        }).unwrap();
+      } catch (err) {
+        logger.error(err);
+      }
+
       const { nextStep } = await signUp({
         username: fv.email.toLowerCase(),
         password: fv.password,
@@ -145,7 +158,7 @@ export default function SignupForm(props: Props) {
               pathname: redirect.path,
               data: redirect.data,
             };
-            signInWithRedirect({
+            await signInWithRedirect({
               provider: "Google",
               customState: JSON.stringify(stored),
             });

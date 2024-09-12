@@ -3,9 +3,11 @@ import { AuthError, signUp } from "aws-amplify/auth";
 import Icon from "components/Icon";
 import { Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
+import { logger } from "helpers";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
+import { useSaveSignupMutation } from "services/aws/hubspot";
 import { object } from "yup";
 import type { Donor, StateSetter } from "./types";
 
@@ -16,6 +18,7 @@ type Props = {
 };
 
 export default function SignupForm(props: Props) {
+  const [savetoHubspot] = useSaveSignupMutation();
   const { handleError, displayError } = useErrorContext();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
@@ -32,6 +35,7 @@ export default function SignupForm(props: Props) {
           .matches(/[A-Z]/, "must have uppercase letters")
           .matches(/[0-9]/, "must have numbers")
           .test("_", "must have special characters", (pw) =>
+            //prettier-ignore
             //biome-ignore format:
             [
             '^', '$', '*', '.', '[', ']',
@@ -52,6 +56,17 @@ export default function SignupForm(props: Props) {
       disabled={isSubmitting}
       onSubmit={handleSubmit(async (fv) => {
         try {
+          try {
+            await savetoHubspot({
+              email: props.donor.email,
+              firstName: props.donor.firstName,
+              lastName: props.donor.lastName,
+              type: "donor",
+            }).unwrap();
+          } catch (err) {
+            logger.error(err);
+          }
+
           const { nextStep } = await signUp({
             username: props.donor.email,
             password: fv.password,
