@@ -30,9 +30,9 @@ export default function UserTypeSelector({
           Donor
         </button>
         <button
-          className={btnClass(value === "non-profit")}
+          className={btnClass(value === "nonprofit")}
           type="button"
-          onClick={() => onChange("non-profit")}
+          onClick={() => onChange("nonprofit")}
         >
           Nonprofit
         </button>
