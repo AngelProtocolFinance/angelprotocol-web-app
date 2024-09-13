@@ -3,6 +3,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods, fill } from "components/DonateMethods";
 import { LockedSplitSlider } from "components/donation";
 import { CheckField, Field, RhfForm } from "components/form";
+import { BG_ID } from "constants/common";
+import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
@@ -19,6 +21,7 @@ const PAYOUT_MIN_USD = 50;
 
 export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();
+  const { displayError } = useErrorContext();
 
   const methods = useForm({
     resolver: yupResolver(
@@ -82,6 +85,12 @@ export default function Form(props: Props) {
           donateMethods,
           ...fv
         }) => {
+          if (props.id === BG_ID && fv.hide_bg_tip === false) {
+            return displayError(
+              "BG donation flow should not show BG tip screen"
+            );
+          }
+
           await updateEndow({
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
