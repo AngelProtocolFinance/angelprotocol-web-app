@@ -1,3 +1,4 @@
+import { TEMP_JWT } from "constants/auth";
 import { IS_TEST } from "constants/env";
 import type {
   BalanceMovement,
@@ -50,6 +51,7 @@ export const {
           url: `endowments/${endowId}/move-balance`,
           method: "PUT",
           body: payload,
+          headers: { authorization: TEMP_JWT },
         };
       },
     }),
