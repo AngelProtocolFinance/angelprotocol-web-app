@@ -1,9 +1,6 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
-import type { BaseQueryFn, TagDescription } from "@reduxjs/toolkit/query";
+import type { BaseQueryFn } from "@reduxjs/toolkit/query";
 import type { TypedUseQueryHookResult } from "@reduxjs/toolkit/query/react";
 
-type Tag = TagDescription<string>;
-export type TagPayload = PayloadAction<Tag[], string>;
 type Base = BaseQueryFn<any, unknown, unknown, {}, {}>;
 export type QueryState<T> = Pick<
   TypedUseQueryHookResult<T, any, Base>,
