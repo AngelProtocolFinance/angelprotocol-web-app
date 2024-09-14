@@ -7,7 +7,6 @@ export * from "./idParamToNum";
 export * from "./isEmpty";
 export * from "./logger";
 export * from "./maskAddress";
-export * from "./theme";
 export * from "./registration";
 export * from "./replaceWithEmptyString";
 export * from "./unpack";

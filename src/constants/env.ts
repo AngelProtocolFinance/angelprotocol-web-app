@@ -1,6 +1,3 @@
-import isMobile from "is-mobile";
-
-export const IS_MOBILE = isMobile();
 export const ENVIRONMENT = process.env.PUBLIC_ENVIRONMENT;
 export const IS_TEST = ENVIRONMENT === "dev";
 
