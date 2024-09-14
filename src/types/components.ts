@@ -1,8 +1,15 @@
+//token selector
+import type { Token } from "@better-giving/assets/tokens";
 import type { FileObject } from "./aws";
 import type { DonateMethodId } from "./lists";
-//token selector
 export { type Token as TokenV2 } from "@better-giving/assets/tokens";
 
+export interface TokenWithDetails extends Token {
+  amount: string;
+  min: number;
+  /** usd/unit */
+  rate: number;
+}
 //selector
 export type ValKey = string | number;
 export type OptionType<V extends ValKey> = { label: string; value: V };

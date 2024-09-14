@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import ImagePlaceholder from "./ImagePlaceholder";
 
-export type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
   isSrcLoading?: boolean;
   render?: (img: ReactNode) => ReactElement;
 };

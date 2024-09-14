@@ -1,5 +1,4 @@
 import { defineConfig } from "@rsbuild/core";
-import { pluginNodePolyfill } from "@rsbuild/plugin-node-polyfill";
 import { pluginReact } from "@rsbuild/plugin-react";
 import postCSSimport from "postcss-import";
 import tailwind from "tailwindcss";
@@ -13,7 +12,7 @@ export default defineConfig({
     template: "./src/index.html",
   },
   output: { distPath: { root: "build" } },
-  plugins: [pluginReact(), pluginNodePolyfill()],
+  plugins: [pluginReact()],
   tools: {
     postcss: {
       postcssOptions: {

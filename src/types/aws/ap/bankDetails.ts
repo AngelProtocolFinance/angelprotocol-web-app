@@ -1,3 +1,8 @@
+type Field = {
+  name: string;
+  group: Group[];
+};
+
 /**
  * See https://docs.wise.com/api-docs/api-reference/recipient#account-requirements
  */
@@ -6,11 +11,6 @@ export type AccountRequirements = {
   title: string;
   usageInfo: string | null;
   fields: Field[];
-};
-
-export type Field = {
-  name: string;
-  group: Group[];
 };
 
 export type Group = {

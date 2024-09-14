@@ -9,7 +9,7 @@ export type RegistrationStatus =
   | "Active"
   | "Rejected";
 
-export type BankVerificationStatus = "Not Submitted" | "Under Review";
+type BankVerificationStatus = "Not Submitted" | "Under Review";
 
 export type ReferralMethods =
   | ""
@@ -136,24 +136,20 @@ export type BankingDetails = {
   wise_recipient_id: number;
 };
 
-export type DoneContact = Append<
-  InitApplication,
-  OrgDataForStep1,
-  ContactDetails
->;
+type DoneContact = Append<InitApplication, OrgDataForStep1, ContactDetails>;
 export type DoneOrgDetails = Append<DoneContact, OrgDetails, {}>;
 
 export type DoneFSAInquiry = Append<DoneOrgDetails, FSAInquiry, {}>;
-export type ResetFSAInquiry = Append<DoneOrgDetails, Reset<FSAInquiry>, {}>;
+type ResetFSAInquiry = Append<DoneOrgDetails, Reset<FSAInquiry>, {}>;
 
 export type DoneDocs = Append<DoneFSAInquiry, TDocumentation, {}>;
-export type ResetDocs = Append<DoneFSAInquiry, Reset<TDocumentation>, {}>;
+type ResetDocs = Append<DoneFSAInquiry, Reset<TDocumentation>, {}>;
 
 export type DoneBanking = Append<DoneDocs, BankingDetails, {}>;
 
-export type SubmissionDetails = { Email: string; EndowmentId?: number };
+type SubmissionDetails = { Email: string; EndowmentId?: number };
 
-export type InReview = Append<DoneBanking, SubmissionDetails, {}>;
+type InReview = Append<DoneBanking, SubmissionDetails, {}>;
 
 export type SavedRegistration =
   | InitApplication
@@ -204,8 +200,6 @@ export type ContactUpdateResult = {
   ContactPerson: ContactDetails;
   Registration: OrgDataForStep1;
 };
-
-export type DocsUpdateResult = InitReg & TDocumentation["Documentation"];
 
 export type SubmitResult = {
   RegistrationStatus: RegistrationStatus;

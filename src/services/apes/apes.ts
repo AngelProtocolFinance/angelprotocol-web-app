@@ -10,9 +10,7 @@ import type {
   FiatCurrencyData,
   GuestDonor,
   PayPalOrder,
-  Token,
 } from "types/aws";
-import type { Chain } from "types/chain";
 import type { DetailedCurrency } from "types/components";
 import { version as v } from "../helpers";
 import { tags } from "./tags";
@@ -54,17 +52,6 @@ export const apes = createApi({
         }),
       }
     ),
-    confirmCryptoIntent: builder.mutation<
-      { guestDonor: GuestDonor },
-      { txId: string; txHash: string }
-    >({
-      query: ({ txHash, txId }) => ({
-        url: `crypto-donation/${txId}/confirm`,
-        method: "POST",
-        headers: { authorization: TEMP_JWT },
-        body: JSON.stringify({ txHash }),
-      }),
-    }),
     intent: builder.query<DonationIntent.ToResume, { transactionId: string }>({
       query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
     }),
@@ -140,9 +127,6 @@ export const apes = createApi({
         url: `stripe-proxy?payment_intent=${paymentIntentId}`,
       }),
     }),
-    tokens: builder.query<Token[], Chain.Id.All>({
-      query: (chainID) => `v1/tokens/${chainID}`,
-    }),
     topCountries: builder.query<string[], unknown>({
       query: () => "top-countries",
     }),
@@ -152,7 +136,6 @@ export const apes = createApi({
 export const {
   useCapturePayPalOrderMutation,
   useCreateCryptoIntentQuery,
-  useConfirmCryptoIntentMutation,
   useLazyIntentQuery,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
@@ -160,7 +143,6 @@ export const {
   usePaypalOrderMutation,
   useEndowBalanceQuery,
   useStripePaymentStatusQuery,
-  useTokensQuery,
   useTopCountriesQuery,
   util: {
     invalidateTags: invalidateApesTags,

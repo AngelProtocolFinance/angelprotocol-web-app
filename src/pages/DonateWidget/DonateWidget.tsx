@@ -1,15 +1,12 @@
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
 import { ErrorStatus } from "components/Status";
-import { idParamToNum, setToLightMode } from "helpers";
+import { idParamToNum } from "helpers";
 import { useEffect } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import Content from "./Content";
 import parseConfig from "./parseConfig";
-
-//light mode by default
-setToLightMode();
 
 export default function DonateWidget() {
   const routeParams = useParams();

@@ -2,8 +2,6 @@ import type { Except } from "type-fest";
 import type { PartialExcept } from "types/utils";
 import type { DonateMethodId, UNSDG_NUMS } from "../../lists";
 
-export type EndowmentTierNum = 1 | 2 | 3;
-
 export type Milestone = {
   id: string;
   /** iso date */

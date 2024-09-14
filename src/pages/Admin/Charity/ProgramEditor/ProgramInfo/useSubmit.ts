@@ -1,4 +1,4 @@
-import Prompt, { TxPrompt } from "components/Prompt";
+import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 
@@ -21,8 +21,8 @@ export default function useSubmit(initProgram: Program) {
     try {
       const imageURL = await uploadImg(fv.image, () => {
         showModal(
-          TxPrompt,
-          { loading: "Uploading image.." },
+          Prompt,
+          { type: "loading", children: "Uploading image.." },
           { isDismissible: false }
         );
       });

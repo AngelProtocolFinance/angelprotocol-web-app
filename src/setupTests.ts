@@ -7,19 +7,6 @@ import { handlers as apesHandlers } from "./services/apes/mock";
 import { handlers as awsHandlers } from "./services/aws/mock";
 import { handlers as wordpressHandlers } from "./services/wordpress/mock";
 
-vi.mock("@walletconnect/modal", () => ({
-  WalletConnectModal: vi.fn(),
-}));
-vi.mock("@walletconnect/sign-client", () => ({
-  SignClient: {
-    init: vi.fn(async () => ({
-      session: {
-        getAll: vi.fn(),
-      },
-    })),
-  },
-}));
-
 class IntersectionObserver {
   observe = vi.fn();
   disconnect = vi.fn();

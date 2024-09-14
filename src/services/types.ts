@@ -7,11 +7,6 @@ import type {
 } from "types/aws";
 import type { SemiPartial } from "types/utils";
 
-export type ChainQueryArgs = {
-  address: string;
-  chainId: string;
-};
-
 export type EndowmentUpdate = SemiPartial<
   EndowmentProfileUpdate & EndowmentSettingsUpdate,
   "id"

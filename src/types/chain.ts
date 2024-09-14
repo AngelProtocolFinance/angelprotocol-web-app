@@ -81,7 +81,7 @@ export const tier2ChainId = (
   chainId: Chain.Id.All
 ): chainId is Chain.Id.Tier2 => unsupportedChainIds.includes(chainId as any);
 
-export type Tier1Chains = { [K in Chain.Id.Tier1]: Chain.Tier1 };
+type Tier1Chains = { [K in Chain.Id.Tier1]: Chain.Tier1 };
 export type Tier2Chains = {
   [K in Chain.Id.Tier2]: Chain.Tier2;
 };
