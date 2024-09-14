@@ -1,4 +1,4 @@
-export interface AWSQueryRes<T> {
+interface AWSQueryRes<T> {
   Count: number;
   ScannedCount: number;
   Items: T;

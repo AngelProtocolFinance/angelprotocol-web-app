@@ -2,11 +2,7 @@
  * put all aws/apes definitions here, if big category exist, separate in a file
  */
 
-export type QrTokenType =
-  | "btc-native"
-  | "doge-native"
-  | "sol-native"
-  | "xrp-native";
+type QrTokenType = "btc-native" | "doge-native" | "sol-native" | "xrp-native";
 
 export type TokenType =
   | "juno-native"
