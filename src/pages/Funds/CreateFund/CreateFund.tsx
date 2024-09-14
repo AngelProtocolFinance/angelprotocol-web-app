@@ -112,8 +112,8 @@ export default withAuth(function CreateFund() {
           fv.targetType === "none"
             ? `${0}`
             : fv.targetType === "smart"
-            ? "smart"
-            : `${+fv.fixedTarget}`,
+              ? "smart"
+              : `${+fv.fixedTarget}`,
       };
 
       if (fv.expiration) fund.expiration = fv.expiration;

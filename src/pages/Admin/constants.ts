@@ -110,7 +110,7 @@ const linkGroup3: LinkGroup = {
       title: "Fundraisers",
       to: sidebarRoutes.funds,
       icon: {
-        type: "HeartFill",
+        type: "Heart",
         size: 21,
       },
     },

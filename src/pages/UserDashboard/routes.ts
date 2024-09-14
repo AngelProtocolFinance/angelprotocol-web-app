@@ -44,14 +44,6 @@ export const linkGroups: LinkGroup[] = [
           size: 21,
         },
       },
-      {
-        title: "My fundraisers",
-        to: routes.funds,
-        icon: {
-          type: "HeartFill",
-          size: 21,
-        },
-      },
     ],
   },
 ];
