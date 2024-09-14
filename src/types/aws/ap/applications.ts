@@ -18,7 +18,7 @@ export type BankingApplicationsQueryParams = {
 
 export type BankingApplicationStatus = "under-review" | "approved" | "rejected";
 
-export type BaseBankingApplication = {
+type BaseBankingApplication = {
   wiseRecipientID: string;
   endowmentID: number;
   bankSummary: string;

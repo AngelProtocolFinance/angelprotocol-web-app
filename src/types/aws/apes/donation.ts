@@ -38,7 +38,7 @@ export type ReceiptPayload = {
   transactionId: string; // tx hash
 };
 
-export type TributeNotif = {
+type TributeNotif = {
   toFullName: string;
   toEmail: string;
   /** may be empty */

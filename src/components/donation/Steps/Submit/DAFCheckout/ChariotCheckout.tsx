@@ -32,7 +32,7 @@ import type { DafCheckoutStep, Honorary } from "../../types";
 import { DonationTerms } from "../DonationTerms";
 import { type AdjustedAmounts, toPlatformValues } from "./toPlatformValues";
 
-export type FV = Honorary & { coverFee: boolean; ukTaxResident: boolean };
+type FV = Honorary & { coverFee: boolean; ukTaxResident: boolean };
 type GrantMetaData = FV & {
   _totalCents: number;
   _tip: number;

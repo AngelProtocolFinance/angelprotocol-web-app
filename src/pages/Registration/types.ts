@@ -1,10 +1,8 @@
-import type { Except } from "type-fest";
 import type {
   BankingDetails,
   ContactDetails,
   EndowClaim,
   FSAInquiry,
-  NonFSADocumentation,
   OrgDetails,
   RegistrationStatus,
   TDocumentation,
@@ -16,10 +14,6 @@ export type InitReg = {
   email: string;
   claim?: EndowClaim;
 };
-
-export type FormFSAInquiry = FSAInquiry;
-
-export type FormNonFSADocumentation = Except<NonFSADocumentation, "DocType">;
 
 export type CompleteRegistration = {
   init: InitReg;

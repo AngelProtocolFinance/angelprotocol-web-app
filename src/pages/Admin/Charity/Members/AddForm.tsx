@@ -15,7 +15,7 @@ import { useLazyProfileQuery } from "services/aws/aws";
 import { useNewEndowAdminMutation } from "services/aws/endow-admins";
 import { object } from "yup";
 
-export type Props = {
+type Props = {
   endowID: number;
   added: string[];
 };

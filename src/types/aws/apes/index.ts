@@ -4,7 +4,7 @@
 
 type QrTokenType = "btc-native" | "doge-native" | "sol-native" | "xrp-native";
 
-export type TokenType =
+type TokenType =
   | "juno-native"
   | "stargaze-native"
   | "osmosis-native"
@@ -32,15 +32,6 @@ export type Token = {
   coingecko_denom: string;
   type: TokenType;
 };
-
-export interface Chain<T extends string> {
-  id: T;
-  nodeUrl: string;
-  nativeToken: Pick<
-    Token,
-    "token_id" | "decimals" | "symbol" | "coingecko_denom"
-  >;
-}
 
 export type EndowmentBalances = {
   contributionsCount: number;

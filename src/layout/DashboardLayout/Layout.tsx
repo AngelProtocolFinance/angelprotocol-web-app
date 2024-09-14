@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Sidebar, { SidebarOpener } from "./Sidebar";
 import type { LinkGroup } from "./Sidebar/types";
 
-export type DashboardLayoutProps = {
+type DashboardLayoutProps = {
   linkGroups: LinkGroup[];
   sidebarHeader?: ReactNode;
   rootRoute: string;

@@ -12,7 +12,7 @@ import { version as v } from "../helpers";
 
 const baseURL = `/${v(1)}/wise-proxy`;
 
-export const wise = aws.injectEndpoints({
+const wise = aws.injectEndpoints({
   endpoints: (builder) => ({
     createRecipient: builder.mutation<
       V1RecipientAccount,
