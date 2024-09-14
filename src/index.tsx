@@ -17,7 +17,7 @@ import { store } from "store/store";
 import "./index.css";
 import { Amplify } from "aws-amplify";
 import { Hub } from "aws-amplify/utils";
-import amplifyConfig from "constants/aws";
+import { amplifyConfig } from "constants/aws";
 import type { OAuthState } from "types/auth";
 import { routes } from "./App/App";
 
