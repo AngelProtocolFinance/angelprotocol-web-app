@@ -35,7 +35,7 @@ export default function PaymentResumer({ paymentId, classes, amount }: Props) {
   );
 }
 
-export function QrModal(props: Crypto.PaymentStatus & { orderAmount: number }) {
+function QrModal(props: Crypto.PaymentStatus & { orderAmount: number }) {
   const token = tokens[props.pay_currency.toUpperCase()];
   return (
     <Modal className="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden px-4 py-8">
