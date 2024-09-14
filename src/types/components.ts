@@ -3,11 +3,9 @@ import type { Token } from "@better-giving/assets/tokens";
 import type { FileObject } from "./aws";
 import type { DonateMethodId } from "./lists";
 export { type Token as TokenV2 } from "@better-giving/assets/tokens";
-export type TokenWithAmount = Token & {
-  amount: string;
-};
 
-export interface TokenWithDetails extends TokenWithAmount {
+export interface TokenWithDetails extends Token {
+  amount: string;
   min: number;
   /** usd/unit */
   rate: number;
