@@ -1,4 +1,4 @@
-import type { TokenWithDetails } from "types/tx";
+import type { TokenWithDetails } from "types/components";
 
 type Classes = {
   container?: string;

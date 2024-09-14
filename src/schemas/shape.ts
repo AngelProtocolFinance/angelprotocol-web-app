@@ -1,5 +1,8 @@
-import type { OptionType, RichTextContent } from "types/components";
-import type { TokenWithDetails as TWD } from "types/tx";
+import type {
+  OptionType,
+  RichTextContent,
+  TokenWithDetails as TWD,
+} from "types/components";
 import {
   type NumberSchema,
   type ObjectSchema,

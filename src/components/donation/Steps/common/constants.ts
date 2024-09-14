@@ -1,7 +1,10 @@
 import type { Donor } from "types/aws";
-import type { DetailedCurrency, OptionType } from "types/components";
+import type {
+  DetailedCurrency,
+  OptionType,
+  TokenWithDetails,
+} from "types/components";
 import type { DonateMethodId } from "types/lists";
-import type { TokenWithDetails } from "types/tx";
 import type {
   DonationDetails,
   DonationState,

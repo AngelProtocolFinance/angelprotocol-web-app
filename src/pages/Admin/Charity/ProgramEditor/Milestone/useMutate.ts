@@ -1,4 +1,4 @@
-import Prompt, { TxPrompt } from "components/Prompt";
+import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
@@ -25,8 +25,8 @@ export default function useMutate(milestoneId: string, programId: string) {
     try {
       const imageURL = await uploadImg(fv.media, () => {
         showModal(
-          TxPrompt,
-          { loading: "Uploading image.." },
+          Prompt,
+          { type: "loading", children: "Uploading image..." },
           { isDismissible: false }
         );
       });

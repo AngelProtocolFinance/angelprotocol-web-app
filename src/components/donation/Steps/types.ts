@@ -1,7 +1,10 @@
 import type { DonationIntent, Donor, Endowment, GuestDonor } from "types/aws";
-import type { DetailedCurrency, OptionType } from "types/components";
+import type {
+  DetailedCurrency,
+  OptionType,
+  TokenWithDetails,
+} from "types/components";
 import type { DonateMethodId, DonationSource } from "types/lists";
-import type { TokenWithDetails } from "types/tx";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,
