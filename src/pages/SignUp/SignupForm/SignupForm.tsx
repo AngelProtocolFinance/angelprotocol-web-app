@@ -1,6 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
-import { AuthError, signInWithRedirect, signUp } from "aws-amplify/auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
@@ -9,7 +8,7 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect, logger } from "helpers";
-import { Mail } from "lucide-react";
+import { cognito, isError } from "helpers/cognito";
 import { useController, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
@@ -19,6 +18,7 @@ import type { OAuthState, SignInRouteState } from "types/auth";
 import { mixed, object, ref } from "yup";
 import type { FormValues, StateSetter, UserType } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
+import { Mail } from "lucide-react";
 
 type Props = {
   setSignupState: StateSetter;
@@ -87,39 +87,22 @@ export default function SignupForm(props: Props) {
         logger.error(err);
       }
 
-      const { nextStep } = await signUp({
-        username: fv.email.toLowerCase(),
-        password: fv.password,
-        options: {
-          userAttributes: {
-            given_name: fv.firstName,
-            family_name: fv.lastName,
-          },
-          autoSignIn: false,
-        },
+      const res = await cognito.signup(fv.email.toLowerCase(), fv.password, {
+        firstName: fv.firstName,
+        lastName: fv.lastName,
       });
 
-      //per cognito config
-      if (nextStep.signUpStep !== "CONFIRM_SIGN_UP")
-        throw `Unexpected next step: ${nextStep.signUpStep}`;
-      if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL")
-        throw `Unexpected code delivery medium: ${nextStep.codeDeliveryDetails.deliveryMedium}`;
-      if (!nextStep.codeDeliveryDetails.destination)
-        throw `Missing code delivery destination`;
+      if (isError(res)) return displayError(res.message);
 
       props.setSignupState({
         type: "confirm",
         codeRecipientEmail: {
           raw: fv.email.toLowerCase(),
-          obscured: nextStep.codeDeliveryDetails.destination,
+          obscured: res,
         },
         userType: fv.userType,
       });
     } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
-      }
-
       handleError(err, { context: "signing up" });
     }
   }

@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
-import { AuthError, signIn, signInWithRedirect } from "aws-amplify/auth";
+import { signInWithRedirect } from "aws-amplify/auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
@@ -10,10 +10,10 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
-import { useRendered } from "hooks/use-rendered";
+import { cognito, isError } from "helpers/cognito";
 import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
 import type { OAuthState } from "types/auth";
@@ -25,7 +25,7 @@ type FormValues = {
 };
 
 export function Component() {
-  useRendered();
+  const navigate = useNavigate();
   const { handleError, displayError } = useErrorContext();
   const {
     register,
@@ -58,17 +58,15 @@ export function Component() {
 
   async function submit(fv: FormValues) {
     try {
-      const { nextStep } = await signIn({
-        username: fv.email.toLowerCase(),
-        password: fv.password,
-      });
+      const res = await cognito.initiate(fv.email.toLowerCase(), fv.password);
 
-      if (nextStep.signInStep !== "DONE")
-        throw `Unexpected next step: ${nextStep.signInStep}`;
-    } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
+      if (isError(res)) {
+        return displayError(res.message);
       }
+      navigate(redirect.path, { state: redirect.data, replace: true });
+
+      return;
+    } catch (err) {
       handleError(err, { context: "signing in" });
     }
   }
