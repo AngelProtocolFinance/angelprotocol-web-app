@@ -16,11 +16,13 @@ import {
   Navigate,
   Outlet,
   type RouteObject as RO,
+  useLoaderData,
   useLocation,
   useNavigation,
 } from "react-router-dom";
 import { Toaster } from "sonner";
 import Layout from "./Layout";
+import { authLoader } from "./auth-loader";
 
 const donateThanks = import("pages/DonateThanks");
 const stripePaymentStatus = import("pages/StripePaymentStatus");
@@ -106,6 +108,7 @@ export const routes: RO[] = [
   {
     element: <RootLayout />,
     children: rootRoutes,
+    loader: authLoader,
     ErrorBoundary: RouterErrorBoundary,
   },
   { path: "*", element: <Navigate to="/" /> },
@@ -116,6 +119,8 @@ NProgress.configure({
 });
 
 function RootLayout() {
+  const data = useLoaderData();
+  console.log({ data });
   const transition = useNavigation();
   useEffect(() => {
     // when the state is idle then we can to complete the progress bar

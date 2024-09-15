@@ -1,6 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
-import { signInWithRedirect } from "aws-amplify/auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
@@ -10,7 +9,7 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
-import { cognito, isError } from "helpers/cognito";
+import { cognito, isError, oauth } from "helpers/cognito";
 import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
@@ -93,10 +92,7 @@ export function Component() {
               pathname: redirect.path,
               data: redirect.data,
             };
-            signInWithRedirect({
-              provider: "Google",
-              customState: JSON.stringify(routeState),
-            });
+            oauth.initiate(JSON.stringify(routeState));
           }}
         >
           <Image src={googleIcon} height={18} width={18} />

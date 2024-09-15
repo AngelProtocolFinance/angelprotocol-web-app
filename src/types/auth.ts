@@ -30,3 +30,17 @@ export type OAuthState = {
   pathname: string;
   data?: unknown;
 };
+
+export type UserV2 = {
+  idToken: string;
+  accessToken: string;
+  groups: CognitoGroup[];
+  endowments: number[];
+  firstName: string;
+  lastName: string;
+  email: string;
+  /** image url */
+  avatar?: string;
+  /** 3 digit currency code */
+  currency?: string;
+};

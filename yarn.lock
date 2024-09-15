@@ -3474,6 +3474,7 @@ __metadata:
     framer-motion: "npm:11.2.10"
     fuse.js: "npm:7.0.0"
     gsap: "npm:3.12.5"
+    jose: "npm:5.9.2"
     jsdom: "npm:24.1.0"
     lefthook: "npm:1.6.15"
     lucide-react: "npm:0.436.0"
@@ -4827,6 +4828,13 @@ __metadata:
   bin:
     jiti: bin/jiti.js
   checksum: 10/005a0239e50381b5c9919f59dbab86128367bd64872f3376dbbde54b6523f41bd134bf22909e2a509e38fd87e1c22125ca255b9b6b53e7df0fedd23f737334cc
+  languageName: node
+  linkType: hard
+
+"jose@npm:5.9.2":
+  version: 5.9.2
+  resolution: "jose@npm:5.9.2"
+  checksum: 10/bbcad3bb2681424ee257f3eb561d70b69a082ceef628926ac20f8c1d3471fccfc039bc8d7b7507fa818f695fdafa2cfaab53c46dfd8e56d9b89262f7c83b8a25
   languageName: node
   linkType: hard
 
