@@ -56,6 +56,14 @@ class Cognito {
     return JSON.stringify({ ...content, ClientId: this.clientId });
   }
 
+  private async deliveryDetails(res: Response) {
+    if (res.ok)
+      return res
+        .json()
+        .then<string>((data) => data.CodeDeliveryDetails.Destination);
+    return res.json() as Promise<AuthError>;
+  }
+
   async initiate(username: string, password: string) {
     return fetch(this.endpoint, {
       method: "POST",
@@ -93,7 +101,7 @@ class Cognito {
       lastName: string;
     }
   ) {
-    const res = await fetch(this.endpoint, {
+    return fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("SignUp"),
       body: this.body({
@@ -105,17 +113,7 @@ class Cognito {
           { Name: "email", Value: username },
         ],
       }),
-    });
-
-    /** code delivery details */
-    if (res.ok) {
-      return res
-        .json()
-        .then<string>((data: any) => data.CodeDeliveryDetails.Destination);
-    }
-
-    /** error: no additional flow */
-    return res.json() as Promise<AuthError>;
+    }).then(this.deliveryDetails);
   }
 
   async confirmSignup(username: string, code: string) {
@@ -152,11 +150,7 @@ class Cognito {
       body: this.body({
         Username: username,
       }),
-    }).then<"success" | AuthError>((res) => {
-      /** redirect to password input form */
-      if (res.ok) return "success";
-      return res.json() as any;
-    });
+    }).then(this.deliveryDetails);
   }
 
   async confirmForgotPassword(

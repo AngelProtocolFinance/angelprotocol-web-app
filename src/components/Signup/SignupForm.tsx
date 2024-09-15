@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AuthError, signUp } from "aws-amplify/auth";
 import { Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { logger } from "helpers";
+import { cognito, isError } from "helpers/cognito";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -67,36 +67,16 @@ export default function SignupForm(props: Props) {
             logger.error(err);
           }
 
-          const { nextStep } = await signUp({
-            username: props.donor.email,
-            password: fv.password,
-            options: {
-              userAttributes: {
-                given_name: props.donor.firstName,
-                family_name: props.donor.lastName,
-              },
-              autoSignIn: false,
-            },
+          const res = await cognito.signup(props.donor.email, fv.password, {
+            firstName: props.donor.firstName,
+            lastName: props.donor.lastName,
           });
-
-          //per cognito config
-          if (nextStep.signUpStep !== "CONFIRM_SIGN_UP")
-            throw "Auth config error: next step after signup should be confirm signup";
-          if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL")
-            throw "Auth config error: code confirmation must be sent to email";
-          if (!nextStep.codeDeliveryDetails.destination)
-            throw "Auth error: code delivery details was not included";
+          if (isError(res)) return displayError(res.message);
 
           props.setSignupState({
-            codeRecipientEmail: {
-              raw: props.donor.email,
-              obscured: nextStep.codeDeliveryDetails.destination,
-            },
+            codeRecipientEmail: { raw: props.donor.email, obscured: res },
           });
         } catch (err) {
-          if (err instanceof AuthError) {
-            return displayError(err.message);
-          }
           handleError(err, { context: "signing up" });
         }
       })}

@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AuthError, resetPassword } from "aws-amplify/auth";
 import { Form, Input } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import { cognito, isError } from "helpers/cognito";
 import { Mail } from "lucide-react";
 import { type UseFormReturn, useForm } from "react-hook-form";
 import { Link, useLocation } from "react-router-dom";
@@ -36,27 +36,17 @@ export default function InitForm(props: Props) {
 
   async function submit(fv: FV) {
     try {
-      const { nextStep } = await resetPassword({ username: fv.email });
-
-      //per cognito config
-      if (nextStep.resetPasswordStep !== "CONFIRM_RESET_PASSWORD_WITH_CODE")
-        throw `Unexpected next reset password step: ${nextStep.resetPasswordStep}`;
-      if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL")
-        throw `Unexpected code delivery medium: ${nextStep.codeDeliveryDetails.deliveryMedium}`;
-      if (!nextStep.codeDeliveryDetails.destination)
-        throw `Missing code delivery destination`;
+      const res = await cognito.forgotPassword(fv.email);
+      if (isError(res)) return displayError(res.message);
 
       props.setStep({
         type: "set-password",
         codeRecipientEmail: {
           raw: fv.email.toLowerCase(),
-          obscured: nextStep.codeDeliveryDetails.destination,
+          obscured: res,
         },
       });
     } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
-      }
       handleError(err, { context: "resetting password" });
     }
   }
