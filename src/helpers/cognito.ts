@@ -37,11 +37,50 @@ export const isError = (data: any): data is AuthError => {
   return !!data.__type;
 };
 
-class Cognito {
+/** type: bearer */
+interface Token {
+  id: string;
+  access: string;
+  refresh: string;
+  /** iso-date */
+  expiry: string;
+}
+
+class MemoryStorage {
+  private state: Token | null = null;
+  get token() {
+    if (this.state && this.state.expiry < new Date().toISOString()) {
+      return null;
+    }
+    return this.state;
+  }
+  private expiry(duration: number) {
+    return new Date(Date.now() + duration * 1000).toISOString();
+  }
+  save(token: AuthSuccess<"new">["AuthenticationResult"]) {
+    this.state = {
+      id: token.IdToken,
+      access: token.AccessToken,
+      refresh: token.RefreshToken,
+      expiry: this.expiry(token.ExpiresIn),
+    };
+  }
+  saveOAuth(token: OauthTokenRes) {
+    this.state = {
+      id: token.id_token,
+      access: token.access_token,
+      refresh: token.refresh_token,
+      expiry: this.expiry(token.expires_in),
+    };
+  }
+}
+
+class Cognito extends MemoryStorage {
   private endpoint = "https://cognito-idp.us-east-1.amazonaws.com";
   private clientId: string;
 
   constructor(clientId: string) {
+    super();
     this.clientId = clientId;
   }
 
@@ -65,7 +104,7 @@ class Cognito {
   }
 
   async initiate(username: string, password: string) {
-    return fetch(this.endpoint, {
+    const res = await fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("InitiateAuth"),
       body: this.body({
@@ -75,13 +114,18 @@ class Cognito {
           PASSWORD: password,
         },
       }),
-    }).then<AuthError<"UserNotConfirmedException"> | AuthSuccess<"new">>(
-      (res) => res.json() as any
-    );
+    });
+
+    if (!res.ok) {
+      return res.json() as Promise<AuthError>;
+    }
+    const data: AuthSuccess<"new"> = await res.json();
+    this.save(data.AuthenticationResult);
+    return data;
   }
 
   async refresh(refreshToken: string) {
-    return fetch(this.endpoint, {
+    const res = await fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("InitiateAuth"),
       body: this.body({
@@ -90,7 +134,14 @@ class Cognito {
           REFRESH_TOKEN: refreshToken,
         },
       }),
-    }).then<AuthError | AuthSuccess<"refresh">>((res) => res.json() as any);
+    });
+
+    if (!res.ok) {
+      return res.json() as Promise<AuthError>;
+    }
+    const data: AuthSuccess<"refresh"> = await res.json();
+    this.save({ ...data.AuthenticationResult, RefreshToken: refreshToken });
+    return data;
   }
 
   async signup(
@@ -173,12 +224,13 @@ class Cognito {
   }
 }
 
-class OAuth {
+class OAuth extends MemoryStorage {
   static redirectUri = window.location.origin + "/";
   private domain: string;
   private clientId: string;
 
   constructor(clientId: string) {
+    super();
     this.clientId = clientId;
     this.domain = IS_TEST
       ? "https://j71l2yzyj3cb-dev.auth.us-east-1.amazoncognito.com"
@@ -225,7 +277,9 @@ class OAuth {
       logger.error(await res.text());
       return null;
     }
-    return res.json() as Promise<OauthTokenRes>;
+    const data: OauthTokenRes = await res.json();
+    this.saveOAuth(data);
+    return data;
   }
 }
 
