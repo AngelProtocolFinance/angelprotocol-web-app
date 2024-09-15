@@ -1,5 +1,9 @@
 import { IS_TEST } from "constants/env";
 
+const clientId = IS_TEST
+  ? "7bl9gfckbneg0udsmkvsu48ssg"
+  : "207sfl8bl2m2cghbr86vg4je2o";
+
 /** api version  2016-04-18 */
 interface AuthSuccess<T extends "new" | "refresh"> {
   AuthenticationResult: {
@@ -166,6 +170,30 @@ class Cognito {
   }
 }
 
-export const cognito = new Cognito(
-  IS_TEST ? "7bl9gfckbneg0udsmkvsu48ssg" : "207sfl8bl2m2cghbr86vg4je2o"
-);
+export const signInOAuth = async (state: string) => {
+  const domain = IS_TEST
+    ? "https://j71l2yzyj3cb-dev.auth.us-east-1.amazoncognito.com"
+    : "https://bettergiving.auth.us-east-1.amazoncognito.com";
+
+  const scopes = [
+    "email",
+    "openid",
+    "profile",
+    "aws.cognito.signin.user.admin",
+  ];
+  const params = new URLSearchParams({
+    response_type: "code",
+    client_id: clientId,
+    redirect_uri: "http://localhost:4200/",
+    identity_provider: "Google",
+    state: window.btoa(state),
+  });
+
+  for (const scope of scopes) {
+    params.append("scope", scope);
+  }
+
+  window.location.href = `${domain}/oauth2/authorize?${params.toString()}`;
+};
+
+export const cognito = new Cognito(clientId);

@@ -8,7 +8,7 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect, logger } from "helpers";
-import { cognito, isError } from "helpers/cognito";
+import { cognito, isError, signInOAuth } from "helpers/cognito";
 import { useController, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
@@ -138,14 +138,11 @@ export default function SignupForm(props: Props) {
             const valid = await trigger("userType");
             if (!valid) return;
 
-            const stored: OAuthState = {
+            const state: OAuthState = {
               pathname: redirect.path,
               data: redirect.data,
             };
-            await signInWithRedirect({
-              provider: "Google",
-              customState: JSON.stringify(stored),
-            });
+            await signInOAuth(JSON.stringify(state));
           }}
         >
           <Image src={googleIcon} height={18} width={18} />
