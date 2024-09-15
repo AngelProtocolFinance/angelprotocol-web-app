@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AuthError, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
 import { Form, Input } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
+import { cognito, isError } from "helpers/cognito";
 import useCounter from "hooks/useCounter";
 import { useState } from "react";
 import { type UseFormReturn, useForm } from "react-hook-form";
@@ -35,20 +35,17 @@ export default function ConfirmForm(props: Props) {
 
   const submit = async (fv: FV) => {
     try {
-      const result = await confirmSignUp({
-        username: props.codeRecipientEmail.raw,
-        confirmationCode: fv.code,
+      const res = await cognito.confirmSignup(
+        props.codeRecipientEmail.raw,
+        fv.code
+      );
+
+      if (isError(res)) return displayError(res.message);
+      props.setSignupState({
+        type: "success",
+        userType: props.userType,
       });
-
-      if (result.nextStep.signUpStep !== "DONE" || !result.isSignUpComplete) {
-        throw "Code confirmation failed";
-      }
-
-      props.setSignupState({ type: "success", userType: props.userType });
     } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
-      }
       handleError(err, { context: "confirming code" });
     }
   };
@@ -58,16 +55,15 @@ export default function ConfirmForm(props: Props) {
       setIsRequestingNewCode(true);
 
       //no need to inspect result
-      await resendSignUpCode({
-        username: props.codeRecipientEmail.raw,
-      });
-      resetCounter();
+      const res = await cognito.resendConfirmationCode(
+        props.codeRecipientEmail.raw
+      );
 
+      if (isError(res)) return displayError(res.message);
+
+      resetCounter();
       alert("New code has been sent to your email.");
     } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
-      }
       handleError(err, { context: "resending code" });
     } finally {
       setIsRequestingNewCode(false);
