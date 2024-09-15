@@ -14,11 +14,7 @@ import {
 } from "react-router-dom";
 import { store } from "store/store";
 import "./index.css";
-import { Amplify } from "aws-amplify";
-import { amplifyConfig } from "constants/aws";
 import { routes } from "./App/App";
-
-Amplify.configure(amplifyConfig);
 
 //set theme immediately, so even suspense loaders and can use it
 // NOTE: Turning off option for Dark theme for now

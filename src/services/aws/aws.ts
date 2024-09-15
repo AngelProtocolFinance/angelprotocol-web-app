@@ -5,12 +5,9 @@ import type {
   Verdict,
 } from "@better-giving/registration/approval";
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { fetchAuthSession } from "aws-amplify/auth";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { apiEnv } from "services/constants";
-import type { RootState } from "store/store";
-import { userIsSignedIn } from "types/auth";
 import type {
   Donation,
   DonationsQueryParams,
@@ -27,29 +24,6 @@ const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
     mode: "cors",
-    async prepareHeaders(headers, { getState }) {
-      const {
-        auth: { user },
-      } = getState() as RootState;
-
-      if (headers.get("authorization") === TEMP_JWT) {
-        if (!userIsSignedIn(user)) return headers;
-        const nowSeconds = Math.round(+new Date() / 1000);
-
-        const token =
-          nowSeconds < user.tokenExpiry
-            ? user.token
-            : /** fetching session fires `tokenRefresh | tokenRefresh_failure` event in Hub */
-              await fetchAuthSession({ forceRefresh: true }).then((res) =>
-                res.tokens?.idToken?.toString()
-              );
-
-        if (!token) return headers;
-
-        headers.set("authorization", token);
-      }
-      return headers;
-    },
   }),
   // current default for all endpoints, change if necessary
   { maxRetries: 1 }
