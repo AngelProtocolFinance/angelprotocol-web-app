@@ -1,4 +1,5 @@
 import { IS_TEST } from "constants/env";
+import { logger } from "./logger";
 
 const clientId = IS_TEST
   ? "7bl9gfckbneg0udsmkvsu48ssg"
@@ -16,6 +17,14 @@ interface AuthSuccess<T extends "new" | "refresh"> {
     TokenType: string;
     /** not used: other attributes  */
   };
+}
+
+interface OauthTokenRes {
+  access_token: string;
+  expires_in: number;
+  id_token: string;
+  refresh_token: string;
+  token_type: string;
 }
 
 /**@template T - type of error to be handled */
@@ -170,30 +179,62 @@ class Cognito {
   }
 }
 
-export const signInOAuth = async (state: string) => {
-  const domain = IS_TEST
-    ? "https://j71l2yzyj3cb-dev.auth.us-east-1.amazoncognito.com"
-    : "https://bettergiving.auth.us-east-1.amazoncognito.com";
+class OAuth {
+  static redirectUri = window.location.origin + "/";
+  private domain: string;
+  private clientId: string;
 
-  const scopes = [
-    "email",
-    "openid",
-    "profile",
-    "aws.cognito.signin.user.admin",
-  ];
-  const params = new URLSearchParams({
-    response_type: "code",
-    client_id: clientId,
-    redirect_uri: "http://localhost:4200/",
-    identity_provider: "Google",
-    state: window.btoa(state),
-  });
-
-  for (const scope of scopes) {
-    params.append("scope", scope);
+  constructor(clientId: string) {
+    this.clientId = clientId;
+    this.domain = IS_TEST
+      ? "https://j71l2yzyj3cb-dev.auth.us-east-1.amazoncognito.com"
+      : "https://bettergiving.auth.us-east-1.amazoncognito.com";
   }
 
-  window.location.href = `${domain}/oauth2/authorize?${params.toString()}`;
-};
+  async initiate(state: string) {
+    const scopes = [
+      "email",
+      "openid",
+      "profile",
+      "aws.cognito.signin.user.admin",
+    ];
+    const params = new URLSearchParams({
+      response_type: "code",
+      client_id: this.clientId,
+      redirect_uri: OAuth.redirectUri,
+      identity_provider: "Google",
+      state: window.btoa(state),
+    });
 
+    for (const scope of scopes) {
+      params.append("scope", scope);
+    }
+
+    window.location.href = `${
+      this.domain
+    }/oauth2/authorize?${params.toString()}`;
+  }
+
+  async exchange(code: string) {
+    const res = await fetch(this.domain + "/oauth2/token", {
+      method: "POST",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      body: JSON.stringify({
+        grant_type: "authorization_code",
+        client_id: this.clientId,
+        code,
+        redirect_uri: OAuth.redirectUri,
+      }),
+    });
+
+    if (!res.ok) {
+      logger.error(await res.text());
+      return null;
+    }
+
+    return res.json() as Promise<OauthTokenRes>;
+  }
+}
+
+export const oauth = new OAuth(clientId);
 export const cognito = new Cognito(clientId);
