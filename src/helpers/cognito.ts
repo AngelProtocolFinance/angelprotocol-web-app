@@ -213,7 +213,7 @@ class OAuth {
     const res = await fetch(this.domain + "/oauth2/token", {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },
-      body: JSON.stringify({
+      body: new URLSearchParams({
         grant_type: "authorization_code",
         client_id: this.clientId,
         code,
@@ -225,7 +225,6 @@ class OAuth {
       logger.error(await res.text());
       return null;
     }
-
     return res.json() as Promise<OauthTokenRes>;
   }
 }
