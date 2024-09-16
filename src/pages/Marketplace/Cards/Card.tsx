@@ -3,7 +3,6 @@ import BookmarkBtn from "components/BookmarkBtn";
 import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
-import { humanize } from "helpers";
 import { Link } from "react-router-dom";
 import type { EndowmentCard } from "types/aws";
 
@@ -15,7 +14,6 @@ export default function Card({
   id,
   tagline,
   claimed,
-  contributions_total,
 }: EndowmentCard) {
   return (
     <div className="relative">
@@ -47,11 +45,6 @@ export default function Card({
               {tagline}
             </p>
           ) : null}
-
-          <p className="text-sm mt-auto flex items-center gap-1">
-            <span>Total contribution:</span>
-            <span>${humanize(contributions_total, 0)}</span>
-          </p>
         </div>
       </Link>
       {/** absolute so above whole `Link` card */}

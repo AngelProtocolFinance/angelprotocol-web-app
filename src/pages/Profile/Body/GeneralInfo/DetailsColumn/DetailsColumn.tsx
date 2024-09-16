@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import type { EndowClaim } from "types/aws";
 import { useProfileContext } from "../../../ProfileContext";
 import DonateButton from "../../DonateButton";
-import Balances from "./Balances";
 import Socials from "./Socials";
 import Tags from "./Tags";
 
@@ -14,7 +13,6 @@ export default function DetailsColumn({ className = "" }) {
   const { active_in_countries = [] } = p;
   return (
     <div className="flex flex-col gap-6 w-full">
-      <Balances />
       <div className={`${className} w-full lg:w-96`}>
         <div className="flex flex-col gap-8 w-full p-8 border border-gray-l4 rounded">
           {p.registration_number && (
