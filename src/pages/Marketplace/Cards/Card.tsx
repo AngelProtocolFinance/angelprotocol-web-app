@@ -14,7 +14,6 @@ export default function Card({
   id,
   tagline,
   claimed,
-  contributions_total,
 }: EndowmentCard) {
   return (
     <div className="relative">
