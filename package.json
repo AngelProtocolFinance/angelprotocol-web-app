@@ -68,7 +68,7 @@
     "yup": "1.4.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.8.1",
+    "@biomejs/biome": "1.9.1",
     "@rsbuild/core": "0.5.9",
     "@rsbuild/plugin-react": "0.5.9",
     "@tailwindcss/container-queries": "0.1.1",
