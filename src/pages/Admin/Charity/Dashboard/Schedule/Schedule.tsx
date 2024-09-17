@@ -73,19 +73,15 @@ export function Schedule(props: Props) {
             <div className="flex items-center">
               <span>Grants</span>
               <Tooltip
-                trigger={
-                  <Icon
-                    type="Question"
-                    size={14}
-                    className="text-navy-l1 ml-1"
-                  />
+                tip={
+                  <Content className="max-w-xs bg-navy-d4 p-4 text-gray-l4 text-sm shadow-lg rounded-lg">
+                    Donations received through Better Giving that will
+                    distributed to your bank account.
+                    <Arrow />
+                  </Content>
                 }
               >
-                <Content className="max-w-xs bg-navy-d4 p-4 text-gray-l4 text-sm shadow-lg rounded-lg">
-                  Donations received through Better Giving that will distributed
-                  to your bank account.
-                  <Arrow />
-                </Content>
+                <Icon type="Question" size={14} className="text-navy-l1 ml-1" />
               </Tooltip>
             </div>
           }
@@ -96,20 +92,20 @@ export function Schedule(props: Props) {
             /** include additional grant from bal */
             val + props.grantFromBal < MIN_PROCESSING_AMOUNT && (
               <Tooltip
-                trigger={
-                  <Icon
-                    type="Info"
-                    size={16}
-                    className="inline mr-auto text-amber"
-                  />
+                tip={
+                  <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
+                    Grant amount of $ {humanize(val)} is less than minimum
+                    processing amount of ${MIN_PROCESSING_AMOUNT} and would be
+                    carried over to the next month.
+                    <Arrow />
+                  </Content>
                 }
               >
-                <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
-                  Grant amount of $ {humanize(val)} is less than minimum
-                  processing amount of ${MIN_PROCESSING_AMOUNT} and would be
-                  carried over to the next month.
-                  <Arrow />
-                </Content>
+                <Icon
+                  type="Info"
+                  size={16}
+                  className="inline mr-auto text-amber"
+                />
               </Tooltip>
             )
           }

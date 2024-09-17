@@ -19,12 +19,8 @@ export default function Figure(props: Props) {
         <h4 className="text-sm">{props.title}</h4>
 
         {props.tooltip && (
-          <Tooltip
-            trigger={
-              <Icon type="Question" size={14} className="text-gray ml-1" />
-            }
-          >
-            {props.tooltip}
+          <Tooltip tip={props.tooltip}>
+            <Icon type="Question" size={14} className="text-gray ml-1" />
           </Tooltip>
         )}
 

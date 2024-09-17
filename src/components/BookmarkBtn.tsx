@@ -47,29 +47,29 @@ export default function BookmarkBtn({ endowId, classes = "" }: Props) {
 
   return (
     <Tooltip
-      trigger={
-        <button
-          ref={ref}
-          type="button"
-          aria-label="Add to favorites button"
-          onClick={toogleBookmark}
-          disabled={isBookmarksLoading || isTogglingBookmark}
-          className={`flex items-center gap-1 disabled:text-gray-l4 ${classes}`}
-        >
-          <Icon
-            type="Heart"
-            size={19}
-            className={isBookmarked ? "fill-red text-red" : ""}
-          />
-        </button>
+      tip={
+        !isBookmarked ? (
+          <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
+            Add to favorites
+            <Arrow />
+          </Content>
+        ) : null
       }
     >
-      {!isBookmarked ? (
-        <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
-          Add to favorites
-          <Arrow />
-        </Content>
-      ) : null}
+      <button
+        ref={ref}
+        type="button"
+        aria-label="Add to favorites button"
+        onClick={toogleBookmark}
+        disabled={isBookmarksLoading || isTogglingBookmark}
+        className={`flex items-center gap-1 disabled:text-gray-l4 ${classes}`}
+      >
+        <Icon
+          type="Heart"
+          size={19}
+          className={isBookmarked ? "fill-red text-red" : ""}
+        />
+      </button>
     </Tooltip>
   );
 }

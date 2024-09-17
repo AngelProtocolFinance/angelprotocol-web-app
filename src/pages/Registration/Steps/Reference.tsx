@@ -19,18 +19,18 @@ export default function Reference({ id, classes = "" }: Props) {
         <span className="block mt-1 md:inline md:mt-0">{id}</span>
 
         <Tooltip
-          trigger={
-            <Icon
-              type="Question"
-              size={13}
-              className="hidden md:inline-block ml-[1.333rem]"
-            />
+          tip={
+            <Content className="p-3 text-xs bg-navy-d4 text-white max-w-xs rounded">
+              {tooltip}
+              <Arrow />
+            </Content>
           }
         >
-          <Content className="p-3 text-xs bg-navy-d4 text-white max-w-xs rounded">
-            {tooltip}
-            <Arrow />
-          </Content>
+          <Icon
+            type="Question"
+            size={13}
+            className="hidden md:inline-block ml-[1.333rem]"
+          />
         </Tooltip>
         <button
           onClick={() => {
