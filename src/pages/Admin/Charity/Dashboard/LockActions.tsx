@@ -41,7 +41,7 @@ export function LockActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-xs px-4 py-1.5 rounded-md bg-navy-d4 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
+        className="text-xs px-4 py-1.5 rounded-md bg-gray-d2 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
       >
         Withdraw
       </button>
