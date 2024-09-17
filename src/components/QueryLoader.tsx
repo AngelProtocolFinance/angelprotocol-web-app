@@ -3,15 +3,14 @@ import { isEmpty, logger } from "helpers";
 import type { ReactElement } from "react";
 import type { QueryState } from "types/third-party/redux";
 
-interface Messages {
-  fetching?: string | ReactElement;
-  loading?: string | ReactElement;
-  error?: string | ReactElement;
-}
-
 type Props<T> = {
   queryState: QueryState<T>;
-  messages?: Messages<T>;
+  messages?: {
+    fetching?: string | ReactElement;
+    loading?: string | ReactElement;
+    error?: string | ReactElement;
+    empty?: T extends any[] ? string | ReactElement : never;
+  };
   dataRequired?: boolean;
   classes?: { container?: string };
   filterFn?: T extends (infer Item)[]
@@ -21,70 +20,6 @@ type Props<T> = {
 };
 
 export default function QueryLoader<T>({
-  queryState,
-  classes = {},
-  messages = {},
-  dataRequired = true,
-  children,
-  filterFn,
-}: Props<T>) {
-  const { container = "" } = classes;
-  const { isLoading, isFetching, isError, data, error } = queryState;
-
-  if (isLoading) {
-    return renderMessage(
-      (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
-      messages.loading,
-      container
-    );
-  }
-  if (isFetching && messages.fetching) {
-    return renderMessage(
-      (msg) => <LoadingStatus>{msg || "Loading.."}</LoadingStatus>,
-      messages.fetching,
-      container
-    );
-  }
-  if (isError || (dataRequired && !data)) {
-    if (isError) logger.error(error);
-    return renderMessage(
-      (msg) => <ErrorStatus>{msg || "Failed to get data"}</ErrorStatus>,
-      messages.error,
-      container
-    );
-  }
-
-  if (Array.isArray(data)) {
-    if (isEmpty(data)) {
-      return renderMessage(
-        (msg) => <Status icon="Info">{msg || "No data"}</Status>,
-        messages.empty,
-        container
-      );
-    }
-
-    if (filterFn) {
-      const filtered = data.filter(filterFn);
-      if (isEmpty(filtered)) {
-        return renderMessage(
-          (msg) => <Status icon="Info">{msg || "No data"}</Status>,
-          messages.empty,
-          container
-        );
-      }
-
-      return children(filtered as unknown as NonNullable<T>);
-    }
-  }
-
-  return children(data as NonNullable<T>);
-}
-
-interface IQueriesLoader<T> {
-  queries: QueryState<T>[];
-}
-
-export function QueriesLoader<T>({
   queryState,
   classes = {},
   messages = {},
