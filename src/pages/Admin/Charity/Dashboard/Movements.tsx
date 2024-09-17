@@ -18,12 +18,12 @@ const asset: {
 } = {
   "liq-cash": {
     title: <span className="text-sm text-navy-l1">Grant</span>,
-    icon: <Icon type="ArrowRight" className="text-navy-l1 size-4" />,
+    icon: <Icon type="HandCoins" className="text-navy-l1 size-4" />,
     source: "Savings",
   },
   "lock-cash": {
     title: <span className="text-sm text-navy-l1">Grant</span>,
-    icon: <Icon type="ArrowRight" className="text-navy-l1 size-4" />,
+    icon: <Icon type="HandCoins" className="text-navy-l1 size-4" />,
     source: "Investments",
   },
   "liq-lock": {
@@ -33,7 +33,7 @@ const asset: {
   },
   "lock-liq": {
     title: <span className="text-sm text-amber">Save</span>,
-    icon: <Icon type="PiggyBank" className="text-navy-l1 size-4" />,
+    icon: <Icon type="PiggyBank" className="text-amber size-4" />,
     source: "Investments",
   },
 };
@@ -41,7 +41,7 @@ const asset: {
 interface Props {
   endowId: number;
   mov: BalanceMovement;
-  balances: Balances;
+  balance: (flow: Flow) => number;
   classes?: string;
 }
 
@@ -74,8 +74,9 @@ export function Movements({ classes = "", ...props }: Props) {
                 type="button"
                 onClick={() =>
                   showModal(MoveFundForm, {
+                    title: "",
                     type: k,
-                    balance: props.balances[k],
+                    balance: props.balance(k),
                     mov: props.mov,
                     endowId: props.endowId,
                     effect: "override",

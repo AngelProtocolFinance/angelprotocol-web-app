@@ -9,9 +9,12 @@ import { schema, stringNumber } from "schemas/shape";
 import { useMoveFundsMutation } from "services/apes";
 import type { BalanceMovement } from "types/aws";
 
+type Flow = keyof BalanceMovement;
+
 interface IMoveFundForm {
+  title: string;
   effect: "append" | "override";
-  type: keyof BalanceMovement;
+  type: Flow;
   endowId: number;
   balance: number;
   mov: BalanceMovement;
@@ -48,6 +51,13 @@ export function MoveFundForm(props: IMoveFundForm) {
     ),
   });
 
+  const from = props.type.split("-")[0];
+  const deductions: [string, number][] = Object.entries(props.mov).filter(
+    ([k, v]) => k.startsWith(from) && +v > 0
+  );
+  const available =
+    props.balance - deductions.reduce((sum, [, v]) => v + sum, 0);
+
   return (
     <Modal
       onSubmit={handleSubmit(async (fv) => {
@@ -66,15 +76,16 @@ export function MoveFundForm(props: IMoveFundForm) {
         }
       })}
       as="form"
-      className="fixed-center z-10 grid gap-y-4 text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6"
+      className="fixed-center z-10 grid text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6"
     >
-      <p className="flex items-center gap-2">
-        <span className="text-navy-l1 text-sm">Available balance</span>
-        <span className="font-semibold font-heading">
-          $ {humanize(props.balance)}
-        </span>
-      </p>
-      <Field className="grid">
+      <h4 className="text-left">{props.title}</h4>
+      <p className="mt-2 text-sm">Balance</p>
+      <p className="font-heading font-bold">$ {humanize(props.balance)}</p>
+      {deductions}
+
+      <p className="mt-4 text-sm">Available</p>
+      <p className="font-heading font-bold">$ {humanize(available ?? 0)}</p>
+      <Field className="grid my-4">
         <Label className="font-semibold mb-1">
           {props.effect === "override" ? "Edit amount" : "Amount"}
           <span className="text-red"> *</span>

@@ -17,6 +17,7 @@ export function LiqActions({ classes = "", ...props }: Props) {
         type="button"
         onClick={() =>
           showModal(MoveFundForm, {
+            title: "Withdraw from savings",
             type: "liq-cash",
             balance: props.balance,
             mov: props.mov,
@@ -32,6 +33,7 @@ export function LiqActions({ classes = "", ...props }: Props) {
         type="button"
         onClick={() =>
           showModal(MoveFundForm, {
+            title: "Invest savings",
             type: "liq-lock",
             balance: props.balance,
             mov: props.mov,

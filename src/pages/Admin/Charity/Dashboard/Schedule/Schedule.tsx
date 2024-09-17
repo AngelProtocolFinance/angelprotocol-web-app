@@ -1,5 +1,3 @@
-import leaf from "assets/icons/leaf.png";
-import sendMoney from "assets/icons/send-money.png";
 import Icon from "components/Icon";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useModalContext } from "contexts/ModalContext";
@@ -70,7 +68,7 @@ export function Schedule(props: Props) {
 
       <div className="grid grid-cols-[auto_auto_auto_1fr_auto_auto] gap-y-3 gap-x-2 mt-4">
         <Row
-          icon={<Icon type="ArrowRight" className="h-4 w-4 mr-2" />}
+          icon={<Icon type="HandCoins" className="h-4 w-4 mr-2 text-navy-l1" />}
           title={
             <div className="flex items-center">
               <span>Grants</span>
@@ -117,14 +115,16 @@ export function Schedule(props: Props) {
           }
         />
         <Row
-          icon={<img src={sendMoney} width={20} className="mr-2" />}
+          icon={
+            <Icon type="PiggyBank" width={20} className="mr-2 text-amber" />
+          }
           title={<span>Savings</span>}
           pct={allocation.liq}
           amount={props.amount}
         />
 
         <Row
-          icon={<img src={leaf} className="mr-2" />}
+          icon={<Icon type="Sprout" size={20} className="mr-2 text-green" />}
           title={<span>Investments</span>}
           pct={allocation.lock}
           amount={props.amount}

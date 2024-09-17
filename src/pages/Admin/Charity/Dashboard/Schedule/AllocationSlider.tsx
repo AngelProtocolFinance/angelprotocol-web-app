@@ -1,8 +1,5 @@
 import * as Slider from "@radix-ui/react-slider";
-import leaf from "assets/icons/leaf.png";
-import sendMoney from "assets/icons/send-money.png";
 import Icon from "components/Icon";
-import Image from "components/Image";
 import type { ReactNode } from "react";
 import type { Allocation } from "types/aws";
 
@@ -44,17 +41,17 @@ export function AllocationSlider({
       <div className="grid grid-cols-[auto_auto_1fr_auto] gap-y-2">
         <Row
           title="Grant"
-          icon={<Icon type="ArrowRight" className="text-gray" size={20} />}
+          icon={<Icon type="HandCoins" size={20} className="text-navy-l1" />}
           pct={value.cash}
         />
         <Row
           title="Savings"
-          icon={<Image src={sendMoney} width={20} />}
+          icon={<Icon type="PiggyBank" width={20} className="text-amber" />}
           pct={value.liq}
         />
         <Row
           title="Investment"
-          icon={<Image src={leaf} className="" />}
+          icon={<Icon type="Sprout" className="text-green" size={20} />}
           pct={value.lock}
         />
       </div>

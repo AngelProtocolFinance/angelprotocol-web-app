@@ -17,6 +17,7 @@ export function LockActions({ classes = "", ...props }: Props) {
         type="button"
         onClick={() =>
           showModal(MoveFundForm, {
+            title: "Transfer to savings",
             type: "lock-liq",
             balance: props.balance,
             mov: props.mov,
@@ -32,6 +33,7 @@ export function LockActions({ classes = "", ...props }: Props) {
         type="button"
         onClick={() =>
           showModal(MoveFundForm, {
+            title: "Withdraw from investments",
             type: "lock-cash",
             balance: props.balance,
             mov: props.mov,

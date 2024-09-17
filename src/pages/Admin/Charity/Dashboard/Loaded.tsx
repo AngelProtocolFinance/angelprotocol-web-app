@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { Arrow, Content } from "components/Tooltip";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
-import type { BalanceMovement, EndowmentBalances } from "types/aws";
+import type { EndowmentBalances } from "types/aws";
 import Figure from "./Figure";
 import { LiqActions } from "./LiqActions";
 import { LockActions } from "./LockActions";
@@ -25,17 +25,6 @@ export function Loaded({
     "lock-liq": 0,
   };
 
-  const liqDeductions = mov["liq-cash"] + mov["liq-lock"];
-  const lockDeductions = mov["lock-cash"] + mov["lock-liq"];
-  const grantFromBal = mov["liq-cash"] + mov["lock-cash"];
-
-  const balances: BalanceMovement = {
-    "liq-cash": (props.liq ?? 0) - liqDeductions,
-    "liq-lock": (props.liq ?? 0) - liqDeductions,
-    "lock-cash": props.sustainabilityFundBal - lockDeductions,
-    "lock-liq": props.sustainabilityFundBal - lockDeductions,
-  };
-
   return (
     <div className={`${classes} mt-6`}>
       <h3 className="uppercase mb-4 font-black">Account Balances</h3>
@@ -56,7 +45,7 @@ export function Loaded({
               classes="mt-8"
               endowId={id}
               mov={mov}
-              balance={balances["liq-cash"]}
+              balance={props.liq ?? 0}
             />
           }
         />
@@ -81,7 +70,7 @@ export function Loaded({
           actions={
             <LockActions
               classes="mt-8"
-              balance={balances["lock-cash"]}
+              balance={props.sustainabilityFundBal ?? 0}
               endowId={id}
               mov={mov}
             />
@@ -109,12 +98,26 @@ export function Loaded({
         </p>
       </h3>
 
-      <Movements endowId={id} mov={mov} classes="mt-4" balances={balances} />
+      <Movements
+        endowId={id}
+        mov={mov}
+        classes="mt-4"
+        balance={(flow) => {
+          switch (flow) {
+            case "liq-lock":
+            case "liq-cash":
+              return props.liq ?? 0;
+            default:
+              flow satisfies `lock-${string}`;
+              return props.sustainabilityFundBal;
+          }
+        }}
+      />
       <Schedule
         amount={props.payoutsPending}
         periodNext={period.next}
         periodRemaining={period.distance}
-        grantFromBal={grantFromBal}
+        grantFromBal={mov["liq-cash"] + mov["lock-cash"]}
       />
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
