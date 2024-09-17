@@ -29,11 +29,11 @@ export function MoveFundForm(props: IMoveFundForm) {
   type FV = { amount: string };
 
   const from = props.type.split("-")[0];
-  const deductions: [string, number][] = Object.entries(props.mov).filter(
+  const deductions = Object.entries(props.mov).filter(
     ([k, v]) => k.startsWith(from) && +v > 0
   );
   const available =
-    props.balance - deductions.reduce((sum, [, v]) => v + sum, 0);
+    props.balance - deductions.reduce((sum, [, v]) => +v + sum, 0);
 
   const {
     handleSubmit,
@@ -92,6 +92,7 @@ export function MoveFundForm(props: IMoveFundForm) {
           <>
             {deductions.map(([flow, amount]) => (
               <Deduction
+                key={flow}
                 to={flow as Flow}
                 amount={amount}
                 isEditing={flow === props.type && props.effect === "override"}

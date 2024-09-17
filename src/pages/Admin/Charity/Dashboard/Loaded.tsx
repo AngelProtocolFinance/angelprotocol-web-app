@@ -9,6 +9,7 @@ import { LockActions } from "./LockActions";
 import { Movements } from "./Movements";
 import { PayoutHistory } from "./PayoutHistory";
 import { Schedule } from "./Schedule";
+import { Summary } from "./Summary";
 import { monthPeriod } from "./monthPeriod";
 
 interface Props {
@@ -121,6 +122,12 @@ export function Loaded({ classes = "", ...props }: Props) {
         periodRemaining={period.distance}
         grantFromBal={mov["liq-cash"] + mov["lock-cash"]}
         allocation={props.allocation}
+      />
+      <Summary
+        classes="mt-4"
+        alloc={props.allocation}
+        balances={props.balances}
+        mov={mov}
       />
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
