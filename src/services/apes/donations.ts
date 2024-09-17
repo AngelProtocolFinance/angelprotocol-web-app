@@ -8,7 +8,7 @@ import type {
   ReceiptPayload,
   Token,
 } from "types/aws";
-import { apes } from "../apes";
+import { apes, updateApesQueryData } from "../apes";
 
 export const {
   useRequestReceiptMutation,
@@ -53,6 +53,18 @@ export const {
           body: payload,
           headers: { authorization: TEMP_JWT },
         };
+      },
+      async onQueryStarted({ endowId, ...mov }, { dispatch, queryFulfilled }) {
+        const patchResult = dispatch(
+          updateApesQueryData("endowBalance", endowId, (draft) => {
+            draft.movementDetails = mov;
+          })
+        );
+        try {
+          await queryFulfilled;
+        } catch {
+          patchResult.undo();
+        }
       },
     }),
   }),
