@@ -7,8 +7,6 @@ import { MoveFundForm } from "./MoveFundForm";
 
 type Flow = keyof BalanceMovement;
 
-type Balances = { [K in Flow]: number };
-
 const asset: {
   [K in Flow]: {
     icon: ReactNode;
