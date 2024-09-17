@@ -140,12 +140,13 @@ const tos: { [K in Flow]: string } = {
 function Deduction(props: IDeduction) {
   return (
     <div className="col-span-full grid grid-cols-subgrid text-sm">
-      <div className="flex items-center gap-x-2">
-        <Icon type="ArrowLeft" size={15} className="text-navy-l1" />
-        <span className="text-left">$ {humanize(props.amount)}</span>
-      </div>
-
-      <span>to {tos[props.to]}</span>
+      <span className="text-left">$ {humanize(props.amount)}</span>
+      <Icon
+        type="ArrowRight"
+        size={15}
+        className="text-navy-l1 justify-self-center"
+      />
+      <span className="text-left">{tos[props.to]}</span>
     </div>
   );
 }
