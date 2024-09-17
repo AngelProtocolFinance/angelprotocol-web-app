@@ -1,4 +1,5 @@
 import Icon from "components/Icon";
+import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { humanize } from "helpers";
 import type { Allocation, BalanceMovement, EndowmentBalances } from "types/aws";
 
@@ -30,7 +31,19 @@ export function Summary({ classes = "", ...props }: Props) {
 
   return (
     <div className={`${classes} p-4 rounded border border-gray-l4`}>
-      <h4 className="mb-6">Ending balances</h4>
+      <h4 className="mb-6 flex items-center gap-2">
+        <span>Ending balances</span>
+        <Tooltip
+          tip={
+            <Content className="bg-navy-d4 text-gray-l2 text-xs p-2 rounded">
+              Doesn't reflect investment performance
+              <Arrow />
+            </Content>
+          }
+        >
+          <Icon type="Info" className="text-navy-l1" size={15} />
+        </Tooltip>
+      </h4>
       <div className="grid grid-cols-[auto_auto_auto_1fr]">
         <Balance
           title="Savings"
