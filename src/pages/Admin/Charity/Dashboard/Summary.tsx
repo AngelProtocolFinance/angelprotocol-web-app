@@ -85,8 +85,9 @@ function Balance({ classes = "", ...props }: IItem) {
               change > 0 ? "text-green" : "text-red"
             } flex items-center font-heading text-sm`}
           >
+            &#40;
             <Icon type={change < 0 ? "Dash" : "Plus"} size={14} />
-            <span>$ {humanize(Math.abs(change))}</span>
+            <span> $ {humanize(Math.abs(change))} &#41;</span>
           </p>
         ) : (
           <div />
