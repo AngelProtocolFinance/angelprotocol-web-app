@@ -91,7 +91,11 @@ export function MoveFundForm(props: IMoveFundForm) {
         {available < props.balance && (
           <>
             {deductions.map(([flow, amount]) => (
-              <Deduction to={flow as Flow} amount={amount} />
+              <Deduction
+                to={flow as Flow}
+                amount={amount}
+                isEditing={flow === props.type && props.effect === "override"}
+              />
             ))}
             <div className="grid grid-cols-subgrid col-span-full items-center border-t pt-2 mt-4 border-gray-l4">
               <p className="text-sm">Available</p>
@@ -130,6 +134,7 @@ export function MoveFundForm(props: IMoveFundForm) {
 interface IDeduction {
   amount: number;
   to: Flow;
+  isEditing?: boolean;
 }
 const tos: { [K in Flow]: string } = {
   "liq-cash": "Grant",
@@ -140,7 +145,16 @@ const tos: { [K in Flow]: string } = {
 function Deduction(props: IDeduction) {
   return (
     <div className="col-span-full grid grid-cols-subgrid text-sm">
-      <span className="text-left">$ {humanize(props.amount)}</span>
+      <span className="text-left">
+        $ {humanize(props.amount)}{" "}
+        {props.isEditing && (
+          <Icon
+            type="Pencil"
+            size={12}
+            className="inline bottom-px relative animate-bounce text-amber-d2"
+          />
+        )}
+      </span>
       <Icon
         type="ArrowRight"
         size={15}
