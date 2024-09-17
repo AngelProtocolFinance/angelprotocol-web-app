@@ -25,9 +25,6 @@ export function Loaded({
     "lock-liq": 0,
   };
 
-  const liqChange = mov["lock-liq"] - mov["liq-cash"] - mov["liq-lock"];
-  const lockChange = mov["liq-lock"] - mov["lock-cash"] - mov["lock-liq"];
-
   return (
     <div className={`${classes} mt-6`}>
       <h3 className="uppercase mb-4 font-black">Account Balances</h3>
