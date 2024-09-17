@@ -25,7 +25,7 @@ export function LiqActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-xs px-3 py-1 rounded-full font-heading border border-gray-l2 hover:border-gray outline-gray-d1"
+        className="text-xs px-4 py-1.5 rounded-md bg-navy-d4 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
       >
         Withdraw
       </button>
@@ -41,7 +41,7 @@ export function LiqActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-green-d1 bg-green-l5 text-xs px-3 py-1 rounded-full font-heading border border-green-l2 hover:border-green-l1 outline-green"
+        className="text-xs font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-sm py-1 bg-green text-white font-heading outline-blue-d1"
       >
         Invest
       </button>

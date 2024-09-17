@@ -25,7 +25,7 @@ export function LockActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-amber-d1 bg-amber-l5 text-xs px-3 py-1 rounded-full font-heading border border-amber-l2 hover:border-amber-l1 outline-amber"
+        className="text-xs font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-sm py-1 bg-amber text-white font-heading outline-blue-d1"
       >
         Save
       </button>
@@ -41,7 +41,7 @@ export function LockActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-xs px-3 py-1 rounded-full font-heading border border-gray-l2 hover:border-gray outline-blue-d1"
+        className="text-xs px-4 py-1.5 rounded-md bg-navy-d4 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
       >
         Withdraw
       </button>
