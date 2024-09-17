@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import { Arrow, Content } from "components/Tooltip";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
-import type { EndowmentBalances } from "types/aws";
+import type { Allocation, EndowmentBalances } from "types/aws";
 import Figure from "./Figure";
 import { LiqActions } from "./LiqActions";
 import { LockActions } from "./LockActions";
@@ -11,14 +11,16 @@ import { PayoutHistory } from "./PayoutHistory";
 import { Schedule } from "./Schedule";
 import { monthPeriod } from "./monthPeriod";
 
-export function Loaded({
-  classes = "",
-  ...props
-}: EndowmentBalances & { classes?: string }) {
+interface Props {
+  balances: EndowmentBalances;
+  allocation: Allocation;
+  classes?: string;
+}
+export function Loaded({ classes = "", ...props }: Props) {
   const { id } = useAdminContext();
   const period = monthPeriod();
 
-  const mov = props.movementDetails ?? {
+  const mov = props.balances.movementDetails ?? {
     "liq-cash": 0,
     "liq-lock": 0,
     "lock-cash": 0,
@@ -39,13 +41,13 @@ export function Loaded({
             </Content>
           }
           icon={<Icon size={21} type="PiggyBank" strokeWidth={1.5} />}
-          amount={`$ ${humanize(props.liq ?? 0, 2)}`}
+          amount={`$ ${humanize(props.balances.liq ?? 0, 2)}`}
           actions={
             <LiqActions
               classes="mt-8"
               endowId={id}
               mov={mov}
-              balance={props.liq ?? 0}
+              balance={props.balances.liq ?? 0}
             />
           }
         />
@@ -66,11 +68,11 @@ export function Loaded({
             </Content>
           }
           icon={<Icon type="Stocks" size={16} />}
-          amount={`$ ${humanize(props.sustainabilityFundBal, 2)}`}
+          amount={`$ ${humanize(props.balances.sustainabilityFundBal, 2)}`}
           actions={
             <LockActions
               classes="mt-8"
-              balance={props.sustainabilityFundBal ?? 0}
+              balance={props.balances.sustainabilityFundBal ?? 0}
               endowId={id}
               mov={mov}
             />
@@ -79,7 +81,7 @@ export function Loaded({
         <Figure
           title="Contributions count"
           icon={<Icon type="Users" size={17} />}
-          amount={props.contributionsCount.toString()}
+          amount={props.balances.contributionsCount.toString()}
         />
       </div>
 
@@ -106,18 +108,19 @@ export function Loaded({
           switch (flow) {
             case "liq-lock":
             case "liq-cash":
-              return props.liq ?? 0;
+              return props.balances.liq ?? 0;
             default:
               flow satisfies `lock-${string}`;
-              return props.sustainabilityFundBal;
+              return props.balances.sustainabilityFundBal;
           }
         }}
       />
       <Schedule
-        amount={props.payoutsPending}
+        amount={props.balances.payoutsPending}
         periodNext={period.next}
         periodRemaining={period.distance}
         grantFromBal={mov["liq-cash"] + mov["lock-cash"]}
+        allocation={props.allocation}
       />
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />

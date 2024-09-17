@@ -1,29 +1,45 @@
 import { skipToken } from "@reduxjs/toolkit/query";
 import ContentLoader from "components/ContentLoader";
-import QueryLoader from "components/QueryLoader";
 import { useEndowBalanceQuery } from "services/apes";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 
+import { ErrorStatus } from "components/Status";
+import { useEndowmentQuery } from "services/aws/aws";
 import { Loaded } from "./Loaded";
 
 export default function Dashboard() {
   const { id } = useAdminContext();
-  const queryState = useEndowBalanceQuery(id || skipToken);
+  const balQuery = useEndowBalanceQuery(id || skipToken);
+  const endowQuery = useEndowmentQuery({
+    id,
+    fields: ["allocation"],
+  });
+
+  if (balQuery.isLoading || endowQuery.isLoading) {
+    return <LoaderSkeleton />;
+  }
+
+  if (
+    balQuery.isError ||
+    !balQuery.data ||
+    endowQuery.isError ||
+    !endowQuery.data
+  ) {
+    return <ErrorStatus>Failed to get nonprofit organisation info</ErrorStatus>;
+  }
 
   return (
     <div className="@container w-full max-w-4xl grid content-start">
       <Seo title="Nonprofit Dashboard" />
       <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
-      <QueryLoader
-        queryState={queryState}
-        messages={{
-          loading: <LoaderSkeleton />,
-          error: "Failed to get nonprofit organisation info",
-        }}
-      >
-        {(balances) => <Loaded {...balances} />}
-      </QueryLoader>
+
+      <Loaded
+        balances={balQuery.data}
+        allocation={
+          endowQuery.data.allocation ?? { cash: 0, liq: 100, lock: 0 }
+        }
+      />
     </div>
   );
 }

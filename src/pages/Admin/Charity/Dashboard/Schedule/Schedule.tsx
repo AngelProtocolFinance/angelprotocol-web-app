@@ -4,7 +4,6 @@ import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
 import type { ReactNode } from "react";
-import { useEndowmentQuery } from "services/aws/aws";
 import type { Allocation } from "types/aws";
 import { Edit } from "./Edit";
 import {
@@ -15,6 +14,7 @@ import {
 
 interface Props {
   amount: number;
+  allocation: Allocation;
   classes?: string;
   periodNext: string;
   periodRemaining: string;
@@ -23,18 +23,9 @@ interface Props {
 export function Schedule(props: Props) {
   const { id } = useAdminContext();
   const { showModal } = useModalContext();
-  const { data: endow } = useEndowmentQuery({
-    id,
-    fields: ["allocation"],
-  });
-
-  const allocation: Allocation =
-    !endow || !endow.allocation
-      ? { cash: 0, liq: 100, lock: 0 }
-      : endow.allocation;
 
   const presetOpt = allocationOptions.find(
-    (opt) => opt.value === toAllocOptValue(allocation)
+    (opt) => opt.value === toAllocOptValue(props.allocation)
   );
 
   return (
@@ -53,12 +44,10 @@ export function Schedule(props: Props) {
         ) : null}
 
         <button
-          disabled={!endow}
           type="button"
           className="hover:text-blue disabled:text-gray"
           onClick={() => {
-            if (!endow) throw "@dev: no endow";
-            showModal(Edit, { ...allocation, amount: props.amount, id });
+            showModal(Edit, { ...props.allocation, amount: props.amount, id });
           }}
         >
           <Icon type="Pencil" className="h-4 w-4" />
@@ -85,7 +74,7 @@ export function Schedule(props: Props) {
               </Tooltip>
             </div>
           }
-          pct={allocation.cash}
+          pct={props.allocation.cash}
           amount={props.amount}
           tooltip={(val) =>
             val !== 0 &&
@@ -115,14 +104,14 @@ export function Schedule(props: Props) {
             <Icon type="PiggyBank" width={20} className="mr-2 text-amber" />
           }
           title={<span>Savings</span>}
-          pct={allocation.liq}
+          pct={props.allocation.liq}
           amount={props.amount}
         />
 
         <Row
           icon={<Icon type="Sprout" size={20} className="mr-2 text-green" />}
           title={<span>Investments</span>}
-          pct={allocation.lock}
+          pct={props.allocation.lock}
           amount={props.amount}
         />
       </div>
