@@ -146,6 +146,10 @@ const tos: { [K in Flow]: string } = {
 function Deduction(props: IDeduction) {
   return (
     <div className="col-span-full grid grid-cols-subgrid text-sm">
+      <p className="flex items-center">
+        <Icon type="ArrowLeft" size={15} className="text-navy-l1 mr-1" />
+        <span className="text-left">{tos[props.to]}</span>
+      </p>
       <span className="text-left">
         $ {humanize(props.amount)}{" "}
         {props.isEditing && (
@@ -156,12 +160,6 @@ function Deduction(props: IDeduction) {
           />
         )}
       </span>
-      <Icon
-        type="ArrowRight"
-        size={15}
-        className="text-navy-l1 justify-self-center"
-      />
-      <span className="text-left">{tos[props.to]}</span>
     </div>
   );
 }

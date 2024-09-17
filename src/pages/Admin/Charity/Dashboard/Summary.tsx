@@ -100,18 +100,17 @@ function Balance({ classes = "", ...props }: IItem) {
               key={idx}
               className="grid grid-cols-subgrid col-span-full items-center"
             >
-              <Icon
-                size={14}
-                className={`${
-                  value > 0 ? "text-green" : "text-navy-l1"
-                } justify-self-end mr-4`}
-                type={value > 0 ? "ArrowRight" : "ArrowLeft"}
-              />
-              <p className="font-heading">$ {humanize(Math.abs(value))}</p>
-              <p className="text-xs text-navy-l1">
-                {value > 0 ? "from" : "to"}
+              <p className="flex items-center mr-4">
+                <Icon
+                  size={14}
+                  className={`${
+                    value > 0 ? "text-green" : "text-navy-l1"
+                  } justify-self-end mr-2`}
+                  type={value > 0 ? "ArrowRight" : "ArrowLeft"}
+                />
+                <span className="text-sm text-navy-l1">{toOrFrom}</span>
               </p>
-              <p className="ml-4 text-sm text-navy-l1">{toOrFrom}</p>
+              <p className="font-heading">$ {humanize(Math.abs(value))}</p>
             </div>
           ))}
         </div>
