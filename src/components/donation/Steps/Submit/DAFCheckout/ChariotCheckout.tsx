@@ -6,7 +6,6 @@ import {
   NativeField as Field,
   Form,
 } from "components/form";
-import { PROCESSING_RATES } from "constants/common";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -28,6 +27,7 @@ import {
   initTributeNotif,
   toDonor,
 } from "../../common/constants";
+import { minFeeAllowance } from "../../common/min-fee-allowance";
 import type { DafCheckoutStep, Honorary } from "../../types";
 import { DonationTerms } from "../DonationTerms";
 import { type AdjustedAmounts, toPlatformValues } from "./toPlatformValues";
@@ -101,7 +101,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   const customMsg = watch("tributeNotif.fromMsg");
 
   const newFeeAllowance = fvCoverFee
-    ? +props.details.amount * PROCESSING_RATES.chariot
+    ? minFeeAllowance(props.details, props.tip?.value ?? 0)
     : 0;
 
   return (
