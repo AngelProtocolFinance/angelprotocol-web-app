@@ -16,7 +16,7 @@ export const processingFee = (
         return [
           +details.amount,
           PROCESSING_RATES.stripe,
-          0.3 * details.currency.rate,
+          PROCESSING_RATES.stripe_flat * details.currency.rate,
         ];
       default: {
         details.method satisfies "stocks";
