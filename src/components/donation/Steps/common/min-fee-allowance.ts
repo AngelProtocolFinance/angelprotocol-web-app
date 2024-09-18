@@ -1,7 +1,7 @@
 import { PROCESSING_RATES } from "constants/common";
 import type { DonationDetails } from "../types";
 
-export const processingFee = (
+export const minFeeAllowance = (
   details: DonationDetails,
   tip: number
 ): number => {
@@ -26,10 +26,10 @@ export const processingFee = (
   })();
 
   if (details.method === "stocks") return 0;
-  return fee(amnt + tip, rate, flat);
+  return allowance(amnt + tip, rate, flat);
 };
 
-function fee(amount: number, rate: number, flat = 0): number {
+function allowance(amount: number, rate: number, flat = 0): number {
   /**
    * fee(1) = amount * rate + flat
    * fee(2) = (amount + fee(1)) * rate + flat
@@ -39,3 +39,5 @@ function fee(amount: number, rate: number, flat = 0): number {
    */
   return (amount * rate + flat) / (1 - rate);
 }
+
+console.log(allowance(98.75982905982904 + 16.789170940170944, 0.029));

@@ -5,9 +5,9 @@ import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";
 import { token } from "../common/Token";
 import { initDonorTitleOption, initTributeNotif } from "../common/constants";
+import { minFeeAllowance } from "../common/min-fee-allowance";
 import type { SummaryStep } from "../types";
 import SummaryForm from "./SummaryForm";
-import { processingFee } from "./helpers";
 
 export default function Summary(props: SummaryStep) {
   const { details, liquidSplitPct, donor, honorary, tip, init, feeAllowance } =
@@ -104,7 +104,7 @@ export default function Summary(props: SummaryStep) {
               tributeNotif,
             },
             feeAllowance: fvCoverFee
-              ? processingFee(details, tip?.value ?? 0)
+              ? minFeeAllowance(details, tip?.value ?? 0)
               : 0,
           });
         }}
