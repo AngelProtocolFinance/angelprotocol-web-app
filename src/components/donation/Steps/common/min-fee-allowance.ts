@@ -39,5 +39,3 @@ function allowance(amount: number, rate: number, flat = 0): number {
    */
   return (amount * rate + flat) / (1 - rate);
 }
-
-console.log(allowance(98.75982905982904 + 16.789170940170944, 0.029));
