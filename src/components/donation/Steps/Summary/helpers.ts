@@ -1,21 +1,32 @@
 import { PROCESSING_RATES } from "constants/common";
 import type { DonationDetails } from "../types";
 
-export const processingFee = (details: DonationDetails): number => {
+export const processingFee = (
+  details: DonationDetails,
+  tip: number
+): number => {
+  const [amnt, rate, flat] = (() => {
+    switch (details.method) {
+      case "crypto":
+        return [+details.token.amount, PROCESSING_RATES.crypto, 0];
+      case "daf":
+        return [+details.amount, PROCESSING_RATES.chariot, 0];
+      case "stripe":
+        /** @see https://stripe.com/pricing */
+        return [
+          +details.amount,
+          PROCESSING_RATES.stripe,
+          0.3 * details.currency.rate,
+        ];
+      default: {
+        details.method satisfies "stocks";
+        return [0, 0, 0];
+      }
+    }
+  })();
+
   if (details.method === "stocks") return 0;
-
-  if (details.method === "crypto") {
-    return fee(+details.token.amount, PROCESSING_RATES.crypto);
-  }
-
-  if (details.method === "daf") {
-    return fee(+details.amount, PROCESSING_RATES.chariot);
-  }
-
-  details.method satisfies "stripe";
-  /** @see https://stripe.com/pricing */
-  const { currency, amount } = details;
-  return fee(+amount, PROCESSING_RATES.stripe, 0.3 * currency.rate);
+  return fee(amnt + tip, rate, flat);
 };
 
 function fee(amount: number, rate: number, flat = 0): number {
