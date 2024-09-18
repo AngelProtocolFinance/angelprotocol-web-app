@@ -14,8 +14,8 @@ export const processingFee = (details: DonationDetails): number => {
 
   details.method satisfies "stripe";
   /** @see https://stripe.com/pricing */
-  const { currency } = details;
-  return fee(+details.amount, PROCESSING_RATES.stripe, 0.3 * currency.rate);
+  const { currency, amount } = details;
+  return fee(+amount, PROCESSING_RATES.stripe, 0.3 * currency.rate);
 };
 
 function fee(amount: number, rate: number, flat = 0): number {
