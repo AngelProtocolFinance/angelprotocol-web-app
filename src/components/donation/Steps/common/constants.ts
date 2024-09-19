@@ -23,7 +23,7 @@ export const initTokenOption: TokenWithDetails = {
   min: 0,
   code: "",
   name: "",
-  symbol: "Select token",
+  symbol: "",
   id: "",
   amount: "",
   network: "",
@@ -56,6 +56,9 @@ export const initDetails = (
         method: "crypto",
         token: initTokenOption,
         program,
+        amount: "",
+        rate: 0,
+        min: 0,
       };
     }
     case "daf": {

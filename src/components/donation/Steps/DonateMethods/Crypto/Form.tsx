@@ -1,9 +1,9 @@
-import TokenField from "../../../../TokenField";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
 import { ProgramSelector } from "../../common/ProgramSelector";
 import type { CryptoFormStep } from "../../types";
 import { nextFormState } from "../helpers";
+import { TokenSelector } from "./TokenSelector";
 import type { DonateValues } from "./types";
 import { useRhf } from "./useRhf";
 
@@ -23,19 +23,7 @@ export default function Form(props: CryptoFormStep) {
       className="flex flex-col gap-4 rounded-md min-h-full"
       autoComplete="off"
     >
-      <TokenField
-        ref={token.ref}
-        token={token.value}
-        onChange={token.onChange}
-        error={errors.token}
-        withBalance
-        label="Donation amount"
-        classes={{
-          label: "font-heading mb-1",
-          inputContainer: "field-container-donate pr-5",
-        }}
-        withMininum
-      />
+      <TokenSelector token={token.value} onChange={token.onChange} />
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
         <ProgramSelector

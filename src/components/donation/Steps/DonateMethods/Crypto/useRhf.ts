@@ -9,6 +9,9 @@ import type { DonateValues as DV } from "./types";
 const initial: DV = {
   program: DEFAULT_PROGRAM,
   token: initTokenOption,
+  amount: "",
+  rate: 0,
+  min: 0,
 };
 
 type Props = CryptoFormStep;
@@ -46,7 +49,7 @@ export function useRhf(props: Props) {
     handleSubmit,
     token,
     errors: {
-      token: errors.token?.amount?.message || errors.token?.id?.message,
+      token: errors.token?.id?.message,
     },
   };
 }

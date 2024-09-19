@@ -48,9 +48,10 @@ export default function Tip(props: TipStep) {
         return ["usd", +details.amount];
       case "stocks":
         return [details.symbol, +details.numShares];
-      case "crypto":
-        const { symbol, amount, rate, precision } = details.token;
-        return [symbol, +amount, rate, precision];
+      case "crypto": {
+        const { token, amount, rate } = details;
+        return [token.symbol, +amount, rate, token.precision];
+      }
     }
   })();
 

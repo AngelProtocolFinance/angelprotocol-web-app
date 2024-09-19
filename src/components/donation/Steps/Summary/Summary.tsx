@@ -19,10 +19,7 @@ export default function Summary(props: SummaryStep) {
   const [amount, Amount] = (() => {
     switch (details.method) {
       case "crypto": {
-        return [
-          +details.token.amount,
-          token(details.token.rate, details.token.precision),
-        ];
+        return [+details.amount, token(details.rate, details.token.precision)];
       }
       //stocks skips summary (straight to submit), as donor info is not saved in DB
       case "stocks": {

@@ -27,8 +27,8 @@ export default function Split(props: Props) {
   const [amount, symbol, rate, decimals] = (() => {
     switch (details.method) {
       case "crypto": {
-        const { amount, symbol, rate, precision } = details.token;
-        return [amount, symbol, rate, precision];
+        const { symbol, precision } = details.token;
+        return [details.amount, symbol, details.rate, precision];
       }
       case "stocks": {
         const { numShares, symbol } = details;

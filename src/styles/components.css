@@ -1,5 +1,11 @@
 /** Layer 1 components */
 @layer components {
+  .red-asterisk::after {
+    content: '*';
+    margin-left: theme(margin.1);
+    color: theme(colors.red.DEFAULT)
+  }
+
   .rich-text-toolbar .ql-toolbar .ql-stroke {
     @apply fill-none stroke-gray-d2 dark:stroke-white;
   }

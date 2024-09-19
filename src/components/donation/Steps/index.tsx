@@ -95,9 +95,10 @@ function initialState({
       step: "submit",
       details: {
         method: "crypto",
+        amount: `${intent.amount}`,
+        min: intent.token.min_donation_amnt,
+        rate: 0,
         token: {
-          amount: `${intent.amount}`,
-          min: intent.token.min_donation_amnt,
           id: intent.token.token_id,
           code: intent.denomination,
           cg_id: intent.token.coingecko_denom,
@@ -107,9 +108,7 @@ function initialState({
           name: "",
           precision: 0,
           symbol: "",
-          rate: 0,
         },
-
         program,
       },
       liquidSplitPct: intent.splitLiq,

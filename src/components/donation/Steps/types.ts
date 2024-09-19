@@ -1,9 +1,5 @@
 import type { DonationIntent, Donor, Endowment } from "types/aws";
-import type {
-  DetailedCurrency,
-  OptionType,
-  TokenWithDetails,
-} from "types/components";
+import type { DetailedCurrency, OptionType, TokenV2 } from "types/components";
 import type { DonateMethodId, DonationSource } from "types/lists";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
@@ -23,7 +19,11 @@ type BaseDonationDetails = {
 
 export type CryptoDonationDetails = BaseDonationDetails & {
   method: Extract<DonateMethodId, "crypto">; //use to preserve selected method
-  token: TokenWithDetails;
+  token: TokenV2;
+  amount: string;
+  /** usd/unit */
+  rate: number;
+  min: number;
 };
 
 type FiatDonationDetails = BaseDonationDetails & {

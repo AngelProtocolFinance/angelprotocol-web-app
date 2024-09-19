@@ -8,7 +8,7 @@ export const minFeeAllowance = (
   const [amnt, rate, flat] = (() => {
     switch (details.method) {
       case "crypto":
-        return [+details.token.amount, PROCESSING_RATES.crypto, 0];
+        return [+details.amount, PROCESSING_RATES.crypto, 0];
       case "daf":
         return [+details.amount, PROCESSING_RATES.chariot, 0];
       case "stripe":

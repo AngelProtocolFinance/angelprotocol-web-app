@@ -11,14 +11,14 @@ import DirectMode from "./DirectMode";
 export default function Crypto(props: CryptoSubmitStep) {
   const { setState } = useDonationState();
   const { details, tip, feeAllowance } = props;
-  const Amount = token(details.token.rate, details.token.precision);
+  const Amount = token(details.rate, details.token.precision);
 
   return (
     <Summary
       classes="grid content-start p-4 @md/steps:p-8"
       onBack={() => setState({ ...props, step: "summary" })}
       Amount={Amount}
-      amount={+details.token.amount}
+      amount={+details.amount}
       feeAllowance={feeAllowance}
       splitLiq={props.liquidSplitPct}
       tip={

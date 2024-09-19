@@ -30,7 +30,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
 
   const intentQuery = useCreateCryptoIntentQuery({
     transactionId: init.intentId,
-    amount: +details.token.amount,
+    amount: +details.amount,
     tipAmount: tip?.value ?? 0,
     feeAllowance,
     chainId: details.token.network,
@@ -50,8 +50,8 @@ export default function DirectMode({ donation, classes = "" }: Props) {
   });
 
   const totalDisplayAmount = roundToCents(
-    +details.token.amount + (tip?.value ?? 0) + feeAllowance,
-    details.token.rate,
+    +details.amount + (tip?.value ?? 0) + feeAllowance,
+    details.rate,
     details.token.precision
   );
 

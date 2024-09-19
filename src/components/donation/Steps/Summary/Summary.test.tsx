@@ -156,7 +156,10 @@ describe("summary step", () => {
 
   const cryptoDetails: CryptoDonationDetails = {
     method: "crypto",
-    token: { ...initTokenOption, amount: "100", cg_id: "wagmi" },
+    token: { ...initTokenOption, cg_id: "wagmi" },
+    amount: "100",
+    rate: 1,
+    min: 1,
     program: props.details.program,
   };
   test("crypto amount + dollar amount", async () => {
