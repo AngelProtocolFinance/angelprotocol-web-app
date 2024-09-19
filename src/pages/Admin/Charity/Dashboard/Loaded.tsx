@@ -88,41 +88,44 @@ export function Loaded({ classes = "", ...props }: Props) {
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
 
-      <h3 className="my-4 font-medium flex items-center">
-        <span className="text-sm uppercase font-normal">Period</span>
-        <span className="ml-2 uppercase text-sm">
-          {period.from} - {period.to}
-        </span>
-        <p className="text-sm text-navy-l3 ml-auto">
-          <span>Ends in </span>
-          <span className="p-1 px-2 bg-navy-d4 text-gray-l4 text-xs rounded ml-1">
-            in {period.distance}
+      {/** div scopes when the sticky header ends */}
+      <div>
+        <h3 className="py-4 font-medium flex items-center sticky top-[4rem] bg-white z-10">
+          <span className="text-sm uppercase font-normal">Period</span>
+          <span className="ml-2 uppercase text-sm">
+            {period.from} - {period.to}
           </span>
-        </p>
-      </h3>
+          <p className="text-sm text-navy-l3 ml-auto">
+            <span>Ends in </span>
+            <span className="p-1 px-2 bg-navy-d4 text-gray-l4 text-xs rounded ml-1">
+              in {period.distance}
+            </span>
+          </p>
+        </h3>
 
-      <Movements
-        endowId={id}
-        mov={mov}
-        classes="mt-4"
-        balance={(flow) => {
-          switch (flow) {
-            case "liq-lock":
-            case "liq-cash":
-              return props.balances.liq ?? 0;
-            default:
-              flow satisfies `lock-${string}`;
-              return props.balances.sustainabilityFundBal;
-          }
-        }}
-      />
-      <Schedule
-        amount={props.balances.payoutsPending}
-        periodNext={period.next}
-        periodRemaining={period.distance}
-        grantFromBal={mov["liq-cash"] + mov["lock-cash"]}
-        allocation={props.allocation}
-      />
+        <Movements
+          endowId={id}
+          mov={mov}
+          classes="mt-4"
+          balance={(flow) => {
+            switch (flow) {
+              case "liq-lock":
+              case "liq-cash":
+                return props.balances.liq ?? 0;
+              default:
+                flow satisfies `lock-${string}`;
+                return props.balances.sustainabilityFundBal;
+            }
+          }}
+        />
+        <Schedule
+          amount={props.balances.payoutsPending}
+          periodNext={period.next}
+          periodRemaining={period.distance}
+          grantFromBal={mov["liq-cash"] + mov["lock-cash"]}
+          allocation={props.allocation}
+        />
+      </div>
       <Summary
         classes="mt-4"
         alloc={props.allocation}
