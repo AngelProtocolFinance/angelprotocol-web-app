@@ -36,7 +36,8 @@ export function Summary({ classes = "", ...props }: Props) {
         <Tooltip
           tip={
             <Content className="bg-navy-d4 text-gray-l2 text-xs p-2 rounded">
-              Doesn't reflect investment performance
+              This value does not reflect any potential growth from savings and
+              investments
               <Arrow />
             </Content>
           }
