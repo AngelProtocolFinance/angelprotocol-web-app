@@ -1,7 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { centsDecimals, roundDown } from "helpers";
 import { useController, useForm } from "react-hook-form";
 import { schema, tokenShape } from "schemas/shape";
 import { object } from "yup";
+import type { OnIncrement } from "../../common/Incrementers";
 import { DEFAULT_PROGRAM, initTokenOption } from "../../common/constants";
 import type { CryptoFormStep } from "../../types";
 import type { DonateValues as DV } from "./types";
@@ -17,6 +19,8 @@ export function useRhf(props: Props) {
     reset,
     setValue,
     handleSubmit,
+    getValues,
+    trigger,
     control,
     formState: { errors },
   } = useForm<DV>({
@@ -39,12 +43,23 @@ export function useRhf(props: Props) {
     name: "token",
   });
 
+  const onIncrement: OnIncrement = (inc) => {
+    const token = getValues("token");
+    const amnt = Number(token.amount);
+    if (Number.isNaN(amnt)) return trigger("token", { shouldFocus: true });
+    setValue("token", {
+      ...token,
+      amount: roundDown(amnt + inc, centsDecimals(token.rate, token.precision)),
+    });
+  };
+
   return {
     program,
     reset,
     setValue,
     handleSubmit,
     token,
+    onIncrement,
     errors: {
       token: errors.token?.amount?.message || errors.token?.id?.message,
     },
