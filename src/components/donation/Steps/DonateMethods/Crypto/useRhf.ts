@@ -41,7 +41,6 @@ export function useRhf(props: Props) {
             n
               .positive("must be greater than 0")
               .when(["min", "token"], (values, schema) => {
-                console.log(values, schema);
                 const [min, token] = values as [number, TokenV2];
                 return schema.min(min || 0, "less than minimum").test((val) => {
                   const numDecimals =

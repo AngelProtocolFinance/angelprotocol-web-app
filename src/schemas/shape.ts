@@ -1,13 +1,8 @@
-import type {
-  OptionType,
-  RichTextContent,
-  TokenWithDetails as TWD,
-} from "types/components";
+import type { OptionType, RichTextContent } from "types/components";
 import {
   type NumberSchema,
   type ObjectSchema,
   type StringSchema,
-  ValidationError,
   lazy,
   mixed,
   number,
@@ -38,37 +33,6 @@ export function schema<T extends object>(shape: SchemaShape<T>) {
     shape
   ) as ObjectSchema<T>;
 }
-
-type Key = keyof TWD;
-type Min = TWD["min"];
-const minKey: Key = "min";
-
-export const tokenShape = (withMin = true): SchemaShape<TWD> => ({
-  id: string().required("select token"),
-  amount: stringNumber(
-    (s) => s.required("required"),
-    (num) =>
-      num
-        .positive("invalid: must be greater than zero ")
-        .when([minKey], (values, schema) => {
-          const [minAmount] = values as [Min];
-          return withMin && !!minAmount
-            ? schema.min(minAmount || 0, "less than minimum")
-            : schema;
-        })
-        .test((val, context) => {
-          if (!val) return true;
-          const numDecimals = val.toString().split(".").at(1)?.length ?? 0;
-          const precision = context.parent.precision;
-          if (numDecimals <= precision) return true;
-          return new ValidationError(
-            `can't be more than ${precision} decimals`,
-            precision,
-            context.path
-          );
-        })
-  ),
-});
 
 export const optionType = ({ required } = { required: false }) =>
   object<any, SchemaShape<OptionType<string>>>({
