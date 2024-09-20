@@ -27,8 +27,8 @@ export default function Form(props: CryptoFormStep) {
 
   const isTokenDetailsLoading = isFetching || isLoading;
 
+  //biome-ignore lint: only data is watched
   useEffect(() => {
-    console.log("run effect");
     if (data) {
       const rate = data.fiat_equivalent / data.min_amount;
       rhf.setValue("rate", rate);
@@ -44,8 +44,6 @@ export default function Form(props: CryptoFormStep) {
 
   const rate = rhf.watch("rate");
   const amnt = rhf.watch("amount");
-
-  console.log(rhf.errors);
 
   return (
     <form
