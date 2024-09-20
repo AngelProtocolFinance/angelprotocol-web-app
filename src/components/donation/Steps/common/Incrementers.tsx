@@ -1,10 +1,11 @@
 import { DONATION_INCREMENTS } from "constants/common";
-import { humanize, roundDownToNum } from "helpers";
+import { centsDecimals, humanize } from "helpers";
 
 export type OnIncrement = (increment: number) => void;
 
 interface Props {
   rate: number;
+  precision?: number;
   code: string;
   onIncrement: OnIncrement;
   increments?: number[];
@@ -31,17 +32,22 @@ interface IIncrementer extends Props {
   inc: number;
 }
 
-function Incrementer({ rate, inc, code, onIncrement }: IIncrementer) {
+function Incrementer({
+  rate,
+  inc,
+  code,
+  onIncrement,
+  precision = 2,
+}: IIncrementer) {
   const value = rate * inc;
-  const roundedVal = roundDownToNum(value, 0);
   return (
     <button
       data-testid="incrementer"
       type="button"
-      className="text-sm font-medium border border-gray-l4 hover:border-gray-l3 rounded-full w-[7rem] h-10"
-      onClick={() => onIncrement(roundedVal)}
+      className="text-sm font-medium border border-gray-l4 hover:border-gray-l3 rounded-full p-3"
+      onClick={() => onIncrement(value)}
     >
-      +{shortenHumanize(roundedVal)} {code.toUpperCase()}
+      +{shortenHumanize(value, rate, precision)} {code.toUpperCase()}
     </button>
   );
 }
@@ -51,17 +57,18 @@ function Incrementer({ rate, inc, code, onIncrement }: IIncrementer) {
  * containing enough precision to be of use to the end user. Numbers passed through
  * should only have at most 5 digits in total (2 before the decimal, 3 digits after).
  */
-function shortenHumanize(num: number): string {
+function shortenHumanize(num: number, rate: number, precision = 2): string {
+  const decimals = centsDecimals(rate, precision);
   if (num > 1e10) {
     // numbers over 10 Billion
-    return `${humanize(num / 1e9, 3)}B`;
+    return `${humanize(num / 1e9, decimals)}B`;
   } else if (num > 1e7) {
     // numbers over 10 Million
-    return `${humanize(num / 1e6, 3)}M`;
+    return `${humanize(num / 1e6, decimals)}M`;
   } else if (num > 1e4) {
     // numbers over 10 Thousand
-    return `${humanize(num / 1e3, 3)}K`;
+    return `${humanize(num / 1e3, decimals)}K`;
   }
   // all other numbers under 10 Thousand
-  return `${num}`;
+  return humanize(num, decimals);
 }
