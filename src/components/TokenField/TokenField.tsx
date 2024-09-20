@@ -1,9 +1,13 @@
-import { roundToCents, unpack } from "helpers";
+import { humanize, roundToCents, unpack } from "helpers";
 import { forwardRef, useEffect, useState } from "react";
+import { number } from "yup";
 import TokenSelector from "./TokenSelector";
 import type { Props, Token } from "./types";
 
 type El = HTMLInputElement;
+
+const multipliable = (amount: string) =>
+  number().min(0).isValidSync(amount) ? +amount : 0;
 
 const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
   const style = unpack(props.classes);
@@ -20,12 +24,22 @@ const TokenField: React.ForwardRefRenderFunction<El, Props> = (props, ref) => {
 
   return (
     <div className={`grid ${style.container}`}>
-      <label
-        htmlFor="amount"
-        className={`font-semibold mr-auto mb-2 after:content-['_*'] after:text-red ${style.label}`}
-      >
-        {props.label}
-      </label>
+      <div className="flex items-center gap-2">
+        <label
+          htmlFor="amount"
+          className={`font-semibold mr-auto mb-2 after:content-['_*'] after:text-red ${style.label}`}
+        >
+          {props.label}
+        </label>
+        <span className="text-navy-l1 text-sm mr-1">
+          {tokenState === "ok"
+            ? `$ ${humanize(
+                props.token.rate * multipliable(props.token.amount),
+                2
+              )}`
+            : "$ --"}
+        </span>
+      </div>
 
       <div
         className={`${style.inputContainer} relative grid grid-cols-[1fr_auto] items-center gap-2 field-container`}
