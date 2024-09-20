@@ -3,12 +3,14 @@ import prod_tokens from "@better-giving/assets/tokens";
 import test_tokens from "@better-giving/assets/tokens/test";
 import {
   Combobox,
+  ComboboxButton,
   ComboboxInput,
   ComboboxOption,
   ComboboxOptions,
   Field,
   Label,
 } from "@headlessui/react";
+import Icon from "components/Icon";
 import { logoUrl } from "constants/common";
 import { IS_TEST } from "constants/env";
 import Fuse from "fuse.js";
@@ -48,12 +50,17 @@ export function TokenSelector(props: Props) {
         onChange={(token) => token && props.onChange(token)}
         onClose={() => setSearch("")}
       >
-        <ComboboxInput
-          placeholder="Search"
-          displayValue={(token?: TokenV2) => token?.symbol ?? ""}
-          className="font-heading bg-transparent py-[13px] px-5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 rounded-lg text-base font-semibold placeholder:font-medium outline-blue-d1 outline-offset-4"
-          onChange={(event) => setSearch(event.target.value)}
-        />
+        <div className="relative w-full">
+          <ComboboxInput
+            placeholder="Search"
+            displayValue={(token?: TokenV2) => token?.symbol ?? ""}
+            className="w-full font-heading bg-transparent py-[13px] px-5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 rounded-lg text-base font-semibold placeholder:font-medium outline-blue-d1 outline-offset-4"
+            onChange={(event) => setSearch(event.target.value)}
+          />
+          <ComboboxButton className="data-[open]:rotate-180 absolute right-4 top-1/2 -translate-y-1/2 transition-transform ease-in-out">
+            <Icon type="ChevronDown" className="" />
+          </ComboboxButton>
+        </div>
 
         {filtered.length === 0 && search !== "" ? (
           <div className="relative cursor-default select-none py-2 px-4 text-sm">
