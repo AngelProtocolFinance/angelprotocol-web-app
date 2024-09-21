@@ -4,7 +4,7 @@ import type {
   EndowClaim,
   FSAInquiry,
   OrgDetails,
-  RegistrationStatus,
+  RegV2,
   TDocumentation,
 } from "types/aws";
 
@@ -47,36 +47,36 @@ type Step5Data = Data<
 /** contact details */
 type RegStep1 = {
   step: 1;
-  data: Step1Data;
+  data: RegV2.Step1;
 };
 
 /** org details */
 type RegStep2 = {
   step: 2;
-  data: Step2Data;
+  data: RegV2.Step2;
 };
 
 /** fsa inquiry */
 type RegStep3 = {
   step: 3;
-  data: Step3Data;
+  data: RegV2.Step3;
 };
 
 /** documentation */
 export type RegStep4 = {
   step: 4;
-  data: Step4Data;
+  data: RegV2.Step4;
 };
 
 /** banking */
 type RegStep5 = {
   step: 5;
-  data: Step5Data;
+  data: RegV2.Step5;
 };
 
 type RegStep6 = {
   step: 6;
-  data: CompleteRegistration & { status: RegistrationStatus };
+  data: RegV2.Step6;
 };
 
 export type RegistrationState =
