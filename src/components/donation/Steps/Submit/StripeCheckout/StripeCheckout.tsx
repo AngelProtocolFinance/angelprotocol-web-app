@@ -51,7 +51,10 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
         ? honorary.tributeNotif
         : undefined,
     }),
-    ...(details.program.value && { programId: details.program.value }),
+    ...(details.program.value && {
+      programId: details.program.value,
+      programName: details.program.label,
+    }),
   });
 
   return (

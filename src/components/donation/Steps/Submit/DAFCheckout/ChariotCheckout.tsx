@@ -303,6 +303,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 source: props.init.source,
                 ...(props.details.program.value && {
                   programId: props.details.program.value,
+                  programName: props.details.program.label,
                 }),
                 ...(meta.honoraryFullName && {
                   inHonorOf: meta.honoraryFullName,
