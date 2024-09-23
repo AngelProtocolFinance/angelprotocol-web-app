@@ -226,7 +226,7 @@ export const aws = createApi({
       providesTags: ["donations"],
       query: (params) => {
         return {
-          url: `${v(1)}/donations`,
+          url: `${v(2)}/donations`,
           params,
           headers: { authorization: TEMP_JWT },
         };
