@@ -2714,10 +2714,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stripe/stripe-js@npm:3.5.0":
-  version: 3.5.0
-  resolution: "@stripe/stripe-js@npm:3.5.0"
-  checksum: 10/ab91655d082b9288d5165b374db3c8b2b3d9851428e90b6817017b0a3ee6c8a077b82cebb00d610d0200a4cbec0c0e8a3822a015c57443807982d932599037cb
+"@stripe/stripe-js@npm:4.5.0":
+  version: 4.5.0
+  resolution: "@stripe/stripe-js@npm:4.5.0"
+  checksum: 10/75e742578b2afb49226ffa5bf04fae051b83be2a974da4269b226d840e81809d99d9d3b0c2e8080d0c14c11039e0ffd2718a107a56b1251bb0e9f00db2228902
   languageName: node
   linkType: hard
 
@@ -3083,7 +3083,7 @@ __metadata:
     "@rsbuild/plugin-react": "npm:0.5.9"
     "@sentry/react": "npm:8.22.0"
     "@stripe/react-stripe-js": "npm:2.7.1"
-    "@stripe/stripe-js": "npm:3.5.0"
+    "@stripe/stripe-js": "npm:4.5.0"
     "@tailwindcss/container-queries": "npm:0.1.1"
     "@testing-library/dom": "npm:10.1.0"
     "@testing-library/jest-dom": "npm:6.4.6"
