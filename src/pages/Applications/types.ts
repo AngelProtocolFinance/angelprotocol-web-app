@@ -1,7 +1,7 @@
-import type { Application } from "types/aws";
+import type { ApplicationItem } from "@better-giving/registration/approval";
 
 export type TableProps = {
-  applications: Application[];
+  applications: ApplicationItem[];
   classes?: string;
   onLoadMore(): void;
   hasMore: boolean;

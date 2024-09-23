@@ -1,3 +1,4 @@
+import type { QueryParams } from "@better-giving/registration/approval";
 import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
 import {
@@ -6,7 +7,6 @@ import {
   useLazyApplicationsQuery,
 } from "services/aws/aws";
 import { useSetter } from "store/accessors";
-import type { ApplicationsQueryParams } from "types/aws";
 
 export default function usePaginatedApplications() {
   const dispatch = useSetter();
@@ -14,24 +14,21 @@ export default function usePaginatedApplications() {
   const [query, setQuery] = useState("");
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
 
-  const [params, setParams] = useState<ApplicationsQueryParams>({
-    limit: 10,
-    regStatus: "Under Review",
+  const [params, setParams] = useState<QueryParams>({
+    status: "02",
   });
 
   const queryState = useApplicationsQuery(params, {
     selectFromResult({ data, ...rest }) {
-      if (!data?.Items) {
+      if (!data?.items) {
         return { data, ...rest };
       }
-      const filtered = data?.Items.filter(({ OrganizationName, PK }) =>
-        (OrganizationName + PK)
-          .toLowerCase()
-          .includes(debouncedQuery.toLowerCase())
+      const filtered = data?.items.filter(({ org_name, id }) =>
+        (org_name + id).toLowerCase().includes(debouncedQuery.toLowerCase())
       );
 
       return {
-        data: { Items: filtered, ItemCutoff: data.ItemCutoff },
+        data: { items: filtered, nextPageKey: data.nextPageKey },
         ...rest,
       };
     },
@@ -45,27 +42,27 @@ export default function usePaginatedApplications() {
   async function loadNextPage() {
     //button is hidden when there's no more
     if (
-      data?.ItemCutoff &&
+      data?.nextPageKey &&
       originalArgs /** cards won't even show if no initial query is made */
     ) {
       const { data: newEndowRes } = await loadMore({
         ...originalArgs,
-        start: data.ItemCutoff + 1,
+        nextPageKey: data.nextPageKey,
       });
 
       if (newEndowRes) {
         //pessimistic update to original cache data
         dispatch(
           updateAWSQueryData("applications", originalArgs, (prevResult) => {
-            prevResult.Items.push(...newEndowRes.Items);
-            prevResult.ItemCutoff = newEndowRes.ItemCutoff;
+            prevResult.items.push(...newEndowRes.items);
+            prevResult.nextPageKey = newEndowRes.nextPageKey;
           })
         );
       }
     }
   }
 
-  const hasMore = !!data?.ItemCutoff;
+  const hasMore = !!data?.nextPageKey;
 
   return {
     data,

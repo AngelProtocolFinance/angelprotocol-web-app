@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@better-giving/assets": "1.0.18",
-    "@better-giving/registration": "1.0.1",
+    "@better-giving/registration": "1.0.8",
     "@gsap/react": "2.1.1",
     "@headlessui/react": "2.1.0",
     "@hookform/error-message": "2.0.1",
