@@ -98,7 +98,10 @@ export default function Checkout(props: StripeCheckoutStep) {
           ...(honorary.honoraryFullName && {
             inHonorOf: honorary.honoraryFullName,
           }),
-          ...(details.program.value && { programId: details.program.value }),
+          ...(details.program.value && {
+            programId: details.program.value,
+            programName: details.program.label,
+          }),
         }).unwrap()
       }
     />

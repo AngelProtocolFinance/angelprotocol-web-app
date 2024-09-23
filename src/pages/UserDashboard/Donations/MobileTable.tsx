@@ -5,9 +5,11 @@ import {
 } from "@headlessui/react";
 import ExtLink from "components/ExtLink";
 import Icon, { DrawerIcon } from "components/Icon";
+import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
 import type { PropsWithChildren } from "react";
+import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
 import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
@@ -69,6 +71,18 @@ export default function MobileTable({
                 </div>
               </DisclosureButton>
               <DisclosurePanel className="w-full divide-y divide-blue-l2">
+                <Row title="Program">
+                  {row.programId ? (
+                    <Link
+                      className="text-blue hover:text-blue-d1"
+                      to={`${appRoutes.profile}/${row.recipientId}/program/${row.programId}`}
+                    >
+                      {row.programName}
+                    </Link>
+                  ) : (
+                    <>--</>
+                  )}
+                </Row>
                 <Row title="Donation Type" className="capitalize">
                   {donationMethod(
                     row.paymentMethod ?? { id: row.viaId, name: row.viaName }

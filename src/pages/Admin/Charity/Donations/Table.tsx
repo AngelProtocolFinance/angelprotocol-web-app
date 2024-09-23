@@ -43,6 +43,7 @@ export default function Table({
           >
             Date
           </HeaderButton>
+          <>Program</>
           <HeaderButton
             onClick={handleHeaderClick("appUsed")}
             _activeSortKey={sortKey}

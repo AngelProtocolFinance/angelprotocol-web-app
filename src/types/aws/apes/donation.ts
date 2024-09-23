@@ -48,6 +48,7 @@ type TributeNotif = {
 export interface DonationIntent {
   transactionId?: string;
   programId?: string;
+  programName?: string;
   amount: number;
   tipAmount: number;
   feeAllowance: number;

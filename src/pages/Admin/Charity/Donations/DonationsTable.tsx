@@ -55,6 +55,7 @@ export default function DonationsTable({ classes = "" }) {
                       const amt = amount(d.splitLiqPct, d.finalAmountUsd);
                       return fill({
                         date: new Date(d.date).toLocaleDateString(),
+                        programName: d.programName,
                         appUsed:
                           d.appUsed === "bg-widget"
                             ? "Donation Form"
@@ -102,6 +103,7 @@ const csvHeaders: {
   label: string;
 }[] = [
   { key: "date", label: "Datetime" },
+  { key: "programName", label: "Program" },
   { key: "appUsed", label: "Donation Origin" },
   { key: "paymentMethod", label: "Donation Type" },
   { key: "isRecurring", label: "Recurring Donation" },

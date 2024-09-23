@@ -1,7 +1,9 @@
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
+import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize, maskAddress, roundDownToNum } from "helpers";
+import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
 
 export default function Row(
@@ -16,6 +18,17 @@ export default function Row(
       <span className="text-sm">
         {new Date(props.date).toLocaleDateString()}
       </span>
+
+      {props.programId ? (
+        <Link
+          className="text-blue hover:text-blue-d1"
+          to={`${appRoutes.profile}/${props.recipientId}/program/${props.programId}`}
+        >
+          {props.programName}
+        </Link>
+      ) : (
+        <>--</>
+      )}
 
       <>{props.appUsed === "bg-widget" ? "Donation Form" : "Marketplace"}</>
       <>{props.paymentMethod ?? "--"}</>

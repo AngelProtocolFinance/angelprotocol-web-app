@@ -46,7 +46,10 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         ? honorary.tributeNotif
         : undefined,
     }),
-    ...(details.program.value && { programId: details.program.value }),
+    ...(details.program.value && {
+      programId: details.program.value,
+      programName: details.program.label,
+    }),
   });
 
   const totalDisplayAmount = roundToCents(
