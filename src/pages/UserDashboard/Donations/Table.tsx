@@ -46,6 +46,7 @@ export default function Table({
           >
             Recipient
           </HeaderButton>
+          <>Program</>
           <HeaderButton
             onClick={handleHeaderClick("date")}
             _activeSortKey={sortKey}
@@ -124,6 +125,16 @@ export default function Table({
                 </span>
                 <Icon type="ExternalLink" className="w-5 h-5" />
               </Link>
+              {row.programId ? (
+                <Link
+                  className="text-blue hover:text-blue-d1"
+                  to={`${appRoutes.profile}/${row.recipientId}/program/${row.programId}`}
+                >
+                  {row.programName}
+                </Link>
+              ) : (
+                <>--</>
+              )}
               <>{new Date(row.date).toLocaleDateString()}</>
               <span className="capitalize">
                 {donationMethod(

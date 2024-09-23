@@ -37,6 +37,8 @@ export namespace Donation {
     /** endow id  */
     recipientId: number;
     recipientName: string;
+    programId?: string;
+    programName?: string;
 
     //details
     /** ISODate string */
