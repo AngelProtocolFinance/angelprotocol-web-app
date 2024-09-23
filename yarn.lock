@@ -1431,25 +1431,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@paypal/paypal-js@npm:^8.0.5":
-  version: 8.0.5
-  resolution: "@paypal/paypal-js@npm:8.0.5"
+"@paypal/paypal-js@npm:^8.1.2":
+  version: 8.1.2
+  resolution: "@paypal/paypal-js@npm:8.1.2"
   dependencies:
     promise-polyfill: "npm:^8.3.0"
-  checksum: 10/f3a889124d688853482fe640dd875dd9d7a2bb66818cdcf5e90541b46d759c7e890745244ae81053bd26f28311634ec28b93374db4165cb6ee2c7ceaac092ba1
+  checksum: 10/485359bc5c9d74fe82db73676eed2e7961f0e40b6d767a8ad75337b0c1c753b1c71f86dd56e371a44dacd23ed8c2ded11dca819a299fafea0df2d476e68f6917
   languageName: node
   linkType: hard
 
-"@paypal/react-paypal-js@npm:8.3.0":
-  version: 8.3.0
-  resolution: "@paypal/react-paypal-js@npm:8.3.0"
+"@paypal/react-paypal-js@npm:8.7.0":
+  version: 8.7.0
+  resolution: "@paypal/react-paypal-js@npm:8.7.0"
   dependencies:
-    "@paypal/paypal-js": "npm:^8.0.5"
+    "@paypal/paypal-js": "npm:^8.1.2"
     "@paypal/sdk-constants": "npm:^1.0.122"
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/0fed4db471e997f21d795846c0ce620f49a030dfebeb64656fee59579d9faf2f36ab67eb3521a2e7a9979a43f4e3ea5ca04c542bc1271ad31ecefb1075228d56
+  checksum: 10/30ddc00311538af16fb45207a18c03da4770b0d4ede0962efd9b34864f3f33cbff6d11346bb177e7ee32e34d6480229bfe2131dc55832aae21ffdd55c0dca6af
   languageName: node
   linkType: hard
 
@@ -3076,7 +3076,7 @@ __metadata:
     "@headlessui/react": "npm:2.1.0"
     "@hookform/error-message": "npm:2.0.1"
     "@hookform/resolvers": "npm:3.3.4"
-    "@paypal/react-paypal-js": "npm:8.3.0"
+    "@paypal/react-paypal-js": "npm:8.7.0"
     "@radix-ui/react-slider": "npm:1.1.2"
     "@reduxjs/toolkit": "npm:2.2.3"
     "@rsbuild/core": "npm:0.5.9"
