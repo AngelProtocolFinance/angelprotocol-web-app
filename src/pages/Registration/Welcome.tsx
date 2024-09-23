@@ -20,6 +20,7 @@ export function Component() {
     data: reg,
     isLoading,
     isError,
+    /** @ts-ignore: TODO: simplify step type  */
   } = useApplicationNewQuery({ registrant_id: email, claim });
 
   useEffect(() => {

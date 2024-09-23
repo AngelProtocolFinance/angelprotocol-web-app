@@ -1,8 +1,8 @@
+import type { Org } from "@better-giving/registration/models";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { country } from "components/CountrySelector";
 import { unsdgs } from "constants/unsdgs";
 import { FormProvider, useForm } from "react-hook-form";
-import type { RegV2 } from "types/aws";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -39,7 +39,7 @@ function OrgDetails() {
 
 export default withStepGuard(OrgDetails);
 
-function formFomat(org: RegV2.Org): FormValues {
+function formFomat(org: Org): FormValues {
   return {
     //level 1
     website: org.website,

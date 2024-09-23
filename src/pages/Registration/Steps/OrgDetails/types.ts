@@ -1,6 +1,5 @@
-import type { Org } from "@better-giving/registration/models";
+import type { EndowDesignation, Org } from "@better-giving/registration/models";
 import type { Except, OverrideProperties } from "type-fest";
-import type { EndowDesignation } from "types/aws";
 import type { Country, OptionType } from "types/components";
 import type { UNSDG_NUMS } from "types/lists";
 

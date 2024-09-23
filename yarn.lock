@@ -822,12 +822,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@better-giving/registration@npm:1.0.11":
-  version: 1.0.11
-  resolution: "@better-giving/registration@npm:1.0.11"
+"@better-giving/registration@npm:1.0.13":
+  version: 1.0.13
+  resolution: "@better-giving/registration@npm:1.0.13"
   peerDependencies:
     valibot: 0.42.0
-  checksum: 10/4dad40bdb768c78a67a627218afecd5fad57b57197f1eb5f0a7b72995fc231fdcc66b1fa67fabeb464497776707acc334a837990e8f1863ecf920e4d995359c4
+  checksum: 10/5af3dde366c19cdd39a96938dd0fed0d34c4ca4b230ffc401a7075c6871a48790c25980316a7e330c9989b9899619973e63bae51c4af1dbc8f742610552ff6d1
   languageName: node
   linkType: hard
 
@@ -3426,7 +3426,7 @@ __metadata:
   resolution: "angelprotocol-web-app@workspace:."
   dependencies:
     "@better-giving/assets": "npm:1.0.18"
-    "@better-giving/registration": "npm:1.0.11"
+    "@better-giving/registration": "npm:1.0.13"
     "@biomejs/biome": "npm:1.8.1"
     "@gsap/react": "npm:2.1.1"
     "@headlessui/react": "npm:2.1.0"

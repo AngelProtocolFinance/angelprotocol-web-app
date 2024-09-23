@@ -2,6 +2,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { type SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
+import type { EndowDesignation } from "types/aws";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import type { FormValues } from "../types";
@@ -35,7 +36,8 @@ export default function useSubmit() {
       ) /**TODO: AWS update to accept number[] */,
       kyc_donors_only: fv.isAnonymousDonationsAllowed === "no",
       hq_country: fv.hq_country.name,
-      designation: fv.designation.value,
+      // required in schema
+      designation: fv.designation.value as EndowDesignation,
       active_in_countries: fv.active_in_countries.map((opt) => opt.value),
     });
 
