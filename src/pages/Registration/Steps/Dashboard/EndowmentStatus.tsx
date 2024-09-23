@@ -3,14 +3,13 @@ import LoadText from "components/LoadText";
 import { steps } from "pages/Registration/routes";
 import type { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
-import type { RegistrationStatus } from "types/aws";
+import type { RegV2 } from "types/aws";
 import { useRegState } from "../StepGuard";
 
 type Props = {
   isSubmitting: boolean;
-  status: Exclude<RegistrationStatus, "Active">;
+  status: Exclude<RegV2.Submission, object>;
   onSubmit: MouseEventHandler<HTMLButtonElement>;
-  endowId?: number;
   classes?: string;
 };
 
@@ -23,7 +22,7 @@ export default function EndowmentStatus({
   const { data } = useRegState<3>();
 
   switch (status) {
-    case "Rejected":
+    case "rejected":
       return (
         <div className={`max-sm:grid text-red dark:text-red-l3 ${classes}`}>
           <p className="mb-6 max-sm:grid justify-items-center gap-2">
@@ -47,7 +46,7 @@ export default function EndowmentStatus({
         </div>
       );
 
-    case "Under Review":
+    case "in-review":
       return (
         <div
           className={`max-sm:grid justify-items-center gap-2 text-navy-l1 dark:text-navy-l2 ${classes}`}

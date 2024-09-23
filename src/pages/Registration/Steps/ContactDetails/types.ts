@@ -1,18 +1,11 @@
 import type { OverrideProperties } from "type-fest";
-import type {
-  ContactDetails,
-  ContactRoles,
-  InitContact,
-  OrgDataForStep1,
-  ReferralMethods,
-} from "types/aws";
+import type { ContactRoles, ReferralMethods, RegV2 } from "types/aws";
 import type { OptionType } from "types/components";
 
 export type FormValues = OverrideProperties<
-  ContactDetails & OrgDataForStep1,
+  RegV2.Contact & Pick<RegV2.Init, "registrant_id" | "id">,
   {
-    Role: OptionType<ContactRoles>;
-    ReferralMethod: OptionType<ReferralMethods>;
+    org_role: OptionType<ContactRoles>;
+    referral_method: OptionType<ReferralMethods>;
   }
-> &
-  Pick<InitContact, "Email" | "PK">;
+>;

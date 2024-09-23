@@ -32,6 +32,7 @@
   },
   "dependencies": {
     "@better-giving/assets": "1.0.18",
+    "@better-giving/registration": "1.0.1",
     "@gsap/react": "2.1.1",
     "@headlessui/react": "2.1.0",
     "@hookform/error-message": "2.0.1",
@@ -67,6 +68,7 @@
     "react-router-dom": "6.23.0",
     "swiper": "11.1.4",
     "type-fest": "4.20.0",
+    "valibot": "0.42.0",
     "yup": "1.4.0"
   },
   "devDependencies": {

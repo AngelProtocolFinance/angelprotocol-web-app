@@ -1,9 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import type {
-  FileObject,
-  FSADocumentation as TFSADocumentation,
-} from "types/aws";
+import type { FileObject, RegV2 } from "types/aws";
 import type { FileDropzoneAsset } from "types/components";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -16,11 +13,11 @@ export default function FSADocumentation(props: Props) {
     defaultValues: doc
       ? formFormat(doc)
       : {
-          ProofOfIdentity: asset([]),
-          RegistrationNumber: "",
-          ProofOfRegistration: asset([]),
-          LegalEntityType: "",
-          ProjectDescription: "",
+          proof_of_identity: asset([]),
+          registration_number: "",
+          proof_of_reg: asset([]),
+          legal_entity_type: "",
+          project_description: "",
         },
   });
 
@@ -31,14 +28,15 @@ export default function FSADocumentation(props: Props) {
   );
 }
 
-function formFormat(doc: TFSADocumentation): FormValues {
+function formFormat(doc: RegV2.FsaDocs): FormValues {
   return {
     //level 1
-    ProofOfIdentity: asset([doc.ProofOfRegistration]),
-    RegistrationNumber: doc.RegistrationNumber,
-    ProofOfRegistration: asset([doc.ProofOfRegistration]),
-    LegalEntityType: doc.LegalEntityType,
-    ProjectDescription: doc.ProjectDescription,
+    outdated: doc.outdated,
+    proof_of_identity: asset([doc.proof_of_identity]),
+    registration_number: doc.registration_number,
+    proof_of_reg: asset([doc.proof_of_reg]),
+    legal_entity_type: doc.legal_entity_type,
+    project_description: doc.project_description,
   };
 }
 

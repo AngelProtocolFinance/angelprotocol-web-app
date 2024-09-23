@@ -20,13 +20,13 @@ export default function Form(props: Props) {
       <Label required className="mb-2 mt-1">
         Please provide passport, driver's license, or ID card.
       </Label>
-      <FileDropzone<FV, "ProofOfIdentity">
-        name="ProofOfIdentity"
+      <FileDropzone<FV, "proof_of_identity">
+        name="proof_of_identity"
         specs={{ mbLimit: MB_LIMIT, mimeTypes: VALID_MIME_TYPES }}
       />
 
       <Field<FV>
-        name="RegistrationNumber"
+        name="registration_number"
         label="Registration number (numbers and letters only)"
         required
         classes={{ container: "mb-6 mt-10", label: "font-semibold" }}
@@ -36,13 +36,13 @@ export default function Form(props: Props) {
       <Label className="mb-2 mt-10 font-semibold" required>
         Proof of registration as a 501(c)(3) nonprofit or equivalent
       </Label>
-      <FileDropzone<FV, "ProofOfRegistration">
-        name="ProofOfRegistration"
+      <FileDropzone<FV, "proof_of_reg">
+        name="proof_of_reg"
         specs={{ mbLimit: MB_LIMIT, mimeTypes: VALID_MIME_TYPES }}
       />
 
       <Field<FV>
-        name="LegalEntityType"
+        name="legal_entity_type"
         label="What type of legal entity is your organization registered as? This can
         usually be found in your registration/organizing document"
         required
@@ -52,16 +52,16 @@ export default function Form(props: Props) {
 
       <Field<FV, "textarea">
         type="textarea"
-        name="ProjectDescription"
+        name="project_description"
         label="Please provide a description of your organization's charitable activities as well as your charitable mission."
         required
         classes={{ container: "mb-6 mt-10" }}
         placeholder=""
       />
 
-      {props.doc?.SignedFiscalSponsorshipAgreement ? (
+      {props.doc?.fsa_signed_doc_url ? (
         <ExtLink
-          href={props.doc.SignedFiscalSponsorshipAgreement}
+          href={props.doc.fsa_signed_doc_url}
           className="text-sm text-blue hover:text-blue-l2 flex items-center gap-2"
         >
           <Icon type="ExternalLink" size={20} />
@@ -87,7 +87,7 @@ export default function Form(props: Props) {
             isLoading={isSubmitting || isRedirecting}
             text={isSubmitting ? "Submitting.." : "Redirecting.."}
           >
-            {props.doc?.SignedFiscalSponsorshipAgreement ? "Continue" : "Sign"}
+            {props.doc?.fsa_signed_doc_url ? "Continue" : "Sign"}
           </LoadText>
         </button>
       </div>

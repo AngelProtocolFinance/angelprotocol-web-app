@@ -2,7 +2,7 @@ import Prompt from "components/Prompt";
 import { regRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import type { CompleteRegistration } from "pages/Registration/types";
+import type { CompleteReg } from "pages/Registration/types";
 import { Navigate } from "react-router-dom";
 import { useSubmitMutation } from "services/aws/registration";
 import { useRegState, withStepGuard } from "../StepGuard";
@@ -16,9 +16,9 @@ function Dashboard() {
   const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
 
-  const submit = async ({ init }: CompleteRegistration) => {
+  const submit = async ({ init }: CompleteReg) => {
     try {
-      await submitApplication(init.reference).unwrap();
+      await submitApplication(init.id).unwrap();
       if (window.hasOwnProperty("lintrk")) {
         (window as any).lintrk("track", { conversion_id: 12807754 });
       }
@@ -37,10 +37,10 @@ function Dashboard() {
     }
   };
 
-  const { status } = data;
-  const isStepDisabled = isSubmitting || status === "Under Review";
+  const { submission } = data;
+  const isStepDisabled = isSubmitting || submission === "in-review";
 
-  if (status === "Active") {
+  if (typeof submission === "object") {
     return <Navigate to={`../../${regRoutes.success}`} state={data} />;
   }
 
@@ -61,8 +61,7 @@ function Dashboard() {
       <EndowmentStatus
         isSubmitting={isSubmitting}
         onSubmit={() => submit(data)}
-        status={status}
-        endowId={data.endowId}
+        status={submission}
         classes="mt-6"
       />
     </div>

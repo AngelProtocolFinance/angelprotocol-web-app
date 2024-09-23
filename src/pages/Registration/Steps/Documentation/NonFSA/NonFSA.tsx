@@ -17,7 +17,7 @@ export default function NonFSA(props: Props) {
   const methods = useForm<FV>({
     resolver: yupResolver(
       object({
-        EIN: requiredString.matches(
+        ein: requiredString.matches(
           alphanumeric,
           "must only contain numbers and letters"
         ),
@@ -26,7 +26,7 @@ export default function NonFSA(props: Props) {
     defaultValues: doc
       ? doc
       : {
-          EIN: claimEin ?? "",
+          ein: claimEin ?? "",
         },
   });
   const { submit, isSubmitting } = useSubmit({ props, form: methods });
@@ -37,7 +37,7 @@ export default function NonFSA(props: Props) {
         <Field<FV>
           /** claimer should not change EIN */
           disabled={!!claimEin}
-          name="EIN"
+          name="ein"
           label="EIN# (numbers and letters only)"
           required
           classes={{ container: "mb-6 mt-1" }}

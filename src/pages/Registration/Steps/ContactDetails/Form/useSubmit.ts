@@ -24,24 +24,14 @@ export default function useSubmit() {
       return navigate(`../${steps.orgDetails}`, { state: init }); // go to latest step
     }
 
+    const { org_role, referral_method, id, registrant_id, ...rest } = fv;
+
     const result = await updateReg({
-      type: "contact-details",
-      reference: fv.PK,
-      ContactPerson: {
-        FirstName: fv.FirstName,
-        LastName: fv.LastName,
-        Email: fv.Email,
-        Goals: fv.Goals,
-        PhoneNumber: fv.PhoneNumber,
-        ReferralMethod: fv.ReferralMethod.value,
-        OtherReferralMethod: fv.OtherReferralMethod,
-        ReferralCode: fv.ReferralCode,
-        Role: fv.Role.value,
-        OtherRole: fv.OtherRole,
-      },
-      Registration: {
-        OrganizationName: fv.OrganizationName,
-      },
+      type: "contact",
+      ...rest,
+      org_role: org_role.value,
+      referral_method: referral_method.value,
+      id,
     });
 
     if ("error" in result) {

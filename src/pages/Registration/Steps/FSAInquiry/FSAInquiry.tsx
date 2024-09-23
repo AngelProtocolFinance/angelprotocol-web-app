@@ -11,21 +11,19 @@ import useSubmit from "./useSubmit";
 const countryWhiteList = ["United States"]; //will add more in the future;
 function FSAInquiry() {
   const { data } = useRegState<3>();
-  const possiblyTaxExempt = countryWhiteList.includes(
-    data.orgDetails.HqCountry
-  );
+  const possiblyTaxExempt = countryWhiteList.includes(data.org.hq_country);
   const methods = useForm<FV>({
     defaultValues: {
-      AuthorizedToReceiveTaxDeductibleDonations:
-        data.fsaInquiry?.AuthorizedToReceiveTaxDeductibleDonations ||
+      irs501c3:
+        data.irs501c3 ||
         /** US-based unclaimed endowments are authorized by default */
         data.init.claim
-          ? "Yes"
-          : "No",
+          ? "yes"
+          : "no",
     },
   });
   const { watch } = methods;
-  const answer = watch("AuthorizedToReceiveTaxDeductibleDonations");
+  const answer = watch("irs501c3");
   const { submit, isSubmitting } = useSubmit(data, methods);
 
   const optionsDisabled = !possiblyTaxExempt || !!data.init.claim;
@@ -40,14 +38,14 @@ function FSAInquiry() {
               a nonprofit organization exempt under IRC 501(c)(3)?{" "}
             </Label>
             <div className="flex gap-4 mt-4 accent-blue-d1 text-sm">
-              <Radio<FV, "AuthorizedToReceiveTaxDeductibleDonations">
-                name="AuthorizedToReceiveTaxDeductibleDonations"
-                value="Yes"
+              <Radio<FV, "irs501c3">
+                name="irs501c3"
+                value="yes"
                 disabled={optionsDisabled}
               />
-              <Radio<FV, "AuthorizedToReceiveTaxDeductibleDonations">
-                name="AuthorizedToReceiveTaxDeductibleDonations"
-                value="No"
+              <Radio<FV, "irs501c3">
+                name="irs501c3"
+                value="no"
                 disabled={optionsDisabled}
               />
             </div>
@@ -55,12 +53,12 @@ function FSAInquiry() {
         ) : (
           <p className="text-sm text-navy-l1 dark:text-navy-l2 leading-relaxed">
             Great news: Nonprofit Organizations in{" "}
-            <span className="font-semibold">{data.orgDetails.HqCountry}</span>{" "}
-            can now take advantage of {APP_NAME}’s Fiscal Sponsorship service.
+            <span className="font-semibold">{data.org.hq_country}</span> can now
+            take advantage of {APP_NAME}’s Fiscal Sponsorship service.
           </p>
         )}
 
-        {!possiblyTaxExempt || answer === "No" ? (
+        {!possiblyTaxExempt || answer === "no" ? (
           <p className="text-sm text-navy-l1 dark:text-navy-l2 leading-relaxed mt-4">
             {APP_NAME} provides fiscal sponsorship services at market-leading
             cost (2.9%) for our partner organizations worldwide to enable them

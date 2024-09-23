@@ -2,13 +2,13 @@ import Icon from "components/Icon";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { Navigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import type { CompleteRegistration } from "./types";
+import type { CompleteReg } from "./types";
 
 export function Component({ classes = "" }: { classes?: string }) {
   const { state } = useLocation();
-  const reg = state as CompleteRegistration | undefined;
+  const reg = state as CompleteReg | undefined;
 
-  if (!reg || !reg.endowId) {
+  if (!reg || typeof reg.submission !== "object") {
     return <Navigate to={".."} />;
   }
 
@@ -20,13 +20,13 @@ export function Component({ classes = "" }: { classes?: string }) {
     >
       <Icon type="CheckCircle" className="text-green" size={92} />
       <h1 className="text-[2rem] mt-10 text-center">
-        {contact.orgName}’s account has been created!
+        {contact.org_name}’s account has been created!
       </h1>
       <Link
         className="mt-6 text-blue-d1 hover:text-blue underline decoration-1 hover:decoration-2 text-center text-lg transition ease-in-out duration-300"
-        to={`${appRoutes.admin}/${reg.endowId}/${adminRoutes.edit_profile}`}
+        to={`${appRoutes.admin}/${reg.submission.endowment_id}/${adminRoutes.edit_profile}`}
       >
-        Start filling out {contact.orgName}’s profile and attract donors! Thank
+        Start filling out {contact.org_name}’s profile and attract donors! Thank
         you!
       </Link>
     </div>

@@ -8,9 +8,8 @@ import { storeRegistrationReference } from "helpers";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
-import type { EndowClaim } from "types/aws";
+import type { EndowClaim, RegV2 } from "types/aws";
 import { steps } from "./routes";
-import type { InitReg } from "./types";
 
 export function Component() {
   const { email } = useAuthenticatedUser();
@@ -44,9 +43,9 @@ export function Component() {
         state={
           {
             //link is disabled if no reg
-            email: reg?.ContactPerson.Email!,
-            reference: reg?.ContactPerson.PK!,
-          } satisfies InitReg
+            registrant_id: reg?.ContactPerson.Email!,
+            id: reg?.ContactPerson.PK!,
+          } satisfies RegV2.Init
         }
       >
         <LoadText isLoading={isLoading} text="Continue registration">

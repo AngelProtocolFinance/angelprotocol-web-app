@@ -13,7 +13,7 @@ export default function useSubmit() {
   } = useFormContext<FormValues>();
 
   const {
-    data: { init, orgDetails },
+    data: { init, org },
   } = useRegState<2>();
 
   const [updateReg] = useUpdateRegMutation();
@@ -21,22 +21,22 @@ export default function useSubmit() {
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FormValues> = async (fv) => {
-    if (!isDirty && orgDetails) {
+    if (!isDirty && org) {
       return navigate(`../${steps.fsaInquiry}`, { state: init });
     }
 
     const result = await updateReg({
-      type: "org-details",
-      reference: init.reference,
+      type: "org",
+      id: init.id,
       //payload
-      Website: fv.Website,
-      UN_SDG: fv.UN_SDG.map(
+      website: fv.website,
+      un_sdg: fv.un_sdg.map(
         (sdg) => sdg.value
       ) /**TODO: AWS update to accept number[] */,
-      KycDonorsOnly: fv.isAnonymousDonationsAllowed === "No",
-      HqCountry: fv.HqCountry.name,
-      EndowDesignation: fv.EndowDesignation.value,
-      ActiveInCountries: fv.ActiveInCountries.map((opt) => opt.value),
+      kyc_donors_only: fv.isAnonymousDonationsAllowed === "no",
+      hq_country: fv.hq_country.name,
+      designation: fv.designation.value,
+      active_in_countries: fv.active_in_countries.map((opt) => opt.value),
     });
 
     if ("error" in result) {

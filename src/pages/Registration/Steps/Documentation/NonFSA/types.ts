@@ -1,8 +1,8 @@
 import type { Except } from "type-fest";
-import type { NonFSADocumentation } from "types/aws";
+import type { RegV2 } from "types/aws";
 
-export type FormValues = Except<NonFSADocumentation, "DocType" | "Claim">;
+export type FormValues = Except<RegV2.TaxDeductibleDocs, "claim" | "outdated">;
 
 export type Props = {
-  doc: NonFSADocumentation | undefined;
+  doc: RegV2.TaxDeductibleDocs | undefined;
 };

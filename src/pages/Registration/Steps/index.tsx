@@ -8,8 +8,9 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useRegQuery } from "services/aws/registration";
+import { type RegV2, isIrs501c3 } from "types/aws";
 import { steps } from "../routes";
-import type { InitReg, RegStep4, RegistrationState } from "../types";
+import type { RegStep4, RegistrationState } from "../types";
 import Banking from "./Banking";
 import ContactDetails from "./ContactDetails";
 import Dashboard from "./Dashboard";
@@ -23,9 +24,9 @@ import { getRegistrationState } from "./getRegistrationState";
 
 function Layout() {
   const { state } = useLocation();
-  const initReg = state as InitReg | undefined;
+  const initReg = state as RegV2.Init | undefined;
 
-  const ref = initReg?.reference || "";
+  const ref = initReg?.id || "";
   const { data, isLoading, isError } = useRegQuery(ref, {
     skip: !ref,
   });
@@ -88,7 +89,7 @@ function Layout() {
       <div className="grid z-10 w-full px-6 py-8 md:p-0 md:pr-8 md:shadow-none shadow-[0px_4px_6px,_0px_-4px_6px] shadow-gray-l3/80 dark:shadow-blue-d7">
         <Outlet context={guardProps} />
       </div>
-      <Reference id={initReg.reference} classes="col-span-full md:mt-8" />
+      <Reference id={initReg.id} classes="col-span-full md:mt-8" />
     </div>
   );
 }
@@ -102,11 +103,7 @@ function getClaim(reg: RegistrationState) {
    * i.e. inputs org's EIN that happens to be already in our marketplace
    */
   const { data } = reg as RegStep4;
-  const doc = data.documentation;
-
-  if (doc?.DocType === "FSA") return;
-
-  return doc?.Claim || reg.data.init.claim;
+  if (!data.docs || isIrs501c3(data.docs)) return reg.data.init.claim;
 }
 
 export const route: RouteObject = {

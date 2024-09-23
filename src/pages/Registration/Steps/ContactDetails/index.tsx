@@ -21,26 +21,27 @@ function ContactDetails() {
     defaultValues: contact
       ? {
           ...contact,
-          PK: init.reference,
-          Role: toRoleOption(contact.Role),
-          ReferralMethod: toReferralOption(
-            contact.ReferralMethod === "angel-alliance"
+          id: init.id,
+          registrant_id: init.registrant_id,
+          org_role: toRoleOption(contact.org_role),
+          referral_method: toReferralOption(
+            contact.referral_method === "better-giving-alliance"
               ? "better-giving-alliance"
-              : contact.ReferralMethod
+              : contact.referral_method
           ),
-          OrganizationName: contact.orgName,
         }
       : {
-          PK: init.reference,
-          Email: init.email,
-          Role: { value: "", label: roles[""] },
-          ReferralMethod: {
+          id: init.id,
+          registrant_id: init.registrant_id,
+          org_role: { value: "", label: roles[""] },
+          referral_method: {
             value: "",
             label: referralMethods[""],
           },
-          FirstName: firstName,
-          LastName: lastName,
-          OrganizationName: init.claim?.name,
+          first_name: firstName,
+          last_name: lastName,
+          org_name: init.claim?.name ?? "",
+          goals: "",
         },
   });
 

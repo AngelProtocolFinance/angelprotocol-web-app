@@ -7,8 +7,8 @@ import { type ObjectSchema, object, string } from "yup";
 import type { FormValues } from "./types";
 
 type Key = keyof FormValues;
-const roleKey: Key = "Role";
-const referralMethodKey: Key = "ReferralMethod";
+const roleKey: Key = "org_role";
+const referralMethodKey: Key = "referral_method";
 
 const otherRole = string()
   .trim()
@@ -28,14 +28,14 @@ const otherReferralMethod = (referralMethod: ReferralMethods) =>
     );
 
 export const schema = object<any, SchemaShape<FormValues>>({
-  OrganizationName: requiredString.trim(),
-  FirstName: requiredString.trim(),
-  LastName: requiredString.trim(),
+  org_name: requiredString.trim(),
+  first_name: requiredString.trim(),
+  last_name: requiredString.trim(),
   //email: disabled: already validated at signup
-  Goals: requiredString.trim(),
-  Role: optionType({ required: true }),
-  ReferralMethod: optionType({ required: true }),
-  OtherReferralMethod: otherReferralMethod("other"),
-  ReferralCode: otherReferralMethod("referral"),
-  OtherRole: otherRole,
+  goals: requiredString.trim(),
+  org_role: optionType({ required: true }),
+  referral_method: optionType({ required: true }),
+  other_referral_method: otherReferralMethod("other"),
+  referral_code: otherReferralMethod("referral"),
+  other_role: otherRole,
 }) as ObjectSchema<FormValues>;

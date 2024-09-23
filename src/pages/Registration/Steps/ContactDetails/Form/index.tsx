@@ -23,30 +23,35 @@ export default function Form({ classes = "" }: { classes?: string }) {
       </p>
       <h3 className="mb-4">Personal information</h3>
       <Field<FV>
-        name="FirstName"
+        name="first_name"
         label="First name"
         placeholder="e.g. John"
         required
         classes={{ container: "mb-4" }}
       />
       <Field<FV>
-        name="LastName"
+        name="last_name"
         label="Last name"
         placeholder="e.g. Doe"
         required
         classes={{ container: "mb-4" }}
       />
       <Field<FV>
-        name="PhoneNumber"
+        name="contact_number"
         label="Phone number"
         placeholder="000000000"
         required={false}
         classes={{ container: "mb-4" }}
       />
-      <Field<FV> name="Email" label="E-mail address" required disabled />
+      <Field<FV>
+        name="registrant_id"
+        label="E-mail address"
+        required
+        disabled
+      />
       <h3 className="mt-8 mb-4">Organization information</h3>
       <Field<FV>
-        name="OrganizationName"
+        name="org_name"
         label="Name of your organization"
         placeholder="Organization name"
         classes={{ container: "mb-4" }}
@@ -55,15 +60,15 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         What's your role within the organization?
       </Label>
-      <Selector<FV, "Role", ContactRoles>
-        name="Role"
+      <Selector<FV, "org_role", ContactRoles>
+        name="org_role"
         options={roleOptions}
         classes={{ options: "text-sm" }}
       >
         {({ value }) =>
           value === "other" && (
             <Field<FV>
-              name="OtherRole"
+              name="other_role"
               label="Specify your role"
               required
               classes={{ container: "mt-4" }}
@@ -76,8 +81,8 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         How did you find about us?
       </Label>
-      <Selector<FV, "ReferralMethod", ReferralMethods>
-        name="ReferralMethod"
+      <Selector<FV, "referral_method", ReferralMethods>
+        name="referral_method"
         options={referralOptions}
         classes={{ options: "text-sm" }}
       >
@@ -85,7 +90,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
           <>
             {value === "other" && (
               <Field<FV>
-                name="OtherReferralMethod"
+                name="other_referral_method"
                 label="Please provide additional information"
                 required
                 classes={{ container: "mt-4" }}
@@ -93,7 +98,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
             )}
             {value === "referral" && (
               <Field<FV>
-                name="ReferralCode"
+                name="referral_code"
                 label="Referral Code"
                 required
                 classes={{ container: "mt-4" }}
@@ -103,7 +108,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         )}
       </Selector>
       <Field<FV>
-        name="Goals"
+        name="goals"
         label="Goals"
         placeholder={`What is your goal working with ${APP_NAME}?`}
         classes={{ container: "mt-4" }}

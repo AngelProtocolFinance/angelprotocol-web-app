@@ -17,14 +17,13 @@ export default function useSubmit(data: Step3Data, form: UseFormReturn<FV>) {
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && data.fsaInquiry !== undefined) {
+    if (!isDirty && data.irs501c3 !== undefined) {
       return navigate(`../${steps.docs}`, { state: data.init });
     }
     const result = await updateReg({
-      reference: data.init.reference,
-      type: "fsa-inquiry",
-      AuthorizedToReceiveTaxDeductibleDonations:
-        fv.AuthorizedToReceiveTaxDeductibleDonations === "Yes",
+      id: data.init.id,
+      type: "fsa-inq",
+      irs501c3: fv.irs501c3 === "yes",
     });
 
     if ("error" in result) {

@@ -822,6 +822,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@better-giving/registration@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@better-giving/registration@npm:1.0.1"
+  peerDependencies:
+    valibot: 0.42.0
+  checksum: 10/7ecf268dc627e9853d9ec6afd6ac7f000170fb270545c3225999d32494ed22be34efb28bf96f4ac339584ddcf32fa9ff3deb68f756f7671dd479744f548d58f1
+  languageName: node
+  linkType: hard
+
 "@biomejs/biome@npm:1.8.1":
   version: 1.8.1
   resolution: "@biomejs/biome@npm:1.8.1"
@@ -3417,6 +3426,7 @@ __metadata:
   resolution: "angelprotocol-web-app@workspace:."
   dependencies:
     "@better-giving/assets": "npm:1.0.18"
+    "@better-giving/registration": "npm:1.0.1"
     "@biomejs/biome": "npm:1.8.1"
     "@gsap/react": "npm:2.1.1"
     "@headlessui/react": "npm:2.1.0"
@@ -3472,6 +3482,7 @@ __metadata:
     tailwindcss: "npm:3.4.3"
     type-fest: "npm:4.20.0"
     typescript: "npm:5.5"
+    valibot: "npm:0.42.0"
     vite-tsconfig-paths: "npm:4.3.2"
     vitest: "npm:2.0.1"
     yup: "npm:1.4.0"
@@ -6740,6 +6751,18 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 10/9d0b6adb72b736e36f2b1b53da0d559125ba3e39d913b6072f6f033e0c87835b414f0836b45bcfaf2bdf698f92297fea1c3cc19b0b258bc182c9c43cc0fab9f2
+  languageName: node
+  linkType: hard
+
+"valibot@npm:0.42.0":
+  version: 0.42.0
+  resolution: "valibot@npm:0.42.0"
+  peerDependencies:
+    typescript: ">=5"
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/e648061c07a8418d719c797ac86530818e3bfa68edaf8f53aa41713651cad5e6faef96c66002d7350c7dcf1a32a8a93323bf3a7d75dc0df0f0ad1fce9f2ac785
   languageName: node
   linkType: hard
 

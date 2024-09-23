@@ -1,10 +1,11 @@
 import { isEmpty } from "helpers";
 import { type FC, createContext, useContext, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
-import type { InitReg, RegStep, RegistrationState } from "../types";
+import type { RegV2 } from "types/aws";
+import type { RegStep, RegistrationState } from "../types";
 
 export type StepGuardProps = {
-  init: InitReg;
+  init: RegV2.Init;
   state: RegistrationState;
 };
 

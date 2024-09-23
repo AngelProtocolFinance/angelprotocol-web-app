@@ -1,9 +1,10 @@
+import type { Except } from "type-fest";
 import type {
   BankingApplication,
   EndowmentAllocationUpdate,
   EndowmentProfileUpdate,
   EndowmentSettingsUpdate,
-  FSASignerDocumentation,
+  RegV2,
   V2RecipientAccount,
 } from "types/aws";
 import type { SemiPartial } from "types/utils";
@@ -15,14 +16,19 @@ export type EndowmentUpdate = SemiPartial<
 
 export type ProgramDeleteMsg = { id: number; program_id: string };
 
-export type FiscalSponsorhipAgreementSigner =
+export type FSASigner =
   | {
       id: string;
-      firstName: string;
-      lastName: string;
-      email: string;
+      first_name: string;
+      last_name: string;
       role: string;
-      docs: FSASignerDocumentation;
+      email: string;
+      docs: Except<
+        RegV2.FsaDocs,
+        "fsa_signed_doc_url" | "fsa_signing_url" | "outdated"
+      > &
+        Pick<RegV2.Org, "hq_country"> &
+        Pick<RegV2.Contact, "org_name">;
     }
   | string; //signerEID;
 
