@@ -1,25 +1,24 @@
+import type { FsaPayload } from "@better-giving/registration/fsa";
+import type { Submission } from "@better-giving/registration/models";
+import type { Reg } from "@better-giving/registration/step";
+import type { NewReg, Update } from "@better-giving/registration/update";
 import { TEMP_JWT } from "constants/auth";
 import { EMAIL_SUPPORT } from "constants/env";
 import { logger } from "helpers";
-import type { EndowClaim, InitApplication, RegV2 } from "types/aws";
 import { version as v } from "../../helpers";
-import type { FSASigner } from "../../types";
 import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    newApplication: builder.query<
-      Pick<InitApplication, "Registration" | "ContactPerson">,
-      { email: string; claim?: EndowClaim }
-    >({
-      query: ({ email, claim }) => ({
+    applicationNew: builder.query<Reg, NewReg>({
+      query: (payload) => ({
         url: `${v(6)}/registration`,
         method: "POST",
-        body: { Email: email, ...(claim && { InitClaim: claim }) },
+        body: payload,
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    reg: builder.query<RegV2.Record, string>({
+    reg: builder.query<Reg, string>({
       providesTags: ["registration"],
       query: (uuid) => {
         return {
@@ -28,13 +27,13 @@ const registration_api = aws.injectEndpoints({
           headers: { authorization: TEMP_JWT },
         };
       },
-      transformResponse(res: RegV2.Record) {
+      transformResponse(res: Reg) {
         return { ...res, reqId: 0 };
       },
     }),
     fiscalSponsorshipAgreementSigningURL: builder.mutation<
       { url: string },
-      FSASigner
+      FsaPayload["signer"]
     >({
       //no need to invalidate registration as latest would be fetched on redirect/success
       query: (signer) => {
@@ -48,12 +47,12 @@ const registration_api = aws.injectEndpoints({
         };
       },
     }),
-    updateReg: builder.mutation<RegV2.Record, RegV2.Update>({
-      query: ({ id, type, ...val }) => {
+    updateReg: builder.mutation<Reg, Update & { id: string }>({
+      query: ({ id, ...payload }) => {
         return {
           url: `${v(7)}/registration/${id}`,
           method: "PATCH",
-          body: { type, val },
+          body: payload,
           headers: { authorization: TEMP_JWT },
         };
       },
@@ -78,7 +77,7 @@ const registration_api = aws.injectEndpoints({
         }
       },
     }),
-    submit: builder.mutation<RegV2.Submission, string>({
+    submit: builder.mutation<Submission, string>({
       invalidatesTags: ["registration"],
       query: (referenceID) => ({
         url: `${v(5)}/registration/${referenceID}/submit`,
@@ -101,6 +100,6 @@ export const {
 
   //mutations
   useUpdateRegMutation,
-  useNewApplicationQuery,
+  useApplicationNewQuery,
   useSubmitMutation,
 } = registration_api;

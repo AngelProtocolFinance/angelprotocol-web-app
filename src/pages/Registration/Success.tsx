@@ -1,8 +1,9 @@
+import type { Submission } from "@better-giving/registration/models";
+import type { CompleteReg } from "@better-giving/registration/step";
 import Icon from "components/Icon";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { Navigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
-import type { CompleteReg } from "./types";
 
 export function Component({ classes = "" }: { classes?: string }) {
   const { state } = useLocation();
@@ -24,7 +25,10 @@ export function Component({ classes = "" }: { classes?: string }) {
       </h1>
       <Link
         className="mt-6 text-blue-d1 hover:text-blue underline decoration-1 hover:decoration-2 text-center text-lg transition ease-in-out duration-300"
-        to={`${appRoutes.admin}/${reg.submission.endowment_id}/${adminRoutes.edit_profile}`}
+        to={`${appRoutes.admin}/${
+          (reg.submission as Extract<Submission, { endowment_id: any }>)
+            .endowment_id
+        }/${adminRoutes.edit_profile}`}
       >
         Start filling out {contact.org_name}’s profile and attract donors! Thank
         you!

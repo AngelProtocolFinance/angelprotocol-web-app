@@ -1,9 +1,9 @@
+import type { FsaDocs } from "@better-giving/registration/models";
 import type { Except, OverrideProperties } from "type-fest";
-import type { RegV2 } from "types/aws";
 import type { FileDropzoneAsset } from "types/components";
 
 export type FormValues = OverrideProperties<
-  Except<RegV2.FsaDocs, "fsa_signing_url" | "fsa_signed_doc_url">,
+  Except<FsaDocs, "fsa_signing_url" | "fsa_signed_doc_url">,
   {
     proof_of_identity: FileDropzoneAsset;
     proof_of_reg: FileDropzoneAsset;
@@ -11,5 +11,5 @@ export type FormValues = OverrideProperties<
 >;
 
 export type Props = {
-  doc: RegV2.FsaDocs | undefined;
+  doc: FsaDocs | undefined;
 };

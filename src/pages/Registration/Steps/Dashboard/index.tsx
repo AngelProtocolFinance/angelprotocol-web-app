@@ -2,9 +2,9 @@ import Prompt from "components/Prompt";
 import { regRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import type { CompleteReg } from "pages/Registration/types";
 import { Navigate } from "react-router-dom";
 import { useSubmitMutation } from "services/aws/registration";
+import type { Step6Data } from "../../types";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
@@ -16,7 +16,7 @@ function Dashboard() {
   const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
 
-  const submit = async ({ init }: CompleteReg) => {
+  const submit = async ({ init }: Step6Data) => {
     try {
       await submitApplication(init.id).unwrap();
       if (window.hasOwnProperty("lintrk")) {
@@ -40,7 +40,11 @@ function Dashboard() {
   const { submission } = data;
   const isStepDisabled = isSubmitting || submission === "in-review";
 
-  if (typeof submission === "object") {
+  if (
+    submission &&
+    typeof submission !== "string" &&
+    "endowment_id" in submission
+  ) {
     return <Navigate to={`../../${regRoutes.success}`} state={data} />;
   }
 

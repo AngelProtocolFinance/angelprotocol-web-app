@@ -1,8 +1,8 @@
+import type { EndowClaim } from "@better-giving/registration/models";
 import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
-import type { EndowClaim } from "types/aws";
 import { useProfileContext } from "../../../ProfileContext";
 import DonateButton from "../../DonateButton";
 import Socials from "./Socials";

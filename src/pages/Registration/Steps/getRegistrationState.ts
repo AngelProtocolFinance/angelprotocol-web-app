@@ -1,8 +1,9 @@
-import { type RegV2, isDone } from "types/aws";
+import type { Init } from "@better-giving/registration/models";
+import { type Reg, isDone } from "@better-giving/registration/step";
 import { steps } from "../routes";
 import type { RegistrationState } from "../types";
 
-export function getRegistrationState(reg: RegV2.Record): {
+export function getRegistrationState(reg: Reg): {
   state: RegistrationState;
   nextStep: steps;
 } {
@@ -32,17 +33,26 @@ export function getRegistrationState(reg: RegV2.Record): {
   return { state: { step: 1, data: toData(reg) }, nextStep: steps.contact };
 }
 
-function toData<T extends RegV2.Record>({
+function toData<T extends Reg>({
   id,
   registrant_id,
   hubspot_contact_id,
   created_at,
   env,
   claim,
+  status,
   ...rest
-}: T): { init: RegV2.Init } & Omit<T, keyof RegV2.Init> {
+}: T): { init: Init } & Omit<T, keyof Init> {
   return {
-    init: { id, registrant_id, hubspot_contact_id, created_at, env, claim },
+    init: {
+      id,
+      registrant_id,
+      hubspot_contact_id,
+      created_at,
+      env,
+      claim,
+      status,
+    },
     ...rest,
   };
 }

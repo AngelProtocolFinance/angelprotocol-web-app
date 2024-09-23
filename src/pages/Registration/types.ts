@@ -1,15 +1,20 @@
-import type { RegV2 } from "types/aws";
+import type {
+  FsaDocs,
+  Init,
+  TaxDeductibleDocs,
+} from "@better-giving/registration/models";
+import type { CompleteReg } from "@better-giving/registration/step";
 
-type InitKeys = keyof RegV2.Init;
-export type CompleteReg = Omit<RegV2.Step6, InitKeys> & {
-  init: RegV2.Init;
-};
+export interface Reg extends Omit<CompleteReg, keyof Init> {
+  init: Init;
+}
+export interface InitState extends Pick<Init, "id" | "registrant_id"> {}
 
 type Data<
-  Done extends keyof CompleteReg,
-  Pending extends Exclude<keyof CompleteReg, Done>,
-> = Pick<CompleteReg, Done> & {
-  [key in Pending]?: CompleteReg[key];
+  Done extends keyof Reg,
+  Pending extends Exclude<keyof Reg, Done>,
+> = Pick<Reg, Done> & {
+  [key in Pending]?: Reg[key];
 };
 
 type Step1Data = Data<"init", "contact">;
@@ -19,12 +24,16 @@ type Step4Data = Omit<
   Data<"init" | "contact" | "org" | "irs501c3", "docs">,
   "docs"
 > & {
-  // override fsa docs required in step 5 member
-  docs?: RegV2.FsaDocs | RegV2.TaxDeductibleDocs;
+  docs?: FsaDocs | TaxDeductibleDocs;
 };
+
 type Step5Data = Data<
   "init" | "contact" | "org" | "irs501c3" | "docs",
   "banking"
+>;
+export type Step6Data = Data<
+  "init" | "contact" | "org" | "irs501c3" | "docs" | "banking",
+  "submission"
 >;
 
 /** contact details */
@@ -57,9 +66,9 @@ type RegStep5 = {
   data: Step5Data;
 };
 
-type RegStep6 = {
+export type RegStep6 = {
   step: 6;
-  data: CompleteReg;
+  data: Step6Data;
 };
 
 export type RegistrationState =

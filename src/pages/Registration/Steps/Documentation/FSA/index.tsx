@@ -1,6 +1,7 @@
+import type { FsaDocs } from "@better-giving/registration/models";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { FormProvider, useForm } from "react-hook-form";
-import type { FileObject, RegV2 } from "types/aws";
+import type { FileObject } from "types/aws";
 import type { FileDropzoneAsset } from "types/components";
 import Form from "./Form";
 import { schema } from "./schema";
@@ -28,7 +29,7 @@ export default function FSADocumentation(props: Props) {
   );
 }
 
-function formFormat(doc: RegV2.FsaDocs): FormValues {
+function formFormat(doc: FsaDocs): FormValues {
   return {
     //level 1
     outdated: doc.outdated,

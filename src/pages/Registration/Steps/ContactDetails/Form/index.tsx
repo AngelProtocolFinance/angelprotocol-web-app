@@ -1,8 +1,8 @@
+import type { ReferralMethod, Role } from "@better-giving/registration/models";
 import LoadText from "components/LoadText";
 import { Selector } from "components/Selector";
 import { Field, Label } from "components/form";
 import { APP_NAME } from "constants/env";
-import type { ContactRoles, ReferralMethods } from "types/aws";
 import { referralOptions, roleOptions } from "../constants";
 import type { FormValues as FV } from "../types";
 import useSubmit from "./useSubmit";
@@ -60,7 +60,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         What's your role within the organization?
       </Label>
-      <Selector<FV, "org_role", ContactRoles>
+      <Selector<FV, "org_role", Role>
         name="org_role"
         options={roleOptions}
         classes={{ options: "text-sm" }}
@@ -81,7 +81,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       <Label required className="mb-2">
         How did you find about us?
       </Label>
-      <Selector<FV, "referral_method", ReferralMethods>
+      <Selector<FV, "referral_method", ReferralMethod>
         name="referral_method"
         options={referralOptions}
         classes={{ options: "text-sm" }}

@@ -1,3 +1,4 @@
+import type { QueryParams } from "@better-giving/registration/approval";
 import { Popover, PopoverButton } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Icon, { DrawerIcon } from "components/Icon";
@@ -6,14 +7,13 @@ import { cleanObject } from "helpers/cleanObject";
 import { weeksAgo } from "helpers/weeksAgo";
 import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import type { ApplicationsQueryParams } from "types/aws";
 import Form from "./Form";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
 
 type Props = {
   classes?: string;
-  setParams: React.Dispatch<React.SetStateAction<ApplicationsQueryParams>>;
+  setParams: React.Dispatch<React.SetStateAction<QueryParams>>;
   isDisabled: boolean;
 };
 
@@ -29,7 +29,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       startDate: dateToFormFormat(weeksAgo("now", 1)),
       endDate: dateToFormFormat(new Date()),
       hqCountry: { name: "", flag: "", code: "" },
-      status: { label: "Under Review", value: "Under Review" },
+      status: { label: "Under Review", value: "02" },
     },
   });
 
@@ -48,10 +48,10 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
   async function submit(data: FV) {
     setParams(
       cleanObject({
-        regDateStart: ISOdate(data.startDate),
-        regDateEnd: ISOdate(data.endDate, true),
-        regStatus: data.status.value,
-        hqCountry: data.hqCountry.name,
+        startDate: ISOdate(data.startDate),
+        endDate: ISOdate(data.endDate, true),
+        status: data.status.value,
+        country: data.hqCountry.name,
       })
     );
     buttonRef.current?.click();
@@ -59,10 +59,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams({
-      limit: 10,
-      regStatus: "Under Review",
-    });
+    setParams({ status: "02" });
     buttonRef.current?.click();
   };
   return (

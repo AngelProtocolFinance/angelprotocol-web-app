@@ -1,10 +1,11 @@
+import type { Org } from "@better-giving/registration/models";
 import type { Except, OverrideProperties } from "type-fest";
-import type { EndowDesignation, RegV2 } from "types/aws";
+import type { EndowDesignation } from "types/aws";
 import type { Country, OptionType } from "types/components";
 import type { UNSDG_NUMS } from "types/lists";
 
 export type FormValues = OverrideProperties<
-  Except<RegV2.Org, "kyc_donors_only">,
+  Except<Org, "kyc_donors_only">,
   {
     hq_country: Country;
     designation: OptionType<EndowDesignation | "">;

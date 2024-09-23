@@ -1,7 +1,7 @@
+import type { ReferralMethod, Role } from "@better-giving/registration/models";
 import { optionType } from "schemas/shape";
 import { requiredString } from "schemas/string";
 import type { SchemaShape } from "schemas/types";
-import type { ContactRoles, ReferralMethods } from "types/aws";
 import type { OptionType } from "types/components";
 import { type ObjectSchema, object, string } from "yup";
 import type { FormValues } from "./types";
@@ -13,16 +13,16 @@ const referralMethodKey: Key = "referral_method";
 const otherRole = string()
   .trim()
   .when(roleKey, ([option], schema) =>
-    (option as OptionType<ContactRoles>).value === "other"
+    (option as OptionType<Role>).value === "other"
       ? schema.required("required")
       : schema
   );
 
-const otherReferralMethod = (referralMethod: ReferralMethods) =>
+const otherReferralMethod = (referralMethod: ReferralMethod) =>
   string()
     .trim()
     .when(referralMethodKey, ([option], schema) =>
-      (option as OptionType<ReferralMethods>).value === referralMethod
+      (option as OptionType<ReferralMethod>).value === referralMethod
         ? schema.required("required")
         : schema
     );

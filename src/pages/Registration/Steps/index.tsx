@@ -1,3 +1,4 @@
+import { isIrs501c3 } from "@better-giving/registration/models";
 import ExtLink from "components/ExtLink";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { appRoutes, regRoutes } from "constants/routes";
@@ -8,9 +9,8 @@ import {
   useLocation,
 } from "react-router-dom";
 import { useRegQuery } from "services/aws/registration";
-import { type RegV2, isIrs501c3 } from "types/aws";
 import { steps } from "../routes";
-import type { RegStep4, RegistrationState } from "../types";
+import type { InitState, RegStep4, RegistrationState } from "../types";
 import Banking from "./Banking";
 import ContactDetails from "./ContactDetails";
 import Dashboard from "./Dashboard";
@@ -24,7 +24,7 @@ import { getRegistrationState } from "./getRegistrationState";
 
 function Layout() {
   const { state } = useLocation();
-  const initReg = state as RegV2.Init | undefined;
+  const initReg = state as InitState | undefined;
 
   const ref = initReg?.id || "";
   const { data, isLoading, isError } = useRegQuery(ref, {

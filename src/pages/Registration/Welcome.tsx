@@ -1,3 +1,4 @@
+import type { EndowClaim } from "@better-giving/registration/models";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
@@ -7,9 +8,9 @@ import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useNewApplicationQuery } from "services/aws/registration";
-import type { EndowClaim, RegV2 } from "types/aws";
+import { useApplicationNewQuery } from "services/aws/registration";
 import { steps } from "./routes";
+import type { InitState } from "./types";
 
 export function Component() {
   const { email } = useAuthenticatedUser();
@@ -19,11 +20,11 @@ export function Component() {
     data: reg,
     isLoading,
     isError,
-  } = useNewApplicationQuery({ email, claim });
+  } = useApplicationNewQuery({ registrant_id: email, claim });
 
   useEffect(() => {
     if (!reg) return;
-    storeRegistrationReference(reg.ContactPerson.PK);
+    storeRegistrationReference(reg.id);
   }, [reg]);
 
   return (
@@ -43,9 +44,9 @@ export function Component() {
         state={
           {
             //link is disabled if no reg
-            registrant_id: reg?.ContactPerson.Email!,
-            id: reg?.ContactPerson.PK!,
-          } satisfies RegV2.Init
+            registrant_id: reg?.registrant_id!,
+            id: reg?.id!,
+          } satisfies InitState
         }
       >
         <LoadText isLoading={isLoading} text="Continue registration">

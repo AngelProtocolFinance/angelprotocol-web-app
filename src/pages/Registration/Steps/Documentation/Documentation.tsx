@@ -1,4 +1,4 @@
-import { isIrs501c3 } from "types/aws";
+import { isIrs501c3 } from "@better-giving/registration/models";
 import { useRegState, withStepGuard } from "../StepGuard";
 import FSADocumentation from "./FSA";
 import NonFSA from "./NonFSA";

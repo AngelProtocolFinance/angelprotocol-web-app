@@ -1,7 +1,7 @@
-import type { ContactRoles, ReferralMethods } from "types/aws";
+import type { ReferralMethod, Role } from "@better-giving/registration/models";
 import type { OptionType } from "types/components";
 
-export const roles: { [key in ContactRoles]: string } = {
+export const roles: { [key in Role]: string } = {
   "": "",
   president: "Chairperson / President",
   "vice-president": "Vice-chairperson / Vice president",
@@ -16,7 +16,7 @@ export const roles: { [key in ContactRoles]: string } = {
   communications: "Communications",
   other: "Other",
 };
-export const referralMethods: { [key in ReferralMethods]: string } = {
+export const referralMethods: { [key in ReferralMethod]: string } = {
   "": "",
   "better-giving-alliance": "Better Giving Alliance",
   discord: "Discord",

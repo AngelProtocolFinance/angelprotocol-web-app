@@ -1,14 +1,15 @@
+import type { Submission } from "@better-giving/registration/models";
+import { isRejected } from "@reduxjs/toolkit";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import { steps } from "pages/Registration/routes";
 import type { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
-import type { RegV2 } from "types/aws";
 import { useRegState } from "../StepGuard";
 
 type Props = {
   isSubmitting: boolean;
-  status: Exclude<RegV2.Submission, object>;
+  status?: Exclude<Submission, { endowment_id: any }>;
   onSubmit: MouseEventHandler<HTMLButtonElement>;
   classes?: string;
 };
@@ -21,67 +22,66 @@ export default function EndowmentStatus({
 }: Props) {
   const { data } = useRegState<3>();
 
-  switch (status) {
-    case "rejected":
-      return (
-        <div className={`max-sm:grid text-red dark:text-red-l3 ${classes}`}>
-          <p className="mb-6 max-sm:grid justify-items-center gap-2">
-            <Icon
-              type="Info"
-              className="inline relative bottom-px mr-2"
-              size={20}
-            />
-            <span className="max-sm:text-center">
-              Your nonprofit's application has been rejected.
-            </span>
-          </p>
-          <button
-            type="button"
-            onClick={onSubmit}
-            disabled={isSubmitting}
-            className="min-w-[8rem] btn-blue btn-reg"
-          >
-            <LoadText isLoading={isSubmitting}>Resubmit</LoadText>
-          </button>
-        </div>
-      );
-
-    case "in-review":
-      return (
-        <div
-          className={`max-sm:grid justify-items-center gap-2 text-navy-l1 dark:text-navy-l2 ${classes}`}
-        >
+  if (isRejected(status)) {
+    return (
+      <div className={`max-sm:grid text-red dark:text-red-l3 ${classes}`}>
+        <p className="mb-6 max-sm:grid justify-items-center gap-2">
           <Icon
-            type="HourglassSplit"
-            className="relative bottom-px inline mr-2"
-            size={18}
+            type="Info"
+            className="inline relative bottom-px mr-2"
+            size={20}
           />
           <span className="max-sm:text-center">
-            Your application has been submitted for review
+            Your nonprofit's application has been rejected.
           </span>
-        </div>
-      );
-
-    default:
-      return (
-        <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
-          <Link
-            aria-disabled={isSubmitting}
-            to={`../${steps.banking}`}
-            state={data.init}
-            className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
-          >
-            Back
-          </Link>
-          <button
-            type="button"
-            disabled={isSubmitting}
-            onClick={onSubmit}
-            className="py-3 min-w-[8rem] btn-blue btn-reg"
-          >
-            <LoadText isLoading={isSubmitting}>Continue</LoadText>
-          </button>
-        </div>
-      );
+        </p>
+        <button
+          type="button"
+          onClick={onSubmit}
+          disabled={isSubmitting}
+          className="min-w-[8rem] btn-blue btn-reg"
+        >
+          <LoadText isLoading={isSubmitting}>Resubmit</LoadText>
+        </button>
+      </div>
+    );
   }
+
+  if (status === "in-review") {
+    return (
+      <div
+        className={`max-sm:grid justify-items-center gap-2 text-navy-l1 dark:text-navy-l2 ${classes}`}
+      >
+        <Icon
+          type="HourglassSplit"
+          className="relative bottom-px inline mr-2"
+          size={18}
+        />
+        <span className="max-sm:text-center">
+          Your application has been submitted for review
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
+      <Link
+        aria-disabled={isSubmitting}
+        to={`../${steps.banking}`}
+        state={data.init}
+        className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+      >
+        Back
+      </Link>
+      <button
+        type="button"
+        disabled={isSubmitting}
+        onClick={onSubmit}
+        className="py-3 min-w-[8rem] btn-blue btn-reg"
+      >
+        <LoadText isLoading={isSubmitting}>Continue</LoadText>
+      </button>
+    </div>
+  );
 }

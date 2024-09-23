@@ -1,7 +1,7 @@
+import type { ReferralMethod, Role } from "@better-giving/registration/models";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { FormProvider, useForm } from "react-hook-form";
-import type { ContactRoles, ReferralMethods } from "types/aws";
 import type { OptionType } from "types/components";
 import { useRegState, withStepGuard } from "../StepGuard";
 import Form from "./Form";
@@ -54,10 +54,10 @@ function ContactDetails() {
 
 export default withStepGuard(ContactDetails);
 
-function toRoleOption(value: ContactRoles): OptionType<ContactRoles> {
+function toRoleOption(value: Role): OptionType<Role> {
   return { value, label: roles[value] };
 }
 
-function toReferralOption(value: ReferralMethods): OptionType<ReferralMethods> {
+function toReferralOption(value: ReferralMethod): OptionType<ReferralMethod> {
   return { value, label: referralMethods[value] };
 }
