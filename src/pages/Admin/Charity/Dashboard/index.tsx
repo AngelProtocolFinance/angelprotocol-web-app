@@ -1,1 +1,1 @@
-export { default as Component } from "./Maintenance";
+export { default as Component } from "./Dashboard";

@@ -22,7 +22,7 @@ describe("stocks form test", () => {
   test("initial state: blank", () => {
     const init: Init = {
       source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
+      config: null,
       recipient: { id: 0, name: "" },
       mode: "live",
     };
@@ -41,7 +41,7 @@ describe("stocks form test", () => {
   test("initial blank state: program donations now allowed", () => {
     const init: Init = {
       source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
+      config: null,
       recipient: { id: 0, name: "", progDonationsAllowed: false },
       mode: "live",
     };
@@ -54,7 +54,7 @@ describe("stocks form test", () => {
   test("initial state: persisted and submittable", async () => {
     const init: Init = {
       source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
+      config: null,
       recipient: { id: 0, name: "" },
       mode: "live",
     };
@@ -83,7 +83,7 @@ describe("stocks form test", () => {
   test("user encounters validation errors and corrects them", async () => {
     const init: Init = {
       source: "bg-marketplace",
-      config: { liquidSplitPct: 50, splitDisabled: false },
+      config: null,
       recipient: { id: 0, name: "", progDonationsAllowed: false },
       mode: "live",
     };

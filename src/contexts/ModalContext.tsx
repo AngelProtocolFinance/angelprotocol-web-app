@@ -51,7 +51,7 @@ export default function ModalContext(
 
   const closeModal = useCallback(() => {
     setState((prev) => {
-      if (!prev) throw new Error("there's no modal to close");
+      if (!prev) return prev;
       if (!prev.isDismissible) return prev;
       prev.onClose(); //side effect with no access to state
       return undefined;
@@ -61,7 +61,7 @@ export default function ModalContext(
   const setModalOption = useCallback(
     <T extends keyof ModalOptions>(option: T, val: ModalOptions[T]) => {
       setState((prev) => {
-        if (!prev) throw new Error("there's no modal to update");
+        if (!prev) return prev;
         return { ...prev, [option]: val };
       });
     },

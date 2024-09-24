@@ -2,14 +2,17 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
-import { getTxUrl, humanize, maskAddress, roundDownToNum } from "helpers";
+import { getTxUrl, humanize, maskAddress } from "helpers";
 import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
+
+const Amount = ({ amount = 0 }) => {
+  return amount >= 0.01 ? <>${humanize(amount)}</> : <>--</>;
+};
 
 export default function Row(
   props: Donation.Record & { hasMore?: boolean; classes?: string }
 ) {
-  const Amount = amount(props.splitLiqPct, props.finalAmountUsd);
   return (
     <Cells
       type="td"
@@ -36,9 +39,7 @@ export default function Row(
       <>{props.symbol}</>
       <>{humanize(props.initAmount)}</>
 
-      <Amount type="total" />
-      <Amount type="liq" />
-      <Amount type="locked" />
+      <Amount amount={props.finalAmountUsd} />
 
       {props.viaId === "staging" || props.viaId === "fiat" ? (
         <>--</>
@@ -80,13 +81,3 @@ export default function Row(
     </Cells>
   );
 }
-
-const amount = (splitLiqPct: number, amount = 0) => {
-  const liq = roundDownToNum(amount * (splitLiqPct / 100), 2);
-  const locked = amount - liq;
-  const amounts = { total: amount, liq, locked };
-  return ({ type }: { type: keyof typeof amounts }) => {
-    const val = amounts[type];
-    return val >= 0.01 ? <>${humanize(val)}</> : <>--</>;
-  };
-};

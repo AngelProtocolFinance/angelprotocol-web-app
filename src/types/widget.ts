@@ -8,8 +8,6 @@ export type WidgetConfig = {
   endowment: EndowmentOption;
   program: OptionType<string>;
   isDescriptionTextShown: boolean;
-  splitDisabled: boolean;
-  liquidSplitPct: number;
   methods: TDonateMethod[];
   /** hex color without alpha */
   accentPrimary?: string;
@@ -21,8 +19,6 @@ export type WidgetConfig = {
 
 export type WidgetURLSearchParams = {
   isDescriptionTextShown: "true" | "false";
-  liquidSplitPct: string;
-  splitDisabled: "true" | "false";
 
   // v2.3 params //
 

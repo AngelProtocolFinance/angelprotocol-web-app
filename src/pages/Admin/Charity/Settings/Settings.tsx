@@ -11,12 +11,8 @@ export default function Settings() {
     isError,
   } = useEndowment({ id }, [
     "receiptMsg",
-    "sfCompounded",
     "hide_bg_tip",
     "progDonationsAllowed",
-    "splitLiqPct",
-    "splitFixed",
-    "payout_minimum",
     "donateMethods",
   ]);
 

@@ -42,8 +42,6 @@ function Content({ endowment }: { endowment?: Endowment }) {
     },
     isDescriptionTextShown: true,
     isTitleShown: true,
-    liquidSplitPct: endowment?.splitLiqPct ?? 50,
-    splitDisabled: endowment?.splitFixed ?? false,
     methods: filled,
     accentPrimary: "#2D89C8",
     accentSecondary: "#E6F1F9",

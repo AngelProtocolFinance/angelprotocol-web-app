@@ -18,15 +18,7 @@ import Checkout from "./Checkout";
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
-  const {
-    init,
-    details,
-    liquidSplitPct,
-    tip,
-    donor: fvDonor,
-    honorary,
-    feeAllowance,
-  } = props;
+  const { init, details, tip, donor: fvDonor, honorary, feeAllowance } = props;
   const { setState } = useDonationState();
 
   const {
@@ -42,7 +34,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
     feeAllowance,
     currency: details.currency.code,
     endowmentId: init.recipient.id,
-    splitLiq: liquidSplitPct,
+    splitLiq: 0,
     donor: toDonor(fvDonor),
     source: init.source,
     ...(honorary.honoraryFullName && {
@@ -64,7 +56,6 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       Amount={currency(details.currency)}
       amount={+details.amount}
       feeAllowance={feeAllowance}
-      splitLiq={liquidSplitPct}
       frequency={details.frequency}
       tip={
         props.tip

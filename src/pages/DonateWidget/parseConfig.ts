@@ -8,9 +8,6 @@ const allMethodIds: DonateMethodId[] = ["crypto", "daf", "stocks", "stripe"];
 
 const hexColor = /^#[0-9A-F]{6}$/i;
 const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
-  splitDisabled: string().required().oneOf(["true", "false"]),
-  isDescriptionTextShown: string().required().oneOf(["true", "false"]),
-  liquidSplitPct: number().required().min(0).max(100),
   methods: string().test("valid csv", "invalid methods", (val) => {
     return Array.from(new Set(val?.split(","))).every((id) =>
       allMethodIds.includes(id as DonateMethodId)
@@ -53,8 +50,6 @@ export default function parseConfig(
 
     return {
       isDescriptionTextShown: config.isDescriptionTextShown === "true",
-      splitDisabled: config.splitDisabled === "true",
-      liquidSplitPct: +config.liquidSplitPct,
       programId: config.programId,
       methodIds,
       title: config.title,

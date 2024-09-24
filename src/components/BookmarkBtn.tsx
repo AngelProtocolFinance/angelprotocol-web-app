@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import Tooltip from "components/Tooltip";
+import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useErrorContext } from "contexts/ErrorContext";
 import { type PropsWithChildren, useRef } from "react";
 import {
@@ -14,11 +14,7 @@ type Props = PropsWithChildren<
   Pick<EndowmentBookmark, "endowId"> & { classes?: string }
 >;
 
-export default function BookmarkBtn({
-  endowId,
-  children,
-  classes = "",
-}: Props) {
+export default function BookmarkBtn({ endowId, classes = "" }: Props) {
   const { user } = useGetter((state) => state.auth);
   const userEmail = userIsSignedIn(user) ? user.email : "";
   const ref = useRef<HTMLButtonElement>(null);
@@ -50,8 +46,16 @@ export default function BookmarkBtn({
   }
 
   return (
-    <>
-      {!isBookmarked && <Tooltip anchorRef={ref} content="Add to favorites" />}
+    <Tooltip
+      tip={
+        !isBookmarked ? (
+          <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
+            Add to favorites
+            <Arrow />
+          </Content>
+        ) : null
+      }
+    >
       <button
         ref={ref}
         type="button"
@@ -65,8 +69,7 @@ export default function BookmarkBtn({
           size={19}
           className={isBookmarked ? "fill-red text-red" : ""}
         />
-        {children}
       </button>
-    </>
+    </Tooltip>
   );
 }

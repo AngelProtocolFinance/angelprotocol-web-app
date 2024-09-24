@@ -112,7 +112,6 @@ function initialState({
 
         program,
       },
-      liquidSplitPct: intent.splitLiq,
       tip: { value: intent.tipAmount, format: "pct" },
       donor: formDonor,
       honorary: {
@@ -138,7 +137,6 @@ function initialState({
       frequency: intent.frequency,
       program,
     },
-    liquidSplitPct: intent.splitLiq,
     tip: { value: intent.tipAmount, format: "pct" },
     donor: formDonor,
     honorary: {

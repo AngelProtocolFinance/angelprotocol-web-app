@@ -96,17 +96,6 @@ export default function MobileTable({
                     ? `$${humanize(row.initAmountUsd, 2)}`
                     : "--"}
                 </Row>
-                <Row title="Direct Donation">
-                  {row.directDonateAmount
-                    ? `$${humanize(row.directDonateAmount, 2)}`
-                    : "--"}
-                </Row>
-                <Row title="Donation to Sustainability Fund">
-                  {row.sfDonateAmount
-                    ? `$${humanize(row.sfDonateAmount, 2)}`
-                    : "--"}
-                </Row>
-
                 <Row title={lastHeaderName[status]} className="rounded-b">
                   <LastRowContent {...row} status={status} />
                 </Row>

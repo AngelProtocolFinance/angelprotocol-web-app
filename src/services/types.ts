@@ -1,5 +1,6 @@
 import type {
   BankingApplication,
+  EndowmentAllocationUpdate,
   EndowmentProfileUpdate,
   EndowmentSettingsUpdate,
   FSASignerDocumentation,
@@ -8,7 +9,7 @@ import type {
 import type { SemiPartial } from "types/utils";
 
 export type EndowmentUpdate = SemiPartial<
-  EndowmentProfileUpdate & EndowmentSettingsUpdate,
+  EndowmentProfileUpdate & EndowmentSettingsUpdate & EndowmentAllocationUpdate,
   "id"
 >;
 

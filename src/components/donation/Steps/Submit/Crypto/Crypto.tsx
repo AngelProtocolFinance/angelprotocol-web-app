@@ -20,7 +20,6 @@ export default function Crypto(props: CryptoSubmitStep) {
       Amount={Amount}
       amount={+details.token.amount}
       feeAllowance={feeAllowance}
-      splitLiq={props.liquidSplitPct}
       tip={
         tip
           ? {

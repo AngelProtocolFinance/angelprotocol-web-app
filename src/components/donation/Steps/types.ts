@@ -54,8 +54,6 @@ export type DonationDetails =
 export type Mode = "live" | "preview";
 
 export type Config = {
-  splitDisabled: boolean;
-  liquidSplitPct: number;
   /** donation tabs follows the list order */
   methodIds?: DonateMethodId[];
   /** hex color without alpha */
@@ -85,18 +83,13 @@ export type CryptoFormStep = FormStep<CryptoDonationDetails>;
 export type StockFormStep = FormStep<StocksDonationDetails>;
 export type DafFormStep = FormStep<DafDonationDetails>;
 
-export type SplitsStep = {
-  step: "splits";
-  liquidSplitPct?: number;
-} & From<FormStep>;
-
 /** edge case: custom tip > donation  */
 export type TipFormat = "pct" | "amount";
 export type TipStep = {
   step: "tip";
   //tip can be skipped
   tip?: { value: number; format: TipFormat };
-} & From<SplitsStep>;
+} & From<FormStep>;
 
 export type FormDonor = Pick<Donor, "email" | "firstName" | "lastName"> & {
   ukTaxResident: boolean;
@@ -143,9 +136,4 @@ export type StripeCheckoutStep = SubmitStep<StripeDonationDetails>;
 export type StockCheckoutStep = SubmitStep<StocksDonationDetails>;
 export type DafCheckoutStep = SubmitStep<DafDonationDetails>;
 
-export type DonationState =
-  | FormStep
-  | SplitsStep
-  | TipStep
-  | SummaryStep
-  | SubmitStep;
+export type DonationState = FormStep | TipStep | SummaryStep | SubmitStep;

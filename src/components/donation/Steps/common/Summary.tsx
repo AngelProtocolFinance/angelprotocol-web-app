@@ -1,6 +1,3 @@
-import { laira } from "assets/laira/laira";
-// TODO: Swap with "pointing" character, once asset is available
-import Image from "components/Image/Image";
 import { unpack } from "helpers";
 import type { ReactNode } from "react";
 import type { DonationIntent } from "types/aws";
@@ -17,7 +14,6 @@ type Classes =
 
 type Props = {
   amount: number;
-  splitLiq: number;
   tip?: { value: number; charityName: string };
   feeAllowance?: number;
 
@@ -36,8 +32,6 @@ export default function Summary({
   ...props
 }: Props) {
   const { container, split: splitClass } = unpack(props.classes);
-  const liq = props.amount * (props.splitLiq / 100);
-  const locked = props.amount - liq;
 
   const tipValue = props.tip?.value ?? 0;
 
@@ -67,27 +61,6 @@ export default function Summary({
             </span>
           </dt>
           <Amount amount={props.amount} classes="text-navy-d4" />
-
-          {locked > 0 && (
-            <div className="flex items-center justify-between col-span-full">
-              <div className="mr-auto flex">
-                <dt aria-label="sustainability fund" className="text-sm mt-2">
-                  Sustainability Fund
-                </dt>
-                <Image src={laira.waiving} className="inline-block px-1 h-8" />
-              </div>
-              <Amount classes="text-sm" amount={locked} />
-            </div>
-          )}
-
-          {locked > 0 && ( //show 0 liquid even if 100% locked
-            <div className="flex items-center justify-between col-span-full">
-              <dt aria-label="direct donation" className="mr-auto text-sm">
-                Direct Donation
-              </dt>
-              <Amount classes="text-sm" amount={liq} />
-            </div>
-          )}
         </div>
 
         {tipValue > 0 && (
@@ -117,18 +90,6 @@ export default function Summary({
           />
         </div>
       </dl>
-      {locked > 0 && (
-        <div className="flex py-3">
-          <Image
-            src={laira.waiving}
-            className="inline-block mt-1 pl-1 pr-2 h-8"
-          />
-          <div className="mr-auto text-sm text-navy-l3">
-            The Sustainability Fund invests your donation for long-term growth
-            to provide reliable, ongoing funding. Give today, give forever!
-          </div>
-        </div>
-      )}
 
       {props.children}
     </div>

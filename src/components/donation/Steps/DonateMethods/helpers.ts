@@ -29,34 +29,14 @@ export const nextFormState = (
       : //reset if of different method
         { init: prev.init, step: "donate-form" };
 
-  if (prev.init.config?.splitDisabled) {
-    if (prev.init.recipient.hide_bg_tip) {
-      // donor info is retrieved from donor's DAF account
-      if (details?.method === "daf") {
-        return {
-          ...toPersist,
-          ...summaryData(prev),
-          details,
-          step: "submit",
-          liquidSplitPct: prev.init.config.liquidSplitPct,
-        };
-      }
-
-      return {
-        ...toPersist,
-        details,
-        step: "summary",
-        liquidSplitPct: prev.init.config.liquidSplitPct,
-      };
+  if (prev.init.recipient.hide_bg_tip) {
+    // donor info is retrieved from donor's DAF account
+    if (details?.method === "daf") {
+      return { ...toPersist, ...summaryData(prev), details, step: "submit" };
     }
 
-    return {
-      ...toPersist,
-      details,
-      step: "tip",
-      liquidSplitPct: prev.init.config.liquidSplitPct,
-    };
+    return { ...toPersist, details, step: "summary" };
   }
 
-  return { ...toPersist, details, step: "splits" };
+  return { ...toPersist, details, step: "tip" };
 };
