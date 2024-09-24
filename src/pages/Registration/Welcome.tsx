@@ -8,7 +8,7 @@ import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useApplicationNewQuery } from "services/aws/registration";
+import { useNewApplicationQuery } from "services/aws/registration";
 import { steps } from "./routes";
 import type { InitState } from "./types";
 
@@ -20,7 +20,7 @@ export function Component() {
     data: reg,
     isLoading,
     isError,
-  } = useApplicationNewQuery({ registrant_id: email, claim });
+  } = useNewApplicationQuery({ registrant_id: email, claim });
 
   useEffect(() => {
     if (!reg) return;
