@@ -18,12 +18,14 @@ export function Summary({ classes = "", ...props }: Props) {
     ["Donation", liqDonation],
     ["Grant", -props.mov["liq-cash"]],
     ["Investment", -props.mov["liq-lock"]],
+    ["Savings", props.mov["lock-liq"]],
   ].filter(([, v]) => Math.abs(+v) > 0) as [string, number][];
 
   const lockItems = [
     ["Donation", lockDonation],
     ["Grant", -props.mov["lock-cash"]],
     ["Savings", -props.mov["lock-liq"]],
+    ["Investment", props.mov["liq-lock"]],
   ].filter(([, v]) => Math.abs(+v) > 0) as [string, number][];
 
   //no changes
