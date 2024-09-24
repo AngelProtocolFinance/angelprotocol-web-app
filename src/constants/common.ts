@@ -6,7 +6,7 @@ export const BYTES_IN_MB = 1e6;
 
 export const PROCESSING_RATES = {
   chariot: 0.029,
-  stripe: 0.029,
+  stripe: 0.022,
   /** $cents */
   stripe_flat: 0.3,
   crypto: 0.01,
