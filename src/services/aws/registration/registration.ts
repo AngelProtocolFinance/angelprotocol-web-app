@@ -1,6 +1,6 @@
 import type { FsaPayload } from "@better-giving/registration/fsa";
 import type { Submission } from "@better-giving/registration/models";
-import type { Reg } from "@better-giving/registration/step";
+import type { Reg, Step1 } from "@better-giving/registration/step";
 import type { NewReg, Update } from "@better-giving/registration/update";
 import { TEMP_JWT } from "constants/auth";
 import { EMAIL_SUPPORT } from "constants/env";
@@ -10,7 +10,7 @@ import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    applicationNew: builder.query<Reg, NewReg>({
+    applicationNew: builder.query<Step1, NewReg>({
       query: (payload) => ({
         url: `${v(6)}/registration`,
         method: "POST",
