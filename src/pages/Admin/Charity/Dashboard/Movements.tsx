@@ -41,6 +41,7 @@ interface Props {
   mov: BalanceMovement;
   balance: (flow: Flow) => number;
   classes?: string;
+  disabled?: boolean;
 }
 
 export function Movements({ classes = "", ...props }: Props) {
@@ -69,6 +70,7 @@ export function Movements({ classes = "", ...props }: Props) {
               <span className="text-xs ml-2">from</span>
               <span className="text-sm">{a.source}</span>
               <button
+                disabled={props.disabled}
                 type="button"
                 onClick={() =>
                   showModal(MoveFundForm, {
@@ -81,7 +83,7 @@ export function Movements({ classes = "", ...props }: Props) {
                     initAmount: roundDownToNum(v, 2),
                   })
                 }
-                className="text-right bg-gray-l4 text-navy-d4 px-3 py-1 font-heading hover:bg-gray-l3 justify-self-end text-xs rounded-full"
+                className="text-right bg-gray-l4 disabled:bg-gray-l5 text-navy-d4 disabled:text-gray px-3 py-1 font-heading hover:bg-gray-l3 justify-self-end text-xs rounded-full"
               >
                 edit
               </button>

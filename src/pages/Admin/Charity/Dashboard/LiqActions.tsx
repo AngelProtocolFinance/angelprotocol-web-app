@@ -7,6 +7,7 @@ interface Props {
   endowId: number;
   balance: number;
   mov: BalanceMovement;
+  disabled?: boolean;
 }
 
 export function LiqActions({ classes = "", ...props }: Props) {
@@ -15,6 +16,7 @@ export function LiqActions({ classes = "", ...props }: Props) {
     <div className={`${classes} flex justify-end gap-x-2`}>
       <button
         type="button"
+        disabled={props.disabled}
         onClick={() =>
           showModal(MoveFundForm, {
             title: "Withdraw from savings",
@@ -25,12 +27,13 @@ export function LiqActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-xs px-4 py-1.5 rounded-md bg-gray-d2 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
+        className="text-xs px-4 py-1.5 rounded-md bg-gray-d2 disabled:bg-gray-l3 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
       >
         Withdraw
       </button>
       <button
         type="button"
+        disabled={props.disabled}
         onClick={() =>
           showModal(MoveFundForm, {
             title: "Invest savings",
@@ -41,7 +44,7 @@ export function LiqActions({ classes = "", ...props }: Props) {
             effect: "append",
           })
         }
-        className="text-xs font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-sm py-1 bg-green text-white font-heading outline-blue-d1"
+        className="text-xs font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-sm py-1 bg-green disabled:bg-gray-l3 text-white font-heading outline-blue-d1"
       >
         Invest
       </button>

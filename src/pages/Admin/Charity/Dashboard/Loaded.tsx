@@ -45,6 +45,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           amount={`$ ${humanize(props.balances.liq ?? 0, 2)}`}
           actions={
             <LiqActions
+              disabled={period.isPre}
               classes="mt-8"
               endowId={id}
               mov={mov}
@@ -72,6 +73,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           amount={`$ ${humanize(props.balances.sustainabilityFundBal, 2)}`}
           actions={
             <LockActions
+              disabled={period.isPre}
               classes="mt-8"
               balance={props.balances.sustainabilityFundBal ?? 0}
               endowId={id}
@@ -106,6 +108,7 @@ export function Loaded({ classes = "", ...props }: Props) {
         </h3>
 
         <Movements
+          disabled={period.isPre}
           endowId={id}
           mov={mov}
           classes="mt-4"
@@ -121,6 +124,7 @@ export function Loaded({ classes = "", ...props }: Props) {
           }}
         />
         <Schedule
+          disabled={period.isPre}
           amount={props.balances.payoutsPending}
           periodNext={period.next}
           periodRemaining={period.distance}

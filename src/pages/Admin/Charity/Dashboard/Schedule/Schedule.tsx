@@ -19,6 +19,7 @@ interface Props {
   periodNext: string;
   periodRemaining: string;
   grantFromBal: number;
+  disabled?: boolean;
 }
 export function Schedule(props: Props) {
   const { id } = useAdminContext();
@@ -44,6 +45,7 @@ export function Schedule(props: Props) {
         ) : null}
 
         <button
+          disabled={props.disabled}
           type="button"
           className="hover:text-blue disabled:text-gray"
           onClick={() => {
