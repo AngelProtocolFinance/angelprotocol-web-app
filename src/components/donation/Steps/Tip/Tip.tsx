@@ -163,7 +163,7 @@ export default function Tip(props: TipStep) {
           onClick={() => setFormat("amount")}
           className="justify-self-center text-sm mt-6 underline hover:text-[color:var(--accent-primary)]"
         >
-          Enter custom tip
+          Enter custom donation
         </button>
       )}
 
