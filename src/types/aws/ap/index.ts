@@ -102,7 +102,6 @@ export type Endowment = {
 
   //can be optional, default false and need not be explicit
   hide_bg_tip?: boolean;
-  sfCompounded?: boolean;
   published?: boolean;
   /** allowed by default */
   progDonationsAllowed?: boolean;
@@ -153,11 +152,7 @@ export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
 export type EndowmentSettingsAttributes = Extract<
   keyof Endowment,
-  | "receiptMsg"
-  | "sfCompounded"
-  | "hide_bg_tip"
-  | "progDonationsAllowed"
-  | "donateMethods"
+  "receiptMsg" | "hide_bg_tip" | "progDonationsAllowed" | "donateMethods"
 >;
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<

@@ -36,7 +36,6 @@ export default function Form(props: Props) {
     ),
     values: {
       receiptMsg: props.receiptMsg ?? "",
-      sfCompounded: props.sfCompounded ?? false,
       hide_bg_tip: props.hide_bg_tip ?? false,
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
       donateMethods: fill(props.donateMethods),
@@ -84,18 +83,6 @@ export default function Form(props: Props) {
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <ReceiptMsg />
-
-      <div>
-        <CheckField<FV> name="sfCompounded" classes={{ label: "font-medium" }}>
-          Reinvest dividends from Sustainability Fund
-        </CheckField>
-        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
-          Let your dividends work harder for you! By reinvesting growth, you're
-          giving your Sustainability Fund balance a boost and ensuring your
-          mission has the support it needs to thrive. Your funds remain
-          available to you as needed.
-        </p>
-      </div>
 
       <div>
         <CheckField<FV>
