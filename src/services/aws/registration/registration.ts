@@ -12,7 +12,7 @@ const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
     newApplication: builder.query<Step1, NewReg>({
       query: (payload) => ({
-        url: `${v(6)}/registration`,
+        url: `${v(1)}/registrations`,
         method: "POST",
         body: payload,
         headers: { authorization: TEMP_JWT },
@@ -22,7 +22,7 @@ const registration_api = aws.injectEndpoints({
       providesTags: ["registration"],
       query: (uuid) => {
         return {
-          url: `${v(6)}/registration/${uuid}`,
+          url: `${v(1)}/registrations/${uuid}`,
           params: { uuid },
           headers: { authorization: TEMP_JWT },
         };
@@ -50,7 +50,7 @@ const registration_api = aws.injectEndpoints({
     updateReg: builder.mutation<Reg, Update & { id: string }>({
       query: ({ id, ...payload }) => {
         return {
-          url: `${v(7)}/registration/${id}`,
+          url: `${v(1)}/registrations/${id}`,
           method: "PATCH",
           body: payload,
           headers: { authorization: TEMP_JWT },

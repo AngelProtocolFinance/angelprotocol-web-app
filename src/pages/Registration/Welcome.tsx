@@ -15,12 +15,15 @@ import type { InitState } from "./types";
 export function Component() {
   const { email } = useAuthenticatedUser();
   const { state } = useLocation();
-  const claim = state as EndowClaim | undefined;
+  const claim = state as EndowClaim | null;
   const {
     data: reg,
     isLoading,
     isError,
-  } = useNewApplicationQuery({ registrant_id: email, claim });
+  } = useNewApplicationQuery({
+    registrant_id: email,
+    claim: claim ?? undefined,
+  });
 
   useEffect(() => {
     if (!reg) return;
