@@ -38,12 +38,13 @@ const registration_api = aws.injectEndpoints({
       //no need to invalidate registration as latest would be fetched on redirect/success
       query: (signer) => {
         return {
-          url: `${v(2)}/registration/fiscal-sponsorship-agreement`,
+          url: `${v(1)}/registration-fsa`,
           method: "POST",
           body: {
             signer,
-            redirectURL: `${window.location.origin}/register/sign-result`,
-          },
+            redirectUrl: `${window.location.origin}/register/sign-result`,
+          } satisfies FsaPayload,
+          headers: { authorization: TEMP_JWT },
         };
       },
     }),
