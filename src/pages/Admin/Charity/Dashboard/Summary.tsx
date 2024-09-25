@@ -15,18 +15,24 @@ export function Summary({ classes = "", ...props }: Props) {
   const lockDonation = props.balances.payoutsPending * (props.alloc.lock / 100);
 
   const liqItems = [
-    ["Donation", liqDonation],
-    ["Grant", -props.mov["liq-cash"]],
-    ["Investment", -props.mov["liq-lock"]],
-    ["Savings", props.mov["lock-liq"]],
-  ].filter(([, v]) => Math.abs(+v) > 0) as [string, number][];
+    ["0", "from Donation", liqDonation] as const,
+    ["1", "from Investment", props.mov["lock-liq"]] as const,
+    ["2", "to Investment", -props.mov["liq-lock"]] as const,
+    ["3", "to Grant", -props.mov["liq-cash"]] as const,
+  ]
+    .toSorted(([ka], [kb]) => ka.localeCompare(kb))
+    .filter(([, , v]) => Math.abs(+v) > 0)
+    .map(([, k, v]) => [k, v]);
 
   const lockItems = [
-    ["Donation", lockDonation],
-    ["Grant", -props.mov["lock-cash"]],
-    ["Savings", -props.mov["lock-liq"]],
-    ["Investment", props.mov["liq-lock"]],
-  ].filter(([, v]) => Math.abs(+v) > 0) as [string, number][];
+    ["0", "from Donation", lockDonation] as const,
+    ["1", "from Savings", props.mov["liq-lock"]] as const,
+    ["2", "to Savings", -props.mov["lock-liq"]] as const,
+    ["3", "to Grant", -props.mov["lock-cash"]] as const,
+  ]
+    .toSorted(([ka], [kb]) => ka.localeCompare(kb))
+    .filter(([, , v]) => Math.abs(+v) > 0)
+    .map(([, k, v]) => [k, v]);
 
   //no changes
   if (liqItems.length === 0 && lockItems.length === 0) return null;
@@ -51,12 +57,12 @@ export function Summary({ classes = "", ...props }: Props) {
         <Balance
           title="Savings"
           balance={props.balances.liq ?? 0}
-          changes={liqItems}
+          changes={liqItems as [string, number][]}
         />
         <Balance
           title="Investments"
           balance={props.balances.sustainabilityFundBal}
-          changes={lockItems}
+          changes={lockItems as [string, number][]}
           classes="mt-6"
         />
       </div>
