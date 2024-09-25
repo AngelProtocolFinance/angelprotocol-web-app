@@ -1,5 +1,5 @@
 import Icon from "components/Icon";
-import { Arrow, Content } from "components/Tooltip";
+import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { humanize } from "helpers";
 import { useAdminContext } from "pages/Admin/Context";
 import type { Allocation, EndowmentBalances } from "types/aws";
@@ -9,6 +9,7 @@ import { LockActions } from "./LockActions";
 import { Movements } from "./Movements";
 import { PayoutHistory } from "./PayoutHistory";
 import { Schedule } from "./Schedule";
+import { MIN_PROCESSING_AMOUNT } from "./Schedule/common";
 import { Summary } from "./Summary";
 import { monthPeriod } from "./monthPeriod";
 
@@ -27,6 +28,11 @@ export function Loaded({ classes = "", ...props }: Props) {
     "lock-cash": 0,
     "lock-liq": 0,
   };
+
+  const grantFromDonations =
+    props.balances.payoutsPending * (props.allocation.cash / 100);
+  const grantFromBal = mov["liq-cash"] + mov["lock-cash"];
+  const totalGrant = grantFromBal + grantFromDonations;
 
   return (
     <div className={`${classes} mt-6`}>
@@ -128,7 +134,6 @@ export function Loaded({ classes = "", ...props }: Props) {
           amount={props.balances.payoutsPending}
           periodNext={period.next}
           periodRemaining={period.distance}
-          grantFromBal={mov["liq-cash"] + mov["lock-cash"]}
           allocation={props.allocation}
         />
       </div>
@@ -138,6 +143,33 @@ export function Loaded({ classes = "", ...props }: Props) {
         balances={props.balances}
         mov={mov}
       />
+
+      {totalGrant > 0 && (
+        <div className="mt-4 p-4 rounded border border-gray-l4 grid items-center grid-cols-[auto_1fr_auto] gap-x-2">
+          <h4 className="text-sm">Total Grant</h4>
+          <span className="justify-self-end text-md">
+            $ {humanize(totalGrant)}
+          </span>
+          {totalGrant < MIN_PROCESSING_AMOUNT && (
+            <Tooltip
+              tip={
+                <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
+                  Total Grant is less than minimum processing amount of $
+                  {MIN_PROCESSING_AMOUNT} and would be carried over to the next
+                  month.
+                  <Arrow />
+                </Content>
+              }
+            >
+              <Icon
+                type="Info"
+                size={16}
+                className="inline mr-auto text-amber"
+              />
+            </Tooltip>
+          )}
+        </div>
+      )}
 
       <div className="w-full mt-16 h-1.5 bg-gray-l5 rounded-full shadow-inner" />
       <PayoutHistory endowId={id} classes="mt-2" />
