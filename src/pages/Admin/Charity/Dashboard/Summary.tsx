@@ -40,7 +40,7 @@ export function Summary({ classes = "", ...props }: Props) {
   return (
     <div className={`${classes} p-4 rounded border border-gray-l4`}>
       <h4 className="mb-6 flex items-center gap-2">
-        <span>Ending balances</span>
+        <span>Projected Month End Balances</span>
         <Tooltip
           tip={
             <Content className="bg-navy-d4 text-gray-l2 text-xs p-2 rounded">
