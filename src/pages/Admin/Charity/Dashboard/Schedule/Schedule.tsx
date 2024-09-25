@@ -6,11 +6,7 @@ import { useAdminContext } from "pages/Admin/Context";
 import type { ReactNode } from "react";
 import type { Allocation } from "types/aws";
 import { Edit } from "./Edit";
-import {
-  MIN_PROCESSING_AMOUNT,
-  allocationOptions,
-  toAllocOptValue,
-} from "./common";
+import { allocationOptions, toAllocOptValue } from "./common";
 
 interface Props {
   amount: number;
@@ -18,7 +14,6 @@ interface Props {
   classes?: string;
   periodNext: string;
   periodRemaining: string;
-  grantFromBal: number;
   disabled?: boolean;
 }
 export function Schedule(props: Props) {
@@ -32,7 +27,7 @@ export function Schedule(props: Props) {
   return (
     <div className="p-4 grid rounded border border-gray-l4 mt-4">
       <div className="grid border-b border-gray-l4 w-full pb-2">
-        <h4 className="mb-1">Donations received</h4>
+        <h4 className="mb-1">Current Month Donations</h4>
         <p className="font-heading font-medium">$ {humanize(props.amount)}</p>
       </div>
       <div className="flex items-center mt-4 gap-x-2">
@@ -78,28 +73,6 @@ export function Schedule(props: Props) {
           }
           pct={props.allocation.cash}
           amount={props.amount}
-          tooltip={(val) =>
-            val !== 0 &&
-            /** include additional grant from bal */
-            val + props.grantFromBal < MIN_PROCESSING_AMOUNT && (
-              <Tooltip
-                tip={
-                  <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
-                    Grant amount of $ {humanize(val)} is less than minimum
-                    processing amount of ${MIN_PROCESSING_AMOUNT} and would be
-                    carried over to the next month.
-                    <Arrow />
-                  </Content>
-                }
-              >
-                <Icon
-                  type="Info"
-                  size={16}
-                  className="inline mr-auto text-amber"
-                />
-              </Tooltip>
-            )
-          }
         />
         <Row
           icon={
@@ -126,7 +99,6 @@ interface IRow {
   pct: number;
   icon: ReactNode;
   title: ReactNode;
-  tooltip?: (val: number) => ReactNode;
 }
 function Row(props: IRow) {
   const val = props.amount * (props.pct / 100);
@@ -141,7 +113,6 @@ function Row(props: IRow) {
       <span className="text-left font-heading font-medium">
         {humanize(val)}
       </span>
-      {props.tooltip?.(val)}
     </div>
   );
 }

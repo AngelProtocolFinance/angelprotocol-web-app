@@ -128,7 +128,6 @@ export function Loaded({ classes = "", ...props }: Props) {
           amount={props.balances.payoutsPending}
           periodNext={period.next}
           periodRemaining={period.distance}
-          grantFromBal={mov["liq-cash"] + mov["lock-cash"]}
           allocation={props.allocation}
         />
       </div>
