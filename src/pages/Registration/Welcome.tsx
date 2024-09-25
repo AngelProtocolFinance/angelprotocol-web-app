@@ -10,7 +10,6 @@ import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
 import { steps } from "./routes";
-import type { InitState } from "./types";
 
 export function Component() {
   const { email } = useAuthenticatedUser();
@@ -44,14 +43,7 @@ export function Component() {
         aria-disabled={isLoading || isError || !reg}
         className="w-full max-w-[26.25rem] btn-blue btn-reg"
         to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`}
-        state={
-          {
-            // link is disabled until reg is loaded
-            id: reg?.id!,
-            registrant_id: reg?.registrant_id!,
-            claim: reg?.claim,
-          } satisfies InitState
-        }
+        state={reg}
       >
         <LoadText isLoading={isLoading} text="Continue registration">
           Continue registration

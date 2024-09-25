@@ -5,7 +5,6 @@ import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useLazyRegQuery } from "services/aws/registration";
 import { getRegistrationState } from "../Steps/getRegistrationState";
-import type { InitState } from "../types";
 import type { FormValues } from "./types";
 
 export default function useSubmit() {
@@ -25,13 +24,9 @@ export default function useSubmit() {
 
       storeRegistrationReference(reference);
 
-      const { nextStep } = getRegistrationState(data);
+      const { state, nextStep } = getRegistrationState(data);
       navigate(`../${regRoutes.steps}/${nextStep}`, {
-        state: {
-          registrant_id: data.registrant_id,
-          id: data.id,
-          claim: data.claim,
-        } as InitState,
+        state: state.data.init,
       });
     } catch (err) {
       handleError(err, { context: "resuming registration" });

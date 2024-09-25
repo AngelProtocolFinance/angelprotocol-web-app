@@ -5,9 +5,6 @@ import type {
 } from "@better-giving/registration/models";
 import type { CompleteReg } from "@better-giving/registration/step";
 
-export interface InitState
-  extends Pick<Init, "id" | "registrant_id" | "claim"> {}
-
 export interface Reg extends Omit<CompleteReg, keyof Init> {
   init: Init;
 }
