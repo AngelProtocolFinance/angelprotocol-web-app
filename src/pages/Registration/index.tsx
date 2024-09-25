@@ -8,7 +8,7 @@ import { route as stepsRoute } from "./Steps";
 
 function Layout() {
   return (
-    <div className="flex justify-center items-center my-20">
+    <div className="grid content-start justify-items-center py-8">
       <Seo
         title={`Registration Portal - ${APP_NAME}`}
         url={`${BASE_URL}/register`}
