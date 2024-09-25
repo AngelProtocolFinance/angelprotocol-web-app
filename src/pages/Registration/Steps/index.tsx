@@ -57,6 +57,7 @@ function Layout() {
   }
 
   const { state: regState } = getRegistrationState(data);
+
   const guardProps: StepGuardProps = {
     init: initReg,
     state: regState,

@@ -87,7 +87,7 @@ export default function Form() {
         />
         <Radio<FV, "isAnonymousDonationsAllowed">
           name="isAnonymousDonationsAllowed"
-          value="yes"
+          value="no"
         />
       </div>
 

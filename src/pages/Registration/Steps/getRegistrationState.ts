@@ -26,7 +26,7 @@ export function getRegistrationState(reg: Reg): {
   if (isDone.contact(reg)) {
     return {
       state: { step: 2, data: toData(reg) },
-      nextStep: steps.fsaInquiry,
+      nextStep: steps.orgDetails,
     };
   }
 

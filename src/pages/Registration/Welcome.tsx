@@ -46,9 +46,10 @@ export function Component() {
         to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`}
         state={
           {
-            //link is disabled if no reg
-            registrant_id: reg?.registrant_id!,
+            // link is disabled until reg is loaded
             id: reg?.id!,
+            registrant_id: reg?.registrant_id!,
+            claim: reg?.claim,
           } satisfies InitState
         }
       >
