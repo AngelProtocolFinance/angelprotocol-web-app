@@ -20,6 +20,7 @@ vi.mock("../../Context", () => ({
 }));
 
 const confirmPaymentMock = vi.hoisted(() => vi.fn());
+const confirmSetupMock = vi.hoisted(() => vi.fn());
 
 vi.mock("@stripe/react-stripe-js", () => ({
   Elements: vi.fn(({ children }) => children),
@@ -35,6 +36,7 @@ vi.mock("@stripe/react-stripe-js", () => ({
   useStripe: vi.fn(() => {
     const stripe: Stripe = {
       confirmPayment: confirmPaymentMock,
+      confirmSetup: confirmSetupMock,
     } as any;
     return stripe;
   }),
@@ -130,7 +132,10 @@ describe("stripe checkout", () => {
       type: "card_error",
       message: "invalid card",
     };
-    confirmPaymentMock.mockResolvedValueOnce({ error: err });
+
+    if (state.details.frequency === "one-time")
+      confirmPaymentMock.mockResolvedValueOnce({ error: err });
+    else confirmSetupMock.mockResolvedValueOnce({ error: err });
 
     //user sees modal on card error
     await userEvent.click(donateBtn);
@@ -149,7 +154,10 @@ describe("stripe checkout", () => {
       message: "unhelpful error message that won't be shown",
     };
 
-    confirmPaymentMock.mockResolvedValueOnce({ error: err });
+    if (state.details.frequency === "one-time")
+      confirmPaymentMock.mockResolvedValueOnce({ error: err });
+    else confirmSetupMock.mockResolvedValueOnce({ error: err });
+
     await userEvent.click(donateBtn);
 
     const errorModal = screen.getByRole("dialog");
