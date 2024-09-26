@@ -14,7 +14,9 @@ import type { DonateThanksState } from "types/pages";
 export function Component() {
   const isInWidget = useOutletContext<true | undefined>();
   const paymentIntentId =
-    new URLSearchParams(window.location.search).get("payment_intent") ?? "";
+    (new URLSearchParams(window.location.search).get("payment_intent") ||
+      new URLSearchParams(window.location.search).get("setup_intent")) ??
+    "";
 
   const queryState = useStripePaymentStatusQuery(
     { paymentIntentId },

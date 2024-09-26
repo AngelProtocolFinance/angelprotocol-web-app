@@ -43,12 +43,17 @@ export default function Checkout(props: StripeCheckoutStep) {
         ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
         : `${window.location.origin}${appRoutes.stripe_payment_status}`;
 
-    const { error } = await stripe.confirmPayment({
+    const stripeConfirmParams = {
       elements,
       confirmParams: {
         return_url,
       },
-    });
+    };
+
+    const { error } =
+      props.details.frequency === "subscription"
+        ? await stripe.confirmSetup(stripeConfirmParams)
+        : await stripe.confirmPayment(stripeConfirmParams);
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
