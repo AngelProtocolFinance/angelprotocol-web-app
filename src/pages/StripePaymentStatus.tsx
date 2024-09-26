@@ -1,3 +1,4 @@
+import { skipToken } from "@reduxjs/toolkit/query";
 import type { PaymentIntent } from "@stripe/stripe-js";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
@@ -6,21 +7,32 @@ import Seo from "components/Seo";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useCallback, useEffect } from "react";
-import { Link, Navigate, useOutletContext } from "react-router-dom";
+import {
+  Link,
+  type LoaderFunction,
+  Navigate,
+  useLoaderData,
+  useOutletContext,
+} from "react-router-dom";
 import { useStripePaymentStatusQuery } from "services/apes";
 import type { GuestDonor } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 
+export const loader: LoaderFunction = ({ request }) => {
+  const url = new URL(request.url);
+  return (
+    url.searchParams.get("payment_intent") ??
+    url.searchParams.get("setup_intent") ??
+    ""
+  );
+};
+
 export function Component() {
   const isInWidget = useOutletContext<true | undefined>();
-  const paymentIntentId =
-    (new URLSearchParams(window.location.search).get("payment_intent") ||
-      new URLSearchParams(window.location.search).get("setup_intent")) ??
-    "";
+  const paymentIntentId = useLoaderData() as string;
 
   const queryState = useStripePaymentStatusQuery(
-    { paymentIntentId },
-    { skip: !paymentIntentId }
+    paymentIntentId ? { paymentIntentId } : skipToken
   );
 
   const { refetch } = queryState;
