@@ -1,92 +1,23 @@
-import LoadText from "components/LoadText";
-import { Label, Radio } from "components/form";
-import { APP_NAME } from "constants/env";
-import { FormProvider, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { steps } from "../../routes";
 import { useRegState, withStepGuard } from "../StepGuard";
-import type { FV } from "./types";
-import useSubmit from "./useSubmit";
+import { NotTaxExempt } from "./NotTaxExempt";
+import { PossiblyTaxExempt } from "./PossiblyTaxExempt";
 
 const countryWhiteList = ["United States"]; //will add more in the future;
 function FSAInquiry() {
   const { data } = useRegState<3>();
   const possiblyTaxExempt = countryWhiteList.includes(data.org.hq_country);
-  const methods = useForm<FV>({
-    defaultValues: {
-      irs501c3:
-        data.irs501c3 ||
-        /** US-based unclaimed endowments are authorized by default */
-        data.init.claim
-          ? "yes"
-          : "no",
-    },
-  });
-  const { watch } = methods;
-  const answer = watch("irs501c3");
-  const { submit, isSubmitting } = useSubmit(data, methods);
 
-  const optionsDisabled = !possiblyTaxExempt || !!data.init.claim;
+  if (!possiblyTaxExempt) {
+    return (
+      <NotTaxExempt
+        {...data.init}
+        country={data.org.hq_country}
+        isFsaPrev={data.irs501c3 != null ? data.irs501c3 === false : undefined}
+      />
+    );
+  }
 
-  return (
-    <FormProvider {...methods}>
-      <form className="w-full" onSubmit={submit}>
-        {possiblyTaxExempt ? (
-          <>
-            <Label className="mt-6">
-              Is your organization recognized by the Internal Revenue Service as
-              a nonprofit organization exempt under IRC 501(c)(3)?{" "}
-            </Label>
-            <div className="flex gap-4 mt-4 accent-blue-d1 text-sm">
-              <Radio<FV, "irs501c3">
-                name="irs501c3"
-                value="yes"
-                disabled={optionsDisabled}
-              />
-              <Radio<FV, "irs501c3">
-                name="irs501c3"
-                value="no"
-                disabled={optionsDisabled}
-              />
-            </div>
-          </>
-        ) : (
-          <p className="text-sm text-navy-l1 dark:text-navy-l2 leading-relaxed">
-            Great news: Nonprofit Organizations in{" "}
-            <span className="font-semibold">{data.org.hq_country}</span> can now
-            take advantage of {APP_NAME}’s Fiscal Sponsorship service.
-          </p>
-        )}
-
-        {!possiblyTaxExempt || answer === "no" ? (
-          <p className="text-sm text-navy-l1 dark:text-navy-l2 leading-relaxed mt-4">
-            {APP_NAME} provides fiscal sponsorship services at market-leading
-            cost (2.9%) for our partner organizations worldwide to enable them
-            to receive tax efficient donations from the USA. Continue to setup
-            your fiscal sponsorship agreement.
-          </p>
-        ) : null}
-
-        <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
-          <Link
-            aria-disabled={isSubmitting}
-            to={`../${steps.orgDetails}`}
-            state={data.init}
-            className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
-          >
-            Back
-          </Link>
-          <button
-            disabled={isSubmitting}
-            type="submit"
-            className="py-3 min-w-[8rem] btn-blue btn-reg"
-          >
-            <LoadText isLoading={isSubmitting}>Continue</LoadText>
-          </button>
-        </div>
-      </form>
-    </FormProvider>
-  );
+  return <PossiblyTaxExempt {...data.init} irs501c3Prev={data.irs501c3} />;
 }
 
 export default withStepGuard(FSAInquiry);

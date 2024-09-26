@@ -69,9 +69,7 @@ const registration_api = aws.injectEndpoints({
           const { id } = args;
           const { data } = await queryFulfilled;
           dispatch(
-            registration_api.util.updateQueryData("reg", id, (draft) => {
-              Object.assign(draft, data);
-            })
+            registration_api.util.updateQueryData("reg", id, () => data)
           );
         } catch (err) {
           logger.error(err);

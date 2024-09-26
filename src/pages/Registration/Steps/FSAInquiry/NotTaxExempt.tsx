@@ -8,7 +8,7 @@ import { steps } from "../../routes";
 
 interface Props extends Init {
   country: string;
-  isFsaPrev: boolean;
+  isFsaPrev?: boolean;
 }
 export function NotTaxExempt({ country, isFsaPrev, ...init }: Props) {
   const [updateReg, { isLoading }] = useUpdateRegMutation();
