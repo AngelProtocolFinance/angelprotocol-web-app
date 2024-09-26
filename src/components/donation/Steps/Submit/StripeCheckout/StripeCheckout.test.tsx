@@ -20,6 +20,7 @@ vi.mock("../../Context", () => ({
 }));
 
 const confirmPaymentMock = vi.hoisted(() => vi.fn());
+const confirmSetupMock = vi.hoisted(() => vi.fn());
 
 vi.mock("@stripe/react-stripe-js", () => ({
   Elements: vi.fn(({ children }) => children),
@@ -35,6 +36,7 @@ vi.mock("@stripe/react-stripe-js", () => ({
   useStripe: vi.fn(() => {
     const stripe: Stripe = {
       confirmPayment: confirmPaymentMock,
+      confirmSetup: confirmSetupMock,
     } as any;
     return stripe;
   }),
