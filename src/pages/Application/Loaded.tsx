@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 import Container from "./Container";
 import Prompt from "./Prompt";
 
-const NA = "Not provided";
-
 export default function Loaded(props: Application) {
   const { showModal } = useModalContext();
 
@@ -105,10 +103,14 @@ export default function Loaded(props: Application) {
       </Container>
       <Container title="Banking details">
         <dl className="grid sm:grid-cols-[auto_auto_1fr]">
-          <Row label="Bank name">{props.bank?.bankName || NA}</Row>
-          <Row label="Address">{props.bank?.address || NA}</Row>
-          <Row label="Account number">{props.bank?.accountNumber || NA}</Row>
-          <Row label="Account holder name">{props.bank?.accountName || NA}</Row>
+          <Row label="Account holder name">
+            {props.banking.details.accountName}
+          </Row>
+          {props.banking.details.fields.map((f) => (
+            <Row key={f.label} label={f.label}>
+              {f.value}
+            </Row>
+          ))}
           <Row label="Bank statement document">
             <DocLink url={props.banking.bank_statement.publicUrl} />
           </Row>
