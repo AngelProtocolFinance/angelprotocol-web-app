@@ -23,9 +23,9 @@ export default function Loaded(props: Application) {
   };
 
   const prevVerdict =
-    props.status === "02"
+    props.status === "03"
       ? "approved"
-      : props.status === "03"
+      : props.status === "04"
         ? "rejected"
         : null;
 

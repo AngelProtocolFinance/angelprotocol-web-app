@@ -79,8 +79,9 @@ const registration_api = aws.injectEndpoints({
     submit: builder.mutation<Submission, string>({
       invalidatesTags: ["registration"],
       query: (referenceID) => ({
-        url: `${v(5)}/registration/${referenceID}/submit`,
+        url: `${v(1)}/registrations/${referenceID}/submit`,
         method: "POST",
+        headers: { authorization: TEMP_JWT },
       }),
       transformErrorResponse(err) {
         return {

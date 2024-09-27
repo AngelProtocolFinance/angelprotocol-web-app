@@ -192,7 +192,7 @@ export const aws = createApi({
       providesTags: ["applications"],
       query: (params) => {
         return {
-          url: `${v(1)}/applications`,
+          url: `${v(1)}/registrations`,
           params,
           headers: { authorization: TEMP_JWT },
         };
@@ -201,7 +201,7 @@ export const aws = createApi({
     application: builder.query<Application, string>({
       providesTags: ["application"],
       query: (uuid) => ({
-        url: `${v(1)}/applications/${uuid}`,
+        url: `${v(1)}/registrations/${uuid}`,
         headers: { authorization: TEMP_JWT },
       }),
     }),
