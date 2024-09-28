@@ -1,5 +1,7 @@
-import type { Submission } from "@better-giving/registration/models";
-import { isRejected } from "@reduxjs/toolkit";
+import {
+  type Submission,
+  isRejected,
+} from "@better-giving/registration/models";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import { steps } from "pages/Registration/routes";
@@ -22,9 +24,34 @@ export default function EndowmentStatus({
 }: Props) {
   const { data } = useRegState<3>();
 
+  if (!status) {
+    return (
+      <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
+        <Link
+          aria-disabled={isSubmitting}
+          to={`../${steps.banking}`}
+          state={data.init}
+          className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
+        >
+          Back
+        </Link>
+        <button
+          type="button"
+          disabled={isSubmitting}
+          onClick={onSubmit}
+          className="py-3 min-w-[8rem] btn-blue btn-reg"
+        >
+          <LoadText isLoading={isSubmitting}>Continue</LoadText>
+        </button>
+      </div>
+    );
+  }
+
   if (isRejected(status)) {
     return (
-      <div className={`max-sm:grid text-red dark:text-red-l3 ${classes}`}>
+      <div
+        className={`max-sm:grid text-red dark:text-red-l3 ${classes} content-start`}
+      >
         <p className="mb-6 max-sm:grid justify-items-center gap-2">
           <Icon
             type="Info"
@@ -63,25 +90,4 @@ export default function EndowmentStatus({
       </div>
     );
   }
-
-  return (
-    <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
-      <Link
-        aria-disabled={isSubmitting}
-        to={`../${steps.banking}`}
-        state={data.init}
-        className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
-      >
-        Back
-      </Link>
-      <button
-        type="button"
-        disabled={isSubmitting}
-        onClick={onSubmit}
-        className="py-3 min-w-[8rem] btn-blue btn-reg"
-      >
-        <LoadText isLoading={isSubmitting}>Continue</LoadText>
-      </button>
-    </div>
-  );
 }

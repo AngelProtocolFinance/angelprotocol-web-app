@@ -37,7 +37,7 @@ function Dashboard() {
     }
   };
 
-  const { submission } = data;
+  const { submission, init } = data;
   const isStepDisabled = isSubmitting || submission === "in-review";
 
   if (
@@ -52,7 +52,7 @@ function Dashboard() {
     <div className="grid">
       <h3 className="text-lg mb-2">Summary</h3>
       <p className="text-sm mb-8">
-        {status === "Inactive" && //keep bottom margin
+        {init.status === "04" && //keep bottom margin
           "If you are happy with the details you have submitted, click continue. If you wish to check, click update as required."}
       </p>
 

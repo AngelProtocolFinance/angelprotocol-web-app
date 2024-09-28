@@ -209,8 +209,8 @@ export const aws = createApi({
       invalidatesTags: ["application", "applications"],
       query: ({ id, ...verdict }) => {
         return {
-          url: `${v(3)}/applications`,
-          method: "PUT",
+          url: `${v(1)}/registrations/${id}/review`,
+          method: "POST",
           headers: { authorization: TEMP_JWT },
           body: verdict,
         };
