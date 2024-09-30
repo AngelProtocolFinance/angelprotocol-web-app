@@ -36,7 +36,6 @@ export function getRegistrationState(reg: Reg): {
 function toData<T extends Reg>({
   id,
   registrant_id,
-  hubspot_contact_id,
   created_at,
   env,
   claim,
@@ -47,7 +46,6 @@ function toData<T extends Reg>({
     init: {
       id,
       registrant_id,
-      hubspot_contact_id,
       created_at,
       env,
       claim,

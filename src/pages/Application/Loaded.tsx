@@ -106,7 +106,7 @@ export default function Loaded(props: Application) {
           <Row label="Account holder name">
             {props.banking.details.accountName}
           </Row>
-          {props.banking.details.fields.map((f) => (
+          {props.banking.fields.map((f) => (
             <Row key={f.label} label={f.label}>
               {f.value}
             </Row>
