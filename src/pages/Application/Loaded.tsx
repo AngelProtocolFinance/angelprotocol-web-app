@@ -66,7 +66,7 @@ export default function Loaded(props: Application) {
       <div className="flex max-sm:flex-col gap-x-4 -mt-2 lg:-mt-4">
         <span className="text-sm font-semibold uppercase">Date submitted:</span>
         <span className="uppercase text-sm">
-          {new Date(props.created_at).toLocaleDateString()}
+          {new Date(props.updated_at).toLocaleDateString()}
         </span>
       </div>
 

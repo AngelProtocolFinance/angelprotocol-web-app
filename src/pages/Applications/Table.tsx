@@ -21,7 +21,7 @@ export default function Table({
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
     applications,
-    "created_at"
+    "updated_at"
   );
 
   return (
@@ -46,7 +46,7 @@ export default function Table({
             Nonprofit Name
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("created_at")}
+            onClick={handleHeaderClick("updated_at")}
             _activeSortKey={sortKey}
             _sortKey="RegistrationDate"
             _sortDirection={sortDirection}
@@ -92,7 +92,7 @@ export default function Table({
                 {isIrs501c3(row.docs) && row.docs.claim ? "Claim" : "New"}
               </span>
               <>{row.org_name}</>
-              <>{new Date(row.created_at).toLocaleDateString()}</>
+              <>{new Date(row.updated_at).toLocaleDateString()}</>
               <>{row.hq_country}</>
               <td className="text-center">
                 <Status status={row.status} />

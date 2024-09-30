@@ -1,5 +1,8 @@
-import type { Init } from "@better-giving/registration/models";
-import { type Reg, isDone } from "@better-giving/registration/step";
+import {
+  type InitStep,
+  type Reg,
+  isDone,
+} from "@better-giving/registration/step";
 import { steps } from "../routes";
 import type { RegistrationState } from "../types";
 
@@ -37,16 +40,20 @@ function toData<T extends Reg>({
   id,
   registrant_id,
   created_at,
+  update_type,
+  updated_at,
   env,
   claim,
   status,
   ...rest
-}: T): { init: Init } & Omit<T, keyof Init> {
+}: T): { init: InitStep } & Omit<T, keyof InitStep> {
   return {
     init: {
       id,
       registrant_id,
       created_at,
+      update_type,
+      updated_at,
       env,
       claim,
       status,
