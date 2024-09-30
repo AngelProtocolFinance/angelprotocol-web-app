@@ -3446,7 +3446,7 @@ __metadata:
     cropperjs: "npm:1.6.2"
     date-fns: "npm:3.6.0"
     decimal.js: "npm:10.4.3"
-    framer-motion: "npm:11.2.10"
+    framer-motion: "npm:11.9.0"
     fuse.js: "npm:7.0.0"
     gsap: "npm:3.12.5"
     jsdom: "npm:24.1.0"
@@ -4344,9 +4344,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:11.2.10":
-  version: 11.2.10
-  resolution: "framer-motion@npm:11.2.10"
+"framer-motion@npm:11.9.0":
+  version: 11.9.0
+  resolution: "framer-motion@npm:11.9.0"
   dependencies:
     tslib: "npm:^2.4.0"
   peerDependencies:
@@ -4360,7 +4360,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10/3f09356c08700f5f405b6259617d9eb3f49d49770efe15a81211bc41625001485f242fe2b44f6de657e707cd2ac766ca243bab72192dc948672525d331628a5d
+  checksum: 10/fa9dec871d99bd3289767eb2b1c2d4b68e142bbe3116deb6a17177c45e90d128e4184a0e96097bed15cf54d2db5c63c1ceed0b1156518e245b807ec8aa653a19
   languageName: node
   linkType: hard
 
