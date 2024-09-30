@@ -18,15 +18,15 @@ export const roles: { [key in Role]: string } = {
 };
 export const referralMethods: { [key in ReferralMethod]: string } = {
   "": "",
-  "better-giving-alliance": "Better Giving Alliance",
+  "better-giving-alliance": "Better.Giving Website",
   discord: "Discord",
   facebook: "Facebook",
   linkedin: "Linkedin",
-  medium: "Medium",
+  medium: "Medium", //not used in hubspot - coerced to "Other"
   press: "Press",
   "search-engines": "Search engines",
   twitter: "Twitter",
-  referral: "Referral Code",
+  referral: "Referral Code", //not used in hubspot -  coerced to "Other"
   other: "Other",
 };
 
