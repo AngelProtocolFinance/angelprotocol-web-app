@@ -103,9 +103,7 @@ export default function Loaded(props: Application) {
       </Container>
       <Container title="Banking details">
         <dl className="grid sm:grid-cols-[auto_auto_1fr]">
-          <Row label="Account holder name">
-            {props.banking.details.accountName}
-          </Row>
+          <Row label="Account holder name">{props.banking.accountName}</Row>
           {props.banking.fields.map((f) => (
             <Row key={f.label} label={f.label}>
               {f.value}
