@@ -1,7 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
-import { LockedSplitSlider } from "components/donation";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
@@ -49,17 +48,12 @@ export default withAuth(function CreateFund() {
       settings: {
         from: "fund",
         allowBgTip: true,
-        liquidSplit: 50,
       },
       targetType: "smart",
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
   const { field: logo } = useController({ control, name: "logo" });
-  const { field: liquidSplitPct } = useController({
-    control,
-    name: "settings.liquidSplit",
-  });
   const { field: members } = useController({
     control,
     name: "members",
@@ -69,9 +63,6 @@ export default withAuth(function CreateFund() {
     name: "targetType",
   });
 
-  //keep track of what user previously set
-  //revert to it when endow is no longer 1
-  const customSplitRef = useRef(50);
   const customAllowBgTipRef = useRef(true);
   const endowReqRef = useRef<string>();
 
@@ -105,7 +96,6 @@ export default withAuth(function CreateFund() {
         members: fv.members.map((m) => m.id),
         featured: fv.featured,
         settings: {
-          liquidSplitPct: fv.settings.liquidSplit,
           allowBgTip: fv.settings.allowBgTip,
         },
         target:
@@ -182,7 +172,6 @@ export default withAuth(function CreateFund() {
               endowReqRef.current = undefined;
               return setValue("settings", {
                 from: "fund",
-                liquidSplit: customSplitRef.current,
                 allowBgTip: customAllowBgTipRef.current,
               });
             }
@@ -193,7 +182,7 @@ export default withAuth(function CreateFund() {
               const endowReq = getEndow(
                 {
                   id: opt.id,
-                  fields: ["hide_bg_tip", "splitLiqPct", "name"],
+                  fields: ["hide_bg_tip", "name"],
                 },
                 true
               );
@@ -208,7 +197,6 @@ export default withAuth(function CreateFund() {
               setValue("settings", {
                 from: endow.name,
                 allowBgTip: !endow.hide_bg_tip,
-                liquidSplit: endow.splitLiqPct ?? 50,
               });
             } catch (err) {
               logger.error(err);
@@ -298,19 +286,6 @@ export default withAuth(function CreateFund() {
           {settings.from !== "fund" &&
             `${withPossesive(settings.from)} config has been applied`}
         </p>
-
-        <label className="block mb-4 mt-10 font-medium text-base">
-          Define default split value:
-        </label>
-        <LockedSplitSlider
-          disabled={settings.from !== "fund"}
-          value={100 - liquidSplitPct.value}
-          onChange={(lockedPct) => {
-            const liq = 100 - lockedPct;
-            liquidSplitPct.onChange(liq);
-            customSplitRef.current = liq;
-          }}
-        />
 
         <CheckField
           {...register("settings.allowBgTip")}

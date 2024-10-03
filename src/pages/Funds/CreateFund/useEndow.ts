@@ -3,7 +3,7 @@ import { useLazyProfileQuery } from "services/aws/aws";
 import type { Endowment } from "types/aws";
 import type { FundMember } from "./types";
 
-export type Endow = Pick<Endowment, "splitLiqPct" | "hide_bg_tip" | "name">;
+export type Endow = Pick<Endowment, "hide_bg_tip" | "name">;
 
 export function useEndow(
   members: FundMember[],
@@ -24,15 +24,14 @@ export function useEndow(
     getEndow(
       {
         id: numId,
-        fields: ["hide_bg_tip", "splitLiqPct", "name"],
+        fields: ["hide_bg_tip", "name"],
       },
       true
     )
       .unwrap()
-      .then(({ hide_bg_tip, splitLiqPct, name }) => {
+      .then(({ hide_bg_tip, name }) => {
         onEndowSet({
           hide_bg_tip,
-          splitLiqPct,
           name,
         });
       });
