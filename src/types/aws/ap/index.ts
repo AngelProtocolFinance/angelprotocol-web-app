@@ -247,8 +247,6 @@ export interface Fund {
   featured: boolean;
   active: boolean;
   settings: {
-    /** 1 - 100 */
-    liquidSplitPct: number;
     allowBgTip: boolean;
   };
   /** iso */

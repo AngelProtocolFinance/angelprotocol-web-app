@@ -10,7 +10,6 @@ export interface FundMember {
 export interface Settings {
   /** endowname or fund */
   from: string;
-  liquidSplit: number;
   allowBgTip: boolean;
 }
 
