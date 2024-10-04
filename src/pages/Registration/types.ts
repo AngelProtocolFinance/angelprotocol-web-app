@@ -1,47 +1,38 @@
 import type {
-  BankingDetails,
-  ContactDetails,
-  EndowClaim,
-  FSAInquiry,
-  OrgDetails,
-  RegistrationStatus,
-  TDocumentation,
-} from "types/aws";
+  FsaDocs,
+  Init,
+  TaxDeductibleDocs,
+} from "@better-giving/registration/models";
+import type { CompleteReg } from "@better-giving/registration/step";
 
-//REF_ID is global to registration
-export type InitReg = {
-  reference: string;
-  email: string;
-  claim?: EndowClaim;
-};
-
-export type CompleteRegistration = {
-  init: InitReg;
-  contact: ContactDetails & { orgName: string };
-  orgDetails: OrgDetails;
-  fsaInquiry: FSAInquiry;
-  documentation: TDocumentation["Documentation"];
-  banking: BankingDetails;
-  endowId?: number;
-};
+export interface Reg extends Omit<CompleteReg, keyof Init> {
+  init: Init;
+}
 
 type Data<
-  Done extends keyof CompleteRegistration,
-  Pending extends Exclude<keyof CompleteRegistration, Done>,
-> = Pick<CompleteRegistration, Done> & {
-  [key in Pending]?: CompleteRegistration[key];
+  Done extends keyof Reg,
+  Pending extends Exclude<keyof Reg, Done>,
+> = Pick<Reg, Done> & {
+  [key in Pending]?: Reg[key];
 };
 
-type Step1Data = Data<"init", "contact">;
-type Step2Data = Data<"init" | "contact", "orgDetails">;
-export type Step3Data = Data<"init" | "contact" | "orgDetails", "fsaInquiry">;
-type Step4Data = Data<
-  "init" | "contact" | "orgDetails" | "fsaInquiry",
-  "documentation"
->;
+export type Step1Data = Data<"init", "contact">;
+type Step2Data = Data<"init" | "contact", "org">;
+export type Step3Data = Data<"init" | "contact" | "org", "irs501c3">;
+type Step4Data = Omit<
+  Data<"init" | "contact" | "org" | "irs501c3", "docs">,
+  "docs"
+> & {
+  docs?: FsaDocs | TaxDeductibleDocs;
+};
+
 type Step5Data = Data<
-  "init" | "contact" | "orgDetails" | "fsaInquiry" | "documentation",
+  "init" | "contact" | "org" | "irs501c3" | "docs",
   "banking"
+>;
+export type Step6Data = Data<
+  "init" | "contact" | "org" | "irs501c3" | "docs" | "banking",
+  "submission"
 >;
 
 /** contact details */
@@ -74,9 +65,9 @@ type RegStep5 = {
   data: Step5Data;
 };
 
-type RegStep6 = {
+export type RegStep6 = {
   step: 6;
-  data: CompleteRegistration & { status: RegistrationStatus };
+  data: Step6Data;
 };
 
 export type RegistrationState =

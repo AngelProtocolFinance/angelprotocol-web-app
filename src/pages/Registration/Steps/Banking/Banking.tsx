@@ -27,7 +27,7 @@ function Banking() {
           </span>
         </p>
         <ExtLink
-          href={data.banking.BankStatementFile.publicUrl}
+          href={data.banking.bank_statement.publicUrl}
           className="flex items-center gap-2 text-blue hover:text-blue-d1"
         >
           <Icon type="ExternalLink" />

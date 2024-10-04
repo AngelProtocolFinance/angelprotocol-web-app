@@ -1,10 +1,13 @@
+import {
+  type Status as TStatus,
+  isIrs501c3,
+} from "@better-giving/registration/models";
 import { HeaderButton } from "components/HeaderButton";
 import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import useSort from "hooks/useSort";
 import { Link } from "react-router-dom";
-import type { RegistrationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
 
@@ -18,7 +21,7 @@ export default function Table({
 }: TableProps) {
   const { handleHeaderClick, sorted, sortDirection, sortKey } = useSort(
     applications,
-    "RegistrationDate"
+    "updated_at"
   );
 
   return (
@@ -35,7 +38,7 @@ export default function Table({
         >
           <td className="w-4">type</td>
           <HeaderButton
-            onClick={handleHeaderClick("OrganizationName")}
+            onClick={handleHeaderClick("org_name")}
             _activeSortKey={sortKey}
             _sortKey="OrganizationName"
             _sortDirection={sortDirection}
@@ -43,7 +46,7 @@ export default function Table({
             Nonprofit Name
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("RegistrationDate")}
+            onClick={handleHeaderClick("updated_at")}
             _activeSortKey={sortKey}
             _sortKey="RegistrationDate"
             _sortDirection={sortDirection}
@@ -51,7 +54,7 @@ export default function Table({
             Date Submitted
           </HeaderButton>
           <HeaderButton
-            onClick={handleHeaderClick("HqCountry")}
+            onClick={handleHeaderClick("hq_country")}
             _activeSortKey={sortKey}
             _sortKey="HqCountry"
             _sortDirection={sortDirection}
@@ -60,7 +63,7 @@ export default function Table({
           </HeaderButton>
           <HeaderButton
             style={{ justifyContent: "center" }}
-            onClick={handleHeaderClick("RegistrationStatus")}
+            onClick={handleHeaderClick("status")}
             _activeSortKey={sortKey}
             _sortKey="RegistrationStatus"
             _sortDirection={sortDirection}
@@ -79,26 +82,23 @@ export default function Table({
         {sorted
           .map((row) => (
             <Cells
-              key={row.PK}
+              key={row.id}
               type="td"
               cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
                 hasMore ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
               <span className="text-xs font-bold upppercase">
-                {row.Documentation.DocType === "Non-FSA" &&
-                row.Documentation.Claim
-                  ? "Claim"
-                  : "New"}
+                {isIrs501c3(row.docs) && row.docs.claim ? "Claim" : "New"}
               </span>
-              <>{row.OrganizationName}</>
-              <>{new Date(row.RegistrationDate).toLocaleDateString()}</>
-              <>{row.HqCountry}</>
+              <>{row.org_name}</>
+              <>{new Date(row.updated_at).toLocaleDateString()}</>
+              <>{row.hq_country}</>
               <td className="text-center">
-                <Status status={row.RegistrationStatus} />
+                <Status status={row.status} />
               </td>
               <Link
-                to={appRoutes.applications + `/${row.PK}`}
+                to={appRoutes.applications + `/${row.id}`}
                 className="text-center w-full inline-block hover:text-blue-d1"
               >
                 <Icon
@@ -132,21 +132,21 @@ export default function Table({
   );
 }
 
-const bg: { [key in RegistrationStatus]: string } = {
-  Active: "bg-green",
-  "Under Review": "bg-gray-d1",
-  Rejected: "bg-red",
-  Inactive: "bg-gray-d1",
+const bg: { [key in TStatus]: string } = {
+  "03": "bg-green",
+  "02": "bg-gray-d1",
+  "04": "bg-red",
+  "01": "bg-gray-d1",
 };
 
-const text: { [key in RegistrationStatus]: string } = {
-  Active: "Approved",
-  "Under Review": "Pending",
-  Rejected: "Rejected",
-  Inactive: "Incomplete",
+const text: { [key in TStatus]: string } = {
+  "03": "Approved",
+  "02": "Pending",
+  "04": "Rejected",
+  "01": "Incomplete",
 };
 
-function Status({ status }: { status: RegistrationStatus }) {
+function Status({ status }: { status: TStatus }) {
   return (
     <p
       className={`${bg[status]} rounded px-3 py-1 inline-block uppercase text-xs text-white`}

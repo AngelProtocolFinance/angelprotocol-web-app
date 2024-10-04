@@ -1,3 +1,9 @@
+import type {
+  Application,
+  Page,
+  QueryParams,
+  Verdict,
+} from "@better-giving/registration/approval";
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { TEMP_JWT } from "constants/auth";
@@ -6,10 +12,6 @@ import { apiEnv } from "services/constants";
 import type { RootState } from "store/store";
 import { userIsSignedIn } from "types/auth";
 import type {
-  Application,
-  ApplicationDetails,
-  ApplicationVerdict,
-  ApplicationsQueryParams,
   Donation,
   DonationsQueryParams,
   EndowListPaginatedAWSQueryRes,
@@ -17,7 +19,6 @@ import type {
   EndowmentCard,
   EndowmentOption,
   EndowmentsQueryParams,
-  PaginatedAWSQueryRes,
 } from "types/aws";
 import { version as v } from "../helpers";
 import type { EndowmentUpdate, IdOrSlug } from "../types";
@@ -187,33 +188,29 @@ export const aws = createApi({
       },
     }),
 
-    applications: builder.query<
-      PaginatedAWSQueryRes<Application[]>,
-      ApplicationsQueryParams
-    >({
+    applications: builder.query<Page, QueryParams>({
       providesTags: ["applications"],
       query: (params) => {
         return {
-          url: `${v(1)}/applications`,
+          url: `${v(1)}/registrations`,
           params,
           headers: { authorization: TEMP_JWT },
         };
       },
     }),
-    application: builder.query<ApplicationDetails, string>({
+    application: builder.query<Application, string>({
       providesTags: ["application"],
       query: (uuid) => ({
-        url: `${v(1)}/applications`,
-        params: { uuid },
+        url: `${v(1)}/registrations/${uuid}`,
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    reviewApplication: builder.mutation<any, ApplicationVerdict>({
+    reviewApplication: builder.mutation<any, Verdict & { id: string }>({
       invalidatesTags: ["application", "applications"],
-      query: (verdict) => {
+      query: ({ id, ...verdict }) => {
         return {
-          url: `${v(3)}/applications`,
-          method: "PUT",
+          url: `${v(1)}/registrations/${id}/review`,
+          method: "POST",
           headers: { authorization: TEMP_JWT },
           body: verdict,
         };

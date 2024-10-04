@@ -1,194 +1,63 @@
 import {
-  type BankingDetails,
-  type DoneBanking,
-  type DoneDocs,
-  type DoneFSAInquiry,
-  type DoneOrgDetails,
-  type EndowClaim,
-  type FSAInquiry,
-  type InitContact,
-  type OrgDetails,
-  type SavedRegistration,
-  type TDocumentation,
-  isDoneBanking,
-  isDoneContact,
-  isDoneDocs,
-  isDoneFSAInquiry,
-  isDoneOrgDetails,
-  isSubmitted,
-} from "types/aws";
+  type InitStep,
+  type Reg,
+  isDone,
+} from "@better-giving/registration/step";
 import { steps } from "../routes";
-import type { InitReg, RegistrationState } from "../types";
+import type { RegistrationState } from "../types";
 
-export function getRegistrationState(reg: SavedRegistration): {
+export function getRegistrationState(reg: Reg): {
   state: RegistrationState;
   nextStep: steps;
 } {
-  if (isSubmitted(reg)) {
-    const { ContactPerson: c, Registration: r } = reg;
-    return {
-      state: {
-        step: 6,
-        data: {
-          init: initReg(c, r.InitClaim),
-          contact: { ...c, orgName: r.OrganizationName },
-          orgDetails: orgDetails(r),
-          fsaInquiry: fsaInquiry(r),
-          documentation: docs(r),
-          banking: bankDetails(r),
-          status: r.RegistrationStatus,
-          endowId: r.EndowmentId,
-        },
-      },
-      nextStep: steps.summary,
-    };
+  if (isDone.submission(reg)) {
+    return { state: { step: 6, data: toData(reg) }, nextStep: steps.summary };
   }
 
-  if (isDoneBanking(reg)) {
-    const { ContactPerson: c, Registration: r } = reg;
-    return {
-      state: {
-        step: 5,
-        data: {
-          init: initReg(c, r.InitClaim),
-          contact: { ...c, orgName: r.OrganizationName },
-          orgDetails: orgDetails(r),
-          fsaInquiry: fsaInquiry(r),
-          documentation: docs(r),
-          banking: bankDetails(r),
-        },
-      },
-      nextStep: steps.summary,
-    };
+  if (isDone.banking(reg)) {
+    return { state: { step: 5, data: toData(reg) }, nextStep: steps.summary };
   }
 
-  if (isDoneDocs(reg)) {
-    const { ContactPerson: c, Registration: r } = reg;
-    const isSignedFSA =
-      r.Documentation.DocType === "FSA"
-        ? !!r.Documentation.SignedFiscalSponsorshipAgreement
-        : true;
-
-    return {
-      state: {
-        //cast to 4 (type only) to conform to type `RegStep4` which accepts documentation
-        step: (isSignedFSA ? 4 : 3) as 4,
-        data: {
-          init: initReg(c, r.InitClaim),
-          contact: { ...c, orgName: r.OrganizationName },
-          orgDetails: orgDetails(r),
-          fsaInquiry: fsaInquiry(r),
-          //even step is has value of `3` user could still go to step 4 with documentation pre-filled from previous uploads
-          documentation: docs(r),
-        },
-      },
-      nextStep: steps.banking,
-    };
+  if (isDone.docs(reg)) {
+    return { state: { step: 4, data: toData(reg) }, nextStep: steps.banking };
   }
 
-  if (isDoneFSAInquiry(reg)) {
-    const { ContactPerson: c, Registration: r } = reg;
-    return {
-      state: {
-        step: 3,
-        data: {
-          init: initReg(c, r.InitClaim),
-          contact: { ...c, orgName: r.OrganizationName },
-          orgDetails: orgDetails(r),
-          fsaInquiry: fsaInquiry(r),
-        },
-      },
-      nextStep: steps.docs,
-    };
-  }
-  if (isDoneOrgDetails(reg)) {
-    const { ContactPerson: c, Registration: r } = reg;
-    return {
-      state: {
-        step: 2,
-        data: {
-          init: initReg(c, r.InitClaim),
-          contact: { ...c, orgName: r.OrganizationName },
-          orgDetails: orgDetails(r),
-        },
-      },
-      nextStep: steps.fsaInquiry,
-    };
+  if (isDone.fsaInq(reg)) {
+    return { state: { step: 3, data: toData(reg) }, nextStep: steps.docs };
   }
 
-  if (isDoneContact(reg)) {
-    const { ContactPerson: c, Registration: r } = reg;
+  if (isDone.contact(reg)) {
     return {
-      state: {
-        step: 1,
-        data: {
-          init: initReg(c, r.InitClaim),
-          contact: { ...c, orgName: r.OrganizationName },
-        },
-      },
+      state: { step: 2, data: toData(reg) },
       nextStep: steps.orgDetails,
     };
   }
 
-  const { ContactPerson: c, Registration: r } = reg;
+  return { state: { step: 1, data: toData(reg) }, nextStep: steps.contact };
+}
+
+function toData<T extends Reg>({
+  id,
+  registrant_id,
+  created_at,
+  update_type,
+  updated_at,
+  env,
+  claim,
+  status,
+  ...rest
+}: T): { init: InitStep } & Omit<T, keyof InitStep> {
   return {
-    state: {
-      step: 1,
-      data: {
-        init: initReg(c, r.InitClaim),
-      },
+    init: {
+      id,
+      registrant_id,
+      created_at,
+      update_type,
+      updated_at,
+      env,
+      claim,
+      status,
     },
-    nextStep: steps.contact,
-  };
-}
-
-function initReg(i: InitContact, claim?: EndowClaim): InitReg {
-  return {
-    email: i.Email,
-    reference: i.PK,
-    claim,
-  };
-}
-
-function orgDetails(reg: DoneOrgDetails["Registration"]): OrgDetails {
-  return {
-    Website: reg.Website,
-    HqCountry: reg.HqCountry,
-    ActiveInCountries: reg.ActiveInCountries,
-    EndowDesignation: reg.EndowDesignation,
-    KycDonorsOnly: reg.KycDonorsOnly,
-    UN_SDG: reg.UN_SDG,
-  };
-}
-
-function docs(reg: DoneDocs["Registration"]): TDocumentation["Documentation"] {
-  const doc = reg.Documentation;
-  if (doc.DocType === "Non-FSA") {
-    return { EIN: doc.EIN, DocType: doc.DocType, Claim: doc.Claim };
-  }
-  return {
-    DocType: doc.DocType,
-    ProofOfIdentity: doc.ProofOfIdentity,
-    RegistrationNumber: doc.RegistrationNumber,
-    ProofOfRegistration: doc.ProofOfRegistration,
-    LegalEntityType: doc.LegalEntityType,
-    ProjectDescription: doc.ProjectDescription,
-    FiscalSponsorshipAgreementSigningURL:
-      doc.FiscalSponsorshipAgreementSigningURL,
-    SignedFiscalSponsorshipAgreement: doc.SignedFiscalSponsorshipAgreement,
-  };
-}
-
-function bankDetails(reg: DoneBanking["Registration"]): BankingDetails {
-  return {
-    BankStatementFile: reg.BankStatementFile,
-    wise_recipient_id: reg.wise_recipient_id,
-  };
-}
-
-function fsaInquiry(reg: DoneFSAInquiry["Registration"]): FSAInquiry {
-  return {
-    AuthorizedToReceiveTaxDeductibleDonations:
-      reg.AuthorizedToReceiveTaxDeductibleDonations,
+    ...rest,
   };
 }

@@ -1,18 +1,16 @@
-import type { OverrideProperties } from "type-fest";
 import type {
-  ContactDetails,
-  ContactRoles,
-  InitContact,
-  OrgDataForStep1,
-  ReferralMethods,
-} from "types/aws";
+  Contact,
+  Init,
+  ReferralMethod,
+  Role,
+} from "@better-giving/registration/models";
+import type { OverrideProperties } from "type-fest";
 import type { OptionType } from "types/components";
 
 export type FormValues = OverrideProperties<
-  ContactDetails & OrgDataForStep1,
+  Contact & Pick<Init, "registrant_id" | "id">,
   {
-    Role: OptionType<ContactRoles>;
-    ReferralMethod: OptionType<ReferralMethods>;
+    org_role: OptionType<Role>;
+    referral_method: OptionType<ReferralMethod>;
   }
-> &
-  Pick<InitContact, "Email" | "PK">;
+>;

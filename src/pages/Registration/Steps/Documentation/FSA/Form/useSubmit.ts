@@ -10,7 +10,7 @@ import type { FormValues, Props } from "../types";
 
 export default function useSubmit({ doc }: Props) {
   const {
-    data: { contact, init, orgDetails },
+    data: { contact, init, org },
   } = useRegState<4>();
   const {
     handleSubmit,
@@ -29,35 +29,38 @@ export default function useSubmit({ doc }: Props) {
   const submit: SubmitHandler<FormValues> = async (fv) => {
     try {
       //signed agreement and user didn't change any documents
-      if (!isDirty && doc?.SignedFiscalSponsorshipAgreement) {
+      if (!isDirty && doc?.fsa_signed_doc_url) {
         return navigate(`../${steps.banking}`, { state: init });
       }
 
       //existing url and user doesn't change any documents
-      if (!isDirty && doc?.FiscalSponsorshipAgreementSigningURL) {
+      if (!isDirty && doc?.fsa_signing_url) {
         setRedirecting(true);
-        window.location.href = doc.FiscalSponsorshipAgreementSigningURL;
+        window.location.href = doc.fsa_signing_url;
       }
 
       const previews = await getFilePreviews({
-        POI: fv.ProofOfIdentity,
-        POR: fv.ProofOfRegistration,
+        POI: fv.proof_of_identity,
+        POR: fv.proof_of_reg,
       });
 
       const { url } = await generateSigningURL({
-        id: init.reference,
-        email: init.email,
-        firstName: contact.FirstName,
-        lastName: contact.LastName,
-        role: contact.Role === "other" ? contact.OtherRole : contact.Role,
+        id: init.id,
+        email: init.registrant_id,
+        first_name: contact.first_name,
+        last_name: contact.last_name,
+        role:
+          contact.org_role === "other"
+            ? contact.other_role ?? ""
+            : contact.org_role,
         docs: {
-          OrgName: contact.orgName,
-          HqCountry: orgDetails.HqCountry,
-          RegistrationNumber: fv.RegistrationNumber,
-          ProofOfIdentity: previews.POI[0],
-          ProofOfRegistration: previews.POR[0],
-          LegalEntityType: fv.LegalEntityType,
-          ProjectDescription: fv.ProjectDescription,
+          org_name: contact.org_name,
+          hq_country: org.hq_country,
+          registration_number: fv.registration_number,
+          proof_of_identity: previews.POI[0],
+          proof_of_reg: previews.POR[0],
+          legal_entity_type: fv.legal_entity_type,
+          project_description: fv.project_description,
         },
       }).unwrap();
       setRedirecting(true);

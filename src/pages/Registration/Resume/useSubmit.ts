@@ -25,9 +25,9 @@ export default function useSubmit() {
       storeRegistrationReference(reference);
 
       const { state, nextStep } = getRegistrationState(data);
-      const init = state.data.init;
-
-      navigate(`../${regRoutes.steps}/${nextStep}`, { state: init });
+      navigate(`../${regRoutes.steps}/${nextStep}`, {
+        state: state.data.init,
+      });
     } catch (err) {
       handleError(err, { context: "resuming registration" });
     }

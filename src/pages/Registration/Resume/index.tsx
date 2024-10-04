@@ -1,21 +1,15 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { getSavedRegistrationReference } from "helpers";
 import { FormProvider, useForm } from "react-hook-form";
-import { requiredString } from "schemas/string";
-import { object } from "yup";
 import Form from "./Form";
-import type { FormValues } from "./types";
+import { type FormValues, schema } from "./types";
 
 export function Component({ classes = "" }: { classes?: string }) {
   const methods = useForm<FormValues>({
     defaultValues: {
       reference: getSavedRegistrationReference() || "",
     },
-    resolver: yupResolver(
-      object({
-        reference: requiredString.trim(),
-      })
-    ),
+    resolver: valibotResolver(schema),
   });
 
   return (

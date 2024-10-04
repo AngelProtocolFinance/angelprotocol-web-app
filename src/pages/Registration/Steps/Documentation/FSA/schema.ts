@@ -22,14 +22,14 @@ const assetShape = fileDropzoneAssetShape(
 );
 
 export const schema = object<any, SchemaShape<FormValues>>({
-  RegistrationNumber: requiredString.matches(
+  registration_number: requiredString.matches(
     alphanumeric,
     "must only contain numbers and letters"
   ),
-  ProofOfIdentity: assetShape,
-  ProofOfRegistration: assetShape,
-  LegalEntityType: requiredString.trim(),
-  ProjectDescription: requiredString
+  proof_of_identity: assetShape,
+  proof_of_reg: assetShape,
+  legal_entity_type: requiredString.trim(),
+  project_description: requiredString
     .trim()
     .max(4000, "maximum 4000 characters allowed"),
 }) as ObjectSchema<FormValues>;

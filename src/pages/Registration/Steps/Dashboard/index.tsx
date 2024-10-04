@@ -2,9 +2,9 @@ import Prompt from "components/Prompt";
 import { regRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import type { CompleteRegistration } from "pages/Registration/types";
 import { Navigate } from "react-router-dom";
 import { useSubmitMutation } from "services/aws/registration";
+import type { Step6Data } from "../../types";
 import { useRegState, withStepGuard } from "../StepGuard";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
@@ -16,9 +16,9 @@ function Dashboard() {
   const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
 
-  const submit = async ({ init }: CompleteRegistration) => {
+  const submit = async ({ init }: Step6Data) => {
     try {
-      await submitApplication(init.reference).unwrap();
+      await submitApplication(init.id).unwrap();
       if (window.hasOwnProperty("lintrk")) {
         (window as any).lintrk("track", { conversion_id: 12807754 });
       }
@@ -37,10 +37,14 @@ function Dashboard() {
     }
   };
 
-  const { status } = data;
-  const isStepDisabled = isSubmitting || status === "Under Review";
+  const { submission, init } = data;
+  const isStepDisabled = isSubmitting || submission === "in-review";
 
-  if (status === "Active") {
+  if (
+    submission &&
+    typeof submission !== "string" &&
+    "endowment_id" in submission
+  ) {
     return <Navigate to={`../../${regRoutes.success}`} state={data} />;
   }
 
@@ -48,7 +52,7 @@ function Dashboard() {
     <div className="grid">
       <h3 className="text-lg mb-2">Summary</h3>
       <p className="text-sm mb-8">
-        {status === "Inactive" && //keep bottom margin
+        {init.status === "04" && //keep bottom margin
           "If you are happy with the details you have submitted, click continue. If you wish to check, click update as required."}
       </p>
 
@@ -61,8 +65,7 @@ function Dashboard() {
       <EndowmentStatus
         isSubmitting={isSubmitting}
         onSubmit={() => submit(data)}
-        status={status}
-        endowId={data.endowId}
+        status={submission}
         classes="mt-6"
       />
     </div>

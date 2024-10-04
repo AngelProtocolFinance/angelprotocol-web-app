@@ -1,14 +1,14 @@
+import type { EndowDesignation, Org } from "@better-giving/registration/models";
 import type { Except, OverrideProperties } from "type-fest";
-import type { EndowDesignation, OrgDetails } from "types/aws";
 import type { Country, OptionType } from "types/components";
 import type { UNSDG_NUMS } from "types/lists";
 
 export type FormValues = OverrideProperties<
-  Except<OrgDetails, "KycDonorsOnly">,
+  Except<Org, "kyc_donors_only">,
   {
-    HqCountry: Country;
-    EndowDesignation: OptionType<EndowDesignation | "">;
-    ActiveInCountries: OptionType<string>[];
-    UN_SDG: OptionType<UNSDG_NUMS>[];
+    hq_country: Country;
+    designation: OptionType<EndowDesignation | "">;
+    active_in_countries: OptionType<string>[];
+    un_sdg: OptionType<UNSDG_NUMS>[];
   }
-> & { isAnonymousDonationsAllowed: "Yes" | "No" };
+> & { isAnonymousDonationsAllowed: "yes" | "no" };

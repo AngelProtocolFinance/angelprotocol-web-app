@@ -41,10 +41,10 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     setModalOption("isDismissible", false);
     const result = await review({
-      PK: uuid,
+      id: uuid,
       ...(verdict === "approve"
         ? { verdict: "approved" }
-        : { verdict: "rejected", rejectionReason: fv.reason ?? "" }),
+        : { verdict: "rejected", reason: fv.reason ?? "" }),
     });
 
     if ("error" in result) {

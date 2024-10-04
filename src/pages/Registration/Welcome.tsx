@@ -1,3 +1,4 @@
+import type { EndowClaim } from "@better-giving/registration/models";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
@@ -8,23 +9,24 @@ import { storeRegistrationReference } from "helpers";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
-import type { EndowClaim } from "types/aws";
 import { steps } from "./routes";
-import type { InitReg } from "./types";
 
 export function Component() {
   const { email } = useAuthenticatedUser();
   const { state } = useLocation();
-  const claim = state as EndowClaim | undefined;
+  const claim = state as EndowClaim | null;
   const {
     data: reg,
     isLoading,
     isError,
-  } = useNewApplicationQuery({ email, claim });
+  } = useNewApplicationQuery({
+    registrant_id: email,
+    claim: claim ?? undefined,
+  });
 
   useEffect(() => {
     if (!reg) return;
-    storeRegistrationReference(reg.ContactPerson.PK);
+    storeRegistrationReference(reg.id);
   }, [reg]);
 
   return (
@@ -41,13 +43,7 @@ export function Component() {
         aria-disabled={isLoading || isError || !reg}
         className="w-full max-w-[26.25rem] btn-blue btn-reg"
         to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`}
-        state={
-          {
-            //link is disabled if no reg
-            email: reg?.ContactPerson.Email!,
-            reference: reg?.ContactPerson.PK!,
-          } satisfies InitReg
-        }
+        state={reg}
       >
         <LoadText isLoading={isLoading} text="Continue registration">
           Continue registration

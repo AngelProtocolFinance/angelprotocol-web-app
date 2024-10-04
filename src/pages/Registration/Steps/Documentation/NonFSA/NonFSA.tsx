@@ -1,13 +1,11 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import LoadText from "components/LoadText";
 import { Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { alphanumeric, requiredString } from "schemas/string";
-import { object } from "yup";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
-import type { FormValues as FV, Props } from "./types";
+import { type FormValues as FV, type Props, schema } from "./types";
 import useSubmit from "./useSubmit";
 
 export default function NonFSA(props: Props) {
@@ -15,18 +13,11 @@ export default function NonFSA(props: Props) {
   const claimEin = data.init.claim?.ein;
   const { doc } = props;
   const methods = useForm<FV>({
-    resolver: yupResolver(
-      object({
-        EIN: requiredString.matches(
-          alphanumeric,
-          "must only contain numbers and letters"
-        ),
-      })
-    ),
+    resolver: valibotResolver(schema),
     defaultValues: doc
       ? doc
       : {
-          EIN: claimEin ?? "",
+          ein: claimEin ?? "",
         },
   });
   const { submit, isSubmitting } = useSubmit({ props, form: methods });
@@ -37,7 +28,7 @@ export default function NonFSA(props: Props) {
         <Field<FV>
           /** claimer should not change EIN */
           disabled={!!claimEin}
-          name="EIN"
+          name="ein"
           label="EIN# (numbers and letters only)"
           required
           classes={{ container: "mb-6 mt-1" }}

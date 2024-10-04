@@ -19,9 +19,9 @@ export default function useSubmit() {
       });
 
       await updateReg({
-        reference: data.init.reference,
+        id: data.init.id,
         type: "banking",
-        BankStatementFile: bankStatementPreview.bankStatementFile[0],
+        bank_statement: bankStatementPreview.bankStatementFile[0],
         wise_recipient_id: recipient.id,
       }).unwrap();
 

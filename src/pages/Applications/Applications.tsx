@@ -48,7 +48,7 @@ function Applications() {
       />
       <QueryLoader
         queryState={{
-          data: data?.Items,
+          data: data?.items,
           isLoading,
           isFetching,
           isError: isError,

@@ -6,7 +6,11 @@ import { steps } from "../../routes";
 import type { Step3Data } from "../../types";
 import type { FV } from "./types";
 
-export default function useSubmit(data: Step3Data, form: UseFormReturn<FV>) {
+export default function useSubmit(
+  data: Step3Data,
+  form: UseFormReturn<FV>,
+  possiblyTaxExempt: boolean
+) {
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
@@ -17,14 +21,13 @@ export default function useSubmit(data: Step3Data, form: UseFormReturn<FV>) {
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    if (!isDirty && data.fsaInquiry !== undefined) {
+    if (!isDirty && data.irs501c3 !== undefined && possiblyTaxExempt) {
       return navigate(`../${steps.docs}`, { state: data.init });
     }
     const result = await updateReg({
-      reference: data.init.reference,
-      type: "fsa-inquiry",
-      AuthorizedToReceiveTaxDeductibleDonations:
-        fv.AuthorizedToReceiveTaxDeductibleDonations === "Yes",
+      id: data.init.id,
+      type: "fsa-inq",
+      irs501c3: possiblyTaxExempt && fv.irs501c3 === "yes",
     });
 
     if ("error" in result) {

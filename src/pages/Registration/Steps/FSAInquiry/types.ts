@@ -1,7 +1,4 @@
+import type { FsaInq } from "@better-giving/registration/models";
 import type { OverrideProperties } from "type-fest";
-import type { FSAInquiry } from "types/aws";
 
-export type FV = OverrideProperties<
-  FSAInquiry,
-  { AuthorizedToReceiveTaxDeductibleDonations: "Yes" | "No" }
->;
+export type FV = OverrideProperties<FsaInq, { irs501c3: "yes" | "no" }>;

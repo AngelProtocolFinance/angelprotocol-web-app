@@ -3,7 +3,6 @@ import type {
   EndowmentAllocationUpdate,
   EndowmentProfileUpdate,
   EndowmentSettingsUpdate,
-  FSASignerDocumentation,
   V2RecipientAccount,
 } from "types/aws";
 import type { SemiPartial } from "types/utils";
@@ -14,17 +13,6 @@ export type EndowmentUpdate = SemiPartial<
 >;
 
 export type ProgramDeleteMsg = { id: number; program_id: string };
-
-export type FiscalSponsorhipAgreementSigner =
-  | {
-      id: string;
-      firstName: string;
-      lastName: string;
-      email: string;
-      role: string;
-      docs: FSASignerDocumentation;
-    }
-  | string; //signerEID;
 
 export type BankingApplicationDetails = BankingApplication & V2RecipientAccount;
 
