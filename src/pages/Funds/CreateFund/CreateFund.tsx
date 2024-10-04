@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
 import {
@@ -22,8 +22,7 @@ import { useCreateFundMutation } from "services/aws/funds";
 import type { Fund } from "types/aws";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { EndowmentSelector } from "./EndowmentSelector";
-import { schema } from "./schema";
-import type { FormValues as FV } from "./types";
+import { type FV, schema } from "./schema";
 
 export default withAuth(function CreateFund() {
   const {
@@ -36,7 +35,7 @@ export default withAuth(function CreateFund() {
     formState: { errors, isSubmitting },
     watch,
   } = useForm<FV>({
-    resolver: yupResolver(schema),
+    resolver: valibotResolver(schema),
     defaultValues: {
       name: "",
       description: "",
@@ -49,7 +48,9 @@ export default withAuth(function CreateFund() {
         from: "fund",
         allowBgTip: true,
       },
-      targetType: "smart",
+      target: {
+        type: "smart",
+      },
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
@@ -60,7 +61,7 @@ export default withAuth(function CreateFund() {
   });
   const { field: targetType } = useController({
     control,
-    name: "targetType",
+    name: "target.type",
   });
 
   const customAllowBgTipRef = useRef(true);
@@ -99,11 +100,11 @@ export default withAuth(function CreateFund() {
           allowBgTip: fv.settings.allowBgTip,
         },
         target:
-          fv.targetType === "none"
+          fv.target.type === "none"
             ? `${0}`
-            : fv.targetType === "smart"
+            : fv.target.type === "smart"
               ? "smart"
-              : `${+fv.fixedTarget}`,
+              : `${+fv.target.value}`, //fixedTarget is required when targetType is fixed
       };
 
       if (fv.expiration) fund.expiration = fv.expiration;
@@ -145,6 +146,7 @@ export default withAuth(function CreateFund() {
         className="grid border border-gray-l4 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
         <h4 className="font-bold text-xl mb-4">Fund information</h4>
+
         <Field
           {...register("name")}
           label="Name"
@@ -215,11 +217,11 @@ export default withAuth(function CreateFund() {
         />
         {targetType.value === "fixed" && (
           <Field
-            {...register("fixedTarget", { shouldUnregister: true })}
+            {...register("target.value", { shouldUnregister: true })}
             label="How much money do you want to raise?"
             classes="mt-2"
             placeholder="$"
-            error={errors.fixedTarget?.message}
+            error={errors.target?.value?.message}
           />
         )}
 
@@ -266,7 +268,7 @@ export default withAuth(function CreateFund() {
             dropzone: "aspect-[1/1] w-60",
           }}
           maxSize={MAX_SIZE_IN_BYTES}
-          error={errors.banner?.file?.message}
+          error={errors.logo?.file?.message}
         />
 
         <Field

@@ -1,4 +1,5 @@
 import type { ImageMIMEType } from "types/lists";
+export { target, type TargetType } from "./types";
 
 export * from "./GoalSelector";
 

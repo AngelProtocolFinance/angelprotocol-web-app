@@ -1,6 +1,5 @@
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-
-export type TargetType = "fixed" | "none" | "smart";
+import type { TargetType } from "./types";
 
 const options: { [T in TargetType]: string } = {
   smart: "Use smart milestones",

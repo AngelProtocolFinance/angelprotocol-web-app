@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLazyProfileQuery } from "services/aws/aws";
 import type { Endowment } from "types/aws";
-import type { FundMember } from "./types";
+import type { FundMember } from "./schema";
 
 export type Endow = Pick<Endowment, "hide_bg_tip" | "name">;
 

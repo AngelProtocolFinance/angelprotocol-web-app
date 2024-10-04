@@ -3,7 +3,7 @@ import Image from "components/Image";
 import { ErrorStatus, Info, LoadingStatus } from "components/Status";
 import useDebouncer from "hooks/useDebouncer";
 import { useEndowmentCardsQuery } from "services/aws/aws";
-import type { FundMember } from "../types";
+import type { EndowOption } from "../schema";
 
 interface Props {
   searchText: string;
@@ -52,7 +52,7 @@ export function Options({ classes = "", searchText }: Props) {
               logo: o.card_img,
               name: o.name,
               id: o.id,
-            } satisfies FundMember
+            } satisfies EndowOption
           }
           className="flex gap-x-2 p-2 data-[selected]:text-blue-d1 data-[selected]:pointer-events-none hover:bg-blue-l4 select-none"
         >

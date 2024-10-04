@@ -8,14 +8,12 @@ import {
 import Icon from "components/Icon";
 import Image from "components/Image";
 import { forwardRef, useState } from "react";
-import type { FundMember } from "../types";
+import type { EndowOption } from "../schema";
 import { Options } from "./Options";
 
-interface EndowmentOption extends FundMember {}
-
-type OnChange = (opts: EndowmentOption[]) => void;
+type OnChange = (opts: EndowOption[]) => void;
 interface Props {
-  values: EndowmentOption[];
+  values: EndowOption[];
   onChange: OnChange;
   classes?: string;
   disabled?: boolean;
@@ -87,8 +85,8 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
   );
 });
 
-interface ISelectedOption extends EndowmentOption {
-  onDeselect: (thisOpt: EndowmentOption) => void;
+interface ISelectedOption extends EndowOption {
+  onDeselect: (thisOpt: EndowOption) => void;
 }
 
 function SelectedOption({ onDeselect, ...props }: ISelectedOption) {
