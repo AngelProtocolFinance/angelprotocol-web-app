@@ -16,7 +16,7 @@ type Data<
   [key in Pending]?: Reg[key];
 };
 
-type Step1Data = Data<"init", "contact">;
+export type Step1Data = Data<"init", "contact">;
 type Step2Data = Data<"init" | "contact", "org">;
 export type Step3Data = Data<"init" | "contact" | "org", "irs501c3">;
 type Step4Data = Omit<

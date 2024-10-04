@@ -1201,12 +1201,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@hookform/resolvers@npm:3.3.4":
-  version: 3.3.4
-  resolution: "@hookform/resolvers@npm:3.3.4"
+"@hookform/resolvers@npm:3.9.0":
+  version: 3.9.0
+  resolution: "@hookform/resolvers@npm:3.9.0"
   peerDependencies:
     react-hook-form: ^7.0.0
-  checksum: 10/0845e15f53b515ab5dc8d970d4ee7f47bbdfc4f4391bc166361535482d96b6ae3d1812669107fca05bf8687fa5447e3ed65f2eee3e349759b23b229ca978f917
+  checksum: 10/b878e92cebc703106a70987437ab4add0e71a327a0bb9864f82ab480b5d9a38b0d639f6154b138c3c4828af0db00c1b413279c102715146b19edc76b9786f1c3
   languageName: node
   linkType: hard
 
@@ -3431,7 +3431,7 @@ __metadata:
     "@gsap/react": "npm:2.1.1"
     "@headlessui/react": "npm:2.1.0"
     "@hookform/error-message": "npm:2.0.1"
-    "@hookform/resolvers": "npm:3.3.4"
+    "@hookform/resolvers": "npm:3.9.0"
     "@paypal/react-paypal-js": "npm:8.3.0"
     "@radix-ui/react-slider": "npm:1.1.2"
     "@radix-ui/react-tooltip": "npm:1.1.2"
@@ -3474,7 +3474,7 @@ __metadata:
     react-dropzone: "npm:14.2.3"
     react-fast-marquee: "npm:1.6.4"
     react-helmet: "npm:6.1.0"
-    react-hook-form: "npm:7.51.5"
+    react-hook-form: "npm:7.53.0"
     react-player: "npm:2.16.0"
     react-redux: "npm:9.1.2"
     react-router-dom: "npm:6.23.0"
@@ -5842,12 +5842,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-hook-form@npm:7.51.5":
-  version: 7.51.5
-  resolution: "react-hook-form@npm:7.51.5"
+"react-hook-form@npm:7.53.0":
+  version: 7.53.0
+  resolution: "react-hook-form@npm:7.53.0"
   peerDependencies:
-    react: ^16.8.0 || ^17 || ^18
-  checksum: 10/f4ff77989202b1faf2dede7a7730210635a6225189dcaeaeb191cea12422bcb97d2adfef0712c50d13bf5c5e14b8debc00fbba16491f86a6d24945a52cacfa59
+    react: ^16.8.0 || ^17 || ^18 || ^19
+  checksum: 10/b7d73696b7c10e042f6ea6fcec01f951091146bfbc89d1378327a970bcd724b968e93fae1657bddada75caf648cfaf8693c5ba03c25e96816b755079d29f65da
   languageName: node
   linkType: hard
 
