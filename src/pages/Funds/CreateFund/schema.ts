@@ -9,12 +9,10 @@ const fileObject = v.object({
 });
 
 export const imgLink = v.object({
-  file: v.optional(
-    v.pipe(
-      v.file(),
-      v.mimeType(VALID_MIME_TYPES, "invalid type"),
-      v.maxSize(MAX_SIZE_IN_BYTES, "exceeds size limit")
-    )
+  file: v.pipe(
+    v.file("required"),
+    v.mimeType(VALID_MIME_TYPES, "invalid type"),
+    v.maxSize(MAX_SIZE_IN_BYTES, "exceeds size limit")
   ),
   preview: v.pipe(str, v.url()),
   ...fileObject.entries,
@@ -42,12 +40,16 @@ export const schema = v.object({
   ),
   featured: v.boolean(),
   settings,
-  expiration: v.pipe(
-    str,
-    v.nonEmpty("required"),
-    v.transform((v) => new Date(v).toISOString()),
-    v.isoTimestamp("invalid date"),
-    v.minValue(new Date().toISOString(), "must be in the future")
+  expiration: v.optional(
+    v.lazy((val) => {
+      if (!val) return v.string();
+      return v.pipe(
+        v.string(),
+        v.transform((val) => val && new Date(val).toISOString()),
+        v.isoTimestamp("invalid date"),
+        v.minValue(new Date().toISOString(), "must be in the future")
+      );
+    })
   ),
   target,
 });

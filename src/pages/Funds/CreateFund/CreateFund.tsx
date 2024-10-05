@@ -41,7 +41,6 @@ export default withAuth(function CreateFund() {
       description: "",
       logo: { preview: "", publicUrl: "" },
       banner: { preview: "", publicUrl: "" },
-      expiration: "",
       featured: true,
       members: [],
       settings: {
