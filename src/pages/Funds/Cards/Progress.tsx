@@ -1,8 +1,8 @@
+import type { FundItem } from "@better-giving/fundraiser";
 import { humanize } from "helpers";
-import type { Fund } from "types/aws";
 
 export function Progress(
-  props: Pick<Fund.Card, "target" | "donation_total_usd">
+  props: Pick<FundItem, "target" | "donation_total_usd">
 ) {
   if (props.target === "0") {
     if (!props.donation_total_usd) return;

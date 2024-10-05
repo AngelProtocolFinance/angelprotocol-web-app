@@ -832,12 +832,33 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@better-giving/fundraiser@npm:1.0.0-rc.5":
+  version: 1.0.0-rc.5
+  resolution: "@better-giving/fundraiser@npm:1.0.0-rc.5"
+  dependencies:
+    "@better-giving/types": "npm:1.0.0-rc.2"
+    valibot: "npm:0.42.0"
+  peerDependencies:
+    valibot: 0.42.0
+  checksum: 10/1c0c631b618790082cd84516fd3e039bd204847876d31f80eb0c47f44f83e6baba304e52cd7c5326412af7f59aa6e65e8a06d8889b3b4eb1287227dc44300ea7
+  languageName: node
+  linkType: hard
+
 "@better-giving/registration@npm:1.0.24":
   version: 1.0.24
   resolution: "@better-giving/registration@npm:1.0.24"
   peerDependencies:
     valibot: 0.42.0
   checksum: 10/8f485d84d8fa1d14635d7d784f486b0cc38e98b215b904702c34f0d488450129e7da769dff1f0cbe4105a1a5842d090045babb8e41bd90790320544bc9a03fe7
+  languageName: node
+  linkType: hard
+
+"@better-giving/types@npm:1.0.0-rc.2":
+  version: 1.0.0-rc.2
+  resolution: "@better-giving/types@npm:1.0.0-rc.2"
+  peerDependencies:
+    valibot: 0.42.0
+  checksum: 10/a4b46d4fb5fce7d21982f636ff922f9a335ab754030142ef731944b8a4e682e0b3c19a133dc9d9e05ad8dbb32e513dcb66e59007393ce7ead474ed8559d36174
   languageName: node
   linkType: hard
 
@@ -3458,6 +3479,7 @@ __metadata:
   dependencies:
     "@better-giving/assets": "npm:1.0.18"
     "@better-giving/donation": "npm:1.0.1"
+    "@better-giving/fundraiser": "npm:1.0.0-rc.5"
     "@better-giving/registration": "npm:1.0.24"
     "@better-giving/types": "npm:1.0.1"
     "@biomejs/biome": "npm:1.8.1"

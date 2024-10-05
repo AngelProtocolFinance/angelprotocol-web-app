@@ -1,9 +1,9 @@
+import type { FundItem } from "@better-giving/fundraiser";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import type { Fund } from "types/aws";
 import { Progress } from "./Progress";
 
 export default function Card({
@@ -14,7 +14,7 @@ export default function Card({
   verified,
   donation_total_usd,
   target,
-}: Fund.Card) {
+}: FundItem) {
   return (
     <div className="relative">
       <Link

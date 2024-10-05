@@ -1,3 +1,4 @@
+import type { NewFund } from "@better-giving/fundraiser/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
@@ -19,7 +20,6 @@ import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useLazyProfileQuery } from "services/aws/aws";
 import { useCreateFundMutation } from "services/aws/funds";
-import type { Fund } from "types/aws";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { type FV, schema } from "./schema";
@@ -88,7 +88,7 @@ export default withAuth(function CreateFund() {
 
       showModal(Prompt, { type: "loading", children: "Creating fund..." });
 
-      const fund: Fund.New = {
+      const fund: NewFund = {
         name: fv.name,
         description: fv.description,
         banner: getFullURL(uploadBaseUrl, banner.file.name),

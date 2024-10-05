@@ -33,6 +33,7 @@
   "dependencies": {
     "@better-giving/assets": "1.0.18",
     "@better-giving/donation": "1.0.1",
+    "@better-giving/fundraiser": "1.0.0-rc.5",
     "@better-giving/registration": "1.0.24",
     "@better-giving/types": "1.0.1",
     "@gsap/react": "2.1.1",

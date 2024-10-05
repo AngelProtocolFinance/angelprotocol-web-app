@@ -1,7 +1,7 @@
 import type { Except } from "type-fest";
 import type { PartialExcept } from "types/utils";
 import * as v from "valibot";
-import type { APIEnvironment, DonateMethodId, UNSDG_NUMS } from "../../lists";
+import type { DonateMethodId, UNSDG_NUMS } from "../../lists";
 
 export type Milestone = {
   id: string;
@@ -264,83 +264,3 @@ export type UserAttributes = {
 };
 
 export type UserUpdate = Partial<UserAttributes>;
-
-export interface Fund {
-  /** uuidv4 */
-  id: string;
-  env: APIEnvironment;
-  name: string;
-  description: string;
-  banner: string;
-  logo: string;
-  members: Pick<Endowment, "id" | "name" | "card_img">[];
-  featured: boolean;
-  active: boolean;
-  settings: {
-    allowBgTip: boolean;
-  };
-  /** iso */
-  expiration?: string;
-  verified: boolean;
-  donation_total_usd: number;
-  /** "0": no target */
-  target: "smart" | `${number}`;
-  /** endowIds that allows this fundraiser on their profile */
-  approvers: number[];
-}
-export namespace Fund {
-  export interface New
-    extends Pick<
-      Fund,
-      | "name"
-      | "description"
-      | "banner"
-      | "logo"
-      | "featured"
-      | "settings"
-      | "expiration"
-      | "target"
-    > {
-    /** endowment ids */
-    members: number[];
-  }
-
-  export interface Update
-    extends Partial<
-      Pick<
-        Fund,
-        "name" | "description" | "banner" | "logo" | "featured" | "target"
-      >
-    > {}
-
-  export interface Card
-    extends Pick<
-      Fund,
-      | "id"
-      | "name"
-      | "description"
-      | "env"
-      | "logo"
-      | "featured"
-      | "active"
-      | "verified"
-      | "donation_total_usd"
-      | "members"
-      | "target"
-      | "approvers"
-    > {
-    /** iso | "9999-12-31T23:59:59.000Z" year 9999 */
-    expiration: string;
-  }
-
-  export interface CardsPage {
-    items: Card[];
-    page: number;
-    numPages: number;
-  }
-
-  export interface CardsQueryParams {
-    query?: string;
-    page?: number;
-  }
-}

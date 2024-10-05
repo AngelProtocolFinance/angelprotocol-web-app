@@ -1,3 +1,5 @@
+import type { SingleFund } from "@better-giving/fundraiser";
+import type { FundUpdate } from "@better-giving/fundraiser/schema";
 import {
   ControlledImgEditor as ImgEditor,
   type ImgLink,
@@ -9,13 +11,15 @@ import { useModalContext } from "contexts/ModalContext";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import type { SubmitHandler } from "react-hook-form";
 import { useCloseFundMutation, useEditFundMutation } from "services/aws/funds";
-import type { Fund } from "types/aws";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { FeatureBanner } from "./FeatureBanner";
-import type { FV } from "./types";
+import type { FV } from "./schema";
 import { useRhf } from "./useRhf";
 
-export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
+export function Form({
+  classes = "",
+  ...props
+}: SingleFund & { classes?: string }) {
   const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
   const rhf = useRhf(props);
@@ -24,8 +28,7 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
   const [closeFund, { isLoading: isClosingFund }] = useCloseFundMutation();
 
   const onSubmit: SubmitHandler<FV> = async ({
-    targetType,
-    fixedTarget,
+    target,
     logo,
     banner,
     ...fv
@@ -40,15 +43,15 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
       });
 
       /// BUILD UPDATE ///
-      const update: Fund.Update = {};
+      const update: FundUpdate = {};
 
-      if (rhf.dirtyFields.targetType || rhf.dirtyFields.fixedTarget) {
+      if (rhf.dirtyFields.target) {
         update.target =
-          targetType === "none"
+          target.type === "none"
             ? "0"
-            : targetType === "smart"
+            : target.type === "smart"
               ? "smart"
-              : (fixedTarget as `${number}`);
+              : target.value;
       }
 
       if (rhf.dirtyFields.banner) update.banner = bannerUrl;
@@ -161,11 +164,11 @@ export function Form({ classes = "", ...props }: Fund & { classes?: string }) {
       />
       {rhf.targetType.value === "fixed" && (
         <Field
-          {...rhf.register("fixedTarget", { shouldUnregister: true })}
+          {...rhf.register("target.value", { shouldUnregister: true })}
           label="How much money do you want to raise?"
           classes="mt-2 mb-6"
           placeholder="$"
-          error={rhf.errors.fixedTarget?.message}
+          error={rhf.errors?.target?.value?.message}
         />
       )}
 
