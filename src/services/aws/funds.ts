@@ -1,11 +1,16 @@
+import type { FundsPage, SingleFund } from "@better-giving/fundraiser";
+import type {
+  FundUpdate,
+  FundsParams,
+  NewFund,
+} from "@better-giving/fundraiser/schema";
 import { TEMP_JWT } from "constants/auth";
-import type { Fund } from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
 export const funds = aws.injectEndpoints({
   endpoints: (builder) => ({
-    createFund: builder.mutation<{ id: string }, Fund.New>({
+    createFund: builder.mutation<{ id: string }, NewFund>({
       invalidatesTags: ["funds"],
       query: (payload) => {
         return {
@@ -16,7 +21,7 @@ export const funds = aws.injectEndpoints({
         };
       },
     }),
-    editFund: builder.mutation<Fund, Fund.Update & { id: string }>({
+    editFund: builder.mutation<SingleFund, FundUpdate & { id: string }>({
       invalidatesTags: ["funds", "fund"],
       query: ({ id, ...payload }) => {
         return {
@@ -37,7 +42,7 @@ export const funds = aws.injectEndpoints({
         };
       },
     }),
-    funds: builder.query<Fund.CardsPage, Fund.CardsQueryParams>({
+    funds: builder.query<FundsPage, FundsParams>({
       providesTags: ["funds"],
       query: (params) => {
         return {
@@ -46,7 +51,7 @@ export const funds = aws.injectEndpoints({
         };
       },
     }),
-    fund: builder.query<Fund, string>({
+    fund: builder.query<SingleFund, string>({
       providesTags: ["fund"],
       query: (fundId) => `${v(1)}/funds/${fundId}`,
     }),

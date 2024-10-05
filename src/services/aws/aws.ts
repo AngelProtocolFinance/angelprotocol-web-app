@@ -1,3 +1,4 @@
+import type { FundItem } from "@better-giving/fundraiser";
 import type {
   Application,
   Page,
@@ -19,7 +20,6 @@ import type {
   EndowmentCard,
   EndowmentOption,
   EndowmentsQueryParams,
-  Fund,
 } from "types/aws";
 import { version as v } from "../helpers";
 import type { EndowmentUpdate, IdOrSlug } from "../types";
@@ -158,7 +158,7 @@ export const aws = createApi({
         }
       },
     }),
-    fundsEndowMemberOf: builder.query<Fund.Card[], { endowId: number }>({
+    fundsEndowMemberOf: builder.query<FundItem[], { endowId: number }>({
       providesTags: ["endowment"],
       query: ({ endowId }) => {
         return {

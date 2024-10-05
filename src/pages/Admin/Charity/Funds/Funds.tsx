@@ -1,3 +1,4 @@
+import type { FundItem as TFundItem } from "@better-giving/fundraiser";
 import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
 import QueryLoader from "components/QueryLoader";
@@ -5,7 +6,6 @@ import { appRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { Link } from "react-router-dom";
 import { useFundsEndowMemberOfQuery } from "services/aws/aws";
-import type { Fund } from "types/aws";
 import { useAdminContext } from "../../Context";
 
 export function Funds() {
@@ -41,7 +41,7 @@ export function Funds() {
   );
 }
 
-const FundItem = (props: Fund.Card) => {
+const FundItem = (props: TFundItem) => {
   const user = useAuthenticatedUser();
   const isActive = new Date().toISOString() <= props.expiration && props.active;
   const isEditor = user.funds.includes(props.id);

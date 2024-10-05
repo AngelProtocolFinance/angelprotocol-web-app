@@ -1,10 +1,10 @@
+import type { SingleFund } from "@better-giving/fundraiser";
 import { isEmpty } from "helpers";
 import { createContext, useContext } from "react";
-import type { Fund } from "types/aws";
 
-export const FundContext = createContext<Fund>({} as Fund);
+export const FundContext = createContext<SingleFund>({} as SingleFund);
 
-export const useFundContext = (): Fund => {
+export const useFundContext = (): SingleFund => {
   const val = useContext(FundContext);
 
   if (isEmpty(Object.entries(val))) {
