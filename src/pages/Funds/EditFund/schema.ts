@@ -1,8 +1,13 @@
-import { fileObject } from "@better-giving/types";
 import * as v from "valibot";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES, target } from "../common";
 
 const str = v.pipe(v.string(), v.trim());
+
+/** not set by user */
+const fileObject = v.object({
+  name: str,
+  publicUrl: str,
+});
 
 export const imgLink = v.object({
   file: v.optional(

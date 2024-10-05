@@ -3,9 +3,10 @@ import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES, target } from "../common";
 
 const str = v.pipe(v.string(), v.trim());
 
+/** not set by user */
 const fileObject = v.object({
   name: str,
-  publicUrl: v.pipe(str, v.url()),
+  publicUrl: str,
 });
 
 export const imgLink = v.object({
@@ -44,10 +45,11 @@ export const schema = v.object({
     v.lazy((val) => {
       if (!val) return v.string();
       return v.pipe(
-        v.string(),
-        v.transform((val) => val && new Date(val).toISOString()),
-        v.isoTimestamp("invalid date"),
-        v.minValue(new Date().toISOString(), "must be in the future")
+        str,
+        v.transform((val) => new Date(val)),
+        v.date("invalid date"),
+        v.minValue(new Date(), "must be in the future"),
+        v.transform((val) => val.toISOString())
       );
     })
   ),
