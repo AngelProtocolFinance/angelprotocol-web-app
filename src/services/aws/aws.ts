@@ -1,4 +1,3 @@
-import type { FundItem } from "@better-giving/fundraiser";
 import type {
   Application,
   Page,
@@ -78,6 +77,7 @@ export const aws = createApi({
     "user-bookmarks",
     "user-endows",
     "user-funds",
+    "endow-funds",
     "funds",
     "fund",
   ],
@@ -158,14 +158,7 @@ export const aws = createApi({
         }
       },
     }),
-    fundsEndowMemberOf: builder.query<FundItem[], { endowId: number }>({
-      providesTags: ["endowment"],
-      query: ({ endowId }) => {
-        return {
-          url: `${v(8)}/endowments/${endowId}/funds`,
-        };
-      },
-    }),
+
     endowment: builder.query<
       Endowment,
       IdOrSlug & { fields?: (keyof Endowment)[] }
@@ -256,7 +249,6 @@ export const {
   useDonationsQuery,
   useLazyDonationsQuery,
   useLazyEndowWithEinQuery,
-  useFundsEndowMemberOfQuery,
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
