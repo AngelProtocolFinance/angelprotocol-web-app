@@ -1,7 +1,12 @@
 import type { FundItem } from "@better-giving/fundraiser";
+import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
+interface PathParams {
+  endowId: number;
+  fundId: string;
+}
 export const { useFundsEndowMemberOfQuery, useOptOutMutation } =
   aws.injectEndpoints({
     endpoints: (builder) => ({
@@ -13,21 +18,23 @@ export const { useFundsEndowMemberOfQuery, useOptOutMutation } =
           };
         },
       }),
-      optOut: builder.mutation<unknown, string>({
+      optOut: builder.mutation<unknown, PathParams>({
         invalidatesTags: ["endow-funds"],
-        query: (fundId) => {
+        query: ({ fundId, endowId }) => {
           return {
-            url: `${v(1)}/funds/${fundId}/opt-out`,
+            url: `${v(8)}/endowments/${endowId}/funds/${fundId}/opt-out`,
             method: "POST",
+            headers: { authorization: TEMP_JWT },
           };
         },
       }),
-      approve: builder.mutation<unknown, string>({
+      approve: builder.mutation<unknown, PathParams>({
         invalidatesTags: ["endow-funds"],
-        query: (fundId) => {
+        query: ({ fundId, endowId }) => {
           return {
-            url: `${v(1)}/funds/${fundId}/approve`,
+            url: `${v(8)}/endowments/${endowId}/funds/${fundId}/approve`,
             method: "POST",
+            headers: { authorization: TEMP_JWT },
           };
         },
       }),

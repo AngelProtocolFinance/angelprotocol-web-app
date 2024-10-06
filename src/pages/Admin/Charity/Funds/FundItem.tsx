@@ -1,12 +1,16 @@
 import type { FundItem as TFundItem } from "@better-giving/fundraiser";
 import { appRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
+import { useErrorContext } from "contexts/ErrorContext";
 import { Link } from "react-router-dom";
+import { useOptOutMutation } from "services/aws/endow-funds";
 
-export const FundItem = (props: TFundItem) => {
+export const FundItem = (props: TFundItem & { endowId: number }) => {
   const user = useAuthenticatedUser();
   const isActive = new Date().toISOString() <= props.expiration && props.active;
   const isEditor = user.funds.includes(props.id);
+  const [optOut, { isLoading: isOptingOut }] = useOptOutMutation();
+  const { handleError } = useErrorContext();
 
   return (
     <div className="grid grid-cols-subgrid col-span-5 items-center gap-3 rounded border border-gray-l4">
@@ -34,6 +38,21 @@ export const FundItem = (props: TFundItem) => {
       >
         view
       </Link>
+      {/** show only when this endow is member of fund */}
+      <button
+        disabled={isOptingOut}
+        type="button"
+        onClick={async () => {
+          console.log(props.id);
+          try {
+            await optOut({ fundId: props.id, endowId: props.endowId }).unwrap();
+          } catch (err) {
+            handleError(err, { context: "opting out of fund" });
+          }
+        }}
+      >
+        {isOptingOut ? "opting out.." : "opt-out"}
+      </button>
     </div>
   );
 };
