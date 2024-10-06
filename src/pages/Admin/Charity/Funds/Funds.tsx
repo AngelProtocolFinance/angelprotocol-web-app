@@ -28,7 +28,7 @@ export function Funds() {
         {(funds) => (
           <>
             {funds.map((fund) => (
-              <FundItem key={fund.id} {...fund} />
+              <FundItem key={fund.id} {...fund} endowId={id} />
             ))}
           </>
         )}
