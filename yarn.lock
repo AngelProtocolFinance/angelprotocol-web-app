@@ -3056,16 +3056,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stripe/react-stripe-js@npm:2.7.1":
-  version: 2.7.1
-  resolution: "@stripe/react-stripe-js@npm:2.7.1"
+"@stripe/react-stripe-js@npm:2.8.1":
+  version: 2.8.1
+  resolution: "@stripe/react-stripe-js@npm:2.8.1"
   dependencies:
     prop-types: "npm:^15.7.2"
   peerDependencies:
-    "@stripe/stripe-js": ^1.44.1 || ^2.0.0 || ^3.0.0
+    "@stripe/stripe-js": ^1.44.1 || ^2.0.0 || ^3.0.0 || ^4.0.0
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
     react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/dd9d28933dd7419568bee183d8f6cda4225fc3095d9cc15337d02f9e6b6df6d54dbdf299757782190693cf74250f9b0b273c5b38bc714a0d39244ec0823737ce
+  checksum: 10/3631430af9ed27354c8c070749de945755be5bedc23fd50ff87b6f6a3d1843f1da0416feabb566dcd818d4c0551621b102de0449f0e2e70a1f8e70d4d334e532
   languageName: node
   linkType: hard
 
@@ -3439,7 +3439,7 @@ __metadata:
     "@rsbuild/core": "npm:0.5.9"
     "@rsbuild/plugin-react": "npm:0.5.9"
     "@sentry/react": "npm:8.22.0"
-    "@stripe/react-stripe-js": "npm:2.7.1"
+    "@stripe/react-stripe-js": "npm:2.8.1"
     "@stripe/stripe-js": "npm:3.5.0"
     "@tailwindcss/container-queries": "npm:0.1.1"
     "@testing-library/dom": "npm:10.1.0"
