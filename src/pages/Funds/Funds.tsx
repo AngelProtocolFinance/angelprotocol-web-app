@@ -5,7 +5,7 @@ import Cards from "./Cards";
 export function Component() {
   const [search, setSearch] = useState("");
   return (
-    <div className="padded-container mt-8">
+    <div className="padded-container mt-8 pb-8">
       <div
         className={`flex gap-2 items-center rounded-lg overflow-clip field-container`}
       >
