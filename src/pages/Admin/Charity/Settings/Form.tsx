@@ -142,14 +142,14 @@ export default function Form(props: Props) {
 
       <div>
         <CheckField<FV> name="fundOptIn" classes="font-medium">
-          Include nonprofit as a potential member for Fundraisers
+          Allow Fundraisers to be created on behalf of your nonprofit
         </CheckField>
         <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
-          Inclusion as an eligible Fundraiser Index member is optional for all
-          Better Giving Nonprofits. By opting in, this nonprofit will appear in
-          the search area of the Fundraiser Builder, will be able to be added to
-          a Fundraiser, and will receive funds donated via Fundraisers of which
-          the nonprofit is a member.
+          Fundraising functionality is optional for all Better Giving
+          nonprofits. By opting in, people will be able to create fundraisers on
+          your behalf. You will receive 100% of funds raised for fundraisers
+          specific to your organization, and a percentage split of fundraisers
+          involving multiple nonprofits (such as curated giving indexes).
         </p>
       </div>
 
