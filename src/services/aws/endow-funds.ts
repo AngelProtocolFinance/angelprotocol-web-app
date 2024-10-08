@@ -1,4 +1,5 @@
 import type { FundItem } from "@better-giving/fundraiser";
+import type { FundsEndowMemberOfParams } from "@better-giving/fundraiser/schema";
 import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
@@ -13,10 +14,14 @@ export const {
   useApproveMutation,
 } = aws.injectEndpoints({
   endpoints: (builder) => ({
-    fundsEndowMemberOf: builder.query<FundItem[], { endowId: number }>({
+    fundsEndowMemberOf: builder.query<
+      FundItem[],
+      { endowId: number } & FundsEndowMemberOfParams
+    >({
       providesTags: ["endow-funds"],
-      query: ({ endowId }) => {
+      query: ({ endowId, ...params }) => {
         return {
+          params,
           url: `${v(8)}/endowments/${endowId}/funds`,
         };
       },
