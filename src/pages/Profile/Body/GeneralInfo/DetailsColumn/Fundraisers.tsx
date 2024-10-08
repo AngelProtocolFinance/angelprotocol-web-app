@@ -12,6 +12,8 @@ export function Fundraisers({ endowId, classes = "" }: Props) {
     npoProfileFeatured: true,
   });
 
+  if (funds.length === 0) return null;
+
   return (
     <div
       className={`${classes} p-8 border border-gray-l4 rounded divide-y divide-gray-l4`}
