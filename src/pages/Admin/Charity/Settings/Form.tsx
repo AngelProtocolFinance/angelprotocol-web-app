@@ -140,6 +140,19 @@ export default function Form(props: Props) {
         </span>
       </div>
 
+      <div>
+        <CheckField<FV> name="fundOptIn" classes="font-medium">
+          Include nonprofit as a potential member for Fundraisers
+        </CheckField>
+        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+          Inclusion as an eligible Fundraiser Index member is optional for all
+          Better Giving Nonprofits. By opting in, this nonprofit will appear in
+          the search area of the Fundraiser Builder, will be able to be added to
+          a Fundraiser, and will receive funds donated via Fundraisers of which
+          the nonprofit is a member.
+        </p>
+      </div>
+
       <h5 className="mt-12 text-2xl">Marketplace settings</h5>
 
       <DonateMethods
