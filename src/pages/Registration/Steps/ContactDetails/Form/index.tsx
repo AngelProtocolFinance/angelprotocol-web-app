@@ -60,8 +60,6 @@ export default function Form({ classes = "" }: { classes?: string }) {
     }
   };
 
-  console.log({ errors });
-
   return (
     <form
       // disabled={isSubmitting}

@@ -20,28 +20,25 @@ export function BookmarkLink({ endowId }: IBookmarkLink) {
         error: <_Link id={endowId} route="profile" />,
       }}
     >
-      {(endow) => <_Link {...endow} id={endowId} route="profile" />}
+      {(endow) => <_Link {...endow} id={endowId} route={appRoutes.profile} />}
     </QueryLoader>
   );
 }
 
 export function EndowmentLink({ endowID, logo, name }: UserEndow) {
-  return <_Link id={endowID} logo={logo} name={name} route="admin" />;
+  return <_Link id={endowID} logo={logo} name={name} route={appRoutes.admin} />;
 }
 
 type LinkProps = {
-  id: number;
+  id: number | string;
   name?: string;
   logo?: string;
-  route: "admin" | "profile";
+  route: string;
 };
 const _Link = (props: LinkProps) => (
   <MenuItem
     as={Link}
-    to={
-      (props.route === "admin" ? appRoutes.admin : appRoutes.marketplace) +
-      `/${props.id}`
-    }
+    to={props.route + `/${props.id}`}
     className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
     <Image src={props.logo} className="object-cover h-[20px] w-[20px]" />
