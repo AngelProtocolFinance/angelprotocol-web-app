@@ -123,9 +123,8 @@ export function Component() {
             placeholder="Password"
           />
           <Link
-            to={appRoutes.reset_password}
+            to={toWithState(appRoutes.reset_password, fromState)}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"
-            state={fromState}
           >
             Forgot password?
           </Link>
@@ -139,8 +138,7 @@ export function Component() {
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
           <Link
-            to={appRoutes.signup}
-            state={fromState}
+            to={toWithState(appRoutes.signup, fromState)}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

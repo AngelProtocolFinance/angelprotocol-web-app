@@ -5,6 +5,7 @@ import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
+import { toWithState } from "helpers/state-params";
 import { CircleX } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import {
@@ -92,14 +93,11 @@ function Content(props: {
         : appRoutes.donate_thanks;
       return (
         <Navigate
-          to={to}
-          state={
-            {
-              guestDonor: props.guestDonor,
-              recipientName: props.recipientName,
-              recipientId: props.recipientId,
-            } satisfies DonateThanksState
-          }
+          to={toWithState(to, {
+            guestDonor: props.guestDonor,
+            recipientName: props.recipientName,
+            recipientId: props.recipientId,
+          } satisfies DonateThanksState)}
         />
       );
     case "processing":
@@ -110,16 +108,13 @@ function Content(props: {
         : appRoutes.donate_thanks;
       return (
         <Navigate
-          to={_to}
-          state={
-            {
-              guestDonor: props.guestDonor,
-              recipientName: props.recipientName,
-              recipientId: props.recipientId,
-              bankVerificationUrl: props.bankVerificationUrl,
-              microdepositArrivalDate: props.microdepositArrivalDate,
-            } satisfies DonateThanksState
-          }
+          to={toWithState(_to, {
+            guestDonor: props.guestDonor,
+            recipientName: props.recipientName,
+            recipientId: props.recipientId,
+            bankVerificationUrl: props.bankVerificationUrl,
+            microdepositArrivalDate: props.microdepositArrivalDate,
+          } satisfies DonateThanksState)}
         />
       );
     case "canceled":
