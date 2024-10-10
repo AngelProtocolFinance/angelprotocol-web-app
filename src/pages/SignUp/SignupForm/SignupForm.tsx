@@ -9,8 +9,9 @@ import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect, logger } from "helpers";
 import { cognito, isError, oauth } from "helpers/cognito";
+import { toState } from "helpers/state-params";
 import { useController, useForm } from "react-hook-form";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useSaveSignupMutation } from "services/aws/hubspot";
 import { useGetter } from "store/accessors";
@@ -20,14 +21,14 @@ import type { FormValues, StateSetter, UserType } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
 
 type Props = {
+  fromState: unknown;
   setSignupState: StateSetter;
   classes?: string;
 };
 
 export default function SignupForm(props: Props) {
   const [savetoHubspot] = useSaveSignupMutation();
-  const location = useLocation();
-  const fromState: SignInRouteState | undefined = location.state;
+  const fromState = props.fromState as SignInRouteState | undefined;
   const isRegistrant = fromState?.from === appRoutes.register;
 
   const { handleError, displayError } = useErrorContext();
@@ -69,8 +70,18 @@ export default function SignupForm(props: Props) {
   const redirect = getAuthRedirect(fromState, {
     isNpo: userType.value === "nonprofit",
   });
+
   if (currUser) {
-    return <Navigate to={redirect.path} replace />;
+    return (
+      <Navigate
+        to={
+          redirect.path + redirect.data
+            ? `_s=${toState(redirect.data as any)}`
+            : ""
+        }
+        replace
+      />
+    );
   }
 
   async function submit(fv: FormValues) {
@@ -200,8 +211,7 @@ export default function SignupForm(props: Props) {
         <span className="flex-center gap-1 max-sm:text-sm font-normal">
           Already have an account?
           <Link
-            to={appRoutes.signin}
-            state={fromState}
+            to={appRoutes.signin + `?_s=${toState(fromState)}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

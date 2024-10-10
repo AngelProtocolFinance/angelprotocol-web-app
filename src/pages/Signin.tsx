@@ -9,8 +9,9 @@ import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
 import { cognito, isError, oauth } from "helpers/cognito";
+import { toState } from "helpers/state-params";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLoaderData, useNavigate } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
 import type { OAuthState } from "types/auth";
@@ -21,8 +22,11 @@ type FormValues = {
   password: string;
 };
 
+export { stateLoader as loader } from "helpers/state-params";
+
 export function Component() {
   const navigate = useNavigate();
+  const fromState = useLoaderData();
   const { handleError, displayError } = useErrorContext();
   const {
     register,
@@ -37,8 +41,7 @@ export function Component() {
     ),
   });
 
-  const { state: fromState } = useLocation();
-  const redirect = getAuthRedirect(fromState);
+  const redirect = getAuthRedirect(fromState as any);
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
@@ -50,7 +53,16 @@ export function Component() {
   }
 
   if (currUser) {
-    return <Navigate to={redirect.path} state={redirect.data} replace />;
+    return (
+      <Navigate
+        to={
+          redirect.path + redirect.data
+            ? `_s=${toState(redirect.data as any)}`
+            : ""
+        }
+        replace
+      />
+    );
   }
 
   async function submit(fv: FormValues) {
