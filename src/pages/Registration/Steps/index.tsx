@@ -111,7 +111,6 @@ export const route: RouteObject = {
   path: regRoutes.steps,
   element: <Layout />,
   loader: ({ request }) => {
-    console.log({ request });
     const params = new URL(request.url);
     return fromState(params.searchParams.get("_s"));
   },
