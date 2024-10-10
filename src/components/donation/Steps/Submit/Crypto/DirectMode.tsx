@@ -3,6 +3,7 @@ import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
+import { toState } from "helpers/state-params";
 import { useNavigate } from "react-router-dom";
 import { useCreateCryptoIntentQuery } from "services/apes";
 import type { DonateThanksState } from "types/pages";
@@ -96,12 +97,13 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       <ContinueBtn
         disabled={intentQuery.isError || intentQuery.isLoading}
         onClick={() =>
-          navigate(appRoutes.donate_thanks, {
-            state: {
-              recipientName: init.recipient.name,
-              recipientId: init.recipient.id,
-            } satisfies DonateThanksState,
-          })
+          navigate(
+            appRoutes.donate_thanks +
+              `?_s=${toState({
+                recipientName: init.recipient.name,
+                recipientId: init.recipient.id,
+              } satisfies DonateThanksState)}`
+          )
         }
         text="I have completed the payment"
         className="justify-self-stretch mt-8"

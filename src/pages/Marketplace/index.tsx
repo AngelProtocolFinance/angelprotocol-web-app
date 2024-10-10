@@ -1,5 +1,5 @@
 import ModalContext from "contexts/ModalContext";
-import { useLocation } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import type { EndowFilterState } from "types/app";
 import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";
@@ -7,13 +7,11 @@ import { Context, type State } from "./Context";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
 
+export { stateLoader as loader } from "helpers/state-params";
+
 export function Component() {
-  const { state } = useLocation();
-  const {
-    searchText = "",
-    sdgGroup,
-    country,
-  } = (state as undefined | EndowFilterState) || {};
+  const state = useLoaderData() as undefined | EndowFilterState;
+  const { searchText = "", sdgGroup, country } = state || {};
   const initState: Partial<State> = {
     searchText,
     sdgGroups: sdgGroup ? [sdgGroup] : [],
