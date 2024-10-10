@@ -1,22 +1,24 @@
 import Seo from "components/Seo";
 import { useRendered } from "hooks/use-rendered";
 import { useState } from "react";
+import { useLoaderData } from "react-router-dom";
 import ConfirmForm from "./ConfirmForm";
 import SignupForm from "./SignupForm";
 import Success from "./Success";
 import type { SignupState } from "./types";
 
 export function SignUp() {
+  const _s = useLoaderData();
   const [state, setState] = useState<SignupState>({ type: "init" });
   useRendered();
 
   const content = (() => {
     if (state.type === "init") {
-      return <SignupForm setSignupState={setState} />;
+      return <SignupForm setSignupState={setState} fromState={_s} />;
     }
 
     if (state.type === "success") {
-      return <Success userType={state.userType} />;
+      return <Success userType={state.userType} fromState={_s} />;
     }
 
     return (

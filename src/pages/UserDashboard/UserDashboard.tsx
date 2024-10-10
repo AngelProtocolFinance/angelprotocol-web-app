@@ -1,6 +1,7 @@
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
+import { authLocLoader } from "helpers/state-params";
 import DashboardLayout from "layout/DashboardLayout";
 import type { RouteObject } from "react-router-dom";
 import Donations from "./Donations";
@@ -26,6 +27,7 @@ const Root = withAuth(function Layout() {
 export const userDashboardRoute: RouteObject = {
   path: appRoutes.user_dashboard,
   element: <Root />,
+  loader: authLocLoader,
   children: [
     { path: routes.edit_profile, element: <EditProfile /> },
     { path: routes.donations, element: <Donations /> },

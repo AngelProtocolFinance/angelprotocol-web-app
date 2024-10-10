@@ -1,6 +1,7 @@
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
+import { toState } from "helpers/state-params";
 import { CircleUserRound } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
@@ -8,7 +9,6 @@ import type { SignInRouteState } from "types/auth";
 
 export default function UserMenu() {
   const user = useGetter((state) => state.auth.user);
-
   const location = useLocation();
 
   if (!user) {
@@ -16,15 +16,13 @@ export default function UserMenu() {
     return (
       <>
         <Link
-          to={appRoutes.signin}
-          state={state}
+          to={appRoutes.signin + `?_s=${toState(state)}`}
           className="btn text-base normal-case max-sm:hidden hover:underline"
         >
           Log in
         </Link>
         <Link
-          to={appRoutes.signup}
-          state={state}
+          to={appRoutes.signup + `?_s=${toState(state)}`}
           className="btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
         >
           Sign up

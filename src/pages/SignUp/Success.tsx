@@ -1,15 +1,18 @@
 import { appRoutes } from "constants/routes";
 import { getAuthRedirect } from "helpers";
+import { toState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import type { SignInRouteState } from "types/auth";
 import type { UserType } from "./types";
 
-type Props = { userType: UserType };
+interface Props {
+  userType: UserType;
+  fromState: unknown;
+}
 
-export default function Success({ userType }: Props) {
-  const { state: fromState } = useLocation();
-  const authRedirect = getAuthRedirect(fromState);
+export default function Success({ userType, fromState }: Props) {
+  const authRedirect = getAuthRedirect(fromState as any);
   // donors get redirected to the route which they originally attempted to
   // access; nonprofits get redirected to the page to register their NPO
   const signInRouteState: SignInRouteState = {
@@ -28,8 +31,7 @@ export default function Success({ userType }: Props) {
       </p>
 
       <Link
-        to={appRoutes.signin}
-        state={signInRouteState}
+        to={`${appRoutes.signin}?_s=${toState(signInRouteState)}`}
         className="flex-center mt-9 w-full bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold"
       >
         Continue to Sign in

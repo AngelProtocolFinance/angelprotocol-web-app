@@ -1,8 +1,9 @@
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
+import { type AuthLoc, toState } from "helpers/state-params";
 import { CircleAlert } from "lucide-react";
 import { type ComponentType, createContext, useContext } from "react";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLoaderData } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import type { AuthenticatedUser, CognitoGroup } from "types/auth";
 import type { SignInRouteState } from "types/auth";
@@ -12,7 +13,7 @@ export default function withAuth<Props>(
   requiredGroups?: CognitoGroup[]
 ) {
   return function Protected(props: Props) {
-    const location = useLocation();
+    const location = useLoaderData() as AuthLoc;
     const user = useGetter((state) => state.auth.user);
 
     if (user === "loading" || user?.isSigningOut) {
@@ -28,7 +29,9 @@ export default function withAuth<Props>(
         from: location.pathname,
         data: location.state,
       };
-      return <Navigate to={appRoutes.signup} state={state} replace />;
+      return (
+        <Navigate to={`${appRoutes.signup}?_s=${toState(state)}`} replace />
+      );
     }
 
     if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {

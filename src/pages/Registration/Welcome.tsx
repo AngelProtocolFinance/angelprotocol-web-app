@@ -8,14 +8,15 @@ import { storeRegistrationReference } from "helpers";
 import { toState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
 import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
 import { steps } from "./routes";
 
+export { stateLoader as loader } from "helpers/state-params";
+
 export function Component() {
   const { email } = useAuthenticatedUser();
-  const { state } = useLocation();
-  const claim = state as EndowClaim | null;
+  const claim = useLoaderData() as EndowClaim | null;
   const {
     data: reg,
     isLoading,

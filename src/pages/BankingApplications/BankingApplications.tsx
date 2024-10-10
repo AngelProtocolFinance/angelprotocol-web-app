@@ -59,4 +59,5 @@ function BankingApplications() {
     </div>
   );
 }
+
 export const Component = withAuth(BankingApplications, ["ap-admin"]);
