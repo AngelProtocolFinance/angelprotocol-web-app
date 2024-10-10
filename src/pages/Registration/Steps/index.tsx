@@ -2,7 +2,7 @@ import { type Init, isIrs501c3 } from "@better-giving/registration/models";
 import ExtLink from "components/ExtLink";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { appRoutes, regRoutes } from "constants/routes";
-import { fromState } from "helpers/state-params";
+import { stateLoader } from "helpers/state-params";
 import {
   Navigate,
   Outlet,
@@ -110,10 +110,7 @@ function getClaim(reg: RegistrationState) {
 export const route: RouteObject = {
   path: regRoutes.steps,
   element: <Layout />,
-  loader: ({ request }) => {
-    const params = new URL(request.url);
-    return fromState(params.searchParams.get("_s"));
-  },
+  loader: stateLoader,
   children: [
     { path: steps.contact, element: <ContactDetails step={1} /> },
     { path: steps.orgDetails, element: <OrgDetails step={2} /> },

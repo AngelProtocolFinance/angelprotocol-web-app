@@ -1,5 +1,6 @@
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
+import { toWithState } from "helpers/state-params";
 import { Link } from "react-router-dom";
 
 export default function Success(props: { state: unknown }) {
@@ -18,7 +19,7 @@ export default function Success(props: { state: unknown }) {
       </p>
 
       <Link
-        to={appRoutes.signin + `?_s=${props.state}`}
+        to={toWithState(appRoutes.signin, props.state)}
         className="flex-center mt-9 w-full bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold"
       >
         Back to Sign in

@@ -1,7 +1,7 @@
 import type { EndowClaim } from "@better-giving/registration/models";
 import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { useProfileContext } from "../../../ProfileContext";
@@ -35,11 +35,11 @@ export default function DetailsColumn({ className = "" }) {
         </div>
         {p.claimed === false && (
           <Link
-            to={`${appRoutes.register}/${regRoutes.welcome}?_s=${toState({
+            to={toWithState(`${appRoutes.register}/${regRoutes.welcome}`, {
               ein: p.registration_number,
               name: p.name,
               id: p.id,
-            } satisfies EndowClaim)}`}
+            } satisfies EndowClaim)}
             className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l4 rounded"
           >
             Claim this organization

@@ -2,7 +2,7 @@ import Icon from "components/Icon";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { Link, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import type { SignInRouteState } from "types/auth";
@@ -16,13 +16,13 @@ export default function UserMenu() {
     return (
       <>
         <Link
-          to={appRoutes.signin + `?_s=${toState(state)}`}
+          to={toWithState(appRoutes.signin, state)}
           className="btn text-base normal-case max-sm:hidden hover:underline"
         >
           Log in
         </Link>
         <Link
-          to={appRoutes.signup + `?_s=${toState(state)}`}
+          to={toWithState(appRoutes.signup, state)}
           className="btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
         >
           Sign up

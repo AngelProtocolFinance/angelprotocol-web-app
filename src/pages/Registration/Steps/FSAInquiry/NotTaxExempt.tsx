@@ -2,7 +2,7 @@ import type { Init } from "@better-giving/registration/models";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
 import { useErrorContext } from "contexts/ErrorContext";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { Link, useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { steps } from "../../routes";
@@ -32,7 +32,7 @@ export function NotTaxExempt({ country, isFsaPrev, ...init }: Props) {
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isLoading}
-          to={`../${steps.orgDetails}?_s=${toState(init)}`}
+          to={toWithState(`../${steps.orgDetails}`, init)}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
@@ -41,7 +41,7 @@ export function NotTaxExempt({ country, isFsaPrev, ...init }: Props) {
           onClick={async () => {
             try {
               if (isFsaPrev) {
-                return navigate(`../${steps.docs}?_s=${toState(init)}`);
+                return navigate(toWithState(`../${steps.docs}`, init));
               }
               await updateReg({
                 id: init.id,
@@ -49,7 +49,7 @@ export function NotTaxExempt({ country, isFsaPrev, ...init }: Props) {
                 irs501c3: false,
               }).unwrap();
 
-              navigate(`../${steps.docs}?_s=${toState(init)}`);
+              navigate(toWithState(`../${steps.docs}`, init));
             } catch (err) {
               handleError(err, { context: "updating registration" });
             }
