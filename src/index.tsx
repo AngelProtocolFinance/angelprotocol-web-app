@@ -18,7 +18,7 @@ import "./index.css";
 import { Amplify } from "aws-amplify";
 import { Hub } from "aws-amplify/utils";
 import { amplifyConfig } from "constants/aws";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import type { OAuthState } from "types/auth";
 import { routes } from "./App/App";
 
@@ -69,10 +69,7 @@ Hub.listen("auth", async ({ payload }) => {
     case "customOAuthState":
       const state: OAuthState = JSON.parse(payload.data);
       const { pathname = "/", data } = state;
-      router.navigate(
-        { pathname, search: data ? `_s=${toState(data as any)}` : "" },
-        { replace: true }
-      );
+      router.navigate(toWithState(pathname, data), { replace: true });
   }
 });
 

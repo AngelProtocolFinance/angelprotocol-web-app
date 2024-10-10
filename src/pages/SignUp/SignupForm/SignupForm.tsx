@@ -9,7 +9,7 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect, logger } from "helpers";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { useController, useForm } from "react-hook-form";
 import { Link, Navigate } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
@@ -72,15 +72,9 @@ export default function SignupForm(props: Props) {
   });
 
   if (currUser) {
+    const { path, search, data } = redirect;
     return (
-      <Navigate
-        to={
-          redirect.path + redirect.data
-            ? `_s=${toState(redirect.data as any)}`
-            : ""
-        }
-        replace
-      />
+      <Navigate to={toWithState({ pathname: path, search }, data)} replace />
     );
   }
 
@@ -231,7 +225,7 @@ export default function SignupForm(props: Props) {
         <span className="flex-center gap-1 max-sm:text-sm font-normal">
           Already have an account?
           <Link
-            to={appRoutes.signin + `?_s=${toState(fromState)}`}
+            to={toWithState(appRoutes.signin, fromState)}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

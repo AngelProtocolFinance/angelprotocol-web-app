@@ -3,7 +3,7 @@ import ContentLoader from "components/ContentLoader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { useNavigate } from "react-router-dom";
 import {
   useCapturePayPalOrderMutation,
@@ -75,7 +75,7 @@ export default function Checkout(props: StripeCheckoutStep) {
             ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}`
             : appRoutes.donate_thanks;
 
-        navigate(route + `?_s=${toState(state)}`);
+        navigate(toWithState(route, state));
       }}
       createOrder={async () =>
         await createOrder({

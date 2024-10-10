@@ -9,7 +9,7 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useLoaderData } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
@@ -52,15 +52,9 @@ export function Component() {
   }
 
   if (currUser) {
+    const { path, search, data } = redirect;
     return (
-      <Navigate
-        to={
-          redirect.path + redirect.data
-            ? `_s=${toState(redirect.data as any)}`
-            : ""
-        }
-        replace
-      />
+      <Navigate to={toWithState({ pathname: path, search }, data)} replace />
     );
   }
 

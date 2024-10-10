@@ -1,4 +1,4 @@
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import type { RegStep } from "pages/Registration/types";
 import { Link } from "react-router-dom";
 import { useRegState } from "../StepGuard";
@@ -30,7 +30,7 @@ export default function Step({
       <p className="text-green font-semibold max-sm:row-start-2">{status}</p>
 
       <Link
-        to={`../${num}?_s=${toState(init)}`}
+        to={toWithState(`../${num}`, init)}
         className="min-w-[8rem] ml-6 max-sm:row-span-2 btn-outline-filled btn-reg"
         aria-disabled={disabled}
       >

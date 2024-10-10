@@ -1,7 +1,7 @@
 import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
-import { type AuthLoc, toState } from "helpers/state-params";
+import { type AuthLoc, toWithState } from "helpers/state-params";
 import { type ComponentType, createContext, useContext } from "react";
 import { Navigate, useLoaderData } from "react-router-dom";
 import { useGetter } from "store/accessors";
@@ -29,9 +29,7 @@ export default function withAuth<Props>(
         from: location.pathname,
         data: location.state,
       };
-      return (
-        <Navigate to={`${appRoutes.signup}?_s=${toState(state)}`} replace />
-      );
+      return <Navigate to={toWithState(appRoutes.signup, state)} replace />;
     }
 
     if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {

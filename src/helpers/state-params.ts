@@ -1,11 +1,11 @@
-import type { LoaderFunction } from "react-router-dom";
+import type { LoaderFunction, To } from "react-router-dom";
 
-export const toState = (state: object | undefined): string => {
+export const encodeState = (state: object): string => {
   if (!state) return "";
   return btoa(JSON.stringify(state));
 };
 
-export const fromState = <T>(base64: string | null) => {
+export const decodeState = <T>(base64: string | null) => {
   try {
     if (!base64) return null;
     return JSON.parse(atob(base64)) as T;
@@ -15,10 +15,28 @@ export const fromState = <T>(base64: string | null) => {
   }
 };
 
+/** includes state in search params */
+export function toWithState(to: To, state: unknown): To {
+  if (!state) return to;
+  if (typeof state !== "object") return to;
+
+  const encoded = encodeState(state);
+  if (typeof to === "string") return `${to}?_s=${encoded}`;
+  const { pathname, search, hash } = to;
+
+  if (!search) return { pathname, hash };
+
+  const s = new URLSearchParams(search);
+  if (s.size === 0) return { pathname, hash };
+
+  s.append("_s", encoded);
+
+  return { pathname, hash, search: s.toString() };
+}
+
 export const stateLoader: LoaderFunction = ({ request }) => {
-  console.log({ request });
   const url = new URL(request.url);
-  return fromState(url.searchParams.get("_s"));
+  return decodeState(url.searchParams.get("_s"));
 };
 
 export type AuthLoc = {
@@ -29,6 +47,6 @@ export const authLocLoader: LoaderFunction = ({ request }): AuthLoc => {
   const url = new URL(request.url);
   return {
     pathname: url.pathname,
-    state: fromState(url.searchParams.get("_s")),
+    state: decodeState(url.searchParams.get("_s")),
   };
 };
