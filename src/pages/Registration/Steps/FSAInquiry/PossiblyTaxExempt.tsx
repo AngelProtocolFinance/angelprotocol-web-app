@@ -1,6 +1,7 @@
 import type { Init } from "@better-giving/registration/models";
 import LoadText from "components/LoadText";
 import { useErrorContext } from "contexts/ErrorContext";
+import { toState } from "helpers/state-params";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
@@ -41,7 +42,7 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
       onSubmit={handleSubmit(async () => {
         try {
           if (!isDirty && irs501c3Prev !== undefined) {
-            return navigate(`../${steps.docs}`, { state: init });
+            return navigate(`../${steps.docs}?_s=${toState(init)}`);
           }
 
           await updateReg({
@@ -50,7 +51,7 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
             irs501c3: watch().irs501c3 === "yes",
           }).unwrap();
 
-          navigate(`../${steps.docs}`, { state: init });
+          navigate(`../${steps.docs}?_s=${toState(init)}`);
         } catch (err) {
           handleError(err, { context: "updating registration" });
         }
@@ -86,8 +87,7 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isLoading}
-          to={`../${steps.orgDetails}`}
-          state={init}
+          to={`../${steps.orgDetails}?_s=${toState(init)}`}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
