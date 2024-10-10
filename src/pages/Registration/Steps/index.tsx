@@ -2,11 +2,12 @@ import { type Init, isIrs501c3 } from "@better-giving/registration/models";
 import ExtLink from "components/ExtLink";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { appRoutes, regRoutes } from "constants/routes";
+import { fromState } from "helpers/state-params";
 import {
   Navigate,
   Outlet,
   type RouteObject,
-  useLocation,
+  useLoaderData,
 } from "react-router-dom";
 import { useRegQuery } from "services/aws/registration";
 import { steps } from "../routes";
@@ -23,8 +24,7 @@ import type { StepGuardProps } from "./StepGuard";
 import { getRegistrationState } from "./getRegistrationState";
 
 function Layout() {
-  const { state } = useLocation();
-  const initReg = state as Init | undefined;
+  const initReg = useLoaderData() as Init | undefined;
 
   const ref = initReg?.id || "";
   const { data, isLoading, isError } = useRegQuery(ref, {
@@ -110,6 +110,11 @@ function getClaim(reg: RegistrationState) {
 export const route: RouteObject = {
   path: regRoutes.steps,
   element: <Layout />,
+  loader: ({ request }) => {
+    console.log({ request });
+    const params = new URL(request.url);
+    return fromState(params.searchParams.get("_s"));
+  },
   children: [
     { path: steps.contact, element: <ContactDetails step={1} /> },
     { path: steps.orgDetails, element: <OrgDetails step={2} /> },

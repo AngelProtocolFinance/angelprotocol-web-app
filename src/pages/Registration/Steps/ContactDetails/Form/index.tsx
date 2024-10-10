@@ -3,6 +3,7 @@ import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
+import { toState } from "helpers/state-params";
 import type { SubmitHandler } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
@@ -41,7 +42,9 @@ export default function Form({ classes = "" }: { classes?: string }) {
   const submit: SubmitHandler<FV> = async (fv) => {
     try {
       if (!isDirty && state.data.contact) {
-        return navigate(`../${steps.orgDetails}`, { state: state.data.init }); // go to latest step
+        return navigate(
+          `../${steps.orgDetails}?_s=${toState(state.data.init)}`
+        ); // go to latest step
       }
 
       const { org_role, referral_method, registrant_id, ...rest } = fv;
@@ -54,7 +57,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
         id: state.data.init.id,
       }).unwrap();
 
-      navigate(`../${steps.orgDetails}`, { state: state.data.init });
+      navigate(`../${steps.orgDetails}?_s=${toState(state.data.init)}`);
     } catch (err) {
       handleError(err, { context: "updating registration" });
     }

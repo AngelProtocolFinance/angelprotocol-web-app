@@ -1,5 +1,6 @@
 import BankDetails from "components/BankDetails";
 import ExtLink from "components/ExtLink";
+import { toState } from "helpers/state-params";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -43,15 +44,13 @@ function Banking() {
 
         <div className="grid grid-cols-2 sm:flex gap-2 w-full mt-auto">
           <Link
-            to={`../${steps.docs}`}
-            state={data.init}
+            to={`../${steps.docs}?_s=${toState(data.init)}`}
             className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >
             Back
           </Link>
           <Link
-            to={`../${steps.summary}`}
-            state={data.init}
+            to={`../${steps.summary}?_s=${toState(data.init)}`}
             className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             Continue

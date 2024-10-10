@@ -2,6 +2,7 @@ import Prompt from "components/Prompt";
 import { regRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import { toState } from "helpers/state-params";
 import { Navigate } from "react-router-dom";
 import { useSubmitMutation } from "services/aws/registration";
 import type { Step6Data } from "../../types";
@@ -45,7 +46,7 @@ function Dashboard() {
     typeof submission !== "string" &&
     "endowment_id" in submission
   ) {
-    return <Navigate to={`../../${regRoutes.success}`} state={data} />;
+    return <Navigate to={`../../${regRoutes.success}?_s=${toState(data)}`} />;
   }
 
   return (

@@ -2,6 +2,7 @@ import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { regRoutes } from "constants/routes";
 import { getSavedRegistrationReference } from "helpers";
+import { toState } from "helpers/state-params";
 import { ArrowDownToLine, CircleCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLazyRegQuery } from "services/aws/registration";
@@ -25,10 +26,10 @@ export default function Success({
       const reference = getSavedRegistrationReference();
       if (!reference) return navigate(appRoutes.register);
       const savedRegistration = await checkPrevRegistration(reference).unwrap();
-      const { state } = getRegistrationState(savedRegistration);
-      navigate(`${appRoutes.register}/${regRoutes.steps}/${state.step}`, {
-        state: state.data.init,
-      });
+      const { state, nextStep } = getRegistrationState(savedRegistration);
+      navigate(
+        `${appRoutes.register}/${regRoutes.steps}/${nextStep}?_s=${toState(state.data.init)}`
+      );
     } catch (_) {
       navigate(appRoutes.register);
     }
