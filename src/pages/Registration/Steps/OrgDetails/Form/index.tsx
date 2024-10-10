@@ -8,6 +8,7 @@ import { MultiSelector, Selector } from "components/Selector";
 import { Field, Label, Radio } from "components/form";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";
+import { toState } from "helpers/state-params";
 import { Link } from "react-router-dom";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
@@ -107,8 +108,7 @@ export default function Form() {
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isSubmitting}
-          to={`../${steps.contact}`}
-          state={data.init}
+          to={`../${steps.contact}?_s=${toState(data.init)}`}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back

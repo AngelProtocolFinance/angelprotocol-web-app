@@ -1,5 +1,6 @@
 import type { Init } from "@better-giving/registration/models";
 import { isEmpty } from "helpers";
+import { toState } from "helpers/state-params";
 import { type FC, createContext, useContext, useEffect } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import type { RegStep, RegistrationState } from "../types";
@@ -21,7 +22,7 @@ export function withStepGuard<T extends object>(Step: FC<T>) {
     // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
     useEffect(() => {
       if (thisStep > savedStep + 1) {
-        navigate(`../${savedStep}`, { state: init });
+        navigate(`../${savedStep}?_s=${toState(init)}`);
       }
     }, []);
 

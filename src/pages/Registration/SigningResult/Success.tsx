@@ -3,6 +3,7 @@ import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { regRoutes } from "constants/routes";
 import { getSavedRegistrationReference } from "helpers";
+import { toState } from "helpers/state-params";
 import { useNavigate } from "react-router-dom";
 import { useLazyRegQuery } from "services/aws/registration";
 import { getRegistrationState } from "../Steps/getRegistrationState";
@@ -26,9 +27,9 @@ export default function Success({
       if (!reference) return navigate(appRoutes.register);
       const savedRegistration = await checkPrevRegistration(reference).unwrap();
       const { state, nextStep } = getRegistrationState(savedRegistration);
-      navigate(`${appRoutes.register}/${regRoutes.steps}/${nextStep}`, {
-        state: state.data.init,
-      });
+      navigate(
+        `${appRoutes.register}/${regRoutes.steps}/${nextStep}?_s=${toState(state.data.init)}`
+      );
     } catch (_) {
       navigate(appRoutes.register);
     }
