@@ -1,6 +1,7 @@
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
+import { toWithState } from "helpers/state-params";
 import { Link } from "react-router-dom";
 import { useTopCountriesQuery } from "services/apes";
 import type { EndowFilterState } from "types/app";
@@ -28,15 +29,12 @@ export function TopCountries() {
           <>
             {countries.map((country) => (
               <Link
-                state={
-                  {
-                    country,
-                    searchText: "",
-                  } satisfies EndowFilterState
-                }
                 key={country}
                 className="border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
-                to={appRoutes.marketplace}
+                to={toWithState(appRoutes.marketplace, {
+                  country,
+                  searchText: "",
+                } satisfies EndowFilterState)}
               >
                 {country}
               </Link>
