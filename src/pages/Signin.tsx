@@ -9,8 +9,9 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
+import { toWithState } from "helpers/state-params";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLoaderData } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
 import type { OAuthState } from "types/auth";
@@ -21,7 +22,10 @@ type FormValues = {
   password: string;
 };
 
+export { stateLoader as loader } from "helpers/state-params";
+
 export function Component() {
+  const fromState = useLoaderData();
   const { handleError, displayError } = useErrorContext();
   const {
     register,
@@ -36,8 +40,7 @@ export function Component() {
     ),
   });
 
-  const { state: fromState } = useLocation();
-  const redirect = getAuthRedirect(fromState);
+  const redirect = getAuthRedirect(fromState as any);
   const currUser = useGetter((state) => state.auth.user);
 
   if (currUser === "loading" || currUser?.isSigningOut) {
@@ -49,7 +52,10 @@ export function Component() {
   }
 
   if (currUser) {
-    return <Navigate to={redirect.path} state={redirect.data} replace />;
+    const { path, search, data } = redirect;
+    return (
+      <Navigate to={toWithState({ pathname: path, search }, data)} replace />
+    );
   }
 
   async function submit(fv: FormValues) {
@@ -118,9 +124,8 @@ export function Component() {
             placeholder="Password"
           />
           <Link
-            to={appRoutes.reset_password}
+            to={toWithState(appRoutes.reset_password, fromState)}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"
-            state={fromState}
           >
             Forgot password?
           </Link>
@@ -134,8 +139,7 @@ export function Component() {
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
           <Link
-            to={appRoutes.signup}
-            state={fromState}
+            to={toWithState(appRoutes.signup, fromState)}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

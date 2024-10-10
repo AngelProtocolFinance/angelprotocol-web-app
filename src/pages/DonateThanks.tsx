@@ -7,15 +7,16 @@ import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
-import { Link, useLocation, useOutletContext } from "react-router-dom";
+import { Link, useLoaderData, useOutletContext } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import { userIsSignedIn } from "types/auth";
 import type { DonateThanksState } from "types/pages";
 
+export { stateLoader as loader } from "helpers/state-params";
+
 export function Component() {
   const widgetVersion = useOutletContext<true | undefined>();
-  const location = useLocation();
-  const state: DonateThanksState | undefined = location.state;
+  const state = useLoaderData() as DonateThanksState | undefined;
   const user = useGetter((state) => state.auth.user);
 
   return (

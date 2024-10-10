@@ -3,16 +3,15 @@ import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { idParamToNum } from "helpers";
 import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import type { DonationIntent } from "types/aws";
 import Content from "./Content";
 
+export { stateLoader as loader } from "helpers/state-params";
 export function Component() {
-  const location = useLocation();
-
   //setter of this should make sure that intent.endowmentId is the same as this page's param.id.
-  const intent = location.state as DonationIntent.ToResume | undefined;
+  const intent = useLoaderData() as DonationIntent.ToResume | undefined;
 
   //clear window.history.state after loading the intent into memory
   useEffect(() => {

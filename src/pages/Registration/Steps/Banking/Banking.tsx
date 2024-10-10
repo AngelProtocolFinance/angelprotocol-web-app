@@ -1,6 +1,7 @@
 import BankDetails from "components/BankDetails";
 import ExtLink from "components/ExtLink";
 import Icon from "components/Icon/Icon";
+import { toWithState } from "helpers/state-params";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { steps } from "../../routes";
@@ -43,15 +44,13 @@ function Banking() {
 
         <div className="grid grid-cols-2 sm:flex gap-2 w-full mt-auto">
           <Link
-            to={`../${steps.docs}`}
-            state={data.init}
+            to={toWithState(`../${steps.docs}`, data.init)}
             className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >
             Back
           </Link>
           <Link
-            to={`../${steps.summary}`}
-            state={data.init}
+            to={toWithState(`../${steps.summary}`, data.init)}
             className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             Continue

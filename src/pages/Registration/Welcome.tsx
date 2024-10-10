@@ -6,15 +6,17 @@ import { APP_NAME } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
+import { toWithState } from "helpers/state-params";
 import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
 import { steps } from "./routes";
 
+export { stateLoader as loader } from "helpers/state-params";
+
 export function Component() {
   const { email } = useAuthenticatedUser();
-  const { state } = useLocation();
-  const claim = state as EndowClaim | null;
+  const claim = useLoaderData() as EndowClaim | null;
   const {
     data: reg,
     isLoading,
@@ -42,8 +44,10 @@ export function Component() {
       <Link
         aria-disabled={isLoading || isError || !reg}
         className="w-full max-w-[26.25rem] btn-blue btn-reg"
-        to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`}
-        state={reg}
+        to={toWithState(
+          `${appRoutes.register}/${regRoutes.steps}/${steps.contact}`,
+          reg
+        )}
       >
         <LoadText isLoading={isLoading} text="Continue registration">
           Continue registration

@@ -3,13 +3,15 @@ import { AuthError, resetPassword } from "aws-amplify/auth";
 import { Form, Input } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import { toWithState } from "helpers/state-params";
 import { type UseFormReturn, useForm } from "react-hook-form";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { requiredString } from "schemas/string";
 import { object } from "yup";
 import type { StepSetter } from "./types";
 
 type Props = {
+  state: unknown;
   setStep: StepSetter;
 };
 
@@ -29,9 +31,6 @@ export default function InitForm(props: Props) {
   } = methods;
 
   type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
-
-  // pass this if navigating back to Login
-  const { state } = useLocation();
 
   async function submit(fv: FV) {
     try {
@@ -89,8 +88,7 @@ export default function InitForm(props: Props) {
       </button>
 
       <Link
-        to={appRoutes.signin}
-        state={state}
+        to={toWithState(appRoutes.signin, props.state)}
         className="mt-5 text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray max-sm:text-sm font-medium underline text-center"
         aria-disabled={isSubmitting}
       >

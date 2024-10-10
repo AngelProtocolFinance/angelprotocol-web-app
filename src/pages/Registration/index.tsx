@@ -2,6 +2,7 @@ import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
+import { authLocLoader } from "helpers/state-params";
 import { Outlet, type RouteObject } from "react-router-dom";
 import SigningResult from "./SigningResult";
 import { route as stepsRoute } from "./Steps";
@@ -23,6 +24,7 @@ const Root = withAuth(Layout);
 export const route: RouteObject = {
   path: appRoutes.register,
   element: <Root />,
+  loader: authLocLoader,
   children: [
     {
       path: regRoutes.welcome,
