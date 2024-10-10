@@ -1,5 +1,5 @@
 import { useErrorContext } from "contexts/ErrorContext";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useLazyEndowWithEinQuery } from "services/aws/aws";
@@ -27,7 +27,7 @@ export default function useSubmit({ form, props }: Args) {
 
   const submit: SubmitHandler<FV> = async (fv) => {
     if (!isDirty && props.doc) {
-      return navigate(`../${steps.banking}?_s=${toState(data.init)}`);
+      return navigate(toWithState(`../${steps.banking}`, data.init));
     }
 
     if (!data.init.claim && fv.ein !== props.doc?.ein) {
@@ -56,7 +56,7 @@ export default function useSubmit({ form, props }: Args) {
     if ("error" in result) {
       return handleError(result.error, { context: "submitting documentation" });
     }
-    return navigate(`../${steps.banking}?_s=${toState(data.init)}`);
+    return navigate(toWithState(`../${steps.banking}`, data.init));
   };
 
   return {

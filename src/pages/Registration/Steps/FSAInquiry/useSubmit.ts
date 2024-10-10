@@ -1,5 +1,5 @@
 import { useErrorContext } from "contexts/ErrorContext";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
@@ -23,7 +23,7 @@ export default function useSubmit(
 
   const submit: SubmitHandler<FV> = async (fv) => {
     if (!isDirty && data.irs501c3 !== undefined && possiblyTaxExempt) {
-      return navigate(`../${steps.docs}?_s=${toState(data.init)}`);
+      return navigate(toWithState(`../${steps.docs}`, data.init));
     }
     const result = await updateReg({
       id: data.init.id,
@@ -35,7 +35,7 @@ export default function useSubmit(
       return handleError(result.error, { context: "updating registration" });
     }
 
-    navigate(`../${steps.docs}?_s=${toState(data.init)}`);
+    navigate(toWithState(`../${steps.docs}`, data.init));
   };
 
   return {

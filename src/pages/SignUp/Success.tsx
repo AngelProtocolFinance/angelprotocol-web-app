@@ -1,6 +1,6 @@
 import { appRoutes } from "constants/routes";
 import { getAuthRedirect } from "helpers";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { SignInRouteState } from "types/auth";
@@ -31,7 +31,7 @@ export default function Success({ userType, fromState }: Props) {
       </p>
 
       <Link
-        to={`${appRoutes.signin}?_s=${toState(signInRouteState)}`}
+        to={toWithState(appRoutes.signin, signInRouteState)}
         className="flex-center mt-9 w-full bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold"
       >
         Continue to Sign in

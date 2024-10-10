@@ -3,7 +3,7 @@ import { Form, Input } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { cognito, isError } from "helpers/cognito";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
 import { type UseFormReturn, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -79,7 +79,7 @@ export default function InitForm(props: Props) {
       </button>
 
       <Link
-        to={appRoutes.signin + `?_s=${toState(props.state as any)}`}
+        to={toWithState(appRoutes.signin, props.state)}
         className="mt-5 text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray max-sm:text-sm font-medium underline text-center"
         aria-disabled={isSubmitting}
       >

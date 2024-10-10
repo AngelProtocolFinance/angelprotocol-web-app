@@ -1,6 +1,6 @@
 import type { FormButtonsProps } from "components/BankDetails/types";
 import LoadText from "components/LoadText";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { Link } from "react-router-dom";
 import { steps } from "../../routes";
 import { useRegState } from "../StepGuard";
@@ -16,7 +16,7 @@ function Submit({ isSubmitting = false }) {
       <div className="grid grid-cols-2 sm:flex gap-2">
         <Link
           aria-disabled={isSubmitting}
-          to={`../${steps.docs}?_s=${toState(data.init)}`}
+          to={toWithState(`../${steps.docs}`, data.init)}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back

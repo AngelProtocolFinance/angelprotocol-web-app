@@ -5,7 +5,7 @@ import { APP_NAME } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
@@ -44,7 +44,10 @@ export function Component() {
       <Link
         aria-disabled={isLoading || isError || !reg}
         className="w-full max-w-[26.25rem] btn-blue btn-reg"
-        to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}?_s=${toState(reg)}`}
+        to={toWithState(
+          `${appRoutes.register}/${regRoutes.steps}/${steps.contact}`,
+          reg
+        )}
       >
         <LoadText isLoading={isLoading} text="Continue registration">
           Continue registration

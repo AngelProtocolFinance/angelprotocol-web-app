@@ -1,7 +1,7 @@
 import { regRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { storeRegistrationReference } from "helpers";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useLazyRegQuery } from "services/aws/registration";
@@ -27,7 +27,7 @@ export default function useSubmit() {
 
       const { state, nextStep } = getRegistrationState(data);
       navigate(
-        `../${regRoutes.steps}/${nextStep}?_s=${toState(state.data.init)}`
+        toWithState(`../${regRoutes.steps}/${nextStep}`, state.data.init)
       );
     } catch (err) {
       handleError(err, { context: "resuming registration" });

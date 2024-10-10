@@ -1,6 +1,6 @@
 import type { OnSubmit } from "components/BankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { uploadFile } from "helpers/uploadFile";
 import { useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
@@ -27,7 +27,7 @@ export default function useSubmit() {
         wise_recipient_id: recipient.id,
       }).unwrap();
 
-      return navigate(`../${steps.summary}?_s=${toState(data.init)}`);
+      return navigate(toWithState(`../${steps.summary}`, data.init));
     } catch (error) {
       handleError(error, { context: "submitting banking details" });
     }

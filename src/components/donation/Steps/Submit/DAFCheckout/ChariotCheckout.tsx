@@ -11,7 +11,7 @@ import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import ErrorBoundary from "errors/ErrorBoundary";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
@@ -312,16 +312,16 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
               setModalOption("isDismissible", true);
               closeModal();
 
-              const _s = toState({
-                guestDonor: {
-                  email: grantor.email,
-                  fullName: `${grantor.firstName} ${grantor.lastName}`,
-                },
-                recipientId: props.init.recipient.id,
-                recipientName: props.init.recipient.name,
-              } satisfies DonateThanksState);
-
-              navigate(`${appRoutes.donate_thanks}?_s=${_s}`);
+              navigate(
+                toWithState(appRoutes.donate_thanks, {
+                  guestDonor: {
+                    email: grantor.email,
+                    fullName: `${grantor.firstName} ${grantor.lastName}`,
+                  },
+                  recipientId: props.init.recipient.id,
+                  recipientName: props.init.recipient.name,
+                } satisfies DonateThanksState)
+              );
             } catch (err) {
               handleError(err, { context: "processing donation" });
             }

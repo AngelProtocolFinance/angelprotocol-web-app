@@ -1,7 +1,7 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import LoadText from "components/LoadText";
 import { Field } from "components/form";
-import { toState } from "helpers/state-params";
+import { toWithState } from "helpers/state-params";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { steps } from "../../../routes";
@@ -39,7 +39,7 @@ export default function NonFSA(props: Props) {
         <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
           <Link
             aria-disabled={isSubmitting}
-            to={`../${steps.fsaInquiry}?_s=${toState(data.init)}`}
+            to={toWithState(`../${steps.fsaInquiry}`, data.init)}
             className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >
             Back

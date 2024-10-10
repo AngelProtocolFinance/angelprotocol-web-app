@@ -1,15 +1,11 @@
 import type { Submission } from "@better-giving/registration/models";
 import type { CompleteReg } from "@better-giving/registration/step";
 import { adminRoutes, appRoutes } from "constants/routes";
-import { fromState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
-import { type LoaderFunction, Navigate, useLoaderData } from "react-router-dom";
+import { Navigate, useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export const loader: LoaderFunction = ({ request }) => {
-  const url = new URL(request.url);
-  return fromState(url.searchParams.get("_s"));
-};
+export { stateLoader as loader } from "helpers/state-params";
 
 export function Component({ classes = "" }: { classes?: string }) {
   const reg = useLoaderData() as CompleteReg | undefined;
