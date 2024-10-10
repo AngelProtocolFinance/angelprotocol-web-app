@@ -2,6 +2,7 @@ import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { adminRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import { toWithState } from "helpers/state-params";
 import { useAdminContext } from "pages/Admin/Context";
 import { Link } from "react-router-dom";
 import { useDeleteProgramMutation } from "services/aws/programs";
@@ -53,9 +54,11 @@ export function Program(props: TProgram) {
             delete
           </button>
           <Link
-            to={`../${adminRoutes.program_editor}/${props.id}`}
+            to={toWithState(
+              `../${adminRoutes.program_editor}/${props.id}`,
+              props
+            )}
             className="btn-outline-filled w-24 py-2 text-sm"
-            state={props}
           >
             edit
           </Link>
