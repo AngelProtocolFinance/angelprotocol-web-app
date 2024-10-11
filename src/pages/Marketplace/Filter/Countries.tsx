@@ -23,7 +23,10 @@ export default function Countries() {
     .filter((c) => c.toLowerCase().includes(searchText.toLowerCase()));
 
   function handleChange(countries: string[]) {
-    setParams(toRaw({ ...p, countries }), { replace: true });
+    setParams(toRaw({ ...p, countries }), {
+      replace: true,
+      preventScrollReset: true,
+    });
   }
 
   return (

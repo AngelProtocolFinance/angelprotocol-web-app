@@ -21,7 +21,7 @@ export default function ActiveFilters() {
                 (val) => val !== designation
               ),
             }),
-            { replace: true }
+            { replace: true, preventScrollReset: true }
           )
         }
       >
@@ -47,7 +47,7 @@ export default function ActiveFilters() {
               (x) => !categories[groupNum].sdgs.includes(x as UNSDG_NUM)
             ),
           }),
-          { replace: true }
+          { replace: true, preventScrollReset: true }
         )
       }
     >
@@ -64,7 +64,7 @@ export default function ActiveFilters() {
             ...parsed,
             countries: parsed.countries?.filter((c) => c !== country),
           }),
-          { replace: true }
+          { replace: true, preventScrollReset: true }
         )
       }
     >
@@ -81,7 +81,7 @@ export default function ActiveFilters() {
             ...parsed,
             kyc_only: parsed.kyc_only?.filter((v) => v !== kyc),
           }),
-          { replace: true }
+          { replace: true, preventScrollReset: true }
         );
       }}
     >
@@ -98,7 +98,7 @@ export default function ActiveFilters() {
             ...parsed,
             claimed: parsed.claimed?.filter((v) => v !== isVerified),
           }),
-          { replace: true }
+          { replace: true, preventScrollReset: true }
         )
       }
     >
@@ -118,7 +118,9 @@ export default function ActiveFilters() {
       {filters.length >= 2 && (
         <button
           type="button"
-          onClick={() => setParams(toRaw({}), { replace: true })}
+          onClick={() =>
+            setParams(toRaw({}), { replace: true, preventScrollReset: true })
+          }
           className="text-blue hover:text-blue-l1 text-sm ml-1"
         >
           Clear all

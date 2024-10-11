@@ -25,7 +25,10 @@ export default function Designations() {
       selectedValues={pEndowDesignation}
       options={options}
       onChange={(value) => {
-        setParams(toRaw({ ...p, endow_designation: value }), { replace: true });
+        setParams(toRaw({ ...p, endow_designation: value }), {
+          replace: true,
+          preventScrollReset: true,
+        });
       }}
     />
   );
