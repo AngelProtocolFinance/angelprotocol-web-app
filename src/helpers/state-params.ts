@@ -1,16 +1,10 @@
 import type { LoaderFunction, To } from "react-router-dom";
 
-export const encodeState = (state: object): string => {
-  if (!state) return "";
-  return btoa(JSON.stringify(state));
-};
-
 export const decodeState = <T>(base64: string | null) => {
   try {
     if (!base64) return null;
     return JSON.parse(atob(base64)) as T;
-  } catch (err) {
-    console.error(err);
+  } catch (_) {
     return null;
   }
 };
@@ -20,7 +14,7 @@ export function toWithState(to: To, state: unknown): To {
   if (!state) return to;
   if (typeof state !== "object") return to;
 
-  const encoded = encodeState(state);
+  const encoded = btoa(JSON.stringify(state));
   if (typeof to === "string") return `${to}?_s=${encoded}`;
   const { pathname, search, hash } = to;
 
