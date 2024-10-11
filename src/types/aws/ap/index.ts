@@ -225,18 +225,6 @@ export type MilestoneDelete = {
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
 
-// export type EndowmentsQueryParams = {
-//   /** can be empty string */
-//   query: string;
-//   page: string; //to load next page, set to Page + 1
-//   endow_designation?: string; // comma separated EndowDesignation values
-//   sdgs?: string; // comma separated sdg values.
-//   kyc_only?: string; // comma separated boolean values
-//   countries?: string; //comma separated country names
-//   /** boolean csv */
-//   claimed?: string;
-// };
-
 export type EndowmentBookmark = {
   endowId: number;
   name: string;
