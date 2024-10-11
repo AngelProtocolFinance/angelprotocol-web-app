@@ -1,4 +1,5 @@
-import { useMarketplaceContext } from "../Context";
+import { useSearchParams } from "react-router-dom";
+import { toParsed, toRaw } from "../helpers";
 import { type FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<boolean>[] = [
@@ -7,14 +8,17 @@ const options: FilterOption<boolean>[] = [
 ];
 
 export default function VerificationFilter() {
-  const { state, update } = useMarketplaceContext();
+  const [params, setParams] = useSearchParams();
+  const { claimed: pc = [], ...p } = toParsed(params);
 
   return (
     <FlatFilter
       label="Verification status"
-      selectedValues={state.verified}
+      selectedValues={pc}
       options={options}
-      onChange={(options) => update({ verified: options })}
+      onChange={(options) => {
+        setParams(toRaw({ ...p, claimed: options }), { replace: true });
+      }}
     />
   );
 }

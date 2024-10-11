@@ -12,10 +12,10 @@ import type {
   Donation,
   DonationsQueryParams,
   EndowListPaginatedAWSQueryRes,
+  EndowQParams,
   Endowment,
   EndowmentCard,
   EndowmentOption,
-  EndowmentsQueryParams,
 } from "types/aws";
 import { version as v } from "../helpers";
 import type { EndowmentUpdate, IdOrSlug } from "../types";
@@ -56,7 +56,7 @@ export const aws = createApi({
   endpoints: (builder) => ({
     endowmentCards: builder.query<
       EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
-      EndowmentsQueryParams
+      EndowQParams
     >({
       providesTags: ["endowments"],
       query: (params) => {
@@ -66,12 +66,12 @@ export const aws = createApi({
         };
       },
     }),
-    endowmentOptions: builder.query<EndowmentOption[], EndowmentsQueryParams>({
+    endowmentOptions: builder.query<EndowmentOption[], EndowQParams>({
       providesTags: ["endowments"],
-      query: (params) => {
+      query: ({ page = "1", ...p }) => {
         return {
           url: `${v(1)}/cloudsearch-nonprofits`,
-          params: { ...params, fields: endowSelectorOptionFields },
+          params: { ...p, page, fields: endowSelectorOptionFields },
         };
       },
       transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {

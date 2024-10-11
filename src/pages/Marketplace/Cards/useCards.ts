@@ -1,49 +1,28 @@
-import { categories } from "constants/unsdgs";
-import { isEmpty } from "helpers";
-import useDebouncer from "hooks/useDebouncer";
+import { useSearchParams } from "react-router-dom";
 import {
   updateAWSQueryData,
   useEndowmentCardsQuery,
   useLazyEndowmentCardsQuery,
 } from "services/aws/aws";
 import { useSetter } from "store/accessors";
-import { useMarketplaceContext } from "../Context";
+import { toObj, toParsed } from "../helpers";
 
 export default function useCards() {
-  const { state } = useMarketplaceContext();
+  const [params] = useSearchParams();
+  const parsed = toParsed(params);
+
   const dispatch = useSetter();
-  const { sort, searchText, sdgGroups, verified, ...params } = state;
-  const [debouncedSearchText, isDebouncing] = useDebouncer(searchText, 500);
+  const { query, claimed, ..._params } = parsed;
 
-  const sdgs = sdgGroups.flatMap((g) => categories[g].sdgs);
-
-  const _params = Object.entries(params).reduce(
-    (prev, [key, val]) => ({
-      ...prev,
-      ...(isEmpty(val) ? {} : { [key]: val.join(",") }),
-    }),
-    {}
-  );
-
-  const {
-    isLoading,
-    isFetching,
-    isUninitialized,
-    data,
-    isError,
-    originalArgs,
-  } = useEndowmentCardsQuery(
-    {
-      query: debouncedSearchText,
-      page: 1, // always starts at page 1
-      sdgs: sdgs.join(","),
-      claimed:
-        /** search for both verified/unverified if user didn't explicitly narrow verified status */
-        searchText && isEmpty(verified) ? "true,false" : verified.join(","),
-      ..._params,
-    },
-    { skip: isDebouncing }
-  );
+  const { isLoading, isFetching, data, isError, originalArgs } =
+    useEndowmentCardsQuery(
+      toObj({
+        ...parsed,
+        query,
+        claimed: query && !claimed ? [true, false] : claimed,
+        ..._params,
+      })
+    );
 
   const [loadMore, { isLoading: isLoadingNextPage }] =
     useLazyEndowmentCardsQuery();
@@ -56,7 +35,7 @@ export default function useCards() {
     ) {
       const { data: newEndowRes } = await loadMore({
         ...originalArgs,
-        page: data.Page + 1,
+        page: (data.Page + 1).toString(),
       });
 
       if (newEndowRes) {
@@ -76,8 +55,8 @@ export default function useCards() {
 
   return {
     hasMore,
-    isLoading: isLoading || isUninitialized,
-    isFetching: isFetching || isUninitialized,
+    isLoading,
+    isFetching,
     isLoadingNextPage,
     loadNextPage,
     data,

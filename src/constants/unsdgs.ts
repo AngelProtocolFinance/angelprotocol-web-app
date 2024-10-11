@@ -250,3 +250,7 @@ export const categories: {
     sdgs: [13, 14, 15],
   },
 };
+
+export const sdgGroups = Object.entries(categories).map(
+  ([group, val]) => [+group, val.sdgs] as [SDGGroup, UNSDG_NUMS[]]
+);

@@ -1,7 +1,6 @@
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { RouterErrorBoundary } from "errors/ErrorBoundary";
-import useScrollTop from "hooks/useScrollTop";
 import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
 import { routes as blogRoutes } from "pages/Blog";
@@ -17,7 +16,7 @@ import {
   Outlet,
   type RouteObject as RO,
   useLoaderData,
-  useLocation,
+  ScrollRestoration,
   useNavigation,
 } from "react-router-dom";
 import Layout from "./Layout";
@@ -71,11 +70,12 @@ const _appRoutes: RO[] = [
   { path: appRoutes.auth_redirector, element: <OAuthRedirector /> },
   {
     path: appRoutes.marketplace,
+    lazy: () => import("pages/Marketplace"),
     children: [
-      { index: true, lazy: () => import("pages/Marketplace") },
-      { path: ":id", ...profileRoute },
+      { path: "filter", lazy: () => import("pages/Marketplace/Filter") },
     ],
   },
+  { path: appRoutes.marketplace + "/:id", ...profileRoute },
   {
     path: appRoutes.widget_config,
     // Widget.tsx is also used as one of the Admin pages and so
@@ -129,10 +129,9 @@ function RootLayout() {
     else NProgress.start();
   }, [transition.state]);
 
-  const location = useLocation();
-  useScrollTop(location.pathname);
   return (
     <ModalContext>
+      <ScrollRestoration />
       <Outlet />
     </ModalContext>
   );

@@ -3,12 +3,9 @@ import Image from "components/Image";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { categories } from "constants/unsdgs";
-import { toWithState } from "helpers/state-params";
 import useDebouncer from "hooks/useDebouncer";
 import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
-import type { EndowFilterState } from "types/app";
-import type { SDGGroup } from "types/lists";
 import { TopCountries } from "./TopCountries";
 
 interface Props {
@@ -22,7 +19,7 @@ export default function SearchDropdown({ classes = "", query }: Props) {
     useEndowmentCardsQuery(
       {
         query: debouncedQuery,
-        page: 1,
+        page: "1",
       },
       { skip: isDebouncing }
     );
@@ -39,14 +36,16 @@ export default function SearchDropdown({ classes = "", query }: Props) {
         <>
           <h4 className="mb-4">Top categories</h4>
           <div className="flex flex-wrap gap-2">
-            {Object.entries(categories).map(([group, v]) => (
+            {Object.entries(categories).map(([, v]) => (
               <Link
                 key={v.name}
                 className="border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
-                to={toWithState(appRoutes.marketplace, {
-                  sdgGroup: +group as SDGGroup,
-                  searchText: "",
-                } satisfies EndowFilterState)}
+                to={{
+                  pathname: appRoutes.marketplace,
+                  search: new URLSearchParams({
+                    sdgs: v.sdgs.join(),
+                  }).toString(),
+                }}
               >
                 {v.name}
               </Link>
@@ -104,9 +103,12 @@ export default function SearchDropdown({ classes = "", query }: Props) {
               {hasMoreItems && (
                 <Link
                   className="w-full text-blue-d1 font-medium text-lg text-center mt-8 block"
-                  to={toWithState(appRoutes.marketplace, {
-                    searchText: debouncedQuery,
-                  } satisfies EndowFilterState)}
+                  to={{
+                    pathname: appRoutes.marketplace,
+                    search: new URLSearchParams({
+                      query: debouncedQuery,
+                    }).toString(),
+                  }}
                 >
                   View all results
                 </Link>

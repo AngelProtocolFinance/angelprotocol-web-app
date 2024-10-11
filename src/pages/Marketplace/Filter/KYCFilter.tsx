@@ -1,4 +1,5 @@
-import { useMarketplaceContext } from "../Context";
+import { useSearchParams } from "react-router-dom";
+import { toParsed, toRaw } from "../helpers";
 import { type FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<boolean>[] = [
@@ -7,14 +8,23 @@ const options: FilterOption<boolean>[] = [
 ];
 
 export default function KYCFilter() {
-  const { state, update } = useMarketplaceContext();
+  const [params, setParams] = useSearchParams();
+  const { kyc_only: pkycs = [], ...p } = toParsed(params);
 
   return (
     <FlatFilter
       label="Donor verification"
-      selectedValues={state.kyc_only}
+      selectedValues={pkycs}
       options={options}
-      onChange={(options) => update({ kyc_only: options })}
+      onChange={(options) => {
+        setParams(
+          toRaw({
+            ...p,
+            kyc_only: options,
+          }),
+          { replace: true }
+        );
+      }}
     />
   );
 }
