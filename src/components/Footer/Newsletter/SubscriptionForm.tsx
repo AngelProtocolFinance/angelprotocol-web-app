@@ -1,10 +1,10 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Icon from "components/Icon";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useForm } from "react-hook-form";
 import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
 import { object, string } from "yup";
+import Icon from "../../Icon";
 
 type FV = { email: string };
 

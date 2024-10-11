@@ -1,9 +1,9 @@
 import { MenuItem } from "@headlessui/react";
-import Icon from "components/Icon";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import type { AuthenticatedUser } from "types/auth";
+import Icon from "../../Icon";
 import { Bookmarks } from "./Bookmarks";
 import { Organizations } from "./Organizations";
 

@@ -37,7 +37,6 @@ const widgetRoutes: RO[] = [
 
 //routes between header/footer
 const _appRoutes: RO[] = [
-  adminRoute,
   regRoute,
   userDashboardRoute,
   ...blogRoutes,
@@ -89,11 +88,12 @@ const _appRoutes: RO[] = [
     ),
     children: [{ index: true, lazy: () => widget }],
   },
-  { index: true, lazy: () => import("pages/Home") },
 ];
 
 const rootRoutes: RO[] = [
+  { path: appRoutes.home, lazy: () => import("pages/Home") },
   { path: `${appRoutes.donate}/:id`, lazy: () => import("pages/Donate") },
+  adminRoute,
   //outlet-value: isInWidget/widgetVersion
   { element: <Layout />, children: _appRoutes },
   {
