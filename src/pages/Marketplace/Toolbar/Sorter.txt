@@ -15,6 +15,7 @@ const options: Option[] = [
   { name: "Donations", key: "overall" },
 ];
 
+
 export default function Sorter() {
   const {
     state: { sort },

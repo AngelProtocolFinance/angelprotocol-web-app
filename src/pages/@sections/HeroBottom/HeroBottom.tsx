@@ -16,7 +16,7 @@ import s from "./styles.module.css";
 const HeroBottom = ({ className = "" }) => {
   const { data } = useEndowmentCardsQuery({
     claimed: "true",
-    page: 1,
+    page: "1",
     query: "",
   });
 

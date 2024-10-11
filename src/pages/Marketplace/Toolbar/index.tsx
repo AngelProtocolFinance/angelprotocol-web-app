@@ -1,18 +1,23 @@
-import { useModalContext } from "contexts/ModalContext";
 import { FilterIcon } from "lucide-react";
-import Filter from "../Filter";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Search from "./Search";
 
 // import Sorter from "./Sorter";
 
 export default function Toolbar({ classes = "" }: { classes?: string }) {
-  const { showModal } = useModalContext();
+  const [params] = useSearchParams();
+  const navigate = useNavigate();
   return (
     <div
       className={`${classes} grid grid-cols-2 md:grid-cols-[auto_1fr] gap-3`}
     >
       <button
-        onClick={() => showModal(Filter, {})}
+        onClick={() =>
+          navigate(
+            { pathname: "filter", search: params.toString() },
+            { replace: true, preventScrollReset: true }
+          )
+        }
         className="btn-blue justify-start justify-self-start rounded-lg px-3 py-2 text-sm"
       >
         <FilterIcon size={16} className="mr-2" />

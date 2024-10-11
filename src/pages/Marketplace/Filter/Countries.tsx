@@ -8,10 +8,14 @@ import countries from "assets/countries/all.json";
 import { isEmpty } from "helpers";
 import { SearchIcon, X } from "lucide-react";
 import { useState } from "react";
-import { useMarketplaceContext } from "../Context";
+import { useSearchParams } from "react-router-dom";
+import { toParsed, toRaw } from "../helpers";
 
 export default function Countries() {
-  const { state, update } = useMarketplaceContext();
+  const [params, setParams] = useSearchParams();
+  const { countries: pcountries = [], ...p } = toParsed(params);
+
+  // const { state, update } = useMarketplaceContext();
   const [searchText, setSearchText] = useState("");
 
   const filteredOptions = countries
@@ -19,12 +23,12 @@ export default function Countries() {
     .filter((c) => c.toLowerCase().includes(searchText.toLowerCase()));
 
   function handleChange(countries: string[]) {
-    update({ countries });
+    setParams(toRaw({ ...p, countries }), { replace: true });
   }
 
   return (
     <Combobox
-      value={state.countries}
+      value={pcountries}
       onChange={handleChange}
       as="div"
       className="relative"
@@ -32,11 +36,11 @@ export default function Countries() {
     >
       <div className="flex items-center field-input justify-between cursor-pointer p-1 focus-within:border-gray-d1 focus-within:dark:border-blue-l2">
         <div className="flex flex-wrap gap-2 h-full">
-          {state.countries.map((opt) => (
+          {pcountries.map((opt) => (
             <SelectedOption
               key={opt}
               option={opt}
-              selected={state.countries}
+              selected={pcountries}
               onChange={handleChange}
             />
           ))}

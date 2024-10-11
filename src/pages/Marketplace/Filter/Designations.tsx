@@ -1,5 +1,6 @@
+import { useSearchParams } from "react-router-dom";
 import type { EndowDesignation } from "types/aws";
-import { useMarketplaceContext } from "../Context";
+import { toParsed, toRaw } from "../helpers";
 import { type FilterOption, FlatFilter } from "./common";
 
 const options: FilterOption<EndowDesignation>[] = [
@@ -15,14 +16,17 @@ const options: FilterOption<EndowDesignation>[] = [
 ];
 
 export default function Designations() {
-  const { state, update } = useMarketplaceContext();
+  const [params, setParams] = useSearchParams();
+  const { endow_designation: pEndowDesignation = [], ...p } = toParsed(params);
 
   return (
     <FlatFilter
       label="NPO Type"
-      selectedValues={state.endow_designation}
+      selectedValues={pEndowDesignation}
       options={options}
-      onChange={(value) => update({ endow_designation: value })}
+      onChange={(value) => {
+        setParams(toRaw({ ...p, endow_designation: value }), { replace: true });
+      }}
     />
   );
 }

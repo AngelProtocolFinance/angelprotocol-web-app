@@ -1,7 +1,6 @@
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { RouterErrorBoundary } from "errors/ErrorBoundary";
-import useScrollTop from "hooks/useScrollTop";
 import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
 import { routes as blogRoutes } from "pages/Blog";
@@ -16,8 +15,8 @@ import {
   Navigate,
   Outlet,
   type RouteObject as RO,
+  ScrollRestoration,
   useLoaderData,
-  useLocation,
   useNavigation,
 } from "react-router-dom";
 import { Toaster } from "sonner";
@@ -72,11 +71,12 @@ const _appRoutes: RO[] = [
   { path: appRoutes.auth_redirector, element: <OAuthRedirector /> },
   {
     path: appRoutes.marketplace,
+    lazy: () => import("pages/Marketplace"),
     children: [
-      { index: true, lazy: () => import("pages/Marketplace") },
-      { path: ":id", ...profileRoute },
+      { path: "filter", lazy: () => import("pages/Marketplace/Filter") },
     ],
   },
+  { path: appRoutes.marketplace + "/:id", ...profileRoute },
   {
     path: appRoutes.form_builder,
     // Widget.tsx is also used as one of the Admin pages and so
@@ -130,10 +130,9 @@ function RootLayout() {
     else NProgress.start();
   }, [transition.state]);
 
-  const location = useLocation();
-  useScrollTop(location.pathname);
   return (
     <ModalContext>
+      <ScrollRestoration />
       <Outlet />
       <Toaster richColors position="top-right" closeButton />
     </ModalContext>
