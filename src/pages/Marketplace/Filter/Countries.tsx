@@ -15,7 +15,6 @@ export default function Countries() {
   const [params, setParams] = useSearchParams();
   const { countries: pcountries = [], ...p } = toParsed(params);
 
-  // const { state, update } = useMarketplaceContext();
   const [searchText, setSearchText] = useState("");
 
   const filteredOptions = countries
