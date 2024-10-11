@@ -3,17 +3,24 @@ import { appRoutes } from "constants/routes";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 
-import type { Link as TLink } from "../types";
 import NavDropdown from "./NavDropdown";
 import SearchDropdown from "./SearchDropdown";
 import SearchField from "./SearchField";
 import UserMenu from "./UserMenu";
 
-type Props = { links: TLink[]; classes?: string };
+type Props = { classes?: string };
 
-export default function Header({ links, classes }: Props) {
+const authRoutes: string[] = [
+  appRoutes.signin,
+  appRoutes.signup,
+  appRoutes.reset_password,
+  appRoutes.auth_redirector,
+];
+
+export default function Header({ classes }: Props) {
   const location = useLocation();
   const [query, setQuery] = useState("");
+  const isInAuth = authRoutes.includes(location.pathname);
 
   return (
     <header
@@ -42,13 +49,8 @@ export default function Header({ links, classes }: Props) {
           />
         )}
         <div className="flex gap-2 md:gap-4 justify-self-end items-center">
-          {!(
-            location.pathname === appRoutes.signin ||
-            location.pathname === appRoutes.signup ||
-            location.pathname === appRoutes.reset_password ||
-            location.pathname === appRoutes.auth_redirector
-          ) && <UserMenu />}
-          <NavDropdown links={links} />
+          {!isInAuth && <UserMenu />}
+          <NavDropdown isInAuth={isInAuth} />
         </div>
       </div>
       {location.pathname === appRoutes.home && (
