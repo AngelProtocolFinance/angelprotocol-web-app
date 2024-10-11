@@ -4,6 +4,7 @@ import { categories } from "constants/unsdgs";
 import useDebouncer from "hooks/useDebouncer";
 import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
+import Image from "../../Image";
 import QueryLoader from "../../QueryLoader";
 import { TopCountries } from "./TopCountries";
 
@@ -83,7 +84,7 @@ export default function SearchDropdown({ classes = "", query }: Props) {
                   className="flex items-center gap-4 border border-gray-l4 hover:bg-blue-l4 pr-6 rounded-full overflow-clip h-10"
                 >
                   {endow.card_img ? (
-                    <img
+                    <Image
                       src={endow.card_img}
                       className="h-full aspect-video object-cover"
                     />
