@@ -17,7 +17,10 @@ export default function VerificationFilter() {
       selectedValues={pc}
       options={options}
       onChange={(options) => {
-        setParams(toRaw({ ...p, claimed: options }), { replace: true });
+        setParams(toRaw({ ...p, claimed: options }), {
+          replace: true,
+          preventScrollReset: true,
+        });
       }}
     />
   );

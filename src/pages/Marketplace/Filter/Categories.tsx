@@ -29,7 +29,10 @@ export default function Categories() {
         for (const v of values) {
           n.push(...categories[v].sdgs);
         }
-        setParams(toRaw({ ...p, sdgs: n }), { replace: true });
+        setParams(toRaw({ ...p, sdgs: n }), {
+          replace: true,
+          preventScrollReset: true,
+        });
       }}
     />
   );

@@ -13,7 +13,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
         e.preventDefault();
         const n = new URLSearchParams(params);
         n.set("query", e.currentTarget.query.value);
-        setParams(n, { replace: true });
+        setParams(n, { replace: true, preventScrollReset: true });
       }}
       className={`${classes} flex gap-2 items-center`}
     >
@@ -25,7 +25,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
           if (!s && q) {
             const n = new URLSearchParams(params);
             n.delete("query");
-            setParams(n, { replace: true });
+            setParams(n, { replace: true, preventScrollReset: true });
           }
         }}
         type="search"

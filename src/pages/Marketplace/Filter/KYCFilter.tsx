@@ -22,7 +22,7 @@ export default function KYCFilter() {
             ...p,
             kyc_only: options,
           }),
-          { replace: true }
+          { replace: true, preventScrollReset: true }
         );
       }}
     />
