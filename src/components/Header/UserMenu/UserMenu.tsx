@@ -1,33 +1,32 @@
-import Image from "components/Image";
-import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
 import { CircleUserRound } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import type { SignInRouteState } from "types/auth";
+import LoaderRing from "../../LoaderRing";
 
-export default function UserMenu() {
+export default function UserMenu({ classes = "" }) {
   const user = useGetter((state) => state.auth.user);
   const location = useLocation();
 
   if (!user) {
     const state: SignInRouteState = { from: location.pathname };
     return (
-      <>
+      <div className={`${classes} flex items-center gap-x-4`}>
         <Link
           to={toWithState(appRoutes.signin, state)}
-          className="btn text-base normal-case max-sm:hidden hover:underline"
+          className="btn text-base normal-case hover:underline"
         >
           Log in
         </Link>
         <Link
           to={toWithState(appRoutes.signup, state)}
-          className="btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
+          className="btn text-base normal-case bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
         >
           Sign up
         </Link>
-      </>
+      </div>
     );
   }
 
@@ -41,7 +40,12 @@ export default function UserMenu() {
       className="cursor-pointer contents"
     >
       {user.avatarUrl ? (
-        <Image src={user.avatarUrl} className="rounded-full size-8" />
+        <img
+          src={user.avatarUrl}
+          className="rounded-full"
+          height={32}
+          width={32}
+        />
       ) : (
         <CircleUserRound
           size={24}

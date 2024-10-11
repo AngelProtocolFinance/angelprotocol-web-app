@@ -1,11 +1,11 @@
 import { MenuItem } from "@headlessui/react";
-import ContentLoader from "components/ContentLoader";
-import Image from "components/Image";
-import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
 import type { UserEndow } from "types/aws";
+import ContentLoader from "../../ContentLoader";
+import Image from "../../Image";
+import QueryLoader from "../../QueryLoader";
 
 interface IBookmarkLink {
   endowId: number;
@@ -44,7 +44,7 @@ const _Link = (props: LinkProps) => (
     }
     className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
-    <Image src={props.logo} className="object-cover h-[20px] w-[20px]" />
+    <Image src={props.logo} className="object-cover" height={20} width={20} />
     <span>{props.name ?? `Endowment: ${props.id}`}</span>
   </MenuItem>
 );

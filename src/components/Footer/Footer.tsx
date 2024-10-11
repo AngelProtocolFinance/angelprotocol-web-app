@@ -1,9 +1,9 @@
 import dappLogo from "assets/images/bg-logo-503c.png";
-import ExtLink from "components/ExtLink";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
+import ExtLink from "../ExtLink";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
 

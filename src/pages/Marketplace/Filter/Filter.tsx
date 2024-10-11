@@ -40,7 +40,12 @@ export function Filter({ classes = "" }: { classes?: string }) {
           >
             Clear Filters
           </button>
-          <Link to=".." className="active:text-blue-d1">
+          <Link
+            to={{ pathname: "..", search: params.toString() }}
+            replace
+            preventScrollReset
+            className="active:text-blue-d1"
+          >
             <X size={22} />
           </Link>
         </div>

@@ -4,7 +4,6 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
 import { createNavLinkStyler } from "helpers";
 import { toWithState } from "helpers/state-params";
@@ -13,6 +12,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import { logout } from "slices/auth";
 import { useGetter, useSetter } from "store/accessors";
 import type { SignInRouteState } from "types/auth";
+import LoaderRing from "../LoaderRing";
 import Menu from "./UserMenu/Menu";
 
 interface Props {

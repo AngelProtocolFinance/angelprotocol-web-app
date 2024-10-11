@@ -3,7 +3,7 @@ import instagram from "assets/icons/social/instagram.png";
 import linkedin from "assets/icons/social/linkedin.png";
 import x from "assets/icons/social/x.png";
 import youtube from "assets/icons/social/youtube.png";
-import ExtLink from "components/ExtLink";
+import ExtLink from "../ExtLink";
 
 export default function Socials() {
   return (
