@@ -5,18 +5,25 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import LoaderRing from "components/LoaderRing";
+import { appRoutes } from "constants/routes";
 import { createNavLinkStyler } from "helpers";
+import { toWithState } from "helpers/state-params";
 import { ChevronDown, MenuIcon } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { logout } from "slices/auth";
 import { useGetter, useSetter } from "store/accessors";
-import type { Link } from "../types";
+import type { SignInRouteState } from "types/auth";
 import Menu from "./UserMenu/Menu";
 
-type Props = { links: Link[] };
+interface Props {
+  isInAuth: boolean;
+}
 
-export default function NavDropdown({ links }: Props) {
+export default function NavDropdown(props: Props) {
   const user = useGetter((state) => state.auth.user);
+  const location = useLocation();
+  const state: SignInRouteState = { from: location.pathname };
+
   const dispatch = useSetter();
 
   return (
@@ -44,13 +51,56 @@ export default function NavDropdown({ links }: Props) {
         className="grid isolate z-40 rounded-lg bg-gray-l6 drop-shadow-2xl scroller origin-top transition duration-100 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
       >
         <div className="p-5 grid gap-y-2 w-80">
-          {links.map((link) => (
-            <MenuItem key={link.title}>
-              <NavLink to={link.href} end={link.end} className={styler}>
-                {link.title}
+          <MenuItem>
+            <NavLink to={appRoutes.home} end className={styler}>
+              Home
+            </NavLink>
+          </MenuItem>
+          <MenuItem>
+            <NavLink to={appRoutes.marketplace} className={styler}>
+              Marketplace
+            </NavLink>
+          </MenuItem>
+          <MenuItem>
+            <NavLink to={appRoutes.blog} className={styler}>
+              Blog
+            </NavLink>
+          </MenuItem>
+          <MenuItem>
+            <NavLink to={appRoutes.register} className={styler}>
+              Register NPO
+            </NavLink>
+          </MenuItem>
+          <MenuItem>
+            <NavLink to={appRoutes.nonprofit_info} className={styler}>
+              For Nonprofits
+            </NavLink>
+          </MenuItem>
+          <MenuItem>
+            <NavLink to={appRoutes.donor_info} className={styler}>
+              For Donors
+            </NavLink>
+          </MenuItem>
+          {!props.isInAuth && (
+            <MenuItem>
+              <NavLink
+                to={toWithState(appRoutes.signin, state)}
+                className={styles + " sm:hidden"}
+              >
+                Login
               </NavLink>
             </MenuItem>
-          ))}
+          )}
+          {!props.isInAuth && (
+            <MenuItem>
+              <NavLink
+                to={toWithState(appRoutes.signup, state)}
+                className={styles + " sm:hidden"}
+              >
+                Sign up
+              </NavLink>
+            </MenuItem>
+          )}
         </div>
         {user && user !== "loading" && (
           <Menu user={user} signOut={() => dispatch(logout())} classes="" />

@@ -4,10 +4,8 @@ import ErrorBoundary from "errors/ErrorBoundary";
 import { Outlet, useLocation, useMatch } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
-import useHeaderLinks from "./useHeaderLinks";
 
 export default function Layout() {
-  const headerLinks = useHeaderLinks();
   const { key, pathname } = useLocation();
   const isWpPost = !!useMatch(`${appRoutes.blog}/:slug`);
   const isHome = pathname === appRoutes.home;
@@ -19,7 +17,6 @@ export default function Layout() {
     >
       <Seo /> {/* Load all defaults for SEO meta tags */}
       <Header
-        links={headerLinks}
         classes={`${isHome ? "mt-8 px-4" : ""} ${
           isWpPost ? "override-wp-overrides" : ""
         } sticky z-40 top-[-1px]`}
