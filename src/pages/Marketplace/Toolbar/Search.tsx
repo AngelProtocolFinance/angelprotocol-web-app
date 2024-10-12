@@ -1,46 +1,52 @@
+import debounce from "lodash/debounce";
 import { SearchIcon } from "lucide-react";
-import { useState } from "react";
+import { type ChangeEventHandler, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 
 export default function Search({ classes = "" }: { classes?: string }) {
+  const ref = useRef<ReturnType<typeof debounce>>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const [params, setParams] = useSearchParams();
-  const q = params.get("query") || "";
-  const [search, setSearch] = useState(q);
+  const q = decodeURIComponent(params.get("query") || "");
+  const _id = params.get("_f") || "";
+
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const n = new URLSearchParams(params);
+    n.set("query", encodeURIComponent(e.target.value));
+    n.set("page", "1");
+    n.set("_f", "search");
+    setParams(n, {
+      replace: true,
+      preventScrollReset: true,
+    });
+  };
+
+  useEffect(() => {
+    if (!_id) return;
+    inputRef.current?.focus();
+  }, [_id]);
+
+  useEffect(() => {
+    return () => {
+      ref.current?.cancel();
+    };
+  }, []);
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        const n = new URLSearchParams(params);
-        n.set("query", e.currentTarget.query.value);
-        setParams(n, { replace: true, preventScrollReset: true });
-      }}
-      className={`${classes} flex gap-2 items-center`}
+    <div
+      className={`${classes} flex gap-2 items-center border border-gray-l4 rounded-lg relative`}
     >
+      <SearchIcon
+        size={20}
+        className="absolute left-3 top-1/2 -translate-y-1/2"
+      />
       <input
-        onChange={(e) => {
-          const s = e.target.value;
-          //user deleted all text
-          setSearch(s);
-          if (!s && q) {
-            const n = new URLSearchParams(params);
-            n.delete("query");
-            setParams(n, { replace: true, preventScrollReset: true });
-          }
-        }}
-        type="search"
-        name="query"
-        value={search}
-        className="w-full h-full p-3 placeholder:text-navy-l3 text-navy-d4 font-medium font-heading border border-gray-l4 rounded-lg outline-blue-d1 outline-offset-4"
+        ref={inputRef}
+        defaultValue={q}
+        onChange={debounce(onChange, 500)}
+        className="w-full h-full p-3 pl-10 placeholder:text-navy-l3 text-navy-d4 font-medium font-heading rounded-lg outline-blue-d1 outline-offset-4"
         placeholder={q || "Search organizations..."}
       />
-      <button
-        disabled={!search}
-        type="submit"
-        className="rounded-lg border border-gray-l4 h-full p-3 enabled:hover:border-blue-d1 enabled:hover:text-blue-d1 disabled:text-gray"
-      >
-        <SearchIcon size={20} />
-      </button>
-    </form>
+    </div>
   );
 }

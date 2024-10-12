@@ -107,6 +107,13 @@ const rootRoutes: RO[] = [
 export const routes: RO[] = [
   {
     element: <RootLayout />,
+    loader: async () => {
+      /** reset all cache */
+      const cache = await caches.open("bg");
+      const keys = await cache.keys();
+      await Promise.all(keys.map((k) => cache.delete(k)));
+      return null;
+    },
     children: rootRoutes,
     loader: authLoader,
     ErrorBoundary: RouterErrorBoundary,

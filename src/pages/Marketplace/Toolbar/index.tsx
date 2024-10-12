@@ -12,12 +12,14 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
       className={`${classes} grid grid-cols-2 md:grid-cols-[auto_1fr] gap-3`}
     >
       <button
-        onClick={() =>
+        onClick={() => {
+          // remove focus persistor from <Search/>
+          params.delete("_f");
           navigate(
             { pathname: "filter", search: params.toString() },
             { replace: true, preventScrollReset: true }
-          )
-        }
+          );
+        }}
         className="btn-blue justify-start justify-self-start rounded-lg px-3 py-2 text-sm"
       >
         <FilterIcon size={16} className="mr-2" />
