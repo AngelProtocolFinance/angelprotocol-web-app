@@ -42,11 +42,7 @@ const _appRoutes: RO[] = [
   ...blogRoutes,
   ...legalRoutes,
   ...infoRoutes,
-  {
-    element: <Outlet context={true} />, //outlet-value: legacy
-    children: [{ path: appRoutes.profile + "/:id", ...profileRoute }],
-  },
-
+  { path: appRoutes.profile + "/:id", ...profileRoute },
   {
     path: appRoutes.banking_applications,
     children: [
