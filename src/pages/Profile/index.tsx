@@ -3,44 +3,15 @@ import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { appRoutes } from "constants/routes";
 import { useRendered } from "hooks/use-rendered";
-import {
-  Navigate,
-  Outlet,
-  type RouteObject,
-  useOutletContext,
-  useParams,
-} from "react-router-dom";
-import { segment } from "schemas/string";
-import { useEndowment } from "services/aws/useEndowment";
+import { Outlet, type RouteObject, useLoaderData } from "react-router-dom";
+import type { EndowmentProfile } from "types/aws";
 import { bodyRoute } from "./Body";
-import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
-import Skeleton from "./Skeleton";
+import { profileLoader } from "./profile-loader";
 
 function Profile() {
-  const legacy = useOutletContext<true | undefined>();
-  const { id = "" } = useParams<{ id: string }>();
-
-  const { isLoading, isError, data } = useEndowment(
-    segment.isValidSync(id) ? { slug: id } : { id: Number(id) }
-  );
-
-  if (isLoading) return <Skeleton />;
-  if (isError || !data) return <PageError />;
-
-  if (legacy) {
-    if (data.id === null) {
-      return <Navigate to={appRoutes.marketplace} />;
-    }
-
-    if (data.id !== Number(id)) {
-      return <Navigate to={`${appRoutes.marketplace}/${data.id}`} />;
-    }
-  }
-
-  // if (!data.published) return <Unpublished />;
+  const data = useLoaderData() as EndowmentProfile;
 
   return (
     <ProfileContext.Provider value={data}>
@@ -87,5 +58,6 @@ function Logo() {
 
 export const profileRoute: RouteObject = {
   element: <Profile />,
+  loader: profileLoader,
   children: [bodyRoute],
 };
