@@ -1,8 +1,8 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { cognito, isError } from "auth/cognito";
 import { Form, Input } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { cognito, isError } from "helpers/cognito";
 import { toWithState } from "helpers/state-params";
 import { type UseFormReturn, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";

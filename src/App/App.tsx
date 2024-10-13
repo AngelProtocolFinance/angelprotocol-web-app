@@ -1,3 +1,4 @@
+import { loadAuth } from "auth/load-auth";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { RouterErrorBoundary } from "errors/ErrorBoundary";
@@ -20,7 +21,6 @@ import {
   useNavigation,
 } from "react-router-dom";
 import Layout from "./Layout";
-import { loadAuth } from "./auth-loader";
 
 const donateThanks = import("pages/DonateThanks");
 const stripePaymentStatus = import("pages/StripePaymentStatus");
