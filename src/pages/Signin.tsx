@@ -1,21 +1,26 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
 import { cognito, isError, oauth } from "auth/cognito";
+import { loadAuth, userRes } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import LoaderRing from "components/LoaderRing";
 import Seo from "components/Seo";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
-import { toWithState } from "helpers/state-params";
+import { decodeState, toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useLoaderData, useNavigate } from "react-router-dom";
+import {
+  Link,
+  type LoaderFunction,
+  redirect,
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import { password, requiredString } from "schemas/string";
-import { useGetter } from "store/accessors";
 import type { OAuthState } from "types/auth";
 import { object } from "yup";
 
@@ -24,11 +29,23 @@ type FormValues = {
   password: string;
 };
 
-export { stateLoader as loader } from "helpers/state-params";
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<Response | unknown> => {
+  const res = await loadAuth(request);
+  if (userRes(res)) return redirect(appRoutes.marketplace);
+
+  const url = new URL(request.url);
+  const fromState = decodeState(url.searchParams.get("_s"));
+
+  return fromState;
+};
 
 export function Component() {
   const navigate = useNavigate();
-  const fromState = useLoaderData();
+  const fromState = useLoaderData() as unknown;
+  const redirect = getAuthRedirect(fromState as any);
+
   const { handleError, displayError } = useErrorContext();
   const {
     register,
@@ -43,24 +60,6 @@ export function Component() {
     ),
   });
 
-  const redirect = getAuthRedirect(fromState as any);
-  const currUser = useGetter((state) => state.auth.user);
-
-  if (currUser === "loading" || currUser?.isSigningOut) {
-    return (
-      <div className="grid content-start place-items-center py-14">
-        <LoaderRing thickness={12} classes="w-32 mt-8" />
-      </div>
-    );
-  }
-
-  if (currUser) {
-    const { path, search, data } = redirect;
-    return (
-      <Navigate to={toWithState({ pathname: path, search }, data)} replace />
-    );
-  }
-
   async function submit(fv: FormValues) {
     try {
       const res = await cognito.initiate(fv.email.toLowerCase(), fv.password);
@@ -68,8 +67,7 @@ export function Component() {
       if (isError(res)) {
         return displayError(res.message);
       }
-      navigate(redirect.path, { state: redirect.data, replace: true });
-
+      navigate(toWithState(redirect.path, redirect.data), { replace: true });
       return;
     } catch (err) {
       handleError(err, { context: "signing in" });
