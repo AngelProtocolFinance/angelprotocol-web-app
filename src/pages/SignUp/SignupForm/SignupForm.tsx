@@ -3,19 +3,16 @@ import googleIcon from "assets/icons/google.svg";
 import { cognito, isError, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import LoaderRing from "components/LoaderRing";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { getAuthRedirect, logger } from "helpers";
+import { getAuthRedirect } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
 import { useController, useForm } from "react-hook-form";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
-import { useSaveSignupMutation } from "services/aws/hubspot";
-import { useGetter } from "store/accessors";
 import type { OAuthState, SignInRouteState } from "types/auth";
 import { mixed, object, ref } from "yup";
 import type { FormValues, StateSetter, UserType } from "../types";
@@ -28,7 +25,6 @@ type Props = {
 };
 
 export default function SignupForm(props: Props) {
-  const [savetoHubspot] = useSaveSignupMutation();
   const fromState = props.fromState as SignInRouteState | undefined;
   const isRegistrant = fromState?.from === appRoutes.register;
 
@@ -62,39 +58,16 @@ export default function SignupForm(props: Props) {
   });
   const { field: userType } = useController({ name: "userType", control });
 
-  const currUser = useGetter((state) => state.auth.user);
-
-  if (currUser === "loading" || currUser?.isSigningOut) {
-    return <LoaderRing thickness={12} classes="w-32 mt-8" />;
-  }
-
   const redirect = getAuthRedirect(fromState, {
     isNpo: userType.value === "nonprofit",
   });
 
-  if (currUser) {
-    const { path, search, data } = redirect;
-    return (
-      <Navigate to={toWithState({ pathname: path, search }, data)} replace />
-    );
-  }
-
   async function submit(fv: FormValues) {
     try {
-      try {
-        await savetoHubspot({
-          email: fv.email,
-          firstName: fv.firstName,
-          lastName: fv.lastName,
-          type: fv.userType,
-        }).unwrap();
-      } catch (err) {
-        logger.error(err);
-      }
-
       const res = await cognito.signup(fv.email.toLowerCase(), fv.password, {
         firstName: fv.firstName,
         lastName: fv.lastName,
+        "custom:user-type": fv.userType,
       });
 
       if (isError(res)) return displayError(res.message);

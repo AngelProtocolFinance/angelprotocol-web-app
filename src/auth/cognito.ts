@@ -183,6 +183,7 @@ class Cognito extends Storage {
     attributes: {
       firstName: string;
       lastName: string;
+      "custom:user-type": string;
     }
   ) {
     return fetch(this.endpoint, {
