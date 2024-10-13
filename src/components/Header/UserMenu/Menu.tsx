@@ -2,17 +2,17 @@ import { MenuItem } from "@headlessui/react";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { CircleDollarSign, Shield } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useFetcher } from "react-router-dom";
 import type { DetailedUser } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
 import { Organizations } from "./Organizations";
 
 type Props = {
   classes?: string;
-  signOut(): void;
   user: DetailedUser;
 };
-export default function Menu({ user, signOut, classes }: Props) {
+export default function Menu({ user, classes }: Props) {
+  const fetcher = useFetcher();
   return (
     <div className={`${classes} text-navy-l1`}>
       <p className="text-sm p-3 bg-blue-l4">
@@ -53,13 +53,18 @@ export default function Menu({ user, signOut, classes }: Props) {
           )}
         </div>
       </div>
-      <button
-        type="button"
-        onClick={signOut}
-        className="btn-blue rounded-none w-full p-3 text-sm mt-4"
-      >
-        Log out
-      </button>
+
+      <fetcher.Form className="contents" action="/logout" method="post">
+        <button
+          disabled={fetcher.state === "submitting"}
+          name="token"
+          value={user.accessToken}
+          type="submit"
+          className="btn-blue rounded-none w-full p-3 text-sm mt-4"
+        >
+          Log out
+        </button>
+      </fetcher.Form>
     </div>
   );
 }

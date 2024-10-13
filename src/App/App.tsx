@@ -1,3 +1,4 @@
+import { cognito } from "auth/cognito";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { RouterErrorBoundary } from "errors/ErrorBoundary";
@@ -16,6 +17,7 @@ import {
   Outlet,
   type RouteObject as RO,
   ScrollRestoration,
+  redirect,
   useLoaderData,
   useNavigation,
 } from "react-router-dom";
@@ -97,6 +99,17 @@ const rootRoutes: RO[] = [
     path: appRoutes.donate_widget,
     element: <Outlet context={true} />, //outlet-value: isInWidget/widgetVersion
     children: widgetRoutes,
+  },
+  {
+    path: "logout",
+    action: async ({ request }) => {
+      console.log({ request });
+      const form = await request.formData();
+      const token = form.get("token");
+      if (!token) return { status: 400, body: "missing token" };
+      await cognito.signOut(token.toString());
+      return redirect(appRoutes.marketplace);
+    },
   },
 ];
 

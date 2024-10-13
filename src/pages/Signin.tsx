@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
 import { cognito, isError, oauth } from "auth/cognito";
-import { loadAuth, userRes } from "auth/load-auth";
+import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Seo from "components/Seo";
@@ -32,8 +32,8 @@ type FormValues = {
 export const loader: LoaderFunction = async ({
   request,
 }): Promise<Response | unknown> => {
-  const res = await loadAuth(request);
-  if (userRes(res)) return redirect(appRoutes.marketplace);
+  const auth = await loadAuth();
+  if (auth) return redirect(appRoutes.marketplace);
 
   const url = new URL(request.url);
   const fromState = decodeState(url.searchParams.get("_s"));

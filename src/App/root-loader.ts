@@ -1,10 +1,11 @@
-import { loadAuth, userRes } from "auth/load-auth";
+import { oauth } from "auth/cognito";
+import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
-import { type LoaderFunctionArgs, defer } from "react-router-dom";
+import { type LoaderFunctionArgs, defer, redirect } from "react-router-dom";
 import { apiEnv } from "services/constants";
 import { version as v } from "services/helpers";
-import type { DetailedUser, UserV2 } from "types/auth";
+import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
 import type { Endowment, EndowmentBookmark, UserEndow } from "types/aws";
 
 export const rootLoader = async ({
@@ -14,9 +15,35 @@ export const rootLoader = async ({
   const cache = await caches.open("bg");
   const keys = await cache.keys();
   await Promise.all(keys.map((k) => cache.delete(k)));
-  const auth = await loadAuth(request);
+
+  /** handle oauth if applicable */
+  const url = new URL(request.url);
+  const code = url.searchParams.get("code");
+  const state = url.searchParams.get("state");
+
+  // handle oauth callback
+  // TODO: don't let signin when already signed in
+  if (code && state) {
+    const res = await oauth.exchange(code);
+    if (!res) return redirect(url.toString());
+
+    //redirect to requestor
+    const parsed = JSON.parse(window.atob(state)) as OAuthState;
+    url.searchParams.delete("code");
+    url.searchParams.delete("state");
+
+    url.pathname = parsed.pathname;
+    if (parsed.data && typeof parsed.data === "object") {
+      url.searchParams.append("_s", btoa(JSON.stringify(parsed.data)));
+    }
+
+    //TODO send this data to the redirect route
+    //const user = userFromIdToken(res.id_token, res.access_token);
+    return redirect(url.toString());
+  }
+
+  const auth = await loadAuth();
   if (!auth) return null;
-  if (!userRes(auth)) return auth;
 
   return defer({
     ...auth,

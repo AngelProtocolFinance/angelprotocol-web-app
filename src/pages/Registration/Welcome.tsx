@@ -3,7 +3,6 @@ import LoadText from "components/LoadText";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
-import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
@@ -11,18 +10,19 @@ import { useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
 import { steps } from "./routes";
+import { useUser } from "./user";
 
 export { stateLoader as loader } from "helpers/state-params";
 
 export function Component() {
-  const { email } = useAuthenticatedUser();
+  const user = useUser();
   const claim = useLoaderData() as EndowClaim | null;
   const {
     data: reg,
     isLoading,
     isError,
   } = useNewApplicationQuery({
-    registrant_id: email,
+    registrant_id: user.email,
     claim: claim ?? undefined,
   });
 
