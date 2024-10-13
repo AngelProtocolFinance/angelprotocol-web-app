@@ -1,8 +1,9 @@
+import { appRoutes } from "constants/routes";
 import { logger } from "helpers";
 import { cognito, isError, oauth } from "helpers/cognito";
 import { decodeJwt } from "jose";
-import type { LoaderFunction } from "react-router-dom";
-import type { UserV2 } from "types/auth";
+import { redirect } from "react-router-dom";
+import type { OAuthState, UserV2 } from "types/auth";
 
 const key = "bg_session";
 const session = {
@@ -10,17 +11,40 @@ const session = {
   save: (session: string) => sessionStorage.setItem(key, session),
 };
 
-export const authLoader: LoaderFunction = async ({ request }) => {
+const protectedPaths: string[] = [
+  appRoutes.admin,
+  appRoutes.register,
+  appRoutes.applications,
+  appRoutes.banking_applications,
+];
+
+export const loadAuth = async (request: Request) => {
   try {
     const url = new URL(request.url);
     const code = url.searchParams.get("code");
     const state = url.searchParams.get("state");
+
     //handle oauth callback
     if (code && state) {
       const res = await oauth.exchange(code);
-      if (!res) return null;
+      if (!res) return redirect(url.toString());
+
+      //persist refresh token
       session.save(res.refresh_token);
-      return userFromIdToken(res.id_token, res.access_token);
+
+      //redirect to requestor
+      const parsed = JSON.parse(window.atob(state)) as OAuthState;
+      url.searchParams.delete("code");
+      url.searchParams.delete("state");
+
+      url.pathname = parsed.pathname;
+      if (parsed.data && typeof parsed.data === "object") {
+        url.searchParams.append("_s", btoa(JSON.stringify(parsed.data)));
+      }
+
+      //TODO send this data to the redirect route
+      //const user = userFromIdToken(res.id_token, res.access_token);
+      return redirect(url.toString());
     }
 
     const sesh = session.get();
@@ -34,6 +58,11 @@ export const authLoader: LoaderFunction = async ({ request }) => {
         auth.AuthenticationResult.IdToken,
         auth.AuthenticationResult.AccessToken
       );
+    }
+
+    // check if protected path
+    if (protectedPaths.includes(url.pathname)) {
+      return redirect(appRoutes.signup);
     }
 
     return null;

@@ -20,9 +20,9 @@ interface AuthSuccess<T extends "new" | "refresh"> {
 }
 
 interface OauthTokenRes {
+  id_token: string;
   access_token: string;
   expires_in: number;
-  id_token: string;
   refresh_token: string;
   token_type: string;
 }
@@ -250,11 +250,8 @@ class OAuth extends MemoryStorage {
       redirect_uri: OAuth.redirectUri,
       identity_provider: "Google",
       state: window.btoa(state),
+      scope: scopes.join(" "),
     });
-
-    for (const scope of scopes) {
-      params.append("scope", scope);
-    }
 
     window.location.href = `${
       this.domain

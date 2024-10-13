@@ -15,12 +15,12 @@ import {
   Navigate,
   Outlet,
   type RouteObject as RO,
-  useLoaderData,
   ScrollRestoration,
+  useLoaderData,
   useNavigation,
 } from "react-router-dom";
 import Layout from "./Layout";
-import { authLoader } from "./auth-loader";
+import { loadAuth } from "./auth-loader";
 
 const donateThanks = import("pages/DonateThanks");
 const stripePaymentStatus = import("pages/StripePaymentStatus");
@@ -102,15 +102,14 @@ const rootRoutes: RO[] = [
 export const routes: RO[] = [
   {
     element: <RootLayout />,
-    loader: async () => {
+    loader: async ({ request }) => {
       /** reset all cache */
       const cache = await caches.open("bg");
       const keys = await cache.keys();
       await Promise.all(keys.map((k) => cache.delete(k)));
-      return null;
+      return loadAuth(request);
     },
     children: rootRoutes,
-    loader: authLoader,
     ErrorBoundary: RouterErrorBoundary,
   },
   { path: "*", element: <Navigate to="/" /> },
