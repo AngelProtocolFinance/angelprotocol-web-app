@@ -55,34 +55,33 @@ type Session = Token | null | string;
 class Storage {
   private static key = "bg_session";
 
-  get token(): Session {
+  protected retrieve(): Token | null {
     const sesh = sessionStorage.getItem(Storage.key);
     if (!sesh) return null;
 
-    try {
-      const token = JSON.parse(sesh) as Token;
-
-      if (token.expiry < new Date().toISOString()) {
-        sessionStorage.removeItem(Storage.key);
-        return null;
-      }
-
-      if (new Date(token.expiry).getTime() - Date.now() < FIVE_MINUTES_MS) {
-        sessionStorage.setItem(Storage.key, token.refresh);
-        return token.refresh;
-      }
-
-      return token;
-    } catch (_) {
-      /** sesh is not JSON.string */
-      return sesh;
+    const token = JSON.parse(sesh) as Token;
+    if (token.expiry < new Date().toISOString()) {
+      sessionStorage.removeItem(Storage.key);
+      return null;
     }
+
+    return token;
+  }
+
+  get token(): Session {
+    const token = this.retrieve();
+    if (!token) return null;
+
+    if (new Date(token.expiry).getTime() - Date.now() < FIVE_MINUTES_MS) {
+      return token.refresh;
+    }
+    return token;
   }
   private expiry(duration: number) {
     return new Date(Date.now() + duration * 1000).toISOString();
   }
 
-  save(token: AuthSuccess<"new">["AuthenticationResult"]) {
+  protected save(token: AuthSuccess<"new">["AuthenticationResult"]) {
     sessionStorage.setItem(
       Storage.key,
       JSON.stringify({
@@ -93,7 +92,7 @@ class Storage {
       })
     );
   }
-  saveOAuth(token: OauthTokenRes) {
+  protected saveOAuth(token: OauthTokenRes) {
     sessionStorage.setItem(
       Storage.key,
       JSON.stringify({
@@ -103,6 +102,9 @@ class Storage {
         expiry: this.expiry(token.expires_in),
       })
     );
+  }
+  protected clear() {
+    sessionStorage.removeItem(Storage.key);
   }
 }
 
@@ -253,6 +255,22 @@ class Cognito extends Storage {
       }),
     }).then<"success" | AuthError>((res) => {
       if (res.ok) return "success";
+      return res.json() as any;
+    });
+  }
+
+  async signOut(accessToken: string) {
+    return fetch(this.endpoint, {
+      method: "POST",
+      headers: this.headers("GlobalSignOut"),
+      body: this.body({
+        AccessToken: accessToken,
+      }),
+    }).then<"success" | AuthError>((res) => {
+      if (res.ok) {
+        this.clear();
+        return "success";
+      }
       return res.json() as any;
     });
   }

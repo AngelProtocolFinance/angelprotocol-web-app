@@ -8,8 +8,6 @@ import { appRoutes } from "constants/routes";
 import { createNavLinkStyler } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { NavLink, useLocation } from "react-router-dom";
-import { logout } from "slices/auth";
-import { useSetter } from "store/accessors";
 import type { DetailedUser, SignInRouteState } from "types/auth";
 import Icon from "../Icon";
 import Menu from "./UserMenu/Menu";
@@ -22,8 +20,6 @@ interface Props {
 export default function NavDropdown({ user, isInAuth }: Props) {
   const location = useLocation();
   const state: SignInRouteState = { from: location.pathname };
-
-  const dispatch = useSetter();
 
   return (
     <HuiMenu>
@@ -103,7 +99,7 @@ export default function NavDropdown({ user, isInAuth }: Props) {
             </MenuItem>
           )}
         </div>
-        {user ? <Menu user={user} signOut={() => dispatch(logout())} /> : null}
+        {user ? <Menu user={user} /> : null}
       </MenuItems>
     </HuiMenu>
   );

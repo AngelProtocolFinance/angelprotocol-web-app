@@ -2,7 +2,7 @@ import type { ReferralMethod, Role } from "@better-giving/registration/models";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import type { Step1Data } from "pages/Registration/types";
 import { useController, useForm } from "react-hook-form";
-import type { AuthenticatedUser } from "types/auth";
+import type { UserV2 } from "types/auth";
 import { referralMethods, roles } from "../constants";
 import {
   type FV,
@@ -11,7 +11,7 @@ import {
   schema,
 } from "./schema";
 
-export function useRhf(data: Step1Data, user: AuthenticatedUser) {
+export function useRhf(data: Step1Data, user: UserV2) {
   const { contact, init } = data;
 
   const {
