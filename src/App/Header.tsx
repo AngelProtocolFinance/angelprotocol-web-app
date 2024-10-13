@@ -2,12 +2,12 @@ import { NavDropdown, UserMenu } from "components/Header";
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
 import { useLocation, useRouteLoaderData } from "react-router-dom";
-import type { UserV2 } from "types/auth";
+import type { DetailedUser } from "types/auth";
 
 type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
-  const user = useRouteLoaderData("root") as UserV2 | null;
+  const user = useRouteLoaderData("root") as DetailedUser | null;
   const location = useLocation();
   const isInAuth = authRoutes.includes(location.pathname);
 

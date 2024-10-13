@@ -3,14 +3,14 @@ import { authRoutes } from "constants/routes";
 import { useLocation, useRouteLoaderData } from "react-router-dom";
 
 import { NavDropdown, UserMenu } from "components/Header";
-import type { UserV2 } from "types/auth";
+import type { DetailedUser } from "types/auth";
 
 type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
   const location = useLocation();
   const isInAuth = authRoutes.includes(location.pathname);
-  const user = useRouteLoaderData("root") as UserV2 | null;
+  const user = useRouteLoaderData("root") as DetailedUser | null;
 
   return (
     <header

@@ -1,28 +1,13 @@
 import { MenuItem } from "@headlessui/react";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { useEndowment } from "services/aws/useEndowment";
-import type { UserEndow } from "types/aws";
+import type { EndowmentBookmark, UserEndow } from "types/aws";
 import ContentLoader from "../../ContentLoader";
 import Image from "../../Image";
-import QueryLoader from "../../QueryLoader";
 
-interface IBookmarkLink {
-  endowId: number;
-}
-export function BookmarkLink({ endowId }: IBookmarkLink) {
-  const query = useEndowment({ id: endowId }, ["logo", "name"]);
-  return (
-    <QueryLoader
-      queryState={query}
-      messages={{
-        loading: <Skeleton />,
-        error: <_Link id={endowId} route="profile" />,
-      }}
-    >
-      {(endow) => <_Link {...endow} id={endowId} route="profile" />}
-    </QueryLoader>
-  );
+interface IBookmarkLink extends EndowmentBookmark {}
+export function BookmarkLink({ endowId, ...endow }: IBookmarkLink) {
+  return <_Link {...endow} id={endowId} route="profile" />;
 }
 
 export function EndowmentLink({ endowID, logo, name }: UserEndow) {
