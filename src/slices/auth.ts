@@ -17,10 +17,6 @@ const initialState: State = {
   user: null,
 };
 
-export const logout = createAsyncThunk("auth/logout", () =>
-  console.log("todo")
-);
-
 export const loadSession = createAsyncThunk<User, any | undefined>(
   "auth/loadSession",
   async (_) => {
@@ -109,11 +105,6 @@ const auth = createSlice({
     });
     builder.addCase(loadSession.pending, (state) => {
       state.user = "loading";
-    });
-    builder.addCase(logout.pending, (state) => {
-      if (userIsSignedIn(state.user)) {
-        state.user.isSigningOut = true;
-      }
     });
   },
 });

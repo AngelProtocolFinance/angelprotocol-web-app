@@ -29,7 +29,6 @@ function Layout() {
 
 const loader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
-
   if (auth) return auth;
 
   //redirect to signin page
@@ -37,6 +36,7 @@ const loader: LoaderFunction = async ({ request }) => {
   const toState: SignInRouteState = {
     from: from.pathname,
     data: decodeState(from.searchParams.get("_s")),
+    search: from.search,
   };
 
   const to = new URL(request.url);
