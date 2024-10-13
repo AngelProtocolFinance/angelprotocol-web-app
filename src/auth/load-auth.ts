@@ -1,22 +1,8 @@
-import { appRoutes } from "constants/routes";
 import { logger } from "helpers";
 import { decodeJwt } from "jose";
 import { redirect } from "react-router-dom";
 import type { OAuthState, UserV2 } from "types/auth";
 import { cognito, isError, oauth } from "./cognito";
-
-const key = "bg_session";
-const session = {
-  get: () => sessionStorage.getItem(key),
-  save: (session: string) => sessionStorage.setItem(key, session),
-};
-
-const protectedPaths: string[] = [
-  appRoutes.admin,
-  appRoutes.register,
-  appRoutes.applications,
-  appRoutes.banking_applications,
-];
 
 type AuthRes = Response | UserV2 | null;
 
@@ -26,13 +12,11 @@ export const loadAuth = async (request: Request): Promise<AuthRes> => {
     const code = url.searchParams.get("code");
     const state = url.searchParams.get("state");
 
-    //handle oauth callback
+    // handle oauth callback
+    // TODO: don't let signin when already signed in
     if (code && state) {
       const res = await oauth.exchange(code);
       if (!res) return redirect(url.toString());
-
-      //persist refresh token
-      session.save(res.refresh_token);
 
       //redirect to requestor
       const parsed = JSON.parse(window.atob(state)) as OAuthState;
@@ -49,22 +33,20 @@ export const loadAuth = async (request: Request): Promise<AuthRes> => {
       return redirect(url.toString());
     }
 
-    const sesh = session.get();
-    // retrieve user
-    if (sesh) {
-      const auth = await cognito.refresh(sesh);
+    /// FROM PERSISTED ///
+    if (cognito.token && typeof cognito.token !== "string") {
+      return userFromIdToken(cognito.token.id, cognito.token.access);
+    }
+
+    /// NEAR EXPIRATION ///
+    if (cognito.token && typeof cognito.token === "string") {
+      const auth = await cognito.refresh(cognito.token);
       if (isError(auth)) return null;
 
-      session.save(auth.AuthenticationResult.RefreshToken);
       return userFromIdToken(
         auth.AuthenticationResult.IdToken,
         auth.AuthenticationResult.AccessToken
       );
-    }
-
-    // check if protected path
-    if (protectedPaths.includes(url.pathname)) {
-      return redirect(appRoutes.signup);
     }
 
     return null;
