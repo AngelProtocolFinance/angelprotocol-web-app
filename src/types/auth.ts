@@ -1,3 +1,5 @@
+import type { EndowmentBookmark, UserEndow } from "./aws";
+
 export type AuthenticatedUser = {
   token: string;
   tokenExpiry: number;
@@ -44,3 +46,10 @@ export type UserV2 = {
   /** 3 digit currency code */
   currency?: string;
 };
+
+export interface DetailedUser extends UserV2 {
+  /** deferred: detailed userV2.endowments */
+  orgs: Promise<UserEndow[]>;
+  /** deferred  */
+  bookmarks: Promise<EndowmentBookmark[]>;
+}

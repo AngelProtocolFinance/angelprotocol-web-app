@@ -11,12 +11,12 @@ import { ChevronDown, MenuIcon } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { logout } from "slices/auth";
 import { useSetter } from "store/accessors";
-import type { SignInRouteState, UserV2 } from "types/auth";
+import type { DetailedUser, SignInRouteState } from "types/auth";
 import Menu from "./UserMenu/Menu";
 
 interface Props {
   isInAuth: boolean;
-  user: UserV2 | null;
+  user: DetailedUser | null;
 }
 
 export default function NavDropdown({ user, isInAuth }: Props) {

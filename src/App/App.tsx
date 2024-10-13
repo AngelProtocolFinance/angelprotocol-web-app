@@ -1,4 +1,3 @@
-import { loadAuth } from "auth/load-auth";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { RouterErrorBoundary } from "errors/ErrorBoundary";
@@ -22,6 +21,7 @@ import {
 } from "react-router-dom";
 import { Toaster } from "sonner";
 import Layout from "./Layout";
+import { rootLoader } from "./root-loader";
 
 const donateThanks = import("pages/DonateThanks");
 const stripePaymentStatus = import("pages/StripePaymentStatus");
@@ -104,13 +104,7 @@ export const routes: RO[] = [
   {
     id: "root",
     element: <RootLayout />,
-    loader: async ({ request }) => {
-      /** reset all cache */
-      const cache = await caches.open("bg");
-      const keys = await cache.keys();
-      await Promise.all(keys.map((k) => cache.delete(k)));
-      return loadAuth(request);
-    },
+    loader: rootLoader,
     children: rootRoutes,
     ErrorBoundary: RouterErrorBoundary,
   },

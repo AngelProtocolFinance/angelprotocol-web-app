@@ -1,7 +1,7 @@
 import Seo from "components/Seo";
 import { APIs } from "constants/urls";
 import {
-  type LoaderFunctionArgs,
+  type LoaderFunction,
   Outlet,
   redirect,
   useLoaderData,
@@ -43,9 +43,7 @@ async function pageRes(
   if (fresh) return fresh.clone();
 }
 
-export const loader = async ({
-  request,
-}: LoaderFunctionArgs): Promise<Page | Response> => {
+async function loadPages(request: Request): Promise<Page | Response> {
   const cache = await caches.open("bg");
   const source = new URL(request.url);
   // delete focus persistor from <Search/>
@@ -83,7 +81,9 @@ export const loader = async ({
     Items: res.flatMap((r) => r.Items),
     Page: pageNum,
   };
-};
+}
+
+export const loader: LoaderFunction = async ({ request }) => loadPages(request);
 
 export function Component() {
   const page = useLoaderData() as Page;

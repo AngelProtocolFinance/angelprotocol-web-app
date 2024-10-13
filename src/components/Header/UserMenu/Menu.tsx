@@ -3,14 +3,14 @@ import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { CircleDollarSign, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
-import type { UserV2 } from "types/auth";
+import type { DetailedUser } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
 import { Organizations } from "./Organizations";
 
 type Props = {
   classes?: string;
   signOut(): void;
-  user: UserV2;
+  user: DetailedUser;
 };
 export default function Menu({ user, signOut, classes }: Props) {
   return (
@@ -27,8 +27,8 @@ export default function Menu({ user, signOut, classes }: Props) {
           <CircleDollarSign size={18} />
           <span>My Donations</span>
         </MenuItem>
-        <Organizations userId={user.email} classes="mt-6" />
-        <Bookmarks classes="mt-6" />
+        <Organizations user={user} classes="mt-6" />
+        <Bookmarks user={user} classes="mt-6" />
         <div className="hidden [&:has(a)]:block mt-6">
           <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
           {user.groups.includes(groups["ap-admin"]) && (
