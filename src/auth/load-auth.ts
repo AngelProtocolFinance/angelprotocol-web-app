@@ -1,9 +1,9 @@
 import { appRoutes } from "constants/routes";
 import { logger } from "helpers";
-import { cognito, isError, oauth } from "helpers/cognito";
 import { decodeJwt } from "jose";
 import { redirect } from "react-router-dom";
 import type { OAuthState, UserV2 } from "types/auth";
+import { cognito, isError, oauth } from "./cognito";
 
 const key = "bg_session";
 const session = {
@@ -18,7 +18,9 @@ const protectedPaths: string[] = [
   appRoutes.banking_applications,
 ];
 
-export const loadAuth = async (request: Request) => {
+type AuthRes = Response | UserV2 | null;
+
+export const loadAuth = async (request: Request): Promise<AuthRes> => {
   try {
     const url = new URL(request.url);
     const code = url.searchParams.get("code");
@@ -91,3 +93,7 @@ function userFromIdToken(idToken: string, accessToken: string): UserV2 {
     currency: p["custom:currency"],
   };
 }
+
+export const userRes = (res: AuthRes): res is UserV2 => {
+  return res !== null && "idToken" in res;
+};

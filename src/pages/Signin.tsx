@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
+import { cognito, isError, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
@@ -9,7 +10,6 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
-import { cognito, isError, oauth } from "helpers/cognito";
 import { toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";

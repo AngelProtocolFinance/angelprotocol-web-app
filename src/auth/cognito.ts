@@ -1,5 +1,5 @@
 import { IS_TEST } from "constants/env";
-import { logger } from "./logger";
+import { logger } from "helpers/logger";
 
 const clientId = IS_TEST
   ? "7bl9gfckbneg0udsmkvsu48ssg"
