@@ -23,7 +23,7 @@ export function toWithState(to: To, state: unknown): To {
   const s = new URLSearchParams(search);
   if (s.size === 0) return { pathname, hash };
 
-  s.append("_s", encoded);
+  s.set("_s", encoded);
 
   return { pathname, hash, search: s.toString() };
 }
@@ -34,7 +34,7 @@ export function toUrlWithState(url: URL, state: unknown) {
   if (typeof state !== "object") return url;
 
   const encoded = btoa(JSON.stringify(state));
-  copy.searchParams.append("_s", encoded);
+  copy.searchParams.set("_s", encoded);
   return copy;
 }
 

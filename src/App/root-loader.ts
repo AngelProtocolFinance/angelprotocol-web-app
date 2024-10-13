@@ -34,7 +34,7 @@ export const rootLoader = async ({
 
     url.pathname = parsed.pathname;
     if (parsed.data && typeof parsed.data === "object") {
-      url.searchParams.append("_s", btoa(JSON.stringify(parsed.data)));
+      url.searchParams.set("_s", btoa(JSON.stringify(parsed.data)));
     }
 
     //TODO send this data to the redirect route

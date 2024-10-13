@@ -12,7 +12,5 @@ export const loader: LoaderFunction = async ({
   if (auth) return redirect(appRoutes.marketplace);
 
   const url = new URL(request.url);
-  const fromState = decodeState(url.searchParams.get("_s"));
-
-  return fromState;
+  return decodeState(url.searchParams.get("_s"));
 };

@@ -18,7 +18,6 @@ import {
   type RouteObject as RO,
   ScrollRestoration,
   redirect,
-  useLoaderData,
   useNavigation,
 } from "react-router-dom";
 import { Toaster } from "sonner";
@@ -103,7 +102,6 @@ const rootRoutes: RO[] = [
   {
     path: "logout",
     action: async ({ request }) => {
-      console.log({ request });
       const form = await request.formData();
       const token = form.get("token");
       if (!token) return { status: 400, body: "missing token" };
@@ -129,8 +127,6 @@ NProgress.configure({
 });
 
 function RootLayout() {
-  const data = useLoaderData();
-  console.log({ data });
   const transition = useNavigation();
   useEffect(() => {
     // when the state is idle then we can to complete the progress bar
