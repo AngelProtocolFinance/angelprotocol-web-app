@@ -9,18 +9,17 @@ import { createNavLinkStyler } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { NavLink, useLocation } from "react-router-dom";
 import { logout } from "slices/auth";
-import { useGetter, useSetter } from "store/accessors";
-import type { SignInRouteState } from "types/auth";
+import { useSetter } from "store/accessors";
+import type { SignInRouteState, UserV2 } from "types/auth";
 import Icon from "../Icon";
-import LoaderRing from "../LoaderRing";
 import Menu from "./UserMenu/Menu";
 
 interface Props {
   isInAuth: boolean;
+  user: UserV2 | null;
 }
 
-export default function NavDropdown(props: Props) {
-  const user = useGetter((state) => state.auth.user);
+export default function NavDropdown({ user, isInAuth }: Props) {
   const location = useLocation();
   const state: SignInRouteState = { from: location.pathname };
 
@@ -83,7 +82,7 @@ export default function NavDropdown(props: Props) {
               For Donors
             </NavLink>
           </MenuItem>
-          {!props.isInAuth && (
+          {!isInAuth && (
             <MenuItem>
               <NavLink
                 to={toWithState(appRoutes.signin, state)}
@@ -93,7 +92,7 @@ export default function NavDropdown(props: Props) {
               </NavLink>
             </MenuItem>
           )}
-          {!props.isInAuth && (
+          {!isInAuth && (
             <MenuItem>
               <NavLink
                 to={toWithState(appRoutes.signup, state)}
@@ -104,14 +103,7 @@ export default function NavDropdown(props: Props) {
             </MenuItem>
           )}
         </div>
-        {user && user !== "loading" && (
-          <Menu user={user} signOut={() => dispatch(logout())} classes="" />
-        )}
-        {user && user === "loading" && (
-          <div className="p-5">
-            <LoaderRing thickness={10} classes="w-6" />
-          </div>
-        )}
+        {user ? <Menu user={user} signOut={() => dispatch(logout())} /> : null}
       </MenuItems>
     </HuiMenu>
   );

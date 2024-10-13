@@ -7,11 +7,13 @@ import {
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useRouteLoaderData } from "react-router-dom";
+import type { UserV2 } from "types/auth";
 
 type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
+  const user = useRouteLoaderData("root") as UserV2 | null;
   const location = useLocation();
   const [query, setQuery] = useState("");
   const isInAuth = authRoutes.includes(location.pathname);
@@ -42,7 +44,7 @@ export default function Header({ classes }: Props) {
         />
         <div className="flex gap-2 md:gap-4 justify-self-end items-center">
           {!isInAuth && <UserMenu />}
-          <NavDropdown isInAuth={isInAuth} />
+          <NavDropdown isInAuth={isInAuth} user={user} />
         </div>
       </div>
       <SearchDropdown

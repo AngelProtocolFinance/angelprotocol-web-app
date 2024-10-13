@@ -1,14 +1,16 @@
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
-import { useLocation } from "react-router-dom";
+import { useLocation, useRouteLoaderData } from "react-router-dom";
 
 import { NavDropdown, UserMenu } from "components/Header";
+import type { UserV2 } from "types/auth";
 
 type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
   const location = useLocation();
   const isInAuth = authRoutes.includes(location.pathname);
+  const user = useRouteLoaderData("root") as UserV2 | null;
 
   return (
     <header
@@ -27,7 +29,7 @@ export default function Header({ classes }: Props) {
     >
       <DappLogo classes="w-48 h-12" />
       {!isInAuth && <UserMenu classes="max-sm:hidden" />}
-      <NavDropdown isInAuth={isInAuth} />
+      <NavDropdown isInAuth={isInAuth} user={user} />
     </header>
   );
 }

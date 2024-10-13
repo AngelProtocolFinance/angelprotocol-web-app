@@ -101,6 +101,7 @@ const rootRoutes: RO[] = [
 
 export const routes: RO[] = [
   {
+    id: "root",
     element: <RootLayout />,
     loader: async ({ request }) => {
       /** reset all cache */
