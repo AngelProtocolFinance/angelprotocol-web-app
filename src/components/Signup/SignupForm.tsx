@@ -2,12 +2,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { cognito, isError } from "auth/cognito";
 import { Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
-import { logger } from "helpers";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
-import { useSaveSignupMutation } from "services/aws/hubspot";
 import { object } from "yup";
 import type { Donor, StateSetter } from "./types";
 
@@ -18,7 +16,6 @@ type Props = {
 };
 
 export default function SignupForm(props: Props) {
-  const [savetoHubspot] = useSaveSignupMutation();
   const { handleError, displayError } = useErrorContext();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
@@ -56,20 +53,10 @@ export default function SignupForm(props: Props) {
       disabled={isSubmitting}
       onSubmit={handleSubmit(async (fv) => {
         try {
-          try {
-            await savetoHubspot({
-              email: props.donor.email,
-              firstName: props.donor.firstName,
-              lastName: props.donor.lastName,
-              type: "donor",
-            }).unwrap();
-          } catch (err) {
-            logger.error(err);
-          }
-
           const res = await cognito.signup(props.donor.email, fv.password, {
             firstName: props.donor.firstName,
             lastName: props.donor.lastName,
+            "custom:user-type": "donor",
           });
           if (isError(res)) return displayError(res.message);
 

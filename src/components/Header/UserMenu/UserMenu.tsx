@@ -2,12 +2,11 @@ import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
 import { CircleUserRound } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
-import { useGetter } from "store/accessors";
-import type { SignInRouteState } from "types/auth";
-import LoaderRing from "../../LoaderRing";
+import { useRouteLoaderData } from "react-router-dom";
+import type { SignInRouteState, UserV2 } from "types/auth";
 
 export default function UserMenu({ classes = "" }) {
-  const user = useGetter((state) => state.auth.user);
+  const user = useRouteLoaderData("root") as UserV2 | null;
   const location = useLocation();
 
   if (!user) {
@@ -30,18 +29,15 @@ export default function UserMenu({ classes = "" }) {
     );
   }
 
-  if (user === "loading") {
-    return <LoaderRing thickness={10} classes="w-6" />;
-  }
-
   return (
     <Link
       to={`${appRoutes.user_dashboard}/edit-profile`}
       className="cursor-pointer contents"
     >
-      {user.avatarUrl ? (
+      {user.avatar ? (
+        //TODO: migrate userdb attribute to custom attribute
         <img
-          src={user.avatarUrl}
+          src={user.avatar}
           className="rounded-full"
           height={32}
           width={32}

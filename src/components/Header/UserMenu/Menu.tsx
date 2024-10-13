@@ -3,14 +3,14 @@ import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { CircleDollarSign, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
-import type { AuthenticatedUser } from "types/auth";
+import type { UserV2 } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
 import { Organizations } from "./Organizations";
 
 type Props = {
   classes?: string;
   signOut(): void;
-  user: AuthenticatedUser;
+  user: UserV2;
 };
 export default function Menu({ user, signOut, classes }: Props) {
   return (
@@ -54,7 +54,6 @@ export default function Menu({ user, signOut, classes }: Props) {
         </div>
       </div>
       <button
-        disabled={user.isSigningOut}
         type="button"
         onClick={signOut}
         className="btn-blue rounded-none w-full p-3 text-sm mt-4"

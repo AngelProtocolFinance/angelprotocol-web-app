@@ -28,6 +28,16 @@ export function toWithState(to: To, state: unknown): To {
   return { pathname, hash, search: s.toString() };
 }
 
+export function toUrlWithState(url: URL, state: unknown) {
+  const copy = new URL(url);
+  if (!state) return copy;
+  if (typeof state !== "object") return url;
+
+  const encoded = btoa(JSON.stringify(state));
+  copy.searchParams.append("_s", encoded);
+  return copy;
+}
+
 export const stateLoader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url);
   return decodeState(url.searchParams.get("_s"));
