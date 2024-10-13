@@ -11,10 +11,11 @@ import type { Endowment, EndowmentBookmark, UserEndow } from "types/aws";
 export const rootLoader = async ({
   request,
 }: LoaderFunctionArgs): Promise<null | ReturnType<typeof defer> | Response> => {
+  console.log("root loader runs");
   /** reset all cache */
-  const cache = await caches.open("bg");
-  const keys = await cache.keys();
-  await Promise.all(keys.map((k) => cache.delete(k)));
+  //   const cache = await caches.open("bg");
+  //   const keys = await cache.keys();
+  //   await Promise.all(keys.map((k) => cache.delete(k)));
 
   /** handle oauth if applicable */
   const url = new URL(request.url);
