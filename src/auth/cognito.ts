@@ -9,9 +9,10 @@ const clientId = IS_TEST
 interface AuthSuccess<T extends "new" | "refresh"> {
   AuthenticationResult: {
     AccessToken: string;
-    /** in seconds */
+    /** both access and id tokens, in seconds */
     ExpiresIn: number;
     IdToken: string;
+    /** expires depending in user pool client config */
     RefreshToken: T extends "new" ? string : never;
     /** config: Bearer  */
     TokenType: string;
@@ -22,7 +23,9 @@ interface AuthSuccess<T extends "new" | "refresh"> {
 interface OauthTokenRes {
   id_token: string;
   access_token: string;
+  /** both access and id tokens, in seconds */
   expires_in: number;
+  /** expires depending in user pool client config */
   refresh_token: string;
   token_type: string;
 }
@@ -46,36 +49,64 @@ interface Token {
   expiry: string;
 }
 
-class MemoryStorage {
-  private state: Token | null = null;
-  get token() {
-    if (this.state && this.state.expiry < new Date().toISOString()) {
-      return null;
+const FIVE_MINUTES_MS = 5 * 60 * 1000;
+
+type Session = Token | null | string;
+class Storage {
+  private static key = "bg_session";
+
+  get token(): Session {
+    const sesh = sessionStorage.getItem(Storage.key);
+    if (!sesh) return null;
+
+    try {
+      const token = JSON.parse(sesh) as Token;
+
+      if (token.expiry < new Date().toISOString()) {
+        sessionStorage.removeItem(Storage.key);
+        return null;
+      }
+
+      if (new Date(token.expiry).getTime() - Date.now() < FIVE_MINUTES_MS) {
+        sessionStorage.setItem(Storage.key, token.refresh);
+        return token.refresh;
+      }
+
+      return token;
+    } catch (_) {
+      /** sesh is not JSON.string */
+      return sesh;
     }
-    return this.state;
   }
   private expiry(duration: number) {
     return new Date(Date.now() + duration * 1000).toISOString();
   }
+
   save(token: AuthSuccess<"new">["AuthenticationResult"]) {
-    this.state = {
-      id: token.IdToken,
-      access: token.AccessToken,
-      refresh: token.RefreshToken,
-      expiry: this.expiry(token.ExpiresIn),
-    };
+    sessionStorage.setItem(
+      Storage.key,
+      JSON.stringify({
+        id: token.IdToken,
+        access: token.AccessToken,
+        refresh: token.RefreshToken,
+        expiry: this.expiry(token.ExpiresIn),
+      })
+    );
   }
   saveOAuth(token: OauthTokenRes) {
-    this.state = {
-      id: token.id_token,
-      access: token.access_token,
-      refresh: token.refresh_token,
-      expiry: this.expiry(token.expires_in),
-    };
+    sessionStorage.setItem(
+      Storage.key,
+      JSON.stringify({
+        id: token.id_token,
+        access: token.access_token,
+        refresh: token.refresh_token,
+        expiry: this.expiry(token.expires_in),
+      })
+    );
   }
 }
 
-class Cognito extends MemoryStorage {
+class Cognito extends Storage {
   private endpoint = "https://cognito-idp.us-east-1.amazonaws.com";
   private clientId: string;
 
@@ -139,8 +170,10 @@ class Cognito extends MemoryStorage {
     if (!res.ok) {
       return res.json() as Promise<AuthError>;
     }
+
     const data: AuthSuccess<"refresh"> = await res.json();
     this.save({ ...data.AuthenticationResult, RefreshToken: refreshToken });
+
     return data;
   }
 
@@ -224,7 +257,7 @@ class Cognito extends MemoryStorage {
   }
 }
 
-class OAuth extends MemoryStorage {
+class OAuth extends Storage {
   static redirectUri = window.location.origin + "/";
   private domain: string;
   private clientId: string;
@@ -244,6 +277,7 @@ class OAuth extends MemoryStorage {
       "profile",
       "aws.cognito.signin.user.admin",
     ];
+
     const params = new URLSearchParams({
       response_type: "code",
       client_id: this.clientId,
