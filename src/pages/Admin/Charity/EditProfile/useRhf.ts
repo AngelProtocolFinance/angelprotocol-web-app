@@ -39,8 +39,6 @@ export default function useRhf(init: FV) {
     name: "published",
   });
 
-  console.log({ errors });
-
   return {
     id,
     //rhf
