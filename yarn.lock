@@ -3461,7 +3461,7 @@ __metadata:
     gsap: "npm:3.12.5"
     jsdom: "npm:24.1.0"
     lefthook: "npm:1.6.15"
-    lucide-react: "npm:0.436.0"
+    lucide-react: "npm:0.452.0"
     msw: "npm:2.3.1"
     nprogress: "npm:0.2.0"
     postcss-import: "npm:16.1.0"
@@ -5059,12 +5059,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lucide-react@npm:0.436.0":
-  version: 0.436.0
-  resolution: "lucide-react@npm:0.436.0"
+"lucide-react@npm:0.452.0":
+  version: 0.452.0
+  resolution: "lucide-react@npm:0.452.0"
   peerDependencies:
     react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
-  checksum: 10/33ece64ea067a02d9d4eaf4b18f9334323db3e0b91746c5332c29b0aa2afd44858db9b48300a78a3406adcd99ffc15c14f94345b7a18a02070216741710c5751
+  checksum: 10/2ea9c050f6cde80ee252afb0e9044002f9f208675052c73b1d3982d8d97a5d247c11d83a1161f58ca27f32d87ea397512482025292f05a2b326208c38dcb96b0
   languageName: node
   linkType: hard
 
