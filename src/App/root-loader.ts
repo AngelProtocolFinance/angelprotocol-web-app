@@ -84,6 +84,5 @@ async function useEndows(user: UserV2): Promise<UserEndow[]> {
   source.pathname = `${v(3)}/users/${user.email}/endowments`;
   const req = new Request(source);
   req.headers.set("authorization", `Bearer ${user.idToken}`);
-
-  return fetch(req).then<UserEndow[]>((res) => (res.ok ? res.json() : []));
+  return cacheGet(req).then<UserEndow[]>((res) => (res.ok ? res.json() : []));
 }
