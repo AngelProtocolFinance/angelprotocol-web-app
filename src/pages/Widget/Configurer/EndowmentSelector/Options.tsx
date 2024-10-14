@@ -13,7 +13,6 @@ export default function Options({ searchText, isDebouncing = false }: Props) {
     query: searchText,
     sdgs: Object.keys(unsdgs).join(","),
     kyc_only: "true,false",
-    page: "1",
   });
 
   return (

@@ -19,10 +19,14 @@ import {
 import { useUpdateEndowment } from "../common";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import { type FV, schema } from "./types";
+import { useLoaderData } from "react-router-dom";
 
-type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
+export default function Form() {
+  const endow = useLoaderData() as Pick<
+    Endowment,
+    "id" | EndowmentSettingsAttributes
+  >;
 
-export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();
   const { displayError } = useErrorContext();
 
@@ -36,11 +40,11 @@ export default function Form(props: Props) {
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     values: {
-      receiptMsg: props.receiptMsg ?? "",
-      hide_bg_tip: props.hide_bg_tip ?? false,
-      programDonateDisabled: !(props.progDonationsAllowed ?? true),
-      donateMethods: fill(props.donateMethods),
-      increments: props.increments ?? [],
+      receiptMsg: endow.receiptMsg ?? "",
+      hide_bg_tip: endow.hide_bg_tip ?? false,
+      programDonateDisabled: !(endow.progDonationsAllowed ?? true),
+      donateMethods: fill(endow.donateMethods),
+      increments: endow.increments ?? [],
     },
   });
 
@@ -66,7 +70,7 @@ export default function Form(props: Props) {
       }}
       onSubmit={handleSubmit(
         async ({ programDonateDisabled, donateMethods, ...fv }) => {
-          if (props.id === BG_ID && fv.hide_bg_tip === false) {
+          if (endow.id === BG_ID && fv.hide_bg_tip === false) {
             return displayError(
               "BG donation flow should not show BG tip screen"
             );
@@ -75,7 +79,7 @@ export default function Form(props: Props) {
           await updateEndow({
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
-            id: props.id,
+            id: endow.id,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
               .map((m) => m.id),

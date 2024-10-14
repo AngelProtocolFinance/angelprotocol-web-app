@@ -68,10 +68,10 @@ export const aws = createApi({
     }),
     endowmentOptions: builder.query<EndowmentOption[], EndowQParams>({
       providesTags: ["endowments"],
-      query: ({ page = "1", ...p }) => {
+      query: (p) => {
         return {
           url: `${v(1)}/cloudsearch-nonprofits`,
-          params: { ...p, page, fields: endowSelectorOptionFields },
+          params: { ...p, page: 1, fields: endowSelectorOptionFields },
         };
       },
       transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
