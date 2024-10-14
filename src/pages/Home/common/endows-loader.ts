@@ -1,11 +1,11 @@
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import type { LoaderFunction } from "react-router-dom";
-import { version as v } from "services/helpers";
 import type { EndowListPaginatedAWSQueryRes, EndowmentCard } from "types/aws";
-export { Component } from "./Home";
+export type { EndowmentCard } from "types/aws";
+import { version as v } from "services/helpers";
 
-export const loader: LoaderFunction = async () => {
+export const endowsLoader: LoaderFunction = async () => {
   const url = new URL(APIs.aws);
   url.pathname = `${v(1)}/cloudsearch-nonprofits`;
   url.searchParams.set("page", "1");

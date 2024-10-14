@@ -1,4 +1,6 @@
 import Footer from "components/Footer";
+import { useLoaderData } from "react-router-dom";
+import type { EndowmentCard } from "types/aws";
 import HeroBottom from "../@sections/HeroBottom";
 import Animation from "./Animation";
 import Benefits from "./Benefits";
@@ -9,11 +11,12 @@ import Hero from "./Hero";
 import Testimonials from "./Testimonials";
 import Video from "./Video";
 export const Component = () => {
+  const endows = useLoaderData() as EndowmentCard[];
   return (
     <>
       <Header classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
-      <HeroBottom className="mb-10" />
+      <HeroBottom className="mb-10" endowments={endows} />
       <Benefits />
       <Brands />
       <Animation />
