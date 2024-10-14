@@ -1,4 +1,5 @@
 import { APIs } from "constants/urls";
+import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunctionArgs, redirect } from "react-router-dom";
 import { apiEnv } from "services/constants";
 import * as v from "valibot";
@@ -28,7 +29,6 @@ const schema = v.union([
 export const profileLoader = async ({
   params,
 }: LoaderFunctionArgs): Promise<Response | undefined> => {
-  const cache = await caches.open("bg");
   const { output: id, issues } = v.safeParse(schema, params.id);
   if (issues) return redirect("/marketplace");
 
@@ -41,9 +41,6 @@ export const profileLoader = async ({
     url.pathname = `v9/endowments`;
     url.searchParams.set("slug", id);
   }
-  const c = await cache.match(url);
-  if (c) return c.clone();
 
-  await cache.add(url);
-  return cache.match(url);
+  return cacheGet(url);
 };
