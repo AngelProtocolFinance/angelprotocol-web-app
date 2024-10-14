@@ -262,15 +262,6 @@ const sdg = v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(17));
 
 export const endowQParams = v.object({
   query: v.optional(v.string()),
-  page: v.optional(
-    v.pipe(
-      v.string(),
-      v.transform((x) => +x),
-      v.number(),
-      v.integer(),
-      v.minValue(1)
-    )
-  ),
   sdgs: v.optional(
     v.pipe(
       v.string(),
