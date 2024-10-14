@@ -1,5 +1,5 @@
 import QueryLoader from "components/QueryLoader";
-import RichText from "components/RichText";
+import { RichText } from "components/RichText";
 import { useProgramsQuery } from "services/aws/programs";
 import { usePaginatedMedia } from "services/aws/usePaginatedMedia";
 import { useProfileContext } from "../../ProfileContext";

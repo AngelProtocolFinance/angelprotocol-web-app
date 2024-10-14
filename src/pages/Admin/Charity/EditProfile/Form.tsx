@@ -3,7 +3,7 @@ import { ControlledCountrySelector as CountrySelector } from "components/Country
 import ExtLink from "components/ExtLink";
 import Group from "components/Group";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
-import RichText from "components/RichText";
+import { RichText } from "components/RichText";
 import { List, MultiList } from "components/Selector";
 import { Confirmed, Info } from "components/Status";
 import { ControlledToggle as Toggle } from "components/Toggle";
@@ -138,6 +138,7 @@ export default function Form({ initSlug = "", init }: Props) {
         />
         <Label className="-mb-4">Description of your organization</Label>
         <RichText
+          ref={rhf.overview.ref}
           content={rhf.overview.value}
           onChange={rhf.overview.onChange}
           placeHolder="A short overview of your organization"

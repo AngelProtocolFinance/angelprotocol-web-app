@@ -1,12 +1,25 @@
 import { unpack } from "helpers";
 import Quill from "quill";
-import { useCallback, useState } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
 import { toDelta } from "./helpers";
 import type { Props } from "./types";
 
-export default function RichText({ classes, ...props }: Props) {
+type El = Pick<HTMLDivElement, "focus">;
+
+export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
   const style = unpack(classes);
   const [numChars, setNumChars] = useState(props.content.length ?? 0);
+  const quillRef = useRef<Quill>();
+
+  useImperativeHandle(ref, () => ({
+    focus: () => quillRef.current?.focus(),
+  }));
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   const containerRef = useCallback((container: HTMLDivElement | null) => {
@@ -24,6 +37,8 @@ export default function RichText({ classes, ...props }: Props) {
         ],
       },
     });
+
+    quillRef.current = quill;
 
     quill.setContents(toDelta(props.content));
 
@@ -70,4 +85,4 @@ export default function RichText({ classes, ...props }: Props) {
       </p>
     </div>
   );
-}
+});

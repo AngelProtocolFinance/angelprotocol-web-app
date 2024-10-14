@@ -5,7 +5,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import RichText from "./RichText";
+import { RichText } from "./RichText";
 import type { Editable, EditorClasses } from "./types";
 
 export function RichTextEditor<T extends FieldValues>(
@@ -19,11 +19,12 @@ export function RichTextEditor<T extends FieldValues>(
   } = useFormContext<T>();
   const {
     formState: { errors },
-    field: { value, onChange },
+    field: { value, onChange, ref },
   } = useController<T>({ name: props.fieldName });
 
   return (
     <RichText
+      ref={ref}
       content={value}
       onChange={onChange}
       placeHolder={props.placeHolder}

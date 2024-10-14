@@ -1,5 +1,5 @@
 import Image from "components/Image";
-import RichText from "components/RichText";
+import { RichText } from "components/RichText";
 import { Info } from "components/Status";
 import { isEmpty } from "helpers";
 import type { Milestone as TMilestone } from "types/aws";
