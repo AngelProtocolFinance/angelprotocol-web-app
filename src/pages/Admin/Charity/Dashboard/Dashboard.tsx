@@ -1,34 +1,13 @@
-import { skipToken } from "@reduxjs/toolkit/query";
 import ContentLoader from "components/ContentLoader";
 import { ErrorStatus } from "components/Status";
 import { CircleAlert } from "lucide-react";
-import { useEndowBalanceQuery } from "services/apes";
-import { useEndowmentQuery } from "services/aws/aws";
-import { useAdminContext } from "../../Context";
+import { Suspense } from "react";
+import { Await, useLoaderData } from "react-router-dom";
 import { Loaded } from "./Loaded";
 import { monthPeriod } from "./monthPeriod";
 
 export default function Dashboard() {
-  const { id } = useAdminContext();
-  const balQuery = useEndowBalanceQuery(id || skipToken);
-  const endowQuery = useEndowmentQuery({
-    id,
-    fields: ["allocation"],
-  });
-
-  if (balQuery.isLoading || endowQuery.isLoading) {
-    return <LoaderSkeleton />;
-  }
-
-  if (
-    balQuery.isError ||
-    !balQuery.data ||
-    endowQuery.isError ||
-    !endowQuery.data
-  ) {
-    return <ErrorStatus>Failed to get nonprofit organisation info</ErrorStatus>;
-  }
-
+  const data: any = useLoaderData();
   const period = monthPeriod();
 
   return (
@@ -40,12 +19,19 @@ export default function Dashboard() {
           Pending transactions are now locked for processing
         </div>
       )}
-      <Loaded
-        balances={balQuery.data}
-        allocation={
-          endowQuery.data.allocation ?? { cash: 0, liq: 100, lock: 0 }
-        }
-      />
+
+      <Suspense fallback={<LoaderSkeleton />}>
+        <Await
+          resolve={data.data}
+          errorElement={
+            <ErrorStatus>Failed to get nonprofit organisation info</ErrorStatus>
+          }
+        >
+          {([alloc, balance]) => (
+            <Loaded balances={balance} allocation={alloc} />
+          )}
+        </Await>
+      </Suspense>
     </div>
   );
 }
