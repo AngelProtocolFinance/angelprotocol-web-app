@@ -1,5 +1,6 @@
 import Seo from "components/Seo";
 import { APIs } from "constants/urls";
+import { cacheGet } from "helpers/cache-get";
 import {
   type LoaderFunction,
   Outlet,
@@ -26,25 +27,18 @@ function restPages(num: number) {
 
 async function pageRes(
   search: URLSearchParams,
-  page: number,
-  cache: Cache
+  page: number
 ): Promise<Response | undefined> {
   const n = new URLSearchParams(search);
   n.set("page", page.toString());
   const url = new URL(APIs.aws);
   url.pathname = `${v(1)}/cloudsearch-nonprofits`;
   url.search = n.toString();
-  const c = await cache.match(url);
 
-  if (c) return c.clone();
-
-  await cache.add(url);
-  const fresh = await cache.match(url);
-  if (fresh) return fresh.clone();
+  return cacheGet(url);
 }
 
 async function loadPages(request: Request): Promise<Page | Response> {
-  const cache = await caches.open("bg");
   const source = new URL(request.url);
   // delete focus persistor from <Search/>
   source.searchParams.delete("_f");
@@ -52,7 +46,7 @@ async function loadPages(request: Request): Promise<Page | Response> {
   const pageNum = +(source.searchParams.get("page") ?? "1");
 
   const pagesRes: Response[] = [];
-  const firstPageRes = await pageRes(source.searchParams, 1, cache);
+  const firstPageRes = await pageRes(source.searchParams, 1);
 
   if (firstPageRes) pagesRes.push(firstPageRes.clone());
 
@@ -64,7 +58,7 @@ async function loadPages(request: Request): Promise<Page | Response> {
   })(firstPageRes);
 
   for (const page of restPages(Math.min(pageNum, maxPage)).reverse()) {
-    const res = await pageRes(source.searchParams, page, cache);
+    const res = await pageRes(source.searchParams, page);
     if (res) pagesRes.push(res);
   }
 

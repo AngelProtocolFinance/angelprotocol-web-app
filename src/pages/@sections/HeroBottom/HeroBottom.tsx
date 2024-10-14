@@ -1,10 +1,10 @@
 import { appRoutes } from "constants/routes";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useEndowmentCardsQuery } from "services/aws/aws";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import Card, { Skeleton } from "./Card";
+import type { EndowmentCard } from "types/aws";
+import Card from "./Card";
 import frame1 from "./characters/frame_1.png";
 import frame2 from "./characters/frame_2.png";
 import frame3 from "./characters/frame_3.png";
@@ -13,13 +13,12 @@ import frame6 from "./characters/frame_6.png";
 import mappng from "./map.webp";
 import s from "./styles.module.css";
 
-const HeroBottom = ({ className = "" }) => {
-  const { data } = useEndowmentCardsQuery({
-    claimed: "true",
-    page: "1",
-    query: "",
-  });
+interface Props {
+  endowments: EndowmentCard[];
+  className?: string;
+}
 
+const HeroBottom = ({ className = "", endowments }: Props) => {
   return (
     <div
       className={`${className} ${s.container} grid content-start relative bg-[length:300%] md:bg-[length:200%] lg:bg-contain bg-no-repeat bg-[center_100%] pb-40 overflow-x-clip`}
@@ -72,13 +71,9 @@ const HeroBottom = ({ className = "" }) => {
           className="relative w-[90vw] xl:w-[60vw] py-8"
           wrapperClass={s.swiper_wrapper}
         >
-          {(data?.Items || [1, 2, 3, 4, 5, 6]).map((endow, idx) => (
+          {endowments.map((endow, idx) => (
             <SwiperSlide key={idx}>
-              {typeof endow === "number" ? (
-                <Skeleton />
-              ) : (
-                <Card key={endow.id} {...endow} />
-              )}
+              <Card key={endow.id} {...endow} />
             </SwiperSlide>
           ))}
         </Swiper>{" "}
