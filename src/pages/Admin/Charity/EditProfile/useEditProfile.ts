@@ -12,7 +12,7 @@ import {
 import type { EndowmentProfileUpdate } from "types/aws";
 import type { UNSDG_NUMS } from "types/lists";
 import type { Ensure } from "types/utils";
-import type { FV } from "./types";
+import type { FV } from "./schema";
 
 type DirtyFields = FieldNamesMarkedBoolean<FV>;
 

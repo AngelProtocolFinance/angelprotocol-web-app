@@ -9,7 +9,7 @@ import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import type { FV } from "./types";
+import type { FV } from "./schema";
 
 export function Component() {
   const { id } = useAdminContext();

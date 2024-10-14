@@ -126,3 +126,5 @@ export const schema = v.object({
   sdgs: v.pipe(sdgs, v.minLength(1, "required")),
   published: v.boolean(),
 });
+
+export type FV = v.InferInput<typeof schema>;

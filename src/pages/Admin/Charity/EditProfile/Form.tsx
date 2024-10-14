@@ -14,7 +14,7 @@ import type { EndowDesignation } from "types/aws";
 import Slug from "./Slug";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
-import type { FV } from "./types";
+import type { FV } from "./schema";
 import useEditProfile from "./useEditProfile";
 import useRhf from "./useRhf";
 

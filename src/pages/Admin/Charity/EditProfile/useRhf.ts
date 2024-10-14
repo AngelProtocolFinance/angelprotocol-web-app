@@ -1,8 +1,7 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { useController, useForm } from "react-hook-form";
 import { useAdminContext } from "../../Context";
-import { schema } from "./schema";
-import type { FV } from "./types";
+import { type FV, schema } from "./schema";
 export default function useRhf(init: FV) {
   const { id } = useAdminContext();
   const {
