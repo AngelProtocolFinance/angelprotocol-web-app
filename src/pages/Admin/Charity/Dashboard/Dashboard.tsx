@@ -1,15 +1,12 @@
-import ContentLoader from "components/ContentLoader";
 import Seo from "../Seo";
 
 import Icon from "components/Icon";
-import { ErrorStatus } from "components/Status";
-import { Suspense } from "react";
-import { Await, useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { Loaded } from "./Loaded";
 import { monthPeriod } from "./monthPeriod";
 
 export default function Dashboard() {
-  const data: any = useLoaderData();
+  const [alloc, balance]: any = useLoaderData();
   const period = monthPeriod();
 
   return (
@@ -27,32 +24,7 @@ export default function Dashboard() {
         </div>
       )}
 
-      <Suspense fallback={<LoaderSkeleton />}>
-        <Await
-          resolve={data.data}
-          errorElement={
-            <ErrorStatus>Failed to get nonprofit organisation info</ErrorStatus>
-          }
-        >
-          {([alloc, balance]) => (
-            <Loaded balances={balance} allocation={alloc} />
-          )}
-        </Await>
-      </Suspense>
-    </div>
-  );
-}
-
-function LoaderSkeleton() {
-  return (
-    <div className="grid gap-4 @lg:grid-cols-2">
-      <ContentLoader className="h-40" />
-      <ContentLoader className="h-40" />
-      <ContentLoader className="h-40" />
-      <ContentLoader className="h-2 col-span-full" />
-
-      <ContentLoader className="h-60 col-span-full" />
-      <ContentLoader className="h-60 col-span-full" />
+      <Loaded balances={balance} allocation={alloc} />
     </div>
   );
 }
