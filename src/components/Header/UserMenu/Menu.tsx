@@ -56,7 +56,7 @@ export default function Menu({ user, classes }: Props) {
 
       <fetcher.Form className="contents" action="/logout" method="post">
         <button
-          disabled={fetcher.state === "loading"}
+          disabled={fetcher.state !== "idle"}
           name="token"
           value={user.accessToken}
           type="submit"

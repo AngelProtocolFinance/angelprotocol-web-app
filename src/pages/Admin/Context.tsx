@@ -2,16 +2,18 @@ import { idParamToNum } from "helpers";
 import { CircleAlert } from "lucide-react";
 import { type PropsWithChildren, createContext, useContext } from "react";
 import { useParams } from "react-router-dom";
-import type { AuthenticatedUser } from "types/auth";
+import type { UserV2 } from "types/auth";
 import type { AdminParams } from "./types";
 
-type AdminContext = { id: number; user: AuthenticatedUser };
+type AdminContext = { id: number; user: UserV2 };
 
 export function Context({
   children,
   user,
-}: PropsWithChildren<{ user: AuthenticatedUser }>) {
+}: PropsWithChildren<{ user: UserV2 }>) {
   const { id } = useParams<AdminParams>();
+
+  console.log({ user, id });
 
   if (!user.endowments.includes(idParamToNum(id))) {
     return (
