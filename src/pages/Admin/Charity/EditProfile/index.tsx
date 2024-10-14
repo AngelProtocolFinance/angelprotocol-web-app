@@ -1,38 +1,33 @@
 import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
 import Seo from "components/Seo";
-import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { useEndowment } from "services/aws/useEndowment";
+import { APIs } from "constants/urls";
+import { cacheGet } from "helpers/cache-get";
+import { type LoaderFunction, useLoaderData } from "react-router-dom";
+import { apiEnv } from "services/constants";
 import type { EndowmentProfile as TProfile } from "types/aws";
-import { useAdminContext } from "../../Context";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
 
+export const loader: LoaderFunction = async ({ params }) => {
+  const url = new URL(APIs.aws);
+  url.searchParams.set("env", apiEnv);
+  url.pathname = `v9/endowments/${params.id}`;
+  return cacheGet(url);
+};
+
 export function Component() {
-  const { id } = useAdminContext();
-  const {
-    data: profile,
-    isLoading,
-    isError,
-    isFetching,
-  } = useEndowment({ id });
-
-  const content =
-    isLoading || isFetching ? (
-      <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />
-    ) : isError || !profile ? (
-      <FormError errorMessage="Failed to load profile" />
-    ) : (
-      <FormWithContext {...profile} />
-    );
-
+  const profile = useLoaderData() as TProfile;
   return (
     <>
-      <Seo title="Edit Profile" url={`${adminRoutes.edit_profile}/${id}`} />
-      {content}
+      <Seo
+        title="Edit Profile"
+        url={`${adminRoutes.edit_profile}/${profile.id}`}
+      />
+      <FormWithContext {...profile} />
     </>
   );
 }

@@ -8,10 +8,10 @@ import { appRoutes, regRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import { storeRegistrationReference } from "helpers";
 import { decodeState, toWithState } from "helpers/state-params";
+import { CircleCheck } from "lucide-react";
 import { Link, type LoaderFunction, useLoaderData } from "react-router-dom";
 import { version as v } from "services/helpers";
 import { steps } from "./routes";
-import { CircleCheck } from "lucide-react";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
