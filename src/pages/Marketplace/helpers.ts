@@ -16,7 +16,6 @@ export const toRaw = (p: ParsedEndowQParams): URLSearchParams => {
 export const toObj = (p: ParsedEndowQParams): EndowQParams => {
   const raw: EndowQParams = {
     query: p.query,
-    page: p.page?.toString() ?? "1",
     sdgs: p.sdgs?.join(","),
     kyc_only: p.kyc_only?.join(","),
     countries: p.countries?.join(","),

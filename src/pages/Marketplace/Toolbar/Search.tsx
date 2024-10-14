@@ -13,7 +13,6 @@ export default function Search({ classes = "" }: { classes?: string }) {
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const n = new URLSearchParams(params);
     n.set("query", encodeURIComponent(e.target.value));
-    n.set("page", "1");
     n.set("_f", "search");
     setParams(n, {
       replace: true,
