@@ -39,8 +39,6 @@ export function Component() {
 
 function FormWithContext(props: TProfile & { id: number }) {
   const defaults: FV = {
-    id: props.id,
-    kyc_donors_only: props.kyc_donors_only,
     name: props.name,
     published: !!props.published,
     registration_number: props.registration_number ?? "",

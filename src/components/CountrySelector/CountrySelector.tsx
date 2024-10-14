@@ -76,9 +76,11 @@ export const ControlledCountrySelector = forwardRef<El, Props>((props, ref) => {
 
       <Options query={query} options={props.options} />
 
-      <span data-error className={cls.error + " empty:hidden"}>
-        {props.error}
-      </span>
+      {props.error && (
+        <span data-error className={cls.error + " empty:hidden"}>
+          {props.error}
+        </span>
+      )}
     </Combobox>
   );
 });

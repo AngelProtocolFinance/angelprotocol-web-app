@@ -11,3 +11,11 @@ export const parseContent = (content?: string): RichTextContent => {
     return { length: 0, value: "" };
   }
 };
+
+export const toDelta = (content: RichTextContent): Delta => {
+  try {
+    return new Delta(JSON.parse(content.value));
+  } catch (_) {
+    return new Delta();
+  }
+};

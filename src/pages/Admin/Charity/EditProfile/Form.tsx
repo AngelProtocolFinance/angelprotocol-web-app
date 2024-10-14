@@ -16,6 +16,7 @@ import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
 import type { FV } from "./types";
 import useEditProfile from "./useEditProfile";
+import useRhf from "./useRhf";
 
 const sdgOptions = Object.entries(unsdgs).map(([key, { title }]) =>
   getSDGLabelValuePair(key, title)
@@ -35,14 +36,15 @@ interface Props {
 }
 
 export default function Form({ initSlug = "", init }: Props) {
-  const { id, editProfile, ...rhf } = useEditProfile(init);
+  const { id, dirtyFields, handleSubmit, ...rhf } = useRhf(init);
+  const { onSubmit } = useEditProfile(id, dirtyFields);
   return (
     <form
       onReset={(e) => {
         e.preventDefault();
         rhf.reset();
       }}
-      onSubmit={editProfile}
+      onSubmit={handleSubmit(onSubmit)}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
       <Group
@@ -132,19 +134,24 @@ export default function Form({ initSlug = "", init }: Props) {
             dropzone: "w-full aspect-[2/1]",
           }}
           maxSize={MAX_SIZE_IN_BYTES}
+          error={rhf.errors.card_img?.file?.message}
         />
         <Label className="-mb-4">Description of your organization</Label>
         <RichText
           content={rhf.overview.value}
           onChange={rhf.overview.onChange}
-          onInit={rhf.overview.onChange}
           placeHolder="A short overview of your organization"
           charLimit={MAX_CHARS}
           classes={{
-            container:
+            field:
               "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
-            charCounter: "text-navy-l1 dark:text-navy-l2",
+            counter: "text-navy-l1 dark:text-navy-l2",
+            error: "text-right",
           }}
+          error={
+            rhf.errors.overview?.value?.message ||
+            rhf.errors.overview?.length?.message
+          }
         />
         <p className="static field-error -mt-4 empty:hidden">
           {rhf.errors.overview?.message}
@@ -200,7 +207,9 @@ export default function Form({ initSlug = "", init }: Props) {
           error={rhf.errors.endow_designation?.message}
           ref={rhf.designation.ref}
         />
-        <Label className="-mb-4">Headquarters</Label>
+        <Label className="-mb-4" required>
+          Headquarters
+        </Label>
         <CountrySelector
           value={rhf.hqCountry.value}
           onChange={rhf.hqCountry.onChange}
@@ -257,16 +266,9 @@ export default function Form({ initSlug = "", init }: Props) {
         <Field
           {...rhf.register("social_media_urls.twitter")}
           classes="field-admin"
-          label="Twitter"
-          placeholder="https://twitter.com/"
+          label="X (fka Twitter)"
+          placeholder="https://x.com/"
           error={rhf.errors.social_media_urls?.twitter?.message}
-        />
-        <Field
-          {...rhf.register("social_media_urls.discord")}
-          classes="field-admin"
-          label="Discord"
-          placeholder="https://discord.com/"
-          error={rhf.errors.social_media_urls?.discord?.message}
         />
         <Field
           {...rhf.register("social_media_urls.instagram")}

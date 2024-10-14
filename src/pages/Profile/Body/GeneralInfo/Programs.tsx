@@ -26,7 +26,7 @@ function Program(props: TProgram) {
         <RichText
           content={{ value: props.description }}
           readOnly
-          classes={{ container: "overflow-hidden h-32" }}
+          classes={{ field: "overflow-hidden h-32" }}
         />
       </div>
     </div>

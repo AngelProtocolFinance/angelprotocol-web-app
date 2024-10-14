@@ -95,10 +95,9 @@ export default function Milestone(props: Props) {
           fieldName="description"
           charLimit={MAX_CHARS}
           classes={{
-            container:
+            field:
               "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
-            error: "static field-error -mt-4",
-            charCounter: "text-navy-l1 dark:text-navy-l2",
+            counter: "text-navy-l1 dark:text-navy-l2",
           }}
         />
         <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-between">

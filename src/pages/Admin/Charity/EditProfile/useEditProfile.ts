@@ -1,60 +1,28 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import type { ImgLink } from "components/ImgEditor";
 import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
-import { type SubmitHandler, useController, useForm } from "react-hook-form";
-import { useLazyProfileQuery } from "services/aws/aws";
+import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
+import {
+  useEditEndowmentMutation,
+  useLazyProfileQuery,
+} from "services/aws/aws";
 import type { EndowmentProfileUpdate } from "types/aws";
-import { useAdminContext } from "../../Context";
-import { useUpdateEndowment } from "../common";
-import { schema } from "./schema";
+import type { UNSDG_NUMS } from "types/lists";
+import type { Ensure } from "types/utils";
 import type { FV } from "./types";
 
-export default function useEditProfile(init: FV) {
-  const { id } = useAdminContext();
-  const {
-    register,
-    reset,
-    resetField,
-    handleSubmit,
-    control,
-    trigger,
-    watch,
-    formState: { isSubmitting, errors, isDirty },
-  } = useForm<FV>({ defaultValues: init, resolver: yupResolver(schema) });
+type DirtyFields = FieldNamesMarkedBoolean<FV>;
 
+export default function useEditProfile(id: number, df: DirtyFields) {
+  const [submit] = useEditEndowmentMutation();
   const { showModal } = useModalContext();
   const { displayError, handleError } = useErrorContext();
   const [endowment] = useLazyProfileQuery();
-  const updateEndow = useUpdateEndowment();
 
-  const slug = watch("slug");
-  const { field: card_img } = useController({ control, name: "card_img" });
-  const { field: banner } = useController({ control, name: "image" });
-  const { field: logo } = useController({ control, name: "logo" });
-  const { field: overview } = useController({ control, name: "overview" });
-  const { field: sdgs } = useController({ control, name: "sdgs" });
-  const { field: designation } = useController({
-    control,
-    name: "endow_designation",
-  });
-  const { field: hqCountry } = useController({
-    control,
-    name: "hq_country",
-  });
-  const { field: activityCountries } = useController({
-    control,
-    name: "active_in_countries",
-  });
-  const { field: published } = useController({
-    control,
-    name: "published",
-  });
-
-  const editProfile: SubmitHandler<FV> = async (fv) => {
+  const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
       const [bannerUrl, logoUrl, cardImgUrl] = await uploadImgs(
         [fv.image, fv.logo, fv.card_img],
@@ -67,52 +35,55 @@ export default function useEditProfile(init: FV) {
         }
       );
 
-      const update: Partial<EndowmentProfileUpdate> = {};
+      const update: Ensure<Partial<EndowmentProfileUpdate>, "id"> = { id };
 
-      //dont check hit if unsetting
-      if (update.slug && update.slug !== initial.slug) {
-        const result = await endowment({ slug: update.slug });
+      if (df.slug) {
+        const result = await endowment({ slug: fv.slug });
         //endow is found with update.slug
         if (result.isSuccess) {
           return displayError(`Slug "${update.slug}" is already taken`);
         }
       }
 
-      type Cleaned = Partial<EndowmentProfileUpdate>;
-      //only include top level keys that appeared on diff
-      const cleanUpdate = diffs.reduce<Cleaned>((result, [path]) => {
-        const key = path.split(".")[0] as keyof Cleaned;
-        return { ...result, [key]: update[key] };
-      }, {});
+      if (df.name) update.name = fv.name;
+      if (df.tagline) update.tagline = fv.tagline;
+      if (df.registration_number) {
+        update.registration_number = fv.registration_number;
+      }
+      if (df.image) update.image = bannerUrl;
+      if (df.logo) update.logo = logoUrl;
+      if (df.card_img) update.card_img = cardImgUrl;
 
-      await updateEndow({ ...cleanUpdate, id });
+      if (df.overview) update.overview = fv.overview.value;
+      if (df.url) update.url = fv.url;
+
+      if (df.sdgs)
+        update.sdgs = fv.sdgs.map((sdg) => sdg.value) as UNSDG_NUMS[];
+      if (df.endow_designation)
+        update.endow_designation = fv.endow_designation.value;
+
+      if (df.hq_country) update.hq_country = fv.hq_country.name;
+      if (df.active_in_countries) {
+        update.active_in_countries = fv.active_in_countries.map((c) => c.value);
+      }
+      if (df.street_address) update.street_address = fv.street_address;
+
+      if (df.social_media_urls) update.social_media_urls = fv.social_media_urls;
+      if (df.published) update.published = fv.published;
+
+      await submit(update).unwrap();
+
+      return showModal(Prompt, {
+        type: "success",
+        children: "Successfully updated profile",
+      });
     } catch (err) {
       handleError(err, { context: "applying profile changes" });
     }
   };
 
   return {
-    editProfile: handleSubmit(editProfile),
-    id,
-    //rhf
-    register,
-    errors,
-    reset,
-    resetField,
-    isSubmitting,
-    trigger,
-    isDirty,
-    //controllers
-    card_img,
-    logo,
-    banner,
-    overview,
-    slug,
-    sdgs,
-    designation,
-    hqCountry,
-    activityCountries,
-    published,
+    onSubmit,
   };
 }
 

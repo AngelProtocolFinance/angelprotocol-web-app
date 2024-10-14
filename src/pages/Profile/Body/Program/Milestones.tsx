@@ -62,7 +62,7 @@ function Milestone(m: TMilestone) {
           content={{ value: m.description ?? "" }}
           readOnly
           classes={{
-            container: "text-navy-l1 dark:text-navy-l2 text-sm w-full",
+            field: "text-navy-l1 dark:text-navy-l2 text-sm w-full",
           }}
         />
       </div>
