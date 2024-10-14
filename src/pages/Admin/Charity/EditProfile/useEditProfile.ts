@@ -3,35 +3,27 @@ import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { isEmpty } from "helpers";
-import { getPayloadDiff } from "helpers/admin";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
-import { type SubmitHandler, useFormContext } from "react-hook-form";
-import { useLazyProfileQuery } from "services/aws/aws";
+import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
+import {
+  useEditEndowmentMutation,
+  useLazyProfileQuery,
+} from "services/aws/aws";
 import type { EndowmentProfileUpdate } from "types/aws";
-import { useAdminContext } from "../../Context";
-import { useUpdateEndowment } from "../common";
-import type { FV } from "./types";
-import { toProfileUpdate } from "./update";
+import type { UNSDG_NUMS } from "types/lists";
+import type { Ensure } from "types/utils";
+import type { FV } from "./schema";
 
-export default function useEditProfile() {
-  const { id } = useAdminContext();
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useFormContext<FV>();
+type DirtyFields = FieldNamesMarkedBoolean<FV>;
 
+export default function useEditProfile(id: number, df: DirtyFields) {
+  const [submit] = useEditEndowmentMutation();
   const { showModal } = useModalContext();
   const { displayError, handleError } = useErrorContext();
   const [endowment] = useLazyProfileQuery();
-  const updateEndow = useUpdateEndowment();
 
-  const editProfile: SubmitHandler<FV> = async ({ initial, ...fv }) => {
+  const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
-      /** special case for edit profile: since upload happens prior
-       * to tx submission. Other users of useTxSender
-       */
-
       const [bannerUrl, logoUrl, cardImgUrl] = await uploadImgs(
         [fv.image, fv.logo, fv.card_img],
         () => {
@@ -43,43 +35,56 @@ export default function useEditProfile() {
         }
       );
 
-      const update = toProfileUpdate({
-        type: "final",
-        data: { ...fv, id },
-        urls: { image: bannerUrl, logo: logoUrl, card_img: cardImgUrl },
-      });
+      const update: Ensure<Partial<EndowmentProfileUpdate>, "id"> = { id };
 
-      const diffs = getPayloadDiff(initial, update);
-
-      if (isEmpty(diffs)) return displayError("No changes detected");
-
-      //dont check hit if unsetting
-      if (update.slug && update.slug !== initial.slug) {
-        const result = await endowment({ slug: update.slug });
+      if (df.slug) {
+        const result = await endowment({ slug: fv.slug });
         //endow is found with update.slug
         if (result.isSuccess) {
-          return displayError(`Slug "${update.slug}" is already taken`);
+          return displayError(`Slug "${fv.slug}" is already taken`);
         }
+        update.slug = fv.slug;
       }
 
-      type Cleaned = Partial<EndowmentProfileUpdate>;
-      //only include top level keys that appeared on diff
-      const cleanUpdate = diffs.reduce<Cleaned>((result, [path]) => {
-        const key = path.split(".")[0] as keyof Cleaned;
-        return { ...result, [key]: update[key] };
-      }, {});
+      if (df.name) update.name = fv.name;
+      if (df.tagline) update.tagline = fv.tagline;
+      if (df.registration_number) {
+        update.registration_number = fv.registration_number;
+      }
+      if (df.image) update.image = bannerUrl;
+      if (df.logo) update.logo = logoUrl;
+      if (df.card_img) update.card_img = cardImgUrl;
 
-      await updateEndow({ ...cleanUpdate, id });
+      if (df.overview) update.overview = fv.overview.value;
+      if (df.url) update.url = fv.url;
+
+      if (df.sdgs)
+        update.sdgs = fv.sdgs.map((sdg) => sdg.value) as UNSDG_NUMS[];
+      if (df.endow_designation)
+        update.endow_designation = fv.endow_designation.value;
+
+      if (df.hq_country) update.hq_country = fv.hq_country.name;
+      if (df.active_in_countries) {
+        update.active_in_countries = fv.active_in_countries.map((c) => c.value);
+      }
+      if (df.street_address) update.street_address = fv.street_address;
+
+      if (df.social_media_urls) update.social_media_urls = fv.social_media_urls;
+      if (df.published) update.published = fv.published;
+
+      await submit(update).unwrap();
+
+      return showModal(Prompt, {
+        type: "success",
+        children: "Successfully updated profile",
+      });
     } catch (err) {
       handleError(err, { context: "applying profile changes" });
     }
   };
 
   return {
-    reset,
-    editProfile: handleSubmit(editProfile),
-    isSubmitting,
-    id,
+    onSubmit,
   };
 }
 

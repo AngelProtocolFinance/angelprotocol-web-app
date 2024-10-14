@@ -1,4 +1,3 @@
-import { ErrorMessage } from "@hookform/error-message";
 import {
   type FieldValues,
   type Path,
@@ -6,7 +5,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import RichText from "./RichText";
+import { RichText } from "./RichText";
 import type { Editable, EditorClasses } from "./types";
 
 export function RichTextEditor<T extends FieldValues>(
@@ -16,36 +15,24 @@ export function RichTextEditor<T extends FieldValues>(
   } & Pick<Editable, "charLimit" | "placeHolder">
 ) {
   const {
-    setValue,
     formState: { isSubmitting },
   } = useFormContext<T>();
   const {
     formState: { errors },
-    field: { value, onChange },
+    field: { value, onChange, ref },
   } = useController<T>({ name: props.fieldName });
 
-  const invalid = !!get(errors, props.fieldName);
-
   return (
-    <>
-      <RichText
-        content={value}
-        onChange={onChange}
-        onInit={(v) =>
-          setValue(props.fieldName, v as any, { shouldDirty: false })
-        }
-        placeHolder={props.placeHolder}
-        charLimit={props.charLimit}
-        classes={props.classes}
-        disabled={isSubmitting}
-        invalid={invalid}
-      />
-      <ErrorMessage
-        errors={errors}
-        name={props.fieldName as any}
-        as="p"
-        className={props.classes?.error}
-      />
-    </>
+    <RichText
+      ref={ref}
+      content={value}
+      onChange={onChange}
+      placeHolder={props.placeHolder}
+      charLimit={props.charLimit}
+      classes={props.classes}
+      disabled={isSubmitting}
+      //NOTE: only valid if scoped to rhf context + yup schema
+      error={get(errors, props.fieldName)?.message}
+    />
   );
 }

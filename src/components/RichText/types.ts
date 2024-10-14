@@ -8,21 +8,20 @@ type ReadOnly = {
 export type Editable = {
   readOnly?: never;
   onChange(content: Required<RichTextContent>): void;
-  onInit(content: Required<RichTextContent>): void;
   placeHolder?: string;
   charLimit?: number;
   disabled?: boolean;
-  invalid?: boolean;
+  error?: string;
 };
 
-export type EditorClasses = { container?: string; charCounter?: string };
+export type EditorClasses = {
+  container?: string;
+  field?: string;
+  counter?: string;
+  error?: string;
+};
 
 export type Props = (ReadOnly | Editable) & {
-  /**
-   * Setting this type to be compatible with RichTextContent makes it
-   * unnecessary for RichTextEditor to define complicated type to make
-   * its value content value compatible with type of RichText.content.
-   */
-  content: Pick<RichTextContent, "value">;
+  content: RichTextContent;
   classes?: EditorClasses;
 };

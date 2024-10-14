@@ -3467,6 +3467,7 @@ __metadata:
     postcss-import: "npm:16.1.0"
     qrcode.react: "npm:3.1.0"
     quill: "npm:2.0.2"
+    quill-delta: "npm:5.1.0"
     react: "npm:18.2.0"
     react-chariot-connect: "npm:1.0.8"
     react-csv: "npm:2.2.2"
@@ -5745,7 +5746,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"quill-delta@npm:^5.1.0":
+"quill-delta@npm:5.1.0, quill-delta@npm:^5.1.0":
   version: 5.1.0
   resolution: "quill-delta@npm:5.1.0"
   dependencies:

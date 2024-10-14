@@ -151,7 +151,7 @@ function Balance({ classes = "", ...props }: IItem) {
             <span> $ {humanize(Math.abs(changeAmount))} &#41;</span>
           </p>
         ) : (
-          <div />
+          <span />
         )}
       </div>
       {props.changes.length > 0 && (

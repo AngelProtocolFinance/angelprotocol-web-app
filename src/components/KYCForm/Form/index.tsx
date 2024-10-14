@@ -79,7 +79,7 @@ export default function Form({ classes = "", ...props }: Props) {
         <CountrySelector<FV, "country">
           placeholder="Select a country"
           fieldName="country"
-          countries={countries}
+          options={countries}
           onReset={() => resetField("usState")}
           classes={{
             container: "px-4 bg-gray-l6 dark:bg-blue-d6",

@@ -154,6 +154,7 @@ export type EndowmentSettingsAttributes = Extract<
   keyof Endowment,
   "receiptMsg" | "hide_bg_tip" | "progDonationsAllowed" | "donateMethods"
 >;
+
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
@@ -161,6 +162,7 @@ export type EndowmentProfileUpdate = Except<
   | "fiscal_sponsored"
   | "claimed"
   | "allocation"
+  | "kyc_donors_only"
   | EndowmentSettingsAttributes
 > & {
   endow_designation: EndowDesignation | "";

@@ -1,5 +1,5 @@
 import Image from "components/Image";
-import RichText from "components/RichText";
+import { RichText } from "components/RichText";
 import { Link } from "react-router-dom";
 import type { Program as TProgram } from "types/aws";
 
@@ -26,7 +26,7 @@ function Program(props: TProgram) {
         <RichText
           content={{ value: props.description }}
           readOnly
-          classes={{ container: "overflow-hidden h-32" }}
+          classes={{ field: "overflow-hidden h-32" }}
         />
       </div>
     </div>

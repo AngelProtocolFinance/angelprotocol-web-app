@@ -1,5 +1,5 @@
 import Image from "components/Image";
-import RichText from "components/RichText";
+import { RichText } from "components/RichText";
 import { Info } from "components/Status";
 import { isEmpty } from "helpers";
 import type { Milestone as TMilestone } from "types/aws";
@@ -62,7 +62,7 @@ function Milestone(m: TMilestone) {
           content={{ value: m.description ?? "" }}
           readOnly
           classes={{
-            container: "text-navy-l1 dark:text-navy-l2 text-sm w-full",
+            field: "text-navy-l1 dark:text-navy-l2 text-sm w-full",
           }}
         />
       </div>

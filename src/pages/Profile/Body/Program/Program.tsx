@@ -1,6 +1,6 @@
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
-import RichText from "components/RichText";
+import { RichText } from "components/RichText";
 import { humanize } from "helpers";
 import { useProfileContext } from "pages/Profile/ProfileContext";
 import { useParams } from "react-router-dom";

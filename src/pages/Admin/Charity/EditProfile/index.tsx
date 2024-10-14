@@ -1,21 +1,15 @@
-import { yupResolver } from "@hookform/resolvers/yup";
 import { country } from "components/CountrySelector";
+import { parseContent } from "components/RichText";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { FormProvider, useForm } from "react-hook-form";
 import { useEndowment } from "services/aws/useEndowment";
-import type {
-  EndowmentProfileUpdate,
-  EndowmentProfile as TProfile,
-} from "types/aws";
+import type { EndowmentProfile as TProfile } from "types/aws";
 import { useAdminContext } from "../../Context";
 import Seo from "../Seo";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import { schema } from "./schema";
-import type { FV } from "./types";
-import { toProfileUpdate } from "./update";
+import type { FV } from "./schema";
 
 export function Component() {
   const { id } = useAdminContext();
@@ -44,13 +38,23 @@ export function Component() {
 }
 
 function FormWithContext(props: TProfile & { id: number }) {
-  const init: EndowmentProfileUpdate = toProfileUpdate({
-    type: "initial",
-    data: props,
-  });
-
   const defaults: FV = {
-    ...init,
+    name: props.name,
+    published: !!props.published,
+    registration_number: props.registration_number ?? "",
+    social_media_urls: {
+      facebook: props.social_media_urls.facebook,
+      instagram: props.social_media_urls.instagram,
+      linkedin: props.social_media_urls.linkedin,
+      twitter: props.social_media_urls.twitter,
+      discord: props.social_media_urls.discord,
+      youtube: props.social_media_urls.youtube,
+      tiktok: props.social_media_urls.tiktok,
+    },
+    slug: props.slug ?? "",
+    street_address: props.street_address ?? "",
+    tagline: props.tagline ?? "",
+    url: props.url ?? "",
     image: {
       name: "",
       publicUrl: props.image ?? "",
@@ -62,29 +66,17 @@ function FormWithContext(props: TProfile & { id: number }) {
       publicUrl: props.card_img ?? "",
       preview: props.card_img ?? "",
     },
-    endow_designation: init.endow_designation
-      ? { label: init.endow_designation, value: init.endow_designation }
+    endow_designation: props.endow_designation
+      ? { label: props.endow_designation, value: props.endow_designation }
       : { label: "", value: "" },
     hq_country: country(props.hq_country),
-    sdgs: init.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
-    active_in_countries: init.active_in_countries.map((x) => ({
+    sdgs: props.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
+    active_in_countries: props.active_in_countries.map((x) => ({
       label: x,
       value: x,
     })),
-    overview: { value: props.overview ?? "" },
-
-    //meta
-    initial: init,
+    overview: parseContent(props.overview),
   };
 
-  const methods = useForm<FV>({
-    defaultValues: defaults,
-    resolver: yupResolver(schema),
-  });
-
-  return (
-    <FormProvider {...methods}>
-      <Form initSlug={props.slug} isPublished={props.published} />
-    </FormProvider>
-  );
+  return <Form initSlug={props.slug} init={defaults} id={props.id} />;
 }

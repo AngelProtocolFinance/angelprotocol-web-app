@@ -1,2 +1,3 @@
 export * from "./RichTextEditor";
-export { default } from "./RichText";
+export { parseContent } from "./helpers";
+export { RichText } from "./RichText";

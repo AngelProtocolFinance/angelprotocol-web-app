@@ -1,9 +1,25 @@
+import { unpack } from "helpers";
 import Quill from "quill";
-import { useCallback, useState } from "react";
+import {
+  forwardRef,
+  useCallback,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from "react";
+import { toDelta } from "./helpers";
 import type { Props } from "./types";
 
-export default function RichText(props: Props) {
-  const [numChars, setNumChars] = useState(0);
+type El = Pick<HTMLDivElement, "focus">;
+
+export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
+  const style = unpack(classes);
+  const [numChars, setNumChars] = useState(props.content.length ?? 0);
+  const quillRef = useRef<Quill>();
+
+  useImperativeHandle(ref, () => ({
+    focus: () => quillRef.current?.focus(),
+  }));
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   const containerRef = useCallback((container: HTMLDivElement | null) => {
@@ -22,63 +38,51 @@ export default function RichText(props: Props) {
       },
     });
 
-    try {
-      quill.setContents(JSON.parse(props.content.value));
-    } catch (_) {
-      //previous rich text format based on draft-js will throw parse error
-      //in this case just set it to blank
-      quill.setContents(quill.getContents());
-    } finally {
-      // set initial number of chars
-      setNumChars(quill.getLength() - 1);
-    }
+    quillRef.current = quill;
 
-    if (!props.readOnly) {
-      /** even if quill is empty, it's string value for form purposes is not.
-      after mounting, set form value to "", so that form state with initially empty quill value
-      will be blocked by validation on re-submit
-      */
-      if (quill.getLength() <= 1) {
-        props.onInit({ value: "", length: 0 });
-      }
+    quill.setContents(toDelta(props.content));
 
-      quill.on("editor-change", function handleChange() {
-        //quill content min length is 1
-        const numChars = quill.getLength() - 1;
-        setNumChars(numChars);
+    if (props.readOnly) return;
 
-        props.onChange({
-          //quill clean state has residual `\n`
-          value: numChars <= 0 ? "" : JSON.stringify(quill.getContents()),
-          length: numChars,
-        });
+    quill.on("editor-change", function handleChange() {
+      //quill content min length is 1
+      const numChars = quill.getLength() - 1;
+      setNumChars(numChars);
+
+      props.onChange({
+        //quill clean state has residual `\n`
+        value: numChars <= 0 ? "" : JSON.stringify(quill.getContents()),
+        length: numChars,
       });
-    }
+    });
   }, []);
 
   return (
-    <div
-      aria-invalid={props.invalid}
-      aria-disabled={props.disabled}
-      className={`relative has-[:focus-within]:ring-2 ring-blue-d1 ring-offset-1 ${
-        props.classes?.container || ""
-      } ${props.readOnly ? "toolbar-hidden" : ""}`}
-    >
+    <div className={style.container}>
       <div
-        style={{ fontFamily: "inherit", fontSize: "inherit" }}
-        className="w-full h-full text-base"
-        ref={containerRef}
-      />
-      {!props.readOnly && (
-        <span
-          className={`absolute top-4 right-4 text-xs uppercase ${
-            props.classes?.charCounter ?? ""
-          }`}
-        >
-          chars : {numChars}
-          {props.charLimit && ` /${props.charLimit}`}
-        </span>
-      )}
+        aria-invalid={!!props.error}
+        aria-disabled={props.disabled}
+        className={`relative has-[:focus-within]:ring-2 ring-blue-d1 ring-offset-1 ${style.field} ${props.readOnly ? "toolbar-hidden" : ""}`}
+      >
+        <div
+          style={{ fontFamily: "inherit", fontSize: "inherit" }}
+          className="w-full h-full text-base"
+          ref={containerRef}
+        />
+        {!props.readOnly && (
+          <span
+            className={`absolute top-4 right-4 text-xs uppercase ${
+              style.counter ?? ""
+            }`}
+          >
+            chars : {numChars}
+            {props.charLimit && ` /${props.charLimit}`}
+          </span>
+        )}
+      </div>
+      <p className={`empty:hidden text-red-d1 text-xs mt-1 ${style.error}`}>
+        {props.error}
+      </p>
     </div>
   );
-}
+});

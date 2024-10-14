@@ -65,7 +65,7 @@ export default function Form() {
           input: "text-sm py-3.5",
           error: "field-error",
         }}
-        countries={countries}
+        options={countries}
       />
 
       <Label className="mt-6 mb-2">
