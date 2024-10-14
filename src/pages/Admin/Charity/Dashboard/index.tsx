@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 async function getAllocation(id: number) {
   const url = new URL(APIs.aws);
   url.searchParams.set("env", apiEnv);
-  url.searchParams.set("field", "allocation");
+  url.searchParams.set("fields", "allocation");
   url.pathname = `v9/endowments/${id}`;
 
   return cacheGet(url)
