@@ -33,10 +33,11 @@ const endowDesignations: EndowDesignation[] = [
 interface Props {
   initSlug?: string;
   init: FV;
+  id: number;
 }
 
-export default function Form({ initSlug = "", init }: Props) {
-  const { id, dirtyFields, handleSubmit, ...rhf } = useRhf(init);
+export default function Form({ initSlug = "", init, id }: Props) {
+  const { dirtyFields, handleSubmit, ...rhf } = useRhf(init);
   const { onSubmit } = useEditProfile(id, dirtyFields);
   return (
     <form

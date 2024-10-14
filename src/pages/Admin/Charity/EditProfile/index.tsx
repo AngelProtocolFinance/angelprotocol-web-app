@@ -78,5 +78,5 @@ function FormWithContext(props: TProfile & { id: number }) {
     overview: parseContent(props.overview),
   };
 
-  return <Form initSlug={props.slug} init={defaults} />;
+  return <Form initSlug={props.slug} init={defaults} id={props.id} />;
 }
