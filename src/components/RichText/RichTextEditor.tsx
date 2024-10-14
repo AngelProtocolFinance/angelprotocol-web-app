@@ -30,10 +30,8 @@ export function RichTextEditor<T extends FieldValues>(
       charLimit={props.charLimit}
       classes={props.classes}
       disabled={isSubmitting}
-      error={
-        get(errors, `${props.fieldName}.value`)?.message ||
-        get(errors, `${props.fieldName}.length`)?.message
-      }
+      //NOTE: only valid if scoped to rhf context + yup schema
+      error={get(errors, props.fieldName)?.message}
     />
   );
 }
