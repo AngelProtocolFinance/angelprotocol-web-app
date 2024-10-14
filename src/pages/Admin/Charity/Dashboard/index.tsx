@@ -1,6 +1,6 @@
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
-import { type LoaderFunction, defer } from "react-router-dom";
+import type { LoaderFunction } from "react-router-dom";
 import { apiEnv } from "services/constants";
 import { version as ver } from "services/helpers";
 import type { Endowment, EndowmentBalances } from "types/aws";
@@ -19,9 +19,7 @@ export const loader: LoaderFunction = async ({ params }) => {
     ),
     params.id
   );
-  return defer({
-    data: Promise.all([getAllocation(id), getBalance(id)]),
-  });
+  return Promise.all([getAllocation(id), getBalance(id)]);
 };
 
 async function getAllocation(id: number) {
