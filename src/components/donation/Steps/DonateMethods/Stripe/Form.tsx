@@ -1,10 +1,10 @@
+import type { FiatCurrencies } from "api/types";
 import CurrencySelector from "components/CurrencySelector";
-import QueryLoader from "components/QueryLoader";
+import { LoadingStatus } from "components/Status";
 import { Form as FormContainer, NativeField } from "components/form";
 import { bgCookies, setCookie } from "helpers/cookie";
-import { useFiatCurrenciesQuery } from "services/apes";
-import { useGetter } from "store/accessors";
-import { userIsSignedIn } from "types/auth";
+import { Suspense } from "react";
+import { Await, useLoaderData } from "react-router-dom";
 import type { Currency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -17,27 +17,22 @@ import type { FormProps, Props } from "./types";
 import { useRhf } from "./useRhf";
 
 export default function Loader(props: Props) {
-  const user = useGetter((state) => state.auth.user);
-  const query = useFiatCurrenciesQuery(
-    userIsSignedIn(user) ? user.prefCurrencyCode : undefined
-  );
+  const data: any = useLoaderData();
+
   return (
-    <QueryLoader
-      queryState={query}
-      messages={{
-        loading: "loading donate form",
-        error: "failed to load donate form",
-      }}
-    >
-      {(data) => <Form {...props} {...data} />}
-    </QueryLoader>
+    <Suspense fallback={<LoadingStatus>Loading form..</LoadingStatus>}>
+      <Await resolve={data.currencies}>
+        {(currencies: FiatCurrencies) => <Form {...props} {...currencies} />}
+      </Await>
+    </Suspense>
   );
 }
 
-function Form({ currencies, defaultCurr, ...props }: FormProps) {
+function Form(props: FormProps) {
   const { setState } = useDonationState();
+  const { all } = props;
 
-  const rhf = useRhf({ ...props, defaultCurr });
+  const rhf = useRhf(props);
 
   return (
     <FormContainer
@@ -52,7 +47,7 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
         error={rhf.errors.frequency?.message}
       />
       <CurrencySelector
-        currencies={currencies}
+        currencies={all}
         label="Currency"
         onChange={(c) => {
           setCookie(bgCookies.prefCode, c.code.toUpperCase());
@@ -89,7 +84,6 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
       {(props.init.recipient.progDonationsAllowed ?? true) && (
         <ProgramSelector
           classes="mt-4"
-          endowId={props.init.recipient.id}
           program={rhf.program.value}
           onChange={rhf.program.onChange}
         />

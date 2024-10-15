@@ -10,6 +10,7 @@ import OAuthRedirector from "pages/OAuthRedirector";
 import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { userDashboardRoute } from "pages/UserDashboard";
+import { Component as Widget, loader as widgetLoader } from "pages/Widget";
 import { infoRoutes } from "pages/informational";
 import { useEffect } from "react";
 import {
@@ -26,7 +27,6 @@ import { rootLoader } from "./root-loader";
 
 const donateThanks = import("pages/DonateThanks");
 const stripePaymentStatus = import("pages/StripePaymentStatus");
-const widget = import("pages/Widget");
 
 const widgetRoutes: RO[] = [
   { path: ":id", lazy: () => import("pages/DonateWidget") },
@@ -75,22 +75,25 @@ const _appRoutes: RO[] = [
   { path: appRoutes.marketplace + "/:id", ...profileRoute },
   {
     path: appRoutes.form_builder,
+    loader: widgetLoader,
     // Widget.tsx is also used as one of the Admin pages and so
     // where its styles depend on the width of the parent component;
     // We copy/paste src/pages/Admin/Layout.tsx container setup & styles
     // here so that Widget.tsx styles are applied correctly on both pages.
     element: (
       <div className="px-6 py-8 md:p-10 @container">
-        <Outlet />
+        <Widget />
       </div>
     ),
-    children: [{ index: true, lazy: () => widget }],
   },
 ];
 
 const rootRoutes: RO[] = [
   { path: appRoutes.home, lazy: () => import("pages/Home") },
-  { path: `${appRoutes.donate}/:id`, lazy: () => import("pages/Donate") },
+  {
+    path: `${appRoutes.donate}/:id`,
+    lazy: () => import("pages/Donate"),
+  },
   adminRoute,
   //outlet-value: isInWidget/widgetVersion
   { element: <Layout />, children: _appRoutes },

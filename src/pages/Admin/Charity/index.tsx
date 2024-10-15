@@ -1,7 +1,5 @@
 import { adminRoutes } from "constants/routes";
 import type { RouteObject } from "react-router-dom";
-import { Component as Widget } from "../../Widget";
-import { useAdminContext } from "../Context";
 import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";
 import { mediaRoutes } from "./Media";
 
@@ -23,13 +21,7 @@ export const charityRoutes: RouteObject[] = [
       { path: ":bankId", element: <PayoutMethodDetails /> },
     ],
   },
-  { path: adminRoutes.form_builder, element: <EndowWidget /> },
+  { path: adminRoutes.form_builder, lazy: () => import("../../Widget") },
   { index: true, lazy: () => import("./Dashboard") },
   ...mediaRoutes,
 ];
-
-function EndowWidget() {
-  //widget configurer is used in admin
-  const { id: endowId } = useAdminContext();
-  return <Widget endowId={endowId} />;
-}

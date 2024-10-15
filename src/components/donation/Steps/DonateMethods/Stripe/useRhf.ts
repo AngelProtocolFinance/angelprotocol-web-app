@@ -11,7 +11,7 @@ import type { FormValues as FV, FormProps } from "./types";
 export function useRhf(props: Omit<FormProps, "currencies">) {
   const initial: FV = {
     amount: "",
-    currency: props.defaultCurr || usdOption,
+    currency: props.main || usdOption,
     frequency: "subscription",
     program: DEFAULT_PROGRAM,
   };

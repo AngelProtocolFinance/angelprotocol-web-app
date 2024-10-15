@@ -244,8 +244,6 @@ const csvToStrs = (x: string) => x.split(",").filter((x) => x);
 const csvToBools = (x: string) => csvToStrs(x).map((x) => x === "true");
 const csvToNums = (x: string) => csvToStrs(x).map((x) => +x);
 
-const str = v.pipe(v.string(), v.nonEmpty());
-
 const boolArr = v.pipe(
   v.string(),
   v.transform(csvToBools),
@@ -254,7 +252,7 @@ const boolArr = v.pipe(
 const strArr = v.pipe(
   v.string(),
   v.transform(csvToStrs),
-  v.everyItem((x) => v.safeParse(str, x).success),
+  v.everyItem((x) => v.safeParse(v.pipe(str, v.nonEmpty()), x).success),
   v.sortItems((a, b) => a.localeCompare(b))
 );
 

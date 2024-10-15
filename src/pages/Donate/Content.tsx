@@ -13,7 +13,7 @@ import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
 type Props = {
-  intent?: DonationIntent.ToResume;
+  intent: DonationIntent.ToResume | null;
   endowment: Endowment;
 };
 
@@ -44,7 +44,7 @@ function Content({ intent, endowment }: Props) {
           <Steps
             source="bg-marketplace"
             mode="live"
-            intent={intent}
+            intent={intent ?? undefined}
             recipient={{
               id: endowment.id,
               name: endowment.name,
