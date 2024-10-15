@@ -2,10 +2,19 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { store } from "store/store";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
+import { testDonateData } from "./__tests__/test-data";
 import { DEFAULT_PROGRAM } from "./common/constants";
 import { Steps } from "./index";
 import type { DonationState, StripeDonationDetails } from "./types";
+
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useLoaderData: () => testDonateData,
+  };
+});
 
 const _Steps: typeof Steps = (props) => (
   <Provider store={store}>{<Steps {...props} />}</Provider>

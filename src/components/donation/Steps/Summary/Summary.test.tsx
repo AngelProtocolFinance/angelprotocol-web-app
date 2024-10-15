@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "store/store";
-import type { AuthenticatedUser } from "types/auth";
-import { describe, expect, test, vi } from "vitest";
+import type { UserV2 } from "types/auth";
+import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
+import { testDonateData } from "../__tests__/test-data";
 import { initTokenOption } from "../common/constants";
 import type {
   CryptoDonationDetails,
@@ -16,10 +17,20 @@ vi.mock("../Context", () => ({
   useDonationState: vi.fn().mockReturnValue({ state: {}, setState: vi.fn() }),
 }));
 
-const mockUseGetter = vi.hoisted(() => vi.fn());
-vi.mock("store/accessors", () => ({
-  useGetter: mockUseGetter,
-}));
+const mockLoader = vi.hoisted(() => vi.fn());
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useLoaderData: mockLoader,
+  };
+});
+beforeEach(() => {
+  mockLoader.mockReturnValue(testDonateData);
+});
+afterEach(() => {
+  mockLoader.mockReset();
+});
 
 const oneTimeStripeDetails: StripeDonationDetails = {
   method: "stripe",
@@ -140,15 +151,14 @@ describe("summary step", () => {
     expect(donationTerm.nextSibling).toHaveTextContent("100.00 ($100.00)");
   });
 
-  const user: Partial<AuthenticatedUser> = {
-    token: "123", //determinant if user is logged in
+  const user: Partial<UserV2> = {
     lastName: "last",
     firstName: "first",
     email: "first@last.mail",
   };
 
   test("donor information is pre-filled when user is logged in and donor info is not manually set previously", () => {
-    mockUseGetter.mockReturnValue(user);
+    mockLoader.mockReturnValue({ ...testDonateData, user });
     render(<Summary {...props} />);
 
     const firstNameInput = screen.getByLabelText(/your name/i);
@@ -158,12 +168,9 @@ describe("summary step", () => {
     expect(firstNameInput).toHaveDisplayValue("first");
     expect(lastNameInput).toHaveDisplayValue("last");
     expect(emailInput).toHaveDisplayValue("first@last.mail");
-
-    mockUseGetter.mockClear();
   });
 
   test("previously set donor information is always used", () => {
-    mockUseGetter.mockReturnValue(user);
     render(<Summary {...props} donor={donor} />);
 
     const firstNameInput = screen.getByLabelText(/your name/i);
@@ -173,7 +180,5 @@ describe("summary step", () => {
     expect(firstNameInput).toHaveDisplayValue("John");
     expect(lastNameInput).toHaveDisplayValue("Doe");
     expect(emailInput).toHaveDisplayValue("john@doe.com");
-
-    mockUseGetter.mockClear();
   });
 });

@@ -1,4 +1,5 @@
 import char from "assets/images/celebrating-character.png";
+import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Seo from "components/Seo";
@@ -7,17 +8,32 @@ import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
-import { Link, useLoaderData, useOutletContext } from "react-router-dom";
-import { useGetter } from "store/accessors";
-import { userIsSignedIn } from "types/auth";
+import { decodeState } from "helpers/state-params";
+import {
+  Link,
+  type LoaderFunction,
+  useLoaderData,
+  useOutletContext,
+} from "react-router-dom";
+import type { UserV2 } from "types/auth";
 import type { DonateThanksState } from "types/pages";
 
 export { stateLoader as loader } from "helpers/state-params";
 
+export const stateLoader: LoaderFunction = async ({ request }) => {
+  const auth = await loadAuth();
+  const url = new URL(request.url);
+  return { user: auth, state: decodeState(url.searchParams.get("_s")) };
+};
+
+interface Data {
+  user: UserV2 | null;
+  state: DonateThanksState | null;
+}
+
 export function Component() {
   const widgetVersion = useOutletContext<true | undefined>();
-  const state = useLoaderData() as DonateThanksState | undefined;
-  const user = useGetter((state) => state.auth.user);
+  const { state, user } = useLoaderData() as Data;
 
   return (
     <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
@@ -68,17 +84,15 @@ export function Component() {
         page.
       </p>
 
-      {!userIsSignedIn(user) &&
-        state?.guestDonor &&
-        state?.bankVerificationUrl && (
-          <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
-            If you are not signed up yet, you may access the bank verification
-            url by copying{" "}
-            <ExtLink href={state.bankVerificationUrl}>this link.</ExtLink>
-          </p>
-        )}
+      {!user && state?.guestDonor && state?.bankVerificationUrl && (
+        <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
+          If you are not signed up yet, you may access the bank verification url
+          by copying{" "}
+          <ExtLink href={state.bankVerificationUrl}>this link.</ExtLink>
+        </p>
+      )}
 
-      {!userIsSignedIn(user) && state?.guestDonor && (
+      {!user && state?.guestDonor && (
         <Signup
           classes="max-w-96 w-full mt-6 justify-self-center"
           donor={((d) => {
