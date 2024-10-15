@@ -1,21 +1,17 @@
+import { getEndow } from "api/get/endow";
+import { endowId } from "api/schema/endow-id";
 import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
 import { unsdgs } from "constants/unsdgs";
-import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunction, useLoaderData } from "react-router-dom";
-import { apiEnv } from "services/constants";
 import type { EndowmentProfile as TProfile } from "types/aws";
+import { parse } from "valibot";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
 
-export const loader: LoaderFunction = async ({ params }) => {
-  const url = new URL(APIs.aws);
-  url.searchParams.set("env", apiEnv);
-  url.pathname = `v9/endowments/${params.id}`;
-  return cacheGet(url);
-};
+export const loader: LoaderFunction = async ({ params }) =>
+  getEndow(parse(endowId, params.id));
 
 export function Component() {
   const endow = useLoaderData() as TProfile;

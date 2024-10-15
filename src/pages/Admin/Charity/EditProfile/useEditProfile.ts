@@ -1,12 +1,10 @@
+import { getEndow } from "api/get/endow";
 import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { uploadFile } from "helpers/uploadFile";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
-import {
-  useEditEndowmentMutation,
-  useLazyProfileQuery,
-} from "services/aws/aws";
+import { useEditEndowmentMutation } from "services/aws/aws";
 import type { EndowmentProfileUpdate } from "types/aws";
 import type { UNSDG_NUMS } from "types/lists";
 import type { Ensure } from "types/utils";
@@ -18,7 +16,6 @@ export default function useEditProfile(id: number, df: DirtyFields) {
   const [submit] = useEditEndowmentMutation();
   const { showModal } = useModalContext();
   const { displayError, handleError } = useErrorContext();
-  const [endowment] = useLazyProfileQuery();
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
@@ -41,9 +38,9 @@ export default function useEditProfile(id: number, df: DirtyFields) {
       }
 
       if (df.slug) {
-        const result = await endowment({ slug: fv.slug });
+        const result = await getEndow({ slug: fv.slug }, ["id"]);
         //endow is found with update.slug
-        if (result.isSuccess) {
+        if (result.id) {
           return displayError(`Slug "${fv.slug}" is already taken`);
         }
         update.slug = fv.slug;

@@ -1,12 +1,10 @@
 import { loadAuth } from "auth/load-auth";
-import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { decodeState } from "helpers/state-params";
 import { type LoaderFunction, defer } from "react-router-dom";
-import { apiEnv } from "services/constants";
 import type { UserV2 } from "types/auth";
 import type { DonationIntent, EndowmentProfile, Program } from "types/aws";
 import * as v from "valibot";
+import { getEndow } from "./get/endow";
 import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
 import { getPrograms } from "./get/programs";
 import { endowId } from "./schema/endow-id";
@@ -39,10 +37,3 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     programs: getPrograms(id),
   } satisfies DonateData);
 };
-
-async function getEndow(id: number) {
-  const url = new URL(APIs.aws);
-  url.searchParams.set("env", apiEnv);
-  url.pathname = `v9/endowments/${id}`;
-  return cacheGet(url).then((res) => res.json());
-}

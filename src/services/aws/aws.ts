@@ -18,7 +18,7 @@ import type {
   EndowmentOption,
 } from "types/aws";
 import { version as v } from "../helpers";
-import type { EndowmentUpdate, IdOrSlug } from "../types";
+import type { EndowmentUpdate } from "../types";
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -129,20 +129,6 @@ export const aws = createApi({
       },
     }),
 
-    endowment: builder.query<
-      Endowment,
-      IdOrSlug & { fields?: (keyof Endowment)[] }
-    >({
-      providesTags: ["endowment"],
-      query: ({ fields, ...args }) => ({
-        url: "id" in args ? `v10/endowments/${args.id}` : "v10/endowments",
-        params: {
-          env: apiEnv,
-          slug: args.slug,
-          ...(fields ? { fields: fields.join(",") } : {}),
-        },
-      }),
-    }),
     endowWithEin: builder.query<
       Pick<Endowment, "id" | "name" | "claimed" | "registration_number">,
       string
@@ -209,7 +195,6 @@ export const aws = createApi({
 export const {
   useUserBookmarksQuery,
   useToggleUserBookmarkMutation,
-  useEndowmentQuery,
   useEndowmentCardsQuery,
   useEndowmentOptionsQuery,
   useEditEndowmentMutation,
@@ -222,7 +207,6 @@ export const {
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
-    endowment: { useLazyQuery: useLazyProfileQuery },
     applications: { useLazyQuery: useLazyApplicationsQuery },
   },
   util: {

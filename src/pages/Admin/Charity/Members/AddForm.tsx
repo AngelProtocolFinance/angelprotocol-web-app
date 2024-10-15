@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { getEndow } from "api/get/endow";
 import Modal from "components/Modal";
 import Prompt from "components/Prompt";
 import { Field } from "components/form";
@@ -11,7 +12,6 @@ import {
   useForm,
 } from "react-hook-form";
 import { requiredString } from "schemas/string";
-import { useLazyProfileQuery } from "services/aws/aws";
 import { useNewEndowAdminMutation } from "services/aws/endow-admins";
 import { object } from "yup";
 
@@ -22,7 +22,6 @@ type Props = {
 
 export default function AddForm({ added, endowID }: Props) {
   const [addAdmin] = useNewEndowAdminMutation();
-  const [profile] = useLazyProfileQuery();
   const { setModalOption, showModal } = useModalContext();
   const { handleError } = useErrorContext();
   const methods = useForm({
@@ -48,14 +47,14 @@ export default function AddForm({ added, endowID }: Props) {
     try {
       setModalOption("isDismissible", false);
       //get endowname
-      const { data } = await profile({ id: endowID, fields: ["name"] });
+      const endow = await getEndow(endowID, ["name"]);
 
       await addAdmin({
         firstName: fv.firstName,
         lastName: fv.lastName,
         email: fv.email,
         endowID,
-        endowName: data?.name || `Endowment:${endowID}`,
+        endowName: endow.name,
       }).unwrap();
 
       showModal(Prompt, {

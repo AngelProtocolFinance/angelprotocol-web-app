@@ -1,9 +1,8 @@
-import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
+import { getEndow } from "api/get/endow";
+import { endowId } from "api/schema/endow-id";
 import type { LoaderFunction } from "react-router-dom";
-import { apiEnv } from "services/constants";
 import type { EndowmentSettingsAttributes } from "types/aws";
-
+import { parse } from "valibot";
 export { default as Component } from "./Form";
 
 const fields: EndowmentSettingsAttributes[] = [
@@ -12,12 +11,5 @@ const fields: EndowmentSettingsAttributes[] = [
   "progDonationsAllowed",
   "donateMethods",
 ];
-export const loader: LoaderFunction = async ({ params }) => {
-  const url = new URL(APIs.aws);
-  url.searchParams.set("env", apiEnv);
-  url.searchParams.set("fields", fields.join(","));
-  url.pathname = `v9/endowments/${params.id}`;
-
-  //Pick<Endowment, "id" | EndowmentSettingsAttributes>;
-  return cacheGet(url);
-};
+export const loader: LoaderFunction = async ({ params }) =>
+  getEndow(parse(endowId, params.id), fields);
