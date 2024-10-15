@@ -1,11 +1,11 @@
 import QueryLoader from "components/QueryLoader";
-import { useAuthenticatedUser } from "contexts/Auth";
 import { useFiatCurrenciesQuery } from "services/apes";
+import { useUser } from "../use-user";
 import Form from "./Form";
 
 export default function EditProfile() {
-  const user = useAuthenticatedUser();
-  const query = useFiatCurrenciesQuery(user.prefCurrencyCode);
+  const user = useUser();
+  const query = useFiatCurrenciesQuery(user.currency);
   return (
     <QueryLoader
       queryState={query}

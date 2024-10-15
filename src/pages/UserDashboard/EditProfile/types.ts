@@ -1,5 +1,5 @@
 import type { ImgLink } from "components/ImgEditor";
-import type { AuthenticatedUser } from "types/auth";
+import type { UserV2 } from "types/auth";
 import type { CurrencyOption, DetailedCurrency } from "types/components";
 
 export type FV = {
@@ -12,5 +12,5 @@ export type FV = {
 export type Props = {
   currencies: DetailedCurrency[];
   defaultCurr?: DetailedCurrency;
-  user: AuthenticatedUser;
+  user: UserV2;
 };

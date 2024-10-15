@@ -1,10 +1,10 @@
 import CsvExporter from "components/CsvExporter";
 import QueryLoader from "components/QueryLoader";
-import { useAuthenticatedUser } from "contexts/Auth";
 import { replaceWithEmptyString as fill, humanize, isEmpty } from "helpers";
 import { Search } from "lucide-react";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { Donation } from "types/aws";
+import { useUser } from "../use-user";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
 import NoDonations from "./NoDonations";
@@ -12,7 +12,7 @@ import StatusTabs from "./StatusTabs";
 import Table from "./Table";
 
 export default function Donations() {
-  const user = useAuthenticatedUser();
+  const user = useUser();
   const queryState = usePaginatedDonationRecords({
     email: user.email,
   });
