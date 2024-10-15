@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     method: "POST",
     body: JSON.stringify(payload),
   });
-  req.headers.set("authorization", auth!.accessToken);
+  req.headers.set("authorization", auth.idToken);
 
   api.search = "";
   const cacheKey =

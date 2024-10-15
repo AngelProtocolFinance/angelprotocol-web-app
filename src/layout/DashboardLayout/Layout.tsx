@@ -1,5 +1,6 @@
+import ErrorBoundary from "errors/ErrorBoundary";
 import type { ReactNode } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Sidebar, { SidebarOpener } from "./Sidebar";
 import type { LinkGroup } from "./Sidebar/types";
 
@@ -14,6 +15,7 @@ export default function Layout({
   sidebarHeader,
   rootRoute,
 }: DashboardLayoutProps) {
+  const { key } = useLocation();
   return (
     <div className="grid max-md:content-start md:grid-cols-[auto_1fr]">
       {/** sidebar */}
@@ -29,7 +31,9 @@ export default function Layout({
       />
       {/** views */}
       <div className="px-6 py-8 md:p-10 @container">
-        <Outlet />
+        <ErrorBoundary key={key}>
+          <Outlet />
+        </ErrorBoundary>
       </div>
     </div>
   );
