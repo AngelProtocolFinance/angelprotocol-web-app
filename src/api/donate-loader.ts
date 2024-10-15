@@ -4,6 +4,7 @@ import { cacheGet } from "helpers/cache-get";
 import { decodeState } from "helpers/state-params";
 import { type LoaderFunction, defer } from "react-router-dom";
 import { apiEnv } from "services/constants";
+import type { UserV2 } from "types/auth";
 import type { DonationIntent, EndowmentProfile, Program } from "types/aws";
 import * as v from "valibot";
 import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
@@ -14,6 +15,7 @@ export interface DonateData {
   id: number;
   intent: DonationIntent.ToResume | null;
   endow: EndowmentProfile;
+  user: UserV2 | null;
   /** need to await */
   currencies: Promise<FiatCurrencies>;
   programs: Promise<Program[]>;
@@ -30,6 +32,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   return defer({
     id,
+    user: auth,
     intent,
     endow: await getEndow(id),
     currencies: getFiatCurrencies(auth ?? undefined),

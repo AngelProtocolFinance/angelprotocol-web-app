@@ -1,6 +1,6 @@
 import type { FiatCurrencies } from "api/types";
 import CurrencySelector from "components/CurrencySelector";
-import { LoadingStatus } from "components/Status";
+import { ErrorStatus, LoadingStatus } from "components/Status";
 import { Form as FormContainer, NativeField } from "components/form";
 import { bgCookies, setCookie } from "helpers/cookie";
 import { Suspense } from "react";
@@ -20,8 +20,11 @@ export default function Loader(props: Props) {
   const data: any = useLoaderData();
 
   return (
-    <Suspense fallback={<LoadingStatus>Loading form..</LoadingStatus>}>
-      <Await resolve={data.currencies}>
+    <Suspense fallback={<LoadingStatus>Loading donate form..</LoadingStatus>}>
+      <Await
+        resolve={data.currencies}
+        errorElement={<ErrorStatus>Failed to load donate form ..</ErrorStatus>}
+      >
         {(currencies: FiatCurrencies) => <Form {...props} {...currencies} />}
       </Await>
     </Suspense>
