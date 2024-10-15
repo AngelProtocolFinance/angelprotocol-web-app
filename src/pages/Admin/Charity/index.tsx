@@ -1,6 +1,10 @@
 import { adminRoutes } from "constants/routes";
 import type { RouteObject } from "react-router-dom";
-import Banking, { NewPayoutMethod, PayoutMethodDetails } from "./Banking";
+import Banking, {
+  NewPayoutMethod,
+  PayoutMethodDetails,
+  payoutMethodsLoader,
+} from "./Banking";
 import { mediaRoutes } from "./Media";
 
 export const charityRoutes: RouteObject[] = [
@@ -16,7 +20,7 @@ export const charityRoutes: RouteObject[] = [
   {
     path: adminRoutes.banking,
     children: [
-      { index: true, element: <Banking /> },
+      { index: true, element: <Banking />, loader: payoutMethodsLoader },
       { path: "new", element: <NewPayoutMethod /> },
       { path: ":bankId", element: <PayoutMethodDetails /> },
     ],
