@@ -1,5 +1,6 @@
 import { CircleAlert } from "lucide-react";
 import { useLoaderData } from "react-router-dom";
+import Seo from "../Seo";
 import { Loaded } from "./Loaded";
 import { monthPeriod } from "./monthPeriod";
 

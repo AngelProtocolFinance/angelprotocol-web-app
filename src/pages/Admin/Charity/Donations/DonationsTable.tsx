@@ -1,96 +1,91 @@
 import CsvExporter from "components/CsvExporter";
-import QueryLoader from "components/QueryLoader";
+import { Info } from "components/Status";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
 import { FileSpreadsheet } from "lucide-react";
-import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
+import { useEffect, useState } from "react";
+import { useFetcher, useSearchParams } from "react-router-dom";
 import type { Donation } from "types/aws";
 import type { Ensure } from "types/utils";
-import { useAdminContext } from "../../Context";
 import Table from "./Table";
+import type { Page } from "./types";
 
-export default function DonationsTable({ classes = "" }) {
-  const { id: endowmentId } = useAdminContext();
+interface Props {
+  classes?: string;
+  firstPage: Page;
+}
 
-  const {
-    data,
-    isLoading,
-    isFetching,
-    isError,
-    hasMore,
-    loadNextPage,
-    isLoadingNextPage,
-  } = usePaginatedDonationRecords({
-    endowmentId: endowmentId.toString(),
-  });
+export default function DonationsTable({ classes = "", firstPage }: Props) {
+  const fetcher = useFetcher<Page>(); //initially undefined
+  const [params] = useSearchParams();
+  const [items, setItems] = useState(firstPage.Items);
 
-  const isLoadingOrError = isLoading || isLoadingNextPage || isError;
+  useEffect(() => {
+    if (!fetcher.data || fetcher.state === "loading") return;
+    if (fetcher.data) {
+      setItems((prev) => [...prev, ...(fetcher.data?.Items || [])]);
+    }
+  }, [fetcher.data, fetcher.state]);
+
+  if (items.length === 0) {
+    return <Info>No donations found</Info>;
+  }
+
+  const nextPage = fetcher.data?.nextPage ?? firstPage.nextPage;
+
+  function loadNext() {
+    if (!nextPage) throw `should not call load when there's no next page`;
+    const n = new URLSearchParams(params);
+    n.set("page", nextPage.toString());
+    fetcher.load(`?${n.toString()}`);
+  }
+
   return (
     <div className={classes}>
-      <QueryLoader
-        queryState={{
-          data: data?.Items,
-          isLoading,
-          isFetching,
-          isError,
-        }}
-        messages={{
-          loading: "Fetching donations",
-          error: "Failed to get donations",
-          empty: "No donations found",
-        }}
-      >
-        {(donations) => (
-          <>
-            <div className="grid w-full sm:flex items-center sm:justify-end mb-2 gap-2">
-              <CsvExporter
-                classes="border border-blue text-blue-d1 hover:border-blue-l2 hover:text-blue rounded px-4 py-2 text-sm"
-                headers={csvHeaders}
-                data={donations
-                  .filter(
-                    (d): d is Ensure<Donation.Record, "donorDetails"> =>
-                      !!d.donorDetails
-                  )
-                  .map<Donation.Record | Donation.KYC>(
-                    ({ donorDetails: donor, ...d }) => {
-                      return fill({
-                        date: new Date(d.date).toLocaleDateString(),
-                        programName: d.programName,
-                        appUsed:
-                          d.appUsed === "bg-widget"
-                            ? "Donation Form"
-                            : "Marketplace",
-                        paymentMethod: d.paymentMethod,
-                        isRecurring: d.isRecurring ? "Yes" : "No",
-                        symbol: d.symbol,
-                        initAmount: humanize(d.initAmount, 2),
-                        finalAmountUsd: humanize(d.finalAmountUsd ?? 0, 2),
-                        id: d.id,
-                        receipt: donor.address?.country ? "Yes" : "No",
-                        fullName: donor.fullName,
-                        kycEmail: donor.kycEmail,
-                        ...donor.address,
-                      });
-                    }
-                  )}
-                filename="received_donations.csv"
-              >
-                <FileSpreadsheet size={17} className="text-2xl" />
-                Donation Records
-              </CsvExporter>
-            </div>
+      <div className="grid w-full sm:flex items-center sm:justify-end mb-2 gap-2">
+        <CsvExporter
+          classes="border border-blue text-blue-d1 hover:border-blue-l2 hover:text-blue rounded px-4 py-2 text-sm"
+          headers={csvHeaders}
+          data={items
+            .filter(
+              (d): d is Ensure<Donation.Record, "donorDetails"> =>
+                !!d.donorDetails
+            )
+            .map<Donation.Record | Donation.KYC>(
+              ({ donorDetails: donor, ...d }) => {
+                return fill({
+                  date: new Date(d.date).toLocaleDateString(),
+                  programName: d.programName,
+                  appUsed:
+                    d.appUsed === "bg-widget" ? "Donation Form" : "Marketplace",
+                  paymentMethod: d.paymentMethod,
+                  isRecurring: d.isRecurring ? "Yes" : "No",
+                  symbol: d.symbol,
+                  initAmount: humanize(d.initAmount, 2),
+                  finalAmountUsd: humanize(d.finalAmountUsd ?? 0, 2),
+                  id: d.id,
+                  receipt: donor.address?.country ? "Yes" : "No",
+                  fullName: donor.fullName,
+                  kycEmail: donor.kycEmail,
+                  ...donor.address,
+                });
+              }
+            )}
+          filename="received_donations.csv"
+        >
+          <FileSpreadsheet size={17} className="text-2xl" />
+          Donation Records
+        </CsvExporter>
+      </div>
 
-            <div className="overflow-x-auto">
-              <Table
-                donations={donations}
-                hasMore={hasMore}
-                onLoadMore={loadNextPage}
-                disabled={isLoadingOrError}
-                isLoading={isLoadingNextPage}
-              />
-            </div>
-          </>
-        )}
-      </QueryLoader>
+      <div className="overflow-x-auto">
+        <Table
+          donations={items}
+          hasMore={!!nextPage}
+          onLoadMore={loadNext}
+          disabled={fetcher.state === "loading"}
+          isLoading={fetcher.state === "loading"}
+        />
+      </div>
     </div>
   );
 }

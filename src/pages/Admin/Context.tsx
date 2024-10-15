@@ -13,8 +13,6 @@ export function Context({
 }: PropsWithChildren<{ user: UserV2 }>) {
   const { id } = useParams<AdminParams>();
 
-  console.log({ user, id });
-
   if (!user.endowments.includes(idParamToNum(id))) {
     return (
       <div className="grid content-start place-items-center pt-40 pb-20">

@@ -11,6 +11,7 @@ import {
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useFieldArray, useForm } from "react-hook-form";
+import { useLoaderData } from "react-router-dom";
 import {
   type Endowment,
   type EndowmentSettingsAttributes,
@@ -19,7 +20,6 @@ import {
 import { useUpdateEndowment } from "../common";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import { type FV, schema } from "./types";
-import { useLoaderData } from "react-router-dom";
 
 export default function Form() {
   const endow = useLoaderData() as Pick<

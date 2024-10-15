@@ -57,7 +57,7 @@ async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
   const source = new URL(APIs.aws);
   source.pathname = `${v(1)}/bookmarks`;
   const req = new Request(source);
-  req.headers.set("authorization", `Bearer ${user.idToken}`);
+  req.headers.set("authorization", user.idToken);
 
   const res = await fetch(req);
   if (!res.ok) return [];
@@ -83,6 +83,6 @@ async function useEndows(user: UserV2): Promise<UserEndow[]> {
   const source = new URL(APIs.aws);
   source.pathname = `${v(3)}/users/${user.email}/endowments`;
   const req = new Request(source);
-  req.headers.set("authorization", `Bearer ${user.idToken}`);
+  req.headers.set("authorization", user.idToken);
   return cacheGet(req).then<UserEndow[]>((res) => (res.ok ? res.json() : []));
 }
