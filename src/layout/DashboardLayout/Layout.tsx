@@ -9,12 +9,14 @@ type DashboardLayoutProps = {
   linkGroups: LinkGroup[];
   sidebarHeader?: ReactNode;
   rootRoute: string;
+  context: any;
 };
 
 export default function Layout({
   linkGroups,
   sidebarHeader,
   rootRoute,
+  context,
 }: DashboardLayoutProps) {
   const { key } = useLocation();
   return (
@@ -34,7 +36,7 @@ export default function Layout({
       {/** views */}
       <div className="px-6 py-8 md:p-10 @container">
         <ErrorBoundary key={key}>
-          <Outlet />
+          <Outlet context={context} />
         </ErrorBoundary>
       </div>
     </div>

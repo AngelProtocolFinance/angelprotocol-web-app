@@ -1,37 +1,63 @@
+import { loadAuth } from "auth/load-auth";
 import Footer from "components/Footer";
+import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { decodeState, toUrlWithState } from "helpers/state-params";
+import Layout from "layout/DashboardLayout";
 import {
   type LoaderFunction,
-  Outlet,
   type RouteObject,
   redirect,
   useLoaderData,
 } from "react-router-dom";
-import { charityRoute } from "./Charity";
-import { Context } from "./Context";
+import type { SignInRouteState } from "types/auth";
+import * as v from "valibot";
+import { charityRoutes } from "./Charity";
+import type { AdminContext } from "./Context";
 import Header from "./Header";
+import SidebarHeader from "./SidebarHeader";
+import { linkGroups } from "./constants";
+function AdminLayout() {
+  const context = useLoaderData() as AdminContext;
 
-import { loadAuth } from "auth/load-auth";
-import type { SignInRouteState, UserV2 } from "types/auth";
-function Layout() {
-  const user = useLoaderData() as UserV2;
+  if (!context.user.endowments.includes(context.id)) {
+    return (
+      <div className="grid content-start place-items-center pt-40 pb-20">
+        <Icon type="Exclamation" size={80} className="text-red" />
+        <p className="text-xl mt-8">Unauthorized</p>
+      </div>
+    );
+  }
 
   return (
-    <Context user={user}>
+    <>
       <Header classes="sticky z-40 top-[-1px]" />
       <ModalContext>
-        <Outlet />
+        <Layout
+          rootRoute={`${appRoutes.admin}/:id/`}
+          linkGroups={linkGroups}
+          sidebarHeader={<SidebarHeader endowId={context.id} />}
+          context={context}
+        />
       </ModalContext>
       <Footer />
-    </Context>
+    </>
   );
 }
 
-const loader: LoaderFunction = async ({ request }) => {
+const id = v.pipe(
+  v.string(),
+  v.transform((x) => +x),
+  v.number(),
+  v.integer(),
+  v.minValue(1)
+);
+
+const loader: LoaderFunction = async ({ request, params }) => {
   const auth = await loadAuth();
-  if (auth) return auth;
+  if (auth)
+    return { user: auth, id: v.parse(id, params.id) } satisfies AdminContext;
 
   //redirect to signin page
   const from = new URL(request.url);
@@ -49,7 +75,7 @@ const loader: LoaderFunction = async ({ request }) => {
 
 export const adminRoute: RouteObject = {
   path: appRoutes.admin + "/:id",
-  element: <Layout />,
+  element: <AdminLayout />,
   loader,
-  children: [charityRoute],
+  children: charityRoutes,
 };
