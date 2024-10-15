@@ -1,5 +1,3 @@
-import Seo from "../Seo";
-
 import Icon from "components/Icon";
 import { useLoaderData } from "react-router-dom";
 import { Loaded } from "./Loaded";
@@ -11,7 +9,6 @@ export default function Dashboard() {
 
   return (
     <div className="@container w-full max-w-4xl grid content-start">
-      <Seo title="Nonprofit Dashboard" />
       <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
       {period.isPre && (
         <div className="bg-gray-l4 text-navy-l1 text-sm p-2 rounded">
