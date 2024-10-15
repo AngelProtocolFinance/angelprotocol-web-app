@@ -55,7 +55,7 @@ export function Widget() {
       </p>
       <div className="w-full">
         <Configurer config={state} setConfig={setState} endow={endow} />
-        <Snippet config={state} classes="mt-10" />
+        <Snippet config={state} classes="mt-10" endow={endow} />
       </div>
 
       <Preview

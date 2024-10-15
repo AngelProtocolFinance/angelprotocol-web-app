@@ -14,11 +14,10 @@ type Props = {
   endow?: Endowment;
 };
 export default function Snippet({ classes = "", config, endow }: Props) {
-  const widgetURL = widgetURLfn(config);
-  const iframeURL =
-    endow?.id !== 0
-      ? `<iframe src="${widgetURL}" width="700" height="900" style="border: 0px;"></iframe>`
-      : "Please select organization";
+  const widgetURL = widgetURLfn(config, endow?.id);
+  const iframeURL = endow?.id
+    ? `<iframe src="${widgetURL}" width="700" height="900" style="border: 0px;"></iframe>`
+    : "Please select organization";
 
   return (
     <div className={classes}>
