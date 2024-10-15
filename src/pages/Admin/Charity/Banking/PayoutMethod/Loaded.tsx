@@ -1,22 +1,22 @@
 import ExtLink from "components/ExtLink";
-import { adminRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
-import type { BankingApplicationDetails } from "services/types";
 import DeletePrompt from "./DeletePrompt";
+import type { BankDetails } from "./index";
 
-export default function Loaded(props: BankingApplicationDetails) {
+export default function Loaded() {
+  const bank = useLoaderData() as BankDetails;
   const { id: endowID } = useAdminContext();
   const [update, { isLoading }] = useUpdateBankingApplicationMutation();
 
-  const isRejected = props.status === "rejected";
-  const isApproved = props.status === "approved";
+  const isRejected = bank.status === "rejected";
+  const isApproved = bank.status === "approved";
   const prevVerdict = isRejected || isApproved;
-  const isDefault = props.thisPriorityNum === props.topPriorityNum;
+  const isDefault = bank.thisPriorityNum === bank.topPriorityNum;
 
   const { showModal } = useModalContext();
 
@@ -24,12 +24,12 @@ export default function Loaded(props: BankingApplicationDetails) {
     if (!isApproved) return alert("This payout method is not approved");
     if (isDefault) return alert("This payout method is already default");
 
-    await update({ type: "prioritize", uuid: props.id.toString() });
+    await update({ type: "prioritize", uuid: bank.id.toString() });
   }
 
   async function deleteMethod() {
     const APPROVED_PRIORITY_NUM = 2;
-    const isWithHeir = (props.heirPriorityNum || 0) >= APPROVED_PRIORITY_NUM;
+    const isWithHeir = (bank.heirPriorityNum || 0) >= APPROVED_PRIORITY_NUM;
 
     const [canProceed, message] =
       isDefault && isWithHeir
@@ -43,7 +43,7 @@ export default function Loaded(props: BankingApplicationDetails) {
 
     showModal(DeletePrompt, {
       canProceed,
-      uuid: props.id.toString(),
+      uuid: bank.id.toString(),
       message,
       endowID,
     });
@@ -71,28 +71,28 @@ export default function Loaded(props: BankingApplicationDetails) {
       {isRejected && (
         <p className="text-sm text-red my-2">
           <CircleAlert className="relative inline bottom-px mr-1" />
-          <span>{props.rejectionReason}</span>
+          <span>{bank.rejectionReason}</span>
         </p>
       )}
 
       <dl className="grid sm:grid-cols-[auto_auto_1fr] border border-gray-l4 rounded mt-2">
-        <Row label="Currency">{props.currency}</Row>
-        <Row label="Country">{props.country}</Row>
-        <Row label="Recipient name">{props.name.fullName}</Row>
-        <Row label="Account type">{props.type}</Row>
-        <Row label="Legal entity type">{props.legalEntityType}</Row>
-        {props.displayFields.map(({ label, value, key }) => (
+        <Row label="Currency">{bank.currency}</Row>
+        <Row label="Country">{bank.country}</Row>
+        <Row label="Recipient name">{bank.name.fullName}</Row>
+        <Row label="Account type">{bank.type}</Row>
+        <Row label="Legal entity type">{bank.legalEntityType}</Row>
+        {bank.displayFields.map(({ label, value, key }) => (
           <Row key={key} label={label}>
             {value}
           </Row>
         ))}
         <Row label="Bank statement">
           <ExtLink
-            href={props.bankStatementFile.publicUrl}
+            href={bank.bankStatementFile.publicUrl}
             className="text-blue hover:text-blue-d1"
           >
             <span className="break-all">
-              {props.bankStatementFile.publicUrl}
+              {bank.bankStatementFile.publicUrl}
             </span>
             <SquareArrowOutUpRight
               className="inline relative bottom-px ml-2"
@@ -103,7 +103,7 @@ export default function Loaded(props: BankingApplicationDetails) {
       </dl>
       <div className="flex max-sm:flex-col gap-1 sm:gap-3 mt-4 sm:justify-self-end">
         <Link
-          to={`../${adminRoutes.banking}`}
+          to={".."}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back

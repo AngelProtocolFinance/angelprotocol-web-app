@@ -4,6 +4,7 @@ import Banking, {
   NewPayoutMethod,
   PayoutMethodDetails,
   payoutMethodsLoader,
+  payoutMethodLoader,
 } from "./Banking";
 import { mediaRoutes } from "./Media";
 
@@ -22,7 +23,11 @@ export const charityRoutes: RouteObject[] = [
     children: [
       { index: true, element: <Banking />, loader: payoutMethodsLoader },
       { path: "new", element: <NewPayoutMethod /> },
-      { path: ":bankId", element: <PayoutMethodDetails /> },
+      {
+        path: ":bankId",
+        element: <PayoutMethodDetails />,
+        loader: payoutMethodLoader,
+      },
     ],
   },
   { path: adminRoutes.form_builder, lazy: () => import("../../Widget") },
