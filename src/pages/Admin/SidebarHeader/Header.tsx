@@ -1,11 +1,15 @@
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import { useEndowment } from "services/aws/useEndowment";
-import { useAdminContext } from "../Context";
 
-export default function Header() {
-  const { id } = useAdminContext();
-  const { data: profile, isLoading } = useEndowment({ id }, ["logo", "name"]);
+interface Props {
+  endowId: number;
+}
+export default function Header({ endowId }: Props) {
+  const { data: profile, isLoading } = useEndowment({ id: endowId }, [
+    "logo",
+    "name",
+  ]);
 
   return (
     <div
