@@ -1,12 +1,12 @@
+import { getEndow } from "api/get/endow";
 import { oauth } from "auth/cognito";
 import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunctionArgs, defer, redirect } from "react-router-dom";
-import { apiEnv } from "services/constants";
 import { version as v } from "services/helpers";
 import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
-import type { Endowment, EndowmentBookmark, UserEndow } from "types/aws";
+import type { EndowmentBookmark, UserEndow } from "types/aws";
 
 export const rootLoader = async ({
   request,
@@ -67,14 +67,8 @@ async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
   const bookmarks: EndowmentBookmark[] = [];
 
   for (const id of endows) {
-    const s = new URL(APIs.aws);
-    s.pathname = `v9/endowments/${id}`;
-    s.searchParams.set("env", apiEnv);
-    s.searchParams.set("fields", "logo,name");
-    const res = await cacheGet(s).then<Pick<Endowment, "name" | "logo">>(
-      (res) => res.json()
-    );
-    bookmarks.push({ ...res, endowId: id });
+    const endow = await getEndow(id, ["name", "logo"]);
+    bookmarks.push({ ...endow, endowId: id });
   }
   return bookmarks;
 }

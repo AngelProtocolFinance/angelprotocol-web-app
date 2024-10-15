@@ -1,3 +1,5 @@
+import { getEndow } from "api/get/endow";
+import { endowId } from "api/schema/endow-id";
 import { loadAuth } from "auth/load-auth";
 import Footer from "components/Footer";
 import Icon from "components/Icon";
@@ -12,7 +14,7 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import type { SignInRouteState } from "types/auth";
-import * as v from "valibot";
+import { parse } from "valibot";
 import { charityRoutes } from "./Charity";
 import type { AdminContext } from "./Context";
 import Header from "./Header";
@@ -37,7 +39,7 @@ function AdminLayout() {
         <Layout
           rootRoute={`${appRoutes.admin}/:id/`}
           linkGroups={linkGroups}
-          sidebarHeader={<SidebarHeader endowId={context.id} />}
+          sidebarHeader={<SidebarHeader endow={context.endow} />}
           context={context}
         />
       </ModalContext>
@@ -46,18 +48,16 @@ function AdminLayout() {
   );
 }
 
-const id = v.pipe(
-  v.string(),
-  v.transform((x) => +x),
-  v.number(),
-  v.integer(),
-  v.minValue(1)
-);
-
 const loader: LoaderFunction = async ({ request, params }) => {
   const auth = await loadAuth();
-  if (auth)
-    return { user: auth, id: v.parse(id, params.id) } satisfies AdminContext;
+  if (auth) {
+    const id = parse(endowId, params.id);
+    return {
+      user: auth,
+      id,
+      endow: getEndow(id, ["name", "logo"]),
+    } satisfies AdminContext;
+  }
 
   //redirect to signin page
   const from = new URL(request.url);
