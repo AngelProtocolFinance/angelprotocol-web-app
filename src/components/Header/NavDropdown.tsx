@@ -4,12 +4,12 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
+import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { createNavLinkStyler } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { NavLink, useLocation } from "react-router-dom";
 import type { DetailedUser, SignInRouteState } from "types/auth";
-import Icon from "../Icon";
 import Menu from "./UserMenu/Menu";
 
 interface Props {

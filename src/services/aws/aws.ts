@@ -8,15 +8,7 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { apiEnv } from "services/constants";
-import type {
-  Donation,
-  DonationsQueryParams,
-  EndowListPaginatedAWSQueryRes,
-  EndowQParams,
-  Endowment,
-  EndowmentCard,
-  EndowmentOption,
-} from "types/aws";
+import type { Donation, DonationsQueryParams, Endowment } from "types/aws";
 import { version as v } from "../helpers";
 import type { EndowmentUpdate } from "../types";
 
@@ -54,30 +46,6 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    endowmentCards: builder.query<
-      EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
-      EndowQParams
-    >({
-      providesTags: ["endowments"],
-      query: (params) => {
-        return {
-          url: `${v(1)}/cloudsearch-nonprofits`,
-          params: { ...params, fields: endowCardFields },
-        };
-      },
-    }),
-    endowmentOptions: builder.query<EndowmentOption[], EndowQParams>({
-      providesTags: ["endowments"],
-      query: (p) => {
-        return {
-          url: `${v(1)}/cloudsearch-nonprofits`,
-          params: { ...p, page: 1, fields: endowSelectorOptionFields },
-        };
-      },
-      transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
-        return res.Items;
-      },
-    }),
     userBookmarks: builder.query<number[], null>({
       providesTags: ["user-bookmarks"],
       query: () => ({
@@ -195,8 +163,6 @@ export const aws = createApi({
 export const {
   useUserBookmarksQuery,
   useToggleUserBookmarkMutation,
-  useEndowmentCardsQuery,
-  useEndowmentOptionsQuery,
   useEditEndowmentMutation,
   useApplicationsQuery,
   useApplicationQuery,
@@ -205,8 +171,6 @@ export const {
   useLazyDonationsQuery,
   useLazyEndowWithEinQuery,
   endpoints: {
-    endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
-    endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
     applications: { useLazyQuery: useLazyApplicationsQuery },
   },
   util: {
@@ -214,24 +178,3 @@ export const {
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
-
-//object format first to avoid duplicates
-const endowCardObj: {
-  [key in keyof EndowmentCard]: ""; //we care only for keys
-} = {
-  id: "",
-  card_img: "",
-  name: "",
-  tagline: "",
-  claimed: "",
-  contributions_total: "",
-};
-const endowCardFields = Object.keys(endowCardObj).join(",");
-
-const endowSelectorOptionObj: {
-  [key in keyof Required<EndowmentOption>]: "";
-} = {
-  id: "",
-  name: "",
-};
-const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");

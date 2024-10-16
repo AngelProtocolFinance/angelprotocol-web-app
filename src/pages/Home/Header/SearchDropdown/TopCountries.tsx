@@ -1,8 +1,8 @@
+import ContentLoader from "components/ContentLoader";
+import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useTopCountriesQuery } from "services/apes";
-import ContentLoader from "../../ContentLoader";
-import QueryLoader from "../../QueryLoader";
 
 export function TopCountries() {
   const query = useTopCountriesQuery({});
