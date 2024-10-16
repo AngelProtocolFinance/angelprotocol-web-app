@@ -1,33 +1,27 @@
-import ContentLoader from "components/ContentLoader";
 import Prompt from "components/Prompt";
-import QueryLoader from "components/QueryLoader";
 import TableSection, { Cells } from "components/TableSection";
-import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { Minus, Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import {
-  useDeleteEndowAdminMutation,
-  useEndowAdminsQuery,
-} from "services/aws/endow-admins";
+import { useLoaderData } from "react-router-dom";
+import { useDeleteEndowAdminMutation } from "services/aws/endow-admins";
 import type { EndowAdmin } from "types/aws";
 import AddForm from "./AddForm";
 
 export default function List() {
+  const admins = useLoaderData() as EndowAdmin[];
   const { showModal } = useModalContext();
   const { id } = useAdminContext();
 
-  const queryState = useEndowAdminsQuery(id);
   return (
     <div className="overflow-x-auto">
       <button
         type="button"
-        disabled={queryState.isLoading}
         className="justify-self-end btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
         onClick={() =>
           showModal(AddForm, {
-            added: (queryState.data || []).map((admin) => admin.email),
+            added: (admins || []).map((admin) => admin.email),
             endowID: id,
           })
         }
@@ -35,16 +29,7 @@ export default function List() {
         <Plus size={16} />
         <span>Invite user</span>
       </button>
-      <QueryLoader
-        queryState={queryState}
-        messages={{
-          loading: <Skeleton />,
-          error: "Failed to get members",
-          empty: "No members found.",
-        }}
-      >
-        {(members) => <Loaded members={members} />}
-      </QueryLoader>
+      <Loaded members={admins} />
     </div>
   );
 }
@@ -54,14 +39,13 @@ type LoadedProps = {
   members: EndowAdmin[];
 };
 function Loaded({ members, classes = "" }: LoadedProps) {
-  const { email: user } = useAuthenticatedUser();
-  const { id } = useAdminContext();
+  const { id, user } = useAdminContext();
   const [removeUser, { isLoading }] = useDeleteEndowAdminMutation();
   const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
 
   async function handleRemove(toRemove: string) {
-    if (toRemove === user)
+    if (toRemove === user.email)
       return showModal(Prompt, {
         type: "error",
         children: "Can't delete self",
@@ -123,16 +107,5 @@ function Loaded({ members, classes = "" }: LoadedProps) {
         ))}
       </TableSection>
     </table>
-  );
-}
-
-function Skeleton() {
-  return (
-    <div className="grid gap-y-1 mt-2">
-      <ContentLoader className="h-12 w-full rounded" />
-      <ContentLoader className="h-12 w-full rounded" />
-      <ContentLoader className="h-12 w-full rounded" />
-      <ContentLoader className="h-12 w-full rounded" />
-    </div>
   );
 }

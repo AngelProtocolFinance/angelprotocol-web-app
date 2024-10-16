@@ -1,8 +1,8 @@
 import debounce from "lodash/debounce";
+import { SearchIcon } from "lucide-react";
 import type { ChangeEventHandler } from "react";
 import { useFetcher, useSearchParams } from "react-router-dom";
 import type { Page } from "../types";
-import { SearchIcon } from "lucide-react";
 
 export default function Search({ classes = "" }: { classes?: string }) {
   const { load } = useFetcher<Page>({ key: "marketplace" }); //initially undefined
