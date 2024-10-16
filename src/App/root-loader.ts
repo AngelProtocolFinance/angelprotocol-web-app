@@ -11,12 +11,7 @@ import type { EndowmentBookmark, UserEndow } from "types/aws";
 export const rootLoader = async ({
   request,
 }: LoaderFunctionArgs): Promise<null | ReturnType<typeof defer> | Response> => {
-  console.log("root loader runs");
-  /** reset all cache */
-  //   const cache = await caches.open("bg");
-  //   const keys = await cache.keys();
-  //   await Promise.all(keys.map((k) => cache.delete(k)));
-
+  console.log("app loads");
   /** handle oauth if applicable */
   const url = new URL(request.url);
   const code = url.searchParams.get("code");

@@ -10,7 +10,9 @@ interface Props {
 }
 
 export default function Cards({ classes = "", firstPage }: Props) {
-  const { data, state, load } = useFetcher<Page>({ key: "marketplace" }); //initially undefined
+  const { data, state, load } = useFetcher<Page>({
+    key: "marketplace",
+  }); //initially undefined
   const [params] = useSearchParams();
   const [items, setItems] = useState(firstPage.Items);
 
@@ -19,7 +21,7 @@ export default function Cards({ classes = "", firstPage }: Props) {
     if (!data || state === "loading") return;
     if (data) {
       if (data.Page === 1) return setItems(data.Items);
-      setItems((prev) => [...prev, ...(data?.Items || [])]);
+      setItems((prev) => [...prev, ...data.Items]);
     }
   }, [data, state]);
 
