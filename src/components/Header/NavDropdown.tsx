@@ -4,6 +4,7 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
+import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { createNavLinkStyler } from "helpers";
 import { toWithState } from "helpers/state-params";
