@@ -54,7 +54,7 @@ async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
   const req = new Request(source);
   req.headers.set("authorization", user.idToken);
 
-  const res = await fetch(req);
+  const res = await cacheGet(req);
   if (!res.ok) return [];
 
   const endows: number[] = await res.json();
