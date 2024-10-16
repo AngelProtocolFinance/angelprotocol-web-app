@@ -13,8 +13,6 @@ export default function Toolbar({ classes = "" }: { classes?: string }) {
     >
       <button
         onClick={() => {
-          // remove focus persistor from <Search/>
-          params.delete("_f");
           navigate(
             { pathname: "filter", search: params.toString() },
             { replace: true, preventScrollReset: true }

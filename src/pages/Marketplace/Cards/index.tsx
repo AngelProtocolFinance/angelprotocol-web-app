@@ -10,30 +10,31 @@ interface Props {
 }
 
 export default function Cards({ classes = "", firstPage }: Props) {
-  const fetcher = useFetcher<Page>(); //initially undefined
+  const { data, state, load } = useFetcher<Page>({ key: "marketplace" }); //initially undefined
   const [params] = useSearchParams();
   const [items, setItems] = useState(firstPage.Items);
 
   /**  */
   useEffect(() => {
-    if (!fetcher.data || fetcher.state === "loading") return;
-    if (fetcher.data) {
-      setItems((prev) => [...prev, ...(fetcher.data?.Items || [])]);
+    if (!data || state === "loading") return;
+    if (data) {
+      if (data.Page === 1) return setItems(data.Items);
+      setItems((prev) => [...prev, ...(data?.Items || [])]);
     }
-  }, [fetcher.data, fetcher.state]);
+  }, [data, state]);
 
   if (items.length === 0) {
     return <Info>No organisations found</Info>;
   }
 
-  const currPage = fetcher.data?.Page ?? 1;
-  const hasMore = currPage < firstPage.NumOfPages;
+  const hasMore =
+    (data?.Page ?? 1) < (data?.NumOfPages ?? 1 ?? firstPage.NumOfPages);
 
   function loadNext() {
-    const nextPage = (fetcher.data?.Page ?? 1) + 1;
+    const nextPage = (data?.Page ?? 1) + 1;
     const n = new URLSearchParams(params);
     n.set("page", nextPage.toString());
-    fetcher.load(`?${n.toString()}`);
+    load(`?${n.toString()}`);
   }
 
   return (
@@ -47,7 +48,7 @@ export default function Cards({ classes = "", firstPage }: Props) {
       {hasMore && (
         <button
           type="button"
-          disabled={fetcher.state === "loading"}
+          disabled={state === "loading"}
           className="col-span-full btn-blue rounded-md p-2 text-sm w-full mt-6"
           onClick={loadNext}
         >
