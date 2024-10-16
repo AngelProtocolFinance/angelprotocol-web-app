@@ -54,11 +54,12 @@ export default function Menu({ user, classes }: Props) {
         </div>
       </div>
 
-      <fetcher.Form className="contents" action="/logout" method="post">
+      <fetcher.Form className="contents" action="/" method="post">
+        <input className="hidden" value={user.accessToken} name="token" />
         <button
           disabled={fetcher.state !== "idle"}
-          name="token"
-          value={user.accessToken}
+          name="intent"
+          value="logout"
           type="submit"
           className="btn-blue rounded-none w-full p-3 text-sm mt-4"
         >

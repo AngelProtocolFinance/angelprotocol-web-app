@@ -1,4 +1,3 @@
-import { cognito } from "auth/cognito";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { RouterErrorBoundary } from "errors/ErrorBoundary";
@@ -18,10 +17,10 @@ import {
   Outlet,
   type RouteObject as RO,
   ScrollRestoration,
-  redirect,
   useNavigation,
 } from "react-router-dom";
 import Layout from "./Layout";
+import { rootAction } from "./root-action";
 import { rootLoader } from "./root-loader";
 
 const donateThanks = import("pages/DonateThanks");
@@ -88,7 +87,7 @@ const _appRoutes: RO[] = [
 ];
 
 const rootRoutes: RO[] = [
-  { path: appRoutes.home, lazy: () => import("pages/Home") },
+  { index: true, lazy: () => import("pages/Home") },
   {
     path: `${appRoutes.donate}/:id`,
     lazy: () => import("pages/Donate"),
@@ -101,16 +100,7 @@ const rootRoutes: RO[] = [
     element: <Outlet context={true} />, //outlet-value: isInWidget/widgetVersion
     children: widgetRoutes,
   },
-  {
-    path: "logout",
-    action: async ({ request }) => {
-      const form = await request.formData();
-      const token = form.get("token");
-      if (!token) return { status: 400, body: "missing token" };
-      await cognito.signOut(token.toString());
-      return redirect(appRoutes.marketplace);
-    },
-  },
+  { path: "*", element: <Navigate to="/" /> },
 ];
 
 export const routes: RO[] = [
@@ -118,12 +108,11 @@ export const routes: RO[] = [
     id: "root",
     path: "/",
     element: <RootLayout />,
-
     loader: rootLoader,
+    action: rootAction,
     children: rootRoutes,
     ErrorBoundary: RouterErrorBoundary,
   },
-  { path: "*", element: <Navigate to="/" /> },
 ];
 
 NProgress.configure({
