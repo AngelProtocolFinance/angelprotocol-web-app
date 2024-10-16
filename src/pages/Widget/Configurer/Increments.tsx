@@ -31,7 +31,7 @@ export default function Increments({
             type="Plus"
             size={17}
             strokeWidth={3}
-            onClick={() => onAdd("0")}
+            onClick={() => onAdd("")}
           />
         </button>
       </div>
