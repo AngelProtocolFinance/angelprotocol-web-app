@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { roundDown } from "helpers";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import type { OnIncrement } from "../../common/Incrementers";
@@ -40,7 +41,7 @@ export function useRhf(props: Props) {
   const onIncrement: OnIncrement = (inc) => {
     const amntNum = Number(getValues("amount"));
     if (Number.isNaN(amntNum)) return trigger("amount", { shouldFocus: true });
-    setValue("amount", `${inc + amntNum}`);
+    setValue("amount", roundDown(inc + amntNum, 0));
   };
 
   return {

@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { centsDecimals, roundDown } from "helpers";
+import { roundDown } from "helpers";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { requiredString } from "schemas/string";
@@ -62,10 +62,9 @@ export function useRhf(props: Omit<FormProps, "currencies">) {
   });
 
   const onIncrement: OnIncrement = (inc) => {
-    const currency = getValues("currency");
     const amntNum = Number(getValues("amount"));
     if (Number.isNaN(amntNum)) return trigger("amount", { shouldFocus: true });
-    setValue("amount", roundDown(amntNum + inc, centsDecimals(currency.rate)));
+    setValue("amount", roundDown(amntNum + inc, 0));
   };
 
   return {

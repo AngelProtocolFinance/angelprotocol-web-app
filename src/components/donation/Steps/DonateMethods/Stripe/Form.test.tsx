@@ -176,9 +176,9 @@ describe("Stripe form test", () => {
     await userEvent.clear(amountInput);
     await userEvent.type(amountInput, "13");
     await userEvent.click(incrementers[0]); // 50PHP * 40
-    expect(amountInput).toHaveDisplayValue("2013.00");
+    expect(amountInput).toHaveDisplayValue("2013");
 
     await userEvent.click(incrementers[1]); // 50PHP * 100
-    expect(amountInput).toHaveDisplayValue("7013.00");
+    expect(amountInput).toHaveDisplayValue("7013");
   });
 });
