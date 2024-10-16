@@ -50,6 +50,7 @@ export default function Form(props: Props) {
         rate={usdOption.rate}
         increments={props.init.config?.increments}
         classes="mb-4"
+        precision={0}
       />
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
