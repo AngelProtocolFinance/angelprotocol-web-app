@@ -4,6 +4,7 @@ export const routes = {
   index: "",
   edit_profile: "edit-profile",
   donations: "donations",
+  funds: "funds",
   settings: "settings",
 };
 
@@ -32,6 +33,14 @@ export const linkGroups: LinkGroup[] = [
         icon: {
           type: "Gear",
           size: 22,
+        },
+      },
+      {
+        title: "My fundraisers",
+        to: routes.funds,
+        icon: {
+          type: "Heart",
+          size: 21,
         },
       },
     ],
