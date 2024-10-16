@@ -1,1 +1,1 @@
-export { default } from "./EndowmentSelector";
+export { EndowmentSelector } from "./EndowmentSelector";

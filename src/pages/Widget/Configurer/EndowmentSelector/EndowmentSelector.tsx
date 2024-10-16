@@ -1,32 +1,28 @@
 import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
-import { ErrorMessage } from "@hookform/error-message";
 import { DrawerIcon } from "components/Icon";
 import useDebouncer from "hooks/useDebouncer";
-import { useState } from "react";
-import { useController, useFormContext } from "react-hook-form";
+import { forwardRef, useState } from "react";
 import type { EndowmentOption } from "types/aws";
-import type { FormValues as FV } from "../types";
 import Options from "./Options";
 
-export default function EndowmentSelector() {
-  const {
-    formState: { errors, isSubmitting },
-  } = useFormContext<FV>();
+interface Props {
+  disabled?: boolean;
+  value: EndowmentOption;
+  onChange: (endowment: EndowmentOption) => void;
+  error?: string;
+}
 
-  const {
-    field: { value: endowment, onChange: onEndowmentChange, ref },
-  } = useController<FV, "endowment">({
-    name: "endowment",
-  });
+type El = HTMLInputElement;
 
+export const EndowmentSelector = forwardRef<El, Props>((props: Props, ref) => {
   const [searchText, setSearchText] = useState("");
   const [debouncedQuery, isDebouncing] = useDebouncer(searchText, 500);
 
   return (
     <Combobox
-      disabled={isSubmitting}
-      value={endowment}
-      onChange={(val) => val && onEndowmentChange(val)}
+      disabled={props.disabled}
+      value={props.value}
+      onChange={(val) => val && props.onChange(val)}
       as="div"
       by="name"
       className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d6"
@@ -46,13 +42,11 @@ export default function EndowmentSelector() {
       </ComboboxButton>
 
       <Options searchText={debouncedQuery} isDebouncing={isDebouncing} />
-      <ErrorMessage
-        data-error
-        errors={errors}
-        name="endowment.id"
-        as="span"
-        className="field-error"
-      />
+      {props.error && (
+        <span className="field-error" data-error>
+          {props.error}
+        </span>
+      )}
     </Combobox>
   );
-}
+});
