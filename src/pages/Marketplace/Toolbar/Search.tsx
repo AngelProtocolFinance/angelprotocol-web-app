@@ -1,35 +1,17 @@
 import debounce from "lodash/debounce";
+import type { ChangeEventHandler } from "react";
+import { useFetcher, useSearchParams } from "react-router-dom";
+import type { Page } from "../types";
 import { SearchIcon } from "lucide-react";
-import { type ChangeEventHandler, useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
 
 export default function Search({ classes = "" }: { classes?: string }) {
-  const ref = useRef<ReturnType<typeof debounce>>();
-  const inputRef = useRef<HTMLInputElement>(null);
-  const [params, setParams] = useSearchParams();
-  const q = decodeURIComponent(params.get("query") || "");
-  const _id = params.get("_f") || "";
-
+  const { load } = useFetcher<Page>({ key: "marketplace" }); //initially undefined
+  const [params] = useSearchParams();
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const n = new URLSearchParams(params);
     n.set("query", encodeURIComponent(e.target.value));
-    n.set("_f", "search");
-    setParams(n, {
-      replace: true,
-      preventScrollReset: true,
-    });
+    load(`?${n.toString()}`);
   };
-
-  useEffect(() => {
-    if (!_id) return;
-    inputRef.current?.focus();
-  }, [_id]);
-
-  useEffect(() => {
-    return () => {
-      ref.current?.cancel();
-    };
-  }, []);
 
   return (
     <div
@@ -37,14 +19,14 @@ export default function Search({ classes = "" }: { classes?: string }) {
     >
       <SearchIcon
         size={20}
-        className="absolute left-3 top-1/2 -translate-y-1/2"
+        className="absolute origin-center left-3 top-1/2 -translate-y-1/2"
       />
       <input
-        ref={inputRef}
-        defaultValue={q}
+        type="search"
+        name="query"
         onChange={debounce(onChange, 500)}
         className="w-full h-full p-3 pl-10 placeholder:text-navy-l3 text-navy-d4 font-medium font-heading rounded-lg outline-blue-d1 outline-offset-4"
-        placeholder={q || "Search organizations..."}
+        placeholder={"Search organizations..."}
       />
     </div>
   );

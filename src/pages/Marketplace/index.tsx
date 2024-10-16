@@ -11,11 +11,7 @@ import type { Page } from "./types";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);
-  // delete focus persistor from <Search/>
-  source.searchParams.delete("_f");
-
   const page = +(source.searchParams.get("page") ?? "1");
-
   const s = new URLSearchParams(source.searchParams);
   s.set("page", page.toString());
   const url = new URL(APIs.aws);
