@@ -6,7 +6,8 @@ import ExtLink from "components/ExtLink";
 import Icon from "components/Icon";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
-import { Outlet, type RouteObject } from "react-router-dom";
+import { Outlet, type RouteObject, useRouteLoaderData } from "react-router-dom";
+import type { DetailedUser } from "types/auth";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
@@ -15,6 +16,7 @@ import { featuredMedia } from "./featured-media";
 
 function Body() {
   const p = useProfileContext();
+  const user = useRouteLoaderData("root") as DetailedUser | null;
 
   return (
     <div className="flex justify-center items-center w-full h-full">
@@ -44,7 +46,7 @@ function Body() {
                 )}
                 <span>{p.name}</span>
               </h3>
-              <BookmarkBtn endowId={p.id} />
+              <BookmarkBtn endowId={p.id} user={user} />
             </div>
             <p className="w-full font-normal text-lg">{p.tagline}</p>
           </div>
