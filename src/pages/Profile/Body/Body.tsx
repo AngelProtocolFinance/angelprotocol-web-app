@@ -1,3 +1,5 @@
+import { getProgram } from "api/get/program";
+import { getPrograms } from "api/get/programs";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
@@ -9,6 +11,7 @@ import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
 import Program from "./Program";
+import { featuredMedia } from "./featured-media";
 
 function Body() {
   const p = useProfileContext();
@@ -80,10 +83,13 @@ export const bodyRoute: RouteObject = {
     {
       index: true,
       element: <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />,
+      loader: async ({ params }) =>
+        Promise.all([getPrograms(params.id), featuredMedia(params.id)]),
     },
     {
       path: "program/:programId",
       element: <Program className="order-4 lg:col-span-2 w-full h-full" />,
+      loader: ({ params }) => getProgram(params.id, params.programId),
     },
   ],
 };
