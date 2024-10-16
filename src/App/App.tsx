@@ -116,10 +116,9 @@ const rootRoutes: RO[] = [
 export const routes: RO[] = [
   {
     id: "root",
+    path: "/",
     element: <RootLayout />,
-    shouldRevalidate: ({ currentUrl }) =>
-      currentUrl.pathname === appRoutes.home ||
-      currentUrl.pathname === "/logout",
+
     loader: rootLoader,
     children: rootRoutes,
     ErrorBoundary: RouterErrorBoundary,
