@@ -38,7 +38,7 @@ export default function useEditProfile(id: number, df: DirtyFields) {
       }
 
       if (df.slug) {
-        const result = await getEndow({ slug: fv.slug }, ["id"]);
+        const result = await getEndow(fv.slug, ["id"]);
         //endow is found with update.slug
         if (result.id) {
           return displayError(`Slug "${fv.slug}" is already taken`);

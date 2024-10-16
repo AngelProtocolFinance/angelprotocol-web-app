@@ -1,4 +1,5 @@
 import { getEndow } from "api/get/endow";
+import { endowId } from "api/schema/endow-id";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import type { LoaderFunction } from "react-router-dom";
@@ -9,16 +10,7 @@ import * as v from "valibot";
 export { default as Component } from "./Dashboard";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const id = v.parse(
-    v.pipe(
-      v.string(),
-      v.transform((x) => +x),
-      v.number(),
-      v.integer(),
-      v.minValue(1)
-    ),
-    params.id
-  );
+  const id = v.parse(endowId, params.id);
   return Promise.all([getAllocation(id), getBalance(id)]);
 };
 

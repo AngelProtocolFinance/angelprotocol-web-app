@@ -1,17 +1,14 @@
 import { getEndow } from "api/get/endow";
-import { endowId } from "api/schema/endow-id";
 import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
 import { unsdgs } from "constants/unsdgs";
 import { type LoaderFunction, useLoaderData } from "react-router-dom";
 import type { EndowmentProfile as TProfile } from "types/aws";
-import { parse } from "valibot";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
 
-export const loader: LoaderFunction = async ({ params }) =>
-  getEndow(parse(endowId, params.id));
+export const loader: LoaderFunction = async ({ params }) => getEndow(params.id);
 
 export function Component() {
   const endow = useLoaderData() as TProfile;

@@ -3,7 +3,7 @@ import type { Media, MediaQueryParams, MediaUpdate } from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
-type MediaPage = {
+export type MediaPage = {
   items: Media[]; //future: album | article
   nextPageKey?: string;
 };
