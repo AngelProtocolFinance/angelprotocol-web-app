@@ -1,15 +1,13 @@
+import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import { appRoutes } from "constants/routes";
-import { decodeState, toUrlWithState } from "helpers/state-params";
 import DashboardLayout from "layout/DashboardLayout";
 import {
   type LoaderFunction,
   Navigate,
   type RouteObject,
-  redirect,
   useLoaderData,
 } from "react-router-dom";
-import type { SignInRouteState } from "types/auth";
 import Donations from "./Donations";
 import EditProfile from "./EditProfile";
 import Settings from "./Settings";
@@ -32,19 +30,7 @@ function Layout() {
 export const loader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
   if (auth) return auth;
-
-  //redirect to signin page
-  const from = new URL(request.url);
-  const toState: SignInRouteState = {
-    from: from.pathname,
-    data: decodeState(from.searchParams.get("_s")),
-    search: from.search,
-  };
-
-  const to = new URL(request.url);
-  to.pathname = appRoutes.signin;
-
-  return redirect(toUrlWithState(to, toState).toString());
+  return redirectToAuth(request);
 };
 
 export const userDashboardRoute: RouteObject = {

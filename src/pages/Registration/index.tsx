@@ -1,16 +1,14 @@
+import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
-import { decodeState, toUrlWithState } from "helpers/state-params";
 import {
   type LoaderFunction,
   Outlet,
   type RouteObject,
-  redirect,
   useLoaderData,
 } from "react-router-dom";
-import type { SignInRouteState } from "types/auth";
 import SigningResult from "./SigningResult";
 import { route as stepsRoute } from "./Steps";
 
@@ -30,19 +28,7 @@ function Layout() {
 const loader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
   if (auth) return auth;
-
-  //redirect to signin page
-  const from = new URL(request.url);
-  const toState: SignInRouteState = {
-    from: from.pathname,
-    data: decodeState(from.searchParams.get("_s")),
-    search: from.search,
-  };
-
-  const to = new URL(request.url);
-  to.pathname = appRoutes.signin;
-
-  return redirect(toUrlWithState(to, toState).toString());
+  return redirectToAuth(request);
 };
 
 export const route: RouteObject = {
