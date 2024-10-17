@@ -1,9 +1,4 @@
-import type {
-  Application,
-  Page,
-  QueryParams,
-  Verdict,
-} from "@better-giving/registration/approval";
+import type { Verdict } from "@better-giving/registration/approval";
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
@@ -116,23 +111,6 @@ export const aws = createApi({
       },
     }),
 
-    applications: builder.query<Page, QueryParams>({
-      providesTags: ["applications"],
-      query: (params) => {
-        return {
-          url: `${v(1)}/registrations`,
-          params,
-          headers: { authorization: TEMP_JWT },
-        };
-      },
-    }),
-    application: builder.query<Application, string>({
-      providesTags: ["application"],
-      query: (uuid) => ({
-        url: `${v(1)}/registrations/${uuid}`,
-        headers: { authorization: TEMP_JWT },
-      }),
-    }),
     reviewApplication: builder.mutation<any, Verdict & { id: string }>({
       invalidatesTags: ["application", "applications"],
       query: ({ id, ...verdict }) => {
@@ -164,15 +142,10 @@ export const {
   useUserBookmarksQuery,
   useToggleUserBookmarkMutation,
   useEditEndowmentMutation,
-  useApplicationsQuery,
-  useApplicationQuery,
   useReviewApplicationMutation,
   useDonationsQuery,
   useLazyDonationsQuery,
   useLazyEndowWithEinQuery,
-  endpoints: {
-    applications: { useLazyQuery: useLazyApplicationsQuery },
-  },
   util: {
     invalidateTags: invalidateAwsTags,
     updateQueryData: updateAWSQueryData,
