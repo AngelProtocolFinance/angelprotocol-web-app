@@ -1,12 +1,20 @@
-import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DonateMethods } from "components/DonateMethods";
 import { ProgramSelector } from "components/donation";
-import { CheckField, Field, RhfForm } from "components/form";
+import {
+  NativeCheckField as CheckField,
+  NativeField as Field,
+  Form,
+} from "components/form";
 import type { Dispatch, SetStateAction } from "react";
-import { type SubmitHandler, useController, useForm } from "react-hook-form";
+import {
+  type SubmitHandler,
+  useController,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import type { WidgetConfig } from "types/widget";
-import EndowmentSelector from "./EndowmentSelector";
+import { EndowmentSelector } from "./EndowmentSelector";
 import Increments from "./Increments";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
@@ -24,12 +32,6 @@ export default function Configurer({
   setConfig,
   programDonationAllowed,
 }: Props) {
-  const methods = useForm<FormValues>({
-    resolver: yupResolver(schema),
-    //set new config as default, so user would need to make a change to be able to update again
-    values: config,
-  });
-
   const {
     handleSubmit,
     reset: hookFormReset,
@@ -37,16 +39,31 @@ export default function Configurer({
     setValue,
     watch,
     register,
-  } = methods;
+    control,
+  } = useForm<FormValues>({
+    resolver: yupResolver(schema),
+    //set new config as default, so user would need to make a change to be able to update again
+    values: config,
+  });
 
   const { field: donateMethods } = useController({
-    control: methods.control,
+    control: control,
     name: "methods",
   });
 
   const { field: program } = useController({
-    control: methods.control,
+    control: control,
     name: "program",
+  });
+
+  const increments = useFieldArray({
+    control,
+    name: "increments",
+  });
+
+  const { field: endowment } = useController({
+    control: control,
+    name: "endowment",
   });
 
   const isDescriptionTextShown = watch("isDescriptionTextShown");
@@ -57,10 +74,9 @@ export default function Configurer({
   };
 
   return (
-    <RhfForm
+    <Form
       disabled={isSubmitting}
       className={`${classes} @container/configurer`}
-      methods={methods}
       onSubmit={handleSubmit(submit)}
       onReset={(e) => {
         e.preventDefault();
@@ -75,7 +91,11 @@ export default function Configurer({
         <label className="mt-2 mb-2 font-medium text-base">
           Nonprofit name:
         </label>
-        <EndowmentSelector />
+        <EndowmentSelector
+          onChange={endowment.onChange}
+          value={endowment.value}
+          error={errors.endowment?.id?.message}
+        />
 
         {programDonationAllowed && (
           <ProgramSelector
@@ -86,30 +106,33 @@ export default function Configurer({
           />
         )}
 
-        <Field<FormValues, "textarea">
+        <Field
+          {...register("title")}
           type="textarea"
-          name="title"
           label="Custom title"
           classes={{ container: "mt-8", label: "font-medium text-base" }}
           disabled={!isTitleShown}
+          error={errors.title?.message}
         />
-        <CheckField<FormValues>
-          name="isTitleShown"
+
+        <CheckField
+          {...register("isTitleShown")}
           classes="mt-3"
           onChange={(checked) => !checked && setValue("title", "")}
         >
           Show title
         </CheckField>
 
-        <Field<FormValues, "textarea">
+        <Field
+          {...register("description")}
           type="textarea"
-          name="description"
           label="Custom description"
           classes={{ container: "mt-8", label: "font-medium text-base" }}
           disabled={!isDescriptionTextShown}
+          error={errors.description?.message}
         />
-        <CheckField<FormValues>
-          name="isDescriptionTextShown"
+        <CheckField
+          {...register("isDescriptionTextShown")}
           classes="mt-4"
           onChange={(checked) => !checked && setValue("description", "")}
         >
@@ -125,12 +148,9 @@ export default function Configurer({
           values={donateMethods.value}
           onChange={donateMethods.onChange}
           error={
-            <ErrorMessage
-              name="methods"
-              as="p"
-              errors={errors}
-              className="text-red text-sm mb-1"
-            />
+            <p className="text-red text-sm mb-1 empty:hidden">
+              {errors.methods?.message}
+            </p>
           }
         />
 
@@ -152,7 +172,27 @@ export default function Configurer({
           <label htmlFor="__accent-sec">Accent secondary</label>
         </div>
 
-        <Increments classes="mt-8 mb-10" />
+        <Increments
+          classes="mt-8 mb-10"
+          fields={increments.fields}
+          onAdd={(val) => {
+            if (increments.fields.length >= 4) {
+              return alert("You can only have 4 increments");
+            }
+            increments.append({ value: val });
+          }}
+          onRemove={(idx) => increments.remove(idx)}
+          countError={errors.increments?.root?.message}
+          field={(idx) => (
+            <Field
+              {...register(`increments.${idx}.value`)}
+              placeholder="$"
+              label=""
+              classes={{ label: "hidden" }}
+              error={errors.increments?.[idx]?.value?.message}
+            />
+          )}
+        />
 
         <div className="flex gap-3 w-full @max-xl/configurer:justify-center mt-8">
           <button
@@ -171,6 +211,6 @@ export default function Configurer({
           </button>
         </div>
       </div>
-    </RhfForm>
+    </Form>
   );
 }
