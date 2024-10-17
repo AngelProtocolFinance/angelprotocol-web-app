@@ -5,6 +5,7 @@ import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
+import { Globe, MapPin } from "lucide-react";
 import { Outlet, type RouteObject, useRouteLoaderData } from "react-router-dom";
 import type { DetailedUser } from "types/auth";
 import { useProfileContext } from "../ProfileContext";
@@ -12,7 +13,6 @@ import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
 import Program from "./Program";
 import { featuredMedia } from "./featured-media";
-import { Globe, MapPin } from "lucide-react";
 
 function Body() {
   const p = useProfileContext();
