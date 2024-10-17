@@ -1,19 +1,17 @@
 import { getEndow } from "api/get/endow";
 import { endowId } from "api/schema/endow-id";
+import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import Footer from "components/Footer";
 import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
-import { decodeState, toUrlWithState } from "helpers/state-params";
 import Layout from "layout/DashboardLayout";
 import {
   type LoaderFunction,
   type RouteObject,
-  redirect,
   useLoaderData,
 } from "react-router-dom";
-import type { SignInRouteState } from "types/auth";
 import { parse } from "valibot";
 import { charityRoutes } from "./Charity";
 import type { AdminContext } from "./Context";
@@ -50,6 +48,7 @@ function AdminLayout() {
 
 const loader: LoaderFunction = async ({ request, params }) => {
   const auth = await loadAuth();
+  if (!auth) return redirectToAuth(request);
   if (auth) {
     const id = parse(endowId, params.id);
     return {
@@ -58,19 +57,6 @@ const loader: LoaderFunction = async ({ request, params }) => {
       endow: getEndow(id, ["name", "logo"]),
     } satisfies AdminContext;
   }
-
-  //redirect to signin page
-  const from = new URL(request.url);
-  const toState: SignInRouteState = {
-    from: from.pathname,
-    data: decodeState(from.searchParams.get("_s")),
-    search: from.search,
-  };
-
-  const to = new URL(request.url);
-  to.pathname = appRoutes.signin;
-
-  return redirect(toUrlWithState(to, toState).toString());
 };
 
 export const adminRoute: RouteObject = {
