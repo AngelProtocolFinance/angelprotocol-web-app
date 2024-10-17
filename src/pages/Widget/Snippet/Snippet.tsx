@@ -2,18 +2,22 @@ import Copier from "components/Copier";
 import { DONATION_INCREMENTS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { cleanObject } from "helpers/cleanObject";
-import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
+import type {
+  Endowment,
+  WidgetConfig,
+  WidgetURLSearchParams,
+} from "types/widget";
 
 type Props = {
   classes?: string;
   config: WidgetConfig;
+  endow?: Endowment;
 };
-export default function Snippet({ classes = "", config }: Props) {
-  const widgetURL = widgetURLfn(config);
-  const iframeURL =
-    config.endowment.id !== 0
-      ? `<iframe src="${widgetURL}" width="700" height="900" style="border: 0px;"></iframe>`
-      : "Please select organization";
+export default function Snippet({ classes = "", config, endow }: Props) {
+  const widgetURL = widgetURLfn(config, endow?.id);
+  const iframeURL = endow?.id
+    ? `<iframe src="${widgetURL}" width="700" height="900" style="border: 0px;"></iframe>`
+    : "Please select organization";
 
   return (
     <div className={classes}>
@@ -34,7 +38,7 @@ export default function Snippet({ classes = "", config }: Props) {
 }
 
 //create URLSearchParams from config
-const widgetURLfn = (config: WidgetConfig) => {
+const widgetURLfn = (config: WidgetConfig, endowId = 0) => {
   const params: Required<WidgetURLSearchParams> = {
     isDescriptionTextShown: config.isDescriptionTextShown ? "true" : "false",
     methods: config.methods
@@ -56,7 +60,7 @@ const widgetURLfn = (config: WidgetConfig) => {
     window.location.origin +
     appRoutes.donate_widget +
     "/" +
-    config.endowment.id +
+    endowId +
     "?" +
     new URLSearchParams(cleanObject(params)).toString()
   );

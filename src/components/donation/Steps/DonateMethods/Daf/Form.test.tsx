@@ -1,8 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Provider } from "react-redux";
-import { store } from "store/store";
 import { describe, expect, test, vi } from "vitest";
+import { testDonateData } from "../../__tests__/test-data";
 import { DEFAULT_PROGRAM, USD_CODE } from "../../common/constants";
 import type { DafDonationDetails, Init } from "../../types";
 import Form from "./Form";
@@ -14,12 +13,18 @@ vi.mock("../../Context", () => ({
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
 
-const _Form: typeof Form = (props) => (
-  <Provider store={store}>{<Form {...props} />}</Provider>
-);
+const mockLoader = vi.hoisted(() => vi.fn());
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useLoaderData: mockLoader,
+  };
+});
 
 describe("DAF form test", () => {
-  test("initial state: blank", () => {
+  test("initial state: blank", async () => {
+    mockLoader.mockReturnValue(testDonateData);
     const init: Init = {
       source: "bg-marketplace",
       config: null,
@@ -27,12 +32,19 @@ describe("DAF form test", () => {
       mode: "live",
     };
 
-    render(<_Form init={init} step="donate-form" />);
+    render(<Form init={init} step="donate-form" />);
+
+    await waitFor(() => {
+      //after loading
+      expect(screen.queryByText(/loading donate form/i)).toBeNull();
+    });
+
     const currencySelector = screen.getByRole("combobox");
     expect(currencySelector).toHaveDisplayValue(/usd/i);
 
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("");
+    mockLoader.mockReset();
   });
 
   test("initial blank state: program donations now allowed", () => {
@@ -42,7 +54,7 @@ describe("DAF form test", () => {
       recipient: { id: 0, name: "", progDonationsAllowed: false },
       mode: "live",
     };
-    render(<_Form init={init} step="donate-form" />);
+    render(<Form init={init} step="donate-form" />);
     const programSelector = screen.queryByRole("button", {
       name: /general donation/i,
     });
@@ -50,6 +62,7 @@ describe("DAF form test", () => {
   });
 
   test("initial state: persisted and submittable", async () => {
+    mockLoader.mockReturnValue(testDonateData);
     const init: Init = {
       source: "bg-marketplace",
       config: null,
@@ -62,7 +75,7 @@ describe("DAF form test", () => {
       currency: { code: USD_CODE, rate: 1, min: 1 },
       program: DEFAULT_PROGRAM,
     };
-    render(<_Form init={init} step="donate-form" details={details} />);
+    render(<Form init={init} step="donate-form" details={details} />);
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("100");
 
@@ -70,6 +83,7 @@ describe("DAF form test", () => {
     await userEvent.click(continueBtn);
     expect(mockedSetState).toHaveBeenCalledOnce();
     mockedSetState.mockReset();
+    mockLoader.mockReset();
   });
   test("user encounters validation errors and corrects them", async () => {
     const init: Init = {
@@ -78,7 +92,7 @@ describe("DAF form test", () => {
       recipient: { id: 0, name: "", progDonationsAllowed: false },
       mode: "live",
     };
-    render(<_Form init={init} step="donate-form" />);
+    render(<Form init={init} step="donate-form" />);
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
 

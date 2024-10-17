@@ -1,7 +1,6 @@
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { RouterErrorBoundary } from "errors/ErrorBoundary";
-import useScrollTop from "hooks/useScrollTop";
 import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
 import { routes as blogRoutes } from "pages/Blog";
@@ -10,20 +9,22 @@ import OAuthRedirector from "pages/OAuthRedirector";
 import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { userDashboardRoute } from "pages/UserDashboard";
+import { Component as Widget, loader as widgetLoader } from "pages/Widget";
 import { infoRoutes } from "pages/informational";
 import { useEffect } from "react";
 import {
   Navigate,
   Outlet,
   type RouteObject as RO,
-  useLocation,
+  ScrollRestoration,
   useNavigation,
 } from "react-router-dom";
 import Layout from "./Layout";
+import { rootAction } from "./root-action";
+import { rootLoader } from "./root-loader";
 
 const donateThanks = import("pages/DonateThanks");
 const stripePaymentStatus = import("pages/StripePaymentStatus");
-const widget = import("pages/Widget");
 
 const widgetRoutes: RO[] = [
   { path: ":id", lazy: () => import("pages/DonateWidget") },
@@ -36,17 +37,12 @@ const widgetRoutes: RO[] = [
 
 //routes between header/footer
 const _appRoutes: RO[] = [
-  adminRoute,
   regRoute,
   userDashboardRoute,
   ...blogRoutes,
   ...legalRoutes,
   ...infoRoutes,
-  {
-    element: <Outlet context={true} />, //outlet-value: legacy
-    children: [{ path: appRoutes.profile + "/:id", ...profileRoute }],
-  },
-
+  { path: appRoutes.profile + "/:id", ...profileRoute },
   {
     path: appRoutes.banking_applications,
     children: [
@@ -69,29 +65,34 @@ const _appRoutes: RO[] = [
   { path: appRoutes.auth_redirector, element: <OAuthRedirector /> },
   {
     path: appRoutes.marketplace,
+    lazy: () => import("pages/Marketplace"),
     children: [
-      { index: true, lazy: () => import("pages/Marketplace") },
-      { path: ":id", ...profileRoute },
+      { path: "filter", lazy: () => import("pages/Marketplace/Filter") },
     ],
   },
+  { path: appRoutes.marketplace + "/:id", ...profileRoute },
   {
     path: appRoutes.widget_config,
+    loader: widgetLoader,
     // Widget.tsx is also used as one of the Admin pages and so
     // where its styles depend on the width of the parent component;
     // We copy/paste src/pages/Admin/Layout.tsx container setup & styles
     // here so that Widget.tsx styles are applied correctly on both pages.
     element: (
       <div className="px-6 py-8 md:p-10 @container">
-        <Outlet />
+        <Widget />
       </div>
     ),
-    children: [{ index: true, lazy: () => widget }],
   },
-  { index: true, lazy: () => import("pages/Home") },
 ];
 
 const rootRoutes: RO[] = [
-  { path: `${appRoutes.donate}/:id`, lazy: () => import("pages/Donate") },
+  { index: true, lazy: () => import("pages/Home") },
+  {
+    path: `${appRoutes.donate}/:id`,
+    lazy: () => import("pages/Donate"),
+  },
+  adminRoute,
   //outlet-value: isInWidget/widgetVersion
   { element: <Layout />, children: _appRoutes },
   {
@@ -99,15 +100,19 @@ const rootRoutes: RO[] = [
     element: <Outlet context={true} />, //outlet-value: isInWidget/widgetVersion
     children: widgetRoutes,
   },
+  { path: "*", element: <Navigate to="/" /> },
 ];
 
 export const routes: RO[] = [
   {
+    id: "root",
+    path: "/",
     element: <RootLayout />,
+    loader: rootLoader,
+    action: rootAction,
     children: rootRoutes,
     ErrorBoundary: RouterErrorBoundary,
   },
-  { path: "*", element: <Navigate to="/" /> },
 ];
 
 NProgress.configure({
@@ -124,10 +129,22 @@ function RootLayout() {
     else NProgress.start();
   }, [transition.state]);
 
-  const location = useLocation();
-  useScrollTop(location.pathname);
+  useEffect(() => {
+    console.log("reloaded");
+    return () => {
+      caches.open("bg").then((c) => {
+        c.keys().then((ks) => {
+          for (const k of ks) {
+            c.delete(k);
+          }
+        });
+      });
+    };
+  }, []);
+
   return (
     <ModalContext>
+      <ScrollRestoration />
       <Outlet />
     </ModalContext>
   );

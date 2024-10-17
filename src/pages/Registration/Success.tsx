@@ -2,12 +2,13 @@ import type { Submission } from "@better-giving/registration/models";
 import type { CompleteReg } from "@better-giving/registration/step";
 import Icon from "components/Icon";
 import { adminRoutes, appRoutes } from "constants/routes";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+export { stateLoader as loader } from "helpers/state-params";
+
 export function Component({ classes = "" }: { classes?: string }) {
-  const { state } = useLocation();
-  const reg = state as CompleteReg | undefined;
+  const reg = useLoaderData() as CompleteReg | undefined;
 
   if (!reg || typeof reg.submission !== "object") {
     return <Navigate to={".."} />;

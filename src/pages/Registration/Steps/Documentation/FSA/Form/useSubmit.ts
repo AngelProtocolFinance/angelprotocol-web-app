@@ -1,5 +1,6 @@
 import { useErrorContext } from "contexts/ErrorContext";
 import { getFilePreviews } from "helpers";
+import { toWithState } from "helpers/state-params";
 import { useRegState } from "pages/Registration/Steps/StepGuard";
 import { useState } from "react";
 import { type SubmitHandler, useFormContext } from "react-hook-form";
@@ -30,7 +31,7 @@ export default function useSubmit({ doc }: Props) {
     try {
       //signed agreement and user didn't change any documents
       if (!isDirty && doc?.fsa_signed_doc_url) {
-        return navigate(`../${steps.banking}`, { state: init });
+        return navigate(toWithState(`../${steps.banking}`, init));
       }
 
       //existing url and user doesn't change any documents

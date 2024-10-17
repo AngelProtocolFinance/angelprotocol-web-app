@@ -1,22 +1,27 @@
 import { laira } from "assets/laira/laira";
 import Image from "components/Image/Image";
+import { Info } from "components/Status";
 import { type DonationState, Steps, initDetails } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
-import { useEndowment } from "services/aws/useEndowment";
+import type { PropsWithChildren } from "react";
+import type { Endowment } from "types/aws";
 import type { WidgetConfig } from "types/widget";
 
 type Props = {
   classes?: string;
   config: WidgetConfig;
+  endow?: Endowment;
 };
-export default function Preview({ classes = "", config }: Props) {
-  const { endowment, methods, increments, ...restConfig } = config;
-  const endowName = config.endowment.name;
+export default function Preview({ classes = "", config, endow }: Props) {
+  if (!endow) {
+    return (
+      <Container classes={classes} {...config}>
+        <Info classes="text-lg">Please select an organization.</Info>
+      </Container>
+    );
+  }
 
-  const { data } = useEndowment({ id: endowment.id }, [
-    "hide_bg_tip",
-    "progDonationsAllowed",
-  ]);
+  const { methods, increments, ...restConfig } = config;
 
   const initState: DonationState = {
     step: "donate-form",
@@ -24,9 +29,10 @@ export default function Preview({ classes = "", config }: Props) {
       source: "bg-widget",
       mode: "preview",
       recipient: {
-        ...endowment,
-        hide_bg_tip: data?.hide_bg_tip,
-        progDonationsAllowed: data?.progDonationsAllowed,
+        id: endow.id,
+        name: endow.name,
+        hide_bg_tip: endow?.hide_bg_tip,
+        progDonationsAllowed: endow?.progDonationsAllowed,
       },
       config: {
         ...restConfig,
@@ -40,8 +46,38 @@ export default function Preview({ classes = "", config }: Props) {
     details: initDetails(methods.at(0)?.id ?? "stripe", restConfig.program),
   };
 
-  const { accentPrimary, accentSecondary } = restConfig;
+  return (
+    <Container {...config}>
+      {config.isTitleShown && (
+        <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
+          {config.title || `Donate to ${endow.name}`}
+        </h1>
+      )}
+      {config.isDescriptionTextShown && (
+        <p className="text-xs text-center @sm/preview:text-base">
+          {config.description ||
+            "Check out the many crypto and fiat donation options. Provide your personal details to receive an immediate tax receipt."}
+        </p>
+      )}
+      <Steps
+        key={JSON.stringify(initState)}
+        init={initState}
+        className="my-5 @md/preview:w-3/4 border border-gray-l4"
+      />
+    </Container>
+  );
+}
 
+interface IContainer extends PropsWithChildren, WidgetConfig {
+  classes?: string;
+}
+
+function Container({
+  accentPrimary,
+  accentSecondary,
+  classes = "",
+  children,
+}: IContainer) {
   return (
     <section
       style={{
@@ -62,22 +98,7 @@ export default function Preview({ classes = "", config }: Props) {
       </div>
       <div className="grid h-full overflow-y-auto scroller w-full max-h-[800px] border border-gray-l2 rounded text-navy-d4 bg-white">
         <div className="grow flex flex-col justify-between items-center pt-6 @xl/preview:pt-10">
-          {config.isTitleShown && (
-            <h1 className="flex justify-center items-center gap-10 w-full h-24 z-20 text-lg @sm/preview:text-3xl">
-              {config.title || `Donate to ${endowName}`}
-            </h1>
-          )}
-          {config.isDescriptionTextShown && (
-            <p className="text-xs text-center @sm/preview:text-base">
-              {config.description ||
-                "Check out the many crypto and fiat donation options. Provide your personal details to receive an immediate tax receipt."}
-            </p>
-          )}
-          <Steps
-            key={JSON.stringify(initState)}
-            init={initState}
-            className="my-5 @md/preview:w-3/4 border border-gray-l4"
-          />
+          {children}
         </div>
       </div>
     </section>

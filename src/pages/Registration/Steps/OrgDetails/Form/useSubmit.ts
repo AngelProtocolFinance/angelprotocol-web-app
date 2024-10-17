@@ -1,4 +1,5 @@
 import { useErrorContext } from "contexts/ErrorContext";
+import { toWithState } from "helpers/state-params";
 import { type SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
@@ -23,7 +24,7 @@ export default function useSubmit() {
 
   const submit: SubmitHandler<FormValues> = async (fv) => {
     if (!isDirty && org) {
-      return navigate(`../${steps.fsaInquiry}`, { state: init });
+      return navigate(toWithState(`../${steps.fsaInquiry}`, init));
     }
 
     const result = await updateReg({
@@ -45,7 +46,7 @@ export default function useSubmit() {
       return handleError(result.error, { context: "updating registration" });
     }
 
-    navigate(`../${steps.fsaInquiry}`, { state: init });
+    navigate(toWithState(`../${steps.fsaInquiry}`, init));
   };
   return {
     submit: handleSubmit(submit),

@@ -1,5 +1,6 @@
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import { toWithState } from "helpers/state-params";
 import { useNavigate } from "react-router-dom";
 import { useLazyIntentQuery } from "services/apes";
 
@@ -12,9 +13,9 @@ export default function IntentResumer({ intentId, classes }: Props) {
   async function resumeIntent() {
     try {
       const intent = await getIntent({ transactionId: intentId }).unwrap();
-      navigate(`${appRoutes.donate}/${intent.endowmentId}`, {
-        state: intent,
-      });
+      navigate(
+        toWithState(`${appRoutes.donate}/${intent.endowmentId}`, intent)
+      );
     } catch (err) {
       handleError(err, "parsed");
     }

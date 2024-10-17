@@ -4,6 +4,7 @@ import {
 } from "@better-giving/registration/models";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
+import { toWithState } from "helpers/state-params";
 import { steps } from "pages/Registration/routes";
 import type { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
@@ -29,8 +30,7 @@ export default function EndowmentStatus({
       <div className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}>
         <Link
           aria-disabled={isSubmitting}
-          to={`../${steps.banking}`}
-          state={data.init}
+          to={toWithState(`../${steps.banking}`, data.init)}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back

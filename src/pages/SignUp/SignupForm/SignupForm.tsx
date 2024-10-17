@@ -1,33 +1,30 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
-import { AuthError, signInWithRedirect, signUp } from "aws-amplify/auth";
+import { cognito, isError, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import LoaderRing from "components/LoaderRing";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { getAuthRedirect, logger } from "helpers";
+import { getAuthRedirect } from "helpers";
+import { toWithState } from "helpers/state-params";
 import { useController, useForm } from "react-hook-form";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
-import { useSaveSignupMutation } from "services/aws/hubspot";
-import { useGetter } from "store/accessors";
 import type { OAuthState, SignInRouteState } from "types/auth";
 import { mixed, object, ref } from "yup";
 import type { FormValues, StateSetter, UserType } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
 
 type Props = {
+  fromState: unknown;
   setSignupState: StateSetter;
   classes?: string;
 };
 
 export default function SignupForm(props: Props) {
-  const [savetoHubspot] = useSaveSignupMutation();
-  const location = useLocation();
-  const fromState: SignInRouteState | undefined = location.state;
+  const fromState = props.fromState as SignInRouteState | undefined;
   const isRegistrant = fromState?.from === appRoutes.register;
 
   const { handleError, displayError } = useErrorContext();
@@ -60,65 +57,29 @@ export default function SignupForm(props: Props) {
   });
   const { field: userType } = useController({ name: "userType", control });
 
-  const currUser = useGetter((state) => state.auth.user);
-
-  if (currUser === "loading" || currUser?.isSigningOut) {
-    return <LoaderRing thickness={12} classes="w-32 mt-8" />;
-  }
-
   const redirect = getAuthRedirect(fromState, {
     isNpo: userType.value === "nonprofit",
   });
-  if (currUser) {
-    return <Navigate to={redirect.path} replace />;
-  }
 
   async function submit(fv: FormValues) {
     try {
-      try {
-        await savetoHubspot({
-          email: fv.email,
-          firstName: fv.firstName,
-          lastName: fv.lastName,
-          type: fv.userType,
-        }).unwrap();
-      } catch (err) {
-        logger.error(err);
-      }
-
-      const { nextStep } = await signUp({
-        username: fv.email.toLowerCase(),
-        password: fv.password,
-        options: {
-          userAttributes: {
-            given_name: fv.firstName,
-            family_name: fv.lastName,
-          },
-          autoSignIn: false,
-        },
+      const res = await cognito.signup(fv.email.toLowerCase(), fv.password, {
+        firstName: fv.firstName,
+        lastName: fv.lastName,
+        "custom:user-type": fv.userType,
       });
 
-      //per cognito config
-      if (nextStep.signUpStep !== "CONFIRM_SIGN_UP")
-        throw `Unexpected next step: ${nextStep.signUpStep}`;
-      if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL")
-        throw `Unexpected code delivery medium: ${nextStep.codeDeliveryDetails.deliveryMedium}`;
-      if (!nextStep.codeDeliveryDetails.destination)
-        throw `Missing code delivery destination`;
+      if (isError(res)) return displayError(res.message);
 
       props.setSignupState({
         type: "confirm",
         codeRecipientEmail: {
           raw: fv.email.toLowerCase(),
-          obscured: nextStep.codeDeliveryDetails.destination,
+          obscured: res,
         },
         userType: fv.userType,
       });
     } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
-      }
-
       handleError(err, { context: "signing up" });
     }
   }
@@ -154,14 +115,11 @@ export default function SignupForm(props: Props) {
             const valid = await trigger("userType");
             if (!valid) return;
 
-            const stored: OAuthState = {
+            const state: OAuthState = {
               pathname: redirect.path,
               data: redirect.data,
             };
-            await signInWithRedirect({
-              provider: "Google",
-              customState: JSON.stringify(stored),
-            });
+            await oauth.initiate(JSON.stringify(state));
           }}
         >
           <Image src={googleIcon} height={18} width={18} />
@@ -220,8 +178,7 @@ export default function SignupForm(props: Props) {
         <span className="flex-center gap-1 max-sm:text-sm font-normal">
           Already have an account?
           <Link
-            to={appRoutes.signin}
-            state={fromState}
+            to={toWithState(appRoutes.signin, fromState)}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

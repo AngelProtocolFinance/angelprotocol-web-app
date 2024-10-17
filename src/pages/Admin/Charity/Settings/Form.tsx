@@ -5,6 +5,7 @@ import { CheckField, RhfForm } from "components/form";
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useForm } from "react-hook-form";
+import { useLoaderData } from "react-router-dom";
 import { schema } from "schemas/shape";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
 import type { TDonateMethod } from "types/components";
@@ -15,9 +16,12 @@ import ReceiptMsg from "./ReceiptMsg";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import type { FV } from "./types";
 
-type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
+export default function Form() {
+  const endow = useLoaderData() as Pick<
+    Endowment,
+    "id" | EndowmentSettingsAttributes
+  >;
 
-export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();
   const { displayError } = useErrorContext();
 
@@ -35,10 +39,10 @@ export default function Form(props: Props) {
       })
     ),
     values: {
-      receiptMsg: props.receiptMsg ?? "",
-      hide_bg_tip: props.hide_bg_tip ?? false,
-      programDonateDisabled: !(props.progDonationsAllowed ?? true),
-      donateMethods: fill(props.donateMethods),
+      receiptMsg: endow.receiptMsg ?? "",
+      hide_bg_tip: endow.hide_bg_tip ?? false,
+      programDonateDisabled: !(endow.progDonationsAllowed ?? true),
+      donateMethods: fill(endow.donateMethods),
     },
   });
 
@@ -64,7 +68,7 @@ export default function Form(props: Props) {
       }}
       onSubmit={handleSubmit(
         async ({ programDonateDisabled, donateMethods, ...fv }) => {
-          if (props.id === BG_ID && fv.hide_bg_tip === false) {
+          if (endow.id === BG_ID && fv.hide_bg_tip === false) {
             return displayError(
               "BG donation flow should not show BG tip screen"
             );
@@ -73,7 +77,7 @@ export default function Form(props: Props) {
           await updateEndow({
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
-            id: props.id,
+            id: endow.id,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
               .map((m) => m.id),

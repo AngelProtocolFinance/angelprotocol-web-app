@@ -5,6 +5,7 @@ import type {
   TokenWithDetails,
 } from "types/components";
 import type { DonateMethodId, DonationSource } from "types/lists";
+export type { DetailedCurrency } from "types/components";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,

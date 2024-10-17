@@ -1,20 +1,12 @@
 import Icon from "components/Icon";
-import QueryLoader from "components/QueryLoader";
 import { adminRoutes } from "constants/routes";
-import { useParams } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useProgramQuery } from "services/aws/programs";
-import { useAdminContext } from "../../Context";
+import type { Program } from "types/aws";
 import Form from "./Form";
 
 export default function ProgramEditor() {
-  const { programId = "" } = useParams();
-  const { id: endowId } = useAdminContext();
-  const programQuery = useProgramQuery(
-    { endowId, programId },
-    { skip: !programId }
-  );
-
+  const program = useLoaderData() as Program;
   return (
     <>
       <Link
@@ -24,16 +16,7 @@ export default function ProgramEditor() {
         <Icon type="Back" />
         <span>Back</span>
       </Link>
-      <QueryLoader
-        queryState={programQuery}
-        messages={{
-          loading: "Loading program",
-          error: "Failed to load program",
-        }}
-        classes={{ container: "mt-2" }}
-      >
-        {(p) => <Form {...p} />}
-      </QueryLoader>
+      <Form {...program} />
     </>
   );
 }

@@ -3,7 +3,8 @@ import BookmarkBtn from "components/BookmarkBtn";
 import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link, useRouteLoaderData } from "react-router-dom";
+import type { DetailedUser } from "types/auth";
 import type { EndowmentCard } from "types/aws";
 
 const PLACEHOLDER_TAGLINE = " ";
@@ -15,6 +16,7 @@ export default function Card({
   tagline,
   claimed,
 }: EndowmentCard) {
+  const user = useRouteLoaderData("root") as DetailedUser | null;
   return (
     <div className="relative">
       <Link
@@ -56,7 +58,7 @@ export default function Card({
         >
           Donate
         </Link>
-        <BookmarkBtn endowId={id} classes="justify-self-end" />
+        <BookmarkBtn user={user} endowId={id} classes="justify-self-end" />
       </div>
     </div>
   );

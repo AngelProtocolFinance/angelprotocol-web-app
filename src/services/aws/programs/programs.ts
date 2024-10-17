@@ -6,15 +6,6 @@ import { aws } from "../aws";
 
 const programs = aws.injectEndpoints({
   endpoints: (builder) => ({
-    programs: builder.query<Program[], number>({
-      providesTags: ["programs", "program"],
-      query: (endowId) => `/${v(1)}/endowments/${endowId}/programs`,
-    }),
-    program: builder.query<Program, { endowId: number; programId: string }>({
-      providesTags: ["program"],
-      query: ({ endowId, programId }) =>
-        `/${v(1)}/endowments/${endowId}/programs/${programId}`,
-    }),
     newProgram: builder.mutation<
       { id: string },
       NewProgram & { endowId: number }
@@ -56,8 +47,6 @@ const programs = aws.injectEndpoints({
 });
 
 export const {
-  useProgramsQuery,
-  useProgramQuery,
   useNewProgramMutation,
   useEditProgramMutation,
   useDeleteProgramMutation,
