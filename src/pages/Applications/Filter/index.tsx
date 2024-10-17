@@ -1,24 +1,33 @@
-import type { QueryParams } from "@better-giving/registration/approval";
+import {
+  type QueryParams,
+  queryParams,
+} from "@better-giving/registration/approval";
 import { Popover, PopoverButton } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
-import { cleanObject } from "helpers/cleanObject";
 import { weeksAgo } from "helpers/weeksAgo";
 import { FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useSearchParams } from "react-router-dom";
+import { parse } from "valibot";
 import Form from "./Form";
+import { statuses } from "./constants";
 import { schema } from "./schema";
 import type { FormValues as FV } from "./types";
 
 type Props = {
   classes?: string;
-  onChange: (params: QueryParams) => void;
   isDisabled: boolean;
 };
 
-export default function Filter({ classes = "", isDisabled, onChange }: Props) {
+export default function Filter({ classes = "", isDisabled }: Props) {
+  const [params, setParams] = useSearchParams();
+
+  const parsed = parse(queryParams, Object.fromEntries(params));
+  const status = statuses.find((s) => s.value === parsed.status);
+
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
@@ -27,14 +36,18 @@ export default function Filter({ classes = "", isDisabled, onChange }: Props) {
     resolver: yupResolver(schema),
     defaultValues: {
       //set default value so empty can be tagged as invalid
-      startDate: dateToFormFormat(weeksAgo("now", 1)),
-      endDate: dateToFormFormat(new Date()),
-      hqCountry: { name: "", flag: "", code: "" },
-      status: { label: "Under Review", value: "02" },
+      startDate: dateToFormFormat(
+        parsed.startDate ? new Date(parsed.startDate) : weeksAgo("now", 1)
+      ),
+      endDate: dateToFormFormat(
+        parsed.endDate ? new Date(parsed.endDate) : new Date()
+      ),
+      hqCountry: { name: parsed.country ?? "", flag: "", code: "" },
+      status: status || { label: "Under Review", value: "02" },
     },
   });
 
-  const { handleSubmit, reset } = methods;
+  const { handleSubmit } = methods;
 
   function ISOdate(date: string, end?: boolean) {
     if (!date) return "";
@@ -46,23 +59,19 @@ export default function Filter({ classes = "", isDisabled, onChange }: Props) {
     return output.toISOString();
   }
 
-  async function submit(data: FV) {
-    onChange(
-      cleanObject({
-        startDate: ISOdate(data.startDate),
-        endDate: ISOdate(data.endDate, true),
-        status: data.status.value,
-        country: data.hqCountry.name,
-      })
-    );
-    buttonRef.current?.click();
+  async function submit(fv: FV) {
+    const copy = new URLSearchParams(params);
+    copy.set("status", fv.status.value);
+    copy.set("country", fv.hqCountry.name);
+    copy.set("startDate", ISOdate(fv.startDate));
+    copy.set("endDate", ISOdate(fv.endDate));
+    setParams(copy);
   }
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
-    reset();
-    onChange({ status: "02" });
-    buttonRef.current?.click();
+    setParams({ status: "02" } satisfies QueryParams);
   };
+
   return (
     <Popover className={`${classes} flex relative items-center`}>
       <PopoverButton

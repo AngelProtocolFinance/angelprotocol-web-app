@@ -1,29 +1,22 @@
 import type { Page } from "@better-giving/registration/approval";
 import Seo from "components/Seo";
 import { Search } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetcher, useLoaderData, useSearchParams } from "react-router-dom";
 import Filter from "./Filter";
 import Table from "./Table";
 
 export function Component() {
-  const firstPage = useLoaderData() as Page;
-
   const [params] = useSearchParams();
-  const { load, data, state } = useFetcher<Page & { _id?: string }>({
+  const firstPage = useLoaderData() as Page;
+  const { load, data, state } = useFetcher<Page>({
     key: "applications",
   });
   const [items, setItems] = useState(firstPage.items);
   const [query, setQuery] = useState("");
-  const idRef = useRef(data?._id);
 
   useEffect(() => {
     if (state === "loading" || !data) return;
-    if (idRef.current !== data._id) {
-      setItems(data.items);
-      idRef.current = data._id;
-      return;
-    }
     setItems((prev) => [...prev, ...data.items]);
   }, [data, state]);
 
@@ -57,15 +50,6 @@ export function Component() {
       </div>
       <Filter
         isDisabled={state === "loading"}
-        onChange={(x) => {
-          const copy = new URLSearchParams(params);
-          for (const [k, v] of Object.entries(x)) {
-            if (v != null) copy.set(k, v?.toString());
-          }
-          //use to determine when to reset items
-          copy.set("_id", window.crypto.randomUUID());
-          load(`?index&${copy.toString()}`);
-        }}
         classes="max-lg:col-span-full max-lg:w-full"
       />
 
