@@ -11,7 +11,7 @@ interface Props {
   isLoading?: boolean;
 }
 
-export default function EndowmentSelector({ endow, isLoading }: Props) {
+export function EndowmentSelector({ endow, isLoading }: Props) {
   const [params, setParams] = useSearchParams();
   const [searchText, setSearchText] = useState("");
 
