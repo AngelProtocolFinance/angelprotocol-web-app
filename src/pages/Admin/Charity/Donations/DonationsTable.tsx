@@ -15,31 +15,28 @@ interface Props {
 }
 
 export default function DonationsTable({ classes = "", firstPage }: Props) {
-  const fetcher = useFetcher<Page>(); //initially undefined
+  const { data, state, load } = useFetcher<Page>(); //initially undefined
   const [params] = useSearchParams();
   const [items, setItems] = useState(firstPage.Items);
   const pageRef = useRef(1);
 
   useEffect(() => {
-    if (!fetcher.data || fetcher.state === "loading") return;
-    if (fetcher.data) {
-      setItems((prev) => [...prev, ...(fetcher.data?.Items || [])]);
-      pageRef.current = pageRef.current + 1;
-    }
-  }, [fetcher.data, fetcher.state]);
+    if (!data || state === "loading") return;
+    setItems((prev) => [...prev, ...(data.Items || [])]);
+    pageRef.current = pageRef.current + 1;
+  }, [data, state]);
 
   if (items.length === 0) {
     return <Info>No donations found</Info>;
   }
 
-  const nextPage =
-    pageRef.current > 1 ? fetcher.data?.nextPage : firstPage.nextPage;
+  const nextPage = pageRef.current > 1 ? data?.nextPage : firstPage.nextPage;
 
   function loadNext() {
     if (!nextPage) throw `should not call load when there's no next page`;
     const n = new URLSearchParams(params);
     n.set("page", nextPage.toString());
-    fetcher.load(`?${n.toString()}`);
+    load(`?${n.toString()}`);
   }
 
   return (
@@ -85,8 +82,8 @@ export default function DonationsTable({ classes = "", firstPage }: Props) {
           donations={items}
           hasMore={!!nextPage}
           onLoadMore={loadNext}
-          disabled={fetcher.state === "loading"}
-          isLoading={fetcher.state === "loading"}
+          disabled={state === "loading"}
+          isLoading={state === "loading"}
         />
       </div>
     </div>

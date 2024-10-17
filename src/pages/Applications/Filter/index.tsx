@@ -13,11 +13,11 @@ import type { FormValues as FV } from "./types";
 
 type Props = {
   classes?: string;
-  setParams: React.Dispatch<React.SetStateAction<QueryParams>>;
+  onChange: (params: QueryParams) => void;
   isDisabled: boolean;
 };
 
-export default function Filter({ setParams, classes = "", isDisabled }: Props) {
+export default function Filter({ classes = "", isDisabled, onChange }: Props) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
@@ -46,7 +46,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
   }
 
   async function submit(data: FV) {
-    setParams(
+    onChange(
       cleanObject({
         startDate: ISOdate(data.startDate),
         endDate: ISOdate(data.endDate, true),
@@ -59,7 +59,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
 
   const onReset: FormEventHandler<HTMLFormElement> = () => {
     reset();
-    setParams({ status: "02" });
+    onChange({ status: "02" });
     buttonRef.current?.click();
   };
   return (
