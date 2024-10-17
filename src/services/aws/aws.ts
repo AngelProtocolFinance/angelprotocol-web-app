@@ -2,7 +2,6 @@ import type { Verdict } from "@better-giving/registration/approval";
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
-import { apiEnv } from "services/constants";
 import type { Donation, DonationsQueryParams, Endowment } from "types/aws";
 import { version as v } from "../helpers";
 import type { EndowmentUpdate } from "../types";
@@ -92,13 +91,6 @@ export const aws = createApi({
       },
     }),
 
-    endowWithEin: builder.query<
-      Pick<Endowment, "id" | "name" | "claimed" | "registration_number">,
-      string
-    >({
-      query: (ein) => ({ url: "v10/endowments", params: { ein, env: apiEnv } }),
-    }),
-
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
       invalidatesTags: (_, error) => (error ? [] : ["endowments", "endowment"]),
       query: ({ id, ...payload }) => {
@@ -145,7 +137,6 @@ export const {
   useReviewApplicationMutation,
   useDonationsQuery,
   useLazyDonationsQuery,
-  useLazyEndowWithEinQuery,
   util: {
     invalidateTags: invalidateAwsTags,
     updateQueryData: updateAWSQueryData,
