@@ -23,7 +23,7 @@ export const updateAction =
     req.headers.set("authorization", auth.idToken);
     const res = await fetch(req);
     //used as context
-    if (!res.ok) throw "updating registration";
+    if (!res.ok) throw res;
 
     await caches
       .open("bg")

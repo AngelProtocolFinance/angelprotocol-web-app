@@ -10,8 +10,8 @@ export const steps = {
 };
 
 export const nextStep: { [K in RegStep]: string } = {
-  1: steps.contact,
-  2: steps.orgDetails,
+  1: steps.orgDetails,
+  2: steps.fsaInquiry,
   3: steps.docs,
   4: steps.banking,
   5: steps.summary,

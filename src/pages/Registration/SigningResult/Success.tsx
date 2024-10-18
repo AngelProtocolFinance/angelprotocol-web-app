@@ -1,10 +1,10 @@
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { ArrowDownToLine } from "lucide-react";
 import { Link, useNavigation, useRouteLoaderData } from "react-router-dom";
 import { nextStep } from "../routes";
 import type { Reg$IdData } from "../types";
 import type { SignerCompleteQueryParams } from "./types";
-import { ArrowDownToLine } from "lucide-react";
 
 const proxyFunctionURL =
   "https://e7r5xzrogp3hpnzgrg2laiqwvq0avzkz.lambda-url.us-east-1.on.aws";

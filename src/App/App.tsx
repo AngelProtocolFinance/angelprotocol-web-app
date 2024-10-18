@@ -1,8 +1,9 @@
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
-import { RouterErrorBoundary } from "errors/ErrorBoundary";
+import { ErrorElement } from "errors/ErrorElement";
 import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
+import { promptRoutes, reviewRoute } from "pages/Application/review-route";
 import { routes as blogRoutes } from "pages/Blog";
 import { legalRoutes } from "pages/Legal";
 import OAuthRedirector from "pages/OAuthRedirector";
@@ -54,7 +55,12 @@ const _appRoutes: RO[] = [
   {
     path: appRoutes.applications,
     children: [
-      { path: ":id", lazy: () => import("pages/Application") },
+      {
+        path: ":id",
+        lazy: () => import("pages/Application"),
+        errorElement: <ErrorElement />,
+        children: [reviewRoute, ...promptRoutes],
+      },
       { index: true, lazy: () => import("pages/Applications") },
     ],
   },
@@ -112,7 +118,7 @@ export const routes: RO[] = [
     loader: rootLoader,
     action: rootAction,
     children: rootRoutes,
-    ErrorBoundary: RouterErrorBoundary,
+    ErrorBoundary: ErrorElement,
   },
 ];
 

@@ -1,12 +1,12 @@
 import type { FsaPayload } from "@better-giving/registration/fsa";
+import { uploadFile } from "helpers/uploadFile";
 import { useState } from "react";
 import { type SubmitHandler, useFormContext } from "react-hook-form";
 import { useFetcher, useLoaderData, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { steps } from "../../../../routes";
 import type { RegStep4 } from "../../../../types";
 import type { FormValues, Props } from "../types";
-import { toast } from "sonner";
-import { uploadFile } from "helpers/uploadFile";
 
 export default function useSubmit({ doc }: Props) {
   const {

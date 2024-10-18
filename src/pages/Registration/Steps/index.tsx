@@ -1,6 +1,8 @@
 import { isIrs501c3 } from "@better-giving/registration/models";
 import ExtLink from "components/ExtLink";
+import PromptV2 from "components/Prompt/PromptV2";
 import { appRoutes } from "constants/routes";
+import { ErrorElement } from "errors/ErrorElement";
 import {
   Navigate,
   Outlet,
@@ -14,7 +16,6 @@ import Banking from "./Banking";
 import ContactDetails from "./ContactDetails";
 import Dashboard from "./Dashboard";
 import Documentation from "./Documentation";
-import { ErrorHandler } from "./ErrorHandler";
 import FSAInquiry from "./FSAInquiry";
 import OrgDetails from "./OrgDetails";
 import ProgressIndicator from "./ProgressIndicator";
@@ -76,19 +77,21 @@ export const route: RouteObject = {
       path: steps.contact,
       element: <ContactDetails />,
       loader: stepLoader(1),
-      errorElement: <ErrorHandler />,
+      errorElement: <ErrorElement />,
       action: updateAction(nextStep[1]),
     },
     {
       path: steps.orgDetails,
       element: <OrgDetails />,
       loader: stepLoader(2),
+      errorElement: <ErrorElement />,
       action: updateAction(nextStep[2]),
     },
     {
       path: steps.fsaInquiry,
       element: <FSAInquiry />,
       loader: stepLoader(3),
+      errorElement: <ErrorElement />,
       action: updateAction(nextStep[3]),
     },
     {
@@ -96,19 +99,33 @@ export const route: RouteObject = {
       element: <Documentation />,
       loader: stepLoader(4),
       action: updateAction(nextStep[4]),
+      errorElement: <ErrorElement />,
       children: [{ path: "fsa", action: fsaAction }],
     },
     {
       path: steps.banking,
       element: <Banking />,
       loader: stepLoader(5),
+      errorElement: <ErrorElement />,
       action: updateAction(nextStep[5]),
     },
     {
       path: steps.summary,
       element: <Dashboard />,
       loader: stepLoader(6),
+      errorElement: <ErrorElement />,
       action: submitAction,
+      children: [
+        {
+          path: "success",
+          element: (
+            <PromptV2
+              type="success"
+              children="Your application has been submitted. We will get back to you soon!"
+            />
+          ),
+        },
+      ],
     },
     { index: true, element: <Navigate to={steps.contact} /> },
   ],

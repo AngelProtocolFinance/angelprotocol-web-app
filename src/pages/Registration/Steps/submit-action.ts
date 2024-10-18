@@ -1,6 +1,6 @@
 import { loadAuth, redirectToAuth } from "auth";
 import { APIs } from "constants/urls";
-import type { ActionFunction } from "react-router-dom";
+import { type ActionFunction, redirect } from "react-router-dom";
 import { version as v } from "services/helpers";
 
 export const submitAction: ActionFunction = async ({ request, params }) => {
@@ -22,5 +22,5 @@ export const submitAction: ActionFunction = async ({ request, params }) => {
     .open("bg")
     .then((c) => c.delete(key.toString(), { ignoreSearch: true }));
 
-  return res;
+  return redirect("success");
 };

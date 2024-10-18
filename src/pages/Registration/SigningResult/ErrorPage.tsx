@@ -1,8 +1,8 @@
 import { appRoutes } from "constants/routes";
 import { regRoutes } from "constants/routes";
+import { CircleAlert } from "lucide-react";
 import { Link, useFetcher } from "react-router-dom";
 import type { ErrorQueryParams } from "./types";
-import { CircleAlert } from "lucide-react";
 
 export default function ErrorPage(props: ErrorQueryParams) {
   const fetcher = useFetcher();
