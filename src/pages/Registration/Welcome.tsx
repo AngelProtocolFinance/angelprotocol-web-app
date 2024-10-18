@@ -4,14 +4,13 @@ import type { NewReg } from "@better-giving/registration/update";
 import { loadAuth } from "auth/load-auth";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
-import { appRoutes, regRoutes } from "constants/routes";
 import { APIs } from "constants/urls";
 import { storeRegistrationReference } from "helpers";
-import { decodeState, toWithState } from "helpers/state-params";
-import { CircleCheck } from "lucide-react";
+import { decodeState } from "helpers/state-params";
 import { Link, type LoaderFunction, useLoaderData } from "react-router-dom";
 import { version as v } from "services/helpers";
 import { steps } from "./routes";
+import { CircleCheck } from "lucide-react";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
@@ -29,11 +28,11 @@ export const loader: LoaderFunction = async ({ request }) => {
 
   api.pathname = `${v(1)}/registrations`;
 
-  const req = new Request(api, {
+  const post = new Request(api, {
     method: "POST",
     body: JSON.stringify(payload),
   });
-  req.headers.set("authorization", auth.idToken);
+  post.headers.set("authorization", auth.idToken);
 
   api.search = "";
   const cacheKey =
@@ -43,16 +42,16 @@ export const loader: LoaderFunction = async ({ request }) => {
   const cached = await cache.match(cacheKey);
   if (cached) return cached.clone();
 
-  const res = await fetch(req);
+  const res = await fetch(post);
   await cache.put(cacheKey, res.clone());
 
-  const reg = (await res.json()) as Pick<Step1, "id">;
+  const reg: Pick<Step1, "id"> = await res.json();
   storeRegistrationReference(reg.id);
-  return reg;
+  return reg.id;
 };
 
 export function Component() {
-  const reg = useLoaderData() as Pick<Step1, "id">;
+  const regId = useLoaderData() as string;
 
   return (
     <div className="grid justify-items-center mx-6">
@@ -66,10 +65,7 @@ export function Component() {
 
       <Link
         className="w-full max-w-[26.25rem] btn-blue btn-reg"
-        to={toWithState(
-          `${appRoutes.register}/${regRoutes.steps}/${steps.contact}`,
-          reg
-        )}
+        to={`../${regId}/${steps.contact}`}
       >
         <LoadText text="Continue registration">Continue registration</LoadText>
       </Link>

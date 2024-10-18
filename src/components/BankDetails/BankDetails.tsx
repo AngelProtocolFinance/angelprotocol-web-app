@@ -17,9 +17,14 @@ type Props = {
   FormButtons: IFormButtons;
   /** All errors should be handled inside `onSubmit` */
   onSubmit: OnSubmit;
+  isLoading: boolean;
 };
 
-export default function BankDetails({ FormButtons, onSubmit }: Props) {
+export default function BankDetails({
+  FormButtons,
+  onSubmit,
+  isLoading,
+}: Props) {
   const [isSubmitting, setSubmitting] = useState(false);
   const [currency, setCurrency] = useState<Currency>({
     code: "USD",
@@ -55,7 +60,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
         onChange={(c) => setCurrency(c)}
         value={currency}
         classes={{ combobox: "w-full md:w-80", options: "text-sm" }}
-        disabled={isSubmitting}
+        disabled={isSubmitting || isLoading}
         label="Select your bank account currency:"
         required
       />
@@ -71,7 +76,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
       <RecipientDetails
         amount={amnt}
         currency={currency.code}
-        disabled={isSubmitting}
+        disabled={isSubmitting || isLoading}
         FormButtons={FormButtons}
         onSubmit={handleSubmit}
       />

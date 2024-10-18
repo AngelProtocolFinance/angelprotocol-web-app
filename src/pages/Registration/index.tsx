@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import SigningResult from "./SigningResult";
 import { route as stepsRoute } from "./Steps";
+import { regLoader } from "./data/step-loader";
 
 function Layout() {
   const user = useLoaderData();
@@ -27,11 +28,12 @@ function Layout() {
 
 const loader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
-  if (auth) return auth;
-  return redirectToAuth(request);
+  if (!auth) return redirectToAuth(request);
+  return auth;
 };
 
 export const route: RouteObject = {
+  id: "reg",
   path: appRoutes.register,
   element: <Layout />,
   loader: loader,
@@ -40,10 +42,17 @@ export const route: RouteObject = {
       path: regRoutes.welcome,
       lazy: () => import("./Welcome"),
     },
-    stepsRoute,
     { path: regRoutes.resume, lazy: () => import("./Resume") },
     { path: regRoutes.success, lazy: () => import("./Success") },
-    { path: regRoutes.sign_result, element: <SigningResult /> },
     { index: true, lazy: () => import("./Signup") },
+    {
+      id: "reg$Id",
+      path: ":regId",
+      loader: regLoader,
+      children: [
+        stepsRoute,
+        { path: regRoutes.sign_result, element: <SigningResult /> },
+      ],
+    },
   ],
 };

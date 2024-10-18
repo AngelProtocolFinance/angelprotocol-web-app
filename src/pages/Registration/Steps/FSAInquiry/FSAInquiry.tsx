@@ -1,10 +1,11 @@
-import { useRegState, withStepGuard } from "../StepGuard";
+import { useLoaderData } from "react-router-dom";
+import type { RegStep3 } from "../../types";
 import { NotTaxExempt } from "./NotTaxExempt";
 import { PossiblyTaxExempt } from "./PossiblyTaxExempt";
 
 const countryWhiteList = ["United States"]; //will add more in the future;
-function FSAInquiry() {
-  const { data } = useRegState<3>();
+export default function FSAInquiry() {
+  const { data } = useLoaderData() as RegStep3;
   const possiblyTaxExempt = countryWhiteList.includes(data.org.hq_country);
 
   if (!possiblyTaxExempt) {
@@ -19,5 +20,3 @@ function FSAInquiry() {
 
   return <PossiblyTaxExempt {...data.init} irs501c3Prev={data.irs501c3} />;
 }
-
-export default withStepGuard(FSAInquiry);

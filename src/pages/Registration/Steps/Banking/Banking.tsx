@@ -1,18 +1,17 @@
 import BankDetails from "components/BankDetails";
 import ExtLink from "components/ExtLink";
-import { toWithState } from "helpers/state-params";
-import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import { steps } from "../../routes";
-import { useRegState, withStepGuard } from "../StepGuard";
+import type { RegStep5 } from "../../types";
 import FormButtons from "./FormButtons";
 import useSubmit from "./useSubmit";
+import { SquareArrowOutUpRight } from "lucide-react";
 
-function Banking() {
-  const { data } = useRegState<5>();
+export default function Banking() {
+  const { data } = useLoaderData() as RegStep5;
   const [isChanging, setIsChanging] = useState(false);
-  const { submit } = useSubmit();
+  const { submit, isLoading } = useSubmit();
 
   if (data.banking && !isChanging) {
     return (
@@ -44,13 +43,13 @@ function Banking() {
 
         <div className="grid grid-cols-2 sm:flex gap-2 w-full mt-auto">
           <Link
-            to={toWithState(`../${steps.docs}`, data.init)}
+            to={`../${steps.docs}`}
             className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >
             Back
           </Link>
           <Link
-            to={toWithState(`../${steps.summary}`, data.init)}
+            to={`../${steps.summary}`}
             className="py-3 min-w-[8rem] btn-blue btn-reg"
           >
             Continue
@@ -74,9 +73,11 @@ function Banking() {
       <h2 className="text-center sm:text-left text-xl mb-4">
         {isChanging ? "Update" : "Setup"} your banking details
       </h2>
-      <BankDetails FormButtons={FormButtons} onSubmit={submit} />
+      <BankDetails
+        FormButtons={FormButtons}
+        onSubmit={submit}
+        isLoading={isLoading}
+      />
     </div>
   );
 }
-
-export default withStepGuard(Banking);

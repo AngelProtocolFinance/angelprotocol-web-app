@@ -1,11 +1,9 @@
-import { regRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
-import { storeRegistrationReference } from "helpers";
-import { toWithState } from "helpers/state-params";
 import { useFormContext } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useLazyRegQuery } from "services/aws/registration";
-import { getRegistrationState } from "../Steps/getRegistrationState";
+import { useNavigate, useRouteLoaderData } from "react-router-dom";
+import type { UserV2 } from "types/auth";
+import { getRegState } from "../data/step-loader";
+import { nextStep } from "../routes";
 import type { FormValues } from "./types";
 
 export default function useSubmit() {
@@ -13,22 +11,15 @@ export default function useSubmit() {
     handleSubmit,
     formState: { isSubmitting },
   } = useFormContext<FormValues>();
+  const user = useRouteLoaderData("reg") as UserV2;
 
   const navigate = useNavigate();
   const { handleError } = useErrorContext();
-  const [checkPrevRegistration] = useLazyRegQuery();
 
   const onSubmit = async ({ reference }: FormValues) => {
     try {
-      const { isError, error, data } = await checkPrevRegistration(reference);
-      if (isError || !data) return handleError(error, "parsed");
-
-      storeRegistrationReference(reference);
-
-      const { state, nextStep } = getRegistrationState(data);
-      navigate(
-        toWithState(`../${regRoutes.steps}/${nextStep}`, state.data.init)
-      );
+      const { data, step } = await getRegState(reference, user);
+      navigate(`../${data.init.id}/${nextStep[step]}`);
     } catch (err) {
       handleError(err, { context: "resuming registration" });
     }

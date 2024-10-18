@@ -1,37 +1,30 @@
+import type { Update } from "@better-giving/registration/update";
 import type { OnSubmit } from "components/BankDetails";
-import { useErrorContext } from "contexts/ErrorContext";
-import { toWithState } from "helpers/state-params";
 import { uploadFile } from "helpers/uploadFile";
-import { useNavigate } from "react-router-dom";
-import { useUpdateRegMutation } from "services/aws/registration";
-import { steps } from "../../routes";
-import { useRegState } from "../StepGuard";
+import { useFetcher } from "react-router-dom";
+import { toast } from "sonner";
 
 export default function useSubmit() {
-  const { data } = useRegState<5>();
-  const [updateReg] = useUpdateRegMutation();
-  const { handleError, displayError } = useErrorContext();
-  const navigate = useNavigate();
+  const fetcher = useFetcher();
 
   const submit: OnSubmit = async (recipient, file) => {
-    try {
-      const bankStatement = await uploadFile(file, "endow-reg");
-      if (!bankStatement) {
-        return displayError("Failed to upload bank statement");
-      }
-
-      await updateReg({
-        id: data.init.id,
-        type: "banking",
-        bank_statement: bankStatement,
-        wise_recipient_id: recipient.id,
-      }).unwrap();
-
-      return navigate(toWithState(`../${steps.summary}`, data.init));
-    } catch (error) {
-      handleError(error, { context: "submitting banking details" });
+    const bankStatement = await uploadFile(file, "endow-reg");
+    if (!bankStatement) {
+      toast.error("Failed to upload bank statement");
+      return;
     }
+
+    const update: Update = {
+      type: "banking",
+      bank_statement: bankStatement,
+      wise_recipient_id: recipient.id,
+    };
+    fetcher.submit(update, {
+      method: "patch",
+      action: ".",
+      encType: "application/json",
+    });
   };
 
-  return { submit };
+  return { submit, isLoading: fetcher.state !== "idle" };
 }

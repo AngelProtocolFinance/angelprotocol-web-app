@@ -10,7 +10,5 @@ export const getEndowWithEin = async (ein: string) => {
 
   if (!res.ok) throw await res.text();
 
-  return res.json() as Promise<
-    Pick<Endowment, "id" | "name" | "claimed" | "registration_number">
-  >;
+  return res.json() as Promise<Endowment>;
 };

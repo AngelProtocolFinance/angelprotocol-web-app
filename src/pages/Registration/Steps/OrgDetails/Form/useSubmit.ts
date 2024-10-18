@@ -1,35 +1,27 @@
-import { useErrorContext } from "contexts/ErrorContext";
-import { toWithState } from "helpers/state-params";
+import type { Update } from "@better-giving/registration/update";
 import { type SubmitHandler, useFormContext } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useUpdateRegMutation } from "services/aws/registration";
+import { useFetcher, useNavigate } from "react-router-dom";
 import type { EndowDesignation } from "types/aws";
 import { steps } from "../../../routes";
-import { useRegState } from "../../StepGuard";
+import type { RegStep2 } from "../../../types";
 import type { FormValues } from "../types";
 
-export default function useSubmit() {
+export default function useSubmit(org: RegStep2["data"]["org"]) {
   const {
     handleSubmit,
-    formState: { isDirty, isSubmitting },
+    formState: { isDirty },
   } = useFormContext<FormValues>();
 
-  const {
-    data: { init, org },
-  } = useRegState<2>();
-
-  const [updateReg] = useUpdateRegMutation();
-  const { handleError } = useErrorContext();
+  const fetcher = useFetcher();
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FormValues> = async (fv) => {
     if (!isDirty && org) {
-      return navigate(toWithState(`../${steps.fsaInquiry}`, init));
+      return navigate(`../${steps.fsaInquiry}`);
     }
 
-    const result = await updateReg({
+    const update: Update = {
       type: "org",
-      id: init.id,
       //payload
       website: fv.website,
       un_sdg: fv.un_sdg.map(
@@ -40,16 +32,16 @@ export default function useSubmit() {
       // required in schema
       designation: fv.designation.value as EndowDesignation,
       active_in_countries: fv.active_in_countries.map((opt) => opt.value),
+    };
+
+    fetcher.submit(update, {
+      method: "PATCH",
+      action: ".",
+      encType: "application/json",
     });
-
-    if ("error" in result) {
-      return handleError(result.error, { context: "updating registration" });
-    }
-
-    navigate(toWithState(`../${steps.fsaInquiry}`, init));
   };
   return {
     submit: handleSubmit(submit),
-    isSubmitting,
+    isSubmitting: fetcher.state !== "idle",
   };
 }

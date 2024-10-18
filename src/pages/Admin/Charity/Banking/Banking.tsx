@@ -13,7 +13,7 @@ import FormButtons from "./FormButtons";
 export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
-  const [newApplication] = useNewBankingApplicationMutation();
+  const [newApplication, { isLoading }] = useNewBankingApplicationMutation();
   const { handleError, displayError } = useErrorContext();
   const { showModal } = useModalContext();
   const navigate = useNavigate();
@@ -62,7 +62,11 @@ export default function Banking() {
         title="Bank account details"
         description="The following information will be used to register your bank account that will be used to withdraw your funds."
       >
-        <BankDetails FormButtons={FormButtons} onSubmit={submit} />
+        <BankDetails
+          FormButtons={FormButtons}
+          onSubmit={submit}
+          isLoading={isLoading}
+        />
       </Group>
     </>
   );

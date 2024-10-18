@@ -1,20 +1,18 @@
 import type { Init } from "@better-giving/registration/models";
+import type { Update } from "@better-giving/registration/update";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
-import { useErrorContext } from "contexts/ErrorContext";
-import { toWithState } from "helpers/state-params";
-import { Link, useNavigate } from "react-router-dom";
-import { useUpdateRegMutation } from "services/aws/registration";
+import { Link, useFetcher, useNavigate } from "react-router-dom";
 import { steps } from "../../routes";
 
 interface Props extends Init {
   country: string;
   isFsaPrev?: boolean;
 }
-export function NotTaxExempt({ country, isFsaPrev, ...init }: Props) {
-  const [updateReg, { isLoading }] = useUpdateRegMutation();
-  const { handleError } = useErrorContext();
+export function NotTaxExempt({ country, isFsaPrev }: Props) {
+  const fetcher = useFetcher();
   const navigate = useNavigate();
+  const isLoading = fetcher.state !== "idle";
 
   return (
     <div className="w-full">
@@ -32,27 +30,28 @@ export function NotTaxExempt({ country, isFsaPrev, ...init }: Props) {
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isLoading}
-          to={toWithState(`../${steps.orgDetails}`, init)}
+          to={`../${steps.orgDetails}`}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
         </Link>
         <button
           onClick={async () => {
-            try {
-              if (isFsaPrev) {
-                return navigate(toWithState(`../${steps.docs}`, init));
-              }
-              await updateReg({
-                id: init.id,
+            if (isFsaPrev) {
+              return navigate(`../${steps.docs}`);
+            }
+
+            fetcher.submit(
+              {
                 type: "fsa-inq",
                 irs501c3: false,
-              }).unwrap();
-
-              navigate(toWithState(`../${steps.docs}`, init));
-            } catch (err) {
-              handleError(err, { context: "updating registration" });
-            }
+              } satisfies Update,
+              {
+                action: ".",
+                method: "PATCH",
+                encType: "application/json",
+              }
+            );
           }}
           disabled={isLoading}
           type="button"

@@ -1,35 +1,34 @@
+import type { EndowClaim } from "@better-giving/registration/models";
+import type { Update } from "@better-giving/registration/update";
 import { getEndowWithEin } from "api/get/endow-with-ein";
 import { useErrorContext } from "contexts/ErrorContext";
-import { toWithState } from "helpers/state-params";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
-import { useUpdateRegMutation } from "services/aws/registration";
+import { useFetcher, useNavigate } from "react-router-dom";
 import { steps } from "../../../routes";
-import { useRegState } from "../../StepGuard";
 import type { FormValues as FV, Props } from "./types";
 
 type Args = {
   props: Props;
   form: UseFormReturn<FV>;
+  initClaim: EndowClaim | undefined;
 };
 
-export default function useSubmit({ form, props }: Args) {
-  const { data } = useRegState<4>();
+export default function useSubmit({ form, props, initClaim }: Args) {
   const {
     handleSubmit,
     formState: { isDirty, isSubmitting },
   } = form;
 
-  const [updateReg] = useUpdateRegMutation();
-  const { handleError, displayError } = useErrorContext();
+  const { displayError } = useErrorContext();
+  const fetcher = useFetcher();
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
     if (!isDirty && props.doc) {
-      return navigate(toWithState(`../${steps.banking}`, data.init));
+      return navigate(`../${steps.banking}`);
     }
 
-    if (!data.init.claim && fv.ein !== props.doc?.ein) {
+    if (!initClaim && fv.ein !== props.doc?.ein) {
       const endow = await getEndowWithEin(fv.ein);
 
       if (endow) {
@@ -44,20 +43,19 @@ export default function useSubmit({ form, props }: Args) {
       }
     }
 
-    const result = await updateReg({
-      id: data.init.id,
+    const update: Update = {
       type: "docs",
       ein: fv.ein,
+    };
+    fetcher.submit(update, {
+      encType: "application/json",
+      action: ".",
+      method: "patch",
     });
-
-    if ("error" in result) {
-      return handleError(result.error, { context: "submitting documentation" });
-    }
-    return navigate(toWithState(`../${steps.banking}`, data.init));
   };
 
   return {
     submit: handleSubmit(submit),
-    isSubmitting,
+    isSubmitting: isSubmitting || fetcher.state !== "idle",
   };
 }
