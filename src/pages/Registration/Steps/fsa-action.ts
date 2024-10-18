@@ -9,13 +9,21 @@ export const fsaAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 
-  const data: FsaPayload["signer"] = await request.json();
+  const signer = await (async (r) => {
+    const r1 = r.clone();
+    const form = await r1.formData();
+    const signer_eid = form.get("signer_eid")?.toString();
+    return (
+      signer_eid ||
+      ((await request.json()) as Exclude<FsaPayload["signer"], string>)
+    );
+  })(request);
 
   const from = new URL(request.url);
   from.pathname = `register/${params.regId}/${regRoutes.sign_result}`;
   from.search = "";
   const payload: FsaPayload = {
-    signer: data,
+    signer,
     redirectUrl: from.toString(),
   };
 

@@ -30,7 +30,6 @@ export const aws = createApi({
     "application",
     "banking-applications",
     "banking-application",
-    "registration",
     "endow-admins",
     "donations",
     "user",

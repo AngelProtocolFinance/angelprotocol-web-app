@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import SigningResult from "./SigningResult";
 import { route as stepsRoute } from "./Steps";
+import { fsaAction } from "./Steps/fsa-action";
 import { regLoader } from "./data/step-loader";
 
 function Layout() {
@@ -51,7 +52,11 @@ export const route: RouteObject = {
       loader: regLoader,
       children: [
         stepsRoute,
-        { path: regRoutes.sign_result, element: <SigningResult /> },
+        {
+          path: regRoutes.sign_result,
+          element: <SigningResult />,
+          action: fsaAction,
+        },
       ],
     },
   ],
