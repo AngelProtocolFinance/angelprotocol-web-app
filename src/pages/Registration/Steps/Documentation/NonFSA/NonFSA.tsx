@@ -1,34 +1,37 @@
+import type { EndowClaim } from "@better-giving/registration/models";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import LoadText from "components/LoadText";
 import { Field } from "components/form";
-import { toWithState } from "helpers/state-params";
 import { FormProvider, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { steps } from "../../../routes";
-import { useRegState } from "../../StepGuard";
 import { type FormValues as FV, type Props, schema } from "./types";
 import useSubmit from "./useSubmit";
 
-export default function NonFSA(props: Props) {
-  const { data } = useRegState<4>();
-  const claimEin = data.init.claim?.ein;
+export default function NonFSA(
+  props: Props & { initClaim: EndowClaim | undefined; regId: string }
+) {
   const { doc } = props;
   const methods = useForm<FV>({
     resolver: valibotResolver(schema),
     defaultValues: doc
       ? doc
       : {
-          ein: claimEin ?? "",
+          ein: props.initClaim?.ein ?? "",
         },
   });
-  const { submit, isSubmitting } = useSubmit({ props, form: methods });
+  const { submit, isSubmitting } = useSubmit({
+    props,
+    form: methods,
+    initClaim: props.initClaim,
+  });
 
   return (
     <FormProvider {...methods}>
       <form className="w-full" onSubmit={submit}>
         <Field<FV>
           /** claimer should not change EIN */
-          disabled={!!claimEin}
+          disabled={!!props.initClaim}
           name="ein"
           label="EIN# (numbers and letters only)"
           required
@@ -39,7 +42,7 @@ export default function NonFSA(props: Props) {
         <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
           <Link
             aria-disabled={isSubmitting}
-            to={toWithState(`../${steps.fsaInquiry}`, data.init)}
+            to={`../${steps.fsaInquiry}`}
             className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
           >
             Back

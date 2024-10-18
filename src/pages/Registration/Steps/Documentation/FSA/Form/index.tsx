@@ -3,8 +3,6 @@ import FileDropzone from "components/FileDropzone";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import { Field, Label } from "components/form";
-import { toWithState } from "helpers/state-params";
-import { useRegState } from "pages/Registration/Steps/StepGuard";
 import { Link } from "react-router-dom";
 import { steps } from "../../../../routes";
 import { MB_LIMIT, VALID_MIME_TYPES } from "../schema";
@@ -12,7 +10,6 @@ import type { FormValues as FV, Props } from "../types";
 import useSubmit from "./useSubmit";
 
 export default function Form(props: Props) {
-  const { data } = useRegState<4>();
   const { submit, isSubmitting, isRedirecting } = useSubmit(props);
 
   return (
@@ -73,7 +70,7 @@ export default function Form(props: Props) {
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isSubmitting || isRedirecting}
-          to={toWithState(`../${steps.fsaInquiry}`, data.init)}
+          to={`../${steps.fsaInquiry}`}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back

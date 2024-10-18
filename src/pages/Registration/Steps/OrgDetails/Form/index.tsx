@@ -8,16 +8,14 @@ import { MultiSelector, Selector } from "components/Selector";
 import { Field, Label, Radio } from "components/form";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";
-import { toWithState } from "helpers/state-params";
 import { Link } from "react-router-dom";
 import { steps } from "../../../routes";
-import { useRegState } from "../../StepGuard";
+import type { RegStep2 } from "../../../types";
 import type { FormValues as FV } from "../types";
 import useSubmit from "./useSubmit";
 
-export default function Form() {
-  const { data } = useRegState<2>();
-  const { submit, isSubmitting } = useSubmit();
+export default function Form({ data }: RegStep2) {
+  const { submit, isSubmitting } = useSubmit(data.org);
 
   return (
     <form className="w-full" onSubmit={submit}>
@@ -108,7 +106,7 @@ export default function Form() {
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isSubmitting}
-          to={toWithState(`../${steps.contact}`, data.init)}
+          to={`../${steps.contact}`}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back

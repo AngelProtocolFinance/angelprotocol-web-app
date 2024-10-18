@@ -3,37 +3,30 @@ import {
   type Reg,
   isDone,
 } from "@better-giving/registration/step";
-import { steps } from "../routes";
 import type { RegistrationState } from "../types";
 
-export function getRegistrationState(reg: Reg): {
-  state: RegistrationState;
-  nextStep: steps;
-} {
+export function getRegistrationState(reg: Reg): RegistrationState {
   if (isDone.submission(reg)) {
-    return { state: { step: 6, data: toData(reg) }, nextStep: steps.summary };
+    return { step: 6, data: toData(reg) };
   }
 
   if (isDone.banking(reg)) {
-    return { state: { step: 5, data: toData(reg) }, nextStep: steps.summary };
+    return { step: 5, data: toData(reg) };
   }
 
   if (isDone.docs(reg)) {
-    return { state: { step: 4, data: toData(reg) }, nextStep: steps.banking };
+    return { step: 4, data: toData(reg) };
   }
 
   if (isDone.fsaInq(reg)) {
-    return { state: { step: 3, data: toData(reg) }, nextStep: steps.docs };
+    return { step: 3, data: toData(reg) };
   }
 
   if (isDone.contact(reg)) {
-    return {
-      state: { step: 2, data: toData(reg) },
-      nextStep: steps.orgDetails,
-    };
+    return { step: 2, data: toData(reg) };
   }
 
-  return { state: { step: 1, data: toData(reg) }, nextStep: steps.contact };
+  return { step: 1, data: toData(reg) };
 }
 
 function toData<T extends Reg>({

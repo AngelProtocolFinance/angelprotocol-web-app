@@ -1,10 +1,8 @@
 import type { Init } from "@better-giving/registration/models";
+import type { Update } from "@better-giving/registration/update";
 import LoadText from "components/LoadText";
-import { useErrorContext } from "contexts/ErrorContext";
-import { toWithState } from "helpers/state-params";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import { useUpdateRegMutation } from "services/aws/registration";
+import { Link, useFetcher, useNavigate } from "react-router-dom";
 import { steps } from "../../routes";
 import type { FV } from "./types";
 
@@ -15,7 +13,6 @@ interface Props extends Init {
 export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
   const {
     handleSubmit,
-    watch,
     register,
     formState: { isDirty },
   } = useForm<FV>({
@@ -29,8 +26,8 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
     },
   });
 
-  const [updateReg, { isLoading }] = useUpdateRegMutation();
-  const { handleError } = useErrorContext();
+  const fetcher = useFetcher();
+  const isLoading = fetcher.state !== "idle";
   const navigate = useNavigate();
 
   //orgs to claim are irs501c3 tax exempt
@@ -39,22 +36,18 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
   return (
     <form
       className="w-full"
-      onSubmit={handleSubmit(async () => {
-        try {
-          if (!isDirty && irs501c3Prev !== undefined) {
-            return navigate(toWithState(`../${steps.docs}`, init));
-          }
-
-          await updateReg({
-            id: init.id,
-            type: "fsa-inq",
-            irs501c3: watch().irs501c3 === "yes",
-          }).unwrap();
-
-          navigate(toWithState(`../${steps.docs}`, init));
-        } catch (err) {
-          handleError(err, { context: "updating registration" });
+      onSubmit={handleSubmit(async (fv) => {
+        if (!isDirty && irs501c3Prev !== undefined) {
+          return navigate(`../${steps.docs}`);
         }
+
+        fetcher.submit(
+          {
+            type: "fsa-inq",
+            irs501c3: fv.irs501c3 === "yes",
+          } satisfies Update,
+          { action: ".", method: "patch", encType: "application/json" }
+        );
       })}
     >
       <p className="mt-6">
@@ -87,7 +80,7 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
       <div className="grid grid-cols-2 sm:flex gap-2 mt-8">
         <Link
           aria-disabled={isLoading}
-          to={toWithState(`../${steps.orgDetails}`, init)}
+          to={`../${steps.orgDetails}`}
           className="py-3 min-w-[8rem] btn-outline-filled btn-reg"
         >
           Back
