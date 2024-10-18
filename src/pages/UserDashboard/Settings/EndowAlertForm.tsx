@@ -8,11 +8,11 @@ import {
   useUpdateUserEndowsMutation,
   useUserEndowsQuery,
 } from "services/aws/users";
-import type { AuthenticatedUser } from "types/auth";
+import type { UserV2 } from "types/auth";
 import type { UserEndow } from "types/aws";
 
 interface Props {
-  user: AuthenticatedUser;
+  user: UserV2;
   classes?: string;
 }
 

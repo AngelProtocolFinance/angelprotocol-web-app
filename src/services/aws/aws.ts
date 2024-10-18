@@ -1,55 +1,15 @@
-import type {
-  Application,
-  Page,
-  QueryParams,
-  Verdict,
-} from "@better-giving/registration/approval";
+import type { Verdict } from "@better-giving/registration/approval";
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { fetchAuthSession } from "aws-amplify/auth";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
-import { apiEnv } from "services/constants";
-import type { RootState } from "store/store";
-import { userIsSignedIn } from "types/auth";
-import type {
-  Donation,
-  DonationsQueryParams,
-  EndowListPaginatedAWSQueryRes,
-  Endowment,
-  EndowmentCard,
-  EndowmentOption,
-  EndowmentsQueryParams,
-} from "types/aws";
+import type { Donation, DonationsQueryParams, Endowment } from "types/aws";
 import { version as v } from "../helpers";
-import type { EndowmentUpdate, IdOrSlug } from "../types";
+import type { EndowmentUpdate } from "../types";
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
     baseUrl: APIs.aws,
     mode: "cors",
-    async prepareHeaders(headers, { getState }) {
-      const {
-        auth: { user },
-      } = getState() as RootState;
-
-      if (headers.get("authorization") === TEMP_JWT) {
-        if (!userIsSignedIn(user)) return headers;
-        const nowSeconds = Math.round(+new Date() / 1000);
-
-        const token =
-          nowSeconds < user.tokenExpiry
-            ? user.token
-            : /** fetching session fires `tokenRefresh | tokenRefresh_failure` event in Hub */
-              await fetchAuthSession({ forceRefresh: true }).then((res) =>
-                res.tokens?.idToken?.toString()
-              );
-
-        if (!token) return headers;
-
-        headers.set("authorization", token);
-      }
-      return headers;
-    },
   }),
   // current default for all endpoints, change if necessary
   { maxRetries: 1 }
@@ -70,7 +30,6 @@ export const aws = createApi({
     "application",
     "banking-applications",
     "banking-application",
-    "registration",
     "endow-admins",
     "donations",
     "user",
@@ -80,30 +39,6 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    endowmentCards: builder.query<
-      EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
-      EndowmentsQueryParams
-    >({
-      providesTags: ["endowments"],
-      query: (params) => {
-        return {
-          url: `${v(1)}/cloudsearch-nonprofits`,
-          params: { ...params, fields: endowCardFields },
-        };
-      },
-    }),
-    endowmentOptions: builder.query<EndowmentOption[], EndowmentsQueryParams>({
-      providesTags: ["endowments"],
-      query: (params) => {
-        return {
-          url: `${v(1)}/cloudsearch-nonprofits`,
-          params: { ...params, fields: endowSelectorOptionFields },
-        };
-      },
-      transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
-        return res.Items;
-      },
-    }),
     userBookmarks: builder.query<number[], null>({
       providesTags: ["user-bookmarks"],
       query: () => ({
@@ -155,27 +90,6 @@ export const aws = createApi({
       },
     }),
 
-    endowment: builder.query<
-      Endowment,
-      IdOrSlug & { fields?: (keyof Endowment)[] }
-    >({
-      providesTags: ["endowment"],
-      query: ({ fields, ...args }) => ({
-        url: "id" in args ? `v9/endowments/${args.id}` : "v9/endowments",
-        params: {
-          env: apiEnv,
-          slug: args.slug,
-          ...(fields ? { fields: fields.join(",") } : {}),
-        },
-      }),
-    }),
-    endowWithEin: builder.query<
-      Pick<Endowment, "id" | "name" | "claimed" | "registration_number">,
-      string
-    >({
-      query: (ein) => ({ url: "v8/endowments", params: { ein, env: apiEnv } }),
-    }),
-
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
       invalidatesTags: (_, error) => (error ? [] : ["endowments", "endowment"]),
       query: ({ id, ...payload }) => {
@@ -188,23 +102,6 @@ export const aws = createApi({
       },
     }),
 
-    applications: builder.query<Page, QueryParams>({
-      providesTags: ["applications"],
-      query: (params) => {
-        return {
-          url: `${v(1)}/registrations`,
-          params,
-          headers: { authorization: TEMP_JWT },
-        };
-      },
-    }),
-    application: builder.query<Application, string>({
-      providesTags: ["application"],
-      query: (uuid) => ({
-        url: `${v(1)}/registrations/${uuid}`,
-        headers: { authorization: TEMP_JWT },
-      }),
-    }),
     reviewApplication: builder.mutation<any, Verdict & { id: string }>({
       invalidatesTags: ["application", "applications"],
       query: ({ id, ...verdict }) => {
@@ -235,45 +132,12 @@ export const aws = createApi({
 export const {
   useUserBookmarksQuery,
   useToggleUserBookmarkMutation,
-  useEndowmentQuery,
-  useEndowmentCardsQuery,
-  useEndowmentOptionsQuery,
   useEditEndowmentMutation,
-  useApplicationsQuery,
-  useApplicationQuery,
   useReviewApplicationMutation,
   useDonationsQuery,
   useLazyDonationsQuery,
-  useLazyEndowWithEinQuery,
-  endpoints: {
-    endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
-    endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
-    endowment: { useLazyQuery: useLazyProfileQuery },
-    applications: { useLazyQuery: useLazyApplicationsQuery },
-  },
   util: {
     invalidateTags: invalidateAwsTags,
     updateQueryData: updateAWSQueryData,
   },
 } = aws;
-
-//object format first to avoid duplicates
-const endowCardObj: {
-  [key in keyof EndowmentCard]: ""; //we care only for keys
-} = {
-  id: "",
-  card_img: "",
-  name: "",
-  tagline: "",
-  claimed: "",
-  contributions_total: "",
-};
-const endowCardFields = Object.keys(endowCardObj).join(",");
-
-const endowSelectorOptionObj: {
-  [key in keyof Required<EndowmentOption>]: "";
-} = {
-  id: "",
-  name: "",
-};
-const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");

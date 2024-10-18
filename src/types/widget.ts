@@ -1,11 +1,10 @@
-import type { EndowmentOption } from "./aws";
 import type { OptionType, TDonateMethod } from "./components";
+export type { Endowment, EndowmentOption } from "./aws";
 
 export type WidgetConfig = {
   title?: string;
   isTitleShown: boolean;
   description?: string;
-  endowment: EndowmentOption;
   program: OptionType<string>;
   isDescriptionTextShown: boolean;
   methods: TDonateMethod[];

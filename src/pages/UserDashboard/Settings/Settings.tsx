@@ -1,8 +1,8 @@
-import { useAuthenticatedUser } from "contexts/Auth";
+import { useUser } from "../use-user";
 import EndowAlertForm from "./EndowAlertForm";
 
 export default function Settings() {
-  const user = useAuthenticatedUser();
+  const user = useUser();
   return (
     <div className="grid">
       <h2 className="text-3xl">Settings</h2>

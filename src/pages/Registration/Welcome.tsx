@@ -1,33 +1,57 @@
 import type { EndowClaim } from "@better-giving/registration/models";
+import type { Step1 } from "@better-giving/registration/step";
+import type { NewReg } from "@better-giving/registration/update";
+import { loadAuth } from "auth/load-auth";
 import Icon from "components/Icon";
 import LoadText from "components/LoadText";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME } from "constants/env";
-import { appRoutes, regRoutes } from "constants/routes";
-import { useAuthenticatedUser } from "contexts/Auth";
+import { APIs } from "constants/urls";
 import { storeRegistrationReference } from "helpers";
-import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useNewApplicationQuery } from "services/aws/registration";
+import { decodeState } from "helpers/state-params";
+import { Link, type LoaderFunction, useLoaderData } from "react-router-dom";
+import { version as v } from "services/helpers";
 import { steps } from "./routes";
 
-export function Component() {
-  const { email } = useAuthenticatedUser();
-  const { state } = useLocation();
-  const claim = state as EndowClaim | null;
-  const {
-    data: reg,
-    isLoading,
-    isError,
-  } = useNewApplicationQuery({
-    registrant_id: email,
-    claim: claim ?? undefined,
-  });
+export const loader: LoaderFunction = async ({ request }) => {
+  const auth = await loadAuth();
+  if (!auth) throw "auth is required up higher";
 
-  useEffect(() => {
-    if (!reg) return;
-    storeRegistrationReference(reg.id);
-  }, [reg]);
+  const url = new URL(request.url);
+  const claim = decodeState<EndowClaim>(url.searchParams.get("_s"));
+
+  const payload: NewReg = {
+    registrant_id: auth.email,
+  };
+  if (claim) payload.claim = claim;
+
+  const api = new URL(APIs.aws);
+
+  api.pathname = `${v(1)}/registrations`;
+
+  const post = new Request(api, {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+  post.headers.set("authorization", auth.idToken);
+
+  api.search = "";
+  const cacheKey =
+    api.toString() + `?new=true&claim=${btoa(JSON.stringify(claim))}`;
+
+  const cache = await caches.open("bg");
+  const cached = await cache.match(cacheKey);
+  if (cached) return cached.clone();
+
+  const res = await fetch(post);
+  await cache.put(cacheKey, res.clone());
+
+  const reg: Pick<Step1, "id"> = await res.json();
+  storeRegistrationReference(reg.id);
+  return reg.id;
+};
+
+export function Component() {
+  const regId = useLoaderData() as string;
 
   return (
     <div className="grid justify-items-center mx-6">
@@ -40,20 +64,11 @@ export function Component() {
       </p>
 
       <Link
-        aria-disabled={isLoading || isError || !reg}
         className="w-full max-w-[26.25rem] btn-blue btn-reg"
-        to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`}
-        state={reg}
+        to={`../${regId}/${steps.contact}`}
       >
-        <LoadText isLoading={isLoading} text="Continue registration">
-          Continue registration
-        </LoadText>
+        <LoadText text="Continue registration">Continue registration</LoadText>
       </Link>
-      {isError && (
-        <span className="text-xs text-red mt-2 text-center">
-          {GENERIC_ERROR_MESSAGE}
-        </span>
-      )}
       <p className="text-sm italic text-navy-l1 dark:text-navy-l2 mt-8 text-center">
         Note: Registration is quick, but we've sent an email link if you need to
         pause and resume at any point.

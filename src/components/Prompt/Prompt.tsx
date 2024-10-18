@@ -1,7 +1,7 @@
 import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
 import Icon from "../Icon";
-import LoaderRing from "../LoaderRing";
+import { PromptIcon } from "./prompt-icon";
 import type { Props } from "./types";
 
 export default function Prompt({
@@ -49,25 +49,4 @@ export default function Prompt({
       </div>
     </Modal>
   );
-}
-
-function PromptIcon({
-  type,
-  classes = "",
-}: Pick<Props, "type"> & { classes?: string }) {
-  const common = `justify-self-center ${classes}`;
-  switch (type) {
-    case "success":
-      return (
-        <Icon type="CheckCircle" size={92} className={common + " text-green"} />
-      );
-    case "error":
-      return (
-        <Icon type="Exclamation" size={80} className={common + " text-red"} />
-      );
-    case "loading":
-      return <LoaderRing thickness={12} classes={common + " h-24"} />;
-    default:
-      return null;
-  }
 }

@@ -1,5 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AuthError, confirmSignUp, resendSignUpCode } from "aws-amplify/auth";
+import { cognito, isError } from "auth/cognito";
 import { Field, RhfForm } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useState } from "react";
@@ -33,23 +33,15 @@ export default function ConfirmForm(props: Props) {
       methods={methods}
       onSubmit={handleSubmit(async (fv) => {
         try {
-          const result = await confirmSignUp({
-            username: props.codeRecipientEmail.raw,
-            confirmationCode: fv.code,
-          });
+          const res = await cognito.confirmSignup(
+            props.codeRecipientEmail.raw,
+            fv.code
+          );
 
-          if (
-            result.nextStep.signUpStep !== "DONE" ||
-            !result.isSignUpComplete
-          ) {
-            throw "Code confirmation failed";
-          }
+          if (isError(res)) return displayError(res.message);
 
           props.setSignupState("success");
         } catch (err) {
-          if (err instanceof AuthError) {
-            return displayError(err.message);
-          }
           handleError(err, { context: "confirming signup" });
         }
       })}
@@ -76,15 +68,13 @@ export default function ConfirmForm(props: Props) {
           try {
             setIsRequestingNewCode(true);
             //no need to inspect result
-            await resendSignUpCode({
-              username: props.codeRecipientEmail.raw,
-            });
+            const res = await cognito.resendConfirmationCode(
+              props.codeRecipientEmail.raw
+            );
+            if (isError(res)) displayError(res.message);
 
             return alert("New code has been sent to your email.");
           } catch (err) {
-            if (err instanceof AuthError) {
-              return displayError(err.message);
-            }
             handleError(err, { context: "sending code" });
           } finally {
             setIsRequestingNewCode(false);

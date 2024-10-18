@@ -50,7 +50,13 @@ export enum regRoutes {
   resume = "resume",
   success = "success",
   welcome = "welcome",
-  steps = "steps",
   sign_notice = "sign-notice",
   sign_result = "sign-result",
 }
+
+export const authRoutes: string[] = [
+  appRoutes.signin,
+  appRoutes.signup,
+  appRoutes.reset_password,
+  appRoutes.auth_redirector,
+];

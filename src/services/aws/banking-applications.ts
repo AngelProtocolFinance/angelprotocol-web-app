@@ -7,7 +7,6 @@ import type {
   BankingApplicationsPage,
   BankingApplicationsQueryParams,
   NewBankingApplication,
-  PayoutMethod,
   V2RecipientAccount,
 } from "types/aws";
 import { version as v } from "../helpers";
@@ -105,16 +104,6 @@ const bankingApplications = aws.injectEndpoints({
         return { data: { ...record, ...recipient } };
       },
     }),
-    payoutMethods: builder.query<PayoutMethod[], number>({
-      providesTags: ["banking-applications"],
-      query: (endowmentID) => {
-        return {
-          url: `/${v(1)}/banking-applications`,
-          params: { endowmentID, requestor: "endowment" },
-          headers: { Authorization: TEMP_JWT },
-        };
-      },
-    }),
   }),
 });
 
@@ -124,7 +113,6 @@ export const {
   useBankingApplicationsQuery,
   useBankingApplicationQuery,
   useDeleteBankingApplicationMutation,
-  usePayoutMethodsQuery,
   endpoints: {
     bankingApplications: { useLazyQuery: useLazyBankingApplicationsQuery },
   },

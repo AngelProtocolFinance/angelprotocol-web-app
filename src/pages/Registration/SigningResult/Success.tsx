@@ -1,11 +1,9 @@
 import Icon from "components/Icon";
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { regRoutes } from "constants/routes";
-import { getSavedRegistrationReference } from "helpers";
-import { useNavigate } from "react-router-dom";
-import { useLazyRegQuery } from "services/aws/registration";
-import { getRegistrationState } from "../Steps/getRegistrationState";
+import { Link, useNavigation, useRouteLoaderData } from "react-router-dom";
+import { nextStep } from "../routes";
+import type { Reg$IdData } from "../types";
 import type { SignerCompleteQueryParams } from "./types";
 
 const proxyFunctionURL =
@@ -16,23 +14,10 @@ const downloadZipURL = (eid: string) =>
 export default function Success({
   documentGroupEid,
 }: SignerCompleteQueryParams) {
-  const [checkPrevRegistration, { isLoading }] = useLazyRegQuery();
-  const navigate = useNavigate();
+  const navigation = useNavigation();
+  const { reg } = useRouteLoaderData("reg$Id") as Reg$IdData;
 
-  //redirect page from anvil has no information about the registration
-  const proceed = async () => {
-    try {
-      const reference = getSavedRegistrationReference();
-      if (!reference) return navigate(appRoutes.register);
-      const savedRegistration = await checkPrevRegistration(reference).unwrap();
-      const { state, nextStep } = getRegistrationState(savedRegistration);
-      navigate(`${appRoutes.register}/${regRoutes.steps}/${nextStep}`, {
-        state: state.data.init,
-      });
-    } catch (_) {
-      navigate(appRoutes.register);
-    }
-  };
+  const isLoading = navigation.state === "loading";
 
   return (
     <>
@@ -52,13 +37,13 @@ export default function Success({
         />
         <span className="uppercase text-sm font-semibold">download</span>
       </a>
-      <button
-        disabled={isLoading}
+      <Link
+        aria-disabled={isLoading}
         className="w-full max-w-[26.25rem] btn-blue btn-reg mt-4"
-        onClick={proceed}
+        to={`${appRoutes.register}/${reg.data.init.id}/${nextStep[reg.step]}`}
       >
         {isLoading ? "Loading..." : "Continue"}
-      </button>
+      </Link>
     </>
   );
 }

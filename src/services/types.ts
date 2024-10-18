@@ -15,7 +15,3 @@ export type EndowmentUpdate = SemiPartial<
 export type ProgramDeleteMsg = { id: number; program_id: string };
 
 export type BankingApplicationDetails = BankingApplication & V2RecipientAccount;
-
-export type IdOrSlug =
-  | { slug: string; id?: never }
-  | { id: number; slug?: never };

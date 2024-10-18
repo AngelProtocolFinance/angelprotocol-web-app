@@ -43,8 +43,8 @@ export function useRhf(props: Props) {
       lastName: props.user.lastName ?? "",
       avatar: {
         name: "",
-        preview: props.user.avatarUrl ?? "",
-        publicUrl: props.user.avatarUrl ?? "",
+        preview: props.user.avatar ?? "",
+        publicUrl: props.user.avatar ?? "",
       },
     },
   });
