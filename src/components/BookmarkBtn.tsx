@@ -1,9 +1,7 @@
 import { Arrow, Content, Tooltip } from "components/Tooltip";
-import { useErrorContext } from "contexts/ErrorContext";
 import { Heart } from "lucide-react";
 import { Suspense } from "react";
-import { Await } from "react-router-dom";
-import { useToggleUserBookmarkMutation } from "services/aws/aws";
+import { Await, useFetcher } from "react-router-dom";
 import type { DetailedUser, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
@@ -16,11 +14,7 @@ type Props = {
 export default function Loader({ classes = "", user, endowId }: Props) {
   const bms = user ? user.bookmarks : Promise.resolve([]);
   return (
-    <Suspense
-      fallback={
-        <Icon type="Heart" size={19} className={`${classes} text-gray`} />
-      }
-    >
+    <Suspense fallback={<Heart size={19} className={`${classes} text-gray`} />}>
       <Await resolve={bms}>
         {(bms: EndowmentBookmark[]) => (
           <BookmarkBtn
@@ -44,9 +38,7 @@ interface IBookmarkBtn {
 }
 
 function BookmarkBtn({ user, bookmarks, classes = "", endowId }: IBookmarkBtn) {
-  const { handleError } = useErrorContext();
-  const [toggle, { isLoading: isTogglingBookmark }] =
-    useToggleUserBookmarkMutation();
+  const fetcher = useFetcher();
 
   if (!user) {
     return (
@@ -63,18 +55,9 @@ function BookmarkBtn({ user, bookmarks, classes = "", endowId }: IBookmarkBtn) {
     );
   }
 
-  const isBookmarked = bookmarks.some((bm) => bm.endowId === endowId);
-
-  async function toogleBookmark() {
-    try {
-      await toggle({
-        endowId,
-        action: isBookmarked ? "delete" : "add",
-      }).unwrap();
-    } catch (err) {
-      handleError(err, { context: "changing bookmark" });
-    }
-  }
+  const isBookmarked =
+    fetcher.formData?.get("action") === "add" ||
+    bookmarks.some((bm) => bm.endowId === endowId);
 
   return (
     <Tooltip
@@ -87,15 +70,27 @@ function BookmarkBtn({ user, bookmarks, classes = "", endowId }: IBookmarkBtn) {
         ) : null
       }
     >
-      <button
-        type="button"
-        disabled={isTogglingBookmark}
-        aria-label="Add to favorites button"
-        onClick={toogleBookmark}
-        className={`flex items-center gap-1 disabled:text-gray-l4 ${classes}`}
-      >
-        <Heart size={19} className={isBookmarked ? "fill-red text-red" : ""} />
-      </button>
+      <fetcher.Form action="/" method="post" className="contents">
+        <input
+          type="hidden"
+          name="action"
+          value={isBookmarked ? "delete" : "add"}
+        />
+        <input type="hidden" name="endowId" value={endowId} />
+        <button
+          name="intent"
+          value="toggle-bookmark"
+          type="submit"
+          disabled={fetcher.state !== "idle"}
+          aria-label="Add to favorites button"
+          className={`flex items-center gap-1 disabled:text-gray-l4 ${classes}`}
+        >
+          <Heart
+            size={19}
+            className={isBookmarked ? "fill-red text-red" : ""}
+          />
+        </button>
+      </fetcher.Form>
     </Tooltip>
   );
 }

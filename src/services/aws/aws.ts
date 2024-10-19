@@ -32,63 +32,11 @@ export const aws = createApi({
     "endow-admins",
     "donations",
     "user",
-    "user-bookmarks",
     "user-endows",
   ],
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    userBookmarks: builder.query<number[], null>({
-      providesTags: ["user-bookmarks"],
-      query: () => ({
-        url: `${v(1)}/bookmarks`,
-        //get user id from jwt
-        headers: { authorization: TEMP_JWT },
-      }),
-    }),
-    toggleUserBookmark: builder.mutation<
-      unknown,
-      { endowId: number; action: "add" | "delete" }
-    >({
-      invalidatesTags: ["user-bookmarks"],
-      query: ({ endowId, action }) => {
-        if (action === "add") {
-          return {
-            url: `${v(1)}/bookmarks`,
-            method: "POST",
-            body: { endowId },
-            headers: { authorization: TEMP_JWT },
-          };
-        }
-
-        return {
-          url: `${v(1)}/bookmarks/${endowId}`,
-          method: "DELETE",
-          //get user id from jwt
-          headers: { authorization: TEMP_JWT },
-        };
-      },
-      async onQueryStarted({ endowId, action }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          aws.util.updateQueryData("userBookmarks", null, (draft) => {
-            if (action === "add") {
-              draft.push(endowId);
-            } else {
-              const idx = draft.indexOf(endowId);
-              if (idx !== -1) {
-                draft.splice(idx, 1);
-              }
-            }
-          })
-        );
-        try {
-          await queryFulfilled;
-        } catch {
-          patchResult.undo();
-        }
-      },
-    }),
-
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
       invalidatesTags: (_, error) => (error ? [] : ["endowments", "endowment"]),
       query: ({ id, ...payload }) => {
@@ -118,8 +66,6 @@ export const aws = createApi({
 });
 
 export const {
-  useUserBookmarksQuery,
-  useToggleUserBookmarkMutation,
   useEditEndowmentMutation,
   useDonationsQuery,
   useLazyDonationsQuery,
