@@ -2,7 +2,7 @@ import CsvExporter from "components/CsvExporter";
 import Icon from "components/Icon";
 import { Info } from "components/Status";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFetcher, useSearchParams } from "react-router-dom";
 import type { Donation, DonationsPage } from "types/aws";
 import type { Ensure } from "types/utils";
@@ -17,19 +17,17 @@ export default function DonationsTable({ classes = "", firstPage }: Props) {
   const { data, state, load } = useFetcher<DonationsPage>(); //initially undefined
   const [params] = useSearchParams();
   const [items, setItems] = useState(firstPage.Items);
-  const pageRef = useRef(1);
 
   useEffect(() => {
     if (!data || state === "loading") return;
     setItems((prev) => [...prev, ...(data.Items || [])]);
-    pageRef.current = pageRef.current + 1;
   }, [data, state]);
 
   if (items.length === 0) {
     return <Info>No donations found</Info>;
   }
 
-  const nextPage = pageRef.current > 1 ? data?.nextPage : firstPage.nextPage;
+  const nextPage = data ? data.nextPage : firstPage.nextPage;
 
   function loadNext() {
     if (!nextPage) throw `should not call load when there's no next page`;
