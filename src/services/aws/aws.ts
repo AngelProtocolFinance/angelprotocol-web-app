@@ -1,4 +1,3 @@
-import type { Verdict } from "@better-giving/registration/approval";
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
@@ -102,17 +101,6 @@ export const aws = createApi({
       },
     }),
 
-    reviewApplication: builder.mutation<any, Verdict & { id: string }>({
-      invalidatesTags: ["application", "applications"],
-      query: ({ id, ...verdict }) => {
-        return {
-          url: `${v(1)}/registrations/${id}/review`,
-          method: "POST",
-          headers: { authorization: TEMP_JWT },
-          body: verdict,
-        };
-      },
-    }),
     donations: builder.query<
       { Items: Donation.Record[]; nextPage?: number },
       DonationsQueryParams
@@ -133,7 +121,6 @@ export const {
   useUserBookmarksQuery,
   useToggleUserBookmarkMutation,
   useEditEndowmentMutation,
-  useReviewApplicationMutation,
   useDonationsQuery,
   useLazyDonationsQuery,
   util: {
