@@ -11,13 +11,13 @@ import {
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useFieldArray, useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { Outlet, useFetcher, useLoaderData } from "react-router-dom";
+import type { EndowmentUpdate } from "services/types";
 import {
+  incrementLabelMaxChars,
   type Endowment,
   type EndowmentSettingsAttributes,
-  incrementLabelMaxChars,
 } from "types/aws";
-import { useUpdateEndowment } from "../common";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import { type FV, schema } from "./types";
 
@@ -27,7 +27,7 @@ export default function Form() {
     "id" | EndowmentSettingsAttributes
   >;
 
-  const updateEndow = useUpdateEndowment();
+  const fetcher = useFetcher();
   const { displayError } = useErrorContext();
 
   const {
@@ -63,7 +63,7 @@ export default function Form() {
 
   return (
     <F
-      disabled={isSubmitting}
+      disabled={isSubmitting || fetcher.state !== "idle"}
       onReset={(e) => {
         e.preventDefault();
         reset();
@@ -75,14 +75,19 @@ export default function Form() {
               "BG donation flow should not show BG tip screen"
             );
           }
-
-          await updateEndow({
+          const update: EndowmentUpdate = {
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
             id: endow.id,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
               .map((m) => m.id),
+          };
+
+          fetcher.submit(update as any, {
+            method: "post",
+            action: ".",
+            encType: "application/json",
           });
         }
       )}
@@ -217,6 +222,7 @@ export default function Form() {
           Submit changes
         </button>
       </div>
+      <Outlet />
     </F>
   );
 }

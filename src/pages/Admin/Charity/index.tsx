@@ -1,4 +1,6 @@
+import PromptV2 from "components/Prompt/PromptV2";
 import { adminRoutes } from "constants/routes";
+import { ErrorElement } from "errors/ErrorElement";
 import type { RouteObject } from "react-router-dom";
 import Banking, {
   NewPayoutMethod,
@@ -16,7 +18,17 @@ export const charityRoutes: RouteObject[] = [
     path: adminRoutes.program_editor + "/:programId",
     lazy: () => import("./ProgramEditor"),
   },
-  { path: adminRoutes.settings, lazy: () => import("./Settings") },
+  {
+    path: adminRoutes.settings,
+    lazy: () => import("./Settings"),
+    errorElement: <ErrorElement />,
+    children: [
+      {
+        path: "success",
+        element: <PromptV2 type="success" children="Settings updated" />,
+      },
+    ],
+  },
   { path: adminRoutes.members, lazy: () => import("./Members") },
   {
     path: adminRoutes.banking,
