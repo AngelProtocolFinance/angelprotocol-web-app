@@ -1,29 +1,23 @@
-import { adminRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useAdminContext } from "pages/Admin/Context";
-import { useNavigate } from "react-router-dom";
-import { useNewProgramMutation } from "services/aws/programs";
+import { useFetcher } from "react-router-dom";
+import type { NewProgram } from "types/aws";
 import List from "./List";
 
 export default function Programs() {
-  const { id } = useAdminContext();
-  const navigate = useNavigate();
-  const { handleError } = useErrorContext();
-  const [createProgram, { isLoading }] = useNewProgramMutation();
-
+  const fetcher = useFetcher();
   async function handleCreateProgram() {
-    try {
-      const result = await createProgram({
-        title: "New program",
-        description: "program description",
-        endowId: id,
-        milestones: [],
-      }).unwrap();
-      navigate(`../${adminRoutes.program_editor}/${result.id}`);
-    } catch (err) {
-      handleError(err, { context: "creating program" });
-    }
+    const program: NewProgram = {
+      title: "New program",
+      description: "program description",
+      milestones: [],
+    };
+    fetcher.submit(program, {
+      action: ".",
+      method: "post",
+      encType: "application/json",
+    });
   }
+
+  const isLoading = fetcher.state !== "idle";
 
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">
