@@ -8,7 +8,6 @@ import {
   type RouteObject,
   useLoaderData,
 } from "react-router-dom";
-import Donations from "./Donations";
 import EditProfile from "./EditProfile";
 import Settings from "./Settings";
 import { linkGroups, routes } from "./routes";
@@ -39,7 +38,7 @@ export const userDashboardRoute: RouteObject = {
   loader,
   children: [
     { path: routes.edit_profile, element: <EditProfile /> },
-    { path: routes.donations, element: <Donations /> },
+    { path: routes.donations, lazy: () => import("./Donations") },
     { path: routes.settings, element: <Settings /> },
     { index: true, element: <Navigate to={routes.edit_profile} /> },
   ],

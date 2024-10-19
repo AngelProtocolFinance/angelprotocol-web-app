@@ -4,18 +4,17 @@ import { replaceWithEmptyString as fill, humanize } from "helpers";
 import { FileSpreadsheet } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useFetcher, useSearchParams } from "react-router-dom";
-import type { Donation } from "types/aws";
+import type { Donation, DonationsPage } from "types/aws";
 import type { Ensure } from "types/utils";
 import Table from "./Table";
-import type { Page } from "./types";
 
 interface Props {
   classes?: string;
-  firstPage: Page;
+  firstPage: DonationsPage;
 }
 
 export default function DonationsTable({ classes = "", firstPage }: Props) {
-  const { data, state, load } = useFetcher<Page>(); //initially undefined
+  const { data, state, load } = useFetcher<DonationsPage>(); //initially undefined
   const [params] = useSearchParams();
   const [items, setItems] = useState(firstPage.Items);
   const pageRef = useRef(1);
