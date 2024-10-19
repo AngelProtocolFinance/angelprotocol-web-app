@@ -1,10 +1,11 @@
 import Icon from "components/Icon";
-import { useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import { Loaded } from "./Loaded";
 import { monthPeriod } from "./monthPeriod";
+import type { DashboardData } from "./route";
 
 export default function Dashboard() {
-  const [alloc, balance]: any = useLoaderData();
+  const { alloc, bal } = useLoaderData() as DashboardData;
   const period = monthPeriod();
 
   return (
@@ -21,7 +22,9 @@ export default function Dashboard() {
         </div>
       )}
 
-      <Loaded balances={balance} allocation={alloc} />
+      <Loaded balances={bal} allocation={alloc} />
+      {/** prompts render here */}
+      <Outlet />
     </div>
   );
 }

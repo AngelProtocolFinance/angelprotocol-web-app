@@ -1,38 +1,28 @@
 import { getEndow } from "api/get/endow";
 import type { ImgLink } from "components/ImgEditor";
-import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { isEmpty } from "helpers";
 import { getFullURL, uploadFiles } from "helpers/uploadFiles";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
-import { useEditEndowmentMutation } from "services/aws/aws";
+import { useFetcher } from "react-router-dom";
 import type { EndowmentProfileUpdate } from "types/aws";
 import type { UNSDG_NUMS } from "types/lists";
-import type { Ensure } from "types/utils";
 import type { FV } from "./schema";
 
 type DirtyFields = FieldNamesMarkedBoolean<FV>;
 
-export default function useEditProfile(id: number, df: DirtyFields) {
-  const [submit] = useEditEndowmentMutation();
-  const { showModal } = useModalContext();
+export default function useEditProfile(df: DirtyFields) {
+  const fetcher = useFetcher();
   const { displayError, handleError } = useErrorContext();
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
-      const [bannerUrl, logoUrl, cardImgUrl] = await uploadImgs(
-        [fv.image, fv.logo, fv.card_img],
-        () => {
-          showModal(
-            Prompt,
-            { type: "loading", children: "Uploading images.." },
-            { isDismissible: false }
-          );
-        }
-      );
+      const [bannerUrl, logoUrl, cardImgUrl] = await uploadImgs([
+        fv.image,
+        fv.logo,
+        fv.card_img,
+      ]);
 
-      const update: Ensure<Partial<EndowmentProfileUpdate>, "id"> = { id };
+      const update: Partial<EndowmentProfileUpdate> = {};
 
       if (df.slug) {
         const result = await getEndow(fv.slug, ["id"]);
@@ -69,11 +59,10 @@ export default function useEditProfile(id: number, df: DirtyFields) {
       if (df.social_media_urls) update.social_media_urls = fv.social_media_urls;
       if (df.published) update.published = fv.published;
 
-      await submit(update).unwrap();
-
-      return showModal(Prompt, {
-        type: "success",
-        children: "Successfully updated profile",
+      fetcher.submit(update, {
+        method: "patch",
+        action: ".",
+        encType: "application/json",
       });
     } catch (err) {
       handleError(err, { context: "applying profile changes" });
@@ -82,15 +71,12 @@ export default function useEditProfile(id: number, df: DirtyFields) {
 
   return {
     onSubmit,
+    state: fetcher.state,
   };
 }
 
-async function uploadImgs(
-  imgs: ImgLink[],
-  onUpload: () => void
-): Promise<string[]> {
+async function uploadImgs(imgs: ImgLink[]): Promise<string[]> {
   const files = imgs.flatMap((img) => (img.file ? [img.file] : []));
-  if (!isEmpty(files)) onUpload();
   const baseURL = await uploadFiles(files, "endow-profiles");
   return imgs.map((img) =>
     img.file && baseURL ? getFullURL(baseURL, img.file.name) : img.publicUrl

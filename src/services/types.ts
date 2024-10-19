@@ -5,11 +5,9 @@ import type {
   EndowmentSettingsUpdate,
   V2RecipientAccount,
 } from "types/aws";
-import type { SemiPartial } from "types/utils";
 
-export type EndowmentUpdate = SemiPartial<
-  EndowmentProfileUpdate & EndowmentSettingsUpdate & EndowmentAllocationUpdate,
-  "id"
+export type EndowmentUpdate = Partial<
+  EndowmentProfileUpdate & EndowmentSettingsUpdate & EndowmentAllocationUpdate
 >;
 
 export type ProgramDeleteMsg = { id: number; program_id: string };

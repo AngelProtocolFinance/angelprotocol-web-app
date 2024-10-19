@@ -76,7 +76,6 @@ export default function Form() {
           const update: EndowmentUpdate = {
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
-            id: endow.id,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
               .map((m) => m.id),
