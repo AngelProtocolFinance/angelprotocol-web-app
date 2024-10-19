@@ -5,12 +5,12 @@ import { CheckField, RhfForm } from "components/form";
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { Outlet, useFetcher, useLoaderData } from "react-router-dom";
 import { schema } from "schemas/shape";
+import type { EndowmentUpdate } from "services/types";
 import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
 import type { TDonateMethod } from "types/components";
 import { array, string } from "yup";
-import { useUpdateEndowment } from "../common";
 import HideBGTipCheckbox from "./HideBGTipCheckbox";
 import ReceiptMsg from "./ReceiptMsg";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
@@ -22,7 +22,7 @@ export default function Form() {
     "id" | EndowmentSettingsAttributes
   >;
 
-  const updateEndow = useUpdateEndowment();
+  const fetcher = useFetcher();
   const { displayError } = useErrorContext();
 
   const methods = useForm({
@@ -60,7 +60,7 @@ export default function Form() {
 
   return (
     <RhfForm
-      disabled={isSubmitting}
+      disabled={isSubmitting || fetcher.state !== "idle"}
       methods={methods}
       onReset={(e) => {
         e.preventDefault();
@@ -73,14 +73,19 @@ export default function Form() {
               "BG donation flow should not show BG tip screen"
             );
           }
-
-          await updateEndow({
+          const update: EndowmentUpdate = {
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
             id: endow.id,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
               .map((m) => m.id),
+          };
+
+          fetcher.submit(update as any, {
+            method: "post",
+            action: ".",
+            encType: "application/json",
           });
         }
       )}
@@ -140,6 +145,7 @@ export default function Form() {
           Submit changes
         </button>
       </div>
+      <Outlet />
     </RhfForm>
   );
 }
