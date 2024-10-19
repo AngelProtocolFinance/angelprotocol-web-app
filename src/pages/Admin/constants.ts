@@ -12,12 +12,7 @@ import {
   Wallet,
 } from "lucide-react";
 
-const { program_editor: _pe, index: _i, ...restAdminRoutes } = adminRoutes;
-
-const sidebarRoutes = {
-  ...restAdminRoutes,
-  dashboard: "",
-} as const;
+const { program_editor: _pe, ...sidebarRoutes } = adminRoutes;
 
 const linkGroup1: LinkGroup = {
   links: [

@@ -1,25 +1,21 @@
 import { getEndow } from "api/get/endow";
-import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { uploadFile } from "helpers/uploadFile";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
-import { useEditEndowmentMutation } from "services/aws/aws";
+import { useFetcher } from "react-router-dom";
 import type { EndowmentProfileUpdate } from "types/aws";
 import type { UNSDG_NUMS } from "types/lists";
-import type { Ensure } from "types/utils";
 import type { FV } from "./schema";
 
 type DirtyFields = FieldNamesMarkedBoolean<FV>;
 
-export default function useEditProfile(id: number, df: DirtyFields) {
-  const [submit] = useEditEndowmentMutation();
-  const { showModal } = useModalContext();
+export default function useEditProfile(df: DirtyFields) {
+  const fetcher = useFetcher();
   const { displayError, handleError } = useErrorContext();
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
-      const update: Ensure<Partial<EndowmentProfileUpdate>, "id"> = { id };
+      const update: Partial<EndowmentProfileUpdate> = {};
 
       if (df.logo && fv.logo.file) {
         const obj = await uploadFile(fv.logo.file, "endow-profiles");
@@ -69,11 +65,10 @@ export default function useEditProfile(id: number, df: DirtyFields) {
       if (df.social_media_urls) update.social_media_urls = fv.social_media_urls;
       if (df.published) update.published = fv.published;
 
-      await submit(update).unwrap();
-
-      return showModal(Prompt, {
-        type: "success",
-        children: "Successfully updated profile",
+      fetcher.submit(update, {
+        method: "patch",
+        action: ".",
+        encType: "application/json",
       });
     } catch (err) {
       handleError(err, { context: "applying profile changes" });
@@ -82,5 +77,6 @@ export default function useEditProfile(id: number, df: DirtyFields) {
 
   return {
     onSubmit,
+    state: fetcher.state,
   };
 }

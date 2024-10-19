@@ -7,9 +7,10 @@ import { RichText } from "components/RichText";
 import { List, MultiList } from "components/Selector";
 import { Confirmed, Info } from "components/Status";
 import { ControlledToggle as Toggle } from "components/Toggle";
-import { NativeField as Field, Label } from "components/form";
+import { Form as F, NativeField as Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
+import { Outlet } from "react-router-dom";
 import type { EndowDesignation } from "types/aws";
 import Slug from "./Slug";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
@@ -38,9 +39,10 @@ interface Props {
 
 export default function Form({ initSlug = "", init, id }: Props) {
   const { dirtyFields, handleSubmit, ...rhf } = useRhf(init);
-  const { onSubmit } = useEditProfile(id, dirtyFields);
+  const { onSubmit, state } = useEditProfile(dirtyFields);
   return (
-    <form
+    <F
+      disabled={rhf.isSubmitting || state !== "idle"}
       onReset={(e) => {
         e.preventDefault();
         rhf.reset();
@@ -337,20 +339,22 @@ export default function Form({ initSlug = "", init, id }: Props) {
 
       <div className="flex gap-3 group-disabled:hidden">
         <button
-          disabled={rhf.isSubmitting || !rhf.isDirty}
+          disabled={!rhf.isDirty}
           type="reset"
           className="px-6 btn-outline-filled text-sm"
         >
           Reset changes
         </button>
         <button
-          disabled={rhf.isSubmitting || !rhf.isDirty}
+          disabled={!rhf.isDirty}
           type="submit"
           className="px-6 btn-blue text-sm"
         >
           Submit changes
         </button>
       </div>
-    </form>
+      {/** success prompts */}
+      <Outlet />
+    </F>
   );
 }

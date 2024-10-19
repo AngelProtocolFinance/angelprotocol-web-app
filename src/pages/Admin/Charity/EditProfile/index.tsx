@@ -9,6 +9,7 @@ import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
 
 export const loader: LoaderFunction = async ({ params }) => getEndow(params.id);
+export { action } from "../endow-update-action";
 
 export function Component() {
   const endow = useLoaderData() as TProfile;

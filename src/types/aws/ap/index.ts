@@ -190,6 +190,7 @@ export type EndowmentSettingsAttributes = keyof Pick<
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
+  | "id"
   | "endow_designation"
   | "fiscal_sponsored"
   | "claimed"

@@ -1,18 +1,29 @@
 import PromptV2 from "components/Prompt/PromptV2";
 import { adminRoutes } from "constants/routes";
 import { ErrorElement } from "errors/ErrorElement";
-import type { RouteObject } from "react-router-dom";
+import { Navigate, type RouteObject } from "react-router-dom";
 import Banking, {
   NewPayoutMethod,
   PayoutMethodDetails,
   payoutMethodsLoader,
   payoutMethodLoader,
 } from "./Banking";
+import { dashboardRoute } from "./Dashboard/route";
 import { mediaRoutes } from "./Media";
 
 export const charityRoutes: RouteObject[] = [
   { path: adminRoutes.donations, lazy: () => import("./Donations") },
-  { path: adminRoutes.edit_profile, lazy: () => import("./EditProfile") },
+  {
+    path: adminRoutes.edit_profile,
+    lazy: () => import("./EditProfile"),
+    errorElement: <ErrorElement />,
+    children: [
+      {
+        path: "success",
+        element: <PromptV2 type="success" children="Profile updated" />,
+      },
+    ],
+  },
   { path: adminRoutes.programs, lazy: () => import("./Programs") },
   {
     path: adminRoutes.program_editor + "/:programId",
@@ -43,6 +54,11 @@ export const charityRoutes: RouteObject[] = [
     ],
   },
   { path: adminRoutes.form_builder, lazy: () => import("../../Widget") },
-  { index: true, lazy: () => import("./Dashboard") },
+  dashboardRoute,
+  {
+    index: true,
+    element: <Navigate to={adminRoutes.dashboard} />,
+  },
+
   ...mediaRoutes,
 ];

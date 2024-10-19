@@ -14,9 +14,9 @@ import { useController, useFieldArray, useForm } from "react-hook-form";
 import { Outlet, useFetcher, useLoaderData } from "react-router-dom";
 import type { EndowmentUpdate } from "services/types";
 import {
-  incrementLabelMaxChars,
   type Endowment,
   type EndowmentSettingsAttributes,
+  incrementLabelMaxChars,
 } from "types/aws";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import { type FV, schema } from "./types";
@@ -78,7 +78,6 @@ export default function Form() {
           const update: EndowmentUpdate = {
             ...fv,
             progDonationsAllowed: !programDonateDisabled,
-            id: endow.id,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
               .map((m) => m.id),

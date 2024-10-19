@@ -29,7 +29,7 @@ export enum appRoutes {
 }
 
 export const adminRoutes = {
-  index: "",
+  dashboard: "dashboard",
   edit_profile: "edit-profile",
   programs: "programs",
   program_editor: "program-editor",

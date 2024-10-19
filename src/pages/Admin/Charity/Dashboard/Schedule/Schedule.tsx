@@ -1,11 +1,9 @@
 import { Arrow, Content, Tooltip } from "components/Tooltip";
-import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
-import { useAdminContext } from "pages/Admin/Context";
 import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import type { Allocation } from "types/aws";
-import { Edit } from "./Edit";
 import { allocationOptions, toAllocOptValue } from "./common";
 
 interface Props {
@@ -17,9 +15,6 @@ interface Props {
   disabled?: boolean;
 }
 export function Schedule(props: Props) {
-  const { id } = useAdminContext();
-  const { showModal } = useModalContext();
-
   const presetOpt = allocationOptions.find(
     (opt) => opt.value === toAllocOptValue(props.allocation)
   );
@@ -39,17 +34,16 @@ export function Schedule(props: Props) {
           </div>
         ) : null}
 
-        <button
-          disabled={props.disabled}
-          type="button"
+        <Link
+          title="Edit allocation settings"
+          to="edit-alloc"
+          replace
+          preventScrollReset
+          aria-disabled={props.disabled}
           className="hover:text-blue disabled:text-gray"
-          onClick={() => {
-            showModal(Edit, { ...props.allocation, amount: props.amount, id });
-          }}
         >
           <Pencil className="h-4 w-4" />
-          <span className="sr-only">Edit allocation settings</span>
-        </button>
+        </Link>
       </div>
 
       <div className="grid grid-cols-[auto_auto_auto_1fr_auto_auto] gap-y-3 gap-x-2 mt-4">

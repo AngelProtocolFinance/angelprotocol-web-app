@@ -2,11 +2,8 @@ import Copier from "components/Copier";
 import { DONATION_INCREMENTS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { cleanObject } from "helpers/cleanObject";
-import type {
-  Endowment,
-  WidgetConfig,
-  WidgetURLSearchParams,
-} from "types/widget";
+import type { Endowment } from "types/aws";
+import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
 type Props = {
   classes?: string;

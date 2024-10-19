@@ -20,11 +20,6 @@ export const widgetConfig = v.object({
   isTitleShown: v.boolean(),
   description: v.optional(description),
   //from dropdown
-  endowment: v.object({
-    id: v.number(),
-    name: str,
-  }),
-  //from dropdown
   program: v.object({
     label: str,
     value: str,
