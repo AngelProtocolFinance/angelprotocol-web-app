@@ -210,9 +210,8 @@ export type EndowmentAllocationUpdate = Pick<Required<Endowment>, "allocation">;
 export type NewProgram = Omit<Program, "id" | "milestones"> & {
   milestones: Omit<Milestone, "id">[];
 };
-export type ProgramUpdate = PartialExcept<
-  Omit<Program, "milestones" | "targetRaise">,
-  "id"
+export type ProgramUpdate = Partial<
+  Omit<Program, "milestones" | "targetRaise" | "id">
 > & { targetRaise?: number | null /** unsets the target */ };
 
 export type NewMilestone = Omit<Milestone, "id">;

@@ -1,5 +1,6 @@
 import CsvExporter from "components/CsvExporter";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
+import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useFetcher, useLoaderData, useSearchParams } from "react-router-dom";
 import type { Donation } from "types/aws";
@@ -9,7 +10,6 @@ import NoDonations from "./NoDonations";
 import StatusTabs from "./StatusTabs";
 import Table from "./Table";
 import type { DonationsData } from "./donations-loader";
-import { Search } from "lucide-react";
 
 export { loader } from "./donations-loader";
 

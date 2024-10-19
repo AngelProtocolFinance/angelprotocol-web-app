@@ -27,7 +27,7 @@ export const action: LoaderFunction = async ({ request, params }) => {
 
     const key = new URL(APIs.aws);
     key.pathname = `${v(1)}/endowments/${params.id}/programs`;
-    await caches.open("cache").then((cache) => cache.delete(key));
+    await caches.open("bg").then((cache) => cache.delete(key));
 
     return res;
   }
@@ -42,10 +42,7 @@ export const action: LoaderFunction = async ({ request, params }) => {
   });
   const res = await fetch(req);
   if (!res.ok) throw res;
-
-  const key = new URL(APIs.aws);
-  key.pathname = `${v(1)}/endowments/${params.id}/programs`;
-  await caches.open("cache").then((cache) => cache.delete(key));
+  await caches.open("bg").then((cache) => cache.delete(url));
 
   const id = await res.json().then((data) => data.id);
   return redirect(`../${adminRoutes.program_editor}/${id}`);
