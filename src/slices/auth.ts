@@ -3,7 +3,6 @@ import {
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";
-import { type AuthUser, fetchAuthSession, signOut } from "aws-amplify/auth";
 import { IS_TEST } from "constants/env";
 import { APIs } from "constants/urls";
 import { logger } from "helpers";
@@ -18,13 +17,11 @@ const initialState: State = {
   user: null,
 };
 
-export const logout = createAsyncThunk("auth/logout", signOut);
-
-export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
+export const loadSession = createAsyncThunk<User, any | undefined>(
   "auth/loadSession",
   async (_) => {
     try {
-      const session = await fetchAuthSession();
+      const session = {} as any;
       const idToken = session.tokens?.idToken;
       if (!idToken) return null;
       if (!idToken.payload.exp) return null;
@@ -108,11 +105,6 @@ const auth = createSlice({
     });
     builder.addCase(loadSession.pending, (state) => {
       state.user = "loading";
-    });
-    builder.addCase(logout.pending, (state) => {
-      if (userIsSignedIn(state.user)) {
-        state.user.isSigningOut = true;
-      }
     });
   },
 });

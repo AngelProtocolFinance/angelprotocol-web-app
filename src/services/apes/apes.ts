@@ -1,11 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { PaymentIntent } from "@stripe/stripe-js";
-import { fetchAuthSession } from "aws-amplify/auth";
-import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
 import { bgCookies, getCookie, setCookie } from "helpers/cookie";
-import type { RootState } from "store/store";
-import { userIsSignedIn } from "types/auth";
 import type {
   Crypto,
   DonationIntent,
@@ -35,29 +31,6 @@ export const apes = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: APIs.apes,
     mode: "cors",
-    async prepareHeaders(headers, { getState }) {
-      const {
-        auth: { user },
-      } = getState() as RootState;
-
-      if (headers.get("authorization") === TEMP_JWT) {
-        if (!userIsSignedIn(user)) return headers;
-        const nowSeconds = Math.round(+new Date() / 1000);
-
-        const token =
-          nowSeconds < user.tokenExpiry
-            ? user.token
-            : /** fetching session fires `tokenRefresh | tokenRefresh_failure` event in Hub */
-              await fetchAuthSession({ forceRefresh: true }).then((res) =>
-                res.tokens?.idToken?.toString()
-              );
-
-        if (!token) return headers;
-
-        headers.set("authorization", token);
-      }
-      return headers;
-    },
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
@@ -65,7 +38,6 @@ export const apes = createApi({
       query: (params) => ({
         url: `fiat-donation/paypal/orders/${params.orderId}/capture`,
         method: "POST",
-        headers: { authorization: TEMP_JWT },
       }),
     }),
     createCryptoIntent: builder.query<Crypto.NewPayment, DonationIntent.Crypto>(
@@ -73,7 +45,6 @@ export const apes = createApi({
         query: (params) => ({
           url: "crypto-intents",
           method: "POST",
-          headers: { authorization: TEMP_JWT },
           body: JSON.stringify(params),
         }),
       }
@@ -116,7 +87,6 @@ export const apes = createApi({
       query: (params) => ({
         url: "fiat-donation/paypal/orders/v2",
         method: "POST",
-        headers: { authorization: TEMP_JWT },
         body: JSON.stringify(params),
       }),
       transformResponse: (res: { orderId: string }) => res.orderId,

@@ -26,10 +26,10 @@ export default function ProgramInfo(props: Program) {
   });
   const {
     handleSubmit,
-    formState: { isSubmitting, isDirty },
+    formState: { isSubmitting, isDirty, dirtyFields },
   } = methods;
 
-  const submit = useSubmit(props);
+  const { submit, isLoading } = useSubmit(dirtyFields);
 
   return (
     <Group title="Program information">
@@ -73,11 +73,11 @@ export default function ProgramInfo(props: Program) {
           placeholder="e.g. $1000"
         />
         <button
-          disabled={!isDirty}
+          disabled={!isDirty || isLoading || isSubmitting}
           type="submit"
           className="@lg:justify-self-end btn-blue py-2 text-sm"
         >
-          Save changes
+          {isLoading || isSubmitting ? "Saving..." : "Save changes"}
         </button>
       </RhfForm>
     </Group>

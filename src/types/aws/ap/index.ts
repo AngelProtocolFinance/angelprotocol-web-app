@@ -1,5 +1,6 @@
 import type { Except } from "type-fest";
 import type { PartialExcept } from "types/utils";
+import * as v from "valibot";
 import type { DonateMethodId, UNSDG_NUMS } from "../../lists";
 
 export type Milestone = {
@@ -158,6 +159,7 @@ export type EndowmentSettingsAttributes = Extract<
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
   Required<Endowment>,
+  | "id"
   | "endow_designation"
   | "fiscal_sponsored"
   | "claimed"
@@ -177,9 +179,8 @@ export type EndowmentAllocationUpdate = Pick<Required<Endowment>, "allocation">;
 export type NewProgram = Omit<Program, "id" | "milestones"> & {
   milestones: Omit<Milestone, "id">[];
 };
-export type ProgramUpdate = PartialExcept<
-  Omit<Program, "milestones" | "targetRaise">,
-  "id"
+export type ProgramUpdate = Partial<
+  Omit<Program, "milestones" | "targetRaise" | "id">
 > & { targetRaise?: number | null /** unsets the target */ };
 
 export type NewMilestone = Omit<Milestone, "id">;
@@ -192,18 +193,6 @@ export type MilestoneDelete = {
 
 export type SortDirection = "asc" | "desc";
 export type EndowmentsSortKey = "name_internal" | "overall";
-
-export type EndowmentsQueryParams = {
-  /** can be empty string */
-  query: string;
-  page: number; //to load next page, set to Page + 1
-  endow_designation?: string; // comma separated EndowDesignation values
-  sdgs?: string; // comma separated sdg values.
-  kyc_only?: string; // comma separated boolean values
-  countries?: string; //comma separated country names
-  /** boolean csv */
-  claimed?: string;
-};
 
 export type EndowmentBookmark = {
   endowId: number;
@@ -219,3 +208,42 @@ export type UserAttributes = {
 };
 
 export type UserUpdate = Partial<UserAttributes>;
+
+const csvToStrs = (x: string) => x.split(",").filter((x) => x);
+const csvToBools = (x: string) => csvToStrs(x).map((x) => x === "true");
+const csvToNums = (x: string) => csvToStrs(x).map((x) => +x);
+
+const str = v.pipe(v.string(), v.nonEmpty());
+
+const boolArr = v.pipe(
+  v.string(),
+  v.transform(csvToBools),
+  v.everyItem((x) => v.safeParse(v.boolean(), x).success)
+);
+const strArr = v.pipe(
+  v.string(),
+  v.transform(csvToStrs),
+  v.everyItem((x) => v.safeParse(str, x).success),
+  v.sortItems((a, b) => a.localeCompare(b))
+);
+
+const sdg = v.pipe(v.number(), v.integer(), v.minValue(1), v.maxValue(17));
+
+export const endowQParams = v.object({
+  query: v.optional(v.string()),
+  sdgs: v.optional(
+    v.pipe(
+      v.string(),
+      v.transform(csvToNums),
+      v.everyItem((x) => v.safeParse(sdg, x).success),
+      v.sortItems((a, b) => a - b)
+    )
+  ),
+  kyc_only: v.optional(boolArr),
+  countries: v.optional(strArr),
+  endow_designation: v.optional(strArr),
+  claimed: v.optional(boolArr),
+});
+
+export type EndowQParams = v.InferInput<typeof endowQParams>;
+export type ParsedEndowQParams = v.InferOutput<typeof endowQParams>;

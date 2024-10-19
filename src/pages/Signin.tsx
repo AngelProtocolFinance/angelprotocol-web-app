@@ -1,18 +1,24 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
-import { AuthError, signIn, signInWithRedirect } from "aws-amplify/auth";
+import { cognito, isError, oauth } from "auth/cognito";
+import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import LoaderRing from "components/LoaderRing";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
+import { decodeState, toWithState } from "helpers/state-params";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import {
+  Link,
+  type LoaderFunction,
+  redirect,
+  useLoaderData,
+  useNavigate,
+} from "react-router-dom";
 import { password, requiredString } from "schemas/string";
-import { useGetter } from "store/accessors";
 import type { OAuthState } from "types/auth";
 import { object } from "yup";
 
@@ -21,7 +27,21 @@ type FormValues = {
   password: string;
 };
 
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<Response | unknown> => {
+  const auth = await loadAuth();
+  if (auth) return redirect(appRoutes.marketplace);
+
+  const url = new URL(request.url);
+  return decodeState(url.searchParams.get("_s"));
+};
+
 export function Component() {
+  const navigate = useNavigate();
+  const fromState = useLoaderData() as unknown;
+  const redirect = getAuthRedirect(fromState as any);
+
   const { handleError, displayError } = useErrorContext();
   const {
     register,
@@ -36,35 +56,16 @@ export function Component() {
     ),
   });
 
-  const { state: fromState } = useLocation();
-  const redirect = getAuthRedirect(fromState);
-  const currUser = useGetter((state) => state.auth.user);
-
-  if (currUser === "loading" || currUser?.isSigningOut) {
-    return (
-      <div className="grid content-start place-items-center py-14">
-        <LoaderRing thickness={12} classes="w-32 mt-8" />
-      </div>
-    );
-  }
-
-  if (currUser) {
-    return <Navigate to={redirect.path} state={redirect.data} replace />;
-  }
-
   async function submit(fv: FormValues) {
     try {
-      const { nextStep } = await signIn({
-        username: fv.email.toLowerCase(),
-        password: fv.password,
-      });
+      const res = await cognito.initiate(fv.email.toLowerCase(), fv.password);
 
-      if (nextStep.signInStep !== "DONE")
-        throw `Unexpected next step: ${nextStep.signInStep}`;
-    } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
+      if (isError(res)) {
+        return displayError(res.message);
       }
+      navigate(toWithState(redirect.path, redirect.data), { replace: true });
+      return;
+    } catch (err) {
       handleError(err, { context: "signing in" });
     }
   }
@@ -90,10 +91,7 @@ export function Component() {
               pathname: redirect.path,
               data: redirect.data,
             };
-            signInWithRedirect({
-              provider: "Google",
-              customState: JSON.stringify(routeState),
-            });
+            oauth.initiate(JSON.stringify(routeState));
           }}
         >
           <Image src={googleIcon} height={18} width={18} />
@@ -118,9 +116,8 @@ export function Component() {
             placeholder="Password"
           />
           <Link
-            to={appRoutes.reset_password}
+            to={toWithState(appRoutes.reset_password, fromState)}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"
-            state={fromState}
           >
             Forgot password?
           </Link>
@@ -134,8 +131,7 @@ export function Component() {
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
           <Link
-            to={appRoutes.signup}
-            state={fromState}
+            to={toWithState(appRoutes.signup, fromState)}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

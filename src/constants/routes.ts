@@ -28,7 +28,7 @@ export enum appRoutes {
 }
 
 export const adminRoutes = {
-  index: "",
+  dashboard: "dashboard",
   edit_profile: "edit-profile",
   programs: "programs",
   program_editor: "program-editor",
@@ -50,7 +50,13 @@ export enum regRoutes {
   resume = "resume",
   success = "success",
   welcome = "welcome",
-  steps = "steps",
   sign_notice = "sign-notice",
   sign_result = "sign-result",
 }
+
+export const authRoutes: string[] = [
+  appRoutes.signin,
+  appRoutes.signup,
+  appRoutes.reset_password,
+  appRoutes.auth_redirector,
+];

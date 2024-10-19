@@ -5,27 +5,20 @@ import {
   ListboxOptions,
 } from "@headlessui/react";
 import { unpack } from "helpers";
-import { useEffect } from "react";
-import { useProgramsQuery } from "services/aws/programs";
+import { Suspense, useEffect } from "react";
+import { Await, useLoaderData } from "react-router-dom";
 import type { Program } from "types/aws";
 import type { OptionType } from "types/components";
 import { DrawerIcon } from "../../../Icon";
-import QueryLoader from "../../../QueryLoader";
 import { DEFAULT_PROGRAM } from "./constants";
 
 type Props = {
-  endowId: number;
   classes?: string | { container?: string; label?: string };
   program: OptionType<string>;
   onChange: (program: OptionType<string>) => void;
 };
 
-export function ProgramSelector({
-  program,
-  onChange,
-  endowId,
-  classes,
-}: Props) {
+export function ProgramSelector({ program, onChange, classes }: Props) {
   const styles = unpack(classes);
   return (
     <Listbox
@@ -57,7 +50,6 @@ export function ProgramSelector({
         )}
       </ListboxButton>
       <Options
-        endowId={endowId}
         onOptionsLoaded={(options) => {
           const selectedProgram = options.find((o) => o.id === program.value);
           if (!selectedProgram) return;
@@ -70,28 +62,28 @@ export function ProgramSelector({
 
 type OptionsLoadedCb = (options: Program[]) => void;
 type OptionsProps = {
-  endowId: number;
-  classes?: string;
   onOptionsLoaded: OptionsLoadedCb;
 };
 
-function Options({ endowId, classes = "", onOptionsLoaded }: OptionsProps) {
-  const query = useProgramsQuery(endowId);
+function Options({ onOptionsLoaded }: OptionsProps) {
+  // const query = useProgramsQuery(endowId);
+  const data: any = useLoaderData();
+
   return (
-    <QueryLoader
-      classes={{ container: classes }}
-      queryState={query}
-      messages={{
-        //parent watches for these data status to show/hide the entire listbox
-        loading: <span data-loading />,
-        error: <span data-error />,
-        empty: <span data-empty />,
-      }}
-    >
-      {(options) => (
-        <LoadedOptions options={options} onOptionsLoaded={onOptionsLoaded} />
-      )}
-    </QueryLoader>
+    <Suspense fallback={<span data-loading />}>
+      <Await resolve={data.programs} errorElement={<span data-error />}>
+        {(programs: Program[]) =>
+          programs.length === 0 ? (
+            <span data-empty />
+          ) : (
+            <LoadedOptions
+              options={programs}
+              onOptionsLoaded={onOptionsLoaded}
+            />
+          )
+        }
+      </Await>
+    </Suspense>
   );
 }
 

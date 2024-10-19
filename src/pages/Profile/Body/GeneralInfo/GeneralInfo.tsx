@@ -1,7 +1,6 @@
-import QueryLoader from "components/QueryLoader";
 import { RichText } from "components/RichText";
-import { useProgramsQuery } from "services/aws/programs";
-import { usePaginatedMedia } from "services/aws/usePaginatedMedia";
+import { useLoaderData } from "react-router-dom";
+import type { Program, Media as TMedia } from "types/aws";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";
@@ -10,10 +9,8 @@ import Programs from "./Programs";
 
 export default function GeneralInfo({ className = "" }) {
   const profile = useProfileContext();
-  const programs = useProgramsQuery(profile.id);
-  const { data: media, ...mediaState } = usePaginatedMedia(profile.id, {
-    featured: true,
-  });
+  const [programs, media] = useLoaderData() as [Program[], TMedia[]];
+  console.log({ programs, media });
 
   return (
     <div
@@ -27,26 +24,17 @@ export default function GeneralInfo({ className = "" }) {
             readOnly
           />
         </Container>
-        <QueryLoader
-          queryState={programs}
-          messages={{ error: "Failed to load programs", empty: <></> }}
-        >
-          {(programs) => (
-            <Container title="Programs">
-              <Programs programs={programs} />
-            </Container>
-          )}
-        </QueryLoader>
-        <QueryLoader
-          queryState={{ data: media?.items, ...mediaState }}
-          messages={{ error: "Failed to load media", empty: <></> }}
-        >
-          {(media) => (
-            <Container title="Media">
-              <Media media={media} />
-            </Container>
-          )}
-        </QueryLoader>
+        {programs.length > 0 ? (
+          <Container title="Programs">
+            <Programs programs={programs} />
+          </Container>
+        ) : null}
+
+        {media.length > 0 ? (
+          <Container title="Media">
+            <Media media={media} />
+          </Container>
+        ) : null}
       </div>
       <DetailsColumn className="self-start lg:sticky lg:top-[5.5rem]" />
     </div>

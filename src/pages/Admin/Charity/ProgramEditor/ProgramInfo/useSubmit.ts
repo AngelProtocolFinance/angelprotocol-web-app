@@ -1,52 +1,37 @@
-import Prompt from "components/Prompt";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-
-import { cleanObject } from "helpers/cleanObject";
-import type { SubmitHandler } from "react-hook-form";
-import { useEditProgramMutation } from "services/aws/programs";
-import type { Program, ProgramUpdate } from "types/aws";
-import { useAdminContext } from "../../../Context";
+import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
+import { useFetcher } from "react-router-dom";
+import type { ProgramUpdate } from "types/aws";
 import { uploadImg } from "../common";
 import type { FV } from "./types";
 
-export default function useSubmit(initProgram: Program) {
-  const { id } = useAdminContext();
-
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
-  const [updateProgram] = useEditProgramMutation();
+export default function useSubmit(
+  df: Partial<Readonly<FieldNamesMarkedBoolean<FV>>>
+) {
+  const fetcher = useFetcher();
 
   const submit: SubmitHandler<FV> = async (fv) => {
-    try {
-      const imageURL = await uploadImg(fv.image, () => {
-        showModal(
-          Prompt,
-          { type: "loading", children: "Uploading image.." },
-          { isDismissible: false }
-        );
-      });
-
-      const update: ProgramUpdate = {
-        id: initProgram.id,
-        banner: imageURL,
-        description: fv.description.value,
-        title: fv.title,
-      };
-
-      await updateProgram({
-        endowId: id,
-        ...cleanObject(update),
-        targetRaise: +fv.targetRaise || null,
-      }).unwrap();
-      showModal(Prompt, {
-        type: "success",
-        children: "Program information updated",
-      });
-    } catch (err) {
-      handleError(err, { context: "applying program info changes" });
+    const imageURL = await uploadImg(fv.image, () => {});
+    const update: ProgramUpdate = {};
+    if (df.image) {
+      update.banner = imageURL;
     }
+    if (df.description) {
+      update.description = fv.description.value;
+    }
+    if (df.title) {
+      update.title = fv.title;
+    }
+
+    if (df.targetRaise) {
+      update.targetRaise = fv.targetRaise ? +fv.targetRaise : null;
+    }
+
+    fetcher.submit(update, {
+      method: "post",
+      action: ".",
+      encType: "application/json",
+    });
   };
 
-  return submit;
+  return { submit, isLoading: fetcher.state !== "idle" };
 }

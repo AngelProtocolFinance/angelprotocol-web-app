@@ -1,4 +1,6 @@
 import { benefits } from "content/benefits";
+import { useLoaderData } from "react-router-dom";
+import type { EndowmentCard } from "types/aws";
 import Benefits from "../../@sections/Benefits";
 import HeroBottom from "../../@sections/HeroBottom";
 import BottomCta from "./BottomCta";
@@ -6,10 +8,11 @@ import DonationFormInfo from "./DonationFormInfo";
 import Hero from "./Hero";
 
 export function DonorInfo({ className = "" }) {
+  const endows = useLoaderData() as EndowmentCard[];
   return (
     <main className={`${className} grid @container`}>
       <Hero className="padded-container px-10" />
-      <HeroBottom className="mb-10 mt-20" />
+      <HeroBottom className="mb-10 mt-20" endowments={endows} />
       <DonationFormInfo className="mt-20 padded-container" />
       <Benefits
         className="mt-56 padded-container px-10"

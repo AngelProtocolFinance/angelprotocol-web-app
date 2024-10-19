@@ -1,3 +1,5 @@
+import type { EndowmentBookmark, UserEndow } from "./aws";
+
 export type AuthenticatedUser = {
   token: string;
   tokenExpiry: number;
@@ -30,3 +32,24 @@ export type OAuthState = {
   pathname: string;
   data?: unknown;
 };
+
+export type UserV2 = {
+  idToken: string;
+  accessToken: string;
+  groups: CognitoGroup[];
+  endowments: number[];
+  firstName: string;
+  lastName: string;
+  email: string;
+  /** image url */
+  avatar?: string;
+  /** 3 digit currency code */
+  currency?: string;
+};
+
+export interface DetailedUser extends UserV2 {
+  /** deferred: detailed userV2.endowments */
+  orgs: Promise<UserEndow[]>;
+  /** deferred  */
+  bookmarks: Promise<EndowmentBookmark[]>;
+}
