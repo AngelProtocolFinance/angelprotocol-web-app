@@ -82,6 +82,8 @@ export type DonationsQueryParams = {
   status?: Donation.Status;
 };
 
+export type DonationsPage = { Items: Donation.Record[]; nextPage?: number };
+
 export interface BalanceTx {
   /** iso */
   date: string;
