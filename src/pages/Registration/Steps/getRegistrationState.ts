@@ -26,14 +26,21 @@ export function getRegistrationState(reg: Reg): {
     return { state: { step: 3, data: toData(reg) }, nextStep: steps.docs };
   }
 
-  if (isDone.contact(reg)) {
+  if (isDone.org(reg)) {
     return {
       state: { step: 2, data: toData(reg) },
+      nextStep: steps.fsaInquiry,
+    };
+  }
+
+  if (isDone.contact(reg)) {
+    return {
+      state: { step: 1, data: toData(reg) },
       nextStep: steps.orgDetails,
     };
   }
 
-  return { state: { step: 1, data: toData(reg) }, nextStep: steps.contact };
+  return { state: { step: 1, data: toData(reg) }, nextStep: steps.orgDetails };
 }
 
 function toData<T extends Reg>({
