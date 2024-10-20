@@ -24,8 +24,8 @@ export default function useSubmit() {
 
       storeRegistrationReference(reference);
 
-      const { state, nextStep } = getRegistrationState(data);
-      navigate(`../${regRoutes.steps}/${nextStep}`, {
+      const { state } = getRegistrationState(data);
+      navigate(`../${regRoutes.steps}/${state.step}`, {
         state: state.data.init,
       });
     } catch (err) {
