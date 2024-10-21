@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods } from "components/DonateMethods";
 import { ProgramSelector } from "components/donation";
 import {
@@ -13,10 +13,9 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
-import type { WidgetConfig } from "types/widget";
+import { type WidgetConfig, widgetConfig } from "types/widget";
 import { EndowmentSelector } from "./EndowmentSelector";
 import Increments from "./Increments";
-import { schema } from "./schema";
 import type { FormValues } from "./types";
 
 type Props = {
@@ -41,7 +40,7 @@ export default function Configurer({
     register,
     control,
   } = useForm<FormValues>({
-    resolver: yupResolver(schema),
+    resolver: valibotResolver(widgetConfig),
     //set new config as default, so user would need to make a change to be able to update again
     values: config,
   });
@@ -179,18 +178,26 @@ export default function Configurer({
             if (increments.fields.length >= 4) {
               return alert("You can only have 4 increments");
             }
-            increments.append({ value: val });
+            increments.append({ value: val, label: "" });
           }}
           onRemove={(idx) => increments.remove(idx)}
           countError={errors.increments?.root?.message}
           field={(idx) => (
-            <Field
-              {...register(`increments.${idx}.value`)}
-              placeholder="$"
-              label=""
-              classes={{ label: "hidden" }}
-              error={errors.increments?.[idx]?.value?.message}
-            />
+            <>
+              <Field
+                {...register(`increments.${idx}.value`)}
+                placeholder="$"
+                label=""
+                classes={{ label: "hidden" }}
+                error={errors.increments?.[idx]?.value?.message}
+              />
+              <Field
+                {...register(`increments.${idx}.label`)}
+                label=""
+                classes={{ label: "hidden" }}
+                error={errors.increments?.[idx]?.label?.message}
+              />
+            </>
           )}
         />
 

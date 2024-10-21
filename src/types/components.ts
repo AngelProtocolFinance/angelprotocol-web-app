@@ -1,7 +1,8 @@
-//token selector
 import type { Token } from "@better-giving/assets/tokens";
+//token selector
+import * as v from "valibot";
 import type { FileObject } from "./aws";
-import type { DonateMethodId } from "./lists";
+import { donateMethodId } from "./lists";
 export { type Token as TokenV2 } from "@better-giving/assets/tokens";
 
 export interface TokenWithDetails extends Token {
@@ -67,10 +68,12 @@ export type RichTextContent = {
   length?: number;
 };
 
-export type TDonateMethod = {
-  id: DonateMethodId;
-  name: string;
-  disabled: boolean;
-  locked?: boolean;
-  tooltip?: string;
-};
+export const donateMethod = v.object({
+  id: donateMethodId,
+  name: v.string(),
+  disabled: v.boolean(),
+  locked: v.optional(v.boolean()),
+  tooltip: v.optional(v.string()),
+});
+
+export type TDonateMethod = v.InferOutput<typeof donateMethod>;

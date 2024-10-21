@@ -46,7 +46,10 @@ function Content({ endowment }: { endowment?: Endowment }) {
     accentPrimary: "#2D89C8",
     accentSecondary: "#E6F1F9",
     program: DEFAULT_PROGRAM,
-    increments: DONATION_INCREMENTS.map((inc) => ({ value: `${inc}` })),
+    increments: DONATION_INCREMENTS.map((i) => ({
+      label: i.label,
+      value: i.value.toString(),
+    })),
   });
 
   return (
