@@ -191,6 +191,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@conform-to/dom@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@conform-to/dom@npm:1.2.2"
+  checksum: 10/7276d53750b3cf631b14c14bbb009dec08e2008b9c47e4a7fa51ee938b8cd9ab90c9612d9376b4301c1ababda2a0ece48cb3a58104b4d59c37c622bf8f61f0c8
+  languageName: node
+  linkType: hard
+
+"@conform-to/react@npm:1.2.2":
+  version: 1.2.2
+  resolution: "@conform-to/react@npm:1.2.2"
+  dependencies:
+    "@conform-to/dom": "npm:1.2.2"
+  peerDependencies:
+    react: ">=18"
+  checksum: 10/966cceade7fda8019eccc3d0efb0e7525016a17f2fb44767c4a2d0870c47da3af81624ee51dabe88772654e99a7fa373b5345811654acd7c19e39300dfd7cb63
+  languageName: node
+  linkType: hard
+
 "@esbuild/aix-ppc64@npm:0.19.12":
   version: 0.19.12
   resolution: "@esbuild/aix-ppc64@npm:0.19.12"
@@ -2162,6 +2180,8 @@ __metadata:
     "@better-giving/assets": "npm:1.0.18"
     "@better-giving/registration": "npm:1.0.24"
     "@biomejs/biome": "npm:1.8.1"
+    "@conform-to/dom": "npm:1.2.2"
+    "@conform-to/react": "npm:1.2.2"
     "@gsap/react": "npm:2.1.1"
     "@headlessui/react": "npm:2.1.0"
     "@hookform/error-message": "npm:2.0.1"
@@ -2188,6 +2208,7 @@ __metadata:
     "@types/react-csv": "npm:1.1.10"
     "@types/react-dom": "npm:18.2.19"
     "@types/react-helmet": "npm:6.1.11"
+    conform-to-valibot: "npm:1.11.0"
     cropperjs: "npm:1.6.2"
     date-fns: "npm:3.6.0"
     decimal.js: "npm:10.4.3"
@@ -2588,6 +2609,16 @@ __metadata:
   version: 4.1.1
   resolution: "commander@npm:4.1.1"
   checksum: 10/3b2dc4125f387dab73b3294dbcb0ab2a862f9c0ad748ee2b27e3544d25325b7a8cdfbcc228d103a98a716960b14478114a5206b5415bd48cdafa38797891562c
+  languageName: node
+  linkType: hard
+
+"conform-to-valibot@npm:1.11.0":
+  version: 1.11.0
+  resolution: "conform-to-valibot@npm:1.11.0"
+  peerDependencies:
+    "@conform-to/dom": ">= 1.0.0"
+    valibot: ">= 0.32.0"
+  checksum: 10/d7fdea34cd6f134f57d81b76cb8a8ffc46728ee231a6ae5580ad9b0e96cd4d0596095eefb281902ab98aa06248c25f3511d1f5d93f708a48b70d987bf4934840
   languageName: node
   linkType: hard
 
