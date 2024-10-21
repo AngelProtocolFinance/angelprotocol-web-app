@@ -34,7 +34,7 @@ export default function Preview({ classes = "", config }: Props) {
         increments:
           increments.length === 0
             ? DONATION_INCREMENTS
-            : increments.map(({ value }) => +value),
+            : increments.map((i) => ({ ...i, value: +i.value })),
       },
     },
     details: initDetails(methods.at(0)?.id ?? "stripe", restConfig.program),

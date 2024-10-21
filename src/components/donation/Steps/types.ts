@@ -5,6 +5,7 @@ import type {
   TokenWithDetails,
 } from "types/components";
 import type { DonateMethodId, DonationSource } from "types/lists";
+import type { Increment } from "types/widget";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,
@@ -60,7 +61,7 @@ export type Config = {
   accentPrimary?: string;
   /** hex color without alpha */
   accentSecondary?: string;
-  increments?: number[];
+  increments?: Increment[];
 };
 
 export type Init = {

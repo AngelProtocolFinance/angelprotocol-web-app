@@ -9,11 +9,22 @@ const incrementVal = v.pipe(
   v.nonEmpty("required"),
   v.transform((x) => +x),
   v.number("must be a number"),
-  v.minValue(0, "must be greater than 0")
+  v.minValue(0, "must be greater than 0"),
+  //parsed output
+  v.transform((x) => x.toString())
 );
+
+const incrementLabel = v.pipe(
+  str,
+  v.maxLength(30, "cannot exceed 30 characters")
+);
+
 const increment = v.object({
   value: incrementVal,
+  label: incrementLabel,
 });
+
+export type Increment = { value: number; label: string };
 
 const increments = v.array(increment);
 
@@ -77,6 +88,16 @@ export const widgetUrlSearchParams = v.object({
       str, //csv of increments e.g. 40, 100, 500
       v.transform((x) => x.split(",")),
       v.everyItem((x) => v.safeParse(incrementVal, x).success)
+    )
+  ),
+  descriptions: v.optional(
+    v.pipe(
+      str,
+      //csv of descriptions,
+      v.transform((x) => x.split(",")),
+      // bring back commas replaced in snippet generation
+      v.mapItems((x) => x.replace(/_/g, ",")),
+      v.everyItem((x) => v.safeParse(incrementLabel, x).success)
     )
   ),
 });

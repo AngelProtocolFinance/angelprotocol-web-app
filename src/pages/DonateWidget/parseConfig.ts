@@ -1,6 +1,10 @@
 import { DONATION_INCREMENTS } from "constants/common";
 import type { DonateMethodId } from "types/lists";
-import { type WidgetConfig, widgetUrlSearchParams } from "types/widget";
+import {
+  type Increment,
+  type WidgetConfig,
+  widgetUrlSearchParams,
+} from "types/widget";
 import { safeParse } from "valibot";
 
 export type Parsed = Omit<
@@ -8,7 +12,7 @@ export type Parsed = Omit<
   "endowment" | "methods" | "program" | "increments"
 > & {
   methodIds?: DonateMethodId[];
-  increments: number[];
+  increments: Increment[];
   programId?: string;
 };
 
@@ -20,8 +24,10 @@ export default function parseConfig(
     Object.fromEntries(searchParams.entries())
   );
 
-  if (issues)
+  if (issues) {
     return { error: `Donation form config is invalid: ${issues[0].message}` };
+  }
+  const { descriptions = [] } = config;
   return {
     isDescriptionTextShown: config.isDescriptionTextShown,
     programId: config.programId,
@@ -31,6 +37,11 @@ export default function parseConfig(
     description: config.description,
     accentPrimary: config.accentPrimary,
     accentSecondary: config.accentSecondary,
-    increments: config.increments?.map(Number) || DONATION_INCREMENTS,
+    increments: (
+      config.increments?.map(Number) || DONATION_INCREMENTS.map((i) => i.value)
+    ).map((x, i) => ({
+      value: x,
+      label: descriptions[i],
+    })),
   };
 }

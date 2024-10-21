@@ -178,18 +178,26 @@ export default function Configurer({
             if (increments.fields.length >= 4) {
               return alert("You can only have 4 increments");
             }
-            increments.append({ value: val });
+            increments.append({ value: val, label: "" });
           }}
           onRemove={(idx) => increments.remove(idx)}
           countError={errors.increments?.root?.message}
           field={(idx) => (
-            <Field
-              {...register(`increments.${idx}.value`)}
-              placeholder="$"
-              label=""
-              classes={{ label: "hidden" }}
-              error={errors.increments?.[idx]?.value?.message}
-            />
+            <>
+              <Field
+                {...register(`increments.${idx}.value`)}
+                placeholder="$"
+                label=""
+                classes={{ label: "hidden" }}
+                error={errors.increments?.[idx]?.value?.message}
+              />
+              <Field
+                {...register(`increments.${idx}.label`)}
+                label=""
+                classes={{ label: "hidden" }}
+                error={errors.increments?.[idx]?.label?.message}
+              />
+            </>
           )}
         />
 

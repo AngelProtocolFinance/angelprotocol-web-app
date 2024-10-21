@@ -1,5 +1,6 @@
 import { DONATION_INCREMENTS } from "constants/common";
 import { centsDecimals, humanize } from "helpers";
+import type { Increment } from "types/widget";
 
 export type OnIncrement = (increment: number) => void;
 
@@ -8,7 +9,7 @@ interface Props {
   precision?: number;
   code: string;
   onIncrement: OnIncrement;
-  increments?: number[];
+  increments?: Increment[];
   classes?: string;
 }
 
@@ -20,16 +21,16 @@ export default function Incrementers({
   return (
     <div className={`flex justify-center flex-wrap gap-3 ${classes}`}>
       {increments
-        .toSorted((a, b) => a - b)
+        .toSorted((a, b) => a.value - b.value)
         .map((inc) => (
-          <Incrementer key={inc} inc={inc} {...props} />
+          <Incrementer key={inc.value} inc={inc} {...props} />
         ))}
     </div>
   );
 }
 
 interface IIncrementer extends Props {
-  inc: number;
+  inc: Increment;
 }
 
 function Incrementer({
@@ -39,15 +40,20 @@ function Incrementer({
   onIncrement,
   precision = 2,
 }: IIncrementer) {
-  const value = rate * inc;
+  const value = rate * inc.value;
   return (
     <button
       data-testid="incrementer"
       type="button"
-      className="text-sm font-medium border border-gray-l4 hover:border-gray-l3 rounded-full p-3"
+      className="divide-x divide-gray-l4 font-medium border border-gray-l4 hover:border-gray-l3 rounded-full px-3 py-1"
       onClick={() => onIncrement(value)}
     >
-      +{shortenHumanize(value, rate, precision)} {code.toUpperCase()}
+      <span className="pr-1 text-xs">
+        +{shortenHumanize(value, rate, precision)} {code.toUpperCase()}
+      </span>
+      <span className="pl-1 text-xs text-navy-l1 empty:hidden">
+        {inc.label}
+      </span>
     </button>
   );
 }
