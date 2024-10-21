@@ -44,7 +44,7 @@
     "@sentry/react": "8.22.0",
     "@stripe/react-stripe-js": "2.7.1",
     "@stripe/stripe-js": "3.5.0",
-    "aws-amplify": "6.3.6",
+    "aws-amplify": "6.6.5",
     "cropperjs": "1.6.2",
     "date-fns": "3.6.0",
     "decimal.js": "10.4.3",
