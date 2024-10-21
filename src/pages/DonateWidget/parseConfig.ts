@@ -1,28 +1,7 @@
 import { DONATION_INCREMENTS } from "constants/common";
-import type { SchemaShape } from "schemas/types";
 import type { DonateMethodId } from "types/lists";
-import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
-import { type ValidationError, number, object, string } from "yup";
-
-const allMethodIds: DonateMethodId[] = ["crypto", "daf", "stocks", "stripe"];
-
-const hexColor = /^#[0-9A-F]{6}$/i;
-const schema = object<any, SchemaShape<WidgetURLSearchParams>>({
-  methods: string().test("valid csv", "invalid methods", (val) => {
-    return Array.from(new Set(val?.split(","))).every((id) =>
-      allMethodIds.includes(id as DonateMethodId)
-    );
-  }),
-  increments: string().test("valid csv", "invalid increments", (val) => {
-    if (!val) return true;
-    return val.split(",").every((val) => number().positive().isValidSync(+val));
-  }),
-  accentPrimary: string().matches(hexColor, "invalid color format"),
-  accentSecondary: string().matches(hexColor, "invalid color format"),
-  title: string().max(100),
-  programId: string().uuid(),
-  description: string().max(300),
-});
+import { type WidgetConfig, widgetUrlSearchParams } from "types/widget";
+import { safeParse } from "valibot";
 
 export type Parsed = Omit<
   WidgetConfig,
@@ -36,34 +15,22 @@ export type Parsed = Omit<
 export default function parseConfig(
   searchParams: URLSearchParams
 ): Parsed | { error: string } {
-  try {
-    const { methods: methodsCsv, ...config } = schema.validateSync(
-      Object.fromEntries(searchParams.entries())
-    ) as WidgetURLSearchParams;
+  const { issues, output: config } = safeParse(
+    widgetUrlSearchParams,
+    Object.fromEntries(searchParams.entries())
+  );
 
-    const methodIds = (methodsCsv?.split(",") || [
-      "stripe",
-      "stocks",
-      "daf",
-      "crypto",
-    ]) as DonateMethodId[];
-
-    return {
-      isDescriptionTextShown: config.isDescriptionTextShown === "true",
-      programId: config.programId,
-      methodIds,
-      title: config.title,
-      isTitleShown: (config.isTitleShown ?? "true") === "true",
-      description: config.description,
-      accentPrimary: config.accentPrimary,
-      accentSecondary: config.accentSecondary,
-      increments:
-        config.increments?.split(",").map(Number) || DONATION_INCREMENTS,
-    };
-  } catch (error) {
-    const message = (error as ValidationError).message;
-    return {
-      error: `Donation Form config is invalid: ${message}.`,
-    };
-  }
+  if (issues)
+    return { error: `Donation form config is invalid: ${issues[0].message}` };
+  return {
+    isDescriptionTextShown: config.isDescriptionTextShown,
+    programId: config.programId,
+    methodIds: config.methods as DonateMethodId[] | undefined,
+    title: config.title,
+    isTitleShown: config.isTitleShown ?? false,
+    description: config.description,
+    accentPrimary: config.accentPrimary,
+    accentSecondary: config.accentSecondary,
+    increments: config.increments?.map(Number) || DONATION_INCREMENTS,
+  };
 }

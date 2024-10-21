@@ -148,6 +148,7 @@ export type EndowmentCard = Pick<
   contributions_total: number;
   // contributions_count:number
 };
+
 export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
 export type EndowmentSettingsAttributes = Extract<
