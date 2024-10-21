@@ -1,33 +1,42 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import googleIcon from "assets/icons/google.svg";
-import { cognito, isError, oauth } from "auth/cognito";
+import { oauth } from "auth/cognito";
 import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
+import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
 import { decodeState, toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
-import { useForm } from "react-hook-form";
 import {
+  type ActionFunction,
   Link,
   type LoaderFunction,
   redirect,
+  useFetcher,
   useLoaderData,
-  useNavigate,
 } from "react-router-dom";
-import { password, requiredString } from "schemas/string";
-import type { OAuthState } from "types/auth";
-import { object } from "yup";
+import { type OAuthState, signIn } from "types/auth";
 
-type FormValues = {
-  email: string;
-  password: string;
-};
+// async function submit(fv: FormValues) {
+//   try {
+//     const res = await cognito.initiate(fv.email.toLowerCase(), fv.password);
+
+//     if (isError(res)) {
+//       return displayError(res.message);
+//     }
+//     navigate(toWithState(redirect.path, redirect.data), { replace: true });
+//     return;
+//   } catch (err) {
+//     handleError(err, { context: "signing in" });
+//   }
+// }
+
+export const action: ActionFunction = async ({ request }) => {};
 
 export const loader: LoaderFunction = async ({
   request,
@@ -40,45 +49,29 @@ export const loader: LoaderFunction = async ({
 };
 
 export function Component() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const fetcher = useFetcher();
   const fromState = useLoaderData() as unknown;
   const redirect = getAuthRedirect(fromState as any);
 
-  const { handleError, displayError } = useErrorContext();
-  const {
-    register,
-    formState: { isSubmitting, errors },
-    handleSubmit,
-  } = useForm<FormValues>({
-    resolver: yupResolver(
-      object({
-        email: requiredString.trim().strict().email("invalid email format"),
-        password: password,
-      })
-    ),
+  const [form, fields] = useForm({
+    shouldRevalidate: "onInput",
+    // Optional: Required only if you're validating on the server
+    lastResult: typeof fetcher.data === "string" ? undefined : fetcher.data,
+    onValidate({ formData }) {
+      return parseWithValibot(formData, { schema: signIn });
+    },
   });
 
-  async function submit(fv: FormValues) {
-    try {
-      const res = await cognito.initiate(fv.email.toLowerCase(), fv.password);
-
-      if (isError(res)) {
-        return displayError(res.message);
-      }
-      navigate(toWithState(redirect.path, redirect.data), { replace: true });
-      return;
-    } catch (err) {
-      handleError(err, { context: "signing in" });
-    }
-  }
+  const isSubmitting = fetcher.state === "submitting";
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
       <Seo title="Login - Better Giving" />
       <Form
+        {...getFormProps(form)}
         className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
         disabled={isSubmitting}
-        onSubmit={handleSubmit(submit)}
       >
         <h3 className="text-center text-2xl font-bold text-navy-d4">
           Philanthropy for Everyone
@@ -107,15 +100,15 @@ export function Component() {
         </Separator>
         <div className="grid gap-3">
           <Input
-            {...register("email")}
+            {...getInputProps(fields.email, { type: "text" })}
             placeholder="Email address"
             autoComplete="username"
             icon={Mail}
-            error={errors.email?.message}
+            error={fields.email.errors?.[0]}
           />
           <PasswordInput
-            {...register("password")}
-            error={errors.password?.message}
+            {...getInputProps(fields.password, { type: "text" })}
+            error={fields.password.errors?.[0]}
             placeholder="Password"
           />
           <Link

@@ -1,3 +1,4 @@
+import * as v from "valibot";
 import type { EndowmentBookmark, UserEndow } from "./aws";
 
 export type AuthenticatedUser = {
@@ -53,3 +54,13 @@ export interface DetailedUser extends UserV2 {
   /** deferred  */
   bookmarks: Promise<EndowmentBookmark[]>;
 }
+
+export const signIn = v.object({
+  email: v.pipe(
+    v.string("required"),
+    v.trim(),
+    v.nonEmpty("required"),
+    v.email("invalid email format")
+  ),
+  password: v.pipe(v.string("required"), v.nonEmpty("required")),
+});
