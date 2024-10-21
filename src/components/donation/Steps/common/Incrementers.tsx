@@ -19,7 +19,7 @@ export default function Incrementers({
   ...props
 }: Props) {
   return (
-    <div className={`flex justify-center flex-wrap gap-3 ${classes}`}>
+    <div className={` grid grid-cols-2 gap-2 ${classes}`}>
       {increments
         .toSorted((a, b) => a.value - b.value)
         .map((inc) => (
@@ -45,13 +45,13 @@ function Incrementer({
     <button
       data-testid="incrementer"
       type="button"
-      className="divide-x divide-gray-l4 font-medium border border-gray-l4 hover:border-gray-l3 rounded-full px-3 py-1"
+      className="grid grid-rows-subgrid gap-y-1 row-span-2 border border-[--accent-secondary] hover:border-[--accent-primary] rounded-lg p-2 bg-[--accent-secondary]"
       onClick={() => onIncrement(value)}
     >
-      <span className="pr-1 text-xs">
+      <span className="text-left text-sm font-medium text-[--accent-primary]">
         +{shortenHumanize(value, rate, precision)} {code.toUpperCase()}
       </span>
-      <span className="pl-1 text-xs text-navy-l1 empty:hidden">
+      <span className="text-left text-xs text-navy-l1 empty:hidden">
         {inc.label}
       </span>
     </button>
