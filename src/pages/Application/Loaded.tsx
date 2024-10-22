@@ -49,6 +49,15 @@ export default function Loaded(props: Application) {
           {prevVerdict === "approved" ? "Approved" : "Rejected"}
         </div>
       )}
+      {typeof props.submission === "object" &&
+        "endowment_id" in props.submission && (
+          <Link
+            className="text-blue-d1 hover:underline block -mt-6 text-sm"
+            to={appRoutes.marketplace + `/${props.submission.endowment_id}`}
+          >
+            Endowment ID: {props.submission.endowment_id}
+          </Link>
+        )}
       {isRejected(props.submission) && (
         <div className="flex max-sm:flex-col gap-x-4">
           <span className="text-sm font-semibold uppercase">
