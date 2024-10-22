@@ -23,7 +23,7 @@ export function Edit({
   );
 
   return (
-    <Modal className="fixed-center z-10 grid gap-y-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6">
+    <Modal className="fixed-center z-10 grid gap-y-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded-lg p-6 max-h-[90dvh] overflow-y-scroll">
       <h4>Choose allocation</h4>
 
       <AllocationOptions
