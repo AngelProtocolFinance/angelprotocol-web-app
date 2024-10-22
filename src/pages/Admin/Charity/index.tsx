@@ -34,7 +34,7 @@ export const charityRoute: RouteObject = {
         { path: ":bankId", element: <PayoutMethodDetails /> },
       ],
     },
-    { path: adminRoutes.widget_config, element: <EndowWidget /> },
+    { path: adminRoutes.form_builder, element: <EndowWidget /> },
     { index: true, lazy: () => import("./Dashboard") },
     ...mediaRoutes,
   ],
