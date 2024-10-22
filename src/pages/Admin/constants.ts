@@ -89,7 +89,7 @@ const linkGroup3: LinkGroup = {
     },
     {
       title: "Donation Form Builder",
-      to: sidebarRoutes.widget_config,
+      to: sidebarRoutes.form_builder,
       icon: {
         type: "Widget",
         size: 25,

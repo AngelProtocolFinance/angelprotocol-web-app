@@ -75,7 +75,7 @@ const _appRoutes: RO[] = [
     ],
   },
   {
-    path: appRoutes.widget_config,
+    path: appRoutes.form_builder,
     // Widget.tsx is also used as one of the Admin pages and so
     // where its styles depend on the width of the parent component;
     // We copy/paste src/pages/Admin/Layout.tsx container setup & styles

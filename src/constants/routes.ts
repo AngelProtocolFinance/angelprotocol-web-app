@@ -15,7 +15,7 @@ export enum appRoutes {
   stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",
   reset_password = "/login/reset",
-  widget_config = "/widget-config",
+  form_builder = "/form-builder",
   blog = "/blog",
   //legal
   privacy_policy = "/privacy-policy",
@@ -33,7 +33,7 @@ export const adminRoutes = {
   programs: "programs",
   program_editor: "program-editor",
   banking: "banking",
-  widget_config: "widget-config",
+  form_builder: "form-builder",
   donations: "donations",
   settings: "settings",
   members: "members",
