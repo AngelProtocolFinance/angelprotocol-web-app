@@ -1,4 +1,4 @@
-import { APP_NAME, BASE_URL, SEO_IMAGE } from "constants/env";
+import { APP_NAME, BASE_URL, IS_TEST, SEO_IMAGE } from "constants/env";
 import { Helmet } from "react-helmet";
 
 interface Script {
@@ -46,7 +46,7 @@ export default function Seo({
   scripts = defaultScripts,
 }: Props) {
   return (
-    <Helmet script={scripts}>
+    <Helmet script={IS_TEST ? [] : scripts}>
       {/* Standard metadata tags */}
       <title>{title}</title>
       <meta property="title" content={title} />
