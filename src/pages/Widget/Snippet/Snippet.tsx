@@ -49,8 +49,11 @@ const widgetURLfn = (config: WidgetConfig) => {
     accentSecondary: config.accentSecondary ?? "",
     increments:
       config.increments.length === 0
-        ? DONATION_INCREMENTS.join(",")
+        ? DONATION_INCREMENTS.map((inc) => inc.value).join(",")
         : config.increments.map((inc) => inc.value).join(","),
+    descriptions: config.increments
+      .map((inc) => inc.label.replace(/,/g, "_"))
+      .join(","),
   };
   return (
     window.location.origin +

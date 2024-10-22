@@ -48,7 +48,7 @@ export default function Form(props: CryptoFormStep) {
           precision={token.value.precision}
           increments={(
             props.init.config?.increments || DONATION_INCREMENTS
-          ).map((i) => i / token.value.rate ** 2)}
+          ).map((i) => ({ ...i, value: i.value / token.value.rate ** 2 }))}
         />
       )}
 
