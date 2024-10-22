@@ -52,7 +52,10 @@ export default function Increments({
         ) : (
           fields.map((f, idx) => {
             return (
-              <div key={f.id} className="grid grid-cols-subgrid col-span-3">
+              <div
+                key={f.id}
+                className="grid grid-cols-subgrid col-span-3 items-center grid-rows-[auto_auto]"
+              >
                 {field(idx)}
                 <button
                   tabIndex={-1}
@@ -62,6 +65,7 @@ export default function Increments({
                 >
                   <Icon strokeWidth={3} type="Dash" size={18} />
                 </button>
+                <div />
               </div>
             );
           })

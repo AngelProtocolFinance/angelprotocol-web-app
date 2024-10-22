@@ -14,9 +14,10 @@ const incrementVal = v.pipe(
   v.transform((x) => x.toString())
 );
 
+export const incrementLabelMaxChars = 30;
 const incrementLabel = v.pipe(
   str,
-  v.maxLength(30, "cannot exceed 30 characters")
+  v.maxLength(incrementLabelMaxChars, "cannot exceed 30 characters")
 );
 
 const increment = v.object({
