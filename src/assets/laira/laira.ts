@@ -1,5 +1,8 @@
 import laira1 from "./laira-happy-jump.png";
+import laira8 from "./laira-laptop.png";
+import laira7 from "./laira-negotiating.png";
 import laira2 from "./laira-open-arms.png";
+import laira9 from "./laira-presentation.png";
 import laira3 from "./laira-sitting.png";
 import laira4 from "./laira-standing.png";
 import laira5 from "./laira-waiving.png";
@@ -12,6 +15,9 @@ export const laira = {
   standing: laira4,
   waiving: laira5,
   walking: laira6,
+  negotiating: laira7,
+  laptop: laira8,
+  presentation: laira9,
 };
 
 const lairas = Object.values(laira);
