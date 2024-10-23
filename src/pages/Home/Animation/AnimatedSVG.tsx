@@ -464,23 +464,26 @@ const AnimatedSVG = ({ classes = "" }) => {
           </g>
           <text
             className="fill-navy-d4 capitalize font-heading font-bold text-3xl"
-            x={240}
+            x={230}
             y={360}
           >
             Result:
           </text>
           <g className="font-medium fill-navy-l1 text-xl">
-            <text x={35} y={400}>
-              Better Giving provides nonprofits with a simple path to
+            <text x={30} y={390}>
+              Better Giving offers you a complete financial solution:
             </text>
-            <text x={41} y={430}>
-              financial stability while giving donors a way to amplify
+            <text x={45} y={420}>
+              free of donation processing, high yield savings, and
             </text>
-            <text x={43} y={460}>
-              their impact, ensuring their gift continues to provide
+            <text x={20} y={450}>
+              experly managed investments - all designed to maximize
             </text>
-            <text x={120} y={490}>
-              support - not just today, but every day.
+            <text x={40} y={480}>
+              your financial stability and empower your nonprofit to
+            </text>
+            <text x={140} y={510}>
+              make an even greater impact.
             </text>
           </g>
           <defs>
