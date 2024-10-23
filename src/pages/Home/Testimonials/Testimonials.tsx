@@ -14,7 +14,7 @@ const Testimonials = () => {
         className="justify-self-center w-24 lg:w-36 mb-8"
       />
       <h2 className="text-center text-[30px]/10 md:text-[42px]/[58px] text-pretty justify-self-center mb-14">
-        Success Stories: <br /> Inspiring Change Together
+        Nonprofit Success Stories: <br /> Inspiring Change Together
       </h2>
 
       <button

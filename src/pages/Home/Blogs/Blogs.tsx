@@ -11,7 +11,7 @@ const Blogs = () => {
   return (
     <section className="grid content-start py-40 bg-gradient-to-b from-peach/40 to-transparent overflow-x-clip">
       <h2 className="text-navy-d4 text-[32px] md:text-[42px] text-center mb-14">
-        Check out the latest
+        Gain Knowledge to Empower Your Nonprofit
       </h2>
       <div className="relative">
         <button

@@ -46,14 +46,13 @@ function Footer({ classes = "" }: Props) {
           </div>
 
           <p className="text-xs text-[#3D5361]">
-            Better Giving simplifies giving with a free platform that lets
-            nonprofits around the world easily receive any kind of donation. Our
-            Sustainability Fund ensures donations keep supporting causes,
-            offering lasting benefits without the hassle. Dedicated to helping
-            nonprofits everywhere, we provide essential support and affordable
-            fiscal sponsorship, empowering them to achieve their goals. Join us
-            in making a difference with every donation, creating enduring impact
-            for a better tomorrow.
+            Better Giving is your nonprofit's free one-stop solution to
+            fundraise, save, and invest. We financially empower fellow
+            nonprofits with free donation processing integrated with high-yield
+            savings and investment services, helping organizations grow their
+            funds while reducing administrative burdens. We believe that making
+            financial sustainability easy and accessible creates lasting change
+            for nonprofits.
           </p>
         </div>
 
