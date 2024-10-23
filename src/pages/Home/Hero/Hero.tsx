@@ -12,10 +12,10 @@ const Hero = ({ classes = "" }) => {
       className={`${classes} ${s.container} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
       style={{ backgroundImage: `url('${headillust}')` }}
     >
-      <p className="z-10 text-[13px] md:text-[18px] font-heading uppercase font-bold text-center mb-5 tracking-wider">
+      <p className="z-10 text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
         By a nonprofit, for nonprofits
       </p>
-      <h1 className="z-10 mx-auto text-4xl md:text-5xl lg:text-6xl text-center text-balance leading-none mb-5 px-6">
+      <h1 className="z-10 mx-auto text-3xl md:text-4xl lg:text-5xl text-center text-pretty mb-5 px-6">
         Empower Your Nonprofit with Effortless Fundraising
       </h1>
       <p className="z-10 px-6 text-navy max-md:block md:text-2xl text-center text-pretty sm:text-balance">
