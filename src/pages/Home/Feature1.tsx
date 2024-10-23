@@ -1,5 +1,8 @@
 import { laira } from "assets/laira/laira";
+import Icon from "components/Icon";
 import Image from "components/Image";
+import { BOOK_A_DEMO } from "constants/env";
+import { Link } from "react-router-dom";
 
 type TListItem = {
   title1: string;
@@ -52,6 +55,13 @@ export function Feature1({ className = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
+      <Link
+        to={BOOK_A_DEMO}
+        className="mt-10 isolate justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
+      >
+        <span className="ml-1">Start Today / Book A Demo</span>
+        <Icon type="ArrowRight" size={18} />
+      </Link>
     </section>
   );
 }
