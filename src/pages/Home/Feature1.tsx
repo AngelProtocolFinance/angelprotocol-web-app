@@ -75,10 +75,10 @@ function ListItem(props: TListItem) {
         width={props.image.width}
         className="mb-4"
       />
-      <h5 className="text-center font-body font-medium text-2xl text-navy py-4 border-b-[3px] px-8 border-blue-d1 mb-7">
+      <h5 className="text-center font-body font-medium text-2xl text-navy px-8">
         {props.title1}
       </h5>
-      <h6 className="text-center font-normal font-body text-lg @6xl:text-xl text-navy-l1 mb-2">
+      <h6 className="py-4 text-center font-medium font-body text-lg @6xl:text-xl text-navy-l1 border-b-[3px] border-blue-d1 mb-7 px-8">
         {props.title2}
       </h6>
       <p className="text-center text-lg @6xl:text-xl text-navy-l3">
