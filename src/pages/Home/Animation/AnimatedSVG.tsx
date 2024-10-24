@@ -119,21 +119,24 @@ const AnimatedSVG = ({ classes = "" }) => {
           viewBox="0 0 1184 144"
           id="content"
         >
-          <text className="fill-blue uppercase text-lg font-bold" x={450} y={0}>
+          <text
+            className="fill-blue uppercase text-2xl font-bold"
+            x={430}
+            y={0}
+          >
             Secure your financial stability
           </text>
           <text
-            className="fill-navy-d4 capitalize font-heading font-bold text-4.5xl"
-            x={300}
+            className="fill-navy-d4 capitalize font-heading font-bold text-5xl"
+            x={295}
             y={60}
-            style={{ fontSize: 42 }}
           >
-            Nonprofit Fund Management
+            Nonprofit Fund Management:
           </text>
           <text
-            className="fill-navy-d4 capitalize font-heading font-bold text-4.5xl"
-            x={300}
-            y={110}
+            className="fill-navy-d4 capitalize font-heading font-bold text-5xl"
+            x={297}
+            y={120}
           >
             Donations That Work For You
           </text>
