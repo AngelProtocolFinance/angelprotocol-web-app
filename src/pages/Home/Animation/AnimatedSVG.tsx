@@ -119,23 +119,26 @@ const AnimatedSVG = ({ classes = "" }) => {
           viewBox="0 0 1184 144"
           id="content"
         >
-          <text className="fill-blue uppercase text-lg font-bold" x={450} y={0}>
-            Simple path to financial stability
+          <text
+            className="fill-blue uppercase text-2xl font-bold"
+            x={430}
+            y={0}
+          >
+            Secure your financial stability
           </text>
           <text
-            className="fill-navy-d4 capitalize font-heading font-bold text-4.5xl"
-            x={300}
+            className="fill-navy-d4 capitalize font-heading font-bold text-5xl"
+            x={295}
             y={60}
-            style={{ fontSize: 42 }}
           >
-            Nonprofit sustainability fund:
+            Nonprofit Fund Management:
           </text>
           <text
-            className="fill-navy-d4 capitalize font-heading font-bold text-4.5xl"
-            x={250}
-            y={110}
+            className="fill-navy-d4 capitalize font-heading font-bold text-5xl"
+            x={297}
+            y={120}
           >
-            Donations today, funding forever
+            Donations That Work For You
           </text>
         </svg>
 
@@ -173,23 +176,26 @@ const AnimatedSVG = ({ classes = "" }) => {
           </g>
           <text
             className="fill-navy-d4 capitalize font-heading font-bold text-3xl"
-            x={50}
-            y={360}
+            x={90}
+            y={350}
           >
-            The gift that keeps on giving
+            Your Gifts Keep Growing
           </text>
           <g className="font-medium fill-navy-l1 text-xl">
-            <text x={10} y={400}>
-              Donors can choose the portion of their donation to go into
+            <text x={20} y={390}>
+              Choose to allocate a portion of your donations into our
             </text>
-            <text x={20} y={430}>
-              the Sustainability Fund, allowing it to grow and provide
+            <text x={10} y={420}>
+              high-yield savings account or managed investment funds,
             </text>
-            <text x={40} y={460}>
-              ongoing support to the nonprofit of their choice -
+            <text x={8} y={450}>
+              allowing your contributions to grow and provide long-term
             </text>
-            <text x={250} y={490}>
-              forever.
+            <text x={30} y={480}>
+              support for your mission. Transfer balances or request
+            </text>
+            <text x={70} y={510}>
+              grants out to your bank account at any time.
             </text>
           </g>
 
@@ -245,22 +251,25 @@ const AnimatedSVG = ({ classes = "" }) => {
           <text
             className="fill-navy-d4 capitalize font-heading font-bold text-3xl"
             x={80}
-            y={360}
+            y={350}
           >
-            Simple, sustainable growth
+            Simple, Sustainable Growth
           </text>
           <g className="font-medium fill-navy-l1 text-xl">
-            <text x={20} y={400}>
-              The Sustainability Fund is owned & managed by Better
+            <text x={70} y={390}>
+              We manage both your high-yield savings and
             </text>
-            <text x={20} y={430}>
-              Giving and invested into a balanced portfolio to protect
+            <text x={60} y={420}>
+              Sustainability Fund investments, giving you the
             </text>
-            <text x={40} y={460}>
-              and grow over time - no admin work or liability for
+            <text x={40} y={450}>
+              peace of mind that your funds are growing steadily -
             </text>
-            <text x={220} y={490}>
-              nonprofits.
+            <text x={50} y={480}>
+              without any of the administrative work of financial
+            </text>
+            <text x={220} y={510}>
+              reporting.
             </text>
           </g>
           <defs>
@@ -315,23 +324,26 @@ const AnimatedSVG = ({ classes = "" }) => {
           </g>
           <text
             className="fill-navy-d4 capitalize font-heading font-bold text-3xl"
-            x={100}
-            y={360}
+            x={90}
+            y={350}
           >
-            Reliable funding stream
+            Consistent, Reliable Funding
           </text>
           <g className="font-medium fill-navy-l1 text-xl">
-            <text x={60} y={400}>
-              Sustainability fund growth is paid out quarterly,
+            <text x={90} y={390}>
+              Receive grants monthly, benefitting from a
             </text>
-            <text x={45} y={430}>
-              providing nonprofits with a new source of recurring
+            <text x={70} y={420}>
+              consistent revenue stream that doesn't rely on
             </text>
-            <text x={52} y={460}>
-              revenue - consistent funding that doesn't rely on
+            <text x={52} y={450}>
+              ongoing donations. You get the best of both worlds:
             </text>
-            <text x={210} y={490}>
-              donation cycles.
+            <text x={80} y={480}>
+              immediate returns from savings and long-term
+            </text>
+            <text x={170} y={510}>
+              growth from investments.
             </text>
           </g>
           <defs>
@@ -455,23 +467,26 @@ const AnimatedSVG = ({ classes = "" }) => {
           </g>
           <text
             className="fill-navy-d4 capitalize font-heading font-bold text-3xl"
-            x={240}
+            x={230}
             y={360}
           >
             Result:
           </text>
           <g className="font-medium fill-navy-l1 text-xl">
-            <text x={35} y={400}>
-              Better Giving provides nonprofits with a simple path to
+            <text x={30} y={390}>
+              Better Giving offers you a complete financial solution:
             </text>
-            <text x={41} y={430}>
-              financial stability while giving donors a way to amplify
+            <text x={45} y={420}>
+              free of donation processing, high yield savings, and
             </text>
-            <text x={43} y={460}>
-              their impact, ensuring their gift continues to provide
+            <text x={20} y={450}>
+              experly managed investments - all designed to maximize
             </text>
-            <text x={120} y={490}>
-              support - not just today, but every day.
+            <text x={40} y={480}>
+              your financial stability and empower your nonprofit to
+            </text>
+            <text x={140} y={510}>
+              make an even greater impact.
             </text>
           </g>
           <defs>

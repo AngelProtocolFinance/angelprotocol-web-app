@@ -10,24 +10,24 @@ const Hero = ({ classes = "" }) => {
       className={`${classes} ${s.container} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
       style={{ backgroundImage: `url('${headillust}')` }}
     >
-      <p className="z-10 text-[13px] md:text-[18px] font-heading uppercase font-bold text-center mb-5 tracking-wider">
-        Give Today, Give Forever
+      <p className="z-10 text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
+        By a nonprofit, for nonprofits
       </p>
-      <h1 className="z-10 mx-auto text-4xl md:text-5xl lg:text-6xl text-center leading-none mb-5 px-6">
-        Simplified Giving, <br /> Amplified Impact
+      <h1 className="z-10 mx-auto text-3xl md:text-4xl lg:text-5xl text-center text-pretty mb-5 px-6">
+        Empower Your Nonprofit <br /> with Effortless Fundraising
       </h1>
       <p className="z-10 px-6 text-navy max-md:block md:text-2xl text-center text-pretty sm:text-balance">
-        As a nonprofit serving nonprofits, our all-in-one fundraising solution
-        is free, global, and inclusive. <br /> However you want to give and
-        receive, we've got your back. Together we can make donations go further
-        and last forever.
+        Embed our free donation form for a one-stop solution to simplify giving,
+        earn high-yield savings, and enjoy hands-off investment growth. Join
+        hundreds of nonprofits growing their donations and securing their
+        financial futures with Better Giving’s platform.
       </p>
 
       <Link
         to={appRoutes.register}
         className="mt-8 isolate justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
       >
-        <span className="ml-1">Join us</span>
+        <span className="ml-1">Start Fundraising Today</span>
         <Icon type="ArrowRight" size={18} />
         <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
       </Link>
