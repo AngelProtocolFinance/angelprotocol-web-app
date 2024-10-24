@@ -42,9 +42,7 @@ export function Feature1({ className = "" }) {
       <h3 className="text-sm md:text-lg uppercase text-blue-d1 text-center mb-4">
         Simplify and Grow Your Impact
       </h3>
-      <h2 className="text-center text-4xl leading-snug mb-6">
-        How Better Giving Works
-      </h2>
+      <h2 className="text-center text-4xl leading-snug mb-6">Easy as 1-2-3</h2>
       <p className="text-navy-l1 px-10 text-center mb-16 text-xl">
         Discover how easy it is to boost your nonprofit’s donations and achieve
         long-term financial sustainability.
@@ -55,13 +53,22 @@ export function Feature1({ className = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
-      <Link
-        to={BOOK_A_DEMO}
-        className="mt-10 isolate justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
-      >
-        <span className="ml-1">Start Today / Book A Demo</span>
-        <Icon type="ArrowRight" size={18} />
-      </Link>
+      <div className="flex max-md:flex-col items-center justify-self-center gap-4 mt-10">
+        <Link
+          to={BOOK_A_DEMO}
+          className="isolate btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
+        >
+          <span className="ml-1">Start Today</span>
+          <Icon type="ArrowRight" size={18} />
+        </Link>
+        <Link
+          to={BOOK_A_DEMO}
+          className="isolate btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
+        >
+          <span className="ml-1">Book A Demo</span>
+          <Icon type="ArrowRight" size={18} />
+        </Link>
+      </div>
     </section>
   );
 }
