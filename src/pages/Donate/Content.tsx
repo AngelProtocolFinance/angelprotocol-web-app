@@ -49,7 +49,13 @@ function Content({ intent, endowment }: Props) {
               hide_bg_tip: endowment.hide_bg_tip,
               progDonationsAllowed: endowment.progDonationsAllowed,
             }}
-            config={{ methodIds: endowment.donateMethods }}
+            config={{
+              methodIds: endowment.donateMethods,
+              increments: endowment.increments?.map((i) => ({
+                ...i,
+                value: +i.value,
+              })),
+            }}
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
         </div>
