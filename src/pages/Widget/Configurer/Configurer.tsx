@@ -1,6 +1,7 @@
 import { Field as HuiField, Input } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods } from "components/DonateMethods";
+import Increments from "components/Increments";
 import { ProgramSelector } from "components/donation";
 import {
   NativeCheckField as CheckField,
@@ -14,13 +15,9 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
-import {
-  type WidgetConfig,
-  incrementLabelMaxChars,
-  widgetConfig,
-} from "types/widget";
+import { incrementLabelMaxChars } from "types/aws";
+import { type WidgetConfig, widgetConfig } from "types/widget";
 import { EndowmentSelector } from "./EndowmentSelector";
-import Increments from "./Increments";
 import type { FormValues } from "./types";
 
 type Props = {
