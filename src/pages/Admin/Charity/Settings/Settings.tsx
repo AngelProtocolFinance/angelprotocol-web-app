@@ -14,6 +14,7 @@ export default function Settings() {
     "hide_bg_tip",
     "progDonationsAllowed",
     "donateMethods",
+    "increments",
   ]);
 
   if (isLoading) {

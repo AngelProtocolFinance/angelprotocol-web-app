@@ -1,10 +1,13 @@
 import Icon from "components/Icon";
 import { Info } from "components/Status";
 import type { ReactNode } from "react";
-import type { FieldArrayWithId } from "react-hook-form";
-import type { WidgetConfig } from "types/widget";
 
-type F = FieldArrayWithId<WidgetConfig, "increments", "id">;
+type Increment = {
+  value: string;
+  label: string;
+};
+
+type F = Increment & { id: string };
 
 interface Props {
   classes?: string;

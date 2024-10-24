@@ -1,29 +1,9 @@
 import * as v from "valibot";
+import { increment, incrementLabel, incrementVal } from "./aws";
 import { donateMethod } from "./components";
 import { donateMethodId } from "./lists";
 
 const str = v.pipe(v.string(), v.trim());
-
-const incrementVal = v.pipe(
-  str,
-  v.nonEmpty("required"),
-  v.transform((x) => +x),
-  v.number("must be a number"),
-  v.minValue(0, "must be greater than 0"),
-  //parsed output
-  v.transform((x) => x.toString())
-);
-
-export const incrementLabelMaxChars = 30;
-const incrementLabel = v.pipe(
-  str,
-  v.maxLength(incrementLabelMaxChars, "cannot exceed 30 characters")
-);
-
-const increment = v.object({
-  value: incrementVal,
-  label: incrementLabel,
-});
 
 export type Increment = { value: number; label: string };
 

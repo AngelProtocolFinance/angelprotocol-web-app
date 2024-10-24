@@ -1,19 +1,24 @@
+import { Field as HuiField, Input } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods, fill } from "components/DonateMethods";
-import { CheckField, RhfForm } from "components/form";
+import Increments from "components/Increments";
+import {
+  NativeCheckField as CheckField,
+  Form as F,
+  NativeField as Field,
+} from "components/form";
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useController, useForm } from "react-hook-form";
-import { schema } from "schemas/shape";
-import type { Endowment, EndowmentSettingsAttributes } from "types/aws";
-import type { TDonateMethod } from "types/components";
-import { array, string } from "yup";
+import { useController, useFieldArray, useForm } from "react-hook-form";
+import {
+  type Endowment,
+  type EndowmentSettingsAttributes,
+  incrementLabelMaxChars,
+} from "types/aws";
 import { useUpdateEndowment } from "../common";
-import HideBGTipCheckbox from "./HideBGTipCheckbox";
-import ReceiptMsg from "./ReceiptMsg";
 import { MAX_RECEIPT_MSG_CHAR } from "./constants";
-import type { FV } from "./types";
+import { type FV, schema } from "./types";
 
 type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
 
@@ -21,43 +26,40 @@ export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();
   const { displayError } = useErrorContext();
 
-  const methods = useForm({
-    resolver: yupResolver(
-      schema<FV>({
-        receiptMsg: string().max(MAX_RECEIPT_MSG_CHAR, "exceeds max"),
-        donateMethods: array().test(
-          "",
-          "at least one payment option should be active",
-          (values) => {
-            return values?.some((v) => !(v as TDonateMethod).disabled);
-          }
-        ),
-      })
-    ),
+  const {
+    reset,
+    register,
+    handleSubmit,
+    formState: { isSubmitting, isDirty, errors },
+    control,
+    watch,
+  } = useForm<FV>({
+    resolver: valibotResolver(schema),
     values: {
       receiptMsg: props.receiptMsg ?? "",
       hide_bg_tip: props.hide_bg_tip ?? false,
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
       donateMethods: fill(props.donateMethods),
+      increments: props.increments ?? [],
     },
   });
 
-  const {
-    reset,
-    handleSubmit,
-    formState: { isSubmitting, isDirty, errors },
-    control,
-  } = methods;
-
-  const { field: donateMethods } = useController<FV, "donateMethods">({
+  const { field: donateMethods } = useController({
     control,
     name: "donateMethods",
   });
 
+  const increments = useFieldArray({
+    control,
+    name: "increments",
+  });
+
+  const receipMsg = watch("receiptMsg");
+  const incs = watch("increments");
+
   return (
-    <RhfForm
+    <F
       disabled={isSubmitting}
-      methods={methods}
       onReset={(e) => {
         e.preventDefault();
         reset();
@@ -82,11 +84,35 @@ export default function Form(props: Props) {
       )}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
-      <ReceiptMsg />
+      <div>
+        <Field
+          {...register("receiptMsg")}
+          rows={5}
+          type="textarea"
+          classes={{
+            container: "field-admin [&_[data-error]]:-bottom-4",
+            label: "text-base font-medium",
+          }}
+          label="Tax Receipt message for donors"
+          placeholder="Your nonprofit's message to all donors"
+          error={errors.receiptMsg?.message}
+        />
+        <p
+          data-exceed={receipMsg.length > MAX_RECEIPT_MSG_CHAR}
+          className="text-xs text-navy-l1 data-[exceed='true']:text-red"
+        >
+          {receipMsg.length}/{MAX_RECEIPT_MSG_CHAR}
+        </p>
+        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+          This is an optional message that can be included on all tax receipts
+          to your donors to add a personalized touch, a thank you, or a call to
+          action.
+        </p>
+      </div>
 
       <div>
-        <CheckField<FV>
-          name="programDonateDisabled"
+        <CheckField
+          {...register("programDonateDisabled")}
           classes={{ label: "font-medium" }}
         >
           Disable Program-based donations
@@ -98,7 +124,19 @@ export default function Form(props: Props) {
         </p>
       </div>
 
-      <HideBGTipCheckbox />
+      <div className="grid gap-2">
+        <CheckField {...register("hide_bg_tip")} classes="font-medium">
+          Opt out of Support Contribution Model
+        </CheckField>
+        <span className="text-xs sm:text-sm italic text-navy-l1">
+          During the donation flow, there is a step in which users can choose to
+          support Better Giving by contributing any amount they desire alongside
+          their donation to you - the amount they contribute will not affect the
+          donation amount you receive. You may choose to turn this step off in
+          the donation flow by ticking the checkbox above and we will instead
+          apply a fixed 1.5% fee to any donation amount you receive.
+        </span>
+      </div>
 
       <h5 className="mt-12 text-2xl">Marketplace settings</h5>
 
@@ -120,6 +158,45 @@ export default function Form(props: Props) {
         }
       />
 
+      <Increments
+        classes="mt-8 mb-10"
+        fields={increments.fields}
+        onAdd={(val) => {
+          if (increments.fields.length >= 4) {
+            return alert("You can only have 4 increments");
+          }
+          increments.append({ value: val, label: "" });
+        }}
+        onRemove={(idx) => increments.remove(idx)}
+        countError={errors.increments?.root?.message}
+        field={(idx) => (
+          <>
+            <HuiField className="grid grid-rows-subgrid row-span-2">
+              <Input
+                placeholder="$"
+                {...register(`increments.${idx}.value`)}
+                className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+              />
+              <p className="mt-1 empty:hidden text-left text-xs text-red">
+                {errors.increments?.[idx]?.value?.message}
+              </p>
+            </HuiField>
+            <HuiField className="grid grid-rows-subgrid row-span-2">
+              <Input
+                {...register(`increments.${idx}.label`)}
+                className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+              />
+              <p
+                data-error={!!errors.increments?.[idx]?.label?.message}
+                className="mt-1 text-left text-xs data-[error='true']:text-red"
+              >
+                {incs[idx].label.length}/{incrementLabelMaxChars}
+              </p>
+            </HuiField>
+          </>
+        )}
+      />
+
       <div className="flex gap-3 mt-8">
         <button
           type="reset"
@@ -136,6 +213,6 @@ export default function Form(props: Props) {
           Submit changes
         </button>
       </div>
-    </RhfForm>
+    </F>
   );
 }
