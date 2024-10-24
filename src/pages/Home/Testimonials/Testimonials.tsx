@@ -7,7 +7,7 @@ import TestimonialCard from "./TestimonialCard";
 
 const Testimonials = () => {
   return (
-    <div className="grid relative pt-48 bg-gradient-to-t from-peach/40 to-transparent">
+    <div className="grid relative pt-48 bg-gradient-to-b from-peach/20 to-transparent overflow-x-clip">
       <img
         src={quotation}
         alt="quotation mark"
