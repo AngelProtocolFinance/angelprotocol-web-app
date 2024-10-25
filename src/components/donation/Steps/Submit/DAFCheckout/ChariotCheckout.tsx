@@ -1,3 +1,4 @@
+import type { DonationIntent } from "@better-giving/donation/intent";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ContentLoader from "components/ContentLoader";
 import Prompt from "components/Prompt";
@@ -276,7 +277,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               const { postalCode, line1, line2, city, state } = grantor.address;
 
-              await createGrant({
+              const intent: DonationIntent = {
                 frequency: "one-time",
                 viaId: workflowSessionId,
                 viaName: "",
@@ -299,22 +300,25 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                   ukTaxResident: meta.ukTaxResident,
                 }),
                 source: props.init.source,
-                program: props.details.program.value
-                  ? {
-                      id: props.details.program.value,
-                      name: props.details.program.label,
-                    }
-                  : undefined,
+              };
 
-                tribute: meta.honoraryFullName
-                  ? {
-                      fullName: meta.honoraryFullName,
-                      notif: meta.withTributeNotif
-                        ? meta.tributeNotif
-                        : undefined,
-                    }
-                  : undefined,
-              }).unwrap();
+              if (props.details.program.value) {
+                intent.program = {
+                  id: props.details.program.value,
+                  name: props.details.program.label,
+                };
+              }
+
+              if (meta.honoraryFullName) {
+                intent.tribute = {
+                  fullName: meta.honoraryFullName,
+                };
+                if (meta.withTributeNotif) {
+                  intent.tribute.notif = meta.tributeNotif;
+                }
+              }
+
+              await createGrant(intent).unwrap();
 
               setModalOption("isDismissible", true);
               closeModal();
