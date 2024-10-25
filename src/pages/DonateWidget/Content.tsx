@@ -48,7 +48,6 @@ export default function Content({ profile, config, classes = "" }: Props) {
         className="w-full md:w-3/4 border border-gray-l4 rounded-lg"
         recipient={recipient}
         config={config}
-        programId={config.programId}
       />
     </div>
   );

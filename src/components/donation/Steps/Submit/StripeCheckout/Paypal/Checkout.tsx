@@ -1,3 +1,4 @@
+import type { DonationIntent } from "@better-giving/donation/intent";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
@@ -76,26 +77,40 @@ export default function Checkout(props: StripeCheckoutStep) {
 
         navigate(route, { state });
       }}
-      createOrder={async () =>
-        await createOrder({
-          transactionId: init.intentId,
-          amount: +details.amount,
-          tipAmount: tip?.value ?? 0,
-          feeAllowance,
-          currency: details.currency.code,
-          endowmentId: init.recipient.id,
-          splitLiq: 0,
+      createOrder={async () => {
+        const intent: DonationIntent = {
+          amount: {
+            amount: +details.amount,
+            tip: tip?.value ?? 0,
+            feeAllowance,
+            currency: details.currency.code,
+          },
+          frequency: "one-time",
+          recipient: init.recipient.id,
           donor: toDonor(fvDonor),
+          viaId: "paypal",
+          viaName: "Paypal",
           source: init.source,
-          ...(honorary.honoraryFullName && {
-            inHonorOf: honorary.honoraryFullName,
-          }),
-          ...(details.program.value && {
-            programId: details.program.value,
-            programName: details.program.label,
-          }),
-        }).unwrap()
-      }
+        };
+        if (honorary.honoraryFullName) {
+          intent.tribute = {
+            fullName: honorary.honoraryFullName,
+          };
+          if (honorary.withTributeNotif) {
+            intent.tribute.notif = honorary.tributeNotif;
+          }
+        }
+
+        if (details.program.value) {
+          intent.program = {
+            id: details.program.value,
+            name: details.program.label,
+          };
+        }
+
+        const res = await createOrder(intent).unwrap();
+        return res;
+      }}
     />
   );
 }

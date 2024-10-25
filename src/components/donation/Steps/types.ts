@@ -1,4 +1,4 @@
-import type { DonationIntent, Donor, Endowment } from "types/aws";
+import type { Donor, Endowment } from "types/aws";
 import type {
   DetailedCurrency,
   OptionType,
@@ -6,6 +6,8 @@ import type {
 } from "types/components";
 import type { DonateMethodId, DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
+
+export type Frequency = "one-time" | "subscription";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,
@@ -34,7 +36,7 @@ type FiatDonationDetails = BaseDonationDetails & {
 
 export type StripeDonationDetails = {
   method: Extract<DonateMethodId, "stripe">;
-  frequency: DonationIntent.Frequency;
+  frequency: Frequency;
 } & FiatDonationDetails;
 
 export type StocksDonationDetails = BaseDonationDetails & {
@@ -69,8 +71,6 @@ export type Init = {
   mode: Mode;
   recipient: DonationRecipient;
   config: Config | null;
-  /** intent to resume */
-  intentId?: string;
 };
 
 export type FormStep<T extends DonationDetails = DonationDetails> = {

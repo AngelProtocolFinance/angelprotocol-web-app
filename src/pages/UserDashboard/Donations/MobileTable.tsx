@@ -12,7 +12,6 @@ import { ArrowDownToLine } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
-import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
 import PaymentResumer from "./PaymentResumer";
 import { donationMethod, lastHeaderName } from "./common";
@@ -157,7 +156,7 @@ function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
   }
 
   if (props.status === "intent" && props.viaId === "fiat") {
-    return <IntentResumer intentId={props.id} />;
+    return <>---</>;
   }
 
   if (props.status === "intent" && props.viaId !== "fiat") {
