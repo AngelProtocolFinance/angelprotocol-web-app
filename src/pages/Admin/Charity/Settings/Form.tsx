@@ -141,7 +141,7 @@ export default function Form(props: Props) {
       </div>
 
       <div>
-        <CheckField<FV> name="fundOptIn" classes="font-medium">
+        <CheckField {...register("fundOptIn")} classes="font-medium">
           Allow Fundraisers to be created on behalf of your nonprofit
         </CheckField>
         <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
