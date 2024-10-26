@@ -41,6 +41,7 @@ export function LiqActions({ classes = "", ...props }: Props) {
             balance: props.balance,
             mov: props.mov,
             endowId: props.endowId,
+            min: 50,
             effect: "append",
           })
         }

@@ -23,6 +23,7 @@ export function LockActions({ classes = "", ...props }: Props) {
             type: "lock-liq",
             balance: props.balance,
             mov: props.mov,
+            min: 50,
             endowId: props.endowId,
             effect: "append",
           })
@@ -38,6 +39,7 @@ export function LockActions({ classes = "", ...props }: Props) {
           showModal(MoveFundForm, {
             title: "Withdraw from investments",
             type: "lock-cash",
+            min: 50,
             balance: props.balance,
             mov: props.mov,
             endowId: props.endowId,
