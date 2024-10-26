@@ -7,7 +7,9 @@ const U = ({ children }: PropsWithChildren) => (
 export function Component() {
   return (
     <main className="prose lg:prose-lg padded-container py-20">
-      <p className="text-right">Effective October 25, 2024</p>
+      <i className="text-navy-l1 text-right block">
+        Effective October 25, 2024
+      </i>
       <h2 className="text-center">
         Donor <br /> Terms of Use
       </h2>
