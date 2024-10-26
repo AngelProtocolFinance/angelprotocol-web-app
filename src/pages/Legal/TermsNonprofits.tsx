@@ -301,7 +301,7 @@ export function Component() {
           </ol>
         </li>
         <li>
-          <h3>Receiving Grants from Better Givings</h3>
+          <h3>Receiving Grants from Better Giving</h3>
           <ol type="a">
             <li>
               You acknowledge that we make no promise that you will receive any
