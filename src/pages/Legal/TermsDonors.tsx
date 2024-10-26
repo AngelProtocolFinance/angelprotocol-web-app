@@ -12,52 +12,50 @@ export function Component() {
         Donor <br /> Terms of Use
       </h2>
 
-      <section>
-        <p>
-          These Terms of Use (the “<b>Terms</b>”) are a binding contract (“
-          <b>Agreement</b>”) by and between you (“<b>you.</b>” “<b>your,</b>” or
-          “<b>Donors</b>”) and <b>Better Giving</b>, Inc. (“Better Giving,” “
-          <b>we</b>,” “<b>us</b>,” or “<b>our</b>”). Better Giving is a public
-          charity recognized by the Internal Revenue Service (the “IRS”) under
-          Section 501(c)(3) of the Internal Revenue Code (Federal Tax ID #
-          87-3758939).
-        </p>
-        <p>
-          Better Giving provides and offers a charitable giving platform (the “
-          <b>Platform</b>”) which enables Donors to make charitable
-          contributions to Better Giving and make grant recommendations to
-          qualified nonprofit organization(s) (“<b>NPOs</b>”) on the Platform to
-          advance their missions. Better Giving accepts contributions of fiat
-          currency, cryptocurrency and securities from Donors on the Platform
-          and makes charitable grants to NPOs.
-        </p>
-        <p>
-          In furtherance of its charitable mission, Better Giving (1) receives
-          donations from Donors and makes follow-on grants to NPOs based upon
-          Donor recommendations; (2) provides fiscal sponsorship services to
-          qualifying NPOs, and accepts donations and grants on their behalf; and
-          (3) maintains and manages a board designated endowment fund (or
-          quasi-endowment) (hereinafter the “<b>Fund</b>”) to support NPOs with
-          sustainable grant funding, at Better Giving’s sole discretion.
-        </p>
-        <p>
-          By making donations to Better Giving, you acknowledge and represent
-          that you (i) agree that these Terms are supported by reasonable,
-          valuable and sufficient consideration, (ii) acknowledge the receipt of
-          such consideration, and (iii) state that you have read and understand,
-          and agree to be bound by these Terms.
-        </p>
-        <p>
-          We may revise and update these Terms from time to time at our sole
-          discretion. All changes are effective immediately when posted.
-        </p>
-        <p>
-          The headings and subheadings are for reference only and do not limit
-          the terms or application of the applicable section. Your trust is very
-          important to us. If you have questions about this Agreement, please
-          email support@better.giving.
-        </p>
-      </section>
+      <p>
+        These Terms of Use (the “<b>Terms</b>”) are a binding contract (“
+        <b>Agreement</b>”) by and between you (“<b>you.</b>” “<b>your,</b>” or “
+        <b>Donors</b>”) and <b>Better Giving</b>, Inc. (“Better Giving,” “
+        <b>we</b>,” “<b>us</b>,” or “<b>our</b>”). Better Giving is a public
+        charity recognized by the Internal Revenue Service (the “IRS”) under
+        Section 501(c)(3) of the Internal Revenue Code (Federal Tax ID #
+        87-3758939).
+      </p>
+      <p>
+        Better Giving provides and offers a charitable giving platform (the “
+        <b>Platform</b>”) which enables Donors to make charitable contributions
+        to Better Giving and make grant recommendations to qualified nonprofit
+        organization(s) (“<b>NPOs</b>”) on the Platform to advance their
+        missions. Better Giving accepts contributions of fiat currency,
+        cryptocurrency and securities from Donors on the Platform and makes
+        charitable grants to NPOs.
+      </p>
+      <p>
+        In furtherance of its charitable mission, Better Giving (1) receives
+        donations from Donors and makes follow-on grants to NPOs based upon
+        Donor recommendations; (2) provides fiscal sponsorship services to
+        qualifying NPOs, and accepts donations and grants on their behalf; and
+        (3) maintains and manages a board designated endowment fund (or
+        quasi-endowment) (hereinafter the “<b>Fund</b>”) to support NPOs with
+        sustainable grant funding, at Better Giving’s sole discretion.
+      </p>
+      <p>
+        By making donations to Better Giving, you acknowledge and represent that
+        you (i) agree that these Terms are supported by reasonable, valuable and
+        sufficient consideration, (ii) acknowledge the receipt of such
+        consideration, and (iii) state that you have read and understand, and
+        agree to be bound by these Terms.
+      </p>
+      <p>
+        We may revise and update these Terms from time to time at our sole
+        discretion. All changes are effective immediately when posted.
+      </p>
+      <p>
+        The headings and subheadings are for reference only and do not limit the
+        terms or application of the applicable section. Your trust is very
+        important to us. If you have questions about this Agreement, please
+        email support@better.giving.
+      </p>
       <ol>
         <li>
           <h3>Terms and Conditions for Donations</h3>
