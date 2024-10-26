@@ -17,6 +17,7 @@ interface IMoveFundForm {
   effect: "append" | "override";
   type: Flow;
   endowId: number;
+  min?: number;
   balance: number;
   mov: BalanceMovement;
   initAmount?: number;
@@ -47,7 +48,10 @@ export function MoveFundForm(props: IMoveFundForm) {
           (s) => s.required("required"),
           (n) =>
             n
-              .min(0, "can't be negative")
+              .min(
+                props.min ?? 0,
+                props.min ? `minimum of $${props.min}` : "can't be negative"
+              )
               .max(
                 props.effect === "append"
                   ? available
