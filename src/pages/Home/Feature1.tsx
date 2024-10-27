@@ -2,6 +2,7 @@ import { laira } from "assets/laira/laira";
 import Icon from "components/Icon";
 import Image from "components/Image";
 import { BOOK_A_DEMO } from "constants/env";
+import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 
 type TListItem = {
@@ -42,7 +43,10 @@ export function Feature1({ className = "" }) {
       <h3 className="text-sm md:text-lg uppercase text-blue-d1 text-center mb-4">
         Simplify and Grow Your Impact
       </h3>
-      <h2 className="text-center text-4xl leading-snug mb-6">Easy as 1-2-3</h2>
+      <h2 className="text-center text-4xl leading-snug mb-6">
+        Get Started <br />
+        As Easy 1-2-3
+      </h2>
       <p className="text-navy-l1 px-10 text-center mb-16 text-xl">
         Discover how easy it is to boost your nonprofit’s donations and achieve
         long-term financial sustainability.
@@ -53,9 +57,9 @@ export function Feature1({ className = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
-      <div className="flex max-md:flex-col items-center justify-self-center gap-4 mt-10">
+      <div className="flex max-md:flex-col items-center justify-self-center gap-4 mt-24">
         <Link
-          to={BOOK_A_DEMO}
+          to={appRoutes.register}
           className="isolate btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
         >
           <span className="ml-1">Start Today</span>

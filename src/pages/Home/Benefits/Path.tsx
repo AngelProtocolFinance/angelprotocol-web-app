@@ -13,7 +13,7 @@ const Path = () => {
 
   return (
     <section
-      className={`relative grid ${s.container} pb-40 xl:pb-56 overflow-x-clip`}
+      className={`relative grid ${s.container} pt-20 pb-40 xl:pb-56 overflow-x-clip`}
     >
       <h3 className="text-[13px] md:text-[18px] uppercase text-blue-d1 text-center mb-4">
         Simplified Giving, Amplified Impact

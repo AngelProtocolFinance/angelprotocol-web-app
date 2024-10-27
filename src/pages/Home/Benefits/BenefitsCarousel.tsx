@@ -53,7 +53,9 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
               <p className="text-2xl text-[#0D283A] w-full text-center font-semibold">
                 {slide.title}
               </p>
-              <p className="text-center text-balance">{slide.description}</p>
+              <p className="text-center text-balance text-lg">
+                {slide.description}
+              </p>
             </SwiperSlide>
           );
         })}
