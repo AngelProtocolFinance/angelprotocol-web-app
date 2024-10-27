@@ -1,3 +1,4 @@
+import type { SingleFund } from "@better-giving/fundraiser";
 import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
@@ -7,32 +8,31 @@ import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import type { Endowment } from "types/aws";
-import FAQ from "./FAQ";
-import OrgCard from "./OrgCard";
+import FAQ from "./faq";
+import { FundCard } from "./fund-card";
 
 type Props = {
-  endowment: Endowment;
+  fund: SingleFund;
 };
 
-function Content({ endowment }: Props) {
+function Content({ fund }: Props) {
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
         <DappLogo classes="h-[2.036rem]" />
         <Link
-          to={`${appRoutes.marketplace}/${endowment.id}`}
+          to={`${appRoutes.funds}/${fund.id}`}
           className="font-semibold font-heading hover:text-blue-d1"
         >
           Cancel
         </Link>
       </div>
       <div className="md:px-4 max-w-[68.625rem] mx-auto grid md:grid-cols-[1fr_auto] items-start content-start gap-4">
-        <Link to={`${appRoutes.marketplace}/${endowment.id}`} className="">
-          <OrgCard
-            name={endowment.name}
-            tagline={endowment.tagline}
-            logo={endowment.logo || flying_character}
+        <Link to={`${appRoutes.marketplace}/${fund.id}`} className="">
+          <FundCard
+            name={fund.name}
+            tagline={fund.description}
+            logo={fund.logo || flying_character}
             classes="col-start-1 row-start-1"
           />
         </Link>
@@ -42,24 +42,19 @@ function Content({ endowment }: Props) {
             source="bg-marketplace"
             mode="live"
             recipient={{
-              id: endowment.id.toString(),
-              name: endowment.name,
-              hide_bg_tip: endowment.hide_bg_tip,
-              progDonationsAllowed: endowment.progDonationsAllowed,
+              id: fund.id,
+              name: fund.name,
+              hide_bg_tip: !fund.settings.allowBgTip,
+              progDonationsAllowed: false,
             }}
-            config={{
-              methodIds: endowment.donateMethods,
-              increments: endowment.increments?.map((i) => ({
-                ...i,
-                value: +i.value,
-              })),
-            }}
+            config={null}
             className="md:border border-gray-l4 rounded-lg row-start-2"
           />
         </div>
         <FAQ
           classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]"
-          endowId={endowment.id}
+          //TODO: endowId={1}
+          endowId={1}
         />
         <p className="max-md:px-4 mb-4 max-mbcol-start-1 text-sm leading-normal text-left text-navy-l1 dark:text-navy-l2">
           <span className="block mb-0.5">

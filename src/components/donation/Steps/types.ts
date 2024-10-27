@@ -1,4 +1,4 @@
-import type { Donor, Endowment } from "types/aws";
+import type { Donor } from "types/aws";
 import type {
   DetailedCurrency,
   OptionType,
@@ -14,10 +14,12 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
   "step" | U
 > & { [key in U]?: T[key] };
 
-export type DonationRecipient = Pick<
-  Endowment,
-  "id" | "name" | "hide_bg_tip" | "progDonationsAllowed"
->;
+export type DonationRecipient = {
+  id: string;
+  name: string;
+  hide_bg_tip?: boolean;
+  progDonationsAllowed?: boolean;
+};
 
 type BaseDonationDetails = {
   /** value is "" if no program is selected   */

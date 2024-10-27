@@ -11,6 +11,7 @@ export enum appRoutes {
   signup = "/signup",
   profile = "/profile",
   donate = "/donate",
+  donate_fund = "/donate-fund",
   donate_thanks = "/donate-thanks",
   stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",

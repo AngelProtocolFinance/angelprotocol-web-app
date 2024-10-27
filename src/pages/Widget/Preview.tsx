@@ -24,7 +24,8 @@ export default function Preview({ classes = "", config }: Props) {
       source: "bg-widget",
       mode: "preview",
       recipient: {
-        ...endowment,
+        id: endowment.id.toString(),
+        name: endowment.name,
         hide_bg_tip: data?.hide_bg_tip,
         progDonationsAllowed: data?.progDonationsAllowed,
       },

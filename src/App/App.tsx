@@ -94,6 +94,10 @@ const _appRoutes: RO[] = [
 
 const rootRoutes: RO[] = [
   { path: `${appRoutes.donate}/:id`, lazy: () => import("pages/Donate") },
+  {
+    path: `${appRoutes.donate_fund}/:id`,
+    lazy: () => import("pages/donate-fund"),
+  },
   //outlet-value: isInWidget/widgetVersion
   { element: <Layout />, children: _appRoutes },
   {

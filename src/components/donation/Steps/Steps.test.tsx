@@ -24,7 +24,7 @@ describe("donation flow", () => {
     const state: DonationState = {
       step: "donate-form",
       init: {
-        recipient: { id: 1, name: "test" },
+        recipient: { id: "1", name: "test" },
         source: "bg-marketplace",
         mode: "live",
         config: null,
@@ -53,7 +53,7 @@ describe("donation flow", () => {
     const state: DonationState = {
       step: "donate-form",
       init: {
-        recipient: { id: 1, name: "test", hide_bg_tip: true },
+        recipient: { id: "1", name: "test", hide_bg_tip: true },
         source: "bg-marketplace",
         mode: "live",
         config: null,
@@ -86,7 +86,7 @@ describe("donation flow", () => {
     const state: DonationState = {
       step: "tip",
       init: {
-        recipient: { id: 1, name: "test" },
+        recipient: { id: "1", name: "test" },
         source: "bg-marketplace",
         mode: "live",
         config: null,
@@ -129,7 +129,7 @@ describe("donation flow", () => {
     const state: DonationState = {
       step: "tip",
       init: {
-        recipient: { id: 1, name: "test" },
+        recipient: { id: "1", name: "test" },
         source: "bg-marketplace",
         mode: "live",
         config: null,

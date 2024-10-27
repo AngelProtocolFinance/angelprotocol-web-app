@@ -50,10 +50,10 @@ export default function Card({
       <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
         <div /> {/** future: share button  */}
         <Link
-          to={`${appRoutes.donate}/${id}`}
+          to={`${appRoutes.donate_fund}/${id}`}
           className="btn-blue px-4 py-1 rounded-full text-sm normal-case"
         >
-          WIP: Donate
+          Donate
         </Link>
         <div /> {/** future: bookmark button  */}
       </div>

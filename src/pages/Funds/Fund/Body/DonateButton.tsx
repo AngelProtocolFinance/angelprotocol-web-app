@@ -8,7 +8,7 @@ export default function DonateButton({ className = "" }) {
   return (
     <Link
       aria-disabled={!fund.active}
-      to={appRoutes.donate + `/${fund.id}`}
+      to={appRoutes.donate_fund + `/${fund.id}`}
       className={`${className} btn-blue h-12 px-6 text-base lg:text-sm`}
     >
       Donate now
