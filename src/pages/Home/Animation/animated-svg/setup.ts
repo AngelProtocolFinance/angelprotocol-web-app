@@ -12,7 +12,7 @@ export const timeline = (element: string): gsap.core.Timeline => {
     start: "-105 66.5 1995 744.45", // Shows bubble 1 and 2 initially
     middle: "800 66.5 1995 744.45", // Centers bubble 2, shows part of 3
     preEnd: "1400 66.5 1995 744.45", // Centers bubble 3, shows part of 4
-    end: "2000 66.5 1995 744.45", // Shows bubble 4 on the right edge
+    end: "1700 66.5 1995 744.45", // Shows bubble 4 on the right edge
   };
 
   const mainTimeline = gsap.timeline({
