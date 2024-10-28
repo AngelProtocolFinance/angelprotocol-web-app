@@ -2,7 +2,7 @@ import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import dafPayLogo from "assets/icons/dafpay.svg";
 import Image from "components/Image";
 import { Label } from "components/form";
-import { Coins, CreditCard, Spline } from "lucide-react";
+import { ChartSpline, Coins, CreditCard } from "lucide-react";
 import type { ReactNode } from "react";
 import type { DonateMethodId } from "types/lists";
 import type { FormStep } from "../types";
@@ -25,7 +25,7 @@ const methods: {
   },
   stocks: {
     name: "Stocks",
-    icon: <Spline className="shrink-0" size={18} />,
+    icon: <ChartSpline className="shrink-0" size={18} />,
     panel: Stocks,
   },
   daf: {
