@@ -16,10 +16,14 @@ export default function Hero({ className = "" }) {
           Funding Today, Funding Forever
         </h4>
         <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl @6xl:leading-tight text-pretty mb-4 text-navy-d4">
-          Fundraising made simple, sustainable, and entirely free
+          Raise funds easily. Grow them effortlessly.
         </h1>
         <p className="mb-10 text-lg @6xl:text-xl text-center @6xl:text-left">
-          Accept any type of donation, anywhere in the world
+          Better Giving streamlines donations, simplifies administration, and
+          helps your nonprofit grow its funds—all through an easily embeddable
+          donation form. As a 501(c)(3) ourselves, we accept donations on your
+          behalf, automate tax receipts, and grant 100% of the funds to you—no
+          fees, no hassle.
         </p>
 
         <div className="flex flex-col @sm:flex-row justify-center @6xl:justify-start items-center gap-6">
