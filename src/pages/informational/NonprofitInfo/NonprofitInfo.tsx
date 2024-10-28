@@ -22,10 +22,13 @@ export function NonprofitInfo() {
       <WhyBG className="mt-56 padded-container" />
       <Benefits
         className="mt-56 padded-container px-10"
-        subheading="Simple path to financial stability"
-        heading="Making a Lasting Impact: Give today, Give Forever"
-        body="Join our global community and amplify your charitable giving."
-        items={benefits.sf}
+        subheading="Simplify your fundraising"
+        heading="Your One-Stop Fundraising Solution"
+        body="Donation processing and fund management in one platform"
+        items={benefits.nonprofits.map(({ cardBgClass, ...i }) => ({
+          ...i,
+          cardBgClass: "",
+        }))}
       />
       <FiscalSponsorship className="@xl:mt-56 padded-container" />
       <Testimonials className="mt-40 padded-container" />

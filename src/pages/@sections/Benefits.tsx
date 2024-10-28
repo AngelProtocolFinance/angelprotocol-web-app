@@ -22,7 +22,7 @@ export default function Benefits(props: Props) {
       <p className="text-xl font-medium text-navy-l2 text-center mb-24 text-balance">
         {props.body}
       </p>
-      <div className="grid gap-y-24 @2xl:gap-y-32">
+      <div className="grid gap-y-4 @2xl:gap-y-8">
         {props.items.map((b, i) => (
           <Benefit {...b} key={i} />
         ))}
