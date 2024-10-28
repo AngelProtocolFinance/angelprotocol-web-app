@@ -8,6 +8,7 @@ import FiscalSponsorship from "./FiscalSponsorship";
 import Hero from "./Hero";
 import Testimonials from "./Testimonials";
 import WhyBG from "./WhyBG";
+import FAQ from "./faq";
 import { Features } from "./features";
 import Investment from "./investment";
 
@@ -37,6 +38,7 @@ export function NonprofitInfo() {
       <Features classes="padded-container mt-56" />
       <Testimonials className="mt-80 padded-container" />
       <BottomCta className="mt-48 padded-container" />
+      <FAQ classes="mt-48 padded-container" />
     </main>
   );
 }
