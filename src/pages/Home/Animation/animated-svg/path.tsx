@@ -4,19 +4,20 @@ export const Path: React.FC = () => (
   <path
     stroke="url(#a)"
     strokeLinecap="round"
-    strokeWidth={46}
+    strokeWidth={41}
     d="M547.499 92.252c-407-199.999-633 82.501-472.5 254.501C235.5 518.753 735.5 128.252 824 424.743c88.5 296.49 380.3 108.757 543.5 15.757C1593 312 1753 238.5 2012 339.5S2499 678 2892 448"
     className="line"
   />
 );
+
 export const PathGradient: React.FC = () => (
   <defs>
     <linearGradient
       id="a"
-      x1={400}
-      x2={3399.89}
-      y1={30}
-      y2={337.883}
+      x1={360}
+      x2={3059.9}
+      y1={27}
+      y2={304.09}
       gradientUnits="userSpaceOnUse"
     >
       <stop stopColor="#F1ECFD" />
@@ -33,5 +34,5 @@ export const PathGradient: React.FC = () => (
 );
 
 export const Ball: React.FC = () => (
-  <circle cx={50} cy={100} r={22} className="fill-[#76ceeb]" id="ball" />
+  <circle cx={45} cy={90} r={20} className="fill-[#76ceeb]" id="ball" />
 );

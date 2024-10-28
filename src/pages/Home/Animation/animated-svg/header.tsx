@@ -1,10 +1,10 @@
 import type React from "react";
 
 export const Header: React.FC = () => (
-  <svg width={1184} height={200} x={255} viewBox="0 0 1184 144" id="content">
+  <svg width={1066} height={180} x={300} viewBox="0 0 1066 130" id="content">
     <text
       className="fill-blue uppercase text-2xl font-bold"
-      x={592}
+      x={533}
       y={0}
       textAnchor="middle"
     >
@@ -12,16 +12,16 @@ export const Header: React.FC = () => (
     </text>
     <text
       className="fill-navy-d4 capitalize font-heading font-bold text-5xl"
-      x={592}
-      y={60}
+      x={533}
+      y={54}
       textAnchor="middle"
     >
       Nonprofit Fund Management:
     </text>
     <text
       className="fill-navy-d4 capitalize font-heading font-bold text-5xl"
-      x={592}
-      y={120}
+      x={533}
+      y={108}
       textAnchor="middle"
     >
       Donations That Work For You

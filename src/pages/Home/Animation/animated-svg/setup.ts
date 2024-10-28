@@ -1,4 +1,3 @@
-// animations/animationSetup.ts
 import { gsap } from "gsap";
 
 export const timeline = (element: string): gsap.core.Timeline => {
@@ -7,12 +6,11 @@ export const timeline = (element: string): gsap.core.Timeline => {
   const segment3 = 0.75;
   const segment4 = 1;
 
-  // Adjusted viewBox positions to maintain proper panning
   const viewBoxes = {
-    start: "-105 66.5 1995 744.45", // Shows bubble 1 and 2 initially
-    middle: "800 66.5 1995 744.45", // Centers bubble 2, shows part of 3
-    preEnd: "1400 66.5 1995 744.45", // Centers bubble 3, shows part of 4
-    end: "1700 66.5 1995 744.45", // Shows bubble 4 on the right edge
+    start: "0 60 1795.5 670",
+    middle: "800 60 1795.5 670",
+    preEnd: "1400 60 1795.5 670",
+    end: "1700 60 1795.5 670",
   };
 
   const mainTimeline = gsap.timeline({
