@@ -36,7 +36,7 @@ export function NonprofitInfo() {
       <Investment className="mt-56 padded-container" />
       <Features classes="padded-container mt-56" />
       <Testimonials className="mt-80 padded-container" />
-      <BottomCta className="mt-40 mb-20 max-w-5xl @5xl:max-w-6xl justify-self-center mx-4 @md:mx-10" />
+      <BottomCta className="mt-48 padded-container" />
     </main>
   );
 }

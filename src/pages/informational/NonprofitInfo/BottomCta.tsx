@@ -7,6 +7,14 @@ import { Link } from "react-router-dom";
 export function BottomCta({ className = "" }) {
   return (
     <div className={`${className} grid @4xl:grid-cols-2 gap-4`}>
+      <h4 className="col-span-full text-lg text-blue-d1 uppercase text-center">
+        Simple. Sustainable. Free.
+      </h4>
+      <h2 className="col-span-full text-center text-4xl leading-snug max-w-2xl justify-self-center mb-4">
+        The all-in-one fundraising solution you deserve is only a few clicks
+        away
+      </h2>
+
       <CtaCard
         className="from-blue-d1 "
         title="Ready to unlock your fundraising potential?"
