@@ -5,7 +5,7 @@ import { store } from "store/store";
 import { describe, expect, test, vi } from "vitest";
 import { routes } from "../App";
 
-const homeHeroText = /Simplified Giving/i;
+const homeHeroText = /empower your nonprofit with effortless fundraising/i;
 const marketplaceHeroText = /better giving redefines/i;
 
 const marketLink = /explore all causes/i;

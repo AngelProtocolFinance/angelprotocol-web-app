@@ -1,8 +1,8 @@
 import { laira } from "assets/laira/laira";
-import Icon from "components/Icon";
 import Image from "components/Image";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 type TListItem = {
@@ -63,14 +63,14 @@ export function Feature1({ className = "" }) {
           className="isolate btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
         >
           <span className="ml-1">Start Today</span>
-          <Icon type="ArrowRight" size={18} />
+          <ArrowRight size={18} />
         </Link>
         <Link
           to={BOOK_A_DEMO}
           className="isolate btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
         >
           <span className="ml-1">Book A Demo</span>
-          <Icon type="ArrowRight" size={18} />
+          <ArrowRight size={18} />
         </Link>
       </div>
     </section>
