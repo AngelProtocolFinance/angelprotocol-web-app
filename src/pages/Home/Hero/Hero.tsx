@@ -19,10 +19,10 @@ const Hero = ({ classes = "" }) => {
         Empower Your Nonprofit <br /> with Effortless Fundraising
       </h1>
       <p className="z-10 px-6 text-navy max-md:block md:text-2xl text-center text-pretty sm:text-balance">
-        Embed our free donation form for a one-stop solution to simplify giving,
-        earn high-yield savings, and enjoy hands-off investment growth. Join
-        hundreds of nonprofits growing their donations and securing their
-        financial futures with Better Giving’s platform.
+        Benefit from free donation processing with Better Giving’s one-stop
+        solution to simplify giving, earn high-yield savings, and enjoy
+        hands-off investment growth. Add our customizable donation form to your
+        website in minutes and start putting your donations to work for you.
       </p>
 
       <Link
