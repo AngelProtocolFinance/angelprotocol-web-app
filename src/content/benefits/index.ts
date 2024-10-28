@@ -47,28 +47,33 @@ const donors: Benefit[] = [
 const nonprofits: Benefit[] = [
   {
     title: "Free Donation Processing",
+    title2: "Keep 100% of your donations",
     description:
-      "Keep 100% of your donations, streamline away admin work, and accept all donation types.",
+      "Maximize your nonprofit’s funds with no platform fees. Although third-party processing fees may apply, 95% of donors choose to cover these fees. We handle the tax receipts and admin work for accepting all types of donations, you enjoy grants directly to your bank account.",
     img: icon7,
     cardBgClass: colors[0],
   },
   {
     title: "High-Yield Savings Accounts",
+    title2: "Secure, steady growth for your funds",
     description:
-      "Secure your donations and watch them grow 4-5% annually with no market risk.",
+      "Choose to grow donations in a high-yield savings account at an annual rate of 4-5%, all without any market risk. Funds remain accessible and safe while earning interest, providing your nonprofit with a reliable way to increase reserves over time.",
     img: icon5,
     cardBgClass: colors[1],
   },
   {
     title: "Managed Investment Funds",
+    title2: "Maximize long-term financial growth",
     description:
-      "Maximize your donations’ potential with an average annual return of 24% over the past five years.",
+      "Unlock the potential of your donations with managed investment funds that have delivered an average annual return of 24% over the past five years. Our investment strategy is designed for long-term stability and growth, helping your nonprofit secure a sustainable financial future.",
     img: icon2,
     cardBgClass: colors[2],
   },
   {
     title: "Global Fiscal Sponsorship",
-    description: "Access U.S. grants and simplify cross-border donations.",
+    title2: "Access U.S. grants and streamline international giving",
+    description:
+      "Our fiscal sponsorship program helps nonprofits outside the U.S. access tax-deductible donations from American donors and simplifies cross-border donations. With Better Giving as your fiscal sponsor, you can expand your reach and grow your donor base without navigating complex legal and tax processes on your own.",
     img: icon4,
     cardBgClass: colors[3],
   },

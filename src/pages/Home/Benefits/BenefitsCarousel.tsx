@@ -43,17 +43,20 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
           return (
             <SwiperSlide
               key={index}
-              className={`grid justify-items-center gap-9 py-14 px-10 w-[30rem] @4xl:w-[48rem] rounded-5xl ${slide.cardBgClass}`}
+              className={`grid justify-items-center py-14 px-10 w-[30rem] @4xl:w-[48rem] rounded-5xl ${slide.cardBgClass}`}
             >
               <img
                 src={slide.img}
                 className="size-60 object-cover object-center"
                 alt="logo"
               />
-              <p className="text-2xl text-[#0D283A] w-full text-center font-semibold">
+              <p className="text-2xl font-heading text-[#0D283A] w-full text-center font-bold">
                 {slide.title}
               </p>
-              <p className="text-center text-balance text-lg">
+              <p className="text-xl text-navy w-full text-center font-medium">
+                {slide.title2}
+              </p>
+              <p className="text-center text-balance text-lg mt-4 text-navy">
                 {slide.description}
               </p>
             </SwiperSlide>
