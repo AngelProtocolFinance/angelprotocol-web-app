@@ -27,7 +27,7 @@ const Hero = ({ classes = "" }) => {
 
       <Link
         to={appRoutes.register}
-        className="mt-8 isolate justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
+        className="mt-8 isolate z-10 justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
       >
         <span className="ml-1">Start Fundraising Today</span>
         <ArrowRight size={18} />

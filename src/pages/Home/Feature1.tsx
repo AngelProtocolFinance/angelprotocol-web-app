@@ -57,7 +57,7 @@ export function Feature1({ className = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
-      <div className="flex max-md:flex-col items-center justify-self-center gap-4 mt-24">
+      <div className="isolate z-10 flex max-md:flex-col items-center justify-self-center gap-4 mt-24">
         <Link
           to={appRoutes.register}
           className="isolate btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
