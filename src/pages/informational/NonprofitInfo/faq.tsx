@@ -37,7 +37,7 @@ export default function FAQ({ classes = "" }) {
           </DisclosurePanel>
         </Disclosure>
       ))}
-      <div className="grid pt-4">
+      <div className="grid pt-8">
         <ExtLink
           href={INTERCOM_HELP}
           className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 text-lg font-semibold"
@@ -45,6 +45,18 @@ export default function FAQ({ classes = "" }) {
           <span>Complete FAQs</span>
           <ArrowRight size={15} />
         </ExtLink>
+        <button
+          type="button"
+          onClick={() => {
+            if ((window as any).Intercom) {
+              return (window as any).Intercom("show");
+            }
+            window.open(INTERCOM_HELP, "_blank");
+          }}
+          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 text-lg font-semibold"
+        >
+          Need additional support? Live Chat.
+        </button>
       </div>
     </div>
   );
