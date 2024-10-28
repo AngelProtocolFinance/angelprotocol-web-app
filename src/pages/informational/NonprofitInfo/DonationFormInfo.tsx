@@ -57,7 +57,7 @@ export default function DonationFormInfo({ className = "" }) {
         ))}
       </ul>
 
-      <p className="col-span-full text-center text-xl max-w-3xl justify-self-center mt-4">
+      <p className="col-span-full text-center text-2xl leading-normal max-w-3xl justify-self-center mt-8">
         As a 501(c)(3) public charity, Better Giving accepts donations on your
         behalf, handling all reporting, processing, and tax receipting. We grant
         100% of donations directly to your bank account, or save and invest a
