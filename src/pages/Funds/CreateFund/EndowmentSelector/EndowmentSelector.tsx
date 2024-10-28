@@ -5,8 +5,8 @@ import {
   Field,
   Label,
 } from "@headlessui/react";
-import Icon from "components/Icon";
 import Image from "components/Image";
+import { Search, X } from "lucide-react";
 import { forwardRef, useState } from "react";
 import type { EndowOption } from "../schema";
 import { Options } from "./Options";
@@ -59,7 +59,7 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
             ))}
 
             <div className="bg-blue-l5 inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 rounded">
-              <Icon type="Search" size={20} />
+              <Search size={20} />
               <ComboboxInput
                 className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
                 value={searchText}
@@ -101,7 +101,7 @@ function SelectedOption({ onDeselect, ...props }: ISelectedOption) {
           onDeselect(props);
         }}
       >
-        <Icon type="Close" size={20} />
+        <X size={20} />
       </button>
     </div>
   );

@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { Minus, Plus } from "lucide-react";
 import type React from "react";
 import { type PropsWithChildren, useState } from "react";
 
@@ -63,7 +63,7 @@ function Header(props: {
         className="flex items-center justify-center p-px w-10 h-10 border border-gray-l4 rounded"
         aria-label="toggle section content's visibility"
       >
-        <Icon type={props.isOpen ? "Dash" : "Plus"} />
+        {props.isOpen ? <Minus /> : <Plus />}
       </button>
     </StaticHeader>
   );

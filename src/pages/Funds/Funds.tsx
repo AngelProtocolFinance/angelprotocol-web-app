@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { Search } from "lucide-react";
 import { useState } from "react";
 import Cards from "./Cards";
 
@@ -9,7 +9,7 @@ export function Component() {
       <div
         className={`flex gap-2 items-center rounded-lg overflow-clip field-container`}
       >
-        <Icon type="Search" size={20} className="ml-2" />
+        <Search size={20} className="ml-2" />
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}

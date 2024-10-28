@@ -1,10 +1,10 @@
 import type { FundItem as TFundItem } from "@better-giving/fundraiser";
-import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { appRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import { ArrowRight, BadgeCheck, LoaderCircle, Split } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   useApproveMutation,
@@ -51,7 +51,7 @@ export const FundItem = (props: TFundItem & { endowId: number }) => {
           }`}
           to={`${appRoutes.funds}/${props.id}/edit`}
         >
-          <Icon type="ArrowRight" size={16} />
+          <ArrowRight size={16} />
           <span>Edit</span>
         </Link>
         {/** fund item won't show once NPO opted out of it: so no need to hide this button */}
@@ -76,11 +76,12 @@ export const FundItem = (props: TFundItem & { endowId: number }) => {
             }
           }}
         >
-          <Icon
-            type={isOptingOut ? "Loading" : "Split"}
-            size={12}
-            className={isOptingOut ? "animate-spin" : "rotate-90"}
-          />
+          {isOptingOut ? (
+            <LoaderCircle size={12} className="animate-spin" />
+          ) : (
+            <Split size={12} className="rotate-90" />
+          )}
+
           <span>{isOptingOut ? "Opting out.." : "Opt out"}</span>
         </button>
         {!isApproved ? (
@@ -105,16 +106,17 @@ export const FundItem = (props: TFundItem & { endowId: number }) => {
               }
             }}
           >
-            <Icon
-              type={isApproving ? "Loading" : "Verified"}
-              size={16}
-              className={isApproving ? "animate-spin" : ""}
-            />
+            {isApproving ? (
+              <LoaderCircle size={16} className="animate-spin" />
+            ) : (
+              <ArrowRight size={16} />
+            )}
+
             <span>{isApproving ? "Approving.." : "Approve"}</span>
           </button>
         ) : (
           <div className="flex items-center gap-1 text-green">
-            <Icon type="Verified" className="size-4" />
+            <BadgeCheck className="size-4" />
             <p className="text-xs">Approved</p>
           </div>
         )}
