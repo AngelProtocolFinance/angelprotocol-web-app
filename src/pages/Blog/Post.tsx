@@ -1,7 +1,7 @@
 import ContentLoader from "components/ContentLoader";
-import Icon from "components/Icon";
 import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
+import { ChevronLeft } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -44,7 +44,7 @@ export function Component() {
         to={".."}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
       >
-        <Icon type="Back" className="text-[1em]" />
+        <ChevronLeft className="text-[1em]" />
         <span>Go Back</span>
       </Link>
       <QueryLoader

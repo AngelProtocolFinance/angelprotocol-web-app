@@ -1,17 +1,20 @@
-import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { humanize } from "helpers";
+import {
+  ArrowLeft,
+  ArrowLeftRight,
+  ArrowRight,
+  CircleAlert,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import type { BalanceTx } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
 
-const transferIcon = (
-  <Icon type="ArrowLeftRight" className="size-4 text-amber" />
-);
-const unprocessedIcon = <Icon type="Info" className="size-4 text-gray" />;
-const receivedIcon = <Icon type="ArrowRight" className="size-4 text-green" />;
-const withdrawIcon = <Icon type="ArrowLeft" className="size-4 text-gray" />;
+const transferIcon = <ArrowLeftRight className="size-4 text-amber" />;
+const unprocessedIcon = <CircleAlert className="size-4 text-gray" />;
+const receivedIcon = <ArrowRight className="size-4 text-green" />;
+const withdrawIcon = <ArrowLeft className="size-4 text-gray" />;
 
 const txs: {
   [K in `${BalanceTx["from"]}-${BalanceTx["to"]}`]: {

@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Icon from "components/Icon";
 import Modal from "components/Modal";
 import GenericPrompt from "components/Prompt";
 import { Field } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import { ChevronRight, CircleAlert, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import {
   FormProvider,
@@ -77,11 +77,11 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
             disabled={isLoading}
             className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
           >
-            <Icon type="Close" className="text-lg sm:text-2xl" />
+            <X className="text-lg sm:text-2xl" />
           </button>
         )}
       </div>
-      <Icon type="Exclamation" size={80} className="my-6 text-red" />
+      <CircleAlert size={80} className="my-6 text-red" />
 
       <h3 className="text-center text-2xl mb-2 leading-tight px-3 sm:px-8">
         <div className="uppercase">{verdict}</div>
@@ -109,7 +109,7 @@ export default function Prompt({ verdict, orgName, uuid }: Props) {
 
       <div className="flex items-center gap-2 mb-6">
         <Status classes="bg-gray-d2">Pending</Status>
-        <Icon type="ChevronRight" size={20} />
+        <ChevronRight size={20} />
         {verdict === "approve" ? (
           <Status classes="bg-green">Approved</Status>
         ) : (

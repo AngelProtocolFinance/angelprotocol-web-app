@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import headillust from "./head-illust.webp";
 import s from "./styles.module.css";
@@ -28,7 +28,7 @@ const Hero = ({ classes = "" }) => {
         className="mt-8 isolate justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
       >
         <span className="ml-1">Join us</span>
-        <Icon type="ArrowRight" size={18} />
+        <ArrowRight size={18} />
         <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
       </Link>
     </section>

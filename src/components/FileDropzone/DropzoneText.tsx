@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
 import { isEmpty } from "helpers";
+import { ArrowUpFromLine } from "lucide-react";
 import type { FileDropzoneAsset } from "types/components";
 
 const filesKey: keyof FileDropzoneAsset = "files";
@@ -18,7 +18,7 @@ export default function DropzoneText({
   if (isFilesEmpty && isPreviewsEmpty) {
     return (
       <div className="grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none">
-        <Icon type="Upload" size={20} className="mb-[1.125rem]" />
+        <ArrowUpFromLine size={20} className="mb-[1.125rem]" />
         <p className="font-semibold mb-1">Upload file</p>
         <span>Click to Browse or Drag &amp; Drop</span>
       </div>

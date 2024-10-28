@@ -1,4 +1,5 @@
 import type { LinkGroup } from "layout/DashboardLayout";
+import { CircleDollarSign, CircleUserRound, Settings } from "lucide-react";
 
 export const routes = {
   index: "",
@@ -14,7 +15,7 @@ export const linkGroups: LinkGroup[] = [
         title: "My Donations",
         to: routes.donations,
         icon: {
-          type: "DollarCircle",
+          fn: CircleDollarSign,
           size: 22,
         },
       },
@@ -22,7 +23,7 @@ export const linkGroups: LinkGroup[] = [
         title: "Edit Profile",
         to: routes.edit_profile,
         icon: {
-          type: "User",
+          fn: CircleUserRound,
           size: 21,
         },
       },
@@ -30,7 +31,7 @@ export const linkGroups: LinkGroup[] = [
         title: "Settings",
         to: routes.settings,
         icon: {
-          type: "Gear",
+          fn: Settings,
           size: 22,
         },
       },

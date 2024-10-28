@@ -1,5 +1,6 @@
 import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
 import { unpack } from "helpers";
+import { X } from "lucide-react";
 import { forwardRef, useState } from "react";
 import {
   type FieldValues,
@@ -9,7 +10,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 import type { Country } from "types/components";
-import Icon, { DrawerIcon } from "../Icon";
+import { DrawerIcon } from "../Icon";
 import Options from "./Options";
 import { placeHolderCountryOption } from "./constants";
 
@@ -70,7 +71,7 @@ export const ControlledCountrySelector = forwardRef<El, Props>((props, ref) => {
             props.onReset?.();
           }}
         >
-          <Icon type="Close" size={16} />
+          <X size={16} />
         </button>
       )}
 

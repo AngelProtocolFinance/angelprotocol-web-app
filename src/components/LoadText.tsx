@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { LoaderCircle } from "lucide-react";
 import type { PropsWithChildren } from "react";
 
 export default function LoadText({
@@ -8,10 +8,7 @@ export default function LoadText({
 }: PropsWithChildren<{ isLoading?: boolean; text?: string }>) {
   return isLoading ? (
     <>
-      <Icon
-        type="Loading"
-        className="inline animate-spin mr-1 bottom-px relative"
-      />
+      <LoaderCircle className="inline animate-spin mr-1 bottom-px relative" />
       {text}
     </>
   ) : (

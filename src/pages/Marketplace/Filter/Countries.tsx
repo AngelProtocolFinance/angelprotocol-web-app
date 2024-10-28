@@ -5,8 +5,8 @@ import {
   ComboboxOptions,
 } from "@headlessui/react";
 import countries from "assets/countries/all.json";
-import Icon from "components/Icon";
 import { isEmpty } from "helpers";
+import { SearchIcon, X } from "lucide-react";
 import { useState } from "react";
 import { useMarketplaceContext } from "../Context";
 
@@ -42,7 +42,7 @@ export default function Countries() {
           ))}
 
           <div className="inline-flex p-1 items-center gap-2 bg-blue-l5 text-navy-l1 dark:text-navy-l2 rounded">
-            <Icon type="Search" size={18} />
+            <SearchIcon size={18} />
             <ComboboxInput
               className="appearance-none bg-transparent focus:outline-none"
               value={searchText}
@@ -91,7 +91,7 @@ function SelectedOption({ selected, onChange, option }: SelectedProps) {
           handleRemove(option);
         }}
       >
-        <Icon type="Close" size={18} />
+        <X size={18} />
       </button>
     </div>
   );

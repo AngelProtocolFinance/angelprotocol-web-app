@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize, roundDownToNum } from "helpers";
+import { HandCoins, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
 import type { BalanceMovement } from "types/aws";
 import { MoveFundForm } from "./MoveFundForm";
@@ -16,22 +16,22 @@ const asset: {
 } = {
   "liq-cash": {
     title: <span className="text-sm text-navy-l1">Grant</span>,
-    icon: <Icon type="HandCoins" className="text-navy-l1 size-4" />,
+    icon: <HandCoins className="text-navy-l1 size-4" />,
     source: "Savings",
   },
   "lock-cash": {
     title: <span className="text-sm text-navy-l1">Grant</span>,
-    icon: <Icon type="HandCoins" className="text-navy-l1 size-4" />,
+    icon: <HandCoins className="text-navy-l1 size-4" />,
     source: "Investments",
   },
   "liq-lock": {
     title: <span className="text-sm text-green">Invest</span>,
-    icon: <Icon type="Sprout" className="text-green size-4" />,
+    icon: <Sprout className="text-green size-4" />,
     source: "Savings",
   },
   "lock-liq": {
     title: <span className="text-sm text-amber">Save</span>,
-    icon: <Icon type="PiggyBank" className="text-amber size-4" />,
+    icon: <PiggyBank className="text-amber size-4" />,
     source: "Investments",
   },
 };

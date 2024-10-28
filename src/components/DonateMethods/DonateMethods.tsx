@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import { Reorder, useDragControls, useMotionValue } from "framer-motion";
 import { unpack } from "helpers/unpack";
+import { GripVertical } from "lucide-react";
 import type { ReactNode } from "react";
 import type { TDonateMethod } from "types/components";
 
@@ -108,7 +108,7 @@ function Method({
         onPointerDown={(e) => controls.start(e)}
         disabled={value.disabled}
       >
-        <Icon type="Drag" size={20} />
+        <GripVertical size={20} />
       </button>
 
       <div>

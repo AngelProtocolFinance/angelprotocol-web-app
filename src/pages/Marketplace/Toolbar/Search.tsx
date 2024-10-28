@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { SearchIcon } from "lucide-react";
 import { useMarketplaceContext } from "../Context";
 
 export default function Search({ classes = "" }: { classes?: string }) {
@@ -8,7 +8,7 @@ export default function Search({ classes = "" }: { classes?: string }) {
     <div
       className={`${classes} flex gap-2 items-center rounded-lg overflow-clip field-container`}
     >
-      <Icon type="Search" size={20} className="ml-2" />
+      <SearchIcon className="ml-2" />
       <input
         value={state.searchText}
         onChange={(e) => update({ searchText: e.target.value })}

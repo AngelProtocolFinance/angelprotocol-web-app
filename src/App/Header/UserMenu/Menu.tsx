@@ -1,7 +1,7 @@
 import { MenuItem } from "@headlessui/react";
-import Icon from "components/Icon";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
+import { CircleDollarSign, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { AuthenticatedUser } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
@@ -24,7 +24,7 @@ export default function Menu({ user, signOut, classes }: Props) {
           to={`${appRoutes.user_dashboard}/donations`}
           className=" hover:text-blue-d1 text-sm flex items-center gap-2"
         >
-          <Icon type="DollarCircle" size={18} />
+          <CircleDollarSign size={18} />
           <span>My Donations</span>
         </MenuItem>
         <Organizations userId={user.email} classes="mt-6" />
@@ -37,7 +37,7 @@ export default function Menu({ user, signOut, classes }: Props) {
               to={appRoutes.applications}
               className="hover:text-blue-d1 text-sm flex items-center gap-1"
             >
-              <Icon type="SecurityScan" size={18} />
+              <Shield size={18} />
               <span>Applications Dashboard</span>
             </MenuItem>
           )}
@@ -47,7 +47,7 @@ export default function Menu({ user, signOut, classes }: Props) {
               to={appRoutes.banking_applications}
               className="hover:text-blue-d1 text-sm flex items-center gap-1 mt-1"
             >
-              <Icon type="SecurityScan" size={18} />
+              <Shield size={18} />
               <span>Banking applications</span>
             </MenuItem>
           )}

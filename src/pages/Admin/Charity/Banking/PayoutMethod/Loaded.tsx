@@ -1,7 +1,7 @@
 import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
 import { adminRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
+import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
@@ -70,7 +70,7 @@ export default function Loaded(props: BankingApplicationDetails) {
 
       {isRejected && (
         <p className="text-sm text-red my-2">
-          <Icon type="Info" className="relative inline bottom-px mr-1" />
+          <CircleAlert className="relative inline bottom-px mr-1" />
           <span>{props.rejectionReason}</span>
         </p>
       )}
@@ -94,8 +94,7 @@ export default function Loaded(props: BankingApplicationDetails) {
             <span className="break-all">
               {props.bankStatementFile.publicUrl}
             </span>
-            <Icon
-              type="ExternalLink"
+            <SquareArrowOutUpRight
               className="inline relative bottom-px ml-2"
               size={15}
             />

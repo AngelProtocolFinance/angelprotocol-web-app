@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import { Info } from "components/Status";
+import { Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 
 type Increment = {
@@ -32,12 +32,7 @@ export default function Increments({
       <div className="flex items-center gap-2 col-span-3">
         <p className="font-bold text-base">Donation increments</p>
         <button type="button" className="text-base font-bold text-green">
-          <Icon
-            type="Plus"
-            size={17}
-            strokeWidth={3}
-            onClick={() => onAdd("")}
-          />
+          <Plus size={17} strokeWidth={3} onClick={() => onAdd("")} />
         </button>
       </div>
       <p className="text-xs text-red empty:hidden col-span-3">{countError}</p>
@@ -66,7 +61,7 @@ export default function Increments({
                   type="button"
                   onClick={() => onRemove(idx)}
                 >
-                  <Icon strokeWidth={3} type="Dash" size={18} />
+                  <Minus strokeWidth={3} size={18} />
                 </button>
                 <div />
               </div>

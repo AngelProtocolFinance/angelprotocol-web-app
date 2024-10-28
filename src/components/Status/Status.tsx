@@ -1,32 +1,16 @@
-import type { IconType } from "../Icon";
-import Icon, { icons } from "../Icon";
 import type { StatusProps } from "./types";
 
-export default function Status<T extends IconType | JSX.Element>({
+export default function Status({
   icon,
   inline = false,
-  iconOptions,
   classes = "",
   gap = "gap-2",
   children,
-}: StatusProps<T>) {
-  const { className = "", ...options } = iconOptions || {};
+}: StatusProps) {
   return (
     <div className={`${classes} ${gap} ${inline ? "" : "flex items-center"}`}>
-      {isIconProps(icon) ? (
-        <Icon
-          {...options}
-          type={icon}
-          className={`${className} ${inline ? "inline-block relative" : ""}`}
-        />
-      ) : (
-        (icon as JSX.Element)
-      )}
+      {icon}
       <span>{children}</span>
     </div>
   );
-}
-
-function isIconProps(val: any): val is IconType {
-  return typeof val === "string" && val in icons;
 }

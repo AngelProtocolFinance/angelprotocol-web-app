@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
+import { ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import BenefitsCarousel from "./BenefitsCarousel";
@@ -60,7 +60,7 @@ const Path = () => {
         className="mt-8 justify-self-center btn-blue normal-case items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
       >
         <span className="mr-1">Learn more</span>
-        <Icon type="ArrowRight" size={18} />
+        <ArrowRight size={18} />
       </Link>
     </section>
   );

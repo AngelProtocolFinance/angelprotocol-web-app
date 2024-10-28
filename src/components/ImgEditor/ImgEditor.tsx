@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import { humanize, unpack } from "helpers";
 import { fixedForwardRef } from "helpers/react";
+import { ArrowUpFromLine, Crop, Undo } from "lucide-react";
 import type React from "react";
 import { useDropzone } from "react-dropzone";
 import {
@@ -54,7 +54,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             className="absolute-center grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none"
             tabIndex={-1}
           >
-            <Icon type="Upload" size={22} className="mb-[1.125rem]" />
+            <ArrowUpFromLine size={22} className="mb-[1.125rem]" />
             <p className="font-semibold mb-1">Upload file</p>
             <span className="text-center">
               Click to Browse or Drag &amp; Drop
@@ -67,19 +67,19 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           <div className="absolute-center hidden group-hover:flex">
             <div className={buttonStyle}>
               <input {...getInputProps()} />
-              <Icon type="Upload" size={15} />
+              <ArrowUpFromLine size={15} />
             </div>
             {
               /** only show controls if new file is uploaded */
               props.value.file && (
                 <IconButton disabled={props.disabled} onClick={props.onUndo}>
-                  <Icon type="Undo" size={18} />
+                  <Undo size={18} />
                 </IconButton>
               )
             }
             {props.value.file && !props.error && (
               <IconButton onClick={handleOpenCropper} disabled={props.disabled}>
-                <Icon type="Crop" size={16} />
+                <Crop size={16} />
               </IconButton>
             )}
           </div>

@@ -1,11 +1,11 @@
 import type { EndowClaim } from "@better-giving/registration/models";
-import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
+import { CircleCheck } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useNewApplicationQuery } from "services/aws/registration";
@@ -31,7 +31,7 @@ export function Component() {
 
   return (
     <div className="grid justify-items-center mx-6">
-      <Icon type="CheckCircle" className="text-green" size={80} />
+      <CircleCheck className="text-green" size={80} />
       <h1 className="text-[2rem] mt-10 text-center">
         Thank you for joining {APP_NAME}!
       </h1>

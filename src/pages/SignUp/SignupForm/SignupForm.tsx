@@ -9,6 +9,7 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect, logger } from "helpers";
+import { Mail } from "lucide-react";
 import { useController, useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
@@ -191,7 +192,7 @@ export default function SignupForm(props: Props) {
             {...register("email")}
             autoComplete="username"
             placeholder="Email address"
-            icon="Email"
+            icon={Mail}
             error={errors.email?.message}
             classes={{ container: "mt-4" }}
           />
@@ -199,7 +200,7 @@ export default function SignupForm(props: Props) {
             {...register("emailConfirmation")}
             autoComplete="username"
             placeholder="Confirm email"
-            icon="Email"
+            icon={Mail}
             error={errors.emailConfirmation?.message}
             classes={{ container: "mb-4" }}
           />

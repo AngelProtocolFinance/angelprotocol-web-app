@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
+import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEndowmentCardsQuery } from "services/aws/aws";
 import { Navigation } from "swiper/modules";
@@ -39,13 +39,13 @@ const HeroBottom = ({ className = "" }) => {
           type="button"
           className="cause-prev p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 left-[5%] xl:left-[15%]"
         >
-          <Icon type="Back" />
+          <ChevronLeft />
         </button>
         <button
           type="button"
           className="cause-next p-4 bg-white text-blue-d1 rounded-full shadow-lg z-10 absolute top-1/2 -translate-y-1/2 right-[5%] xl:right-[15%]"
         >
-          <Icon type="Next" className="text-2xl" />
+          <ChevronRight className="text-2xl" />
         </button>
         <Swiper
           centeredSlides
@@ -90,7 +90,7 @@ const HeroBottom = ({ className = "" }) => {
         className="z-10 mt-16 justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full font-heading relative"
       >
         <span className="ml-1">Explore All Causes</span>
-        <Icon type="ArrowRight" size={20} />
+        <ArrowRight size={20} />
       </Link>
       <p className="bg-[#FFEECC] font-gochi text-2xl z-[22] px-4 justify-self-center mt-4">
         from all around the globe

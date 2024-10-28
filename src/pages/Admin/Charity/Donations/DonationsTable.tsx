@@ -1,7 +1,7 @@
 import CsvExporter from "components/CsvExporter";
-import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
+import { FileSpreadsheet } from "lucide-react";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { Donation } from "types/aws";
 import type { Ensure } from "types/utils";
@@ -74,7 +74,7 @@ export default function DonationsTable({ classes = "" }) {
                   )}
                 filename="received_donations.csv"
               >
-                <Icon type="FileCSV" size={17} className="text-2xl" />
+                <FileSpreadsheet size={17} className="text-2xl" />
                 Donation Records
               </CsvExporter>
             </div>

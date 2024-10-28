@@ -1,6 +1,6 @@
-import Icon, { type IconType } from "components/Icon";
 import type { Classes } from "components/form/types";
 import { unpack } from "helpers";
+import type { Church } from "lucide-react";
 import { type InputHTMLAttributes, forwardRef } from "react";
 
 import { fieldClasses } from "./constants";
@@ -9,7 +9,7 @@ type El = HTMLInputElement;
 interface Props extends Omit<InputHTMLAttributes<El>, "type" | "className"> {
   classes?: Classes;
   error?: string;
-  icon?: IconType;
+  icon?: typeof Church;
 }
 
 export const Input = forwardRef<El, Props>((props, ref) => {
@@ -23,9 +23,7 @@ export const Input = forwardRef<El, Props>((props, ref) => {
           props.icon ? "grid-cols-[auto_1fr]" : ""
         } ${fieldClasses}`}
       >
-        {props.icon && (
-          <Icon type={props.icon} className="ml-5 text-navy-l3" size={20} />
-        )}
+        {props.icon && <props.icon className="ml-5 text-navy-l3" size={20} />}
         <input
           {...rest}
           ref={ref}

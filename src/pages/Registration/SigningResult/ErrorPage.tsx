@@ -1,7 +1,7 @@
-import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { regRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import { CircleAlert } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useFiscalSponsorshipAgreementSigningURLMutation } from "services/aws/registration";
@@ -33,7 +33,7 @@ export default function ErrorPage(props: ErrorQueryParams) {
   return (
     <>
       <div className="bg-red rounded-full aspect-square grid place-items-center mb-4">
-        <Icon type="Exclamation" size={30} className="text-white m-5" />
+        <CircleAlert size={30} className="text-white m-5" />
       </div>
       <h1 className="text-2xl uppercase text-center">Signing failed</h1>
       <p className="bg-blue-l5 dark:bg-blue-d6 p-4 text-sm text-navy-l1 dark:text-navy-l2 mt-4">

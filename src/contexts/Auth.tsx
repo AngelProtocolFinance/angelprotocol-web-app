@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
+import { CircleAlert } from "lucide-react";
 import { type ComponentType, createContext, useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
@@ -34,7 +34,7 @@ export default function withAuth<Props>(
     if (!(requiredGroups || []).every((g) => user.groups.includes(g))) {
       return (
         <div className="grid content-start place-items-center py-20">
-          <Icon type="Exclamation" size={80} className="text-red" />
+          <CircleAlert size={80} className="text-red" />
           <p className="text-xl mt-8">Unauthorized</p>
         </div>
       );

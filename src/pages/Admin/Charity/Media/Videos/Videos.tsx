@@ -1,7 +1,7 @@
 import Breadcrumbs from "components/Breadcrumbs";
-import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
+import { Plus } from "lucide-react";
 import { useAdminContext } from "../../../Context";
 import VideoEditor from "../VideoEditor";
 import { List } from "./List";
@@ -32,7 +32,7 @@ export default function Videos() {
           type="button"
           className="btn-outline-filled text-sm px-8 py-2 gap-1"
         >
-          <Icon type="Plus" size={16} />
+          <Plus size={16} />
           <span>add video</span>
         </button>
       </div>

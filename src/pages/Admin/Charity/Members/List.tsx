@@ -1,11 +1,11 @@
 import ContentLoader from "components/ContentLoader";
-import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import QueryLoader from "components/QueryLoader";
 import TableSection, { Cells } from "components/TableSection";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import { Minus, Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import {
   useDeleteEndowAdminMutation,
@@ -32,7 +32,7 @@ export default function List() {
           })
         }
       >
-        <Icon type="Plus" size={16} />
+        <Plus size={16} />
         <span>Invite user</span>
       </button>
       <QueryLoader
@@ -112,7 +112,7 @@ function Loaded({ members, classes = "" }: LoadedProps) {
                 type="button"
                 className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
               >
-                <Icon type="Dash" size={16} />
+                <Minus size={16} />
               </button>
             </td>
 

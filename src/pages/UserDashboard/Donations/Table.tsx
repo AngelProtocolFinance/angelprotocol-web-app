@@ -1,11 +1,11 @@
 import ExtLink from "components/ExtLink";
 import { HeaderButton } from "components/HeaderButton";
-import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { juno } from "constants/chains";
 import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";
 import useSort from "hooks/useSort";
+import { ArrowDownToLine, SquareArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
 import IntentResumer from "./IntentResumer";
@@ -107,7 +107,7 @@ export default function Table({
                 <span className="truncate max-w-[12rem]">
                   {row.recipientName}
                 </span>
-                <Icon type="ExternalLink" className="w-5 h-5" />
+                <SquareArrowUpRight className="w-5 h-5" />
               </Link>
               {row.programId ? (
                 <Link
@@ -168,7 +168,7 @@ function LastRowColContent(
         className="w-full flex justify-center"
         onClick={() => showKYCForm(props.id)}
       >
-        <Icon type="FileDownload" size={20} />
+        <ArrowDownToLine size={20} />
       </button>
     );
   }

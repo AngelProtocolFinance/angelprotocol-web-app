@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
+import { CircleCheck, FolderIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { BankingApplicationStatus, PayoutMethod } from "types/aws";
 
@@ -46,16 +46,15 @@ export default function Table({ methods, classes = "" }: Props) {
             </td>
             <>
               {row.topPriorityNum === row.thisPriorityNum && (
-                <Icon type="CheckCircle" size={18} className="text-green-d1" />
+                <CircleCheck size={18} className="text-green-d1" />
               )}
             </>
             <Link
               to={row.wiseRecipientID}
               className="text-center w-full inline-block hover:text-blue-d1"
             >
-              <Icon
+              <FolderIcon
                 size={22}
-                type="Folder"
                 aria-label="bank statement file"
                 className="inline-block"
               />

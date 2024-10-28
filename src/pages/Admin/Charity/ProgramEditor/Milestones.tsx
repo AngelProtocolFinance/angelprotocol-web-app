@@ -1,7 +1,7 @@
-import Icon from "components/Icon";
 import { Info } from "components/Status";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
+import { Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import { useNewMilestoneMutation } from "services/aws/milestones";
 import type { Milestone as TMilestone } from "types/aws";
@@ -42,7 +42,7 @@ export default function Milestones({ programId, milestones }: Props) {
           type="button"
           className="btn-outline-filled text-sm w-full @md:w-52 py-2"
         >
-          <Icon type="Plus" className="mr-2" size={16} />
+          <Plus className="mr-2" size={16} />
           <span>{isLoading ? "Adding.." : "Add"} milestone</span>
         </button>
       </div>

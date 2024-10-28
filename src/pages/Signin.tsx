@@ -9,6 +9,7 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
+import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
@@ -109,7 +110,7 @@ export function Component() {
             {...register("email")}
             placeholder="Email address"
             autoComplete="username"
-            icon="Email"
+            icon={Mail}
             error={errors.email?.message}
           />
           <PasswordInput

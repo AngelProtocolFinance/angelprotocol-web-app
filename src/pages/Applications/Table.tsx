@@ -3,10 +3,10 @@ import {
   isIrs501c3,
 } from "@better-giving/registration/models";
 import { HeaderButton } from "components/HeaderButton";
-import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import useSort from "hooks/useSort";
+import { Folder } from "lucide-react";
 import { Link } from "react-router-dom";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
@@ -101,9 +101,8 @@ export default function Table({
                 to={appRoutes.applications + `/${row.id}`}
                 className="text-center w-full inline-block hover:text-blue-d1"
               >
-                <Icon
+                <Folder
                   size={22}
-                  type="Folder"
                   aria-label="application details"
                   className="inline-block"
                 />

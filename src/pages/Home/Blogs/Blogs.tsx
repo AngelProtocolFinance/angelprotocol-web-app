@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { usePostsQuery } from "services/wordpress";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -18,13 +18,13 @@ const Blogs = () => {
           type="button"
           className="blog-prev p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 left-10 md:left-[15%]"
         >
-          <Icon type="Back" />
+          <ChevronLeft />
         </button>
         <button
           type="button"
           className="blog-next p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 -translate-y-1/2 right-10 md:right-[15%]"
         >
-          <Icon type="Next" />
+          <ChevronRight />
         </button>
         <Swiper
           loop

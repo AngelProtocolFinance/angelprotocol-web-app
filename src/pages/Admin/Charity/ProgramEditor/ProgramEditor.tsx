@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { adminRoutes } from "constants/routes";
+import { ChevronLeft } from "lucide-react";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useProgramQuery } from "services/aws/programs";
@@ -21,7 +21,7 @@ export default function ProgramEditor() {
         to={"../" + adminRoutes.programs}
         className="flex items-center gap-2 text-blue-d1 hover:text-blue"
       >
-        <Icon type="Back" />
+        <ChevronLeft />
         <span>Back</span>
       </Link>
       <QueryLoader

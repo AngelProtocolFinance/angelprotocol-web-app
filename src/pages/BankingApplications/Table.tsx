@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
+import { Folder } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { BankingApplicationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
@@ -57,9 +57,8 @@ export default function Table({
                 to={appRoutes.banking_applications + `/${row.wiseRecipientID}`}
                 className="text-center w-full inline-block hover:text-blue-d1"
               >
-                <Icon
+                <Folder
                   size={22}
-                  type="Folder"
                   aria-label="bank statement file"
                   className="inline-block"
                 />

@@ -3,6 +3,7 @@ import { AuthError, resetPassword } from "aws-amplify/auth";
 import { Form, Input } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
+import { Mail } from "lucide-react";
 import { type UseFormReturn, useForm } from "react-hook-form";
 import { Link, useLocation } from "react-router-dom";
 import { requiredString } from "schemas/string";
@@ -77,7 +78,7 @@ export default function InitForm(props: Props) {
         {...register("email")}
         placeholder="Email address"
         classes={{ container: "mt-6" }}
-        icon="Email"
+        icon={Mail}
         error={errors.email?.message}
       />
 

@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import { Image } from "lucide-react";
 import { usePaginatedMedia } from "services/aws/usePaginatedMedia";
 import VideoPreview from "../VideoPreview";
 
@@ -59,7 +59,7 @@ function NoVideo({ classes = "" }) {
     <div
       className={`bg-white ${classes} grid justify-items-center rounded border border-gray-l4 px-4 py-16`}
     >
-      <Icon type="Picture" className="text-navy-l2 text-2xl mb-6" />
+      <Image className="text-navy-l2 text-2xl mb-6" />
       <p className="font-bold mb-2">Start by adding your first video</p>
       <p className="text-sm text-navy-l1">
         You have no videos. To add one, use the{" "}

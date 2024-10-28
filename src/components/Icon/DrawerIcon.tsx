@@ -1,5 +1,4 @@
-import type { LucideProps } from "lucide-react";
-import Icon from "./Icon";
+import { ChevronDown, type LucideProps } from "lucide-react";
 
 export function DrawerIcon({
   isOpen,
@@ -7,9 +6,8 @@ export function DrawerIcon({
   ...props
 }: LucideProps & { isOpen: boolean }) {
   return (
-    <Icon
+    <ChevronDown
       {...props}
-      type="ChevronDown"
       className={`transition transform ease-in-out ${
         isOpen ? "rotate-180" : "rotate-0"
       } ${className}`}

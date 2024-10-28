@@ -1,9 +1,10 @@
 import { Popover, PopoverButton } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Icon, { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
 import { weeksAgo } from "helpers/weeksAgo";
+import { Filter as FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import type { DonationsQueryParams } from "types/aws";
@@ -72,7 +73,7 @@ export default function Filter({
       >
         {({ open }) => (
           <>
-            <Icon className="@5xl:hidden mr-1" type="Filter" size={16} />
+            <FilterIcon className="@5xl:hidden mr-1" size={16} />
             <div className="uppercase font-semibold text-[0.9375rem]">
               Filter
             </div>

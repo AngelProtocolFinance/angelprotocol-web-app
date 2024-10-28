@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
+import { X } from "lucide-react";
 import { useMarketplaceContext } from "../Context";
 import Categories from "./Categories";
 import Countries from "./Countries";
@@ -27,7 +27,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
           Clear Filters
         </button>
         <button onClick={closeModal} className="active:text-blue-d1">
-          <Icon type="Close" size={22} />
+          <X size={22} />
         </button>
       </div>
 

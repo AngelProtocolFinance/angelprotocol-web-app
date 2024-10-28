@@ -1,8 +1,8 @@
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import dafPayLogo from "assets/icons/dafpay.svg";
-import Icon from "components/Icon/Icon";
 import Image from "components/Image";
 import { Label } from "components/form";
+import { ChartSpline, Coins, CreditCard } from "lucide-react";
 import type { ReactNode } from "react";
 import type { DonateMethodId } from "types/lists";
 import type { FormStep } from "../types";
@@ -20,12 +20,12 @@ const methods: {
 } = {
   stripe: {
     name: "Card/Bank",
-    icon: <Icon type="CreditCard" className="shrink-0" size={18} />,
+    icon: <CreditCard className="shrink-0" size={18} />,
     panel: Stripe,
   },
   stocks: {
     name: "Stocks",
-    icon: <Icon type="Stocks" className="shrink-0" size={18} />,
+    icon: <ChartSpline className="shrink-0" size={18} />,
     panel: Stocks,
   },
   daf: {
@@ -35,7 +35,7 @@ const methods: {
   },
   crypto: {
     name: "Crypto",
-    icon: <Icon type="Coins" className="shrink-0" size={22} />,
+    icon: <Coins className="shrink-0" size={22} />,
     panel: Crypto,
   },
 };

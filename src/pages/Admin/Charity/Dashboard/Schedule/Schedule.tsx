@@ -1,7 +1,7 @@
-import Icon from "components/Icon";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
+import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import type { ReactNode } from "react";
 import type { Allocation } from "types/aws";
@@ -47,14 +47,14 @@ export function Schedule(props: Props) {
             showModal(Edit, { ...props.allocation, amount: props.amount, id });
           }}
         >
-          <Icon type="Pencil" className="h-4 w-4" />
+          <Pencil className="h-4 w-4" />
           <span className="sr-only">Edit allocation settings</span>
         </button>
       </div>
 
       <div className="grid grid-cols-[auto_auto_auto_1fr_auto_auto] gap-y-3 gap-x-2 mt-4">
         <Row
-          icon={<Icon type="HandCoins" className="h-4 w-4 mr-2 text-navy-l1" />}
+          icon={<HandCoins className="h-4 w-4 mr-2 text-navy-l1" />}
           title={
             <div className="flex items-center">
               <span>Grants</span>
@@ -67,7 +67,7 @@ export function Schedule(props: Props) {
                   </Content>
                 }
               >
-                <Icon type="Question" size={14} className="text-navy-l1 ml-1" />
+                <CircleHelp size={14} className="text-navy-l1 ml-1" />
               </Tooltip>
             </div>
           }
@@ -75,16 +75,14 @@ export function Schedule(props: Props) {
           amount={props.amount}
         />
         <Row
-          icon={
-            <Icon type="PiggyBank" width={20} className="mr-2 text-amber" />
-          }
+          icon={<PiggyBank width={20} className="mr-2 text-amber" />}
           title={<span>Savings</span>}
           pct={props.allocation.liq}
           amount={props.amount}
         />
 
         <Row
-          icon={<Icon type="Sprout" size={20} className="mr-2 text-green" />}
+          icon={<Sprout size={20} className="mr-2 text-green" />}
           title={<span>Investments</span>}
           pct={props.allocation.lock}
           amount={props.amount}

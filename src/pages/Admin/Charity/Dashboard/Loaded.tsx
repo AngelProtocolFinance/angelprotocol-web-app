@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import { Arrow, Content } from "components/Tooltip";
 import { humanize } from "helpers";
+import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import type { Allocation, EndowmentBalances } from "types/aws";
 import Figure from "./Figure";
@@ -41,7 +41,7 @@ export function Loaded({ classes = "", ...props }: Props) {
               <Arrow />
             </Content>
           }
-          icon={<Icon size={21} type="PiggyBank" strokeWidth={1.5} />}
+          icon={<PiggyBank size={21} strokeWidth={1.5} />}
           amount={`$ ${humanize(props.balances.liq ?? 0, 2)}`}
           actions={
             <LiqActions
@@ -69,7 +69,7 @@ export function Loaded({ classes = "", ...props }: Props) {
               <Arrow />
             </Content>
           }
-          icon={<Icon type="Stocks" size={16} />}
+          icon={<ChartSpline size={16} />}
           amount={`$ ${humanize(props.balances.sustainabilityFundBal, 2)}`}
           actions={
             <LockActions
@@ -83,7 +83,7 @@ export function Loaded({ classes = "", ...props }: Props) {
         />
         <Figure
           title="Contributions count"
-          icon={<Icon type="Users" size={17} />}
+          icon={<UsersRound size={17} />}
           amount={props.balances.contributionsCount.toString()}
         />
       </div>

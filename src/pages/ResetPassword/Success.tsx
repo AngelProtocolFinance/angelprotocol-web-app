@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
+import { CircleCheck } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 export default function Success() {
@@ -7,10 +7,7 @@ export default function Success() {
 
   return (
     <div className="grid justify-items-center w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
-      <Icon
-        type="CheckCircle"
-        className="text-blue-d1 h-16 sm:h-20 w-16 sm:w-20"
-      />
+      <CircleCheck className="text-blue-d1 h-16 sm:h-20 w-16 sm:w-20" />
 
       <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4 mt-6">
         Password reset successful

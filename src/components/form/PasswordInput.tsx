@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { Eye, EyeOff, Lock } from "lucide-react";
 import { type InputHTMLAttributes, forwardRef, useState } from "react";
 import { fieldClasses } from "./constants";
 
@@ -15,7 +15,7 @@ export const PasswordInput = forwardRef<El, Props>((props, ref) => {
   return (
     <div>
       <div className={`grid grid-cols-[auto_1fr_auto] px-5 ${fieldClasses}`}>
-        <Icon type="Padlock" className="text-navy-l3" size={20} />
+        <Lock className="text-navy-l3" size={20} />
         <input
           ref={ref}
           {...rest}
@@ -29,7 +29,7 @@ export const PasswordInput = forwardRef<El, Props>((props, ref) => {
           className="text-navy-l3 hover:text-navy-l2 active:text-navy rounded focus-visible:outline focus-visible:outline-2"
           onClick={() => setIsPasswordShown((prev) => !prev)}
         >
-          <Icon type={isPasswordShown ? "EyeSlashed" : "Eye"} size={20} />
+          {isPasswordShown ? <EyeOff size={20} /> : <Eye size={20} />}
         </button>
       </div>
       {error && <p className="text-xs text-red mt-1.5">{error}</p>}
