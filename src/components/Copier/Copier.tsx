@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import { unpack } from "helpers";
+import { Check, Copy } from "lucide-react";
 import type { ReactNode } from "react";
 import useCopier from "./useCopier";
 
@@ -22,15 +22,13 @@ export default function Copier({ text, classes, size, children }: Props) {
       onClick={handleCopy}
     >
       {(copied && (
-        <Icon
-          type="Check"
+        <Check
           className={`${icon} cursor-default hover:text-current`}
           size={size?.check}
           aria-labelledby="copied"
         />
       )) || (
-        <Icon
-          type="Copy"
+        <Copy
           className={`${icon} cursor-pointer`}
           size={size?.copy}
           aria-labelledby="copy"

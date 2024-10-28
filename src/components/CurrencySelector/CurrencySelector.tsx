@@ -5,8 +5,8 @@ import {
   Field,
   Label,
 } from "@headlessui/react";
-import Icon from "components/Icon/Icon";
 import { unpack } from "helpers";
+import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
 import type { CurrencyOption } from "types/components";
 import { type QueryState, isQuery } from "types/third-party/redux";
@@ -73,11 +73,7 @@ export default function CurrencySelector<T extends CurrencyOption>({
         <ComboboxButton className="flex items-center absolute inset-y-0 right-2">
           {({ open }) =>
             isCurrencyLoading ? (
-              <Icon
-                type="Loading"
-                className="text-navy-l2 animate-spin"
-                size={20}
-              />
+              <LoaderCircle className="text-navy-l2 animate-spin" size={20} />
             ) : (
               <DrawerIcon
                 isOpen={open}

@@ -1,5 +1,5 @@
 import { Radio, RadioGroup } from "@headlessui/react";
-import Icon from "components/Icon";
+import { Check } from "lucide-react";
 import type { FormValues } from "./types";
 
 type Freq = FormValues["frequency"];
@@ -28,11 +28,11 @@ export default function Frequency({ value, onChange, error }: Props) {
       <div className="grid grid-cols-2 gap-2 @[21rem]/frequency:flex">
         <Radio value={"subscription" satisfies Freq} className={styles.option}>
           <span>Give Monthly</span>
-          <Icon type="Check" size={16} className={styles.icon} />
+          <Check size={16} className={styles.icon} />
         </Radio>
         <Radio value={"one-time" satisfies Freq} className={styles.option}>
           <span>Give Once</span>
-          <Icon type="Check" size={16} className={styles.icon} />
+          <Check size={16} className={styles.icon} />
         </Radio>
       </div>
       {error && <p className="field-error static text-left mt-1">{error}</p>}

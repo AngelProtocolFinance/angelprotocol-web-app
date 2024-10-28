@@ -1,6 +1,6 @@
 import BankDetails from "components/BankDetails";
 import ExtLink from "components/ExtLink";
-import Icon from "components/Icon/Icon";
+import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { steps } from "../../routes";
@@ -30,7 +30,7 @@ function Banking() {
           href={data.banking.bank_statement.publicUrl}
           className="flex items-center gap-2 text-blue hover:text-blue-d1"
         >
-          <Icon type="ExternalLink" />
+          <SquareArrowOutUpRight />
           <span>Bank statement</span>
         </ExtLink>
         <button

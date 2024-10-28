@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { humanize } from "helpers";
+import { ArrowLeft, ArrowRight, CircleAlert, Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import type { Allocation, BalanceMovement, EndowmentBalances } from "types/aws";
 import { MIN_PROCESSING_AMOUNT } from "./Schedule/common";
@@ -68,7 +68,7 @@ export function Summary({ classes = "", ...props }: Props) {
             </Content>
           }
         >
-          <Icon type="Info" className="text-navy-l1" size={15} />
+          <CircleAlert className="text-navy-l1" size={15} />
         </Tooltip>
       </h4>
       <div className="grid grid-cols-[auto_auto_auto_1fr]">
@@ -91,11 +91,7 @@ export function Summary({ classes = "", ...props }: Props) {
                   </Content>
                 }
               >
-                <Icon
-                  type="Info"
-                  size={16}
-                  className="inline mr-auto text-amber"
-                />
+                <CircleAlert size={16} className="inline mr-auto text-amber" />
               </Tooltip>
             );
           }}
@@ -147,7 +143,7 @@ function Balance({ classes = "", ...props }: IItem) {
             } flex items-center font-heading text-sm`}
           >
             &#40;
-            <Icon type={changeAmount < 0 ? "Dash" : "Plus"} size={14} />
+            {changeAmount < 0 ? <Minus size={14} /> : <Plus size={14} />}
             <span> $ {humanize(Math.abs(changeAmount))} &#41;</span>
           </p>
         ) : (
@@ -161,16 +157,23 @@ function Balance({ classes = "", ...props }: IItem) {
               key={idx}
               className="grid grid-cols-subgrid col-span-full items-center"
             >
-              <p className="flex items-center mr-4">
-                <Icon
-                  size={14}
-                  className={`${
-                    value > 0 ? "text-green" : "text-navy-l1"
-                  } justify-self-end mr-2`}
-                  type={value > 0 ? "ArrowRight" : "ArrowLeft"}
-                />
-                <span className="text-sm text-navy-l1">{toOrFrom}</span>
-              </p>
+              {value !== 0 && (
+                <p className="flex items-center mr-4">
+                  {value > 0 ? (
+                    <ArrowRight
+                      size={14}
+                      className="text-green justify-self-end mr-2"
+                    />
+                  ) : (
+                    <ArrowLeft
+                      size={14}
+                      className="text-navy-l1 justify-self-end mr-2"
+                    />
+                  )}
+
+                  <span className="text-sm text-navy-l1">{toOrFrom}</span>
+                </p>
+              )}
               <p className="font-heading">$ {humanize(Math.abs(value))}</p>
             </div>
           ))}

@@ -2,8 +2,8 @@ import {
   type Submission,
   isRejected,
 } from "@better-giving/registration/models";
-import Icon from "components/Icon";
 import LoadText from "components/LoadText";
+import { CircleAlert, Hourglass } from "lucide-react";
 import { steps } from "pages/Registration/routes";
 import type { MouseEventHandler } from "react";
 import { Link } from "react-router-dom";
@@ -53,11 +53,7 @@ export default function EndowmentStatus({
         className={`max-sm:grid text-red dark:text-red-l3 ${classes} content-start`}
       >
         <p className="mb-6 max-sm:grid justify-items-center gap-2">
-          <Icon
-            type="Info"
-            className="inline relative bottom-px mr-2"
-            size={20}
-          />
+          <CircleAlert className="inline relative bottom-px mr-2" size={20} />
           <span className="max-sm:text-center">
             Your nonprofit's application has been rejected.
           </span>
@@ -79,11 +75,7 @@ export default function EndowmentStatus({
       <div
         className={`max-sm:grid justify-items-center gap-2 text-navy-l1 dark:text-navy-l2 ${classes}`}
       >
-        <Icon
-          type="HourglassSplit"
-          className="relative bottom-px inline mr-2"
-          size={18}
-        />
+        <Hourglass className="relative bottom-px inline mr-2" size={18} />
         <span className="max-sm:text-center">
           Your application has been submitted for review
         </span>

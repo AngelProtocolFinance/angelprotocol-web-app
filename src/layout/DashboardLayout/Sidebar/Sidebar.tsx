@@ -1,4 +1,3 @@
-import Icon from "components/Icon";
 import { createNavLinkStyler } from "helpers";
 import React, { type ReactNode } from "react";
 import { NavLink } from "react-router-dom";
@@ -39,7 +38,7 @@ export default function Sidebar({
                 onClick={onChange}
                 aria-disabled={link.disabled}
               >
-                <Icon {...link.icon} className="justify-self-center" />
+                <link.icon.fn className="justify-self-center" />
                 {link.title}
               </NavLink>
             ))}

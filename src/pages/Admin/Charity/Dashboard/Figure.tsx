@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import { Tooltip } from "components/Tooltip";
+import { CircleHelp } from "lucide-react";
 import type { ReactNode } from "react";
 
 type Props = {
@@ -20,7 +20,7 @@ export default function Figure(props: Props) {
 
         {props.tooltip && (
           <Tooltip tip={props.tooltip}>
-            <Icon type="Question" size={14} className="text-gray ml-1" />
+            <CircleHelp size={14} className="text-gray ml-1" />
           </Tooltip>
         )}
 

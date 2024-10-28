@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import { LoaderCircle, Minus, Pencil, Star } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import type { ButtonHTMLAttributes } from "react";
 import ReactPlayer from "react-player";
@@ -36,9 +36,8 @@ export default function VideoPreview(props: Media) {
             }
           }}
         >
-          <Icon
+          <Star
             size={19}
-            type="Star"
             className={`${
               props.featured ? "text-[#FFA500]" : ""
             } group-disabled:text-gray-l1`}
@@ -52,7 +51,7 @@ export default function VideoPreview(props: Media) {
             })
           }
         >
-          <Icon type="Pencil" size={16} />
+          <Pencil size={16} />
         </CRUDBtn>
         <CRUDBtn
           disabled={allControlsDisabled}
@@ -65,7 +64,7 @@ export default function VideoPreview(props: Media) {
             }
           }}
         >
-          <Icon type="Dash" />
+          <Minus />
         </CRUDBtn>
       </div>
       {/** render only thumbnails on lists */}
@@ -103,7 +102,7 @@ function CRUDBtn({
       type="button"
       className={`p-1.5 text-lg rounded-full hover:bg-blue-l4 group disabled:text-gray-l1 ${className}`}
     >
-      {isLoading ? <Icon type="Loading" className="animate-spin" /> : children}
+      {isLoading ? <LoaderCircle className="animate-spin" /> : children}
     </button>
   );
 }

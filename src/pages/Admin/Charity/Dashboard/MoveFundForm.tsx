@@ -1,10 +1,10 @@
 import { Field, Input, Label } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Icon from "components/Icon";
 import Modal from "components/Modal";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
+import { ArrowLeft, Pencil } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import { useMoveFundsMutation } from "services/apes";
@@ -151,14 +151,13 @@ function Deduction(props: IDeduction) {
   return (
     <div className="col-span-full grid grid-cols-subgrid text-sm">
       <p className="flex items-center">
-        <Icon type="ArrowLeft" size={15} className="text-navy-l1 mr-1" />
+        <ArrowLeft size={15} className="text-navy-l1 mr-1" />
         <span className="text-left">{tos[props.to]}</span>
       </p>
       <span className="text-left">
         $ {humanize(props.amount)}{" "}
         {props.isEditing && (
-          <Icon
-            type="Pencil"
+          <Pencil
             size={12}
             className="inline bottom-px relative animate-bounce text-amber-d2"
           />

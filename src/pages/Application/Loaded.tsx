@@ -1,9 +1,9 @@
 import type { Application } from "@better-giving/registration/approval";
 import { isIrs501c3, isRejected } from "@better-giving/registration/models";
 import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { useModalContext } from "contexts/ModalContext";
+import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import Container from "./Container";
@@ -155,8 +155,7 @@ function DocLink({ url }: { url: string }) {
   return (
     <ExtLink href={url} className="text-blue hover:text-blue-d1">
       <span className="break-all">{url}</span>
-      <Icon
-        type="ExternalLink"
+      <SquareArrowOutUpRight
         className="inline relative bottom-px ml-2"
         size={15}
       />

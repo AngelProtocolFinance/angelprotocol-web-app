@@ -1,11 +1,11 @@
 import { skipToken } from "@reduxjs/toolkit/query";
 import type { PaymentIntent } from "@stripe/stripe-js";
-import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
+import { CircleX } from "lucide-react";
 import { useCallback, useEffect } from "react";
 import {
   Link,
@@ -143,7 +143,7 @@ function Processing({ onMount = () => {} }) {
 function Unsuccessful({ recipientId }: { recipientId?: number }) {
   return (
     <div className="justify-self-center display-block m-auto max-w-[35rem] pt-8 sm:pt-20 pb-20 scroll-mt-6">
-      <Icon type="CloseCircle" size={96} className="text-green mb-4 mx-auto" />
+      <CircleX size={96} className="text-green mb-4 mx-auto" />
       <h3 className="text-2xl sm:text-3xl mb-8 sm:mb-12 text-center">
         Donation unsuccessful
       </h3>
@@ -163,7 +163,7 @@ function Unsuccessful({ recipientId }: { recipientId?: number }) {
 function SomethingWentWrong({ recipientId }: { recipientId?: number }) {
   return (
     <div className="justify-self-center display-block m-auto max-w-[35rem] pt-8 sm:pt-20 pb-20 scroll-mt-6">
-      <Icon type="CloseCircle" size={96} className="text-green mb-4 mx-auto" />
+      <CircleX size={96} className="text-green mb-4 mx-auto" />
       <h3 className="text-2xl sm:text-3xl mb-8 sm:mb-12 text-center">
         Something went wrong
       </h3>

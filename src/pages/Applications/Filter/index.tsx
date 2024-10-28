@@ -1,10 +1,11 @@
 import type { QueryParams } from "@better-giving/registration/approval";
 import { Popover, PopoverButton } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Icon, { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/Icon";
 import { dateToFormFormat } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
 import { weeksAgo } from "helpers/weeksAgo";
+import { FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import Form from "./Form";
@@ -71,7 +72,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       >
         {({ open }) => (
           <>
-            <Icon className="lg:hidden mr-1" type="Filter" size={16} />
+            <FilterIcon className="lg:hidden mr-1" size={16} />
             <div className="uppercase font-semibold text-[0.9375rem] ">
               Filter
             </div>

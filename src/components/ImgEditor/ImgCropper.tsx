@@ -1,8 +1,8 @@
-import Icon from "components/Icon";
 import Image from "components/Image";
 import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
 import Cropper from "cropperjs";
+import { Save } from "lucide-react";
 import { useCallback, useRef } from "react";
 
 type Props = {
@@ -56,7 +56,7 @@ export default function ImgCropper({
           className="text-navy-d4 hover:text-blue"
           onClick={handleSave}
         >
-          <Icon type="Save" size={22} />
+          <Save size={22} />
         </button>
       </div>
       <Image

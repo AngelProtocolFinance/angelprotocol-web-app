@@ -1,23 +1,15 @@
-import Icon, { type IconType } from "../Icon";
+import { LoaderCircle } from "lucide-react";
 import Status from "./Status";
 import type { StatusProps } from "./types";
 
 export function LoadingStatus({
   classes,
   children,
-  iconOptions: icon,
-}: Omit<StatusProps<IconType>, "icon">) {
+}: Omit<StatusProps, "icon">) {
   return (
     <Status
       classes={classes}
-      icon={
-        <Icon
-          {...icon}
-          size={icon?.size ?? 20}
-          type="Loading"
-          className={`animate-spin ${icon?.className || ""}`}
-        />
-      }
+      icon={<LoaderCircle size={20} className="animate-spin" />}
     >
       {children}
     </Status>

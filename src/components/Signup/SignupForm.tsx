@@ -1,9 +1,9 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { AuthError, signUp } from "aws-amplify/auth";
-import Icon from "components/Icon";
 import { Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { logger } from "helpers";
+import { Eye, EyeOff, Lock } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
@@ -102,7 +102,7 @@ export default function SignupForm(props: Props) {
       })}
     >
       <div className='grid grid-cols-[auto_1fr_auto] h-[3.25rem] bg-gray-l5 px-5 border border-gray-l4 rounded items-center has-[:focus]:ring-2 ring-blue-d1 ring-offset-1  has-[input[aria-invalid="true"]]:border-red has-[:disabled]:bg-gray-l3'>
-        <Icon type="Padlock" className="mr-3 text-gray" size={20} />
+        <Lock className="mr-3 text-gray" size={20} />
         <input
           {...register("password")}
           type={isPasswordShown ? "text" : "password"}
@@ -116,7 +116,7 @@ export default function SignupForm(props: Props) {
           className="py-3 focus:outline-none focus:text-black text-gray"
           onClick={() => setIsPasswordShown((prev) => !prev)}
         >
-          <Icon type={isPasswordShown ? "EyeSlashed" : "Eye"} size={18.5} />
+          {isPasswordShown ? <EyeOff size={18.5} /> : <Eye size={18.5} />}
         </button>
       </div>
       <p className="text-xs text-red text-right mt-1">

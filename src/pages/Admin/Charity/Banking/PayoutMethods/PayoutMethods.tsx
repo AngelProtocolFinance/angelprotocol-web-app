@@ -1,6 +1,6 @@
 import ContentLoader from "components/ContentLoader";
-import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
+import { Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import { Link } from "react-router-dom";
 import { usePayoutMethodsQuery } from "services/aws/banking-applications";
@@ -19,7 +19,7 @@ export default function PayoutMethods() {
           aria-disabled={queryState.isLoading}
           className="btn-green pl-2 pr-4 py-2 text-xs"
         >
-          <Icon type="Plus" className="mr-2" size={16} />
+          <Plus className="mr-2" size={16} />
           <span>New</span>
         </Link>
       </div>

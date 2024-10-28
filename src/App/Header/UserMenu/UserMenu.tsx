@@ -1,7 +1,7 @@
-import Icon from "components/Icon";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
+import { CircleUserRound } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import type { SignInRouteState } from "types/auth";
@@ -45,9 +45,8 @@ export default function UserMenu() {
       {user.avatarUrl ? (
         <Image src={user.avatarUrl} className="rounded-full size-8" />
       ) : (
-        <Icon
+        <CircleUserRound
           size={24}
-          type="User"
           className="text-blue disabled:text-navy-l2"
         />
       )}

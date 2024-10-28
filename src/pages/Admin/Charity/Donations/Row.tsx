@@ -1,8 +1,8 @@
 import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
 import { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize, maskAddress } from "helpers";
+import { CircleCheck, X } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
 
@@ -55,15 +55,13 @@ export default function Row(
 
       <td className="relative">
         {!props.donorDetails ? (
-          <Icon
-            type="Close"
+          <X
             //prevent icon size from affecting row height
             className="left-4 absolute top-1/2 -translate-y-1/2 text-red "
             size={22}
           />
         ) : (
-          <Icon
-            type="CheckCircle"
+          <CircleCheck
             className="left-4 absolute top-1/2 -translate-y-1/2  text-green"
             size={20}
           />

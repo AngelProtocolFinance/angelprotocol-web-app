@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { Search } from "lucide-react";
 
 interface Props {
   text: string;
@@ -11,7 +11,7 @@ export default function SearchField({ classes = "", text, onChange }: Props) {
       className={`${classes} flex items-center px-4 py-1 text-sm gap-1 font-heading`}
     >
       <label htmlFor="__endow-search">
-        <Icon type="Search" className="mr-1 text-2xl text-gray" />
+        <Search className="mr-1 text-2xl text-gray" />
       </label>
       <input
         value={text}

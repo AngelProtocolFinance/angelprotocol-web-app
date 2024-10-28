@@ -1,5 +1,16 @@
 import { adminRoutes } from "constants/routes";
 import type { LinkGroup } from "layout/DashboardLayout";
+import {
+  Blocks,
+  CircleDollarSign,
+  CircleUserRound,
+  Image,
+  LayoutDashboard,
+  ListCheck,
+  Settings,
+  UsersRound,
+  Wallet,
+} from "lucide-react";
 
 const { program_editor: _pe, index: _i, ...restAdminRoutes } = adminRoutes;
 
@@ -14,7 +25,7 @@ const linkGroup1: LinkGroup = {
       title: "Dashboard",
       to: sidebarRoutes.dashboard,
       icon: {
-        type: "Dashboard",
+        fn: LayoutDashboard,
         size: 20,
       },
       end: true,
@@ -23,7 +34,7 @@ const linkGroup1: LinkGroup = {
       title: "Donations",
       to: sidebarRoutes.donations,
       icon: {
-        type: "DollarCircle",
+        fn: CircleDollarSign,
         size: 22,
       },
     },
@@ -37,7 +48,7 @@ const linkGroup2: LinkGroup = {
       title: "Edit Profile",
       to: sidebarRoutes.edit_profile,
       icon: {
-        type: "User",
+        fn: CircleUserRound,
         size: 20.5,
       },
     },
@@ -45,7 +56,7 @@ const linkGroup2: LinkGroup = {
       title: "Programs",
       to: sidebarRoutes.programs,
       icon: {
-        type: "ListBox",
+        fn: ListCheck,
         size: 22,
       },
     },
@@ -53,7 +64,7 @@ const linkGroup2: LinkGroup = {
       title: "Media",
       to: sidebarRoutes.media,
       icon: {
-        type: "Picture",
+        fn: Image,
         size: 20,
       },
     },
@@ -61,7 +72,7 @@ const linkGroup2: LinkGroup = {
       title: "Banking",
       to: sidebarRoutes.banking,
       icon: {
-        type: "Wallet",
+        fn: Wallet,
         size: 20,
       },
     },
@@ -75,7 +86,7 @@ const linkGroup3: LinkGroup = {
       title: "Settings",
       to: "settings",
       icon: {
-        type: "Gear",
+        fn: Settings,
         size: 21,
       },
     },
@@ -83,7 +94,7 @@ const linkGroup3: LinkGroup = {
       title: "Members",
       to: "members",
       icon: {
-        type: "Users",
+        fn: UsersRound,
         size: 21,
       },
     },
@@ -91,7 +102,7 @@ const linkGroup3: LinkGroup = {
       title: "Donation Form Builder",
       to: sidebarRoutes.form_builder,
       icon: {
-        type: "Widget",
+        fn: Blocks,
         size: 25,
       },
     },

@@ -1,10 +1,10 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import Icon from "components/Icon";
 import Modal from "components/Modal";
 import Prompt from "components/Prompt";
 import { Field, RhfForm } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import { X } from "lucide-react";
 import { type UseFormReturn, useForm } from "react-hook-form";
 import { url } from "schemas/string";
 import {
@@ -76,7 +76,7 @@ export default function VideoEditor(props: Props) {
             onClick={closeModal}
             className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
           >
-            <Icon type="Close" size={24} />
+            <X size={24} />
           </button>
         )}
       </div>

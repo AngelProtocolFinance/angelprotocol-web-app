@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { ChevronDown, ChevronUp, ChevronsUpDown } from "lucide-react";
 
 export function HeaderButton<T>(
   props: React.ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -22,20 +22,15 @@ export function HeaderButton<T>(
     >
       <span>{children}</span>
 
-      <Icon
-        type={
-          _activeSortKey === _sortKey
-            ? _sortDirection === "asc"
-              ? "ChevronUp"
-              : "ChevronDown"
-            : "ChevronsUpDown"
-        }
-        className={`w-4 h-4 shrink-0 ${
-          _activeSortKey === _sortKey
-            ? "text-navy-d4 dark:text-white"
-            : "text-navy-l2 dark:text-white"
-        }`}
-      />
+      {_activeSortKey === _sortKey ? (
+        _sortDirection === "asc" ? (
+          <ChevronUp className="w-4 h-4 shrink-0 text-navy-d4" />
+        ) : (
+          <ChevronDown className="w-4 h-4 shrink-0 text-navy-d4" />
+        )
+      ) : (
+        <ChevronsUpDown className="w-4 h-4 shrink-0 text-navy-l2" />
+      )}
     </button>
   );
 }

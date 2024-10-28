@@ -4,7 +4,8 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import Icon, { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/Icon";
+import { ChevronDown, ChevronUp, X } from "lucide-react";
 import type { EndowmentsSortKey } from "types/aws";
 import { type Sort, useMarketplaceContext } from "../Context";
 
@@ -74,16 +75,14 @@ export default function Sorter() {
               onClick={resetSort}
               className="text-red dark:text-red-l3 mr-2"
             >
-              <Icon type="Close" />
+              <X />
             </button>
             <button
               type="button"
               onClick={() => toggleDirection(sort)}
               className="mr-3"
             >
-              <Icon
-                type={sort.direction === "asc" ? "ChevronUp" : "ChevronDown"}
-              />
+              {sort.direction === "asc" ? <ChevronUp /> : <ChevronDown />}
             </button>
           </>
         )}

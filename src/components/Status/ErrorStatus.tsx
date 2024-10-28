@@ -1,16 +1,15 @@
-import Icon, { type IconType } from "../Icon";
+import { CircleAlert } from "lucide-react";
 import Status from "./Status";
 import type { StatusProps } from "./types";
 
 export function ErrorStatus({
   classes = "",
   children,
-  iconOptions: icon,
-}: Omit<StatusProps<IconType>, "icon">) {
+}: Omit<StatusProps, "icon">) {
   return (
     <Status
       classes={`text-red dark:text-red-l2 ${classes}`}
-      icon={<Icon {...icon} type="Info" />}
+      icon={<CircleAlert />}
     >
       {children}
     </Status>

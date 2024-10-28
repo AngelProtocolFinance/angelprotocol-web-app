@@ -1,6 +1,6 @@
 import { PopoverButton, PopoverPanel } from "@headlessui/react";
-import Icon from "components/Icon";
 import { DateInput } from "components/form";
+import { X } from "lucide-react";
 import type { FC, FormEventHandler } from "react";
 import type { FormValues as FV } from "./types";
 
@@ -24,7 +24,7 @@ const Form: FC<Props> = ({ onReset, submit, classes = "" }) => {
       <div className="@5xl:hidden relative text-[1.25rem] px-4 py-3 -mb-4 font-bold uppercase">
         <span className="text-blue-d1">Filters</span>
         <PopoverButton className="absolute top-1/2 -translate-y-1/2 right-2">
-          <Icon type="Close" size={33} />
+          <X size={33} />
         </PopoverButton>
       </div>
 

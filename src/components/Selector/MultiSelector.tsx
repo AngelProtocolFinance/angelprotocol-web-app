@@ -5,10 +5,11 @@ import {
   ComboboxOption,
   ComboboxOptions,
 } from "@headlessui/react";
-import Icon, { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/Icon";
 import { isEmpty } from "helpers";
 import { unpack } from "helpers";
 import { fixedForwardRef } from "helpers/react";
+import { Search, X } from "lucide-react";
 import { type ForwardedRef, type PropsWithChildren, useState } from "react";
 import {
   type FieldValues,
@@ -70,7 +71,7 @@ function _MultiList<T extends ValKey>(
             ))}
             {props.searchable ? (
               <div className="bg-blue-l5 inline-flex items-center gap-2 text-navy-l1 dark:text-navy-l2 pl-3 rounded">
-                <Icon type="Search" size={20} />
+                <Search size={20} />
                 <ComboboxInput
                   className="appearance-none bg-transparent first:pl-3 focus:outline-none h-10"
                   value={searchText}
@@ -170,7 +171,7 @@ function SelectedOption<T extends ValKey>({
           onDeselect(option);
         }}
       >
-        <Icon type="Close" size={20} />
+        <X size={20} />
       </button>
     </div>
   );

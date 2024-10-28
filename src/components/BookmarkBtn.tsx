@@ -1,6 +1,6 @@
-import Icon from "components/Icon";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useErrorContext } from "contexts/ErrorContext";
+import { Heart } from "lucide-react";
 import { type PropsWithChildren, useRef } from "react";
 import {
   useToggleUserBookmarkMutation,
@@ -64,11 +64,7 @@ export default function BookmarkBtn({ endowId, classes = "" }: Props) {
         disabled={isBookmarksLoading || isTogglingBookmark}
         className={`flex items-center gap-1 disabled:text-gray-l4 ${classes}`}
       >
-        <Icon
-          type="Heart"
-          size={19}
-          className={isBookmarked ? "fill-red text-red" : ""}
-        />
+        <Heart size={19} className={isBookmarked ? "fill-red text-red" : ""} />
       </button>
     </Tooltip>
   );

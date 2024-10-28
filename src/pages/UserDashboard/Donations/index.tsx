@@ -1,8 +1,8 @@
 import CsvExporter from "components/CsvExporter";
-import Icon from "components/Icon";
 import QueryLoader from "components/QueryLoader";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { replaceWithEmptyString as fill, humanize, isEmpty } from "helpers";
+import { Search } from "lucide-react";
 import usePaginatedDonationRecords from "services/aws/usePaginatedDonations";
 import type { Donation } from "types/aws";
 import Filter from "./Filter";
@@ -69,8 +69,7 @@ export default function Donations() {
         Export to CSV
       </CsvExporter>
       <div className="relative flex gap-x-3 items-center border border-gray-l4 w-full bg-white dark:bg-blue-d6 rounded">
-        <Icon
-          type="Search"
+        <Search
           size={20}
           className="text-navy-d4 dark:text-navy-l2 absolute top-1/2 -translate-y-1/2 left-3"
         />

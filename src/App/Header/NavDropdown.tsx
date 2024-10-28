@@ -4,9 +4,9 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import Icon from "components/Icon";
 import LoaderRing from "components/LoaderRing";
 import { createNavLinkStyler } from "helpers";
+import { ChevronDown, MenuIcon } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { logout } from "slices/auth";
 import { useGetter, useSetter } from "store/accessors";
@@ -25,14 +25,12 @@ export default function NavDropdown({ links }: Props) {
         data-testid="nav_dropdown"
         className="text-white data-[open]:text-white/90 group flex justify-center items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
       >
-        <Icon
-          type="Menu"
+        <MenuIcon
           size={24}
           className="text-navy-l2 data-[open]:text-navy-l2/70 sm:hidden transition duration-150 ease-in-out group-hover:text-navy-l2/80"
           aria-hidden="true"
         />
-        <Icon
-          type="ChevronDown"
+        <ChevronDown
           size={20}
           className="text-blue-d7 data-[open]:text-blue-d7/70 max-sm:hidden transition duration-150 ease-in-out group-hover:text-blue-d7/80"
           aria-hidden="true"

@@ -13,10 +13,10 @@ import { logoUrl } from "constants/common";
 import { IS_TEST } from "constants/env";
 import Fuse from "fuse.js";
 import { logger } from "helpers";
+import { SearchIcon } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useLazyTokenEstimateQuery } from "services/aws/crypto";
 import type { TokenV2 } from "types/components";
-import Icon from "../../Icon";
 import Image from "../../Image";
 import type { Token } from "../types";
 import type { OnTokenChange } from "./types";
@@ -104,7 +104,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
           className="text-left text-sm focus:outline-none bg-transparent"
           onChange={(event) => setSearchText(event.target.value)}
         />
-        <Icon type="Search" size={20} />
+        <SearchIcon size={20} />
       </div>
 
       {filtered.length === 0 && searchText !== "" ? (

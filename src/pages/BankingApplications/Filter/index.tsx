@@ -1,7 +1,8 @@
 import { Popover, PopoverButton } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Icon, { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/Icon";
 import { cleanObject } from "helpers/cleanObject";
+import { FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
@@ -65,7 +66,7 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       >
         {({ open }) => (
           <>
-            <Icon className="lg:hidden mr-1" type="Filter" size={16} />
+            <FilterIcon className="lg:hidden mr-1" size={16} />
             <div className="uppercase font-semibold text-[0.9375rem] ">
               Filter
             </div>

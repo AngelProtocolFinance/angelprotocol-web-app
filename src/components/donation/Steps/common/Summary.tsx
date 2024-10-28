@@ -1,8 +1,8 @@
 import { unpack } from "helpers";
+import { ListCheck } from "lucide-react";
 import type { ReactNode } from "react";
 import type { DonationIntent } from "types/aws";
 import type { OptionType } from "types/components";
-import Icon from "../../../Icon";
 import BackBtn from "./BackBtn";
 
 type Classes =
@@ -39,7 +39,7 @@ export default function Summary({
     <div className={container}>
       <BackBtn type="button" onClick={props.onBack} />
       <h4 className="flex items-center text-lg gap-2 my-4">
-        <Icon type="ListBox" size={20} />
+        <ListCheck size={20} />
         <span className="font-semibold">Your donation summary</span>
       </h4>
       {props.preSplitContent}

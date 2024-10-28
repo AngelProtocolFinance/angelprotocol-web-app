@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Icon from "components/Icon";
 import { useErrorContext } from "contexts/ErrorContext";
+import { Check } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useNewsletterSubscribeMutation } from "services/aws/hubspot";
 import { object, string } from "yup";
@@ -71,7 +71,7 @@ export default function SubscriptionForm() {
 function SuccessMessage() {
   return (
     <span className="flex gap-1 w-full text-xs">
-      <Icon type="Check" size={14} />
+      <Check size={14} />
       <p>
         The form was sent successfully. By doing so, you have agreed to our
         privacy policy

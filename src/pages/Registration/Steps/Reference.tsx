@@ -1,5 +1,6 @@
-import Icon, { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/Icon";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
+import { CircleHelp } from "lucide-react";
 import { useState } from "react";
 
 type Props = {
@@ -26,8 +27,7 @@ export default function Reference({ id, classes = "" }: Props) {
             </Content>
           }
         >
-          <Icon
-            type="Question"
+          <CircleHelp
             size={13}
             className="hidden md:inline-block ml-[1.333rem]"
           />

@@ -1,11 +1,11 @@
 import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
-import Icon from "components/Icon";
 import Prompt from "components/Prompt";
 import { adminRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { getFilePreviews } from "helpers";
+import { ChevronLeft } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import { Link, useNavigate } from "react-router-dom";
 import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
@@ -57,7 +57,7 @@ export default function Banking() {
         to={".."}
         className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm uppercase"
       >
-        <Icon type="Back" size={18} />
+        <ChevronLeft size={18} />
         <span>Back</span>
       </Link>
       <Group

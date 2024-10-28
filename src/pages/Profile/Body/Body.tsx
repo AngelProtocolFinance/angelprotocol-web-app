@@ -1,9 +1,9 @@
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
-import Icon from "components/Icon";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
+import { Globe, MapPin } from "lucide-react";
 import { Outlet, type RouteObject } from "react-router-dom";
 import { useProfileContext } from "../ProfileContext";
 import DonateButton from "./DonateButton";
@@ -48,14 +48,14 @@ function Body() {
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             {p.hq_country && (
               <span className="flex items-center gap-2 uppercase">
-                <Icon type="MapPin" className="text-blue-d1" size={20} />
+                <MapPin className="text-blue-d1" size={20} />
                 {p.hq_country}
               </span>
             )}
 
             {p.url && (
               <span className="flex items-center gap-2">
-                <Icon type="Globe" className="text-blue-d1" size={20} />
+                <Globe className="text-blue-d1" size={20} />
                 <ExtLink
                   href={p.url}
                   title="organization website"

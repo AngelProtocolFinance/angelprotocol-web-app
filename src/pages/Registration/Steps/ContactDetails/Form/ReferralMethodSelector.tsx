@@ -6,7 +6,7 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import Icon from "components/Icon";
+import { ChevronDown } from "lucide-react";
 import { forwardRef } from "react";
 import { referralOptions } from "../constants";
 import type { ReferralOption } from "./schema";
@@ -43,10 +43,9 @@ export const ReferralMethodSelector = forwardRef<HTMLButtonElement, Props>(
             className="group flex items-center focus:outline outline-2 outline-blue-d1 outline-offset-[3px] text-sm justify-between w-full px-4 py-3.5 text-navy-d4 border border-gray-l3 font-heading rounded disabled:bg-gray-l5 disabled:text-navy-l1"
           >
             <span>{props.value.label}</span>
-            <Icon
+            <ChevronDown
               size={20}
               className="group-data-[open]:rotate-180 transition-transform ease-in-out"
-              type="ChevronDown"
             />
           </ListboxButton>
           <ListboxOptions

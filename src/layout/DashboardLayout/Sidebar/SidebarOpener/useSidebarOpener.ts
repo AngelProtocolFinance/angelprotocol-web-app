@@ -2,13 +2,14 @@ import { useModalContext } from "contexts/ModalContext";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
+import { Menu } from "lucide-react";
 import { matchPath, useLocation } from "react-router-dom";
 import type { Link, LinkGroup } from "../types";
 import ToggleableSidebar from "./ToggleableSidebar";
 
 const DEFAULT_LINK: Link = {
   title: "Open Menu",
-  icon: { type: "Menu", size: 24 },
+  icon: { fn: Menu, size: 24 },
   to: "",
 };
 

@@ -1,9 +1,9 @@
-import Icon from "components/Icon";
 import Modal from "components/Modal";
 import Prompt from "components/Prompt";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import { CircleAlert, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDeleteBankingApplicationMutation } from "services/aws/banking-applications";
 
@@ -56,11 +56,11 @@ export default function DeletePrompt({
             disabled={isLoading}
             className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
           >
-            <Icon type="Close" className="text-lg sm:text-2xl" />
+            <X className="text-lg sm:text-2xl" />
           </button>
         )}
       </div>
-      <Icon type="Exclamation" size={80} className="mt-6 text-red" />
+      <CircleAlert size={80} className="mt-6 text-red" />
 
       <div className="p-6 text-center text-navy-l1 dark:text-navy-l5">
         {message}

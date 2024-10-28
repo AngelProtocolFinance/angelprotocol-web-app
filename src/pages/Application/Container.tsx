@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { Minus, Plus } from "lucide-react";
 import { type PropsWithChildren, useState } from "react";
 
 type Props = PropsWithChildren<{
@@ -19,7 +19,7 @@ export default function Container({ title, children, classes = "" }: Props) {
           className="flex items-center justify-center p-px w-6 h-6 border border-gray-l4 rounded"
           aria-label="toggle section content's visibility"
         >
-          <Icon type={isOpen ? "Dash" : "Plus"} size={18} />
+          {isOpen ? <Minus size={18} /> : <Plus size={18} />}
         </button>
         <p className="uppercase text-sm font-bold">{title}</p>
       </div>

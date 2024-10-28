@@ -1,6 +1,6 @@
 import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
-import Icon from "../Icon";
+import { CircleAlert, CircleCheck, X } from "lucide-react";
 import LoaderRing from "../LoaderRing";
 import type { Props } from "./types";
 
@@ -23,7 +23,7 @@ export default function Prompt({
             onClick={closeModal}
             className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 disabled:text-navy-l5 dark:disabled:text-navy-d3 disabled:dark:border-navy-d3"
           >
-            <Icon type="Close" size={24} />
+            <X size={24} />
           </button>
         )}
       </div>
@@ -58,13 +58,9 @@ function PromptIcon({
   const common = `justify-self-center ${classes}`;
   switch (type) {
     case "success":
-      return (
-        <Icon type="CheckCircle" size={92} className={common + " text-green"} />
-      );
+      return <CircleCheck size={92} className={common + " text-green"} />;
     case "error":
-      return (
-        <Icon type="Exclamation" size={80} className={common + " text-red"} />
-      );
+      return <CircleAlert size={80} className={common + " text-red"} />;
     case "loading":
       return <LoaderRing thickness={12} classes={common + " h-24"} />;
     default:

@@ -1,8 +1,8 @@
-import Icon from "components/Icon";
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { regRoutes } from "constants/routes";
 import { getSavedRegistrationReference } from "helpers";
+import { ArrowDownToLine, CircleCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useLazyRegQuery } from "services/aws/registration";
 import { getRegistrationState } from "../Steps/getRegistrationState";
@@ -36,7 +36,7 @@ export default function Success({
 
   return (
     <>
-      <Icon type="CheckCircle" className="text-green" size={70} />
+      <CircleCheck className="text-green" size={70} />
       <h1 className="text-2xl uppercase text-center mt-10 mb-4">
         Fiscal Sponsorship Agreement signature was successfully saved!
       </h1>
@@ -45,11 +45,7 @@ export default function Success({
         href={downloadZipURL(documentGroupEid)}
         className="text-blue hover:text-blue-d1 active:text-blue-d2 mb-4 inline-block"
       >
-        <Icon
-          type="FileDownload"
-          size={18}
-          className="inline bottom-px relative mr-1"
-        />
+        <ArrowDownToLine size={18} className="inline bottom-px relative mr-1" />
         <span className="uppercase text-sm font-semibold">download</span>
       </a>
       <button

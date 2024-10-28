@@ -1,5 +1,5 @@
+import { ArrowRight } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
-import Icon from "../../../Icon";
 
 export default function ContinueBtn({
   className,
@@ -16,7 +16,7 @@ export default function ContinueBtn({
       className={`btn-blue bg-[--accent-primary] hover:enabled:bg-[--accent-primary] btn-donate ${className}`}
     >
       <span className="mr-4">{text}</span>
-      <Icon type="ArrowRight" size={18} />
+      <ArrowRight size={18} />
     </button>
   );
 }

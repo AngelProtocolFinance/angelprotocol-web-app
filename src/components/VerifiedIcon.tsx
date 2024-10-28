@@ -1,4 +1,4 @@
-import Icon from "./Icon";
+import { BadgeCheck } from "lucide-react";
 import { Arrow, Content, Tooltip } from "./Tooltip";
 type Props = { size: number; classes?: string };
 
@@ -12,8 +12,7 @@ export default function VerifiedIcon({ size, classes = "" }: Props) {
         </Content>
       }
     >
-      <Icon
-        type="Verified"
+      <BadgeCheck
         size={size}
         className={`text-white inline fill-blue ${classes}`}
       />

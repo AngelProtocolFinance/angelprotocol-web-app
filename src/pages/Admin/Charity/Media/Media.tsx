@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import { useModalContext } from "contexts/ModalContext";
+import { Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAdminContext } from "../../Context";
 import FeaturedVideos from "./FeaturedVideos";
@@ -20,7 +20,7 @@ export default function Media() {
             type="button"
             className="btn-outline-filled text-sm px-8 py-2 gap-1"
           >
-            <Icon type="Plus" size={16} />
+            <Plus size={16} />
             <span>add video</span>
           </button>
         </div>

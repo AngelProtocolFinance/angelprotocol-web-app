@@ -1,6 +1,6 @@
 import quotation from "assets/icons/quotation.svg";
-import Icon from "components/Icon";
 import { testimonials } from "content/testimonials";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import TestimonialCard from "./TestimonialCard";
@@ -21,13 +21,13 @@ const Testimonials = () => {
         type="button"
         className="swip-prev p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-3/4 -translate-y-1/2 right-[90%]"
       >
-        <Icon type="Back" />
+        <ChevronLeft />
       </button>
       <button
         type="button"
         className="swip-next p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-3/4 -translate-y-1/2 left-[90%]"
       >
-        <Icon type="Next" />
+        <ChevronRight />
       </button>
 
       <Swiper

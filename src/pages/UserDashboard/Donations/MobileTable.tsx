@@ -4,10 +4,11 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import ExtLink from "components/ExtLink";
-import Icon, { DrawerIcon } from "components/Icon";
+import { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { humanize } from "helpers";
 import useSort from "hooks/useSort";
+import { ArrowDownToLine } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
@@ -135,7 +136,7 @@ function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
   if (props.status === "final") {
     return (
       <button className="block" onClick={() => showKYCForm(props.id)}>
-        <Icon type="FileDownload" size={20} />
+        <ArrowDownToLine size={20} />
       </button>
     );
   }

@@ -1,4 +1,4 @@
-import Icon from "components/Icon";
+import { ChevronRight } from "lucide-react";
 import type { LinkGroup } from "../types";
 import useSidebarOpener from "./useSidebarOpener";
 
@@ -10,6 +10,7 @@ export function SidebarOpener({
   rootRoute,
 }: Props) {
   const { open, activeLink } = useSidebarOpener(linkGroups, rootRoute);
+  const Ico = activeLink.icon.fn;
 
   return (
     <button
@@ -17,9 +18,9 @@ export function SidebarOpener({
       onClick={open}
       className={`flex items-center gap-2 py-5 px-6 dark:bg-blue-d6 border-b border-gray-l4 font-bold text-sm text-blue-d1 ${className}`}
     >
-      <Icon {...activeLink.icon} />
+      <Ico {...activeLink.icon} />
       {activeLink.title}
-      <Icon type="ChevronRight" size={20} className="ml-auto" />
+      <ChevronRight size={20} className="ml-auto" />
     </button>
   );
 }

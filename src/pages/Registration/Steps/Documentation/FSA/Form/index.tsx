@@ -1,8 +1,8 @@
 import ExtLink from "components/ExtLink";
 import FileDropzone from "components/FileDropzone";
-import Icon from "components/Icon";
 import LoadText from "components/LoadText";
 import { Field, Label } from "components/form";
+import { SquareArrowOutUpRight } from "lucide-react";
 import { useRegState } from "pages/Registration/Steps/StepGuard";
 import { Link } from "react-router-dom";
 import { steps } from "../../../../routes";
@@ -64,7 +64,7 @@ export default function Form(props: Props) {
           href={props.doc.fsa_signed_doc_url}
           className="text-sm text-blue hover:text-blue-l2 flex items-center gap-2"
         >
-          <Icon type="ExternalLink" size={20} />
+          <SquareArrowOutUpRight size={20} />
           <span>Signed Fiscal sponsorship agreement</span>
         </ExtLink>
       ) : null}

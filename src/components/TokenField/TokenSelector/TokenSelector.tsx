@@ -1,5 +1,6 @@
 import { Popover, PopoverButton } from "@headlessui/react";
-import Icon, { DrawerIcon } from "../../Icon";
+import { CircleAlert, LoaderCircle } from "lucide-react";
+import { DrawerIcon } from "../../Icon";
 import type { Props, Token } from "../types";
 import TokenOptions from "./TokenOptions";
 
@@ -21,16 +22,14 @@ export default function TokenSelector({
           <>
             {tokenState === "ok" && <span>{token.symbol}</span>}
             {tokenState === "loading" ? (
-              <Icon
+              <LoaderCircle
                 test-id="token-loader"
-                type="Loading"
                 className="animate-spin"
                 size={20}
               />
             ) : tokenState === "error" ? (
-              <Icon
+              <CircleAlert
                 test-id="token-error"
-                type="Info"
                 className="text-red"
                 size={20}
               />
