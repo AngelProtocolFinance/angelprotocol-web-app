@@ -64,7 +64,14 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
         })}
       </Swiper>
 
-      <div className="absolute grid bottom-0 left-3/4 z-10 -rotate-12">
+      <p className="text-center max-w-4xl justify-self-center mt-8 text-2xl px-4">
+        We pride ourselves in helping fellow nonprofits like yours save money
+        with free donation processing, save time by handling all admin &
+        reporting work, and save for your future with simple but powerful
+        high-yield savings and investment options.
+      </p>
+
+      <div className="absolute grid bottom-48 left-3/4 z-10 -rotate-12">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="41"
