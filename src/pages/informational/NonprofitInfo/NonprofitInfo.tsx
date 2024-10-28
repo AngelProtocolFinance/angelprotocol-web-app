@@ -8,6 +8,7 @@ import FiscalSponsorship from "./FiscalSponsorship";
 import Hero from "./Hero";
 import Testimonials from "./Testimonials";
 import WhyBG from "./WhyBG";
+import Investment from "./investment";
 
 export function NonprofitInfo() {
   return (
@@ -31,7 +32,8 @@ export function NonprofitInfo() {
         }))}
       />
       <FiscalSponsorship className="@xl:mt-56 padded-container" />
-      <Testimonials className="mt-40 padded-container" />
+      <Investment className="mt-56 padded-container" />
+      <Testimonials className="mt-80 padded-container" />
       <BottomCta className="mt-40 mb-20 max-w-5xl @5xl:max-w-6xl justify-self-center mx-4 @md:mx-10" />
     </main>
   );
