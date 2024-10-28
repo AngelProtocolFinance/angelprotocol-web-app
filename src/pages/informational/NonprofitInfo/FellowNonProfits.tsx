@@ -5,7 +5,7 @@ export default function FellowNonProfits({ className = "" }) {
   return (
     <section className={`${className} grid`}>
       <h2 className="px-2 text-center text-4xl text-navy-d4 text-pretty mb-12">
-        Trusted by Fellow Nonprofits Globally
+        Over $6 million donations processed for nonprofits worldwide
       </h2>
       <Marquee
         pauseOnHover
