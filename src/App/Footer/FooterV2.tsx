@@ -1,6 +1,6 @@
 import dappLogo from "assets/images/bg-logo-503c.png";
 import ExtLink from "components/ExtLink";
-import { APP_NAME } from "constants/env";
+import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -69,7 +69,7 @@ function Footer({ classes = "" }: Props) {
             classes="col-start-2 col-span-1"
             title="Resources"
             links={[
-              <a href="https://intercom.help/better-giving/en">FAQs</a>,
+              <a href={INTERCOM_HELP}>FAQs</a>,
               <Link to={appRoutes.blog}>News</Link>,
             ]}
           />

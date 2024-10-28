@@ -3,7 +3,10 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
+import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
+import { INTERCOM_HELP } from "constants/env";
+import { ArrowRight } from "lucide-react";
 import { Fragment } from "react";
 
 export default function FAQ({ classes = "" }) {
@@ -34,6 +37,15 @@ export default function FAQ({ classes = "" }) {
           </DisclosurePanel>
         </Disclosure>
       ))}
+      <div className="grid pt-4">
+        <ExtLink
+          href={INTERCOM_HELP}
+          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 text-lg font-semibold"
+        >
+          <span>Complete FAQs</span>
+          <ArrowRight size={15} />
+        </ExtLink>
+      </div>
     </div>
   );
 }
