@@ -49,6 +49,13 @@ export default function WhyBG({ className = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
+      <p className="text-navy-l1 text-sm text-center mt-16 max-w-2xl justify-self-center">
+        Disclaimer: Past performance is not indicative of future results. All
+        investments carry risk, and the value of our portfolio may fluctuate.
+        Our investment committee oversees and reviews our portfolio to ensure
+        alignment with long-term financial goals, but returns cannot be
+        guaranteed.
+      </p>
     </section>
   );
 }
