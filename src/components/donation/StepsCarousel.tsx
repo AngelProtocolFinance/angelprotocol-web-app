@@ -1,13 +1,11 @@
 import Image from "components/Image";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import checkout from "./screenshots/checkout.png";
 import form from "./screenshots/form.png";
 import result from "./screenshots/result.png";
-import split from "./screenshots/split.png";
-import summary from "./screenshots/summary.png";
-import tip from "./screenshots/tip.png";
 
-const screenshots = [form, split, tip, summary, result];
+const screenshots = [form, checkout, result];
 
 export function StepsCarousel({ classes = "" }) {
   return (

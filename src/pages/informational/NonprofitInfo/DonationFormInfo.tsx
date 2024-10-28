@@ -21,28 +21,33 @@ const items: TListItem[] = [
     image: { src: laira.sitting, width: 23 },
   },
   {
-    title: "Increase funds raised",
+    title: "Make it yours",
     description:
-      "Increase funds raised: Choose to have your donations invested to provide sustainable funding",
+      "Apply your brand colors, customize wording and options, and easily add to your website.",
     image: { src: laira.jumping, width: 30 },
   },
   {
-    title: "Fundraise for free",
+    title: "Grow your funds",
     description:
-      "Fundraise for free: 100% free. No setup costs, no recurring charges, no platform fees of any kind",
+      "Choose to have your donations saved or invested to provide sustainable funding.",
     image: { src: laira.standing, width: 20 },
   },
 ];
 
 export default function DonationFormInfo({ className = "" }) {
   return (
-    <section className={`${className} grid @6xl:grid-cols-2 gap-x-16`}>
+    <section
+      className={`${className} grid @6xl:grid-cols-2 gap-x-16 content-start`}
+    >
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
         Your all-in-one donation form
       </h4>
-      <h2 className="mb-16 col-span-full text-center text-4xl">
-        Easily accept all types of donations
+      <h2 className="col-span-full text-center text-4xl mb-2">
+        Raise more. Save more. Do less.
       </h2>
+      <p className="col-span-full mb-12 text-center text-xl">
+        100% free. No setup costs, no recurring charges, no platform fees.
+      </p>
 
       <StepsCarousel classes="w-full max-w-lg self-center justify-self-center" />
 
@@ -51,6 +56,13 @@ export default function DonationFormInfo({ className = "" }) {
           <ListItem {...item} key={idx} />
         ))}
       </ul>
+
+      <p className="col-span-full text-center text-xl max-w-3xl justify-self-center mt-4">
+        As a 501(c)(3) public charity, Better Giving accepts donations on your
+        behalf, handling all reporting, processing, and tax receipting. We grant
+        100% of donations directly to your bank account, or save and invest a
+        portion based on your preferences.
+      </p>
     </section>
   );
 }
