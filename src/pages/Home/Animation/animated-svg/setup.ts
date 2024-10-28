@@ -21,9 +21,7 @@ export const timeline = (element: string): gsap.core.Timeline => {
       start: "top 10%",
       end: "bottom -40%",
     },
-    defaults: {
-      ease: "none",
-    },
+    defaults: { ease: "none" },
   });
 
   // Set initial states
@@ -49,22 +47,8 @@ export const timeline = (element: string): gsap.core.Timeline => {
       },
       0
     )
-    .to(
-      "#bubble1",
-      {
-        filter: "grayscale(0%)",
-        duration: 0.5,
-      },
-      4.5
-    )
-    .to(
-      "#bubble1",
-      {
-        filter: "grayscale(100%)",
-        duration: 0.5,
-      },
-      0
-    );
+    .to("#bubble1", { filter: "grayscale(0%)", duration: 0.5 }, 4.5)
+    .to("#bubble1", { filter: "grayscale(100%)", duration: 0.5 }, 0);
 
   // Sequence to bubble 2 with first pan
   mainTimeline
@@ -83,30 +67,9 @@ export const timeline = (element: string): gsap.core.Timeline => {
       },
       5
     )
-    .to(
-      "#svg",
-      {
-        attr: { viewBox: viewBoxes.middle },
-        duration: 5,
-      },
-      5
-    )
-    .to(
-      "#bubble2",
-      {
-        filter: "grayscale(0%)",
-        duration: 0.5,
-      },
-      9.5
-    )
-    .to(
-      "#bubble2",
-      {
-        filter: "grayscale(100%)",
-        duration: 0.5,
-      },
-      5
-    );
+    .to("#svg", { attr: { viewBox: viewBoxes.middle }, duration: 5 }, 5)
+    .to("#bubble2", { filter: "grayscale(0%)", duration: 0.5 }, 9.5)
+    .to("#bubble2", { filter: "grayscale(100%)", duration: 0.5 }, 5);
 
   // Sequence to bubble 3 with second pan
   mainTimeline
@@ -125,30 +88,9 @@ export const timeline = (element: string): gsap.core.Timeline => {
       },
       10
     )
-    .to(
-      "#svg",
-      {
-        attr: { viewBox: viewBoxes.preEnd },
-        duration: 5,
-      },
-      10
-    )
-    .to(
-      "#bubble3",
-      {
-        filter: "grayscale(0%)",
-        duration: 0.5,
-      },
-      14.5
-    )
-    .to(
-      "#bubble3",
-      {
-        filter: "grayscale(100%)",
-        duration: 0.5,
-      },
-      10
-    );
+    .to("#svg", { attr: { viewBox: viewBoxes.preEnd }, duration: 5 }, 10)
+    .to("#bubble3", { filter: "grayscale(0%)", duration: 0.5 }, 14.5)
+    .to("#bubble3", { filter: "grayscale(100%)", duration: 0.5 }, 10);
 
   // Final sequence to bubble 4
   mainTimeline
@@ -167,30 +109,9 @@ export const timeline = (element: string): gsap.core.Timeline => {
       },
       15
     )
-    .to(
-      "#svg",
-      {
-        attr: { viewBox: viewBoxes.end },
-        duration: 5,
-      },
-      15
-    )
-    .to(
-      "#bubble4",
-      {
-        filter: "grayscale(0%)",
-        duration: 0.5,
-      },
-      19.5
-    )
-    .to(
-      "#bubble4",
-      {
-        filter: "grayscale(100%)",
-        duration: 0.5,
-      },
-      15
-    );
+    .to("#svg", { attr: { viewBox: viewBoxes.end }, duration: 5 }, 15)
+    .to("#bubble4", { filter: "grayscale(0%)", duration: 0.5 }, 19.5)
+    .to("#bubble4", { filter: "grayscale(100%)", duration: 0.5 }, 15);
 
   return mainTimeline;
 };

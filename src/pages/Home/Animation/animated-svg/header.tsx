@@ -1,7 +1,7 @@
 import type React from "react";
 
 export const Header: React.FC = () => (
-  <svg width={1066} height={180} x={300} viewBox="0 0 1066 130" id="content">
+  <svg width={1066} height={180} x={400} viewBox="0 0 1066 130" id="content">
     <text
       className="fill-blue uppercase text-2xl font-bold"
       x={533}

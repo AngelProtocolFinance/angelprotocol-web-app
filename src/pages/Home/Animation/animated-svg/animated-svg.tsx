@@ -65,7 +65,6 @@ export const AnimatedSVG: React.FC<AnimatedSVGProps> = ({ classes = "" }) => {
           id="bubble3"
           x="1700"
           y="153"
-          height={504}
           content={{
             title: "Consistent, Reliable Funding",
             text: "Receive grants monthly, benefitting from a consistent revenue stream that doesn't rely on ongoing donations. You get the best of both worlds: immediate returns from savings and long-term growth from investments.",
@@ -76,7 +75,7 @@ export const AnimatedSVG: React.FC<AnimatedSVGProps> = ({ classes = "" }) => {
         <InfoBubble
           id="bubble4"
           x="2600"
-          y="270"
+          y="210"
           content={{
             title: "Result:",
             text: "Better Giving offers you a complete financial solution: free of donation processing, high yield savings, and expertly managed investments - all designed to maximize your financial stability and empower your nonprofit to make an even greater impact.",
