@@ -15,21 +15,21 @@ const items: TListItem[] = [
     title2: "",
     description:
       "Choose what proportion of donated funds are granted directly to your bank account, held in a high-yield savings account, or invested into the market for growth. Savings & investments are purely optional. You can change your preferences, transfer balances, or request grants at any time.",
-    icon: <Bolt size={38} className="stroke-amber" />,
+    icon: <Bolt size={38} className="stroke-blue-d1" />,
   },
   {
     title1: "Secure and Compliant",
     title2: "",
     description:
       "Better Giving’s fund management solutions are fully regulated investment vehicles secured through our trusted financial partner, Fidelity Investments. Our portfolios are constructed and reviewed by an experienced investment committee to ensure responsible and effective management.",
-    icon: <ShieldCheck size={36} className="text-green" />,
+    icon: <ShieldCheck size={36} className="text-blue-d1" />,
   },
   {
     title1: "Flexibility For Your Needs",
     title2: "",
     description:
       "We understand one-size does not fit all. From conservative 4-5% US Treasury savings returns with no market risk, to balanced investment portfolios providing avg. annual returns of 24% over the past 5 years, we’ve got you covered.",
-    icon: <Combine size={35} className="text-navy" />,
+    icon: <Combine size={35} className="text-blue-d1" />,
   },
 ];
 
