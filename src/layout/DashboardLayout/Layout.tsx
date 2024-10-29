@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import type { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar, { SidebarOpener } from "./Sidebar";
@@ -16,6 +17,7 @@ export default function Layout({
 }: DashboardLayoutProps) {
   return (
     <div className="grid max-md:content-start md:grid-cols-[auto_1fr]">
+      <Seo title="Admin" />
       {/** sidebar */}
       <SidebarOpener
         className="md:hidden"

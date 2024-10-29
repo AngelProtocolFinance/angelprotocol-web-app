@@ -1,4 +1,5 @@
 import QueryLoader from "components/QueryLoader";
+import Seo from "components/Seo";
 import withAuth from "contexts/Auth";
 import { Search } from "lucide-react";
 import Filter from "./Filter";
@@ -23,6 +24,7 @@ function Applications() {
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
+      <Seo title="Applications" />
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Dashboard
       </h1>

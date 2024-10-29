@@ -5,7 +5,6 @@ import { CircleAlert } from "lucide-react";
 import { useEndowBalanceQuery } from "services/apes";
 import { useEndowmentQuery } from "services/aws/aws";
 import { useAdminContext } from "../../Context";
-import Seo from "../Seo";
 import { Loaded } from "./Loaded";
 import { monthPeriod } from "./monthPeriod";
 
@@ -34,7 +33,6 @@ export default function Dashboard() {
 
   return (
     <div className="@container w-full max-w-4xl grid content-start">
-      <Seo title="Nonprofit Dashboard" />
       <h3 className="font-bold text-2xl mb-4">Dashboard</h3>
       {period.isPre && (
         <div className="bg-gray-l4 text-navy-l1 text-sm p-2 rounded">

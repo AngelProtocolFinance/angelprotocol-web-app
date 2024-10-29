@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import { benefits } from "content/benefits";
 import Benefits from "../../@sections/Benefits";
 import BottomCta from "./BottomCta";
@@ -11,6 +12,7 @@ import WhyBG from "./WhyBG";
 export function NonprofitInfo() {
   return (
     <main className="w-full grid content-start pb-16 @container">
+      <Seo title="For nonprofits" />
       <Hero className="padded-container px-10" />
       <FellowNonProfits className="my-44" />
       <DonationFormInfo className="mt-28 padded-container" />

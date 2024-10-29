@@ -1,5 +1,6 @@
 import LoaderRing from "components/LoaderRing";
 import QueryLoader from "components/QueryLoader";
+import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
 import withAuth from "contexts/Auth";
 import { useParams } from "react-router-dom";
@@ -12,6 +13,7 @@ function Application() {
 
   return (
     <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
+      <Seo title="Application review" />
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Details
       </h1>

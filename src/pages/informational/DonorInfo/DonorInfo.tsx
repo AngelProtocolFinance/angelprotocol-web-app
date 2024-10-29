@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import { benefits } from "content/benefits";
 import Benefits from "../../@sections/Benefits";
 import HeroBottom from "../../@sections/HeroBottom";
@@ -8,6 +9,7 @@ import Hero from "./Hero";
 export function DonorInfo({ className = "" }) {
   return (
     <main className={`${className} grid @container`}>
+      <Seo title="For donors" />
       <Hero className="padded-container px-10" />
       <HeroBottom className="mb-10 mt-20" />
       <DonationFormInfo className="mt-20 padded-container" />
