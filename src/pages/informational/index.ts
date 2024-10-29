@@ -14,4 +14,5 @@ export const infoRoutes: RouteObject[] = [
     path: appRoutes.wp_plugin,
     lazy: () => import("./WpPlugin"),
   },
+  { path: appRoutes.about, lazy: () => import("./about") },
 ];

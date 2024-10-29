@@ -71,6 +71,7 @@ function Footer({ classes = "" }: Props) {
             links={[
               <a href={INTERCOM_HELP}>FAQs</a>,
               <Link to={appRoutes.blog}>News</Link>,
+              <Link to={appRoutes.about}>About Us</Link>,
             ]}
           />
 
