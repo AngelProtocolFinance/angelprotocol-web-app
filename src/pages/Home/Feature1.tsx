@@ -40,12 +40,11 @@ export function Feature1({ className = "" }) {
     <section
       className={`${className} pt-56 pb-20 lg:pb-0 grid content-start bg-gradient-to-b from-transparent to-peach/20`}
     >
-      <h3 className="text-sm md:text-lg uppercase text-blue-d1 text-center mb-4">
-        Simplify and Grow Your Impact
+      <h3 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
+        Easy as 1-2-3
       </h3>
       <h2 className="text-center text-4xl leading-snug mb-6">
-        Get Started <br />
-        As Easy 1-2-3
+        How Better Giving Works
       </h2>
       <p className="text-navy-l1 px-10 text-center mb-16 text-xl">
         Discover how easy it is to boost your nonprofit’s donations and achieve
@@ -67,7 +66,7 @@ export function Feature1({ className = "" }) {
         </Link>
         <Link
           to={BOOK_A_DEMO}
-          className="isolate btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
+          className="isolate btn-outline-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
         >
           <span className="ml-1">Book A Demo</span>
           <ArrowRight size={18} />
