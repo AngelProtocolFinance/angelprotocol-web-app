@@ -34,10 +34,10 @@ const Path = () => {
             ? appRoutes.nonprofit_info
             : appRoutes.donor_info
         }
-        className="mt-8 justify-self-center btn-blue normal-case items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
+        className="mt-8 group justify-self-center normal-case flex items-center px-10 py-3 gap-1 text-lg bg-blue-d1 group active:translate-x-1 text-white font-heading font-bold shadow-2xl rounded-full"
       >
         <span className="mr-1">Learn more</span>
-        <ArrowRight size={18} />
+        <ArrowRight size={18} className="group-hover:translate-x-1" />
       </Link>
     </section>
   );

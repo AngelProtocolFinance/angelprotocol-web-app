@@ -27,10 +27,10 @@ const Hero = ({ classes = "" }) => {
 
       <Link
         to={appRoutes.register}
-        className="mt-8 isolate z-10 justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
+        className="mt-8 isolate z-10 justify-self-center normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
       >
         <span className="ml-1">Start Fundraising Today</span>
-        <ArrowRight size={18} />
+        <ArrowRight size={18} className="group-hover:translate-x-1" />
         <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
       </Link>
     </section>
