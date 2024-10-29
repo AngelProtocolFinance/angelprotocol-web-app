@@ -11,13 +11,13 @@ const items: TListItem[] = [
   {
     title: "Quick, simple setup",
     description:
-      "Register in minutes, we’ll review and get you started right away",
+      "Register in minutes, we’ll review and get you started right away.",
     image: { src: laira.openArms, width: 28 },
   },
   {
     title: "Never miss a donation",
     description:
-      "Accept cash, stocks, crypto, and DAF gifts all in one conversion-optimized form",
+      "Accept cash, stocks, crypto, and DAF gifts all in one conversion-optimized form.",
     image: { src: laira.sitting, width: 23 },
   },
   {
