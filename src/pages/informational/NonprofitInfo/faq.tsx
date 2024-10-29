@@ -76,7 +76,7 @@ const faqs = [
         you may opt out of this donor contribution model in favor of a 1.5%
         platform fee if you prefer.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Maximize your impact without worrying about fees eating into donations.
       </p>,
     ],
@@ -94,7 +94,7 @@ const faqs = [
         opportunity to receive a donation, regardless of how your donors prefer
         to give.
       </p>,
-      <p className="underline">
+      <p className="italic">
         More donation options mean more opportunities to engage donors and
         increase contributions.
       </p>,
@@ -111,7 +111,7 @@ const faqs = [
         form to your website or share your custom fundraising page to start
         receiving donations from day one.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Start raising funds fast without the hassle of complex setup processes.
       </p>,
     ],
@@ -127,7 +127,7 @@ const faqs = [
         clicks. We provide step-by-step guides, and if you need additional
         support, our team is always available to help.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Start accepting donations quickly, with no tech headaches or lengthy
         setup processes.
       </p>,
@@ -144,7 +144,7 @@ const faqs = [
         support specific programs or projects. These forms can be embedded
         anywhere on your website, creating a seamless experience for donors.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Customization builds trust with your donors, making them feel more
         connected to your mission.
       </p>,
@@ -163,7 +163,7 @@ const faqs = [
         You get a fully operational donation system without adding
         administrative overhead.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Save your organization valuable time and resources, letting you focus on
         your mission rather than paperwork.
       </p>,
@@ -182,7 +182,7 @@ const faqs = [
         ourselves, we use the same savings services to manage our own funds,
         ensuring reliability and trust.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Simple, hassle-free way to grow donations without extra overhead.
       </p>,
     ],
@@ -202,7 +202,7 @@ const faqs = [
         request funds granted out, ensuring your nonprofit has a reliable source
         of funding well into the future.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Turn today’s donations into long-term financial security for your
         nonprofit.
       </p>,
@@ -220,7 +220,7 @@ const faqs = [
         progress and make informed decisions about future fundraising and
         investment strategies.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Stay informed with transparent, regular updates on your financial
         performance.
       </p>,
@@ -238,7 +238,7 @@ const faqs = [
         when you win, and as a nonprofit any income generated from our fees is
         reinvested to further our mission.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Grow funds securely with a nonprofit partner rather than overpaying
         for-profit third parties.
       </p>,
@@ -257,7 +257,7 @@ const faqs = [
         a cost-leading 2.9% for these services to keep them affordable for
         organizations of all sizes.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Global nonprofits can access U.S. funding and donors with ease.
       </p>,
     ],
@@ -275,7 +275,7 @@ const faqs = [
         transparent reporting so you always know where your funds are and how
         they are performing.
       </p>,
-      <p className="underline">
+      <p className="italic">
         Security and transparency build trust, ensuring your donations are safe,
         and your donors feel confident.
       </p>,
