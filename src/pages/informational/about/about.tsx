@@ -1,6 +1,7 @@
 // import { benefits } from "content/benefits";
 // import Benefits from "../../@sections/Benefits";
 import { Hero } from "./hero";
+import { Manifesto } from "./manifesto";
 import { Section2 } from "./section-2";
 // import { BottomCta } from "./BottomCta";
 // import DonationFormInfo from "./DonationFormInfo";
@@ -24,6 +25,7 @@ export function About() {
         <Section2 className="mt-28 padded-container" />
       </div>
       <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-lilac/50">
+        <Manifesto className="mt-56 padded-container" />
         {/* <DonationFormInfo className="mt-28 padded-container" /> */}
       </div>
 
