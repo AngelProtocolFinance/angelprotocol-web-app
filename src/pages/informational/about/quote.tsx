@@ -27,13 +27,15 @@ export function Quote({ className = "" }) {
         </p>
       </div>
 
-      <blockquote className="order-1 @6xl:order-2 self-center">
-        "Our mission is to give every nonprofit, everywhere, free access to the
-        financial tools they need to grow and thrive. We believe a new model of
-        philanthropy is possible, not based on scarcity and dependence but
-        rather abundance and financial self-sufficiency" – Chauncey St. John,
-        Founder​.
-      </blockquote>
+      <div className="order-1 @6xl:order-2 self-center">
+        <blockquote>
+          "Our mission is to give every nonprofit, everywhere, free access to
+          the financial tools they need to grow and thrive. We believe a new
+          model of philanthropy is possible, not based on scarcity and
+          dependence but rather abundance and financial self-sufficiency"
+        </blockquote>
+        <p>– Chauncey St. John, Founder​</p>
+      </div>
     </section>
   );
 }
