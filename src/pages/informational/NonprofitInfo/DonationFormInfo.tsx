@@ -12,25 +12,25 @@ const items: TListItem[] = [
     title: "Quick, simple setup",
     description:
       "Register in minutes, we’ll review and get you started right away.",
-    image: { src: laira.openArms, width: 28 },
+    image: { src: laira.cheering, width: 50 },
   },
   {
     title: "Never miss a donation",
     description:
       "Accept cash, stocks, crypto, and DAF gifts all in one conversion-optimized form.",
-    image: { src: laira.sitting, width: 23 },
+    image: { src: laira.announce, width: 50 },
   },
   {
     title: "Make it yours",
     description:
       "Apply your brand colors, customize wording and options, and easily add to your website.",
-    image: { src: laira.jumping, width: 30 },
+    image: { src: laira.like, width: 40 },
   },
   {
     title: "Grow your funds",
     description:
       "Choose to have your donations saved or invested to provide sustainable funding.",
-    image: { src: laira.standing, width: 20 },
+    image: { src: laira.presentation, width: 60 },
   },
 ];
 

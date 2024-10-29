@@ -17,21 +17,21 @@ const items: TListItem[] = [
     title2: "Built by a nonprofit, for nonprofits",
     description:
       "We understand your pain points firsthand, which is how we’ve helped causes in over 30 countries raise more than $6 million in donations - entirely for free",
-    image: { src: laira.openArms, width: 45 },
+    image: { src: laira.trophy, width: 45 },
   },
   {
     title1: "Simplicity",
     title2: "Less admin work, more funding",
     description:
       "Easily accept all types of donations while we manage all reporting, accounting and tax receipting. We’d tell you to sit back and relax - if you weren’t so mission driven",
-    image: { src: laira.sitting, width: 40 },
+    image: { src: laira.sitting, width: 45 },
   },
   {
     title1: "Sustainability",
     title2: "Financial security at your fingertips",
     description:
       "With our high-yield savings and managed investment funds, let your donations work for you: a reliable and growing income stream to provide not just today, but forever",
-    image: { src: laira.jumping, width: 48 },
+    image: { src: laira.coin, width: 60 },
   },
 ];
 
