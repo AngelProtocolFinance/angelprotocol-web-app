@@ -73,7 +73,7 @@ const nonprofits: Benefit[] = [
     title: "Global Fiscal Sponsorship",
     title2: "Access U.S. grants and streamline international giving",
     description:
-      "Our fiscal sponsorship program helps nonprofits outside the U.S. access tax-deductible donations from American donors and simplifies cross-border donations. With Better Giving as your fiscal sponsor, you can expand your reach and grow your donor base without navigating complex legal and tax processes on your own.",
+      "Our fiscal sponsorship program helps nonprofits outside the U.S. access tax-deductible donations from US donors and simplifies cross-border donations. Expand your reach and grow your donor base without navigating complex legal and tax processes on your own.",
     img: icon4,
     cardBgClass: colors[3],
   },
