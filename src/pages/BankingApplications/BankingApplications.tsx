@@ -1,4 +1,5 @@
 import QueryLoader from "components/QueryLoader";
+import Seo from "components/Seo";
 import withAuth from "contexts/Auth";
 import Filter from "./Filter";
 import Table from "./Table";
@@ -20,6 +21,7 @@ function BankingApplications() {
 
   return (
     <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20 lg:pt-10">
+      <Seo title="Banking applications" />
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Banking Applications
       </h1>

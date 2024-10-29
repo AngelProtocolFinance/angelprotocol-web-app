@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import ModalContext from "contexts/ModalContext";
 import { useLocation } from "react-router-dom";
 import type { EndowFilterState } from "types/app";
@@ -22,6 +23,7 @@ export function Component() {
 
   return (
     <div className="w-full grid content-start pb-16">
+      <Seo title="Marketplace" />
       <div className="relative overlay bg-cover bg-left-top">
         <Hero classes="grid isolate mt-28 mb-16" />
       </div>

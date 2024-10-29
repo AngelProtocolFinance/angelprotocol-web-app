@@ -1,10 +1,12 @@
 import ExtLink from "components/ExtLink";
+import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 
 export function Component() {
   return (
     <div className="padded-container min-h-screen pb-6">
+      <Seo title="Privacy policy" />
       <h1 className="font-bold uppercase col-span-full text-2xl lg:text-3xl break-words mt-6">
         Privacy Policy
       </h1>

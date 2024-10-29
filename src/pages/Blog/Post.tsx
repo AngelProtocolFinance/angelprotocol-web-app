@@ -1,6 +1,7 @@
 import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
+import Seo from "components/Seo";
 import { ChevronLeft } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
@@ -63,6 +64,7 @@ export function Component() {
 function Loaded(post: Wordpress.Post) {
   return (
     <>
+      <Seo title={post.slug} />
       <Media
         sizes="(min-width: 896px) 896px, 100vw"
         id={post.featured_media}

@@ -1,6 +1,7 @@
 import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
+import Seo from "components/Seo";
 import { Link } from "react-router-dom";
 import type { Wordpress } from "types/wordpress";
 import usePagination from "./usePagination";
@@ -20,6 +21,7 @@ export function Component() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 content-start padded-container min-h-screen pb-6">
+      <Seo title="Posts" />
       <h1 className="font-bold uppercase col-span-full text-2xl lg:text-3xl break-words mt-6">
         Posts
       </h1>

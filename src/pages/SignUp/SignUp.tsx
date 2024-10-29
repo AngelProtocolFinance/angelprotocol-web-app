@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import { useState } from "react";
 import ConfirmForm from "./ConfirmForm";
 import SignupForm from "./SignupForm";
@@ -27,6 +28,7 @@ export function SignUp() {
 
   return (
     <div className="grid place-items-center px-4 py-14 text-navy-l1">
+      <Seo title="Signup" />
       {content}
     </div>
   );

@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
@@ -9,6 +10,7 @@ const U = ({ children }: PropsWithChildren) => (
 export function Component() {
   return (
     <div className="padded-container prose lg:prose-lg py-20">
+      <Seo title="Terms of use (NPO)" />
       <i className="text-navy-l1 text-right block">
         Effective October 25, 2024
       </i>

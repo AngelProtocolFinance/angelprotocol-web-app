@@ -4,6 +4,7 @@ import { AuthError, signIn, signInWithRedirect } from "aws-amplify/auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
+import Seo from "components/Seo";
 import { Separator } from "components/Separator";
 import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
@@ -72,6 +73,7 @@ export function Component() {
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
+      <Seo title="Signin" />
       <Form
         className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
         disabled={isSubmitting}
