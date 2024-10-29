@@ -28,7 +28,7 @@ export function SignUp() {
 
   return (
     <div className="grid place-items-center px-4 py-14 text-navy-l1">
-      <Seo title="Signup" />
+      <Seo title="Sign up" />
       {content}
     </div>
   );
