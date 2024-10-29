@@ -47,7 +47,7 @@ const donors: Benefit[] = [
 const nonprofits: Benefit[] = [
   {
     title: "Free Donation Processing",
-    title2: "Keep 100% of your donations",
+    title2: "More for your mission",
     description:
       "Maximize your nonprofit’s funds with no platform fees. Although third-party processing fees may apply, 95% of donors choose to cover these fees. We handle the tax receipts and admin work for accepting all types of donations, you enjoy grants directly to your bank account.",
     img: icon7,
