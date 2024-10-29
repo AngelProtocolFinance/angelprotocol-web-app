@@ -2,6 +2,7 @@
 // import Benefits from "../../@sections/Benefits";
 import { Hero } from "./hero";
 import { Manifesto } from "./manifesto";
+import { Quote } from "./quote";
 import { Section2 } from "./section-2";
 // import { BottomCta } from "./BottomCta";
 // import DonationFormInfo from "./DonationFormInfo";
@@ -30,7 +31,7 @@ export function About() {
       </div>
 
       <div className="bg-gradient-to-bl via-transparent via-50% from-lilac/50 to-transparent">
-        {/* <WhyBG className="mt-56 padded-container" /> */}
+        <Quote className="padded-container" />
       </div>
       <div className="bg-gradient-to-bl from-50% from-transparent to-peach/50"></div>
 
