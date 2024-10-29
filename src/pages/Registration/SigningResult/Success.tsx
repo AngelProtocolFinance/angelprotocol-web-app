@@ -1,6 +1,6 @@
 import { IS_TEST } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { ArrowDownToLine } from "lucide-react";
+import { ArrowDownToLine, CircleCheck } from "lucide-react";
 import { Link, useNavigation, useRouteLoaderData } from "react-router-dom";
 import { nextStep } from "../routes";
 import type { Reg$IdData } from "../types";

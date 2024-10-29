@@ -1,5 +1,5 @@
-import Icon from "components/Icon";
 import debounce from "lodash/debounce";
+import { Search } from "lucide-react";
 import type { ChangeEvent } from "react";
 import { useFetcher, useSearchParams } from "react-router-dom";
 
@@ -24,7 +24,7 @@ export default function SearchField({ classes = "", onChange }: Props) {
       className={`${classes} flex items-center px-4 py-1 text-sm gap-1 font-heading`}
     >
       <label htmlFor="__endow-search">
-        <Icon type="Search" className="mr-1 text-2xl text-gray" />
+        <Search className="mr-1 text-2xl text-gray" />
       </label>
       <input
         onChange={debounce(handleChange, 500)}

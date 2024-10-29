@@ -3,10 +3,10 @@ import { endowId } from "api/schema/endow-id";
 import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import Footer from "components/Footer";
-import Icon from "components/Icon";
 import { appRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import Layout from "layout/DashboardLayout";
+import { CircleAlert } from "lucide-react";
 import {
   type LoaderFunction,
   type RouteObject,
@@ -24,7 +24,7 @@ function AdminLayout() {
   if (!context.user.endowments.includes(context.id)) {
     return (
       <div className="grid content-start place-items-center pt-40 pb-20">
-        <Icon type="Exclamation" size={80} className="text-red" />
+        <CircleAlert size={80} className="text-red" />
         <p className="text-xl mt-8">Unauthorized</p>
       </div>
     );

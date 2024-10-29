@@ -2,6 +2,7 @@ import ExtLink from "components/ExtLink";
 import FileDropzone from "components/FileDropzone";
 import LoadText from "components/LoadText";
 import { Field, Label } from "components/form";
+import { SquareArrowOutUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { steps } from "../../../../routes";
 import { MB_LIMIT, VALID_MIME_TYPES } from "../schema";
