@@ -16,21 +16,21 @@ const items: TListItem[] = [
     title1: "Trust",
     title2: "Built by a nonprofit, for nonprofits",
     description:
-      "We understand your pain points firsthand, which is how we’ve helped causes in over 30 countries raise more than $6 million in donations - entirely for free",
+      "We understand your pain points firsthand, which is how we’ve helped causes in over 30 countries raise more than $6 million in donations - entirely for free.",
     image: { src: laira.trophy, width: 45 },
   },
   {
     title1: "Simplicity",
     title2: "Less admin work, more funding",
     description:
-      "Easily accept all types of donations while we manage all reporting, accounting and tax receipting. We’d tell you to sit back and relax - if you weren’t so mission driven",
+      "Easily accept all types of donations while we manage all reporting, accounting and tax receipting. We’d tell you to sit back and relax - if you weren’t so mission driven.",
     image: { src: laira.sitting, width: 45 },
   },
   {
     title1: "Sustainability",
     title2: "Financial security at your fingertips",
     description:
-      "With our high-yield savings and managed investment funds, let your donations work for you: a reliable and growing income stream to provide not just today, but forever",
+      "With our high-yield savings and managed investment funds, let your donations work for you: a reliable and growing income stream to provide not just today, but forever.",
     image: { src: laira.coin, width: 60 },
   },
 ];
@@ -56,17 +56,17 @@ export default function WhyBG({ className = "" }) {
       <div className="isolate z-10 flex flex-col @3xl:flex-row items-center justify-self-center gap-4 mt-24">
         <Link
           to={appRoutes.register}
-          className="isolate btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
+          className="isolate normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
         >
           <span className="ml-1">Start Today</span>
-          <ArrowRight size={18} />
+          <ArrowRight size={18} className="group-hover:translate-x-1" />
         </Link>
         <Link
           to={BOOK_A_DEMO}
-          className="isolate btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
+          className="isolate normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-white group active:translate-x-1 text-blue-d1 font-bold shadow-2xl shadow-black/10 border border-blue-l3"
         >
           <span className="ml-1">Book A Demo</span>
-          <ArrowRight size={18} />
+          <ArrowRight size={18} className="group-hover:translate-x-1" />
         </Link>
       </div>
     </section>
