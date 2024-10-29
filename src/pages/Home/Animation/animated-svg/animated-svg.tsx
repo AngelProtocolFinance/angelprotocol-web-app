@@ -78,7 +78,7 @@ export const AnimatedSVG: React.FC<AnimatedSVGProps> = ({ classes = "" }) => {
           y="210"
           content={{
             title: "Result:",
-            text: "Better Giving offers you a complete financial solution: free of donation processing, high yield savings, and expertly managed investments - all designed to maximize your financial stability and empower your nonprofit to make an even greater impact.",
+            text: "Better Giving offers you a complete financial solution: free donation processing, high yield savings, and expertly managed investments - all designed to maximize your financial stability and empower your nonprofit to make an even greater impact.",
           }}
           imageUrl={benefits.sf[3].img}
         />

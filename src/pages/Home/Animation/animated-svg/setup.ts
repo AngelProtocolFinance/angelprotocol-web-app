@@ -8,9 +8,9 @@ export const timeline = (element: string): gsap.core.Timeline => {
 
   const viewBoxes = {
     start: "0 60 1795.5 670",
-    middle: "800 60 1795.5 670",
-    preEnd: "1400 60 1795.5 670",
-    end: "1700 60 1795.5 670",
+    middle: "600 60 1795.5 670", // Adjusted from 800 to 600
+    preEnd: "1200 60 1795.5 670", // Adjusted from 1400 to 1200
+    end: "1500 60 1795.5 670", // Adjusted from 1700 to 1500
   };
 
   const mainTimeline = gsap.timeline({
