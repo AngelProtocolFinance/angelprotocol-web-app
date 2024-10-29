@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import {
   BarChart2,
   CreditCard,
@@ -109,7 +108,7 @@ export function Features({ classes = "" }) {
       <h4 className="text-xl font-heading text-blue-d1 uppercase -mb-4 col-span-full text-center @4xl:text-left">
         Features
       </h4>
-      <div className="row-span-2 col-span-full @4xl:col-span-1 pb-8">
+      <div className="row-span-2 col-span-full @4xl:col-span-2 pb-8">
         <h3 className="text-3xl @4xl:text-2xl text-navy-d3 mb-4 text-center @4xl:text-left">
           Smarter Tools for Seamless Fundraising
         </h3>
@@ -127,12 +126,12 @@ export function Features({ classes = "" }) {
 
 function Feature(props: IFeature) {
   return (
-    <motion.div className="p-4 border border-blue-l4 rounded-lg grid grid-rows-subgrid row-span-2">
+    <div className="p-4 border border-blue-l4 rounded-lg grid grid-rows-subgrid row-span-2">
       <div className="flex items-center gap-x-2">
         {props.icon}
         <p className="font-bold text-sm font-heading">{props.title}</p>
       </div>
       <p className="text-navy">{props.body}</p>
-    </motion.div>
+    </div>
   );
 }
