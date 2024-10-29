@@ -1,7 +1,7 @@
 import Image from "components/Image";
 import { Bolt, Combine, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
-import sectionImg from "./images/investment-philosophy.png";
+import sectionImg from "./images/portfolio.png";
 
 type TListItem = {
   title1: string;
@@ -43,7 +43,50 @@ export default function WhyBG({ className = "" }) {
         The Sustainability Fund: Securing Your Future, Today
       </h2>
 
-      <Image src={sectionImg} width={800} className="justify-self-center" />
+      <div className="grid @3xl:grid-cols-2 items-center mb-14 p-3 rounded-lg">
+        <Image src={sectionImg} width={320} className="justify-self-center" />
+        <div className="">
+          <p className="border-b border-gray-l4 pb-2 text-2xl mb-4 mt-4 @3xl:mt-0 font-medium text-center @3xl:text-left">
+            Investment Philosophy
+          </p>
+          <ul className="space-y-7">
+            <li className="text-center @3xl:text-left">
+              <span className="block font-semibold mb-1">
+                50% Equity Exposure
+              </span>{" "}
+              <span className="text-navy-l1">
+                benefit from the long-term growth potential of US and global
+                markets
+              </span>
+            </li>
+            <li className="text-center @3xl:text-left">
+              <span className="block font-semibold b-1">
+                30% Fixed Income Stability
+              </span>{" "}
+              <span className="text-navy-l1">
+                cushion losses during market down-turns and generate steady
+                income
+              </span>
+            </li>
+            <li className="text-center @3xl:text-left">
+              <span className="block font-semibold mb-1">
+                15% Blockchain Assets
+              </span>{" "}
+              <span className="text-navy-l1">
+                gain exposure to the emerging digital asset frontier
+              </span>
+            </li>
+            <li className="text-center @3xl:text-left">
+              <span className="block font-semibold mb-1">
+                5% Cash Flexibility
+              </span>{" "}
+              <span className="text-navy-l1">
+                maintain liquidity for strategic rebalancing opportunities
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
       <ul className="mt-4 @3xl:divide-x divide-gray-l4 grid @3xl:grid-cols-3 gap-y-16 @3xl:gap-y-0">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
