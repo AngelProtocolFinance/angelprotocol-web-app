@@ -13,11 +13,12 @@ export default function Testimonials({ className = "" }) {
         <img
           src={quotation}
           alt="quotation mark"
-          width={66}
+          width={50}
           className="mb-4 @3xl:mb-8"
         />
-        <h2 className="text-navy-d4 text-pretty text-2xl @3xl:text-4.5xl leading-tight ">
-          Amazing stories from our customers
+        <h2 className="text-navy-d4 text-pretty text-xl @3xl:text-3xl leading-normal ">
+          Nonprofit Success Stories: <br />
+          Inspiring Change Together
         </h2>
       </div>
 
