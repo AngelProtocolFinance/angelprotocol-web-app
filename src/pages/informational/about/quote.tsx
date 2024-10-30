@@ -8,9 +8,9 @@ export function Quote({ className = "" }) {
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-blue-d1 mb-5">
           Philanthropy Reimagined
         </h4>
-        <h1 className="text-center @6xl:text-left text-3xl @6xl:text-4xl @6xl:leading-tight text-pretty mb-4 text-navy-d4">
+        <h2 className="text-center @6xl:text-left text-3xl @6xl:text-4xl @6xl:leading-tight text-pretty mb-4 text-navy-d4">
           Why We Do What We Do
-        </h1>
+        </h2>
         <p className="mb-10 text-lg text-center @6xl:text-left">
           Founded in 2021 to help nonprofits become more financially resilient,
           Better Giving was born from a vision to equip organizations with the
