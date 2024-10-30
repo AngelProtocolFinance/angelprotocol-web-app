@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import { BottomCta } from "./bottom-cta";
 import { Hero } from "./hero";
 import { Manifesto } from "./manifesto";
@@ -8,6 +9,7 @@ import { Team } from "./team";
 export function About() {
   return (
     <main className="w-full grid content-start pb-40 @container">
+      <Seo title="About us" />
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
         <Hero classes="padded-container" />
       </div>
