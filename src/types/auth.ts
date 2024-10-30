@@ -65,14 +65,54 @@ export interface DetailedUser extends UserV2 {
   bookmarks: Promise<EndowmentBookmark[]>;
 }
 
+const str = v.pipe(v.string("required"), v.trim(), v.nonEmpty("required"));
+const email = v.pipe(str, v.email("invalid email format"));
 export const signIn = v.object({
-  email: v.pipe(
-    v.string("required"),
-    v.trim(),
-    v.nonEmpty("required"),
-    v.email("invalid email format")
-  ),
+  email,
   password: v.pipe(v.string("required"), v.nonEmpty("required")),
 });
 
 export type SignIn = v.InferOutput<typeof signIn>;
+
+export const signUpUserTypes = ["donor", "nonprofit"] as const;
+export const signUpUserType = v.picklist(
+  signUpUserTypes,
+  "Please select an option to proceed"
+);
+export type SignUpUserType = v.InferOutput<typeof signUpUserType>;
+
+const password = v.pipe(
+  v.string("required"),
+  v.nonEmpty("required"),
+  v.minLength(8, "must have at least 8 characters"),
+  v.regex(/[a-z]/, "must have lowercase letters"),
+  v.regex(/[A-Z]/, "must have uppercase letters"),
+  v.regex(/\d/, "must have numbers"),
+  v.regex(/[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/, "must have special characters")
+);
+
+export const signUp = v.pipe(
+  v.object({
+    email,
+    emailConfirmation: email,
+    firstName: str,
+    lastName: str,
+    userType: signUpUserType,
+    password,
+  }),
+  v.forward(
+    v.partialCheck(
+      [["email"], ["emailConfirmation"]],
+      (input) => {
+        console.log(input);
+        return (
+          input.email.toLowerCase() === input.emailConfirmation.toLowerCase()
+        );
+      },
+
+      "email mismatch"
+    ),
+    ["emailConfirmation"]
+  )
+);
+export type SignUp = v.InferOutput<typeof signUp>;

@@ -1,4 +1,4 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import googleIcon from "assets/icons/google.svg";
 import { cognito, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
@@ -12,10 +12,13 @@ import { toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
 import { useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { password, requiredString } from "schemas/string";
-import { type OAuthState, type SignInRouteState, isError } from "types/auth";
-import { mixed, object, ref } from "yup";
-import type { FormValues, StateSetter, UserType } from "../types";
+import {
+  type OAuthState,
+  type SignInRouteState,
+  isError,
+  signUp,
+} from "types/auth";
+import type { FormValues, StateSetter } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
 
 type Props = {
@@ -36,26 +39,13 @@ export default function SignupForm(props: Props) {
     trigger,
     control,
   } = useForm<FormValues>({
+    criteriaMode: "all",
     defaultValues: {
       userType: isRegistrant ? "nonprofit" : undefined,
     },
-    resolver: yupResolver(
-      object({
-        email: requiredString.trim().strict().email("invalid email format"),
-        emailConfirmation: requiredString
-          .trim()
-          .strict()
-          .email("invalid email format")
-          .oneOf([ref("email")], "email mismatch"),
-        firstName: requiredString.trim(),
-        lastName: requiredString.trim(),
-        userType: mixed<UserType>()
-          .required("Please select an option to proceed")
-          .oneOf(["donor", "nonprofit"]),
-        password: password,
-      })
-    ),
+    resolver: valibotResolver(signUp),
   });
+
   const { field: userType } = useController({ name: "userType", control });
 
   const redirect = getAuthRedirect(fromState, {

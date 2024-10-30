@@ -1,3 +1,6 @@
+import type { SignUp, SignUpUserType } from "types/auth";
+export type UserType = SignUpUserType;
+
 export type CodeRecipientEmail = {
   /** lowercased */
   raw: string;
@@ -22,13 +25,4 @@ type SuccessState = {
 export type SignupState = InitState | ConfirmState | SuccessState;
 export type StateSetter = React.Dispatch<React.SetStateAction<SignupState>>;
 
-export type UserType = "donor" | "nonprofit";
-
-export type FormValues = {
-  email: string;
-  emailConfirmation: string;
-  firstName: string;
-  lastName: string;
-  password: string;
-  userType: UserType;
-};
+export type FormValues = SignUp;
