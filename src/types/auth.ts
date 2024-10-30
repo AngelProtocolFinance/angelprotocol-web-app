@@ -81,7 +81,7 @@ export const signUpUserType = v.picklist(
 );
 export type SignUpUserType = v.InferOutput<typeof signUpUserType>;
 
-const password = v.pipe(
+const newPassword = v.pipe(
   v.string("required"),
   v.nonEmpty("required"),
   v.minLength(8, "must have at least 8 characters"),
@@ -98,7 +98,7 @@ export const signUp = v.pipe(
     firstName: str,
     lastName: str,
     userType: signUpUserType,
-    password,
+    password: newPassword,
   }),
   v.forward(
     v.partialCheck(
@@ -115,4 +115,7 @@ export const signUp = v.pipe(
     ["emailConfirmation"]
   )
 );
+
+export const signUpConfirm = v.object({ code: str });
+export type SignUpConfirm = v.InferOutput<typeof signUpConfirm>;
 export type SignUp = v.InferOutput<typeof signUp>;

@@ -1,13 +1,11 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { cognito } from "auth/cognito";
 import { Form, Input } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import useCounter from "hooks/useCounter";
 import { useState } from "react";
-import { type UseFormReturn, useForm } from "react-hook-form";
-import { requiredString } from "schemas/string";
-import { isError } from "types/auth";
-import { object } from "yup";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import { type SignUpConfirm, isError, signUpConfirm } from "types/auth";
 import type { CodeRecipientEmail, StateSetter, UserType } from "./types";
 
 const MAX_TIME = 30;
@@ -21,8 +19,9 @@ type Props = {
 export default function ConfirmForm(props: Props) {
   const { handleError, displayError } = useErrorContext();
   const [isRequestingNewCode, setIsRequestingNewCode] = useState(false);
-  const methods = useForm({
-    resolver: yupResolver(object({ code: requiredString })),
+  type FV = SignUpConfirm;
+  const methods = useForm<FV>({
+    resolver: valibotResolver(signUpConfirm),
   });
   const {
     register,
@@ -30,11 +29,9 @@ export default function ConfirmForm(props: Props) {
     formState: { isSubmitting, errors },
   } = methods;
 
-  type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
-
   const { counter, resetCounter } = useCounter(MAX_TIME);
 
-  const submit = async (fv: FV) => {
+  const submit: SubmitHandler<FV> = async (fv: FV) => {
     try {
       const res = await cognito.confirmSignup(
         props.codeRecipientEmail.raw,
