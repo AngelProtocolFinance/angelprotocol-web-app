@@ -3,7 +3,7 @@ import { humanize } from "helpers";
 import { ArrowLeft, ArrowRight, CircleAlert, Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";
 import type { Allocation, BalanceMovement, EndowmentBalances } from "types/aws";
-import { MIN_PROCESSING_AMOUNT } from "./Schedule/common";
+import { MIN_GRANT_PROCESSING } from "./common";
 
 interface Props {
   balances: EndowmentBalances;
@@ -79,14 +79,14 @@ export function Summary({ classes = "", ...props }: Props) {
           classes="mb-4"
           tooltip={(change) => {
             if (change === 0) return null;
-            if (change >= MIN_PROCESSING_AMOUNT) return null;
+            if (change >= MIN_GRANT_PROCESSING) return null;
             return (
               <Tooltip
                 tip={
                   <Content className="max-w-xs text-sm bg-navy-d4 text-gray-l4 p-3 rounded-lg">
                     Total Grant is less than minimum processing amount of $
-                    {MIN_PROCESSING_AMOUNT} and would be carried over to the
-                    next month.
+                    {MIN_GRANT_PROCESSING} and would be carried over to the next
+                    month.
                     <Arrow />
                   </Content>
                 }
