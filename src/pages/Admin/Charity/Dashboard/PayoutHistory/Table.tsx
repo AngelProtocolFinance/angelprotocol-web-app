@@ -28,9 +28,12 @@ const txs: {
     description: "Donation paid out",
     icon: withdrawIcon,
   }),
-  "donation-liq": () => ({ description: "Donation saved", icon: receivedIcon }),
+  "donation-liq": () => ({
+    description: "Donation transferred to Savings",
+    icon: receivedIcon,
+  }),
   "donation-lock": () => ({
-    description: "Donation invested",
+    description: "Donation transferred to Investments",
     icon: receivedIcon,
   }),
   "donation-unprocessed": (amnt) => ({
@@ -49,25 +52,25 @@ const txs: {
     ),
   }),
   "liq-cash": () => ({
-    description: "Withdrawal from savings",
+    description: "Withdrawal from Savings",
     icon: withdrawIcon,
   }),
   "lock-cash": () => ({
-    description: "Withdrawal from investments",
+    description: "Withdrawal from Investments",
     icon: withdrawIcon,
   }),
   "liq-lock": () => ({
-    description: "Transfer from savings to investments",
+    description: "Transfer from Savings to Investments",
     icon: transferIcon,
   }),
   "lock-liq": () => ({
-    description: "Transfer from investments to savings",
+    description: "Transfer from Investments to Savings",
     icon: transferIcon,
   }),
   "liq-liq": () => ({ description: "--", icon: null }),
   "lock-lock": () => ({ description: "--", icon: null }),
   "liq-unprocessed": (amnt) => ({
-    description: "Unprocessed withdrawal from savings",
+    description: "Unprocessed withdrawal from Savings",
     icon: (
       <Tooltip
         tip={
@@ -82,7 +85,7 @@ const txs: {
     ),
   }),
   "lock-unprocessed": (amnt) => ({
-    description: "Unprocessed withdrawal from investments",
+    description: "Unprocessed withdrawal from Investments",
     icon: (
       <Tooltip
         tip={
