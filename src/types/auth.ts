@@ -48,6 +48,16 @@ export type UserV2 = {
   currency?: string;
 };
 
+/**@template T - type of error to be handled */
+export interface AuthError<T extends string = string> {
+  __type: T | (string & {});
+  message: string;
+}
+
+export const isError = (data: any): data is AuthError => {
+  return !!data.__type;
+};
+
 export interface DetailedUser extends UserV2 {
   /** deferred: detailed userV2.endowments */
   orgs: Promise<UserEndow[]>;
@@ -64,3 +74,5 @@ export const signIn = v.object({
   ),
   password: v.pipe(v.string("required"), v.nonEmpty("required")),
 });
+
+export type SignIn = v.InferOutput<typeof signIn>;

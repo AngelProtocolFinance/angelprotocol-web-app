@@ -1,42 +1,84 @@
-import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import {
+  type SubmissionResult,
+  getFormProps,
+  getInputProps,
+  useForm,
+} from "@conform-to/react";
 import googleIcon from "assets/icons/google.svg";
-import { oauth } from "auth/cognito";
+import { cognito, oauth } from "auth/cognito";
 import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { Separator } from "components/Separator";
-import { Form, Input, PasswordInput } from "components/form";
+import { Input, PasswordInput } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { getAuthRedirect } from "helpers";
 import { decodeState, toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
+import { useEffect } from "react";
 import {
   type ActionFunction,
   Link,
   type LoaderFunction,
+  json,
   redirect,
   useFetcher,
   useLoaderData,
+  useSearchParams,
 } from "react-router-dom";
-import { type OAuthState, signIn } from "types/auth";
+import { toast } from "sonner";
+import { type OAuthState, isError, signIn } from "types/auth";
 
-// async function submit(fv: FormValues) {
-//   try {
-//     const res = await cognito.initiate(fv.email.toLowerCase(), fv.password);
+type ActionData = { __error: string } | SubmissionResult | undefined;
 
-//     if (isError(res)) {
-//       return displayError(res.message);
-//     }
-//     navigate(toWithState(redirect.path, redirect.data), { replace: true });
-//     return;
-//   } catch (err) {
-//     handleError(err, { context: "signing in" });
-//   }
-// }
+const isActionErr = (data: ActionData): data is { __error: string } =>
+  data ? "__error" in data : false;
+const isValiErr = (data: ActionData): data is SubmissionResult =>
+  data ? "status" in data : false;
 
-export const action: ActionFunction = async ({ request }) => {};
+export const action: ActionFunction = async ({ request }) => {
+  try {
+    const url = new URL(request.url);
+    const state = decodeState(url.searchParams.get("_s"));
+    const r = getAuthRedirect(state as any);
+
+    const fv = await request.formData();
+    if (fv.get("intent") === "oauth") {
+      const routeState: OAuthState = {
+        pathname: r.path,
+        data: r.data,
+      };
+      return redirect(oauth.initiateUrl(JSON.stringify(routeState)));
+    }
+
+    const payload = parseWithValibot(fv, { schema: signIn });
+
+    if (payload.status !== "success") return payload.reply();
+
+    const res = await cognito.initiate(
+      payload.value.email.toLowerCase(),
+      payload.value.password
+    );
+    if (isError(res)) {
+      return payload.reply({ fieldErrors: { password: [res.message] } });
+    }
+
+    const to = new URL(request.url);
+    to.pathname = r.path;
+    to.search = r.search;
+    if (r.data) {
+      const encoded = btoa(JSON.stringify(r.data));
+      to.searchParams.set("_s", encoded);
+    }
+
+    return redirect(to.toString());
+  } catch (err) {
+    console.error(err);
+    return json<ActionData>({ __error: "Unknown error occured" }, 500);
+  }
+};
 
 export const loader: LoaderFunction = async ({
   request,
@@ -50,55 +92,70 @@ export const loader: LoaderFunction = async ({
 
 export function Component() {
   // const navigate = useNavigate();
-  const fetcher = useFetcher();
+  const [params] = useSearchParams();
+  const fetcher = useFetcher<ActionData>();
   const fromState = useLoaderData() as unknown;
-  const redirect = getAuthRedirect(fromState as any);
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    // Optional: Required only if you're validating on the server
-    lastResult: typeof fetcher.data === "string" ? undefined : fetcher.data,
+    lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: signIn });
     },
   });
 
+  useEffect(() => {
+    if (isActionErr(fetcher.data)) {
+      toast.error(fetcher.data.__error);
+    }
+  }, [fetcher.data]);
+
   const isSubmitting = fetcher.state === "submitting";
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
+<<<<<<< HEAD
       <Seo title="Login - Better Giving" />
       <Form
         {...getFormProps(form)}
         className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
         disabled={isSubmitting}
       >
+=======
+      <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
+>>>>>>> 14877853c (signin to action)
         <h3 className="text-center text-2xl font-bold text-navy-d4">
           Philanthropy for Everyone
         </h3>
         <p className="text-center font-normal max-sm:text-sm mt-2">
           Log in to support 18000+ causes or register and manage your nonprofit.
         </p>
-        <button
-          className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
-          type="button"
-          onClick={() => {
-            const routeState: OAuthState = {
-              pathname: redirect.path,
-              data: redirect.data,
-            };
-            oauth.initiate(JSON.stringify(routeState));
-          }}
+        <fetcher.Form
+          method="POST"
+          action={`.?${params.toString()}`}
+          className="contents"
         >
-          <Image src={googleIcon} height={18} width={18} />
-          <span className="normal-case font-heading font-semibold text-navy-d4">
-            Continue with Google
-          </span>
-        </button>
+          <button
+            name="intent"
+            value="oauth"
+            type="submit"
+            className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
+          >
+            <Image src={googleIcon} height={18} width={18} />
+            <span className="normal-case font-heading font-semibold text-navy-d4">
+              Continue with Google
+            </span>
+          </button>
+        </fetcher.Form>
         <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
           OR
         </Separator>
-        <div className="grid gap-3">
+        <fetcher.Form
+          method="POST"
+          action={`.?${params.toString()}`}
+          {...getFormProps(form)}
+          className="grid gap-3"
+        >
           <Input
             {...getInputProps(fields.email, { type: "text" })}
             placeholder="Email address"
@@ -117,8 +174,9 @@ export function Component() {
           >
             Forgot password?
           </Link>
-        </div>
+        </fetcher.Form>
         <button
+          form={form.id}
           type="submit"
           className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full mt-4"
         >
@@ -134,7 +192,7 @@ export function Component() {
             Sign up
           </Link>
         </span>
-      </Form>
+      </div>
       <span className="text-xs sm:text-sm text-center w-80">
         By signing in, you agree to our{" "}
         <ExtLink

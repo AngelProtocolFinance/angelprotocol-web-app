@@ -1,5 +1,6 @@
 import { IS_TEST } from "constants/env";
 import { logger } from "helpers/logger";
+import type { AuthError } from "types/auth";
 
 const clientId = IS_TEST
   ? "7bl9gfckbneg0udsmkvsu48ssg"
@@ -29,16 +30,6 @@ interface OauthTokenRes {
   refresh_token: string;
   token_type: string;
 }
-
-/**@template T - type of error to be handled */
-interface AuthError<T extends string = string> {
-  __type: T | (string & {});
-  message: string;
-}
-
-export const isError = (data: any): data is AuthError => {
-  return !!data.__type;
-};
 
 /** type: bearer */
 interface Token {
@@ -289,7 +280,7 @@ class OAuth extends Storage {
       : "https://bettergiving.auth.us-east-1.amazoncognito.com";
   }
 
-  async initiate(state: string) {
+  initiateUrl(state: string) {
     const scopes = [
       "email",
       "openid",
@@ -306,9 +297,7 @@ class OAuth extends Storage {
       scope: scopes.join(" "),
     });
 
-    window.location.href = `${
-      this.domain
-    }/oauth2/authorize?${params.toString()}`;
+    return `${this.domain}/oauth2/authorize?${params.toString()}`;
   }
 
   async exchange(code: string) {

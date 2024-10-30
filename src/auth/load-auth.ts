@@ -1,7 +1,7 @@
 import { logger } from "helpers";
 import { decodeJwt } from "jose";
-import type { UserV2 } from "types/auth";
-import { cognito, isError } from "./cognito";
+import { type UserV2, isError } from "types/auth";
+import { cognito } from "./cognito";
 
 export const loadAuth = async (): Promise<UserV2 | null> => {
   try {

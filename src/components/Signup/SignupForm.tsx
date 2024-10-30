@@ -1,11 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { cognito, isError } from "auth/cognito";
+import { cognito } from "auth/cognito";
 import { Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
+import { isError } from "types/auth";
 import { object } from "yup";
 import type { Donor, StateSetter } from "./types";
 

@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import googleIcon from "assets/icons/google.svg";
-import { cognito, isError, oauth } from "auth/cognito";
+import { cognito, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import { Separator } from "components/Separator";
@@ -13,7 +13,7 @@ import { Mail } from "lucide-react";
 import { useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
-import type { OAuthState, SignInRouteState } from "types/auth";
+import { type OAuthState, type SignInRouteState, isError } from "types/auth";
 import { mixed, object, ref } from "yup";
 import type { FormValues, StateSetter, UserType } from "../types";
 import UserTypeSelector from "./UserTypeSelector";
@@ -120,7 +120,8 @@ export default function SignupForm(props: Props) {
               pathname: redirect.path,
               data: redirect.data,
             };
-            await oauth.initiate(JSON.stringify(state));
+            const to = oauth.initiateUrl(JSON.stringify(state));
+            window.location.href = to;
           }}
         >
           <Image src={googleIcon} height={18} width={18} />
