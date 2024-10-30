@@ -1,4 +1,5 @@
 import TableSection, { Cells } from "components/TableSection";
+import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { humanize } from "helpers";
 import {
   ArrowLeft,
@@ -8,6 +9,7 @@ import {
 } from "lucide-react";
 import type { ReactNode } from "react";
 import type { BalanceTx } from "types/aws";
+import { MIN_GRANT_PROCESSING } from "../common";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
 
@@ -17,41 +19,83 @@ const receivedIcon = <ArrowRight className="size-4 text-green" />;
 const withdrawIcon = <ArrowLeft className="size-4 text-gray" />;
 
 const txs: {
-  [K in `${BalanceTx["from"]}-${BalanceTx["to"]}`]: {
+  [K in `${BalanceTx["from"]}-${BalanceTx["to"]}`]: (amount: number) => {
     description: string;
     icon: ReactNode;
   };
 } = {
-  "donation-cash": { description: "Donation paid out", icon: withdrawIcon },
-  "donation-liq": { description: "Donation saved", icon: receivedIcon },
-  "donation-lock": { description: "Donation invested", icon: receivedIcon },
-  "donation-unprocessed": {
+  "donation-cash": () => ({
+    description: "Donation paid out",
+    icon: withdrawIcon,
+  }),
+  "donation-liq": () => ({ description: "Donation saved", icon: receivedIcon }),
+  "donation-lock": () => ({
+    description: "Donation invested",
+    icon: receivedIcon,
+  }),
+  "donation-unprocessed": (amnt) => ({
     description: "Unprocessed donation",
-    icon: unprocessedIcon,
-  },
-  "liq-cash": { description: "Withdrawal from savings", icon: withdrawIcon },
-  "lock-cash": {
+    icon: (
+      <Tooltip
+        tip={
+          <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+            <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
+            Grant processing threshold and would be processed in the next cycle
+          </Content>
+        }
+      >
+        {unprocessedIcon}
+      </Tooltip>
+    ),
+  }),
+  "liq-cash": () => ({
+    description: "Withdrawal from savings",
+    icon: withdrawIcon,
+  }),
+  "lock-cash": () => ({
     description: "Withdrawal from investments",
     icon: withdrawIcon,
-  },
-  "liq-lock": {
+  }),
+  "liq-lock": () => ({
     description: "Transfer from savings to investments",
     icon: transferIcon,
-  },
-  "lock-liq": {
+  }),
+  "lock-liq": () => ({
     description: "Transfer from investments to savings",
     icon: transferIcon,
-  },
-  "liq-liq": { description: "--", icon: null },
-  "lock-lock": { description: "--", icon: null },
-  "liq-unprocessed": {
+  }),
+  "liq-liq": () => ({ description: "--", icon: null }),
+  "lock-lock": () => ({ description: "--", icon: null }),
+  "liq-unprocessed": (amnt) => ({
     description: "Unprocessed withdrawal from savings",
-    icon: unprocessedIcon,
-  },
-  "lock-unprocessed": {
+    icon: (
+      <Tooltip
+        tip={
+          <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+            <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
+            Grant processing threshold and is credited back to Savings
+          </Content>
+        }
+      >
+        {unprocessedIcon}
+      </Tooltip>
+    ),
+  }),
+  "lock-unprocessed": (amnt) => ({
     description: "Unprocessed withdrawal from investments",
-    icon: unprocessedIcon,
-  },
+    icon: (
+      <Tooltip
+        tip={
+          <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
+            <Arrow />${humanize(amnt)} does not meet the ${MIN_GRANT_PROCESSING}{" "}
+            Grant processing threshold and is credited back to Investments
+          </Content>
+        }
+      >
+        {unprocessedIcon}
+      </Tooltip>
+    ),
+  }),
 };
 
 export default function Table({
@@ -93,9 +137,9 @@ export default function Table({
                   hasMore ? "" : "first:rounded-bl last:rounded-br"
                 }`}
               >
-                <td className="w-4">{tx.icon}</td>
+                <td className="w-4">{tx(row.amount).icon}</td>
                 <>{new Date(row.date).toLocaleDateString()}</>
-                <>{tx.description}</>
+                <>{tx(row.amount).description}</>
                 <>$ {humanize(row.amount)}</>
               </Cells>
             );
