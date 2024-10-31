@@ -17,7 +17,7 @@ const items: TListItem[] = [
     title2: "Built by a nonprofit, for nonprofits",
     description:
       "We understand your pain points firsthand, which is how we’ve helped causes in over 30 countries raise more than $6 million in donations - entirely for free.",
-    image: { src: laira.trophy, width: 45 },
+    image: { src: laira.standing, width: 40 },
   },
   {
     title1: "Simplicity",
@@ -31,7 +31,7 @@ const items: TListItem[] = [
     title2: "Financial security at your fingertips",
     description:
       "With our high-yield savings and managed investment funds, let your donations work for you: a reliable and growing income stream to provide not just today, but forever.",
-    image: { src: laira.coin, width: 60 },
+    image: { src: laira.coin, width: 65 },
   },
 ];
 
@@ -41,7 +41,7 @@ export default function WhyBG({ className = "" }) {
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
         The Better Giving Difference
       </h4>
-      <h2 className="col-span-full text-center text-4xl leading-snug">
+      <h2 className="col-span-full text-center text-4.5xl leading-snug">
         Why Nonprofits Choose Better Giving
       </h2>
       <p className="text-navy text-center mb-16  col-span-full text-xl mt-4">

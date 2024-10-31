@@ -12,7 +12,7 @@ export default function FiscalSponsorship({ className = "" }) {
         <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase">
           Borderless Donations
         </h4>
-        <h1 className="text-center @6xl:text-left text-3xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-navy-d4">
+        <h1 className="text-center @6xl:text-left text-4xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-navy-d4">
           Globally Inclusive: We support all nonprofits and NGOs, regardless of
           their size or location
         </h1>

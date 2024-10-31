@@ -39,8 +39,8 @@ export default function WhyBG({ className = "" }) {
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
         Fund Management Solutions
       </h4>
-      <h2 className="col-span-full text-center text-4xl leading-snug mb-16">
-        The Sustainability Fund: Securing Your Future, Today
+      <h2 className="col-span-full text-center text-4.5xl leading-snug mb-16">
+        The Sustainability Fund: <br /> Securing Your Future, Today
       </h2>
 
       <div className="grid @3xl:grid-cols-2 items-center mb-14 p-3 rounded-lg">

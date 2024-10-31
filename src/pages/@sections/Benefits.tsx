@@ -45,7 +45,7 @@ function Benefit(props: TBenefit) {
         />
       </div>
       <div className="order-2 mt-4 @2xl:mt-0 @2xl:group-even:order-1 @2xl:group-even:justify-self-end self-center @5xl:self-start @5xl:mt-24">
-        <h4 className="text-2xl @2xl:text-4xl text-center @2xl:text-left mb-6 text-pretty text-navy-d4">
+        <h4 className="text-2xl @2xl:text-3xl text-center @2xl:text-left mb-6 text-pretty text-navy-d4">
           {props.title}
         </h4>
         <p className="text-lg @2xl:text-xl text-navy-l1 text-center @2xl:text-left">

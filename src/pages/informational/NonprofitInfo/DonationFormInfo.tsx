@@ -42,7 +42,7 @@ export default function DonationFormInfo({ className = "" }) {
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
         Your all-in-one donation form
       </h4>
-      <h2 className="col-span-full text-center text-4xl mb-2">
+      <h2 className="col-span-full text-center text-4.5xl mb-2">
         Raise more. Save more. Do less.
       </h2>
       <p className="col-span-full mb-12 text-center text-xl">
@@ -51,7 +51,7 @@ export default function DonationFormInfo({ className = "" }) {
 
       <StepsCarousel classes="w-full max-w-lg self-center justify-self-center" />
 
-      <ul className="divide-y divide-gray-l4 mt-6 @6xl:mt-0">
+      <ul className="divide-y divide-gray-l4 mt-6 @6xl:mt-0 grid grid-cols-[auto_1fr]">
         {items.map((item, idx) => (
           <ListItem {...item} key={idx} />
         ))}
@@ -69,7 +69,7 @@ export default function DonationFormInfo({ className = "" }) {
 
 function ListItem(props: TListItem) {
   return (
-    <li className="grid grid-cols-[auto_1fr] gap-y-1 gap-x-4 py-6">
+    <li className="grid grid-cols-subgrid col-span-2 gap-y-1 gap-x-4 py-6">
       <Image
         src={props.image.src}
         className="col-start-1 row-span-2"

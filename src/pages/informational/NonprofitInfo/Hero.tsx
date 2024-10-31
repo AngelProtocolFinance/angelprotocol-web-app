@@ -15,8 +15,8 @@ export default function Hero({ className = "" }) {
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-navy-d4 mb-5">
           Funding Today, Funding Forever
         </h4>
-        <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl @6xl:leading-tight text-pretty mb-4 text-navy-d4">
-          Raise funds easily. Grow them effortlessly.
+        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-navy-d4">
+          Raise funds easily. <br /> Grow them effortlessly.
         </h1>
         <p className="mb-10 text-lg @6xl:text-xl text-center @6xl:text-left">
           Better Giving streamlines donations, simplifies administration, and
