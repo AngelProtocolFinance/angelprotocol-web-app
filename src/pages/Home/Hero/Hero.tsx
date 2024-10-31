@@ -15,7 +15,7 @@ const Hero = ({ classes = "" }) => {
       <p className="z-10 text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
         By a nonprofit, for nonprofits
       </p>
-      <h1 className="z-10 mx-auto text-3xl md:text-4xl lg:text-5xl text-center text-pretty mb-5 px-6">
+      <h1 className="z-10 mx-auto text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
         Simplified Giving, <br /> Amplified Impact
       </h1>
       <p className="z-10 px-6 text-navy max-md:block md:text-2xl text-center text-pretty sm:text-balance">

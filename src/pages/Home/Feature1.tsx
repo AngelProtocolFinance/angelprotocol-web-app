@@ -43,7 +43,7 @@ export function Feature1({ className = "" }) {
       <h3 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
         Easy as 1-2-3
       </h3>
-      <h2 className="text-center text-4xl leading-snug mb-6">
+      <h2 className="text-center text-4.5xl leading-snug mb-6">
         How Better Giving Works
       </h2>
       <p className="text-navy-l1 px-10 text-center mb-16 text-xl">
@@ -66,7 +66,7 @@ export function Feature1({ className = "" }) {
         </Link>
         <Link
           to={BOOK_A_DEMO}
-          className="group isolate normal-case inline-flex items-center px-10 py-3 gap-1 text-lg bg-white shadow-2xl shadow-black/5 active:translate-x-1 text-blue-d1 font-heading font-bold rounded-full relative"
+          className="group isolate normal-case inline-flex items-center px-10 py-3 gap-1 text-lg bg-white shadow-2xl shadow-black/5 active:translate-x-1 text-blue-d1 font-heading font-bold rounded-full relative border border-blue-l2"
         >
           <span className="ml-1">Book A Demo</span>
           <ArrowRight size={18} className="group-hover:translate-x-1" />

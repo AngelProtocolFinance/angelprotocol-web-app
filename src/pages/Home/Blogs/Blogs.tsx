@@ -10,7 +10,7 @@ const Blogs = () => {
 
   return (
     <section className="grid content-start py-40 bg-gradient-to-b from-transparent via-peach/40 to-transparent overflow-x-clip">
-      <h2 className="text-navy-d4 text-[32px] md:text-[42px] text-center mb-14">
+      <h2 className="text-navy-d4 text-4xl md:text-4.5xl text-center mb-14">
         Gain Knowledge to Empower Your Nonprofit
       </h2>
       <div className="relative">

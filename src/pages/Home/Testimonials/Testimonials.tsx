@@ -13,7 +13,7 @@ const Testimonials = () => {
         alt="quotation mark"
         className="justify-self-center w-24 lg:w-36 mb-8"
       />
-      <h2 className="text-center text-[30px]/10 md:text-[42px]/[58px] text-pretty justify-self-center mb-14">
+      <h2 className="text-center text-4xl/tight md:text-4.5xl/tight text-pretty justify-self-center mb-14">
         Nonprofit Success Stories: <br /> Inspiring Change Together
       </h2>
 
