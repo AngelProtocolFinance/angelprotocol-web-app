@@ -10,6 +10,7 @@ import { Form, Input, PasswordInput } from "components/form";
 import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { getAuthRedirect } from "helpers";
+import { useRendered } from "hooks/use-rendered";
 import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { Link, Navigate, useLocation } from "react-router-dom";
@@ -24,6 +25,7 @@ type FormValues = {
 };
 
 export function Component() {
+  useRendered();
   const { handleError, displayError } = useErrorContext();
   const {
     register,
