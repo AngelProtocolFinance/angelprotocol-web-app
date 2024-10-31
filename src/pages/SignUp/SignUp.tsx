@@ -1,4 +1,5 @@
 import Seo from "components/Seo";
+import { useRendered } from "hooks/use-rendered";
 import { useState } from "react";
 import ConfirmForm from "./ConfirmForm";
 import SignupForm from "./SignupForm";
@@ -7,6 +8,7 @@ import type { SignupState } from "./types";
 
 export function SignUp() {
   const [state, setState] = useState<SignupState>({ type: "init" });
+  useRendered();
 
   const content = (() => {
     if (state.type === "init") {

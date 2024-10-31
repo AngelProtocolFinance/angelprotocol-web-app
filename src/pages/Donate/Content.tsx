@@ -5,6 +5,7 @@ import { Steps } from "components/donation";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
+import { useRendered } from "hooks/use-rendered";
 import { memo } from "react";
 import { Link } from "react-router-dom";
 import type { DonationIntent, Endowment } from "types/aws";
@@ -17,6 +18,7 @@ type Props = {
 };
 
 function Content({ intent, endowment }: Props) {
+  useRendered();
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
