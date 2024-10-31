@@ -1,10 +1,12 @@
 import { appRoutes } from "constants/routes";
+import { useRendered } from "hooks/use-rendered";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import headillust from "./head-illust.webp";
 import s from "./styles.module.css";
 
 const Hero = ({ classes = "" }) => {
+  useRendered();
   return (
     <section
       className={`${classes} ${s.container} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}

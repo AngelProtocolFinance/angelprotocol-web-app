@@ -4,6 +4,7 @@ import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { useRendered } from "hooks/use-rendered";
 import {
   Navigate,
   Outlet,
@@ -60,6 +61,7 @@ function Profile() {
 }
 
 function Banner() {
+  useRendered();
   const { image } = useProfileContext();
   return (
     <div

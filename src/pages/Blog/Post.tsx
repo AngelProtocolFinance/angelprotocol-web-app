@@ -2,6 +2,7 @@ import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
+import { useRendered } from "hooks/use-rendered";
 import { ChevronLeft } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
@@ -62,6 +63,7 @@ export function Component() {
 }
 
 function Loaded(post: Wordpress.Post) {
+  useRendered();
   return (
     <>
       <Seo title={post.slug} />

@@ -1,9 +1,11 @@
 import ExtLink from "components/ExtLink";
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
+import { useRendered } from "hooks/use-rendered";
 import { Link } from "react-router-dom";
 
 export function Component() {
+  useRendered();
   return (
     <div className="padded-container min-h-screen pb-6">
       <Seo title="Privacy policy" />
