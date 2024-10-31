@@ -16,7 +16,7 @@ const Hero = ({ classes = "" }) => {
         By a nonprofit, for nonprofits
       </p>
       <h1 className="z-10 mx-auto text-3xl md:text-4xl lg:text-5xl text-center text-pretty mb-5 px-6">
-        Empower Your Nonprofit <br /> with Effortless Fundraising
+        Simplified Giving, <br /> Amplified Impact
       </h1>
       <p className="z-10 px-6 text-navy max-md:block md:text-2xl text-center text-pretty sm:text-balance">
         Benefit from free donation processing with Better Giving’s one-stop
