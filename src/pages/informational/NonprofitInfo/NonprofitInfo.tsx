@@ -12,7 +12,10 @@ import WhyBG from "./WhyBG";
 export function NonprofitInfo() {
   return (
     <main className="w-full grid content-start pb-16 @container">
-      <Seo title="For nonprofits" />
+      <Seo
+        title="For Nonprofits"
+        description="Accept any type of donation, anywhere in the world"
+      />
       <Hero className="padded-container px-10" />
       <FellowNonProfits className="my-44" />
       <DonationFormInfo className="mt-28 padded-container" />
