@@ -23,7 +23,7 @@ export function NonprofitInfo() {
         <Hero className="padded-container px-10 bg-transparent" />
       </div>
       <div className="bg-gradient-to-bl via-transparent via-50% from-peach/50 to-lilac/50">
-        <FellowNonProfits className="my-44" />
+        <FellowNonProfits className="my-20 md:my-44" />
       </div>
       <div className="bg-gradient-to-br from-lilac/50 via-transparent via-50% to-lilac/50">
         <DonationFormInfo className="mt-28 padded-container" />

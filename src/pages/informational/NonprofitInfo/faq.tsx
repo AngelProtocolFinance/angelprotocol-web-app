@@ -12,7 +12,7 @@ import { Fragment } from "react";
 export default function FAQ({ classes = "" }) {
   return (
     <div className={classes + " grid divide-y divide-gray-l4"}>
-      <h2 className="col-span-full text-center text-4xl leading-snug mb-10">
+      <h2 className="col-span-full text-center text-3xl md:text-4xl leading-snug mb-10">
         Frequently Asked Questions
       </h2>
       {faqs.map((faq) => (
@@ -40,7 +40,7 @@ export default function FAQ({ classes = "" }) {
       <div className="grid pt-8">
         <ExtLink
           href={INTERCOM_HELP}
-          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 text-lg font-semibold"
+          className="justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
         >
           <span>Complete FAQs</span>
           <ArrowRight size={15} />
@@ -53,7 +53,7 @@ export default function FAQ({ classes = "" }) {
             }
             window.open(INTERCOM_HELP, "_blank");
           }}
-          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 text-lg font-semibold"
+          className="mt-4 justify-self-center flex items-center gap-x-2 text-blue hover:text-blue-d1 md:text-lg font-semibold"
         >
           Need additional support? Live Chat.
         </button>

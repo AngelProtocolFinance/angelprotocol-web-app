@@ -41,7 +41,7 @@ export default function WhyBG({ className = "" }) {
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
         The Better Giving Difference
       </h4>
-      <h2 className="col-span-full text-center text-4.5xl leading-snug">
+      <h2 className="col-span-full text-center text-3xl md:text-4.5xl leading-snug">
         Why Nonprofits Choose Better Giving
       </h2>
       <p className="text-navy text-center mb-16  col-span-full text-xl mt-4">

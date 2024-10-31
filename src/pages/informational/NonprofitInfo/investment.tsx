@@ -39,7 +39,7 @@ export default function WhyBG({ className = "" }) {
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
         Fund Management Solutions
       </h4>
-      <h2 className="col-span-full text-center text-4.5xl leading-snug mb-16">
+      <h2 className="col-span-full text-center text-3xl md:text-4.5xl leading-snug mb-16">
         The Sustainability Fund: <br /> Securing Your Future, Today
       </h2>
 
@@ -107,7 +107,7 @@ function ListItem(props: TListItem) {
   return (
     <li className="grid content-start @3xl:grid-rows-subgrid row-span-4 justify-items-center px-4">
       {props.icon}
-      <h5 className="text-center font-body font-medium text-2xl text-navy mt-8">
+      <h5 className="text-center font-body font-medium text-xl @6xl:text-2xl text-navy mt-8">
         {props.title1}
       </h5>
       <h6 className="text-center self-center font-normal font-body text-lg @6xl:text-xl text-navy-l1 mb-4">

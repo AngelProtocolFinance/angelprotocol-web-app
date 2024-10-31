@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export function Hero({ classes = "" }) {
   return (
-    <section className={`${classes} grid py-48`}>
+    <section className={`${classes} grid pb-48 pt-32`}>
       <p className="text-blue-d1 text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
         No nonprofit left behind
       </p>

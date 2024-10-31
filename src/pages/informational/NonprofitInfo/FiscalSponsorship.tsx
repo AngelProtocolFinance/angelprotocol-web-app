@@ -12,7 +12,7 @@ export default function FiscalSponsorship({ className = "" }) {
         <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase">
           Borderless Donations
         </h4>
-        <h1 className="text-center @6xl:text-left text-4xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-navy-d4">
+        <h1 className="text-center @6xl:text-left text-3xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-navy-d4">
           Globally Inclusive: We support all nonprofits and NGOs, regardless of
           their size or location
         </h1>
@@ -30,7 +30,7 @@ export default function FiscalSponsorship({ className = "" }) {
 
         <Link
           to={appRoutes.register}
-          className="justify-self-center @6xl:justify-self-start btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50 uppercase"
+          className="justify-self-center text-center @6xl:justify-self-start btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50 uppercase"
         >
           Unlock a new world of donors
         </Link>

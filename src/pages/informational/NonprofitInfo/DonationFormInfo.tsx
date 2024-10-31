@@ -42,7 +42,7 @@ export default function DonationFormInfo({ className = "" }) {
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
         Your all-in-one donation form
       </h4>
-      <h2 className="col-span-full text-center text-4.5xl mb-2">
+      <h2 className="col-span-full text-center text-3xl @6xl:text-4.5xl mb-2">
         Raise more. Save more. Do less.
       </h2>
       <p className="col-span-full mb-12 text-center text-xl">
@@ -57,7 +57,7 @@ export default function DonationFormInfo({ className = "" }) {
         ))}
       </ul>
 
-      <p className="col-span-full text-center text-2xl leading-normal max-w-3xl justify-self-center mt-8">
+      <p className="col-span-full text-center text-xl @6xl:text-2xl leading-normal max-w-3xl justify-self-center mt-8">
         As a 501(c)(3) public charity, Better Giving accepts donations on your
         behalf, handling all reporting, processing, and tax receipting. We grant
         100% of donations directly to your bank account, or save and invest a

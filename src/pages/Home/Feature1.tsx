@@ -43,7 +43,7 @@ export function Feature1({ className = "" }) {
       <h3 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
         Easy as 1-2-3
       </h3>
-      <h2 className="text-center text-4.5xl leading-snug mb-6">
+      <h2 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
         How Better Giving Works
       </h2>
       <p className="text-navy-l1 px-10 text-center mb-16 text-xl">

@@ -75,7 +75,7 @@ const members: IMember[] = [
 export function Team({ classes = "" }) {
   return (
     <div className={`${classes} grid pb-20`}>
-      <h2 className="mx-auto text-3xl md:text-4xl lg:text-4.5xl/tight max-md:text-center text-balance mb-16 mt-4 text-blue-d1">
+      <h2 className="mx-auto text-3xl/tight md:text-4xl/tight lg:text-4.5xl/tight max-md:text-center text-balance mb-16 mt-4 text-blue-d1">
         Backed by a passionate team with deep nonprofit, finance, and tech
         experience
       </h2>

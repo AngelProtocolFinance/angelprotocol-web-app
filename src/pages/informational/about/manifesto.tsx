@@ -3,7 +3,7 @@ import { ShipWheel, Sprout, Tally4 } from "lucide-react";
 export function Manifesto({ className = "" }) {
   return (
     <section className={`${className} grid pb-40`}>
-      <h2 className="col-span-full text-center text-4.5xl leading-snug">
+      <h2 className="col-span-full text-center text-3xl md:text-4.5xl leading-snug">
         The Better Giving Manifesto
       </h2>
       <p className="text-navy text-center mb-8 col-span-full text-xl mt-4 max-w-3xl justify-self-center">

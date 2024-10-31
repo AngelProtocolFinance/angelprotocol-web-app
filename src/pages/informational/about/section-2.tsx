@@ -37,7 +37,7 @@ export function Section2({ className = "" }) {
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">
         WE STAND FOR NONPROFITS
       </h4>
-      <h2 className="col-span-full text-center text-4.5xl leading-snug">
+      <h2 className="col-span-full text-center text-3xl md:text-4.5xl leading-snug">
         Our Mission & Values
       </h2>
       <p className="text-navy text-center mb-16 col-span-full text-xl mt-4 max-w-4xl justify-self-center">
@@ -65,7 +65,7 @@ function ListItem(props: TListItem) {
         width={props.image.width}
         className="mb-4"
       />
-      <h5 className="text-center font-body font-medium text-2xl text-navy mb-2">
+      <h5 className="text-center font-body font-medium text-xl @6xl:text-2xl text-navy mb-2">
         {props.title1}
       </h5>
       <h6 className="text-center self-start font-normal font-body text-lg @6xl:text-xl text-navy-l1 mb-4">
