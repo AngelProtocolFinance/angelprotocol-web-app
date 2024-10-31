@@ -29,11 +29,10 @@ export function Quote({ className = "" }) {
       </div>
 
       <div className="self-center p-8 pb-2 mt-4 max-w-3xl relative">
-        <div className="w-2 shadow-inner h-full absolute inset-y-0 left-0 bg-lilac/50 rounded-full" />
         <img
           src={quotation}
           alt="quotation mark"
-          className="justify-self-start w-24 lg:w-36 mb-4 -mt-24"
+          className="justify-self-start w-24 lg:w-36 mb-6 -mt-24"
         />
         <blockquote className="text-xl sm:text-2xl font-medium text-navy-l3 italic mb-2 font-heading">
           Our mission is to give every nonprofit, everywhere, free access to the
@@ -43,7 +42,7 @@ export function Quote({ className = "" }) {
           scarcity and dependence but rather abundance and financial
           self-sufficiency
         </blockquote>
-        <p className="text-right text-lg text-navy mt-8">
+        <p className="text-right font-heading text-lg text-navy mt-8">
           – Chauncey St. John
           <span className="block text-sm font-medium">Founder</span>​
         </p>

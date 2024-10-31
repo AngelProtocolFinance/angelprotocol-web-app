@@ -1,11 +1,11 @@
 import github from "assets/icons/social/github.png";
 import linkedin from "assets/icons/social/linkedin.png";
-import chauncey from "assets/people/chauncey.jpeg";
-import justin from "assets/people/justin.jpeg";
+import chauncey from "assets/people/chauncey2.png";
+import justin from "assets/people/justin.jpg";
 import pallav from "assets/people/pallav.jpeg";
 import shaun from "assets/people/shaun.jpeg";
-import tejaswini from "assets/people/tejaswini.jpeg";
-import tim from "assets/people/tim.jpeg";
+import tejaswini from "assets/people/tejaswini.png";
+import tim from "assets/people/tim.png";
 import ExtLink from "components/ExtLink";
 import { Mail } from "lucide-react";
 
@@ -75,7 +75,7 @@ const members: IMember[] = [
 export function Team({ classes = "" }) {
   return (
     <div className={`${classes} grid pb-20`}>
-      <h2 className="mx-auto text-3xl md:text-4xl lg:text-5xl max-md:text-center text-balance mb-16 mt-4 text-blue-d1">
+      <h2 className="mx-auto text-3xl md:text-4xl lg:text-4.5xl/tight max-md:text-center text-balance mb-16 mt-4 text-blue-d1">
         Backed by a passionate team with deep nonprofit, finance, and tech
         experience
       </h2>

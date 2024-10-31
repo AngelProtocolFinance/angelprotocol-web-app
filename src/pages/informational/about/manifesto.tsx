@@ -3,7 +3,7 @@ import { ShipWheel, Sprout, Tally4 } from "lucide-react";
 export function Manifesto({ className = "" }) {
   return (
     <section className={`${className} grid pb-40`}>
-      <h2 className="col-span-full text-center text-4xl leading-snug">
+      <h2 className="col-span-full text-center text-4.5xl leading-snug">
         The Better Giving Manifesto
       </h2>
       <p className="text-navy text-center mb-8 col-span-full text-xl mt-4 max-w-3xl justify-self-center">
@@ -14,7 +14,7 @@ export function Manifesto({ className = "" }) {
       </p>
 
       <p className="text-xl font-bold text-center text-blue-d1 mb-4">
-        We believe in these fundamental rights for all nonprofits
+        We believe in these fundamental rights for all nonprofits :
       </p>
 
       <ul className="flex flex-wrap sm:justify-center gap-4 mt-4 mb-8">
@@ -26,11 +26,11 @@ export function Manifesto({ className = "" }) {
         </li>
         <li className="max-md:w-full pb-8 grid justify-items-center bg-white rounded shadow-2xl shadow-lilac gap-y-4 p-4 border-lilac border text-center font-heading font-black">
           <Tally4 size={35} className="text-navy" />
-          <span className="text-lg">The Right to equal opportunity</span>
+          <span className="text-lg">The Right to Equal Opportunity</span>
         </li>
         <li className="max-md:w-full pb-8 grid justify-items-center bg-white rounded shadow-2xl shadow-lilac gap-y-4 p-4 border-lilac border text-center font-heading font-black">
           <ShipWheel size={40} className="text-blue-d1" />
-          <span className="text-lg">The Right to organizational autonomy</span>
+          <span className="text-lg">The Right to Organizational Autonomy</span>
         </li>
       </ul>
 
