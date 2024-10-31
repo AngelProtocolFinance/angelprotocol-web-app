@@ -22,6 +22,7 @@ const HEADER_LINKS: Link[] = [
   { title: "Register NPO", href: appRoutes.register },
   { title: "For Nonprofits", href: appRoutes.nonprofit_info },
   { title: "For Donors", href: appRoutes.donor_info },
+  { title: "About Us", href: appRoutes.about },
 ];
 
 export const CHARITY_LINKS: LINKS = {
