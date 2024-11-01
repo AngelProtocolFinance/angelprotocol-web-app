@@ -46,7 +46,7 @@ export function NonprofitInfo() {
       </div>
 
       <div className="bg-gradient-to-br via-transparent via-50% from-peach/50 to-transparent">
-        <FiscalSponsorship className="@xl:mt-56 padded-container" />
+        <FiscalSponsorship className="@3xl:mt-56 padded-container" />
       </div>
       <div className="bg-gradient-to-b from-transparent via-lilac/20 to-transparent">
         <Investment className="mt-56 padded-container" />

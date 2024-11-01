@@ -9,7 +9,7 @@ export default function FiscalSponsorship({ className = "" }) {
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[1fr_auto] py-24`}
     >
       <div className="grid max-w-2xl order-2 @6xl:order-1">
-        <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase">
+        <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center @6xl:text-left">
           Borderless Donations
         </h4>
         <h1 className="text-center @6xl:text-left text-3xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-navy-d4">
