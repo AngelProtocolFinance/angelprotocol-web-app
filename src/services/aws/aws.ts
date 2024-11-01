@@ -173,7 +173,7 @@ export const aws = createApi({
       Pick<Endowment, "id" | "name" | "claimed" | "registration_number">,
       string
     >({
-      query: (ein) => ({ url: "v8/endowments", params: { ein, env: apiEnv } }),
+      query: (ein) => ({ url: "v10/endowments", params: { ein, env: apiEnv } }),
     }),
 
     editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
