@@ -1,10 +1,10 @@
+import type { DonateMethodId } from "@better-giving/endowment";
 import type { Donor } from "types/aws";
 import type {
   DetailedCurrency,
   OptionType,
   TokenWithDetails,
 } from "types/components";
-import type { DonateMethodId } from "types/lists";
 import type {
   DonationDetails,
   DonationState,

@@ -1,3 +1,8 @@
+import type { Endow } from "@better-giving/endowment";
+import {
+  MAX_RECEIPT_MSG_CHAR,
+  incrementLabelMaxChars,
+} from "@better-giving/endowment/schema";
 import { Field as HuiField, Input } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
@@ -11,16 +16,11 @@ import {
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useFieldArray, useForm } from "react-hook-form";
-import {
-  type Endowment,
-  type EndowmentSettingsAttributes,
-  incrementLabelMaxChars,
-} from "types/aws";
+import type { EndowmentSettingsAttributes } from "types/aws";
 import { useUpdateEndowment } from "../common";
-import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 import { type FV, schema } from "./types";
 
-type Props = Pick<Endowment, "id" | EndowmentSettingsAttributes>;
+type Props = Pick<Endow, "id" | EndowmentSettingsAttributes>;
 
 export default function Form(props: Props) {
   const updateEndow = useUpdateEndowment();

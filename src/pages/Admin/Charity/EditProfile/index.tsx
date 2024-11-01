@@ -1,3 +1,4 @@
+import type { Endow, EndowDesignation } from "@better-giving/endowment";
 import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
 import Seo from "components/Seo";
@@ -5,7 +6,6 @@ import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { useEndowment } from "services/aws/useEndowment";
-import type { EndowmentProfile as TProfile } from "types/aws";
 import { useAdminContext } from "../../Context";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
@@ -37,7 +37,7 @@ export function Component() {
   );
 }
 
-function FormWithContext(props: TProfile & { id: number }) {
+function FormWithContext(props: Endow & { id: number }) {
   const defaults: FV = {
     name: props.name,
     published: !!props.published,
@@ -68,7 +68,7 @@ function FormWithContext(props: TProfile & { id: number }) {
     },
     endow_designation: props.endow_designation
       ? { label: props.endow_designation, value: props.endow_designation }
-      : { label: "", value: "" },
+      : { label: "", value: "" as EndowDesignation },
     hq_country: country(props.hq_country),
     sdgs: props.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
     active_in_countries: props.active_in_countries.map((x) => ({

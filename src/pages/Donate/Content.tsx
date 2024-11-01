@@ -1,3 +1,4 @@
+import type { Endow } from "@better-giving/endowment";
 import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
@@ -8,13 +9,13 @@ import { PRIVACY_POLICY } from "constants/urls";
 import { useRendered } from "hooks/use-rendered";
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import type { DonationIntent, Endowment } from "types/aws";
+import type { DonationIntent } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
 type Props = {
   intent?: DonationIntent.ToResume;
-  endowment: Endowment;
+  endowment: Endow;
 };
 
 function Content({ intent, endowment }: Props) {

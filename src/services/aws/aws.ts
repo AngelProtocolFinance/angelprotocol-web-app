@@ -1,3 +1,4 @@
+import type { Endow, EndowUpdate } from "@better-giving/endowment";
 import type {
   Application,
   Page,
@@ -15,13 +16,12 @@ import type {
   Donation,
   DonationsQueryParams,
   EndowListPaginatedAWSQueryRes,
-  Endowment,
   EndowmentCard,
   EndowmentOption,
   EndowmentsQueryParams,
 } from "types/aws";
 import { version as v } from "../helpers";
-import type { EndowmentUpdate, IdOrSlug } from "../types";
+import type { IdOrSlug } from "../types";
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -155,10 +155,7 @@ export const aws = createApi({
       },
     }),
 
-    endowment: builder.query<
-      Endowment,
-      IdOrSlug & { fields?: (keyof Endowment)[] }
-    >({
+    endowment: builder.query<Endow, IdOrSlug & { fields?: (keyof Endow)[] }>({
       providesTags: ["endowment"],
       query: ({ fields, ...args }) => ({
         url: "id" in args ? `v10/endowments/${args.id}` : "v10/endowments",
@@ -169,14 +166,8 @@ export const aws = createApi({
         },
       }),
     }),
-    endowWithEin: builder.query<
-      Pick<Endowment, "id" | "name" | "claimed" | "registration_number">,
-      string
-    >({
-      query: (ein) => ({ url: "v10/endowments", params: { ein, env: apiEnv } }),
-    }),
 
-    editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
+    editEndowment: builder.mutation<Endow, EndowUpdate & { id: number }>({
       invalidatesTags: (_, error) => (error ? [] : ["endowments", "endowment"]),
       query: ({ id, ...payload }) => {
         return {
@@ -244,7 +235,6 @@ export const {
   useReviewApplicationMutation,
   useDonationsQuery,
   useLazyDonationsQuery,
-  useLazyEndowWithEinQuery,
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
@@ -277,3 +267,16 @@ const endowSelectorOptionObj: {
   name: "",
 };
 const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");
+
+export const endowByEin = async (
+  ein: string
+): Promise<
+  Pick<Endow, "id" | "name" | "claimed" | "registration_number"> | undefined
+> => {
+  const res = await fetch(
+    `${APIs.aws}/v10/endowments?ein=${ein}&env=${apiEnv}`
+  );
+  if (res.status === 404) return undefined;
+  if (!res.ok) throw res;
+  return res.json() as Promise<Endow>;
+};

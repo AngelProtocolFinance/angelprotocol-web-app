@@ -1,15 +1,15 @@
+import type { EndowUpdate } from "@better-giving/endowment";
 import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useEditEndowmentMutation } from "services/aws/aws";
-import type { EndowmentUpdate } from "services/types";
 
 export function useUpdateEndowment() {
   const { showModal } = useModalContext();
   const [submit] = useEditEndowmentMutation();
   const { handleError } = useErrorContext();
 
-  const updateEndowment = async (update: EndowmentUpdate) => {
+  const updateEndowment = async (update: EndowUpdate & { id: number }) => {
     try {
       showModal(
         Prompt,

@@ -1,9 +1,11 @@
-import { increment } from "types/aws";
+import {
+  MAX_RECEIPT_MSG_CHAR,
+  increment,
+  str,
+} from "@better-giving/endowment/schema";
 import { donateMethod } from "types/components";
 import * as v from "valibot";
-import { MAX_RECEIPT_MSG_CHAR } from "./constants";
 
-const str = v.pipe(v.string(), v.trim());
 export const schema = v.object({
   receiptMsg: v.pipe(
     str,

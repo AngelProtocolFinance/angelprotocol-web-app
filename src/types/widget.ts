@@ -1,7 +1,11 @@
+import {
+  donateMethodId,
+  increment,
+  incrementLabel,
+  incrementVal,
+} from "@better-giving/endowment/schema";
 import * as v from "valibot";
-import { increment, incrementLabel, incrementVal } from "./aws";
 import { donateMethod } from "./components";
-import { donateMethodId } from "./lists";
 
 const str = v.pipe(v.string(), v.trim());
 
