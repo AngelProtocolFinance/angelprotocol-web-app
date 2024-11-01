@@ -21,7 +21,7 @@ export default function useSubmit({ form, props }: Args) {
 
   const [updateReg] = useUpdateRegMutation();
   const [endowByEin] = useLazyEndowWithEinQuery({});
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
@@ -31,11 +31,12 @@ export default function useSubmit({ form, props }: Args) {
 
     if (!data.init.claim && fv.ein !== props.doc?.ein) {
       const res = await endowByEin(fv.ein);
+      console.log(res);
 
       if ("data" in res && res.data) {
         const endow = res.data;
         if (endow.claimed ?? true) {
-          return handleError(
+          return displayError(
             `Nonprofit: ${endow.name} with EIN: ${fv.ein} already exists on our app. You must speak with an existing user of your NPO Account's members in order to be invited on as a member.`
           );
         }
