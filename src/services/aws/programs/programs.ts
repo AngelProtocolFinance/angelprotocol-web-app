@@ -1,5 +1,9 @@
+import type {
+  NewProgram,
+  Program,
+  ProgramUpdate,
+} from "@better-giving/endowment";
 import { TEMP_JWT } from "constants/auth";
-import type { NewProgram, Program, ProgramUpdate } from "types/aws";
 import { version as v } from "../../helpers";
 import type { ProgramDeleteMsg } from "../../types";
 import { aws } from "../aws";
@@ -29,19 +33,20 @@ const programs = aws.injectEndpoints({
         };
       },
     }),
-    editProgram: builder.mutation<Program, ProgramUpdate & { endowId: number }>(
-      {
-        invalidatesTags: (_, error) => (error ? [] : ["program", "programs"]),
-        query: ({ endowId, id, ...payload }) => {
-          return {
-            url: `/${v(1)}/endowments/${endowId}/programs/${id}`,
-            method: "PATCH",
-            headers: { authorization: TEMP_JWT },
-            body: payload,
-          };
-        },
-      }
-    ),
+    editProgram: builder.mutation<
+      Program,
+      ProgramUpdate & { endowId: number; id: string }
+    >({
+      invalidatesTags: (_, error) => (error ? [] : ["program", "programs"]),
+      query: ({ endowId, id, ...payload }) => {
+        return {
+          url: `/${v(1)}/endowments/${endowId}/programs/${id}`,
+          method: "PATCH",
+          headers: { authorization: TEMP_JWT },
+          body: payload,
+        };
+      },
+    }),
     deleteProgram: builder.mutation<unknown, ProgramDeleteMsg>({
       invalidatesTags: (_, error) => (error ? [] : ["programs"]),
       query: ({ id, program_id }) => {

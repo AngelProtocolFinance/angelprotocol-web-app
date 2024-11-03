@@ -35,7 +35,7 @@ export default function useCards() {
   } = useEndowmentCardsQuery(
     {
       query: debouncedSearchText,
-      page: 1, // always starts at page 1
+      page: "1", // always starts at page 1
       sdgs: sdgs.join(","),
       claimed:
         /** search for both verified/unverified if user didn't explicitly narrow verified status */
@@ -56,7 +56,7 @@ export default function useCards() {
     ) {
       const { data: newEndowRes } = await loadMore({
         ...originalArgs,
-        page: data.Page + 1,
+        page: (data.Page + 1).toString(),
       });
 
       if (newEndowRes) {

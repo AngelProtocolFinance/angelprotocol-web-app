@@ -1,4 +1,4 @@
-import type { EndowDesignation } from "types/aws";
+import type { EndowDesignation } from "@better-giving/endowment";
 import { useMarketplaceContext } from "../Context";
 import { type FilterOption, FlatFilter } from "./common";
 

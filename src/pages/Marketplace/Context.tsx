@@ -1,3 +1,4 @@
+import type { EndowDesignation } from "@better-giving/endowment";
 import {
   type PropsWithChildren,
   createContext,
@@ -5,11 +6,7 @@ import {
   useReducer,
 } from "react";
 import type { UnionToIntersection } from "type-fest";
-import type {
-  EndowDesignation,
-  EndowmentsSortKey,
-  SortDirection,
-} from "types/aws";
+import type { EndowmentsSortKey, SortDirection } from "types/aws";
 import type { SDGGroup } from "types/lists";
 
 export interface Sort {

@@ -1,6 +1,6 @@
+import type { Program } from "@better-giving/endowment";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
-import type { Program } from "types/aws";
 import { version as v } from "../../helpers";
 
 export const mockPrograms: Program[] = [

@@ -1,4 +1,8 @@
-import type { Endow, EndowUpdate } from "@better-giving/endowment";
+import type {
+  Endow,
+  EndowUpdate,
+  EndowsQueryParams,
+} from "@better-giving/endowment";
 import type {
   Application,
   Page,
@@ -18,7 +22,6 @@ import type {
   EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentOption,
-  EndowmentsQueryParams,
 } from "types/aws";
 import { version as v } from "../helpers";
 import type { IdOrSlug } from "../types";
@@ -82,7 +85,7 @@ export const aws = createApi({
   endpoints: (builder) => ({
     endowmentCards: builder.query<
       EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
-      EndowmentsQueryParams
+      EndowsQueryParams
     >({
       providesTags: ["endowments"],
       query: (params) => {
@@ -92,7 +95,7 @@ export const aws = createApi({
         };
       },
     }),
-    endowmentOptions: builder.query<EndowmentOption[], EndowmentsQueryParams>({
+    endowmentOptions: builder.query<EndowmentOption[], EndowsQueryParams>({
       providesTags: ["endowments"],
       query: (params) => {
         return {

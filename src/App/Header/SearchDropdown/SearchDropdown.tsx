@@ -21,7 +21,7 @@ export default function SearchDropdown({ classes = "", query }: Props) {
     useEndowmentCardsQuery(
       {
         query: debouncedQuery,
-        page: 1,
+        page: "1",
       },
       { skip: isDebouncing }
     );
