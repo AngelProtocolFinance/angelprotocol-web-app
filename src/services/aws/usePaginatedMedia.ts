@@ -1,6 +1,6 @@
+import type { MediaQueryParamsObj } from "@better-giving/endowment";
 import { useState } from "react";
 import { useSetter } from "store/accessors";
-import type { MediaQueryParams } from "types/aws";
 import {
   updateMediaQueryData,
   useLazyMediaQuery,
@@ -9,11 +9,13 @@ import {
 
 export function usePaginatedMedia(
   endowId: number,
-  initParams?: MediaQueryParams
+  initParams?: MediaQueryParamsObj
 ) {
   const dispatch = useSetter();
 
-  const [params, setParams] = useState<MediaQueryParams>(initParams ?? {});
+  const [params, setParams] = useState<MediaQueryParamsObj>(
+    initParams ?? { type: "video" }
+  );
 
   const queryState = useMediaQuery({ ...params, endowId });
 

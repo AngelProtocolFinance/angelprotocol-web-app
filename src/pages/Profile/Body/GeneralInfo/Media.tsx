@@ -1,5 +1,5 @@
+import type { TMedia } from "@better-giving/endowment";
 import ReactPlayer from "react-player";
-import type { Media as TMedia } from "types/aws";
 
 export default function Media({ media }: { media: TMedia[] }) {
   return (

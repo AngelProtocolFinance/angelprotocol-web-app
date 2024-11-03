@@ -21,22 +21,6 @@ export type Program = {
   totalDonations?: number;
 };
 
-export type Media = {
-  type: "video";
-  url: string;
-  id: string;
-  featured: boolean;
-  dateCreated: string;
-}; // {article} | {album}
-export type MediaQueryParams = {
-  type?: "video"; //future: article | album
-  featured?: boolean;
-  nextPageKey?: string;
-  limit?: number;
-};
-
-export type MediaUpdate = Partial<Pick<Media, "url" | "featured">>;
-
 export type EndowDesignation =
   | "Charity"
   | "Religious Organization"

@@ -1,11 +1,11 @@
 import {
   endowDesignation,
+  maybeEmptyHttpsUrl,
   reg_number,
   segment,
   social_media_urls,
   str,
   unSdgNum,
-  userInputUrl,
 } from "@better-giving/endowment/schema";
 import type { ImageMIMEType } from "types/lists";
 import * as v from "valibot";
@@ -82,7 +82,7 @@ export const schema = v.object({
   ),
   street_address: v.optional(str),
   social_media_urls: social_media_urls,
-  url: v.optional(userInputUrl),
+  url: v.optional(maybeEmptyHttpsUrl),
   sdgs: v.pipe(sdgs, v.minLength(1, "required")),
   published: v.boolean(),
 });
