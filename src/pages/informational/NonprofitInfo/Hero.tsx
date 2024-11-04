@@ -9,7 +9,7 @@ export default function Hero({ className = "" }) {
   useRendered();
   return (
     <section
-      className={`${className} grid justify-items-center gap-y-10 @6xl:justify-items-start @6xl:grid-cols-[3fr_2fr] py-24`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[3fr_2fr] py-24`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-navy-d4 mb-5">
@@ -43,8 +43,8 @@ export default function Hero({ className = "" }) {
       </div>
       <Image
         src={benefits.donors[1].img}
-        width={500}
-        height={500}
+        width={420}
+        height={420}
         className="rounded-4xl order-1 @6xl:order-2"
       />
     </section>
