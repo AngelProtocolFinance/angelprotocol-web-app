@@ -5,7 +5,7 @@ import { NativeField as Field, Label, Form as _Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
-import { getFullURL, uploadFiles } from "helpers/uploadFiles";
+import { uploadFile } from "helpers/uploadFile";
 import { useEditUserMutation } from "services/aws/users";
 import { updateUserAttributes } from "slices/auth";
 import { useSetter } from "store/accessors";
@@ -15,8 +15,8 @@ import { AVATAR_MAX_SIZE_BYTES, AVATAR_MIME_TYPE, useRhf } from "./useRhf";
 
 export default function Form(props: Props) {
   const dispatch = useSetter();
-  const { handleError } = useErrorContext();
-  const { showModal, closeModal } = useModalContext();
+  const { handleError, displayError } = useErrorContext();
+  const { showModal } = useModalContext();
   const [editUser] = useEditUserMutation();
 
   const rhf = useRhf(props);
@@ -30,25 +30,20 @@ export default function Form(props: Props) {
       }}
       onSubmit={rhf.handleSubmit(async (fv) => {
         try {
-          const newAvatarUrl = await (async () => {
-            const file = fv.avatar.file;
-            if (!file) return;
-            showModal(Prompt, {
-              type: "loading",
-              children: "Uploading avatar...",
-            });
-            const baseUrl = await uploadFiles([file], "bg-user");
-            if (!baseUrl) return closeModal();
-
-            closeModal();
-            return getFullURL(baseUrl, file.name);
-          })();
+          let avatar = fv.avatar.publicUrl;
+          if (fv.avatar.file) {
+            const obj = await uploadFile(fv.avatar.file, "bg-user");
+            if (!obj) {
+              return displayError("Failed to upload avatar");
+            }
+            avatar = obj.publicUrl;
+          }
 
           const update: Required<UserAttributes> = {
             givenName: fv.firstName,
             familyName: fv.lastName,
             prefCurrencyCode: fv.prefCurrency.code,
-            avatarUrl: newAvatarUrl ?? "",
+            avatarUrl: avatar,
           };
           const updated = await editUser({
             ...cleanObject(update),

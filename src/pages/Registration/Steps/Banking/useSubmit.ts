@@ -1,6 +1,6 @@
 import type { OnSubmit } from "components/BankDetails";
 import { useErrorContext } from "contexts/ErrorContext";
-import { getFilePreviews } from "helpers";
+import { uploadFile } from "helpers/uploadFile";
 import { useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { steps } from "../../routes";
@@ -9,19 +9,20 @@ import { useRegState } from "../StepGuard";
 export default function useSubmit() {
   const { data } = useRegState<5>();
   const [updateReg] = useUpdateRegMutation();
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const navigate = useNavigate();
 
   const submit: OnSubmit = async (recipient, file) => {
     try {
-      const bankStatementPreview = await getFilePreviews({
-        bankStatementFile: { previews: [], files: [file] },
-      });
+      const bankStatement = await uploadFile(file, "endow-reg");
+      if (!bankStatement) {
+        return displayError("Failed to upload bank statement");
+      }
 
       await updateReg({
         id: data.init.id,
         type: "banking",
-        bank_statement: bankStatementPreview.bankStatementFile[0],
+        bank_statement: bankStatement,
         wise_recipient_id: recipient.id,
       }).unwrap();
 
