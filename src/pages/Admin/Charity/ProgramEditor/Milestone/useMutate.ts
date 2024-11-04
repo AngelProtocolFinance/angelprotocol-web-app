@@ -26,7 +26,7 @@ export default function useMutate(milestoneId: string, programId: string) {
       let media = fv.media.publicUrl;
       if (fv.media.file) {
         const obj = await uploadFile(fv.media.file, "endow-profiles");
-        if (!obj) return displayError("Failed to upload media banner");
+        if (!obj) return displayError("Failed to upload milestone media");
         media = obj.publicUrl;
       }
 
