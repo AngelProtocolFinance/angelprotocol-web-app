@@ -1,7 +1,6 @@
 import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
 import Prompt from "components/Prompt";
-import { adminRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { uploadFile } from "helpers/uploadFile";
@@ -43,7 +42,7 @@ export default function Banking() {
         children: <p className="py-8">Banking details submitted for review!</p>,
       });
 
-      navigate(`../${adminRoutes.banking}`);
+      navigate("..");
     } catch (error) {
       handleError(error, { context: "submitting banking application" });
     }
