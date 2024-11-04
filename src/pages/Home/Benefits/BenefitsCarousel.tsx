@@ -2,6 +2,7 @@ import type { Benefit } from "content/benefits";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { EffectCoverflow, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { PreCta } from "./common";
 
 type Props = { slides: Benefit[]; classes?: string };
 const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
@@ -43,23 +44,30 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
           return (
             <SwiperSlide
               key={index}
-              className={`grid justify-items-center gap-9 py-14 px-10 w-[30rem] @4xl:w-[48rem] rounded-5xl ${slide.cardBgClass}`}
+              className={`grid justify-items-center py-14 px-10 w-[30rem] @4xl:w-[48rem] rounded-5xl ${slide.cardBgClass}`}
             >
               <img
                 src={slide.img}
                 className="size-60 object-cover object-center"
                 alt="logo"
               />
-              <p className="text-2xl text-[#0D283A] w-full text-center font-semibold">
+              <p className="mt-6 text-2xl font-heading text-[#0D283A] w-full text-center font-bold">
                 {slide.title}
               </p>
-              <p className="text-center text-balance">{slide.description}</p>
+              <p className="text-xl text-navy w-full text-center font-medium">
+                {slide.title2}
+              </p>
+              <p className="text-center text-balance text-lg mt-4 text-navy">
+                {slide.description}
+              </p>
             </SwiperSlide>
           );
         })}
       </Swiper>
 
-      <div className="absolute grid bottom-0 left-3/4 z-10 -rotate-12">
+      <PreCta classes="text-center max-w-4xl justify-self-center mt-8 text-2xl px-4" />
+
+      <div className="absolute grid bottom-48 left-3/4 z-10 -rotate-12">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="41"

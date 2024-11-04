@@ -7,14 +7,14 @@ import TestimonialCard from "./TestimonialCard";
 
 const Testimonials = () => {
   return (
-    <div className="grid relative pt-48 bg-gradient-to-t from-peach/40 to-transparent">
+    <div className="grid relative pt-48 bg-gradient-to-b from-peach/20 to-transparent overflow-x-clip">
       <img
         src={quotation}
         alt="quotation mark"
         className="justify-self-center w-24 lg:w-36 mb-8"
       />
-      <h2 className="text-center text-[30px]/10 md:text-[42px]/[58px] text-pretty justify-self-center mb-14">
-        Success Stories: <br /> Inspiring Change Together
+      <h2 className="text-center text-3xl/tight md:text-4.5xl/tight text-pretty justify-self-center mb-14">
+        Nonprofit Success Stories: <br /> Inspiring Change Together
       </h2>
 
       <button
