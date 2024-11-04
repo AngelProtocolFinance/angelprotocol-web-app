@@ -28,7 +28,7 @@ export function Quote({ className = "" }) {
         </p>
       </div>
 
-      <div className="self-center p-8 mt-4 max-w-3xl relative ">
+      <div className="self-center p-8 mt-4 @6xl:mt-24 max-w-3xl relative ">
         <img
           src={quotation}
           alt="quotation mark"
