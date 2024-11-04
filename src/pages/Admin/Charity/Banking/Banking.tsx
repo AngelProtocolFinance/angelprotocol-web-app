@@ -4,7 +4,7 @@ import Prompt from "components/Prompt";
 import { adminRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { getFilePreviews } from "helpers";
+import { uploadFile } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,15 +15,16 @@ export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
   const [newApplication] = useNewBankingApplicationMutation();
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const { showModal } = useModalContext();
   const navigate = useNavigate();
 
   const submit: OnSubmit = async (recipient, bankStatementFile) => {
     try {
-      const { bankStatement } = await getFilePreviews({
-        bankStatement: { previews: [], files: [bankStatementFile] },
-      });
+      const bankStatement = await uploadFile(bankStatementFile, "endow-reg");
+      if (!bankStatement) {
+        return displayError("Failed to upload bank statement");
+      }
 
       const { id, details, currency } = recipient;
       //creating account return V1Recipient and doesn't have longAccount summary field
@@ -34,10 +35,7 @@ export default function Banking() {
         wiseRecipientID: id.toString(),
         bankSummary,
         endowmentID: endowment_id,
-        bankStatementFile: {
-          name: "bank statement",
-          publicUrl: bankStatement[0].publicUrl,
-        },
+        bankStatementFile: bankStatement,
       }).unwrap();
 
       showModal(Prompt, {

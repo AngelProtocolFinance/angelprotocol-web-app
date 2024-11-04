@@ -2,6 +2,7 @@ import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
+import { uploadFile } from "helpers/uploadFile";
 import type { SubmitHandler } from "react-hook-form";
 import {
   useDeleteMilestoneMutation,
@@ -9,31 +10,29 @@ import {
 } from "services/aws/milestones";
 import type { MilestoneUpdate } from "types/aws";
 import { useAdminContext } from "../../../Context";
-import { uploadImg } from "../common";
 import type { FV } from "./types";
 
 export default function useMutate(milestoneId: string, programId: string) {
   const { id } = useAdminContext();
 
   const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const [editMilestone] = useEditMilestoneMutation();
   const [deleteMilestone, { isLoading: isDeletingMilestone }] =
     useDeleteMilestoneMutation();
 
   const submit: SubmitHandler<FV> = async (fv) => {
     try {
-      const imageURL = await uploadImg(fv.media, () => {
-        showModal(
-          Prompt,
-          { type: "loading", children: "Uploading image..." },
-          { isDismissible: false }
-        );
-      });
+      let media = fv.media.publicUrl;
+      if (fv.media.file) {
+        const obj = await uploadFile(fv.media.file, "endow-profiles");
+        if (!obj) return displayError("Failed to upload media banner");
+        media = obj.publicUrl;
+      }
 
       const update: MilestoneUpdate = {
         id: milestoneId,
-        media: imageURL,
+        media,
         description: fv.description.value,
         title: fv.title,
         date: new Date(fv.date).toISOString(),
