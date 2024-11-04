@@ -16,10 +16,10 @@ export default function Benefits(props: Props) {
           {props.subheading}
         </h4>
       )}
-      <h2 className="text-3xl md:text-4.5xl capitalize text-navy-d4 text-center text-pretty mb-3">
+      <h2 className="text-3xl md:text-4.5xl capitalize text-navy-d4 text-center text-pretty mb-4">
         {props.heading}
       </h2>
-      <p className="text-xl font-medium text-navy-l2 text-center mb-24 text-balance">
+      <p className="text-xl text-navy text-center mb-24 text-balance">
         {props.body}
       </p>
       <div className="grid gap-y-4 @2xl:gap-y-8">
