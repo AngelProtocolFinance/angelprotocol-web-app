@@ -3494,6 +3494,7 @@ __metadata:
     react-player: "npm:2.16.0"
     react-redux: "npm:9.1.2"
     react-router-dom: "npm:6.23.0"
+    sonner: "npm:1.7.0"
     swiper: "npm:11.1.4"
     tailwindcss: "npm:3.4.3"
     type-fest: "npm:4.20.0"
@@ -6301,6 +6302,16 @@ __metadata:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
   checksum: 10/a3cc38e0716ab53a2db3fa00c703ca682ad54dbbc9ed4c7461624a999be6fa7cdc79fc904c411618e698d5eff55a55aa6d9329169a7db11636d0200814a2b5aa
+  languageName: node
+  linkType: hard
+
+"sonner@npm:1.7.0":
+  version: 1.7.0
+  resolution: "sonner@npm:1.7.0"
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+    react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+  checksum: 10/121357b6fb39d2c8f81980f72249d8fc02fa5eaba8e6522ca13a89bf4a13a8313421bd1dde9125e593f1d9a9507baa5c48f595f043373733f75e0e038eaff65f
   languageName: node
   linkType: hard
 

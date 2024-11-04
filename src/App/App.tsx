@@ -19,6 +19,7 @@ import {
   useLocation,
   useNavigation,
 } from "react-router-dom";
+import { Toaster } from "sonner";
 import Layout from "./Layout";
 
 const donateThanks = import("pages/DonateThanks");
@@ -128,6 +129,7 @@ function RootLayout() {
   useScrollTop(location.pathname);
   return (
     <ModalContext>
+      <Toaster richColors position="top-right" closeButton />
       <Outlet />
     </ModalContext>
   );
