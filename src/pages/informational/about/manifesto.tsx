@@ -17,23 +17,17 @@ export function Manifesto({ className = "" }) {
         We believe in these fundamental rights for all nonprofits :
       </p>
 
-      <ul className="grid mt-4 mb-8 @container/rights">
-        <li className="max-md:w-full gap-y-4 p-4">
-          <div className="grid @lg/rights:grid-cols-[1fr_auto_1fr] gap-x-2 items-center mb-6">
-            <div className="bg-gradient-to-l hidden @lg/rights:block from-green-l1 to-transparent h-2 rounded-full shadow-inner" />
-            <div className="flex flex-col @lg/rights:flex-row items-center gap-2">
-              <Sprout size={35} className="text-green shrink-0" />
-              <h5 className="text-lg shrink-0">
-                The Right to Financial Self-Sufficiency
-              </h5>
-            </div>
-            <div className="bg-gradient-to-r hidden @lg/rights:block from-green-l1 to-transparent h-2 w-full rounded-full shadow-inner" />
-          </div>
+      <ul className="grid mt-4 mb-8 @container/rights md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <li className="grid gap-y-0 bg-white justify-items-center border border-lilac/30 p-4 rounded-lg content-start shadow-2xl shadow-lilac/40 grid-rows-subgrid row-span-7">
+          <Sprout size={35} className="text-green shrink-0" />
+          <h5 className="text-center text-lg shrink-0 my-4">
+            The Right to Financial Self-Sufficiency
+          </h5>
           <p className="text-lg text-center">
             Every nonprofit deserves the opportunity to achieve financial
             self-sufficiency and resilience.
           </p>
-          <p className="text-center mt-4 font-black mb-4 text-navy-l1">
+          <p className="text-center mt-6 mb-1 font-black text-navy-l1">
             This includes :
           </p>
           <ul className="space-y-1 mb-8">
@@ -47,7 +41,7 @@ export function Manifesto({ className = "" }) {
               The ability to diversify funding sources.
             </li>
           </ul>
-          <p className="font-bold text-center mt-4 mb-4 text-navy-l1">
+          <p className="font-bold text-center mb-2 mt-6 text-navy-l1">
             How we support this right :
           </p>
           <ul className="space-y-1 mb-8">
@@ -66,24 +60,17 @@ export function Manifesto({ className = "" }) {
             </li>
           </ul>
         </li>
-        <li className="max-md:w-full gap-y-4 p-4">
-          <div className="grid @lg/rights:grid-cols-[1fr_auto_1fr] gap-x-2 items-center mb-6">
-            <div className="bg-gradient-to-l hidden @lg/rights:block from-gray-l4 to-transparent h-2 rounded-full shadow-inner" />
-            <div className="flex flex-col @lg/rights:flex-row items-center gap-2">
-              <Tally4 size={28} className="text-navy shrink-0" />
-              <h5 className="text-lg shrink-0">
-                The Right to Equal Opportunity
-              </h5>
-            </div>
-            <div className="bg-gradient-to-r hidden @lg/rights:block from-gray-l4 to-transparent h-2 w-full rounded-full shadow-inner" />
-          </div>
-
+        <li className="grid gap-y-0 bg-white justify-items-center border border-lilac/30 p-4 rounded-lg content-start shadow-2xl shadow-lilac/40 grid-rows-subgrid row-span-7">
+          <Tally4 size={28} className="text-navy shrink-0" />
+          <h5 className="text-center text-lg shrink-0 my-4">
+            The Right to Equal Opportunity
+          </h5>
           <p className="text-lg text-center">
             All nonprofits, regardless of size, location, or cause, should have
             equal access to fundraising technology, financial services, and
             education.
           </p>
-          <p className="text-center mt-4 font-black mb-4 text-navy-l1">
+          <p className="text-center mt-6 mb-1 font-black text-navy-l1">
             This encompasses :
           </p>
           <ul className="space-y-1 mb-8">
@@ -97,7 +84,7 @@ export function Manifesto({ className = "" }) {
               Access to educational resources for financial empowerment.
             </li>
           </ul>
-          <p className="font-bold text-center mt-4 mb-4 text-navy-l1">
+          <p className="font-bold text-center mb-2 mt-6 text-navy-l1">
             How we support this right :
           </p>
           <ul className="space-y-1 mb-8">
@@ -115,22 +102,16 @@ export function Manifesto({ className = "" }) {
             </li>
           </ul>
         </li>
-        <li className="max-md:w-full gap-y-4 p-4">
-          <div className="grid @lg/rights:grid-cols-[1fr_auto_1fr] gap-x-2 items-center mb-6">
-            <div className="bg-gradient-to-l hidden @lg/rights:block from-blue-d1 to-transparent h-2 rounded-full shadow-inner" />
-            <div className="flex flex-col @lg/rights:flex-row items-center gap-2">
-              <ShipWheel size={32} className="text-blue-d1 shrink-0" />
-              <h5 className="text-lg shrink-0">
-                The Right to Organizational Autonomy
-              </h5>
-            </div>
-            <div className="bg-gradient-to-r hidden @lg/rights:block from-blue-d1 to-transparent h-2 w-full rounded-full shadow-inner" />
-          </div>
-          <p className="text-lg text-center text-blue-d4">
+        <li className="grid gap-y-0 bg-white justify-items-center border border-lilac/30 p-4 rounded-lg content-start shadow-2xl shadow-lilac/40 grid-rows-subgrid row-span-7 md:max-lg:col-span-2">
+          <ShipWheel size={32} className="text-blue-d1 shrink-0" />
+          <h5 className="text-center text-lg shrink-0 my-4">
+            The Right to Organizational Autonomy
+          </h5>
+          <p className="text-lg text-center">
             Nonprofits should have the independence to make decisions based on
             their mission and expertise.
           </p>
-          <p className="text-center mt-4 font-black mb-4 text-navy-l1">
+          <p className="text-center mt-6 mb-1 font-black text-navy-l1">
             This right includes :
           </p>
           <ul className="space-y-1 mb-8">
@@ -145,7 +126,7 @@ export function Manifesto({ className = "" }) {
               The ability to innovate and adapt strategies.
             </li>
           </ul>
-          <p className="font-bold text-center mt-4 mb-4 text-navy-l1">
+          <p className="font-bold text-center mb-2 mt-6 text-navy-l1">
             How we support this right :
           </p>
           <ul className="space-y-1 mb-8">
