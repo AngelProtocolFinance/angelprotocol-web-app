@@ -31,7 +31,7 @@ export function Manifesto({ className = "" }) {
             self-sufficiency and resilience.
           </p>
           <p className="mt-6 mb-1 font-black text-navy-l1">This includes :</p>
-          <ul className="space-y-3 mb-8 list-disc list-inside pl-2">
+          <ul className="space-y-3 mb-8 list-disc list-outside pl-4">
             <li className="text-navy-l1">
               The freedom to grow and manage sustainable financial reserves.
             </li>
@@ -45,7 +45,7 @@ export function Manifesto({ className = "" }) {
           <p className="font-bold mb-2 mt-6 text-navy-l1">
             How we support this right :
           </p>
-          <ul className="space-y-3 mb-8 list-disc list-inside pl-2">
+          <ul className="space-y-3 mb-8 list-disc list-outside pl-4">
             <li className="text-navy-l1">
               We offer a secure, high-yield savings account, enabling nonprofits
               to grow their funds steadily.
@@ -77,7 +77,7 @@ export function Manifesto({ className = "" }) {
           <p className="mt-6 mb-2 font-black text-navy-l1">
             This encompasses :
           </p>
-          <ul className="space-y-3 mb-8 list-disc list-inside pl-2">
+          <ul className="space-y-3 mb-8 list-disc list-outside pl-4">
             <li className="text-navy-l1">
               Fair access to tools and resources that simplify fundraising.
             </li>
@@ -91,7 +91,7 @@ export function Manifesto({ className = "" }) {
           <p className="font-bold mb-2 mt-6 text-navy-l1">
             How we support this right :
           </p>
-          <ul className="space-y-3 mb-8 list-disc list-inside pl-2">
+          <ul className="space-y-3 mb-8 list-disc list-outside pl-4">
             <li className="text-navy-l1">
               We offer unrestricted access to our platform for nonprofits of any
               size or location.
@@ -121,7 +121,7 @@ export function Manifesto({ className = "" }) {
           <p className="mt-6 mb-1 font-black text-navy-l1">
             This right includes :
           </p>
-          <ul className="space-y-3 mb-8 list-disc list-inside pl-2">
+          <ul className="space-y-3 mb-8 list-disc list-outside pl-4">
             <li className="text-navy-l1">
               The freedom to allocate funds according to organizational
               priorities.
@@ -136,7 +136,7 @@ export function Manifesto({ className = "" }) {
           <p className="font-bold mb-2 mt-6 text-navy-l1">
             How we support this right :
           </p>
-          <ul className="space-y-3 mb-8 list-disc list-inside pl-2">
+          <ul className="space-y-3 mb-8 list-disc list-outside pl-4">
             <li className="text-navy-l1">
               We advocate for trust-based philanthropy, encouraging unrestricted
               funding practices.
