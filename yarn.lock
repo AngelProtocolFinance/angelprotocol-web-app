@@ -822,14 +822,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@better-giving/endowment@npm:1.0.26":
-  version: 1.0.26
-  resolution: "@better-giving/endowment@npm:1.0.26"
+"@better-giving/endowment@npm:1.0.28":
+  version: 1.0.28
+  resolution: "@better-giving/endowment@npm:1.0.28"
   peerDependencies:
     "@better-giving/schemas": 1.0.1
     "@better-giving/types": 1.0.1
     valibot: 0.42.0
-  checksum: 10/c1a0056e764999222b146dc2daaa10ec58f46d0fcc615c6c7948bdd6246855f52342194e8fed5c449500ee457bf0cfedad1f7a2e159ce60edd9e041bf3e1a72e
+  checksum: 10/49330583755b7e3fc17e5f7582b846b84b90bcfb88ff0362e56004fd7511eaa51fdd90610869be36b495815b995d732eaaf85b9fe9df68bc96bc4248424f02f8
   languageName: node
   linkType: hard
 
@@ -3467,7 +3467,7 @@ __metadata:
   resolution: "angelprotocol-web-app@workspace:."
   dependencies:
     "@better-giving/assets": "npm:1.0.18"
-    "@better-giving/endowment": "npm:1.0.26"
+    "@better-giving/endowment": "npm:1.0.28"
     "@better-giving/registration": "npm:1.0.24"
     "@better-giving/schemas": "npm:1.0.1"
     "@better-giving/types": "npm:1.0.1"

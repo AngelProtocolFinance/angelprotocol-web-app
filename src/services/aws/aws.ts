@@ -1,6 +1,7 @@
 import type {
   Endow,
   EndowUpdate,
+  EndowsPage,
   EndowsQueryParams,
 } from "@better-giving/endowment";
 import type {
@@ -18,7 +19,6 @@ import { userIsSignedIn } from "types/auth";
 import type {
   Donation,
   DonationsQueryParams,
-  EndowListPaginatedAWSQueryRes,
   EndowmentCard,
   EndowmentOption,
 } from "types/aws";
@@ -82,14 +82,14 @@ export const aws = createApi({
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
     endowmentCards: builder.query<
-      EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
+      EndowsPage<keyof EndowmentCard>,
       EndowsQueryParams
     >({
       providesTags: ["endowments"],
-      query: (params) => {
+      query: ({ fields = endowCardFields, ...p }) => {
         return {
           url: `${v(1)}/cloudsearch-nonprofits`,
-          params: { ...params, fields: endowCardFields },
+          params: { ...p, fields },
         };
       },
     }),
@@ -101,8 +101,8 @@ export const aws = createApi({
           params: { ...params, fields: endowSelectorOptionFields },
         };
       },
-      transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
-        return res.Items;
+      transformResponse(res: EndowsPage<keyof EndowmentOption>) {
+        return res.items;
       },
     }),
     userBookmarks: builder.query<number[], null>({

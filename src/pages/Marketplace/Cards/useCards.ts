@@ -50,20 +50,20 @@ export default function useCards() {
   async function loadNextPage() {
     //button is hidden when there's no more
     if (
-      data?.Page &&
+      data?.page &&
       originalArgs /** cards won't even show if no initial query is made */
     ) {
       const { data: newEndowRes } = await loadMore({
         ...originalArgs,
-        page: (data.Page + 1).toString(),
+        page: (data.page + 1).toString(),
       });
 
       if (newEndowRes) {
         //pessimistic update to original cache data
         dispatch(
           updateAWSQueryData("endowmentCards", originalArgs, (prevResult) => {
-            prevResult.Items.push(...newEndowRes.Items);
-            prevResult.Page = newEndowRes.Page;
+            prevResult.items.push(...newEndowRes.items);
+            prevResult.page = newEndowRes.page;
           })
         );
       }
@@ -71,7 +71,7 @@ export default function useCards() {
   }
 
   // initial assumption is that there's no more to load until we get first res from query
-  const hasMore = (data?.Page || 0) < (data?.NumOfPages || 0);
+  const hasMore = (data?.page || 0) < (data?.numPages || 0);
 
   return {
     hasMore,

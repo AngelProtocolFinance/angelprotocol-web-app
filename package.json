@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@better-giving/assets": "1.0.18",
-    "@better-giving/endowment": "1.0.26",
+    "@better-giving/endowment": "1.0.28",
     "@better-giving/registration": "1.0.24",
     "@better-giving/schemas": "1.0.1",
     "@better-giving/types": "1.0.1",

@@ -72,7 +72,7 @@ const HeroBottom = ({ className = "" }) => {
           className="relative w-[90vw] xl:w-[60vw] py-8"
           wrapperClass={s.swiper_wrapper}
         >
-          {(data?.Items || [1, 2, 3, 4, 5, 6]).map((endow, idx) => (
+          {(data?.items || [1, 2, 3, 4, 5, 6]).map((endow, idx) => (
             <SwiperSlide key={idx}>
               {typeof endow === "number" ? (
                 <Skeleton />
