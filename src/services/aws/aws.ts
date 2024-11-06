@@ -13,7 +13,6 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
-import { apiEnv } from "services/constants";
 import type { RootState } from "store/store";
 import { userIsSignedIn } from "types/auth";
 import type {
@@ -24,7 +23,6 @@ import type {
   EndowmentOption,
 } from "types/aws";
 import { version as v } from "../helpers";
-import type { IdOrSlug } from "../types";
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -158,15 +156,14 @@ export const aws = createApi({
       },
     }),
 
-    endowment: builder.query<Endow, IdOrSlug & { fields?: (keyof Endow)[] }>({
+    endowment: builder.query<
+      Endow,
+      { id: string | number; fields?: (keyof Endow)[] }
+    >({
       providesTags: ["endowment"],
-      query: ({ fields, ...args }) => ({
-        url: "id" in args ? `v10/endowments/${args.id}` : "v10/endowments",
-        params: {
-          env: apiEnv,
-          slug: args.slug,
-          ...(fields ? { fields: fields.join(",") } : {}),
-        },
+      query: ({ fields, id }) => ({
+        url: `${v(1)}/endowments/${id}`,
+        params: fields ? { fields: fields.join(",") } : {},
       }),
     }),
 
@@ -276,9 +273,7 @@ export const endowByEin = async (
 ): Promise<
   Pick<Endow, "id" | "name" | "claimed" | "registration_number"> | undefined
 > => {
-  const res = await fetch(
-    `${APIs.aws}/v10/endowments?ein=${ein}&env=${apiEnv}`
-  );
+  const res = await fetch(`${APIs.aws}/${v(1)}/endowments/ein/${ein}`);
   if (res.status === 404) return undefined;
   if (!res.ok) throw res;
   return res.json() as Promise<Endow>;

@@ -24,7 +24,6 @@ export default function useCards() {
     }),
     {}
   );
-
   const {
     isLoading,
     isFetching,
@@ -41,7 +40,7 @@ export default function useCards() {
         /** search for both verified/unverified if user didn't explicitly narrow verified status */
         searchText && isEmpty(verified) ? "true,false" : verified.join(","),
       ..._params,
-    },
+    } as any,
     { skip: isDebouncing }
   );
 

@@ -40,7 +40,7 @@ export default function useEditProfile(id: number, df: DirtyFields) {
       }
 
       if (df.slug) {
-        const result = await endowment({ slug: fv.slug });
+        const result = await endowment({ id: fv.slug });
         //endow is found with update.slug
         if (result.isSuccess) {
           return displayError(`Slug "${fv.slug}" is already taken`);

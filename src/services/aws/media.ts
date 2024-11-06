@@ -1,8 +1,8 @@
 import type {
+  IMedia,
   MediaPage,
   MediaQueryParamsObj,
   MediaUpdate,
-  TMedia,
 } from "@better-giving/endowment";
 import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
@@ -16,7 +16,7 @@ const media = aws.injectEndpoints({
         return { url: `/${v(1)}/endowments/${endowId}/media`, params };
       },
     }),
-    medium: builder.query<TMedia, { endowId: number; mediaId: string }>({
+    medium: builder.query<IMedia, { endowId: number; mediaId: string }>({
       providesTags: ["program"],
       query: ({ endowId, mediaId }) =>
         `/${v(1)}/endowments/${endowId}/media/${mediaId}`,
@@ -36,7 +36,7 @@ const media = aws.injectEndpoints({
       },
     }),
     editMedium: builder.mutation<
-      TMedia,
+      IMedia,
       MediaUpdate & { endowId: number; mediaId: string }
     >({
       invalidatesTags: (_, error) => (error ? [] : ["medium", "media"]),

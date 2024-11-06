@@ -1,7 +1,7 @@
-import type { TMedia } from "@better-giving/endowment";
+import type { IMedia } from "@better-giving/endowment";
 import ReactPlayer from "react-player";
 
-export default function Media({ media }: { media: TMedia[] }) {
+export default function Media({ media }: { media: IMedia[] }) {
   return (
     <div className="w-full h-full px-8 py-10 grid sm:grid-cols-[repeat(auto-fill,minmax(373px,1fr))] gap-8">
       {media.map((m) => (
@@ -11,7 +11,7 @@ export default function Media({ media }: { media: TMedia[] }) {
   );
 }
 
-function Medium(props: TMedia) {
+function Medium(props: IMedia) {
   return (
     /** @see https://github.com/CookPete/react-player/issues/145 */
     <div className="relative pt-[56.25%] aspect-[16/9] rounded-lg overflow-clip">

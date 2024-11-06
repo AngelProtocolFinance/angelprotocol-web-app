@@ -13,12 +13,7 @@ import type { FV } from "./schema";
 
 export function Component() {
   const { id } = useAdminContext();
-  const {
-    data: profile,
-    isLoading,
-    isError,
-    isFetching,
-  } = useEndowment({ id });
+  const { data: profile, isLoading, isError, isFetching } = useEndowment(id);
 
   const content =
     isLoading || isFetching ? (

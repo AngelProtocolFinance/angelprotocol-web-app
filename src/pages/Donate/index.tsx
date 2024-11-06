@@ -22,7 +22,7 @@ export function Component() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
 
-  const queryState = useEndowment({ id: numId });
+  const queryState = useEndowment(numId);
 
   return (
     <QueryLoader

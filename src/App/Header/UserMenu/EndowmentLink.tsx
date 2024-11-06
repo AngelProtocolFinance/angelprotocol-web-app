@@ -11,7 +11,7 @@ interface IBookmarkLink {
   endowId: number;
 }
 export function BookmarkLink({ endowId }: IBookmarkLink) {
-  const query = useEndowment({ id: endowId }, ["logo", "name"]);
+  const query = useEndowment(endowId, ["logo", "name"]);
   return (
     <QueryLoader
       queryState={query}

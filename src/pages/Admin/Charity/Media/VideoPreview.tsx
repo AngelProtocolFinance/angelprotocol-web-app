@@ -1,4 +1,4 @@
-import type { TMedia } from "@better-giving/endowment";
+import type { IMedia } from "@better-giving/endowment";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { LoaderCircle, Minus, Pencil, Star } from "lucide-react";
@@ -11,7 +11,7 @@ import {
 } from "services/aws/media";
 import VideoEditor from "./VideoEditor";
 
-export default function VideoPreview(props: TMedia) {
+export default function VideoPreview(props: IMedia) {
   const { id } = useAdminContext();
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();

@@ -14,7 +14,7 @@ import Preview from "./Preview";
 import Snippet from "./Snippet";
 
 export function Widget({ endowId = 0 }: { endowId?: number }) {
-  const queryState = useEndowment({ id: endowId }, undefined, {
+  const queryState = useEndowment(endowId, undefined, {
     skip: !endowId,
   });
 
