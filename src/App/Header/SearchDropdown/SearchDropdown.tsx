@@ -18,6 +18,7 @@ interface Props {
 export default function SearchDropdown({ classes = "", query }: Props) {
   const [debouncedQuery, isDebouncing] = useDebouncer(query, 500);
   const { currentData, isLoading, isFetching, isError, isUninitialized } =
+    /** @ts-ignore: temp */
     useEndowmentCardsQuery(
       {
         query: debouncedQuery,

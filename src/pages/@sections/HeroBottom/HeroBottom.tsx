@@ -14,6 +14,7 @@ import mappng from "./map.webp";
 import s from "./styles.module.css";
 
 const HeroBottom = ({ className = "" }) => {
+  /** @ts-ignore: temp */
   const { data } = useEndowmentCardsQuery({
     claimed: "true",
     page: "1",

@@ -1,4 +1,8 @@
-import type { Endow, EndowDesignation } from "@better-giving/endowment";
+import type {
+  Endow,
+  EndowDesignation,
+  EndowItem,
+} from "@better-giving/endowment";
 import type { Except } from "type-fest";
 
 export type AletPrefUpdate = {
@@ -26,8 +30,8 @@ export interface EndowAdmin {
 
 /** from CloudSearch index instead of DB */
 export type EndowmentCard = Pick<
-  Endow,
-  "id" | "card_img" | "name" | "tagline" | "claimed"
+  EndowItem,
+  "id" | "card_img" | "name" | "tagline" | "claimed" | "contributions_total"
   /** available but need not fetched */
   // "claimed"
   // "hq_country"
@@ -35,10 +39,7 @@ export type EndowmentCard = Pick<
   // "active_in_countries"
   // "endow_designation"
   // "kyc_donors_only"
-> & {
-  contributions_total: number;
-  // contributions_count:number
-};
+>;
 
 export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
 
