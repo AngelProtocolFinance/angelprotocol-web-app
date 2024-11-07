@@ -1,12 +1,12 @@
 import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
+import Seo from "components/Seo";
 import { FormError, FormSkeleton } from "components/admin";
 import { adminRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { useEndowment } from "services/aws/useEndowment";
 import type { EndowmentProfile as TProfile } from "types/aws";
 import { useAdminContext } from "../../Context";
-import Seo from "../Seo";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
