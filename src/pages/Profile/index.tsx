@@ -46,7 +46,7 @@ function Profile() {
     <ProfileContext.Provider value={data}>
       <Seo
         title={`${data.name} - ${APP_NAME}`}
-        description={data?.overview?.slice(0, 140)}
+        description={data?.tagline?.slice(0, 140)}
         name={data.name}
         image={data?.logo || flying_character}
         url={`${BASE_URL}/profile/${data.id}`}

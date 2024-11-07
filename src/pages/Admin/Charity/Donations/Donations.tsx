@@ -1,5 +1,5 @@
+import Seo from "components/Seo";
 import { adminRoutes } from "constants/routes";
-import Seo from "../Seo";
 import DonationsTable from "./DonationsTable";
 
 export default function Donations() {
