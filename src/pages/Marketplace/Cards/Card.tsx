@@ -16,10 +16,10 @@ export default function Card({
   claimed,
 }: EndowmentCard) {
   return (
-    <div className="relative">
+    <div className="relative grid grid-rows-subgrid row-span-3 gap-y-0">
       <Link
         to={`${appRoutes.marketplace}/${id}`}
-        className="grid grid-rows-[auto_1fr] h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
+        className="grid grid-rows-subgrid row-span-3 h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
       >
         <Image
           loading="lazy"
@@ -27,7 +27,7 @@ export default function Card({
           className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
           onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
         />
-        <div className="flex flex-col p-3 pb-16 gap-3">
+        <div className="grid grid-rows-subgrid row-start-2 row-span-2 p-3 pb-16 gap-3">
           {/* nonprofit NAME */}
           <h3 className="text-ellipsis line-clamp-2 text-center mb-2">
             {claimed && (
