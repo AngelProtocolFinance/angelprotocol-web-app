@@ -15,6 +15,7 @@ export default function Settings() {
     "progDonationsAllowed",
     "donateMethods",
     "increments",
+    "target",
   ]);
 
   if (isLoading) {

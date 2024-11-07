@@ -50,6 +50,7 @@ export type EndowmentSettingsAttributes = keyof Pick<
   | "progDonationsAllowed"
   | "donateMethods"
   | "increments"
+  | "target"
 >;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..

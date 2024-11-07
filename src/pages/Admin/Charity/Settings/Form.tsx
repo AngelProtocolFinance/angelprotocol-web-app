@@ -18,6 +18,8 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import type { EndowmentSettingsAttributes } from "types/aws";
 import { useUpdateEndowment } from "../common";
+import GoalSelector from "./goal-selector";
+import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 
 type Props = Pick<Endow, "id" | EndowmentSettingsAttributes>;
@@ -41,6 +43,7 @@ export default function Form(props: Props) {
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
       donateMethods: fill(props.donateMethods),
       increments: props.increments ?? [],
+      target: toFormTarget(props.target),
     },
   });
 
@@ -54,6 +57,11 @@ export default function Form(props: Props) {
     name: "increments",
   });
 
+  const { field: target } = useController({
+    control,
+    name: "target.type",
+  });
+
   const receipMsg = watch("receiptMsg");
   const incs = watch("increments");
 
@@ -65,7 +73,12 @@ export default function Form(props: Props) {
         reset();
       }}
       onSubmit={handleSubmit(
-        async ({ programDonateDisabled, donateMethods, ...fv }) => {
+        async ({
+          programDonateDisabled,
+          donateMethods,
+          target: fvTarget,
+          ...fv
+        }) => {
           if (props.id === BG_ID && fv.hide_bg_tip === false) {
             return displayError(
               "BG donation flow should not show BG tip screen"
@@ -74,6 +87,7 @@ export default function Form(props: Props) {
 
           await updateEndow({
             ...fv,
+            target: toTarget(fvTarget),
             progDonationsAllowed: !programDonateDisabled,
             id: props.id,
             donateMethods: donateMethods
@@ -196,6 +210,8 @@ export default function Form(props: Props) {
           </>
         )}
       />
+
+      <GoalSelector value={target.value} onChange={target.onChange} />
 
       <div className="flex gap-3 mt-8">
         <button
