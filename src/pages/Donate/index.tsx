@@ -23,6 +23,7 @@ export function Component() {
   const numId = idParamToNum(id);
 
   const queryState = useEndowment({ id: numId });
+  queryState.isLoading = true;
 
   return (
     <QueryLoader
