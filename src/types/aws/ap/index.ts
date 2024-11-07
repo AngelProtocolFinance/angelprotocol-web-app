@@ -1,7 +1,7 @@
 import type {
   Endow,
   EndowDesignation,
-  EndowItem,
+  EndowsPage,
 } from "@better-giving/endowment";
 import type { Except } from "type-fest";
 
@@ -29,9 +29,17 @@ export interface EndowAdmin {
 }
 
 /** from CloudSearch index instead of DB */
-export type EndowmentCard = Pick<
-  EndowItem,
-  "id" | "card_img" | "name" | "tagline" | "claimed" | "contributions_total"
+
+export interface EndowCardsPage
+  extends EndowsPage<
+    | "id"
+    | "card_img"
+    | "name"
+    | "tagline"
+    | "claimed"
+    | "contributions_total"
+    | "target"
+  > {
   /** available but need not fetched */
   // "claimed"
   // "hq_country"
@@ -39,9 +47,11 @@ export type EndowmentCard = Pick<
   // "active_in_countries"
   // "endow_designation"
   // "kyc_donors_only"
->;
+}
+export interface EndowOptionsPage extends EndowsPage<"id" | "name"> {}
 
-export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
+export type EndowmentCard = EndowCardsPage["items"][number];
+export type EndowmentOption = EndowOptionsPage["items"][number];
 
 export type EndowmentSettingsAttributes = keyof Pick<
   Endow,

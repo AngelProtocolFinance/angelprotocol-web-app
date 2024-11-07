@@ -211,7 +211,19 @@ export default function Form(props: Props) {
         )}
       />
 
-      <GoalSelector value={target.value} onChange={target.onChange} />
+      <div>
+        <p className="font-bold mb-3">Donation goal</p>
+        <GoalSelector value={target.value} onChange={target.onChange} />
+        {target.value === "fixed" && (
+          <Field
+            {...register("target.value", { shouldUnregister: true })}
+            label="How much money do you want to raise?"
+            classes="mt-4 mb-6"
+            placeholder="$"
+            error={errors?.target?.value?.message}
+          />
+        )}
+      </div>
 
       <div className="flex gap-3 mt-8">
         <button

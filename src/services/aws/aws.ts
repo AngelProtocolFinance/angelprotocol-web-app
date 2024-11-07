@@ -1,7 +1,6 @@
 import type {
   Endow,
   EndowUpdate,
-  EndowsPage,
   EndowsQueryParams,
 } from "@better-giving/endowment";
 import type {
@@ -19,6 +18,8 @@ import { userIsSignedIn } from "types/auth";
 import type {
   Donation,
   DonationsQueryParams,
+  EndowCardsPage,
+  EndowOptionsPage,
   EndowmentCard,
   EndowmentOption,
 } from "types/aws";
@@ -81,10 +82,7 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    endowmentCards: builder.query<
-      EndowsPage<keyof EndowmentCard>,
-      EndowsQueryParams
-    >({
+    endowmentCards: builder.query<EndowCardsPage, EndowsQueryParams>({
       providesTags: ["endowments"],
       query: ({ fields = endowCardFields, ...p }) => {
         return {
@@ -101,7 +99,7 @@ export const aws = createApi({
           params: { ...params, fields: endowSelectorOptionFields },
         };
       },
-      transformResponse(res: EndowsPage<keyof EndowmentOption>) {
+      transformResponse(res: EndowOptionsPage) {
         return res.items;
       },
     }),
@@ -249,7 +247,7 @@ export const {
 
 //object format first to avoid duplicates
 const endowCardObj: {
-  [key in keyof EndowmentCard]: ""; //we care only for keys
+  [key in keyof Required<EndowmentCard>]: ""; //we care only for keys
 } = {
   id: "",
   card_img: "",
@@ -257,6 +255,7 @@ const endowCardObj: {
   tagline: "",
   claimed: "",
   contributions_total: "",
+  target: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 

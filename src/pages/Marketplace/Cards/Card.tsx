@@ -16,6 +16,7 @@ export default function Card({
   tagline,
   claimed,
   contributions_total,
+  target,
 }: EndowmentCard) {
   return (
     <div className="relative grid grid-rows-subgrid row-span-4 gap-y-0">
@@ -50,7 +51,7 @@ export default function Card({
             <div />
           )}
 
-          <Target progress={contributions_total} target="smart" />
+          <Target progress={contributions_total} target={target} />
         </div>
       </Link>
       {/** absolute so above whole `Link` card */}

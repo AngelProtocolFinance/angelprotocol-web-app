@@ -4,16 +4,16 @@ import { useEndowBalanceQuery } from "services/apes";
 
 interface Props {
   endowId: number;
-  target?: number | "smart";
+  target?: "smart" | (string & {});
   classes?: string;
 }
-export function Target({ target = 0, classes = "", endowId }: Props) {
+export function Target({ target = "", classes = "", endowId }: Props) {
   const { data } = useEndowBalanceQuery(endowId);
 
   if (!target || !data) return null;
 
   const to =
-    target === "smart" ? nextMilestone(data.totalContributions) : target;
+    target === "smart" ? nextMilestone(data.totalContributions) : +target;
 
   const pct = Math.min(data.totalContributions, to) / to;
 

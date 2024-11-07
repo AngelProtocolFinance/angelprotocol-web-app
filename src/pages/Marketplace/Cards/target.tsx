@@ -2,13 +2,13 @@ import { humanize } from "helpers";
 
 interface Props {
   progress: number;
-  target?: number | "smart";
+  target?: "smart" | (string & {});
   classes?: string;
 }
-export function Target({ target = 0, progress, classes = "" }: Props) {
+export function Target({ target = "", progress, classes = "" }: Props) {
   if (!target) return null;
 
-  const to = target === "smart" ? nextMilestone(progress) : target;
+  const to = target === "smart" ? nextMilestone(progress) : +target;
 
   const pct = Math.min(progress, to) / to;
 

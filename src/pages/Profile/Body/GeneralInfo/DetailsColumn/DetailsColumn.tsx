@@ -31,7 +31,7 @@ export default function DetailsColumn({ className = "" }) {
           {p.social_media_urls && (
             <Socials social_media_urls={p.social_media_urls} />
           )}
-          <Target endowId={p.id} target="smart" classes="-mb-5 mt-4" />
+          <Target endowId={p.id} target={p.target} classes="-mb-5 mt-4" />
           <DonateButton className="w-full" />
         </div>
         {p.claimed === false && (
