@@ -29,7 +29,7 @@ export default function parseConfig(
   }
   const { descriptions = [] } = config;
   return {
-    isDescriptionTextShown: config.isDescriptionTextShown,
+    isDescriptionTextShown: config.isDescriptionTextShown ?? false,
     programId: config.programId,
     methodIds: config.methods as DonateMethodId[] | undefined,
     title: config.title,
