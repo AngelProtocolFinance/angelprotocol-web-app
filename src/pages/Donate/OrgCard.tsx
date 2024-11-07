@@ -1,7 +1,7 @@
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { Target } from "./Target";
+import { Target } from "./target";
 
 type Props = {
   id: number;
@@ -36,7 +36,7 @@ export default function OrgCard({
           <p className="text-navy-l1 text-sm w-full line-clamp-2">{tagline}</p>
         )}
       </div>
-      <Target endowId={id} target={20_000} />
+      <Target endowId={id} target="smart" />
     </div>
   );
 }

@@ -10,7 +10,12 @@ interface Props {
 export function Target({ target = 0, classes = "", endowId }: Props) {
   const { data } = useEndowBalanceQuery(endowId);
 
-  if (!target) return null;
+  if (!target || !data) return null;
+
+  const to =
+    target === "smart" ? nextMilestone(data.totalContributions) : target;
+
+  const pct = Math.min(data.totalContributions, to) / to;
 
   return (
     <div className={classes}>
@@ -27,20 +32,34 @@ export function Target({ target = 0, classes = "", endowId }: Props) {
       </p>
       <div className="h-1.5 w-full rounded-full bg-blue-l4 shadow-inner">
         <div
-          style={{ width: "20%" }}
+          style={{ width: `${pct * 100}%` }}
           className="h-full rounded-full bg-green"
         />
       </div>
       <div className="flex items-center justify-between mt-1">
         <p className="flex items-center gap-x-1 text-sm text-navy-l1">
-          <span className="font-medium">${humanize(150000, 0, true)}</span>
+          <span className="font-medium">
+            ${humanize(data.totalContributions, 2, true)}
+          </span>
           <span className="text-xs">Raised</span>
         </p>
         <p className="flex items-center gap-x-1 text-sm text-navy-l1">
-          <span className="font-medium">${humanize(20_000, 0, true)}</span>
+          <span className="font-medium">${humanize(to, 2, true)}</span>
           <span className="text-xs">Goal</span>
         </p>
       </div>
     </div>
   );
+}
+
+function nextMilestone(progress: number): number {
+  const base = 100;
+  const multiplier = 2;
+  let next = base;
+
+  while (next <= progress) {
+    next *= multiplier;
+  }
+
+  return next;
 }
