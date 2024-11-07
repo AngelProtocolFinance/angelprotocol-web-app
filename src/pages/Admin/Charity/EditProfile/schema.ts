@@ -2,7 +2,7 @@ import {
   endowDesignation,
   maybeEmptyHttpsUrl,
   reg_number,
-  segment,
+  slug,
   social_media_urls,
   str,
   unSdgNum,
@@ -56,7 +56,7 @@ const sdgs = v.array(
 );
 
 export const schema = v.object({
-  slug: segment,
+  slug,
   registration_number: reg_number,
   name: requiredStr,
   endow_designation: v.object({
