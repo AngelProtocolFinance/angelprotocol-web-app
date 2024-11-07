@@ -32,14 +32,13 @@ function Content({ intent, endowment }: Props) {
         </Link>
       </div>
       <div className="md:px-4 max-w-[68.625rem] mx-auto grid md:grid-cols-[1fr_auto] items-start content-start gap-4">
-        <Link to={`${appRoutes.marketplace}/${endowment.id}`} className="">
-          <OrgCard
-            name={endowment.name}
-            tagline={endowment.tagline}
-            logo={endowment.logo || flying_character}
-            classes="col-start-1 row-start-1"
-          />
-        </Link>
+        <OrgCard
+          id={endowment.id}
+          name={endowment.name}
+          tagline={endowment.tagline}
+          logo={endowment.logo || flying_character}
+          classes="col-start-1 row-start-1"
+        />
         {/** small screen but space is still enough to render sidebar */}
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps
