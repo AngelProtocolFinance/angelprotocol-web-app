@@ -15,7 +15,7 @@ export default function Socials(
     props.social_media_urls;
   return (
     <div className="flex items-center gap-4">
-      {facebook && <SocialsIcon href={"a"} src={facebookIcon} size={22} />}
+      {facebook && <SocialsIcon href={facebook} src={facebookIcon} size={22} />}
       {linkedin && <SocialsIcon href={linkedin} src={linkedinIcon} size={24} />}
       {twitter && <SocialsIcon href={twitter} src={xIcon} size={18} />}
       {discord && <SocialsIcon href={discord} src={discordIcon} size={25} />}
