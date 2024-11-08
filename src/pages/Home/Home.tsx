@@ -15,7 +15,7 @@ import Testimonials from "./Testimonials";
 export const Component = () => {
   // const page1 = useLoaderData() as EndowPage;
   return (
-    <>
+    <div className="grid">
       <Header classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
       {/* <HeroBottom className="mb-10" endowments={page1.Items} /> */}
@@ -28,6 +28,6 @@ export const Component = () => {
       <Blogs />
       <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10" />
       <Footer />
-    </>
+    </div>
   );
 };

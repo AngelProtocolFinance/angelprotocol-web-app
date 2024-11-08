@@ -31,7 +31,7 @@ function AdminLayout() {
   }
 
   return (
-    <>
+    <div className="grid">
       <Header classes="sticky z-40 top-[-1px]" />
       <ModalContext>
         <Layout
@@ -42,7 +42,7 @@ function AdminLayout() {
         />
       </ModalContext>
       <Footer />
-    </>
+    </div>
   );
 }
 
