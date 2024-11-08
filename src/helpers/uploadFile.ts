@@ -1,7 +1,6 @@
 import { APIs } from "constants/urls";
 import { version as v } from "services/helpers";
 import { toast } from "sonner";
-import { jwtToken } from "./jwt-token";
 import { logger } from "./logger";
 
 export type Bucket = "endow-profiles" | "endow-reg" | "bg-user";
@@ -28,7 +27,7 @@ export async function uploadFile(file: File, bucket: Bucket) {
       dataUri: await toDataURL(file),
       fileName: key,
     }),
-    headers: { authorization: `Bearer ${await jwtToken()}` },
+    headers: { authorization: `Bearer {todo}` },
   });
   if (!res.ok) {
     logger.error(await res.text());

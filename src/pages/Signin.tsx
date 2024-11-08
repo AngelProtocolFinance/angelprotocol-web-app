@@ -114,16 +114,8 @@ export function Component() {
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
-<<<<<<< HEAD
       <Seo title="Login - Better Giving" />
-      <Form
-        {...getFormProps(form)}
-        className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
-        disabled={isSubmitting}
-      >
-=======
       <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
->>>>>>> 14877853c (signin to action)
         <h3 className="text-center text-2xl font-bold text-navy-d4">
           Philanthropy for Everyone
         </h3>
