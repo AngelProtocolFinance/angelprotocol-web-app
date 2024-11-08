@@ -74,13 +74,6 @@ export const signIn = v.object({
 
 export type SignIn = v.InferOutput<typeof signIn>;
 
-export const signUpUserTypes = ["donor", "nonprofit"] as const;
-export const signUpUserType = v.picklist(
-  signUpUserTypes,
-  "Please select an option to proceed"
-);
-export type SignUpUserType = v.InferOutput<typeof signUpUserType>;
-
 const newPassword = v.pipe(
   v.string("required"),
   v.nonEmpty("required"),
@@ -97,7 +90,6 @@ export const signUp = v.pipe(
     emailConfirmation: email,
     firstName: str,
     lastName: str,
-    userType: signUpUserType,
     password: newPassword,
   }),
   v.forward(

@@ -1,87 +1,48 @@
-import { valibotResolver } from "@hookform/resolvers/valibot";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import googleIcon from "assets/icons/google.svg";
-import { cognito, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import { Separator } from "components/Separator";
-import { Form, Input, PasswordInput } from "components/form";
+import { Input, PasswordInput } from "components/form";
+import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
-import { getAuthRedirect } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
-import { useController, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
 import {
-  type OAuthState,
-  type SignInRouteState,
-  isError,
-  signUp,
-} from "types/auth";
-import type { FormValues, StateSetter } from "../types";
-import UserTypeSelector from "./UserTypeSelector";
+  Link,
+  useFetcher,
+  useLoaderData,
+  useSearchParams,
+} from "react-router-dom";
+import { toast } from "sonner";
+import { signUp } from "types/auth";
+import { type ActionData, isActionErr, isValiErr } from "../types";
 
-type Props = {
-  fromState: unknown;
-  setSignupState: StateSetter;
-  classes?: string;
-};
+export function SignupForm() {
+  const fromState = useLoaderData();
+  const [params] = useSearchParams();
+  const fetcher = useFetcher<ActionData>();
 
-export default function SignupForm(props: Props) {
-  const fromState = props.fromState as SignInRouteState | undefined;
-  const isRegistrant = fromState?.from === appRoutes.register;
-
-  const { handleError, displayError } = useErrorContext();
-  const {
-    register,
-    formState: { isSubmitting, errors },
-    handleSubmit,
-    trigger,
-    control,
-  } = useForm<FormValues>({
-    criteriaMode: "all",
-    defaultValues: {
-      userType: isRegistrant ? "nonprofit" : undefined,
+  const [form, fields] = useForm({
+    shouldRevalidate: "onInput",
+    lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
+    onValidate({ formData }) {
+      return parseWithValibot(formData, { schema: signUp });
     },
-    resolver: valibotResolver(signUp),
   });
 
-  const { field: userType } = useController({ name: "userType", control });
-
-  const redirect = getAuthRedirect(fromState, {
-    isNpo: userType.value === "nonprofit",
-  });
-
-  async function submit(fv: FormValues) {
-    try {
-      const res = await cognito.signup(fv.email.toLowerCase(), fv.password, {
-        firstName: fv.firstName,
-        lastName: fv.lastName,
-        "custom:user-type": fv.userType,
-      });
-
-      if (isError(res)) return displayError(res.message);
-
-      props.setSignupState({
-        type: "confirm",
-        codeRecipientEmail: {
-          raw: fv.email.toLowerCase(),
-          obscured: res,
-        },
-        userType: fv.userType,
-      });
-    } catch (err) {
-      handleError(err, { context: "signing up" });
+  useEffect(() => {
+    if (isActionErr(fetcher.data)) {
+      toast.error(fetcher.data.__error);
     }
-  }
+  }, [fetcher.data]);
+
+  const isSubmitting = fetcher.state === "submitting";
 
   return (
     <div className="grid justify-items-center gap-3.5">
-      <Form
-        className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
-        disabled={isSubmitting}
-        onSubmit={handleSubmit(submit)}
-      >
+      <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
         <h3 className="text-center text-2xl font-bold text-navy-d4">
           Philanthropy for Everyone
         </h3>
@@ -90,77 +51,71 @@ export default function SignupForm(props: Props) {
           nonprofit.
         </p>
 
-        {!isRegistrant && (
-          <UserTypeSelector
-            classes="mt-5"
-            value={userType.value}
-            onChange={userType.onChange}
-            error={errors.userType?.message}
-          />
-        )}
-
-        <button
-          className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
-          type="button"
-          onClick={async () => {
-            const valid = await trigger("userType");
-            if (!valid) return;
-
-            const state: OAuthState = {
-              pathname: redirect.path,
-              data: redirect.data,
-            };
-            const to = oauth.initiateUrl(JSON.stringify(state));
-            window.location.href = to;
-          }}
+        <fetcher.Form
+          method="POST"
+          action={`.?index&${params.toString()}`}
+          className="contents"
         >
-          <Image src={googleIcon} height={18} width={18} />
-          <span className="normal-case font-heading font-semibold text-navy-d4">
-            Sign Up with Google
-          </span>
-        </button>
+          <button
+            name="intent"
+            value="oauth"
+            className="flex-center btn-outline-2 gap-2 h-12 sm:h-[52px] mt-6 border-[0.8px]"
+            type="submit"
+          >
+            <Image src={googleIcon} height={18} width={18} />
+            <span className="normal-case font-heading font-semibold text-navy-d4">
+              Sign Up with Google
+            </span>
+          </button>
+        </fetcher.Form>
 
         <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
           OR
         </Separator>
 
-        <div className="grid gap-3">
+        <fetcher.Form
+          method="POST"
+          action={`.?index&${params.toString()}`}
+          {...getFormProps(form)}
+          className="grid gap-3"
+        >
           <div className="flex gap-3">
             <Input
-              {...register("firstName")}
+              {...getInputProps(fields.firstName, { type: "text" })}
               placeholder="First Name"
-              error={errors.firstName?.message}
+              error={fields.firstName.errors?.[0]}
             />
             <Input
-              {...register("lastName")}
+              {...getInputProps(fields.lastName, { type: "text" })}
               placeholder="Last Name"
-              error={errors.lastName?.message}
+              error={fields.firstName.errors?.[0]}
             />
           </div>
           <Input
-            {...register("email")}
+            {...getInputProps(fields.email, { type: "email" })}
             autoComplete="username"
             placeholder="Email address"
             icon={Mail}
-            error={errors.email?.message}
+            error={fields.email.errors?.[0]}
             classes={{ container: "mt-4" }}
           />
           <Input
-            {...register("emailConfirmation")}
+            {...getInputProps(fields.emailConfirmation, { type: "email" })}
             autoComplete="username"
             placeholder="Confirm email"
             icon={Mail}
-            error={errors.emailConfirmation?.message}
+            error={fields.emailConfirmation.errors?.[0]}
             classes={{ container: "mb-4" }}
           />
           <PasswordInput
-            {...register("password")}
+            {...getInputProps(fields.password, { type: "password" })}
             placeholder="Create password"
-            error={errors.password?.message}
+            error={fields.password.errors?.[0]}
           />
-        </div>
+        </fetcher.Form>
 
         <button
+          form={form.id}
           type="submit"
           className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full my-8"
         >
@@ -177,7 +132,7 @@ export default function SignupForm(props: Props) {
             Login
           </Link>
         </span>
-      </Form>
+      </div>
 
       <span className="text-xs sm:text-sm text-center w-80">
         By signing up, you agree to our{" "}

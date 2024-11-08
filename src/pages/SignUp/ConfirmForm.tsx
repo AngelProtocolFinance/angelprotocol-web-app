@@ -6,14 +6,13 @@ import useCounter from "hooks/useCounter";
 import { useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { type SignUpConfirm, isError, signUpConfirm } from "types/auth";
-import type { CodeRecipientEmail, StateSetter, UserType } from "./types";
+import type { CodeRecipientEmail, StateSetter } from "./types";
 
 const MAX_TIME = 30;
 
 type Props = {
   codeRecipientEmail: CodeRecipientEmail;
   setSignupState: StateSetter;
-  userType: UserType;
 };
 
 export default function ConfirmForm(props: Props) {
@@ -39,10 +38,6 @@ export default function ConfirmForm(props: Props) {
       );
 
       if (isError(res)) return displayError(res.message);
-      props.setSignupState({
-        type: "success",
-        userType: props.userType,
-      });
     } catch (err) {
       handleError(err, { context: "confirming code" });
     }

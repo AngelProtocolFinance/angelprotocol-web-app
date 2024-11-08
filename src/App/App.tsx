@@ -9,6 +9,7 @@ import { legalRoutes } from "pages/Legal";
 import OAuthRedirector from "pages/OAuthRedirector";
 import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
+import { signUpRoute } from "pages/SignUp";
 import { userDashboardRoute } from "pages/UserDashboard";
 import { Component as Widget, loader as widgetLoader } from "pages/Widget";
 import { infoRoutes } from "pages/informational";
@@ -67,7 +68,7 @@ const _appRoutes: RO[] = [
   { path: appRoutes.donate_thanks, lazy: () => donateThanks },
   { path: appRoutes.stripe_payment_status, lazy: () => stripePaymentStatus },
   { path: appRoutes.signin, lazy: () => import("pages/Signin") },
-  { path: appRoutes.signup, lazy: () => import("pages/SignUp") },
+  signUpRoute,
   { path: appRoutes.reset_password, lazy: () => import("pages/ResetPassword") },
   { path: appRoutes.auth_redirector, element: <OAuthRedirector /> },
   {
