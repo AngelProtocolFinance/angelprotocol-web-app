@@ -129,8 +129,8 @@ function RootLayout() {
   useScrollTop(location.pathname);
   return (
     <ModalContext>
-      <Toaster richColors position="top-right" closeButton />
       <Outlet />
+      <Toaster richColors position="top-right" closeButton />
     </ModalContext>
   );
 }
