@@ -6,7 +6,6 @@ import type {
   BankingApplicationUpdate,
   BankingApplicationsPage,
   BankingApplicationsQueryParams,
-  NewBankingApplication,
   V2RecipientAccount,
 } from "types/aws";
 import { version as v } from "../helpers";
@@ -15,17 +14,6 @@ import { aws } from "./aws";
 
 const bankingApplications = aws.injectEndpoints({
   endpoints: (builder) => ({
-    newBankingApplication: builder.mutation<unknown, NewBankingApplication>({
-      invalidatesTags: (_, error) => (error ? [] : ["banking-applications"]),
-      query: (payload) => {
-        return {
-          method: "POST",
-          url: `/${v(1)}/banking-applications`,
-          body: payload,
-          headers: { Authorization: TEMP_JWT },
-        };
-      },
-    }),
     updateBankingApplication: builder.mutation<
       unknown,
       BankingApplicationUpdate
@@ -108,7 +96,6 @@ const bankingApplications = aws.injectEndpoints({
 });
 
 export const {
-  useNewBankingApplicationMutation,
   useUpdateBankingApplicationMutation,
   useBankingApplicationsQuery,
   useBankingApplicationQuery,
