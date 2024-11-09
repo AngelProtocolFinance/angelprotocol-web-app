@@ -141,7 +141,7 @@ class Cognito extends Storage {
     });
 
     if (!res.ok) {
-      return res.json() as Promise<AuthError>;
+      return res.json() as Promise<AuthError<"UserNotConfirmedException">>;
     }
     const data: AuthSuccess<"new"> = await res.json();
     this.save(data.AuthenticationResult);

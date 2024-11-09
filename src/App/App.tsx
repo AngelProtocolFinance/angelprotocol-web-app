@@ -154,7 +154,7 @@ function RootLayout() {
     <ModalContext>
       <ScrollRestoration />
       <Outlet />
-      <Toaster richColors position="top-right" closeButton />
+      <Toaster richColors position="bottom-right" closeButton />
     </ModalContext>
   );
 }

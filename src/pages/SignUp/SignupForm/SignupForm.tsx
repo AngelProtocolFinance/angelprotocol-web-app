@@ -16,13 +16,13 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { toast } from "sonner";
+import { type ActionData, isActionErr, isValiErr } from "types/action";
 import { signUp } from "types/auth";
-import { type ActionData, isActionErr, isValiErr } from "../types";
 
 export function SignupForm() {
   const fromState = useLoaderData();
   const [params] = useSearchParams();
-  const fetcher = useFetcher<ActionData>();
+  const fetcher = useFetcher<ActionData<any>>();
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",

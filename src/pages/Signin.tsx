@@ -29,6 +29,7 @@ import {
   useSearchParams,
 } from "react-router-dom";
 import { toast } from "sonner";
+import { authStore } from "store/auth";
 import { type OAuthState, isError, signIn } from "types/auth";
 
 type ActionData = { __error: string } | SubmissionResult | undefined;
@@ -40,9 +41,9 @@ const isValiErr = (data: ActionData): data is SubmissionResult =>
 
 export const action: ActionFunction = async ({ request }) => {
   try {
-    const url = new URL(request.url);
-    const state = decodeState(url.searchParams.get("_s"));
-    const r = getAuthRedirect(state as any);
+    const from = new URL(request.url);
+    const fromState = decodeState(from.searchParams.get("_s"));
+    const r = getAuthRedirect(fromState as any);
 
     const fv = await request.formData();
     if (fv.get("intent") === "oauth") {
@@ -61,11 +62,19 @@ export const action: ActionFunction = async ({ request }) => {
       payload.value.email.toLowerCase(),
       payload.value.password
     );
+
     if (isError(res)) {
+      if (res.__type === "UserNotConfirmedException") {
+        authStore.set("email", payload.value.email);
+        const to = new URL(from);
+        to.pathname = appRoutes.signup + "/confirm";
+        return redirect(to.toString());
+      }
+
       return payload.reply({ fieldErrors: { password: [res.message] } });
     }
 
-    const to = new URL(request.url);
+    const to = new URL(from);
     to.pathname = r.path;
     to.search = r.search;
     if (r.data) {
@@ -168,11 +177,12 @@ export function Component() {
           </Link>
         </fetcher.Form>
         <button
+          disabled={isSubmitting}
           form={form.id}
           type="submit"
           className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full mt-4"
         >
-          {isSubmitting ? "Submitting..." : "Log in"}
+          Login
         </button>
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?

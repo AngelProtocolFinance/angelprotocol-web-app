@@ -4,7 +4,7 @@ export default function useCounter(countFrom: number) {
   const [counter, setCounter] = useState(countFrom);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const interval = window.setInterval(() => {
       if (counter === 0) {
         clearInterval(interval);
         return;
@@ -14,7 +14,7 @@ export default function useCounter(countFrom: number) {
     }, 1000);
 
     return () => {
-      clearInterval(interval);
+      window.clearInterval(interval);
     };
   }, [counter]);
 
