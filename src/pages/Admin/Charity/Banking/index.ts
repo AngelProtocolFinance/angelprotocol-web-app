@@ -4,3 +4,5 @@ export {
   default as PayoutMethodDetails,
   payoutMethodLoader,
 } from "./PayoutMethod";
+
+export { newBanking } from "./new-banking-action";

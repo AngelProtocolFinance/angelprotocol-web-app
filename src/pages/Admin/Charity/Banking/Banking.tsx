@@ -1,22 +1,17 @@
 import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
-import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { uploadFile } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import { Link, useNavigate } from "react-router-dom";
-import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
+import { Link, useFetcher } from "react-router-dom";
 import FormButtons from "./FormButtons";
 
 export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
-  const [newApplication, { isLoading }] = useNewBankingApplicationMutation();
+  const fetcher = useFetcher();
   const { handleError, displayError } = useErrorContext();
-  const { showModal } = useModalContext();
-  const navigate = useNavigate();
 
   const submit: OnSubmit = async (recipient, bankStatementFile) => {
     try {
@@ -30,19 +25,16 @@ export default function Banking() {
       const bankSummary = `${currency.toUpperCase()} account ending in ${
         details.accountNumber?.slice(-4) || "0000"
       } `;
-      await newApplication({
-        wiseRecipientID: id.toString(),
-        bankSummary,
-        endowmentID: endowment_id,
-        bankStatementFile: bankStatement,
-      }).unwrap();
 
-      showModal(Prompt, {
-        headline: "Success!",
-        children: <p className="py-8">Banking details submitted for review!</p>,
-      });
-
-      navigate("..");
+      fetcher.submit(
+        {
+          wiseRecipientID: id.toString(),
+          bankSummary,
+          endowmentID: endowment_id,
+          bankStatementFile: bankStatement,
+        },
+        { action: ".", method: "POST", encType: "application/json" }
+      );
     } catch (error) {
       handleError(error, { context: "submitting banking application" });
     }
@@ -65,7 +57,7 @@ export default function Banking() {
         <BankDetails
           FormButtons={FormButtons}
           onSubmit={submit}
-          isLoading={isLoading}
+          isLoading={fetcher.state !== "idle"}
         />
       </Group>
     </>

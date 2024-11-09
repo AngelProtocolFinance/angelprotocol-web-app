@@ -7,6 +7,7 @@ import Banking, {
   PayoutMethodDetails,
   payoutMethodsLoader,
   payoutMethodLoader,
+  newBanking,
 } from "./Banking";
 import { dashboardRoute } from "./Dashboard/route";
 import { mediaRoutes } from "./Media";
@@ -45,7 +46,7 @@ export const charityRoutes: RouteObject[] = [
     path: adminRoutes.banking,
     children: [
       { index: true, element: <Banking />, loader: payoutMethodsLoader },
-      { path: "new", element: <NewPayoutMethod /> },
+      { path: "new", element: <NewPayoutMethod />, action: newBanking },
       {
         path: ":bankId",
         element: <PayoutMethodDetails />,

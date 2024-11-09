@@ -16,7 +16,7 @@ export function useCurrencies(): QueryState<Currency[]> {
   const { data, isLoading, isValidating, error } = useSWR(
     `${APIs.aws}/${v(1)}/wise-proxy/v1/currencies`,
     getCurencies,
-    { revalidateOnFocus: false, revalidateOnMount: false }
+    { revalidateOnFocus: false }
   );
   return { data, isLoading, isFetching: isValidating, isError: !!error, error };
 }
