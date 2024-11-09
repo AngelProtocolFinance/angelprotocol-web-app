@@ -1,19 +1,16 @@
 import { ErrorMessage } from "@hookform/error-message";
-import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
 import { APIs } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty, logger } from "helpers";
 import { Controller, get, useForm } from "react-hook-form";
-import {
-  useCreateRecipientMutation,
-  useNewRequirementsMutation,
-} from "services/aws/wise";
-import type { Group, ValidationContent } from "types/aws";
+import type { Group, V1RecipientAccount, ValidationContent } from "types/aws";
 import type { ApplicationMIMEType } from "types/lists";
 import type { IFormButtons, OnSubmit } from "../../types";
+import { useRequirements } from "../use-requirements";
 import Form from "./Form";
+import { createRecipient } from "./create-recipient";
 
 type Props = {
   fields: Group[];
@@ -48,8 +45,9 @@ export default function RecipientDetailsForm({
   } = useForm({ disabled, shouldUnregister: true });
 
   const { handleError, displayError } = useErrorContext();
-  const [updateRequirements] = useNewRequirementsMutation();
-  const [createRecipient] = useCreateRecipientMutation();
+  const { updateRequirements } = useRequirements(
+    !amount ? null : { amount, currency }
+  );
 
   async function refresh() {
     const { accountHolderName, bankStatement: _, ...details } = getValues();
@@ -87,17 +85,17 @@ export default function RecipientDetailsForm({
             details,
           });
 
-          if ("data" in res) {
+          if (res.ok) {
+            const data: V1RecipientAccount = await res.json();
             const file = (bankStatement as FileList).item(0)!;
-            return await onSubmit(res.data, file);
+            return await onSubmit(data, file);
           }
 
           //ERROR handling
-          const error = res.error as FetchBaseQueryError;
-          if (error.status !== 422) throw res.error;
+          if (res.status !== 422) throw res;
 
           //only handle 422
-          const content = error.data as ValidationContent;
+          const content: ValidationContent = await res.json();
 
           //filter "NOT_VALID"
           const _errs = content.errors;

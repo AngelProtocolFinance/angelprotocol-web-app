@@ -68,6 +68,20 @@ export type RichTextContent = {
   length?: number;
 };
 
+/** query loader */
+export interface QueryState<T> {
+  error?: unknown;
+  data?: T | undefined;
+  isLoading: boolean;
+  isFetching: boolean;
+  isError: boolean;
+}
+
+/** query loader */
+export function isQuery<T>(val: T | QueryState<T>): val is QueryState<T> {
+  return "isLoading" in (val as any) && "isFetching" in (val as any);
+}
+
 export const donateMethod = v.object({
   id: donateMethodId,
   name: v.string(),

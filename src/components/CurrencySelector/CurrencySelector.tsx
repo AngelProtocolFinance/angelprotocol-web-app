@@ -8,8 +8,11 @@ import {
 import { unpack } from "helpers";
 import { LoaderCircle } from "lucide-react";
 import { useState } from "react";
-import type { CurrencyOption } from "types/components";
-import { type QueryState, isQuery } from "types/third-party/redux";
+import {
+  type CurrencyOption,
+  type QueryState,
+  isQuery,
+} from "types/components";
 import { DrawerIcon } from "../Icon";
 import CurrencyOptions from "./CurrencyOptions";
 
