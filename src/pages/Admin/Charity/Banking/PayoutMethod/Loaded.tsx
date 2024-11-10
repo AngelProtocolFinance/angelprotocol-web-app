@@ -1,8 +1,8 @@
+import type { BankDetails } from "api/get/payout-method";
 import ExtLink from "components/ExtLink";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link, Outlet, useFetcher, useLoaderData } from "react-router-dom";
-import type { BankDetails } from "./index";
 
 const APPROVED_PRIORITY_NUM = 2;
 export default function Loaded() {
