@@ -1,4 +1,4 @@
-import PromptV2 from "components/Prompt/PromptV2";
+import { PromptV2 } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
 import { ErrorElement } from "errors/ErrorElement";
 import type { RouteObject } from "react-router-dom";

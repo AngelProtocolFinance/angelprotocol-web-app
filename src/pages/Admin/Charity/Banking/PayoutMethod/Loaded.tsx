@@ -1,56 +1,24 @@
 import ExtLink from "components/ExtLink";
-import { useModalContext } from "contexts/ModalContext";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
-import { useAdminContext } from "pages/Admin/Context";
 import type { PropsWithChildren } from "react";
-import { Link, useLoaderData } from "react-router-dom";
-import { useUpdateBankingApplicationMutation } from "services/aws/banking-applications";
-import DeletePrompt from "./DeletePrompt";
+import { Link, Outlet, useFetcher, useLoaderData } from "react-router-dom";
 import type { BankDetails } from "./index";
 
+const APPROVED_PRIORITY_NUM = 2;
 export default function Loaded() {
   const bank = useLoaderData() as BankDetails;
-  const { id: endowID } = useAdminContext();
-  const [update, { isLoading }] = useUpdateBankingApplicationMutation();
+  const fetcher = useFetcher();
 
   const isRejected = bank.status === "rejected";
   const isApproved = bank.status === "approved";
   const prevVerdict = isRejected || isApproved;
   const isDefault = bank.thisPriorityNum === bank.topPriorityNum;
-
-  const { showModal } = useModalContext();
-
-  async function setDefault() {
-    if (!isApproved) return alert("This payout method is not approved");
-    if (isDefault) return alert("This payout method is already default");
-
-    await update({ type: "prioritize", uuid: bank.id.toString() });
-  }
-
-  async function deleteMethod() {
-    const APPROVED_PRIORITY_NUM = 2;
-    const isWithHeir = (bank.heirPriorityNum || 0) >= APPROVED_PRIORITY_NUM;
-
-    const [canProceed, message] =
-      isDefault && isWithHeir
-        ? [false, "Kindly set another payout method as default before deleting"]
-        : isDefault
-          ? [
-              true,
-              "Your Nonprofit must have at least one banking connection approved in order to receive payouts. Banking connections that are 'Under Review' do not count towards this and are not eligible to receive payouts until approved. Do you want to proceed with this deletion?",
-            ]
-          : [true, "Are you sure you want to delete this payment method?"];
-
-    showModal(DeletePrompt, {
-      canProceed,
-      uuid: bank.id.toString(),
-      message,
-      endowID,
-    });
-  }
+  const isWithHeir = (bank.heirPriorityNum || 0) >= APPROVED_PRIORITY_NUM;
 
   return (
     <div className="grid">
+      {/** render success and delete prompt */}
+      <Outlet />
       <div className="flex items-center gap-2">
         {prevVerdict && (
           <div
@@ -101,29 +69,39 @@ export default function Loaded() {
           </ExtLink>
         </Row>
       </dl>
-      <div className="flex max-sm:flex-col gap-1 sm:gap-3 mt-4 sm:justify-self-end">
+      <fetcher.Form
+        method="POST"
+        action="."
+        className="flex max-sm:flex-col gap-1 sm:gap-3 mt-4 sm:justify-self-end"
+      >
         <Link
           to={".."}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back
         </Link>
-        <button
-          onClick={() => deleteMethod()}
-          type="button"
+        <Link
+          replace
+          preventScrollReset
+          to={{
+            pathname: "delete",
+            search: new URLSearchParams({
+              default: isDefault.toString(),
+              with_heir: isWithHeir.toString(),
+            }).toString(),
+          }}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
         >
           delete
-        </button>
+        </Link>
         <button
-          disabled={isLoading || isDefault || !isApproved}
-          onClick={() => setDefault()}
-          type="button"
+          disabled={fetcher.state === "submitting" || isDefault || !isApproved}
+          type="submit"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-blue"
         >
           set default
         </button>
-      </div>
+      </fetcher.Form>
     </div>
   );
 }

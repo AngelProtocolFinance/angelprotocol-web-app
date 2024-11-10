@@ -1,6 +1,6 @@
 import type { Verdict } from "@better-giving/registration/approval";
 import { loadAuth, redirectToAuth } from "auth";
-import PromptV2 from "components/Prompt/PromptV2";
+import { PromptV2 } from "components/Prompt";
 import { APIs } from "constants/urls";
 import {
   type ActionFunction,

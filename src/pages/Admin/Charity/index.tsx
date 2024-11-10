@@ -1,13 +1,12 @@
-import PromptV2 from "components/Prompt/PromptV2";
+import { PromptV2 } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
 import { ErrorElement } from "errors/ErrorElement";
 import { Navigate, type RouteObject } from "react-router-dom";
 import Banking, {
   NewPayoutMethod,
-  PayoutMethodDetails,
   payoutMethodsLoader,
-  payoutMethodLoader,
   newBanking,
+  payoutMethodRoute,
 } from "./Banking";
 import { dashboardRoute } from "./Dashboard/route";
 import { mediaRoutes } from "./Media";
@@ -47,11 +46,7 @@ export const charityRoutes: RouteObject[] = [
     children: [
       { index: true, element: <Banking />, loader: payoutMethodsLoader },
       { path: "new", element: <NewPayoutMethod />, action: newBanking },
-      {
-        path: ":bankId",
-        element: <PayoutMethodDetails />,
-        loader: payoutMethodLoader,
-      },
+      payoutMethodRoute,
     ],
   },
   { path: adminRoutes.form_builder, lazy: () => import("../../Widget") },

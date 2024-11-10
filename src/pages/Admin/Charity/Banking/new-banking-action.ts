@@ -15,11 +15,9 @@ export const newBanking: ActionFunction = async ({ request }) => {
   const req = new Request(url, {
     method: "POST",
     body: JSON.stringify(payload),
-    headers: {
-      "content-type": "application/json",
-      authorization: `Bearer ${auth.idToken}`,
-    },
   });
+
+  req.headers.set("authorization", auth.idToken);
 
   const res = await fetch(req);
   if (!res.ok) throw res;

@@ -8,7 +8,7 @@ interface Props extends PropsWithChildren {
   ack?: ReactNode;
 }
 
-export default function PromptV2({ type, children }: Props) {
+export function PromptV2({ type, children }: Props) {
   const navigate = useNavigate();
   return (
     <Dialog

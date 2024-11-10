@@ -1,6 +1,6 @@
 import { isIrs501c3 } from "@better-giving/registration/models";
 import ExtLink from "components/ExtLink";
-import PromptV2 from "components/Prompt/PromptV2";
+import { PromptV2 } from "components/Prompt/PromptV2";
 import { appRoutes } from "constants/routes";
 import { ErrorElement } from "errors/ErrorElement";
 import {
