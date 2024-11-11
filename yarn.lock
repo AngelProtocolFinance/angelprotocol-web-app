@@ -3500,7 +3500,7 @@ __metadata:
     type-fest: "npm:4.20.0"
     typescript: "npm:5.5"
     valibot: "npm:0.42.0"
-    vite-tsconfig-paths: "npm:4.3.2"
+    vite-tsconfig-paths: "npm:5.1.2"
     vitest: "npm:2.0.1"
     yup: "npm:1.4.0"
   peerDependenciesMeta:
@@ -6839,9 +6839,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-tsconfig-paths@npm:4.3.2":
-  version: 4.3.2
-  resolution: "vite-tsconfig-paths@npm:4.3.2"
+"vite-tsconfig-paths@npm:5.1.2":
+  version: 5.1.2
+  resolution: "vite-tsconfig-paths@npm:5.1.2"
   dependencies:
     debug: "npm:^4.1.1"
     globrex: "npm:^0.1.2"
@@ -6851,7 +6851,7 @@ __metadata:
   peerDependenciesMeta:
     vite:
       optional: true
-  checksum: 10/c12e2087fd01ac8a694850c649b79d5b9798cdba0ef9ab4116f669d8ffa1a9a3195c5a14410d3d9a12d2f08cd35ddd74f03d9c7b13a2d590d002055cdaab45c0
+  checksum: 10/0a46db04653b60621a5d77f2054de5c29a8a6b069535ba3137e0a466b3da0308b07efb95b52713695873e99fadf35ae8878820a7227eabf1c0c1b159d9083bc0
   languageName: node
   linkType: hard
 
