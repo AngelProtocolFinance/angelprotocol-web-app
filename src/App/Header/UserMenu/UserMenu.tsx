@@ -2,7 +2,7 @@ import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { appRoutes } from "constants/routes";
 import { CircleUserRound } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useMatch } from "react-router-dom";
 import { useGetter } from "store/accessors";
 import type { SignInRouteState } from "types/auth";
 
@@ -11,6 +11,8 @@ export default function UserMenu() {
 
   const location = useLocation();
 
+  const isWpPost = !!useMatch(`${appRoutes.blog}/:slug`);
+
   if (!user) {
     const state: SignInRouteState = { from: location.pathname };
     return (
@@ -18,14 +20,14 @@ export default function UserMenu() {
         <Link
           to={appRoutes.signin}
           state={state}
-          className="btn text-base normal-case max-sm:hidden hover:underline"
+          className={`${isWpPost ? "log-in-link" : "btn text-base normal-case max-sm:hidden hover:underline"}`}
         >
           Log in
         </Link>
         <Link
           to={appRoutes.signup}
           state={state}
-          className="btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
+          className={`${isWpPost ? "btn-user-sign-up" : "btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"}`}
         >
           Sign up
         </Link>
