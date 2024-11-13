@@ -1,4 +1,4 @@
-import { endowId } from "api/schema/endow-id";
+import { plusInt } from "api/schema/endow-id";
 import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
@@ -17,7 +17,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
 
   const url = new URL(APIs.aws);
   url.pathname = `${ver(2)}/donations`;
-  url.searchParams.set("asker", v.parse(endowId, params.id).toString());
+  url.searchParams.set("asker", v.parse(plusInt, params.id).toString());
   url.searchParams.set("status", "final");
   url.searchParams.set("page", page);
 

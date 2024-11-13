@@ -9,7 +9,7 @@ import * as v from "valibot";
 import { getEndow } from "./get/endow";
 import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
 import { getPrograms } from "./get/programs";
-import { endowId } from "./schema/endow-id";
+import { plusInt } from "./schema/endow-id";
 
 export interface WidgetData {
   endow?: Endowment;
@@ -27,10 +27,10 @@ export interface WidgetData {
 export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
   const selectedId = v.parse(
-    v.nullish(endowId),
+    v.nullish(plusInt),
     url.searchParams.get("id") ?? params.id
   );
-  const routeEndowId = v.parse(v.optional(endowId), params.id);
+  const routeEndowId = v.parse(v.optional(plusInt), params.id);
   const id = selectedId ?? routeEndowId;
 
   const auth = await loadAuth();

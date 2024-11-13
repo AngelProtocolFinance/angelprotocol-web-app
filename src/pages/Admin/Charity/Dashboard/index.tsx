@@ -1,5 +1,5 @@
 import { getEndow } from "api/get/endow";
-import { endowId } from "api/schema/endow-id";
+import { plusInt } from "api/schema/endow-id";
 import { ENVIRONMENT } from "constants/env";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const url = new URL(request.url);
   const nextPageKey = url.searchParams.get("nextPageKey");
 
-  const id = v.parse(endowId, params.id);
+  const id = v.parse(plusInt, params.id);
   return defer({
     alloc: await getAllocation(id),
     bal: await getBalance(id),

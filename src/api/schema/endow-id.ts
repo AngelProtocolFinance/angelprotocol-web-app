@@ -1,6 +1,6 @@
 import * as v from "valibot";
 
-export const endowId = v.pipe(
+export const plusInt = v.pipe(
   v.string(),
   v.transform((x) => +x),
   v.number(),

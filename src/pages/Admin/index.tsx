@@ -1,5 +1,5 @@
 import { getEndow } from "api/get/endow";
-import { endowId } from "api/schema/endow-id";
+import { plusInt } from "api/schema/endow-id";
 import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import Footer from "components/Footer";
@@ -50,7 +50,7 @@ const loader: LoaderFunction = async ({ request, params }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
   if (auth) {
-    const id = parse(endowId, params.id);
+    const id = parse(plusInt, params.id);
     return {
       user: auth,
       id,

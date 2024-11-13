@@ -7,7 +7,7 @@ import * as v from "valibot";
 import { getEndow } from "./get/endow";
 import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
 import { getPrograms } from "./get/programs";
-import { endowId } from "./schema/endow-id";
+import { plusInt } from "./schema/endow-id";
 
 export interface DonateData {
   id: number;
@@ -21,7 +21,7 @@ export interface DonateData {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const auth = await loadAuth();
-  const id = v.parse(endowId, params.id);
+  const id = v.parse(plusInt, params.id);
   const url = new URL(request.url);
   //setter of this should make sure that intent.endowmentId is the same as this page's param.id.
   const intent = decodeState<DonationIntent.ToResume>(

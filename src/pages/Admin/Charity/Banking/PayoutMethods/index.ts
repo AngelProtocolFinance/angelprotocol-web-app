@@ -1,4 +1,4 @@
-import { endowId } from "api/schema/endow-id";
+import { plusInt } from "api/schema/endow-id";
 import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
@@ -8,7 +8,7 @@ import { parse } from "valibot";
 export { default } from "./PayoutMethods";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  const id = parse(endowId, params.id);
+  const id = parse(plusInt, params.id);
   const auth = await loadAuth();
   if (!auth) throw "auth is required up higher";
 

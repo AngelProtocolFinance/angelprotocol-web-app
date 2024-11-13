@@ -1,4 +1,4 @@
-import { endowId } from "api/schema/endow-id";
+import { plusInt } from "api/schema/endow-id";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import { apiEnv } from "services/constants";
@@ -21,7 +21,7 @@ const segment = v.pipe(
   v.custom((x) => !(x as string).endsWith("."), "invalid segment")
 );
 
-const schema = v.union([endowId, segment]);
+const schema = v.union([plusInt, segment]);
 
 export async function getEndow<T extends K[]>(
   idParamOrSlug: number | string | undefined,

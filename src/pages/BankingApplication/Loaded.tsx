@@ -1,21 +1,14 @@
 import ExtLink from "components/ExtLink";
 import { appRoutes } from "constants/routes";
-import { useModalContext } from "contexts/ModalContext";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import type { BankingApplicationDetails } from "services/types";
-import Prompt from "./Prompt";
 
 export default function Loaded(props: BankingApplicationDetails) {
   const isApproved = props.status === "approved";
   const isRejected = props.status === "rejected";
   const prevVerdict = isApproved || isRejected;
-
-  const { showModal } = useModalContext();
-  const verdict = (value: "approve" | "reject") => () => {
-    showModal(Prompt, { uuid: props.id.toString(), verdict: value });
-  };
 
   return (
     <>
@@ -70,27 +63,31 @@ export default function Loaded(props: BankingApplicationDetails) {
       </dl>
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
         <Link
+          replace
+          preventScrollReset
           to={appRoutes.banking_applications}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back
         </Link>
-        <button
-          disabled={!!prevVerdict}
-          onClick={verdict("reject")}
-          type="button"
+        <Link
+          replace
+          preventScrollReset
+          aria-disabled={!!prevVerdict}
+          to="reject"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
         >
           reject
-        </button>
-        <button
-          disabled={!!prevVerdict}
-          onClick={verdict("approve")}
-          type="button"
+        </Link>
+        <Link
+          replace
+          preventScrollReset
+          aria-disabled={!!prevVerdict}
+          to="approve"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-green"
         >
           approve
-        </button>
+        </Link>
       </div>
     </>
   );
