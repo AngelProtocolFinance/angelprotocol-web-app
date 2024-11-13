@@ -14,10 +14,10 @@ export function Target({ target = "", progress, classes = "" }: Props) {
 
   return (
     <div className={classes}>
-      <div className="h-1.5 w-full rounded-full bg-blue-l4 shadow-inner">
+      <div className="h-1.5 w-full rounded-full bg-green-l4 shadow-inner">
         <div
           style={{ width: `${pct * 100}%` }}
-          className="h-full rounded-full bg-blue shadow-sm"
+          className="h-full rounded-full bg-green shadow-sm"
         />
       </div>
       <div className="flex items-center justify-between mt-1">

@@ -27,13 +27,13 @@ export function Target({ target = "", classes = "", endowId }: Props) {
           className="inline-block relative mr-2 bottom-1"
         />
         <span className="text-sm font-heading font-medium text-navy-l1">
-          Help them reach the goal!
+          Help them reach their goal!
         </span>
       </p>
-      <div className="h-1.5 w-full rounded-full bg-blue-l4 shadow-inner">
+      <div className="h-1.5 w-full rounded-full bg-green-l4 shadow-inner">
         <div
           style={{ width: `${pct * 100}%` }}
-          className="h-full rounded-full bg-blue shadow-sm"
+          className="h-full rounded-full bg-green shadow-sm"
         />
       </div>
       <div className="flex items-center justify-between mt-1">
