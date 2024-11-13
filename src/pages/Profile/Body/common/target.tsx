@@ -1,5 +1,5 @@
 import diversity from "assets/icons/diversity.svg";
-import { humanize } from "helpers";
+import { prettyUsd } from "helpers";
 import { useEndowBalanceQuery } from "services/apes";
 
 interface Props {
@@ -39,12 +39,12 @@ export function Target({ target = "", classes = "", endowId }: Props) {
       <div className="flex items-center justify-between mt-1">
         <p className="flex items-center gap-x-1 text-sm text-navy-l1">
           <span className="font-medium">
-            ${humanize(data.totalContributions, 2, true)}
+            ${prettyUsd(data.totalContributions)}
           </span>
           <span className="text-xs">Raised</span>
         </p>
         <p className="flex items-center gap-x-1 text-sm text-navy-l1">
-          <span className="font-medium">${humanize(to, 2, true)}</span>
+          <span className="font-medium">${prettyUsd(to)}</span>
           <span className="text-xs">Goal</span>
         </p>
       </div>
