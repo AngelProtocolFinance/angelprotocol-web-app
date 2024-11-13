@@ -2,6 +2,7 @@ import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
+import { appRoutes } from "constants/routes";
 import { useRendered } from "hooks/use-rendered";
 import { ChevronLeft } from "lucide-react";
 import { Helmet } from "react-helmet";
@@ -43,7 +44,7 @@ export function Component() {
       />
 
       <Link
-        to={".."}
+        to={appRoutes.blog}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
       >
         <ChevronLeft className="text-[1em]" />
