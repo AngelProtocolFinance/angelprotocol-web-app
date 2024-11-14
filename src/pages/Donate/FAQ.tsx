@@ -60,20 +60,15 @@ const faqs = (endowId: number) => [
     question: "How does my donation work to benefit nonprofits?",
     paragraphs: [
       <p>
-        Donations are made to Altruistic Partners Empowering Society, DBA Better
-        Giving, a registered charitable 501(c)(3) (EIN 87-3758939).
+        Better Giving handles all donation processing and reporting, and grants
+        your donation 100% to the charitable organization you selected. This
+        streamlines efforts and saves costs for the nonprofit you're supporting.
       </p>,
       <p>
-        <Em intensity={2}>For immediate donations</Em>, Better Giving grants out
-        the donations to the chosen nonprofit on a weekly basis.
-      </p>,
-      <p>
-        <Em intensity={2}>For Sustainability Fund donations</Em>, these are
-        invested as a Board Managed quasi-endowment, and Better Giving grants
-        out 75% of the yield every quarter to the nonprofit, investing the other
-        25% of the yield into the sustainability fund to mitigate against such
-        as inflation. In this way, donors can give today, but see the impact
-        continue into the future.
+        All nonprofits using Better Giving also have free access to high-yield
+        savings and managed investment funds, meaning they can put your donation
+        to work to provide for their future. When you give today, you give
+        forever.
       </p>,
     ],
   },
