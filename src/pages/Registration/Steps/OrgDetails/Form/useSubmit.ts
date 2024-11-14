@@ -1,8 +1,8 @@
+import type { EndowDesignation } from "@better-giving/endowment";
 import { useErrorContext } from "contexts/ErrorContext";
 import { type SubmitHandler, useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useUpdateRegMutation } from "services/aws/registration";
-import type { EndowDesignation } from "types/aws";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
 import type { FormValues } from "../types";

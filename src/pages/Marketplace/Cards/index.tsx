@@ -1,4 +1,5 @@
 import QueryLoader from "components/QueryLoader";
+import type { EndowmentCard } from "types/aws";
 import Card from "./Card";
 import useCards from "./useCards";
 
@@ -15,7 +16,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
   return (
     <QueryLoader
       queryState={{
-        data: data?.Items || [],
+        data: data?.items || [],
         isLoading,
         isFetching,
         isError,
@@ -33,7 +34,7 @@ export default function Cards({ classes = "" }: { classes?: string }) {
         <div
           className={`${classes} w-full grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 content-start`}
         >
-          {endowments.map((endow) => (
+          {endowments.map((endow: EndowmentCard) => (
             <Card {...endow} key={endow.id} />
           ))}
 

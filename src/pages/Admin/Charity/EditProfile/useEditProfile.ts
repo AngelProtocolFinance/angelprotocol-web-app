@@ -1,3 +1,4 @@
+import type { EndowUpdate } from "@better-giving/endowment";
 import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
@@ -7,9 +8,7 @@ import {
   useEditEndowmentMutation,
   useLazyProfileQuery,
 } from "services/aws/aws";
-import type { EndowmentProfileUpdate } from "types/aws";
 import type { UNSDG_NUMS } from "types/lists";
-import type { Ensure } from "types/utils";
 import type { FV } from "./schema";
 
 type DirtyFields = FieldNamesMarkedBoolean<FV>;
@@ -22,7 +21,7 @@ export default function useEditProfile(id: number, df: DirtyFields) {
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
-      const update: Ensure<Partial<EndowmentProfileUpdate>, "id"> = { id };
+      const update: EndowUpdate & { id: number } = { id };
 
       if (df.logo && fv.logo.file) {
         const obj = await uploadFile(fv.logo.file, "endow-profiles");
@@ -41,7 +40,7 @@ export default function useEditProfile(id: number, df: DirtyFields) {
       }
 
       if (df.slug) {
-        const result = await endowment({ slug: fv.slug });
+        const result = await endowment({ id: fv.slug });
         //endow is found with update.slug
         if (result.isSuccess) {
           return displayError(`Slug "${fv.slug}" is already taken`);
@@ -61,7 +60,7 @@ export default function useEditProfile(id: number, df: DirtyFields) {
       if (df.sdgs)
         update.sdgs = fv.sdgs.map((sdg) => sdg.value) as UNSDG_NUMS[];
       if (df.endow_designation)
-        update.endow_designation = fv.endow_designation.value;
+        update.endow_designation = fv.endow_designation.value || undefined;
 
       if (df.hq_country) update.hq_country = fv.hq_country.name;
       if (df.active_in_countries) {

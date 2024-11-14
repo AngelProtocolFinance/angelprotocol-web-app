@@ -4,11 +4,11 @@ import ExtLink from "components/ExtLink";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
 import { Globe, MapPin } from "lucide-react";
-import { Outlet, type RouteObject } from "react-router-dom";
+import { Link, Outlet, type RouteObject } from "react-router-dom";
 import { useProfileContext } from "../ProfileContext";
-import DonateButton from "./DonateButton";
 import GeneralInfo from "./GeneralInfo";
 import Program from "./Program";
+import { Target } from "./common/target";
 
 function Body() {
   const p = useProfileContext();
@@ -27,7 +27,15 @@ function Body() {
             { title: p.name, to: `${appRoutes.marketplace}/${p.id}` },
           ]}
         />
-        <DonateButton className="order-3 lg:order-2 w-full lg:w-48" />
+        <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
+          <Target endowId={p.id} target={p.target} />
+          <Link
+            to={`${appRoutes.donate}/${p.id}`}
+            className="btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
+          >
+            Donate now
+          </Link>
+        </div>
 
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center">
           <div className="flex flex-col items-center lg:items-start w-full gap-2 text-center lg:text-left">

@@ -1,3 +1,4 @@
+import type { Endow } from "@better-giving/endowment";
 import { fill } from "components/DonateMethods";
 import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
@@ -7,14 +8,13 @@ import { APP_NAME, BASE_URL } from "constants/env";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
-import type { Endowment } from "types/aws";
 import type { WidgetConfig } from "types/widget";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
 
 export function Widget({ endowId = 0 }: { endowId?: number }) {
-  const queryState = useEndowment({ id: endowId }, undefined, {
+  const queryState = useEndowment(endowId, undefined, {
     skip: !endowId,
   });
 
@@ -25,7 +25,7 @@ export function Widget({ endowId = 0 }: { endowId?: number }) {
   );
 }
 
-function Content({ endowment }: { endowment?: Endowment }) {
+function Content({ endowment }: { endowment?: Endow }) {
   const location = useLocation();
 
   const _methods = endowment?.donateMethods;

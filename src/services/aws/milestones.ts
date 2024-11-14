@@ -1,10 +1,10 @@
-import { TEMP_JWT } from "constants/auth";
 import type {
   Milestone,
-  MilestoneDelete,
   MilestoneUpdate,
   NewMilestone,
-} from "types/aws";
+} from "@better-giving/endowment";
+import { TEMP_JWT } from "constants/auth";
+import type { MilestoneDelete } from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
@@ -28,7 +28,7 @@ const milestones = aws.injectEndpoints({
     }),
     editMilestone: builder.mutation<
       Milestone,
-      MilestoneUpdate & { endowId: number; programId: string }
+      MilestoneUpdate & { endowId: number; programId: string; id: string }
     >({
       invalidatesTags: (_, error) => (error ? [] : ["program"]),
       query: ({ endowId, programId, id, ...payload }) => {

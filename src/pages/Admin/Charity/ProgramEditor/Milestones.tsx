@@ -1,10 +1,10 @@
+import type { Milestone as TMilestone } from "@better-giving/endowment";
 import { Info } from "components/Status";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import { useNewMilestoneMutation } from "services/aws/milestones";
-import type { Milestone as TMilestone } from "types/aws";
 import Milestone from "./Milestone";
 
 type Props = {

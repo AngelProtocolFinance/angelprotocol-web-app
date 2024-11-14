@@ -9,12 +9,13 @@ export default function Settings() {
     data: endow,
     isLoading,
     isError,
-  } = useEndowment({ id }, [
+  } = useEndowment(id, [
     "receiptMsg",
     "hide_bg_tip",
     "progDonationsAllowed",
     "donateMethods",
     "increments",
+    "target",
   ]);
 
   if (isLoading) {

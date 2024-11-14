@@ -1,5 +1,5 @@
+import type { Allocation } from "@better-giving/endowment";
 import { Banknote, Sprout, Trees, TrendingUp, Zap } from "lucide-react";
-import type { Allocation } from "types/aws";
 
 export function toAlloc(input: string): Allocation {
   const [a, b, c] = input.split("-").map((str) => Number.parseInt(str, 10));

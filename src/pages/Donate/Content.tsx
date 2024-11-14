@@ -1,3 +1,4 @@
+import type { Endow } from "@better-giving/endowment";
 import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
@@ -8,13 +9,13 @@ import { PRIVACY_POLICY } from "constants/urls";
 import { useRendered } from "hooks/use-rendered";
 import { memo } from "react";
 import { Link } from "react-router-dom";
-import type { DonationIntent, Endowment } from "types/aws";
+import type { DonationIntent } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
 type Props = {
   intent?: DonationIntent.ToResume;
-  endowment: Endowment;
+  endowment: Endow;
 };
 
 function Content({ intent, endowment }: Props) {
@@ -31,14 +32,16 @@ function Content({ intent, endowment }: Props) {
         </Link>
       </div>
       <div className="md:px-4 max-w-[68.625rem] mx-auto grid md:grid-cols-[1fr_auto] items-start content-start gap-4">
-        <Link to={`${appRoutes.marketplace}/${endowment.id}`} className="">
+        <div className="@container/org-card col-start-1 row-start-1">
           <OrgCard
+            id={endowment.id}
             name={endowment.name}
             tagline={endowment.tagline}
             logo={endowment.logo || flying_character}
-            classes="col-start-1 row-start-1"
+            classes=""
           />
-        </Link>
+        </div>
+
         {/** small screen but space is still enough to render sidebar */}
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           <Steps

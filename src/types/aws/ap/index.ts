@@ -1,141 +1,9 @@
+import type {
+  Endow,
+  EndowDesignation,
+  EndowsPage,
+} from "@better-giving/endowment";
 import type { Except } from "type-fest";
-import type { PartialExcept } from "types/utils";
-import * as v from "valibot";
-import type { DonateMethodId, UNSDG_NUMS } from "../../lists";
-
-export type Milestone = {
-  id: string;
-  /** iso date */
-  date: string;
-  description?: string;
-  media?: string;
-  title: string;
-};
-
-export type Program = {
-  banner?: string;
-  description: string;
-  id: string;
-  title: string;
-  milestones: Milestone[];
-  targetRaise?: number | null;
-  totalDonations?: number;
-};
-
-export type Media = {
-  type: "video";
-  url: string;
-  id: string;
-  featured: boolean;
-  dateCreated: string;
-}; // {article} | {album}
-export type MediaQueryParams = {
-  type?: "video"; //future: article | album
-  featured?: boolean;
-  nextPageKey?: string;
-  limit?: number;
-};
-
-export type MediaUpdate = Partial<Pick<Media, "url" | "featured">>;
-
-export type EndowDesignation =
-  | "Charity"
-  | "Religious Organization"
-  | "University"
-  | "Hospital"
-  | "Other";
-
-type SocialMediaURLs = {
-  /** may be empty */
-  twitter?: string;
-  /** may be empty */
-  facebook?: string;
-  /** may be empty */
-  linkedin?: string;
-  /** may be empty */
-  instagram?: string;
-  /** may be empty */
-  discord?: string;
-  /** may be empty */
-  youtube?: string;
-  /** may be empty */
-  tiktok?: string;
-};
-
-/** sums up to 100 */
-export interface Allocation {
-  /** e.g. 20 */
-  cash: number;
-  /** e.g. 30 */
-  liq: number;
-  /** e.g. 50 */
-  lock: number;
-}
-
-const str = v.pipe(v.string(), v.trim());
-
-export const incrementVal = v.pipe(
-  str,
-  v.nonEmpty("required"),
-  v.transform((x) => +x),
-  v.number("must be a number"),
-  v.minValue(0, "must be greater than 0"),
-  //parsed output
-  v.transform((x) => x.toString())
-);
-
-export const incrementLabelMaxChars = 30;
-export const incrementLabel = v.pipe(
-  str,
-  v.maxLength(incrementLabelMaxChars, "cannot exceed 30 characters")
-);
-
-export const increment = v.object({
-  value: incrementVal,
-  label: incrementLabel,
-});
-
-type Increment = v.InferInput<typeof increment>;
-
-export type Endowment = {
-  id: number;
-  /** may be empty */
-  slug?: string;
-  registration_number: string;
-  name: string;
-  endow_designation: EndowDesignation;
-  /** may be empty */
-  overview?: string;
-  /** may be empty */
-  tagline?: string;
-  image?: string;
-  logo?: string;
-  card_img?: string;
-  hq_country: string;
-  active_in_countries: string[];
-  /** may be empty */
-  street_address?: string;
-  social_media_urls: SocialMediaURLs;
-  url?: string;
-  sdgs: UNSDG_NUMS[];
-  /** may be empty */
-  receiptMsg?: string;
-
-  kyc_donors_only: boolean;
-  fiscal_sponsored: boolean;
-  claimed: boolean;
-  allocation?: Allocation;
-  increments?: Increment[];
-
-  //can be optional, default false and need not be explicit
-  hide_bg_tip?: boolean;
-  published?: boolean;
-  /** allowed by default */
-  progDonationsAllowed?: boolean;
-  donateMethods?: DonateMethodId[];
-};
-
-export type EndowmentProfile = Endowment;
 
 export type AletPrefUpdate = {
   endowId: number;
@@ -161,9 +29,17 @@ export interface EndowAdmin {
 }
 
 /** from CloudSearch index instead of DB */
-export type EndowmentCard = Pick<
-  Endowment,
-  "id" | "card_img" | "name" | "tagline" | "claimed"
+
+export interface EndowCardsPage
+  extends EndowsPage<
+    | "id"
+    | "card_img"
+    | "name"
+    | "tagline"
+    | "claimed"
+    | "contributions_total"
+    | "target"
+  > {
   /** available but need not fetched */
   // "claimed"
   // "hq_country"
@@ -171,25 +47,25 @@ export type EndowmentCard = Pick<
   // "active_in_countries"
   // "endow_designation"
   // "kyc_donors_only"
-> & {
-  contributions_total: number;
-  // contributions_count:number
-};
+}
+export interface EndowOptionsPage extends EndowsPage<"id" | "name"> {}
 
-export type EndowmentOption = Pick<EndowmentCard, "id" | "name">;
+export type EndowmentCard = EndowCardsPage["items"][number];
+export type EndowmentOption = EndowOptionsPage["items"][number];
 
 export type EndowmentSettingsAttributes = keyof Pick<
-  Endowment,
+  Endow,
   | "receiptMsg"
   | "hide_bg_tip"
   | "progDonationsAllowed"
   | "donateMethods"
   | "increments"
+  | "target"
 >;
 
 //most are optional except id, but typed as required to force setting of default values - "", [], etc ..
 export type EndowmentProfileUpdate = Except<
-  Required<Endowment>,
+  Required<Endow>,
   | "endow_designation"
   | "fiscal_sponsored"
   | "claimed"
@@ -201,21 +77,11 @@ export type EndowmentProfileUpdate = Except<
 };
 
 export type EndowmentSettingsUpdate = Pick<
-  Required<Endowment>,
+  Required<Endow>,
   EndowmentSettingsAttributes
 >;
-export type EndowmentAllocationUpdate = Pick<Required<Endowment>, "allocation">;
+export type EndowmentAllocationUpdate = Pick<Required<Endow>, "allocation">;
 
-export type NewProgram = Omit<Program, "id" | "milestones"> & {
-  milestones: Omit<Milestone, "id">[];
-};
-export type ProgramUpdate = PartialExcept<
-  Omit<Program, "milestones" | "targetRaise">,
-  "id"
-> & { targetRaise?: number | null /** unsets the target */ };
-
-export type NewMilestone = Omit<Milestone, "id">;
-export type MilestoneUpdate = PartialExcept<Milestone, "id">;
 export type MilestoneDelete = {
   endowId: number;
   programId: string;

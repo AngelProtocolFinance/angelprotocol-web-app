@@ -1,8 +1,8 @@
 import type { Token } from "@better-giving/assets/tokens";
+import { donateMethodId } from "@better-giving/endowment/schema";
 //token selector
 import * as v from "valibot";
 import type { FileObject } from "./aws";
-import { donateMethodId } from "./lists";
 export { type Token as TokenV2 } from "@better-giving/assets/tokens";
 
 export interface TokenWithDetails extends Token {

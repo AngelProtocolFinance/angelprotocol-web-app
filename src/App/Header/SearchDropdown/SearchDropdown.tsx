@@ -21,7 +21,7 @@ export default function SearchDropdown({ classes = "", query }: Props) {
     useEndowmentCardsQuery(
       {
         query: debouncedQuery,
-        page: 1,
+        page: "1",
       },
       { skip: isDebouncing }
     );
@@ -29,7 +29,7 @@ export default function SearchDropdown({ classes = "", query }: Props) {
   const isCategoriesShown =
     !debouncedQuery && !isDebouncing && !isLoading && !isFetching;
 
-  const hasMoreItems = (currentData?.NumOfPages ?? 1) > 1;
+  const hasMoreItems = (currentData?.numPages ?? 1) > 1;
   return (
     <div
       className={`${classes} bg-white container rounded-lg p-6 shadow-2xl shadow-black/20`}
@@ -67,7 +67,7 @@ export default function SearchDropdown({ classes = "", query }: Props) {
       ) : (
         <QueryLoader
           queryState={{
-            data: currentData?.Items || [],
+            data: currentData?.items || [],
             isLoading: isLoading || isUninitialized,
             isFetching: isFetching || isUninitialized,
             isError,

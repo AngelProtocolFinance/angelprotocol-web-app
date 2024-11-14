@@ -87,7 +87,7 @@ export default function RecipientDetailsForm({
             details,
           });
 
-          if ("data" in res) {
+          if (res.data) {
             const file = (bankStatement as FileList).item(0)!;
             return await onSubmit(res.data, file);
           }

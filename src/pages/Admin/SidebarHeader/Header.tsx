@@ -5,7 +5,7 @@ import { useAdminContext } from "../Context";
 
 export default function Header() {
   const { id } = useAdminContext();
-  const { data: profile, isLoading } = useEndowment({ id }, ["logo", "name"]);
+  const { data: profile, isLoading } = useEndowment(id, ["logo", "name"]);
 
   return (
     <div

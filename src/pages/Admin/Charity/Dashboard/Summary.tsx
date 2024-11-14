@@ -1,8 +1,9 @@
+import type { Allocation } from "@better-giving/endowment";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { humanize } from "helpers";
 import { ArrowLeft, ArrowRight, CircleAlert, Minus, Plus } from "lucide-react";
 import type { ReactNode } from "react";
-import type { Allocation, BalanceMovement, EndowmentBalances } from "types/aws";
+import type { BalanceMovement, EndowmentBalances } from "types/aws";
 import { MIN_GRANT_PROCESSING } from "./common";
 
 interface Props {

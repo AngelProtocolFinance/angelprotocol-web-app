@@ -1,10 +1,10 @@
+import type { Endow } from "@better-giving/endowment";
 import { unsdgs } from "constants/unsdgs";
 import { Fingerprint } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import type { EndowmentProfile } from "types/aws";
 import EndowDesignationTag from "./EndowDesignationTag";
 
-export default function Tags(props: EndowmentProfile) {
+export default function Tags(props: Endow) {
   return (
     <div className="flex flex-col items-start gap-3">
       {<EndowDesignationTag {...props} />}

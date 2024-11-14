@@ -1,25 +1,18 @@
-import type { IdOrSlug } from "services/types";
-import type { Endowment } from "types/aws";
+import type { Endow } from "@better-giving/endowment";
 import type { QueryState } from "types/third-party/redux";
 import { useEndowmentQuery } from "./aws";
 
 type ArrayValues<T extends readonly unknown[]> = T[number];
 
-type K = keyof Endowment;
+type K = keyof Endow;
 export function useEndowment<T extends K[]>(
-  idOrSlug: IdOrSlug,
+  id: string | number,
   fields?: T,
   options?: { skip: boolean }
 ) {
-  const query = useEndowmentQuery(
-    {
-      ...idOrSlug,
-      fields,
-    },
-    options
-  );
+  const query = useEndowmentQuery({ id, fields }, options);
 
   return query as QueryState<
-    T extends K[] ? Pick<Endowment, ArrayValues<T>> : Endowment
+    T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow
   >;
 }

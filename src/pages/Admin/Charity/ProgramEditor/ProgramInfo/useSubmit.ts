@@ -1,11 +1,12 @@
 import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+
+import type { Program, ProgramUpdate } from "@better-giving/endowment";
 import { cleanObject } from "helpers/cleanObject";
 import { uploadFile } from "helpers/uploadFile";
 import type { SubmitHandler } from "react-hook-form";
 import { useEditProgramMutation } from "services/aws/programs";
-import type { Program, ProgramUpdate } from "types/aws";
 import { useAdminContext } from "../../../Context";
 import type { FV } from "./types";
 
@@ -26,13 +27,13 @@ export default function useSubmit(initProgram: Program) {
       }
 
       const update: ProgramUpdate = {
-        id: initProgram.id,
         banner,
         description: fv.description.value,
         title: fv.title,
       };
 
       await updateProgram({
+        id: initProgram.id,
         endowId: id,
         ...cleanObject(update),
         targetRaise: +fv.targetRaise || null,

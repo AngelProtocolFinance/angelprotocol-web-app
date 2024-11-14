@@ -1,3 +1,4 @@
+import type { MilestoneUpdate } from "@better-giving/endowment";
 import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
@@ -8,7 +9,6 @@ import {
   useDeleteMilestoneMutation,
   useEditMilestoneMutation,
 } from "services/aws/milestones";
-import type { MilestoneUpdate } from "types/aws";
 import { useAdminContext } from "../../../Context";
 import type { FV } from "./types";
 
@@ -31,7 +31,6 @@ export default function useMutate(milestoneId: string, programId: string) {
       }
 
       const update: MilestoneUpdate = {
-        id: milestoneId,
         media,
         description: fv.description.value,
         title: fv.title,
@@ -39,8 +38,9 @@ export default function useMutate(milestoneId: string, programId: string) {
       };
 
       await editMilestone({
+        id: milestoneId,
         endowId: id,
-        programId,
+        programId: programId,
         ...cleanObject(update),
       }).unwrap();
       showModal(Prompt, {

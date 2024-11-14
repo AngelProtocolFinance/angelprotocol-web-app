@@ -1,13 +1,13 @@
+import type { Endow } from "@better-giving/endowment";
 import Seo from "components/Seo";
 import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { useRendered } from "hooks/use-rendered";
-import type { EndowmentProfile } from "types/aws";
 import type { Parsed } from "./parseConfig";
 
 type Props = {
-  profile: EndowmentProfile;
+  profile: Endow;
   config: Parsed;
   classes?: string;
 };

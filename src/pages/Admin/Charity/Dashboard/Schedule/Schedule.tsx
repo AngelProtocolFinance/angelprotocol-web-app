@@ -1,10 +1,10 @@
+import type { Allocation } from "@better-giving/endowment";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { useModalContext } from "contexts/ModalContext";
 import { humanize } from "helpers";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import type { ReactNode } from "react";
-import type { Allocation } from "types/aws";
 import { Edit } from "./Edit";
 import { allocationOptions, toAllocOptValue } from "./common";
 

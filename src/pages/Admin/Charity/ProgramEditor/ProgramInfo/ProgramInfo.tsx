@@ -1,10 +1,10 @@
+import type { Program } from "@better-giving/endowment";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Group from "components/Group";
 import ImgEditor from "components/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label, RhfForm } from "components/form";
 import { useForm } from "react-hook-form";
-import type { Program } from "types/aws";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { schema } from "./schema";
 import type { FV } from "./types";

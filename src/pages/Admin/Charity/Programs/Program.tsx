@@ -1,3 +1,4 @@
+import type { Program as TProgram } from "@better-giving/endowment";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { adminRoutes } from "constants/routes";
@@ -6,7 +7,6 @@ import { useAdminContext } from "pages/Admin/Context";
 import { Link } from "react-router-dom";
 import { useDeleteProgramMutation } from "services/aws/programs";
 import type { ProgramDeleteMsg } from "services/types";
-import type { Program as TProgram } from "types/aws";
 
 export function Program(props: TProgram) {
   const { id } = useAdminContext();
