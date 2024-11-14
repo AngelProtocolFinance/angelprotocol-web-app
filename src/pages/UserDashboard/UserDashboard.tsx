@@ -1,3 +1,4 @@
+import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
 import DashboardLayout from "layout/DashboardLayout";
@@ -13,7 +14,11 @@ const Root = withAuth(function Layout() {
       rootRoute={`${appRoutes.user_dashboard}/`}
       linkGroups={linkGroups}
       //dummy header
-      sidebarHeader={<div className="h-5" />}
+      sidebarHeader={
+        <div className="h-5">
+          <Seo title="User" />
+        </div>
+      }
     />
   );
 });

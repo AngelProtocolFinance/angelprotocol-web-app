@@ -9,19 +9,20 @@ export default function FiscalSponsorship({ className = "" }) {
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[1fr_auto] py-24`}
     >
       <div className="grid max-w-2xl order-2 @6xl:order-1">
+        <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center @6xl:text-left">
+          Borderless Donations
+        </h4>
         <h1 className="text-center @6xl:text-left text-3xl @6xl:text-4.5xl leading-tight text-pretty mb-6 text-navy-d4">
-          Fundraising made simple, sustainable, and entirely free
+          Globally Inclusive: We support all nonprofits and NGOs, regardless of
+          their size or location
         </h1>
         <p className="mb-10 text-navy-l1 text-lg @6xl:text-xl text-center @6xl:text-left">
-          At Better Giving, we understand that many impactful organizations,
-          especially smaller, grassroots initiatives outside the US, may lack
-          access to the resources needed to achieve IRS tax-exempt status to
-          benefit from tax efficient donations from US donors. Our fiscal
-          sponsorship program is designed to bridge these gaps. By acting as a
-          fiscal sponsor, Better Giving enables these organizations to receive
-          tax-deductible donations through us, facilitating their access to a
-          broader base of support without the burden of managing legal and tax
-          complexities themselves.
+          At Better Giving, we recognize that many grassroots organizations,
+          especially those outside the US, struggle to access IRS tax-exempt
+          status and benefit from US donor support. Our fiscal sponsorship
+          program helps bridge this gap, allowing these organizations to receive
+          tax-deductible donations while we handle the legal and tax
+          complexities for them.
           <br />
           <br />
           To obtain fiscal sponsorship, simply register your nonprofit below!
@@ -29,9 +30,9 @@ export default function FiscalSponsorship({ className = "" }) {
 
         <Link
           to={appRoutes.register}
-          className="justify-self-center @6xl:justify-self-start btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50"
+          className="justify-self-center text-center @6xl:justify-self-start btn-blue rounded-full px-8 py-3 @6xl:px-12 @6xl:py-6 @6xl:text-xl shadow-2xl shadow-blue/30 hover:shadow-blue/50 uppercase"
         >
-          Register today
+          Unlock a new world of donors
         </Link>
       </div>
       <Image

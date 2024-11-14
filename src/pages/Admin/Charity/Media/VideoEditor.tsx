@@ -1,4 +1,5 @@
-import { yupResolver } from "@hookform/resolvers/yup";
+import { httpsUrl } from "@better-giving/endowment/schema";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import Modal from "components/Modal";
 import Prompt from "components/Prompt";
 import { Field, RhfForm } from "components/form";
@@ -6,12 +7,11 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { X } from "lucide-react";
 import { type UseFormReturn, useForm } from "react-hook-form";
-import { url } from "schemas/string";
 import {
   useEditMediumMutation,
   useNewMediumMutation,
 } from "services/aws/media";
-import { object } from "yup";
+import { nonEmpty, object, pipe } from "valibot";
 import { useAdminContext } from "../../Context";
 
 type Props = {
@@ -26,7 +26,9 @@ export default function VideoEditor(props: Props) {
   const { handleError } = useErrorContext();
 
   const methods = useForm({
-    resolver: yupResolver(object({ url: url.required("required") })),
+    resolver: valibotResolver(
+      object({ url: pipe(httpsUrl, nonEmpty("required")) })
+    ),
     defaultValues: {
       url: props.edit?.prevUrl ?? "",
     },

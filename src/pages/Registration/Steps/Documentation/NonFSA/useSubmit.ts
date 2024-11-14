@@ -1,7 +1,7 @@
 import { useErrorContext } from "contexts/ErrorContext";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useLazyEndowWithEinQuery } from "services/aws/aws";
+import { endowByEin } from "services/aws/aws";
 import { useUpdateRegMutation } from "services/aws/registration";
 import { steps } from "../../../routes";
 import { useRegState } from "../../StepGuard";
@@ -20,8 +20,7 @@ export default function useSubmit({ form, props }: Args) {
   } = form;
 
   const [updateReg] = useUpdateRegMutation();
-  const [endowByEin] = useLazyEndowWithEinQuery({});
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FV> = async (fv) => {
@@ -30,12 +29,11 @@ export default function useSubmit({ form, props }: Args) {
     }
 
     if (!data.init.claim && fv.ein !== props.doc?.ein) {
-      const res = await endowByEin(fv.ein);
+      const endow = await endowByEin(fv.ein);
 
-      if ("data" in res && res.data) {
-        const endow = res.data;
+      if (endow) {
         if (endow.claimed ?? true) {
-          return handleError(
+          return displayError(
             `Nonprofit: ${endow.name} with EIN: ${fv.ein} already exists on our app. You must speak with an existing user of your NPO Account's members in order to be invited on as a member.`
           );
         }

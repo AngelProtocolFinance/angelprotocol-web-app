@@ -14,7 +14,7 @@ import withAuth from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { logger } from "helpers";
-import { getFullURL, uploadFiles } from "helpers/uploadFiles";
+import { uploadFile } from "helpers/uploadFile";
 import { useRef } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
@@ -80,19 +80,16 @@ export default withAuth(function CreateFund() {
 
       showModal(Prompt, { type: "loading", children: "Uploading..." });
 
-      const uploadBaseUrl = await uploadFiles(
-        [banner.file, logo.file],
-        "bg-funds"
-      );
-      if (!uploadBaseUrl) throw `upload failed`;
-
-      showModal(Prompt, { type: "loading", children: "Creating fund..." });
+      const _banner = await uploadFile(banner.file, "bg-funds");
+      if (!_banner) return handleError("Failed to upload banner");
+      const _logo = await uploadFile(logo.file, "bg-funds");
+      if (!_logo) return handleError("Failed to upload logo");
 
       const fund: NewFund = {
         name: fv.name,
         description: fv.description,
-        banner: getFullURL(uploadBaseUrl, banner.file.name),
-        logo: getFullURL(uploadBaseUrl, logo.file.name),
+        banner: _banner.publicUrl,
+        logo: _logo.publicUrl,
         members: fv.members.map((m) => m.id),
         featured: fv.featured,
         settings: {

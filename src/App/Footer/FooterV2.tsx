@@ -1,6 +1,6 @@
 import dappLogo from "assets/images/bg-logo-503c.png";
 import ExtLink from "components/ExtLink";
-import { APP_NAME } from "constants/env";
+import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -46,14 +46,13 @@ function Footer({ classes = "" }: Props) {
           </div>
 
           <p className="text-xs text-[#3D5361]">
-            Better Giving simplifies giving with a free platform that lets
-            nonprofits around the world easily receive any kind of donation. Our
-            Sustainability Fund ensures donations keep supporting causes,
-            offering lasting benefits without the hassle. Dedicated to helping
-            nonprofits everywhere, we provide essential support and affordable
-            fiscal sponsorship, empowering them to achieve their goals. Join us
-            in making a difference with every donation, creating enduring impact
-            for a better tomorrow.
+            Better Giving is your nonprofit's free one-stop solution to
+            fundraise, save, and invest. We financially empower fellow
+            nonprofits with free donation processing integrated with high-yield
+            savings and investment services, helping organizations grow their
+            funds while reducing administrative burdens. We believe that making
+            financial sustainability easy and accessible creates lasting change
+            for nonprofits.
           </p>
         </div>
 
@@ -70,8 +69,9 @@ function Footer({ classes = "" }: Props) {
             classes="col-start-2 col-span-1"
             title="Resources"
             links={[
-              <a href="https://intercom.help/better-giving/en">FAQs</a>,
+              <a href={INTERCOM_HELP}>FAQs</a>,
               <Link to={appRoutes.blog}>News</Link>,
+              <Link to={appRoutes.about}>About Us</Link>,
             ]}
           />
 

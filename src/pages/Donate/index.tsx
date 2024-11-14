@@ -10,7 +10,7 @@ export function Component() {
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
 
-  const queryState = useEndowment({ id: numId });
+  const queryState = useEndowment(numId);
 
   return (
     <QueryLoader
@@ -25,7 +25,7 @@ export function Component() {
         <>
           <Seo
             title={`Donate to ${profile.name} - ${APP_NAME}`}
-            description={profile.overview?.slice(0, 140)}
+            description={profile.tagline?.slice(0, 140)}
             name={profile.name}
             image={profile.logo}
             url={`${BASE_URL}/donate/${profile.id}`}

@@ -1,9 +1,11 @@
+import { endowIdParam, segment } from "@better-giving/endowment/schema";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { useRendered } from "hooks/use-rendered";
 import {
   Navigate,
   Outlet,
@@ -11,8 +13,8 @@ import {
   useOutletContext,
   useParams,
 } from "react-router-dom";
-import { segment } from "schemas/string";
 import { useEndowment } from "services/aws/useEndowment";
+import { parse, union } from "valibot";
 import { bodyRoute } from "./Body";
 import PageError from "./PageError";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
@@ -20,11 +22,10 @@ import Skeleton from "./Skeleton";
 
 function Profile() {
   const legacy = useOutletContext<true | undefined>();
-  const { id = "" } = useParams<{ id: string }>();
+  const params = useParams();
+  const id = parse(union([segment, endowIdParam]), params.id);
 
-  const { isLoading, isError, data } = useEndowment(
-    segment.isValidSync(id) ? { slug: id } : { id: Number(id) }
-  );
+  const { isLoading, isError, data } = useEndowment(id);
 
   if (isLoading) return <Skeleton />;
   if (isError || !data) return <PageError />;
@@ -45,7 +46,7 @@ function Profile() {
     <ProfileContext.Provider value={data}>
       <Seo
         title={`${data.name} - ${APP_NAME}`}
-        description={data?.overview?.slice(0, 140)}
+        description={data?.tagline?.slice(0, 140)}
         name={data.name}
         image={data?.logo || flying_character}
         url={`${BASE_URL}/profile/${data.id}`}
@@ -60,6 +61,7 @@ function Profile() {
 }
 
 function Banner() {
+  useRendered();
   const { image } = useProfileContext();
   return (
     <div

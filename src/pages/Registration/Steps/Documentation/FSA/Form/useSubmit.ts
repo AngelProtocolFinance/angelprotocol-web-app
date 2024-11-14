@@ -1,5 +1,5 @@
 import { useErrorContext } from "contexts/ErrorContext";
-import { getFilePreviews } from "helpers";
+import { uploadFile } from "helpers/uploadFile";
 import { useRegState } from "pages/Registration/Steps/StepGuard";
 import { useState } from "react";
 import { type SubmitHandler, useFormContext } from "react-hook-form";
@@ -23,7 +23,7 @@ export default function useSubmit({ doc }: Props) {
   const [generateSigningURL] =
     useFiscalSponsorshipAgreementSigningURLMutation();
 
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const navigate = useNavigate();
 
   const submit: SubmitHandler<FormValues> = async (fv) => {
@@ -39,10 +39,11 @@ export default function useSubmit({ doc }: Props) {
         window.location.href = doc.fsa_signing_url;
       }
 
-      const previews = await getFilePreviews({
-        POI: fv.proof_of_identity,
-        POR: fv.proof_of_reg,
-      });
+      const poi = await uploadFile(fv.proof_of_identity.files[0], "endow-reg");
+      if (!poi) return displayError("Failed to upload proof of identity");
+
+      const por = await uploadFile(fv.proof_of_reg.files[0], "endow-reg");
+      if (!por) return displayError("Failed to upload proof of reg");
 
       const { url } = await generateSigningURL({
         id: init.id,
@@ -57,8 +58,8 @@ export default function useSubmit({ doc }: Props) {
           org_name: contact.org_name,
           hq_country: org.hq_country,
           registration_number: fv.registration_number,
-          proof_of_identity: previews.POI[0],
-          proof_of_reg: previews.POR[0],
+          proof_of_identity: poi,
+          proof_of_reg: por,
           legal_entity_type: fv.legal_entity_type,
           project_description: fv.project_description,
         },

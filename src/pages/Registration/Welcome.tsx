@@ -5,6 +5,7 @@ import { APP_NAME } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
+import { useRendered } from "hooks/use-rendered";
 import { CircleCheck } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
@@ -14,6 +15,7 @@ import { steps } from "./routes";
 export function Component() {
   const { email } = useAuthenticatedUser();
   const { state } = useLocation();
+  useRendered();
   const claim = state as EndowClaim | null;
   const {
     data: reg,

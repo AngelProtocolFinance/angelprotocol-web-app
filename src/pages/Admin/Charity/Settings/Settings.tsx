@@ -12,11 +12,12 @@ const fields = Object.keys({
   donateMethods: "",
   increments: "",
   fund_opt_in: "",
+  target: "",
 } satisfies { [k in K]: "" }) as K[];
 
 export default function Settings() {
   const { id } = useAdminContext();
-  const { data: endow, isLoading, isError } = useEndowment({ id }, fields);
+  const { data: endow, isLoading, isError } = useEndowment(id, fields);
 
   if (isLoading) {
     return <FormSkeleton classes="max-w-4xl justify-self-center mt-6" />;

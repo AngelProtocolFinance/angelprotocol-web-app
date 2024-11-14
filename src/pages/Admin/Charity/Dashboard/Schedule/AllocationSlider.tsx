@@ -1,7 +1,7 @@
+import type { Allocation } from "@better-giving/endowment";
 import * as Slider from "@radix-ui/react-slider";
 import { HandCoins, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
-import type { Allocation } from "types/aws";
 
 interface Props {
   disabled?: boolean;

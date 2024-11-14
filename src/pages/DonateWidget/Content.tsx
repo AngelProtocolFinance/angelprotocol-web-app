@@ -1,17 +1,19 @@
+import type { Endow } from "@better-giving/endowment";
 import Seo from "components/Seo";
 import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import type { EndowmentProfile } from "types/aws";
+import { useRendered } from "hooks/use-rendered";
 import type { Parsed } from "./parseConfig";
 
 type Props = {
-  profile: EndowmentProfile;
+  profile: Endow;
   config: Parsed;
   classes?: string;
 };
 
 export default function Content({ profile, config, classes = "" }: Props) {
+  useRendered();
   const recipient: DonationRecipient = {
     id: profile.id.toString(),
     name: profile.name,
@@ -25,7 +27,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
     >
       <Seo
         title={`Donate to ${profile.name} - ${APP_NAME}`}
-        description={profile.overview?.slice(0, 140)}
+        description={profile.tagline?.slice(0, 140)}
         name={profile.name}
         image={profile.logo}
         url={`${BASE_URL}/${appRoutes.donate_widget}/${profile.id}`}

@@ -9,44 +9,21 @@ import s from "./benefits.module.css";
 
 type TPath = keyof typeof benefits;
 const Path = () => {
-  const [path, setPath] = useState<TPath>("nonprofits");
+  const [path] = useState<TPath>("nonprofits");
 
   return (
     <section
-      className={`relative grid ${s.container} pb-40 xl:pb-56 overflow-x-clip`}
+      className={`relative grid ${s.container} pt-20 pb-40 xl:pb-56 overflow-x-clip`}
     >
-      <h3 className="text-[13px] md:text-[18px] uppercase text-blue-d1 text-center mb-4">
-        Bridge to better
+      <h3 className="text-sm md:text-lg uppercase text-blue-d1 text-center mb-4">
+        Bridge To Better
       </h3>
-      <h2 className="text-[32px] md:text-[42px] capitalize text-navy-d4 leading-snug text-center text-pretty mb-11">
-        Amplifying impact for all
+      <h2 className="text-3xl md:text-4.5xl capitalize text-navy-d4 leading-snug text-center text-balance mb-11">
+        How Better Giving Powers Your Mission
       </h2>
-      <div className="flex p-1 bg-[#F6EFE5] font-medium rounded-3xl gap-2 justify-self-center mb-11">
-        <button
-          type="button"
-          className={`${
-            path === "nonprofits" ? "bg-white" : "bg-transparent"
-          } py-2 px-6 rounded-3xl`}
-          onClick={() => {
-            setPath("nonprofits");
-          }}
-        >
-          For Nonprofits
-        </button>
-        <button
-          type="button"
-          className={`${
-            path === "donors" ? "bg-white" : "bg-transparent"
-          } py-2 px-6 rounded-3xl`}
-          onClick={() => setPath("donors")}
-        >
-          For Donors
-        </button>
-      </div>
-      <p className="text-lg md:text-[28px] font-medium text-navy-l1/60 text-center mb-11">
-        {path === "nonprofits"
-          ? "Join our global community and amplify your charitable giving."
-          : "Access our free fundraising technology and tools."}
+      <p className="text-lg md:text-2xl font-medium text-navy-l1/60 text-center mb-11">
+        Your All-in-One Solution for Sustainable Fundraising and Financial
+        Growth
       </p>
 
       <BenefitsCarousel slides={benefits[path]} classes="max-lg:hidden" />
@@ -57,10 +34,10 @@ const Path = () => {
             ? appRoutes.nonprofit_info
             : appRoutes.donor_info
         }
-        className="mt-8 justify-self-center btn-blue normal-case items-center px-10 py-3 gap-1 rounded-full text-lg font-heading"
+        className="mt-8 group justify-self-center normal-case flex items-center px-10 py-3 gap-1 text-lg bg-blue-d1 group active:translate-x-1 text-white font-heading font-bold shadow-2xl rounded-full"
       >
         <span className="mr-1">Learn more</span>
-        <ArrowRight size={18} />
+        <ArrowRight size={18} className="group-hover:translate-x-1" />
       </Link>
     </section>
   );

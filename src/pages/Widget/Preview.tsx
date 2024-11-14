@@ -13,7 +13,7 @@ export default function Preview({ classes = "", config }: Props) {
   const { endowment, methods, increments, ...restConfig } = config;
   const endowName = config.endowment.name;
 
-  const { data } = useEndowment({ id: endowment.id }, [
+  const { data } = useEndowment(endowment.id, [
     "hide_bg_tip",
     "progDonationsAllowed",
   ]);

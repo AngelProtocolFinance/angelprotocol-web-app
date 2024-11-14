@@ -1,22 +1,22 @@
+import type {
+  IMedia,
+  MediaPage,
+  MediaQueryParamsObj,
+  MediaUpdate,
+} from "@better-giving/endowment";
 import { TEMP_JWT } from "constants/auth";
-import type { Media, MediaQueryParams, MediaUpdate } from "types/aws";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
-type MediaPage = {
-  items: Media[]; //future: album | article
-  nextPageKey?: string;
-};
-
 const media = aws.injectEndpoints({
   endpoints: (builder) => ({
-    media: builder.query<MediaPage, MediaQueryParams & { endowId: number }>({
+    media: builder.query<MediaPage, MediaQueryParamsObj & { endowId: number }>({
       providesTags: ["media", "medium"],
       query: ({ endowId, ...params }) => {
         return { url: `/${v(1)}/endowments/${endowId}/media`, params };
       },
     }),
-    medium: builder.query<Media, { endowId: number; mediaId: string }>({
+    medium: builder.query<IMedia, { endowId: number; mediaId: string }>({
       providesTags: ["program"],
       query: ({ endowId, mediaId }) =>
         `/${v(1)}/endowments/${endowId}/media/${mediaId}`,
@@ -36,7 +36,7 @@ const media = aws.injectEndpoints({
       },
     }),
     editMedium: builder.mutation<
-      Media,
+      IMedia,
       MediaUpdate & { endowId: number; mediaId: string }
     >({
       invalidatesTags: (_, error) => (error ? [] : ["medium", "media"]),

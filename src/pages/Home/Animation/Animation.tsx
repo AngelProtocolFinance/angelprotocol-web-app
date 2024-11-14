@@ -1,5 +1,5 @@
-import AnimatedSVG from "./AnimatedSVG";
 import MobileAnimation from "./MobileAnimation";
+import { AnimatedSVG } from "./animated-svg";
 
 const Animation = () => {
   return (

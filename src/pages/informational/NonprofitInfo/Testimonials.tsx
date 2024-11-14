@@ -9,15 +9,16 @@ export default function Testimonials({ className = "" }) {
     <div
       className={`${className} grid @3xl:grid-cols-[2fr_3fr] gap-x-4 relative`}
     >
-      <div className="@3xl:mb-40 @3xl:-mt-24 py-4 @3xl:py-0 sticky top-16 @3xl:top-32 bottom-32 self-start bg-white z-10 shadow-2xl shadow-white">
+      <div className="@3xl:mb-40 @3xl:-mt-24 py-4 @3xl:py-0 @3xl:sticky top-16 @3xl:top-32 bottom-32 self-start z-10">
         <img
           src={quotation}
           alt="quotation mark"
-          width={66}
+          width={60}
           className="mb-4 @3xl:mb-8"
         />
-        <h2 className="text-navy-d4 text-pretty text-2xl @3xl:text-4.5xl leading-tight ">
-          Amazing stories from our customers
+        <h2 className="text-navy-d4 text-pretty text-xl @3xl:text-3xl/normal">
+          Nonprofit Success Stories: <br />
+          Inspiring Change Together
         </h2>
       </div>
 

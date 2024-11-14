@@ -1,13 +1,13 @@
+import type { Endow } from "@better-giving/endowment";
 import { useEffect } from "react";
 import { useLazyProfileQuery } from "services/aws/aws";
-import type { Endowment } from "types/aws";
 import type { FundMember } from "./schema";
 
-export type Endow = Pick<Endowment, "hide_bg_tip" | "name">;
+export type TEndow = Pick<Endow, "hide_bg_tip" | "name">;
 
 export function useEndow(
   members: FundMember[],
-  onEndowSet: (endow: Endow) => void
+  onEndowSet: (endow: TEndow) => void
 ) {
   /** set donate settings for single endowment */
   const [getEndow] = useLazyProfileQuery();

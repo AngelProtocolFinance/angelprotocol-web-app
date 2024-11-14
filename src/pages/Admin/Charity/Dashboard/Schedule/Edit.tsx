@@ -1,10 +1,10 @@
+import type { Allocation } from "@better-giving/endowment";
 import { Field, Label, Switch } from "@headlessui/react";
 import Modal from "components/Modal";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { useState } from "react";
 import { useEditEndowmentMutation } from "services/aws/aws";
-import type { Allocation } from "types/aws";
 import { AllocationOptions } from "./AllocationOptions";
 import { AllocationSlider } from "./AllocationSlider";
 import { allocationOptions, toAllocOptValue } from "./common";

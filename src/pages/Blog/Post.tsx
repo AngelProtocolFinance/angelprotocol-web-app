@@ -1,6 +1,9 @@
 import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import QueryLoader from "components/QueryLoader";
+import Seo from "components/Seo";
+import { appRoutes } from "constants/routes";
+import { useRendered } from "hooks/use-rendered";
 import { ChevronLeft } from "lucide-react";
 import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
@@ -41,7 +44,7 @@ export function Component() {
       />
 
       <Link
-        to={".."}
+        to={appRoutes.blog}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
       >
         <ChevronLeft className="text-[1em]" />
@@ -61,8 +64,10 @@ export function Component() {
 }
 
 function Loaded(post: Wordpress.Post) {
+  useRendered();
   return (
     <>
+      <Seo title={post.slug} />
       <Media
         sizes="(min-width: 896px) 896px, 100vw"
         id={post.featured_media}

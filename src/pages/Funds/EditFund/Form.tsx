@@ -1,14 +1,11 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import type { FundUpdate } from "@better-giving/fundraiser/schema";
-import {
-  ControlledImgEditor as ImgEditor,
-  type ImgLink,
-} from "components/ImgEditor";
+import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
 import { NativeField as Field, Form as Frm } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { getFullURL, uploadFiles } from "helpers/uploadFiles";
+import { uploadFile } from "helpers/uploadFile";
 import type { SubmitHandler } from "react-hook-form";
 import { useCloseFundMutation, useEditFundMutation } from "services/aws/funds";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
@@ -34,16 +31,17 @@ export function Form({
     ...fv
   }) => {
     try {
-      const [bannerUrl, logoUrl] = await uploadImgs([banner, logo], () => {
-        showModal(
-          Prompt,
-          { type: "loading", children: "Uploading images.." },
-          { isDismissible: false }
-        );
-      });
-
       /// BUILD UPDATE ///
       const update: FundUpdate = {};
+
+      if (rhf.dirtyFields.banner && banner.file) {
+        const uploaded = await uploadFile(banner.file, "bg-funds");
+        if (uploaded) update.banner = uploaded.publicUrl;
+      }
+      if (rhf.dirtyFields.logo && logo.file) {
+        const uploaded = await uploadFile(logo.file, "bg-funds");
+        if (uploaded) update.logo = uploaded.publicUrl;
+      }
 
       if (rhf.dirtyFields.target) {
         update.target =
@@ -54,8 +52,6 @@ export function Form({
               : target.value;
       }
 
-      if (rhf.dirtyFields.banner) update.banner = bannerUrl;
-      if (rhf.dirtyFields.logo) update.logo = logoUrl;
       if (rhf.dirtyFields.name) update.name = fv.name;
       if (rhf.dirtyFields.description) update.description = fv.description;
 
@@ -203,17 +199,5 @@ export function Form({
         </button>
       </div>
     </Frm>
-  );
-}
-
-async function uploadImgs(
-  imgs: ImgLink[],
-  onUpload: () => void
-): Promise<string[]> {
-  const files = imgs.flatMap((img) => (img.file ? [img.file] : []));
-  if (files.length > 0) onUpload();
-  const baseURL = await uploadFiles(files, "endow-profiles");
-  return imgs.map((img) =>
-    img.file && baseURL ? getFullURL(baseURL, img.file.name) : img.publicUrl
   );
 }

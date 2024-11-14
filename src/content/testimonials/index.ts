@@ -16,7 +16,7 @@ export type Testimonial = {
 export const testimonials: Testimonial[] = [
   {
     content:
-      "Better Giving is an incredible idea, platform and opportunity. I have loved working with the team",
+      "Better Giving is an incredible idea, platform and opportunity. I have loved working with the team.",
     reviewer: "Faith Flanigan",
     reviewer_org_role: "Buckminster Fuller Institute",
     reviewer_org_logo: buck,

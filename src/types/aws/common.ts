@@ -4,11 +4,6 @@ interface AWSQueryRes<T> {
   Items: T;
 }
 
-export type EndowListPaginatedAWSQueryRes<T> = {
-  Page: number;
-  NumOfPages: number;
-  Items: T;
-};
 export type PaginatedAWSQueryRes<T> = AWSQueryRes<T> & {
   ItemCutoff: number | null;
 };

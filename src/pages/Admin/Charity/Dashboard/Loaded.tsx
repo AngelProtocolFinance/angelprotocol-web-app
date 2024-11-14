@@ -1,8 +1,9 @@
+import type { Allocation } from "@better-giving/endowment";
 import { Arrow, Content } from "components/Tooltip";
 import { humanize } from "helpers";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import type { Allocation, EndowmentBalances } from "types/aws";
+import type { EndowmentBalances } from "types/aws";
 import Figure from "./Figure";
 import { LiqActions } from "./LiqActions";
 import { LockActions } from "./LockActions";

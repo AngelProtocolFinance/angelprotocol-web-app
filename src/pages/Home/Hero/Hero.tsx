@@ -1,34 +1,36 @@
 import { appRoutes } from "constants/routes";
+import { useRendered } from "hooks/use-rendered";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import headillust from "./head-illust.webp";
 import s from "./styles.module.css";
 
 const Hero = ({ classes = "" }) => {
+  useRendered();
   return (
     <section
       className={`${classes} ${s.container} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
       style={{ backgroundImage: `url('${headillust}')` }}
     >
-      <p className="z-10 text-[13px] md:text-[18px] font-heading uppercase font-bold text-center mb-5 tracking-wider">
-        Give Today, Give Forever
+      <p className="z-10 text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
+        By a nonprofit, for nonprofits
       </p>
-      <h1 className="z-10 mx-auto text-4xl md:text-5xl lg:text-6xl text-center leading-none mb-5 px-6">
+      <h1 className="z-10 mx-auto text-4xl/tight md:text-5xl/tight lg:text-6xl/tight text-center text-pretty mb-6 px-6 ">
         Simplified Giving, <br /> Amplified Impact
       </h1>
       <p className="z-10 px-6 text-navy max-md:block md:text-2xl text-center text-pretty sm:text-balance">
-        As a nonprofit serving nonprofits, our all-in-one fundraising solution
-        is free, global, and inclusive. <br /> However you want to give and
-        receive, we've got your back. Together we can make donations go further
-        and last forever.
+        Benefit from free donation processing with Better Giving’s one-stop
+        solution to simplify giving, earn high-yield savings, and enjoy
+        hands-off investment growth. Add our customizable donation form to your
+        website in minutes and start putting your donations to work for you.
       </p>
 
       <Link
         to={appRoutes.register}
-        className="mt-8 isolate justify-self-center btn-blue normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative"
+        className="mt-8 isolate z-10 justify-self-center normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
       >
-        <span className="ml-1">Join us</span>
-        <ArrowRight size={18} />
+        <span className="ml-1">Start Fundraising Today</span>
+        <ArrowRight size={18} className="group-hover:translate-x-1" />
         <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
       </Link>
     </section>

@@ -10,7 +10,7 @@ const StepsCard = (props: Card) => {
         className="md:row-span-2 size-52 md:size-72 relative rounded-full shadow-lg object-cover object-center max-md:mb-7"
       />
 
-      <h4 className="md:self-end text-navy-d4 text-center md:text-left text-2xl md:text-3xl leading-10 max-md:mb-2.5">
+      <h4 className="md:self-end text-navy-d4 text-center md:text-left text-xl md:text-2xl leading-10 max-md:mb-2.5">
         {props.title}
       </h4>
       <p className="md:text-lg text-center md:text-left text-navy-l1 text-balance">

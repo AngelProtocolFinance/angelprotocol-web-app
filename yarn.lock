@@ -832,6 +832,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@better-giving/endowment@npm:1.0.29":
+  version: 1.0.29
+  resolution: "@better-giving/endowment@npm:1.0.29"
+  peerDependencies:
+    "@better-giving/schemas": 1.0.1
+    "@better-giving/types": 1.0.1
+    valibot: 0.42.0
+  checksum: 10/5b4c33afffe217787d9fda9a3313b1cc7be2f9a0d6d30302a9da6b38d73e85d14e5452a22c428d4471c717145c85acb27ed3b218a53e9d060b26691af23da2d1
+  languageName: node
+  linkType: hard
+
 "@better-giving/fundraiser@npm:1.0.0-rc.10":
   version: 1.0.0-rc.10
   resolution: "@better-giving/fundraiser@npm:1.0.0-rc.10"
@@ -847,6 +858,15 @@ __metadata:
   peerDependencies:
     valibot: 0.42.0
   checksum: 10/8f485d84d8fa1d14635d7d784f486b0cc38e98b215b904702c34f0d488450129e7da769dff1f0cbe4105a1a5842d090045babb8e41bd90790320544bc9a03fe7
+  languageName: node
+  linkType: hard
+
+"@better-giving/schemas@npm:1.0.1":
+  version: 1.0.1
+  resolution: "@better-giving/schemas@npm:1.0.1"
+  peerDependencies:
+    valibot: 0.42.0
+  checksum: 10/1e69b19e434e1828427862c59b95edb9ee975841412dc093d3838488af2f294dbda9d4f8d59e90e69c7134b4e730ec3606c950ecb8f216d9fb9fc79af4c5b201
   languageName: node
   linkType: hard
 
@@ -2154,14 +2174,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reduxjs/toolkit@npm:2.2.3":
-  version: 2.2.3
-  resolution: "@reduxjs/toolkit@npm:2.2.3"
+"@reduxjs/toolkit@npm:2.3.0":
+  version: 2.3.0
+  resolution: "@reduxjs/toolkit@npm:2.3.0"
   dependencies:
     immer: "npm:^10.0.3"
     redux: "npm:^5.0.1"
     redux-thunk: "npm:^3.1.0"
-    reselect: "npm:^5.0.1"
+    reselect: "npm:^5.1.0"
   peerDependencies:
     react: ^16.9.0 || ^17.0.0 || ^18
     react-redux: ^7.2.1 || ^8.1.3 || ^9.0.0
@@ -2170,7 +2190,7 @@ __metadata:
       optional: true
     react-redux:
       optional: true
-  checksum: 10/7054747462f8b6a0739b76e227fde8a08143c9deef663f31c2f6f72352e0d1d49a400c8e56c68f320e0e88029412d7f452d88dd2b2a5d6dce7b65c9be646e894
+  checksum: 10/3aa0bf29ce4dfe4ae75416cb5338a91ccc89f06c5a2fcdae5dc137dca02b3990c46306062696e158869ac399b50cae6476e5536902df9bd1ad1a998195221af6
   languageName: node
   linkType: hard
 
@@ -3467,8 +3487,10 @@ __metadata:
   dependencies:
     "@better-giving/assets": "npm:1.0.18"
     "@better-giving/donation": "npm:1.0.1"
+    "@better-giving/endowment": "npm:1.0.29"
     "@better-giving/fundraiser": "npm:1.0.0-rc.10"
     "@better-giving/registration": "npm:1.0.24"
+    "@better-giving/schemas": "npm:1.0.1"
     "@better-giving/types": "npm:1.0.1"
     "@biomejs/biome": "npm:1.8.1"
     "@gsap/react": "npm:2.1.1"
@@ -3478,7 +3500,7 @@ __metadata:
     "@paypal/react-paypal-js": "npm:8.3.0"
     "@radix-ui/react-slider": "npm:1.1.2"
     "@radix-ui/react-tooltip": "npm:1.1.2"
-    "@reduxjs/toolkit": "npm:2.2.3"
+    "@reduxjs/toolkit": "npm:2.3.0"
     "@rsbuild/core": "npm:0.5.9"
     "@rsbuild/plugin-react": "npm:0.5.9"
     "@sentry/react": "npm:8.22.0"
@@ -3523,6 +3545,7 @@ __metadata:
     react-player: "npm:2.16.0"
     react-redux: "npm:9.1.2"
     react-router-dom: "npm:6.23.0"
+    sonner: "npm:1.7.0"
     swiper: "npm:11.1.4"
     tailwindcss: "npm:3.4.3"
     type-fest: "npm:4.20.0"
@@ -6106,7 +6129,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reselect@npm:^5.0.1":
+"reselect@npm:^5.1.0":
   version: 5.1.1
   resolution: "reselect@npm:5.1.1"
   checksum: 10/1fdae11a39ed9c8d85a24df19517c8372ee24fefea9cce3fae9eaad8e9cefbba5a3d4940c6fe31296b6addf76e035588c55798f7e6e147e1b7c0855f119e7fa5
@@ -6330,6 +6353,16 @@ __metadata:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
   checksum: 10/a3cc38e0716ab53a2db3fa00c703ca682ad54dbbc9ed4c7461624a999be6fa7cdc79fc904c411618e698d5eff55a55aa6d9329169a7db11636d0200814a2b5aa
+  languageName: node
+  linkType: hard
+
+"sonner@npm:1.7.0":
+  version: 1.7.0
+  resolution: "sonner@npm:1.7.0"
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+    react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+  checksum: 10/121357b6fb39d2c8f81980f72249d8fc02fa5eaba8e6522ca13a89bf4a13a8313421bd1dde9125e593f1d9a9507baa5c48f595f043373733f75e0e038eaff65f
   languageName: node
   linkType: hard
 

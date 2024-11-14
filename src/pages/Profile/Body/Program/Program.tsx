@@ -1,7 +1,7 @@
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { RichText } from "components/RichText";
-import { humanize } from "helpers";
+import { prettyUsd } from "helpers";
 import { useProfileContext } from "pages/Profile/ProfileContext";
 import { useParams } from "react-router-dom";
 import { useProgramQuery } from "services/aws/programs";
@@ -72,7 +72,7 @@ function TargetProgress({ target, total }: ProgressProps) {
     <div className="m-6 border-t border-gray-l4 pt-2 font-heading">
       <div className="mb-2 flex items-center gap-2">
         <p className="font-medium">Target raise:</p>
-        <p className="font-bold text-navy-l1">${humanize(target)}</p>
+        <p className="font-bold text-navy-l1">${prettyUsd(target)}</p>
       </div>
       <div className="h-4 rounded-full bg-gray-l4 relative overflow-clip">
         <div className="h-full bg-green" style={{ width: `${progressPct}%` }} />
@@ -80,7 +80,7 @@ function TargetProgress({ target, total }: ProgressProps) {
       {total ? (
         <div className="mt-1 flex items-center gap-2 text-sm text-navy-l1">
           <p>Donations received</p>
-          <p>${humanize(total)}</p>
+          <p>${prettyUsd(total)}</p>
         </div>
       ) : null}
     </div>

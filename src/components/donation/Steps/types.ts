@@ -1,10 +1,11 @@
+import type { DonateMethodId } from "@better-giving/endowment";
 import type { Donor } from "types/aws";
 import type {
   DetailedCurrency,
   OptionType,
   TokenWithDetails,
 } from "types/components";
-import type { DonateMethodId, DonationSource } from "types/lists";
+import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
 
 export type Frequency = "one-time" | "subscription";

@@ -1,4 +1,9 @@
 import type {
+  Endow,
+  EndowUpdate,
+  EndowsQueryParams,
+} from "@better-giving/endowment";
+import type {
   Application,
   Page,
   QueryParams,
@@ -8,20 +13,17 @@ import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { fetchAuthSession } from "aws-amplify/auth";
 import { TEMP_JWT } from "constants/auth";
 import { APIs } from "constants/urls";
-import { apiEnv } from "services/constants";
 import type { RootState } from "store/store";
 import { userIsSignedIn } from "types/auth";
 import type {
   Donation,
   DonationsQueryParams,
-  EndowListPaginatedAWSQueryRes,
-  Endowment,
+  EndowCardsPage,
+  EndowOptionsPage,
   EndowmentCard,
   EndowmentOption,
-  EndowmentsQueryParams,
 } from "types/aws";
 import { version as v } from "../helpers";
-import type { EndowmentUpdate, IdOrSlug } from "../types";
 
 const awsBaseQuery = retry(
   fetchBaseQuery({
@@ -84,19 +86,16 @@ export const aws = createApi({
   reducerPath: "aws",
   baseQuery: awsBaseQuery,
   endpoints: (builder) => ({
-    endowmentCards: builder.query<
-      EndowListPaginatedAWSQueryRes<EndowmentCard[]>,
-      EndowmentsQueryParams
-    >({
+    endowmentCards: builder.query<EndowCardsPage, EndowsQueryParams>({
       providesTags: ["endowments"],
-      query: (params) => {
+      query: ({ fields = endowCardFields, ...p }) => {
         return {
           url: `${v(1)}/cloudsearch-nonprofits`,
-          params: { ...params, fields: endowCardFields },
+          params: { ...p, fields },
         };
       },
     }),
-    endowmentOptions: builder.query<EndowmentOption[], EndowmentsQueryParams>({
+    endowmentOptions: builder.query<EndowmentOption[], EndowsQueryParams>({
       providesTags: ["endowments"],
       query: (params) => {
         return {
@@ -104,8 +103,8 @@ export const aws = createApi({
           params: { ...params, fields: endowSelectorOptionFields },
         };
       },
-      transformResponse(res: EndowListPaginatedAWSQueryRes<EndowmentOption[]>) {
-        return res.Items;
+      transformResponse(res: EndowOptionsPage) {
+        return res.items;
       },
     }),
     userBookmarks: builder.query<number[], null>({
@@ -160,27 +159,17 @@ export const aws = createApi({
     }),
 
     endowment: builder.query<
-      Endowment,
-      IdOrSlug & { fields?: (keyof Endowment)[] }
+      Endow,
+      { id: string | number; fields?: (keyof Endow)[] }
     >({
       providesTags: ["endowment"],
-      query: ({ fields, ...args }) => ({
-        url: "id" in args ? `v10/endowments/${args.id}` : "v10/endowments",
-        params: {
-          env: apiEnv,
-          slug: args.slug,
-          ...(fields ? { fields: fields.join(",") } : {}),
-        },
+      query: ({ fields, id }) => ({
+        url: `${v(1)}/endowments/${id}`,
+        params: fields ? { fields: fields.join(",") } : {},
       }),
     }),
-    endowWithEin: builder.query<
-      Pick<Endowment, "id" | "name" | "claimed" | "registration_number">,
-      string
-    >({
-      query: (ein) => ({ url: "v8/endowments", params: { ein, env: apiEnv } }),
-    }),
 
-    editEndowment: builder.mutation<Endowment, EndowmentUpdate>({
+    editEndowment: builder.mutation<Endow, EndowUpdate & { id: number }>({
       invalidatesTags: (_, error) => (error ? [] : ["endowments", "endowment"]),
       query: ({ id, ...payload }) => {
         return {
@@ -248,7 +237,6 @@ export const {
   useReviewApplicationMutation,
   useDonationsQuery,
   useLazyDonationsQuery,
-  useLazyEndowWithEinQuery,
   endpoints: {
     endowmentCards: { useLazyQuery: useLazyEndowmentCardsQuery },
     endowmentOptions: { useLazyQuery: useLazyEndowmentOptionsQuery },
@@ -263,7 +251,7 @@ export const {
 
 //object format first to avoid duplicates
 const endowCardObj: {
-  [key in keyof EndowmentCard]: ""; //we care only for keys
+  [key in keyof Required<EndowmentCard>]: ""; //we care only for keys
 } = {
   id: "",
   card_img: "",
@@ -271,6 +259,7 @@ const endowCardObj: {
   tagline: "",
   claimed: "",
   contributions_total: "",
+  target: "",
 };
 const endowCardFields = Object.keys(endowCardObj).join(",");
 
@@ -281,3 +270,14 @@ const endowSelectorOptionObj: {
   name: "",
 };
 const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");
+
+export const endowByEin = async (
+  ein: string
+): Promise<
+  Pick<Endow, "id" | "name" | "claimed" | "registration_number"> | undefined
+> => {
+  const res = await fetch(`${APIs.aws}/${v(1)}/endowments/ein/${ein}`);
+  if (res.status === 404) return undefined;
+  if (!res.ok) throw res;
+  return res.json() as Promise<Endow>;
+};

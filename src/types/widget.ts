@@ -1,7 +1,11 @@
+import {
+  donateMethodId,
+  increment,
+  incrementLabel,
+  incrementVal,
+} from "@better-giving/endowment/schema";
 import * as v from "valibot";
-import { increment, incrementLabel, incrementVal } from "./aws";
 import { donateMethod } from "./components";
-import { donateMethodId } from "./lists";
 
 const str = v.pipe(v.string(), v.trim());
 
@@ -40,7 +44,7 @@ export const widgetConfig = v.object({
   increments,
 });
 
-export type WidgetConfig = v.InferInput<typeof widgetConfig>;
+export interface WidgetConfig extends v.InferInput<typeof widgetConfig> {}
 
 const toBool = v.pipe(
   v.picklist(["true", "false"] as const),
@@ -48,7 +52,7 @@ const toBool = v.pipe(
 );
 
 export const widgetUrlSearchParams = v.object({
-  isDescriptionTextShown: toBool,
+  isDescriptionTextShown: v.optional(toBool),
 
   // v2.3 params //
   methods: v.optional(

@@ -4,7 +4,7 @@ import { isEmpty } from "helpers";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { useProfileContext } from "../../../ProfileContext";
-import DonateButton from "../../DonateButton";
+import { Target } from "../../common/target";
 import { Fundraisers } from "./Fundraisers";
 import Socials from "./Socials";
 import Tags from "./Tags";
@@ -31,7 +31,13 @@ export default function DetailsColumn({ className = "" }) {
           {p.social_media_urls && (
             <Socials social_media_urls={p.social_media_urls} />
           )}
-          <DonateButton className="w-full" />
+          <Target endowId={p.id} target={p.target} classes="-mb-5 mt-4" />
+          <Link
+            to={appRoutes.donate + `/${p.id}`}
+            className="w-full btn-blue h-12 px-6 text-base lg:text-sm"
+          >
+            Donate now
+          </Link>
         </div>
         {p.claimed === false && (
           <Link

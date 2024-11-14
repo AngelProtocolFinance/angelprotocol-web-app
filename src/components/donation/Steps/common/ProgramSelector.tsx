@@ -1,3 +1,4 @@
+import type { Program } from "@better-giving/endowment";
 import {
   Listbox,
   ListboxButton,
@@ -7,7 +8,6 @@ import {
 import { unpack } from "helpers";
 import { useEffect } from "react";
 import { useProgramsQuery } from "services/aws/programs";
-import type { Program } from "types/aws";
 import type { OptionType } from "types/components";
 import { DrawerIcon } from "../../../Icon";
 import QueryLoader from "../../../QueryLoader";

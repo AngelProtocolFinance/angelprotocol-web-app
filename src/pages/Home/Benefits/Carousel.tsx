@@ -1,4 +1,5 @@
 import type { Benefit } from "content/benefits";
+import { PreCta } from "./common";
 
 type Props = { slides: Benefit[]; classes?: string };
 const Carousel = ({ slides, classes = "" }: Props) => {
@@ -11,13 +12,19 @@ const Carousel = ({ slides, classes = "" }: Props) => {
             key={index}
           >
             <img src={slide.img} alt="logo" className="size-56 mb-8" />
-            <p className="text-[20px] text-center md:text-[28px] text-black font-bold mb-3">
+            <p className="font-heading text-lg text-center md:text-xl text-black font-bold">
               {slide.title}
             </p>
-            <p className="md:text-xl text-center">{slide.description}</p>
+            <p className="text-center md:text-lg text-black font-bold mb-3">
+              {slide.title2}
+            </p>
+            <p className="md:text-xl text-center text-navy">
+              {slide.description}
+            </p>
           </div>
         );
       })}
+      <PreCta classes="text-center max-w-3xl justify-self-center mt-8 text-xl px-4" />
     </div>
   );
 };

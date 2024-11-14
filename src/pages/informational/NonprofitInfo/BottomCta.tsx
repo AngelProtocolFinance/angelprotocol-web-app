@@ -4,37 +4,57 @@ import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 
-export default function BottomCta({ className = "" }) {
+export function BottomCta({ className = "" }) {
+  return (
+    <div className={`${className} grid @4xl:grid-cols-2 gap-4`}>
+      <h4 className="col-span-full text-lg text-blue-d1 uppercase text-center">
+        Simple. Sustainable. Free.
+      </h4>
+      <h2 className="col-span-full text-center text-3xl @4xl:text-4xl leading-snug max-w-2xl justify-self-center mb-12">
+        The all-in-one fundraising solution you deserve is only a few clicks
+        away
+      </h2>
+
+      <CtaCard
+        className="from-blue-d1 "
+        title="Ready to unlock your fundraising potential?"
+        to={{ href: appRoutes.register, title: "Get started" }}
+        img={{ src: laira.negotiating, width: 140 }}
+      />
+      <CtaCard
+        className="from-navy"
+        title="Want to learn more first?"
+        to={{ href: BOOK_A_DEMO, title: "Book a demo" }}
+        img={{ src: laira.laptop, width: 70 }}
+      />
+    </div>
+  );
+}
+
+interface ICtaCard {
+  className?: string;
+  title: string;
+  to: { href: string; title: string };
+  img: { src: string; width: number };
+}
+export function CtaCard({ className = "", title, to, img }: ICtaCard) {
   return (
     <div
-      className={`${className} grid @5xl:grid-cols-[3fr_1fr] bg-blue-d1 rounded-3xl @5xl:rounded-4xl ring-8 @md:ring-[1rem] ring-blue-l4 px-10 py-12 @5xl:px-16 @5xl:py-[4.5rem]`}
+      className={`${className} grid @md:grid-cols-2 w-full bg-gradient-to-br to-transparent p-6 rounded-xl`}
     >
-      <div className="order-2 @5xl:order-1">
-        <h4 className="text-center @5xl:text-left uppercase @md:text-lg text-white leading-normal mb-6">
-          Simple. Sustainable. Free.
-        </h4>
-        <h3 className="text-center @5xl:text-left @5xl:leading-snug font-heading text-2xl @sm:text-4xl text-white mb-9">
-          The all-in-one fundraising solution you deserve is only a few clicks
-          away
-        </h3>
-        <div className="flex flex-col sm:flex-row justify-center @5xl:justify-start items-center gap-6">
-          <Link
-            to={appRoutes.register}
-            className="btn-outline-blue bg-white rounded-full px-8 py-3 @5xl:px-12 @5xl:py-6 @5xl:text-xl"
-          >
-            Start today
-          </Link>
-          <Link
-            to={BOOK_A_DEMO}
-            className="btn-outline-blue bg-white border-2 rounded-full px-8 py-3 @5xl:px-12 @5xl:py-6 @5xl:text-xl"
-          >
-            Book a Demo
-          </Link>
-        </div>
-      </div>
+      <h3 className="@3xl:text-left text-white @3xl:leading-snug font-heading text-xl @sm:text-2xl mb-4 col-span-full">
+        {title}
+      </h3>
+      <Link
+        to={to.href}
+        className="uppercase font-bold font-heading bg-blue-d1 text-white shadow-xl active:translate-x-1 hover:bg-blue-d2 rounded-full px-6 py-3 self-start justify-self-start"
+      >
+        {to.title}
+      </Link>
       <Image
-        src={laira.waiving}
-        className="place-self-center mb-8 order-1 @5xl:order-2"
+        width={img.width}
+        src={img.src}
+        className="justify-self-end mt-8"
       />
     </div>
   );

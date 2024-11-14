@@ -4,9 +4,7 @@ import icon2 from "./icons/Icon2_wb.webp";
 import icon3 from "./icons/Icon3_wb.webp";
 import icon4 from "./icons/Icon4_wb.webp";
 import icon5 from "./icons/Icon5_wb.webp";
-import icon6 from "./icons/Icon6_wb.webp";
 import icon7 from "./icons/Icon7_wb.webp";
-import icon8 from "./icons/Icon8_wb.webp";
 import { sf } from "./sf-benefits";
 import type { Benefit } from "./types";
 
@@ -48,31 +46,35 @@ const donors: Benefit[] = [
 ];
 const nonprofits: Benefit[] = [
   {
-    title: "Expanded Funding Channels",
+    title: "Free Donation Processing",
+    title2: "More for your mission",
     description:
-      "Tap into new sources of funding by accepting cash, crypto, stocks, donor funds, and more.",
-    img: icon5,
+      "Maximize your nonprofit’s funds with no platform fees. Although third-party processing fees may apply, 95% of donors choose to cover these fees. We handle the tax receipts and admin work for accepting all types of donations, you enjoy grants directly to your bank account.",
+    img: icon7,
     cardBgClass: colors[0],
   },
   {
-    title: "Recurring Revenue Streams",
+    title: "High-Yield Savings Accounts",
+    title2: "Secure, steady growth for your funds",
     description:
-      "Get perpetual funding as your donor gifts grow inside our Sustainability Fund's balanced investment portfolio",
-    img: icon6,
+      "Choose to grow donations in a high-yield savings account at an annual rate of 4-5%, all without any market risk. Funds remain accessible and safe while earning interest, providing your nonprofit with a reliable way to increase reserves over time.",
+    img: icon5,
     cardBgClass: colors[1],
   },
   {
-    title: "Simplified Donation Management",
+    title: "Managed Investment Funds",
+    title2: "Maximize long-term financial growth",
     description:
-      "Forget the admin hassle. We handle the complexity of processing diverse donations, issuing automated tax receipts, and consolidating donor data",
-    img: icon7,
+      "Unlock the potential of your donations with managed investment funds that have delivered an average annual return of 24% over the past five years. Our investment strategy is designed for long-term stability and growth, helping your nonprofit secure a sustainable financial future.",
+    img: icon2,
     cardBgClass: colors[2],
   },
   {
-    title: "Global Reach and Fiscal Sponsorship",
+    title: "Global Fiscal Sponsorship",
+    title2: "Access U.S. grants and streamline international giving",
     description:
-      "Unlock new worldwide donor pipelines and accept cross-border gifts through fiscal sponsorship. Expand your global community.",
-    img: icon8,
+      "Our fiscal sponsorship program helps nonprofits outside the U.S. access tax-deductible donations from US donors and simplifies cross-border donations. Expand your reach and grow your donor base without navigating complex legal and tax processes on your own.",
+    img: icon4,
     cardBgClass: colors[3],
   },
 ];

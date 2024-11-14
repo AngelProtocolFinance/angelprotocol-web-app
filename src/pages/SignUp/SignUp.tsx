@@ -1,3 +1,5 @@
+import Seo from "components/Seo";
+import { useRendered } from "hooks/use-rendered";
 import { useState } from "react";
 import ConfirmForm from "./ConfirmForm";
 import SignupForm from "./SignupForm";
@@ -6,6 +8,7 @@ import type { SignupState } from "./types";
 
 export function SignUp() {
   const [state, setState] = useState<SignupState>({ type: "init" });
+  useRendered();
 
   const content = (() => {
     if (state.type === "init") {
@@ -27,6 +30,7 @@ export function SignUp() {
 
   return (
     <div className="grid place-items-center px-4 py-14 text-navy-l1">
+      <Seo title="Sign Up - Better Giving" />
       {content}
     </div>
   );

@@ -1,3 +1,4 @@
+import type { Endow, EndowDesignation } from "@better-giving/endowment";
 import {
   Church,
   Heart,
@@ -6,7 +7,6 @@ import {
   University,
 } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import type { EndowDesignation, EndowmentProfile } from "types/aws";
 
 const icons: {
   [key in EndowDesignation]: typeof Church;
@@ -20,7 +20,7 @@ const icons: {
 
 export default function EndowDesignationTag({
   endow_designation,
-}: Pick<EndowmentProfile, "endow_designation">) {
+}: Pick<Endow, "endow_designation">) {
   if (endow_designation === "Other") return null;
   const Ico = icons[endow_designation];
 

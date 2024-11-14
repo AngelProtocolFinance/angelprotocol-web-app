@@ -15,7 +15,7 @@ export function Options({ classes = "", searchText }: Props) {
 
   const endowments = useEndowmentCardsQuery({
     query: debouncedSearchText,
-    page: 1,
+    page: "1",
     fund_opt_in: "true",
   });
 
@@ -35,7 +35,7 @@ export function Options({ classes = "", searchText }: Props) {
     );
   }
 
-  const endows = endowments.data?.Items;
+  const endows = endowments.data?.items;
   if (!endows) return null;
 
   if (endows.length === 0) {

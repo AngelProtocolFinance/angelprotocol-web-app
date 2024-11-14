@@ -1,5 +1,5 @@
+import type { DonateMethodId } from "@better-giving/endowment";
 import type { TDonateMethod } from "types/components";
-import type { DonateMethodId } from "types/lists";
 
 const methodDetails: {
   [K in DonateMethodId]: Pick<TDonateMethod, "name" | "tooltip">;

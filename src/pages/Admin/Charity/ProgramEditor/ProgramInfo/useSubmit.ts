@@ -2,39 +2,38 @@ import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 
+import type { Program, ProgramUpdate } from "@better-giving/endowment";
 import { cleanObject } from "helpers/cleanObject";
+import { uploadFile } from "helpers/uploadFile";
 import type { SubmitHandler } from "react-hook-form";
 import { useEditProgramMutation } from "services/aws/programs";
-import type { Program, ProgramUpdate } from "types/aws";
 import { useAdminContext } from "../../../Context";
-import { uploadImg } from "../common";
 import type { FV } from "./types";
 
 export default function useSubmit(initProgram: Program) {
   const { id } = useAdminContext();
 
   const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
+  const { handleError, displayError } = useErrorContext();
   const [updateProgram] = useEditProgramMutation();
 
   const submit: SubmitHandler<FV> = async (fv) => {
     try {
-      const imageURL = await uploadImg(fv.image, () => {
-        showModal(
-          Prompt,
-          { type: "loading", children: "Uploading image.." },
-          { isDismissible: false }
-        );
-      });
+      let banner = fv.image.publicUrl;
+      if (fv.image.file) {
+        const obj = await uploadFile(fv.image.file, "endow-profiles");
+        if (!obj) return displayError("Failed to upload program banner");
+        banner = obj.publicUrl;
+      }
 
       const update: ProgramUpdate = {
-        id: initProgram.id,
-        banner: imageURL,
+        banner,
         description: fv.description.value,
         title: fv.title,
       };
 
       await updateProgram({
+        id: initProgram.id,
         endowId: id,
         ...cleanObject(update),
         targetRaise: +fv.targetRaise || null,
