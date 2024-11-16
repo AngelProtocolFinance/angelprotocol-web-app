@@ -20,11 +20,11 @@ We use `yarn` as a package manager. After installing yarn, simply run the packag
 yarn install
 ```
 
-Lastly, we have provided an example `.env` file as `.env.template`.
+Lastly, we have provided an example `.env` file as `.env.example`.
 You'll need to copy this file to `.env` and then modify/add your relevant app's settings, API Keys and the like:
 
 ```shell
-cp .env.template .env
+cp .env.example .env
 ```
 
 To run the web app server locally, simply execute:

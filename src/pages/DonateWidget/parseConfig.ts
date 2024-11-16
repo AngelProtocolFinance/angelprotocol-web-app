@@ -1,5 +1,5 @@
+import type { DonateMethodId } from "@better-giving/endowment";
 import { DONATION_INCREMENTS } from "constants/common";
-import type { DonateMethodId } from "types/lists";
 import {
   type Increment,
   type WidgetConfig,

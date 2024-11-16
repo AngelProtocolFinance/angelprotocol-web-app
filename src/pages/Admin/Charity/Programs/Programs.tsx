@@ -1,5 +1,5 @@
+import type { NewProgram } from "@better-giving/endowment";
 import { useFetcher } from "react-router-dom";
-import type { NewProgram } from "types/aws";
 import List from "./List";
 
 export default function Programs() {

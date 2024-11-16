@@ -8,6 +8,7 @@ const fields: EndowmentSettingsAttributes[] = [
   "hide_bg_tip",
   "progDonationsAllowed",
   "donateMethods",
+  "target",
 ];
 export const loader: LoaderFunction = async ({ params }) =>
   getEndow(params.id, fields);

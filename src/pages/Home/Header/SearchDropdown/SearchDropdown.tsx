@@ -4,12 +4,12 @@ import { Info, LoadingStatus } from "components/Status";
 import { appRoutes } from "constants/routes";
 import { categories } from "constants/unsdgs";
 import { Link, useFetcher } from "react-router-dom";
-import type { EndowPage } from "../../types";
+import type { EndowCardsPage } from "types/aws";
 import { TopCountries } from "./TopCountries";
 
 interface Props {
   query: string;
-  initPage: EndowPage;
+  initPage: EndowCardsPage;
   classes?: string;
 }
 
@@ -18,7 +18,7 @@ export default function SearchDropdown({
   initPage,
   query,
 }: Props) {
-  const { data, state } = useFetcher<EndowPage>({ key: "home" });
+  const { data, state } = useFetcher<EndowCardsPage>({ key: "home" });
 
   return (
     <div
@@ -64,17 +64,17 @@ export default function SearchDropdown({
   );
 }
 
-interface ISearchResult extends EndowPage {
+interface ISearchResult extends EndowCardsPage {
   isLoading: boolean;
   query: string;
 }
 function SearchResult(props: ISearchResult) {
   if (props.isLoading) return <LoadingStatus>Searching...</LoadingStatus>;
-  if (props.Items.length === 0) return <Info>No endowments found.</Info>;
+  if (props.items.length === 0) return <Info>No endowments found.</Info>;
 
   return (
     <div className="flex flex-wrap items-center gap-4">
-      {props.Items.map((endow) => (
+      {props.items.map((endow) => (
         <Link
           to={`${appRoutes.marketplace}/${endow.id}`}
           key={endow.id}
@@ -94,7 +94,7 @@ function SearchResult(props: ISearchResult) {
           <span className="text-navy-l1">{endow.name}</span>
         </Link>
       ))}
-      {props.Page < props.NumOfPages && (
+      {props.page < props.numPages && (
         <Link
           className="w-full text-blue-d1 font-medium text-lg text-center mt-8 block"
           to={{

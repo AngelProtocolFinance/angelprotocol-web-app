@@ -1,9 +1,9 @@
+import type { Allocation } from "@better-giving/endowment";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { humanize } from "helpers";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import type { Allocation } from "types/aws";
 import { allocationOptions, toAllocOptValue } from "./common";
 
 interface Props {

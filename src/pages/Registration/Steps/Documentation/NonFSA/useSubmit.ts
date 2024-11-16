@@ -3,7 +3,8 @@ import type { Update } from "@better-giving/registration/update";
 import { getEndowWithEin } from "api/get/endow-with-ein";
 import { useErrorContext } from "contexts/ErrorContext";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
-import { useFetcher, useNavigate } from "react-router-dom";
+import { useFetcher } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { steps } from "../../../routes";
 import type { FormValues as FV, Props } from "./types";
 

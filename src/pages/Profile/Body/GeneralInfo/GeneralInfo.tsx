@@ -1,6 +1,6 @@
+import type { IMedia, Program } from "@better-giving/endowment";
 import { RichText } from "components/RichText";
 import { useLoaderData } from "react-router-dom";
-import type { Program, Media as TMedia } from "types/aws";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";
@@ -9,7 +9,7 @@ import Programs from "./Programs";
 
 export default function GeneralInfo({ className = "" }) {
   const profile = useProfileContext();
-  const [programs, media] = useLoaderData() as [Program[], TMedia[]];
+  const [programs, media] = useLoaderData() as [Program[], IMedia[]];
   console.log({ programs, media });
 
   return (

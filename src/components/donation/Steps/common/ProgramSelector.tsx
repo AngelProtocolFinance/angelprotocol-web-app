@@ -1,3 +1,4 @@
+import type { Program } from "@better-giving/endowment";
 import {
   Listbox,
   ListboxButton,
@@ -7,7 +8,6 @@ import {
 import { unpack } from "helpers";
 import { Suspense, useEffect } from "react";
 import { Await, useLoaderData } from "react-router-dom";
-import type { Program } from "types/aws";
 import type { OptionType } from "types/components";
 import { DrawerIcon } from "../../../Icon";
 import { DEFAULT_PROGRAM } from "./constants";

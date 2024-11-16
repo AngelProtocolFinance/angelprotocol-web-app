@@ -1,16 +1,16 @@
+import type { Endow } from "@better-giving/endowment";
 import { laira } from "assets/laira/laira";
 import Image from "components/Image/Image";
 import { Info } from "components/Status";
 import { type DonationState, Steps, initDetails } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
 import type { PropsWithChildren } from "react";
-import type { Endowment } from "types/aws";
 import type { WidgetConfig } from "types/widget";
 
 type Props = {
   classes?: string;
   config: WidgetConfig;
-  endow?: Endowment;
+  endow?: Endow;
 };
 export default function Preview({ classes = "", config, endow }: Props) {
   if (!endow) {

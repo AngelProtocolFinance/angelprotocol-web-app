@@ -1,12 +1,12 @@
+import type { Program as IProgram } from "@better-giving/endowment";
 import { RichText } from "components/RichText";
-import { humanize } from "helpers";
+import { prettyUsd } from "helpers";
 import { useLoaderData } from "react-router-dom";
-import type { Program as TProgram } from "types/aws";
 import Container from "../common/Container";
 import Milestones from "./Milestones";
 
 export default function Program({ className = "" }) {
-  const prog = useLoaderData() as TProgram;
+  const prog = useLoaderData() as IProgram;
 
   return (
     <div
@@ -43,7 +43,7 @@ function TargetProgress({ target, total }: ProgressProps) {
     <div className="m-6 border-t border-gray-l4 pt-2 font-heading">
       <div className="mb-2 flex items-center gap-2">
         <p className="font-medium">Target raise:</p>
-        <p className="font-bold text-navy-l1">${humanize(target)}</p>
+        <p className="font-bold text-navy-l1">${prettyUsd(target)}</p>
       </div>
       <div className="h-4 rounded-full bg-gray-l4 relative overflow-clip">
         <div className="h-full bg-green" style={{ width: `${progressPct}%` }} />
@@ -51,7 +51,7 @@ function TargetProgress({ target, total }: ProgressProps) {
       {total ? (
         <div className="mt-1 flex items-center gap-2 text-sm text-navy-l1">
           <p>Donations received</p>
-          <p>${humanize(total)}</p>
+          <p>${prettyUsd(total)}</p>
         </div>
       ) : null}
     </div>

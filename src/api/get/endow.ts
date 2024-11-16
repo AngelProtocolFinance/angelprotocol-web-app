@@ -1,11 +1,11 @@
+import type { Endow } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import { apiEnv } from "services/constants";
-import type { Endowment } from "types/aws";
 import * as v from "valibot";
 
-type K = keyof Endowment;
+type K = keyof Endow;
 type ArrayValues<T extends readonly unknown[]> = T[number];
 
 const segment = v.pipe(
@@ -44,6 +44,6 @@ export async function getEndow<T extends K[]>(
   }
 
   return cacheGet(url).then<
-    T extends K[] ? Pick<Endowment, ArrayValues<T>> : Endowment
+    T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow
   >((res) => res.json());
 }

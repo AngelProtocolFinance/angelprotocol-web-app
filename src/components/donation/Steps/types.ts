@@ -1,10 +1,11 @@
-import type { DonationIntent, Donor, Endowment } from "types/aws";
+import type { DonateMethodId, Endow } from "@better-giving/endowment";
+import type { DonationIntent, Donor } from "types/aws";
 import type {
   DetailedCurrency,
   OptionType,
   TokenWithDetails,
 } from "types/components";
-import type { DonateMethodId, DonationSource } from "types/lists";
+import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
 
@@ -14,7 +15,7 @@ type From<T extends { step: string }, U extends keyof T = never> = Omit<
 > & { [key in U]?: T[key] };
 
 export type DonationRecipient = Pick<
-  Endowment,
+  Endow,
   "id" | "name" | "hide_bg_tip" | "progDonationsAllowed"
 >;
 

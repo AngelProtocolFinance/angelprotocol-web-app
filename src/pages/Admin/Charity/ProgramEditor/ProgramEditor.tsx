@@ -1,8 +1,8 @@
+import type { Program } from "@better-giving/endowment";
 import { adminRoutes } from "constants/routes";
 import { ChevronLeft } from "lucide-react";
 import { useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
-import type { Program } from "types/aws";
 import Form from "./Form";
 
 export default function ProgramEditor() {

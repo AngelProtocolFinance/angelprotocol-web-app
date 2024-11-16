@@ -1,17 +1,18 @@
+import type { Endow } from "@better-giving/endowment";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useRendered } from "hooks/use-rendered";
-import { Outlet, type RouteObject, useLoaderData } from "react-router-dom";
-import type { EndowmentProfile } from "types/aws";
+import { useLoaderData } from "react-router-dom";
+import { Outlet, type RouteObject } from "react-router-dom";
 import { bodyRoute } from "./Body";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 import { profileLoader } from "./profile-loader";
 
 function Profile() {
-  const data = useLoaderData() as EndowmentProfile;
+  const data = useLoaderData() as Endow;
 
   return (
     <ProfileContext.Provider value={data}>

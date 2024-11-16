@@ -1,27 +1,32 @@
 import { Info } from "components/Status";
 import { useEffect, useState } from "react";
 import { useFetcher, useSearchParams } from "react-router-dom";
-import type { Page } from "../types";
+import type { EndowCardsPage } from "types/aws";
 import Card from "./Card";
 
 interface Props {
   classes?: string;
-  firstPage: Page;
+  firstPage: EndowCardsPage;
+}
+
+function next(_page?: EndowCardsPage) {
+  const { page = 1, numPages = 1 } = _page || {};
+  return page < numPages ? page + 1 : undefined;
 }
 
 export default function Cards({ classes = "", firstPage }: Props) {
-  const { data, state, load } = useFetcher<Page>({
+  const { data, state, load } = useFetcher<EndowCardsPage>({
     key: "marketplace",
   }); //initially undefined
   const [params] = useSearchParams();
-  const [items, setItems] = useState(firstPage.Items);
+  const [items, setItems] = useState(firstPage.items);
 
   /**  */
   useEffect(() => {
     if (!data || state === "loading") return;
     if (data) {
-      if (data.Page === 1) return setItems(data.Items);
-      setItems((prev) => [...prev, ...data.Items]);
+      if (data.page === 1) return setItems(data.items);
+      setItems((prev) => [...prev, ...data.items]);
     }
   }, [data, state]);
 
@@ -29,11 +34,9 @@ export default function Cards({ classes = "", firstPage }: Props) {
     return <Info>No organisations found</Info>;
   }
 
-  const hasMore =
-    (data?.Page ?? 1) < (data?.NumOfPages ?? 1 ?? firstPage.NumOfPages);
+  const nextPage = next(data) || next(firstPage);
 
-  function loadNext() {
-    const nextPage = (data?.Page ?? 1) + 1;
+  function loadNext(nextPage: number) {
     const n = new URLSearchParams(params);
     n.set("page", nextPage.toString());
     load(`?${n.toString()}`);
@@ -47,12 +50,12 @@ export default function Cards({ classes = "", firstPage }: Props) {
         <Card {...endow} key={endow.id} />
       ))}
 
-      {hasMore && (
+      {nextPage && (
         <button
           type="button"
           disabled={state === "loading"}
           className="col-span-full btn-blue rounded-md p-2 text-sm w-full mt-6"
-          onClick={loadNext}
+          onClick={() => loadNext(nextPage)}
         >
           Load more organizations
         </button>

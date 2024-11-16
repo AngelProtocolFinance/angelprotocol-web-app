@@ -119,7 +119,10 @@ export default function ActiveFilters() {
         <button
           type="button"
           onClick={() =>
-            setParams(toRaw({}), { replace: true, preventScrollReset: true })
+            setParams(toRaw({ query: "", page: 1 }), {
+              replace: true,
+              preventScrollReset: true,
+            })
           }
           className="text-blue hover:text-blue-l1 text-sm ml-1"
         >

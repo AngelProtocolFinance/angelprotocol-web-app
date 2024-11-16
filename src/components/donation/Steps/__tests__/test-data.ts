@@ -1,8 +1,8 @@
+import type { Endow } from "@better-giving/endowment";
 import type { DonateData } from "api/donate-loader";
-import type { Endowment } from "types/aws";
 import { usdOption } from "../common/constants";
 
-const endow: Endowment = {
+const endow: Endow = {
   id: 1,
   registration_number: "E001",
   name: "Global Education Fund",
@@ -17,6 +17,7 @@ const endow: Endowment = {
   kyc_donors_only: false,
   fiscal_sponsored: true,
   claimed: true,
+  env: "staging",
 };
 
 export const testDonateData: DonateData = {

@@ -1,3 +1,8 @@
+import type { Endow } from "@better-giving/endowment";
+import {
+  MAX_RECEIPT_MSG_CHAR,
+  incrementLabelMaxChars,
+} from "@better-giving/endowment/schema";
 import { Field as HuiField, Input } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
@@ -13,17 +18,14 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { Outlet, useFetcher, useLoaderData } from "react-router-dom";
 import type { EndowmentUpdate } from "services/types";
-import {
-  type Endowment,
-  type EndowmentSettingsAttributes,
-  incrementLabelMaxChars,
-} from "types/aws";
-import { MAX_RECEIPT_MSG_CHAR } from "./constants";
+import type { EndowmentSettingsAttributes } from "types/aws";
+import GoalSelector from "./goal-selector";
+import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 
 export default function Form() {
   const endow = useLoaderData() as Pick<
-    Endowment,
+    Endow,
     "id" | EndowmentSettingsAttributes
   >;
 
@@ -45,6 +47,7 @@ export default function Form() {
       programDonateDisabled: !(endow.progDonationsAllowed ?? true),
       donateMethods: fill(endow.donateMethods),
       increments: endow.increments ?? [],
+      target: toFormTarget(endow.target),
     },
   });
 
@@ -58,6 +61,11 @@ export default function Form() {
     name: "increments",
   });
 
+  const { field: target } = useController({
+    control,
+    name: "target.type",
+  });
+
   const receipMsg = watch("receiptMsg");
   const incs = watch("increments");
 
@@ -69,7 +77,12 @@ export default function Form() {
         reset();
       }}
       onSubmit={handleSubmit(
-        async ({ programDonateDisabled, donateMethods, ...fv }) => {
+        async ({
+          programDonateDisabled,
+          donateMethods,
+          target: fvTarget,
+          ...fv
+        }) => {
           if (endow.id === BG_ID && fv.hide_bg_tip === false) {
             return displayError(
               "BG donation flow should not show BG tip screen"
@@ -77,6 +90,7 @@ export default function Form() {
           }
           const update: EndowmentUpdate = {
             ...fv,
+            target: toTarget(fvTarget),
             progDonationsAllowed: !programDonateDisabled,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
@@ -204,6 +218,20 @@ export default function Form() {
           </>
         )}
       />
+
+      <div>
+        <p className="font-bold mb-3">Donation goal</p>
+        <GoalSelector value={target.value} onChange={target.onChange} />
+        {target.value === "fixed" && (
+          <Field
+            {...register("target.value", { shouldUnregister: true })}
+            label="How much money do you want to raise?"
+            classes="mt-4 mb-6"
+            placeholder="$"
+            error={errors?.target?.value?.message}
+          />
+        )}
+      </div>
 
       <div className="flex gap-3 mt-8">
         <button

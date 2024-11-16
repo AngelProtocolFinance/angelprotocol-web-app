@@ -1,7 +1,7 @@
+import type { MediaPage } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
-import type { MediaPage } from "services/aws/media";
 import { version } from "services/helpers";
 import { parse } from "valibot";
 

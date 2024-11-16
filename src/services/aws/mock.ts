@@ -1,10 +1,7 @@
+import type { EndowsPage } from "@better-giving/endowment";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
-import type {
-  Crypto,
-  EndowListPaginatedAWSQueryRes,
-  EndowmentCard,
-} from "types/aws";
+import type { Crypto } from "types/aws";
 import { version as v } from "../helpers";
 
 export const handlers = [
@@ -12,10 +9,10 @@ export const handlers = [
     return HttpResponse.json();
   }),
   http.get(APIs.aws + `/${v(1)}/cloudsearch-nonprofits`, () => {
-    const data: EndowListPaginatedAWSQueryRes<EndowmentCard[]> = {
-      Items: [],
-      NumOfPages: 1,
-      Page: 1,
+    const data: EndowsPage = {
+      items: [],
+      numPages: 1,
+      page: 1,
     };
     return HttpResponse.json(data);
   }),

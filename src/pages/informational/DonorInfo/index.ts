@@ -2,7 +2,7 @@ import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import type { LoaderFunction } from "react-router-dom";
 import { version as v } from "services/helpers";
-import type { EndowListPaginatedAWSQueryRes, EndowmentCard } from "types/aws";
+import type { EndowCardsPage } from "types/aws";
 
 export { DonorInfo as Component } from "./DonorInfo";
 
@@ -13,5 +13,5 @@ export const loader: LoaderFunction = async () => {
   url.searchParams.set("claimed", "true");
   return cacheGet(url)
     .then((res) => res.json())
-    .then((data: EndowListPaginatedAWSQueryRes<EndowmentCard[]>) => data.Items);
+    .then((data: EndowCardsPage) => data.items);
 };

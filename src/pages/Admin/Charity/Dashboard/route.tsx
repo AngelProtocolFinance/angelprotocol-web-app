@@ -1,8 +1,9 @@
+import type { Allocation } from "@better-giving/endowment";
 import { PromptV2 } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
 import { ErrorElement } from "errors/ErrorElement";
 import type { RouteObject } from "react-router-dom";
-import type { Allocation, BalanceTxsPage, EndowmentBalances } from "types/aws";
+import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import { MoveFundForm } from "./MoveFundForm";
 import { Edit } from "./Schedule";
 import { moveFundAction } from "./move-fund-action";

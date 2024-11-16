@@ -1,4 +1,4 @@
-import type { Program } from "types/aws";
+import type { Program } from "@better-giving/endowment";
 import Milestones from "./Milestones";
 import ProgramInfo from "./ProgramInfo";
 

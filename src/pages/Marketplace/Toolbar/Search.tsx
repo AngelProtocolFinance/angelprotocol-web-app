@@ -2,10 +2,10 @@ import debounce from "lodash/debounce";
 import { SearchIcon } from "lucide-react";
 import type { ChangeEventHandler } from "react";
 import { useFetcher, useSearchParams } from "react-router-dom";
-import type { Page } from "../types";
+import type { EndowCardsPage } from "types/aws";
 
 export default function Search({ classes = "" }: { classes?: string }) {
-  const { load } = useFetcher<Page>({ key: "marketplace" }); //initially undefined
+  const { load } = useFetcher<EndowCardsPage>({ key: "marketplace" }); //initially undefined
   const [params] = useSearchParams();
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const n = new URLSearchParams(params);

@@ -1,3 +1,4 @@
+import type { Milestone as TMilestone } from "@better-giving/endowment";
 import {
   Disclosure,
   DisclosureButton,
@@ -9,7 +10,6 @@ import ImgEditor from "components/ImgEditor/ImgEditor";
 import { RichTextEditor } from "components/RichText";
 import { Field, Label, RhfForm, dateToFormFormat } from "components/form";
 import { useForm } from "react-hook-form";
-import type { Milestone as TMilestone } from "types/aws";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { schema } from "./schema";
 import type { FV } from "./types";

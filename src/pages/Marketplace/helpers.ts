@@ -1,20 +1,21 @@
-import {
-  type EndowQParams,
-  type ParsedEndowQParams,
-  endowQParams,
-} from "types/aws";
+import type {
+  EndowsQueryParams,
+  EndowsQueryParamsParsed,
+} from "@better-giving/endowment";
+import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
 import * as v from "valibot";
 
-export const toRaw = (p: ParsedEndowQParams): URLSearchParams => {
+export const toRaw = (p: EndowsQueryParamsParsed): URLSearchParams => {
   const params = new URLSearchParams();
-  for (const [k, v] of Object.entries(toObj(p))) {
-    if (v) params.set(k, v);
+  for (const [k, v] of Object.entries(toFlat(p))) {
+    if (v) params.set(k, v as any);
   }
   return params;
 };
 
-export const toObj = (p: ParsedEndowQParams): EndowQParams => {
-  const raw: EndowQParams = {
+export const toFlat = (p: EndowsQueryParamsParsed): EndowsQueryParams => {
+  const raw: EndowsQueryParams = {
+    page: p.page.toString(),
     query: p.query,
     sdgs: p.sdgs?.join(","),
     kyc_only: p.kyc_only?.join(","),
@@ -25,10 +26,10 @@ export const toObj = (p: ParsedEndowQParams): EndowQParams => {
   return raw;
 };
 
-export const toParsed = (raw: URLSearchParams): ParsedEndowQParams => {
+export const toParsed = (raw: URLSearchParams): EndowsQueryParamsParsed => {
   const obj: any = {};
   for (const [k, v] of raw.entries()) {
     obj[k] = v;
   }
-  return v.parse(endowQParams, obj);
+  return v.parse(endowsQueryParams, obj);
 };

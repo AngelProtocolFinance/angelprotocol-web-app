@@ -1,8 +1,9 @@
+import type { ProgramUpdate } from "@better-giving/endowment";
 import { uploadFile } from "helpers/uploadFile";
-import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
+import type { FieldNamesMarkedBoolean } from "react-hook-form";
+import type { SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router-dom";
 import { toast } from "sonner";
-import type { ProgramUpdate } from "types/aws";
 import type { FV } from "./types";
 
 export default function useSubmit(

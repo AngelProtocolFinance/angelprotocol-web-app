@@ -1,3 +1,4 @@
+import type { Allocation } from "@better-giving/endowment";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
 import { ENVIRONMENT } from "constants/env";
@@ -5,7 +6,7 @@ import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunction, defer } from "react-router-dom";
 import { version as ver } from "services/helpers";
-import type { Allocation, BalanceTxsPage, EndowmentBalances } from "types/aws";
+import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import type { DashboardData } from "./route";
 

@@ -1,3 +1,4 @@
+import type { DonateMethodId } from "@better-giving/endowment";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { List } from "components/Selector";
 import {
@@ -8,7 +9,6 @@ import {
 } from "components/form";
 import { useController, useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
-import type { DonateMethodId } from "types/lists";
 import { mixed, string } from "yup";
 import ContinueBtn from "../common/ContinueBtn";
 import { initDonorTitleOption } from "../common/constants";

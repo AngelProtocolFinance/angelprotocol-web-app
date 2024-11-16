@@ -1,8 +1,9 @@
+import type { Endow, Program } from "@better-giving/endowment";
 import { loadAuth } from "auth/load-auth";
 import { decodeState } from "helpers/state-params";
 import { type LoaderFunction, defer } from "react-router-dom";
 import type { UserV2 } from "types/auth";
-import type { DonationIntent, EndowmentProfile, Program } from "types/aws";
+import type { DonationIntent } from "types/aws";
 import * as v from "valibot";
 import { getEndow } from "./get/endow";
 import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
@@ -12,7 +13,7 @@ import { plusInt } from "./schema/endow-id";
 export interface DonateData {
   id: number;
   intent: DonationIntent.ToResume | null;
-  endow: EndowmentProfile;
+  endow: Endow;
   user: UserV2 | null;
   /** need to await */
   currencies: Promise<FiatCurrencies>;

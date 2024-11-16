@@ -1,8 +1,8 @@
+import type { Program } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import { version as ver } from "services/helpers";
-import type { Program } from "types/aws";
 import { parse } from "valibot";
 
 export async function getPrograms(endowIdParam: number | string | undefined) {

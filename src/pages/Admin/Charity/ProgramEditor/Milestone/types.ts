@@ -1,6 +1,6 @@
+import type { Milestone } from "@better-giving/endowment";
 import type { ImgLink } from "components/ImgEditor";
 import type { OverrideProperties } from "type-fest";
-import type { Milestone } from "types/aws";
 import type { RichTextContent } from "types/components";
 
 export type FV = OverrideProperties<

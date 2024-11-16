@@ -1,3 +1,4 @@
+import type { EndowDesignation } from "@better-giving/endowment";
 import countries from "assets/countries/all.json";
 import { ControlledCountrySelector as CountrySelector } from "components/CountrySelector";
 import ExtLink from "components/ExtLink";
@@ -11,7 +12,6 @@ import { Form as F, NativeField as Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import { Outlet } from "react-router-dom";
-import type { EndowDesignation } from "types/aws";
 import Slug from "./Slug";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";

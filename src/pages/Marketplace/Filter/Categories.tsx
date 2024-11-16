@@ -1,11 +1,12 @@
+import type { UnSdgNum } from "@better-giving/schemas";
 import { categories } from "constants/unsdgs";
 import { useSearchParams } from "react-router-dom";
-import type { SDGGroup, UNSDG_NUMS } from "types/lists";
+import type { SDGGroup } from "types/lists";
 import { toParsed, toRaw } from "../helpers";
 import { FlatFilter } from "./common";
 
 const groups = Object.entries(categories).map(
-  ([group, val]) => [+group, val.sdgs] as [SDGGroup, UNSDG_NUMS[]]
+  ([group, val]) => [+group, val.sdgs] as [SDGGroup, UnSdgNum[]]
 );
 
 export default function Categories() {
@@ -25,7 +26,7 @@ export default function Categories() {
         displayText: name,
       }))}
       onChange={(values) => {
-        const n = [];
+        const n: UnSdgNum[] = [];
         for (const v of values) {
           n.push(...categories[v].sdgs);
         }

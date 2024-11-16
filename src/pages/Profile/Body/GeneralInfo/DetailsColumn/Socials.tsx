@@ -1,3 +1,4 @@
+import type { Endow } from "@better-giving/endowment";
 import discordIcon from "assets/icons/social/discord.svg";
 import facebookIcon from "assets/icons/social/facebook.png";
 import instagramIcon from "assets/icons/social/instagram.png";
@@ -6,11 +7,8 @@ import tiktokIcon from "assets/icons/social/tiktok.png";
 import xIcon from "assets/icons/social/x.png";
 import youtubeIcon from "assets/icons/social/youtube.png";
 import ExtLink from "components/ExtLink";
-import type { EndowmentProfile } from "types/aws";
 
-export default function Socials(
-  props: Pick<EndowmentProfile, "social_media_urls">
-) {
+export default function Socials(props: Pick<Endow, "social_media_urls">) {
   const { facebook, linkedin, twitter, discord, instagram, youtube, tiktok } =
     props.social_media_urls;
   return (

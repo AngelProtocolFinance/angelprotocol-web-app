@@ -1,15 +1,9 @@
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  Field,
-  Label,
-  Switch,
-} from "@headlessui/react";
+import type { Allocation } from "@better-giving/endowment";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { Field, Label, Switch } from "@headlessui/react";
 import { useState } from "react";
 import { useFetcher, useNavigate, useRouteLoaderData } from "react-router-dom";
 import type { EndowmentUpdate } from "services/types";
-import type { Allocation } from "types/aws";
 import type { DashboardData } from "../route";
 import { AllocationOptions } from "./AllocationOptions";
 import { AllocationSlider } from "./AllocationSlider";

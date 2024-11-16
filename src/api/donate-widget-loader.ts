@@ -1,10 +1,10 @@
+import type { Endow, Program } from "@better-giving/endowment";
 import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunction, defer } from "react-router-dom";
 import { version as ver } from "services/helpers";
-import type { Endowment, EndowmentOption, Program } from "types/aws";
-import type { EndowListPaginatedAWSQueryRes } from "types/aws";
+import type { EndowOptionsPage, EndowmentOption } from "types/aws";
 import * as v from "valibot";
 import { getEndow } from "./get/endow";
 import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
@@ -12,7 +12,7 @@ import { getPrograms } from "./get/programs";
 import { plusInt } from "./schema/endow-id";
 
 export interface WidgetData {
-  endow?: Endowment;
+  endow?: Endow;
   /** need to await */
   currencies: Promise<FiatCurrencies>;
   endows: EndowmentOption[];
@@ -50,6 +50,6 @@ async function getEndows(query: string) {
   url.searchParams.set("query", query);
 
   return cacheGet(url)
-    .then<EndowListPaginatedAWSQueryRes<EndowmentOption[]>>((res) => res.json())
-    .then((data) => data.Items);
+    .then<EndowOptionsPage>((res) => res.json())
+    .then((data) => data.items);
 }

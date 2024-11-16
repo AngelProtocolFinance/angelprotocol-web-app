@@ -1,3 +1,5 @@
+import type { Endow } from "@better-giving/endowment";
+import { incrementLabelMaxChars } from "@better-giving/endowment/schema";
 import { Field as HuiField, Input } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods } from "components/DonateMethods";
@@ -15,14 +17,13 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
-import { type Endowment, incrementLabelMaxChars } from "types/aws";
 import { type WidgetConfig, widgetConfig } from "types/widget";
 import { EndowmentSelector } from "./EndowmentSelector";
 import type { FormValues } from "./types";
 
 type Props = {
   classes?: string;
-  endow?: Endowment;
+  endow?: Endow;
   config: WidgetConfig;
   setConfig: Dispatch<SetStateAction<WidgetConfig>>;
 };

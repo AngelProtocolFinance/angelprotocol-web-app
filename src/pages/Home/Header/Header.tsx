@@ -8,7 +8,7 @@ import {
   useRouteLoaderData,
 } from "react-router-dom";
 import type { DetailedUser } from "types/auth";
-import type { EndowPage } from "../types";
+import type { EndowCardsPage } from "types/aws";
 import SearchDropdown from "./SearchDropdown";
 import SearchField from "./SearchField";
 
@@ -16,7 +16,7 @@ type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
   const user = useRouteLoaderData("root") as DetailedUser | null;
-  const firstPage = useLoaderData() as EndowPage;
+  const firstPage = useLoaderData() as EndowCardsPage;
   const location = useLocation();
   const [query, setQuery] = useState("");
   const isInAuth = authRoutes.includes(location.pathname);

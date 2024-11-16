@@ -1,6 +1,6 @@
+import type { Endow } from "@better-giving/endowment";
 import { APIs } from "constants/urls";
 import { version as v } from "services/helpers";
-import type { Endowment } from "types/aws";
 
 export const getEndowWithEin = async (ein: string) => {
   const url = new URL(APIs.aws);
@@ -10,5 +10,5 @@ export const getEndowWithEin = async (ein: string) => {
 
   if (!res.ok) throw await res.text();
 
-  return res.json() as Promise<Endowment>;
+  return res.json() as Promise<Endow>;
 };

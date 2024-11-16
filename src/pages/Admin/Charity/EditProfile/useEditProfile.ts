@@ -4,6 +4,7 @@ import { uploadFile } from "helpers/uploadFile";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router-dom";
 import type { EndowmentProfileUpdate } from "types/aws";
+
 import type { UNSDG_NUMS } from "types/lists";
 import type { FV } from "./schema";
 
@@ -54,7 +55,7 @@ export default function useEditProfile(df: DirtyFields) {
       if (df.sdgs)
         update.sdgs = fv.sdgs.map((sdg) => sdg.value) as UNSDG_NUMS[];
       if (df.endow_designation)
-        update.endow_designation = fv.endow_designation.value;
+        update.endow_designation = fv.endow_designation.value || undefined;
 
       if (df.hq_country) update.hq_country = fv.hq_country.name;
       if (df.active_in_countries) {

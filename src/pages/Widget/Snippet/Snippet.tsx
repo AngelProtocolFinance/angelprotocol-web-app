@@ -1,14 +1,14 @@
+import type { Endow } from "@better-giving/endowment";
 import Copier from "components/Copier";
 import { DONATION_INCREMENTS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { cleanObject } from "helpers/cleanObject";
-import type { Endowment } from "types/aws";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
 
 type Props = {
   classes?: string;
   config: WidgetConfig;
-  endow?: Endowment;
+  endow?: Endow;
 };
 export default function Snippet({ classes = "", config, endow }: Props) {
   const widgetURL = widgetURLfn(config, endow?.id);

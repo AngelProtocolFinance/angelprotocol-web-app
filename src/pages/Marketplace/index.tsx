@@ -3,26 +3,29 @@ import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunction, Outlet, useLoaderData } from "react-router-dom";
 import { version as v } from "services/helpers";
+import type { EndowCardsPage } from "types/aws";
 import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
-import type { Page } from "./types";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);
   const page = +(source.searchParams.get("page") ?? "1");
+  const q = source.searchParams.get("query") ?? "";
   const s = new URLSearchParams(source.searchParams);
   s.set("page", page.toString());
+  s.set("query", q);
   const url = new URL(APIs.aws);
   url.pathname = `${v(1)}/cloudsearch-nonprofits`;
   url.search = s.toString();
 
-  return cacheGet(url);
+  return cacheGet(url).then((res) => res.json());
 };
 
 export function Component() {
-  const page1 = useLoaderData() as Page;
+  const page1 = useLoaderData() as EndowCardsPage;
+  console.log({ page1 });
   return (
     <div className="w-full grid content-start pb-16">
       <Seo title="Marketplace" />

@@ -1,9 +1,10 @@
+import type { Program as TProgram } from "@better-giving/endowment";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { adminRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
-import { Link, useFetcher } from "react-router-dom";
-import type { Program as TProgram } from "types/aws";
+import { useFetcher } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export function Program(props: TProgram) {
   const fetcher = useFetcher();

@@ -1,9 +1,9 @@
+import type { Endow, EndowDesignation } from "@better-giving/endowment";
 import { getEndow } from "api/get/endow";
 import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
 import { unsdgs } from "constants/unsdgs";
 import { type LoaderFunction, useLoaderData } from "react-router-dom";
-import type { EndowmentProfile as TProfile } from "types/aws";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
@@ -12,7 +12,7 @@ export const loader: LoaderFunction = async ({ params }) => getEndow(params.id);
 export { action } from "../endow-update-action";
 
 export function Component() {
-  const endow = useLoaderData() as TProfile;
+  const endow = useLoaderData() as Endow;
   const defaults: FV = {
     name: endow.name,
     published: !!endow.published,
@@ -43,7 +43,7 @@ export function Component() {
     },
     endow_designation: endow.endow_designation
       ? { label: endow.endow_designation, value: endow.endow_designation }
-      : { label: "", value: "" },
+      : { label: "", value: "" as EndowDesignation },
     hq_country: country(endow.hq_country),
     sdgs: endow.sdgs.map((x) => getSDGLabelValuePair(x, unsdgs[x].title)),
     active_in_countries: endow.active_in_countries.map((x) => ({
