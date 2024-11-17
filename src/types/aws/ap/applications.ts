@@ -44,7 +44,6 @@ export type BankingApplicationsPage = {
 
 export const approval = v.object({
   type: v.literal(bankApplicationStatuses[1]),
-  reason: v.optional(v.never()),
 });
 
 export const rejection = v.object({
@@ -53,17 +52,27 @@ export const rejection = v.object({
 });
 export const priority = v.object({
   type: v.literal("prioritize"),
-  reason: v.optional(v.never()),
 });
 
-export const bankingApplicationUpdate = v.variant("type", [
-  approval,
-  rejection,
-  priority,
-]);
+export const bankingApplicationUpdate = v.pipe(
+  v.object({
+    type: bankingApplicationStatus,
+    reason: v.optional(v.string()),
+  }),
+  v.forward(
+    v.partialCheck(
+      [["type"], ["reason"]],
+      (input) => (input.type === "rejected" ? !!input.reason : true),
+      "required"
+    ),
+    ["reason"]
+  )
+);
 
 export interface Approval extends v.InferOutput<typeof approval> {}
 export interface Rejection extends v.InferOutput<typeof rejection> {}
 export interface Priority extends v.InferOutput<typeof priority> {}
 
-export type BankingApplicationUpdate = Approval | Rejection | Priority;
+export type BankingApplicationUpdate = v.InferOutput<
+  typeof bankingApplicationUpdate
+>;

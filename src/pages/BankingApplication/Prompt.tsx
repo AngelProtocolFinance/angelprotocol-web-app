@@ -1,9 +1,4 @@
-import {
-  getFormProps,
-  getInputProps,
-  getTextareaProps,
-  useForm,
-} from "@conform-to/react";
+import { getFormProps, getTextareaProps, useForm } from "@conform-to/react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { ChevronRight, X } from "lucide-react";
@@ -39,7 +34,7 @@ export function Prompt(props: Props) {
 
 function Content({ verdict }: Props) {
   const fetcher = useFetcher<ActionData<any>>({
-    key: "banking-application-verdict",
+    key: `banking-application-${verdict}`,
   });
 
   const [form, fields] = useForm({
@@ -57,12 +52,7 @@ function Content({ verdict }: Props) {
       action="."
       className="grid content-start justify-items-center text-navy-d4"
     >
-      <input
-        {...getInputProps(fields.type, {
-          type: "hidden",
-          value: verdict as any,
-        })}
-      />
+      <input type="hidden" value={verdict} name="type" />
       <div className="relative w-full">
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
           Banking application
@@ -106,10 +96,10 @@ function Content({ verdict }: Props) {
             Reason for rejection:
           </label>
           <textarea
-            className="field-input"
             {...getTextareaProps(fields.reason)}
+            className="field-input"
           />
-          <span className="empty:hidden text-xs text-red">
+          <span className="empty:hidden text-xs text-red mt-1">
             {fields.reason.errors?.[0]}
           </span>
         </div>
@@ -125,11 +115,7 @@ function Content({ verdict }: Props) {
         >
           Cancel
         </Link>
-        <button
-          disabled={fetcher.state !== "idle"}
-          type="submit"
-          className="btn-blue px-8 py-2 text-sm"
-        >
+        <button type="submit" className="btn-blue px-8 py-2 text-sm">
           Submit
         </button>
       </div>
