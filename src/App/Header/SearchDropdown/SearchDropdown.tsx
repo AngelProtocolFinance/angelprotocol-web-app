@@ -75,7 +75,7 @@ export default function SearchDropdown({ classes = "", query }: Props) {
           messages={{
             loading: "Searching...",
             fetching: "Searching...",
-            empty: "No endowments found",
+            empty: "No organizations found",
           }}
         >
           {(endows) => (
