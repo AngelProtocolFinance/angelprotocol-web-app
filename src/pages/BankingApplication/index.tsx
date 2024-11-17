@@ -25,19 +25,17 @@ const loader: LoaderFunction = async ({ params }) => {
 };
 
 const verdicAction: ActionFunction = async ({ params, request }) => {
-  console.log({ request });
   const auth = await loadAuth();
   if (!auth) throw "auth is required up higher";
 
   const fv = await request.formData();
   const payload = parseWithValibot(fv, { schema: bankingApplicationUpdate });
-  console.log(payload);
   if (payload.status !== "success") return payload.reply();
 
-  const bankId = v.parse(plusInt, params.bankId);
+  const bankId = v.parse(plusInt, params.id);
   const res = await bankUpdate(bankId, payload.value, auth.idToken);
   if (!res.ok) throw res;
-  return redirect("success");
+  return redirect("../success");
 };
 
 export const bankApplicationRoute: RouteObject = {
