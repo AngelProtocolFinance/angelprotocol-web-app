@@ -42,21 +42,13 @@ export type BankingApplicationsPage = {
   nextPageKey?: string; //base64 encoded string
 };
 
-export const approval = v.object({
-  type: v.literal(bankApplicationStatuses[1]),
-});
-
-export const rejection = v.object({
-  type: v.literal(bankApplicationStatuses[2]),
-  reason: v.pipe(v.string("required"), v.trim(), v.nonEmpty("required")),
-});
-export const priority = v.object({
-  type: v.literal("prioritize"),
-});
-
 export const bankingApplicationUpdate = v.pipe(
   v.object({
-    type: bankingApplicationStatus,
+    type: v.picklist([
+      bankApplicationStatuses[1],
+      bankApplicationStatuses[2],
+      "prioritize",
+    ]),
     reason: v.optional(v.string()),
   }),
   v.forward(
@@ -68,10 +60,6 @@ export const bankingApplicationUpdate = v.pipe(
     ["reason"]
   )
 );
-
-export interface Approval extends v.InferOutput<typeof approval> {}
-export interface Rejection extends v.InferOutput<typeof rejection> {}
-export interface Priority extends v.InferOutput<typeof priority> {}
 
 export type BankingApplicationUpdate = v.InferOutput<
   typeof bankingApplicationUpdate

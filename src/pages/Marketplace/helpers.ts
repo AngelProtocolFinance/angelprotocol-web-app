@@ -15,7 +15,7 @@ export const toRaw = (p: EndowsQueryParamsParsed): URLSearchParams => {
 
 export const toFlat = (p: EndowsQueryParamsParsed): EndowsQueryParams => {
   const raw: EndowsQueryParams = {
-    page: p.page.toString(),
+    page: p.page?.toString(),
     query: p.query,
     sdgs: p.sdgs?.join(","),
     kyc_only: p.kyc_only?.join(","),
