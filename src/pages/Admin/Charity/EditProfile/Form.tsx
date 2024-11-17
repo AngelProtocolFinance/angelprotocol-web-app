@@ -310,10 +310,10 @@ export default function Form({ initSlug = "", init, id }: Props) {
         }`}
       >
         {rhf.published.value ? (
-          <Confirmed>Your endowment is visible in the marketplace</Confirmed>
+          <Confirmed>Your profile is visible in the marketplace</Confirmed>
         ) : (
           <Info classes="text-amber">
-            Your endowment is not visible in the marketplace
+            Your profile is not visible in the marketplace
           </Info>
         )}
         <div className="flex items-center gap-x-2">
