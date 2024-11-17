@@ -74,7 +74,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
           {...rhf.register("registration_number")}
           classes="field-admin"
           name="registration_number"
-          label="Organization’s registration number"
+          label="EIN / Registration#"
           error={rhf.errors.registration_number?.message}
           required
         />
