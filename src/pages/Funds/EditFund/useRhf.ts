@@ -1,5 +1,6 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { parseContent } from "components/RichText";
 import { useController, useForm } from "react-hook-form";
 import { type FV, schema } from "./schema";
 
@@ -15,7 +16,7 @@ export function useRhf(init: SingleFund) {
     resolver: valibotResolver(schema),
     values: {
       name: init.name,
-      description: init.description,
+      description: parseContent(init.description),
       target:
         init.target === "0"
           ? { type: "none" }
@@ -30,6 +31,11 @@ export function useRhf(init: SingleFund) {
   const { field: targetType } = useController({
     control,
     name: "target.type",
+  });
+
+  const { field: desc } = useController({
+    control,
+    name: "description",
   });
 
   const { field: logo } = useController({ control, name: "logo" });
@@ -48,5 +54,6 @@ export function useRhf(init: SingleFund) {
     targetType,
     logo,
     banner,
+    desc,
   };
 }

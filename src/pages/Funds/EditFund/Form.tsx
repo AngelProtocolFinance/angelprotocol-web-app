@@ -2,6 +2,7 @@ import type { SingleFund } from "@better-giving/fundraiser";
 import type { FundUpdate } from "@better-giving/fundraiser/schema";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
+import { RichText } from "components/RichText";
 import { NativeField as Field, Form as Frm } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
@@ -10,7 +11,7 @@ import type { SubmitHandler } from "react-hook-form";
 import { useCloseFundMutation, useEditFundMutation } from "services/aws/funds";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { FeatureBanner } from "./FeatureBanner";
-import type { FV } from "./schema";
+import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
 import { useRhf } from "./useRhf";
 
 export function Form({
@@ -53,7 +54,8 @@ export function Form({
       }
 
       if (rhf.dirtyFields.name) update.name = fv.name;
-      if (rhf.dirtyFields.description) update.description = fv.description;
+      if (rhf.dirtyFields.description)
+        update.description = fv.description.value;
 
       await editFund({
         ...update,
@@ -98,20 +100,26 @@ export function Form({
         error={rhf.errors.name?.message}
         classes={{ label: "font-medium text-base" }}
       />
-      <Field
-        type="textarea"
-        {...rhf.register("description")}
-        label="Description"
-        required
+      <label className="label font-medium mt-4 mb-1" data-required>
+        Description
+      </label>
+      <RichText
+        ref={rhf.desc.ref}
+        content={rhf.desc.value}
+        onChange={rhf.desc.onChange}
+        placeHolder="A short overview of your organization"
+        charLimit={MAX_DESCRIPTION_CHARS}
         classes={{
-          container: "mt-4",
-          label: "font-medium text-base",
-          input:
-            "whitespace-pre-wrap supports-[field-sizing]:[field-sizing:content]",
+          field:
+            "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+          counter: "text-navy-l1 dark:text-navy-l2",
+          error: "text-right",
         }}
-        error={rhf.errors.description?.message}
+        error={
+          rhf.errors.description?.value?.message ||
+          rhf.errors.description?.length?.message
+        }
       />
-
       <label className="text-lg font-medium block mb-2 mt-4">Logo</label>
       <ImgEditor
         disabled={rhf.isSubmitting}

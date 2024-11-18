@@ -1,3 +1,4 @@
+import { richTextContent } from "types/components";
 import * as v from "valibot";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES, target } from "../common";
 
@@ -21,9 +22,13 @@ export const imgLink = v.object({
   ...fileObject.entries,
 });
 
+export const MAX_DESCRIPTION_CHARS = 500;
 export const schema = v.object({
   name: v.pipe(str, v.nonEmpty("required")),
-  description: v.pipe(str, v.nonEmpty("required")),
+  description: richTextContent({
+    maxChars: MAX_DESCRIPTION_CHARS,
+    required: true,
+  }),
   target,
   banner: imgLink,
   logo: imgLink,
