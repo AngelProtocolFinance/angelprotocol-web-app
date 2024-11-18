@@ -8,7 +8,7 @@ export const parseContent = (content?: string): RichTextContent => {
     const delta = new Delta(ops);
     return { value: content, length: delta.length() - 1 };
   } catch (_) {
-    return { length: 0, value: "" };
+    return { length: content.length, value: content };
   }
 };
 
@@ -16,6 +16,6 @@ export const toDelta = (content: RichTextContent): Delta => {
   try {
     return new Delta(JSON.parse(content.value));
   } catch (_) {
-    return new Delta();
+    return new Delta([{ insert: content.value }]);
   }
 };

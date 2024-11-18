@@ -1,3 +1,4 @@
+import { richTextContent } from "types/components";
 import * as v from "valibot";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES, target } from "../common";
 
@@ -30,9 +31,14 @@ export const settings = v.object({
   allowBgTip: v.boolean(),
 });
 
+export const MAX_DESCRIPTION_CHAR = 500;
+
 export const schema = v.object({
   name: v.pipe(str, v.nonEmpty("required")),
-  description: v.pipe(str, v.nonEmpty("required")),
+  description: richTextContent({
+    maxChars: MAX_DESCRIPTION_CHAR,
+    required: true,
+  }),
   banner: imgLink,
   logo: imgLink,
   members: v.pipe(

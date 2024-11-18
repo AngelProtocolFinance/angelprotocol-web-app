@@ -2,6 +2,7 @@ import type { NewFund } from "@better-giving/fundraiser/schema";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
+import { RichText } from "components/RichText";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
@@ -22,7 +23,7 @@ import { useLazyProfileQuery } from "services/aws/aws";
 import { useCreateFundMutation } from "services/aws/funds";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { EndowmentSelector } from "./EndowmentSelector";
-import { type FV, schema } from "./schema";
+import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
 
 export default withAuth(function CreateFund() {
   const {
@@ -62,6 +63,10 @@ export default withAuth(function CreateFund() {
     control,
     name: "target.type",
   });
+  const { field: desc } = useController({
+    control,
+    name: "description",
+  });
 
   const customAllowBgTipRef = useRef(true);
   const endowReqRef = useRef<string>();
@@ -87,7 +92,7 @@ export default withAuth(function CreateFund() {
 
       const fund: NewFund = {
         name: fv.name,
-        description: fv.description,
+        description: fv.description.value,
         banner: _banner.publicUrl,
         logo: _logo.publicUrl,
         members: fv.members.map((m) => m.id),
@@ -150,13 +155,25 @@ export default withAuth(function CreateFund() {
           error={errors.name?.message}
           classes={{ label: "font-medium" }}
         />
-        <Field
-          type="textarea"
-          {...register("description")}
-          label="Description"
-          required
-          classes={{ container: "mt-4", label: "font-medium" }}
-          error={errors.description?.message}
+        <label className="label font-medium mt-4 mb-1" data-required>
+          Description
+        </label>
+        <RichText
+          ref={desc.ref}
+          content={desc.value}
+          onChange={desc.onChange}
+          placeHolder="A short overview of your organization"
+          charLimit={MAX_DESCRIPTION_CHAR}
+          classes={{
+            field:
+              "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
+            counter: "text-navy-l1 dark:text-navy-l2",
+            error: "text-right",
+          }}
+          error={
+            errors.description?.value?.message ||
+            errors.description?.length?.message
+          }
         />
 
         <EndowmentSelector
