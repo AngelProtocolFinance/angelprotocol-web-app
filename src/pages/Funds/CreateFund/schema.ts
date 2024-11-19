@@ -26,11 +26,6 @@ export const endowOption = v.object({
   logo: v.optional(v.pipe(str, v.url())),
 });
 
-export const settings = v.object({
-  from: str,
-  allowBgTip: v.boolean(),
-});
-
 export const MAX_DESCRIPTION_CHAR = 500;
 
 export const schema = v.object({
@@ -47,7 +42,6 @@ export const schema = v.object({
     v.maxLength(10, "cannot contain more than 10 endowments")
   ),
   featured: v.boolean(),
-  settings,
   expiration: v.optional(
     v.lazy((val) => {
       if (!val) return v.string();

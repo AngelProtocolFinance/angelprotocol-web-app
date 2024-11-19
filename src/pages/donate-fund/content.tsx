@@ -44,7 +44,7 @@ function Content({ fund }: Props) {
             recipient={{
               id: fund.id,
               name: fund.name,
-              hide_bg_tip: !fund.settings.allowBgTip,
+              hide_bg_tip: !fund.allow_bg_tip,
               progDonationsAllowed: false,
             }}
             config={null}

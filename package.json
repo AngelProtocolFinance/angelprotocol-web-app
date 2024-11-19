@@ -34,7 +34,7 @@
     "@better-giving/assets": "1.0.18",
     "@better-giving/donation": "1.0.1",
     "@better-giving/endowment": "1.0.29",
-    "@better-giving/fundraiser": "1.0.0-rc.10",
+    "@better-giving/fundraiser": "1.0.2",
     "@better-giving/registration": "1.0.24",
     "@better-giving/schemas": "1.0.1",
     "@better-giving/types": "1.0.1",

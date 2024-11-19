@@ -1,4 +1,4 @@
-import type { Fields } from "@better-giving/fundraiser/cloudsearch";
+import type { FundItem } from "@better-giving/fundraiser";
 import { useFundsEndowMemberOfQuery } from "services/aws/endow-funds";
 
 interface Props {
@@ -26,7 +26,7 @@ export function Fundraisers({ endowId, classes = "" }: Props) {
   );
 }
 
-function Fund(props: Fields) {
+function Fund(props: FundItem) {
   return (
     <div className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1 py-2">
       <img

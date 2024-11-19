@@ -9,17 +9,13 @@ import {
   Form,
   Label,
 } from "components/form";
-import { APP_NAME } from "constants/env";
 import { appRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { logger } from "helpers";
 import { uploadFile } from "helpers/uploadFile";
-import { useRef } from "react";
 import { type SubmitHandler, useController, useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
-import { useLazyProfileQuery } from "services/aws/aws";
 import { useCreateFundMutation } from "services/aws/funds";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { EndowmentSelector } from "./EndowmentSelector";
@@ -32,9 +28,7 @@ export default withAuth(function CreateFund() {
     trigger,
     resetField,
     handleSubmit,
-    setValue,
     formState: { errors, isSubmitting },
-    watch,
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     defaultValues: {
@@ -44,10 +38,6 @@ export default withAuth(function CreateFund() {
       banner: { preview: "", publicUrl: "" },
       featured: true,
       members: [],
-      settings: {
-        from: "fund",
-        allowBgTip: true,
-      },
       target: {
         type: "smart",
       },
@@ -68,14 +58,9 @@ export default withAuth(function CreateFund() {
     name: "description",
   });
 
-  const customAllowBgTipRef = useRef(true);
-  const endowReqRef = useRef<string>();
-
-  const [getEndow] = useLazyProfileQuery();
   const [createFund] = useCreateFundMutation();
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
-  const settings = watch("settings");
 
   const onSubmit: SubmitHandler<FV> = async ({ banner, logo, ...fv }) => {
     try {
@@ -97,9 +82,6 @@ export default withAuth(function CreateFund() {
         logo: _logo.publicUrl,
         members: fv.members.map((m) => m.id),
         featured: fv.featured,
-        settings: {
-          allowBgTip: fv.settings.allowBgTip,
-        },
         target:
           fv.target.type === "none"
             ? `${0}`
@@ -180,43 +162,7 @@ export default withAuth(function CreateFund() {
           classes="mt-4"
           ref={members.ref}
           values={members.value}
-          onChange={async (curr) => {
-            members.onChange(curr);
-            if (curr.length === 0 || curr.length > 1) {
-              //invalidate pending request
-              endowReqRef.current = undefined;
-              return setValue("settings", {
-                from: "fund",
-                allowBgTip: customAllowBgTipRef.current,
-              });
-            }
-
-            //set settings if applicable
-            try {
-              const [opt] = curr;
-              const endowReq = getEndow(
-                {
-                  id: opt.id,
-                  fields: ["hide_bg_tip", "name"],
-                },
-                true
-              );
-
-              endowReqRef.current = endowReq.requestId;
-
-              const endow = await endowReq.unwrap();
-
-              // more recent onChange invalidated this result
-              if (!endowReqRef.current) return;
-
-              setValue("settings", {
-                from: endow.name,
-                allowBgTip: !endow.hide_bg_tip,
-              });
-            } catch (err) {
-              logger.error(err);
-            }
-          }}
+          onChange={members.onChange}
           error={errors.members?.message}
         />
 
@@ -296,31 +242,6 @@ export default withAuth(function CreateFund() {
           Featured in funds page
         </CheckField>
 
-        <h4 className="font-bold text-xl mb-2 mt-12">Donate form settings</h4>
-        <p className="text-sm text-navy-l1">
-          {settings.from !== "fund" &&
-            `${withPossesive(settings.from)} config has been applied`}
-        </p>
-
-        <CheckField
-          {...register("settings.allowBgTip")}
-          disabled={settings.from !== "fund"}
-          classes="font-medium mt-8"
-          onChange={(e) => {
-            customAllowBgTipRef.current = e.target.checked;
-          }}
-        >
-          Allow tips to {APP_NAME}
-        </CheckField>
-        <p className="text-xs sm:text-sm text-navy-l1 mt-2">
-          During the donation flow, there is a step in which users can choose to
-          tip {APP_NAME} any amount they desire alongside their donation to this
-          fund. The amount they tip will not affect the donation amount this
-          fund receives. You may choose to turn this step off in the donation
-          flow and we will instead apply a fixed 2.9% fee to the amount donated
-          to this fund.
-        </p>
-
         <button
           type="submit"
           className="mt-8 btn-blue text-sm font-medium px-4 py-2 justify-self-end"
@@ -331,6 +252,3 @@ export default withAuth(function CreateFund() {
     </div>
   );
 });
-
-const withPossesive = (name: string) =>
-  name.endsWith("s") ? `${name}'` : `${name}'s`;
