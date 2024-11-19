@@ -1,6 +1,7 @@
 import type { FundItem } from "@better-giving/fundraiser";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
+import { parseContent, toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
@@ -40,7 +41,7 @@ export default function Card({
           </h3>
 
           <p className="peer text-navy-l1 dark:text-navy-l2 text-sm line-clamp-3 mb-4">
-            {description}
+            {toText(parseContent(description))}
           </p>
 
           <Progress target={target} donation_total_usd={donation_total_usd} />

@@ -1,5 +1,5 @@
 import Image from "components/Image";
-import { RichText } from "components/RichText";
+import { parseContent, toText } from "components/RichText";
 
 type Props = {
   name: string;
@@ -19,11 +19,9 @@ export function FundCard({ classes = "", name, logo, tagline }: Props) {
       <h4 className="text-ellipsis overflow-hidden text-nowrap md:text-balance col-start-2 w-full">
         {name}
       </h4>
-      <RichText
-        content={{ value: tagline ?? "" }}
-        classes={{ field: "w-full" }}
-        readOnly
-      />
+      <p className="w-full text-navy-l1">
+        {toText(parseContent(tagline ?? ""))}
+      </p>
     </div>
   );
 }
