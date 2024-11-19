@@ -1,3 +1,4 @@
+import { RichText } from "components/RichText";
 import { useFundContext } from "../../FundContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";
@@ -11,9 +12,11 @@ export default function GeneralInfo({ className = "" }) {
     >
       <div className="flex flex-col gap-8 w-full h-full">
         <Container title="Overview">
-          <pre className="w-full h-full px-8 py-10 font-body text-wrap">
-            {fund.description}
-          </pre>
+          <RichText
+            content={{ value: fund.description ?? "" }}
+            classes={{ field: "w-full h-full px-8 py-10" }}
+            readOnly
+          />
         </Container>
       </div>
       <DetailsColumn className="self-start lg:sticky lg:top-[5.5rem]" />
