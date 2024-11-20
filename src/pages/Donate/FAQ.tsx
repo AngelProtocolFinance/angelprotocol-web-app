@@ -132,20 +132,24 @@ const faqs = (endowId: number) => [
         <Em classes="text-navy-d4">
           Altruistic Partners Empowering Society Inc
         </Em>
-        ,<br /> write{" "}
-        <Em classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5 mr-2">
-          endowment:{endowId}
-        </Em>
-        <Em classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5">
-          donation&nbsp;split:__%
-        </Em>{" "}
-        in the memo section of the check, and send it to:{" "}
+        and send it to:{" "}
         <Em intensity={1} classes="text-navy-d4 block mt-2">
           Miscellaneous Account Services
           <br /> PNC Bank
           <br /> P.O. Box 8108
           <br /> Philadelphia, PA 19101-8108
         </Em>
+      </p>,
+      <p>
+        If you would like to add a contribution for Better Giving to help keep
+        our services free, you may add that in the memo with{" "}
+        <Em
+          intensity={1}
+          classes="text-navy-d4 text-xs font-mono bg-blue-l4 p-0.5"
+        >
+          BG:&nbsp;Amount
+        </Em>
+        .
       </p>,
     ],
   },
