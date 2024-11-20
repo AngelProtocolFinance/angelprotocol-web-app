@@ -11,10 +11,9 @@ import { Link } from "react-router-dom";
 
 interface Props {
   classes?: string;
-  endowId: number;
 }
 
-export default function FAQ({ classes = "", endowId }: Props) {
+export default function FAQ({ classes = "" }: Props) {
   return (
     <div
       className={
@@ -23,7 +22,7 @@ export default function FAQ({ classes = "", endowId }: Props) {
       }
     >
       <h2 id="faqs">Frequently asked questions</h2>
-      {faqs(endowId).map((faq) => (
+      {faqs.map((faq) => (
         <Disclosure as="div" key={faq.id}>
           {({ open }) => (
             <>
@@ -54,7 +53,7 @@ export default function FAQ({ classes = "", endowId }: Props) {
   );
 }
 
-const faqs = (endowId: number) => [
+const faqs = [
   {
     id: 1,
     question: "How does my donation work to benefit nonprofits?",
