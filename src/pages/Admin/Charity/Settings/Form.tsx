@@ -3,7 +3,7 @@ import {
   MAX_RECEIPT_MSG_CHAR,
   incrementLabelMaxChars,
 } from "@better-giving/endowment/schema";
-import { Field as HuiField, Input } from "@headlessui/react";
+import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods, fill } from "components/DonateMethods";
@@ -188,6 +188,7 @@ export default function Form(props: Props) {
             <HuiField className="grid grid-rows-subgrid row-span-2">
               <Input
                 placeholder="$"
+                type="number"
                 {...register(`increments.${idx}.value`)}
                 className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
               />
@@ -196,8 +197,9 @@ export default function Form(props: Props) {
               </p>
             </HuiField>
             <HuiField className="grid grid-rows-subgrid row-span-2">
-              <Input
+              <Textarea
                 {...register(`increments.${idx}.label`)}
+                rows={2}
                 className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
               />
               <p
