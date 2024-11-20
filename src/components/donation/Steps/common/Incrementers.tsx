@@ -54,7 +54,7 @@ function Incrementer({
       {inc.label && (
         <span
           data-label
-          className="text-left text-xs text-[--accent-secondary]"
+          className="text-left text-xs text-[--accent-secondary] group-active/incrementer:text-[--accent-primary]"
         >
           {inc.label}
         </span>
