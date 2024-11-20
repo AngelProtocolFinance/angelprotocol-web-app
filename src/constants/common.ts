@@ -17,6 +17,7 @@ export const DONATION_INCREMENTS: Increment[] = [
   { value: 40, label: "" },
   { value: 100, label: "" },
   { value: 200, label: "" },
+  { value: 400, label: "" },
 ];
 export const BG_ID = IS_TEST ? 8 : 1;
 
