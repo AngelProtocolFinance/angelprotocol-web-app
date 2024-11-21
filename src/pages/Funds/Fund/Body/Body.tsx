@@ -1,4 +1,5 @@
 import Breadcrumbs from "components/Breadcrumbs";
+import { parseContent, toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
 import { appRoutes } from "constants/routes";
 import { useFundContext } from "../FundContext";
@@ -43,9 +44,9 @@ export function Body() {
               </h3>
             </div>
 
-            <pre className="w-full font-normal text-lg">
-              {p.members.map((m) => `${m.id}:${m.name}`).join()}
-            </pre>
+            <p className="w-full font-normal text-lg line-clamp-1">
+              {toText(parseContent(p.description))}
+            </p>
           </div>
           <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 items-center w-full font-semibold text-base">
             <span>info 1</span>
