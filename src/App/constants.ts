@@ -16,6 +16,11 @@ const HEADER_LINKS: Link[] = [
     end: true,
   },
   {
+    title: "Fundraisers",
+    href: appRoutes.funds,
+    end: true,
+  },
+  {
     title: "Blog",
     href: appRoutes.blog,
   },
