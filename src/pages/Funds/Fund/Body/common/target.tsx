@@ -6,7 +6,7 @@ interface Props {
   target?: "smart" | (string & {});
   classes?: string;
 }
-export function Target({ target = "", classes = "", progress }: Props) {
+export function Target({ target = "smart", classes = "", progress }: Props) {
   if (!target) return null;
 
   const to = target === "smart" ? nextMilestone(progress) : +target;
@@ -23,7 +23,7 @@ export function Target({ target = "", classes = "", progress }: Props) {
           className="inline-block relative mr-2 bottom-1"
         />
         <span className="text-sm font-heading font-medium text-navy-l1">
-          Help them reach their goal!
+          Help these organizations reach their goal!
         </span>
       </p>
       <div className="h-1.5 w-full rounded-full bg-green-l4 shadow-inner">

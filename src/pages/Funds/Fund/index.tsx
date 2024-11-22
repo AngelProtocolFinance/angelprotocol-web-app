@@ -15,6 +15,7 @@ import { Target } from "./Body/common/target";
 import { FundContext } from "./FundContext";
 import PageError from "./PageError";
 import Skeleton from "./Skeleton";
+import { Share } from "./share";
 
 export function Component() {
   const { fundId = "" } = useParams();
@@ -39,15 +40,15 @@ export function Component() {
             backgroundImage: `url('${data.banner || fallback_banner}')`,
           }}
         />
-        <div className="padded-container grid lg:grid-cols-[3fr_2fr] -mt-48 gap-4">
-          <div className="lg:-mt-24 bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
-            <div className="grid max-lg:gap-y-4 items-center max-lg:justify-items-center lg:grid-cols-[auto_1fr]">
+        <div className="padded-container grid md:grid-cols-[3fr_2fr] -mt-48 gap-4">
+          <div className="md:-mt-24 bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
+            <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
               <Image
                 src={data.logo || flying_character}
                 width={60}
-                className="mr-4 lg:row-span-2 border-2 border-blue-d1 rounded-full object-cover bg-white"
+                className="mr-4 md:row-span-2 border-2 border-blue-d1 rounded-full object-cover bg-white"
               />
-              <div className="lg:col-start-2 max-lg:text-center">
+              <div className="md:col-start-2 max-md:text-center">
                 {data.verified && (
                   <VerifiedIcon classes="relative inline bottom-1" size={20} />
                 )}
@@ -78,22 +79,20 @@ export function Component() {
               readOnly
             />
           </div>
-          <div className="lg:-mt-24 bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
+          <div className="md:-mt-24 flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
+            <Link
+              to={appRoutes.donate_fund + `/${data.id}`}
+              className="w-full btn-blue px-6 py-3 mb-4 text-sm"
+            >
+              Donate now
+            </Link>
             {data.target ? (
               <Target progress={data.donation_total_usd} target={data.target} />
             ) : (
               <Balances amount={data.donation_total_usd} />
             )}
-            <Link
-              to={appRoutes.donate_fund + `/${data.id}`}
-              className="w-full btn-blue px-6 py-3 mt-4 text-sm"
-            >
-              Donate now
-            </Link>
-            <p className="mt-8 mb-2 text-sm font-bold font-heading text-navy-l1">
-              Proceeds goes to
-            </p>
-            <div className="grid gap-y-4">
+
+            <div className="grid gap-y-4 my-4">
               {data.members.map((m) => (
                 <div key={m.id} className="flex items-center gap-x-2">
                   <Image
@@ -110,6 +109,7 @@ export function Component() {
                 </div>
               ))}
             </div>
+            <Share recipientName={data.name} className="mt-auto" />
           </div>
         </div>
       </section>
