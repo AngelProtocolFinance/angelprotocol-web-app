@@ -4,7 +4,8 @@ import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useFundContext } from "../../FundContext";
 import Container from "../common/Container";
-import Balances from "./DetailsColumn/Balances";
+import { Target } from "../common/target";
+import Balances from "./Balances";
 
 export default function GeneralInfo({ className = "" }) {
   const fund = useFundContext();
@@ -23,21 +24,41 @@ export default function GeneralInfo({ className = "" }) {
         </Container>
       </div>
       <div className="flex flex-col gap-6 w-full lg:w-96">
-        <Balances />
         <div className={`self-start lg:sticky lg:top-[5.5rem] w-full lg:w-96`}>
-          <div className="flex flex-col gap-8 w-full p-8 border border-gray-l4 rounded" />
-        </div>
-        {fund.members.map((m) => (
-          <Link
-            to={`${appRoutes.marketplace}/${m.id}`}
-            className="border border-gray-l4 rounded-lg hover:border-blue-d1"
-          >
-            <Image src={m.banner} className="aspect-[4/1] rounded-t-lg" />
-            <div className="p-4 border-t border-gray-l4">
-              <p className="font-bold font-heading text-navy-l1">{m.name}</p>
+          <div className="grid w-full p-8 border border-gray-l4 rounded">
+            {fund.target ? (
+              <Target progress={fund.donation_total_usd} target={fund.target} />
+            ) : (
+              <Balances amount={fund.donation_total_usd} />
+            )}
+            <p className="mb-2 text-sm font-bold font-heading mt-4 text-navy-l1">
+              Proceeds goes to
+            </p>
+            <div className="grid gap-y-4">
+              {fund.members.map((m) => (
+                <div className="flex items-center gap-x-2">
+                  <Image
+                    src={m.logo}
+                    className="aspect-square rounded-full border-2 border-blue-d1"
+                    width={40}
+                  />
+                  <Link
+                    to={`${appRoutes.marketplace}/${m.id}`}
+                    className="font-bold font-heading text-navy-l1 hover:text-blue-d1"
+                  >
+                    {m.name}
+                  </Link>
+                </div>
+              ))}
             </div>
-          </Link>
-        ))}
+            <Link
+              to={appRoutes.donate_fund + `/${fund.id}`}
+              className="w-full btn-blue px-6 py-3 mt-4 text-sm"
+            >
+              Donate now
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );
