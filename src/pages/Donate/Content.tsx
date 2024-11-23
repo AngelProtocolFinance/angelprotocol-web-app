@@ -39,6 +39,7 @@ function Content({ intent, endowment }: Props) {
             tagline={endowment.tagline}
             logo={endowment.logo || flying_character}
             classes=""
+            target={endowment.target}
           />
         </div>
 
