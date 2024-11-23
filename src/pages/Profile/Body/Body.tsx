@@ -30,7 +30,7 @@ function Body() {
           ]}
         />
         <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
-          {bal.data?.totalContributions && p.target && (
+          {bal.data?.totalContributions != null && p.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
               progress={bal.data?.totalContributions}

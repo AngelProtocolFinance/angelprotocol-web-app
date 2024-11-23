@@ -32,7 +32,7 @@ export default function DetailsColumn({ className = "" }) {
           {p.social_media_urls && (
             <Socials social_media_urls={p.social_media_urls} />
           )}
-          {bal.data?.totalContributions && p.target && (
+          {bal.data?.totalContributions != null && p.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
               progress={bal.data?.totalContributions}

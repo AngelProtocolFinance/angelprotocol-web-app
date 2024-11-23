@@ -13,7 +13,7 @@ type Props = {
   classes?: string;
 };
 export default function OrgCard({ classes = "", ...props }: Props) {
-  const balance = useEndowBalanceQuery(props.id);
+  const bal = useEndowBalanceQuery(props.id);
   return (
     <div
       className={`grid @xl/org-card:grid-cols-[3fr_2fr] gap-x-4 gap-y-6 p-4 md:bg-white rounded-lg md:border border-gray-l4 ${classes}`}
@@ -36,10 +36,10 @@ export default function OrgCard({ classes = "", ...props }: Props) {
         )}
       </div>
 
-      {balance.data?.totalContributions && props.target && (
+      {bal.data?.totalContributions != null && props.target && (
         <Target
           text={<Target.Text classes="mb-2" />}
-          progress={balance.data?.totalContributions}
+          progress={bal.data?.totalContributions}
           target={toTarget(props.target)}
           classes="order-1 @xl/org-card:order-2"
         />
