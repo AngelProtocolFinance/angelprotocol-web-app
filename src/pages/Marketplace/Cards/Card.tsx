@@ -2,10 +2,10 @@ import flying_character from "assets/images/flying-character.png";
 import BookmarkBtn from "components/BookmarkBtn";
 import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";
+import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import type { EndowmentCard } from "types/aws";
-import { Target } from "./target";
 
 const PLACEHOLDER_TAGLINE = " ";
 
@@ -51,7 +51,9 @@ export default function Card({
             <div />
           )}
 
-          <Target progress={contributions_total} target={target} />
+          {target && (
+            <Target progress={contributions_total} target={toTarget(target)} />
+          )}
         </div>
       </Link>
       {/** absolute so above whole `Link` card */}

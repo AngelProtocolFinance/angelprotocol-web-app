@@ -2,16 +2,18 @@ import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
 import VerifiedIcon from "components/VerifiedIcon";
+import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Globe, MapPin } from "lucide-react";
 import { Link, Outlet, type RouteObject } from "react-router-dom";
+import { useEndowBalanceQuery } from "services/apes";
 import { useProfileContext } from "../ProfileContext";
 import GeneralInfo from "./GeneralInfo";
 import Program from "./Program";
-import { Target } from "./common/target";
 
 function Body() {
   const p = useProfileContext();
+  const bal = useEndowBalanceQuery(p.id);
 
   return (
     <div className="flex justify-center items-center w-full h-full">
@@ -28,7 +30,13 @@ function Body() {
           ]}
         />
         <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
-          <Target endowId={p.id} target={p.target} />
+          {bal.data?.totalContributions && p.target && (
+            <Target
+              text={<Target.Text classes="mb-2" />}
+              progress={bal.data?.totalContributions}
+              target={toTarget(p.target)}
+            />
+          )}
           <Link
             to={`${appRoutes.donate}/${p.id}`}
             className="btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
