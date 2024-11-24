@@ -1,13 +1,27 @@
 import Seo from "components/Seo";
 import { useRendered } from "hooks/use-rendered";
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import ConfirmForm from "./ConfirmForm";
 import SignupForm from "./SignupForm";
 import Success from "./Success";
 import type { SignupState } from "./types";
 
 export function SignUp() {
-  const [state, setState] = useState<SignupState>({ type: "init" });
+  const [params] = useSearchParams();
+  const confirm = params.get("confirm");
+  const [state, setState] = useState<SignupState>(
+    confirm
+      ? {
+          type: "confirm",
+          userType: "donor",
+          codeRecipientEmail: {
+            raw: confirm,
+            obscured: confirm,
+          },
+        }
+      : { type: "init" }
+  );
   useRendered();
 
   const content = (() => {

@@ -1,16 +1,18 @@
 import type { EndowClaim } from "@better-giving/registration/models";
+import { Target, toTarget } from "components/target";
 import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
+import { useEndowBalanceQuery } from "services/apes";
 import { useProfileContext } from "../../../ProfileContext";
-import { Target } from "../../common/target";
 import { Fundraisers } from "./Fundraisers";
 import Socials from "./Socials";
 import Tags from "./Tags";
 
 export default function DetailsColumn({ className = "" }) {
   const p = useProfileContext();
+  const bal = useEndowBalanceQuery(p.id);
   const { active_in_countries = [] } = p;
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -31,7 +33,14 @@ export default function DetailsColumn({ className = "" }) {
           {p.social_media_urls && (
             <Socials social_media_urls={p.social_media_urls} />
           )}
-          <Target endowId={p.id} target={p.target} classes="-mb-5 mt-4" />
+          {bal.data?.totalContributions != null && p.target && (
+            <Target
+              text={<Target.Text classes="mb-2" />}
+              progress={bal.data?.totalContributions}
+              target={toTarget(p.target)}
+              classes="-mb-5 mt-4"
+            />
+          )}
           <Link
             to={appRoutes.donate + `/${p.id}`}
             className="w-full btn-blue h-12 px-6 text-base lg:text-sm"

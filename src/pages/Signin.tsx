@@ -13,7 +13,7 @@ import { getAuthRedirect } from "helpers";
 import { useRendered } from "hooks/use-rendered";
 import { Mail } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link, Navigate, useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { password, requiredString } from "schemas/string";
 import { useGetter } from "store/accessors";
 import type { OAuthState } from "types/auth";
@@ -25,6 +25,7 @@ type FormValues = {
 };
 
 export function Component() {
+  const navigate = useNavigate();
   useRendered();
   const { handleError, displayError } = useErrorContext();
   const {
@@ -63,6 +64,12 @@ export function Component() {
         password: fv.password,
       });
 
+      if (nextStep.signInStep === "CONFIRM_SIGN_UP") {
+        return navigate(
+          appRoutes.signup + `?confirm=${fv.email.toLowerCase()}`,
+          { state: fromState }
+        );
+      }
       if (nextStep.signInStep !== "DONE")
         throw `Unexpected next step: ${nextStep.signInStep}`;
     } catch (err) {
