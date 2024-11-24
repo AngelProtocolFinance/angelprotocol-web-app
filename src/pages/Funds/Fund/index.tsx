@@ -39,8 +39,8 @@ export function Component() {
             backgroundImage: `url('${data.banner || fallback_banner}')`,
           }}
         />
-        <div className="padded-container grid content-start md:grid-cols-[3fr_2fr] -mt-48 gap-4">
-          <div className="md:-mt-24 bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
+        <div className="padded-container grid md:grid-cols-[3fr_2fr] gap-4">
+          <div className="self-start md:-mt-24 bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
             <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
               <Image
                 src={data.logo || flying_character}
