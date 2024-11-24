@@ -7,11 +7,10 @@ import { APP_NAME, BASE_URL } from "constants/env";
 import { skipToken } from "@reduxjs/toolkit/query";
 import { RichText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
+import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Link, useParams } from "react-router-dom";
 import { useFundQuery } from "services/aws/funds";
-import Balances from "./Body/GeneralInfo/Balances";
-import { Target } from "./Body/common/target";
 import { FundContext } from "./FundContext";
 import PageError from "./PageError";
 import Skeleton from "./Skeleton";
@@ -40,7 +39,7 @@ export function Component() {
             backgroundImage: `url('${data.banner || fallback_banner}')`,
           }}
         />
-        <div className="padded-container grid md:grid-cols-[3fr_2fr] -mt-48 gap-4">
+        <div className="padded-container grid content-start md:grid-cols-[3fr_2fr] -mt-48 gap-4">
           <div className="md:-mt-24 bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
             <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
               <Image
@@ -71,7 +70,9 @@ export function Component() {
               </p>
             </div>
             <RichText
-              content={{ value: data.description ?? "" }}
+              content={{
+                value: data.description ?? "",
+              }}
               classes={{
                 field: "",
                 container: "mt-4 pt-4 border-t border-gray-l4",
@@ -79,20 +80,25 @@ export function Component() {
               readOnly
             />
           </div>
-          <div className="md:-mt-24 flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
+          <div className="md:-mt-24 md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
             <Link
               to={appRoutes.donate_fund + `/${data.id}`}
               className="w-full btn-blue px-6 py-3 mb-4 text-sm"
             >
               Donate now
             </Link>
-            {data.target ? (
-              <Target progress={data.donation_total_usd} target={data.target} />
-            ) : (
-              <Balances amount={data.donation_total_usd} />
+            {data.target && (
+              <Target
+                text={<Target.Text classes="mb-2" />}
+                progress={data.donation_total_usd}
+                target={toTarget(data.target)}
+              />
             )}
 
-            <div className="grid gap-y-4 my-4">
+            <p className="text-navy-l1 mt-8 mb-2 font-bold uppercase text-xs">
+              Donations go to
+            </p>
+            <div className="grid gap-y-4 mb-4">
               {data.members.map((m) => (
                 <div key={m.id} className="flex items-center gap-x-2">
                   <Image

@@ -1,7 +1,8 @@
 import Image from "components/Image";
+import { parseContent, toText } from "components/RichText";
+import { Target } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { Target } from "./target";
 
 type Props = {
   id: string;
@@ -29,11 +30,12 @@ export function FundCard({ classes = "", ...props }: Props) {
         </Link>
         {props.tagline && (
           <p className="text-navy-l1 text-sm w-full line-clamp-2">
-            {props.tagline}
+            {toText(parseContent(props.tagline))}
           </p>
         )}
       </div>
       <Target
+        text={<Target.Text classes="mb-2" />}
         progress={props.progress}
         target="smart"
         classes="order-1 @xl/fund-card:order-2"

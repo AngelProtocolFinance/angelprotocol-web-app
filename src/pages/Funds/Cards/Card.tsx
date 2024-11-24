@@ -3,9 +3,9 @@ import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import { parseContent, toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
+import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { Progress } from "./Progress";
 
 export default function Card({
   name,
@@ -44,7 +44,7 @@ export default function Card({
             {toText(parseContent(description))}
           </p>
 
-          <Progress target={target} donation_total_usd={donation_total_usd} />
+          <Target target={toTarget(target)} progress={donation_total_usd} />
         </div>
       </Link>
       {/** absolute so above whole `Link` card */}
