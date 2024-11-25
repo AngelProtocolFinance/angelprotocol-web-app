@@ -1,14 +1,15 @@
+import type { SingleFund } from "@better-giving/fundraiser";
+import { skipToken } from "@reduxjs/toolkit/query";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
-import Seo from "components/Seo";
-import { APP_NAME, BASE_URL } from "constants/env";
-
-import { skipToken } from "@reduxjs/toolkit/query";
 import { RichText } from "components/RichText";
+import Seo from "components/Seo";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
+import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
+import { unpack } from "helpers";
 import { Link, useParams } from "react-router-dom";
 import { useFundQuery } from "services/aws/funds";
 import { FundContext } from "./FundContext";
@@ -73,6 +74,13 @@ export function Component() {
                     {data.creator || "dev@placeholder.com"}
                   </span>
                 </p>
+                <DonateSection
+                  {...data}
+                  classes={{
+                    container: "col-span-full md:hidden",
+                    target: "mt-8",
+                  }}
+                />
               </div>
               <RichText
                 content={{
@@ -96,19 +104,10 @@ export function Component() {
             ))}
           </div>
           <div className="md:-mt-24 md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
-            <Link
-              to={appRoutes.donate_fund + `/${data.id}`}
-              className="w-full btn-blue px-6 py-3 mb-4 text-sm"
-            >
-              Donate now
-            </Link>
-            {data.target && (
-              <Target
-                text={<Target.Text classes="mb-2" />}
-                progress={data.donation_total_usd}
-                target={toTarget(data.target)}
-              />
-            )}
+            <DonateSection
+              {...data}
+              classes={{ container: "max-md:hidden", link: "mb-4 order-first" }}
+            />
 
             <p className="text-navy-l1 mt-8 mb-2 font-bold uppercase text-xs">
               Donations go to
@@ -135,5 +134,31 @@ export function Component() {
         </div>
       </section>
     </FundContext.Provider>
+  );
+}
+
+function DonateSection(
+  props: SingleFund & {
+    classes?: { container?: string; link?: string; target?: string };
+  }
+) {
+  const s = unpack(props.classes);
+  return (
+    <>
+      {props.target && (
+        <Target
+          text={<Target.Text classes="mb-2" />}
+          progress={props.donation_total_usd}
+          target={toTarget(props.target)}
+          classes={`${s.target} ${s.container} w-full`}
+        />
+      )}
+      <Link
+        to={appRoutes.donate_fund + `/${props.id}`}
+        className={`w-full btn-blue px-6 py-3 text-sm ${s.link} ${s.container}`}
+      >
+        Donate now
+      </Link>
+    </>
   );
 }
