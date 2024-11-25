@@ -843,12 +843,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@better-giving/fundraiser@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@better-giving/fundraiser@npm:1.0.3"
+"@better-giving/fundraiser@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@better-giving/fundraiser@npm:1.0.4"
   peerDependencies:
     "@better-giving/types": 1.0.1
-  checksum: 10/1a322b33a8194065abf33d894ce9530063f82e5aa72106cad5a6ae3f757c61e16142c6a1e6a59cf9b018a2c6732e38b20bd3d5b1dc0aee4c0cc2c4a04715964b
+  checksum: 10/81cd01227d33fd101277bd538bd8210c83875bb4259c1cde763b4287b9e641e472a0f525fdd2dd348ebab15d7e2f4c90c58bdb7b9ef451906e073ef6f26177a8
   languageName: node
   linkType: hard
 
@@ -3488,7 +3488,7 @@ __metadata:
     "@better-giving/assets": "npm:1.0.18"
     "@better-giving/donation": "npm:1.0.1"
     "@better-giving/endowment": "npm:1.0.29"
-    "@better-giving/fundraiser": "npm:1.0.3"
+    "@better-giving/fundraiser": "npm:1.0.4"
     "@better-giving/registration": "npm:1.0.24"
     "@better-giving/schemas": "npm:1.0.1"
     "@better-giving/types": "npm:1.0.1"

@@ -1,8 +1,9 @@
 import { richTextContent } from "types/components";
 import * as v from "valibot";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES, target } from "../common";
+import { video } from "../common/videos";
 
-const str = v.pipe(v.string(), v.trim());
+const str = v.pipe(v.string("required"), v.trim());
 
 /** not set by user */
 const fileObject = v.object({
@@ -55,8 +56,9 @@ export const schema = v.object({
     })
   ),
   target,
+  videos: v.array(video),
 });
 
 export interface FundMember extends v.InferOutput<typeof endowOption> {}
 export interface EndowOption extends FundMember {}
-export type FV = v.InferOutput<typeof schema>;
+export interface FV extends v.InferOutput<typeof schema> {}

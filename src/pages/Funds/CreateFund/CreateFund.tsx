@@ -14,10 +14,16 @@ import withAuth from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { uploadFile } from "helpers/uploadFile";
-import { type SubmitHandler, useController, useForm } from "react-hook-form";
+import {
+  type SubmitHandler,
+  useController,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { Link } from "react-router-dom";
 import { useCreateFundMutation } from "services/aws/funds";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
+import { Videos } from "../common/videos";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
 
@@ -41,6 +47,7 @@ export default withAuth(function CreateFund() {
       target: {
         type: "smart",
       },
+      videos: [],
     },
   });
   const { field: banner } = useController({ control, name: "banner" });
@@ -56,6 +63,11 @@ export default withAuth(function CreateFund() {
   const { field: desc } = useController({
     control,
     name: "description",
+  });
+
+  const videos = useFieldArray<Pick<FV, "videos">, "videos">({
+    control: control as any,
+    name: "videos",
   });
 
   const [createFund] = useCreateFundMutation();
@@ -88,6 +100,7 @@ export default withAuth(function CreateFund() {
             : fv.target.type === "smart"
               ? "smart"
               : `${+fv.target.value}`, //fixedTarget is required when targetType is fixed
+        videos: fv.videos.map((v) => v.url),
       };
 
       if (fv.expiration) fund.expiration = fv.expiration;
@@ -157,6 +170,8 @@ export default withAuth(function CreateFund() {
             errors.description?.length?.message
           }
         />
+
+        <Videos {...videos} classes="mt-4 mb-8" />
 
         <EndowmentSelector
           classes="mt-4"
