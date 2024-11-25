@@ -57,6 +57,7 @@ export function Form({
       if (rhf.dirtyFields.name) update.name = fv.name;
       if (rhf.dirtyFields.description)
         update.description = fv.description.value;
+      if (rhf.dirtyFields.videos) update.videos = fv.videos.map((v) => v.url);
 
       await editFund({
         ...update,
