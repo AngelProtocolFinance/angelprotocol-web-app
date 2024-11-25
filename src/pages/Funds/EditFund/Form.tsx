@@ -10,6 +10,7 @@ import { uploadFile } from "helpers/uploadFile";
 import type { SubmitHandler } from "react-hook-form";
 import { useCloseFundMutation, useEditFundMutation } from "services/aws/funds";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
+import { Videos } from "../common/videos";
 import { FeatureBanner } from "./FeatureBanner";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
 import { useRhf } from "./useRhf";
@@ -120,6 +121,7 @@ export function Form({
           rhf.errors.description?.length?.message
         }
       />
+      <Videos {...rhf.videos} classes="mt-4 mb-8" />
       <label className="text-lg font-medium block mb-2 mt-4">Logo</label>
       <ImgEditor
         disabled={rhf.isSubmitting}

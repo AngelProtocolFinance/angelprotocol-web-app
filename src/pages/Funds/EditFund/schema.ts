@@ -1,6 +1,7 @@
 import { richTextContent } from "types/components";
 import * as v from "valibot";
 import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES, target } from "../common";
+import { video } from "../common/videos";
 
 const str = v.pipe(v.string(), v.trim());
 
@@ -30,6 +31,7 @@ export const schema = v.object({
     required: true,
   }),
   target,
+  videos: v.array(video),
   banner: imgLink,
   logo: imgLink,
 });

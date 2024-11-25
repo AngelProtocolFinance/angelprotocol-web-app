@@ -1,7 +1,7 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { parseContent } from "components/RichText";
-import { useController, useForm } from "react-hook-form";
+import { useController, useFieldArray, useForm } from "react-hook-form";
 import { type FV, schema } from "./schema";
 
 export function useRhf(init: SingleFund) {
@@ -25,6 +25,7 @@ export function useRhf(init: SingleFund) {
             : { type: "fixed", value: init.target },
       logo: { name: "", preview: init.logo, publicUrl: init.logo },
       banner: { name: "", preview: init.banner, publicUrl: init.banner },
+      videos: init.videos.map((v) => ({ url: v })),
     },
   });
 
@@ -40,6 +41,10 @@ export function useRhf(init: SingleFund) {
 
   const { field: logo } = useController({ control, name: "logo" });
   const { field: banner } = useController({ control, name: "banner" });
+  const videos = useFieldArray<Pick<FV, "videos">>({
+    control: control as any,
+    name: "videos",
+  });
 
   return {
     register,
@@ -55,5 +60,6 @@ export function useRhf(init: SingleFund) {
     logo,
     banner,
     desc,
+    videos,
   };
 }
