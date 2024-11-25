@@ -46,7 +46,7 @@
     "@reduxjs/toolkit": "2.3.0",
     "@sentry/react": "8.22.0",
     "@stripe/react-stripe-js": "2.7.1",
-    "@stripe/stripe-js": "3.5.0",
+    "@stripe/stripe-js": "5.2.0",
     "aws-amplify": "6.3.6",
     "cropperjs": "1.6.2",
     "date-fns": "3.6.0",
