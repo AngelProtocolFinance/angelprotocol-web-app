@@ -9,7 +9,7 @@ export function Funds() {
   const query = useFundsEndowMemberOfQuery({ endowId: id });
   return (
     <div className="grid gap-y-4 grid-cols-[auto_1fr_auto_auto_auto_auto] justify-items-start">
-      <h3 className="text-3xl col-span-full mb-2">My Fundraisers</h3>
+      <h3 className="text-3xl col-span-full mb-2">Fundraisers</h3>
 
       <QueryLoader
         messages={{
@@ -21,7 +21,7 @@ export function Funds() {
             </>
           ),
           error: "Failed to get fundraisers",
-          empty: "No fundraisers found.",
+          empty: "This NPO has not been included in any fundraisers",
         }}
         queryState={query}
       >
