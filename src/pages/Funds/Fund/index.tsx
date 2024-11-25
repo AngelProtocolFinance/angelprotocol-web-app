@@ -15,6 +15,7 @@ import { FundContext } from "./FundContext";
 import PageError from "./PageError";
 import Skeleton from "./Skeleton";
 import { Share } from "./share";
+import { Video } from "./video";
 
 export function Component() {
   const { fundId = "" } = useParams();
@@ -40,45 +41,59 @@ export function Component() {
           }}
         />
         <div className="padded-container grid md:grid-cols-[3fr_2fr] gap-4">
-          <div className="self-start md:-mt-24 bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
-            <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
-              <Image
-                src={data.logo || flying_character}
-                width={60}
-                className="mr-4 md:row-span-2 border-2 border-blue-d1 rounded-full object-cover bg-white"
-              />
-              <div className="md:col-start-2 max-md:text-center">
-                {data.verified && (
-                  <VerifiedIcon classes="relative inline bottom-1" size={20} />
-                )}
-                <span className="font-heading font-bold text-2xl w-full break-words text-center">
-                  {data.name}
-                </span>
-                {!data.active && (
-                  <span className="ml-2 px-3 py-1 text-2xs bg-red-l4 text-red relative inline bottom-1 uppercase rounded-full">
-                    closed
+          <div className="self-start md:-mt-24 z-10 grid gap-4">
+            <div className="bg-white rounded-lg shadow-2xl shadow-black/10 p-4">
+              <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
+                <Image
+                  src={data.logo || flying_character}
+                  width={60}
+                  className="mr-4 md:row-span-2 border-2 border-blue-d1 rounded-full object-cover bg-white"
+                />
+                <div className="md:col-start-2 max-md:text-center">
+                  {data.verified && (
+                    <VerifiedIcon
+                      classes="relative inline bottom-1"
+                      size={20}
+                    />
+                  )}
+                  <span className="font-heading font-bold text-2xl w-full break-words text-center">
+                    {data.name}
                   </span>
-                )}
+                  {!data.active && (
+                    <span className="ml-2 px-3 py-1 text-2xs bg-red-l4 text-red relative inline bottom-1 uppercase rounded-full">
+                      closed
+                    </span>
+                  )}
+                </div>
+                <p>
+                  <span className="text-sm font-medium text-navy-l1 mr-1">
+                    created by:
+                  </span>
+                  <span className="font-medium text-navy">
+                    {data.creator || "dev@placeholder.com"}
+                  </span>
+                </p>
               </div>
-              <p>
-                <span className="text-sm font-medium text-navy-l1 mr-1">
-                  created by:
-                </span>
-                <span className="font-medium text-navy">
-                  {data.creator || "dev@placeholder.com"}
-                </span>
-              </p>
+              <RichText
+                content={{
+                  value: data.description ?? "",
+                }}
+                classes={{
+                  field: "",
+                  container: "mt-4 pt-4 border-t border-gray-l4",
+                }}
+                readOnly
+              />
             </div>
-            <RichText
-              content={{
-                value: data.description ?? "",
-              }}
-              classes={{
-                field: "",
-                container: "mt-4 pt-4 border-t border-gray-l4",
-              }}
-              readOnly
-            />
+
+            {data.videos.map((v, idx) => (
+              <div
+                key={idx}
+                className="rounded-lg shadow-2xl shadow-black/10 mt-4"
+              >
+                <Video url={v} />
+              </div>
+            ))}
           </div>
           <div className="md:-mt-24 md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
             <Link
