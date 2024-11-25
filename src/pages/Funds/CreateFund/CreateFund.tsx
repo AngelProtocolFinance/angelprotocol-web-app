@@ -80,7 +80,7 @@ export default withAuth(function CreateFund() {
         throw `dev: banner must be required`;
       }
 
-      showModal(Prompt, { type: "loading", children: "Uploading..." });
+      showModal(Prompt, { type: "loading", children: "Creating fund..." });
 
       const _banner = await uploadFile(banner.file, "bg-funds");
       if (!_banner) return handleError("Failed to upload banner");
