@@ -10,6 +10,7 @@ import { Target, toTarget } from "components/target";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { unpack } from "helpers";
+import { ArrowLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { useFundQuery } from "services/aws/funds";
 import { FundContext } from "./FundContext";
@@ -42,7 +43,14 @@ export function Component() {
           }}
         />
         <div className="padded-container grid md:grid-cols-[3fr_2fr] gap-4">
-          <div className="self-start md:-mt-24 z-10 grid gap-4">
+          <div className="self-start -mt-12 md:-mt-24 z-10 grid gap-4 relative">
+            <Link
+              className="absolute -top-8 text-white flex items-center gap-x-1 active:-translate-x-1"
+              to=".."
+            >
+              <ArrowLeft size={16} />
+              <span>Fundraisers</span>
+            </Link>
             <div className="bg-white rounded-lg shadow-2xl shadow-black/10 p-4">
               <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
                 <Image
@@ -115,11 +123,7 @@ export function Component() {
             <div className="grid gap-y-4 mb-4">
               {data.members.map((m) => (
                 <div key={m.id} className="flex items-center gap-x-2">
-                  <Image
-                    src={m.logo}
-                    className="aspect-square rounded-full border-2 border-blue-d1"
-                    width={40}
-                  />
+                  <Image src={m.logo} className="aspect-[2/1]" width={50} />
                   <Link
                     to={`${appRoutes.marketplace}/${m.id}`}
                     className="font-bold font-heading text-navy-l1 hover:text-blue-d1"
