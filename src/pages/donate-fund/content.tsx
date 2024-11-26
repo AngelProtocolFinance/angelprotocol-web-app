@@ -2,6 +2,7 @@ import type { SingleFund } from "@better-giving/fundraiser";
 import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
+import { Info } from "components/Status";
 import { Steps } from "components/donation";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -11,11 +12,12 @@ import { Link } from "react-router-dom";
 import FAQ from "./faq";
 import { FundCard } from "./fund-card";
 
-type Props = {
-  fund: SingleFund;
+const isClosed = (active: boolean, expiration?: string): boolean => {
+  const isExpired = expiration ? expiration < new Date().toISOString() : false;
+  return !active || isExpired;
 };
 
-function Content({ fund }: Props) {
+function Content(fund: SingleFund) {
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
@@ -40,18 +42,24 @@ function Content({ fund }: Props) {
         </div>
         {/** small screen but space is still enough to render sidebar */}
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
-          <Steps
-            source="bg-marketplace"
-            mode="live"
-            recipient={{
-              id: fund.id,
-              name: fund.name,
-              hide_bg_tip: !fund.allow_bg_tip,
-              progDonationsAllowed: false,
-            }}
-            config={null}
-            className="md:border border-gray-l4 rounded-lg row-start-2"
-          />
+          {isClosed(fund.active, fund.expiration) ? (
+            <Info classes="row-start-2 self-center bg-white rounded-lg h-80 content-center justify-items-center grid">
+              This fund is already closed and can't accept any more donations
+            </Info>
+          ) : (
+            <Steps
+              source="bg-marketplace"
+              mode="live"
+              recipient={{
+                id: fund.id,
+                name: fund.name,
+                hide_bg_tip: !fund.allow_bg_tip,
+                progDonationsAllowed: false,
+              }}
+              config={null}
+              className="md:border border-gray-l4 rounded-lg row-start-2"
+            />
+          )}
         </div>
         <FAQ
           classes="max-md:px-4 md:col-start-2 md:row-span-5 md:w-[18.875rem]"

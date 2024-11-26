@@ -12,12 +12,12 @@ export function Component() {
     <QueryLoader
       queryState={query}
       messages={{
-        loading: "Getting nonprofit info..",
-        error: "Failed to get nonprofit info",
+        loading: "Getting fundraiser info..",
+        error: "Failed to get fundraiser info",
       }}
       classes={{ container: "place-self-center text-center mt-8" }}
     >
-      {(fund) => <Content fund={fund} />}
+      {(fund) => <Content {...fund} />}
     </QueryLoader>
   );
 }
