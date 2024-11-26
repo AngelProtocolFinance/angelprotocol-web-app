@@ -120,10 +120,17 @@ export function Component() {
             <p className="text-navy-l1 mt-8 mb-2 font-bold uppercase text-xs">
               Donations go to
             </p>
-            <div className="grid gap-y-4 mb-4">
+            <div className="grid gap-y-4 mb-4 grid-cols-[auto_1fr]">
               {data.members.map((m) => (
-                <div key={m.id} className="flex items-center gap-x-2">
-                  <Image src={m.logo} className="aspect-[2/1]" width={50} />
+                <div
+                  key={m.id}
+                  className="grid items-center gap-x-2 grid-cols-subgrid col-span-2"
+                >
+                  <Image
+                    src={m.logo}
+                    className="aspect-[2/1] rounded-sm"
+                    width={50}
+                  />
                   <Link
                     to={`${appRoutes.marketplace}/${m.id}`}
                     className="font-bold font-heading text-navy-l1 hover:text-blue-d1"
