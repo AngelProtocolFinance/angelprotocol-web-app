@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 export default function Card({
   name,
   logo,
+  banner,
   id,
   description,
   verified,
@@ -22,21 +23,34 @@ export default function Card({
         to={`${appRoutes.funds}/${id}`}
         className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
       >
-        <Image
-          loading="lazy"
-          src={logo || flying_character}
-          className="h-40 w-full object-cover bg-blue-l4 dark:bg-blue-d2"
-          onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
-        />
-        <div className="grid grid-rows-subgrid row-span-3 p-3 pb-16 gap-3">
-          {/* nonprofit NAME */}
-          <h3 className="text-ellipsis line-clamp-2 text-center mb-2">
-            {verified && (
+        <div className="aspect-[4/1] w-full relative">
+          <Image
+            loading="lazy"
+            src={banner}
+            className="w-full h-full object-cover bg-blue-l4"
+            onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
+          />
+          <Image
+            width={60}
+            height={60}
+            loading="lazy"
+            src={logo || flying_character}
+            className="absolute bottom-0 translate-y-1/2 z-10 left-3 rounded-full border-2 border-blue-d1 shadow-2xl shadow-black/20"
+            onError={(e) => e.currentTarget.classList.add("bg-blue-l3")}
+          />
+          {verified && (
+            <div className="absolute bottom-0  translate-y-1/2 z-10 left-20">
               <VerifiedIcon
                 classes="inline relative bottom-px mr-1"
-                size={18}
+                size={22}
               />
-            )}
+            </div>
+          )}
+        </div>
+
+        <div className="grid grid-rows-subgrid row-span-3 p-3 pb-16 gap-3">
+          {/* nonprofit NAME */}
+          <h3 className="text-ellipsis line-clamp-2 mt-4 -mb-2">
             <span className="inline">{name}</span>
           </h3>
 
