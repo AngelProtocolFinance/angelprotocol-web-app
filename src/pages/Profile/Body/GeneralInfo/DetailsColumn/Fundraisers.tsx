@@ -1,4 +1,8 @@
 import type { FundItem } from "@better-giving/fundraiser";
+import { parseContent, toText } from "components/RichText";
+import { Target, toTarget } from "components/target";
+import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
 import { useFundsEndowMemberOfQuery } from "services/aws/endow-funds";
 
 interface Props {
@@ -36,10 +40,26 @@ function Fund(props: FundItem) {
         height={40}
         className="row-span-2 shrink-0"
       />
-      <p>{props.name}</p>
+      <Link
+        className="hover:text-blue-d1"
+        to={appRoutes.funds + `/${props.id}`}
+      >
+        {props.name}
+      </Link>
       <p className="whitespace-pre-line text-navy-l1 text-sm">
-        {props.description}
+        {toText(parseContent(props.description))}
       </p>
+      <Target
+        classes="col-span-full mt-4"
+        target={toTarget(props.target)}
+        progress={props.donation_total_usd}
+      />
+      <Link
+        to={`${appRoutes.donate_fund}/${props.id}`}
+        className="btn-blue text-xs w-full col-span-full mt-4"
+      >
+        Donate
+      </Link>
     </div>
   );
 }
