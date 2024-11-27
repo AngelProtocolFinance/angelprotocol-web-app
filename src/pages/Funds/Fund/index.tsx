@@ -40,7 +40,7 @@ export function Component() {
         url={`${BASE_URL}/profile/${data.id}`}
       />
       <div
-        className="relative w-full aspect-[4/1] bg-cover overlay"
+        className="relative w-full h-52 sm:h-72 bg-cover bg-center overlay"
         style={{
           backgroundImage: `url('${data.banner || fallback_banner}')`,
         }}
