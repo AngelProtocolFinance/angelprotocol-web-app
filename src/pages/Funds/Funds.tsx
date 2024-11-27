@@ -14,7 +14,7 @@ export function Component() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full py-2 pr-3 placeholder:text-navy-l3 text-navy-d4 font-medium font-heading"
-          placeholder="Search funds..."
+          placeholder="Search fundraiser"
         />
       </div>
       <Cards search={search} classes="mt-4" />
