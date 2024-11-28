@@ -1,9 +1,11 @@
-import type { FundsPage, SingleFund } from "@better-giving/fundraiser";
 import type {
   FundUpdate,
+  FundsPage,
   FundsParams,
   NewFund,
-} from "@better-giving/fundraiser/schema";
+  SingleFund,
+} from "@better-giving/fundraiser";
+
 import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
