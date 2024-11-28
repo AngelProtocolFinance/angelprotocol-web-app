@@ -1,5 +1,4 @@
-import type { SingleFund } from "@better-giving/fundraiser";
-import type { FundUpdate } from "@better-giving/fundraiser/schema";
+import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
 import { RichText } from "components/RichText";

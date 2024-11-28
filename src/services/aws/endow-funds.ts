@@ -1,5 +1,7 @@
-import type { FundItem } from "@better-giving/fundraiser";
-import type { FundsEndowMemberOfParams } from "@better-giving/fundraiser/schema";
+import type {
+  FundItem,
+  FundsEndowMemberOfParams,
+} from "@better-giving/fundraiser";
 import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
