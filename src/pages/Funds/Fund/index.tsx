@@ -6,6 +6,7 @@ import Image from "components/Image";
 import { RichText } from "components/RichText";
 import Seo from "components/Seo";
 import VerifiedIcon from "components/VerifiedIcon";
+import { FundCreator } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -78,9 +79,11 @@ export function Component() {
                 <span className="text-sm font-medium text-navy-l1 mr-1">
                   created by:
                 </span>
-                <span className="font-medium text-navy">
-                  {data.creator_name}
-                </span>
+                <FundCreator
+                  name={data.creator_name}
+                  id={data.creator_id}
+                  classes="font-medium text-navy inline"
+                />
               </p>
               <DonateSection
                 {...data}
