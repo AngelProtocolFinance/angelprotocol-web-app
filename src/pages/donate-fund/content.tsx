@@ -53,10 +53,10 @@ function Content(fund: SingleFund) {
               recipient={{
                 id: fund.id,
                 name: fund.name,
-                hide_bg_tip: !fund.allow_bg_tip,
+                hide_bg_tip: fund.settings.hide_bg_tip,
                 progDonationsAllowed: false,
               }}
-              config={null}
+              config={{ methodIds: fund.settings.donateMethods }}
               className="md:border border-gray-l4 rounded-lg row-start-2"
             />
           )}

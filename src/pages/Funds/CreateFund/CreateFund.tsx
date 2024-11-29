@@ -1,4 +1,4 @@
-import type { NewFund } from "@better-giving/fundraiser/schema";
+import type { NewFund } from "@better-giving/fundraiser";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
@@ -20,7 +20,7 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useCreateFundMutation } from "services/aws/funds";
 import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
 import { Videos } from "../common/videos";
@@ -28,6 +28,9 @@ import { EndowmentSelector } from "./EndowmentSelector";
 import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
 
 export default withAuth(function CreateFund() {
+  const [params] = useSearchParams();
+  const npoParam = params.get("npo");
+  const npoId = npoParam ? +npoParam : 0;
   const {
     register,
     control,
@@ -101,6 +104,7 @@ export default withAuth(function CreateFund() {
               ? "smart"
               : `${+fv.target.value}`, //fixedTarget is required when targetType is fixed
         videos: fv.videos.map((v) => v.url),
+        npo_owner: npoId,
       };
 
       if (fv.expiration) fund.expiration = fv.expiration;

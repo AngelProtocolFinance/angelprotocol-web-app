@@ -822,33 +822,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@better-giving/donation@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@better-giving/donation@npm:1.0.1"
+"@better-giving/donation@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@better-giving/donation@npm:1.0.3"
   peerDependencies:
-    "@better-giving/types": 1.0.1
+    "@better-giving/types": 1.0.2
     valibot: 0.42.0
-  checksum: 10/3676950a28b053a705bba1c21c0e3514fda27bcf973940ea72eb9c40eb23649f80b2bb8c6b059bb1d09873f7d2d755fc867f138ddded86ed4e2466b42bd9e818
+  checksum: 10/ffc85d9e7adecc60c5e077c97419aaa30ada37cd1317cc739fa8bee50e357f54a8a5b492bec12d4053d1ee3a4fc0d85ef6b3fd12db4a4b649a49d8d984c76cfa
   languageName: node
   linkType: hard
 
-"@better-giving/endowment@npm:1.0.29":
-  version: 1.0.29
-  resolution: "@better-giving/endowment@npm:1.0.29"
+"@better-giving/endowment@npm:1.0.33":
+  version: 1.0.33
+  resolution: "@better-giving/endowment@npm:1.0.33"
   peerDependencies:
-    "@better-giving/schemas": 1.0.1
-    "@better-giving/types": 1.0.1
+    "@better-giving/schemas": 1.0.2
+    "@better-giving/types": 1.0.2
     valibot: 0.42.0
-  checksum: 10/5b4c33afffe217787d9fda9a3313b1cc7be2f9a0d6d30302a9da6b38d73e85d14e5452a22c428d4471c717145c85acb27ed3b218a53e9d060b26691af23da2d1
+  checksum: 10/4ad8eb7edd9d6e2368590f773e6da5b676d3cde8e4eb61541380d06544b6003a6b2394b8ba1a08a270baaac95c94c305139c05e3aa1047146900fc944f4a4887
   languageName: node
   linkType: hard
 
-"@better-giving/fundraiser@npm:1.0.5":
-  version: 1.0.5
-  resolution: "@better-giving/fundraiser@npm:1.0.5"
+"@better-giving/fundraiser@npm:1.0.9-bg758.2":
+  version: 1.0.9-bg758.2
+  resolution: "@better-giving/fundraiser@npm:1.0.9-bg758.2"
   peerDependencies:
-    "@better-giving/types": 1.0.1
-  checksum: 10/b3641c552805a7c238132a7a0ebe709ee2092ac644661b8a32ad29008485e3c8388eaa54956bfdf0b6b8fe171e29050321f9bfe0a44cb9d73ad88e0d27883ce0
+    "@better-giving/schemas": 1.0.2
+    "@better-giving/types": 1.0.2
+  checksum: 10/2a6e615d36bb4510bb90144622ea757841e113bf6b9d72fb58ab2ed219e6daf574c8b3df7205362b8dc0ca17ad49de0e53c04570f1b11a32127f684c5546eefe
   languageName: node
   linkType: hard
 
@@ -861,19 +862,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@better-giving/schemas@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@better-giving/schemas@npm:1.0.1"
+"@better-giving/schemas@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@better-giving/schemas@npm:1.0.2"
   peerDependencies:
     valibot: 0.42.0
-  checksum: 10/1e69b19e434e1828427862c59b95edb9ee975841412dc093d3838488af2f294dbda9d4f8d59e90e69c7134b4e730ec3606c950ecb8f216d9fb9fc79af4c5b201
+  checksum: 10/96a6f3fae3386adada57511f650aa1b9b4ad3bba1640945e5779f2c05c3a969ffed7f1783e65623710d3b30c2c70259f4f0e8f80ac21a663310474cfe81191e6
   languageName: node
   linkType: hard
 
-"@better-giving/types@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@better-giving/types@npm:1.0.1"
-  checksum: 10/0179a1b2d80c29d2c9d981be4cdad9d788060c8e76d34fc7899dc3b66d9b36aec5ee80d87b5b2e1543edc68d248dae2b9a34c3cb68f4b53a6f6672d7f865060e
+"@better-giving/types@npm:1.0.2":
+  version: 1.0.2
+  resolution: "@better-giving/types@npm:1.0.2"
+  checksum: 10/9f6ed12cde66274aeec394f6346440d418d5a964f48c1658d0bc1766b487e770c6087e2653b22c99aa1dd16993edb410cdb1c85f92f709fc890dd8a7f47d7dec
   languageName: node
   linkType: hard
 
@@ -3486,12 +3487,12 @@ __metadata:
   resolution: "angelprotocol-web-app@workspace:."
   dependencies:
     "@better-giving/assets": "npm:1.0.18"
-    "@better-giving/donation": "npm:1.0.1"
-    "@better-giving/endowment": "npm:1.0.29"
-    "@better-giving/fundraiser": "npm:1.0.5"
+    "@better-giving/donation": "npm:1.0.3"
+    "@better-giving/endowment": "npm:1.0.33"
+    "@better-giving/fundraiser": "npm:1.0.9-bg758.2"
     "@better-giving/registration": "npm:1.0.24"
-    "@better-giving/schemas": "npm:1.0.1"
-    "@better-giving/types": "npm:1.0.1"
+    "@better-giving/schemas": "npm:1.0.2"
+    "@better-giving/types": "npm:1.0.2"
     "@biomejs/biome": "npm:1.8.1"
     "@gsap/react": "npm:2.1.1"
     "@headlessui/react": "npm:2.1.0"

@@ -79,7 +79,7 @@ export function Component() {
                   created by:
                 </span>
                 <span className="font-medium text-navy">
-                  {data.creator || "dev@placeholder.com"}
+                  {data.creator_name}
                 </span>
               </p>
               <DonateSection

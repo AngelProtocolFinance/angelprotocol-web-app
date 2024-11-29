@@ -4,23 +4,17 @@ import { appRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { ArrowRight, BadgeCheck, LoaderCircle, Split } from "lucide-react";
+import { ArrowRight, LoaderCircle, Split } from "lucide-react";
 import { Link } from "react-router-dom";
-import {
-  useApproveMutation,
-  useOptOutMutation,
-} from "services/aws/endow-funds";
+import { useOptOutMutation } from "services/aws/endow-funds";
 
 export const FundItem = (props: TFundItem & { endowId: number }) => {
   const user = useAuthenticatedUser();
   const isActive = new Date().toISOString() <= props.expiration && props.active;
   const isEditor = user.funds.includes(props.id);
   const [optOut, { isLoading: isOptingOut }] = useOptOutMutation();
-  const [approve, { isLoading: isApproving }] = useApproveMutation();
   const { showModal } = useModalContext();
   const { handleError } = useErrorContext();
-
-  const isApproved = props.approvers.includes(props.endowId);
 
   return (
     <div className="grid grid-cols-subgrid col-span-6 items-center rounded border border-gray-l4">
@@ -84,42 +78,6 @@ export const FundItem = (props: TFundItem & { endowId: number }) => {
 
           <span>{isOptingOut ? "Opting out.." : "Opt out"}</span>
         </button>
-        {!isApproved ? (
-          <button
-            className="font-heading bg-blue-d1 text-white rounded-full px-4 py-2 text-xs flex items-center gap-1 disabled:bg-gray-l1"
-            disabled={isApproving}
-            type="button"
-            onClick={async () => {
-              console.log(props.id);
-              try {
-                await approve({
-                  fundId: props.id,
-                  endowId: props.endowId,
-                }).unwrap();
-                showModal(Prompt, {
-                  type: "success",
-                  children:
-                    "You have successfully approved this fund. Changes will take effect shortly.",
-                });
-              } catch (err) {
-                handleError(err, { context: "approving fund" });
-              }
-            }}
-          >
-            {isApproving ? (
-              <LoaderCircle size={16} className="animate-spin" />
-            ) : (
-              <ArrowRight size={16} />
-            )}
-
-            <span>{isApproving ? "Approving.." : "Approve"}</span>
-          </button>
-        ) : (
-          <div className="flex items-center gap-1 text-green">
-            <BadgeCheck className="size-4" />
-            <p className="text-xs">Approved</p>
-          </div>
-        )}
       </div>
     </div>
   );
