@@ -86,7 +86,7 @@ export function Funds() {
         queryState={query}
       >
         {(funds) => (
-          <div className="grid grid-cols-2">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-4 w-full">
             {funds
               .toSorted(
                 (a, b) =>
@@ -99,7 +99,7 @@ export function Funds() {
             {creatorType === "ours" && (
               <Link
                 to={{ pathname: appRoutes.funds + "/new", search: `npo=${id}` }}
-                className="btn-blue text-sm px-6 py-2 rounded-full normal-case mt-4"
+                className="btn-blue text-sm px-6 py-2 rounded-full normal-case mt-4 col-span-full justify-self-start"
               >
                 Create fundraiser
               </Link>

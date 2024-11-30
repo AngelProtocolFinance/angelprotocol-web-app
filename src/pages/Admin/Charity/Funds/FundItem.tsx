@@ -1,5 +1,6 @@
 import type { FundItem as TFundItem } from "@better-giving/fundraiser";
 import Prompt from "components/Prompt";
+import { FundCreator } from "components/fundraiser";
 import { appRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -17,17 +18,13 @@ export const FundItem = (props: TFundItem & { endowId: number }) => {
   const { handleError } = useErrorContext();
 
   return (
-    <div className="grid grid-cols-subgrid col-span-6 items-center rounded border border-gray-l4">
-      <img
-        src={props.logo}
-        className="col-start-1 row-span-2 object-cover w-28 aspect-square border-r border-gray-l4"
-      />
-      <Link
-        to={`${appRoutes.funds}/${props.id}`}
-        className="mr-4 pl-4 p-1.5 font-medium text-navy-l1 hover:text-blue-d1"
-      >
-        <span className="font-heading">{props.name}</span>
-
+    <div className="grid items-center border border-gray-l4 p-3 rounded-lg">
+      <div className="flex items-start justify-between">
+        <img
+          src={props.logo}
+          width={50}
+          className="object-cover aspect-square rounded-full"
+        />
         <span
           className={`ml-1 relative bottom-px uppercase text-center text-2xs rounded-full px-3 py-0.5 ${
             isActive ? "text-green bg-green-l4" : "text-red bg-red-l4"
@@ -35,9 +32,17 @@ export const FundItem = (props: TFundItem & { endowId: number }) => {
         >
           {isActive ? "active" : "closed"}
         </span>
-      </Link>
+      </div>
 
-      <div className="grid grid-cols-subgrid col-start-2 col-span-5 border-t border-gray-l4 gap-x-6 p-3 items-center">
+      <Link
+        to={`${appRoutes.funds}/${props.id}`}
+        className="mt-4 font-medium text-navy-l1 hover:text-blue-d1 font-heading"
+      >
+        {props.name}
+      </Link>
+      <FundCreator name={props.creator_name} id={props.creator_id} />
+
+      <div className="grid border-t border-gray-l4 gap-x-6 p-3 items-center">
         <Link
           aria-disabled={!isActive || !isEditor}
           className={`flex items-center gap-x-1 text-sm hover:text-blue-d1 text-blue aria-disabled:pointer-events-none aria-disabled:text-gray ${
