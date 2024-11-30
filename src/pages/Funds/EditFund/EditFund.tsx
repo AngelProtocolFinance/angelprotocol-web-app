@@ -28,7 +28,10 @@ export default withAuth(function EditFund({ user }) {
     );
   }
 
-  if (!user.funds.includes(fundId)) {
+  if (
+    !user.funds.includes(fundId) &&
+    !user.endowments.map((n) => n.toString()).includes(data.creator_id)
+  ) {
     return (
       <div className="grid content-start place-items-center pt-40 pb-20">
         <CircleAlert size={80} className="text-red" />
