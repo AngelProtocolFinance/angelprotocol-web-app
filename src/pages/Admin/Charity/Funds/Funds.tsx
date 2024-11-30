@@ -1,24 +1,50 @@
+import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
+import { Info } from "components/Status";
 import { appRoutes } from "constants/routes";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useFundsEndowMemberOfQuery } from "services/aws/endow-funds";
+import { useEndowment } from "services/aws/useEndowment";
 import { useAdminContext } from "../../Context";
 import { FundItem } from "./FundItem";
 
+type CreatorType = "others" | "ours";
 export function Funds() {
   const { id } = useAdminContext();
+  const endow = useEndowment(id, ["name"]);
+  const npoName = endow.data?.name ?? "this nonprofit";
   const query = useFundsEndowMemberOfQuery({ endowId: id });
+  const [creatorType, setCreatorType] = useState<CreatorType>("ours");
   return (
     <div className="grid gap-y-4 grid-cols-[auto_1fr_auto_auto_auto_auto] justify-items-start">
-      <div className="flex items-center justify-between col-span-full mb-2 w-full border-b border-gray-l4 pb-4">
-        <h3 className="text-3xl">Fundraisers</h3>
-        <Link
+      <div className="col-span-full w-full">
+        <h3 className="text-3xl border-b border-gray-l4 w-full pb-2">
+          Fundraisers
+        </h3>
+        <RadioGroup
+          value={creatorType}
+          onChange={setCreatorType}
+          className="grid grid-cols-2 divide-x divide-gray-l4"
+        >
+          {(["ours", "others"] satisfies CreatorType[]).map((opt) => (
+            <Field key={opt} className="contents">
+              <Radio value={opt} className="peer hidden" />
+              <Label className="text-sm peer-data-[checked]:bg-blue-d1 peer-data-[checked]:text-white py-1 px-2 rounded-sm hover:bg-blue-l4">
+                {opt === "ours"
+                  ? `Created by ${npoName}`
+                  : `Where ${npoName} is included`}
+              </Label>
+            </Field>
+          ))}
+        </RadioGroup>
+        {/* <Link
           to={{ pathname: appRoutes.funds + "/new", search: `npo=${id}` }}
           className="btn-blue text-sm px-6 py-2 rounded-full"
         >
           Create
-        </Link>
+        </Link> */}
       </div>
       <QueryLoader
         messages={{
@@ -30,16 +56,55 @@ export function Funds() {
             </>
           ),
           error: "Failed to get fundraisers",
-          empty: "This NPO has not been included in any fundraisers",
+          empty:
+            creatorType === "ours" ? (
+              <div className="mt-4">
+                <Info classes="mb-4">
+                  {npoName} hasn't created any fundraiser yet
+                </Info>
+                <Link
+                  to={{
+                    pathname: appRoutes.funds + "/new",
+                    search: `npo=${id}`,
+                  }}
+                  className="btn-blue text-sm px-6 py-2"
+                >
+                  Create
+                </Link>
+              </div>
+            ) : (
+              <div className="mt-4">
+                <Info>{npoName} has not been included in any fundraisers</Info>
+              </div>
+            ),
         }}
+        filterFn={(f) =>
+          creatorType === "ours"
+            ? f.creator_id === id.toString()
+            : f.creator_id !== id.toString()
+        }
         queryState={query}
       >
         {(funds) => (
-          <>
-            {funds.map((fund) => (
-              <FundItem key={fund.id} {...fund} endowId={id} />
-            ))}
-          </>
+          <div className="grid grid-cols-2">
+            {funds
+              .toSorted(
+                (a, b) =>
+                  (b.creator_id === id.toString() ? 1 : 0) -
+                  (a.creator_id === id.toString() ? 1 : 0)
+              )
+              .map((fund) => (
+                <FundItem key={fund.id} {...fund} endowId={id} />
+              ))}
+            {creatorType === "ours" && (
+              <Link
+                to={{ pathname: appRoutes.funds + "/new", search: `npo=${id}` }}
+                className="btn-blue text-sm px-6 py-2 rounded-full normal-case mt-4"
+              >
+                Create fundraiser
+              </Link>
+            )}
+          </div>
         )}
       </QueryLoader>
     </div>
