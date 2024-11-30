@@ -94,7 +94,12 @@ export function Funds() {
                   (a.creator_id === id.toString() ? 1 : 0)
               )
               .map((fund) => (
-                <FundItem key={fund.id} {...fund} endowId={id} />
+                <FundItem
+                  key={fund.id}
+                  {...fund}
+                  endowId={id}
+                  isSelf={fund.creator_id === id.toString()}
+                />
               ))}
             {creatorType === "ours" && (
               <Link
