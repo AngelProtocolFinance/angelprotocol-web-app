@@ -7,7 +7,7 @@ import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { formatDistance } from "date-fns";
-import { ArrowRight, LoaderCircle, Split } from "lucide-react";
+import { LoaderCircle, Split } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useOptOutMutation } from "services/aws/endow-funds";
 
@@ -61,7 +61,7 @@ export const FundItem = (
       >
         {props.name}
       </Link>
-      <div className="mt-4">
+      <div className="mb-2">
         <span className="text-xs mr-1">by</span>
         <FundCreator
           name={props.creator_name}
@@ -76,7 +76,7 @@ export const FundItem = (
         target={toTarget(props.target)}
       />
 
-      <div className="flex items-center justify-between gap-x-6 p-3 pl-0 mt-4">
+      <div className="flex items-center justify-between gap-x-6 mt-6">
         {/** fund item won't show once NPO opted out of it: so no need to hide this button */}
         {!props.isSelf ? (
           <button
@@ -113,13 +113,12 @@ export const FundItem = (
         )}
         <Link
           aria-disabled={!isActive || !isEditor}
-          className={`flex items-center gap-x-1 text-sm hover:text-blue-d1 text-blue aria-disabled:pointer-events-none aria-disabled:text-gray ${
+          className={`btn btn-blue rounded-full text-xs px-6 py-2 ${
             isEditor ? "" : "invisible"
           }`}
           to={`${appRoutes.funds}/${props.id}/edit`}
         >
-          <ArrowRight size={16} />
-          <span>Edit</span>
+          Edit
         </Link>
       </div>
     </div>

@@ -26,12 +26,12 @@ export function Funds() {
         <RadioGroup
           value={creatorType}
           onChange={setCreatorType}
-          className="grid grid-cols-2 divide-x divide-gray-l4"
+          className="flex flex-col @2xl:flex-row @2xl:items-center mt-1 gap-1"
         >
           {(["ours", "others"] satisfies CreatorType[]).map((opt) => (
             <Field key={opt} className="contents">
               <Radio value={opt} className="peer hidden" />
-              <Label className="text-sm peer-data-[checked]:bg-blue-d1 peer-data-[checked]:text-white py-1 px-2 rounded-sm hover:bg-blue-l4">
+              <Label className="text-sm bg-blue-l4 peer-data-[checked]:bg-blue-d1 peer-data-[checked]:text-white py-1 px-4 rounded-full hover:bg-blue-d1 hover:text-white">
                 {opt === "ours"
                   ? `Created by ${npoName}`
                   : `Where ${npoName} is included`}
