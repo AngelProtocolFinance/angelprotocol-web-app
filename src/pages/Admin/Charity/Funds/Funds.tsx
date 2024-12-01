@@ -100,7 +100,7 @@ export function Funds() {
   );
 }
 
-export function Skeleton() {
+function Skeleton() {
   return (
     <div
       className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4"
