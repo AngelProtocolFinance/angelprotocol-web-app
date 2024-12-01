@@ -18,23 +18,19 @@ export function Funds() {
   const query = useFundsEndowMemberOfQuery({ endowId: id });
   const [creatorType, setCreatorType] = useState<CreatorType>("ours");
   return (
-    <div className="grid gap-y-4 grid-cols-[auto_1fr_auto_auto_auto_auto] justify-items-start">
-      <div className="col-span-full w-full">
-        <h3 className="text-3xl border-b border-gray-l4 w-full pb-2">
-          Fundraisers
-        </h3>
+    <div className="grid">
+      <div className="">
+        <h3 className="text-3xl border-b border-gray-l4 pb-2">Fundraisers</h3>
         <RadioGroup
           value={creatorType}
           onChange={setCreatorType}
-          className="flex flex-col @2xl:flex-row @2xl:items-center mt-1 gap-1"
+          className="flex flex-col @2xl:flex-row @2xl:items-center mt-1 mb-6 gap-1"
         >
           {(["ours", "others"] satisfies CreatorType[]).map((opt) => (
             <Field key={opt} className="contents">
               <Radio value={opt} className="peer hidden" />
               <Label className="text-sm bg-blue-l4 peer-data-[checked]:bg-blue-d1 peer-data-[checked]:text-white py-1 px-4 rounded-full hover:bg-blue-d1 hover:text-white">
-                {opt === "ours"
-                  ? `Created by ${npoName}`
-                  : `Where ${npoName} is included`}
+                {opt === "ours" ? `by ${npoName}` : `${npoName} is included`}
               </Label>
             </Field>
           ))}
@@ -42,13 +38,7 @@ export function Funds() {
       </div>
       <QueryLoader
         messages={{
-          loading: (
-            <>
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
-            </>
-          ),
+          loading: <Skeleton />,
           error: "Failed to get fundraisers",
           empty:
             creatorType === "ours" ? (
@@ -80,7 +70,7 @@ export function Funds() {
         queryState={query}
       >
         {(funds) => (
-          <div className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4 w-full col-span-full">
+          <div className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4">
             {funds
               .toSorted(
                 (a, b) =>
@@ -113,11 +103,15 @@ export function Funds() {
 export function Skeleton() {
   return (
     <div
-      className="flex items-center gap-x-2 w-full col-span-full"
+      className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4"
       aria-disabled={true}
     >
-      <ContentLoader className="size-10 rounded-full" />
-      <ContentLoader className="w-full h-10 rounded" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
     </div>
   );
 }
