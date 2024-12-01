@@ -39,12 +39,6 @@ export function Funds() {
             </Field>
           ))}
         </RadioGroup>
-        {/* <Link
-          to={{ pathname: appRoutes.funds + "/new", search: `npo=${id}` }}
-          className="btn-blue text-sm px-6 py-2 rounded-full"
-        >
-          Create
-        </Link> */}
       </div>
       <QueryLoader
         messages={{
@@ -86,7 +80,7 @@ export function Funds() {
         queryState={query}
       >
         {(funds) => (
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(10rem,1fr))] gap-4 w-full">
+          <div className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4 w-full col-span-full">
             {funds
               .toSorted(
                 (a, b) =>

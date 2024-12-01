@@ -105,6 +105,7 @@ export default withAuth(function CreateFund() {
               : `${+fv.target.value}`, //fixedTarget is required when targetType is fixed
         videos: fv.videos.map((v) => v.url),
         npo_owner: npoId,
+        expiration: fv.expiration,
       };
 
       if (fv.expiration) fund.expiration = fv.expiration;
