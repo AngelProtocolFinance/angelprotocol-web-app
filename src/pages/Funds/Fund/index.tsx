@@ -57,15 +57,21 @@ export function Component() {
           </Link>
           <div className="bg-white rounded-lg shadow-2xl shadow-black/10 p-4">
             <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
-              <Image
-                src={data.logo || flying_character}
-                width={60}
-                className="mr-4 md:row-span-2 border-2 border-blue-d1 rounded-full object-cover bg-white"
-              />
-              <div className="md:col-start-2 max-md:text-center">
+              <div className="mr-4 md:row-span-2 relative">
+                <Image
+                  src={data.logo || flying_character}
+                  width={60}
+                  className="rounded-full object-cover bg-white"
+                />
                 {data.verified && (
-                  <VerifiedIcon classes="relative inline bottom-1" size={20} />
+                  <VerifiedIcon
+                    classes="absolute bottom-0 -right-2"
+                    size={22}
+                  />
                 )}
+              </div>
+
+              <div className="md:col-start-2 max-md:text-center">
                 <span className="font-heading font-bold text-2xl w-full break-words text-center">
                   {data.name}
                 </span>
@@ -75,9 +81,9 @@ export function Component() {
                   </span>
                 )}
               </div>
-              <p>
-                <span className="text-sm font-medium text-navy-l1 mr-1">
-                  created by:
+              <p className="pl-0.5">
+                <span className="text-sm font-medium text-navy-l3 mr-1">
+                  by
                 </span>
                 <FundCreator
                   name={data.creator_name}
