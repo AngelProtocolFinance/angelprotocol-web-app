@@ -822,34 +822,34 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@better-giving/donation@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@better-giving/donation@npm:1.0.3"
+"@better-giving/donation@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@better-giving/donation@npm:1.0.4"
   peerDependencies:
-    "@better-giving/types": 1.0.2
+    "@better-giving/types": 1.0.3
     valibot: 0.42.0
-  checksum: 10/ffc85d9e7adecc60c5e077c97419aaa30ada37cd1317cc739fa8bee50e357f54a8a5b492bec12d4053d1ee3a4fc0d85ef6b3fd12db4a4b649a49d8d984c76cfa
+  checksum: 10/34d5d476fa73e8e85cc8c1bcd2a4d0c0d7f717598e7d4ce47c63180a7cbe2b7d4e3335c60b52673b20c68dccc5244fc969d71b996ca891f8f87ed0d8f7254f37
   languageName: node
   linkType: hard
 
-"@better-giving/endowment@npm:1.0.33":
-  version: 1.0.33
-  resolution: "@better-giving/endowment@npm:1.0.33"
+"@better-giving/endowment@npm:1.0.34":
+  version: 1.0.34
+  resolution: "@better-giving/endowment@npm:1.0.34"
   peerDependencies:
     "@better-giving/schemas": 1.0.2
-    "@better-giving/types": 1.0.2
+    "@better-giving/types": 1.0.3
     valibot: 0.42.0
-  checksum: 10/4ad8eb7edd9d6e2368590f773e6da5b676d3cde8e4eb61541380d06544b6003a6b2394b8ba1a08a270baaac95c94c305139c05e3aa1047146900fc944f4a4887
+  checksum: 10/dd5ae7a8a3e55f8cedac09550285b6db5a21f4587fc0696facb7f6d4fb301510221e6876d436ab280abdab1689d6c981c37c36d389baf739a63fd3cfb1223188
   languageName: node
   linkType: hard
 
-"@better-giving/fundraiser@npm:1.0.9-bg758.2":
-  version: 1.0.9-bg758.2
-  resolution: "@better-giving/fundraiser@npm:1.0.9-bg758.2"
+"@better-giving/fundraiser@npm:1.0.9-bg758.4":
+  version: 1.0.9-bg758.4
+  resolution: "@better-giving/fundraiser@npm:1.0.9-bg758.4"
   peerDependencies:
     "@better-giving/schemas": 1.0.2
-    "@better-giving/types": 1.0.2
-  checksum: 10/2a6e615d36bb4510bb90144622ea757841e113bf6b9d72fb58ab2ed219e6daf574c8b3df7205362b8dc0ca17ad49de0e53c04570f1b11a32127f684c5546eefe
+    "@better-giving/types": 1.0.3
+  checksum: 10/8fac922adc14ac7f9b63586103b51426037c00d5702c3d5b44d8bff3d6a5c6ebd0a4b04afa744706844e3c1a6dffb826575c0695b856ba4a37c2cf10c87fba8c
   languageName: node
   linkType: hard
 
@@ -871,10 +871,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@better-giving/types@npm:1.0.2":
-  version: 1.0.2
-  resolution: "@better-giving/types@npm:1.0.2"
-  checksum: 10/9f6ed12cde66274aeec394f6346440d418d5a964f48c1658d0bc1766b487e770c6087e2653b22c99aa1dd16993edb410cdb1c85f92f709fc890dd8a7f47d7dec
+"@better-giving/types@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@better-giving/types@npm:1.0.3"
+  checksum: 10/3c51dd0b96d1258ecd9ec3f288d9b288569ad3e95f4c6045a09f4bfbf94917cbb96252ee3b9d7be601553b1122e4634036850dd0abc31423db46cb4f68f5805c
+  languageName: node
+  linkType: hard
+
+"@better-giving/user@npm:1.0.3":
+  version: 1.0.3
+  resolution: "@better-giving/user@npm:1.0.3"
+  peerDependencies:
+    "@better-giving/types": 1.0.3
+    valibot: 0.42.0
+  checksum: 10/3c6affd98befc4c8811fe064c8cc1905ccf0d74696d7ed0602b851c366b8b5e99ef5538d49a6b1967bb90ed1334b9971c6993404377e341d6b102a8ad6b61ed4
   languageName: node
   linkType: hard
 
@@ -3487,12 +3497,13 @@ __metadata:
   resolution: "angelprotocol-web-app@workspace:."
   dependencies:
     "@better-giving/assets": "npm:1.0.18"
-    "@better-giving/donation": "npm:1.0.3"
-    "@better-giving/endowment": "npm:1.0.33"
-    "@better-giving/fundraiser": "npm:1.0.9-bg758.2"
+    "@better-giving/donation": "npm:1.0.4"
+    "@better-giving/endowment": "npm:1.0.34"
+    "@better-giving/fundraiser": "npm:1.0.9-bg758.4"
     "@better-giving/registration": "npm:1.0.24"
     "@better-giving/schemas": "npm:1.0.2"
-    "@better-giving/types": "npm:1.0.2"
+    "@better-giving/types": "npm:1.0.3"
+    "@better-giving/user": "npm:1.0.3"
     "@biomejs/biome": "npm:1.8.1"
     "@gsap/react": "npm:2.1.1"
     "@headlessui/react": "npm:2.1.0"
