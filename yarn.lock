@@ -878,13 +878,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@better-giving/user@npm:1.0.3":
-  version: 1.0.3
-  resolution: "@better-giving/user@npm:1.0.3"
+"@better-giving/user@npm:1.0.4":
+  version: 1.0.4
+  resolution: "@better-giving/user@npm:1.0.4"
   peerDependencies:
     "@better-giving/types": 1.0.3
     valibot: 0.42.0
-  checksum: 10/3c6affd98befc4c8811fe064c8cc1905ccf0d74696d7ed0602b851c366b8b5e99ef5538d49a6b1967bb90ed1334b9971c6993404377e341d6b102a8ad6b61ed4
+  checksum: 10/292a9559affd89a6135f23991c0b7078ab529879926b8897033d94d9a85f7e5412e8ad64be4bbbc4160a25d2f69d35583244cf426943370443766ea5bb8f0208
   languageName: node
   linkType: hard
 
@@ -3503,7 +3503,7 @@ __metadata:
     "@better-giving/registration": "npm:1.0.24"
     "@better-giving/schemas": "npm:1.0.2"
     "@better-giving/types": "npm:1.0.3"
-    "@better-giving/user": "npm:1.0.3"
+    "@better-giving/user": "npm:1.0.4"
     "@biomejs/biome": "npm:1.8.1"
     "@gsap/react": "npm:2.1.1"
     "@headlessui/react": "npm:2.1.0"

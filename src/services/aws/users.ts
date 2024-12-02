@@ -1,10 +1,10 @@
-import { TEMP_JWT } from "constants/auth";
 import type {
-  AletPrefUpdate,
+  AlertPref,
   UserEndow,
   UserFund,
   UserUpdate,
-} from "types/aws";
+} from "@better-giving/user";
+import { TEMP_JWT } from "constants/auth";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
@@ -37,7 +37,7 @@ const endowAdmins = aws.injectEndpoints({
     }),
     updateUserEndows: builder.mutation<
       unknown,
-      { userId: string; alertPrefs: AletPrefUpdate[] }
+      { userId: string; alertPrefs: AlertPref[] }
     >({
       invalidatesTags: ["user-endows"],
       query: ({ userId, alertPrefs }) => {

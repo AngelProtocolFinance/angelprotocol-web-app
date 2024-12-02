@@ -10,8 +10,8 @@ export function Funds() {
   const user = useAuthenticatedUser();
   const query = useUserFundsQuery(user.email);
   return (
-    <div className="grid gap-y-4 grid-cols-[auto_auto_1fr_auto_auto] justify-items-start">
-      <div className="flex items-center justify-between col-span-full mb-2 w-full border-b border-gray-l4 pb-4">
+    <div className="grid">
+      <div className="flex items-center justify-between mb-2 w-full border-b border-gray-l4 pb-4">
         <h3 className="text-3xl">My Fundraisers</h3>
         <Link
           to={appRoutes.funds + "/new"}
@@ -23,38 +23,36 @@ export function Funds() {
 
       <QueryLoader
         messages={{
-          loading: (
-            <>
-              <Skeleton />
-              <Skeleton />
-              <Skeleton />
-            </>
-          ),
+          loading: <Skeleton />,
           error: "Failed to get fundraisers",
           empty: "You currently don't have any fundraisers",
         }}
         queryState={query}
       >
         {(funds) => (
-          <>
+          <div className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4">
             {funds.map((fund) => (
               <Fund key={fund.id} {...fund} />
             ))}
-          </>
+          </div>
         )}
       </QueryLoader>
     </div>
   );
 }
 
-export function Skeleton() {
+function Skeleton() {
   return (
     <div
-      className="flex items-center gap-x-2 w-full col-span-full"
+      className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4"
       aria-disabled={true}
     >
-      <ContentLoader className="size-10 rounded-full" />
-      <ContentLoader className="w-full h-10 rounded" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
+      <ContentLoader className="h-60 rounded-lg" />
     </div>
   );
 }

@@ -1,3 +1,4 @@
+import type { UserEndow } from "@better-giving/user";
 import { MenuItem } from "@headlessui/react";
 import ContentLoader from "components/ContentLoader";
 import Image from "components/Image";
@@ -5,7 +6,6 @@ import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
-import type { UserEndow } from "types/aws";
 
 interface IBookmarkLink {
   endowId: number;
