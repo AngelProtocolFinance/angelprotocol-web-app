@@ -1,8 +1,9 @@
+import type { DonateData } from "api/donate-loader";
 import Image from "components/Image";
 import { type TTarget, Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
-import { useEndowBalanceQuery } from "services/apes";
+import { Await, Link, useLoaderData } from "react-router-dom";
+import type { EndowmentBalances } from "types/aws";
 
 type Props = {
   id: number;
@@ -13,7 +14,7 @@ type Props = {
   classes?: string;
 };
 export default function OrgCard({ classes = "", ...props }: Props) {
-  const bal = useEndowBalanceQuery(props.id);
+  const { balance } = useLoaderData() as DonateData;
   return (
     <div
       className={`grid @xl/org-card:grid-cols-[3fr_2fr] gap-x-4 gap-y-6 p-4 md:bg-white rounded-lg md:border border-gray-l4 ${classes}`}
@@ -36,14 +37,18 @@ export default function OrgCard({ classes = "", ...props }: Props) {
         )}
       </div>
 
-      {bal.data?.totalContributions != null && props.target && (
-        <Target
-          text={<Target.Text classes="mb-2" />}
-          progress={bal.data?.totalContributions}
-          target={toTarget(props.target)}
-          classes="order-1 @xl/org-card:order-2"
-        />
-      )}
+      <Await resolve={balance}>
+        {(bal: EndowmentBalances) =>
+          props.target && (
+            <Target
+              text={<Target.Text classes="mb-2" />}
+              progress={bal.totalContributions}
+              target={toTarget(props.target)}
+              classes="order-1 @xl/org-card:order-2"
+            />
+          )
+        }
+      </Await>
     </div>
   );
 }

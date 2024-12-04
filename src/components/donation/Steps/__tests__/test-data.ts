@@ -29,4 +29,5 @@ export const testDonateData: DonateData = {
     all: [usdOption, { code: "eur", min: 1, rate: 1 }],
   }),
   programs: Promise.resolve([]),
+  balance: Promise.resolve({} as any),
 };

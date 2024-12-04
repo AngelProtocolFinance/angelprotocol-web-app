@@ -3,9 +3,10 @@ import { loadAuth } from "auth/load-auth";
 import { decodeState } from "helpers/state-params";
 import { type LoaderFunction, defer } from "react-router-dom";
 import type { UserV2 } from "types/auth";
-import type { DonationIntent } from "types/aws";
+import type { DonationIntent, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import { getEndow } from "./get/endow";
+import { getEndowBalance } from "./get/endow-balance";
 import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
 import { getPrograms } from "./get/programs";
 import { plusInt } from "./schema/endow-id";
@@ -18,6 +19,7 @@ export interface DonateData {
   /** need to await */
   currencies: Promise<FiatCurrencies>;
   programs: Promise<Program[]>;
+  balance: Promise<EndowmentBalances>;
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -36,5 +38,6 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     endow: await getEndow(id),
     currencies: getFiatCurrencies(auth ?? undefined),
     programs: getPrograms(id),
+    balance: getEndowBalance(id.toString()),
   } satisfies DonateData);
 };
