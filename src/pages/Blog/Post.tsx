@@ -5,28 +5,12 @@ import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import { useRendered } from "hooks/use-rendered";
 import { ChevronLeft } from "lucide-react";
-import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { usePostQuery, useUserQuery } from "services/wordpress";
 import type { Wordpress } from "types/wordpress";
 
 const containerStyle = "w-full padded-container max-w-4xl mx-auto pb-4";
-
-const wpStyles = [
-  "animate.min.css",
-  "bootstrap.min.css",
-  "bootstrap.rtl.min.css",
-  "custom-animation.css",
-  "fontawesome.min.css",
-  "gainioz-core.css",
-  "gainioz-custom.css",
-  "gainioz-unit.css",
-  "magnific-popup.css",
-  "meanmenu.css",
-  "nice-select.css",
-  "swiper-bundle.css",
-];
 
 export function Component() {
   const { slug = "" } = useParams<{ slug: string }>();
@@ -35,14 +19,6 @@ export function Component() {
 
   return (
     <div className={containerStyle}>
-      <Helmet
-        link={wpStyles.map((w) => ({
-          rel: "stylesheet",
-          type: "text/css",
-          href: `/wordpress/${w}`,
-        }))}
-      />
-
       <Link
         to={appRoutes.blog}
         className="flex items-center gap-2 font-medium text-blue-d1 hover:text-blue mt-6"
@@ -55,7 +31,7 @@ export function Component() {
         messages={{
           loading: <Skeleton />,
         }}
-        classes={{ container: containerStyle }}
+        classes={{ container: containerStyle + " mt-4" }}
       >
         {(post) => <Loaded {...post} />}
       </QueryLoader>
@@ -91,6 +67,7 @@ function Loaded(post: Wordpress.Post) {
       <div className="w-full h-px bg-gray-l4 my-4" />
 
       <div
+        className="prose"
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: post.content.rendered }}
       />
