@@ -25,7 +25,6 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export function Component() {
   const page1 = useLoaderData() as EndowCardsPage;
-  console.log({ page1 });
   return (
     <div className="w-full grid content-start pb-16">
       <Seo title="Marketplace" />

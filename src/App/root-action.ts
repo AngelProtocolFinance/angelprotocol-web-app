@@ -44,7 +44,6 @@ export const rootAction: ActionFunction = async ({ request }) => {
     const data = await request.formData();
     const action = data.get("action");
     const endowId = data.get("endowId");
-    console.log(Object.fromEntries(data.entries()));
 
     const url = new URL(APIs.aws);
     url.pathname =

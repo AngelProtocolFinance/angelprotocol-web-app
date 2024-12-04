@@ -10,7 +10,6 @@ import Programs from "./Programs";
 export default function GeneralInfo({ className = "" }) {
   const profile = useProfileContext();
   const [programs, media] = useLoaderData() as [Program[], IMedia[]];
-  console.log({ programs, media });
 
   return (
     <div

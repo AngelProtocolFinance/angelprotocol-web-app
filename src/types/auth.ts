@@ -96,7 +96,6 @@ export const signUp = v.pipe(
     v.partialCheck(
       [["email"], ["emailConfirmation"]],
       (input) => {
-        console.log(input);
         return (
           input.email.toLowerCase() === input.emailConfirmation.toLowerCase()
         );
