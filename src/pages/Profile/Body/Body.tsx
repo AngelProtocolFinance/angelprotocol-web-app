@@ -91,7 +91,7 @@ function Body() {
           </div>
         </div>
 
-        <Outlet />
+        <Outlet context={bal} key="profile-body" />
       </div>
     </div>
   );

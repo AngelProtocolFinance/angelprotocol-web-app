@@ -1,17 +1,13 @@
 import { humanize } from "helpers";
-import { useProfileContext } from "pages/Profile/ProfileContext";
-import { useEndowBalanceQuery } from "services/apes";
+import { useOutletContext } from "react-router-dom";
+import type { EndowmentBalances } from "types/aws";
 
 export default function Balances() {
-  const { id } = useProfileContext();
-  const { data } = useEndowBalanceQuery(id);
+  const bal = useOutletContext() as EndowmentBalances;
 
   return (
     <div className="flex flex-col items-center gap-4 w-full">
-      <Balance
-        title="Total Contributions"
-        amount={data?.totalContributions ?? 0}
-      />
+      <Balance title="Total Contributions" amount={bal.totalContributions} />
     </div>
   );
 }

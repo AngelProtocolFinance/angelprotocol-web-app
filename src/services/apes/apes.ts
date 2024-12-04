@@ -5,13 +5,11 @@ import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import type {
   Crypto,
   DonationIntent,
-  EndowmentBalances,
   FiatCurrencyData,
   GuestDonor,
   PayPalOrder,
 } from "types/aws";
 import type { DetailedCurrency } from "types/components";
-import { version as v } from "../helpers";
 import { tags } from "./tags";
 
 type StripeRequiresBankVerification = {
@@ -107,10 +105,6 @@ export const apes = createApi({
       }),
       transformResponse: (res: { grantId: string }) => res.grantId,
     }),
-    endowBalance: builder.query<EndowmentBalances, number>({
-      providesTags: ["balance"],
-      query: (endowId) => `${v(1)}/balances/${endowId}`,
-    }),
     stripePaymentStatus: builder.query<
       Pick<PaymentIntent, "status"> &
         StripeRequiresBankVerification & {
@@ -138,7 +132,6 @@ export const {
   useStripePaymentIntentQuery,
   useLazyChariotGrantQuery,
   usePaypalOrderMutation,
-  useEndowBalanceQuery,
   useStripePaymentStatusQuery,
   useTopCountriesQuery,
   util: {

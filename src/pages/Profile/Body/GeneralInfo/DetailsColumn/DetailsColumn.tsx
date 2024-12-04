@@ -4,15 +4,15 @@ import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
 import { toWithState } from "helpers/state-params";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
-import { useEndowBalanceQuery } from "services/apes";
+import { Link, useOutletContext } from "react-router-dom";
+import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../../../ProfileContext";
 import Socials from "./Socials";
 import Tags from "./Tags";
 
 export default function DetailsColumn({ className = "" }) {
   const p = useProfileContext();
-  const bal = useEndowBalanceQuery(p.id);
+  const bal = useOutletContext() as EndowmentBalances;
   const { active_in_countries = [] } = p;
   return (
     <div className="flex flex-col gap-6 w-full">
@@ -33,10 +33,10 @@ export default function DetailsColumn({ className = "" }) {
           {p.social_media_urls && (
             <Socials social_media_urls={p.social_media_urls} />
           )}
-          {bal.data?.totalContributions != null && p.target && (
+          {bal.totalContributions != null && p.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
-              progress={bal.data?.totalContributions}
+              progress={bal.totalContributions}
               target={toTarget(p.target)}
               classes="-mb-5 mt-4"
             />
