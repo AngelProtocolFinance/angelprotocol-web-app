@@ -70,7 +70,7 @@ interface ISearchResult extends EndowCardsPage {
 }
 function SearchResult(props: ISearchResult) {
   if (props.isLoading) return <LoadingStatus>Searching...</LoadingStatus>;
-  if (props.items.length === 0) return <Info>No endowments found.</Info>;
+  if (props.items.length === 0) return <Info>No organizations found.</Info>;
 
   return (
     <div className="flex flex-wrap items-center gap-4">

@@ -2,7 +2,7 @@ import type { Endow } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
 import { APIs } from "constants/urls";
 import { cacheGet } from "helpers/cache-get";
-import { apiEnv } from "services/constants";
+import { version as ver } from "services/helpers";
 import * as v from "valibot";
 
 type K = keyof Endow;
@@ -29,15 +29,7 @@ export async function getEndow<T extends K[]>(
 ) {
   const id = v.parse(schema, idParamOrSlug?.toString());
   const url = new URL(APIs.aws);
-  url.searchParams.set("env", apiEnv);
-
-  if (typeof id === "number") {
-    url.pathname = `v10/endowments/${id}`;
-  } else {
-    //slug
-    url.pathname = `v10/endowments`;
-    url.searchParams.set("slug", id);
-  }
+  url.pathname = `${ver(1)}/endowments/${id}`;
 
   if (fields && fields.length > 0) {
     url.searchParams.set("fields", fields.join(","));
