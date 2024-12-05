@@ -8,11 +8,11 @@ import { APIs } from "constants/urls";
 import { storeRegistrationReference } from "helpers";
 import { decodeState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
-import { Link, type LoaderFunction, useLoaderData } from "react-router-dom";
+import { type ActionFunction, redirect, useFetcher } from "react-router-dom";
 import { version as v } from "services/helpers";
 import { steps } from "./routes";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request }) => {
   const auth = await loadAuth();
   if (!auth) throw "auth is required up higher";
 
@@ -34,24 +34,13 @@ export const loader: LoaderFunction = async ({ request }) => {
   });
   post.headers.set("authorization", auth.idToken);
 
-  api.search = "";
-  const cacheKey =
-    api.toString() + `?new=true&claim=${btoa(JSON.stringify(claim))}`;
-
-  const cache = await caches.open("bg");
-  const cached = await cache.match(cacheKey);
-  if (cached) return cached.clone();
-
-  const res = await fetch(post);
-  await cache.put(cacheKey, res.clone());
-
-  const reg: Pick<Step1, "id"> = await res.json();
+  const reg = await fetch(post).then<Pick<Step1, "id">>((res) => res.json());
   storeRegistrationReference(reg.id);
-  return reg.id;
+  return redirect(`../${reg.id}/${steps.contact}`);
 };
 
 export function Component() {
-  const regId = useLoaderData() as string;
+  const fetcher = useFetcher();
 
   return (
     <div className="grid justify-items-center mx-6">
@@ -63,12 +52,17 @@ export function Component() {
         Your fundraising profile & account are just few steps away 😇
       </p>
 
-      <Link
-        className="w-full max-w-[26.25rem] btn-blue btn-reg"
-        to={`../${regId}/${steps.contact}`}
-      >
-        <LoadText text="Continue registration">Continue registration</LoadText>
-      </Link>
+      <fetcher.Form className="contents" action="." method="post">
+        <button
+          disabled={fetcher.state !== "idle"}
+          className="w-full max-w-[26.25rem] btn-blue btn-reg"
+        >
+          <LoadText text="Continue registration">
+            Continue registration
+          </LoadText>
+        </button>
+      </fetcher.Form>
+
       <p className="text-sm italic text-navy-l1 dark:text-navy-l2 mt-8 text-center">
         Note: Registration is quick, but we've sent an email link if you need to
         pause and resume at any point.
