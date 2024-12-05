@@ -53,7 +53,7 @@ const Checkout: typeof StripeCheckout = (props) => (
 
 const state: StripeCheckoutStep = {
   init: {
-    recipient: { id: 1, name: "test" },
+    recipient: { id: "1", name: "test" },
     source: "bg-marketplace",
     mode: "live",
     config: null,

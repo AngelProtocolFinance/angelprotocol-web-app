@@ -2,7 +2,7 @@ import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
 import DashboardLayout from "layout/DashboardLayout";
-import type { RouteObject } from "react-router-dom";
+import { Outlet, type RouteObject } from "react-router-dom";
 import Donations from "./Donations";
 import EditProfile from "./EditProfile";
 import Settings from "./Settings";
@@ -30,5 +30,10 @@ export const userDashboardRoute: RouteObject = {
     { path: routes.edit_profile, element: <EditProfile /> },
     { path: routes.donations, element: <Donations /> },
     { path: routes.settings, element: <Settings /> },
+    {
+      path: routes.funds,
+      element: <Outlet />,
+      children: [{ index: true, lazy: () => import("./Funds") }],
+    },
   ],
 };

@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import { jwtToken } from "./jwt-token";
 import { logger } from "./logger";
 
-export type Bucket = "endow-profiles" | "endow-reg" | "bg-user";
+export type Bucket = "endow-profiles" | "endow-reg" | "bg-user" | "bg-funds";
 export const bucketURL = "s3.amazonaws.com";
 
 const SPACES = /\s+/g;

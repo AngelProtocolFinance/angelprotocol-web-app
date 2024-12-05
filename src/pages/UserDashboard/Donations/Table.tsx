@@ -8,7 +8,6 @@ import useSort from "hooks/useSort";
 import { ArrowDownToLine, SquareArrowUpRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import type { Donation } from "types/aws";
-import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";
 import PaymentResumer from "./PaymentResumer";
 import { donationMethod, lastHeaderName } from "./common";
@@ -189,7 +188,7 @@ function LastRowColContent(
   }
 
   if (props.status === "intent" && props.viaId === "fiat") {
-    return <IntentResumer intentId={props.id} />;
+    return <>---</>;
   }
 
   if (props.status === "intent" && props.viaId !== "fiat") {

@@ -23,7 +23,7 @@ describe("DAF form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: 0, name: "" },
+      recipient: { id: "0", name: "" },
       mode: "live",
     };
 
@@ -39,7 +39,7 @@ describe("DAF form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: 0, name: "", progDonationsAllowed: false },
+      recipient: { id: "0", name: "", progDonationsAllowed: false },
       mode: "live",
     };
     render(<_Form init={init} step="donate-form" />);
@@ -53,7 +53,7 @@ describe("DAF form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: 0, name: "" },
+      recipient: { id: "0", name: "" },
       mode: "live",
     };
     const details: DafDonationDetails = {
@@ -75,7 +75,7 @@ describe("DAF form test", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: 0, name: "", progDonationsAllowed: false },
+      recipient: { id: "0", name: "", progDonationsAllowed: false },
       mode: "live",
     };
     render(<_Form init={init} step="donate-form" />);
