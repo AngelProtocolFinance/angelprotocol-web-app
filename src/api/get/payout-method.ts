@@ -16,7 +16,9 @@ export async function getPayoutMethod(
     "requestor",
     typeof requestor === "number" ? "endowment" : requestor
   );
-  bank.searchParams.set("endowmentID", id.toString());
+  if (typeof requestor === "number") {
+    bank.searchParams.set("endowmentID", requestor.toString());
+  }
   const bankReq = new Request(bank);
   bankReq.headers.set("authorization", idToken);
 
