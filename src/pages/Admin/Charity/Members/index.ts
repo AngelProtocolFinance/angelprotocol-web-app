@@ -1,6 +1,5 @@
 import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import type { LoaderFunction } from "react-router-dom";
 import { version } from "services/helpers";
 
@@ -15,5 +14,5 @@ export const loader: LoaderFunction = async ({ params }) => {
   const req = new Request(url);
   req.headers.set("authorization", auth.idToken);
 
-  return cacheGet(req);
+  return fetch(req);
 };

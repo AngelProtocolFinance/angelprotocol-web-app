@@ -1,6 +1,5 @@
 import { loadAuth, redirectToAuth } from "auth";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunction, defer } from "react-router-dom";
 import { version as v } from "services/helpers";
 
@@ -17,7 +16,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   req.headers.set("authorization", auth.idToken);
 
   return defer({
-    application: cacheGet(req).then((res) => res.json()),
+    application: fetch(req).then((res) => res.json()),
     user: auth,
   });
 };

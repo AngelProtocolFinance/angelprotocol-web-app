@@ -1,6 +1,5 @@
 import { ENVIRONMENT } from "constants/env";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import type { UserV2 } from "types/auth";
 import type { FiatCurrencyData } from "types/aws";
@@ -27,7 +26,7 @@ export async function getFiatCurrencies(user?: UserV2) {
   if (prefCode) {
     url.searchParams.set("prefCode", prefCode);
   }
-  return cacheGet(url)
+  return fetch(url)
     .then<FiatCurrencyData>((res) => res.json())
     .then((data) => {
       if (data.default) {

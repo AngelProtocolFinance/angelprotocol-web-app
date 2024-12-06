@@ -1,7 +1,6 @@
 import type { Endow } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { version as ver } from "services/helpers";
 import * as v from "valibot";
 
@@ -35,7 +34,7 @@ export async function getEndow<T extends K[]>(
     url.searchParams.set("fields", fields.join(","));
   }
 
-  return cacheGet(url).then<
-    T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow
-  >((res) => res.json());
+  return fetch(url).then<T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow>(
+    (res) => res.json()
+  );
 }

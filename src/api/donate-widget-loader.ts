@@ -1,7 +1,6 @@
 import type { Endow, Program } from "@better-giving/endowment";
 import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunction, defer } from "react-router-dom";
 import { version as ver } from "services/helpers";
 import type { EndowOptionsPage, EndowmentOption } from "types/aws";
@@ -49,7 +48,7 @@ async function getEndows(query: string) {
   url.searchParams.set("fields", "id,name");
   url.searchParams.set("query", query);
 
-  return cacheGet(url)
+  return fetch(url)
     .then<EndowOptionsPage>((res) => res.json())
     .then((data) => data.items);
 }

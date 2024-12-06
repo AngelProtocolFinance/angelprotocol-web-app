@@ -1,7 +1,6 @@
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import type { LoaderFunction } from "react-router-dom";
 import { version as ver } from "services/helpers";
 import * as v from "valibot";
@@ -24,5 +23,5 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const req = new Request(url);
   req.headers.set("authorization", auth.idToken);
 
-  return cacheGet(req);
+  return fetch(req);
 };

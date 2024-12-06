@@ -3,7 +3,6 @@ import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
 import { ENVIRONMENT } from "constants/env";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunction, defer } from "react-router-dom";
 import { version as ver } from "services/helpers";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
@@ -34,12 +33,12 @@ async function getBalance(id: number) {
   const url = new URL(APIs.apes);
   url.pathname = `${ver(1)}/balances/${id}`;
 
-  return cacheGet(url).then<EndowmentBalances>((res) => res.json());
+  return fetch(url).then<EndowmentBalances>((res) => res.json());
 }
 
 async function balanceTxs(id: number, nextPageKey: string | null) {
   const url = new URL(APIs.apes);
   if (nextPageKey) url.searchParams.set("nextPageKey", nextPageKey);
   url.pathname = `${ENVIRONMENT}/endowments/${id}/balance-txs`;
-  return cacheGet(url).then<BalanceTxsPage>((res) => res.json());
+  return fetch(url).then<BalanceTxsPage>((res) => res.json());
 }

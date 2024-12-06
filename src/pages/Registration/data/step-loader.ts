@@ -1,7 +1,6 @@
 import type { Reg } from "@better-giving/registration/step";
 import { loadAuth } from "auth";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunction, redirect } from "react-router-dom";
 import { version as v } from "services/helpers";
 import type { UserV2 } from "types/auth";
@@ -22,7 +21,7 @@ export async function getRegState(
   const req = new Request(url);
   req.headers.set("authorization", auth.idToken);
 
-  return cacheGet(req)
+  return fetch(req)
     .then<Reg>((res) => res.json())
     .then((data) => getRegistrationState(data));
 }

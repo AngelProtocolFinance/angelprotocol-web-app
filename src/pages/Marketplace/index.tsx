@@ -1,6 +1,5 @@
 import Seo from "components/Seo";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunction, Outlet, useLoaderData } from "react-router-dom";
 import { version as v } from "services/helpers";
 import type { EndowCardsPage } from "types/aws";
@@ -20,7 +19,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   url.pathname = `${v(1)}/cloudsearch-nonprofits`;
   url.search = s.toString();
 
-  return cacheGet(url).then((res) => res.json());
+  return fetch(url).then((res) => res.json());
 };
 
 export function Component() {

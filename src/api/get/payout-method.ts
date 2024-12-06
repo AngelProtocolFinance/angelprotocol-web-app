@@ -1,5 +1,4 @@
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { version as ver } from "services/helpers";
 import type { BankingApplication, V2RecipientAccount } from "types/aws";
 
@@ -28,7 +27,7 @@ export async function getPayoutMethod(
   wiseReq.headers.set("authorization", idToken);
 
   return Promise.all([
-    cacheGet(bankReq).then((res) => res.json()),
-    cacheGet(wiseReq).then((res) => res.json()),
+    fetch(bankReq).then((res) => res.json()),
+    fetch(wiseReq).then((res) => res.json()),
   ]).then<BankDetails>(([a, b]) => ({ ...a, ...b }));
 }

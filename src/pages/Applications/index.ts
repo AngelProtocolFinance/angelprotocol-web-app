@@ -2,7 +2,6 @@ import type { Page } from "@better-giving/registration/approval";
 import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import type { LoaderFunction } from "react-router-dom";
 import { version as v } from "services/helpers";
 import type { UserV2 } from "types/auth";
@@ -28,7 +27,7 @@ async function getApplications(source: URL, user: UserV2) {
 
   const req = new Request(url);
   req.headers.set("authorization", user.idToken);
-  return cacheGet(req)
+  return fetch(req)
     .then<Page>((res) => res.json())
     .then((data) => ({ ...data, _id }));
 }

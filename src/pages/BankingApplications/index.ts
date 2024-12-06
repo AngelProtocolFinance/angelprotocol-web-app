@@ -1,6 +1,5 @@
 import { loadAuth, redirectToAuth } from "auth";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import type { LoaderFunction } from "react-router-dom";
 import { version as v } from "services/helpers";
 import type { UserV2 } from "types/auth";
@@ -29,5 +28,5 @@ async function getApplications(source: URL, user: UserV2) {
 
   const req = new Request(url);
   req.headers.set("authorization", user.idToken);
-  return cacheGet(req).then((res) => res.json());
+  return fetch(req).then((res) => res.json());
 }

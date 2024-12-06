@@ -2,7 +2,6 @@ import { getEndow } from "api/get/endow";
 import { oauth } from "auth/cognito";
 import { loadAuth } from "auth/load-auth";
 import { APIs } from "constants/urls";
-import { cacheGet } from "helpers/cache-get";
 import { type LoaderFunctionArgs, defer, redirect } from "react-router-dom";
 import { version as v } from "services/helpers";
 import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
@@ -54,7 +53,7 @@ async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
   const req = new Request(source);
   req.headers.set("authorization", user.idToken);
 
-  const res = await cacheGet(req);
+  const res = await fetch(req);
   if (!res.ok) return [];
 
   const endows: number[] = await res.json();
@@ -73,5 +72,5 @@ async function useEndows(user: UserV2): Promise<UserEndow[]> {
   source.pathname = `${v(3)}/users/${user.email}/endowments`;
   const req = new Request(source);
   req.headers.set("authorization", user.idToken);
-  return cacheGet(req).then<UserEndow[]>((res) => (res.ok ? res.json() : []));
+  return fetch(req).then<UserEndow[]>((res) => (res.ok ? res.json() : []));
 }
