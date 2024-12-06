@@ -1,9 +1,10 @@
-import { getInputProps, useForm } from "@conform-to/react";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { NativeField as Field } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
-import { useFetcher, useNavigate } from "react-router-dom";
+import { useFetcher, useNavigate, useRouteLoaderData } from "react-router-dom";
 import { isValiErr } from "types/action";
+import type { EndowAdmin } from "types/aws";
 import { schema } from "./schema";
 
 export function AddForm() {
@@ -23,18 +24,21 @@ export function AddForm() {
 }
 
 function Content() {
+  const members = useRouteLoaderData("endow-admins") as EndowAdmin[];
   const fetcher = useFetcher();
   const [form, fields] = useForm({
     lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
     shouldRevalidate: "onInput",
     onValidate({ formData }) {
-      return parseWithValibot(formData, { schema });
+      return parseWithValibot(formData, {
+        schema: schema(members.map((x) => x.email)),
+      });
     },
   });
 
   return (
     <DialogPanel
-      {...form}
+      {...getFormProps(form)}
       method="post"
       action="."
       as={fetcher.Form}

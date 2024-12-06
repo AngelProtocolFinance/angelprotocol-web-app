@@ -27,12 +27,11 @@ export const loader: LoaderFunction = async ({ params }) => {
 };
 
 const addAction: ActionFunction = async ({ request, params }) => {
-  console.log({ request, params });
   const auth = await loadAuth();
   if (!auth) throw `user must have been authenticated`;
 
   const fv = await request.formData();
-  const payload = parseWithValibot(fv, { schema });
+  const payload = parseWithValibot(fv, { schema: schema([]) });
   if (payload.status !== "success") return payload.reply();
 
   const endow = await getEndow(params.id, ["name"]);
