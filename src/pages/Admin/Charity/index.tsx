@@ -10,6 +10,7 @@ import Banking, {
 } from "./Banking";
 import { dashboardRoute } from "./Dashboard/route";
 import { mediaRoutes } from "./Media";
+import { membersRoute } from "./Members";
 
 export const charityRoutes: RouteObject[] = [
   { path: adminRoutes.donations, lazy: () => import("./Donations") },
@@ -40,7 +41,7 @@ export const charityRoutes: RouteObject[] = [
       },
     ],
   },
-  { path: adminRoutes.members, lazy: () => import("./Members") },
+  membersRoute,
   {
     path: adminRoutes.banking,
     children: [

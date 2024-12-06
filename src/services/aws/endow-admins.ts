@@ -1,9 +1,6 @@
 import { TEMP_JWT } from "constants/auth";
 import type { EndowAdmin } from "types/aws";
-import type {
-  DeleteEndowAdminPayload,
-  NewEndowAdminPayload,
-} from "types/aws/ap/users";
+import type { DeleteEndowAdminPayload } from "types/aws/ap/users";
 import { version as v } from "../helpers";
 import { aws } from "./aws";
 
@@ -14,17 +11,6 @@ const endowAdmins = aws.injectEndpoints({
       query: (endowID) => {
         return {
           url: `/${v(2)}/endowments/${endowID}/admins`,
-          headers: { Authorization: TEMP_JWT },
-        };
-      },
-    }),
-    newEndowAdmin: builder.mutation<unknown, NewEndowAdminPayload>({
-      invalidatesTags: (_, error) => (error ? [] : ["endow-admins"]),
-      query: ({ endowID, ...payload }) => {
-        return {
-          method: "POST",
-          url: `/${v(2)}/endowments/${endowID}/admins`,
-          body: payload,
           headers: { Authorization: TEMP_JWT },
         };
       },
@@ -42,8 +28,4 @@ const endowAdmins = aws.injectEndpoints({
   }),
 });
 
-export const {
-  useEndowAdminsQuery,
-  useNewEndowAdminMutation,
-  useDeleteEndowAdminMutation,
-} = endowAdmins;
+export const { useEndowAdminsQuery, useDeleteEndowAdminMutation } = endowAdmins;

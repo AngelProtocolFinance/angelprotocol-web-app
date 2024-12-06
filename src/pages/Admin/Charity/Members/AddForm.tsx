@@ -1,96 +1,67 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { getEndow } from "api/get/endow";
-import Modal from "components/Modal";
-import Prompt from "components/Prompt";
-import { Field } from "components/form";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import {
-  FormProvider,
-  type SubmitHandler,
-  type UseFormReturn,
-  useForm,
-} from "react-hook-form";
-import { requiredString } from "schemas/string";
-import { useNewEndowAdminMutation } from "services/aws/endow-admins";
-import { object } from "yup";
+import { getInputProps, useForm } from "@conform-to/react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { NativeField as Field } from "components/form";
+import { parseWithValibot } from "conform-to-valibot";
+import { useFetcher, useNavigate } from "react-router-dom";
+import { isValiErr } from "types/action";
+import { schema } from "./schema";
 
-type Props = {
-  endowID: number;
-  added: string[];
-};
+export function AddForm() {
+  const navigate = useNavigate();
+  return (
+    <Dialog
+      open={true}
+      onClose={() =>
+        navigate("..", { preventScrollReset: true, replace: true })
+      }
+      className="relative z-50"
+    >
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <Content />
+    </Dialog>
+  );
+}
 
-export default function AddForm({ added, endowID }: Props) {
-  const [addAdmin] = useNewEndowAdminMutation();
-  const { setModalOption, showModal } = useModalContext();
-  const { handleError } = useErrorContext();
-  const methods = useForm({
-    resolver: yupResolver(
-      object({
-        firstName: requiredString.trim(),
-        lastName: requiredString.trim(),
-        email: requiredString
-          .trim()
-          .email("invalid email")
-          .notOneOf(added, "already a member"),
-      })
-    ),
+function Content() {
+  const fetcher = useFetcher();
+  const [form, fields] = useForm({
+    lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
+    shouldRevalidate: "onInput",
+    onValidate({ formData }) {
+      return parseWithValibot(formData, { schema });
+    },
   });
 
-  type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
-  const {
-    handleSubmit,
-    formState: { isSubmitting },
-  } = methods;
-
-  const submit: SubmitHandler<FV> = async (fv) => {
-    try {
-      setModalOption("isDismissible", false);
-      //get endowname
-      const endow = await getEndow(endowID, ["name"]);
-
-      await addAdmin({
-        firstName: fv.firstName,
-        lastName: fv.lastName,
-        email: fv.email,
-        endowID,
-        endowName: endow.name,
-      }).unwrap();
-
-      showModal(Prompt, {
-        headline: "Success!",
-        children: (
-          <p className="py-6">
-            User succesfully added!{" "}
-            <span className="font-semibold">{fv.email}</span> should signin to
-            apply new credentials.
-          </p>
-        ),
-      });
-    } catch (err) {
-      handleError(err, {
-        custom: (
-          <p className="py-6 text-red">Failed to add {fv.email} to members</p>
-        ),
-      });
-    }
-  };
-
   return (
-    <Modal
-      onSubmit={handleSubmit(submit)}
-      as="form"
+    <DialogPanel
+      {...form}
+      method="post"
+      action="."
+      as={fetcher.Form}
       className="p-6 fixed-center z-10 grid gap-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <h4 className="text-center text-xl font-bold mb-4">Invite User</h4>
-      <FormProvider {...methods}>
-        <Field<FV> name="email" label="Email" required />
-        <Field<FV> name="firstName" label="First name" required />
-        <Field<FV> name="lastName" label="Last name" required />
-      </FormProvider>
-      <button disabled={isSubmitting} type="submit" className="btn-blue mt-6">
+      <Field
+        {...getInputProps(fields.email, { type: "email" })}
+        label="Email"
+        required
+        error={fields.email.errors?.[0]}
+      />
+      <Field
+        {...getInputProps(fields.firstName, { type: "text" })}
+        label="First name"
+        required
+        error={fields.firstName.errors?.[0]}
+      />
+      <Field
+        {...getInputProps(fields.lastName, { type: "text" })}
+        label="Last name"
+        error={fields.lastName.errors?.[0]}
+        required
+      />
+      <button disabled={fetcher.state !== "idle"} className="btn-blue mt-6">
         Add member
       </button>
-    </Modal>
+    </DialogPanel>
   );
 }

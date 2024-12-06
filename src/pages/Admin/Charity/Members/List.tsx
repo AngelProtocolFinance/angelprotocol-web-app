@@ -4,31 +4,22 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { Minus, Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import { useLoaderData } from "react-router-dom";
+import { Link, Outlet, useLoaderData } from "react-router-dom";
 import { useDeleteEndowAdminMutation } from "services/aws/endow-admins";
 import type { EndowAdmin } from "types/aws";
-import AddForm from "./AddForm";
 
 export default function List() {
   const admins = useLoaderData() as EndowAdmin[];
-  const { showModal } = useModalContext();
-  const { id } = useAdminContext();
 
   return (
     <div className="overflow-x-auto">
-      <button
-        type="button"
+      <Link
         className="justify-self-end btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
-        onClick={() =>
-          showModal(AddForm, {
-            added: (admins || []).map((admin) => admin.email),
-            endowID: id,
-          })
-        }
+        to="add"
       >
         <Plus size={16} />
         <span>Invite user</span>
-      </button>
+      </Link>
       <Loaded members={admins} />
     </div>
   );
@@ -106,6 +97,8 @@ function Loaded({ members, classes = "" }: LoadedProps) {
           </Cells>
         ))}
       </TableSection>
+      {/** render add form */}
+      <Outlet />
     </table>
   );
 }
