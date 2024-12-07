@@ -1,15 +1,14 @@
 import type { EndowClaim } from "@better-giving/registration/models";
 import type { Step1 } from "@better-giving/registration/step";
 import type { NewReg } from "@better-giving/registration/update";
+import { ap, ver } from "api/api";
 import { loadAuth } from "auth/load-auth";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
-import { APIs } from "constants/urls";
 import { storeRegistrationReference } from "helpers";
 import { decodeState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
 import { type ActionFunction, redirect, useFetcher } from "react-router-dom";
-import { version as v } from "services/helpers";
 import { steps } from "./routes";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -24,17 +23,11 @@ export const action: ActionFunction = async ({ request }) => {
   };
   if (claim) payload.claim = claim;
 
-  const api = new URL(APIs.aws);
-
-  api.pathname = `${v(1)}/registrations`;
-
-  const post = new Request(api, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
-  post.headers.set("authorization", auth.idToken);
-
-  const reg = await fetch(post).then<Pick<Step1, "id">>((res) => res.json());
+  const reg = await ap
+    .post<Pick<Step1, "id">>(`${ver(1)}/registrations`, {
+      headers: { authorization: auth.idToken },
+    })
+    .json();
   storeRegistrationReference(reg.id);
   return redirect(`../${reg.id}/${steps.contact}`);
 };

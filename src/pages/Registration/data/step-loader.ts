@@ -1,8 +1,7 @@
 import type { Reg } from "@better-giving/registration/step";
+import { ap, ver } from "api/api";
 import { loadAuth } from "auth";
-import { APIs } from "constants/urls";
 import { type LoaderFunction, redirect } from "react-router-dom";
-import { version as v } from "services/helpers";
 import type { UserV2 } from "types/auth";
 import { parse, pipe, string, uuid } from "valibot";
 import type { Reg$IdData, RegStep } from "../types";
@@ -15,14 +14,12 @@ export async function getRegState(
   auth: UserV2
 ) {
   const regId = parse(uuidSchema, regIdParam);
-  const url = new URL(APIs.aws);
-  url.pathname = `${v(1)}/registrations/${regId}`;
 
-  const req = new Request(url);
-  req.headers.set("authorization", auth.idToken);
-
-  return fetch(req)
-    .then<Reg>((res) => res.json())
+  return ap
+    .get<Reg>(`${ver(1)}/registrations/${regId}`, {
+      headers: { authorization: auth.idToken },
+    })
+    .json()
     .then((data) => getRegistrationState(data));
 }
 

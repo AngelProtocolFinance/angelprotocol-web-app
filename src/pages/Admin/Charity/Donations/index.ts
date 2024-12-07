@@ -1,8 +1,7 @@
+import { ap, ver } from "api/api";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth } from "auth/load-auth";
-import { APIs } from "constants/urls";
 import type { LoaderFunction } from "react-router-dom";
-import { version as ver } from "services/helpers";
 import * as v from "valibot";
 
 export { default as Component } from "./Donations";
@@ -14,14 +13,12 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const auth = await loadAuth();
   if (!auth) throw `user must have been authenticated at this point`;
 
-  const url = new URL(APIs.aws);
-  url.pathname = `${ver(2)}/donations`;
-  url.searchParams.set("asker", v.parse(plusInt, params.id).toString());
-  url.searchParams.set("status", "final");
-  url.searchParams.set("page", page);
-
-  const req = new Request(url);
-  req.headers.set("authorization", auth.idToken);
-
-  return fetch(req);
+  return ap.get(`${ver(2)}/donations`, {
+    headers: { authorization: auth.idToken },
+    searchParams: {
+      asker: v.parse(plusInt, params.id),
+      status: "final",
+      page,
+    },
+  });
 };

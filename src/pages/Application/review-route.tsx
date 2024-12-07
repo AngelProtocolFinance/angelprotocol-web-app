@@ -1,13 +1,12 @@
 import type { Verdict } from "@better-giving/registration/approval";
+import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import { PromptV2 } from "components/Prompt";
-import { APIs } from "constants/urls";
 import {
   type ActionFunction,
   type RouteObject,
   redirect,
 } from "react-router-dom";
-import { version as v } from "services/helpers";
 import Prompt from "./Prompt";
 
 const action: ActionFunction = async ({ request, params }) => {
@@ -16,28 +15,15 @@ const action: ActionFunction = async ({ request, params }) => {
 
   const fv: { reason?: string } = await request.json();
 
-  const url = new URL(APIs.aws);
-
   const verdict: Verdict = {
     verdict: params.verdict as Verdict["verdict"],
     reason: fv.reason ?? "",
   };
 
-  const cachePath = `${v(1)}/registrations/${params.id}`;
-  url.pathname = `${cachePath}/review`;
-  const req = new Request(url, {
-    method: "POST",
-    body: JSON.stringify(verdict),
-    headers: { authorization: `Bearer ${auth?.idToken}` },
+  await ap.post(`${ver(1)}/registrations/${params.id}/review`, {
+    json: verdict,
+    headers: { authorization: auth.idToken },
   });
-
-  const res = await fetch(req);
-  if (!res.ok) throw res;
-
-  const cacheKey = new URL(APIs.aws);
-  cacheKey.pathname = cachePath;
-
-  await caches.open("bg").then((c) => c.delete(cacheKey));
 
   return redirect("../success");
 };

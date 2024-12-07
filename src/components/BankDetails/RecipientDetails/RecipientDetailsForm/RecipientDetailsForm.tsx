@@ -1,7 +1,7 @@
 import { ErrorMessage } from "@hookform/error-message";
+import { wise } from "api/api";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
-import { APIs } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty, logger } from "helpers";
 import { Controller, get, useForm } from "react-hook-form";
@@ -242,10 +242,11 @@ export default function RecipientDetailsForm({
                         try {
                           const { params, url } = f.validationAsync!;
                           const path = new URL(url).pathname;
-                          const proxy = `${APIs.aws}/v1/wise-proxy/${path}`;
-                          const res = await fetch(
-                            `${proxy}?${params[0].key}=${v}`
-                          );
+                          const res = await wise.get(path, {
+                            throwHttpErrors: false,
+                            searchParams: { [params[0].key]: v },
+                          });
+
                           return res.ok || "invalid";
                         } catch (err) {
                           logger.error(err);

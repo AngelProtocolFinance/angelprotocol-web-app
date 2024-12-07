@@ -1,5 +1,4 @@
-import { APIs } from "constants/urls";
-import { version as v } from "services/helpers";
+import { ap, ver } from "api/api";
 import { toast } from "sonner";
 import { logger } from "./logger";
 
@@ -20,13 +19,13 @@ function toDataURL(file: File): Promise<string> {
 export async function uploadFile(file: File, bucket: Bucket) {
   const id = toast.loading(`Uploading ${file.name}..`);
   const key = `${Date.now()}_${file.name.replace(SPACES, "_")}`;
-  const res = await fetch(APIs.aws + `/${v(2)}/file-upload`, {
-    method: "POST",
-    body: JSON.stringify({
+
+  const res = await ap.post(`${ver(2)}/file-upload`, {
+    json: {
       bucket,
       dataUri: await toDataURL(file),
       fileName: key,
-    }),
+    },
     headers: { authorization: `Bearer {todo}` },
   });
   if (!res.ok) {

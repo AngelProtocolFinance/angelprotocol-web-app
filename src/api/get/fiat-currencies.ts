@@ -1,9 +1,8 @@
-import { ENVIRONMENT } from "constants/env";
-import { APIs } from "constants/urls";
 import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import type { UserV2 } from "types/auth";
 import type { FiatCurrencyData } from "types/aws";
 import type { DetailedCurrency } from "types/components";
+import { apes, toSearch } from "../api";
 
 const toDetailed = (
   input: FiatCurrencyData["currencies"][number]
@@ -19,22 +18,18 @@ export interface FiatCurrencies {
 }
 
 export async function getFiatCurrencies(user?: UserV2) {
-  const url = new URL(APIs.apes);
-  url.pathname = `${ENVIRONMENT}/fiat-currencies`;
   const prefCode = user?.currency ?? getCookie(bgCookies.prefCode);
+  const data = await apes
+    .get<FiatCurrencyData>("fiat-currencies", {
+      searchParams: toSearch({ prefCode }),
+    })
+    .json();
 
-  if (prefCode) {
-    url.searchParams.set("prefCode", prefCode);
+  if (data.default) {
+    setCookie(bgCookies.prefCode, data.default.currency_code.toUpperCase());
   }
-  return fetch(url)
-    .then<FiatCurrencyData>((res) => res.json())
-    .then((data) => {
-      if (data.default) {
-        setCookie(bgCookies.prefCode, data.default.currency_code.toUpperCase());
-      }
-      return {
-        all: data.currencies.map((c) => toDetailed(c)),
-        main: data.default && toDetailed(data.default),
-      } satisfies FiatCurrencies;
-    });
+  return {
+    all: data.currencies.map((c) => toDetailed(c)),
+    main: data.default && toDetailed(data.default),
+  } satisfies FiatCurrencies;
 }

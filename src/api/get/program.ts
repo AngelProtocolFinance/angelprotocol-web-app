@@ -1,6 +1,5 @@
-import { APIs } from "constants/urls";
-import { version as v } from "services/helpers";
 import { parse, pipe, string, uuid } from "valibot";
+import { ap, ver } from "../api";
 import { plusInt } from "../schema/endow-id";
 
 export const getProgram = async (
@@ -9,7 +8,5 @@ export const getProgram = async (
 ) => {
   const id = parse(plusInt, endowIdParam?.toString());
   const programId = parse(pipe(string(), uuid()), programIdParam);
-  const url = new URL(APIs.aws);
-  url.pathname = `${v(1)}/endowments/${id}/programs/${programId}`;
-  return fetch(url).then((res) => res.json());
+  return ap.get(`${ver(1)}/endowments/${id}/programs/${programId}`).json();
 };

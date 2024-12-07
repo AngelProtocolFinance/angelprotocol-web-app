@@ -1,3 +1,8 @@
+import { literal, parse, union } from "valibot";
+
+export const envSchema = union([literal("dev"), literal("production")]);
+export const env = parse(envSchema, process.env.PUBLIC_ENVIRONMENT);
+
 export const ENVIRONMENT = process.env.PUBLIC_ENVIRONMENT;
 export const IS_TEST = ENVIRONMENT === "dev";
 

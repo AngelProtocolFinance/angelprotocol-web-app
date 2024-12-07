@@ -1,8 +1,7 @@
 import type { Update } from "@better-giving/registration/update";
+import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { APIs } from "constants/urls";
 import { type ActionFunction, redirect } from "react-router-dom";
-import { version as v } from "services/helpers";
 
 export const updateAction =
   (next: string): ActionFunction =>
@@ -12,22 +11,10 @@ export const updateAction =
 
     const data: Update = await request.json();
 
-    const url = new URL(APIs.aws);
-    url.pathname = `${v(1)}/registrations/${params.regId}`;
-
-    const req = new Request(url, {
-      method: "PATCH",
-      body: JSON.stringify(data),
+    await ap.patch(`${ver(1)}/registrations/${params.regId}`, {
+      headers: { authorization: auth.idToken },
+      json: data,
     });
-
-    req.headers.set("authorization", auth.idToken);
-    const res = await fetch(req);
-    //used as context
-    if (!res.ok) throw res;
-
-    await caches
-      .open("bg")
-      .then((c) => c.delete(req.url, { ignoreSearch: true }));
 
     return redirect(`../${next}`);
   };

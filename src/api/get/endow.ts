@@ -1,8 +1,7 @@
 import type { Endow } from "@better-giving/endowment";
-import { plusInt } from "api/schema/endow-id";
-import { APIs } from "constants/urls";
-import { version as ver } from "services/helpers";
 import * as v from "valibot";
+import { ap, toSearch, ver } from "../api";
+import { plusInt } from "../schema/endow-id";
 
 type K = keyof Endow;
 type ArrayValues<T extends readonly unknown[]> = T[number];
@@ -27,14 +26,10 @@ export async function getEndow<T extends K[]>(
   fields?: T
 ) {
   const id = v.parse(schema, idParamOrSlug?.toString());
-  const url = new URL(APIs.aws);
-  url.pathname = `${ver(1)}/endowments/${id}`;
-
-  if (fields && fields.length > 0) {
-    url.searchParams.set("fields", fields.join(","));
-  }
-
-  return fetch(url).then<T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow>(
-    (res) => res.json()
-  );
+  return ap
+    .get<T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow>(
+      `${ver(1)}/endowments/${id}`,
+      { searchParams: toSearch({ fields: fields?.join() }) }
+    )
+    .json();
 }

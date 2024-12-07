@@ -138,19 +138,6 @@ function RootLayout() {
     else NProgress.start();
   }, [transition.state]);
 
-  useEffect(() => {
-    console.log("reloaded");
-    return () => {
-      caches.open("bg").then((c) => {
-        c.keys().then((ks) => {
-          for (const k of ks) {
-            c.delete(k);
-          }
-        });
-      });
-    };
-  }, []);
-
   return (
     <ModalContext>
       <ScrollRestoration />

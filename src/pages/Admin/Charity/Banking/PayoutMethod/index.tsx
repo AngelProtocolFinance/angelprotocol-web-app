@@ -1,16 +1,15 @@
 import { bankUpdate } from "api/action/bank-update";
+import { ap, ver } from "api/api";
 import { getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth } from "auth/load-auth";
 import { PromptV2 } from "components/Prompt";
-import { APIs } from "constants/urls";
 import {
   type ActionFunction,
   type LoaderFunction,
   type RouteObject,
   redirect,
 } from "react-router-dom";
-import { version as ver } from "services/helpers";
 import * as v from "valibot";
 import { DeletePrompt } from "./DeletePrompt";
 import PayoutMethod from "./Loaded";
@@ -30,13 +29,9 @@ const deleteAction: ActionFunction = async ({ params }) => {
   const auth = await loadAuth();
   if (!auth) throw "auth is required up higher";
 
-  const url = new URL(APIs.aws);
-  url.pathname = `${ver(1)}/banking-applications/${params.bankId}`;
-  const bankReq = new Request(url, { method: "DELETE" });
-  bankReq.headers.set("authorization", auth.idToken);
-
-  const res = await fetch(bankReq);
-  if (!res.ok) throw res;
+  await ap.delete(`${ver(1)}/banking-applications/${params.bankId}`, {
+    headers: { authorization: auth.idToken },
+  });
   return redirect("../..");
 };
 
@@ -44,8 +39,7 @@ const prioritizeAction: ActionFunction = async ({ params }) => {
   const auth = await loadAuth();
   if (!auth) throw "auth is required up higher";
   const bankId = v.parse(plusInt, params.bankId);
-  const res = await bankUpdate(bankId, { type: "prioritize" }, auth.idToken);
-  if (!res.ok) throw res;
+  await bankUpdate(bankId, { type: "prioritize" }, auth.idToken);
   return redirect("success");
 };
 

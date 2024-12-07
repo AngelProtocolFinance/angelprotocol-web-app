@@ -1,12 +1,9 @@
 import type { Program } from "@better-giving/endowment";
 import { plusInt } from "api/schema/endow-id";
-import { APIs } from "constants/urls";
-import { version as ver } from "services/helpers";
 import { parse } from "valibot";
+import { ap, ver } from "../api";
 
 export async function getPrograms(endowIdParam: number | string | undefined) {
   const id = parse(plusInt, endowIdParam?.toString());
-  const url = new URL(APIs.aws);
-  url.pathname = `${ver(1)}/endowments/${id}/programs`;
-  return fetch(url).then<Program[]>((res) => res.json());
+  return ap.get<Program[]>(`${ver(1)}/endowments/${id}/programs`).json();
 }

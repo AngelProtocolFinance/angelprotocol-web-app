@@ -1,11 +1,8 @@
-import Prompt from "components/Prompt";
 import TableSection, { Cells } from "components/TableSection";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { Minus, Plus } from "lucide-react";
+import { LoaderCircle, Minus, Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import { Link, Outlet, useLoaderData } from "react-router-dom";
-import { useDeleteEndowAdminMutation } from "services/aws/endow-admins";
+import { Link, Outlet, useFetcher, useLoaderData } from "react-router-dom";
+import { toast } from "sonner";
 import type { EndowAdmin } from "types/aws";
 
 export default function List() {
@@ -30,27 +27,6 @@ type LoadedProps = {
   members: EndowAdmin[];
 };
 function Loaded({ members, classes = "" }: LoadedProps) {
-  const { id, user } = useAdminContext();
-  const [removeUser, { isLoading }] = useDeleteEndowAdminMutation();
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
-
-  async function handleRemove(toRemove: string) {
-    if (toRemove === user.email)
-      return showModal(Prompt, {
-        type: "error",
-        children: "Can't delete self",
-      });
-
-    if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
-
-    try {
-      await removeUser({ email: toRemove, endowID: id }).unwrap();
-    } catch (err) {
-      handleError(err, { context: "removing member" });
-    }
-  }
-
   return (
     <table
       className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
@@ -80,16 +56,7 @@ function Loaded({ members, classes = "" }: LoadedProps) {
             type="td"
             cellClass="p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
-            <td className="relative">
-              <button
-                disabled={isLoading}
-                onClick={() => handleRemove(member.email)}
-                type="button"
-                className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
-              >
-                <Minus size={16} />
-              </button>
-            </td>
+            <DeleteForm email={member.email} />
 
             <>{member.email}</>
             <>{member.givenName ?? "-"}</>
@@ -100,5 +67,38 @@ function Loaded({ members, classes = "" }: LoadedProps) {
       {/** render add form */}
       <Outlet />
     </table>
+  );
+}
+
+function DeleteForm({ email }: { email: string }) {
+  const { user } = useAdminContext();
+  async function handleRemove(toRemove: string) {
+    if (toRemove === user.email) {
+      return toast.error("Can't delete self");
+    }
+    if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
+    fetcher.submit(
+      { toRemove },
+      { action: ".", method: "post", encType: "application/json" }
+    );
+  }
+
+  const fetcher = useFetcher({ key: `admin-${email}` });
+
+  return (
+    <fetcher.Form method="POST" action="." className="relative">
+      <button
+        disabled={fetcher.state !== "idle"}
+        onClick={() => handleRemove(email)}
+        type="button"
+        className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
+      >
+        {fetcher.state !== "idle" ? (
+          <LoaderCircle size={16} className="animate-spin" />
+        ) : (
+          <Minus size={16} />
+        )}
+      </button>
+    </fetcher.Form>
   );
 }

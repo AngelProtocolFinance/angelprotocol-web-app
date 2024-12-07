@@ -1,10 +1,8 @@
 import type { Allocation } from "@better-giving/endowment";
+import { apes, toSearch, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
-import { ENVIRONMENT } from "constants/env";
-import { APIs } from "constants/urls";
 import { type LoaderFunction, defer } from "react-router-dom";
-import { version as ver } from "services/helpers";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import type { DashboardData } from "./route";
@@ -30,15 +28,13 @@ const getAllocation = (id: number) =>
   );
 
 async function getBalance(id: number) {
-  const url = new URL(APIs.apes);
-  url.pathname = `${ver(1)}/balances/${id}`;
-
-  return fetch(url).then<EndowmentBalances>((res) => res.json());
+  return apes.get<EndowmentBalances>(`${ver(1)}/balances/${id}`).json();
 }
 
 async function balanceTxs(id: number, nextPageKey: string | null) {
-  const url = new URL(APIs.apes);
-  if (nextPageKey) url.searchParams.set("nextPageKey", nextPageKey);
-  url.pathname = `${ENVIRONMENT}/endowments/${id}/balance-txs`;
-  return fetch(url).then<BalanceTxsPage>((res) => res.json());
+  return apes
+    .get<BalanceTxsPage>(`endowments/${id}/balance-txs`, {
+      searchParams: toSearch({ nextPageKey }),
+    })
+    .json();
 }

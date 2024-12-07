@@ -3,8 +3,7 @@ import {
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";
-import { IS_TEST } from "constants/env";
-import { APIs } from "constants/urls";
+import { ap, ver } from "api/api";
 import { logger } from "helpers";
 import { type User, userIsSignedIn } from "types/auth";
 import type { UserAttributes, UserUpdate } from "types/aws";
@@ -40,15 +39,13 @@ export const loadSession = createAsyncThunk<User, any | undefined>(
       } = idToken.payload as Payload;
 
       //use user attributes from DB
-      const res = await fetch(
-        `${APIs.aws}/${IS_TEST ? "staging" : "v3"}/users/${userEmail}`,
-        {
-          headers: { authorization: idToken.toString() },
-        }
-      );
+      const res = await ap.get<UserAttributes>(`${ver(1)}/users/${userEmail}`, {
+        headers: { authorization: idToken.toString() },
+      });
+
       if (!res.ok) return null;
 
-      const userAttributes: UserAttributes = await res.json();
+      const userAttributes = await res.json();
 
       return {
         token: idToken.toString(),

@@ -1,9 +1,8 @@
+import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { oauth } from "auth/cognito";
 import { loadAuth } from "auth/load-auth";
-import { APIs } from "constants/urls";
 import { type LoaderFunctionArgs, defer, redirect } from "react-router-dom";
-import { version as v } from "services/helpers";
 import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
 import type { EndowmentBookmark, UserEndow } from "types/aws";
 
@@ -48,15 +47,12 @@ export const rootLoader = async ({
 };
 
 async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
-  const source = new URL(APIs.aws);
-  source.pathname = `${v(1)}/bookmarks`;
-  const req = new Request(source);
-  req.headers.set("authorization", user.idToken);
-
-  const res = await fetch(req);
-  if (!res.ok) return [];
-
-  const endows: number[] = await res.json();
+  const endows = await ap
+    .get<number[]>(`${ver(1)}/bookmarks`, {
+      throwHttpErrors: false,
+      headers: { authorization: user.idToken },
+    })
+    .then((res) => (res.ok ? res.json() : []));
 
   const bookmarks: EndowmentBookmark[] = [];
 
@@ -68,9 +64,10 @@ async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
 }
 
 async function useEndows(user: UserV2): Promise<UserEndow[]> {
-  const source = new URL(APIs.aws);
-  source.pathname = `${v(3)}/users/${user.email}/endowments`;
-  const req = new Request(source);
-  req.headers.set("authorization", user.idToken);
-  return fetch(req).then<UserEndow[]>((res) => (res.ok ? res.json() : []));
+  return ap
+    .get(`${ver(3)}/users/${user.email}/endowments`, {
+      throwHttpErrors: false,
+      headers: { authorization: user.idToken },
+    })
+    .then<UserEndow[]>((res) => (res.ok ? res.json() : []));
 }

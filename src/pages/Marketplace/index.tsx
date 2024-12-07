@@ -1,7 +1,6 @@
+import { ap, ver } from "api/api";
 import Seo from "components/Seo";
-import { APIs } from "constants/urls";
 import { type LoaderFunction, Outlet, useLoaderData } from "react-router-dom";
-import { version as v } from "services/helpers";
 import type { EndowCardsPage } from "types/aws";
 import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";
@@ -15,11 +14,12 @@ export const loader: LoaderFunction = async ({ request }) => {
   const s = new URLSearchParams(source.searchParams);
   s.set("page", page.toString());
   s.set("query", q);
-  const url = new URL(APIs.aws);
-  url.pathname = `${v(1)}/cloudsearch-nonprofits`;
-  url.search = s.toString();
 
-  return fetch(url).then((res) => res.json());
+  return ap
+    .get(`${ver(1)}/cloudsearch-nonprofits`, {
+      searchParams: s,
+    })
+    .json();
 };
 
 export function Component() {

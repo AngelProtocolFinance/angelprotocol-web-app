@@ -2247,6 +2247,7 @@ __metadata:
     gsap: "npm:3.12.5"
     jose: "npm:5.9.2"
     jsdom: "npm:24.1.0"
+    ky: "npm:1.7.2"
     lefthook: "npm:1.6.15"
     lodash: "npm:4.17.21"
     lucide-react: "npm:0.436.0"
@@ -3582,6 +3583,13 @@ __metadata:
   version: 3.0.2
   resolution: "json-parse-even-better-errors@npm:3.0.2"
   checksum: 10/6f04ea6c9ccb783630a59297959247e921cc90b917b8351197ca7fd058fccc7079268fd9362be21ba876fc26aa5039369dd0a2280aae49aae425784794a94927
+  languageName: node
+  linkType: hard
+
+"ky@npm:1.7.2":
+  version: 1.7.2
+  resolution: "ky@npm:1.7.2"
+  checksum: 10/d1102fe05e5d2263c5b484bc00b387a5310667aaeec4ebc4f4c3f9369b1d2e62cc19409d50aa21b45127e3ddb8be42d76fb54239799b0aebc9806c7ecb35c696
   languageName: node
   linkType: hard
 

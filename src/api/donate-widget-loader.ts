@@ -1,10 +1,9 @@
 import type { Endow, Program } from "@better-giving/endowment";
 import { loadAuth } from "auth/load-auth";
-import { APIs } from "constants/urls";
 import { type LoaderFunction, defer } from "react-router-dom";
-import { version as ver } from "services/helpers";
 import type { EndowOptionsPage, EndowmentOption } from "types/aws";
 import * as v from "valibot";
+import { ap, ver } from "./api";
 import { getEndow } from "./get/endow";
 import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
 import { getPrograms } from "./get/programs";
@@ -42,13 +41,10 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 };
 
 async function getEndows(query: string) {
-  const url = new URL(APIs.aws);
-  url.pathname = `${ver(1)}/cloudsearch-nonprofits`;
-  url.searchParams.set("page", "1");
-  url.searchParams.set("fields", "id,name");
-  url.searchParams.set("query", query);
-
-  return fetch(url)
-    .then<EndowOptionsPage>((res) => res.json())
+  return ap
+    .get<EndowOptionsPage>(`${ver(1)}/cloudsearch-nonprofits`, {
+      searchParams: { page: 1, fields: "id,name", query },
+    })
+    .json()
     .then((data) => data.items);
 }

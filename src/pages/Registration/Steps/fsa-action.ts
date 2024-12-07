@@ -1,9 +1,8 @@
 import type { FsaPayload } from "@better-giving/registration/fsa";
+import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import { regRoutes } from "constants/routes";
-import { APIs } from "constants/urls";
-import type { ActionFunction } from "react-router-dom";
-import { version as v } from "services/helpers";
+import { type ActionFunction, redirect } from "react-router-dom";
 
 export const fsaAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
@@ -27,17 +26,12 @@ export const fsaAction: ActionFunction = async ({ request, params }) => {
     redirectUrl: from.toString(),
   };
 
-  const url = new URL(APIs.aws);
-  url.pathname = `${v(1)}/registration-fsa`;
+  const { url: to } = await ap
+    .post<{ url: string }>(`${ver(1)}/registration-fsa`, {
+      json: payload,
+      headers: { authorization: auth.idToken },
+    })
+    .json();
 
-  const req = new Request(url, {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
-  req.headers.set("authorization", auth.idToken);
-
-  const { url: to } = await fetch(req).then<{ url: string }>((res) =>
-    res.json()
-  );
-  return new Response("", { status: 302, headers: { Location: to } });
+  return redirect(to);
 };

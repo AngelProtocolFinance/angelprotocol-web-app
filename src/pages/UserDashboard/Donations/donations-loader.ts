@@ -1,7 +1,6 @@
+import { ap, toSearch, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { APIs } from "constants/urls";
 import type { LoaderFunction } from "react-router-dom";
-import { version as v } from "services/helpers";
 import type { UserV2 } from "types/auth";
 import type { DonationsPage } from "types/aws";
 
@@ -18,16 +17,11 @@ export const loader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 
-  const url = new URL(APIs.aws);
-  url.pathname = `${v(2)}/donations`;
-  url.searchParams.set("asker", auth.email);
-  url.searchParams.set("page", page);
-  url.searchParams.set("status", status);
-
-  const req = new Request(url);
-  req.headers.set("authorization", auth.idToken);
-
-  return fetch(req)
-    .then((res) => res.json())
-    .then((data) => ({ ...data, user: auth }));
+  return ap
+    .get(`${ver(2)}/donations`, {
+      headers: { authorization: auth.idToken },
+      searchParams: toSearch({ asker: auth.email, page, status }),
+    })
+    .json()
+    .then((data: any) => ({ ...data, user: auth }));
 };
