@@ -45,15 +45,20 @@ function Incrementer({
     <button
       data-testid="incrementer"
       type="button"
-      className="grid grid-rows-subgrid gap-y-1 row-span-2 border border-[--accent-secondary] hover:border-[--accent-primary] rounded-lg p-2 bg-[--accent-secondary]"
+      className="grid group/incrementer has-[[data-label]]:grid-rows-subgrid gap-y-1 row-span-2 rounded-lg p-2 bg-[--accent-primary] active:outline active:bg-[--accent-secondary] active:outline-[--accent-primary]"
       onClick={() => onIncrement(value)}
     >
-      <span className="text-left text-sm font-medium text-[--accent-primary]">
+      <span className="text-left text-sm font-medium text-[--accent-secondary] group-active/incrementer:text-[--accent-primary]">
         +{shortenHumanize(value, rate, precision)} {code.toUpperCase()}
       </span>
-      <span className="text-left text-xs text-navy-l1 empty:hidden">
-        {inc.label}
-      </span>
+      {inc.label && (
+        <span
+          data-label
+          className="text-left text-xs text-[--accent-secondary] group-active/incrementer:text-[--accent-primary]"
+        >
+          {inc.label}
+        </span>
+      )}
     </button>
   );
 }
