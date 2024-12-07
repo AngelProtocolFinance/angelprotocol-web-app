@@ -1,23 +1,45 @@
-import ContentLoader from "components/ContentLoader";
+import { wp } from "api/api";
 import Media from "components/Media";
-import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import {
+  Link,
+  type LoaderFunction,
+  useFetcher,
+  useLoaderData,
+  useSearchParams,
+} from "react-router-dom";
 import type { Wordpress } from "types/wordpress";
-import usePagination from "./usePagination";
+
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url);
+  const currPage = +(url.searchParams.get("page") ?? "1");
+  const res = await wp.get<Wordpress.Post[]>("posts", {
+    searchParams: { page: currPage },
+  });
+  const total = +(res.headers.get("X-Wp-Total") ?? "0");
+  const itemsPerPage = 10;
+  console.log(url.toString());
+
+  return {
+    pageNum: currPage,
+    posts: await res.json(),
+    nextPageNum: currPage * itemsPerPage < total ? currPage + 1 : undefined,
+  } satisfies Wordpress.PostPage;
+};
 
 export function Component() {
-  const {
-    data,
-    hasMore,
-    isError,
-    isLoading,
-    isLoadingNextPage,
-    loadNextPage,
-    isFetching,
-  } = usePagination();
+  const [params] = useSearchParams();
+  const { data, state, load } = useFetcher<Wordpress.PostPage>();
+  const firstPage = useLoaderData() as Wordpress.PostPage;
+  const [posts, setPosts] = useState(firstPage.posts);
 
-  const isLoadingOrError = isLoading || isLoadingNextPage || isError;
+  useEffect(() => {
+    if (state !== "idle" || !data) return;
+    setPosts((prev) => [...prev, ...data.posts]);
+  }, [data, state]);
+
+  const nextPage = data ? data.nextPageNum : firstPage.nextPageNum;
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 content-start padded-container min-h-screen pb-6">
@@ -26,43 +48,21 @@ export function Component() {
         Posts
       </h1>
 
-      <QueryLoader
-        queryState={{
-          data: data?.posts,
-          isLoading,
-          isFetching,
-          isError: isError,
-        }}
-        messages={{
-          empty: "No posts found.",
-          error: "Failed to load posts",
-          loading: (
-            <>
-              {Array(9)
-                .fill(null)
-                .map((_, idx) => (
-                  <CardSkeleton key={idx} />
-                ))}
-            </>
-          ),
-        }}
-      >
-        {(posts) => (
-          <>
-            <Cards posts={posts} />
-            {hasMore && (
-              <button
-                type="button"
-                className="col-span-full btn-blue rounded-full justify-self-center px-4 py-2 text-sm  mt-6"
-                onClick={loadNextPage}
-                disabled={isLoadingOrError}
-              >
-                Load more
-              </button>
-            )}
-          </>
-        )}
-      </QueryLoader>
+      <Cards posts={posts} />
+      {nextPage && (
+        <button
+          type="button"
+          className="col-span-full btn-blue rounded-full justify-self-center px-4 py-2 text-sm  mt-6"
+          onClick={() => {
+            const copy = new URLSearchParams(params);
+            copy.set("page", nextPage.toString());
+            load(`?${copy.toString()}`);
+          }}
+          disabled={state !== "idle"}
+        >
+          Load more
+        </button>
+      )}
     </div>
   );
 }
@@ -97,12 +97,3 @@ const Cards = (props: { posts: Wordpress.Post[] }) =>
       </div>
     </Link>
   ));
-
-function CardSkeleton() {
-  return (
-    <div className="rounded-lg border border-gray-l4">
-      <ContentLoader className="h-32 sm:h-60 w-full" />
-      <div className="h-40" />
-    </div>
-  );
-}
