@@ -1,3 +1,11 @@
+import { fallback, literal, parse, union } from "valibot";
+
+export const envSchema = fallback(
+  union([literal("dev"), literal("production")]),
+  "dev"
+);
+export const env = parse(envSchema, process.env.PUBLIC_ENVIRONMENT);
+
 export const ENVIRONMENT = process.env.PUBLIC_ENVIRONMENT;
 export const IS_TEST = ENVIRONMENT === "dev";
 

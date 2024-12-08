@@ -16,16 +16,20 @@ import {
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useFieldArray, useForm } from "react-hook-form";
+import { Outlet, useFetcher, useLoaderData } from "react-router-dom";
+import type { EndowmentUpdate } from "services/types";
 import type { EndowmentSettingsAttributes } from "types/aws";
-import { useUpdateEndowment } from "../common";
 import GoalSelector from "./goal-selector";
 import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 
-type Props = Pick<Endow, "id" | EndowmentSettingsAttributes>;
+export default function Form() {
+  const endow = useLoaderData() as Pick<
+    Endow,
+    "id" | EndowmentSettingsAttributes
+  >;
 
-export default function Form(props: Props) {
-  const updateEndow = useUpdateEndowment();
+  const fetcher = useFetcher();
   const { displayError } = useErrorContext();
 
   const {
@@ -38,12 +42,12 @@ export default function Form(props: Props) {
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     values: {
-      receiptMsg: props.receiptMsg ?? "",
-      hide_bg_tip: props.hide_bg_tip ?? false,
-      programDonateDisabled: !(props.progDonationsAllowed ?? true),
-      donateMethods: fill(props.donateMethods),
-      increments: props.increments ?? [],
-      target: toFormTarget(props.target),
+      receiptMsg: endow.receiptMsg ?? "",
+      hide_bg_tip: endow.hide_bg_tip ?? false,
+      programDonateDisabled: !(endow.progDonationsAllowed ?? true),
+      donateMethods: fill(endow.donateMethods),
+      increments: endow.increments ?? [],
+      target: toFormTarget(endow.target),
     },
   });
 
@@ -67,7 +71,7 @@ export default function Form(props: Props) {
 
   return (
     <F
-      disabled={isSubmitting}
+      disabled={isSubmitting || fetcher.state !== "idle"}
       onReset={(e) => {
         e.preventDefault();
         reset();
@@ -79,20 +83,24 @@ export default function Form(props: Props) {
           target: fvTarget,
           ...fv
         }) => {
-          if (props.id === BG_ID && fv.hide_bg_tip === false) {
+          if (endow.id === BG_ID && fv.hide_bg_tip === false) {
             return displayError(
               "BG donation flow should not show BG tip screen"
             );
           }
-
-          await updateEndow({
+          const update: EndowmentUpdate = {
             ...fv,
             target: toTarget(fvTarget),
             progDonationsAllowed: !programDonateDisabled,
-            id: props.id,
             donateMethods: donateMethods
               .filter((m) => !m.disabled)
               .map((m) => m.id),
+          };
+
+          fetcher.submit(update as any, {
+            method: "post",
+            action: ".",
+            encType: "application/json",
           });
         }
       )}
@@ -241,6 +249,7 @@ export default function Form(props: Props) {
           Submit changes
         </button>
       </div>
+      <Outlet />
     </F>
   );
 }

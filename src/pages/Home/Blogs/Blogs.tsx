@@ -1,12 +1,13 @@
+import { posts } from "api/get/wp-posts";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { usePostsQuery } from "services/wordpress";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import useSWR from "swr";
 import BlogCard, { Skeleton } from "./BlogCard";
 import s from "./styles.module.css";
 
 const Blogs = () => {
-  const { data: page } = usePostsQuery({ page: 1 });
+  const { data } = useSWR("1", (page) => posts(+page));
 
   return (
     <section className="grid content-start py-40 bg-gradient-to-b from-transparent via-peach/40 to-transparent overflow-x-clip">
@@ -51,7 +52,7 @@ const Blogs = () => {
           className="w-[70vw] md:w-[80vw] lg:w-[65vw]"
           modules={[Navigation]}
         >
-          {(page?.posts || [1, 2, 3, 4, 5, 6]).map((blog, idx) => {
+          {(data?.[0] || [1, 2, 3, 4, 5, 6]).map((blog, idx) => {
             return (
               <SwiperSlide key={idx}>
                 {typeof blog === "number" ? (

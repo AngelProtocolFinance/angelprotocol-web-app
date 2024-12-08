@@ -1,20 +1,11 @@
 import { appRoutes } from "constants/routes";
-import { getAuthRedirect } from "helpers";
+import { toWithState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import type { SignInRouteState } from "types/auth";
-import type { UserType } from "./types";
+import { Link, useLoaderData } from "react-router-dom";
 
-type Props = { userType: UserType };
-
-export default function Success({ userType }: Props) {
-  const { state: fromState } = useLocation();
-  const authRedirect = getAuthRedirect(fromState);
-  // donors get redirected to the route which they originally attempted to
-  // access; nonprofits get redirected to the page to register their NPO
-  const signInRouteState: SignInRouteState = {
-    from: userType === "donor" ? authRedirect.path : appRoutes.register,
-  };
+export { loader } from "./loader";
+export function Component() {
+  const fromState = useLoaderData();
 
   return (
     <div className="grid justify-items-center w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
@@ -28,8 +19,7 @@ export default function Success({ userType }: Props) {
       </p>
 
       <Link
-        to={appRoutes.signin}
-        state={signInRouteState}
+        to={toWithState(appRoutes.signin, fromState)}
         className="flex-center mt-9 w-full bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold"
       >
         Continue to Sign in

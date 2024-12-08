@@ -8,17 +8,22 @@ import { FormProvider, useForm } from "react-hook-form";
 import { optionType, schema, stringNumber } from "schemas/shape";
 import type { BankingApplicationsQueryParams } from "types/aws";
 import Form from "./Form";
+import { statuses } from "./constants";
 import type { FormValues as FV } from "./types";
 
 type Props = {
   classes?: string;
-  setParams: React.Dispatch<
-    React.SetStateAction<BankingApplicationsQueryParams>
-  >;
+  params: URLSearchParams;
+  setParams: (params: BankingApplicationsQueryParams) => void;
   isDisabled: boolean;
 };
 
-export default function Filter({ setParams, classes = "", isDisabled }: Props) {
+export default function Filter({
+  setParams,
+  classes = "",
+  isDisabled,
+  params,
+}: Props) {
   const buttonRef = useRef<HTMLButtonElement | null>(null);
 
   const methods = useForm<FV>({
@@ -34,8 +39,9 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       })
     ),
     defaultValues: {
-      endowmentID: "",
-      status: { label: "Under Review", value: "under-review" },
+      endowmentID: params.get("endowmentID") || "",
+      status:
+        statuses.find((s) => s.value === params.get("status")) || statuses[0],
     },
   });
 
@@ -46,7 +52,6 @@ export default function Filter({ setParams, classes = "", isDisabled }: Props) {
       cleanObject({
         status: data.status.value,
         endowmentID: data.endowmentID ? +data.endowmentID : undefined,
-        requestor: "bg-admin",
       })
     );
     buttonRef.current?.click();

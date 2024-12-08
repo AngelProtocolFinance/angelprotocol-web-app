@@ -7,6 +7,7 @@ import type {
 } from "types/components";
 import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
+export type { DetailedCurrency } from "types/components";
 
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,

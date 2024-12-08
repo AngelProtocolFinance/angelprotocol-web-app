@@ -1,13 +1,20 @@
-import { useMediaQuery } from "services/wordpress";
+import { wp } from "api/api";
+import useSWR from "swr";
 import type { Wordpress } from "types/wordpress";
 import Image from "./Image";
 
 type Props = { id: number; classes?: string; sizes: string };
 
 export default function Media(props: Props) {
-  const { data: media, isLoading, isError } = useMediaQuery(props.id);
+  const {
+    data: media,
+    isLoading,
+    error,
+  } = useSWR(props.id.toString(), (id) => {
+    return wp.get<Wordpress.Media>(`media/${id}`).json();
+  });
 
-  if (!media || isLoading || isError) {
+  if (!media || isLoading || error) {
     return <Image className={props.classes} />;
   }
 

@@ -1,13 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import { AuthError, signUp } from "aws-amplify/auth";
+import { cognito } from "auth/cognito";
 import { Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
-import { logger } from "helpers";
 import { Eye, EyeOff, Lock } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { requiredString } from "schemas/string";
-import { useSaveSignupMutation } from "services/aws/hubspot";
+import { isError } from "types/auth";
 import { object } from "yup";
 import type { Donor, StateSetter } from "./types";
 
@@ -18,7 +17,6 @@ type Props = {
 };
 
 export default function SignupForm(props: Props) {
-  const [savetoHubspot] = useSaveSignupMutation();
   const { handleError, displayError } = useErrorContext();
   const [isPasswordShown, setIsPasswordShown] = useState(false);
   const {
@@ -56,47 +54,17 @@ export default function SignupForm(props: Props) {
       disabled={isSubmitting}
       onSubmit={handleSubmit(async (fv) => {
         try {
-          try {
-            await savetoHubspot({
-              email: props.donor.email,
-              firstName: props.donor.firstName,
-              lastName: props.donor.lastName,
-              type: "donor",
-            }).unwrap();
-          } catch (err) {
-            logger.error(err);
-          }
-
-          const { nextStep } = await signUp({
-            username: props.donor.email,
-            password: fv.password,
-            options: {
-              userAttributes: {
-                given_name: props.donor.firstName,
-                family_name: props.donor.lastName,
-              },
-              autoSignIn: false,
-            },
+          const res = await cognito.signup(props.donor.email, fv.password, {
+            firstName: props.donor.firstName,
+            lastName: props.donor.lastName,
+            "custom:user-type": "donor",
           });
-
-          //per cognito config
-          if (nextStep.signUpStep !== "CONFIRM_SIGN_UP")
-            throw "Auth config error: next step after signup should be confirm signup";
-          if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL")
-            throw "Auth config error: code confirmation must be sent to email";
-          if (!nextStep.codeDeliveryDetails.destination)
-            throw "Auth error: code delivery details was not included";
+          if (isError(res)) return displayError(res.message);
 
           props.setSignupState({
-            codeRecipientEmail: {
-              raw: props.donor.email,
-              obscured: nextStep.codeDeliveryDetails.destination,
-            },
+            codeRecipientEmail: { raw: props.donor.email, obscured: res },
           });
         } catch (err) {
-          if (err instanceof AuthError) {
-            return displayError(err.message);
-          }
           handleError(err, { context: "signing up" });
         }
       })}

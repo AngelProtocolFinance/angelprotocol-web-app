@@ -1,35 +1,39 @@
 import type { EndowClaim } from "@better-giving/registration/models";
+import type { Step1 } from "@better-giving/registration/step";
+import type { NewReg } from "@better-giving/registration/update";
+import { ap, ver } from "api/api";
+import { loadAuth } from "auth/load-auth";
 import LoadText from "components/LoadText";
-import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME } from "constants/env";
-import { appRoutes, regRoutes } from "constants/routes";
-import { useAuthenticatedUser } from "contexts/Auth";
 import { storeRegistrationReference } from "helpers";
-import { useRendered } from "hooks/use-rendered";
+import { decodeState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
-import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useNewApplicationQuery } from "services/aws/registration";
+import { type ActionFunction, redirect, useFetcher } from "react-router-dom";
 import { steps } from "./routes";
 
-export function Component() {
-  const { email } = useAuthenticatedUser();
-  const { state } = useLocation();
-  useRendered();
-  const claim = state as EndowClaim | null;
-  const {
-    data: reg,
-    isLoading,
-    isError,
-  } = useNewApplicationQuery({
-    registrant_id: email,
-    claim: claim ?? undefined,
-  });
+export const action: ActionFunction = async ({ request }) => {
+  const auth = await loadAuth();
+  if (!auth) throw "auth is required up higher";
 
-  useEffect(() => {
-    if (!reg) return;
-    storeRegistrationReference(reg.id);
-  }, [reg]);
+  const url = new URL(request.url);
+  const claim = decodeState<EndowClaim>(url.searchParams.get("_s"));
+
+  const payload: NewReg = {
+    registrant_id: auth.email,
+  };
+  if (claim) payload.claim = claim;
+
+  const reg = await ap
+    .post<Pick<Step1, "id">>(`${ver(1)}/registrations`, {
+      headers: { authorization: auth.idToken },
+    })
+    .json();
+  storeRegistrationReference(reg.id);
+  return redirect(`../${reg.id}/${steps.contact}`);
+};
+
+export function Component() {
+  const fetcher = useFetcher();
 
   return (
     <div className="grid justify-items-center mx-6">
@@ -41,21 +45,17 @@ export function Component() {
         Your fundraising profile & account are just few steps away 😇
       </p>
 
-      <Link
-        aria-disabled={isLoading || isError || !reg}
-        className="w-full max-w-[26.25rem] btn-blue btn-reg"
-        to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`}
-        state={reg}
-      >
-        <LoadText isLoading={isLoading} text="Continue registration">
-          Continue registration
-        </LoadText>
-      </Link>
-      {isError && (
-        <span className="text-xs text-red mt-2 text-center">
-          {GENERIC_ERROR_MESSAGE}
-        </span>
-      )}
+      <fetcher.Form className="contents" action="." method="post">
+        <button
+          disabled={fetcher.state !== "idle"}
+          className="w-full max-w-[26.25rem] btn-blue btn-reg"
+        >
+          <LoadText text="Continue registration">
+            Continue registration
+          </LoadText>
+        </button>
+      </fetcher.Form>
+
       <p className="text-sm italic text-navy-l1 dark:text-navy-l2 mt-8 text-center">
         Note: Registration is quick, but we've sent an email link if you need to
         pause and resume at any point.

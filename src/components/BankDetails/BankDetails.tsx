@@ -1,12 +1,12 @@
 import { Separator } from "components/Separator";
 import useDebouncer from "hooks/useDebouncer";
 import { useState } from "react";
-import { useWiseCurrenciesQuery } from "services/aws/wise";
 import type { Currency } from "types/components";
 import CurrencySelector from "../CurrencySelector";
 import ExpectedFunds from "./ExpectedFunds";
 import RecipientDetails from "./RecipientDetails";
 import type { IFormButtons, OnSubmit } from "./types";
+import { useCurrencies } from "./use-currencies";
 
 /**
  * Denominated in USD
@@ -17,15 +17,22 @@ type Props = {
   FormButtons: IFormButtons;
   /** All errors should be handled inside `onSubmit` */
   onSubmit: OnSubmit;
+  isLoading: boolean;
 };
 
-export default function BankDetails({ FormButtons, onSubmit }: Props) {
+export default function BankDetails({
+  FormButtons,
+  onSubmit,
+  isLoading,
+}: Props) {
+  const currencies = useCurrencies();
   const [isSubmitting, setSubmitting] = useState(false);
   const [currency, setCurrency] = useState<Currency>({
     code: "USD",
     name: "United States Dollar",
     rate: 1,
   });
+
   const [amount, setAmount] = useState(
     DEFAULT_EXPECTED_MONTHLY_DONATIONS_AMOUNT
   );
@@ -46,8 +53,6 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
     }
   };
 
-  const currencies = useWiseCurrenciesQuery({});
-
   return (
     <div className="grid gap-6">
       <CurrencySelector
@@ -55,7 +60,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
         onChange={(c) => setCurrency(c)}
         value={currency}
         classes={{ combobox: "w-full md:w-80", options: "text-sm" }}
-        disabled={isSubmitting}
+        disabled={isSubmitting || isLoading}
         label="Select your bank account currency:"
         required
       />
@@ -71,7 +76,7 @@ export default function BankDetails({ FormButtons, onSubmit }: Props) {
       <RecipientDetails
         amount={amnt}
         currency={currency.code}
-        disabled={isSubmitting}
+        disabled={isSubmitting || isLoading}
         FormButtons={FormButtons}
         onSubmit={handleSubmit}
       />

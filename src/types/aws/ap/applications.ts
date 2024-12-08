@@ -1,12 +1,20 @@
+import * as v from "valibot";
 import type { FileObject } from "../common";
+
+const bankApplicationStatuses = [
+  "under-review",
+  "approved",
+  "rejected",
+] as const;
+
+export type BankingApplicationStatus = (typeof bankApplicationStatuses)[number];
+export const bankingApplicationStatus = v.picklist(bankApplicationStatuses);
 
 export type BankingApplicationsQueryParams = {
   status?: BankingApplicationStatus;
   endowmentID?: number;
   nextPageKey?: string; //base64 encoded keys
 };
-
-export type BankingApplicationStatus = "under-review" | "approved" | "rejected";
 
 type BaseBankingApplication = {
   wiseRecipientID: string;
@@ -34,15 +42,25 @@ export type BankingApplicationsPage = {
   nextPageKey?: string; //base64 encoded string
 };
 
-type Approval = { type: Extract<BankingApplicationStatus, "approved"> };
-type Rejection = {
-  type: Extract<BankingApplicationStatus, "rejected">;
-  reason: string;
-};
-type Priority = { type: "prioritize" };
-
-export type BankingApplicationUpdate = { uuid: string } & (
-  | Approval
-  | Rejection
-  | Priority
+export const bankingApplicationUpdate = v.pipe(
+  v.object({
+    type: v.picklist([
+      bankApplicationStatuses[1],
+      bankApplicationStatuses[2],
+      "prioritize",
+    ]),
+    reason: v.optional(v.string()),
+  }),
+  v.forward(
+    v.partialCheck(
+      [["type"], ["reason"]],
+      (input) => (input.type === "rejected" ? !!input.reason : true),
+      "required"
+    ),
+    ["reason"]
+  )
 );
+
+export type BankingApplicationUpdate = v.InferOutput<
+  typeof bankingApplicationUpdate
+>;

@@ -1,21 +1,33 @@
-import ContentLoader from "components/ContentLoader";
+import { wp } from "api/api";
 import Media from "components/Media";
-import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import { useRendered } from "hooks/use-rendered";
 import { ChevronLeft } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { type LoaderFunction, useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { usePostQuery, useUserQuery } from "services/wordpress";
+import useSWR from "swr";
 import type { Wordpress } from "types/wordpress";
 
 const containerStyle = "w-full padded-container max-w-4xl mx-auto pb-4";
 
-export function Component() {
-  const { slug = "" } = useParams<{ slug: string }>();
+interface IPost extends Wordpress.Post {
+  media: Wordpress.Media;
+  authorName: string;
+}
 
-  const query = usePostQuery(slug, { skip: !slug });
+export const loader: LoaderFunction = async ({ params }) => {
+  const [post] = await wp
+    .get<Wordpress.Post[]>(`posts?slug=${params.slug}`)
+    .json();
+  const media = wp.get<Wordpress.Media>(`media/${post.featured_media}`).json();
+  const author = wp.get<Wordpress.User>(`users/${post.author}`).json();
+  const [m, a] = await Promise.all([media, author]);
+  return { ...post, media: m, authorName: a.name } satisfies IPost;
+};
+
+export function Component() {
+  const post = useLoaderData() as IPost;
 
   return (
     <div className={containerStyle}>
@@ -26,27 +38,19 @@ export function Component() {
         <ChevronLeft className="text-[1em]" />
         <span>Go Back</span>
       </Link>
-      <QueryLoader
-        queryState={query}
-        messages={{
-          loading: <Skeleton />,
-        }}
-        classes={{ container: containerStyle + " mt-4" }}
-      >
-        {(post) => <Loaded {...post} />}
-      </QueryLoader>
+      <Loaded {...post} />
     </div>
   );
 }
 
-function Loaded(post: Wordpress.Post) {
+function Loaded(post: IPost) {
   useRendered();
   return (
     <>
       <Seo title={post.slug} />
       <Media
-        sizes="(min-width: 896px) 896px, 100vw"
         id={post.featured_media}
+        sizes="(min-width: 896px) 896px, 100vw"
         classes="relative w-full object-cover object-top mt-4 rounded-lg"
       />
       <h1
@@ -76,32 +80,8 @@ function Loaded(post: Wordpress.Post) {
 }
 
 function Author(props: { id: number }) {
-  const { data } = useUserQuery(props.id);
-  return data && <p className="text-navy-l1 text-sm">Author: {data.name}</p>;
-}
-
-function Skeleton() {
-  return (
-    <>
-      <ContentLoader className="h-60 w-full mt-4" />
-      <ContentLoader className="h-12 w-[90%] mt-4" />
-      <ContentLoader className="h-4 w-40 mt-4" />
-      <ContentLoader className="h-4 w-40 mt-2" />
-
-      <ContentLoader className="h-4 w-full mt-8" />
-      <ContentLoader className="h-4 w-full mt-2" />
-      <ContentLoader className="h-4 w-full mt-2" />
-      <ContentLoader className="h-4 w-full mt-2" />
-
-      <ContentLoader className="h-4 w-full mt-8" />
-      <ContentLoader className="h-4 w-full mt-2" />
-      <ContentLoader className="h-4 w-full mt-2" />
-      <ContentLoader className="h-4 w-full mt-2" />
-
-      <ContentLoader className="h-4 w-full mt-8" />
-      <ContentLoader className="h-4 w-full mt-2" />
-      <ContentLoader className="h-4 w-full mt-2" />
-      <ContentLoader className="h-4 w-full mt-2" />
-    </>
+  const { data } = useSWR(props.id.toString(), (id) =>
+    wp.get<Wordpress.User>(`users/${id}`).json()
   );
+  return data && <p className="text-navy-l1 text-sm">Author: {data.name}</p>;
 }

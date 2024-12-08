@@ -12,16 +12,9 @@ import {
   useLocation,
   useNavigationType,
 } from "react-router-dom";
-import * as auth from "slices/auth";
 import { store } from "store/store";
 import "./index.css";
-import { Amplify } from "aws-amplify";
-import { Hub } from "aws-amplify/utils";
-import { amplifyConfig } from "constants/aws";
-import type { OAuthState } from "types/auth";
 import { routes } from "./App/App";
-
-Amplify.configure(amplifyConfig);
 
 //set theme immediately, so even suspense loaders and can use it
 // NOTE: Turning off option for Dark theme for now
@@ -49,28 +42,6 @@ const sentryCreateBrowserRouter =
   Sentry.wrapCreateBrowserRouter(createBrowserRouter);
 
 const router = sentryCreateBrowserRouter(routes);
-
-store.dispatch(auth.loadSession());
-Hub.listen("auth", async ({ payload }) => {
-  switch (payload.event) {
-    case "signedIn":
-      store.dispatch(auth.loadSession(payload.data));
-      break;
-    case "signedOut":
-      store.dispatch(auth.reset());
-      break;
-    case "tokenRefresh":
-      store.dispatch(auth.loadSession());
-      break;
-    case "tokenRefresh_failure":
-      store.dispatch(auth.reset());
-      break;
-    case "customOAuthState":
-      const state: OAuthState = JSON.parse(payload.data);
-      const { pathname = "/", data } = state;
-      router.navigate({ pathname }, { state: data, replace: true });
-  }
-});
 
 const LoaderComponent = () => (
   <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
