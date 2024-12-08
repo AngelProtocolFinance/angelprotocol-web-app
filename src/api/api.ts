@@ -9,6 +9,8 @@ export const wise = ap.extend({ prefixUrl: `${apUrl}/${v(1)}/wise-proxy` });
 export const apes = ky.create({
   prefixUrl: `https://apes-api.better.giving/${env}`,
 });
+
+export const wpUrl = "https://angelgiving.10web.site/wp-json/wp/v2";
 export const wp = ky.create({
-  prefixUrl: "https://angelgiving.10web.site/wp-json/wp/v2",
+  prefixUrl: wpUrl,
 });

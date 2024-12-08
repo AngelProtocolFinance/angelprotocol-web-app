@@ -1,4 +1,4 @@
-import { wp } from "api/api";
+import { posts } from "api/get/wp-posts";
 import Media from "components/Media";
 import Seo from "components/Seo";
 import { useEffect, useState } from "react";
@@ -14,16 +14,12 @@ import type { Wordpress } from "types/wordpress";
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const currPage = +(url.searchParams.get("page") ?? "1");
-  const res = await wp.get<Wordpress.Post[]>("posts", {
-    searchParams: { page: currPage },
-  });
-  const total = +(res.headers.get("X-Wp-Total") ?? "0");
+  const [items, total] = await posts(currPage);
   const itemsPerPage = 10;
-  console.log(url.toString());
 
   return {
     pageNum: currPage,
-    posts: await res.json(),
+    posts: items,
     nextPageNum: currPage * itemsPerPage < total ? currPage + 1 : undefined,
   } satisfies Wordpress.PostPage;
 };
