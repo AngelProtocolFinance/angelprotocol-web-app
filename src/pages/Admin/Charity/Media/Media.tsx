@@ -1,12 +1,12 @@
+import type { MediaPage } from "@better-giving/endowment";
 import { useModalContext } from "contexts/ModalContext";
 import { Plus } from "lucide-react";
-import { Link } from "react-router-dom";
-import { useAdminContext } from "../../Context";
+import { Link, useLoaderData } from "react-router-dom";
 import FeaturedVideos from "./FeaturedVideos";
 import VideoEditor from "./VideoEditor";
 
 export default function Media() {
-  const { id } = useAdminContext();
+  const featuredPage = useLoaderData() as MediaPage;
   const { showModal } = useModalContext();
 
   return (
@@ -25,7 +25,7 @@ export default function Media() {
           </button>
         </div>
         <h5 className="text-lg mt-10">Featured videos</h5>
-        <FeaturedVideos endowId={id} classes="mt-4" />
+        <FeaturedVideos items={featuredPage.items} classes="mt-4" />
         <Link
           to="videos"
           className="btn-outline-filled text-sm py-3 rounded mt-4"
