@@ -61,6 +61,8 @@ function Content(props: Props) {
   return (
     <DialogPanel
       as={fetcher.Form}
+      action="."
+      method="post"
       {...getFormProps(form)}
       className="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
@@ -81,6 +83,7 @@ function Content(props: Props) {
           {...getInputProps(fields.url, { type: "url" })}
           placeholder="e.g. https://youtu.be/XOUjJqQ68Ec?si=-WX60lgPXUWAXPCY"
           label="Web Address (URL)"
+          error={fields.url.errors?.[0]}
           required
         />
       </div>
@@ -90,7 +93,7 @@ function Content(props: Props) {
           Cancel
         </Link>
         <button
-          disabled={!form.dirty}
+          disabled={!form.dirty || fetcher.state !== "idle"}
           type="submit"
           className="btn-blue px-8 py-2 text-sm"
         >

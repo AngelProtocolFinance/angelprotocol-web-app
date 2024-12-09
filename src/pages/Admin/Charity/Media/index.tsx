@@ -2,11 +2,17 @@ import type { MediaPage, MediaQueryParamsObj } from "@better-giving/endowment";
 import { ap, toSearch, ver } from "api/api";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth, redirectToAuth } from "auth";
+import { parseWithValibot } from "conform-to-valibot";
 import { adminRoutes } from "constants/routes";
-import type { LoaderFunction, RouteObject } from "react-router-dom";
+import {
+  type ActionFunction,
+  type LoaderFunction,
+  type RouteObject,
+  redirect,
+} from "react-router-dom";
 import { parse } from "valibot";
 import Media from "./Media";
-import { VideoEditor } from "./VideoEditor";
+import { VideoEditor, schema } from "./VideoEditor";
 import Videos from "./Videos";
 
 const getMedia = async (endowId: number, params: MediaQueryParamsObj) => {
@@ -44,18 +50,48 @@ export const videosAction: LoaderFunction = async ({ params, request }) => {
   const mediaId = fv.get("mediaId");
 
   const path = `${ver(1)}/endowments/${endowId}/media/${mediaId}`;
-  return intent === "feature"
-    ? await ap
-        .patch(path, {
+  const res =
+    intent === "feature"
+      ? await ap.patch(path, {
           headers: { authorization: auth.idToken },
           json: { featured: !featured },
         })
-        .json()
-    : await ap
-        .delete(path, {
+      : await ap.delete(path, {
           headers: { authorization: auth.idToken },
-        })
-        .json();
+        });
+
+  return { ok: res.ok };
+};
+
+const newAction: ActionFunction = async ({ params, request }) => {
+  const auth = await loadAuth();
+  if (!auth) return redirectToAuth(request);
+
+  const fv = await request.formData();
+  const payload = parseWithValibot(fv, { schema });
+  if (payload.status !== "success") return payload.reply();
+
+  await ap.post(`${ver(1)}/endowments/${params.id}/media`, {
+    headers: { authorization: auth.idToken },
+    body: payload.value.url,
+  });
+  return redirect("..");
+};
+
+const editAction: ActionFunction = async ({ params, request }) => {
+  const auth = await loadAuth();
+  if (!auth) return redirectToAuth(request);
+
+  const fv = await request.formData();
+  const payload = parseWithValibot(fv, { schema });
+  if (payload.status !== "success") return payload.reply();
+
+  await ap.patch(`${ver(1)}/endowments/${params.id}/media/${params.mediaId}`, {
+    headers: { authorization: auth.idToken },
+    json: { url: payload.value.url },
+  });
+
+  return redirect("..");
 };
 
 export const mediaRoutes: RouteObject[] = [
@@ -63,7 +99,11 @@ export const mediaRoutes: RouteObject[] = [
     path: adminRoutes.media,
     element: <Media />,
     loader: featuredMedia,
-    children: [{ path: "new", element: <VideoEditor /> }],
+    action: videosAction,
+    children: [
+      { path: "new", action: newAction, element: <VideoEditor /> },
+      { path: ":mediaId", element: <VideoEditor />, action: editAction },
+    ],
   },
   {
     path: adminRoutes.media + "/videos",
@@ -72,7 +112,7 @@ export const mediaRoutes: RouteObject[] = [
     action: videosAction,
     children: [
       { path: "new", element: <VideoEditor /> },
-      { path: ":mediaId", element: <VideoEditor /> },
+      { path: ":mediaId", element: <VideoEditor />, action: editAction },
     ],
   },
 ];
