@@ -3337,7 +3337,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:18.2.62":
+"@types/react@npm:*":
   version: 18.2.62
   resolution: "@types/react@npm:18.2.62"
   dependencies:
@@ -3345,6 +3345,15 @@ __metadata:
     "@types/scheduler": "npm:*"
     csstype: "npm:^3.0.2"
   checksum: 10/ebc85019000fc21a53cd13dfa4863503c651dca19fc991b82c088f092422a992829c6d5c113d199db2a8e0df975320b45b93f3b5cee09a96ed012042d78b9720
+  languageName: node
+  linkType: hard
+
+"@types/react@npm:19.0.1":
+  version: 19.0.1
+  resolution: "@types/react@npm:19.0.1"
+  dependencies:
+    csstype: "npm:^3.0.2"
+  checksum: 10/930dd4904047059c48ae64a90fc5e8078b5bac0a14c9d927917e5a07e88e4e5073ddc944cbde90a955f9f815c23b7112caea63e407bc423913073bedecb097aa
   languageName: node
   linkType: hard
 
@@ -3493,7 +3502,7 @@ __metadata:
     "@testing-library/user-event": "npm:14.5.2"
     "@types/node": "npm:18.18.13"
     "@types/nprogress": "npm:^0"
-    "@types/react": "npm:18.2.62"
+    "@types/react": "npm:19.0.1"
     "@types/react-csv": "npm:1.1.10"
     "@types/react-dom": "npm:18.2.19"
     "@types/react-helmet": "npm:6.1.11"
@@ -3513,7 +3522,7 @@ __metadata:
     qrcode.react: "npm:3.1.0"
     quill: "npm:2.0.2"
     quill-delta: "npm:5.1.0"
-    react: "npm:18.2.0"
+    react: "npm:19.0.0"
     react-chariot-connect: "npm:1.0.8"
     react-csv: "npm:2.2.2"
     react-dom: "npm:18.2.0"
@@ -6034,7 +6043,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:18.2.0, react@npm:>=16":
+"react@npm:19.0.0":
+  version: 19.0.0
+  resolution: "react@npm:19.0.0"
+  checksum: 10/2490969c503f644703c88990d20e4011fa6119ddeca451e9de48f6d7ab058d670d2852a5fcd3aa3cd90a923ab2815d532637bd4a814add402ae5c0d4f129ee71
+  languageName: node
+  linkType: hard
+
+"react@npm:>=16":
   version: 18.2.0
   resolution: "react@npm:18.2.0"
   dependencies:
