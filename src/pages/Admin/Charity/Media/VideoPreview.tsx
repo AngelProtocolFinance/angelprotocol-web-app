@@ -1,40 +1,31 @@
 import type { IMedia } from "@better-giving/endowment";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { LoaderCircle, Minus, Pencil, Star } from "lucide-react";
-import { useAdminContext } from "pages/Admin/Context";
 import type { ButtonHTMLAttributes } from "react";
 import ReactPlayer from "react-player";
-import {
-  useDeleteMediumMutation,
-  useEditMediumMutation,
-} from "services/aws/media";
-import VideoEditor from "./VideoEditor";
+import { Link, useFetcher } from "react-router-dom";
 
 export default function VideoPreview(props: IMedia) {
-  const { id } = useAdminContext();
-  const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
-  const [deleteMedium, { isLoading: isDeleting }] = useDeleteMediumMutation();
-  const [editMedium, { isLoading: isEditing }] = useEditMediumMutation();
-  const allControlsDisabled = isDeleting || isEditing;
+  const fetcher = useFetcher();
+  const allControlsDisabled = fetcher.state !== "idle";
   return (
     <div className="text-navy-d4" key={props.id}>
-      <div className="flex justify-end mb-1">
+      <fetcher.Form
+        action="."
+        method="post"
+        className="flex items-center justify-end mb-1"
+      >
+        <input
+          type="hidden"
+          name="featured"
+          value={props.featured ? "1" : "0"}
+        />
+        <input type="hidden" name="mediaId" value={props.id} />
         <CRUDBtn
-          isLoading={isEditing}
+          type="submit"
+          name="intent"
+          value="feature"
+          isLoading={fetcher.state === "submitting"}
           disabled={allControlsDisabled}
-          onClick={async () => {
-            try {
-              await editMedium({
-                endowId: id,
-                mediaId: props.id,
-                featured: !props.featured,
-              }).unwrap();
-            } catch (err) {
-              handleError(err, { context: "editing video" });
-            }
-          }}
         >
           <Star
             size={19}
@@ -43,30 +34,28 @@ export default function VideoPreview(props: IMedia) {
             } group-disabled:text-gray-l1`}
           />
         </CRUDBtn>
-        <CRUDBtn
-          disabled={allControlsDisabled}
-          onClick={() =>
-            showModal(VideoEditor, {
-              edit: { mediaId: props.id, prevUrl: props.url },
-            })
-          }
+        <Link
+          aria-disabled={allControlsDisabled}
+          to={{
+            pathname: props.id,
+            search: new URLSearchParams({
+              prev_url: props.url,
+            }).toString(),
+          }}
+          className="p-1.5 text-lg rounded-full hover:bg-blue-l4 group aria-disabled:text-gray-l1"
         >
           <Pencil size={16} />
-        </CRUDBtn>
+        </Link>
         <CRUDBtn
+          name="intent"
+          value="delete"
+          type="submit"
           disabled={allControlsDisabled}
-          isLoading={isDeleting}
-          onClick={async () => {
-            try {
-              await deleteMedium({ endowId: id, mediaId: props.id }).unwrap();
-            } catch (err) {
-              handleError(err, { context: "deleting videos" });
-            }
-          }}
+          isLoading={fetcher.state === "submitting"}
         >
           <Minus />
         </CRUDBtn>
-      </div>
+      </fetcher.Form>
       {/** render only thumbnails on lists */}
       {/** @see https://github.com/CookPete/react-player/issues/145 */}
       <div className="relative pt-[56.25%] aspect-[16/9] rounded-lg overflow-clip">
@@ -93,14 +82,13 @@ function CRUDBtn({
   isLoading,
   children,
   ...props
-}: Omit<ButtonHTMLAttributes<HTMLButtonElement>, "type"> & {
+}: ButtonHTMLAttributes<HTMLButtonElement> & {
   isLoading?: boolean;
 }) {
   return (
     <button
       {...props}
-      type="button"
-      className={`p-1.5 text-lg rounded-full hover:bg-blue-l4 group disabled:text-gray-l1 ${className}`}
+      className={`p-1.5 text-lg rounded-full hover:bg-blue-l4 group disabled:text-gray-l1 group aria-disabled:text-gray-l1 ${className}`}
     >
       {isLoading ? <LoaderCircle className="animate-spin" /> : children}
     </button>
