@@ -51,7 +51,7 @@ export function Funds() {
                     pathname: appRoutes.funds + "/new",
                     search: `npo=${id}`,
                   }}
-                  className="btn-blue text-sm px-6 py-2"
+                  className="btn-blue text-sm px-6 py-2 inline-block"
                 >
                   Create
                 </Link>
