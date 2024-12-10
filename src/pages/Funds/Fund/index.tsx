@@ -1,4 +1,4 @@
-import type { SingleFund } from "@better-giving/fundraiser";
+import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
 import { skipToken } from "@reduxjs/toolkit/query";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
@@ -7,6 +7,7 @@ import { RichText } from "components/RichText";
 import Seo from "components/Seo";
 import VerifiedIcon from "components/VerifiedIcon";
 import { FundCreator } from "components/fundraiser";
+import { FundStatus, statusFn } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -19,17 +20,18 @@ import Skeleton from "./Skeleton";
 import { Share } from "./share";
 import { Video } from "./video";
 
-const isClosed = (active: boolean, expiration?: string): boolean => {
-  const isExpired = expiration ? expiration < new Date().toISOString() : false;
-  return !active || isExpired;
-};
-
 export function Component() {
   const { fundId = "" } = useParams();
   const { isLoading, isError, data } = useFundQuery(fundId || skipToken);
 
   if (isLoading) return <Skeleton />;
   if (isError || !data) return <PageError />;
+
+  const status = statusFn(
+    data.expiration ?? MAX_EXPIRATION,
+    data.active,
+    data.donation_total_usd
+  );
 
   return (
     <section className="grid pb-10">
@@ -48,13 +50,27 @@ export function Component() {
       />
       <div className="padded-container grid md:grid-cols-[3fr_2fr] gap-4">
         <div className="self-start -mt-12 md:-mt-24 z-10 grid gap-4 relative">
-          <Link
-            className="absolute -top-8 text-white flex items-center gap-x-1 active:-translate-x-1"
-            to=".."
-          >
-            <ArrowLeft size={16} />
-            <span>Fundraisers</span>
-          </Link>
+          <div className="absolute -top-8 flex justify-between w-full">
+            <Link
+              className="text-white flex items-center gap-x-1 active:-translate-x-1"
+              to=".."
+            >
+              <ArrowLeft size={16} />
+              <span>Fundraisers</span>
+            </Link>
+
+            <FundStatus
+              status={status}
+              classes={{
+                container: "px-3 py-1 rounded-full text-xs",
+                active: "bg-white",
+                inactive: "bg-red-l4 text-red",
+                completed: "bg-green-l4 text-green",
+                expired: "bg-gray-l4 text-gray",
+              }}
+            />
+          </div>
+
           <div className="bg-white rounded-lg shadow-2xl shadow-black/10 p-4">
             <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
               <div className="mr-4 md:row-span-2 relative">
@@ -71,16 +87,9 @@ export function Component() {
                 )}
               </div>
 
-              <div className="md:col-start-2 max-md:text-center">
-                <span className="font-heading font-bold text-2xl w-full break-words text-center">
-                  {data.name}
-                </span>
-                {isClosed(data.active, data.expiration) && (
-                  <span className="ml-2 px-3 py-1 text-2xs bg-red-l4 text-red relative inline bottom-1 uppercase rounded-full">
-                    closed
-                  </span>
-                )}
-              </div>
+              <h4 className="md:col-start-2 max-md:text-center font-heading font-bold text-2xl w-full break-words">
+                {data.name}
+              </h4>
               <p className="pl-0.5">
                 <span className="text-sm font-medium text-navy-l3 mr-1">
                   by
@@ -177,7 +186,13 @@ function DonateSection(props: IDonateSection) {
         />
       )}
       <Link
-        aria-disabled={isClosed(props.active, props.expiration)}
+        aria-disabled={
+          !statusFn(
+            props.expiration ?? MAX_EXPIRATION,
+            props.active,
+            props.donation_total_usd
+          ).active
+        }
         to={appRoutes.donate_fund + `/${props.id}`}
         className={`w-full btn-blue px-6 py-3 text-sm ${s.link} ${s.container}`}
       >

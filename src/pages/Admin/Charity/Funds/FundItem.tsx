@@ -1,12 +1,11 @@
 import type { FundItem as TFundItem } from "@better-giving/fundraiser";
 import Prompt from "components/Prompt";
-import { FundCreator } from "components/fundraiser";
+import { FundCreator, FundStatus, statusFn } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { status as statusFn } from "helpers/fundraiser";
 import { LoaderCircle, Split } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useOptOutMutation } from "services/aws/endow-funds";
@@ -34,15 +33,16 @@ export const FundItem = (
           width={50}
           className="object-cover aspect-square rounded-full"
         />
-        {status.text && (
-          <div className="grid justify-items-end">
-            <span
-              className={`ml-1 relative bottom-px uppercase text-2xs rounded-full px-3 py-0.5 ${status.text?.bg} ${status.text?.fore}`}
-            >
-              {status.text.val}
-            </span>
-          </div>
-        )}
+        <FundStatus
+          status={status}
+          classes={{
+            container: "px-3 py-1 rounded-full text-xs",
+            active: "",
+            inactive: "bg-red-l4 text-red",
+            expired: "bg-gray-l4 text-gray",
+            completed: "bg-green-l4 text-green",
+          }}
+        />
       </div>
 
       <Link
