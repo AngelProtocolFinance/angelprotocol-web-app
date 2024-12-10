@@ -94,25 +94,24 @@ const editAction: ActionFunction = async ({ params, request }) => {
   return redirect("..");
 };
 
+const promptPaths: RouteObject[] = [
+  { path: "new", action: newAction, element: <VideoEditor /> },
+  { path: ":mediaId", element: <VideoEditor />, action: editAction },
+];
+
 export const mediaRoutes: RouteObject[] = [
   {
     path: adminRoutes.media,
     element: <Media />,
     loader: featuredMedia,
     action: videosAction,
-    children: [
-      { path: "new", action: newAction, element: <VideoEditor /> },
-      { path: ":mediaId", element: <VideoEditor />, action: editAction },
-    ],
+    children: promptPaths,
   },
   {
     path: adminRoutes.media + "/videos",
     element: <Videos />,
     loader: allVideos,
     action: videosAction,
-    children: [
-      { path: "new", element: <VideoEditor />, action: newAction },
-      { path: ":mediaId", element: <VideoEditor />, action: editAction },
-    ],
+    children: promptPaths,
   },
 ];

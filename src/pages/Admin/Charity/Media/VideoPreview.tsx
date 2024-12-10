@@ -5,27 +5,20 @@ import ReactPlayer from "react-player";
 import { Link, useFetcher } from "react-router-dom";
 
 export default function VideoPreview(props: IMedia) {
-  const fetcher = useFetcher();
-  const allControlsDisabled = fetcher.state !== "idle";
+  const del = useFetcher({ key: `delete-${props.id}` });
+  const feat = useFetcher({ key: `feature-${props.id}` });
+  const allControlsDisabled =
+    del.state === "submitting" || feat.state === "submitting";
+
   return (
     <div className="text-navy-d4" key={props.id}>
-      <fetcher.Form
-        action="."
-        method="post"
-        className="flex items-center justify-end mb-1"
-      >
-        <input
-          type="hidden"
-          name="featured"
-          value={props.featured ? "1" : "0"}
-        />
-        <input type="hidden" name="mediaId" value={props.id} />
+      <div className="flex items-center justify-end mb-1">
         <CRUDBtn
-          type="submit"
+          id={props.id}
           name="intent"
           value="feature"
-          isLoading={fetcher.state === "submitting"}
           disabled={allControlsDisabled}
+          featured={props.featured}
         >
           <Star
             size={19}
@@ -49,13 +42,13 @@ export default function VideoPreview(props: IMedia) {
         <CRUDBtn
           name="intent"
           value="delete"
-          type="submit"
+          featured={props.featured}
+          id={props.id}
           disabled={allControlsDisabled}
-          isLoading={fetcher.state === "submitting"}
         >
           <Minus />
         </CRUDBtn>
-      </fetcher.Form>
+      </div>
       {/** render only thumbnails on lists */}
       {/** @see https://github.com/CookPete/react-player/issues/145 */}
       <div className="relative pt-[56.25%] aspect-[16/9] rounded-lg overflow-clip">
@@ -77,20 +70,26 @@ export default function VideoPreview(props: IMedia) {
   );
 }
 
-function CRUDBtn({
-  className,
-  isLoading,
-  children,
-  ...props
-}: ButtonHTMLAttributes<HTMLButtonElement> & {
-  isLoading?: boolean;
-}) {
+interface ICRUDBtn extends ButtonHTMLAttributes<HTMLButtonElement> {
+  featured: boolean;
+}
+function CRUDBtn({ className, children, ...props }: ICRUDBtn) {
+  const fetcher = useFetcher({ key: `${props.value}-${props.id}` });
   return (
-    <button
-      {...props}
-      className={`p-1.5 text-lg rounded-full hover:bg-blue-l4 group disabled:text-gray-l1 group aria-disabled:text-gray-l1 ${className}`}
-    >
-      {isLoading ? <LoaderCircle className="animate-spin" /> : children}
-    </button>
+    <fetcher.Form action="." method="post" className="contents">
+      <input type="hidden" name="featured" value={props.featured ? "1" : "0"} />
+      <input type="hidden" name="mediaId" value={props.id} />
+      <button
+        type="submit"
+        {...props}
+        className={`p-1.5 text-lg rounded-full hover:bg-blue-l4 group disabled:text-gray-l1 group aria-disabled:text-gray-l1 ${className}`}
+      >
+        {fetcher.state === "submitting" ? (
+          <LoaderCircle className="animate-spin" />
+        ) : (
+          children
+        )}
+      </button>
+    </fetcher.Form>
   );
 }
