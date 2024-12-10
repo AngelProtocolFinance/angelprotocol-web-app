@@ -5,6 +5,7 @@ import useScrollTop from "hooks/useScrollTop";
 import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
 import { routes as blogRoutes } from "pages/Blog";
+import { fundsRoute } from "pages/Funds";
 import { legalRoutes } from "pages/Legal";
 import OAuthRedirector from "pages/OAuthRedirector";
 import { profileRoute } from "pages/Profile";
@@ -39,6 +40,7 @@ const widgetRoutes: RO[] = [
 const _appRoutes: RO[] = [
   adminRoute,
   regRoute,
+  fundsRoute,
   userDashboardRoute,
   ...blogRoutes,
   ...legalRoutes,
@@ -93,6 +95,10 @@ const _appRoutes: RO[] = [
 
 const rootRoutes: RO[] = [
   { path: `${appRoutes.donate}/:id`, lazy: () => import("pages/Donate") },
+  {
+    path: `${appRoutes.donate_fund}/:id`,
+    lazy: () => import("pages/donate-fund"),
+  },
   //outlet-value: isInWidget/widgetVersion
   { element: <Layout />, children: _appRoutes },
   {

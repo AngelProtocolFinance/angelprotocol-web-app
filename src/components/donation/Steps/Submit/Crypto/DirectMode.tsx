@@ -1,4 +1,5 @@
 import chains from "@better-giving/assets/chains";
+import type { DonationIntent } from "@better-giving/donation/intent";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
@@ -27,29 +28,37 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     honorary,
   } = donation;
 
-  const intentQuery = useCreateCryptoIntentQuery({
-    transactionId: init.intentId,
-    amount: +details.token.amount,
-    tipAmount: tip?.value ?? 0,
-    feeAllowance,
-    chainId: details.token.network,
-    chainName: chains[details.token.network].name,
-    denomination: details.token.code,
-    splitLiq: 0,
-    endowmentId: init.recipient.id,
+  const intent: DonationIntent = {
+    frequency: "one-time",
+    amount: {
+      amount: +details.token.amount,
+      currency: details.token.code,
+      tip: tip?.value ?? 0,
+      feeAllowance,
+    },
+    viaId: details.token.network,
+    viaName: chains[details.token.network].name,
+    recipient: init.recipient.id,
     source: init.source,
     donor: toDonor(fvDonor),
-    ...(honorary.honoraryFullName && {
-      inHonorOf: honorary.honoraryFullName,
-      tributeNotif: honorary.withTributeNotif
-        ? honorary.tributeNotif
-        : undefined,
-    }),
-    ...(details.program.value && {
-      programId: details.program.value,
-      programName: details.program.label,
-    }),
-  });
+  };
+  if (honorary.honoraryFullName) {
+    intent.tribute = {
+      fullName: honorary.honoraryFullName,
+    };
+    if (honorary.withTributeNotif) {
+      intent.tribute.notif = honorary.tributeNotif;
+    }
+  }
+
+  if (details.program.value) {
+    intent.program = {
+      id: details.program.value,
+      name: details.program.label,
+    };
+  }
+
+  const intentQuery = useCreateCryptoIntentQuery(intent);
 
   const totalDisplayAmount = roundToCents(
     +details.token.amount + (tip?.value ?? 0) + feeAllowance,

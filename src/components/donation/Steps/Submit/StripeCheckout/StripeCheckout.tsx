@@ -1,3 +1,4 @@
+import type { DonationIntent } from "@better-giving/donation/intent";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
@@ -21,33 +22,43 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
   const { init, details, tip, donor: fvDonor, honorary, feeAllowance } = props;
   const { setState } = useDonationState();
 
+  const intent: DonationIntent = {
+    frequency: details.frequency === "subscription" ? "recurring" : "one-time",
+    amount: {
+      amount: +details.amount,
+      tip: tip?.value ?? 0,
+      feeAllowance,
+      currency: details.currency.code,
+    },
+    recipient: init.recipient.id,
+    donor: toDonor(fvDonor),
+    source: init.source,
+    viaId: "fiat",
+    viaName: "Stripe",
+  };
+
+  if (honorary.honoraryFullName) {
+    intent.tribute = {
+      fullName: honorary.honoraryFullName,
+    };
+    if (honorary.withTributeNotif) {
+      intent.tribute.notif = honorary.tributeNotif;
+    }
+  }
+
+  if (details.program.value) {
+    intent.program = {
+      id: details.program.value,
+      name: details.program.label,
+    };
+  }
+
   const {
     data: clientSecret,
     isLoading,
     isError,
     error,
-  } = useStripePaymentIntentQuery({
-    transactionId: init.intentId,
-    type: details.frequency,
-    amount: +details.amount,
-    tipAmount: tip?.value ?? 0,
-    feeAllowance,
-    currency: details.currency.code,
-    endowmentId: init.recipient.id,
-    splitLiq: 0,
-    donor: toDonor(fvDonor),
-    source: init.source,
-    ...(honorary.honoraryFullName && {
-      inHonorOf: honorary.honoraryFullName,
-      tributeNotif: honorary.withTributeNotif
-        ? honorary.tributeNotif
-        : undefined,
-    }),
-    ...(details.program.value && {
-      programId: details.program.value,
-      programName: details.program.label,
-    }),
-  });
+  } = useStripePaymentIntentQuery(intent);
 
   return (
     <Summary

@@ -1,8 +1,8 @@
 import { unpack } from "helpers";
 import { ListCheck } from "lucide-react";
 import type { ReactNode } from "react";
-import type { DonationIntent } from "types/aws";
 import type { OptionType } from "types/components";
+import type { Frequency } from "../types";
 import BackBtn from "./BackBtn";
 
 type Classes =
@@ -19,7 +19,7 @@ type Props = {
 
   Amount: (props: { amount: number | string; classes?: string }) => ReactNode;
   onBack(): void;
-  frequency?: DonationIntent.Frequency;
+  frequency?: Frequency;
   classes?: Classes;
   children?: ReactNode;
   preSplitContent?: ReactNode;

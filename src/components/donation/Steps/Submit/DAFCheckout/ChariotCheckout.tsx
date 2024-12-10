@@ -1,3 +1,4 @@
+import type { DonationIntent } from "@better-giving/donation/intent";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ContentLoader from "components/ContentLoader";
 import Prompt from "components/Prompt";
@@ -276,14 +277,17 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               const { postalCode, line1, line2, city, state } = grantor.address;
 
-              await createGrant({
-                transactionId: workflowSessionId,
-                amount: adjusted.amount,
-                tipAmount: adjusted.tip,
-                feeAllowance: adjusted.feeAllowance,
-                currency: props.details.currency.code,
-                endowmentId: props.init.recipient.id,
-                splitLiq: 0,
+              const intent: DonationIntent = {
+                frequency: "one-time",
+                viaId: workflowSessionId,
+                viaName: "",
+                amount: {
+                  currency: props.details.currency.code,
+                  amount: adjusted.amount,
+                  tip: adjusted.tip,
+                  feeAllowance: adjusted.feeAllowance,
+                },
+                recipient: props.init.recipient.id,
                 donor: toDonor({
                   title: initDonorTitleOption,
                   email: grantor.email,
@@ -296,17 +300,25 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                   ukTaxResident: meta.ukTaxResident,
                 }),
                 source: props.init.source,
-                ...(props.details.program.value && {
-                  programId: props.details.program.value,
-                  programName: props.details.program.label,
-                }),
-                ...(meta.honoraryFullName && {
-                  inHonorOf: meta.honoraryFullName,
-                  tributeNotif: meta.withTributeNotif
-                    ? meta.tributeNotif
-                    : undefined,
-                }),
-              }).unwrap();
+              };
+
+              if (props.details.program.value) {
+                intent.program = {
+                  id: props.details.program.value,
+                  name: props.details.program.label,
+                };
+              }
+
+              if (meta.honoraryFullName) {
+                intent.tribute = {
+                  fullName: meta.honoraryFullName,
+                };
+                if (meta.withTributeNotif) {
+                  intent.tribute.notif = meta.tributeNotif;
+                }
+              }
+
+              await createGrant(intent).unwrap();
 
               setModalOption("isDismissible", true);
               closeModal();

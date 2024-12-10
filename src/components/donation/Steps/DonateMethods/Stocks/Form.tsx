@@ -87,7 +87,7 @@ export default function Form(props: StockFormStep) {
       {(props.init.recipient.progDonationsAllowed ?? true) && (
         <ProgramSelector
           classes="mt-6 mb-4"
-          endowId={props.init.recipient.id}
+          endowId={+props.init.recipient.id}
           program={program.value}
           onChange={program.onChange}
         />

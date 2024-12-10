@@ -1,5 +1,5 @@
+import type { Donor } from "@better-giving/donation/intent";
 import type { DonateMethodId } from "@better-giving/endowment";
-import type { Donor } from "types/aws";
 import type {
   DetailedCurrency,
   OptionType,
@@ -94,13 +94,13 @@ export const toDonor = (fv: FormDonor): Donor => {
     lastName: fv.lastName,
     address: fv.ukTaxResident
       ? {
-          streetAddress: fv.streetAddress,
+          street: fv.streetAddress,
           city: "",
           zipCode: fv.zipCode,
           country: "United Kingdom",
+          ukGiftAid: fv.ukTaxResident,
         }
       : undefined,
-    ukGiftAid: fv.ukTaxResident,
   };
 };
 

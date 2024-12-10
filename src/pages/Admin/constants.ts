@@ -4,6 +4,7 @@ import {
   Blocks,
   CircleDollarSign,
   CircleUserRound,
+  Heart,
   Image,
   LayoutDashboard,
   ListCheck,
@@ -104,6 +105,14 @@ const linkGroup3: LinkGroup = {
       icon: {
         fn: Blocks,
         size: 25,
+      },
+    },
+    {
+      title: "Fundraisers",
+      to: sidebarRoutes.funds,
+      icon: {
+        fn: Heart,
+        size: 21,
       },
     },
   ],
