@@ -111,7 +111,7 @@ export const mediaRoutes: RouteObject[] = [
     loader: allVideos,
     action: videosAction,
     children: [
-      { path: "new", element: <VideoEditor /> },
+      { path: "new", element: <VideoEditor />, action: newAction },
       { path: ":mediaId", element: <VideoEditor />, action: editAction },
     ],
   },
