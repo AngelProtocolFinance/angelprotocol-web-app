@@ -4,32 +4,39 @@ import { GENERIC_ERROR_MESSAGE } from "constants/common";
 import { APP_NAME } from "constants/env";
 import { appRoutes, regRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
+import { useErrorContext } from "contexts/ErrorContext";
 import { storeRegistrationReference } from "helpers";
 import { useRendered } from "hooks/use-rendered";
 import { CircleCheck } from "lucide-react";
-import { useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useNewApplicationQuery } from "services/aws/registration";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useNewApplicationMutation } from "services/aws/registration";
 import { steps } from "./routes";
 
 export function Component() {
-  const { email } = useAuthenticatedUser();
-  const { state } = useLocation();
   useRendered();
+  const { email } = useAuthenticatedUser();
+  const { handleError } = useErrorContext();
+  const navigate = useNavigate();
+  const { state } = useLocation();
   const claim = state as EndowClaim | null;
-  const {
-    data: reg,
-    isLoading,
-    isError,
-  } = useNewApplicationQuery({
-    registrant_id: email,
-    claim: claim ?? undefined,
-  });
 
-  useEffect(() => {
-    if (!reg) return;
-    storeRegistrationReference(reg.id);
-  }, [reg]);
+  const [createNewApplication, { isLoading, isError }] =
+    useNewApplicationMutation();
+
+  async function proceed() {
+    try {
+      const reg = await createNewApplication({
+        registrant_id: email,
+        claim: claim ?? undefined,
+      }).unwrap();
+      storeRegistrationReference(reg.id);
+      navigate(`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`, {
+        state: reg,
+      });
+    } catch (err) {
+      handleError(err, { context: "Creating registration" });
+    }
+  }
 
   return (
     <div className="grid justify-items-center mx-6">
@@ -41,16 +48,16 @@ export function Component() {
         Your fundraising profile & account are just few steps away 😇
       </p>
 
-      <Link
-        aria-disabled={isLoading || isError || !reg}
+      <button
+        type="button"
+        onClick={proceed}
+        disabled={isLoading}
         className="w-full max-w-[26.25rem] btn-blue btn-reg"
-        to={`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`}
-        state={reg}
       >
         <LoadText isLoading={isLoading} text="Continue registration">
           Continue registration
         </LoadText>
-      </Link>
+      </button>
       {isError && (
         <span className="text-xs text-red mt-2 text-center">
           {GENERIC_ERROR_MESSAGE}
