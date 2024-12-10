@@ -1,12 +1,12 @@
 import { logger } from "helpers";
 import { useEffect, useRef } from "react";
-import { Link, useRouteError } from "react-router-dom";
+import { useRouteError } from "react-router-dom";
 import DefaultFallback from "./DefaultFallback";
 
 export function ErrorElement() {
   const error = useRouteError();
 
-  const elementRef = useRef<HTMLAnchorElement>(null);
+  const elementRef = useRef<HTMLButtonElement>(null);
 
   //biome-ignore lint: log onmount only
   useEffect(() => {
@@ -21,13 +21,15 @@ export function ErrorElement() {
   return (
     <DefaultFallback
       acknowledger={
-        <Link
+        <button
           ref={elementRef}
-          to="."
+          onClick={() => {
+            window.location.reload();
+          }}
           className="border border-gray-l4 rounded-lg px-6 py-2"
         >
           OK
-        </Link>
+        </button>
       }
     />
   );
