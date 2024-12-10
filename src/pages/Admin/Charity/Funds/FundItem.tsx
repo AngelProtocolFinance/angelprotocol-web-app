@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { expires } from "helpers/fundraiser";
+import { status as statusFn } from "helpers/fundraiser";
 import { LoaderCircle, Split } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useOptOutMutation } from "services/aws/endow-funds";
@@ -15,8 +15,11 @@ export const FundItem = (
   props: TFundItem & { endowId: number; isSelf: boolean }
 ) => {
   const user = useAuthenticatedUser();
-  const [expired, expiresIn] = expires(props.expiration);
-  const isActive = !expired && props.active;
+  const status = statusFn(
+    props.expiration,
+    props.active,
+    props.donation_total_usd
+  );
   const isEditor =
     user.funds.includes(props.id) || user.endowments.includes(props.endowId);
   const [optOut, { isLoading: isOptingOut }] = useOptOutMutation();
@@ -31,18 +34,15 @@ export const FundItem = (
           width={50}
           className="object-cover aspect-square rounded-full"
         />
-        <div className="grid justify-items-end">
-          <span
-            className={`ml-1 relative bottom-px uppercase text-2xs rounded-full px-3 py-0.5 ${
-              isActive ? "text-green bg-green-l4" : "text-red bg-red-l4"
-            }`}
-          >
-            {isActive ? "active" : "closed"}
-          </span>
-          {expiresIn && (
-            <div className="text-xs text-navy-l4 mt-1">{expiresIn}</div>
-          )}
-        </div>
+        {status.text && (
+          <div className="grid justify-items-end">
+            <span
+              className={`ml-1 relative bottom-px uppercase text-2xs rounded-full px-3 py-0.5 ${status.text?.bg} ${status.text?.fore}`}
+            >
+              {status.text.val}
+            </span>
+          </div>
+        )}
       </div>
 
       <Link
@@ -71,7 +71,7 @@ export const FundItem = (
         {!props.isSelf ? (
           <button
             className="font-heading bg-amber enabled:hover:bg-amber-d1 text-white rounded-full px-4 py-2 text-xs flex items-center gap-1 disabled:bg-gray-l1"
-            disabled={isOptingOut}
+            disabled={isOptingOut || !props.active}
             type="button"
             onClick={async () => {
               console.log(props.id);
@@ -102,7 +102,7 @@ export const FundItem = (
           <div data-placeholder />
         )}
         <Link
-          aria-disabled={!isActive || !isEditor}
+          aria-disabled={!status.active}
           className={`btn btn-blue rounded-full text-xs px-6 py-2 ${
             isEditor ? "" : "invisible"
           }`}

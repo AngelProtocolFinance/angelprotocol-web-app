@@ -2,10 +2,49 @@ import { formatDistance } from "date-fns";
 
 const MAX_DATE = "9999-12-31T23:59:59Z";
 
-export const expires = (input: string): [boolean, string | undefined] => {
-  if (input === MAX_DATE) return [false, undefined];
-  const now = new Date();
-  if (now.toISOString() > input) return [true, undefined];
+interface Return {
+  active: boolean;
+  text?: {
+    val: string;
+    fore: string;
+    bg: string;
+  };
+}
 
-  return [false, `ends in ${formatDistance(new Date(input), now)}`];
+export const status = (
+  expiry: string,
+  active: boolean,
+  progress: number
+): Return => {
+  if (!active)
+    return {
+      active: false,
+      text: {
+        val: "closed",
+        fore: "text-red",
+        bg: "bg-red-l4",
+      },
+    };
+
+  if (expiry === MAX_DATE) return { active: true };
+
+  const now = new Date();
+  if (now.toISOString() > expiry)
+    return {
+      active: false,
+      text: {
+        val: progress ? "completed" : "expired",
+        fore: "text-green",
+        bg: "bg-green-l4",
+      },
+    };
+
+  return {
+    active: true,
+    text: {
+      val: `ends in ${formatDistance(new Date(expiry), now)}`,
+      fore: "",
+      bg: "",
+    },
+  };
 };
