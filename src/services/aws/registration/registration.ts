@@ -10,7 +10,7 @@ import { aws } from "../aws";
 
 const registration_api = aws.injectEndpoints({
   endpoints: (builder) => ({
-    newApplication: builder.query<Step1, NewReg>({
+    newApplication: builder.mutation<Step1, NewReg>({
       query: (payload) => ({
         url: `${v(1)}/registrations`,
         method: "POST",
@@ -100,6 +100,6 @@ export const {
 
   //mutations
   useUpdateRegMutation,
-  useNewApplicationQuery,
+  useNewApplicationMutation,
   useSubmitMutation,
 } = registration_api;
