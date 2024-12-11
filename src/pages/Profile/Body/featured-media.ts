@@ -1,15 +1,11 @@
-import type { MediaPage } from "@better-giving/endowment";
-import { ap, ver } from "api/api";
+import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
 import { parse } from "valibot";
 
 export async function featuredMedia(endowIdParam: string | undefined) {
   const id = parse(plusInt, endowIdParam);
 
-  return ap
-    .get<MediaPage>(`${ver(1)}/endowments/${id}/media`, {
-      searchParams: { featured: true },
-    })
-    .json()
-    .then((data) => data.items);
+  return getMedia(id, { featured: true, type: "video" }).then(
+    (data) => data.items
+  );
 }

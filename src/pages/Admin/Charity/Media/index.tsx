@@ -1,5 +1,5 @@
-import type { MediaPage, MediaQueryParamsObj } from "@better-giving/endowment";
-import { ap, toSearch, ver } from "api/api";
+import { ap, ver } from "api/api";
+import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth, redirectToAuth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
@@ -14,14 +14,6 @@ import { parse } from "valibot";
 import Media from "./Media";
 import { VideoEditor, schema } from "./VideoEditor";
 import Videos from "./Videos";
-
-const getMedia = async (endowId: number, params: MediaQueryParamsObj) => {
-  return ap
-    .get<MediaPage>(`${ver(1)}/endowments/${endowId}/media`, {
-      searchParams: toSearch(params),
-    })
-    .json();
-};
 
 export const featuredMedia: LoaderFunction = async ({ params }) => {
   const endowId = parse(plusInt, params.id);
