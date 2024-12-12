@@ -24,7 +24,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
     ? props.spec.type.includes(file.type as any)
       ? URL.createObjectURL(file)
       : ""
-    : props.value.url;
+    : props.value;
 
   const onDrop: DropzoneOptions["onDrop"] = (files: File[]) => {
     const newFile = files[0];
@@ -33,17 +33,11 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
 
     if (!props.spec.type.includes(newFile.type as any)) {
       //don't show cropper, render blank preview
-      return props.onChange({
-        url: "broken preview url",
-        invalidType: "yes" as never,
-      });
+      return props.onChange("invalid-type");
     }
 
     if (props.spec.maxSize && size > props.spec.maxSize) {
-      return props.onChange({
-        url: URL.createObjectURL(newFile),
-        exceedsSize: "yes" as never,
-      });
+      return props.onChange("exceeds-size");
     }
     setFile(newFile);
     setOpenCropper(true);
@@ -116,7 +110,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             </div>
             {
               /** only show controls if new file is uploaded */
-              file && (
+              (file || props.value === "invalid-type") && (
                 <IconButton
                   disabled={props.disabled}
                   onClick={(e) => {

@@ -50,9 +50,9 @@ function FormWithContext(props: Endow & { id: number }) {
     street_address: props.street_address ?? "",
     tagline: props.tagline ?? "",
     url: props.url ?? "",
-    image: { url: props.image ?? "" },
-    logo: { url: props.logo ?? "" },
-    card_img: { url: props.card_img ?? "" },
+    image: props.image ?? "",
+    logo: props.logo ?? "",
+    card_img: props.card_img ?? "",
 
     endow_designation: props.endow_designation
       ? { label: props.endow_designation, value: props.endow_designation }

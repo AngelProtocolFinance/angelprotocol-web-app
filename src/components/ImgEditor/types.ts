@@ -1,28 +1,28 @@
 import type { FieldValues, Path, PathValue } from "react-hook-form";
 import type { Bucket, ImageMIMEType } from "types/lists";
-import {
-  type InferOutput,
-  boolean,
-  never,
-  nonEmpty,
-  object,
-  optional,
-  pipe,
-  string,
-} from "valibot";
+import { nonEmpty, notValue, pipe, string } from "valibot";
 
 type Classes = { container?: string; dropzone?: string };
 
-export const imgOutput = ({ required = false }) =>
-  object({
-    url: required ? pipe(string("required"), nonEmpty("required")) : string(),
-    uploading: optional(boolean()),
-    invalidType: optional(never("invalid type")),
-    exceedsSize: optional(never("exceeds limit")),
-    error: optional(never("failed to upload")),
-  });
+export const errors = {
+  invalidType: "invalid-type",
+  exceedsSize: "exceeds-size",
+  failure: "failure",
+} as const;
 
-export interface ImgOutput extends InferOutput<ReturnType<typeof imgOutput>> {}
+type ImgErr = (typeof errors)[keyof typeof errors];
+
+const requiredStr = pipe(string(), nonEmpty("required"));
+
+export const imgOutput = ({ required = false }) =>
+  pipe(
+    required ? requiredStr : string(),
+    notValue(errors.invalidType, "invalid type"),
+    notValue(errors.exceedsSize, "exceeds limit"),
+    notValue(errors.failure, "failed to upload")
+  );
+
+export type ImgOutput = "loading" | ImgErr | (string & {});
 
 export interface ImgSpec {
   type: ImageMIMEType[];

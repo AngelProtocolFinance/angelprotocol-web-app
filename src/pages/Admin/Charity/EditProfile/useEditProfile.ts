@@ -22,9 +22,9 @@ export default function useEditProfile(id: number, df: DirtyFields) {
     try {
       const update: EndowUpdate & { id: number } = { id };
 
-      if (df.logo) update.logo = fv.logo.url;
-      if (df.image) update.image = fv.image.url;
-      if (df.card_img) update.card_img = fv.card_img.url;
+      if (df.logo) update.logo = fv.logo;
+      if (df.image) update.image = fv.image;
+      if (df.card_img) update.card_img = fv.card_img;
 
       if (df.slug) {
         const result = await endowment({ id: fv.slug });

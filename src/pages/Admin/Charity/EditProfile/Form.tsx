@@ -82,7 +82,11 @@ export default function Form({ initSlug = "", init, id }: Props) {
         <ImgEditor
           bucket="endow-profiles"
           value={rhf.banner.value}
-          onChange={rhf.banner.onChange}
+          onChange={(val) => {
+            rhf.banner.onChange(val);
+            // trigger validation - this opts for onChange validation instead of onSubmit
+            rhf.trigger("image");
+          }}
           onUndo={(e) => {
             e.stopPropagation();
             rhf.resetField("image");
@@ -95,7 +99,10 @@ export default function Form({ initSlug = "", init, id }: Props) {
         <ImgEditor
           bucket="endow-profiles"
           value={rhf.logo.value}
-          onChange={rhf.logo.onChange}
+          onChange={(val) => {
+            rhf.logo.onChange(val);
+            rhf.trigger("logo");
+          }}
           onUndo={(e) => {
             e.stopPropagation();
             rhf.resetField("logo");
@@ -105,7 +112,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
             container: "mb-4",
             dropzone: "w-28 sm:w-48 aspect-square",
           }}
-          error={rhf.errors.logo?.url?.message}
+          error={rhf.errors.logo?.message}
         />
         <Label className="-mb-4">
           Marketplace Card image for your organization
@@ -113,7 +120,10 @@ export default function Form({ initSlug = "", init, id }: Props) {
         <ImgEditor
           bucket="endow-profiles"
           value={rhf.card_img.value}
-          onChange={rhf.card_img.onChange}
+          onChange={(val) => {
+            rhf.banner.onChange(val);
+            rhf.trigger("card_img");
+          }}
           onUndo={(e) => {
             e.stopPropagation();
             rhf.resetField("card_img");
@@ -123,7 +133,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
             container: "mb-4",
             dropzone: "w-full aspect-[2/1]",
           }}
-          error={rhf.errors.card_img?.url?.message}
+          error={rhf.errors.card_img?.message}
         />
         <Label className="-mb-4">Description of your organization</Label>
         <RichText
