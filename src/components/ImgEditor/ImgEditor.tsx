@@ -2,7 +2,8 @@ import { humanize, unpack } from "helpers";
 import { fixedForwardRef } from "helpers/react";
 import { ArrowUpFromLine, Crop, Undo } from "lucide-react";
 import type React from "react";
-import { useDropzone } from "react-dropzone";
+import { useState } from "react";
+import { type DropzoneOptions, useDropzone } from "react-dropzone";
 import {
   type FieldValues,
   type Path,
@@ -10,13 +11,43 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
+import { ImgCropper } from "./ImgCropper";
 import type { ControlledProps, Props } from "./types";
-import useImgEditor from "./useImgEditor";
 
 const BYTES_IN_MB = 1e6;
 
 function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
-  const { handleOpenCropper, onDrop } = useImgEditor(props);
+  const [file, setFile] = useState<File>();
+  const [openCropper, setOpenCropper] = useState(false);
+
+  const preview = file
+    ? props.spec.type.includes(file.type as any)
+      ? URL.createObjectURL(file)
+      : ""
+    : props.value.url;
+
+  const onDrop: DropzoneOptions["onDrop"] = (files: File[]) => {
+    const newFile = files[0];
+    const size = newFile.size;
+    if (!newFile) return;
+
+    if (!props.spec.type.includes(newFile.type as any)) {
+      //don't show cropper, render blank preview
+      return props.onChange({
+        url: "broken preview url",
+        invalidType: "yes" as never,
+      });
+    }
+
+    if (props.spec.maxSize && size > props.spec.maxSize) {
+      return props.onChange({
+        url: URL.createObjectURL(newFile),
+        exceedsSize: "yes" as never,
+      });
+    }
+    setFile(newFile);
+    setOpenCropper(true);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     disabled: props.disabled,
@@ -30,6 +61,20 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
 
   return (
     <div className={`${styles.container} grid grid-rows-[1fr_auto]`}>
+      {file && (
+        <ImgCropper
+          classes={
+            props.spec.rounded ? "[&_.cropper-view-box]:rounded-full" : ""
+          }
+          isOpen={openCropper}
+          input={file}
+          aspect={props.spec.aspect}
+          onSave={(cropped) => {
+            setFile(cropped);
+            setOpenCropper(false);
+          }}
+        />
+      )}
       <div
         data-invalid={!!props.error}
         data-drag={isDragActive}
@@ -44,12 +89,12 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           ref,
         })}
         style={{
-          background: props.value.preview
-            ? `url('${props.value.preview}') center/cover no-repeat`
+          background: preview
+            ? `url('${preview}') center/cover no-repeat`
             : undefined,
         }}
       >
-        {!props.value.preview ? (
+        {!preview ? (
           <div
             className="absolute-center grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none"
             tabIndex={-1}
@@ -71,14 +116,23 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             </div>
             {
               /** only show controls if new file is uploaded */
-              props.value.file && (
-                <IconButton disabled={props.disabled} onClick={props.onUndo}>
+              file && (
+                <IconButton
+                  disabled={props.disabled}
+                  onClick={(e) => {
+                    setFile(undefined);
+                    props.onUndo(e);
+                  }}
+                >
                   <Undo size={18} />
                 </IconButton>
               )
             }
-            {props.value.file && !props.error && (
-              <IconButton onClick={handleOpenCropper} disabled={props.disabled}>
+            {file && !props.error && (
+              <IconButton
+                onClick={() => setOpenCropper(true)}
+                disabled={props.disabled}
+              >
                 <Crop size={16} />
               </IconButton>
             )}
@@ -88,18 +142,17 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
       <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
         <span>
           Valid types are:{" "}
-          {props.accept
+          {props.spec.type
             .map((m) => m.split("/")[1].toUpperCase().replace(/\+xml/gi, ""))
             .join(", ")}
           .{" "}
-          {props.maxSize ? (
+          {props.spec.maxSize ? (
             <>
-              Image should be less than {props.maxSize / BYTES_IN_MB}MB in size.
+              Image should be less than {props.spec.maxSize / BYTES_IN_MB}MB in
+              size.
               <br />
-              {props.value.file?.size
-                ? `Current image size: ${humanize(
-                    props.value.file?.size / BYTES_IN_MB
-                  )}MB.`
+              {file?.size
+                ? `Current image size: ${humanize(file.size / BYTES_IN_MB)}MB.`
                 : ""}
             </>
           ) : (

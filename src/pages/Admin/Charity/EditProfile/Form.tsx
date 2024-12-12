@@ -13,7 +13,7 @@ import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
 import Slug from "./Slug";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
-import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "./schema";
+import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";
 import type { FV } from "./schema";
 import useEditProfile from "./useEditProfile";
 import useRhf from "./useRhf";
@@ -80,62 +80,50 @@ export default function Form({ initSlug = "", init, id }: Props) {
         />
         <Label className="-mb-4">Banner image of your organization</Label>
         <ImgEditor
+          bucket="endow-profiles"
           value={rhf.banner.value}
-          onChange={(img) => {
-            rhf.banner.onChange(img);
-            rhf.trigger("image.file");
-          }}
+          onChange={rhf.banner.onChange}
           onUndo={(e) => {
             e.stopPropagation();
             rhf.resetField("image");
           }}
-          accept={VALID_MIME_TYPES}
-          aspect={[4, 1]}
+          spec={bannerSpec}
           classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
-          maxSize={MAX_SIZE_IN_BYTES}
-          error={rhf.errors.image?.file?.message}
+          error={rhf.errors.image?.message}
         />
         <Label className="-mb-4">Logo of your organization</Label>
         <ImgEditor
+          bucket="endow-profiles"
           value={rhf.logo.value}
-          onChange={(img) => {
-            rhf.logo.onChange(img);
-            rhf.trigger("logo.file");
-          }}
+          onChange={rhf.logo.onChange}
           onUndo={(e) => {
             e.stopPropagation();
             rhf.resetField("logo");
           }}
-          accept={VALID_MIME_TYPES}
-          aspect={[1, 1]}
+          spec={logoSpec}
           classes={{
             container: "mb-4",
             dropzone: "w-28 sm:w-48 aspect-square",
           }}
-          maxSize={MAX_SIZE_IN_BYTES}
-          error={rhf.errors.logo?.file?.message}
+          error={rhf.errors.logo?.url?.message}
         />
         <Label className="-mb-4">
           Marketplace Card image for your organization
         </Label>
         <ImgEditor
+          bucket="endow-profiles"
           value={rhf.card_img.value}
-          onChange={(img) => {
-            rhf.card_img.onChange(img);
-            rhf.trigger("card_img.file");
-          }}
+          onChange={rhf.card_img.onChange}
           onUndo={(e) => {
             e.stopPropagation();
             rhf.resetField("card_img");
           }}
-          accept={VALID_MIME_TYPES}
-          aspect={[2, 1]}
+          spec={cardImgSpec}
           classes={{
             container: "mb-4",
             dropzone: "w-full aspect-[2/1]",
           }}
-          maxSize={MAX_SIZE_IN_BYTES}
-          error={rhf.errors.card_img?.file?.message}
+          error={rhf.errors.card_img?.url?.message}
         />
         <Label className="-mb-4">Description of your organization</Label>
         <RichText
