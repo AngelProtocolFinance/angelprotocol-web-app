@@ -1,5 +1,6 @@
 import { humanize, unpack } from "helpers";
 import { fixedForwardRef } from "helpers/react";
+import { uploadFile } from "helpers/uploadFile";
 import { ArrowUpFromLine, Crop, Undo } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
@@ -18,11 +19,15 @@ const BYTES_IN_MB = 1e6;
 
 function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
   const [file, setFile] = useState<File>();
+  const [cropped, setCropped] = useState<File>();
   const [openCropper, setOpenCropper] = useState(false);
 
-  const preview = file
-    ? props.spec.type.includes(file.type as any)
-      ? URL.createObjectURL(file)
+  console.log(props.value);
+
+  const draft = cropped || file;
+  const preview = draft
+    ? props.spec.type.includes(draft.type as any)
+      ? URL.createObjectURL(draft)
       : ""
     : props.value;
 
@@ -39,6 +44,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
     if (props.spec.maxSize && size > props.spec.maxSize) {
       return props.onChange("exceeds-size");
     }
+
     setFile(newFile);
     setOpenCropper(true);
   };
@@ -50,8 +56,25 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
   });
 
   const styles = unpack(props.classes);
+  const isLoading = props.value === "loading";
+  const overlay = `before:content-[''] before:grid before:place-items-center before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 data-[loading="true"]:before:bg-blue-l5/90 data-[loading="true"]:before:content-['uploading..'] `;
 
-  const overlay = `before:content-[''] before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 `;
+  async function handleSave(cropped: File) {
+    setCropped(cropped);
+    setOpenCropper(false);
+    if (props.spec.maxSize && cropped.size > props.spec.maxSize) {
+      return props.onChange("exceeds-size");
+    }
+
+    try {
+      props.onChange("loading");
+      const obj = await uploadFile(cropped, props.bucket);
+      if (!obj) return props.onChange("failure");
+      props.onChange(obj.publicUrl);
+    } catch (_) {
+      props.onChange("failure");
+    }
+  }
 
   return (
     <div className={`${styles.container} grid grid-rows-[1fr_auto]`}>
@@ -63,16 +86,15 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           isOpen={openCropper}
           input={file}
           aspect={props.spec.aspect}
-          onSave={(cropped) => {
-            setFile(cropped);
-            setOpenCropper(false);
-          }}
+          onSave={handleSave}
+          onClose={() => setOpenCropper(false)}
         />
       )}
       <div
+        data-loading={props.value === "loading"}
         data-invalid={!!props.error}
         data-drag={isDragActive}
-        data-disabled={props.disabled}
+        data-disabled={props.disabled || props.value === "loading"}
         {...getRootProps({
           className: `relative ${overlay} ${styles.dropzone} group rounded border border-gray-l2 border-dashed 
           focus:outline-none focus:ring-2 data-[drag="true"]:ring-2 has-[:active]:ring-2 ring-blue-d1 ring-offset-2 
@@ -110,7 +132,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             </div>
             {
               /** only show controls if new file is uploaded */
-              (file || props.value === "invalid-type") && (
+              (file || props.value === "invalid-type") && !isLoading && (
                 <IconButton
                   disabled={props.disabled}
                   onClick={(e) => {
@@ -124,7 +146,10 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             }
             {file && !props.error && (
               <IconButton
-                onClick={() => setOpenCropper(true)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setOpenCropper(true);
+                }}
                 disabled={props.disabled}
               >
                 <Crop size={16} />

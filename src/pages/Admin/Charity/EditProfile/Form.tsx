@@ -121,7 +121,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
           bucket="endow-profiles"
           value={rhf.card_img.value}
           onChange={(val) => {
-            rhf.banner.onChange(val);
+            rhf.card_img.onChange(val);
             rhf.trigger("card_img");
           }}
           onUndo={(e) => {
