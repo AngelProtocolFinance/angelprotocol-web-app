@@ -4,41 +4,51 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DrawerIcon } from "components/Icon";
-import ImgEditor from "components/ImgEditor/ImgEditor";
-import { RichTextEditor } from "components/RichText";
-import { Field, Label, RhfForm, dateToFormFormat } from "components/form";
-import { useForm } from "react-hook-form";
-import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
-import { schema } from "./schema";
-import type { FV } from "./types";
-import useMustate from "./useMutate";
+import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
+import { RichText } from "components/RichText";
+import {
+  NativeField as Field,
+  Form,
+  Label,
+  dateToFormFormat,
+} from "components/form";
+import { useController, useForm } from "react-hook-form";
+import { MAX_CHARS, imgSpec } from "../common";
+import { type FV, schema } from "./schema";
+import useMutate from "./useMutate";
 
 type Props = TMilestone & { programId: string };
 export default function Milestone(props: Props) {
-  const methods = useForm<FV>({
+  const {
+    register,
+    handleSubmit,
+    formState: { isDirty, isSubmitting, errors },
+    control,
+    trigger,
+    resetField,
+    watch,
+  } = useForm<FV>({
     values: {
-      date: dateToFormFormat(new Date()),
+      date: dateToFormFormat(new Date(props.date)),
       title: props.title,
-      media: {
-        name: "",
-        publicUrl: props.media ?? "",
-        preview: props.media ?? "",
-      },
+      media: props.media ?? "",
       description: { value: props.description ?? "" },
     },
-    resolver: yupResolver(schema),
+    resolver: valibotResolver(schema),
   });
 
-  const {
-    handleSubmit,
-    formState: { isSubmitting, isDirty },
-  } = methods;
-  const { submit, handleDeleteMilestone, isDeletingMilestone } = useMustate(
+  const { field: desc } = useController({ control, name: "description" });
+  const { field: media } = useController({ control, name: "media" });
+
+  const { submit, handleDeleteMilestone, isDeletingMilestone } = useMutate(
     props.id,
     props.programId
   );
+
+  const date = watch("date");
+  console.log({ errors, date });
 
   return (
     <Disclosure
@@ -53,7 +63,7 @@ export default function Milestone(props: Props) {
       </div>
 
       <DisclosurePanel
-        as={RhfForm}
+        as={Form}
         className={({ open }) =>
           `${
             open ? "border-t border-gray-l4" : ""
@@ -61,44 +71,58 @@ export default function Milestone(props: Props) {
         }
         disabled={isSubmitting}
         onSubmit={handleSubmit(submit)}
-        methods={methods}
       >
         <Label className="-mb-4">Image of milestone</Label>
-        <ImgEditor<FV, "media">
-          // resolved T[Path<T>] does not equal to ImgLink though it is the same ??
-          name="media"
-          accept={VALID_MIME_TYPES}
-          aspect={[4, 1]}
+        <ImgEditor
+          value={media.value}
+          onChange={(v) => {
+            media.onChange(v);
+            trigger("media");
+          }}
+          onUndo={(e) => {
+            e.stopPropagation();
+            resetField("media");
+          }}
+          bucket="endow-profiles"
+          spec={imgSpec([4, 1])}
           classes={{
             container: "mb-4",
             dropzone: "w-full @md:aspect-[4/1] h-36 @md:h-auto",
           }}
-          maxSize={MAX_SIZE_IN_BYTES}
+          error={errors.media?.message}
         />
-        <Field<FV, "date">
+        <Field
+          {...register("date")}
           type="date"
           classes={{ input: "date-input uppercase", container: "field-admin" }}
-          name="date"
           label="Date of milestone"
           placeholder="e.g. 2014-09-23"
           required
+          error={errors.date?.message}
         />
-        <Field<FV>
+        <Field
+          {...register("title")}
           classes="field-admin"
-          name="title"
           label="Title of milestone"
           placeholder="e.g. John"
           required
+          error={errors.title?.message}
         />
         <Label className="-mb-4">Description of milestone</Label>
-        <RichTextEditor<FV>
-          fieldName="description"
+        <RichText
+          content={desc.value}
+          onChange={desc.onChange}
+          ref={desc.ref}
           charLimit={MAX_CHARS}
           classes={{
             field:
               "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             counter: "text-navy-l1 dark:text-navy-l2",
           }}
+          error={
+            errors.description?.value?.message ||
+            errors.description?.length?.message
+          }
         />
         <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-between">
           <button

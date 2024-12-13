@@ -3,7 +3,7 @@ import { fixedForwardRef } from "helpers/react";
 import { uploadFile } from "helpers/uploadFile";
 import { ArrowUpFromLine, Crop, Undo } from "lucide-react";
 import type React from "react";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { type DropzoneOptions, useDropzone } from "react-dropzone";
 import {
   type FieldValues,
@@ -19,17 +19,17 @@ const BYTES_IN_MB = 1e6;
 
 function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
   const [file, setFile] = useState<File>();
-  const [cropped, setCropped] = useState<File>();
   const [openCropper, setOpenCropper] = useState(false);
 
-  console.log(props.value);
-
-  const draft = cropped || file;
-  const preview = draft
-    ? props.spec.type.includes(draft.type as any)
-      ? URL.createObjectURL(draft)
-      : ""
-    : props.value;
+  const preview = useMemo(
+    () =>
+      file
+        ? props.spec.type.includes(file.type as any)
+          ? URL.createObjectURL(file)
+          : ""
+        : props.value,
+    [file, props.spec.type, props.value]
+  );
 
   const onDrop: DropzoneOptions["onDrop"] = (files: File[]) => {
     const newFile = files[0];
@@ -57,10 +57,10 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
 
   const styles = unpack(props.classes);
   const isLoading = props.value === "loading";
-  const overlay = `before:content-[''] before:grid before:place-items-center before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 data-[loading="true"]:before:bg-blue-l5/90 data-[loading="true"]:before:content-['uploading..'] `;
+  const overlay = `before:content-[''] before:grid before:place-items-center before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 data-[loading="true"]:before:bg-blue-l5/90 data-[loading="true"]:before:content-['._._.'] before:text-xl before:font-bold `;
 
   async function handleSave(cropped: File) {
-    setCropped(cropped);
+    setFile(cropped);
     setOpenCropper(false);
     if (props.spec.maxSize && cropped.size > props.spec.maxSize) {
       return props.onChange("exceeds-size");

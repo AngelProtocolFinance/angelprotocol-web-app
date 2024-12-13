@@ -1,76 +1,94 @@
 import type { Program } from "@better-giving/endowment";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 import Group from "components/Group";
-import ImgEditor from "components/ImgEditor";
-import { RichTextEditor } from "components/RichText";
-import { Field, Label, RhfForm } from "components/form";
-import { useForm } from "react-hook-form";
-import { MAX_CHARS, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
-import { schema } from "./schema";
-import type { FV } from "./types";
+import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
+import { RichText } from "components/RichText";
+import { NativeField as Field, Form, Label } from "components/form";
+import { useController, useForm } from "react-hook-form";
+import { MAX_CHARS, imgSpec } from "../common";
+import { type FV, schema } from "./schema";
 import useSubmit from "./useSubmit";
 
 export default function ProgramInfo(props: Program) {
-  const methods = useForm<FV>({
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, isDirty, errors },
+    trigger,
+    resetField,
+    control,
+  } = useForm<FV>({
     values: {
       title: props.title,
-      image: {
-        name: "",
-        publicUrl: props.banner ?? "",
-        preview: props.banner ?? "",
-      },
+      image: props.banner ?? "",
       description: { value: props.description },
       targetRaise: props.targetRaise?.toString() ?? "",
     },
-    resolver: yupResolver(schema),
+    resolver: valibotResolver(schema),
   });
-  const {
-    handleSubmit,
-    formState: { isSubmitting, isDirty },
-  } = methods;
+  const { field: image } = useController({ name: "image", control });
+  const { field: desc } = useController({
+    name: "description",
+    control,
+  });
 
   const submit = useSubmit(props);
 
   return (
     <Group title="Program information">
-      <RhfForm
+      <Form
         onSubmit={handleSubmit(submit)}
-        methods={methods}
         disabled={isSubmitting}
         className="contents"
       >
-        <Field<FV>
+        <Field
+          {...register("title")}
           classes="field-admin"
-          name="title"
           label="Title of program"
           required
+          error={errors.title?.message}
         />
         <Label className="-mb-4">Banner image of program</Label>
-        <ImgEditor<FV, "image">
-          name="image"
-          accept={VALID_MIME_TYPES}
-          aspect={[4, 1]}
+        <ImgEditor
+          bucket="endow-profiles"
+          value={image.value}
+          onChange={(v) => {
+            image.onChange(v);
+            trigger("image");
+          }}
+          onUndo={(e) => {
+            e.stopPropagation();
+            resetField("image");
+          }}
+          spec={imgSpec([4, 1])}
           classes={{ container: "mb-4", dropzone: "w-full aspect-[4/1]" }}
-          maxSize={MAX_SIZE_IN_BYTES}
+          error={errors.image?.message}
         />
 
         <Label className="-mb-4" required>
           Description of program
         </Label>
-        <RichTextEditor<FV>
-          fieldName="description"
+        <RichText
+          content={desc.value}
+          onChange={desc.onChange}
+          ref={desc.ref}
           charLimit={MAX_CHARS}
           classes={{
             field:
               "rich-text-toolbar border border-gray-l4 text-sm grid grid-rows-[auto_1fr] rounded bg-gray-l6 dark:bg-blue-d5 p-3 min-h-[15rem]",
             counter: "text-navy-l1 dark:text-navy-l2",
           }}
+          error={
+            errors.description?.value?.message ||
+            errors.description?.length?.message
+          }
         />
-        <Field<FV>
+        <Field
+          {...register("targetRaise")}
           classes="field-admin mb-4"
-          name="targetRaise"
           label="Target amount to raise (USD)"
           placeholder="e.g. $1000"
+          error={errors.targetRaise?.message}
         />
         <button
           disabled={!isDirty}
@@ -79,7 +97,7 @@ export default function ProgramInfo(props: Program) {
         >
           Save changes
         </button>
-      </RhfForm>
+      </Form>
     </Group>
   );
 }

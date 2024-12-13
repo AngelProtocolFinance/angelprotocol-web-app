@@ -59,6 +59,7 @@ export type CurrencyOption = Currency | DetailedCurrency;
  * length as the text is being typed as a separate parameter and use *it* for
  * any validation necessary.
  */
+
 export type RichTextContent = {
   value: string;
   /**
