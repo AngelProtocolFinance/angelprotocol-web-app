@@ -1,17 +1,22 @@
 import { ErrorMessage } from "@hookform/error-message";
 import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import {
+  FileDropzone,
+  type FileOutput,
+  fileOutput,
+} from "components/FileDropzone";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
 import { APIs } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty, logger } from "helpers";
-import { Controller, get, useForm } from "react-hook-form";
+import { Controller, get, useController, useForm } from "react-hook-form";
 import {
   useCreateRecipientMutation,
   useNewRequirementsMutation,
 } from "services/aws/wise";
 import type { Group, ValidationContent } from "types/aws";
-import type { ApplicationMIMEType } from "types/lists";
+import { safeParse } from "valibot";
 import type { IFormButtons, OnSubmit } from "../../types";
 import Form from "./Form";
 
@@ -25,6 +30,10 @@ type Props = {
   FormButtons: IFormButtons;
   onSubmit: OnSubmit;
 };
+
+interface FV extends Record<string, any> {
+  bankStatement: FileOutput;
+}
 
 export default function RecipientDetailsForm({
   fields,
@@ -45,11 +54,22 @@ export default function RecipientDetailsForm({
     setFocus,
     formState: { errors, isSubmitting },
     getFieldState,
-  } = useForm({ disabled, shouldUnregister: true });
+  } = useForm<FV>({ disabled, shouldUnregister: true });
 
   const { handleError, displayError } = useErrorContext();
   const [updateRequirements] = useNewRequirementsMutation();
   const [createRecipient] = useCreateRecipientMutation();
+
+  const { field: bankStatement } = useController({
+    control,
+    name: "bankStatement",
+    rules: {
+      validate(value?: string) {
+        const val = safeParse(fileOutput({ required: true }), value);
+        return val.issues?.[0].message ?? true;
+      },
+    },
+  });
 
   async function refresh() {
     const { accountHolderName, bankStatement: _, ...details } = getValues();
@@ -87,10 +107,7 @@ export default function RecipientDetailsForm({
             details,
           });
 
-          if (res.data) {
-            const file = (bankStatement as FileList).item(0)!;
-            return await onSubmit(res.data, file);
-          }
+          if (res.data) return await onSubmit(res.data, bankStatement);
 
           //ERROR handling
           const error = res.error as FetchBaseQueryError;
@@ -137,23 +154,21 @@ export default function RecipientDetailsForm({
                   required: f.required ? "required" : false,
                 }}
                 render={({ field: { name, value, onChange, ref } }) => (
-                  <>
-                    <NativeSelect
-                      aria-invalid={!!get(errors, name)?.message}
-                      id={name}
-                      onChange={(value) => {
-                        onChange(value);
-                        if (f.refreshRequirementsOnChange) refresh();
-                      }}
-                      options={f.valuesAllowed?.map((v) => ({
-                        label: v.name,
-                        value: v.key,
-                      }))}
-                      ref={ref}
-                      value={value}
-                      classes={{ options: "text-sm" }}
-                    />
-                  </>
+                  <NativeSelect
+                    aria-invalid={!!get(errors, name)?.message}
+                    id={name}
+                    onChange={(value) => {
+                      onChange(value);
+                      if (f.refreshRequirementsOnChange) refresh();
+                    }}
+                    options={f.valuesAllowed?.map((v) => ({
+                      label: v.name,
+                      value: v.key,
+                    }))}
+                    ref={ref}
+                    value={value}
+                    classes={{ options: "text-sm" }}
+                  />
                 )}
               />
               <ErrorMessage name={f.key} errors={errors} as="p" data-error />
@@ -297,42 +312,25 @@ export default function RecipientDetailsForm({
         );
       })}
 
-      <div className="field">
-        <Label htmlFor="bank__statement" required>
-          Bank statement
-        </Label>
-        <input
-          aria-invalid={!!getFieldState("bankStatement").error}
-          id="bank__statement"
-          type="file"
-          // `!py-0 !pl-0` removes padding added by `field > field-input`
-          className="!py-0 !pl-0 file:border-none file:border-r file:border-gray-l4 file:py-3.5 file:px-4 file:bg-blue-l4 file:text-navy-d4 text-navy-l1"
-          {...register("bankStatement", {
-            validate(value?: FileList) {
-              //multile:false
-              const file = value?.item(0);
-              //required: is already handled
-              if (!file) return "required";
+      <FileDropzone
+        label={
+          <Label htmlFor="bank__statement" required className="mb-2">
+            Bank statement
+          </Label>
+        }
+        specs={{ mbLimit: 6, mimeTypes: ["application/pdf"] }}
+        bucket="endow-reg"
+        disabled={disabled}
+        ref={bankStatement.ref}
+        value={bankStatement.value}
+        onChange={bankStatement.onChange}
+        error={errors.bankStatement?.message?.toString()}
+      />
 
-              const VALID_TYPE: ApplicationMIMEType = "application/pdf";
-              if (file.type !== VALID_TYPE) {
-                return "must be PDF file";
-              }
-
-              const MB_LIMIT = 6;
-              if (file.size >= Math.pow(10, MB_LIMIT)) {
-                return `exceeds ${MB_LIMIT}MB`;
-              }
-
-              return true;
-            },
-          })}
-        />
-
-        <ErrorMessage as="p" data-error errors={errors} name="bankStatement" />
-      </div>
-
-      <FormButtons disabled={disabled} isSubmitting={isSubmitting} />
+      <FormButtons
+        disabled={disabled || bankStatement.value === "loading"}
+        isSubmitting={isSubmitting}
+      />
     </Form>
   );
 }

@@ -2,7 +2,6 @@ import type { EndowUpdate } from "@better-giving/endowment";
 import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { uploadFile } from "helpers/uploadFile";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
 import {
   useEditEndowmentMutation,
@@ -23,21 +22,9 @@ export default function useEditProfile(id: number, df: DirtyFields) {
     try {
       const update: EndowUpdate & { id: number } = { id };
 
-      if (df.logo && fv.logo.file) {
-        const obj = await uploadFile(fv.logo.file, "endow-profiles");
-        if (!obj) return displayError("Failed to upload logo");
-        update.logo = obj.publicUrl;
-      }
-      if (df.image && fv.image.file) {
-        const obj = await uploadFile(fv.image.file, "endow-profiles");
-        if (!obj) return displayError("Failed to upload image");
-        update.image = obj.publicUrl;
-      }
-      if (df.card_img && fv.card_img.file) {
-        const obj = await uploadFile(fv.card_img.file, "endow-profiles");
-        if (!obj) return displayError("Failed to upload card image");
-        update.card_img = obj.publicUrl;
-      }
+      if (df.logo) update.logo = fv.logo;
+      if (df.image) update.image = fv.image;
+      if (df.card_img) update.card_img = fv.card_img;
 
       if (df.slug) {
         const result = await endowment({ id: fv.slug });

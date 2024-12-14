@@ -1,8 +1,10 @@
-import { humanize, unpack } from "helpers";
+import { humanize, logger, unpack } from "helpers";
 import { fixedForwardRef } from "helpers/react";
+import { uploadFile } from "helpers/uploadFile";
 import { ArrowUpFromLine, Crop, Undo } from "lucide-react";
 import type React from "react";
-import { useDropzone } from "react-dropzone";
+import { useMemo, useState } from "react";
+import { type DropzoneOptions, useDropzone } from "react-dropzone";
 import {
   type FieldValues,
   type Path,
@@ -10,13 +12,42 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
+import { ImgCropper } from "./ImgCropper";
 import type { ControlledProps, Props } from "./types";
-import useImgEditor from "./useImgEditor";
 
 const BYTES_IN_MB = 1e6;
 
 function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
-  const { handleOpenCropper, onDrop } = useImgEditor(props);
+  const [file, setFile] = useState<File>();
+  const [openCropper, setOpenCropper] = useState(false);
+
+  const preview = useMemo(
+    () =>
+      file
+        ? props.spec.type.includes(file.type as any)
+          ? URL.createObjectURL(file)
+          : ""
+        : props.value,
+    [file, props.spec.type, props.value]
+  );
+
+  const onDrop: DropzoneOptions["onDrop"] = (files: File[]) => {
+    const newFile = files[0];
+    const size = newFile.size;
+    if (!newFile) return;
+
+    if (!props.spec.type.includes(newFile.type as any)) {
+      //don't show cropper, render blank preview
+      return props.onChange("invalid-type");
+    }
+
+    if (props.spec.maxSize && size > props.spec.maxSize) {
+      return props.onChange("exceeds-size");
+    }
+
+    setFile(newFile);
+    setOpenCropper(true);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     disabled: props.disabled,
@@ -25,15 +56,45 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
   });
 
   const styles = unpack(props.classes);
+  const isLoading = props.value === "loading";
+  const overlay = `before:content-[''] before:grid before:place-items-center before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 data-[loading="true"]:before:bg-blue-l5/90 data-[loading="true"]:before:content-['._._.'] before:text-xl before:font-bold `;
 
-  const overlay = `before:content-[''] before:absolute before:inset-0 data-[drag="true"]:before:bg-blue-l5 `;
+  async function handleSave(cropped: File) {
+    setFile(cropped);
+    setOpenCropper(false);
+    if (props.spec.maxSize && cropped.size > props.spec.maxSize) {
+      return props.onChange("exceeds-size");
+    }
+
+    try {
+      props.onChange("loading");
+      const url = await uploadFile(cropped, props.bucket);
+      return props.onChange(url);
+    } catch (err) {
+      logger.error(err);
+      props.onChange("failure");
+    }
+  }
 
   return (
     <div className={`${styles.container} grid grid-rows-[1fr_auto]`}>
+      {file && (
+        <ImgCropper
+          classes={
+            props.spec.rounded ? "[&_.cropper-view-box]:rounded-full" : ""
+          }
+          isOpen={openCropper}
+          input={file}
+          aspect={props.spec.aspect}
+          onSave={handleSave}
+          onClose={() => setOpenCropper(false)}
+        />
+      )}
       <div
+        data-loading={props.value === "loading"}
         data-invalid={!!props.error}
         data-drag={isDragActive}
-        data-disabled={props.disabled}
+        data-disabled={props.disabled || props.value === "loading"}
         {...getRootProps({
           className: `relative ${overlay} ${styles.dropzone} group rounded border border-gray-l2 border-dashed 
           focus:outline-none focus:ring-2 data-[drag="true"]:ring-2 has-[:active]:ring-2 ring-blue-d1 ring-offset-2 
@@ -44,12 +105,12 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           ref,
         })}
         style={{
-          background: props.value.preview
-            ? `url('${props.value.preview}') center/cover no-repeat`
+          background: preview
+            ? `url('${preview}') center/cover no-repeat`
             : undefined,
         }}
       >
-        {!props.value.preview ? (
+        {!preview ? (
           <div
             className="absolute-center grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none"
             tabIndex={-1}
@@ -71,14 +132,26 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             </div>
             {
               /** only show controls if new file is uploaded */
-              props.value.file && (
-                <IconButton disabled={props.disabled} onClick={props.onUndo}>
+              (file || props.value === "invalid-type") && !isLoading && (
+                <IconButton
+                  disabled={props.disabled}
+                  onClick={(e) => {
+                    setFile(undefined);
+                    props.onUndo(e);
+                  }}
+                >
                   <Undo size={18} />
                 </IconButton>
               )
             }
-            {props.value.file && !props.error && (
-              <IconButton onClick={handleOpenCropper} disabled={props.disabled}>
+            {file && !props.error && (
+              <IconButton
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setOpenCropper(true);
+                }}
+                disabled={props.disabled}
+              >
                 <Crop size={16} />
               </IconButton>
             )}
@@ -88,18 +161,17 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
       <p className="text-xs text-navy-l1 dark:text-navy-l2 mt-2">
         <span>
           Valid types are:{" "}
-          {props.accept
+          {props.spec.type
             .map((m) => m.split("/")[1].toUpperCase().replace(/\+xml/gi, ""))
             .join(", ")}
           .{" "}
-          {props.maxSize ? (
+          {props.spec.maxSize ? (
             <>
-              Image should be less than {props.maxSize / BYTES_IN_MB}MB in size.
+              Image should be less than {props.spec.maxSize / BYTES_IN_MB}MB in
+              size.
               <br />
-              {props.value.file?.size
-                ? `Current image size: ${humanize(
-                    props.value.file?.size / BYTES_IN_MB
-                  )}MB.`
+              {file?.size
+                ? `Current image size: ${humanize(file.size / BYTES_IN_MB)}MB.`
                 : ""}
             </>
           ) : (

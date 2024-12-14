@@ -10,5 +10,6 @@ export type IFormButtons = ComponentType<FormButtonsProps>;
 
 export type OnSubmit = (
   recipient: V1RecipientAccount,
-  bankStatementFile: File
+  /** uploaded url */
+  bankStatementFile: string
 ) => Promise<void>;

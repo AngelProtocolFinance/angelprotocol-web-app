@@ -1,6 +1,6 @@
 import { isIrs501c3 } from "@better-giving/registration/models";
 import { useRegState, withStepGuard } from "../StepGuard";
-import FSADocumentation from "./FSA";
+import { FsaDocumentation } from "./FSA";
 import NonFSA from "./NonFSA";
 
 function Documentation() {
@@ -8,7 +8,7 @@ function Documentation() {
 
   //documentation is previously completed
   if (data.docs && !isIrs501c3(data.docs)) {
-    return <FSADocumentation doc={data.docs} />;
+    return <FsaDocumentation doc={data.docs} />;
   }
 
   if (data.docs && isIrs501c3(data.docs)) {
@@ -20,7 +20,7 @@ function Documentation() {
     return <NonFSA doc={undefined} />;
   }
 
-  return <FSADocumentation doc={undefined} />;
+  return <FsaDocumentation doc={undefined} />;
 }
 
 export default withStepGuard(Documentation);

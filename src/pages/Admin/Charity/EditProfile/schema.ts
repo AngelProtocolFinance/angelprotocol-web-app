@@ -7,6 +7,7 @@ import {
   str,
   unSdgNum,
 } from "@better-giving/endowment/schema";
+import { type ImgSpec, imgOutput } from "components/ImgEditor";
 import type { ImageMIMEType } from "types/lists";
 import * as v from "valibot";
 
@@ -17,35 +18,31 @@ export const VALID_MIME_TYPES: ImageMIMEType[] = [
   "image/svg+xml",
 ];
 
-export const MAX_SIZE_IN_BYTES = 1e6;
 export const MAX_CHARS = 4000;
 
-const requiredStr = v.pipe(str, v.nonEmpty("required"));
+export const logoSpec: ImgSpec = {
+  type: VALID_MIME_TYPES,
+  aspect: [1, 1],
+  maxSize: 1e6,
+};
+export const cardImgSpec: ImgSpec = {
+  type: VALID_MIME_TYPES,
+  aspect: [2, 1],
+  maxSize: 1e6,
+};
+export const bannerSpec: ImgSpec = {
+  type: VALID_MIME_TYPES,
+  aspect: [4, 1],
+  maxSize: 1e6,
+};
 
-/** not set by user */
-const fileObject = v.object({
-  name: str,
-  publicUrl: str,
-});
+const requiredStr = v.pipe(str, v.nonEmpty("required"));
 
 /** not set by user */
 const country = v.object({
   name: requiredStr,
   code: requiredStr,
   flag: str,
-});
-
-export const imgLink = v.object({
-  file: v.optional(
-    v.pipe(
-      v.file("invalid file"),
-      v.mimeType(VALID_MIME_TYPES, "invalid type"),
-      v.maxSize(MAX_SIZE_IN_BYTES, "exceeds size limit")
-    )
-  ),
-  /** not set by user */
-  preview: str,
-  ...fileObject.entries,
 });
 
 const sdgs = v.array(
@@ -73,9 +70,9 @@ export const schema = v.object({
     ),
   }),
   tagline: v.pipe(requiredStr, v.maxLength(140, "max length is 140 chars")),
-  image: imgLink,
-  logo: imgLink,
-  card_img: imgLink,
+  image: imgOutput({ required: true }),
+  logo: imgOutput({ required: true }),
+  card_img: imgOutput({ required: true }),
   hq_country: country,
   active_in_countries: v.array(
     v.object({ label: requiredStr, value: requiredStr })

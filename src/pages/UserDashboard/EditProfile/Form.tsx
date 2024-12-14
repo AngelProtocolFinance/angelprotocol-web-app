@@ -5,17 +5,16 @@ import { NativeField as Field, Label, Form as _Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { cleanObject } from "helpers/cleanObject";
-import { uploadFile } from "helpers/uploadFile";
 import { useEditUserMutation } from "services/aws/users";
 import { updateUserAttributes } from "slices/auth";
 import { useSetter } from "store/accessors";
 import type { UserAttributes } from "types/aws";
 import type { Props } from "./types";
-import { AVATAR_MAX_SIZE_BYTES, AVATAR_MIME_TYPE, useRhf } from "./useRhf";
+import { avatarSpec, useRhf } from "./useRhf";
 
 export default function Form(props: Props) {
   const dispatch = useSetter();
-  const { handleError, displayError } = useErrorContext();
+  const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
   const [editUser] = useEditUserMutation();
 
@@ -30,20 +29,11 @@ export default function Form(props: Props) {
       }}
       onSubmit={rhf.handleSubmit(async (fv) => {
         try {
-          let avatar = fv.avatar.publicUrl;
-          if (fv.avatar.file) {
-            const obj = await uploadFile(fv.avatar.file, "bg-user");
-            if (!obj) {
-              return displayError("Failed to upload avatar");
-            }
-            avatar = obj.publicUrl;
-          }
-
           const update: Required<UserAttributes> = {
             givenName: fv.firstName,
             familyName: fv.lastName,
             prefCurrencyCode: fv.prefCurrency.code,
-            avatarUrl: avatar,
+            avatarUrl: fv.avatar,
           };
           const updated = await editUser({
             ...cleanObject(update),
@@ -64,24 +54,22 @@ export default function Form(props: Props) {
 
       <Label className="text-base font-medium mb-2">Avatar</Label>
       <ImgEditor
-        rounded
+        bucket="bg-user"
+        spec={avatarSpec}
         value={rhf.avatar.value}
         onChange={(v) => {
           rhf.avatar.onChange(v);
-          rhf.trigger("avatar.file");
+          rhf.trigger("avatar");
         }}
         onUndo={(e) => {
           e.stopPropagation();
           rhf.resetField("avatar");
         }}
-        accept={AVATAR_MIME_TYPE}
-        aspect={[1, 1]}
         classes={{
           container: "mb-4",
           dropzone: "w-60 aspect-[1/1] rounded-full",
         }}
-        maxSize={AVATAR_MAX_SIZE_BYTES}
-        error={rhf.errors.avatar?.file?.message}
+        error={rhf.errors.avatar?.message}
       />
 
       <CurrencySelector
