@@ -1,2 +1,2 @@
-export { default } from "./FileDropzone";
-export { asset } from "./helpers";
+export { FileDropzone } from "./FileDropzone";
+export * from "./types";

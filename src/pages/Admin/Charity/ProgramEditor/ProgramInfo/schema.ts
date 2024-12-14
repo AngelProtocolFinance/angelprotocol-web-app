@@ -14,7 +14,7 @@ export const schema = v.object({
       )
     ),
   }),
-  image: imgOutput({ required: false }),
+  image: imgOutput(),
   targetRaise: v.lazy((val) => {
     if (val === "") return v.string();
     return v.pipe(

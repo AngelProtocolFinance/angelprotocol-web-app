@@ -1,21 +1,13 @@
-import { ErrorMessage } from "@hookform/error-message";
 import ExtLink from "components/ExtLink";
-import { isEmpty } from "helpers";
-import { ArrowUpFromLine } from "lucide-react";
-import type { FileDropzoneAsset } from "types/components";
+import { toFileName } from "helpers/uploadFile";
+import { ArrowUpFromLine, LoaderCircle } from "lucide-react";
 
-const filesKey: keyof FileDropzoneAsset = "files";
+interface Props {
+  value?: string | File;
+}
 
-export default function DropzoneText({
-  formErrors,
-  fieldName,
-  files,
-  previews,
-}: FileDropzoneAsset & { fieldName: string; formErrors: any }) {
-  const isFilesEmpty = isEmpty(files);
-  const isPreviewsEmpty = isEmpty(previews);
-
-  if (isFilesEmpty && isPreviewsEmpty) {
+export default function DropzoneText({ value }: Props) {
+  if (value == null || value === "") {
     return (
       <div className="grid justify-items-center text-sm text-navy-l1 dark:text-navy-l2 select-none">
         <ArrowUpFromLine size={20} className="mb-[1.125rem]" />
@@ -24,37 +16,26 @@ export default function DropzoneText({
       </div>
     );
   }
-
-  if (isFilesEmpty) {
+  if (value === "loading") {
     return (
-      <div>
-        {previews.map(({ name, publicUrl }) => (
-          <ExtLink
-            onClickCapture={(ev) => ev.stopPropagation()}
-            key={name}
-            href={publicUrl}
-            className="text-sm block text-blue hover:text-blue-l1"
-          >
-            {name}
-          </ExtLink>
-        ))}
+      <div className="grid place-items-center">
+        <LoaderCircle className="text-navy-l1 animate-spin" />
       </div>
     );
   }
 
+  if (value instanceof File) {
+    return (
+      <p className="text-sm block text-blue hover:text-blue-l1">{value.name}</p>
+    );
+  }
   return (
-    <div>
-      {files.map(({ name }, i) => (
-        <p key={name}>
-          <label className="text-sm">{name}</label>
-          <ErrorMessage
-            errors={formErrors}
-            name={`${fieldName}.${filesKey}.${i}`}
-            as="span"
-            className="text-red dark:text-red-l2 text-xs before:content-['-'] before:mx-1"
-          />
-        </p>
-      ))}
-    </div>
+    <ExtLink
+      onClickCapture={(ev) => ev.stopPropagation()}
+      href={value}
+      className="text-sm block text-blue hover:text-blue-l1"
+    >
+      {toFileName(value) || value}
+    </ExtLink>
   );
 }

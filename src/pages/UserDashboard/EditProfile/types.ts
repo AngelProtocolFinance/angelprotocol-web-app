@@ -12,7 +12,7 @@ export const schema = v.object({
     min: v.number(),
     rate: v.number(),
   }),
-  avatar: imgOutput({ required: false }),
+  avatar: imgOutput(),
 });
 
 export interface FV extends v.InferOutput<typeof schema> {}

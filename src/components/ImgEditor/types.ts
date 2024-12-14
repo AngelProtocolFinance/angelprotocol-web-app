@@ -14,7 +14,7 @@ type ImgErr = (typeof errors)[keyof typeof errors];
 
 const requiredStr = pipe(string(), nonEmpty("required"));
 
-export const imgOutput = ({ required = false }) =>
+export const imgOutput = ({ required = false } = {}) =>
   pipe(
     required ? requiredStr : string(),
     notValue(errors.invalidType, "invalid type"),

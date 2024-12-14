@@ -20,7 +20,7 @@ export const schema = v.object({
     ),
   }),
   title: requiredStr,
-  media: imgOutput({ required: false }),
+  media: imgOutput(),
 });
 
 export interface FV extends v.InferOutput<typeof schema> {}

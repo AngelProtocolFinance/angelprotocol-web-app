@@ -1,4 +1,4 @@
-import { humanize, unpack } from "helpers";
+import { humanize, logger, unpack } from "helpers";
 import { fixedForwardRef } from "helpers/react";
 import { uploadFile } from "helpers/uploadFile";
 import { ArrowUpFromLine, Crop, Undo } from "lucide-react";
@@ -68,10 +68,10 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
 
     try {
       props.onChange("loading");
-      const obj = await uploadFile(cropped, props.bucket);
-      if (!obj) return props.onChange("failure");
-      props.onChange(obj.publicUrl);
-    } catch (_) {
+      const url = await uploadFile(cropped, props.bucket);
+      return props.onChange(url);
+    } catch (err) {
+      logger.error(err);
       props.onChange("failure");
     }
   }
