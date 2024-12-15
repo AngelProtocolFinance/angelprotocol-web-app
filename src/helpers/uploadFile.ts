@@ -1,6 +1,4 @@
 import { ap, ver } from "api/api";
-import { toast } from "sonner";
-import { logger } from "./logger";
 
 export type Bucket = "endow-profiles" | "endow-reg" | "bg-user";
 export const bucketURL = "s3.amazonaws.com";
@@ -17,7 +15,6 @@ function toDataURL(file: File): Promise<string> {
 }
 
 export async function uploadFile(file: File, bucket: Bucket) {
-  const id = toast.loading(`Uploading ${file.name}..`);
   const key = `${Date.now()}_${file.name.replace(SPACES, "_")}`;
 
   const res = await ap.post(`${ver(2)}/file-upload`, {
@@ -28,15 +25,12 @@ export async function uploadFile(file: File, bucket: Bucket) {
     },
     headers: { authorization: `Bearer {todo}` },
   });
-  if (!res.ok) {
-    logger.error(await res.text());
-    toast.dismiss(id); //handled by caller
-    return null;
-  }
 
-  toast.success(`Uploaded ${file.name}`, { id });
-  return {
-    publicUrl: `https://${bucket}.${bucketURL}/${key}`,
-    name: file.name,
-  };
+  if (!res.ok) throw res;
+  return `https://${bucket}.${bucketURL}/${key}`;
+}
+
+export function toFileName(url: string) {
+  const key = url.split("/").pop();
+  return key?.split("_").slice(1).join("");
 }

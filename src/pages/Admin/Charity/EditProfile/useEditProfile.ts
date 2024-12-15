@@ -1,6 +1,5 @@
 import { getEndow } from "api/get/endow";
 import { useErrorContext } from "contexts/ErrorContext";
-import { uploadFile } from "helpers/uploadFile";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router-dom";
 import type { EndowmentProfileUpdate } from "types/aws";
@@ -18,21 +17,9 @@ export default function useEditProfile(df: DirtyFields) {
     try {
       const update: Partial<EndowmentProfileUpdate> = {};
 
-      if (df.logo && fv.logo.file) {
-        const obj = await uploadFile(fv.logo.file, "endow-profiles");
-        if (!obj) return displayError("Failed to upload logo");
-        update.logo = obj.publicUrl;
-      }
-      if (df.image && fv.image.file) {
-        const obj = await uploadFile(fv.image.file, "endow-profiles");
-        if (!obj) return displayError("Failed to upload image");
-        update.image = obj.publicUrl;
-      }
-      if (df.card_img && fv.card_img.file) {
-        const obj = await uploadFile(fv.card_img.file, "endow-profiles");
-        if (!obj) return displayError("Failed to upload card image");
-        update.card_img = obj.publicUrl;
-      }
+      if (df.logo) update.logo = fv.logo;
+      if (df.image) update.image = fv.image;
+      if (df.card_img) update.card_img = fv.card_img;
 
       if (df.slug) {
         const result = await getEndow(fv.slug, ["id"]);

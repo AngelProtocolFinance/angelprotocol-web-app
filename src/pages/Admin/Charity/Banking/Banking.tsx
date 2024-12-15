@@ -1,7 +1,7 @@
 import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
 import { useErrorContext } from "contexts/ErrorContext";
-import { uploadFile } from "helpers/uploadFile";
+import { toFileName } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import { Link, useFetcher } from "react-router-dom";
@@ -11,15 +11,10 @@ export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
   const fetcher = useFetcher();
-  const { handleError, displayError } = useErrorContext();
+  const { handleError } = useErrorContext();
 
-  const submit: OnSubmit = async (recipient, bankStatementFile) => {
+  const submit: OnSubmit = async (recipient, bankStatementUrl) => {
     try {
-      const bankStatement = await uploadFile(bankStatementFile, "endow-reg");
-      if (!bankStatement) {
-        return displayError("Failed to upload bank statement");
-      }
-
       const { id, details, currency } = recipient;
       //creating account return V1Recipient and doesn't have longAccount summary field
       const bankSummary = `${currency.toUpperCase()} account ending in ${
@@ -31,7 +26,10 @@ export default function Banking() {
           wiseRecipientID: id.toString(),
           bankSummary,
           endowmentID: endowment_id,
-          bankStatementFile: bankStatement,
+          bankStatementFile: {
+            name: toFileName(bankStatementUrl) ?? "bank statement",
+            publicUrl: bankStatementUrl,
+          },
         },
         { action: ".", method: "POST", encType: "application/json" }
       );

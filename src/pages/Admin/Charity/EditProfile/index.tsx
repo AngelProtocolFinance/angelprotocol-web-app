@@ -30,17 +30,9 @@ export function Component() {
     street_address: endow.street_address ?? "",
     tagline: endow.tagline ?? "",
     url: endow.url ?? "",
-    image: {
-      name: "",
-      publicUrl: endow.image ?? "",
-      preview: endow.image ?? "",
-    },
-    logo: { name: "", publicUrl: endow.logo ?? "", preview: endow.logo ?? "" },
-    card_img: {
-      name: "",
-      publicUrl: endow.card_img ?? "",
-      preview: endow.card_img ?? "",
-    },
+    image: endow.image ?? "",
+    logo: endow.logo ?? "",
+    card_img: endow.card_img ?? "",
     endow_designation: endow.endow_designation
       ? { label: endow.endow_designation, value: endow.endow_designation }
       : { label: "", value: "" as EndowDesignation },
