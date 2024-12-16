@@ -1,4 +1,7 @@
-import type { Milestone as TMilestone } from "@better-giving/endowment";
+import type {
+  MilestoneUpdate,
+  Milestone as TMilestone,
+} from "@better-giving/endowment";
 import {
   Disclosure,
   DisclosureButton,
@@ -15,9 +18,9 @@ import {
   dateToFormFormat,
 } from "components/form";
 import { useController, useForm } from "react-hook-form";
+import { useFetcher } from "react-router-dom";
 import { MAX_CHARS, imgSpec } from "../common";
 import { type FV, schema } from "./schema";
-import useMutate from "./useMutate";
 
 type Props = TMilestone & { programId: string };
 export default function Milestone(props: Props) {
@@ -28,7 +31,6 @@ export default function Milestone(props: Props) {
     control,
     trigger,
     resetField,
-    watch,
   } = useForm<FV>({
     values: {
       date: dateToFormFormat(new Date(props.date)),
@@ -42,13 +44,7 @@ export default function Milestone(props: Props) {
   const { field: desc } = useController({ control, name: "description" });
   const { field: media } = useController({ control, name: "media" });
 
-  const { submit, handleDeleteMilestone, isDeletingMilestone } = useMutate(
-    props.id,
-    props.programId
-  );
-
-  const date = watch("date");
-  console.log({ errors, date });
+  const fetcher = useFetcher();
 
   return (
     <Disclosure
@@ -70,7 +66,22 @@ export default function Milestone(props: Props) {
           } bg-white dark:bg-blue-d6 py-6 px-4 grid content-start gap-6`
         }
         disabled={isSubmitting}
-        onSubmit={handleSubmit(submit)}
+        onSubmit={handleSubmit((fv) => {
+          const update: MilestoneUpdate = {
+            description: fv.description.value,
+            title: fv.title,
+            date: new Date(fv.date).toISOString(),
+            ...(fv.media && { media: fv.media }),
+          };
+          fetcher.submit(
+            { ...update, intent: "edit-milestone", "milestone-id": props.id },
+            {
+              encType: "application/json",
+              method: "post",
+              action: ".",
+            }
+          );
+        })}
       >
         <Label className="-mb-4">Image of milestone</Label>
         <ImgEditor
@@ -126,12 +137,22 @@ export default function Milestone(props: Props) {
         />
         <div className="mt-2 flex gap-2 flex-col @lg:flex-row justify-between">
           <button
-            disabled={isDeletingMilestone}
+            disabled={fetcher.state !== "idle"}
             type="button"
             className="btn-red py-2 text-sm"
-            onClick={() => handleDeleteMilestone(props.id)}
+            onClick={() => {
+              if (!window.confirm("Delete milestone?")) return;
+              fetcher.submit(
+                { intent: "delete-milestone", "milestone-id": props.id },
+                { method: "post", encType: "application/json" }
+              );
+            }}
           >
-            {isDeletingMilestone ? "Deleting.." : "Delete"} milestone
+            {fetcher.formData?.get("intent") === "delete-milestone" &&
+            fetcher.state !== "idle"
+              ? "Deleting.."
+              : "Delete"}{" "}
+            milestone
           </button>
           <button
             disabled={!isDirty}

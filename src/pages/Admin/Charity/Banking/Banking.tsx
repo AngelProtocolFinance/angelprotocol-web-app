@@ -1,22 +1,17 @@
 import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
-import Prompt from "components/Prompt";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { toFileName } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import { Link, useNavigate } from "react-router-dom";
-import { useNewBankingApplicationMutation } from "services/aws/banking-applications";
+import { Link, useFetcher } from "react-router-dom";
 import FormButtons from "./FormButtons";
 
 export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
-  const [newApplication] = useNewBankingApplicationMutation();
+  const fetcher = useFetcher();
   const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
-  const navigate = useNavigate();
 
   const submit: OnSubmit = async (recipient, bankStatementUrl) => {
     try {
@@ -25,22 +20,19 @@ export default function Banking() {
       const bankSummary = `${currency.toUpperCase()} account ending in ${
         details.accountNumber?.slice(-4) || "0000"
       } `;
-      await newApplication({
-        wiseRecipientID: id.toString(),
-        bankSummary,
-        endowmentID: endowment_id,
-        bankStatementFile: {
-          name: toFileName(bankStatementUrl) ?? "bank statement",
-          publicUrl: bankStatementUrl,
+
+      fetcher.submit(
+        {
+          wiseRecipientID: id.toString(),
+          bankSummary,
+          endowmentID: endowment_id,
+          bankStatementFile: {
+            name: toFileName(bankStatementUrl) ?? "bank statement",
+            publicUrl: bankStatementUrl,
+          },
         },
-      }).unwrap();
-
-      showModal(Prompt, {
-        headline: "Success!",
-        children: <p className="py-8">Banking details submitted for review!</p>,
-      });
-
-      navigate("..");
+        { action: ".", method: "POST", encType: "application/json" }
+      );
     } catch (error) {
       handleError(error, { context: "submitting banking application" });
     }
@@ -60,7 +52,11 @@ export default function Banking() {
         title="Bank account details"
         description="The following information will be used to register your bank account that will be used to withdraw your funds."
       >
-        <BankDetails FormButtons={FormButtons} onSubmit={submit} />
+        <BankDetails
+          FormButtons={FormButtons}
+          onSubmit={submit}
+          isLoading={fetcher.state !== "idle"}
+        />
       </Group>
     </>
   );

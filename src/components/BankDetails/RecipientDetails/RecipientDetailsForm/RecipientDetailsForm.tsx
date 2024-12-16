@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@hookform/error-message";
-import type { FetchBaseQueryError } from "@reduxjs/toolkit/query";
+import { wise } from "api/api";
 import {
   FileDropzone,
   type FileOutput,
@@ -7,18 +7,15 @@ import {
 } from "components/FileDropzone";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
-import { APIs } from "constants/urls";
 import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty, logger } from "helpers";
 import { Controller, get, useController, useForm } from "react-hook-form";
-import {
-  useCreateRecipientMutation,
-  useNewRequirementsMutation,
-} from "services/aws/wise";
-import type { Group, ValidationContent } from "types/aws";
+import type { Group, V1RecipientAccount, ValidationContent } from "types/aws";
 import { safeParse } from "valibot";
 import type { IFormButtons, OnSubmit } from "../../types";
+import { useRequirements } from "../use-requirements";
 import Form from "./Form";
+import { createRecipient } from "./create-recipient";
 
 type Props = {
   fields: Group[];
@@ -57,8 +54,9 @@ export default function RecipientDetailsForm({
   } = useForm<FV>({ disabled, shouldUnregister: true });
 
   const { handleError, displayError } = useErrorContext();
-  const [updateRequirements] = useNewRequirementsMutation();
-  const [createRecipient] = useCreateRecipientMutation();
+  const { updateRequirements } = useRequirements(
+    !amount ? null : { amount, currency }
+  );
 
   const { field: bankStatement } = useController({
     control,
@@ -107,14 +105,16 @@ export default function RecipientDetailsForm({
             details,
           });
 
-          if (res.data) return await onSubmit(res.data, bankStatement);
+          if (res.ok) {
+            const data: V1RecipientAccount = await res.json();
+            return await onSubmit(data, bankStatement);
+          }
 
           //ERROR handling
-          const error = res.error as FetchBaseQueryError;
-          if (error.status !== 422) throw res.error;
+          if (res.status !== 422) throw res;
 
           //only handle 422
-          const content = error.data as ValidationContent;
+          const content: ValidationContent = await res.json();
 
           //filter "NOT_VALID"
           const _errs = content.errors;
@@ -259,10 +259,11 @@ export default function RecipientDetailsForm({
                         try {
                           const { params, url } = f.validationAsync!;
                           const path = new URL(url).pathname;
-                          const proxy = `${APIs.aws}/v1/wise-proxy/${path}`;
-                          const res = await fetch(
-                            `${proxy}?${params[0].key}=${v}`
-                          );
+                          const res = await wise.get(path, {
+                            throwHttpErrors: false,
+                            searchParams: { [params[0].key]: v },
+                          });
+
                           return res.ok || "invalid";
                         } catch (err) {
                           logger.error(err);

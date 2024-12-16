@@ -1,50 +1,23 @@
-import ContentLoader from "components/ContentLoader";
-import Prompt from "components/Prompt";
-import QueryLoader from "components/QueryLoader";
 import TableSection, { Cells } from "components/TableSection";
-import { useAuthenticatedUser } from "contexts/Auth";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
-import { Minus, Plus } from "lucide-react";
+import { LoaderCircle, Minus, Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import {
-  useDeleteEndowAdminMutation,
-  useEndowAdminsQuery,
-} from "services/aws/endow-admins";
+import { Link, Outlet, useFetcher, useLoaderData } from "react-router-dom";
+import { toast } from "sonner";
 import type { EndowAdmin } from "types/aws";
-import AddForm from "./AddForm";
 
 export default function List() {
-  const { showModal } = useModalContext();
-  const { id } = useAdminContext();
+  const admins = useLoaderData() as EndowAdmin[];
 
-  const queryState = useEndowAdminsQuery(id);
   return (
     <div className="overflow-x-auto">
-      <button
-        type="button"
-        disabled={queryState.isLoading}
+      <Link
         className="justify-self-end btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
-        onClick={() =>
-          showModal(AddForm, {
-            added: (queryState.data || []).map((admin) => admin.email),
-            endowID: id,
-          })
-        }
+        to="add"
       >
         <Plus size={16} />
         <span>Invite user</span>
-      </button>
-      <QueryLoader
-        queryState={queryState}
-        messages={{
-          loading: <Skeleton />,
-          error: "Failed to get members",
-          empty: "No members found.",
-        }}
-      >
-        {(members) => <Loaded members={members} />}
-      </QueryLoader>
+      </Link>
+      <Loaded members={admins} />
     </div>
   );
 }
@@ -54,28 +27,6 @@ type LoadedProps = {
   members: EndowAdmin[];
 };
 function Loaded({ members, classes = "" }: LoadedProps) {
-  const { email: user } = useAuthenticatedUser();
-  const { id } = useAdminContext();
-  const [removeUser, { isLoading }] = useDeleteEndowAdminMutation();
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
-
-  async function handleRemove(toRemove: string) {
-    if (toRemove === user)
-      return showModal(Prompt, {
-        type: "error",
-        children: "Can't delete self",
-      });
-
-    if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
-
-    try {
-      await removeUser({ email: toRemove, endowID: id }).unwrap();
-    } catch (err) {
-      handleError(err, { context: "removing member" });
-    }
-  }
-
   return (
     <table
       className={`${classes} w-full text-sm rounded border border-separate border-spacing-0 border-blue-l2`}
@@ -105,16 +56,7 @@ function Loaded({ members, classes = "" }: LoadedProps) {
             type="td"
             cellClass="p-3 border-t border-blue-l2 max-w-[256px] truncate first:rounded-bl last:rounded-br"
           >
-            <td className="relative">
-              <button
-                disabled={isLoading}
-                onClick={() => handleRemove(member.email)}
-                type="button"
-                className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
-              >
-                <Minus size={16} />
-              </button>
-            </td>
+            <DeleteForm email={member.email} />
 
             <>{member.email}</>
             <>{member.givenName ?? "-"}</>
@@ -122,17 +64,41 @@ function Loaded({ members, classes = "" }: LoadedProps) {
           </Cells>
         ))}
       </TableSection>
+      {/** render add form */}
+      <Outlet />
     </table>
   );
 }
 
-function Skeleton() {
+function DeleteForm({ email }: { email: string }) {
+  const { user } = useAdminContext();
+  async function handleRemove(toRemove: string) {
+    if (toRemove === user.email) {
+      return toast.error("Can't delete self");
+    }
+    if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
+    fetcher.submit(
+      { toRemove },
+      { action: ".", method: "post", encType: "application/json" }
+    );
+  }
+
+  const fetcher = useFetcher({ key: `admin-${email}` });
+
   return (
-    <div className="grid gap-y-1 mt-2">
-      <ContentLoader className="h-12 w-full rounded" />
-      <ContentLoader className="h-12 w-full rounded" />
-      <ContentLoader className="h-12 w-full rounded" />
-      <ContentLoader className="h-12 w-full rounded" />
-    </div>
+    <fetcher.Form method="POST" action="." className="relative">
+      <button
+        disabled={fetcher.state !== "idle"}
+        onClick={() => handleRemove(email)}
+        type="button"
+        className=" disabled:text-navy-l2 hover:text-red active:text-red absolute-center"
+      >
+        {fetcher.state !== "idle" ? (
+          <LoaderCircle size={16} className="animate-spin" />
+        ) : (
+          <Minus size={16} />
+        )}
+      </button>
+    </fetcher.Form>
   );
 }

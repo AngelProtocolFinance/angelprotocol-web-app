@@ -1,6 +1,4 @@
-import { APIs } from "constants/urls";
-import { version as v } from "services/helpers";
-import { jwtToken } from "./jwt-token";
+import { ap, ver } from "api/api";
 
 export type Bucket = "endow-profiles" | "endow-reg" | "bg-user";
 export const bucketURL = "s3.amazonaws.com";
@@ -18,14 +16,14 @@ function toDataURL(file: File): Promise<string> {
 
 export async function uploadFile(file: File, bucket: Bucket) {
   const key = `${Date.now()}_${file.name.replace(SPACES, "_")}`;
-  const res = await fetch(APIs.aws + `/${v(2)}/file-upload`, {
-    method: "POST",
-    body: JSON.stringify({
+
+  const res = await ap.post(`${ver(2)}/file-upload`, {
+    json: {
       bucket,
       dataUri: await toDataURL(file),
       fileName: key,
-    }),
-    headers: { authorization: `Bearer ${await jwtToken()}` },
+    },
+    headers: { authorization: `Bearer {todo}` },
   });
 
   if (!res.ok) throw res;

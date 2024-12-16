@@ -25,7 +25,7 @@ export function useRhf(props: Props) {
       prefCurrency: props.defaultCurr || { code: "usd", min: 1, rate: 1 },
       firstName: props.user.firstName ?? "",
       lastName: props.user.lastName ?? "",
-      avatar: props.user.avatarUrl ?? "",
+      avatar: props.user.avatar ?? "",
     },
   });
 

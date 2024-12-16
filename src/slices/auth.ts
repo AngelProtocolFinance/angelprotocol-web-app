@@ -3,9 +3,7 @@ import {
   createAsyncThunk,
   createSlice,
 } from "@reduxjs/toolkit";
-import { type AuthUser, fetchAuthSession, signOut } from "aws-amplify/auth";
-import { IS_TEST } from "constants/env";
-import { APIs } from "constants/urls";
+import { ap, ver } from "api/api";
 import { logger } from "helpers";
 import { type User, userIsSignedIn } from "types/auth";
 import type { UserAttributes, UserUpdate } from "types/aws";
@@ -18,13 +16,11 @@ const initialState: State = {
   user: null,
 };
 
-export const logout = createAsyncThunk("auth/logout", signOut);
-
-export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
+export const loadSession = createAsyncThunk<User, any | undefined>(
   "auth/loadSession",
   async (_) => {
     try {
-      const session = await fetchAuthSession();
+      const session = {} as any;
       const idToken = session.tokens?.idToken;
       if (!idToken) return null;
       if (!idToken.payload.exp) return null;
@@ -43,15 +39,13 @@ export const loadSession = createAsyncThunk<User, AuthUser | undefined>(
       } = idToken.payload as Payload;
 
       //use user attributes from DB
-      const res = await fetch(
-        `${APIs.aws}/${IS_TEST ? "staging" : "v3"}/users/${userEmail}`,
-        {
-          headers: { authorization: idToken.toString() },
-        }
-      );
+      const res = await ap.get<UserAttributes>(`${ver(1)}/users/${userEmail}`, {
+        headers: { authorization: idToken.toString() },
+      });
+
       if (!res.ok) return null;
 
-      const userAttributes: UserAttributes = await res.json();
+      const userAttributes = await res.json();
 
       return {
         token: idToken.toString(),
@@ -108,11 +102,6 @@ const auth = createSlice({
     });
     builder.addCase(loadSession.pending, (state) => {
       state.user = "loading";
-    });
-    builder.addCase(logout.pending, (state) => {
-      if (userIsSignedIn(state.user)) {
-        state.user.isSigningOut = true;
-      }
     });
   },
 });

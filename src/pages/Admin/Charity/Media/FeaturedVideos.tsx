@@ -1,37 +1,22 @@
-import QueryLoader from "components/QueryLoader";
-import { usePaginatedMedia } from "services/aws/usePaginatedMedia";
+import type { IMedia } from "@better-giving/endowment";
+import { Info } from "components/Status";
 import VideoPreview from "./VideoPreview";
 
-type Props = {
+interface Props {
   classes?: string;
-  endowId: number;
-};
+  items: IMedia[];
+}
 
-export default function FeaturedVideos({ endowId, classes = "" }: Props) {
-  const { data, isLoading, isFetching, isError } = usePaginatedMedia(endowId, {
-    featured: true,
-    type: "video",
-    limit: 3,
-  });
+export default function FeaturedVideos({ classes = "", items }: Props) {
+  if (items.length === 0) {
+    return <Info classes={classes}>No featured videos</Info>;
+  }
+
   return (
-    <QueryLoader
-      queryState={{ data: data?.items, isLoading, isFetching, isError }}
-      classes={{ container: classes }}
-      messages={{
-        loading: "loading...",
-        error: "failed to get videos",
-        empty: "No featured videos",
-      }}
-    >
-      {(items) => (
-        <div
-          className={`${classes} grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4`}
-        >
-          {items.map((item) => (
-            <VideoPreview key={item.id} {...item} />
-          ))}
-        </div>
-      )}
-    </QueryLoader>
+    <div className={`${classes} grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4`}>
+      {items.map((item) => (
+        <VideoPreview key={item.id} {...item} />
+      ))}
+    </div>
   );
 }

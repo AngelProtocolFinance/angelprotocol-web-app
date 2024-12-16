@@ -2,24 +2,12 @@ import type { Application } from "@better-giving/registration/approval";
 import { isIrs501c3, isRejected } from "@better-giving/registration/models";
 import ExtLink from "components/ExtLink";
 import { appRoutes } from "constants/routes";
-import { useModalContext } from "contexts/ModalContext";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import Container from "./Container";
-import Prompt from "./Prompt";
 
 export default function Loaded(props: Application) {
-  const { showModal } = useModalContext();
-
-  const review = (verdict: "approve" | "reject") => () => {
-    showModal(Prompt, {
-      verdict,
-      uuid: props.id,
-      orgName: props.contact.org_name,
-    });
-  };
-
   const prevVerdict =
     props.status === "03"
       ? "approved"
@@ -130,22 +118,26 @@ export default function Loaded(props: Application) {
         >
           back
         </Link>
-        <button
-          disabled={!!prevVerdict}
-          onClick={review("reject")}
+        <Link
+          aria-disabled={!!prevVerdict}
+          to={`rejected?org_name=${props.contact.org_name}`}
           type="button"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
+          preventScrollReset
         >
           reject
-        </button>
-        <button
-          disabled={!!prevVerdict}
-          onClick={review("approve")}
+        </Link>
+        <Link
+          aria-disabled={!!prevVerdict}
+          to={`approved?org_name=${props.contact.org_name}`}
           type="button"
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-green"
+          preventScrollReset
         >
           approve
-        </button>
+        </Link>
+        {/** review route renders here */}
+        <Outlet />
       </div>
     </>
   );

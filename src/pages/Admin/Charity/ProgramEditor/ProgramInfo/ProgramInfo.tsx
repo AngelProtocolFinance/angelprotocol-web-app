@@ -13,7 +13,7 @@ export default function ProgramInfo(props: Program) {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting, isDirty, errors },
+    formState: { isSubmitting, isDirty, errors, dirtyFields },
     trigger,
     resetField,
     control,
@@ -32,7 +32,7 @@ export default function ProgramInfo(props: Program) {
     control,
   });
 
-  const submit = useSubmit(props);
+  const { submit, isLoading } = useSubmit(dirtyFields);
 
   return (
     <Group title="Program information">
@@ -91,11 +91,11 @@ export default function ProgramInfo(props: Program) {
           error={errors.targetRaise?.message}
         />
         <button
-          disabled={!isDirty}
+          disabled={!isDirty || isLoading || isSubmitting}
           type="submit"
           className="@lg:justify-self-end btn-blue py-2 text-sm"
         >
-          Save changes
+          {isLoading || isSubmitting ? "Saving..." : "Save changes"}
         </button>
       </Form>
     </Group>

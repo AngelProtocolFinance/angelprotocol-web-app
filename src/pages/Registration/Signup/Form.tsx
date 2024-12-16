@@ -1,22 +1,14 @@
 import { Separator } from "components/Separator";
 import { APP_NAME } from "constants/env";
-import { appRoutes, regRoutes } from "constants/routes";
-import { useAuthenticatedUser } from "contexts/Auth";
-import { useErrorContext } from "contexts/ErrorContext";
-import { storeRegistrationReference } from "helpers";
+import { regRoutes } from "constants/routes";
 import { useRendered } from "hooks/use-rendered";
-import { Link, useNavigate } from "react-router-dom";
-import { useNewApplicationMutation } from "services/aws/registration";
-import { steps } from "../routes";
+import { Link, useFetcher } from "react-router-dom";
 
 const NEED_HELP_ARTICLE_ID = 6628120;
 
 export default function Form({ classes = "" }: { classes?: string }) {
   useRendered();
-  const user = useAuthenticatedUser();
-  const navigate = useNavigate();
-  const { handleError } = useErrorContext();
-  const [createNewApplication, { isLoading }] = useNewApplicationMutation();
+  const fetcher = useFetcher();
 
   const openIntercomHelp = () => {
     const w = window as any;
@@ -25,22 +17,10 @@ export default function Form({ classes = "" }: { classes?: string }) {
     }
   };
 
-  async function proceed() {
-    try {
-      const reg = await createNewApplication({
-        registrant_id: user.email,
-      }).unwrap();
-      storeRegistrationReference(reg.id);
-      navigate(`${appRoutes.register}/${regRoutes.steps}/${steps.contact}`, {
-        state: reg,
-      });
-    } catch (err) {
-      handleError(err, { context: "Creating registration" });
-    }
-  }
-
   return (
-    <div
+    <fetcher.Form
+      action="?index"
+      method="post"
       className={`${classes} justify-center gap-8 padded-container w-full max-w-[37.5rem] grid`}
     >
       <h3 className="text-3xl text-center">
@@ -48,9 +28,8 @@ export default function Form({ classes = "" }: { classes?: string }) {
       </h3>
 
       <button
-        disabled={isLoading}
-        type="button"
-        onClick={proceed}
+        disabled={fetcher.state !== "idle"}
+        type="submit"
         className="btn-blue btn-reg"
       >
         Start a new application
@@ -68,6 +47,6 @@ export default function Form({ classes = "" }: { classes?: string }) {
       >
         Need Help?
       </button>
-    </div>
+    </fetcher.Form>
   );
 }

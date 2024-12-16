@@ -11,7 +11,7 @@ export default function Table({
   classes = "",
   disabled,
   isLoading,
-  hasMore,
+  nextPageKey,
   onLoadMore,
 }: TableProps) {
   return (
@@ -44,7 +44,7 @@ export default function Table({
               key={row.wiseRecipientID}
               type="td"
               cellClass={`p-3 border-t border-blue-l2 max-w-[256px] truncate ${
-                hasMore ? "" : "first:rounded-bl last:rounded-br"
+                nextPageKey ? "" : "first:rounded-bl last:rounded-br"
               }`}
             >
               <>{new Date(row.dateCreated).toLocaleDateString()}</>
@@ -66,14 +66,14 @@ export default function Table({
             </Cells>
           ))
           .concat(
-            hasMore ? (
+            nextPageKey ? (
               <td
                 colSpan={9}
                 key="load-more-btn"
                 className="border-t border-blue-l2 rounded-b"
               >
                 <LoadMoreBtn
-                  onLoadMore={onLoadMore}
+                  onLoadMore={() => onLoadMore(nextPageKey)}
                   disabled={disabled}
                   isLoading={isLoading}
                 />

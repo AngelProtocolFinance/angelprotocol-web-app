@@ -1,15 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-  AuthError,
-  confirmResetPassword,
-  resetPassword,
-} from "aws-amplify/auth";
+import { cognito } from "auth/cognito";
 import { Form, Input, PasswordInput } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import useCounter from "hooks/useCounter";
 import { useState } from "react";
 import { type UseFormReturn, useForm } from "react-hook-form";
 import { password, requiredString } from "schemas/string";
+import { isError } from "types/auth";
 import { object, ref } from "yup";
 import type { CodeRecipientEmail, StepSetter } from "./types";
 
@@ -47,17 +44,14 @@ export default function SetPasswordForm(props: Props) {
 
   async function submit(fv: FV) {
     try {
-      await confirmResetPassword({
-        username: props.codeRecipientEmail.raw,
-        confirmationCode: fv.code,
-        newPassword: fv.password,
-      });
-
+      const res = await cognito.confirmForgotPassword(
+        props.codeRecipientEmail.raw,
+        fv.code,
+        fv.password
+      );
+      if (isError(res)) return displayError(res.message);
       props.setStep({ type: "success" });
     } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
-      }
       handleError(err, { context: "resetting password" });
     }
   }
@@ -66,25 +60,15 @@ export default function SetPasswordForm(props: Props) {
     try {
       setIsRequestingNewCode(true);
 
-      const { nextStep } = await resetPassword({
-        username: props.codeRecipientEmail.raw,
-      });
-
-      //per cognito config
-      if (nextStep.resetPasswordStep !== "CONFIRM_RESET_PASSWORD_WITH_CODE")
-        throw `Unexpected next reset password step: ${nextStep.resetPasswordStep}`;
-      if (nextStep.codeDeliveryDetails.deliveryMedium !== "EMAIL")
-        throw `Unexpected code delivery medium: ${nextStep.codeDeliveryDetails.deliveryMedium}`;
-      if (!nextStep.codeDeliveryDetails.destination)
-        throw `Missing code delivery destination`;
+      const res = await cognito.resendConfirmationCode(
+        props.codeRecipientEmail.raw
+      );
+      if (isError(res)) return displayError(res.message);
 
       resetCounter();
 
       alert("New code has been sent to your email.");
     } catch (err) {
-      if (err instanceof AuthError) {
-        return displayError(err.message);
-      }
       handleError(err, { context: "resending code" });
     } finally {
       setIsRequestingNewCode(false);

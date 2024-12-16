@@ -1,35 +1,30 @@
-import type { EndowUpdate } from "@better-giving/endowment";
-import Prompt from "components/Prompt";
+import { getEndow } from "api/get/endow";
 import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
-import {
-  useEditEndowmentMutation,
-  useLazyProfileQuery,
-} from "services/aws/aws";
+import { useFetcher } from "react-router-dom";
+import type { EndowmentProfileUpdate } from "types/aws";
+
 import type { UNSDG_NUMS } from "types/lists";
 import type { FV } from "./schema";
 
 type DirtyFields = FieldNamesMarkedBoolean<FV>;
 
-export default function useEditProfile(id: number, df: DirtyFields) {
-  const [submit] = useEditEndowmentMutation();
-  const { showModal } = useModalContext();
+export default function useEditProfile(df: DirtyFields) {
+  const fetcher = useFetcher();
   const { displayError, handleError } = useErrorContext();
-  const [endowment] = useLazyProfileQuery();
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
-      const update: EndowUpdate & { id: number } = { id };
+      const update: Partial<EndowmentProfileUpdate> = {};
 
       if (df.logo) update.logo = fv.logo;
       if (df.image) update.image = fv.image;
       if (df.card_img) update.card_img = fv.card_img;
 
       if (df.slug) {
-        const result = await endowment({ id: fv.slug });
+        const result = await getEndow(fv.slug, ["id"]);
         //endow is found with update.slug
-        if (result.isSuccess) {
+        if (result.id) {
           return displayError(`Slug "${fv.slug}" is already taken`);
         }
         update.slug = fv.slug;
@@ -58,11 +53,10 @@ export default function useEditProfile(id: number, df: DirtyFields) {
       if (df.social_media_urls) update.social_media_urls = fv.social_media_urls;
       if (df.published) update.published = fv.published;
 
-      await submit(update).unwrap();
-
-      return showModal(Prompt, {
-        type: "success",
-        children: "Successfully updated profile",
+      fetcher.submit(update, {
+        method: "patch",
+        action: ".",
+        encType: "application/json",
       });
     } catch (err) {
       handleError(err, { context: "applying profile changes" });
@@ -71,5 +65,6 @@ export default function useEditProfile(id: number, df: DirtyFields) {
 
   return {
     onSubmit,
+    state: fetcher.state,
   };
 }

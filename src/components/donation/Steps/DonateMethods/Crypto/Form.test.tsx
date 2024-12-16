@@ -1,10 +1,11 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { mockTokens } from "services/apes/mock";
 import { mockPrograms } from "services/aws/programs";
 import { store } from "store/store";
 import { afterAll, describe, expect, test, vi } from "vitest";
+import { testDonateData } from "../../__tests__/test-data";
 import type { CryptoFormStep, Init } from "../../types";
 import Form from "./Form";
 
@@ -15,6 +16,14 @@ vi.mock("../../Context", () => ({
     .mockReturnValue({ state: {}, setState: mockedSetState }),
 }));
 
+vi.mock("react-router-dom", async () => {
+  const actual = await vi.importActual("react-router-dom");
+  return {
+    ...actual,
+    useLoaderData: () => testDonateData,
+  };
+});
+
 const _Form: typeof Form = (props) => (
   <Provider store={store}>{<Form {...props} />}</Provider>
 );
@@ -24,7 +33,7 @@ describe("Crypto form: initial load", () => {
     vi.restoreAllMocks();
   });
 
-  test("initial form state: no persisted details", () => {
+  test("initial form state: no persisted details", async () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
@@ -37,6 +46,13 @@ describe("Crypto form: initial load", () => {
       init,
     };
     render(<_Form {...state} />);
+
+    waitFor(() => {
+      const programSelector = screen.queryByRole("button", {
+        name: /general donation/i,
+      });
+      expect(programSelector).toBeNull();
+    });
   });
 
   test("initial form state: program donations not allowed", () => {
@@ -52,10 +68,12 @@ describe("Crypto form: initial load", () => {
       init,
     };
     render(<_Form {...state} />);
-    const programSelector = screen.queryByRole("button", {
-      name: /general donation/i,
+    waitFor(() => {
+      const programSelector = screen.queryByRole("button", {
+        name: /general donation/i,
+      });
+      expect(programSelector).toBeNull();
     });
-    expect(programSelector).toBeNull();
   });
 
   test("submit form with initial/persisted data", async () => {

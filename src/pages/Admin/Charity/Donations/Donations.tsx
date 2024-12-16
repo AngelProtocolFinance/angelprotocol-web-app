@@ -1,13 +1,13 @@
-import Seo from "components/Seo";
-import { adminRoutes } from "constants/routes";
+import { useLoaderData } from "react-router-dom";
+import type { DonationsPage } from "types/aws";
 import DonationsTable from "./DonationsTable";
 
 export default function Donations() {
+  const page1 = useLoaderData() as DonationsPage;
   return (
     <div>
-      <Seo title="Donations" url={adminRoutes.donations} />
       <h2 className="text-[2rem] font-bold mb-4">Donations</h2>
-      <DonationsTable />
+      <DonationsTable firstPage={page1} />
     </div>
   );
 }

@@ -4,7 +4,8 @@ import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link, useRouteLoaderData } from "react-router-dom";
+import type { DetailedUser } from "types/auth";
 import type { EndowmentCard } from "types/aws";
 
 const PLACEHOLDER_TAGLINE = " ";
@@ -18,6 +19,7 @@ export default function Card({
   contributions_total,
   target,
 }: EndowmentCard) {
+  const user = useRouteLoaderData("root") as DetailedUser | null;
   return (
     <div className="relative grid grid-rows-subgrid row-span-4 gap-y-0">
       <Link
@@ -65,7 +67,7 @@ export default function Card({
         >
           Donate
         </Link>
-        <BookmarkBtn endowId={id} classes="justify-self-end" />
+        <BookmarkBtn user={user} endowId={id} classes="justify-self-end" />
       </div>
     </div>
   );

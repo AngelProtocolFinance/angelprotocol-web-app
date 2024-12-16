@@ -1,7 +1,7 @@
 import Modal from "components/Modal";
 import { useModalContext } from "contexts/ModalContext";
-import { CircleAlert, CircleCheck, X } from "lucide-react";
-import LoaderRing from "../LoaderRing";
+import { X } from "lucide-react";
+import { PromptIcon } from "./prompt-icon";
 import type { Props } from "./types";
 
 export default function Prompt({
@@ -49,21 +49,4 @@ export default function Prompt({
       </div>
     </Modal>
   );
-}
-
-function PromptIcon({
-  type,
-  classes = "",
-}: Pick<Props, "type"> & { classes?: string }) {
-  const common = `justify-self-center ${classes}`;
-  switch (type) {
-    case "success":
-      return <CircleCheck size={92} className={common + " text-green"} />;
-    case "error":
-      return <CircleAlert size={80} className={common + " text-red"} />;
-    case "loading":
-      return <LoaderRing thickness={12} classes={common + " h-24"} />;
-    default:
-      return null;
-  }
 }

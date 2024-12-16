@@ -3,15 +3,17 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { country } from "components/CountrySelector";
 import { unsdgs } from "constants/unsdgs";
 import { FormProvider, useForm } from "react-hook-form";
-import { useRegState, withStepGuard } from "../StepGuard";
+import { useLoaderData } from "react-router-dom";
+import type { RegStep2 } from "../../types";
 import Form from "./Form";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
 
-function OrgDetails() {
+export default function OrgDetails() {
+  const state = useLoaderData() as RegStep2;
   const {
-    data: { org, init },
-  } = useRegState<2>();
+    data: { init, org },
+  } = state;
 
   const methods = useForm<FormValues>({
     resolver: yupResolver(schema),
@@ -32,12 +34,10 @@ function OrgDetails() {
 
   return (
     <FormProvider {...methods}>
-      <Form />
+      <Form {...state} />
     </FormProvider>
   );
 }
-
-export default withStepGuard(OrgDetails);
 
 function formFomat(org: Org): FormValues {
   return {

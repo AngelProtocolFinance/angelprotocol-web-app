@@ -1,3 +1,6 @@
+import { getEndowBalance } from "api/get/endow-balance";
+import { getProgram } from "api/get/program";
+import { getPrograms } from "api/get/programs";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
@@ -5,15 +8,19 @@ import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Globe, MapPin } from "lucide-react";
+import { useLoaderData, useRouteLoaderData } from "react-router-dom";
 import { Link, Outlet, type RouteObject } from "react-router-dom";
-import { useEndowBalanceQuery } from "services/apes";
+import type { DetailedUser } from "types/auth";
+import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../ProfileContext";
 import GeneralInfo from "./GeneralInfo";
 import Program from "./Program";
+import { featuredMedia } from "./featured-media";
 
 function Body() {
   const p = useProfileContext();
-  const bal = useEndowBalanceQuery(p.id);
+  const bal = useLoaderData() as EndowmentBalances;
+  const user = useRouteLoaderData("root") as DetailedUser | null;
 
   return (
     <div className="flex justify-center items-center w-full h-full">
@@ -30,10 +37,10 @@ function Body() {
           ]}
         />
         <div className="order-3 lg:order-2 flex items-center gap-4 max-lg:flex-col w-full">
-          {bal.data?.totalContributions != null && p.target && (
+          {bal.totalContributions != null && p.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
-              progress={bal.data?.totalContributions}
+              progress={bal.totalContributions}
               target={toTarget(p.target)}
             />
           )}
@@ -57,7 +64,7 @@ function Body() {
                 )}
                 <span>{p.name}</span>
               </h3>
-              <BookmarkBtn endowId={p.id} />
+              <BookmarkBtn endowId={p.id} user={user} />
             </div>
             <p className="w-full font-normal text-lg">{p.tagline}</p>
           </div>
@@ -84,7 +91,7 @@ function Body() {
           </div>
         </div>
 
-        <Outlet />
+        <Outlet context={bal} key="profile-body" />
       </div>
     </div>
   );
@@ -92,14 +99,18 @@ function Body() {
 
 export const bodyRoute: RouteObject = {
   element: <Body />,
+  loader: async ({ params }) => getEndowBalance(params.id),
   children: [
     {
       index: true,
       element: <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />,
+      loader: async ({ params }) =>
+        Promise.all([getPrograms(params.id), featuredMedia(params.id)]),
     },
     {
       path: "program/:programId",
       element: <Program className="order-4 lg:col-span-2 w-full h-full" />,
+      loader: ({ params }) => getProgram(params.id, params.programId),
     },
   ],
 };
