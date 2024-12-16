@@ -15,4 +15,5 @@ export const infoRoutes: RouteObject[] = [
     lazy: () => import("./WpPlugin"),
   },
   { path: appRoutes.about, lazy: () => import("./about") },
+  { path: appRoutes.us_nonprofits, lazy: () => import("./us-nonprofits") },
 ];
