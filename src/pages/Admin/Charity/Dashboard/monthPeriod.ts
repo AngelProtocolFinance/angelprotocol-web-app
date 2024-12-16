@@ -11,11 +11,11 @@ export function monthPeriod() {
   const from = startOfMonth(now);
   const to = endOfMonth(now);
   const next = addDays(to, 1);
-  /** pre-processing starts 5 days
+  /** pre-processing starts 1 day
    *  before end of the period
    *  which actions are disabled
    * */
-  const pre = subDays(to, 5);
+  const pre = subDays(to, 1);
 
   return {
     from: format(from, "PP"),
