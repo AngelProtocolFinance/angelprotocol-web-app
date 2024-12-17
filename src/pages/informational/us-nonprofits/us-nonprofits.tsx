@@ -10,8 +10,8 @@ export function UsNonprofits() {
   return (
     <main className="w-full grid content-start pb-16 @container">
       <Seo
-        title="For Nonprofits"
-        description="Accept any type of donation, anywhere in the world"
+        title="US Nonprofits"
+        description="Simplify Fundraising, Maximize Impact: Claim Your Better Giving Account Today"
       />
       <div className="bg-gradient-to-br from-50% from-transparent to-peach/50">
         <Hero className="padded-container px-10 bg-transparent" />
