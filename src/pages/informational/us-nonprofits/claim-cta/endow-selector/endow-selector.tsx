@@ -27,7 +27,7 @@ export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
       onChange={(val) => val && props.onChange(val)}
       as="div"
       by="name"
-      className="relative bg-white dark:bg-blue-d6 rounded-lg"
+      className="relative bg-white dark:bg-blue-d6 rounded-full"
     >
       <SearchIcon
         className="absolute top-1/2 -translate-y-1/2 left-4"
@@ -39,7 +39,7 @@ export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
         placeholder="Search by name or EIN"
         onChange={(event) => setSearchText(event.target.value)}
         displayValue={(value: EndowmentOption) => value.name}
-        className="px-10 w-full focus:outline-none p-3 rounded-full text-sm"
+        className="px-10 w-96 focus:outline-none p-3 rounded-full"
       />
 
       <ComboboxButton>

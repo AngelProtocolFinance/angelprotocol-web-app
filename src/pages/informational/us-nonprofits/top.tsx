@@ -3,7 +3,7 @@ import { benefits } from "content/benefits";
 import { useRendered } from "hooks/use-rendered";
 import { ArrowRight } from "lucide-react";
 
-export default function Hero({ className = "" }) {
+export function Top({ className = "" }) {
   useRendered();
   return (
     <section

@@ -31,7 +31,7 @@ const items: TListItem[] = [
   },
 ];
 
-export default function WhyBG({ className = "" }) {
+export function WhyBG({ className = "" }) {
   return (
     <section className={`${className} grid`}>
       <h4 className="mb-4 col-span-full text-lg text-blue-d1 uppercase text-center">

@@ -4,7 +4,7 @@ import {
   testimonials,
 } from "content/testimonials";
 
-export default function Testimonials({ className = "" }) {
+export function Stories({ className = "" }) {
   return (
     <div
       className={`${className} grid @3xl:grid-cols-[2fr_3fr] gap-x-4 relative`}

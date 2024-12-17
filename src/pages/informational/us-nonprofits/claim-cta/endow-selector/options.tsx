@@ -18,7 +18,7 @@ export function Options({ searchText, isDebouncing = false }: Props) {
   return (
     <ComboboxOptions
       anchor="bottom"
-      className="w-[var(--input-width)] mt-2 z-10 bg-white dark:bg-blue-d6 shadow-lg rounded-lg overflow-y-scroll max-h-32"
+      className="w-[var(--input-width)] mt-2 z-10 bg-white dark:bg-blue-d6 shadow-lg rounded-lg overflow-y-scroll max-h-24"
     >
       <QueryLoader
         queryState={{
@@ -32,13 +32,13 @@ export function Options({ searchText, isDebouncing = false }: Props) {
             ? `${searchText} not found or already claimed`
             : "not found or already claimed",
         }}
-        classes={{ container: "w-full text-sm p-2 text-navy-l1" }}
+        classes={{ container: "w-full p-2 text-navy-l1" }}
       >
         {(endowments) => (
           <>
             {endowments.map((endowment) => (
               <ComboboxOption
-                className="data-[selected]:bg-blue-l2 hover:bg-blue-l2 cursor-pointer flex gap-2 p-2 text-sm"
+                className="data-[selected]:bg-blue-l2 hover:bg-blue-l2 cursor-pointer flex gap-2 p-2"
                 key={endowment.name}
                 value={endowment}
               >

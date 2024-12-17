@@ -5,11 +5,13 @@ import { Link } from "react-router-dom";
 import type { EndowmentOption } from "types/aws";
 import { EndowSelector } from "./endow-selector";
 
-export function ClaimCta() {
+export function ClaimCta({ classes = "" }) {
   const [endow, setEndow] = useState<EndowmentOption>();
   return (
-    <div id="claim-nonprofit" className="">
-      <p className="text-white font-bold mb-2">Claim your nonprofit</p>
+    <div
+      id="claim-nonprofit"
+      className={`flex items-center gap-x-2 gap-y-4 py-4 ${classes}`}
+    >
       <EndowSelector
         value={endow ?? { id: 0, name: "", registration_number: "" }}
         onChange={setEndow}
@@ -26,9 +28,9 @@ export function ClaimCta() {
         }
         to={`${appRoutes.register}/welcome`}
         aria-disabled={!endow?.id}
-        className="block scroll-m-0 text-sm uppercase font-bold font-heading bg-blue-d1 text-white shadow-xl enabled:active:translate-x-1 hover:bg-blue-d2 rounded-full px-4 py-2 self-start justify-self-start mt-2 disabled:bg-gray"
+        className="h-full flex items-center text-sm uppercase font-bold font-heading bg-blue-d1 text-white shadow-xl enabled:active:translate-x-1 hover:bg-blue-d2 rounded-full px-6 py-2 aria-disabled:bg-gray"
       >
-        continue
+        Get started
       </Link>
     </div>
   );
