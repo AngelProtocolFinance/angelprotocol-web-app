@@ -21,6 +21,7 @@ export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
 
   return (
     <Combobox
+      immediate
       disabled={props.disabled}
       value={props.value}
       onChange={(val) => val && props.onChange(val)}
@@ -34,6 +35,7 @@ export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
       />
       <ComboboxInput
         ref={ref}
+        id="claim-npo-input"
         placeholder="Search by name or EIN"
         onChange={(event) => setSearchText(event.target.value)}
         displayValue={(value: EndowmentOption) => value.name}

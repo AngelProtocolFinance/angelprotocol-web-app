@@ -1,9 +1,7 @@
 import Image from "components/Image";
-import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { useRendered } from "hooks/use-rendered";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 
 export default function Hero({ className = "" }) {
   useRendered();
@@ -12,7 +10,7 @@ export default function Hero({ className = "" }) {
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[3fr_2fr] py-24`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1">
-        <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-navy-d4 mb-5">
+        <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-blue-d1 mb-5">
           Setup Today, Grow Forever
         </h4>
         <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-navy-d4">
@@ -26,20 +24,25 @@ export default function Hero({ className = "" }) {
           sustainably with high-yield savings and investment options.
         </p>
 
-        <Link
-          to={appRoutes.register}
+        <button
+          type="button"
+          onClick={() => {
+            const dest = document.getElementById("claim-nonprofit");
+            dest?.scrollIntoView();
+            dest?.getElementsByTagName("input")[0].focus();
+          }}
           className="mt-8 isolate z-10 justify-self-center normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
         >
           <span className="ml-1">Claim Your Account Now</span>
           <ArrowRight size={18} className="group-hover:translate-x-1" />
           <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
-        </Link>
+        </button>
       </div>
       <Image
         src={benefits.donors[1].img}
-        width={420}
-        height={420}
-        className="rounded-4xl order-1 @6xl:order-2"
+        width={600}
+        height={600}
+        className="rounded-full order-1 @6xl:order-2 w-96 @6xl:w-auto shadow-2xl shadow-black/20"
       />
     </section>
   );
