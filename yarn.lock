@@ -3083,23 +3083,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stripe/react-stripe-js@npm:3.0.0":
-  version: 3.0.0
-  resolution: "@stripe/react-stripe-js@npm:3.0.0"
+"@stripe/react-stripe-js@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@stripe/react-stripe-js@npm:3.1.1"
   dependencies:
     prop-types: "npm:^15.7.2"
   peerDependencies:
     "@stripe/stripe-js": ^1.44.1 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/cd99976a6d67e3f3bb385f338038ec45db97773870cdc5a744ece3dcddd319bbb3284d13617134914712cf783bf24df8846657671302a951d23ef235becb4dcc
+    react: ">=16.8.0 <20.0.0"
+    react-dom: ">=16.8.0 <20.0.0"
+  checksum: 10/af955aec702851dd3eec082e4f0dfdadd4b4137dbcc67294bbd022853a01dfe2edf6ab3767400e76aad66fa191187c7167430f67ac82b3084dbcff4f00e60cd7
   languageName: node
   linkType: hard
 
-"@stripe/stripe-js@npm:5.2.0":
-  version: 5.2.0
-  resolution: "@stripe/stripe-js@npm:5.2.0"
-  checksum: 10/39b90fffa821262a2b02342a1c26eaa88d05257e96e6177b082a3b2f56065447e2c6e2462ec210e315beaa110a8f050d835446132259306164db9d9d95bd2019
+"@stripe/stripe-js@npm:5.3.0":
+  version: 5.3.0
+  resolution: "@stripe/stripe-js@npm:5.3.0"
+  checksum: 10/e26717fb4e039f5ca3b47d6805a65926fb469c7cf0cca896b8e6f3c04c55b6421f55ca0eb7579eba13241c59bd797f5f18275c127cee0f517114a7b981e0afa2
   languageName: node
   linkType: hard
 
@@ -3483,8 +3483,8 @@ __metadata:
     "@rsbuild/core": "npm:0.5.9"
     "@rsbuild/plugin-react": "npm:0.5.9"
     "@sentry/react": "npm:8.22.0"
-    "@stripe/react-stripe-js": "npm:3.0.0"
-    "@stripe/stripe-js": "npm:5.2.0"
+    "@stripe/react-stripe-js": "npm:3.1.1"
+    "@stripe/stripe-js": "npm:5.3.0"
     "@tailwindcss/container-queries": "npm:0.1.1"
     "@tailwindcss/typography": "npm:0.5.15"
     "@testing-library/dom": "npm:10.1.0"
