@@ -43,12 +43,16 @@ export function Program(props: TProgram) {
           <button
             className="btn-outline-filled w-24 py-2 text-sm @lg:ml-auto"
             type="button"
-            onClick={() =>
+            onClick={() => {
+              const ok = window.confirm(
+                "Are you sure you want to delete this program?"
+              );
+              if (!ok) return;
               handleDeleteProgram({
                 id,
                 program_id: props.id,
-              })
-            }
+              });
+            }}
           >
             delete
           </button>
