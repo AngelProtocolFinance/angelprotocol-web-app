@@ -6,7 +6,7 @@ import Hero from "./Hero";
 import Testimonials from "./Testimonials";
 import WhyBG from "./WhyBG";
 
-export function NonprofitInfo() {
+export function UsNonprofits() {
   return (
     <main className="w-full grid content-start pb-16 @container">
       <Seo

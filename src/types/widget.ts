@@ -27,6 +27,8 @@ export const widgetConfig = v.object({
   endowment: v.object({
     id: v.number(),
     name: str,
+    registration_number: str,
+    card_img: v.optional(str),
   }),
   //from dropdown
   program: v.object({

@@ -39,6 +39,7 @@ function Content({ endowment }: { endowment?: Endow }) {
     endowment: endowment || {
       id: 0,
       name: "this nonprofit",
+      registration_number: "",
     },
     isDescriptionTextShown: true,
     isTitleShown: true,
