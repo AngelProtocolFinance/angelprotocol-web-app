@@ -1,4 +1,5 @@
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
+import Image from "components/Image";
 import QueryLoader from "components/QueryLoader";
 import { useEndowmentOptionsQuery } from "services/aws/aws";
 
@@ -15,18 +16,23 @@ export function Options({ searchText, isDebouncing = false }: Props) {
   });
 
   return (
-    <ComboboxOptions className="absolute left-0 top-full mt-2 z-10 w-full bg-white dark:bg-blue-d6 shadow-lg rounded overflow-y-scroll max-h-32 scroller">
+    <ComboboxOptions
+      anchor="bottom"
+      className="w-[var(--input-width)] mt-2 z-10 bg-white dark:bg-blue-d6 shadow-lg rounded-lg overflow-y-scroll max-h-32"
+    >
       <QueryLoader
         queryState={{
           ...queryState,
           isLoading: queryState.isLoading || isDebouncing,
         }}
         messages={{
-          loading: "loading options..",
+          loading: searchText ? "searching..." : "loading nonprofit...",
           error: "failed to get nonprofits",
-          empty: searchText ? `${searchText} not found` : "no options found",
+          empty: searchText
+            ? `${searchText} not found or already claimed`
+            : "not found or already claimed",
         }}
-        classes={{ container: "w-full text-sm p-2" }}
+        classes={{ container: "w-full text-sm p-2 text-navy-l1" }}
       >
         {(endowments) => (
           <>
@@ -36,7 +42,12 @@ export function Options({ searchText, isDebouncing = false }: Props) {
                 key={endowment.name}
                 value={endowment}
               >
-                {endowment.name}
+                <Image
+                  src={endowment.card_img}
+                  width="10"
+                  className="rounded-sm"
+                />
+                <span>{endowment.name}</span>
               </ComboboxOption>
             ))}
           </>

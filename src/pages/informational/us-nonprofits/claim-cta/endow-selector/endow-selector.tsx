@@ -1,6 +1,7 @@
 import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
 import useDebouncer from "hooks/useDebouncer";
+import { SearchIcon } from "lucide-react";
 import { forwardRef, useState } from "react";
 import type { EndowmentOption } from "types/aws";
 import { Options } from "./options";
@@ -25,19 +26,27 @@ export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
       onChange={(val) => val && props.onChange(val)}
       as="div"
       by="name"
-      className="relative items-center flex w-full field-container min-h-[3rem] bg-white dark:bg-blue-d6"
+      className="relative bg-white dark:bg-blue-d6 rounded-lg"
     >
+      <SearchIcon
+        className="absolute top-1/2 -translate-y-1/2 left-4"
+        size={16}
+      />
       <ComboboxInput
         ref={ref}
-        placeholder="Search for an organization..."
+        placeholder="Search by name or EIN"
         onChange={(event) => setSearchText(event.target.value)}
         displayValue={(value: EndowmentOption) => value.name}
-        className="pl-4 w-full"
+        className="px-10 w-full focus:outline-none p-3 rounded-full text-sm"
       />
 
       <ComboboxButton>
         {({ open }) => (
-          <DrawerIcon isOpen={open} size={20} className="ml-auto mr-1" />
+          <DrawerIcon
+            isOpen={open}
+            size={16}
+            className="absolute top-1/2 -translate-y-1/2 right-4"
+          />
         )}
       </ComboboxButton>
 

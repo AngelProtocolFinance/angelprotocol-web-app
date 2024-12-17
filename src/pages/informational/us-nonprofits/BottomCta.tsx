@@ -32,7 +32,7 @@ export function BottomCta({ className = "" }) {
       />
       <CtaCard
         className="from-navy"
-        title="Want to learn more first?"
+        title="US 501(c)(3) nonprofit?"
         cta={<ClaimCta />}
         // to={{ href: BOOK_A_DEMO, title: "Book a demo" }}
         img={{ src: laira.laptop, width: 70 }}
