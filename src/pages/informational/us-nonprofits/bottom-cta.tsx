@@ -8,7 +8,7 @@ export function BottomCta({ className = "" }) {
       <h4 className="col-span-full text-lg text-blue-d1 uppercase text-center">
         Simple. Sustainable. Free.
       </h4>
-      <h2 className="col-span-full text-center text-3xl @4xl:text-4xl leading-snug max-w-2xl justify-self-center mb-12">
+      <h2 className="col-span-full text-center text-3xl @4xl:text-4xl leading-snug max-w-2xl justify-self-center mb-12 capitalize">
         The all-in-one fundraising solution you deserve is only a few clicks
         away
       </h2>
