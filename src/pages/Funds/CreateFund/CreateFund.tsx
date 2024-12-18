@@ -9,6 +9,7 @@ import {
   Form,
   Label,
 } from "components/form";
+import { GoalSelector } from "components/goal-selector";
 import { appRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
@@ -21,7 +22,7 @@ import {
 } from "react-hook-form";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCreateFundMutation } from "services/aws/funds";
-import { GoalSelector, imgSpec } from "../common";
+import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
@@ -174,7 +175,7 @@ export default withAuth(function CreateFund() {
         />
 
         <label className="block mt-6 text-sm font-medium">
-          Fundraiser goal
+          Fundraiser Goal
         </label>
         <GoalSelector
           classes="mt-2 mb-2"

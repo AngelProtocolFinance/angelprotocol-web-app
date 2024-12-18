@@ -1,7 +1,7 @@
 import { imgOutput } from "components/ImgEditor";
+import { target } from "components/goal-selector";
 import { richTextContent } from "types/components";
 import * as v from "valibot";
-import { target } from "../common";
 import { video } from "../common/videos";
 
 const str = v.pipe(v.string(), v.trim());

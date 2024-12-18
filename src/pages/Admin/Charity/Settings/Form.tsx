@@ -13,12 +13,12 @@ import {
   Form as F,
   NativeField as Field,
 } from "components/form";
+import { GoalSelector } from "components/goal-selector";
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import type { EndowmentSettingsAttributes } from "types/aws";
 import { useUpdateEndowment } from "../common";
-import GoalSelector from "./goal-selector";
 import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 

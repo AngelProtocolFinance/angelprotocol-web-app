@@ -28,7 +28,7 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
   return (
     <Field className={props.classes ?? "relative"}>
       <Label className="block text-sm font-medium mb-2">
-        Fund members <span className="text-red">*</span>
+        Fund Members <span className="text-red">*</span>
       </Label>
       <Combobox
         immediate
@@ -77,9 +77,9 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
       </Combobox>
       <p className="text-red text-xs empty:hidden mt-1">{props.error}</p>
       <Description className="text-sm text-navy-l1 mt-1">
-        Inclusion as an eligible Fundraiser Index nonprofit is optional for all
-        Better Giving Nonprofits. If you don't see a nonprofit of interest on
-        this list, it means that they have not opted-in at this time.
+        You may include other nonprofits in a joint fundraiser, if those
+        nonprofits have opted in to fundraising functionality. Raised funds will
+        be split equally between nonprofits.
       </Description>
     </Field>
   );
