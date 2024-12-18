@@ -21,7 +21,6 @@ export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
 
   return (
     <Combobox
-      immediate
       disabled={props.disabled}
       value={props.value}
       onChange={(val) => val && props.onChange(val)}
