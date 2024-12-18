@@ -242,6 +242,7 @@ export default withAuth(function CreateFund() {
           type="date"
           classes={{ input: "uppercase" }}
           error={errors.expiration?.message}
+          required={false}
         />
 
         <CheckField {...register("featured")} classes="col-span-full my-6">
