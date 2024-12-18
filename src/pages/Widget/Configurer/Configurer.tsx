@@ -157,7 +157,7 @@ export default function Configurer({
           }
         />
 
-        <h4 className="font-bold text-base mt-8">Style settings</h4>
+        <p className="font-bold text-base mt-8">Style settings</p>
         <div className="flex items-center gap-2 mt-3">
           <input
             id="__accent-prim"
