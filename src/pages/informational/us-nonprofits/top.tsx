@@ -13,7 +13,7 @@ export function Top({ className = "" }) {
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-blue-d1 mb-5">
           Setup Today, Grow Forever
         </h4>
-        <h1 className="text-center @6xl:text-left text-4.5xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-navy-d4">
+        <h1 className="text-center @6xl:text-left text-4xl @6xl:text-5xl @6xl:leading-tight text-balance mb-4 text-navy-d4">
           Simplify Fundraising, Maximize Impact: Claim Your Better Giving
           Account Today!
         </h1>
