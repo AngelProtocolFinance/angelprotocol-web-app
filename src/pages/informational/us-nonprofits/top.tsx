@@ -9,7 +9,7 @@ export function Top({ className = "" }) {
     <section
       className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[3fr_2fr] py-24`}
     >
-      <div className="max-w-2xl order-2 @6xl:order-1">
+      <div className="max-w-2xl order-2 @6xl:order-1 grid">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-blue-d1 mb-5">
           Setup Today, Grow Forever
         </h4>
@@ -34,7 +34,7 @@ export function Top({ className = "" }) {
             const dest = document.getElementById("claim-nonprofit");
             dest?.scrollIntoView({ behavior: "smooth" });
           }}
-          className="mt-8 isolate z-10 justify-self-center normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
+          className="mt-8 isolate z-10 justify-self-center @6xl:justify-self-start  normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
         >
           <span className="ml-1">Claim Your Account Now</span>
           <ArrowRight size={18} className="group-hover:translate-x-1" />
