@@ -4,7 +4,10 @@ import { ClaimCta } from "./claim-cta";
 
 export function BottomCta({ className = "" }) {
   return (
-    <div className={`${className} grid @4xl:grid-cols-2 gap-4 content-start`}>
+    <div
+      id="claim-nonprofit"
+      className={`${className} grid @4xl:grid-cols-2 gap-4 content-start scroll-mt-10`}
+    >
       <h4 className="col-span-full text-lg text-blue-d1 uppercase text-center">
         Simple. Sustainable. Free.
       </h4>

@@ -8,10 +8,7 @@ import { EndowSelector } from "./endow-selector";
 export function ClaimCta({ classes = "" }) {
   const [endow, setEndow] = useState<EndowmentOption>();
   return (
-    <div
-      id="claim-nonprofit"
-      className={`flex items-center gap-x-2 gap-y-4 py-4 ${classes}`}
-    >
+    <div className={`flex items-center gap-x-2 gap-y-4 py-4 ${classes}`}>
       <EndowSelector
         value={endow ?? { id: 0, name: "", registration_number: "" }}
         onChange={setEndow}
