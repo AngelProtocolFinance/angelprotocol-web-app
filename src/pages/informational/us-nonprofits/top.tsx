@@ -26,9 +26,10 @@ export function Top({ className = "" }) {
 
         <button
           type="button"
-          onClick={() => {
+          onClick={async () => {
             const dest = document.getElementById("claim-nonprofit");
-            dest?.scrollIntoView();
+            dest?.scrollIntoView({ behavior: "smooth" });
+            await new Promise((resolve) => setTimeout(resolve, 1000));
             dest?.getElementsByTagName("input")[0].focus();
           }}
           className="mt-8 isolate z-10 justify-self-center normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"

@@ -49,7 +49,9 @@ export default function Header({ links, classes }: Props) {
             location.pathname === appRoutes.auth_redirector ||
             location.pathname === appRoutes.us_nonprofits
           ) && <UserMenu />}
-          <NavDropdown links={links} />
+          {location.pathname !== appRoutes.us_nonprofits && (
+            <NavDropdown links={links} />
+          )}
         </div>
       </div>
       {location.pathname === appRoutes.home && (
