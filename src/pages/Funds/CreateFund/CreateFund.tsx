@@ -145,7 +145,7 @@ export default withAuth(function CreateFund() {
         disabled={isSubmitting}
         className="grid border border-gray-l4 rounded-lg p-6 my-4 w-full max-w-4xl"
       >
-        <h4 className="font-bold text-xl mb-4">Fund information</h4>
+        <h4 className="font-bold text-xl mb-4">Fund Information</h4>
 
         <Field
           {...register("name")}
@@ -161,7 +161,7 @@ export default withAuth(function CreateFund() {
           ref={desc.ref}
           content={desc.value}
           onChange={desc.onChange}
-          placeHolder="A short overview of your organization"
+          placeHolder="A short overview of your fundraiser"
           charLimit={MAX_DESCRIPTION_CHAR}
           classes={{
             field:
