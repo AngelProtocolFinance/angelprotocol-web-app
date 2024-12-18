@@ -1,5 +1,4 @@
 import Copier from "components/Copier";
-import { DONATION_INCREMENTS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { cleanObject } from "helpers/cleanObject";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
@@ -47,10 +46,7 @@ const widgetURLfn = (config: WidgetConfig) => {
     description: config.description ?? "",
     accentPrimary: config.accentPrimary ?? "",
     accentSecondary: config.accentSecondary ?? "",
-    increments:
-      config.increments.length === 0
-        ? DONATION_INCREMENTS.map((inc) => inc.value).join(",")
-        : config.increments.map((inc) => inc.value).join(","),
+    increments: config.increments.map((inc) => inc.value).join(","),
     descriptions: config.increments
       .map((inc) => inc.label.replace(/,/g, "_"))
       .join(","),
