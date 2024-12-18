@@ -108,7 +108,7 @@ export function Form({
         ref={rhf.desc.ref}
         content={rhf.desc.value}
         onChange={rhf.desc.onChange}
-        placeHolder="A short overview of your organization"
+        placeHolder="A short overview of your fundraiser"
         charLimit={MAX_DESCRIPTION_CHARS}
         classes={{
           field:
