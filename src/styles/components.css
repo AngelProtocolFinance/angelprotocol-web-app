@@ -169,11 +169,6 @@
     @apply text-sm;
   }
 
-  /** overrides wp style for blog post Header */
-  .btn-user-sign-up {
-    @apply btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue hover:text-white text-white text-nowrap px-6 py-2 rounded-full
-  }
-
   .field-gift > input {
     @apply bg-white dark:bg-blue-d6;
   }
@@ -210,16 +205,6 @@
 
   .field-admin-sec > input {
     @apply border-0 border-b rounded-none bg-transparent p-0 pb-2;
-  }
-
-  /** overrides wp style for blog post Header */
-  .log-in-link {
-    @apply btn text-base text-navy-d4 normal-case max-sm:hidden hover:underline hover:text-navy-d4
-  }
-  
-  /** tailwind classes of children of this wrapper can still override this styles */
-  .override-wp-overrides {
-    @apply [&_*]:font-body [&_h1]:font-heading [&_h2]:font-heading [&_h3]:font-heading [&_h4]:font-heading [&_h5]:font-heading [&_h6]:font-heading [&_a]:text-navy-d4
   }
 }
 

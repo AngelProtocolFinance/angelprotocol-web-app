@@ -1,70 +1,66 @@
-import Image from "components/Image";
-import Modal from "components/Modal";
-import { useModalContext } from "contexts/ModalContext";
-import Cropper from "cropperjs";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Save } from "lucide-react";
-import { useCallback, useRef } from "react";
+import { useRef } from "react";
+import Cropper, { type ReactCropperElement } from "react-cropper";
 
 type Props = {
   classes?: string;
-  file: File;
+  isOpen: boolean;
+  onClose(): void;
+  input: File;
   aspect: [number, number];
   onSave(cropped: File): void;
 };
 
-export default function ImgCropper({
-  file,
+export function ImgCropper({
+  input,
   aspect: [x, y],
   onSave,
+  isOpen,
+  onClose,
   classes = "",
 }: Props) {
-  const { closeModal } = useModalContext();
+  const cropperRef = useRef<ReactCropperElement>(null);
 
-  const cropperRef = useRef<Cropper>();
-
-  const imgRef = useCallback(
-    (node: HTMLImageElement | null) => {
-      if (node && !cropperRef.current) {
-        cropperRef.current = new Cropper(node, {
-          aspectRatio: x / y,
-          viewMode: 1,
-          zoomable: true,
-          scalable: false,
-        });
-      }
-    },
-    [x, y]
-  );
-
-  function handleSave() {
-    if (!cropperRef.current) return onSave(file);
-    cropperRef.current.getCroppedCanvas().toBlob((blob) => {
-      //nothing is cropped
-      if (!blob) return onSave(file);
-      onSave(new File([blob], file.name, { type: file.type }));
-      closeModal();
-    }, file.type);
+  async function handleSave() {
+    const cropper = cropperRef.current?.cropper;
+    const cropped = await new Promise<File>((resolve) => {
+      if (!cropper) return resolve(input);
+      cropper
+        .getCroppedCanvas()
+        .toBlob((blob) =>
+          blob
+            ? resolve(new File([blob], input.name, { type: input.type }))
+            : resolve(input)
+        );
+    });
+    return onSave(cropped);
   }
 
   return (
-    <Modal
-      className={`${classes} grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm`}
-    >
-      <div className="bg-white flex items-center justify-end gap-2 p-1">
-        <button
-          type="button"
-          className="text-navy-d4 hover:text-blue"
-          onClick={handleSave}
-        >
-          <Save size={22} />
-        </button>
-      </div>
-      <Image
-        ref={imgRef}
-        alt="banner"
-        src={URL.createObjectURL(file)}
-        className="w-full"
-      />
-    </Modal>
+    <Dialog open={isOpen} onClose={onClose} className="relative z-50">
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <DialogPanel
+        className={`${classes} grid grid-rows-[auto_1fr] fixed-center z-20 max-w-[90vmax] max-h-[90vmin] border-2 rounded-sm`}
+      >
+        <div className="bg-white flex items-center justify-end gap-2 p-1">
+          <button
+            type="button"
+            className="text-navy-d4 hover:text-blue"
+            onClick={handleSave}
+          >
+            <Save size={22} />
+          </button>
+        </div>
+        <Cropper
+          src={URL.createObjectURL(input)}
+          aspectRatio={x / y}
+          ref={cropperRef}
+          viewMode={1}
+          zoomable
+          scalable
+        />
+      </DialogPanel>
+    </Dialog>
   );
 }

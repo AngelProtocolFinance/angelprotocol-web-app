@@ -1,35 +1,25 @@
-import { BYTES_IN_MB } from "constants/common";
-import { fileDropzoneAssetShape } from "schemas/file";
-import { alphanumeric, requiredString } from "schemas/string";
-import type { SchemaShape } from "schemas/types";
-import type { MIMEType } from "types/lists";
-import { type ObjectSchema, object } from "yup";
-import type { FormValues } from "./types";
+import { type FileSpec, fileOutput } from "components/FileDropzone";
+import { alphanumeric } from "schemas/string";
+import * as v from "valibot";
 
-export const MB_LIMIT = 6;
+export const fileSpec: FileSpec = {
+  mbLimit: 6,
+  mimeTypes: ["image/jpeg", "image/png", "application/pdf", "image/webp"],
+};
 
-export const VALID_MIME_TYPES: MIMEType[] = [
-  "image/jpeg",
-  "image/png",
-  "application/pdf",
-  "image/webp",
-];
-
-const assetShape = fileDropzoneAssetShape(
-  MB_LIMIT * BYTES_IN_MB,
-  VALID_MIME_TYPES,
-  true
-);
-
-export const schema = object<any, SchemaShape<FormValues>>({
-  registration_number: requiredString.matches(
-    alphanumeric,
-    "must only contain numbers and letters"
+const requiredStr = v.pipe(v.string("required"), v.nonEmpty("required"));
+export const schema = v.object({
+  registration_number: v.pipe(
+    requiredStr,
+    v.regex(alphanumeric, "must only contain numbers and letters")
   ),
-  proof_of_identity: assetShape,
-  proof_of_reg: assetShape,
-  legal_entity_type: requiredString.trim(),
-  project_description: requiredString
-    .trim()
-    .max(4000, "maximum 4000 characters allowed"),
-}) as ObjectSchema<FormValues>;
+  proof_of_identity: fileOutput({ required: true }),
+  proof_of_reg: fileOutput({ required: true }),
+  legal_entity_type: requiredStr,
+  project_description: v.pipe(
+    requiredStr,
+    v.maxLength(4000, ({ requirement: r }) => `maximum ${r} characters allowed`)
+  ),
+});
+
+export interface FV extends v.InferOutput<typeof schema> {}

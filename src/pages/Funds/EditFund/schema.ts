@@ -1,27 +1,10 @@
+import { imgOutput } from "components/ImgEditor";
 import { richTextContent } from "types/components";
 import * as v from "valibot";
-import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES, target } from "../common";
+import { target } from "../common";
 import { video } from "../common/videos";
 
 const str = v.pipe(v.string(), v.trim());
-
-/** not set by user */
-const fileObject = v.object({
-  name: str,
-  publicUrl: str,
-});
-
-export const imgLink = v.object({
-  file: v.optional(
-    v.pipe(
-      v.file("required"),
-      v.mimeType(VALID_MIME_TYPES, "invalid type"),
-      v.maxSize(MAX_SIZE_IN_BYTES, "exceeds size limit")
-    )
-  ),
-  preview: v.pipe(str, v.url()),
-  ...fileObject.entries,
-});
 
 export const MAX_DESCRIPTION_CHARS = 500;
 export const schema = v.object({
@@ -32,8 +15,8 @@ export const schema = v.object({
   }),
   target,
   videos: v.array(video),
-  banner: imgLink,
-  logo: imgLink,
+  banner: imgOutput({ required: true }),
+  logo: imgOutput({ required: true }),
 });
 
 export type FV = v.InferOutput<typeof schema>;

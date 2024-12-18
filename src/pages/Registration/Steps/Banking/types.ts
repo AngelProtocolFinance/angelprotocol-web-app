@@ -1,5 +1,4 @@
-import type { FileDropzoneAsset } from "types/components";
-
 export type FormValues = {
-  bankStatementFile: FileDropzoneAsset;
+  /** uploaded url */
+  bankStatementFile: string;
 };

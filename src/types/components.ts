@@ -2,7 +2,6 @@ import type { Token } from "@better-giving/assets/tokens";
 import { donateMethodId } from "@better-giving/endowment/schema";
 //token selector
 import * as v from "valibot";
-import type { FileObject } from "./aws";
 export { type Token as TokenV2 } from "@better-giving/assets/tokens";
 
 export interface TokenWithDetails extends Token {
@@ -14,12 +13,6 @@ export interface TokenWithDetails extends Token {
 //selector
 export type ValKey = string | number;
 export type OptionType<V extends ValKey> = { label: string; value: V };
-
-//dropzone
-export type FileDropzoneAsset = {
-  previews: FileObject[]; //from previous submission
-  files: File[]; //new files
-};
 
 //country selector
 export type Country = {

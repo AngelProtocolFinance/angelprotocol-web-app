@@ -12,7 +12,7 @@ export default function Snippet({ classes = "", config }: Props) {
   const widgetURL = widgetURLfn(config);
   const iframeURL =
     config.endowment.id !== 0
-      ? `<iframe src="${widgetURL}" width="700" height="900" style="border: 0px;"></iframe>`
+      ? `<iframe src="${widgetURL}" width="100%" height="700" allow="payment" style="border: 0px;"></iframe>`
       : "Please select organization";
 
   return (

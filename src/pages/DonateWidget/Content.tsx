@@ -23,7 +23,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
 
   return (
     <div
-      className={`${classes} max-w-3xl w-full h-full p-6 grid gap-5 content-start justify-items-center`}
+      className={`${classes} w-full grid gap-5 content-start justify-items-center`}
     >
       <Seo
         title={`Donate to ${profile.name} - ${APP_NAME}`}
@@ -47,7 +47,7 @@ export default function Content({ profile, config, classes = "" }: Props) {
       <Steps
         source="bg-widget"
         mode="live"
-        className="w-full md:w-3/4 border border-gray-l4 rounded-lg"
+        className="w-full border border-gray-l4 rounded-lg"
         recipient={recipient}
         config={config}
       />

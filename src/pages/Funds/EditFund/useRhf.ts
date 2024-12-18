@@ -23,8 +23,8 @@ export function useRhf(init: SingleFund) {
           : init.target === "smart"
             ? { type: "smart" }
             : { type: "fixed", value: init.target },
-      logo: { name: "", preview: init.logo, publicUrl: init.logo },
-      banner: { name: "", preview: init.banner, publicUrl: init.banner },
+      logo: init.logo,
+      banner: init.banner,
       videos: init.videos.map((v) => ({ url: v })),
     },
   });
@@ -61,5 +61,6 @@ export function useRhf(init: SingleFund) {
     banner,
     desc,
     videos,
+    isUploading: logo.value === "loading" || banner.value === "loading",
   };
 }

@@ -1,16 +1,29 @@
-import { richTextContent, stringNumber } from "schemas/shape";
-import { requiredString } from "schemas/string";
-import type { SchemaShape } from "schemas/types";
-import { type ObjectSchema, object } from "yup";
-import { MAX_CHARS, fileObj } from "../common";
-import type { FV } from "./types";
+import { imgOutput } from "components/ImgEditor";
+import * as v from "valibot";
+import { MAX_CHARS } from "../common";
 
-export const schema = object<any, SchemaShape<FV>>({
-  title: requiredString.trim(),
-  description: richTextContent({ maxChars: MAX_CHARS, required: true }),
-  image: fileObj,
-  targetRaise: stringNumber(
-    (s) => s,
-    (num) => num.positive("must be greater than 0")
-  ),
-}) as ObjectSchema<FV>;
+const requiredStr = v.pipe(v.string("required"), v.nonEmpty("required"));
+export const schema = v.object({
+  title: requiredStr,
+  description: v.object({
+    value: requiredStr,
+    length: v.optional(
+      v.pipe(
+        v.number(),
+        v.maxValue(MAX_CHARS, (x) => `max ${x.requirement} characters`)
+      )
+    ),
+  }),
+  image: imgOutput(),
+  targetRaise: v.lazy((val) => {
+    if (val === "") return v.string();
+    return v.pipe(
+      v.string(),
+      v.transform((x) => +x),
+      v.check((x) => x > 0, "must be greater than 0"),
+      v.transform((x) => x.toString())
+    );
+  }),
+});
+
+export interface FV extends v.InferOutput<typeof schema> {}

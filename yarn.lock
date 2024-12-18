@@ -3113,23 +3113,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stripe/react-stripe-js@npm:2.7.1":
-  version: 2.7.1
-  resolution: "@stripe/react-stripe-js@npm:2.7.1"
+"@stripe/react-stripe-js@npm:3.1.1":
+  version: 3.1.1
+  resolution: "@stripe/react-stripe-js@npm:3.1.1"
   dependencies:
     prop-types: "npm:^15.7.2"
   peerDependencies:
-    "@stripe/stripe-js": ^1.44.1 || ^2.0.0 || ^3.0.0
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/dd9d28933dd7419568bee183d8f6cda4225fc3095d9cc15337d02f9e6b6df6d54dbdf299757782190693cf74250f9b0b273c5b38bc714a0d39244ec0823737ce
+    "@stripe/stripe-js": ^1.44.1 || ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
+    react: ">=16.8.0 <20.0.0"
+    react-dom: ">=16.8.0 <20.0.0"
+  checksum: 10/af955aec702851dd3eec082e4f0dfdadd4b4137dbcc67294bbd022853a01dfe2edf6ab3767400e76aad66fa191187c7167430f67ac82b3084dbcff4f00e60cd7
   languageName: node
   linkType: hard
 
-"@stripe/stripe-js@npm:3.5.0":
-  version: 3.5.0
-  resolution: "@stripe/stripe-js@npm:3.5.0"
-  checksum: 10/ab91655d082b9288d5165b374db3c8b2b3d9851428e90b6817017b0a3ee6c8a077b82cebb00d610d0200a4cbec0c0e8a3822a015c57443807982d932599037cb
+"@stripe/stripe-js@npm:5.3.0":
+  version: 5.3.0
+  resolution: "@stripe/stripe-js@npm:5.3.0"
+  checksum: 10/e26717fb4e039f5ca3b47d6805a65926fb469c7cf0cca896b8e6f3c04c55b6421f55ca0eb7579eba13241c59bd797f5f18275c127cee0f517114a7b981e0afa2
   languageName: node
   linkType: hard
 
@@ -3516,8 +3516,8 @@ __metadata:
     "@rsbuild/core": "npm:0.5.9"
     "@rsbuild/plugin-react": "npm:0.5.9"
     "@sentry/react": "npm:8.22.0"
-    "@stripe/react-stripe-js": "npm:2.7.1"
-    "@stripe/stripe-js": "npm:3.5.0"
+    "@stripe/react-stripe-js": "npm:3.1.1"
+    "@stripe/stripe-js": "npm:5.3.0"
     "@tailwindcss/container-queries": "npm:0.1.1"
     "@tailwindcss/typography": "npm:0.5.15"
     "@testing-library/dom": "npm:10.1.0"
@@ -3531,7 +3531,6 @@ __metadata:
     "@types/react-dom": "npm:18.2.19"
     "@types/react-helmet": "npm:6.1.11"
     aws-amplify: "npm:6.3.6"
-    cropperjs: "npm:1.6.2"
     date-fns: "npm:3.6.0"
     decimal.js: "npm:10.4.3"
     framer-motion: "npm:11.2.10"
@@ -3547,6 +3546,7 @@ __metadata:
     quill: "npm:2.0.2"
     react: "npm:18.2.0"
     react-chariot-connect: "npm:1.0.8"
+    react-cropper: "npm:2.3.3"
     react-csv: "npm:2.2.2"
     react-dom: "npm:18.2.0"
     react-dropzone: "npm:14.2.3"
@@ -3986,7 +3986,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"cropperjs@npm:1.6.2":
+"cropperjs@npm:^1.5.13":
   version: 1.6.2
   resolution: "cropperjs@npm:1.6.2"
   checksum: 10/4b97ac27b7fd65316a531372dd96ce1073b4620c1b012fbad5acb0fdc28952112466bc333a98c510fe2bc9dcdeee58f5c8619522c045c6166300621673e3d759
@@ -5886,6 +5886,17 @@ __metadata:
   peerDependencies:
     react: ">=18"
   checksum: 10/5f2849bbd7898bc97c8f623812ffcc52d6d90cd959af79e4ec61cb2764e9574ae45588c31f559fe779d56d0cc255b4b8f1b4d71a3067f54a8f0adf7856506228
+  languageName: node
+  linkType: hard
+
+"react-cropper@npm:2.3.3":
+  version: 2.3.3
+  resolution: "react-cropper@npm:2.3.3"
+  dependencies:
+    cropperjs: "npm:^1.5.13"
+  peerDependencies:
+    react: ">=17.0.2"
+  checksum: 10/72df559bb0115bf5335524582568eab26adea3a46984f67d4d7138f5a79af44f10d3f7483302d25a8c670f7aa04fbb5b0cc83a51841471e3374bb91c2f657319
   languageName: node
   linkType: hard
 

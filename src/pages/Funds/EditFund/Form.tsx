@@ -5,10 +5,9 @@ import { RichText } from "components/RichText";
 import { NativeField as Field, Form as Frm } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { uploadFile } from "helpers/uploadFile";
 import type { SubmitHandler } from "react-hook-form";
 import { useCloseFundMutation, useEditFundMutation } from "services/aws/funds";
-import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
+import { GoalSelector, imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { FeatureBanner } from "./FeatureBanner";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
@@ -25,24 +24,13 @@ export function Form({
   const [editFund, { isLoading: isEditingFund }] = useEditFundMutation();
   const [closeFund, { isLoading: isClosingFund }] = useCloseFundMutation();
 
-  const onSubmit: SubmitHandler<FV> = async ({
-    target,
-    logo,
-    banner,
-    ...fv
-  }) => {
+  const onSubmit: SubmitHandler<FV> = async ({ target, ...fv }) => {
     try {
       /// BUILD UPDATE ///
       const update: FundUpdate = {};
 
-      if (rhf.dirtyFields.banner && banner.file) {
-        const uploaded = await uploadFile(banner.file, "bg-funds");
-        if (uploaded) update.banner = uploaded.publicUrl;
-      }
-      if (rhf.dirtyFields.logo && logo.file) {
-        const uploaded = await uploadFile(logo.file, "bg-funds");
-        if (uploaded) update.logo = uploaded.publicUrl;
-      }
+      if (rhf.dirtyFields.banner) update.banner = fv.banner;
+      if (rhf.dirtyFields.logo) update.logo = fv.logo;
 
       if (rhf.dirtyFields.target) {
         update.target =
@@ -124,40 +112,38 @@ export function Form({
       <Videos {...rhf.videos} classes="mt-4 mb-8" />
       <label className="text-lg font-medium block mb-2 mt-4">Logo</label>
       <ImgEditor
+        bucket="bg-funds"
         disabled={rhf.isSubmitting}
         value={rhf.logo.value}
         onChange={(v) => {
           rhf.logo.onChange(v);
-          rhf.trigger("logo.file");
+          rhf.trigger("logo");
         }}
         onUndo={(e) => {
           e.stopPropagation();
           rhf.resetField("logo");
         }}
-        accept={VALID_MIME_TYPES}
-        aspect={[1, 1]}
+        spec={imgSpec([1, 1])}
         classes={{ container: "w-80 aspect-[1/1]" }}
-        maxSize={MAX_SIZE_IN_BYTES}
-        error={rhf.errors.logo?.file?.message}
+        error={rhf.errors.logo?.message}
       />
 
       <label className="text-lg font-medium block mt-6 mb-2">Banner</label>
       <ImgEditor
+        bucket="bg-funds"
         disabled={rhf.isSubmitting}
         value={rhf.banner.value}
         onChange={(v) => {
           rhf.banner.onChange(v);
-          rhf.trigger("banner.file");
+          rhf.trigger("banner");
         }}
         onUndo={(e) => {
           e.stopPropagation();
           rhf.resetField("banner");
         }}
-        accept={VALID_MIME_TYPES}
-        aspect={[4, 1]}
+        spec={imgSpec([4, 1])}
         classes={{ container: "w-full aspect-[4/1]" }}
-        maxSize={MAX_SIZE_IN_BYTES}
-        error={rhf.errors.banner?.file?.message}
+        error={rhf.errors.banner?.message}
       />
 
       <label className="block mt-4 font-medium">
@@ -201,7 +187,7 @@ export function Form({
           {isClosingFund ? "Closing.." : "Close fund"}
         </button>
         <button
-          disabled={!rhf.isDirty}
+          disabled={!rhf.isDirty || rhf.isUploading}
           type="submit"
           className="btn-blue text-sm font-medium px-4 py-2 justify-self-end"
         >

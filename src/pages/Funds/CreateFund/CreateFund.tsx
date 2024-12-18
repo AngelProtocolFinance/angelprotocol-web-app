@@ -13,7 +13,6 @@ import { appRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
-import { uploadFile } from "helpers/uploadFile";
 import {
   type SubmitHandler,
   useController,
@@ -22,7 +21,7 @@ import {
 } from "react-hook-form";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCreateFundMutation } from "services/aws/funds";
-import { GoalSelector, MAX_SIZE_IN_BYTES, VALID_MIME_TYPES } from "../common";
+import { GoalSelector, imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { EndowmentSelector } from "./EndowmentSelector";
 import { type FV, MAX_DESCRIPTION_CHAR, schema } from "./schema";
@@ -43,8 +42,8 @@ export default withAuth(function CreateFund() {
     defaultValues: {
       name: "",
       description: "",
-      logo: { preview: "", publicUrl: "" },
-      banner: { preview: "", publicUrl: "" },
+      banner: "",
+      logo: "",
       featured: true,
       members: [],
       target: {
@@ -77,24 +76,13 @@ export default withAuth(function CreateFund() {
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
 
-  const onSubmit: SubmitHandler<FV> = async ({ banner, logo, ...fv }) => {
+  const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
-      if (!banner.file || !logo.file) {
-        throw `dev: banner must be required`;
-      }
-
-      showModal(Prompt, { type: "loading", children: "Creating fund..." });
-
-      const _banner = await uploadFile(banner.file, "bg-funds");
-      if (!_banner) return handleError("Failed to upload banner");
-      const _logo = await uploadFile(logo.file, "bg-funds");
-      if (!_logo) return handleError("Failed to upload logo");
-
       const fund: NewFund = {
         name: fv.name,
         description: fv.description.value,
-        banner: _banner.publicUrl,
-        logo: _logo.publicUrl,
+        banner: fv.banner,
+        logo: fv.logo,
         members: fv.members.map((m) => m.id),
         featured: fv.featured,
         target:
@@ -207,46 +195,44 @@ export default withAuth(function CreateFund() {
           Banner
         </Label>
         <ImgEditor
+          bucket="bg-funds"
           value={banner.value}
+          spec={imgSpec([4, 1])}
           onChange={(v) => {
             banner.onChange(v);
-            trigger("banner.file");
+            trigger("banner");
           }}
           onUndo={(e) => {
             e.stopPropagation();
             resetField("banner");
           }}
-          accept={VALID_MIME_TYPES}
-          aspect={[4, 1]}
           classes={{
             container: "mb-4",
             dropzone: "aspect-[4/1]",
           }}
-          maxSize={MAX_SIZE_IN_BYTES}
-          error={errors.banner?.file?.message}
+          error={errors.banner?.message}
         />
 
         <Label className="mt-6 mb-2" required>
           Logo
         </Label>
         <ImgEditor
+          bucket="bg-funds"
           value={logo.value}
           onChange={(v) => {
             logo.onChange(v);
-            trigger("logo.file");
+            trigger("logo");
           }}
           onUndo={(e) => {
             e.stopPropagation();
             resetField("logo");
           }}
-          accept={VALID_MIME_TYPES}
-          aspect={[1, 1]}
+          spec={imgSpec([1, 1])}
           classes={{
             container: "mb-4",
             dropzone: "aspect-[1/1] w-60",
           }}
-          maxSize={MAX_SIZE_IN_BYTES}
-          error={errors.logo?.file?.message}
+          error={errors.logo?.message}
         />
 
         <Field

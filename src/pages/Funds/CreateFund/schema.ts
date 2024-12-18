@@ -1,25 +1,10 @@
+import { imgOutput } from "components/ImgEditor";
 import { richTextContent } from "types/components";
 import * as v from "valibot";
-import { MAX_SIZE_IN_BYTES, VALID_MIME_TYPES, target } from "../common";
+import { target } from "../common";
 import { video } from "../common/videos";
 
 const str = v.pipe(v.string("required"), v.trim());
-
-/** not set by user */
-const fileObject = v.object({
-  name: str,
-  publicUrl: str,
-});
-
-export const imgLink = v.object({
-  file: v.pipe(
-    v.file("required"),
-    v.mimeType(VALID_MIME_TYPES, "invalid type"),
-    v.maxSize(MAX_SIZE_IN_BYTES, "exceeds size limit")
-  ),
-  preview: v.pipe(str, v.url()),
-  ...fileObject.entries,
-});
 
 export const endowOption = v.object({
   id: v.number(),
@@ -35,8 +20,8 @@ export const schema = v.object({
     maxChars: MAX_DESCRIPTION_CHAR,
     required: true,
   }),
-  banner: imgLink,
-  logo: imgLink,
+  banner: imgOutput({ required: true }),
+  logo: imgOutput({ required: true }),
   members: v.pipe(
     v.array(endowOption),
     v.minLength(1, "must contain at least one endowment"),

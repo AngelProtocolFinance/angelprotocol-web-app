@@ -1,19 +1,12 @@
-import type { ImgLink } from "components/ImgEditor";
-import { genFileSchema } from "schemas/file";
-import type { SchemaShape } from "schemas/types";
-import type { ImageMIMEType } from "types/lists";
-import { object } from "yup";
+import type { ImgSpec } from "components/ImgEditor";
 
-export const VALID_MIME_TYPES: ImageMIMEType[] = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/svg+xml",
-];
+export const imgSpec = (aspect: [number, number], rounded = false): ImgSpec => {
+  return {
+    maxSize: 1e6,
+    type: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
+    aspect,
+    rounded,
+  };
+};
 
-export const MAX_SIZE_IN_BYTES = 1e6;
 export const MAX_CHARS = 500;
-
-export const fileObj = object().shape<SchemaShape<ImgLink>>({
-  file: genFileSchema(MAX_SIZE_IN_BYTES, VALID_MIME_TYPES),
-});
