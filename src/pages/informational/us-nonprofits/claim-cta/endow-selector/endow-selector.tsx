@@ -39,7 +39,7 @@ export const EndowSelector = forwardRef<El, Props>((props: Props, ref) => {
         placeholder="Search by name or EIN"
         onChange={(event) => setSearchText(event.target.value)}
         displayValue={(value: EndowmentOption) => value.name}
-        className="px-10 w-96 focus:outline-none p-3 rounded-full"
+        className="px-10 @4xl:w-96 focus:outline-none p-3 rounded-full"
       />
 
       <ComboboxButton>
