@@ -1,8 +1,8 @@
 import Seo from "components/Seo";
+import { Responsive } from "pages/@sections/testimonials";
 import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
 import { DonationFormInfo } from "./donation-form-info";
-import { Stories } from "./stories";
 import { Top } from "./top";
 import { WhyBG } from "./why-bg";
 
@@ -26,7 +26,10 @@ export function Component() {
         <DonationFormInfo className="mt-60 padded-container" />
       </div>
       <div className="bg-gradient-to-bl from-lilac/50  via-50% via-transparent to-transparent">
-        <Stories className="mt-40 md:mt-80 padded-container" />
+        <Responsive
+          horizontal="block @3xl:hidden mt-40"
+          vertical="hidden md:grid mt-40 md:mt-80 padded-container"
+        />
       </div>
       <div className="mt-48">
         <BottomCta className="padded-container" />
