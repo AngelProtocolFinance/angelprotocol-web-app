@@ -35,6 +35,7 @@ export const charityRoute: RouteObject = {
       ],
     },
     { path: adminRoutes.form_builder, element: <EndowWidget /> },
+    { path: adminRoutes.funds, lazy: () => import("./Funds") },
     { index: true, lazy: () => import("./Dashboard") },
     ...mediaRoutes,
   ],

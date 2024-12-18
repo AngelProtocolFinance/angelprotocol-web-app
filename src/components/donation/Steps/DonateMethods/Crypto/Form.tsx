@@ -55,7 +55,7 @@ export default function Form(props: CryptoFormStep) {
       {(props.init.recipient.progDonationsAllowed ?? true) && (
         <ProgramSelector
           classes="my-2"
-          endowId={props.init.recipient.id}
+          endowId={+props.init.recipient.id}
           program={program.value}
           onChange={program.onChange}
         />

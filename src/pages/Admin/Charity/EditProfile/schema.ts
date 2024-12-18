@@ -8,6 +8,7 @@ import {
   unSdgNum,
 } from "@better-giving/endowment/schema";
 import { type ImgSpec, imgOutput } from "components/ImgEditor";
+import { richTextContent } from "types/components";
 import type { ImageMIMEType } from "types/lists";
 import * as v from "valibot";
 
@@ -60,15 +61,7 @@ export const schema = v.object({
     label: str,
     value: endowDesignation,
   }),
-  overview: v.object({
-    value: requiredStr,
-    length: v.optional(
-      v.pipe(
-        v.number(),
-        v.maxValue(MAX_CHARS, (x) => `max ${x.requirement} characters`)
-      )
-    ),
-  }),
+  overview: richTextContent({ maxChars: MAX_CHARS, required: true }),
   tagline: v.pipe(requiredStr, v.maxLength(140, "max length is 140 chars")),
   image: imgOutput({ required: true }),
   logo: imgOutput({ required: true }),
