@@ -24,8 +24,8 @@ export const schema = v.object({
   logo: imgOutput({ required: true }),
   members: v.pipe(
     v.array(endowOption),
-    v.minLength(1, "must contain at least one endowment"),
-    v.maxLength(10, "cannot contain more than 10 endowments")
+    v.minLength(1, "must contain at least one nonprofit"),
+    v.maxLength(10, "cannot contain more than 10 nonprofits")
   ),
   featured: v.boolean(),
   expiration: v.optional(
