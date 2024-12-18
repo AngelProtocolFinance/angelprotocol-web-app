@@ -9,6 +9,7 @@ import {
   NativeField as Field,
   Form,
 } from "components/form";
+import { DollarSign } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 import {
   type SubmitHandler,
@@ -188,12 +189,18 @@ export default function Configurer({
           field={(idx) => (
             <>
               <HuiField className="grid grid-rows-subgrid row-span-2">
-                <Input
-                  type="number"
-                  placeholder="$"
-                  {...register(`increments.${idx}.value`)}
-                  className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
-                />
+                <div className="relative w-full">
+                  <DollarSign
+                    size={14}
+                    className="text-navy-l1 absolute top-1/2 left-3 -translate-y-1/2"
+                  />
+                  <Input
+                    type="number"
+                    placeholder="0.00"
+                    {...register(`increments.${idx}.value`)}
+                    className="w-full h-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                  />
+                </div>
                 <p className="mt-1 empty:hidden text-left text-xs text-red">
                   {errors.increments?.[idx]?.value?.message}
                 </p>
