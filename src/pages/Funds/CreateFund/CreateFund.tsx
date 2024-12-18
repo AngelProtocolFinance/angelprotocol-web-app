@@ -14,6 +14,7 @@ import { appRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
+import { useEffect } from "react";
 import {
   type SubmitHandler,
   useController,
@@ -22,6 +23,7 @@ import {
 } from "react-hook-form";
 import { Link, useSearchParams } from "react-router-dom";
 import { useCreateFundMutation } from "services/aws/funds";
+import { useEndowment } from "services/aws/useEndowment";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { EndowmentSelector } from "./EndowmentSelector";
@@ -77,6 +79,12 @@ export default withAuth(function CreateFund() {
   const { handleError } = useErrorContext();
   const { showModal } = useModalContext();
 
+  const { data: initNpoMember } = useEndowment(npoId, ["name", "id", "logo"]);
+
+  useEffect(() => {
+    initNpoMember && members.onChange([initNpoMember]);
+  }, [initNpoMember, members.onChange]);
+
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
       const fund: NewFund = {
@@ -104,21 +112,11 @@ export default withAuth(function CreateFund() {
         type: "success",
         children: (
           <p>
-            Your{" "}
+            Congratulations, your{" "}
             <Link to={appRoutes.funds + `/${res.id}`} className="text-blue-d1">
               fund
             </Link>{" "}
-            is created
-            {fv.featured ? (
-              <>
-                {" "}
-                and is now listed in{" "}
-                <Link to={appRoutes.funds}>funds page</Link>
-              </>
-            ) : (
-              ""
-            )}
-            !. To get access to this fund, kindly login again.
+            was successfully created!
           </p>
         ),
       });
@@ -126,6 +124,8 @@ export default withAuth(function CreateFund() {
       handleError(err, { context: "creating fund" });
     }
   };
+
+  const isUploading = banner.value === "loading" || logo.value === "loading";
 
   return (
     <div className="w-full padded-container">
@@ -250,6 +250,7 @@ export default withAuth(function CreateFund() {
         </CheckField>
 
         <button
+          disabled={isUploading}
           type="submit"
           className="mt-8 btn-blue text-sm font-medium px-4 py-2 justify-self-end"
         >
