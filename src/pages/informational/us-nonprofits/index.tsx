@@ -25,11 +25,9 @@ export function Component() {
       <div className="bg-gradient-to-br from-transparent via-transparent via-50% to-lilac/50">
         <DonationFormInfo className="mt-60 padded-container" />
       </div>
-
       <div className="bg-gradient-to-bl from-lilac/50  via-50% via-transparent to-transparent">
-        <Stories className="mt-80 padded-container" />
+        <Stories className="mt-40 md:mt-80 padded-container" />
       </div>
-
       <div className="mt-48">
         <BottomCta className="padded-container" />
       </div>
