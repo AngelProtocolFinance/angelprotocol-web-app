@@ -17,11 +17,15 @@ export function Top({ className = "" }) {
           Simplify Fundraising, Maximize Impact: Claim Your Better Giving
           Account Today!
         </h1>
-        <p className="mb-10 text-lg @6xl:text-xl text-center @6xl:text-left">
+        <p className="text-lg @6xl:text-xl text-center @6xl:text-left">
           Accept donations seamlessly—whether it’s credit card, crypto, stock,
           or DAF gifts—while paying zero platform fees. Simplify administration
           with automated tax reporting, customizable forms, and grow your funds
           sustainably with high-yield savings and investment options.
+        </p>
+        <p className="mb-10 mt-4 text-lg @6xl:text-xl text-center @6xl:text-left">
+          Your free Better Giving donation Page is ready to receive donations
+          and ready for you to claim! Start your journey today.
         </p>
 
         <button
@@ -29,8 +33,6 @@ export function Top({ className = "" }) {
           onClick={async () => {
             const dest = document.getElementById("claim-nonprofit");
             dest?.scrollIntoView({ behavior: "smooth" });
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            dest?.getElementsByTagName("input")[0].focus();
           }}
           className="mt-8 isolate z-10 justify-self-center normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
         >
