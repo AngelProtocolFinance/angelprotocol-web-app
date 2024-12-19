@@ -17,11 +17,24 @@ export function Top({ className = "" }) {
           Simplify Fundraising, Maximize Impact
         </h1>
         <p className="text-lg @6xl:text-xl text-center @6xl:text-left">
-          Accept donations seamlessly—whether it’s credit card, crypto, stock,
-          or DAF gifts—while paying zero platform fees. Simplify administration
-          with automated tax reporting, customizable forms, and grow your funds
-          sustainably with high-yield savings and investment options.
+          Better Giving streamlines donations, simplifies administration, and
+          helps your nonprofit grow its funds—all through an easily embeddable
+          donation form.
         </p>
+        <ul className="pl-5 mt-4 text-lg @6xl:text-xl space-y-4 text-center @6xl:text-left list-disc list-inside">
+          <li>
+            Accept donations seamlessly: credit card, crypto, stock, and DAF
+            gifts—<span className="font-bold">ZERO PLATFORM FEES</span>.
+          </li>
+          <li>
+            Simplify operations with automated tax reporting and customizable
+            forms.
+          </li>
+          <li>
+            Grow funds sustainably with high-yield savings and investment
+            options.
+          </li>
+        </ul>
         <p className="mb-10 mt-4 text-lg @6xl:text-xl text-center @6xl:text-left">
           Your free Better Giving donation Page is ready to receive donations
           and ready for you to claim! Start your journey today.
