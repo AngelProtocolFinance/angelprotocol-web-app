@@ -10,7 +10,6 @@ import type { SubmitHandler } from "react-hook-form";
 import { useCloseFundMutation, useEditFundMutation } from "services/aws/funds";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
-import { FeatureBanner } from "./FeatureBanner";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
 import { useRhf } from "./useRhf";
 
@@ -22,7 +21,7 @@ export function Form({
   const { handleError } = useErrorContext();
   const rhf = useRhf(props);
 
-  const [editFund, { isLoading: isEditingFund }] = useEditFundMutation();
+  const [editFund] = useEditFundMutation();
   const [closeFund, { isLoading: isClosingFund }] = useCloseFundMutation();
 
   const onSubmit: SubmitHandler<FV> = async ({ target, ...fv }) => {
@@ -66,23 +65,6 @@ export function Form({
       disabled={rhf.isSubmitting}
       className={classes + " pb-4"}
     >
-      <FeatureBanner
-        isToggling={isEditingFund}
-        fundId={props.id}
-        featured={props.featured}
-        onToggle={async () => {
-          try {
-            await editFund({
-              id: props.id,
-              featured: !props.featured,
-            }).unwrap();
-          } catch (err) {
-            handleError(err, { context: "updating fund" });
-          }
-        }}
-        classes="my-4"
-      />
-
       <Field
         {...rhf.register("name")}
         label="Name"
