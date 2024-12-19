@@ -1,21 +1,39 @@
 import quotation from "assets/icons/quotation.svg";
 import { testimonials } from "content/testimonials";
+import { unpack } from "helpers";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import type { ReactNode } from "react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SwipeCard } from "./swipe-card";
 
-// pt-48 bg-gradient-to-b from-peach/20 to-transparent overflow-x-clip
-export const Horizontal = ({ classes = "" }) => {
+interface Classes {
+  container?: string;
+  quote?: string; //w-24 lg:w-36
+  heading?: string; //text-3xl/tight @3xl:text-4.5xl/tight
+}
+
+interface Props {
+  classes?: Classes;
+  heading?: ReactNode; //Nonprofit Success Stories: <br /> Inspiring Change Together
+}
+export const Horizontal = (props: Props) => {
+  const s = unpack(props.classes);
   return (
-    <div className={`grid relative ${classes}`}>
+    <div className={`grid relative ${s.container}`}>
       <img
         src={quotation}
         alt="quotation mark"
-        className="justify-self-center w-24 lg:w-36 mb-8"
+        className={`justify-self-center ${s.quote || "w-24 lg:w-36"} mb-8`}
       />
-      <h2 className="text-center text-3xl/tight @3xl:text-4.5xl/tight text-pretty justify-self-center mb-14">
-        Nonprofit Success Stories: <br /> Inspiring Change Together
+      <h2
+        className={`text-center ${s.heading || "text-3xl/tight @3xl:text-4.5xl/tight"} text-pretty justify-self-center mb-14`}
+      >
+        {props.heading ?? (
+          <>
+            Nonprofit Success Stories: <br /> Inspiring Change Together
+          </>
+        )}
       </h2>
 
       <button

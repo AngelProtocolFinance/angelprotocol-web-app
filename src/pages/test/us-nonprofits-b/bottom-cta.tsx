@@ -1,33 +1,42 @@
 import { laira } from "assets/laira/laira";
 import Image from "components/Image";
-import { ClaimCta } from "./claim-cta";
+import { BOOK_A_DEMO } from "constants/env";
+import { appRoutes } from "constants/routes";
+import { Link } from "react-router-dom";
 
 export function BottomCta({ className = "" }) {
   return (
     <div
-      id="claim-nonprofit"
-      className={`${className} grid @4xl:grid-cols-2 gap-4 content-start scroll-mt-10`}
+      className={`${className} grid md:grid-cols-[3fr_1fr] bg-gradient-to-br from-blue-d1 to-white rounded-3xl md:rounded-4xl px-10 py-12 md:px-16 md:py-[4.5rem]`}
     >
-      <h4 className="col-span-full text-lg text-blue-d1 uppercase text-center">
-        Simple. Sustainable. Free.
-      </h4>
-      <h2 className="col-span-full text-center text-3xl @4xl:text-4xl leading-snug max-w-2xl justify-self-center mb-12 capitalize">
-        The all-in-one fundraising solution you deserve is only a few clicks
-        away
-      </h2>
-
-      <div
-        className={`${className} justify-items-center col-span-full grid w-full bg-gradient-to-br from-blue-d1 to-transparent p-6 rounded-xl`}
-      >
-        <h3 className="text-center text-white @3xl:leading-snug font-heading text-xl @sm:text-2xl mb-4 col-span-full">
-          US 501(c)(3) Nonprofit?
+      <div className="order-2 md:order-1">
+        <h4 className="text-center md:text-left uppercase [28rem]:text-lg text-white leading-normal mb-6">
+          Simple. Sustainable. Free.
+        </h4>
+        <h3 className="text-center md:text-left md:leading-snug font-heading text-2xl @md:text-4xl text-white mb-9">
+          The all-in-one fundraising solution you deserve is only a few clicks
+          away
         </h3>
-        <p className="text-white text-lg font-bold mb-2 text-center">
-          Claim your nonprofit
-        </p>
-        <Image width={200} src={laira.negotiating} className="mt-4 mb-8" />
-        <ClaimCta classes="flex-col @4xl:flex-row" />
+        <div className="flex flex-col md:flex-row justify-center md:justify-start items-center gap-6">
+          <Link
+            to={appRoutes.register}
+            className="bg-blue-d1 hover:bg-blue-d2 active:translate-x-1 text-white font-heading uppercase font-bold shadow-2xl rounded-full px-8 py-3 md:px-12 md:py-6"
+          >
+            Start today
+          </Link>
+          <Link
+            to={BOOK_A_DEMO}
+            className="bg-white shadow-2xl hover:shadow-white/40 active:translate-x-1 text-blue-d1 font-heading uppercase font-bold rounded-full px-8 py-3 md:px-12 md:py-6"
+          >
+            Book a Demo
+          </Link>
+        </div>
       </div>
+      <Image
+        width={140}
+        src={laira.waiving}
+        className="place-self-center mb-8 order-1 md:order-2"
+      />
     </div>
   );
 }

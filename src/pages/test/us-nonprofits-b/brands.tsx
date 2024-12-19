@@ -4,7 +4,7 @@ import Marquee from "react-fast-marquee";
 export function Brands({ className = "" }) {
   return (
     <section className={`${className} grid`}>
-      <h2 className="text-center text-3xl/tight md:text-4.5xl/tight text-navy-d4 text-pretty mb-16 px-4 capitalize">
+      <h2 className="text-center text-xl text-navy-d4 text-pretty mb-16 px-4 capitalize">
         Over $6 million donations <br /> processed for nonprofits worldwide
       </h2>
       <Marquee pauseOnHover autoFill>
