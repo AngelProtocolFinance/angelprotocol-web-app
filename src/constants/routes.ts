@@ -24,6 +24,7 @@ export enum appRoutes {
   //informational
   nonprofit_info = "/nonprofit",
   us_nonprofits = "/us-nonprofits",
+  us_nonprofits_b = "/us-nonprofits-b",
   donor_info = "/donor",
   wp_plugin = "/wp-plugin",
   about = "/about-us",

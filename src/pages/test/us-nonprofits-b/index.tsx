@@ -1,3 +1,4 @@
+import { DappLogo } from "components/Image";
 import Seo from "components/Seo";
 import { Responsive } from "pages/@sections/testimonials";
 import { BottomCta } from "./bottom-cta";
@@ -9,6 +10,9 @@ import { WhyBG } from "./why-bg";
 export function Component() {
   return (
     <main className="w-full grid content-start pb-16 @container">
+      <div className="padded-container pt-6 pb-2">
+        <DappLogo classes="w-48 h-12" />
+      </div>
       <Seo
         title="US Nonprofits"
         description="Simplify Fundraising, Maximize Impact: Claim Your Better Giving Account Today"

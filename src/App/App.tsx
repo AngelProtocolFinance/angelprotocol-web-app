@@ -11,6 +11,7 @@ import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { userDashboardRoute } from "pages/UserDashboard";
 import { infoRoutes } from "pages/informational";
+import { testPages } from "pages/test";
 import { useEffect } from "react";
 import {
   Navigate,
@@ -100,6 +101,7 @@ const rootRoutes: RO[] = [
     element: <Outlet context={true} />, //outlet-value: isInWidget/widgetVersion
     children: widgetRoutes,
   },
+  ...testPages,
 ];
 
 export const routes: RO[] = [
