@@ -1,7 +1,6 @@
 import { laira } from "assets/laira/laira";
 import Image from "components/Image/Image";
 import { type DonationState, Steps, initDetails } from "components/donation";
-import { DONATION_INCREMENTS } from "constants/common";
 import { useEndowment } from "services/aws/useEndowment";
 import type { WidgetConfig } from "types/widget";
 
@@ -31,10 +30,7 @@ export default function Preview({ classes = "", config }: Props) {
       config: {
         ...restConfig,
         methodIds: methods.filter((m) => !m.disabled).map((m) => m.id),
-        increments:
-          increments.length === 0
-            ? DONATION_INCREMENTS
-            : increments.map((i) => ({ ...i, value: +i.value })),
+        increments: increments.map((i) => ({ ...i, value: +i.value })),
       },
     },
     details: initDetails(methods.at(0)?.id ?? "stripe", restConfig.program),
