@@ -1,7 +1,9 @@
 import Image from "components/Image";
+import { BOOK_A_DEMO } from "constants/env";
+import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { useRendered } from "hooks/use-rendered";
-import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export function Top({ className = "" }) {
   useRendered();
@@ -21,7 +23,7 @@ export function Top({ className = "" }) {
           helps your nonprofit grow its funds—all through an easily embeddable
           donation form.
         </p>
-        <ul className="pl-5 mt-4 text-lg @6xl:text-xl space-y-4 text-center @6xl:text-left list-disc list-inside">
+        <ul className="pl-5 my-8 text-lg @6xl:text-xl space-y-4 text-center @6xl:text-left list-disc list-outside">
           <li>
             Accept donations seamlessly: credit card, crypto, stock, and DAF
             gifts—<span className="font-bold">ZERO PLATFORM FEES</span>.
@@ -35,23 +37,21 @@ export function Top({ className = "" }) {
             options.
           </li>
         </ul>
-        <p className="mb-10 mt-4 text-lg @6xl:text-xl text-center @6xl:text-left">
-          Your free Better Giving donation Page is ready to receive donations
-          and ready for you to claim! Start your journey today.
-        </p>
 
-        <button
-          type="button"
-          onClick={async () => {
-            const dest = document.getElementById("claim-nonprofit");
-            dest?.scrollIntoView({ behavior: "smooth" });
-          }}
-          className="mt-8 isolate z-10 justify-self-center @6xl:justify-self-start  normal-case inline-flex items-center px-10 py-3 gap-1 rounded-full text-lg font-heading relative bg-blue-d1 group active:translate-x-1 text-white font-bold shadow-2xl"
-        >
-          <span className="ml-1">Claim Your Account Now</span>
-          <ArrowRight size={18} className="group-hover:translate-x-1" />
-          <Tooltip className="max-sm:hidden absolute left-[110%] top-3" />
-        </button>
+        <div className="flex flex-col @sm:flex-row justify-center @6xl:justify-start items-center gap-6 mt-6">
+          <Link
+            to={appRoutes.register}
+            className="px-6 py-2 @6xl:px-10 @6xl:py-4 @6xl:text-lg shadow-blue/30 hover:shadow-blue/50 bg-blue-d1 active:translate-x-1 text-white font-heading uppercase font-bold shadow-2xl rounded-full"
+          >
+            Start today
+          </Link>
+          <Link
+            to={BOOK_A_DEMO}
+            className="uppercase bg-white border-blue-d1 text-blue-d1 active:translate-x-1 font-bold font-heading border-2 rounded-full px-6 py-2 @6xl:px-8 @6xl:py-4 @6xl:text-xl hover:shadow-2xl hover:shadow-blue/50"
+          >
+            Book a Demo
+          </Link>
+        </div>
       </div>
       <Image
         src={benefits.donors[1].img}
