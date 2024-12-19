@@ -3,12 +3,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
 import { RichText } from "components/RichText";
-import {
-  NativeCheckField as CheckField,
-  NativeField as Field,
-  Form,
-  Label,
-} from "components/form";
+import { NativeField as Field, Form, Label } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { appRoutes } from "constants/routes";
 import withAuth from "contexts/Auth";
@@ -47,7 +42,6 @@ export default withAuth(function CreateFund() {
       description: "",
       banner: "",
       logo: "",
-      featured: true,
       members: [],
       target: {
         type: "smart",
@@ -93,7 +87,7 @@ export default withAuth(function CreateFund() {
         banner: fv.banner,
         logo: fv.logo,
         members: fv.members.map((m) => m.id),
-        featured: fv.featured,
+        featured: true, // internal ( req update: all fundraisers are public )
         target:
           fv.target.type === "none"
             ? `${0}`
@@ -244,10 +238,6 @@ export default withAuth(function CreateFund() {
           error={errors.expiration?.message}
           required={false}
         />
-
-        <CheckField {...register("featured")} classes="col-span-full my-6">
-          Featured in funds page
-        </CheckField>
 
         <button
           disabled={isUploading}

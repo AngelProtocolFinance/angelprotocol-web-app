@@ -27,7 +27,6 @@ export const schema = v.object({
     v.minLength(1, "must contain at least one nonprofit"),
     v.maxLength(10, "cannot contain more than 10 nonprofits")
   ),
-  featured: v.boolean(),
   expiration: v.optional(
     v.lazy((val) => {
       if (!val) return v.string();
