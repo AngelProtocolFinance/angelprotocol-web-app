@@ -1,4 +1,4 @@
-import type { Target } from "./types";
+import type { Target } from "components/goal-selector";
 
 export const toFormTarget = (target?: "smart" | (string & {})): Target => {
   if (!target) {
