@@ -23,6 +23,7 @@ export enum appRoutes {
   terms_nonprofits = "/terms-of-use-npo",
   //informational
   nonprofit_info = "/nonprofit",
+  us_nonprofits = "/us-nonprofits",
   donor_info = "/donor",
   wp_plugin = "/wp-plugin",
   about = "/about-us",

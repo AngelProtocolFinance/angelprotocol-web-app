@@ -3,29 +3,30 @@ import { testimonials } from "content/testimonials";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import TestimonialCard from "./TestimonialCard";
+import { SwipeCard } from "./swipe-card";
 
-const Testimonials = () => {
+// pt-48 bg-gradient-to-b from-peach/20 to-transparent overflow-x-clip
+export const Horizontal = ({ classes = "" }) => {
   return (
-    <div className="grid relative pt-48 bg-gradient-to-b from-peach/20 to-transparent overflow-x-clip">
+    <div className={`grid relative ${classes}`}>
       <img
         src={quotation}
         alt="quotation mark"
         className="justify-self-center w-24 lg:w-36 mb-8"
       />
-      <h2 className="text-center text-3xl/tight md:text-4.5xl/tight text-pretty justify-self-center mb-14">
+      <h2 className="text-center text-3xl/tight @3xl:text-4.5xl/tight text-pretty justify-self-center mb-14">
         Nonprofit Success Stories: <br /> Inspiring Change Together
       </h2>
 
       <button
         type="button"
-        className="swip-prev p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-3/4 -translate-y-1/2 right-[90%]"
+        className="swip-prev p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 @3xl:top-3/4 -translate-y-1/2 right-[85%] @3xl:right-[90%]"
       >
         <ChevronLeft />
       </button>
       <button
         type="button"
-        className="swip-next p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-3/4 -translate-y-1/2 left-[90%]"
+        className="swip-next p-4 bg-white text-blue-d1 rounded-full shadow-md z-10 absolute top-1/2 @3xl:top-3/4 -translate-y-1/2 left-[85%] @3xl:left-[90%]"
       >
         <ChevronRight />
       </button>
@@ -52,12 +53,12 @@ const Testimonials = () => {
           nextEl: ".swip-next",
           prevEl: ".swip-prev",
         }}
-        className="w-[90vw] lg:w-[80vw]"
+        className="w-[80vw] @3xl:w-[80vw]"
       >
         {testimonials.map((t, idx) => {
           return (
             <SwiperSlide key={idx}>
-              <TestimonialCard {...t} />
+              <SwipeCard {...t} />
             </SwiperSlide>
           );
         })}
@@ -65,5 +66,3 @@ const Testimonials = () => {
     </div>
   );
 };
-
-export default Testimonials;
