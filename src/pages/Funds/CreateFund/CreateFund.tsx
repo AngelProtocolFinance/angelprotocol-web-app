@@ -1,5 +1,6 @@
 import type { NewFund } from "@better-giving/fundraiser";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { fetchAuthSession } from "aws-amplify/auth";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import Prompt from "components/Prompt";
 import { RichText } from "components/RichText";
@@ -101,6 +102,10 @@ export default withAuth(function CreateFund() {
       if (fv.expiration) fund.expiration = fv.expiration;
 
       const res = await createFund(fund).unwrap();
+
+      //delay to give room for credentials to be written in db
+      await new Promise((r) => setTimeout(r, 300));
+      await fetchAuthSession({ forceRefresh: true });
 
       showModal(Prompt, {
         type: "success",
