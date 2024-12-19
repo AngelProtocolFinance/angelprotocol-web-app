@@ -9,6 +9,7 @@ export type Link = {
   href: string;
   external?: boolean;
   end?: boolean;
+  sub?: boolean;
 };
 
 export type LinkGroup = {
