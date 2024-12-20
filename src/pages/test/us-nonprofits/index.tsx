@@ -4,12 +4,13 @@ import { Responsive } from "pages/@sections/testimonials";
 import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
 import { DonationFormInfo } from "./donation-form-info";
+import { Footer } from "./footer";
 import { Top } from "./top";
 import { WhyBG } from "./why-bg";
 
 export function Component() {
   return (
-    <main className="w-full grid content-start pb-16 @container">
+    <main className="w-full grid content-start @container">
       <div className="padded-container pt-6 pb-2">
         <DappLogo classes="w-48 h-12" />
       </div>
@@ -38,6 +39,7 @@ export function Component() {
       <div className="mt-48">
         <BottomCta className="padded-container" />
       </div>
+      <Footer classes="mt-20" />
     </main>
   );
 }
