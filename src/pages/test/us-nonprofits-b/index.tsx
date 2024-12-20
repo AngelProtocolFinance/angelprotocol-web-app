@@ -40,7 +40,7 @@ export function Component() {
         />
       </div>
       <div className="mt-48">
-        <BottomCta className="padded-container" />
+        <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10 padded-container" />
       </div>
     </main>
   );
