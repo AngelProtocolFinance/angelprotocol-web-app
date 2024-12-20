@@ -48,7 +48,8 @@ export interface EndowCardsPage
   // "endow_designation"
   // "kyc_donors_only"
 }
-export interface EndowOptionsPage extends EndowsPage<"id" | "name"> {}
+export interface EndowOptionsPage
+  extends EndowsPage<"id" | "name" | "registration_number" | "card_img"> {}
 
 export type EndowmentCard = EndowCardsPage["items"][number];
 export type EndowmentOption = EndowOptionsPage["items"][number];
