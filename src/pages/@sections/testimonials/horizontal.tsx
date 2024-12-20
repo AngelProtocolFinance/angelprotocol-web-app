@@ -14,7 +14,7 @@ interface Classes {
 }
 
 interface Props {
-  classes?: Classes;
+  classes?: Classes | string;
   heading?: ReactNode; //Nonprofit Success Stories: <br /> Inspiring Change Together
 }
 export const Horizontal = (props: Props) => {
