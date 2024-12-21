@@ -9,7 +9,7 @@ export function Top({ className = "" }) {
   useRendered();
   return (
     <section
-      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-[3fr_2fr] py-24`}
+      className={`${className} grid justify-items-center gap-10 @6xl:justify-items-start @6xl:grid-cols-2 py-24`}
     >
       <div className="max-w-2xl order-2 @6xl:order-1 grid">
         <h4 className="text-center @6xl:text-left @6xl:text-lg uppercase text-blue-d1 mb-5">
@@ -26,7 +26,8 @@ export function Top({ className = "" }) {
         <ul className="pl-5 my-8 text-lg @6xl:text-xl space-y-4 text-center @6xl:text-left list-disc list-outside">
           <li>
             Accept donations seamlessly: credit card, crypto, stock, and DAF
-            gifts—<span className="font-bold">ZERO PLATFORM FEES</span>.
+            gifts —
+            <span className="font-bold">ZERO&nbsp;PLATFORM&nbsp;FEES</span>.
           </li>
           <li>
             Simplify operations with automated tax reporting and customizable
@@ -57,7 +58,7 @@ export function Top({ className = "" }) {
         src={benefits.donors[1].img}
         width={600}
         height={600}
-        className="rounded-full order-1 @6xl:order-2 w-96 @6xl:w-auto shadow-2xl shadow-black/20"
+        className="rounded-full self-center order-1 @6xl:order-2 w-96 @6xl:w-auto shadow-2xl shadow-black/20"
       />
     </section>
   );
