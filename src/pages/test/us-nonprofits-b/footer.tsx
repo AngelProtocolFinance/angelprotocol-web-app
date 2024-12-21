@@ -11,7 +11,7 @@ type Props = { classes?: string };
 export function Footer({ classes = "" }: Props) {
   return (
     <footer
-      className={`grid ${classes} grid-cols-[3fr_auto_1fr] lg:grid-cols-[2fr_auto_1fr] 2xl:grid-cols-[auto_auto_1fr] items-center px-10 gap-10`}
+      className={`grid ${classes} grid-cols-[1fr_auto_1fr] max-2xl:gap-x-0 2xl:grid-cols-[auto_auto_1fr] items-center px-10 gap-10`}
     >
       <div className="flex items-center gap-x-2 shrink-0 max-2xl:col-start-2">
         <img
@@ -33,7 +33,7 @@ export function Footer({ classes = "" }: Props) {
         </ExtLink>
       </div>
 
-      <div className="justify-self-start order-3 2xl:order-2 max-2xl:col-start-2 grid max-2xl:justify-items-center">
+      <div className="justify-self-center 2xl:justify-self-start order-3 2xl:order-2 max-2xl:col-span-full grid max-2xl:justify-items-center">
         <Socials classes="order-3 2xl:order-1 max-2xl:mt-4" />
         <div className="flex items-center max-2xl:justify-center flex-wrap 2xl:divide-x divide-navy-l1 my-2 order-2">
           <Link
@@ -74,11 +74,13 @@ export function Footer({ classes = "" }: Props) {
 
 function Copyright({ classes = "" }) {
   return (
-    <p className={`text-[0.93rem] text-navy-l1 ${classes}`}>
+    <p
+      className={`text-[0.93rem] flex max-xl:flex-col text-navy-l1 ${classes}`}
+    >
       <span>
         © Copyright {new Date().getFullYear()} {APP_NAME}
       </span>
-      <span className="hidden xl:inline">,</span>{" "}
+      <span className="hidden 2xl:inline">,</span>{" "}
       <span>A Registered Charitable 501(c)(3) (EIN 87-3758939)</span>
     </p>
   );
