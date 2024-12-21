@@ -27,7 +27,7 @@ export function Component() {
         <Feature className="padded-container" />
       </div>
       <div className="bg-gradient-to-br from-transparent via-transparent via-50% to-lilac/50">
-        <DonationFormInfo className="mt-60 w-full" />
+        <DonationFormInfo className="mt-60 padded-container" />
       </div>
       <div className="bg-gradient-to-bl from-lilac/50  via-50% via-transparent to-transparent">
         <Horizontal
