@@ -5,9 +5,9 @@ import x from "assets/icons/social/x.png";
 import youtube from "assets/icons/social/youtube.png";
 import ExtLink from "components/ExtLink";
 
-export default function Socials() {
+export default function Socials({ classes = "" }) {
   return (
-    <div className="flex items-center gap-3 md:gap-6">
+    <div className={`flex items-center gap-3 md:gap-6 ${classes}`}>
       <ExtLink
         href="https://www.linkedin.com/company/better-giving/"
         className="hover:scale-110 active:scale-110"

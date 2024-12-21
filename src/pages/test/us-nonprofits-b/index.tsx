@@ -5,6 +5,7 @@ import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
 import { DonationFormInfo } from "./donation-form-info";
 import { Feature } from "./feature";
+import { Footer } from "./footer";
 import { Top } from "./top";
 
 export function Component() {
@@ -42,6 +43,7 @@ export function Component() {
       <div className="mt-48">
         <BottomCta className="mb-20 max-w-5xl sm:max-w-6xl justify-self-center mx-4 [28rem]:mx-10 padded-container" />
       </div>
+      <Footer />
     </main>
   );
 }
