@@ -1,6 +1,8 @@
 import { DappLogo } from "components/Image";
 import Seo from "components/Seo";
+import { appRoutes } from "constants/routes";
 import { Horizontal } from "pages/@sections/testimonials";
+import { Link } from "react-router-dom";
 import { BottomCta } from "./bottom-cta";
 import { Brands } from "./brands";
 import { DonationFormInfo } from "./donation-form-info";
@@ -11,8 +13,30 @@ import { Top } from "./top";
 export function Component() {
   return (
     <main className="w-full grid content-start pb-16 @container">
-      <div className="padded-container pt-6 pb-2">
-        <DappLogo classes="w-48 h-12" />
+      <div
+        className="sticky top-[-1px] z-50"
+        ref={(node) => {
+          if (!node) return;
+          const observer = new IntersectionObserver(
+            ([e]) => {
+              const isIntersecting = e.intersectionRatio < 1;
+              e.target.classList.toggle("bg-white", isIntersecting);
+              e.target.classList.toggle("shadow-lg", isIntersecting);
+            },
+            { threshold: [1] }
+          );
+          observer.observe(node);
+        }}
+      >
+        <div className="padded-container py-4 flex justify-between items-center">
+          <DappLogo classes="w-48 h-12" />
+          <Link
+            to={appRoutes.signup}
+            className="btn text-base normal-case max-sm:hidden bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
+          >
+            Sign up
+          </Link>
+        </div>
       </div>
       <Seo
         title="US Nonprofits"
