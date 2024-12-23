@@ -2,7 +2,7 @@ import { ErrorMessage } from "@hookform/error-message";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Slider from "@radix-ui/react-slider";
 import dappLogo from "assets/images/bettergiving-logo.png";
-import waivingLaira from "assets/laira/laira-waiving.png";
+import { laira } from "assets/laira/laira";
 import Image from "components/Image/Image";
 import { centsDecimals, humanize, roundDown } from "helpers";
 import { useState } from "react";
@@ -82,6 +82,8 @@ export default function Tip(props: TipStep) {
     persistedTip?.format ?? "pct"
   );
 
+  const withTip = (tip.amount ? +tip.amount : 0) > 0;
+
   return (
     <form
       data-testid="tip-form"
@@ -119,9 +121,10 @@ export default function Tip(props: TipStep) {
         <Image src={dappLogo} className="inline-block h-8 px-1" />
       </h4>
       <p className="text-navy-l1">
-        Better Giving offers this donation service free of charge to empower
-        nonprofits worldwide. As a nonprofit ourselves, we depend on your
-        support. Please consider donating to help us keep it free for all.
+        Better Giving offers this donation service{" "}
+        <span className={withTip ? "" : "font-bold"}>free of charge</span> to
+        empower nonprofits worldwide. As a nonprofit ourselves, we depend on
+        your support. Please consider donating to help us keep it free for all.
       </p>
 
       {format === "pct" && (
@@ -177,7 +180,7 @@ export default function Tip(props: TipStep) {
             className="relative field-container field-container-donate grid grid-cols-[1fr_auto] items-center pr-5"
           >
             <input
-              type="text"
+              type="number"
               value={tip.amount}
               onChange={(e) =>
                 onTipChange({
@@ -201,14 +204,16 @@ export default function Tip(props: TipStep) {
         </>
       )}
 
-      <div className="rounded bg-[--accent-secondary] h-[4.5rem] mt-16 relative">
+      <div className="rounded bg-[--accent-secondary] mt-16 relative px-4 py-2 grid grid-cols-[auto_1fr] gap-x-4 items-center">
         <Image
-          src={waivingLaira}
-          width={50}
-          className="absolute left-5 bottom-1"
+          src={withTip ? laira.gift : laira.standingFront}
+          width={withTip ? 50 : 40}
+          className=""
         />
-        <p className="px-[5.32rem] grid place-items-center text-center h-full text-[0.94rem]">
-          Thank you for keeping Better Giving free for everyone!
+        <p className="self-center text-navy-l1 indent-4">
+          {!withTip
+            ? "Please consider helping keep Better Giving free for everyone, as a nonprofit we charge no platform fees and rely on your support"
+            : "Thank you for keeping Better Giving free for everyone!"}
         </p>
       </div>
 
