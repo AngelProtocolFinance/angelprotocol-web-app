@@ -9,7 +9,6 @@ import {
   useLoaderData,
 } from "react-router-dom";
 import EditProfile from "./EditProfile";
-import Settings from "./Settings";
 import { linkGroups, routes } from "./routes";
 
 function Layout() {
@@ -39,7 +38,7 @@ export const userDashboardRoute: RouteObject = {
   children: [
     { path: routes.edit_profile, element: <EditProfile /> },
     { path: routes.donations, lazy: () => import("./Donations") },
-    { path: routes.settings, element: <Settings /> },
+    { path: routes.settings, lazy: () => import("./Settings") },
     { index: true, element: <Navigate to={routes.edit_profile} /> },
   ],
 };

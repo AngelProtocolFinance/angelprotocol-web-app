@@ -1,8 +1,9 @@
-import { useUser } from "../use-user";
+import { useLoaderData } from "react-router-dom";
 import EndowAlertForm from "./EndowAlertForm";
+import type { SettingsData } from "./index";
 
-export default function Settings() {
-  const user = useUser();
+export function Settings() {
+  const { user, userEndows } = useLoaderData() as SettingsData;
   return (
     <div className="grid">
       <h2 className="text-3xl">Settings</h2>
@@ -10,7 +11,11 @@ export default function Settings() {
         Here, you can update various settings relating to any nonprofit that you
         are a member of.
       </p>
-      <EndowAlertForm user={user} classes="mt-4 justify-self-start" />
+      <EndowAlertForm
+        user={user}
+        userEndows={userEndows}
+        classes="mt-4 justify-self-start"
+      />
     </div>
   );
 }

@@ -1,29 +1,26 @@
 import Prompt from "components/Prompt";
-import { ErrorStatus, Info, LoadingStatus } from "components/Status";
+import { Info } from "components/Status";
 import { NativeCheckField as CheckField, Form } from "components/form";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import {
-  useUpdateUserEndowsMutation,
-  useUserEndowsQuery,
-} from "services/aws/users";
+import { useUpdateUserEndowsMutation } from "services/aws/users";
 import type { UserV2 } from "types/auth";
 import type { UserEndow } from "types/aws";
 
 interface Props {
   user: UserV2;
+  userEndows: UserEndow[];
   classes?: string;
 }
 
 type FV = { items: UserEndow[] };
 
-export default function EndowAlertForm({ classes = "", user }: Props) {
-  const {
-    data: userEndows = [],
-    isLoading,
-    isError,
-  } = useUserEndowsQuery(user.email);
+export default function EndowAlertForm({
+  classes = "",
+  user,
+  userEndows,
+}: Props) {
   const [updateUserEndows, { isLoading: isUpdatingUseEndows }] =
     useUpdateUserEndowsMutation();
   const { handleError } = useErrorContext();
@@ -46,20 +43,6 @@ export default function EndowAlertForm({ classes = "", user }: Props) {
   });
 
   const { fields } = useFieldArray({ control, name: "items" });
-
-  if (isLoading) {
-    return (
-      <LoadingStatus classes="mt-4">Loading your organizations</LoadingStatus>
-    );
-  }
-
-  if (isError) {
-    return (
-      <ErrorStatus classes="mt-4">
-        Failed to load your organizations
-      </ErrorStatus>
-    );
-  }
 
   if (userEndows.length === 0) {
     return <Info classes="mt-4">No organizations found</Info>;

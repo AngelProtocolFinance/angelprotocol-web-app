@@ -1,10 +1,11 @@
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
+import { userEndows } from "api/get/user-endows";
 import { oauth } from "auth/cognito";
 import { loadAuth } from "auth/load-auth";
 import { type LoaderFunctionArgs, defer, redirect } from "react-router-dom";
 import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
-import type { EndowmentBookmark, UserEndow } from "types/aws";
+import type { EndowmentBookmark } from "types/aws";
 
 export const rootLoader = async ({
   request,
@@ -42,7 +43,7 @@ export const rootLoader = async ({
   return defer({
     ...auth,
     bookmarks: getBookmarks(auth),
-    orgs: useEndows(auth),
+    orgs: userEndows(auth),
   } satisfies DetailedUser);
 };
 
@@ -61,13 +62,4 @@ async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
     bookmarks.push({ ...endow, endowId: id });
   }
   return bookmarks;
-}
-
-async function useEndows(user: UserV2): Promise<UserEndow[]> {
-  return ap
-    .get(`${ver(3)}/users/${user.email}/endowments`, {
-      throwHttpErrors: false,
-      headers: { authorization: user.idToken },
-    })
-    .then<UserEndow[]>((res) => (res.ok ? res.json() : []));
 }
