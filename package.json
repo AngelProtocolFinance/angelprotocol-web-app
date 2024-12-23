@@ -74,7 +74,7 @@
     "swiper": "11.1.4",
     "type-fest": "4.20.0",
     "valibot": "0.42.0",
-    "yup": "1.4.0"
+    "yup": "1.6.1"
   },
   "devDependencies": {
     "@biomejs/biome": "1.8.1",
