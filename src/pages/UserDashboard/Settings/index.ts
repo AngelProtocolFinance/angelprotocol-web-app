@@ -1,6 +1,7 @@
+import { ap, ver } from "api/api";
 import { userEndows } from "api/get/user-endows";
 import { loadAuth, redirectToAuth } from "auth";
-import type { LoaderFunction } from "react-router-dom";
+import type { ActionFunction, LoaderFunction } from "react-router-dom";
 import type { UserV2 } from "types/auth";
 import type { UserEndow } from "types/aws";
 
@@ -13,6 +14,18 @@ export const loader: LoaderFunction = async ({ request }) => {
     user: auth,
     userEndows: await userEndows(auth),
   } satisfies SettingsData;
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  const auth = await loadAuth();
+  if (!auth) return redirectToAuth(request);
+
+  const path = `${ver(3)}/users/${auth.email}/endowments`;
+  const res = await ap.patch(path, {
+    headers: { authorization: auth.idToken },
+    json: { alertPrefs: await request.json() },
+  });
+  return { ok: res.ok };
 };
 
 export interface SettingsData {

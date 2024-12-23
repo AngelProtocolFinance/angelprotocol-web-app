@@ -1,10 +1,7 @@
-import Prompt from "components/Prompt";
 import { Info } from "components/Status";
 import { NativeCheckField as CheckField, Form } from "components/form";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useUpdateUserEndowsMutation } from "services/aws/users";
+import { useFetcher } from "react-router-dom";
 import type { UserV2 } from "types/auth";
 import type { UserEndow } from "types/aws";
 
@@ -16,15 +13,8 @@ interface Props {
 
 type FV = { items: UserEndow[] };
 
-export default function EndowAlertForm({
-  classes = "",
-  user,
-  userEndows,
-}: Props) {
-  const [updateUserEndows, { isLoading: isUpdatingUseEndows }] =
-    useUpdateUserEndowsMutation();
-  const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
+export default function EndowAlertForm({ classes = "", userEndows }: Props) {
+  const fetcher = useFetcher();
 
   const {
     register,
@@ -49,22 +39,14 @@ export default function EndowAlertForm({
   }
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
-    try {
-      await updateUserEndows({
-        userId: user.email,
-        alertPrefs: fv.items.map((item) => ({
-          endowId: item.endowID,
-          banking: item.alertPref?.banking ?? true,
-          donation: item.alertPref?.banking ?? true,
-        })),
-      });
-      showModal(Prompt, {
-        type: "success",
-        children: "Email preference updated!",
-      });
-    } catch (err) {
-      handleError(err, { context: "updating alert preferences" });
-    }
+    fetcher.submit(
+      fv.items.map((item) => ({
+        endowId: item.endowID,
+        banking: item.alertPref?.banking ?? true,
+        donation: item.alertPref?.banking ?? true,
+      })),
+      { encType: "application/json", method: "post", action: "." }
+    );
   };
 
   return (
@@ -107,11 +89,11 @@ export default function EndowAlertForm({
 
       <div className="col-span-full flex justify-end items-center gap-4 p-4">
         <button
-          disabled={!isDirty}
+          disabled={!isDirty || fetcher.state === "submitting"}
           type="submit"
           className="btn-blue text-sm px-6 py-2"
         >
-          {isUpdatingUseEndows ? "updating.." : "save"}
+          {fetcher.state === "submitting" ? "updating.." : "save"}
         </button>
         <button
           disabled={!isDirty}
