@@ -11,7 +11,8 @@ export default function Snippet({ classes = "", config }: Props) {
   const widgetURL = widgetURLfn(config);
   const iframeURL =
     config.endowment.id !== 0
-      ? `<iframe src="${widgetURL}" width="100%" height="700" allow="payment" style="border: 0px;"></iframe>`
+      ? /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
+        `<iframe src="${widgetURL}" width="700" height="900" allow="payment" style="border: 0px;"></iframe>`
       : "Please select organization";
 
   return (
