@@ -1,52 +1,36 @@
 import CurrencySelector from "components/CurrencySelector";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
-import Prompt from "components/Prompt";
-import { NativeField as Field, Label, Form as _Form } from "components/form";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
+import { NativeField as Field, Form, Label } from "components/form";
 import { cleanObject } from "helpers/cleanObject";
-import { useEditUserMutation } from "services/aws/users";
-import { updateUserAttributes } from "slices/auth";
-import { useSetter } from "store/accessors";
+import { useFetcher, useLoaderData } from "react-router-dom";
 import type { UserAttributes } from "types/aws";
-import type { Props } from "./types";
+import type { LoaderData } from "./types";
 import { avatarSpec, useRhf } from "./useRhf";
 
-export default function Form(props: Props) {
-  const dispatch = useSetter();
-  const { handleError } = useErrorContext();
-  const { showModal } = useModalContext();
-  const [editUser] = useEditUserMutation();
-
-  const rhf = useRhf(props);
+export function Component() {
+  const data = useLoaderData() as LoaderData;
+  const fetcher = useFetcher();
+  const rhf = useRhf(data);
 
   return (
-    <_Form
-      disabled={rhf.isSubmitting}
+    <Form
+      disabled={fetcher.state === "submitting"}
       onReset={(e) => {
         e.preventDefault();
         rhf.reset();
       }}
       onSubmit={rhf.handleSubmit(async (fv) => {
-        try {
-          const update: Required<UserAttributes> = {
-            givenName: fv.firstName,
-            familyName: fv.lastName,
-            prefCurrencyCode: fv.prefCurrency.code,
-            avatarUrl: fv.avatar,
-          };
-          const updated = await editUser({
-            ...cleanObject(update),
-            userEmail: props.user.email,
-          }).unwrap();
-          showModal(Prompt, {
-            type: "success",
-            children: "Sucessfully updated!",
-          });
-          dispatch(updateUserAttributes(updated));
-        } catch (err) {
-          handleError(err, { context: "updating settings" });
-        }
+        const update: Required<UserAttributes> = {
+          givenName: fv.firstName,
+          familyName: fv.lastName,
+          prefCurrencyCode: fv.prefCurrency.code,
+          avatarUrl: fv.avatar,
+        };
+
+        fetcher.submit(
+          { ...cleanObject(update), userEmail: data.user.email },
+          { encType: "application/json", action: ".", method: "PATCH" }
+        );
       })}
       className="w-full max-w-4xl justify-self-center content-start"
     >
@@ -73,7 +57,7 @@ export default function Form(props: Props) {
       />
 
       <CurrencySelector
-        currencies={props.currencies}
+        currencies={data.all}
         label="Default currency"
         onChange={rhf.prefCurrency.onChange}
         value={rhf.prefCurrency.value}
@@ -115,6 +99,6 @@ export default function Form(props: Props) {
           Submit changes
         </button>
       </div>
-    </_Form>
+    </Form>
   );
 }

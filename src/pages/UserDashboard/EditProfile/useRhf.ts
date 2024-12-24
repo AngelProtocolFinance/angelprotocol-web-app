@@ -1,7 +1,7 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import type { ImgSpec } from "components/ImgEditor";
 import { useController, useForm } from "react-hook-form";
-import { type FV, type Props, schema } from "./types";
+import { type FV, type LoaderData, schema } from "./types";
 
 export const avatarSpec: ImgSpec = {
   type: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],
@@ -10,7 +10,7 @@ export const avatarSpec: ImgSpec = {
   rounded: true,
 };
 
-export function useRhf(props: Props) {
+export function useRhf(props: LoaderData) {
   const {
     register,
     control,
@@ -18,11 +18,11 @@ export function useRhf(props: Props) {
     handleSubmit,
     resetField,
     trigger,
-    formState: { isSubmitting, isDirty, errors },
+    formState: { isDirty, errors },
   } = useForm({
     resolver: valibotResolver(schema),
     values: {
-      prefCurrency: props.defaultCurr || { code: "usd", min: 1, rate: 1 },
+      prefCurrency: props.main || { code: "usd", min: 1, rate: 1 },
       firstName: props.user.firstName ?? "",
       lastName: props.user.lastName ?? "",
       avatar: props.user.avatar ?? "",
@@ -47,7 +47,6 @@ export function useRhf(props: Props) {
     resetField,
     reset,
     trigger,
-    isSubmitting,
     errors,
     isDirty,
   };
