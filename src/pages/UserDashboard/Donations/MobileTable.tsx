@@ -17,7 +17,6 @@ import LoadMoreBtn from "./LoadMoreBtn";
 import PaymentResumer from "./PaymentResumer";
 import { donationMethod, lastHeaderName } from "./common";
 import type { TableProps } from "./types";
-import useShowKYCForm from "./useShowKYCForm";
 
 export default function MobileTable({
   donations,
@@ -132,12 +131,11 @@ function Row({
 }
 
 function LastRowContent(props: Donation.Record & { status: Donation.Status }) {
-  const showKYCForm = useShowKYCForm();
   if (props.status === "final") {
     return (
-      <button className="block" onClick={() => showKYCForm(props.id)}>
+      <Link to={props.id} className="block">
         <ArrowDownToLine size={20} />
-      </button>
+      </Link>
     );
   }
 

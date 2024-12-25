@@ -15,3 +15,11 @@ export const isValiErr = (data: ActionData<any>): data is SubmissionResult =>
 
 export const isData = <T>(data: ActionData<T>): data is T =>
   !!data && !isActionErr(data) && !isValiErr(data);
+
+export type ActionResult = { success: string } | { err: string };
+
+export const isSuccess = (
+  result: ActionResult
+): result is { success: string } => {
+  return "success" in result;
+};

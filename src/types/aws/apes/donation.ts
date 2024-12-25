@@ -35,7 +35,6 @@ export type ReceiptPayload = {
   state: string;
   zipCode: string; //2000
   country: string;
-  transactionId: string; // tx hash
 };
 
 type TributeNotif = {

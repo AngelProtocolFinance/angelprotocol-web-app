@@ -2,7 +2,12 @@ import CsvExporter from "components/CsvExporter";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useFetcher, useLoaderData, useSearchParams } from "react-router-dom";
+import {
+  Outlet,
+  useFetcher,
+  useLoaderData,
+  useSearchParams,
+} from "react-router-dom";
 import type { Donation } from "types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
@@ -40,6 +45,8 @@ export function Component() {
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 @5xl:gap-y-8 @5xl:gap-x-3 relative">
+      {/** render kyc form here */}
+      <Outlet />
       <h1 className="text-3xl text-center @5xl:text-left col-span-full @5xl:col-span-1 mb-4 @5xl:mb-0">
         My Donations
       </h1>

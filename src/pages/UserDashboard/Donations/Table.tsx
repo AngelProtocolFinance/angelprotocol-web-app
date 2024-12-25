@@ -13,7 +13,6 @@ import LoadMoreBtn from "./LoadMoreBtn";
 import PaymentResumer from "./PaymentResumer";
 import { donationMethod, lastHeaderName } from "./common";
 import type { TableProps } from "./types";
-import useShowKYCForm from "./useShowKYCForm";
 
 export default function Table({
   donations,
@@ -161,15 +160,11 @@ export default function Table({
 function LastRowColContent(
   props: Donation.Record & { status: Donation.Status }
 ) {
-  const showKYCForm = useShowKYCForm();
   if (props.status === "final") {
     return (
-      <button
-        className="w-full flex justify-center"
-        onClick={() => showKYCForm(props.id)}
-      >
+      <Link to={props.id} className="w-full flex justify-center">
         <ArrowDownToLine size={20} />
-      </button>
+      </Link>
     );
   }
 

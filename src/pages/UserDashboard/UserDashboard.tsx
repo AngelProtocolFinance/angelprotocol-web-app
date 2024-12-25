@@ -36,7 +36,11 @@ export const userDashboardRoute: RouteObject = {
   loader,
   children: [
     { path: routes.edit_profile, lazy: () => import("./EditProfile") },
-    { path: routes.donations, lazy: () => import("./Donations") },
+    {
+      path: routes.donations,
+      lazy: () => import("./Donations"),
+      children: [{ path: ":id", lazy: () => import("components/KYCForm") }],
+    },
     { path: routes.settings, lazy: () => import("./Settings") },
     { index: true, element: <Navigate to={routes.edit_profile} /> },
   ],
