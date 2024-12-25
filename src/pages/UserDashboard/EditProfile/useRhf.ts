@@ -18,7 +18,7 @@ export function useRhf(props: LoaderData) {
     handleSubmit,
     resetField,
     trigger,
-    formState: { isDirty, errors },
+    formState: { isDirty, errors, dirtyFields },
   } = useForm({
     resolver: valibotResolver(schema),
     values: {
@@ -49,5 +49,6 @@ export function useRhf(props: LoaderData) {
     trigger,
     errors,
     isDirty,
+    df: dirtyFields,
   };
 }

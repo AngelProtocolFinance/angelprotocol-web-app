@@ -1,7 +1,7 @@
-import { ap, ver } from "api/api";
 import { getFiatCurrencies } from "api/get/fiat-currencies";
-import { loadAuth, redirectToAuth } from "auth";
+import { cognito, loadAuth, redirectToAuth } from "auth";
 import type { ActionFunction, LoaderFunction } from "react-router-dom";
+import { isError } from "types/auth";
 
 export { Component } from "./Form";
 
@@ -16,10 +16,13 @@ export const action: ActionFunction = async ({ request }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 
-  const payload = await request.json();
-  const res = await ap.patch(`${ver(3)}/users/${auth.email}`, {
-    headers: { authorization: auth.idToken },
-    json: payload,
-  });
-  return { ok: res.ok };
+  const attributes = await request.json();
+  const result = await cognito.updateUserAttributes(
+    attributes,
+    auth.accessToken
+  );
+  if (result !== "success") throw result.message;
+
+  const res = await cognito.refresh(auth.refreshToken);
+  return { ok: !isError(res) };
 };

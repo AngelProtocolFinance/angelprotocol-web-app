@@ -1,12 +1,9 @@
 import CurrencySelector from "components/CurrencySelector";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import { NativeField as Field, Form, Label } from "components/form";
-import { cleanObject } from "helpers/cleanObject";
 import { useFetcher, useLoaderData } from "react-router-dom";
-import type { UserAttributes } from "types/aws";
 import type { LoaderData } from "./types";
 import { avatarSpec, useRhf } from "./useRhf";
-
 export function Component() {
   const data = useLoaderData() as LoaderData;
   const fetcher = useFetcher();
@@ -20,17 +17,30 @@ export function Component() {
         rhf.reset();
       }}
       onSubmit={rhf.handleSubmit(async (fv) => {
-        const update: Required<UserAttributes> = {
-          givenName: fv.firstName,
-          familyName: fv.lastName,
-          prefCurrencyCode: fv.prefCurrency.code,
-          avatarUrl: fv.avatar,
-        };
+        const { df } = rhf;
+        const attributes: object[] = [];
 
-        fetcher.submit(
-          { ...cleanObject(update), userEmail: data.user.email },
-          { encType: "application/json", action: ".", method: "PATCH" }
-        );
+        if (df.firstName) {
+          attributes.push({ Name: "given_name", Value: fv.firstName });
+        }
+        if (df.lastName) {
+          attributes.push({ Name: "family_name", Value: fv.lastName });
+        }
+        if (df.prefCurrency) {
+          attributes.push({
+            Name: "custom:currency",
+            Value: fv.prefCurrency.code,
+          });
+        }
+        if (df.avatar) {
+          attributes.push({ Name: "custom:avatar", Value: fv.avatar });
+        }
+
+        fetcher.submit(attributes as any, {
+          encType: "application/json",
+          action: ".",
+          method: "PATCH",
+        });
       })}
       className="w-full max-w-4xl justify-self-center content-start"
     >

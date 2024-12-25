@@ -37,6 +37,7 @@ export type OAuthState = {
 export type UserV2 = {
   idToken: string;
   accessToken: string;
+  refreshToken: string;
   groups: CognitoGroup[];
   endowments: number[];
   firstName: string;

@@ -265,6 +265,20 @@ class Cognito extends Storage {
       return res.json() as any;
     });
   }
+
+  async updateUserAttributes(attributes: object[], accessToken: string) {
+    return fetch(this.endpoint, {
+      method: "POST",
+      headers: this.headers("UpdateUserAttributes"),
+      body: this.body({
+        AccessToken: accessToken,
+        UserAttributes: attributes,
+      }),
+    }).then<"success" | AuthError>((res) => {
+      if (res.ok) return "success";
+      return res.json() as any;
+    });
+  }
 }
 
 class OAuth extends Storage {

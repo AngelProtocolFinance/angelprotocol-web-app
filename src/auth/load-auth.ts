@@ -7,7 +7,11 @@ export const loadAuth = async (): Promise<UserV2 | null> => {
   try {
     /// FROM PERSISTED ///
     if (cognito.token && typeof cognito.token !== "string") {
-      return userFromIdToken(cognito.token.id, cognito.token.access);
+      return userFromTokens(
+        cognito.token.id,
+        cognito.token.access,
+        cognito.token.refresh
+      );
     }
 
     /// NEAR EXPIRATION ///
@@ -15,9 +19,10 @@ export const loadAuth = async (): Promise<UserV2 | null> => {
       const auth = await cognito.refresh(cognito.token);
       if (isError(auth)) return null;
 
-      return userFromIdToken(
+      return userFromTokens(
         auth.AuthenticationResult.IdToken,
-        auth.AuthenticationResult.AccessToken
+        auth.AuthenticationResult.AccessToken,
+        auth.AuthenticationResult.RefreshToken
       );
     }
 
@@ -28,7 +33,11 @@ export const loadAuth = async (): Promise<UserV2 | null> => {
   }
 };
 
-function userFromIdToken(idToken: string, accessToken: string): UserV2 {
+function userFromTokens(
+  idToken: string,
+  accessToken: string,
+  refreshToken: string
+): UserV2 {
   const {
     endows = "",
     "cognito:groups": groups = [],
@@ -38,6 +47,7 @@ function userFromIdToken(idToken: string, accessToken: string): UserV2 {
   return {
     idToken,
     accessToken,
+    refreshToken,
     groups,
     endowments: endows.split(",").map(Number) ?? [],
     email: p.email,
