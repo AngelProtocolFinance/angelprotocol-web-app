@@ -38,6 +38,7 @@ export const {
         return {
           url: `endowments/${endowId}/balance-txs`,
           params,
+          headers: { authorization: TEMP_JWT },
         };
       },
     }),
