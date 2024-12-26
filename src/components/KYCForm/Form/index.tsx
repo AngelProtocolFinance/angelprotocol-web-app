@@ -62,7 +62,7 @@ export function Form({ classes = "", ...init }: IForm) {
           action: ".",
         });
       })}
-      className={`${classes} ${formStyle}`}
+      className={`${classes} ${formStyle} grid gap-5 p-4`}
       autoComplete="off"
       autoSave="off"
     >
@@ -184,10 +184,10 @@ export function Form({ classes = "", ...init }: IForm) {
 
       <button
         className="col-span-full btn-blue text-sm"
-        disabled={fetcher.state === "submitting"}
+        disabled={fetcher.state !== "idle"}
         type="submit"
       >
-        {fetcher.state === "submitting" ? "Processing..." : "Submit"}
+        {fetcher.state !== "idle" ? "Processing..." : "Submit"}
       </button>
     </form>
   );
