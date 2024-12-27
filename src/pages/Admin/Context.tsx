@@ -12,8 +12,10 @@ export function Context({
   user,
 }: PropsWithChildren<{ user: AuthenticatedUser }>) {
   const { id } = useParams<AdminParams>();
+  const isNpoAdmin = user.endowments.includes(idParamToNum(id));
+  const isBgAdmin = user.groups.includes("ap-admin");
 
-  if (!user.endowments.includes(idParamToNum(id))) {
+  if (!isNpoAdmin && !isBgAdmin) {
     return (
       <div className="grid content-start place-items-center pt-40 pb-20">
         <CircleAlert size={80} className="text-red" />
