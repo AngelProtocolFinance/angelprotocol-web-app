@@ -14,8 +14,6 @@ import { captureOrder, createOrder } from "./api";
 // Code inspired by React Stripe.js docs, see:
 // https://stripe.com/docs/stripe-js/react#useelements-hook
 
-type AsyncState = "error" | "success" | "pending";
-
 export default function Checkout(props: StripeCheckoutStep) {
   const { details, tip, donor: fvDonor, honorary, init, feeAllowance } = props;
 
@@ -23,8 +21,7 @@ export default function Checkout(props: StripeCheckoutStep) {
   const { handleError } = useErrorContext();
 
   const [{ isPending }] = usePayPalScriptReducer();
-  const [captureState, setCaptureState] = useState<AsyncState>();
-  const [orderState, setOrderState] = useState<AsyncState>();
+  const [state, setState] = useState<"loading" | "error">();
 
   // const [captureOrder, { isLoading: isCapturingOrder }] =
   //   useCapturePayPalOrderMutation();
@@ -44,10 +41,10 @@ export default function Checkout(props: StripeCheckoutStep) {
         height: 40,
       }}
       className="w-40 flex gap-2"
-      disabled={captureState === "pending" || orderState === "pending"}
+      disabled={!!state}
       onError={(error) => handleError(error, { context: "processing payment" })}
       onApprove={async (data, actions) => {
-        setOrderState("pending");
+        setState("loading");
         const order = await captureOrder(data.orderID);
 
         if ("debug_id" in order) throw order;
@@ -80,6 +77,7 @@ export default function Checkout(props: StripeCheckoutStep) {
         navigate(toWithState(route, state));
       }}
       createOrder={async () => {
+        setState("loading");
         const id = await createOrder({
           transactionId: init.intentId,
           amount: +details.amount,
@@ -98,6 +96,7 @@ export default function Checkout(props: StripeCheckoutStep) {
             programName: details.program.label,
           }),
         });
+        setState(undefined);
         return id;
       }}
     />
