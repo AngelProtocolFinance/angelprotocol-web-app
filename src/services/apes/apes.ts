@@ -1,14 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { PaymentIntent } from "@stripe/stripe-js";
 import { APIs } from "constants/urls";
-import { bgCookies, getCookie, setCookie } from "helpers/cookie";
-import type {
-  Crypto,
-  DonationIntent,
-  FiatCurrencyData,
-  GuestDonor,
-} from "types/aws";
-import type { DetailedCurrency } from "types/components";
+import type { Crypto, DonationIntent, GuestDonor } from "types/aws";
 import { tags } from "./tags";
 
 type StripeRequiresBankVerification = {
@@ -40,37 +33,6 @@ export const apes = createApi({
     ),
     intent: builder.query<DonationIntent.ToResume, { transactionId: string }>({
       query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
-    }),
-    fiatCurrencies: builder.query<
-      { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
-      /** dbPrefCode */
-      string | undefined
-    >({
-      query: (dbPrefCode) => ({
-        url: "fiat-currencies",
-        params: { prefCode: dbPrefCode || getCookie(bgCookies.prefCode) },
-      }),
-      transformResponse: (res: FiatCurrencyData) => {
-        const toDetailed = (
-          input: FiatCurrencyData["currencies"][number]
-        ): DetailedCurrency => ({
-          code: input.currency_code,
-          rate: input.rate,
-          min: input.minimum_amount,
-        });
-
-        if (res.default) {
-          setCookie(
-            bgCookies.prefCode,
-            res.default.currency_code.toUpperCase()
-          );
-        }
-
-        return {
-          currencies: res.currencies.map((c) => toDetailed(c)),
-          defaultCurr: res.default && toDetailed(res.default),
-        };
-      },
     }),
     stripePaymentIntent: builder.query<string, StripePaymentIntentParams>({
       query: (data) => ({
@@ -110,7 +72,6 @@ export const apes = createApi({
 export const {
   useCreateCryptoIntentQuery,
   useLazyIntentQuery,
-  useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
   useLazyChariotGrantQuery,
   useStripePaymentStatusQuery,
