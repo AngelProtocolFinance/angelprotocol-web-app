@@ -2,6 +2,7 @@ import { APP_NAME, BASE_URL, IS_TEST, SEO_IMAGE } from "constants/env";
 import { Helmet } from "react-helmet";
 
 interface Script {
+  id?: string;
   src: string;
   /** no need to set if javascript @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attribute_is_not_set_default_an_empty_string_or_a_javascript_mime_type */
   type?: string;
@@ -35,6 +36,11 @@ const defaultScripts: Script[] = [
   },
   { src: "/scripts/linkedin-tracking.js", "data-category": "tracking" },
   { src: "/scripts/hotjar-tracking.js", "data-category": "tracking" },
+  {
+    id: "hs-script-loader",
+    src: "//js-eu1.hs-scripts.com/24900163.js",
+    "data-category": "tracking",
+  },
 ];
 
 export default function Seo({
