@@ -7,7 +7,6 @@ import type {
   DonationIntent,
   FiatCurrencyData,
   GuestDonor,
-  PayPalOrder,
 } from "types/aws";
 import type { DetailedCurrency } from "types/components";
 import { tags } from "./tags";
@@ -22,8 +21,6 @@ type StripePaymentIntentParams = DonationIntent.Fiat & {
   type: "one-time" | "subscription";
 };
 
-type CreatePayPalOrderParams = DonationIntent.Fiat;
-
 export const apes = createApi({
   reducerPath: "apes",
   baseQuery: fetchBaseQuery({
@@ -32,12 +29,6 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
-    capturePayPalOrder: builder.mutation<PayPalOrder, { orderId: string }>({
-      query: (params) => ({
-        url: `fiat-donation/paypal/orders/${params.orderId}/capture`,
-        method: "POST",
-      }),
-    }),
     createCryptoIntent: builder.query<Crypto.NewPayment, DonationIntent.Crypto>(
       {
         query: (params) => ({
@@ -81,14 +72,6 @@ export const apes = createApi({
         };
       },
     }),
-    paypalOrder: builder.mutation<string, CreatePayPalOrderParams>({
-      query: (params) => ({
-        url: "fiat-donation/paypal/orders/v2",
-        method: "POST",
-        body: JSON.stringify(params),
-      }),
-      transformResponse: (res: { orderId: string }) => res.orderId,
-    }),
     stripePaymentIntent: builder.query<string, StripePaymentIntentParams>({
       query: (data) => ({
         url: "fiat-donation/stripe",
@@ -125,13 +108,11 @@ export const apes = createApi({
 });
 
 export const {
-  useCapturePayPalOrderMutation,
   useCreateCryptoIntentQuery,
   useLazyIntentQuery,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
   useLazyChariotGrantQuery,
-  usePaypalOrderMutation,
   useStripePaymentStatusQuery,
   useTopCountriesQuery,
   util: {
