@@ -62,8 +62,10 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       }),
     },
     cryptoIntent,
-    { revalidateOnFocus: false, revalidateOnMount: false }
+    { revalidateOnFocus: false, revalidateIfStale: false }
   );
+
+  console.log(intent);
 
   const totalDisplayAmount = roundToCents(
     +details.token.amount + (tip?.value ?? 0) + feeAllowance,
@@ -80,7 +82,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       </p>
       <QueryLoader
         queryState={{
-          isLoading: intent.isLoading,
+          isLoading: intent.isLoading || intent.isValidating,
           isFetching: intent.isValidating,
           data: intent.data,
           isError: intent.error,

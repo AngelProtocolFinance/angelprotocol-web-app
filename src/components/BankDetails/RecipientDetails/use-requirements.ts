@@ -49,6 +49,7 @@ const requirements: Fetcher<RequirementsOutput, Input | null> = async (
 export function useRequirements(args: Input | null) {
   const req = useSWR(args, requirements, {
     revalidateOnFocus: false,
+    revalidateIfStale: false,
   });
 
   async function updateRequirements(payload: ReqUpdateInput) {
