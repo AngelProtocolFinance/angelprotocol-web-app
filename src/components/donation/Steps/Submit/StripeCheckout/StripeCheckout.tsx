@@ -1,9 +1,11 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { apes } from "api/api";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
-import { useStripePaymentIntentQuery } from "services/apes";
+import useSWR from "swr/immutable";
+import type { DonationIntent } from "types/aws";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
@@ -17,37 +19,47 @@ import Checkout from "./Checkout";
 // https://stripe.com/docs/payments/quickstart
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
+interface Intent extends DonationIntent.Fiat {
+  type: "one-time" | "subscription";
+}
+
+const fetcher = async (intent: Intent) => {
+  const res = await apes
+    .post<{ clientSecret: string }>("fiat-donation/stripe", { json: intent })
+    .json();
+
+  return res.clientSecret;
+};
+
 export default function StripeCheckout(props: StripeCheckoutStep) {
   const { init, details, tip, donor: fvDonor, honorary, feeAllowance } = props;
   const { setState } = useDonationState();
 
-  const {
-    data: clientSecret,
-    isLoading,
-    isError,
-    error,
-  } = useStripePaymentIntentQuery({
-    transactionId: init.intentId,
-    type: details.frequency,
-    amount: +details.amount,
-    tipAmount: tip?.value ?? 0,
-    feeAllowance,
-    currency: details.currency.code,
-    endowmentId: init.recipient.id,
-    splitLiq: 0,
-    donor: toDonor(fvDonor),
-    source: init.source,
-    ...(honorary.honoraryFullName && {
-      inHonorOf: honorary.honoraryFullName,
-      tributeNotif: honorary.withTributeNotif
-        ? honorary.tributeNotif
-        : undefined,
-    }),
-    ...(details.program.value && {
-      programId: details.program.value,
-      programName: details.program.label,
-    }),
-  });
+  const intent = useSWR(
+    {
+      transactionId: init.intentId,
+      type: details.frequency,
+      amount: +details.amount,
+      tipAmount: tip?.value ?? 0,
+      feeAllowance,
+      currency: details.currency.code,
+      endowmentId: init.recipient.id,
+      splitLiq: 0,
+      donor: toDonor(fvDonor),
+      source: init.source,
+      ...(honorary.honoraryFullName && {
+        inHonorOf: honorary.honoraryFullName,
+        tributeNotif: honorary.withTributeNotif
+          ? honorary.tributeNotif
+          : undefined,
+      }),
+      ...(details.program.value && {
+        programId: details.program.value,
+        programName: details.program.label,
+      }),
+    },
+    fetcher
+  );
 
   return (
     <Summary
@@ -68,10 +80,10 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       program={details.program}
     >
       <ErrorBoundary>
-        {isLoading ? (
+        {intent.isLoading ? (
           <Loader msg="Loading payment form.." />
-        ) : isError || !clientSecret ? (
-          <ErrorTrigger error={error} />
+        ) : intent.error || !intent.data ? (
+          <ErrorTrigger error={intent.error} />
         ) : (
           <Elements
             options={{
@@ -81,7 +93,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
                   cssSrc: "https://fonts.googleapis.com/css2?family=Quicksand",
                 },
               ],
-              clientSecret,
+              clientSecret: intent.data,
               appearance: {
                 theme: "flat",
                 variables: {

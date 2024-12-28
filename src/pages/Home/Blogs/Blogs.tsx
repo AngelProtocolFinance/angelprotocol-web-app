@@ -2,7 +2,7 @@ import { posts } from "api/get/wp-posts";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
-import useSWR from "swr";
+import useSWR from "swr/immutable";
 import BlogCard, { Skeleton } from "./BlogCard";
 import s from "./styles.module.css";
 

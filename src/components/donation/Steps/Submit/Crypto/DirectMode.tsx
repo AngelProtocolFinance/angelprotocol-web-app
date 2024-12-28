@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { useNavigate } from "react-router-dom";
-import useSWR from "swr";
+import useSWR from "swr/immutable";
 import type { Crypto, DonationIntent } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -61,8 +61,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         programName: details.program.label,
       }),
     },
-    cryptoIntent,
-    { revalidateOnFocus: false, revalidateIfStale: false }
+    cryptoIntent
   );
 
   console.log(intent);

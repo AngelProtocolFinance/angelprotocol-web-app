@@ -1,5 +1,5 @@
 import { ap, ver } from "api/api";
-import useSWR from "swr";
+import useSWR from "swr/immutable";
 import type { WiseCurrency } from "types/aws";
 import type { Currency, QueryState } from "types/components";
 
@@ -15,8 +15,7 @@ async function getCurencies(path: string) {
 export function useCurrencies(): QueryState<Currency[]> {
   const { data, isLoading, isValidating, error } = useSWR(
     `${ver(1)}/wise-proxy/v1/currencies`,
-    getCurencies,
-    { revalidateOnFocus: false, revalidateIfStale: false }
+    getCurencies
   );
   return { data, isLoading, isFetching: isValidating, isError: !!error, error };
 }

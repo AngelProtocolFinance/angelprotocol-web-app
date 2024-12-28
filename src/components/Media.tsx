@@ -1,5 +1,5 @@
 import { wp } from "api/api";
-import useSWR from "swr";
+import useSWR from "swr/immutable";
 import type { Wordpress } from "types/wordpress";
 import Image from "./Image";
 

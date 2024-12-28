@@ -6,7 +6,7 @@ import { useRendered } from "hooks/use-rendered";
 import { ChevronLeft } from "lucide-react";
 import { type LoaderFunction, useLoaderData } from "react-router-dom";
 import { Link } from "react-router-dom";
-import useSWR from "swr";
+import useSWR from "swr/immutable";
 import type { Wordpress } from "types/wordpress";
 
 const containerStyle = "w-full padded-container max-w-4xl mx-auto pb-4";

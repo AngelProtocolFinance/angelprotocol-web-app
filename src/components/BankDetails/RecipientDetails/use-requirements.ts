@@ -1,5 +1,6 @@
 import { wise } from "api/api";
-import useSWR, { type Fetcher } from "swr";
+import type { Fetcher } from "swr";
+import useSWR from "swr/immutable";
 import type {
   AccountRequirements,
   CreateRecipientRequest,
@@ -47,10 +48,7 @@ const requirements: Fetcher<RequirementsOutput, Input | null> = async (
 };
 
 export function useRequirements(args: Input | null) {
-  const req = useSWR(args, requirements, {
-    revalidateOnFocus: false,
-    revalidateIfStale: false,
-  });
+  const req = useSWR(args, requirements);
 
   async function updateRequirements(payload: ReqUpdateInput) {
     const reqs = await wise
