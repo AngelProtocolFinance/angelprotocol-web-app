@@ -1,11 +1,13 @@
 import chains from "@better-giving/assets/chains";
+import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { useNavigate } from "react-router-dom";
-import { useCreateCryptoIntentQuery } from "services/apes";
+import useSWR from "swr";
+import type { Crypto, DonationIntent } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 import ContinueBtn from "../../common/ContinueBtn";
 import { toDonor } from "../../common/constants";
@@ -16,6 +18,13 @@ type Props = {
   classes?: string;
   donation: CryptoSubmitStep;
 };
+
+const cryptoIntent = async (intent: DonationIntent.Crypto) => {
+  return apes
+    .post<Crypto.NewPayment>("crypto-intents", { json: intent })
+    .json();
+};
+
 export default function DirectMode({ donation, classes = "" }: Props) {
   const navigate = useNavigate();
 
@@ -28,29 +37,33 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     honorary,
   } = donation;
 
-  const intentQuery = useCreateCryptoIntentQuery({
-    transactionId: init.intentId,
-    amount: +details.token.amount,
-    tipAmount: tip?.value ?? 0,
-    feeAllowance,
-    chainId: details.token.network,
-    chainName: chains[details.token.network].name,
-    denomination: details.token.code,
-    splitLiq: 0,
-    endowmentId: init.recipient.id,
-    source: init.source,
-    donor: toDonor(fvDonor),
-    ...(honorary.honoraryFullName && {
-      inHonorOf: honorary.honoraryFullName,
-      tributeNotif: honorary.withTributeNotif
-        ? honorary.tributeNotif
-        : undefined,
-    }),
-    ...(details.program.value && {
-      programId: details.program.value,
-      programName: details.program.label,
-    }),
-  });
+  const intent = useSWR(
+    {
+      transactionId: init.intentId,
+      amount: +details.token.amount,
+      tipAmount: tip?.value ?? 0,
+      feeAllowance,
+      chainId: details.token.network,
+      chainName: chains[details.token.network].name,
+      denomination: details.token.code,
+      splitLiq: 0,
+      endowmentId: init.recipient.id,
+      source: init.source,
+      donor: toDonor(fvDonor),
+      ...(honorary.honoraryFullName && {
+        inHonorOf: honorary.honoraryFullName,
+        tributeNotif: honorary.withTributeNotif
+          ? honorary.tributeNotif
+          : undefined,
+      }),
+      ...(details.program.value && {
+        programId: details.program.value,
+        programName: details.program.label,
+      }),
+    },
+    cryptoIntent,
+    { revalidateOnFocus: false, revalidateOnMount: false }
+  );
 
   const totalDisplayAmount = roundToCents(
     +details.token.amount + (tip?.value ?? 0) + feeAllowance,
@@ -66,7 +79,12 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         {details.token.symbol} from your crypto wallet to the address below
       </p>
       <QueryLoader
-        queryState={intentQuery}
+        queryState={{
+          isLoading: intent.isLoading,
+          isFetching: intent.isValidating,
+          data: intent.data,
+          isError: intent.error,
+        }}
         messages={{
           loading: <ContentLoader className="size-48 rounded" />,
           error: "Failed to load donation address",
@@ -95,7 +113,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       </p>
 
       <ContinueBtn
-        disabled={intentQuery.isError || intentQuery.isLoading}
+        disabled={!!intent.error || intent.isLoading}
         onClick={() =>
           navigate(
             toWithState(appRoutes.donate_thanks, {

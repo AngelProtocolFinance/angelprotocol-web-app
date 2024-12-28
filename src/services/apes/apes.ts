@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { PaymentIntent } from "@stripe/stripe-js";
 import { APIs } from "constants/urls";
-import type { Crypto, DonationIntent, GuestDonor } from "types/aws";
+import type { DonationIntent, GuestDonor } from "types/aws";
 import { tags } from "./tags";
 
 type StripeRequiresBankVerification = {
@@ -22,15 +22,6 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
-    createCryptoIntent: builder.query<Crypto.NewPayment, DonationIntent.Crypto>(
-      {
-        query: (params) => ({
-          url: "crypto-intents",
-          method: "POST",
-          body: JSON.stringify(params),
-        }),
-      }
-    ),
     intent: builder.query<DonationIntent.ToResume, { transactionId: string }>({
       query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
     }),
@@ -70,7 +61,6 @@ export const apes = createApi({
 });
 
 export const {
-  useCreateCryptoIntentQuery,
   useLazyIntentQuery,
   useStripePaymentIntentQuery,
   useLazyChariotGrantQuery,
