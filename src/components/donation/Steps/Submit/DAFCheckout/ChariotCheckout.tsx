@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import Prompt from "components/Prompt";
 import {
@@ -17,7 +18,7 @@ import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { schema } from "schemas/shape";
-import { useLazyChariotGrantQuery } from "services/apes";
+import type { DonationIntent } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 import { mixed, string } from "yup";
 import { useDonationState } from "../../Context";
@@ -49,7 +50,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
   const { setState } = useDonationState();
   const { handleError } = useErrorContext();
   const { showModal, closeModal, setModalOption } = useModalContext();
-  const [createGrant, { isLoading }] = useLazyChariotGrantQuery();
+  const [grantState, setGrantState] = useState<"pending">();
   const navigate = useNavigate();
 
   const {
@@ -221,7 +222,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
         </Form>
         <ChariotConnect
           theme="LightBlueTheme"
-          disabled={isLoading}
+          disabled={grantState === "pending"}
           cid={CHARIOT_CONNECT_ID}
           // https://givechariot.readme.io/reference/integrating-connect#pre-populate-data-into-your-connect-session
           onDonationRequest={async () => {
@@ -277,7 +278,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               const { postalCode, line1, line2, city, state } = grantor.address;
 
-              await createGrant({
+              const intent: DonationIntent.Fiat = {
                 transactionId: workflowSessionId,
                 amount: adjusted.amount,
                 tipAmount: adjusted.tip,
@@ -307,7 +308,11 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                     ? meta.tributeNotif
                     : undefined,
                 }),
-              }).unwrap();
+              };
+
+              setGrantState("pending");
+              await apes.post("fiat-donation/chariot", { json: intent });
+              setGrantState(undefined);
 
               setModalOption("isDismissible", true);
               closeModal();
@@ -323,6 +328,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 } satisfies DonateThanksState)
               );
             } catch (err) {
+              setGrantState(undefined);
               handleError(err, { context: "processing donation" });
             }
           }}

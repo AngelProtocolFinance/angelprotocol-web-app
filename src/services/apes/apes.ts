@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { PaymentIntent } from "@stripe/stripe-js";
 import { APIs } from "constants/urls";
-import type { DonationIntent, GuestDonor } from "types/aws";
+import type { GuestDonor } from "types/aws";
 import { tags } from "./tags";
 
 type StripeRequiresBankVerification = {
@@ -18,14 +18,6 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
-    chariotGrant: builder.query<string, DonationIntent.Fiat>({
-      query: (data) => ({
-        url: "fiat-donation/chariot",
-        method: "POST",
-        body: JSON.stringify(data),
-      }),
-      transformResponse: (res: { grantId: string }) => res.grantId,
-    }),
     stripePaymentStatus: builder.query<
       Pick<PaymentIntent, "status"> &
         StripeRequiresBankVerification & {
@@ -46,7 +38,6 @@ export const apes = createApi({
 });
 
 export const {
-  useLazyChariotGrantQuery,
   useStripePaymentStatusQuery,
   useTopCountriesQuery,
   util: {
