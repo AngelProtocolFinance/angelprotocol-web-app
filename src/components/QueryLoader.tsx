@@ -2,7 +2,7 @@ import Status, { ErrorStatus, LoadingStatus } from "components/Status";
 import { isEmpty, logger } from "helpers";
 import { CircleAlert } from "lucide-react";
 import type { ReactElement } from "react";
-import type { QueryState } from "types/third-party/redux";
+import type { QueryState } from "types/components";
 
 type Props<T> = {
   queryState: QueryState<T>;

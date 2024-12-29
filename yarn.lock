@@ -1424,26 +1424,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@reduxjs/toolkit@npm:2.3.0":
-  version: 2.3.0
-  resolution: "@reduxjs/toolkit@npm:2.3.0"
-  dependencies:
-    immer: "npm:^10.0.3"
-    redux: "npm:^5.0.1"
-    redux-thunk: "npm:^3.1.0"
-    reselect: "npm:^5.1.0"
-  peerDependencies:
-    react: ^16.9.0 || ^17.0.0 || ^18
-    react-redux: ^7.2.1 || ^8.1.3 || ^9.0.0
-  peerDependenciesMeta:
-    react:
-      optional: true
-    react-redux:
-      optional: true
-  checksum: 10/3aa0bf29ce4dfe4ae75416cb5338a91ccc89f06c5a2fcdae5dc137dca02b3990c46306062696e158869ac399b50cae6476e5536902df9bd1ad1a998195221af6
-  languageName: node
-  linkType: hard
-
 "@remix-run/router@npm:1.17.0":
   version: 1.17.0
   resolution: "@remix-run/router@npm:1.17.0"
@@ -2107,13 +2087,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/use-sync-external-store@npm:^0.0.3":
-  version: 0.0.3
-  resolution: "@types/use-sync-external-store@npm:0.0.3"
-  checksum: 10/161ddb8eec5dbe7279ac971531217e9af6b99f7783213566d2b502e2e2378ea19cf5e5ea4595039d730aa79d3d35c6567d48599f69773a02ffcff1776ec2a44e
-  languageName: node
-  linkType: hard
-
 "@types/wrap-ansi@npm:^3.0.0":
   version: 3.0.0
   resolution: "@types/wrap-ansi@npm:3.0.0"
@@ -2219,7 +2192,6 @@ __metadata:
     "@paypal/react-paypal-js": "npm:8.3.0"
     "@radix-ui/react-slider": "npm:1.1.2"
     "@radix-ui/react-tooltip": "npm:1.1.2"
-    "@reduxjs/toolkit": "npm:2.3.0"
     "@rsbuild/core": "npm:0.5.9"
     "@rsbuild/plugin-react": "npm:0.5.9"
     "@sentry/react": "npm:8.22.0"
@@ -2266,7 +2238,6 @@ __metadata:
     react-helmet: "npm:6.1.0"
     react-hook-form: "npm:7.53.0"
     react-player: "npm:2.16.0"
-    react-redux: "npm:9.1.2"
     react-router-dom: "npm:6.24.0"
     sonner: "npm:1.7.0"
     swiper: "npm:11.1.4"
@@ -3378,13 +3349,6 @@ __metadata:
   dependencies:
     safer-buffer: "npm:>= 2.1.2 < 3.0.0"
   checksum: 10/24e3292dd3dadaa81d065c6f8c41b274a47098150d444b96e5f53b4638a9a71482921ea6a91a1f59bb71d9796de25e04afd05919fa64c360347ba65d3766f10f
-  languageName: node
-  linkType: hard
-
-"immer@npm:^10.0.3":
-  version: 10.0.3
-  resolution: "immer@npm:10.0.3"
-  checksum: 10/0be07be2f278bd1988112613648e0cf9a64fc316d5b4817f273b519fbfed0f1714275b041911f0b8c560c199b2e3430824ce620c23262c96c9d4efc9909ff1cc
   languageName: node
   linkType: hard
 
@@ -4647,25 +4611,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-redux@npm:9.1.2":
-  version: 9.1.2
-  resolution: "react-redux@npm:9.1.2"
-  dependencies:
-    "@types/use-sync-external-store": "npm:^0.0.3"
-    use-sync-external-store: "npm:^1.0.0"
-  peerDependencies:
-    "@types/react": ^18.2.25
-    react: ^18.0
-    redux: ^5.0.0
-  peerDependenciesMeta:
-    "@types/react":
-      optional: true
-    redux:
-      optional: true
-  checksum: 10/319b3286f538da7e609ca90fc6762ffae007c5cf75e525a25237ac2feaee63d9cf76fe766817de1fc8f27e7bde825ca409c463037d26dd8e57c435d383f80c50
-  languageName: node
-  linkType: hard
-
 "react-refresh@npm:^0.14.0":
   version: 0.14.2
   resolution: "react-refresh@npm:0.14.2"
@@ -4753,22 +4698,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"redux-thunk@npm:^3.1.0":
-  version: 3.1.0
-  resolution: "redux-thunk@npm:3.1.0"
-  peerDependencies:
-    redux: ^5.0.0
-  checksum: 10/38c563db5f0bbec90d2e65cc27f3c870c1b6102e0c071258734fac41cb0e51d31d894125815c2f4133b20aff231f51f028ad99bccc05a7e3249f1a5d5a959ed3
-  languageName: node
-  linkType: hard
-
-"redux@npm:^5.0.1":
-  version: 5.0.1
-  resolution: "redux@npm:5.0.1"
-  checksum: 10/a373f9ed65693ead58bea5ef61c1d6bef39da9f2706db3be6f84815f3a1283230ecd1184efb1b3daa7f807d8211b0181564ca8f336fc6ee0b1e2fa0ba06737c2
-  languageName: node
-  linkType: hard
-
 "regenerator-runtime@npm:^0.14.0":
   version: 0.14.1
   resolution: "regenerator-runtime@npm:0.14.1"
@@ -4787,13 +4716,6 @@ __metadata:
   version: 1.0.0
   resolution: "requires-port@npm:1.0.0"
   checksum: 10/878880ee78ccdce372784f62f52a272048e2d0827c29ae31e7f99da18b62a2b9463ea03a75f277352f4697c100183debb0532371ad515a2d49d4bfe596dd4c20
-  languageName: node
-  linkType: hard
-
-"reselect@npm:^5.1.0":
-  version: 5.1.1
-  resolution: "reselect@npm:5.1.1"
-  checksum: 10/1fdae11a39ed9c8d85a24df19517c8372ee24fefea9cce3fae9eaad8e9cefbba5a3d4940c6fe31296b6addf76e035588c55798f7e6e147e1b7c0855f119e7fa5
   languageName: node
   linkType: hard
 
@@ -5467,15 +5389,6 @@ __metadata:
     querystringify: "npm:^2.1.1"
     requires-port: "npm:^1.0.0"
   checksum: 10/c9e96bc8c5b34e9f05ddfeffc12f6aadecbb0d971b3cc26015b58d5b44676a99f50d5aeb1e5c9e61fa4d49961ae3ab1ae997369ed44da51b2f5ac010d188e6ad
-  languageName: node
-  linkType: hard
-
-"use-sync-external-store@npm:^1.0.0":
-  version: 1.2.0
-  resolution: "use-sync-external-store@npm:1.2.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/a676216affc203876bd47981103f201f28c2731361bb186367e12d287a7566763213a8816910c6eb88265eccd4c230426eb783d64c373c4a180905be8820ed8e
   languageName: node
   linkType: hard
 
