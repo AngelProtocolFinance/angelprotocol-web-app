@@ -18,9 +18,6 @@ export const apes = createApi({
   }),
   tagTypes: tags,
   endpoints: (builder) => ({
-    intent: builder.query<DonationIntent.ToResume, { transactionId: string }>({
-      query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
-    }),
     chariotGrant: builder.query<string, DonationIntent.Fiat>({
       query: (data) => ({
         url: "fiat-donation/chariot",
@@ -49,7 +46,6 @@ export const apes = createApi({
 });
 
 export const {
-  useLazyIntentQuery,
   useLazyChariotGrantQuery,
   useStripePaymentStatusQuery,
   useTopCountriesQuery,
