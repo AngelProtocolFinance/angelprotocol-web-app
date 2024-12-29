@@ -1,15 +1,26 @@
+import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router-dom";
-import { useTopCountriesQuery } from "services/apes";
+import useSWR from "swr/immutable";
+
+const fetcher = (path: string) => apes.get<string[]>(path).json();
 
 export function TopCountries() {
-  const query = useTopCountriesQuery({});
+  const { data, isLoading, error, isValidating } = useSWR(
+    "top-countries",
+    fetcher
+  );
   return (
     <div className="flex flex-wrap gap-2">
       <QueryLoader
-        queryState={query}
+        queryState={{
+          data,
+          isLoading,
+          isError: !!error,
+          isFetching: isValidating,
+        }}
         classes={{ container: "flex flex-wrap gap-2" }}
         messages={{
           loading: (
