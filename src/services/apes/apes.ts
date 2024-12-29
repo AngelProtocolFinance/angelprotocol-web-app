@@ -10,10 +10,6 @@ type StripeRequiresBankVerification = {
   url?: string;
 };
 
-type StripePaymentIntentParams = DonationIntent.Fiat & {
-  type: "one-time" | "subscription";
-};
-
 export const apes = createApi({
   reducerPath: "apes",
   baseQuery: fetchBaseQuery({
@@ -24,14 +20,6 @@ export const apes = createApi({
   endpoints: (builder) => ({
     intent: builder.query<DonationIntent.ToResume, { transactionId: string }>({
       query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
-    }),
-    stripePaymentIntent: builder.query<string, StripePaymentIntentParams>({
-      query: (data) => ({
-        url: "fiat-donation/stripe",
-        method: "POST",
-        body: JSON.stringify(data),
-      }),
-      transformResponse: (res: { clientSecret: string }) => res.clientSecret,
     }),
     chariotGrant: builder.query<string, DonationIntent.Fiat>({
       query: (data) => ({
@@ -62,7 +50,6 @@ export const apes = createApi({
 
 export const {
   useLazyIntentQuery,
-  useStripePaymentIntentQuery,
   useLazyChariotGrantQuery,
   useStripePaymentStatusQuery,
   useTopCountriesQuery,
