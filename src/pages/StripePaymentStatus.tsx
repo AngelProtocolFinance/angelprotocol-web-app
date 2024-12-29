@@ -1,13 +1,11 @@
-import { skipToken } from "@reduxjs/toolkit/query";
 import type { PaymentIntent } from "@stripe/stripe-js";
+import { apes } from "api/api";
 import LoadText from "components/LoadText";
-import QueryLoader from "components/QueryLoader";
-import Seo from "components/Seo";
 import { EMAIL_SUPPORT } from "constants/env";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
 import { CircleX } from "lucide-react";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import {
   Link,
   type LoaderFunction,
@@ -15,64 +13,48 @@ import {
   useLoaderData,
   useOutletContext,
 } from "react-router-dom";
-import { useStripePaymentStatusQuery } from "services/apes";
 import type { GuestDonor } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 
+interface StripeRequiresBankVerification {
+  /** timestamp in seconds: only present when status ===  "requires_action"*/
+  arrivalDate?: number;
+  url?: string;
+}
+interface LoaderData
+  extends Pick<PaymentIntent, "status">,
+    StripeRequiresBankVerification {
+  guestDonor?: GuestDonor;
+  recipientName?: string;
+  recipientId?: number;
+}
+
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url);
-  return (
+  const id =
     url.searchParams.get("payment_intent") ??
-    url.searchParams.get("setup_intent") ??
-    ""
-  );
+    url.searchParams.get("setup_intent");
+
+  return apes.get(`stripe-proxy?payment_intent=${id}`).json();
 };
 
 export function Component() {
   const isInWidget = useOutletContext<true | undefined>();
-  const paymentIntentId = useLoaderData() as string;
-
-  const queryState = useStripePaymentStatusQuery(
-    paymentIntentId ? { paymentIntentId } : skipToken
-  );
-
-  const { refetch } = queryState;
-
-  const handleProcessing = useCallback(() => refetch(), [refetch]);
+  const data = useLoaderData() as LoaderData;
 
   return (
-    <QueryLoader
-      queryState={queryState}
-      messages={{
-        loading: "Loading donation status",
-        error: "Failed to load donation status",
+    <Content
+      status={data.status}
+      onMount={() => {
+        /** depracated */
       }}
-      classes={{ container: "place-self-center" }}
-    >
-      {({
-        status,
-        guestDonor,
-        recipientName,
-        recipientId,
-        arrivalDate,
-        url,
-      }) => (
-        <>
-          {/** override default scripts when used inside iframe */}
-          <Seo scripts={isInWidget ? [] : undefined} />
-          <Content
-            status={status}
-            onMount={handleProcessing}
-            isInWidget={isInWidget ?? false}
-            guestDonor={guestDonor}
-            recipientName={recipientName}
-            recipientId={recipientId}
-            bankVerificationUrl={url}
-            microdepositArrivalDate={arrivalDate}
-          />
-        </>
-      )}
-    </QueryLoader>
+      isInWidget={isInWidget ?? false}
+      guestDonor={data.guestDonor}
+      recipientName={data.recipientName}
+      recipientId={data.recipientId}
+      bankVerificationUrl={data.url}
+      microdepositArrivalDate={data.arrivalDate}
+    />
   );
 }
 
