@@ -2,6 +2,7 @@ import type { Allocation } from "@better-giving/endowment";
 import { apes, toSearch, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
+import { loadAuth, redirectToAuth } from "auth";
 import { type LoaderFunction, defer } from "react-router-dom";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
@@ -11,6 +12,8 @@ export { default as Component } from "./Dashboard";
 
 export { action } from "../endow-update-action";
 export const loader: LoaderFunction = async ({ params, request }) => {
+  const auth = await loadAuth();
+  if (!auth) return redirectToAuth(request);
   const url = new URL(request.url);
   const nextPageKey = url.searchParams.get("nextPageKey");
 
@@ -18,7 +21,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   return defer({
     alloc: await getAllocation(id),
     bal: await getBalance(id),
-    balTxs: await balanceTxs(id, nextPageKey),
+    balTxs: await balanceTxs(id, nextPageKey, auth.idToken),
   } satisfies DashboardData);
 };
 
@@ -31,10 +34,15 @@ async function getBalance(id: number) {
   return apes.get<EndowmentBalances>(`${ver(1)}/balances/${id}`).json();
 }
 
-async function balanceTxs(id: number, nextPageKey: string | null) {
+async function balanceTxs(
+  id: number,
+  nextPageKey: string | null,
+  idToken: string
+) {
   return apes
     .get<BalanceTxsPage>(`endowments/${id}/balance-txs`, {
       searchParams: toSearch({ nextPageKey }),
+      headers: { authorization: idToken },
     })
     .json();
 }

@@ -21,7 +21,10 @@ import { linkGroups } from "./constants";
 function AdminLayout() {
   const context = useLoaderData() as AdminContext;
 
-  if (!context.user.endowments.includes(context.id)) {
+  if (
+    !context.user.endowments.includes(context.id) &&
+    !context.user.groups.includes("ap-admin")
+  ) {
     return (
       <div className="grid content-start place-items-center pt-40 pb-20">
         <CircleAlert size={80} className="text-red" />

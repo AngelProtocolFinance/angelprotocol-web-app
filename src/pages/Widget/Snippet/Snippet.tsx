@@ -1,6 +1,5 @@
 import type { Endow } from "@better-giving/endowment";
 import Copier from "components/Copier";
-import { DONATION_INCREMENTS } from "constants/common";
 import { appRoutes } from "constants/routes";
 import { cleanObject } from "helpers/cleanObject";
 import type { WidgetConfig, WidgetURLSearchParams } from "types/widget";
@@ -11,9 +10,10 @@ type Props = {
   endow?: Endow;
 };
 export default function Snippet({ classes = "", config, endow }: Props) {
-  const widgetURL = widgetURLfn(config, endow?.id);
+  const widgetURL = widgetURLfn(config);
   const iframeURL = endow?.id
-    ? `<iframe src="${widgetURL}" width="700" height="900" style="border: 0px;"></iframe>`
+    ? /** allow payment https://docs.stripe.com/payments/payment-methods/pmd-registration?dashboard-or-api=dashboard#using-an-iframe */
+      `<iframe src="${widgetURL}" width="700" height="900" allow="payment" style="border: 0px;"></iframe>`
     : "Please select organization";
 
   return (
@@ -48,10 +48,7 @@ const widgetURLfn = (config: WidgetConfig, endowId = 0) => {
     description: config.description ?? "",
     accentPrimary: config.accentPrimary ?? "",
     accentSecondary: config.accentSecondary ?? "",
-    increments:
-      config.increments.length === 0
-        ? DONATION_INCREMENTS.map((inc) => inc.value).join(",")
-        : config.increments.map((inc) => inc.value).join(","),
+    increments: config.increments.map((inc) => inc.value).join(","),
     descriptions: config.increments
       .map((inc) => inc.label.replace(/,/g, "_"))
       .join(","),

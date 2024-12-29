@@ -4,6 +4,7 @@ import telegram from "assets/icons/social/telegram.png";
 import x from "assets/icons/social/x.png";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useModalContext } from "contexts/ModalContext";
+import { X } from "lucide-react";
 import { useCallback, useState } from "react";
 import ExtLink from "../../ExtLink";
 import Modal from "../../Modal";
@@ -99,20 +100,21 @@ function Prompt({ recipientName, ...social }: IPrompt) {
           onClick={closeModal}
           className="absolute top-1/2 transform -translate-y-1/2 right-4 w-10 h-10 border border-gray-l4 rounded "
         >
-          <img
-            src={social.src}
-            className="absolute-center"
-            width={social.size}
-          />
+          <X size={20} className="absolute-center" />
         </button>
       </div>
       <p
         ref={msgRef}
         className="my-6 sm:my-10 mx-4 sm:mx-12 text-sm leading-normal p-3 border dark:bg-blue-d6 border-gray-l4 rounded"
       >
-        I just donated to <span className="font-bold">{recipientName}</span> on{" "}
-        <span className="font-bold">{social.handle}</span>!{" "}
-        {`Every gift is invested to provide sustainable funding for nonprofits: Give once, give forever. Help join the cause: ${BASE_URL}.`}
+        I just donated to The Better Giving 501(c)(3) on{" "}
+        <span className="font-bold">@BetterDotGiving</span>! They can choose to
+        use my gift today, or save and invest it for sustainable growth. When
+        you give today, you give forever. Join me:{" "}
+        <a href={BASE_URL} className="font-bold">
+          https://better.giving
+        </a>
+        .
       </p>
       <ExtLink
         href={generateShareLink(shareText, social.id)}

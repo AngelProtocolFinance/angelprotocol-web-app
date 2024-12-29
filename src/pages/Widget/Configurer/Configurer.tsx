@@ -1,6 +1,6 @@
 import type { Endow } from "@better-giving/endowment";
 import { incrementLabelMaxChars } from "@better-giving/endowment/schema";
-import { Field as HuiField, Input } from "@headlessui/react";
+import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import { DonateMethods } from "components/DonateMethods";
 import Increments from "components/Increments";
@@ -10,6 +10,7 @@ import {
   NativeField as Field,
   Form,
 } from "components/form";
+import { DollarSign } from "lucide-react";
 import type { Dispatch, SetStateAction } from "react";
 import {
   type SubmitHandler,
@@ -147,7 +148,7 @@ export default function Configurer({
           }
         />
 
-        <h4 className="font-bold text-base mt-8">Style settings</h4>
+        <p className="font-bold text-base mt-8">Style settings</p>
         <div className="flex items-center gap-2 mt-3">
           <input
             id="__accent-prim"
@@ -179,17 +180,25 @@ export default function Configurer({
           field={(idx) => (
             <>
               <HuiField className="grid grid-rows-subgrid row-span-2">
-                <Input
-                  placeholder="$"
-                  {...register(`increments.${idx}.value`)}
-                  className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
-                />
+                <div className="relative w-full">
+                  <DollarSign
+                    size={14}
+                    className="text-navy-l1 absolute top-1/2 left-3 -translate-y-1/2"
+                  />
+                  <Input
+                    type="number"
+                    placeholder="0.00"
+                    {...register(`increments.${idx}.value`)}
+                    className="w-full h-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent pl-8 pr-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
+                  />
+                </div>
                 <p className="mt-1 empty:hidden text-left text-xs text-red">
                   {errors.increments?.[idx]?.value?.message}
                 </p>
               </HuiField>
               <HuiField className="grid grid-rows-subgrid row-span-2">
-                <Input
+                <Textarea
+                  rows={2}
                   {...register(`increments.${idx}.label`)}
                   className="w-full font-heading outline-blue-d1 rounded text-sm font-medium bg-transparent px-4 py-3.5 placeholder:text-navy-l3 text-navy-d4 border border-gray-l3 disabled:pointer-events-none disabled:bg-gray-l5 disabled:text-navy-l1"
                 />

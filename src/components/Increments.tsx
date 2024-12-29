@@ -45,7 +45,8 @@ export default function Increments({
       <div className="mt-2 grid grid-cols-subgrid gap-y-6 col-span-3">
         {fields.length === 0 ? (
           <Info classes="col-span-3">
-            Default preset $40, $100, $200 are used{" "}
+            Click the plus symbol to add preset donation increments for donors
+            to choose
           </Info>
         ) : (
           fields.map((f, idx) => {
