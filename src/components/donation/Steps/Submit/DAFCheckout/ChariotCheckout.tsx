@@ -312,7 +312,6 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               setGrantState("pending");
               await apes.post("fiat-donation/chariot", { json: intent });
-              setGrantState(undefined);
 
               setModalOption("isDismissible", true);
               closeModal();
@@ -328,8 +327,9 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 } satisfies DonateThanksState)
               );
             } catch (err) {
-              setGrantState(undefined);
               handleError(err, { context: "processing donation" });
+            } finally {
+              setGrantState(undefined);
             }
           }}
         />

@@ -22,8 +22,9 @@ export default function IntentResumer({ intentId, classes }: Props) {
         toWithState(`${appRoutes.donate}/${intent.endowmentId}`, intent)
       );
     } catch (err) {
-      setState(undefined);
       handleError(err, "parsed");
+    } finally {
+      setState(undefined);
     }
   }
   return (

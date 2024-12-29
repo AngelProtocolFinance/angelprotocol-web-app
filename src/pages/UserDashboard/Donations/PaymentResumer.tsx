@@ -1,36 +1,45 @@
 import tokens from "@better-giving/assets/tokens/map";
+import { ap, ver } from "api/api";
 import Modal from "components/Modal";
 import { PayQr } from "components/donation";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { roundDown } from "helpers";
-import { useLazyPaymentQuery } from "services/aws/crypto";
+import { useState } from "react";
 import type { Crypto } from "types/aws";
 
 type Props = { paymentId: number; classes?: string; amount: number };
 export default function PaymentResumer({ paymentId, classes, amount }: Props) {
-  const [getPayment, { isLoading, isFetching }] = useLazyPaymentQuery();
   const { handleError, displayError } = useErrorContext();
   const { showModal } = useModalContext();
 
+  const [intentState, setIntentState] = useState<"pending">();
+
   return (
     <button
-      disabled={isLoading || isFetching}
+      disabled={intentState === "pending"}
       type="button"
       className={`${classes} btn-blue px-3 py-1 text-xs`}
       onClick={async () => {
         try {
-          const payment = await getPayment(paymentId).unwrap();
+          setIntentState("pending");
+          const payment = await ap
+            .get<Crypto.PaymentStatus>(
+              `${ver(1)}/crypto/v1/payment/${paymentId}`
+            )
+            .json();
           if (payment.payment_status !== "waiting") {
             return displayError("Donation is already processing.");
           }
           showModal(QrModal, { ...payment, orderAmount: amount });
         } catch (err) {
           handleError(err, "parsed");
+        } finally {
+          setIntentState(undefined);
         }
       }}
     >
-      {isLoading ? "Loading..." : "Finish paying"}
+      {intentState === "pending" ? "Loading..." : "Finish paying"}
     </button>
   );
 }
