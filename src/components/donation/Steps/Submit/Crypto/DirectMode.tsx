@@ -37,7 +37,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     honorary,
   } = donation;
 
-  const intent = useSWR(
+  const { data, isLoading, error, isValidating } = useSWR(
     {
       transactionId: init.intentId,
       amount: +details.token.amount,
@@ -64,8 +64,6 @@ export default function DirectMode({ donation, classes = "" }: Props) {
     cryptoIntent
   );
 
-  console.log(intent);
-
   const totalDisplayAmount = roundToCents(
     +details.token.amount + (tip?.value ?? 0) + feeAllowance,
     details.token.rate,
@@ -81,10 +79,10 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       </p>
       <QueryLoader
         queryState={{
-          isLoading: intent.isLoading || intent.isValidating,
-          isFetching: intent.isValidating,
-          data: intent.data,
-          isError: intent.error,
+          isLoading: isLoading,
+          isFetching: isValidating,
+          data: data,
+          isError: !!error,
         }}
         messages={{
           loading: <ContentLoader className="size-48 rounded" />,
@@ -114,7 +112,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
       </p>
 
       <ContinueBtn
-        disabled={!!intent.error || intent.isLoading}
+        disabled={!!error || isLoading}
         onClick={() =>
           navigate(
             toWithState(appRoutes.donate_thanks, {

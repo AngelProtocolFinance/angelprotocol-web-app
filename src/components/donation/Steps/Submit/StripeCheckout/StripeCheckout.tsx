@@ -1,7 +1,7 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import { apes } from "api/api";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
+import { APIs } from "constants/urls";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
 import useSWR from "swr/immutable";
@@ -24,18 +24,19 @@ interface Intent extends DonationIntent.Fiat {
 }
 
 const fetcher = async (intent: Intent) => {
-  const res = await apes
-    .post<{ clientSecret: string }>("fiat-donation/stripe", { json: intent })
-    .json();
-
-  return res.clientSecret;
+  const res = await fetch(`${APIs.apes}/fiat-donation/stripe`, {
+    method: "POST",
+    body: JSON.stringify(intent),
+  });
+  if (!res.ok) throw res;
+  return res.json().then((x) => x.clientSecret);
 };
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
   const { init, details, tip, donor: fvDonor, honorary, feeAllowance } = props;
   const { setState } = useDonationState();
 
-  const intent = useSWR(
+  const { data, error, isLoading } = useSWR(
     {
       transactionId: init.intentId,
       type: details.frequency,
@@ -80,10 +81,10 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       program={details.program}
     >
       <ErrorBoundary>
-        {intent.isLoading ? (
+        {isLoading ? (
           <Loader msg="Loading payment form.." />
-        ) : intent.error || !intent.data ? (
-          <ErrorTrigger error={intent.error} />
+        ) : error || !data ? (
+          <ErrorTrigger error={error} />
         ) : (
           <Elements
             options={{
@@ -93,7 +94,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
                   cssSrc: "https://fonts.googleapis.com/css2?family=Quicksand",
                 },
               ],
-              clientSecret: intent.data,
+              clientSecret: data,
               appearance: {
                 theme: "flat",
                 variables: {
