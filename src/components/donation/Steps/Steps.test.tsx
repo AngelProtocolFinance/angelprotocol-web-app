@@ -1,7 +1,5 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Provider } from "react-redux";
-import { store } from "store/store";
 import { describe, expect, test, vi } from "vitest";
 import { testDonateData } from "./__tests__/test-data";
 import { DEFAULT_PROGRAM } from "./common/constants";
@@ -15,10 +13,6 @@ vi.mock("react-router-dom", async () => {
     useLoaderData: () => testDonateData,
   };
 });
-
-const _Steps: typeof Steps = (props) => (
-  <Provider store={store}>{<Steps {...props} />}</Provider>
-);
 
 const stripeDonation: StripeDonationDetails = {
   method: "stripe",
@@ -40,7 +34,7 @@ describe("donation flow", () => {
       },
       details: stripeDonation,
     };
-    render(<_Steps init={state} />);
+    render(<Steps init={state} />);
 
     const continueBtn = await screen.findByRole("button", {
       name: /continue/i,
@@ -69,7 +63,7 @@ describe("donation flow", () => {
       },
       details: stripeDonation,
     };
-    render(<_Steps init={state} />);
+    render(<Steps init={state} />);
 
     await userEvent.click(
       await screen.findByRole("button", {
@@ -104,7 +98,7 @@ describe("donation flow", () => {
       tip: { value: 50, format: "pct" },
     };
 
-    render(<_Steps init={state} />);
+    render(<Steps init={state} />);
 
     // back to donate methods
     await userEvent.click(
@@ -147,7 +141,7 @@ describe("donation flow", () => {
       tip: { value: 50, format: "pct" },
     };
 
-    render(<_Steps init={state} />);
+    render(<Steps init={state} />);
 
     // back to donate methods
     await userEvent.click(

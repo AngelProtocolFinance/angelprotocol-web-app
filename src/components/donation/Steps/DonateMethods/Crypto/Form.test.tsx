@@ -1,9 +1,7 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Provider } from "react-redux";
 import { mockTokens } from "services/apes/mock";
-import { mockPrograms } from "services/aws/programs";
-import { store } from "store/store";
+import { mockPrograms } from "services/aws/programs/mock";
 import { afterAll, describe, expect, test, vi } from "vitest";
 import { testDonateData } from "../../__tests__/test-data";
 import type { CryptoFormStep, Init } from "../../types";
@@ -24,10 +22,6 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-const _Form: typeof Form = (props) => (
-  <Provider store={store}>{<Form {...props} />}</Provider>
-);
-
 describe("Crypto form: initial load", () => {
   afterAll(() => {
     vi.restoreAllMocks();
@@ -45,7 +39,7 @@ describe("Crypto form: initial load", () => {
       step: "donate-form",
       init,
     };
-    render(<_Form {...state} />);
+    render(<Form {...state} />);
 
     waitFor(() => {
       const programSelector = screen.queryByRole("button", {
@@ -67,7 +61,7 @@ describe("Crypto form: initial load", () => {
       step: "donate-form",
       init,
     };
-    render(<_Form {...state} />);
+    render(<Form {...state} />);
     waitFor(() => {
       const programSelector = screen.queryByRole("button", {
         name: /general donation/i,
@@ -94,7 +88,7 @@ describe("Crypto form: initial load", () => {
         program: { label: mockPrograms[0].title, value: mockPrograms[0].id },
       },
     } as const;
-    render(<_Form {...state} />);
+    render(<Form {...state} />);
 
     const amountInput = screen.getByDisplayValue(amount);
     expect(amountInput).toBeInTheDocument();
@@ -122,7 +116,7 @@ describe("Crypto form: initial load", () => {
       step: "donate-form",
       init,
     };
-    render(<_Form {...state} />);
+    render(<Form {...state} />);
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
@@ -146,7 +140,7 @@ describe("Crypto form: initial load", () => {
       step: "donate-form",
       init,
     };
-    render(<_Form {...state} />);
+    render(<Form {...state} />);
 
     //submit empty form
     const continueBtn = screen.getByRole("button", { name: /continue/i });

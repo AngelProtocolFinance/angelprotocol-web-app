@@ -2,7 +2,7 @@ import { beforeEach } from "node:test";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mockPhpCurrency } from "services/apes/mock";
-import { mockPrograms } from "services/aws/programs";
+import { mockPrograms } from "services/aws/programs/mock";
 import { describe, expect, test, vi } from "vitest";
 import { testDonateData } from "../../__tests__/test-data";
 import { usdOption } from "../../common/constants";

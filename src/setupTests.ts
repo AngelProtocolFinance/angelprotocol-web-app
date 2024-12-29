@@ -1,7 +1,7 @@
 import { setupServer } from "msw/node";
 // jest-dom adds custom jest matchers for asserting on DOM nodes.
 import "@testing-library/jest-dom";
-import { handlers as programsHandlers } from "services/aws/programs";
+import { handlers as programsHandlers } from "services/aws/programs/mock";
 import { afterAll, afterEach, beforeAll, vi } from "vitest";
 import { postsMock } from "./api/get/wp-posts";
 import { handlers as apesHandlers } from "./services/apes/mock";

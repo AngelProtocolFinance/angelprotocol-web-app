@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { mockPrograms } from "services/aws/programs";
+import { mockPrograms } from "services/aws/programs/mock";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { testDonateData } from "../../__tests__/test-data";
 import type { Init, StocksDonationDetails } from "../../types";

@@ -1,6 +1,4 @@
 import { render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { store } from "store/store";
 import type { UserV2 } from "types/auth";
 import { afterEach, beforeEach, describe, expect, test, vi } from "vitest";
 import { testDonateData } from "../__tests__/test-data";
@@ -140,11 +138,7 @@ describe("summary step", () => {
     program: props.details.program,
   };
   test("crypto amount + dollar amount", async () => {
-    render(
-      <Provider store={store}>
-        <Summary {...props} details={cryptoDetails} />
-      </Provider>
-    );
+    render(<Summary {...props} details={cryptoDetails} />);
 
     const donationTerm = screen.getByRole("term", { name: /amount/i });
     expect(donationTerm).toBeInTheDocument();

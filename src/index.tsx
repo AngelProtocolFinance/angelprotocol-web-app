@@ -3,7 +3,6 @@ import Loader from "components/Loader";
 import ErrorBoundary from "errors/ErrorBoundary";
 import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
 import {
   RouterProvider,
   createBrowserRouter,
@@ -12,7 +11,6 @@ import {
   useLocation,
   useNavigationType,
 } from "react-router-dom";
-import { store } from "store/store";
 import "./index.css";
 import { routes } from "./App/App";
 
@@ -50,9 +48,7 @@ const LoaderComponent = () => (
 root.render(
   <StrictMode>
     <ErrorBoundary>
-      <Provider store={store}>
-        <RouterProvider router={router} fallbackElement={<LoaderComponent />} />
-      </Provider>
+      <RouterProvider router={router} fallbackElement={<LoaderComponent />} />
     </ErrorBoundary>
   </StrictMode>
 );
