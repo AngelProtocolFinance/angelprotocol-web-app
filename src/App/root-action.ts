@@ -1,10 +1,9 @@
-import { ap } from "api/api";
+import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import { cognito } from "auth/cognito";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { type ActionFunction, redirect } from "react-router-dom";
-import { version as v } from "services/helpers";
 import { emailSubs } from "types/hubspot-subscription";
 
 export const rootAction: ActionFunction = async ({ request }) => {
@@ -19,7 +18,7 @@ export const rootAction: ActionFunction = async ({ request }) => {
 
     if (payload.status !== "success") return payload.reply();
 
-    const res = await ap.post(`${v(1)}/hubspot/email-subs`, {
+    const res = await ap.post(`${ver(1)}/hubspot/email-subs`, {
       throwHttpErrors: false,
       json: { email: payload.value.email },
     });
@@ -43,11 +42,11 @@ export const rootAction: ActionFunction = async ({ request }) => {
     const endowId = data.get("endowId");
 
     return action === "add"
-      ? ap.post(`${v(1)}/bookmarks`, {
+      ? ap.post(`${ver(1)}/bookmarks`, {
           headers: { authorization: auth.idToken },
           json: { endowId },
         })
-      : ap.delete(`${v(1)}/bookmarks/${endowId}`, {
+      : ap.delete(`${ver(1)}/bookmarks/${endowId}`, {
           headers: { authorization: auth.idToken },
         });
   }

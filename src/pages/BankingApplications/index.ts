@@ -1,7 +1,6 @@
-import { ap, toSearch } from "api/api";
+import { ap, toSearch, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import type { LoaderFunction } from "react-router-dom";
-import { version as v } from "services/helpers";
 import type { UserV2 } from "types/auth";
 
 export { BankingApplications as Component } from "./BankingApplications";
@@ -17,7 +16,7 @@ async function getApplications(source: URL, user: UserV2) {
     source.searchParams.entries()
   );
   return ap
-    .get(`${v(1)}/banking-applications`, {
+    .get(`${ver(1)}/banking-applications`, {
       headers: { authorization: user.idToken },
       searchParams: toSearch({
         requestor: "bg-admin",

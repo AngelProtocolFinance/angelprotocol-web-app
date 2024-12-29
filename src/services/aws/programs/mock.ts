@@ -1,7 +1,7 @@
 import type { Program } from "@better-giving/endowment";
+import { ver } from "api/api";
 import { APIs } from "constants/urls";
 import { http, HttpResponse } from "msw";
-import { version as v } from "../../helpers";
 
 export const mockPrograms: Program[] = [
   {
@@ -19,7 +19,7 @@ export const mockPrograms: Program[] = [
 ];
 
 export const handlers = [
-  http.get(`${APIs.aws}/${v(1)}/endowments/:endowId/programs`, () => {
+  http.get(`${APIs.aws}/${ver(1)}/endowments/:endowId/programs`, () => {
     return HttpResponse.json(mockPrograms);
   }),
 ];
