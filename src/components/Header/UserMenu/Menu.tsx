@@ -2,7 +2,7 @@ import { MenuItem } from "@headlessui/react";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { CircleDollarSign, Shield } from "lucide-react";
-import { Link, useFetcher } from "react-router-dom";
+import { Link, useFetcher } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
 import { Organizations } from "./Organizations";
@@ -54,7 +54,7 @@ export default function Menu({ user, classes }: Props) {
         </div>
       </div>
 
-      <fetcher.Form className="contents" action="/" method="post">
+      <fetcher.Form className="contents" action="/" method="POST">
         <input
           className="hidden"
           value={user.accessToken}

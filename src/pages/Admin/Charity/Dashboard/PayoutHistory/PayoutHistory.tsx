@@ -1,6 +1,6 @@
 import { Info } from "components/Status";
 import { useEffect, useState } from "react";
-import { useFetcher, useLoaderData, useSearchParams } from "react-router-dom";
+import { useFetcher, useLoaderData, useSearchParams } from "react-router";
 import type { BalanceTxsPage } from "types/aws";
 import type { DashboardData } from "../route";
 import Table from "./Table";

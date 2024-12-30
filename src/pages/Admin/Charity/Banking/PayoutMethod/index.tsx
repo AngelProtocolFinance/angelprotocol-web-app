@@ -9,7 +9,7 @@ import {
   type LoaderFunction,
   type RouteObject,
   redirect,
-} from "react-router-dom";
+} from "react-router";
 import * as v from "valibot";
 import { DeletePrompt } from "./DeletePrompt";
 import PayoutMethod from "./Loaded";

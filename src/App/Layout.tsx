@@ -1,7 +1,7 @@
 import Footer from "components/Footer";
 import Seo from "components/Seo";
 import ErrorBoundary from "errors/ErrorBoundary";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router";
 import Header from "./Header";
 
 export default function Layout() {

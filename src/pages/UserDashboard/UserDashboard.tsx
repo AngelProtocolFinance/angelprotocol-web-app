@@ -7,7 +7,7 @@ import {
   Navigate,
   type RouteObject,
   useLoaderData,
-} from "react-router-dom";
+} from "react-router";
 import { linkGroups, routes } from "./routes";
 
 function Layout() {

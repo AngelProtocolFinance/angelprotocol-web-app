@@ -2,7 +2,7 @@ import type { Page } from "@better-giving/registration/approval";
 import { ap, ver } from "api/api";
 import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
-import type { LoaderFunction } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 
 export { Component } from "./Applications";

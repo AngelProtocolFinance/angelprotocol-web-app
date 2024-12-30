@@ -1,6 +1,6 @@
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import fiscalsponsorshipImg from "./images/fiscal-sponsorship.png";
 
 export default function FiscalSponsorship({ className = "" }) {

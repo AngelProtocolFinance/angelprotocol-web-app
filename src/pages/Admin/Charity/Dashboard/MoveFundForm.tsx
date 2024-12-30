@@ -15,7 +15,7 @@ import {
   useNavigate,
   useRouteLoaderData,
   useSearchParams,
-} from "react-router-dom";
+} from "react-router";
 import { schema, stringNumber } from "schemas/shape";
 import type { BalanceMovement } from "types/aws";
 import type { DashboardData } from "./route";

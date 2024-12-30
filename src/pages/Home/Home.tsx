@@ -11,7 +11,7 @@ import Hero from "./Hero";
 import Testimonials from "./Testimonials";
 // import Video from "./Video";
 // import type { EndowPage } from "./types";
-// import { useLoaderData } from "react-router-dom";
+// import { useLoaderData } from "react-router";
 export const Component = () => {
   // const page1 = useLoaderData() as EndowPage;
   return (

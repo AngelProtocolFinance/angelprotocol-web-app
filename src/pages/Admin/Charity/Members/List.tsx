@@ -1,7 +1,7 @@
 import TableSection, { Cells } from "components/TableSection";
 import { LoaderCircle, Minus, Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import { Link, Outlet, useFetcher, useLoaderData } from "react-router-dom";
+import { Link, Outlet, useFetcher, useLoaderData } from "react-router";
 import { toast } from "sonner";
 import type { EndowAdmin } from "types/aws";
 
@@ -79,7 +79,7 @@ function DeleteForm({ email }: { email: string }) {
     if (!window.confirm(`Are you sure you want to remove ${toRemove}?`)) return;
     fetcher.submit(
       { toRemove },
-      { action: ".", method: "post", encType: "application/json" }
+      { action: ".", method: "POST", encType: "application/json" }
     );
   }
 

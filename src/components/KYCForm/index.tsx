@@ -1,6 +1,6 @@
 import { apes } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { type ActionFunction, redirect } from "react-router-dom";
+import { type ActionFunction, redirect } from "react-router";
 
 export { Component } from "./KYCForm";
 

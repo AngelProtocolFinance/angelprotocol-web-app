@@ -1,6 +1,6 @@
 import type { BankDetails } from "api/get/payout-method";
 import Seo from "components/Seo";
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router";
 import Loaded from "./Loaded";
 
 export function BankingApplication() {

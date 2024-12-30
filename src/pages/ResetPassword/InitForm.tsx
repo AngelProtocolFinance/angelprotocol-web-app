@@ -6,7 +6,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
 import { type UseFormReturn, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { requiredString } from "schemas/string";
 import { isError } from "types/auth";
 import { object } from "yup";

@@ -1,7 +1,7 @@
 import type { DonateData } from "api/donate-loader";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router";
 import Content from "./Content";
 export { loader } from "api/donate-loader";
 export function Component() {

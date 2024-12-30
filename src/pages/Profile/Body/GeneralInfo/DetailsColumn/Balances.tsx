@@ -1,5 +1,5 @@
 import { humanize } from "helpers";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router";
 import type { EndowmentBalances } from "types/aws";
 
 export default function Balances() {

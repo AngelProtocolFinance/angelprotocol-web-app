@@ -1,7 +1,7 @@
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { Heart } from "lucide-react";
 import { Suspense } from "react";
-import { Await, useFetcher } from "react-router-dom";
+import { Await, useFetcher } from "react-router";
 import type { DetailedUser, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
@@ -70,7 +70,7 @@ function BookmarkBtn({ user, bookmarks, classes = "", endowId }: IBookmarkBtn) {
         ) : null
       }
     >
-      <fetcher.Form action="/" method="post" className="contents">
+      <fetcher.Form action="/" method="POST" className="contents">
         <input
           type="hidden"
           name="action"

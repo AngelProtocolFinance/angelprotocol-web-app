@@ -1,7 +1,7 @@
 import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
 import { loadAuth, redirectToAuth } from "auth";
-import type { ActionFunction, LoaderFunction } from "react-router-dom";
+import type { ActionFunction, LoaderFunction } from "react-router";
 export { ErrorElement as ErrorBoundary } from "errors/ErrorElement";
 
 export { default as Component } from "./ProgramEditor";

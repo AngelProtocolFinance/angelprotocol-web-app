@@ -5,7 +5,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import type { DonateThanksState } from "types/pages";
 import { toDonor } from "../../../common/constants";
 import type { StripeCheckoutStep } from "../../../types";

@@ -1,5 +1,5 @@
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import SubscriptionForm from "./SubscriptionForm";
 
 export default function Newsletter({ classes = "" }) {

@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { ArrowDownToLine, SquareArrowUpRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type { Donation } from "types/aws";
 import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";

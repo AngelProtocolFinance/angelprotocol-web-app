@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router";
 import type { RegStep3 } from "../../types";
 import { NotTaxExempt } from "./NotTaxExempt";
 import { PossiblyTaxExempt } from "./PossiblyTaxExempt";

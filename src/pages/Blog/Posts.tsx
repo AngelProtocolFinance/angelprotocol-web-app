@@ -8,7 +8,7 @@ import {
   useFetcher,
   useLoaderData,
   useSearchParams,
-} from "react-router-dom";
+} from "react-router";
 import type { Wordpress } from "types/wordpress";
 
 export const loader: LoaderFunction = async ({ request }) => {

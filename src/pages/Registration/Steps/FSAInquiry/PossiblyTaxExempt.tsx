@@ -2,7 +2,7 @@ import type { Init } from "@better-giving/registration/models";
 import type { Update } from "@better-giving/registration/update";
 import LoadText from "components/LoadText";
 import { useForm } from "react-hook-form";
-import { Link, useFetcher, useNavigate } from "react-router-dom";
+import { Link, useFetcher, useNavigate } from "react-router";
 import { steps } from "../../routes";
 import type { FV } from "./types";
 
@@ -46,7 +46,7 @@ export function PossiblyTaxExempt({ irs501c3Prev, ...init }: Props) {
             type: "fsa-inq",
             irs501c3: fv.irs501c3 === "yes",
           } satisfies Update,
-          { action: ".", method: "patch", encType: "application/json" }
+          { action: ".", method: "PATCH", encType: "application/json" }
         );
       })}
     >

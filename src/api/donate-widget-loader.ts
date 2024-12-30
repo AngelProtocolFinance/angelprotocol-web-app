@@ -1,6 +1,6 @@
 import type { Endow, Program } from "@better-giving/endowment";
 import { loadAuth } from "auth/load-auth";
-import { type LoaderFunction, defer } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 import type { EndowOptionsPage, EndowmentOption } from "types/aws";
 import * as v from "valibot";
 import { ap, ver } from "./api";
@@ -32,12 +32,12 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const id = selectedId ?? routeEndowId;
 
   const auth = await loadAuth();
-  return defer({
+  return {
     endow: id ? await getEndow(id) : undefined,
     currencies: getFiatCurrencies(auth ?? undefined),
     endows: await getEndows(url.searchParams.get("query") ?? ""),
     programs: id ? getPrograms(id) : Promise.resolve([]),
-  } satisfies WidgetData);
+  } satisfies WidgetData;
 };
 
 async function getEndows(query: string) {

@@ -16,7 +16,7 @@ import { toWithState } from "helpers/state-params";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { schema } from "schemas/shape";
 import type { DonationIntent } from "types/aws";
 import type { DonateThanksState } from "types/pages";

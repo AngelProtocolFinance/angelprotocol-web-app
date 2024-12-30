@@ -1,5 +1,5 @@
 import { regRoutes } from "constants/routes";
-import { Navigate, Outlet, useFetcher, useLoaderData } from "react-router-dom";
+import { Navigate, Outlet, useFetcher, useLoaderData } from "react-router";
 import type { RegStep6 } from "../../types";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";

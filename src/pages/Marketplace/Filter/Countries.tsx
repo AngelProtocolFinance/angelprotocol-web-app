@@ -8,7 +8,7 @@ import countries from "assets/countries/all.json";
 import { isEmpty } from "helpers";
 import { SearchIcon, X } from "lucide-react";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 import { toParsed, toRaw } from "../helpers";
 
 export default function Countries() {

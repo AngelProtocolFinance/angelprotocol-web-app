@@ -1,5 +1,5 @@
 import { ErrorStatus } from "components/Status";
-import { useLoaderData, useSearchParams } from "react-router-dom";
+import { useLoaderData, useSearchParams } from "react-router";
 import Content from "./Content";
 import parseConfig from "./parseConfig";
 

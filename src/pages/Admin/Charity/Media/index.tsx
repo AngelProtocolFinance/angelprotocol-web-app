@@ -9,7 +9,7 @@ import {
   type LoaderFunction,
   type RouteObject,
   redirect,
-} from "react-router-dom";
+} from "react-router";
 import { parse } from "valibot";
 import Media from "./Media";
 import { VideoEditor, schema } from "./VideoEditor";

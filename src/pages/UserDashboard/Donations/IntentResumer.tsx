@@ -3,7 +3,7 @@ import { appRoutes } from "constants/routes";
 import { useErrorContext } from "contexts/ErrorContext";
 import { toWithState } from "helpers/state-params";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import type { DonationIntent } from "types/aws";
 
 type Props = { intentId: string; classes?: string };

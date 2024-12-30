@@ -7,7 +7,7 @@ import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
 import { Fragment, type PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 interface Props {
   classes?: string;

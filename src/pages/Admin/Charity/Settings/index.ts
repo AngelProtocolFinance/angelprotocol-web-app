@@ -1,5 +1,5 @@
 import { getEndow } from "api/get/endow";
-import type { LoaderFunction } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 import type { EndowmentSettingsAttributes } from "types/aws";
 export { default as Component } from "./Form";
 

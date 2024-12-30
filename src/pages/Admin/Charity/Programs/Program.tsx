@@ -3,8 +3,8 @@ import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { adminRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
-import { useFetcher } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useFetcher } from "react-router";
+import { Link } from "react-router";
 
 export function Program(props: TProgram) {
   const fetcher = useFetcher();

@@ -1,7 +1,7 @@
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import { ErrorElement } from "errors/ErrorElement";
-import { Outlet, type RouteObject } from "react-router-dom";
+import { Outlet, type RouteObject } from "react-router";
 
 export const signUpRoute: RouteObject = {
   path: appRoutes.signup,

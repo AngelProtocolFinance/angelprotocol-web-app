@@ -9,12 +9,7 @@ import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
 import { useEffect } from "react";
-import {
-  Link,
-  useFetcher,
-  useLoaderData,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useFetcher, useLoaderData, useSearchParams } from "react-router";
 import { toast } from "sonner";
 import { type ActionData, isActionErr, isValiErr } from "types/action";
 import { signUp } from "types/auth";

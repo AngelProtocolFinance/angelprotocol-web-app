@@ -22,12 +22,12 @@ import {
   type ActionFunction,
   Link,
   type LoaderFunction,
-  json,
+  data,
   redirect,
   useFetcher,
   useLoaderData,
   useSearchParams,
-} from "react-router-dom";
+} from "react-router";
 import { toast } from "sonner";
 import { authStore } from "store/auth";
 import { type OAuthState, isError, signIn } from "types/auth";
@@ -85,7 +85,7 @@ export const action: ActionFunction = async ({ request }) => {
     return redirect(to.toString());
   } catch (err) {
     console.error(err);
-    return json<ActionData>({ __error: "Unknown error occured" }, 500);
+    return data<ActionData>({ __error: "Unknown error occured" }, 500);
   }
 };
 

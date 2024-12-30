@@ -2,7 +2,7 @@ import { ap, ver } from "api/api";
 import { getPrograms } from "api/get/programs";
 import { loadAuth, redirectToAuth } from "auth";
 import { adminRoutes } from "constants/routes";
-import { type LoaderFunction, redirect } from "react-router-dom";
+import { type LoaderFunction, redirect } from "react-router";
 
 export { default as Component } from "./Programs";
 

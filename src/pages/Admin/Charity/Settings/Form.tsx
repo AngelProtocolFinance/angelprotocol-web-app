@@ -17,7 +17,7 @@ import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
-import { Outlet, useFetcher, useLoaderData } from "react-router-dom";
+import { Outlet, useFetcher, useLoaderData } from "react-router";
 import type { EndowmentUpdate } from "services/types";
 import type { EndowmentSettingsAttributes } from "types/aws";
 import GoalSelector from "./goal-selector";
@@ -99,7 +99,7 @@ export default function Form() {
           };
 
           fetcher.submit(update as any, {
-            method: "post",
+            method: "POST",
             action: ".",
             encType: "application/json",
           });

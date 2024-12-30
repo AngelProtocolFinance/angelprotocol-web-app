@@ -1,7 +1,7 @@
 import { loadAuth } from "auth";
 import { appRoutes } from "constants/routes";
 import { decodeState } from "helpers/state-params";
-import { type LoaderFunction, redirect } from "react-router-dom";
+import { type LoaderFunction, redirect } from "react-router";
 
 export const loader: LoaderFunction = async ({
   request,

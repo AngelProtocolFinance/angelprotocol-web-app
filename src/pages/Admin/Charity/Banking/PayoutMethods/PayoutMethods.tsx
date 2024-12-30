@@ -1,6 +1,6 @@
 import { Info } from "components/Status";
 import { Plus } from "lucide-react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router";
 import type { PayoutMethod } from "types/aws";
 import Table from "./Table";
 

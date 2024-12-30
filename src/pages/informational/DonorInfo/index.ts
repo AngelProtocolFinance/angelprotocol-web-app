@@ -1,5 +1,5 @@
 import { ap, ver } from "api/api";
-import type { LoaderFunction } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 import type { EndowCardsPage } from "types/aws";
 
 export { DonorInfo as Component } from "./DonorInfo";

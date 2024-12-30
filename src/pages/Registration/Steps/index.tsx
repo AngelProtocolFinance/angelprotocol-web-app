@@ -8,7 +8,7 @@ import {
   Outlet,
   type RouteObject,
   useRouteLoaderData,
-} from "react-router-dom";
+} from "react-router";
 import { stepLoader } from "../data/step-loader";
 import { nextStep, steps } from "../routes";
 import type { Reg$IdData, RegStep4, RegistrationState } from "../types";

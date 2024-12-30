@@ -9,7 +9,7 @@ import {
   type LoaderFunction,
   type RouteObject,
   redirect,
-} from "react-router-dom";
+} from "react-router";
 import { bankingApplicationUpdate } from "types/aws";
 import { parse } from "valibot";
 import * as v from "valibot";

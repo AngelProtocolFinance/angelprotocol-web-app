@@ -5,7 +5,7 @@ import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
 import { toWithState } from "helpers/state-params";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import useSWR from "swr/immutable";
 import type { Crypto, DonationIntent } from "types/aws";
 import type { DonateThanksState } from "types/pages";

@@ -3,13 +3,13 @@ import { getEndow } from "api/get/endow";
 import { userEndows } from "api/get/user-endows";
 import { oauth } from "auth/cognito";
 import { loadAuth } from "auth/load-auth";
-import { type LoaderFunctionArgs, defer, redirect } from "react-router-dom";
+import { type LoaderFunctionArgs, redirect } from "react-router";
 import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
 export const rootLoader = async ({
   request,
-}: LoaderFunctionArgs): Promise<null | ReturnType<typeof defer> | Response> => {
+}: LoaderFunctionArgs): Promise<null | DetailedUser | Response> => {
   console.log("app loads");
   /** handle oauth if applicable */
   const url = new URL(request.url);
@@ -40,11 +40,11 @@ export const rootLoader = async ({
   const auth = await loadAuth();
   if (!auth) return null;
 
-  return defer({
+  return {
     ...auth,
     bookmarks: getBookmarks(auth),
     orgs: userEndows(auth),
-  } satisfies DetailedUser);
+  } satisfies DetailedUser;
 };
 
 async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {

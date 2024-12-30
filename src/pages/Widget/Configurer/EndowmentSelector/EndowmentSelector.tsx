@@ -2,7 +2,7 @@ import { Combobox, ComboboxButton, ComboboxInput } from "@headlessui/react";
 import { DrawerIcon } from "components/Icon";
 import { debounce } from "lodash";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 import type { EndowmentOption } from "types/aws";
 import Options from "./Options";
 

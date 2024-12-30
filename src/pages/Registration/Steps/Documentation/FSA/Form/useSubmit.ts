@@ -2,7 +2,7 @@ import type { FsaPayload } from "@better-giving/registration/fsa";
 import { toFileName } from "helpers/uploadFile";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
-import { useFetcher, useLoaderData, useNavigate } from "react-router-dom";
+import { useFetcher, useLoaderData, useNavigate } from "react-router";
 import { steps } from "../../../../routes";
 import type { RegStep4 } from "../../../../types";
 import type { FV } from "../schema";
@@ -63,7 +63,7 @@ export default function useSubmit({
 
     fetcher.submit(signer, {
       encType: "application/json",
-      method: "post",
+      method: "POST",
       action: "fsa",
     });
   };

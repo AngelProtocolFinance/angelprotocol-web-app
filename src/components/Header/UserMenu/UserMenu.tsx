@@ -1,8 +1,8 @@
 import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
 import { CircleUserRound } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
-import { useRouteLoaderData } from "react-router-dom";
+import { Link, useLocation } from "react-router";
+import { useRouteLoaderData } from "react-router";
 import type { SignInRouteState, UserV2 } from "types/auth";
 
 export default function UserMenu({ classes = "" }) {

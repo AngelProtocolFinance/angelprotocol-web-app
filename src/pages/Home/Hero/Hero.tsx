@@ -1,7 +1,7 @@
 import { appRoutes } from "constants/routes";
 import { useRendered } from "hooks/use-rendered";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import headillust from "./head-illust.webp";
 import s from "./styles.module.css";
 

@@ -2,7 +2,7 @@ import type { Milestone as TMilestone } from "@better-giving/endowment";
 import { Info } from "components/Status";
 import { isEmpty } from "helpers";
 import { Plus } from "lucide-react";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 import Milestone from "./Milestone";
 
 type Props = {
@@ -33,7 +33,7 @@ export default function Milestones({ programId, milestones }: Props) {
                 intent: "add-milestone",
                 "next-milestone-num": milestones.length + 1,
               },
-              { method: "post", action: ".", encType: "application/json" }
+              { method: "POST", action: ".", encType: "application/json" }
             )
           }
           className="btn-outline-filled text-sm w-full @md:w-52 py-2"

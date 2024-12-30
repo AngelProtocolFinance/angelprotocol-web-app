@@ -1,5 +1,5 @@
 import type { EndowDesignation } from "@better-giving/endowment";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 import { toParsed, toRaw } from "../helpers";
 import { type FilterOption, FlatFilter } from "./common";
 

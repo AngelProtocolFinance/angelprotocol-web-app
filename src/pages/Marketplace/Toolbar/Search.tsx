@@ -1,7 +1,7 @@
 import debounce from "lodash/debounce";
 import { SearchIcon } from "lucide-react";
 import type { ChangeEventHandler } from "react";
-import { useFetcher, useSearchParams } from "react-router-dom";
+import { useFetcher, useSearchParams } from "react-router";
 import type { EndowCardsPage } from "types/aws";
 
 export default function Search({ classes = "" }: { classes?: string }) {

@@ -1,5 +1,5 @@
 import React, { type ReactNode } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink } from "react-router";
 import type { LinkGroup } from "./types";
 
 type Props = {

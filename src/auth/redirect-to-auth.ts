@@ -1,6 +1,6 @@
 import { appRoutes } from "constants/routes";
 import { decodeState, toUrlWithState } from "helpers/state-params";
-import { redirect } from "react-router-dom";
+import { redirect } from "react-router";
 import type { SignInRouteState } from "types/auth";
 
 export const redirectToAuth = (req: Request) => {

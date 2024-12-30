@@ -1,7 +1,7 @@
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import { Suspense } from "react";
-import { Await } from "react-router-dom";
+import { Await } from "react-router";
 
 interface Endow {
   name: string;

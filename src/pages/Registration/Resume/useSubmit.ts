@@ -1,6 +1,6 @@
 import { useErrorContext } from "contexts/ErrorContext";
 import { useFormContext } from "react-hook-form";
-import { useNavigate, useRouteLoaderData } from "react-router-dom";
+import { useNavigate, useRouteLoaderData } from "react-router";
 import type { UserV2 } from "types/auth";
 import { getRegState } from "../data/step-loader";
 import { nextStep } from "../routes";

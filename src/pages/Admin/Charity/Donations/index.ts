@@ -1,7 +1,7 @@
 import { ap, ver } from "api/api";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth } from "auth/load-auth";
-import type { LoaderFunction } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 
 export { default as Component } from "./Donations";

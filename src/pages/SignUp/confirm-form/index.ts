@@ -4,9 +4,9 @@ import { appRoutes } from "constants/routes";
 import {
   type ActionFunction,
   type LoaderFunction,
-  json,
+  data,
   redirect,
-} from "react-router-dom";
+} from "react-router";
 import { authStore } from "store/auth";
 import { isError, signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";
@@ -31,8 +31,8 @@ export const action: ActionFunction = async ({ request }) => {
 
   if (fv.get("intent") === "resend-otp") {
     const res = await cognito.resendConfirmationCode(email.toString());
-    if (isError(res)) return json<ActionData>({ __error: res.message }, 500);
-    return json<ActionData>({ time_remaining: 30 });
+    if (isError(res)) return data<ActionData>({ __error: res.message }, 500);
+    return data<ActionData>({ time_remaining: 30 });
   }
 
   const p = parseWithValibot(fv, { schema: signUpConfirm });

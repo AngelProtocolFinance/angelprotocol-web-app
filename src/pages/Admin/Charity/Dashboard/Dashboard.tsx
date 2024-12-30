@@ -1,5 +1,5 @@
 import { CircleAlert } from "lucide-react";
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router";
 import { Loaded } from "./Loaded";
 import { monthPeriod } from "./monthPeriod";
 import type { DashboardData } from "./route";

@@ -4,7 +4,7 @@ import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link, useRouteLoaderData } from "react-router-dom";
+import { Link, useRouteLoaderData } from "react-router";
 import type { DetailedUser } from "types/auth";
 import type { EndowmentCard } from "types/aws";
 

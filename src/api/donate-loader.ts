@@ -1,7 +1,7 @@
 import type { Endow, Program } from "@better-giving/endowment";
 import { loadAuth } from "auth/load-auth";
 import { decodeState } from "helpers/state-params";
-import { type LoaderFunction, defer } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { DonationIntent, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
@@ -31,7 +31,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     url.searchParams.get("_s")
   );
 
-  return defer({
+  return {
     id,
     user: auth,
     intent,
@@ -39,5 +39,5 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     currencies: getFiatCurrencies(auth ?? undefined),
     programs: getPrograms(id),
     balance: getEndowBalance(id.toString()),
-  } satisfies DonateData);
+  } satisfies DonateData;
 };

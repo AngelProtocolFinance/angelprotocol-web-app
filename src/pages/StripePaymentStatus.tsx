@@ -12,7 +12,7 @@ import {
   Navigate,
   useLoaderData,
   useOutletContext,
-} from "react-router-dom";
+} from "react-router";
 import type { GuestDonor } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 

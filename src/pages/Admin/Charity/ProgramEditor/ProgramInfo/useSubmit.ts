@@ -1,7 +1,7 @@
 import type { ProgramUpdate } from "@better-giving/endowment";
 import type { FieldNamesMarkedBoolean } from "react-hook-form";
 import type { SubmitHandler } from "react-hook-form";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 import type { FV } from "./schema";
 
 export default function useSubmit(
@@ -19,7 +19,7 @@ export default function useSubmit(
     }
 
     fetcher.submit(update, {
-      method: "post",
+      method: "POST",
       action: ".",
       encType: "application/json",
     });

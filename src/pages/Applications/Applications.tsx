@@ -2,7 +2,7 @@ import type { Page } from "@better-giving/registration/approval";
 import Seo from "components/Seo";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useFetcher, useLoaderData, useSearchParams } from "react-router-dom";
+import { useFetcher, useLoaderData, useSearchParams } from "react-router";
 import Filter from "./Filter";
 import Table from "./Table";
 

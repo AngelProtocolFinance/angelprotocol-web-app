@@ -1,6 +1,6 @@
 import Seo from "components/Seo";
 import { benefits } from "content/benefits";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router";
 import type { EndowmentCard } from "types/aws";
 import Benefits from "../../@sections/Benefits";
 import HeroBottom from "../../@sections/HeroBottom";

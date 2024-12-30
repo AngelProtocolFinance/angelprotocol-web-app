@@ -8,7 +8,7 @@ import { MultiSelector, Selector } from "components/Selector";
 import { Field, Label, Radio } from "components/form";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { steps } from "../../../routes";
 import type { RegStep2 } from "../../../types";
 import type { FormValues as FV } from "../types";

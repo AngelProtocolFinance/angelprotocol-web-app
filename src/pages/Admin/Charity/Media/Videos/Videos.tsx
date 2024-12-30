@@ -1,7 +1,7 @@
 import Breadcrumbs from "components/Breadcrumbs";
 import { appRoutes } from "constants/routes";
 import { Plus } from "lucide-react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router";
 import { useAdminContext } from "../../../Context";
 import { List } from "./List";
 

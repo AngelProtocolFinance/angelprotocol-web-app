@@ -1,7 +1,7 @@
 import type { Update } from "@better-giving/registration/update";
 import type { OnSubmit } from "components/BankDetails";
 import { toFileName } from "helpers/uploadFile";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 
 export default function useSubmit() {
   const fetcher = useFetcher();
@@ -16,7 +16,7 @@ export default function useSubmit() {
       wise_recipient_id: recipient.id,
     };
     fetcher.submit(update, {
-      method: "patch",
+      method: "PATCH",
       action: ".",
       encType: "application/json",
     });

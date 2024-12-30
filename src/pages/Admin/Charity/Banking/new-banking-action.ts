@@ -1,6 +1,6 @@
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { type ActionFunction, redirect } from "react-router-dom";
+import { type ActionFunction, redirect } from "react-router";
 
 export const newBanking: ActionFunction = async ({ request }) => {
   const auth = await loadAuth();

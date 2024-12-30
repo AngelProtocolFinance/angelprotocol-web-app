@@ -3,7 +3,7 @@ import Image from "components/Image";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 type TListItem = {
   title1: string;

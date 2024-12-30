@@ -8,7 +8,7 @@ import {
   type LoaderFunction,
   type RouteObject,
   redirect,
-} from "react-router-dom";
+} from "react-router";
 import { AddForm } from "./AddForm";
 import Members from "./Members";
 import { schema } from "./schema";

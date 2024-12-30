@@ -1,6 +1,6 @@
 import { ap, toSearch, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import type { LoaderFunction } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { DonationsPage } from "types/aws";
 

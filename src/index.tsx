@@ -1,16 +1,15 @@
 import * as Sentry from "@sentry/react";
-import Loader from "components/Loader";
 import ErrorBoundary from "errors/ErrorBoundary";
 import { StrictMode, useEffect } from "react";
 import { createRoot } from "react-dom/client";
 import {
-  RouterProvider,
   createBrowserRouter,
   createRoutesFromChildren,
   matchRoutes,
   useLocation,
   useNavigationType,
-} from "react-router-dom";
+} from "react-router";
+import { RouterProvider } from "react-router/dom";
 import "./index.css";
 import { routes } from "./App/App";
 
@@ -37,18 +36,14 @@ Sentry.init({
 });
 
 const sentryCreateBrowserRouter =
-  Sentry.wrapCreateBrowserRouter(createBrowserRouter);
+  Sentry.wrapCreateBrowserRouterV7(createBrowserRouter);
 
 const router = sentryCreateBrowserRouter(routes);
-
-const LoaderComponent = () => (
-  <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
-);
 
 root.render(
   <StrictMode>
     <ErrorBoundary>
-      <RouterProvider router={router} fallbackElement={<LoaderComponent />} />
+      <RouterProvider router={router} />
     </ErrorBoundary>
   </StrictMode>
 );

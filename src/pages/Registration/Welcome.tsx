@@ -1,7 +1,7 @@
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
 import { CircleCheck } from "lucide-react";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 
 export function Component() {
   const fetcher = useFetcher();
@@ -16,7 +16,7 @@ export function Component() {
         Your fundraising profile & account are just few steps away 😇
       </p>
 
-      <fetcher.Form className="contents" action="." method="post">
+      <fetcher.Form className="contents" action="." method="POST">
         <button
           disabled={fetcher.state !== "idle"}
           className="w-full max-w-[26.25rem] btn-blue btn-reg"

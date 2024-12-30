@@ -6,7 +6,7 @@ import {
 } from "@conform-to/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { Check } from "lucide-react";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 import { emailSubs } from "types/hubspot-subscription";
 
 export default function SubscriptionForm() {
@@ -25,7 +25,7 @@ export default function SubscriptionForm() {
     <fetcher.Form
       {...getFormProps(form)}
       action="/"
-      method="post"
+      method="POST"
       className="grid content-start"
       onSubmit={form.onSubmit}
     >

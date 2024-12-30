@@ -1,6 +1,6 @@
 import TableSection, { Cells } from "components/TableSection";
 import { CircleCheck, FolderIcon } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type { BankingApplicationStatus, PayoutMethod } from "types/aws";
 
 type Props = {

@@ -1,7 +1,7 @@
 import { getEndow } from "api/get/endow";
 import { useErrorContext } from "contexts/ErrorContext";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 import type { EndowmentProfileUpdate } from "types/aws";
 
 import type { UNSDG_NUMS } from "types/lists";
@@ -54,7 +54,7 @@ export default function useEditProfile(df: DirtyFields) {
       if (df.published) update.published = fv.published;
 
       fetcher.submit(update, {
-        method: "patch",
+        method: "PATCH",
         action: ".",
         encType: "application/json",
       });

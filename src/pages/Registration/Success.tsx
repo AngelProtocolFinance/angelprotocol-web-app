@@ -2,8 +2,8 @@ import type { Submission } from "@better-giving/registration/models";
 import type { CompleteReg } from "@better-giving/registration/step";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { CircleCheck } from "lucide-react";
-import { Navigate, useLoaderData } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Navigate, useLoaderData } from "react-router";
+import { Link } from "react-router";
 
 export { stateLoader as loader } from "helpers/state-params";
 

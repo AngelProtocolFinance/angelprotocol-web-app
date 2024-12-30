@@ -2,7 +2,7 @@ import Image from "components/Image";
 import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { useRendered } from "hooks/use-rendered";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export default function Hero({ className = "" }) {
   useRendered();

@@ -1,11 +1,6 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { CircleAlert, X } from "lucide-react";
-import {
-  Link,
-  useFetcher,
-  useNavigate,
-  useSearchParams,
-} from "react-router-dom";
+import { Link, useFetcher, useNavigate, useSearchParams } from "react-router";
 
 type Props = {
   isDefault: boolean;

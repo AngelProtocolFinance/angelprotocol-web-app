@@ -1,6 +1,6 @@
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
-import { useLocation, useRouteLoaderData } from "react-router-dom";
+import { useLocation, useRouteLoaderData } from "react-router";
 
 import { NavDropdown, UserMenu } from "components/Header";
 import type { DetailedUser } from "types/auth";

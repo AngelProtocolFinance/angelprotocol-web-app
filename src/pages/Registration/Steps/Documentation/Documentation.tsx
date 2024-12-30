@@ -1,5 +1,5 @@
 import { isIrs501c3 } from "@better-giving/registration/models";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router";
 import type { RegStep4 } from "../../types";
 import { FsaDocumentation } from "./FSA";
 import NonFSA from "./NonFSA";

@@ -11,7 +11,7 @@ import {
   type LoaderFunction,
   type RouteObject,
   useLoaderData,
-} from "react-router-dom";
+} from "react-router";
 import { parse } from "valibot";
 import { charityRoutes } from "./Charity";
 import type { AdminContext } from "./Context";

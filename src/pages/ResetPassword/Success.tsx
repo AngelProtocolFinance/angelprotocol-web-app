@@ -1,7 +1,7 @@
 import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export default function Success(props: { state: unknown }) {
   return (

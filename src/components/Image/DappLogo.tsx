@@ -2,7 +2,7 @@ import dappLogoWhite from "assets/images/bettergiving-logo-white.png";
 import dappLogo from "assets/images/bg-logo-503c.png";
 import ExtLink from "components/ExtLink";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import Image from "./Image";
 
 type Props = {

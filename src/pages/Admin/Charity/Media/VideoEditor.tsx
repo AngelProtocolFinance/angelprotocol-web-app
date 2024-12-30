@@ -10,7 +10,7 @@ import {
   useNavigate,
   useParams,
   useSearchParams,
-} from "react-router-dom";
+} from "react-router";
 import { isValiErr } from "types/action";
 import { nonEmpty, object, pipe } from "valibot";
 
@@ -62,7 +62,7 @@ function Content(props: Props) {
     <DialogPanel
       as={fetcher.Form}
       action="."
-      method="post"
+      method="POST"
       {...getFormProps(form)}
       className="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >

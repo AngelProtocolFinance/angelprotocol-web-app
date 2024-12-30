@@ -3,7 +3,7 @@ import { valibotResolver } from "@hookform/resolvers/valibot";
 import LoadText from "components/LoadText";
 import { Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { steps } from "../../../routes";
 import { type FormValues as FV, type Props, schema } from "./types";
 import useSubmit from "./useSubmit";

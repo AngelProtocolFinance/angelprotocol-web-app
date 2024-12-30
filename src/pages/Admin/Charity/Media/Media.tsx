@@ -1,6 +1,6 @@
 import type { MediaPage } from "@better-giving/endowment";
 import { Plus } from "lucide-react";
-import { Link, Outlet, useLoaderData } from "react-router-dom";
+import { Link, Outlet, useLoaderData } from "react-router";
 import FeaturedVideos from "./FeaturedVideos";
 
 export default function Media() {

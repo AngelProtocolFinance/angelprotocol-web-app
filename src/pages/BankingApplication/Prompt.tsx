@@ -3,7 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { ChevronRight, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link, useFetcher, useNavigate } from "react-router-dom";
+import { Link, useFetcher, useNavigate } from "react-router";
 import { type ActionData, isValiErr } from "types/action";
 import {
   type BankingApplicationStatus,

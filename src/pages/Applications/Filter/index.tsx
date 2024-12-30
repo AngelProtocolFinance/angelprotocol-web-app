@@ -10,7 +10,7 @@ import { weeksAgo } from "helpers/weeksAgo";
 import { FilterIcon } from "lucide-react";
 import { type FormEventHandler, useRef } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 import { parse } from "valibot";
 import Form from "./Form";
 import { statuses } from "./constants";

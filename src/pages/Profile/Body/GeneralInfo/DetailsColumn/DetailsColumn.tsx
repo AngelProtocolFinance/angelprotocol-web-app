@@ -4,7 +4,7 @@ import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
 import { toWithState } from "helpers/state-params";
 import type { PropsWithChildren } from "react";
-import { Link, useOutletContext } from "react-router-dom";
+import { Link, useOutletContext } from "react-router";
 import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../../../ProfileContext";
 import Socials from "./Socials";

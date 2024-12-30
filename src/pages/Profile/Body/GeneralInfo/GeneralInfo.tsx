@@ -1,6 +1,6 @@
 import type { IMedia, Program } from "@better-giving/endowment";
 import { RichText } from "components/RichText";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";

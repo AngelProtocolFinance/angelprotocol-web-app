@@ -3,7 +3,7 @@ import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { getAuthRedirect } from "helpers";
 import { decodeState } from "helpers/state-params";
-import { type ActionFunction, redirect } from "react-router-dom";
+import { type ActionFunction, redirect } from "react-router";
 import { authStore } from "store/auth";
 import {
   type OAuthState,

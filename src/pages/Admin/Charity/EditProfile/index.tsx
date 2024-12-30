@@ -3,7 +3,7 @@ import { getEndow } from "api/get/endow";
 import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
 import { unsdgs } from "constants/unsdgs";
-import { type LoaderFunction, useLoaderData } from "react-router-dom";
+import { type LoaderFunction, useLoaderData } from "react-router";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";

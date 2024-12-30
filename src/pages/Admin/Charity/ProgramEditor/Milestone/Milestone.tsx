@@ -18,7 +18,7 @@ import {
   dateToFormFormat,
 } from "components/form";
 import { useController, useForm } from "react-hook-form";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 import { MAX_CHARS, imgSpec } from "../common";
 import { type FV, schema } from "./schema";
 
@@ -77,7 +77,7 @@ export default function Milestone(props: Props) {
             { ...update, intent: "edit-milestone", "milestone-id": props.id },
             {
               encType: "application/json",
-              method: "post",
+              method: "POST",
               action: ".",
             }
           );
@@ -144,7 +144,7 @@ export default function Milestone(props: Props) {
               if (!window.confirm("Delete milestone?")) return;
               fetcher.submit(
                 { intent: "delete-milestone", "milestone-id": props.id },
-                { method: "post", encType: "application/json" }
+                { method: "POST", encType: "application/json" }
               );
             }}
           >

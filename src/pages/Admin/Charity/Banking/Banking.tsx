@@ -4,7 +4,7 @@ import { useErrorContext } from "contexts/ErrorContext";
 import { toFileName } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import { Link, useFetcher } from "react-router-dom";
+import { Link, useFetcher } from "react-router";
 import FormButtons from "./FormButtons";
 
 export default function Banking() {

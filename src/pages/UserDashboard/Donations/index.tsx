@@ -7,7 +7,7 @@ import {
   useFetcher,
   useLoaderData,
   useSearchParams,
-} from "react-router-dom";
+} from "react-router";
 import type { Donation } from "types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";

@@ -1,6 +1,6 @@
 import { Separator } from "components/Separator";
 import { Field } from "components/form";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type { FormValues } from "./types";
 import useSubmit from "./useSubmit";
 

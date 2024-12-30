@@ -3,7 +3,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { country } from "components/CountrySelector";
 import { unsdgs } from "constants/unsdgs";
 import { FormProvider, useForm } from "react-hook-form";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router";
 import type { RegStep2 } from "../../types";
 import Form from "./Form";
 import { schema } from "./schema";

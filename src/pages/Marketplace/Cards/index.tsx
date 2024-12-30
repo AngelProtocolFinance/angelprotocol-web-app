@@ -1,6 +1,6 @@
 import { Info } from "components/Status";
 import { useEffect, useState } from "react";
-import { useFetcher, useSearchParams } from "react-router-dom";
+import { useFetcher, useSearchParams } from "react-router";
 import type { EndowCardsPage } from "types/aws";
 import Card from "./Card";
 

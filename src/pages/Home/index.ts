@@ -1,5 +1,5 @@
 import { ap, ver } from "api/api";
-import type { LoaderFunction } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 export { Component } from "./Home";
 
 export const loader: LoaderFunction = async ({ request }) => {

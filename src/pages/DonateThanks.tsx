@@ -14,7 +14,7 @@ import {
   type LoaderFunction,
   useLoaderData,
   useOutletContext,
-} from "react-router-dom";
+} from "react-router";
 import type { UserV2 } from "types/auth";
 import type { DonateThanksState } from "types/pages";
 

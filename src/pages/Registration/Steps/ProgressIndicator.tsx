@@ -5,7 +5,7 @@ import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
 import { type PropsWithChildren, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation } from "react-router";
 import type { RegStep } from "../types";
 
 type Props = {

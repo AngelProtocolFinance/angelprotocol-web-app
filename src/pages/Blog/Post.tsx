@@ -4,8 +4,8 @@ import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import { useRendered } from "hooks/use-rendered";
 import { ChevronLeft } from "lucide-react";
-import { type LoaderFunction, useLoaderData } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { type LoaderFunction, useLoaderData } from "react-router";
+import { Link } from "react-router";
 import useSWR from "swr/immutable";
 import type { Wordpress } from "types/wordpress";
 

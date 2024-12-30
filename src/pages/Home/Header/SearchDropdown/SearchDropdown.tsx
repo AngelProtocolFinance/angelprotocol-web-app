@@ -3,7 +3,7 @@ import Image from "components/Image";
 import { Info, LoadingStatus } from "components/Status";
 import { appRoutes } from "constants/routes";
 import { categories } from "constants/unsdgs";
-import { Link, useFetcher } from "react-router-dom";
+import { Link, useFetcher } from "react-router";
 import type { EndowCardsPage } from "types/aws";
 import { TopCountries } from "./TopCountries";
 

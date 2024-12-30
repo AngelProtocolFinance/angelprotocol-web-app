@@ -3,7 +3,7 @@ import { Field, Input, Label } from "@headlessui/react";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
 import type { SubmitHandler } from "react-hook-form";
-import { useFetcher, useLoaderData, useNavigate } from "react-router-dom";
+import { useFetcher, useLoaderData, useNavigate } from "react-router";
 import { steps } from "../../../routes";
 import type { RegStep1 } from "../../../types";
 import { useUser } from "../../../user";
@@ -48,7 +48,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
     };
     fetcher.submit(update, {
       action: ".",
-      method: "patch",
+      method: "PATCH",
       encType: "application/json",
     });
   };

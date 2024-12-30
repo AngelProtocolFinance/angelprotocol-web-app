@@ -8,7 +8,7 @@ import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import useSort from "hooks/useSort";
 import { Folder } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
 

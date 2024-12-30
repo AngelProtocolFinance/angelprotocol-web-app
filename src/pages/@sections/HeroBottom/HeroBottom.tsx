@@ -1,6 +1,6 @@
 import { appRoutes } from "constants/routes";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { EndowmentCard } from "types/aws";

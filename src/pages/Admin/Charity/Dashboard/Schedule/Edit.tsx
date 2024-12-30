@@ -2,7 +2,7 @@ import type { Allocation } from "@better-giving/endowment";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { Field, Label, Switch } from "@headlessui/react";
 import { useState } from "react";
-import { useFetcher, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { useFetcher, useNavigate, useRouteLoaderData } from "react-router";
 import type { EndowmentUpdate } from "services/types";
 import type { DashboardData } from "../route";
 import { AllocationOptions } from "./AllocationOptions";
@@ -76,7 +76,7 @@ function Content({ amount, ...props }: Allocation & { amount: number }) {
           const update: EndowmentUpdate = { allocation: alloc };
 
           fetcher.submit(update as any, {
-            method: "patch",
+            method: "PATCH",
             action: "..",
             encType: "application/json",
           });

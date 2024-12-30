@@ -3,7 +3,7 @@ import { Arrow, Content } from "components/Tooltip";
 import { humanize } from "helpers";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 import type { BalanceMovement } from "types/aws";
 import type { EndowmentBalances } from "types/aws";
 import Figure from "./Figure";

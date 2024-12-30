@@ -1,7 +1,7 @@
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import { Folder } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type { BankingApplicationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";

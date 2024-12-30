@@ -8,7 +8,7 @@ import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { useRendered } from "hooks/use-rendered";
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type { DonationIntent } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";

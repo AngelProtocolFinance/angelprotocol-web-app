@@ -1,6 +1,6 @@
 import type { UnSdgNum } from "@better-giving/schemas";
 import { categories } from "constants/unsdgs";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router";
 import type { SDGGroup } from "types/lists";
 import { toParsed, toRaw } from "../helpers";
 import { FlatFilter } from "./common";

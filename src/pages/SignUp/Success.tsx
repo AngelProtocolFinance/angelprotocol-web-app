@@ -1,7 +1,7 @@
 import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router";
 
 export { loader } from "./loader";
 export function Component() {

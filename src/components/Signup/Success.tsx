@@ -1,5 +1,5 @@
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 type Props = { classes?: string };
 export default function Success({ classes = "" }: Props) {

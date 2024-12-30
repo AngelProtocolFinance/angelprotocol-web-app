@@ -3,7 +3,7 @@ import { apes, toSearch, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth, redirectToAuth } from "auth";
-import { type LoaderFunction, defer } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import type { DashboardData } from "./route";
@@ -18,11 +18,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   const nextPageKey = url.searchParams.get("nextPageKey");
 
   const id = v.parse(plusInt, params.id);
-  return defer({
+  return {
     alloc: await getAllocation(id),
     bal: await getBalance(id),
     balTxs: await balanceTxs(id, nextPageKey, auth.idToken),
-  } satisfies DashboardData);
+  } satisfies DashboardData;
 };
 
 const getAllocation = (id: number) =>

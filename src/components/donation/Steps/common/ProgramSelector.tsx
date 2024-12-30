@@ -7,7 +7,7 @@ import {
 } from "@headlessui/react";
 import { unpack } from "helpers";
 import { Suspense, useEffect } from "react";
-import { Await, useLoaderData } from "react-router-dom";
+import { Await, useLoaderData } from "react-router";
 import type { OptionType } from "types/components";
 import { DrawerIcon } from "../../../Icon";
 import { DEFAULT_PROGRAM } from "./constants";

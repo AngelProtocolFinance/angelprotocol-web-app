@@ -3,7 +3,7 @@ import { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import { getTxUrl, humanize, maskAddress } from "helpers";
 import { CircleCheck, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type { Donation } from "types/aws";
 
 const Amount = ({ amount = 0 }) => {

@@ -3,7 +3,7 @@ import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
 import { Menu } from "lucide-react";
-import { matchPath, useLocation } from "react-router-dom";
+import { matchPath, useLocation } from "react-router";
 import type { Link, LinkGroup } from "../types";
 import ToggleableSidebar from "./ToggleableSidebar";
 

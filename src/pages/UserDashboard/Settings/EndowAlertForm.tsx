@@ -1,7 +1,7 @@
 import { Info } from "components/Status";
 import { NativeCheckField as CheckField, Form } from "components/form";
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { UserEndow } from "types/aws";
 
@@ -45,7 +45,7 @@ export default function EndowAlertForm({ classes = "", userEndows }: Props) {
         banking: item.alertPref?.banking ?? true,
         donation: item.alertPref?.banking ?? true,
       })),
-      { encType: "application/json", method: "post", action: "." }
+      { encType: "application/json", method: "POST", action: "." }
     );
   };
 

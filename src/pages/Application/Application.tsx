@@ -4,7 +4,7 @@ import Seo from "components/Seo";
 import { ErrorStatus } from "components/Status";
 import { CircleAlert } from "lucide-react";
 import { Suspense } from "react";
-import { Await, useLoaderData } from "react-router-dom";
+import { Await, useLoaderData } from "react-router";
 import type { UserV2 } from "types/auth";
 import Loaded from "./Loaded";
 

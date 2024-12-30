@@ -11,7 +11,7 @@ import { ControlledToggle as Toggle } from "components/Toggle";
 import { Form as F, NativeField as Field, Label } from "components/form";
 import { appRoutes } from "constants/routes";
 import { unsdgs } from "constants/unsdgs";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 import Slug from "./Slug";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import { MAX_CHARS, bannerSpec, cardImgSpec, logoSpec } from "./schema";

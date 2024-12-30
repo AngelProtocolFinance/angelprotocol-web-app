@@ -3,7 +3,7 @@ import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { humanize } from "helpers";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { allocationOptions, toAllocOptValue } from "./common";
 
 interface Props {

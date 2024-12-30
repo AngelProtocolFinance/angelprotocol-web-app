@@ -1,4 +1,4 @@
-import type { LoaderFunction, To } from "react-router-dom";
+import type { LoaderFunction, To } from "react-router";
 
 export const decodeState = <T>(base64: string | null) => {
   try {

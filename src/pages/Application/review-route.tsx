@@ -2,11 +2,7 @@ import type { Verdict } from "@better-giving/registration/approval";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import { PromptV2 } from "components/Prompt";
-import {
-  type ActionFunction,
-  type RouteObject,
-  redirect,
-} from "react-router-dom";
+import { type ActionFunction, type RouteObject, redirect } from "react-router";
 import Prompt from "./Prompt";
 
 const action: ActionFunction = async ({ request, params }) => {

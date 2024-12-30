@@ -2,7 +2,7 @@ import type { Init } from "@better-giving/registration/models";
 import type { Update } from "@better-giving/registration/update";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
-import { Link, useFetcher, useNavigate } from "react-router-dom";
+import { Link, useFetcher, useNavigate } from "react-router";
 import { steps } from "../../routes";
 
 interface Props extends Init {

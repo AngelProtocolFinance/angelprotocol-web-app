@@ -1,7 +1,7 @@
 import { PromptV2 } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
 import { ErrorElement } from "errors/ErrorElement";
-import { Navigate, type RouteObject } from "react-router-dom";
+import { Navigate, type RouteObject } from "react-router";
 import Banking, {
   NewPayoutMethod,
   payoutMethodsLoader,

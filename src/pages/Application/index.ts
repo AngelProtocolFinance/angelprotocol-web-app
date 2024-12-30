@@ -1,6 +1,6 @@
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { type LoaderFunction, defer } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 
 export { Component } from "./Application";
 
@@ -14,8 +14,8 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     })
     .json();
 
-  return defer({
+  return {
     application,
     user: auth,
-  });
+  };
 };

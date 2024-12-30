@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData } from "react-router";
 import EndowAlertForm from "./EndowAlertForm";
 import type { SettingsData } from "./index";
 

@@ -2,7 +2,7 @@ import type { FsaPayload } from "@better-giving/registration/fsa";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import { regRoutes } from "constants/routes";
-import { type ActionFunction, redirect } from "react-router-dom";
+import { type ActionFunction, redirect } from "react-router";
 
 export const fsaAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();

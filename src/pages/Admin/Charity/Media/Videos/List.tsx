@@ -1,7 +1,7 @@
 import type { MediaPage } from "@better-giving/endowment";
 import { Image } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useFetcher, useLoaderData } from "react-router-dom";
+import { useFetcher, useLoaderData } from "react-router";
 import VideoPreview from "../VideoPreview";
 
 interface Props {

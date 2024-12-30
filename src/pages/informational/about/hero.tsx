@@ -2,7 +2,7 @@ import { laira } from "assets/laira/laira";
 import { appRoutes } from "constants/routes";
 import { useRendered } from "hooks/use-rendered";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export function Hero({ classes = "" }) {
   useRendered();

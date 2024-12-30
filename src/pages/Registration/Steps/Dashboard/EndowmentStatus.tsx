@@ -5,7 +5,7 @@ import {
 import LoadText from "components/LoadText";
 import { CircleAlert, Hourglass } from "lucide-react";
 import { steps } from "pages/Registration/routes";
-import { Link, useFetcher } from "react-router-dom";
+import { Link, useFetcher } from "react-router";
 
 type Props = {
   status?: Exclude<Submission, { endowment_id: any }>;
@@ -19,7 +19,7 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
     return (
       <fetcher.Form
         action="."
-        method="post"
+        method="POST"
         className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}
       >
         <Link
@@ -43,7 +43,7 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
   if (isRejected(status)) {
     return (
       <fetcher.Form
-        method="post"
+        method="POST"
         action="."
         className={`max-sm:grid text-red dark:text-red-l3 ${classes} content-start`}
       >

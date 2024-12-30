@@ -15,7 +15,7 @@ import {
   useNavigate,
   useParams,
   useSearchParams,
-} from "react-router-dom";
+} from "react-router";
 import { requiredString } from "schemas/string";
 import { object, string } from "yup";
 
@@ -41,7 +41,7 @@ function Content() {
   const onSubmit: SubmitHandler<FV> = async (fv) =>
     fetcher.submit(fv, {
       encType: "application/json",
-      method: "post",
+      method: "POST",
       action: ".",
     });
 

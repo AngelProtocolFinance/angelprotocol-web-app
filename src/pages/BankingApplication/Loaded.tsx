@@ -2,7 +2,7 @@ import ExtLink from "components/ExtLink";
 import { appRoutes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type { BankingApplicationDetails } from "services/types";
 
 export default function Loaded(props: BankingApplicationDetails) {

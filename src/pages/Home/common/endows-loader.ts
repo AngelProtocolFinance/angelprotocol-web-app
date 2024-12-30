@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "react-router-dom";
+import type { LoaderFunction } from "react-router";
 import type { EndowCardsPage } from "types/aws";
 export type { EndowmentCard } from "types/aws";
 import { ap, ver } from "api/api";

@@ -5,7 +5,7 @@ import LoadText from "components/LoadText";
 import { NativeField as Field, Form as Frm, Label } from "components/form";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useController, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { steps } from "../../../../routes";
 import { type FV, fileSpec, schema } from "../schema";
 import type { Props } from "../types";

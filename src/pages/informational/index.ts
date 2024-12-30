@@ -1,5 +1,5 @@
 import { appRoutes } from "constants/routes";
-import type { RouteObject } from "react-router-dom";
+import type { RouteObject } from "react-router";
 
 export const infoRoutes: RouteObject[] = [
   {

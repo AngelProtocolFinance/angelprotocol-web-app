@@ -1,6 +1,6 @@
 import { MenuItem } from "@headlessui/react";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type { EndowmentBookmark, UserEndow } from "types/aws";
 import ContentLoader from "../../ContentLoader";
 import Image from "../../Image";

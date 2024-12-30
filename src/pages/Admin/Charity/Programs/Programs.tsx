@@ -1,5 +1,5 @@
 import type { NewProgram } from "@better-giving/endowment";
-import { useFetcher } from "react-router-dom";
+import { useFetcher } from "react-router";
 import List from "./List";
 
 export default function Programs() {
@@ -12,7 +12,7 @@ export default function Programs() {
     };
     fetcher.submit(program, {
       action: ".",
-      method: "post",
+      method: "POST",
       encType: "application/json",
     });
   }

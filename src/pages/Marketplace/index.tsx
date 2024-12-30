@@ -1,6 +1,6 @@
 import { ap, ver } from "api/api";
 import Seo from "components/Seo";
-import { type LoaderFunction, Outlet, useLoaderData } from "react-router-dom";
+import { type LoaderFunction, Outlet, useLoaderData } from "react-router";
 import type { EndowCardsPage } from "types/aws";
 import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";

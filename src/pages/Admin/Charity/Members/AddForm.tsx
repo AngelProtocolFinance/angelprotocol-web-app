@@ -2,7 +2,7 @@ import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { NativeField as Field } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
-import { useFetcher, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { useFetcher, useNavigate, useRouteLoaderData } from "react-router";
 import { isValiErr } from "types/action";
 import type { EndowAdmin } from "types/aws";
 import { schema } from "./schema";
@@ -39,7 +39,7 @@ function Content() {
   return (
     <DialogPanel
       {...getFormProps(form)}
-      method="post"
+      method="POST"
       action="."
       as={fetcher.Form}
       className="p-6 fixed-center z-10 grid gap-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"

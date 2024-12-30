@@ -1,3 +1,4 @@
+import Loader from "components/Loader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { ErrorElement } from "errors/ErrorElement";
@@ -21,7 +22,7 @@ import {
   type RouteObject as RO,
   ScrollRestoration,
   useNavigation,
-} from "react-router-dom";
+} from "react-router";
 import { Toaster } from "sonner";
 import Layout from "./Layout";
 import { rootAction } from "./root-action";
@@ -112,10 +113,14 @@ const rootRoutes: RO[] = [
   { path: "*", element: <Navigate to="/" /> },
 ];
 
+const LoaderComponent = () => (
+  <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
+);
 export const routes: RO[] = [
   {
     id: "root",
     path: "/",
+    hydrateFallbackElement: <LoaderComponent />,
     element: <RootLayout />,
     loader: rootLoader,
     action: rootAction,
