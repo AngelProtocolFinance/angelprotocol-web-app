@@ -8,7 +8,6 @@ import { promptRoutes, reviewRoute } from "pages/Application/review-route";
 import { bankApplicationRoute } from "pages/BankingApplication";
 import { routes as blogRoutes } from "pages/Blog";
 import { legalRoutes } from "pages/Legal";
-import OAuthRedirector from "pages/OAuthRedirector";
 import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { signUpRoute } from "pages/SignUp";
@@ -72,7 +71,6 @@ const _appRoutes: RO[] = [
   { path: appRoutes.signin, lazy: () => import("pages/Signin") },
   signUpRoute,
   { path: appRoutes.reset_password, lazy: () => import("pages/ResetPassword") },
-  { path: appRoutes.auth_redirector, element: <OAuthRedirector /> },
   {
     path: appRoutes.marketplace,
     lazy: () => import("pages/Marketplace"),

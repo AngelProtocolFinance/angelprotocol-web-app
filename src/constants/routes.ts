@@ -1,5 +1,4 @@
 export enum appRoutes {
-  auth_redirector = "/auth-redirector",
   marketplace = "/marketplace",
   admin = "/admin",
   user_dashboard = "/dashboard",
@@ -59,5 +58,4 @@ export const authRoutes: string[] = [
   appRoutes.signin,
   appRoutes.signup,
   appRoutes.reset_password,
-  appRoutes.auth_redirector,
 ];
