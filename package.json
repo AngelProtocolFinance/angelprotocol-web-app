@@ -96,19 +96,16 @@
     "@types/react-dom": "18.2.19",
     "@types/react-helmet": "6.1.11",
     "@vitejs/plugin-react": "4.3.4",
+    "autoprefixer": "10.4.20",
     "jsdom": "24.1.0",
     "lefthook": "1.6.15",
     "msw": "2.3.1",
+    "postcss": "8.4.49",
     "postcss-import": "16.1.0",
     "tailwindcss": "3.4.3",
     "typescript": "5.5",
     "vite": "6.0.6",
     "vite-tsconfig-paths": "5.1.4",
     "vitest": "2.1.8"
-  },
-  "peerDependenciesMeta": {
-    "postcss": {
-      "optional": true
-    }
   }
 }
