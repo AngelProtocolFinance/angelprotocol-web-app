@@ -1,2 +1,2 @@
-export { default as Component } from "./DonateWidget";
+export { default } from "./DonateWidget";
 export { loader } from "api/donate-loader";

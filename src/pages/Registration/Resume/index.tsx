@@ -5,7 +5,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import Form from "./Form";
 import { type FormValues, schema } from "./types";
 
-export function Component({ classes = "" }: { classes?: string }) {
+export default function Resume({ classes = "" }: { classes?: string }) {
   const methods = useForm<FormValues>({
     defaultValues: {
       reference: getSavedRegistrationReference() || "",

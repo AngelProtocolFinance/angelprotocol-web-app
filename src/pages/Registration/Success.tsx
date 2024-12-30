@@ -4,10 +4,9 @@ import { adminRoutes, appRoutes } from "constants/routes";
 import { CircleCheck } from "lucide-react";
 import { Navigate, useLoaderData } from "react-router";
 import { Link } from "react-router";
+export { stateLoader as clientLoader } from "helpers/state-params";
 
-export { stateLoader as loader } from "helpers/state-params";
-
-export function Component({ classes = "" }: { classes?: string }) {
+export default function Success({ classes = "" }: { classes?: string }) {
   const reg = useLoaderData() as CompleteReg | undefined;
 
   if (!reg || typeof reg.submission !== "object") {

@@ -29,7 +29,7 @@ interface LoaderData
   recipientId?: number;
 }
 
-export const loader: LoaderFunction = ({ request }) => {
+export const clientLoader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url);
   const id =
     url.searchParams.get("payment_intent") ??
@@ -38,7 +38,7 @@ export const loader: LoaderFunction = ({ request }) => {
   return apes.get(`stripe-proxy?payment_intent=${id}`).json();
 };
 
-export function Component() {
+export default function StripePaymentStatus() {
   const isInWidget = useOutletContext<true | undefined>();
   const data = useLoaderData() as LoaderData;
 

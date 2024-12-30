@@ -2,6 +2,7 @@ import Loader from "components/Loader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import ModalContext from "contexts/ModalContext";
 import { ErrorElement } from "errors/ErrorElement";
+import { convert } from "helpers/route";
 import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
 import { promptRoutes, reviewRoute } from "pages/Application/review-route";
@@ -27,11 +28,11 @@ import Layout from "./Layout";
 import { rootAction } from "./root-action";
 import { rootLoader } from "./root-loader";
 
-const donateThanks = import("pages/DonateThanks");
-const stripePaymentStatus = import("pages/StripePaymentStatus");
+const donateThanks = import("pages/DonateThanks").then(convert);
+const stripePaymentStatus = import("pages/StripePaymentStatus").then(convert);
 
 const widgetRoutes: RO[] = [
-  { path: ":id", lazy: () => import("pages/DonateWidget") },
+  { path: ":id", lazy: () => import("pages/DonateWidget").then(convert) },
   { path: donateWidgetRoutes.donate_thanks, lazy: () => donateThanks },
   {
     path: donateWidgetRoutes.stripe_payment_status,

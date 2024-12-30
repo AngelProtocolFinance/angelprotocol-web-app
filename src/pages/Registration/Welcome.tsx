@@ -3,7 +3,8 @@ import { APP_NAME } from "constants/env";
 import { CircleCheck } from "lucide-react";
 import { useFetcher } from "react-router";
 
-export function Component() {
+export { newApplicationAction as clientAction } from "./api";
+export default function Welcome() {
   const fetcher = useFetcher();
 
   return (

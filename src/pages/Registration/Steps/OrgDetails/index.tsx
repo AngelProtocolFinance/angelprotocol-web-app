@@ -4,10 +4,17 @@ import { country } from "components/CountrySelector";
 import { unsdgs } from "constants/unsdgs";
 import { FormProvider, useForm } from "react-hook-form";
 import { useLoaderData } from "react-router";
+import { stepLoader } from "../../data/step-loader";
+import { nextStep } from "../../routes";
 import type { RegStep2 } from "../../types";
+import { updateAction } from "../update-action";
 import Form from "./Form";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
+
+export { ErrorElement } from "errors/ErrorElement";
+export const clientLoader = stepLoader(2);
+export const clientAction = updateAction(nextStep[2]);
 
 export default function OrgDetails() {
   const state = useLoaderData() as RegStep2;

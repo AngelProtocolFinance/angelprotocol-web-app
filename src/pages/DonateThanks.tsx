@@ -18,9 +18,7 @@ import {
 import type { UserV2 } from "types/auth";
 import type { DonateThanksState } from "types/pages";
 
-export { stateLoader as loader } from "helpers/state-params";
-
-export const stateLoader: LoaderFunction = async ({ request }) => {
+export const clientLoader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
   const url = new URL(request.url);
   return { user: auth, state: decodeState(url.searchParams.get("_s")) };
@@ -31,7 +29,7 @@ interface Data {
   state: DonateThanksState | null;
 }
 
-export function Component() {
+export default function DonateThanks() {
   const widgetVersion = useOutletContext<true | undefined>();
   const { state, user } = useLoaderData() as Data;
 

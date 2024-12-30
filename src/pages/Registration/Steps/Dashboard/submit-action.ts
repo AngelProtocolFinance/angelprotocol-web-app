@@ -6,7 +6,7 @@ export const submitAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 
-  await ap.patch(`${ver(1)}/registrations/${params.regId}/submit`, {
+  await ap.post(`${ver(1)}/registrations/${params.regId}/submit`, {
     headers: { authorization: auth.idToken },
   });
 

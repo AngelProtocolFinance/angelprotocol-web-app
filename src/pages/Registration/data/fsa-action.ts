@@ -4,7 +4,7 @@ import { loadAuth, redirectToAuth } from "auth";
 import { regRoutes } from "constants/routes";
 import { type ActionFunction, redirect } from "react-router";
 
-export const fsaAction: ActionFunction = async ({ request, params }) => {
+export const clientAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 

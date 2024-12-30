@@ -1,1 +1,2 @@
-export { default as Component } from "./Form";
+export { default } from "./Form";
+export { newApplicationAction as clientAction } from "../api";
