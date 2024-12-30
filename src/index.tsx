@@ -22,8 +22,8 @@ const container = document.getElementById("root");
 const root = createRoot(container as Element);
 
 Sentry.init({
-  dsn: process.env.PUBLIC_SENTRY_DSN,
-  environment: process.env.PUBLIC_ENVIRONMENT,
+  dsn: import.meta.env.VITE_SENTRY_DSN,
+  environment: import.meta.env.VITE_ENVIRONMENT,
   integrations: [
     Sentry.reactRouterV6BrowserTracingIntegration({
       useEffect,
