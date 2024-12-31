@@ -1,7 +1,7 @@
 import { bankUpdate } from "api/action/bank-update";
 import { getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
-import { loadAuth } from "auth";
+import { loadAuth, redirectToAuth } from "auth";
 import { PromptV2 } from "components/Prompt";
 import { parseWithValibot } from "conform-to-valibot";
 import {
@@ -16,17 +16,17 @@ import * as v from "valibot";
 import { BankingApplication } from "./BankingApplication";
 import { Prompt } from "./Prompt";
 
-const loader: LoaderFunction = async ({ params }) => {
+const loader: LoaderFunction = async ({ params, request }) => {
   const bankId = parse(plusInt, params.id);
   const auth = await loadAuth();
-  if (!auth) throw "auth is required up higher";
+  if (!auth) return redirectToAuth(request);
 
   return getPayoutMethod(bankId, "bg-admin", auth.idToken);
 };
 
 const verdicAction: ActionFunction = async ({ params, request }) => {
   const auth = await loadAuth();
-  if (!auth) throw "auth is required up higher";
+  if (!auth) return redirectToAuth(request);
 
   const fv = await request.formData();
   const payload = parseWithValibot(fv, { schema: bankingApplicationUpdate });

@@ -1,5 +1,6 @@
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
+import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { adminRoutes } from "constants/routes";
@@ -13,9 +14,9 @@ import { AddForm } from "./AddForm";
 import Members from "./Members";
 import { schema } from "./schema";
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params, request }) => {
   const auth = await loadAuth();
-  if (!auth) throw `user must have been authenticated`;
+  if (!auth) return redirectToAuth(request);
 
   return ap.get(`${ver(2)}/endowments/${params.id}/admins`, {
     headers: { authorization: auth.idToken },
@@ -24,7 +25,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 const addAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
-  if (!auth) throw `user must have been authenticated`;
+  if (!auth) return redirectToAuth(request);
 
   const fv = await request.formData();
   const payload = parseWithValibot(fv, { schema: schema([]) });
@@ -42,7 +43,7 @@ const addAction: ActionFunction = async ({ request, params }) => {
 
 const deleteAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
-  if (!auth) throw `user must have been authenticated`;
+  if (!auth) return redirectToAuth(request);
 
   const { toRemove } = await request.json();
 

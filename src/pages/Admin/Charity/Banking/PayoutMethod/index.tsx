@@ -2,6 +2,7 @@ import { bankUpdate } from "api/action/bank-update";
 import { ap, ver } from "api/api";
 import { getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
+import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import { PromptV2 } from "components/Prompt";
 import {
@@ -16,18 +17,21 @@ import PayoutMethod from "./Loaded";
 
 export { default } from "./Loaded";
 
-export const payoutMethodLoader: LoaderFunction = async ({ params }) => {
+export const payoutMethodLoader: LoaderFunction = async ({
+  params,
+  request,
+}) => {
   const id = v.parse(plusInt, params.id);
   const bankId = v.parse(plusInt, params.bankId);
   const auth = await loadAuth();
-  if (!auth) throw "auth is required up higher";
+  if (!auth) return redirectToAuth(request);
 
   return getPayoutMethod(bankId, id, auth.idToken);
 };
 
-const deleteAction: ActionFunction = async ({ params }) => {
+const deleteAction: ActionFunction = async ({ params, request }) => {
   const auth = await loadAuth();
-  if (!auth) throw "auth is required up higher";
+  if (!auth) return redirectToAuth(request);
 
   await ap.delete(`${ver(1)}/banking-applications/${params.bankId}`, {
     headers: { authorization: auth.idToken },
@@ -35,9 +39,9 @@ const deleteAction: ActionFunction = async ({ params }) => {
   return redirect("../..");
 };
 
-const prioritizeAction: ActionFunction = async ({ params }) => {
+const prioritizeAction: ActionFunction = async ({ params, request }) => {
   const auth = await loadAuth();
-  if (!auth) throw "auth is required up higher";
+  if (!auth) return redirectToAuth(request);
   const bankId = v.parse(plusInt, params.bankId);
   await bankUpdate(bankId, { type: "prioritize" }, auth.idToken);
   return redirect("success");
