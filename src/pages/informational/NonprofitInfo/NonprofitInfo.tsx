@@ -12,7 +12,7 @@ import FAQ from "./faq";
 import { Features } from "./features";
 import Investment from "./investment";
 
-export function NonprofitInfo() {
+export default function NonprofitInfo() {
   return (
     <main className="w-full grid content-start pb-16 @container">
       <Seo

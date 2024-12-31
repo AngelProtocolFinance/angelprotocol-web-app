@@ -8,7 +8,7 @@ import BottomCta from "./BottomCta";
 import DonationFormInfo from "./DonationFormInfo";
 import Hero from "./Hero";
 
-export function DonorInfo({ className = "" }) {
+export default function DonorInfo({ className = "" }) {
   const endows = useLoaderData() as EndowmentCard[];
   return (
     <main className={`${className} grid @container`}>
