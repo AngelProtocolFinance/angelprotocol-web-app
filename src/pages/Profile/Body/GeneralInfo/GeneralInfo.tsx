@@ -7,14 +7,12 @@ import DetailsColumn from "./DetailsColumn";
 import Media from "./Media";
 import Programs from "./Programs";
 
-export default function GeneralInfo({ className = "" }) {
+export default function GeneralInfo() {
   const profile = useProfileContext();
   const [programs, media] = useLoaderData() as [Program[], IMedia[]];
 
   return (
-    <div
-      className={`${className} grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
-    >
+    <div className="order-4 lg:col-span-2 grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]">
       <div className="flex flex-col gap-8 w-full h-full">
         <Container title="Overview">
           <RichText

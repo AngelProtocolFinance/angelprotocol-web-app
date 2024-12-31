@@ -6,12 +6,11 @@ import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useRendered } from "hooks/use-rendered";
 import { useLoaderData } from "react-router";
-import { Outlet, type RouteObject } from "react-router";
-import { bodyRoute } from "./Body";
+import { Outlet } from "react-router";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
-import { profileLoader } from "./profile-loader";
 
-function Profile() {
+export { profileLoader as clientLoader } from "./profile-loader";
+export default function Profile() {
   const data = useLoaderData() as Endow;
 
   return (
@@ -56,9 +55,3 @@ function Logo() {
     </div>
   );
 }
-
-export const profileRoute: RouteObject = {
-  element: <Profile />,
-  loader: profileLoader,
-  children: [bodyRoute],
-};

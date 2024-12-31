@@ -1,6 +1,4 @@
 import { getEndowBalance } from "api/get/endow-balance";
-import { getProgram } from "api/get/program";
-import { getPrograms } from "api/get/programs";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
 import ExtLink from "components/ExtLink";
@@ -8,16 +6,20 @@ import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Globe, MapPin } from "lucide-react";
-import { useLoaderData, useRouteLoaderData } from "react-router";
-import { Link, Outlet, type RouteObject } from "react-router";
+import {
+  type LoaderFunction,
+  useLoaderData,
+  useRouteLoaderData,
+} from "react-router";
+import { Link, Outlet } from "react-router";
 import type { DetailedUser } from "types/auth";
 import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../ProfileContext";
-import GeneralInfo from "./GeneralInfo";
-import Program from "./Program";
-import { featuredMedia } from "./featured-media";
 
-function Body() {
+export const clientLoader: LoaderFunction = async ({ params }) =>
+  getEndowBalance(params.id);
+
+export default function Body() {
   const p = useProfileContext();
   const bal = useLoaderData() as EndowmentBalances;
   const user = useRouteLoaderData("root") as DetailedUser | null;
@@ -96,21 +98,3 @@ function Body() {
     </div>
   );
 }
-
-export const bodyRoute: RouteObject = {
-  element: <Body />,
-  loader: async ({ params }) => getEndowBalance(params.id),
-  children: [
-    {
-      index: true,
-      element: <GeneralInfo className="order-4 lg:col-span-2 w-full h-full" />,
-      loader: async ({ params }) =>
-        Promise.all([getPrograms(params.id), featuredMedia(params.id)]),
-    },
-    {
-      path: "program/:programId",
-      element: <Program className="order-4 lg:col-span-2 w-full h-full" />,
-      loader: ({ params }) => getProgram(params.id, params.programId),
-    },
-  ],
-};

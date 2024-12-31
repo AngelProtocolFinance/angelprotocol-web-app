@@ -5,13 +5,11 @@ import { useLoaderData } from "react-router";
 import Container from "../common/Container";
 import Milestones from "./Milestones";
 
-export default function Program({ className = "" }) {
+export default function Program() {
   const prog = useLoaderData() as IProgram;
 
   return (
-    <div
-      className={`${className} grid items-start grid-rows-[auto_auto] gap-8 w-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]`}
-    >
+    <div className="order-4 lg:col-span-2 w-full h-full grid items-start grid-rows-[auto_auto] gap-8 lg:grid-rows-1 lg:grid-cols-[1fr_auto]">
       <Container title={prog.title} expanded>
         <RichText
           content={{ value: prog.description }}
