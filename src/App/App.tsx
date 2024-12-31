@@ -52,7 +52,10 @@ const _appRoutes: RO[] = [
     path: appRoutes.banking_applications,
     children: [
       bankApplicationRoute,
-      { index: true, lazy: () => import("pages/BankingApplications") },
+      {
+        index: true,
+        lazy: () => import("pages/BankingApplications").then(convert),
+      },
     ],
   },
   {

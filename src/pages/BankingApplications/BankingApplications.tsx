@@ -6,7 +6,7 @@ import type { BankingApplicationsPage } from "types/aws";
 import Filter from "./Filter";
 import Table from "./Table";
 
-export function BankingApplications() {
+export default function BankingApplications() {
   const [params, setParams] = useSearchParams();
   const firstPage = useLoaderData() as BankingApplicationsPage;
   const { load, data, state } = useFetcher<BankingApplicationsPage>({
