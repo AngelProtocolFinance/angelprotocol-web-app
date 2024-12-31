@@ -1,61 +1,21 @@
-import { bankUpdate } from "api/action/bank-update";
-import { getPayoutMethod } from "api/get/payout-method";
-import { plusInt } from "api/schema/endow-id";
-import { loadAuth, redirectToAuth } from "auth";
-import { PromptV2 } from "components/Prompt";
-import { parseWithValibot } from "conform-to-valibot";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  type RouteObject,
-  redirect,
-} from "react-router";
-import { bankingApplicationUpdate } from "types/aws";
-import { parse } from "valibot";
-import * as v from "valibot";
-import { BankingApplication } from "./BankingApplication";
-import { Prompt } from "./Prompt";
-
-const loader: LoaderFunction = async ({ params, request }) => {
-  const bankId = parse(plusInt, params.id);
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
-
-  return getPayoutMethod(bankId, "bg-admin", auth.idToken);
-};
-
-const verdicAction: ActionFunction = async ({ params, request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
-
-  const fv = await request.formData();
-  const payload = parseWithValibot(fv, { schema: bankingApplicationUpdate });
-  if (payload.status !== "success") return payload.reply();
-
-  const bankId = v.parse(plusInt, params.id);
-  const res = await bankUpdate(bankId, payload.value, auth.idToken);
-  if (!res.ok) throw res;
-  return redirect("../success");
-};
+import { convert } from "helpers/route";
+import type { RouteObject } from "react-router";
 
 export const bankApplicationRoute: RouteObject = {
   path: ":id",
-  loader,
-  element: <BankingApplication />,
+  lazy: () => import("./BankingApplication").then(convert),
   children: [
     {
       path: "approve",
-      action: verdicAction,
-      element: <Prompt verdict="approved" />,
+      lazy: () => import("./verdict-approve").then(convert),
     },
     {
       path: "reject",
-      action: verdicAction,
-      element: <Prompt verdict="rejected" />,
+      lazy: () => import("./verdict-reject").then(convert),
     },
     {
       path: "success",
-      element: <PromptV2 type="success" children="Review submitted" />,
+      lazy: () => import("./success-prompt").then(convert),
     },
   ],
 };

@@ -1,9 +1,19 @@
-import type { BankDetails } from "api/get/payout-method";
+import { type BankDetails, getPayoutMethod } from "api/get/payout-method";
+import { plusInt } from "api/schema/endow-id";
+import { loadAuth, redirectToAuth } from "auth";
 import Seo from "components/Seo";
-import { Outlet, useLoaderData } from "react-router";
-import Loaded from "./Loaded";
+import { type LoaderFunction, Outlet, useLoaderData } from "react-router";
+import { parse } from "valibot";
+import { Loaded } from "./Loaded";
 
-export function BankingApplication() {
+export const clientLoader: LoaderFunction = async ({ params, request }) => {
+  const bankId = parse(plusInt, params.id);
+  const auth = await loadAuth();
+  if (!auth) return redirectToAuth(request);
+
+  return getPayoutMethod(bankId, "bg-admin", auth.idToken);
+};
+export default function BankingApplication() {
   const bank = useLoaderData() as BankDetails;
 
   return (

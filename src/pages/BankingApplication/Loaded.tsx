@@ -5,7 +5,7 @@ import type { PropsWithChildren } from "react";
 import { Link } from "react-router";
 import type { BankingApplicationDetails } from "services/types";
 
-export default function Loaded(props: BankingApplicationDetails) {
+export function Loaded(props: BankingApplicationDetails) {
   const isApproved = props.status === "approved";
   const isRejected = props.status === "rejected";
   const prevVerdict = isApproved || isRejected;
