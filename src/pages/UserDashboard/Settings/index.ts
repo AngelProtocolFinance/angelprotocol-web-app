@@ -5,9 +5,9 @@ import type { ActionFunction, LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { UserEndow } from "types/aws";
 
-export { Settings as Component } from "./Settings";
+export { default } from "./Settings";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const clientLoader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
   return {
@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   } satisfies SettingsData;
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const clientAction: ActionFunction = async ({ request }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 

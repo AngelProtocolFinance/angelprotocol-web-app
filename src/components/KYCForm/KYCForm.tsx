@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { Form } from "./Form";
 import type { FV } from "./schema";
 
-export function Component() {
+export default function KycForm() {
   const navigate = useNavigate();
   const init: FV = {
     name: { first: "", last: "" },

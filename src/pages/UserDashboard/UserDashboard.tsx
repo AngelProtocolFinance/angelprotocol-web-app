@@ -1,47 +1,24 @@
-import { redirectToAuth } from "auth";
-import { loadAuth } from "auth/load-auth";
 import { appRoutes } from "constants/routes";
-import DashboardLayout from "layout/DashboardLayout";
-import {
-  type LoaderFunction,
-  Navigate,
-  type RouteObject,
-  useLoaderData,
-} from "react-router";
-import { linkGroups, routes } from "./routes";
-
-function Layout() {
-  const user = useLoaderData();
-
-  return (
-    <DashboardLayout
-      rootRoute={`${appRoutes.user_dashboard}/`}
-      linkGroups={linkGroups}
-      //dummy header
-      sidebarHeader={<div className="h-5" />}
-      context={user}
-    />
-  );
-}
-
-export const loader: LoaderFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  if (auth) return auth;
-  return redirectToAuth(request);
-};
+import { convert } from "helpers/route";
+import { Navigate, type RouteObject } from "react-router";
+import { routes } from "./routes";
 
 export const userDashboardRoute: RouteObject = {
   path: appRoutes.user_dashboard,
-  element: <Layout />,
-  loader,
+  lazy: () => import("./layout").then(convert),
   children: [
-    { path: routes.edit_profile, lazy: () => import("./EditProfile") },
+    {
+      path: routes.edit_profile,
+      lazy: () => import("./EditProfile").then(convert),
+    },
     {
       path: routes.donations,
-      lazy: () => import("./Donations"),
-      children: [{ path: ":id", lazy: () => import("components/KYCForm") }],
+      lazy: () => import("./Donations").then(convert),
+      children: [
+        { path: ":id", lazy: () => import("components/KYCForm").then(convert) },
+      ],
     },
-    { path: routes.settings, lazy: () => import("./Settings") },
+    { path: routes.settings, lazy: () => import("./Settings").then(convert) },
     { index: true, element: <Navigate to={routes.edit_profile} /> },
   ],
 };

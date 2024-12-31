@@ -2,7 +2,7 @@ import { useLoaderData } from "react-router";
 import EndowAlertForm from "./EndowAlertForm";
 import type { SettingsData } from "./index";
 
-export function Settings() {
+export default function Settings() {
   const { user, userEndows } = useLoaderData() as SettingsData;
   return (
     <div className="grid">

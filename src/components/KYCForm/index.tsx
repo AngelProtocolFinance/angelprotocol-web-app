@@ -2,9 +2,9 @@ import { apes } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import { type ActionFunction, redirect } from "react-router";
 
-export { Component } from "./KYCForm";
+export { default } from "./KYCForm";
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const clientAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 

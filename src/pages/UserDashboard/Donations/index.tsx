@@ -16,9 +16,9 @@ import StatusTabs from "./StatusTabs";
 import Table from "./Table";
 import type { DonationsData } from "./donations-loader";
 
-export { loader } from "./donations-loader";
+export { loader as clientLoader } from "./donations-loader";
 
-export function Component() {
+export default function Donations() {
   const [params, setParams] = useSearchParams();
   const { load, data, state } = useFetcher<DonationsData>();
   const { user, ...firstPage } = useLoaderData() as DonationsData;
