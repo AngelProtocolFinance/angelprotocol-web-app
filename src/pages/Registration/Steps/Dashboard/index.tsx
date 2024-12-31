@@ -1,5 +1,7 @@
 import { regRoutes } from "constants/routes";
+import { useActionResult } from "hooks/use-action-result";
 import { Navigate, Outlet, useFetcher, useLoaderData } from "react-router";
+import type { ActionResult } from "types/action";
 import { stepLoader } from "../../data/step-loader";
 import type { RegStep6 } from "../../types";
 import EndowmentStatus from "./EndowmentStatus";
@@ -10,7 +12,8 @@ export { ErrorElement } from "errors/ErrorElement";
 export const clientLoader = stepLoader(6);
 
 export default function Dashboard() {
-  const fetcher = useFetcher({ key: "reg-sub" });
+  const fetcher = useFetcher<ActionResult>({ key: "reg-sub" });
+  useActionResult(fetcher.data);
   const { data } = useLoaderData() as RegStep6;
 
   const { submission, init } = data;

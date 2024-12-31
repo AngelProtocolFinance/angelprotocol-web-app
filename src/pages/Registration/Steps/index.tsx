@@ -1,4 +1,3 @@
-import { PromptV2 } from "components/Prompt/PromptV2";
 import { convert } from "helpers/route";
 import { Navigate, type RouteObject } from "react-router";
 import { steps } from "../routes";
@@ -29,17 +28,6 @@ export const route: RouteObject = {
     {
       path: steps.summary,
       lazy: () => import("./Dashboard").then(convert),
-      children: [
-        {
-          path: "success",
-          element: (
-            <PromptV2
-              type="success"
-              children="Your application has been submitted. We will get back to you soon!"
-            />
-          ),
-        },
-      ],
     },
     { index: true, element: <Navigate to={steps.contact} /> },
   ],
