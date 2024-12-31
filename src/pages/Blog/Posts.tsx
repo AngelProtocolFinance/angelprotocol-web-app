@@ -11,7 +11,7 @@ import {
 } from "react-router";
 import type { Wordpress } from "types/wordpress";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const clientLoader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const currPage = +(url.searchParams.get("page") ?? "1");
   const [items, total] = await posts(currPage);
@@ -24,7 +24,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   } satisfies Wordpress.PostPage;
 };
 
-export function Component() {
+export default function Posts() {
   const [params] = useSearchParams();
   const { data, state, load } = useFetcher<Wordpress.PostPage>();
   const firstPage = useLoaderData() as Wordpress.PostPage;

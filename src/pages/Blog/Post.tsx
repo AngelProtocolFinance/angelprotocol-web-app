@@ -16,7 +16,7 @@ interface IPost extends Wordpress.Post {
   authorName: string;
 }
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const clientLoader: LoaderFunction = async ({ params }) => {
   const [post] = await wp
     .get<Wordpress.Post[]>(`posts?slug=${params.slug}`)
     .json();
@@ -26,7 +26,7 @@ export const loader: LoaderFunction = async ({ params }) => {
   return { ...post, media: m, authorName: a.name } satisfies IPost;
 };
 
-export function Component() {
+export default function Post() {
   const post = useLoaderData() as IPost;
 
   return (
