@@ -1,7 +1,7 @@
 import Seo from "components/Seo";
 import { useRendered } from "hooks/use-rendered";
 
-export function Component() {
+export default function PrivacyPolicy() {
   useRendered();
   return (
     <div className="padded-container min-h-screen pb-6 prose pt-24">

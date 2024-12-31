@@ -6,7 +6,7 @@ import { Link } from "react-router";
 const U = ({ children }: PropsWithChildren) => (
   <span className="underline">{children}</span>
 );
-export function Component() {
+export default function TermsDonors() {
   useRendered();
   return (
     <main className="prose lg:prose-lg padded-container py-20">

@@ -8,7 +8,7 @@ const U = ({ children }: PropsWithChildren) => (
   <span className="underline">{children}</span>
 );
 
-export function Component() {
+export default function TermsNonprofits() {
   useRendered();
   return (
     <div className="padded-container prose lg:prose-lg py-20">
