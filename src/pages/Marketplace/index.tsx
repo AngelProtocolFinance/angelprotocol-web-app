@@ -7,7 +7,7 @@ import Cards from "./Cards";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const clientLoader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);
   const page = +(source.searchParams.get("page") ?? "1");
   const q = source.searchParams.get("query") ?? "";
@@ -22,7 +22,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     .json();
 };
 
-export function Component() {
+export default function Marketplace() {
   const page1 = useLoaderData() as EndowCardsPage;
   return (
     <div className="w-full grid content-start pb-16">

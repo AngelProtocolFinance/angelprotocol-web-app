@@ -1,13 +1,16 @@
 import type { Endow, Program } from "@better-giving/endowment";
+import { ap, ver } from "api/api";
+import { getEndow } from "api/get/endow";
+import {
+  type FiatCurrencies,
+  getFiatCurrencies,
+} from "api/get/fiat-currencies";
+import { getPrograms } from "api/get/programs";
+import { plusInt } from "api/schema/endow-id";
 import { loadAuth } from "auth/load-auth";
 import type { LoaderFunction } from "react-router";
 import type { EndowOptionsPage, EndowmentOption } from "types/aws";
 import * as v from "valibot";
-import { ap, ver } from "./api";
-import { getEndow } from "./get/endow";
-import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
-import { getPrograms } from "./get/programs";
-import { plusInt } from "./schema/endow-id";
 
 export interface WidgetData {
   endow?: Endow;
@@ -22,7 +25,7 @@ export interface WidgetData {
  * admin/:id/widget-config
  * /widget-config
  */
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const clientLoader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
   const selectedId = v.parse(
     v.nullish(plusInt),

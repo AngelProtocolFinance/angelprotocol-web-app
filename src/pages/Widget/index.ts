@@ -1,2 +1,2 @@
-export { Widget as Component } from "./Widget";
-export { loader } from "api/donate-widget-loader";
+export { default } from "./Widget";
+export { clientLoader } from "./loader";

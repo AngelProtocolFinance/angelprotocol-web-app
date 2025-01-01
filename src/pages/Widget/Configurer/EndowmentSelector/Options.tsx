@@ -1,8 +1,8 @@
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import type { WidgetData } from "api/donate-widget-loader";
 import { Info, LoadingStatus } from "components/Status";
 import { useEffect } from "react";
 import { useFetcher, useLoaderData, useSearchParams } from "react-router";
+import type { WidgetData } from "../../loader";
 
 type Props = {
   searchText: string;

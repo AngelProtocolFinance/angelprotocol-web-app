@@ -1,4 +1,3 @@
-import type { WidgetData } from "api/donate-widget-loader";
 import { fill } from "components/DonateMethods";
 import Seo from "components/Seo";
 import { DEFAULT_PROGRAM } from "components/donation";
@@ -11,8 +10,9 @@ import type { WidgetConfig } from "types/widget";
 import Configurer from "./Configurer";
 import Preview from "./Preview";
 import Snippet from "./Snippet";
+import type { WidgetData } from "./loader";
 
-export function Widget() {
+export default function Widget() {
   const { endow } = useLoaderData() as WidgetData;
   const location = useLocation();
 

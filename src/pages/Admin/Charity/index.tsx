@@ -1,6 +1,7 @@
 import { PromptV2 } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
 import { ErrorElement } from "errors/ErrorElement";
+import { convert } from "helpers/route";
 import { Navigate, type RouteObject } from "react-router";
 import Banking, {
   NewPayoutMethod,
@@ -50,7 +51,10 @@ export const charityRoutes: RouteObject[] = [
       payoutMethodRoute,
     ],
   },
-  { path: adminRoutes.form_builder, lazy: () => import("../../Widget") },
+  {
+    path: adminRoutes.form_builder,
+    lazy: () => import("../../Widget").then(convert),
+  },
   dashboardRoute,
   {
     index: true,

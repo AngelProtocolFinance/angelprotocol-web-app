@@ -7,7 +7,7 @@ import Designations from "./Designations";
 import KYCFilter from "./KYCFilter";
 import VerificationFilter from "./VerificationFilter";
 
-export function Filter({ classes = "" }: { classes?: string }) {
+export default function Filter({ classes = "" }: { classes?: string }) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
 
