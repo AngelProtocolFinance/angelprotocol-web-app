@@ -117,7 +117,7 @@ function Content() {
       <div className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l4">
         <Link
           to={".."}
-          aria-disabled={fetcher.state !== "submitting"}
+          aria-disabled={fetcher.state === "submitting"}
           type="button"
           className="btn-outline-filled text-sm px-8 py-2"
           preventScrollReset

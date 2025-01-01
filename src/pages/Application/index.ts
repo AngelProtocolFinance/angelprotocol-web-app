@@ -1,21 +1,11 @@
-import { ap, ver } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
-import type { LoaderFunction } from "react-router";
+import { convert } from "helpers/route";
+import type { RouteObject } from "react-router";
 
-export { Component } from "./Application";
-
-export const loader: LoaderFunction = async ({ params, request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
-
-  const application = ap
-    .get(`${ver(1)}/registrations/${params.id}`, {
-      headers: { authorization: auth.idToken },
-    })
-    .json();
-
-  return {
-    application,
-    user: auth,
-  };
+export const applicationRoute: RouteObject = {
+  path: ":id",
+  lazy: () => import("./Application").then(convert),
+  children: [
+    { path: ":verdict", lazy: () => import("./review-route").then(convert) },
+    { path: "success", lazy: () => import("./success-prompt").then(convert) },
+  ],
 };

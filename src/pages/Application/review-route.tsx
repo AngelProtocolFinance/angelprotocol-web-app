@@ -1,11 +1,10 @@
 import type { Verdict } from "@better-giving/registration/approval";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { PromptV2 } from "components/Prompt";
-import { type ActionFunction, type RouteObject, redirect } from "react-router";
-import Prompt from "./Prompt";
+import { type ActionFunction, redirect } from "react-router";
+export { default } from "./Prompt";
 
-const action: ActionFunction = async ({ request, params }) => {
+export const clientAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 
@@ -23,16 +22,3 @@ const action: ActionFunction = async ({ request, params }) => {
 
   return redirect("../success");
 };
-
-export const reviewRoute: RouteObject = {
-  path: ":verdict",
-  element: <Prompt />,
-  action,
-};
-
-export const promptRoutes: RouteObject[] = [
-  {
-    path: "success",
-    element: <PromptV2 type="success">Review submitted</PromptV2>,
-  },
-];

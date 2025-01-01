@@ -5,7 +5,7 @@ import { ErrorElement } from "errors/ErrorElement";
 import { convert } from "helpers/route";
 import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
-import { promptRoutes, reviewRoute } from "pages/Application/review-route";
+import { applicationRoute } from "pages/Application";
 import { bankApplicationRoute } from "pages/BankingApplication";
 import { routes as blogRoutes } from "pages/Blog";
 import { legalRoutes } from "pages/Legal";
@@ -61,12 +61,7 @@ const _appRoutes: RO[] = [
   {
     path: appRoutes.applications,
     children: [
-      {
-        path: ":id",
-        lazy: () => import("pages/Application"),
-        errorElement: <ErrorElement />,
-        children: [reviewRoute, ...promptRoutes],
-      },
+      applicationRoute,
       { index: true, lazy: () => import("pages/Applications") },
     ],
   },

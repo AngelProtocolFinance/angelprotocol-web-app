@@ -1,18 +1,36 @@
-import type { Application } from "@better-giving/registration/approval";
-import LoaderRing from "components/LoaderRing";
+import type { Application as IApplication } from "@better-giving/registration/approval";
+import { ap, ver } from "api/api";
+import { loadAuth, redirectToAuth } from "auth";
 import Seo from "components/Seo";
-import { ErrorStatus } from "components/Status";
 import { CircleAlert } from "lucide-react";
-import { Suspense } from "react";
-import { Await, useLoaderData } from "react-router";
+import { useLoaderData } from "react-router";
+import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import Loaded from "./Loaded";
 
-export function Component() {
-  const { application, user } = useLoaderData() as {
-    user: UserV2;
-    application: Application;
-  };
+export interface LoaderData {
+  user: UserV2;
+  application: IApplication;
+}
+
+export const clientLoader: LoaderFunction = async ({ params, request }) => {
+  const auth = await loadAuth();
+  if (!auth) return redirectToAuth(request);
+
+  const application = await ap
+    .get<IApplication>(`${ver(1)}/registrations/${params.id}`, {
+      headers: { authorization: auth.idToken },
+    })
+    .json();
+
+  return {
+    application,
+    user: auth,
+  } satisfies LoaderData;
+};
+
+export default function Application() {
+  const { application, user } = useLoaderData() as LoaderData;
 
   if (!user.groups.includes("ap-admin")) {
     return (
@@ -30,22 +48,7 @@ export function Component() {
         Applications Review - Details
       </h1>
 
-      <Suspense
-        fallback={
-          <LoaderRing thickness={10} classes="w-32 justify-self-center" />
-        }
-      >
-        <Await
-          resolve={application}
-          errorElement={
-            <ErrorStatus classes="justify-self-center">
-              Failed to load application details
-            </ErrorStatus>
-          }
-        >
-          {(data: Application) => <Loaded {...data} />}
-        </Await>
-      </Suspense>
+      <Loaded {...application} />
     </div>
   );
 }
