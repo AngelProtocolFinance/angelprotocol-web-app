@@ -1,12 +1,7 @@
 import { adminRoutes } from "constants/routes";
 import { convert } from "helpers/route";
 import { Navigate, type RouteObject } from "react-router";
-import Banking, {
-  NewPayoutMethod,
-  payoutMethodsLoader,
-  newBanking,
-  payoutMethodRoute,
-} from "./Banking";
+import { bankingRoute } from "./Banking";
 import { dashboardRoute } from "./Dashboard/route";
 import { mediaRoutes } from "./Media";
 import { membersRoute } from "./Members";
@@ -33,14 +28,7 @@ export const charityRoutes: RouteObject[] = [
     lazy: () => import("./Settings").then(convert),
   },
   membersRoute,
-  {
-    path: adminRoutes.banking,
-    children: [
-      { index: true, element: <Banking />, loader: payoutMethodsLoader },
-      { path: "new", element: <NewPayoutMethod />, action: newBanking },
-      payoutMethodRoute,
-    ],
-  },
+  bankingRoute,
   {
     path: adminRoutes.form_builder,
     lazy: () => import("../../Widget").then(convert),

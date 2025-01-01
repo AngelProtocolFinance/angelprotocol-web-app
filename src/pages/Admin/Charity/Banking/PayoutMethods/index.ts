@@ -6,7 +6,7 @@ import type { LoaderFunction } from "react-router";
 import { parse } from "valibot";
 export { default } from "./PayoutMethods";
 
-export const loader: LoaderFunction = async ({ params, request }) => {
+export const clientLoader: LoaderFunction = async ({ params, request }) => {
   const id = parse(plusInt, params.id);
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
