@@ -18,7 +18,7 @@ import {
 } from "react-router";
 import { schema, stringNumber } from "schemas/shape";
 import type { BalanceMovement } from "types/aws";
-import type { DashboardData } from "./route";
+import type { DashboardData } from "./api";
 
 type Flow = keyof BalanceMovement;
 
@@ -39,7 +39,8 @@ interface IMoveFundForm {
   initAmount?: number;
 }
 
-export function MoveFundForm() {
+export { moveFundAction as clientAction } from "./move-fund-action";
+export default function MoveFundForm() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const { bal } = useRouteLoaderData("dashboard") as DashboardData;

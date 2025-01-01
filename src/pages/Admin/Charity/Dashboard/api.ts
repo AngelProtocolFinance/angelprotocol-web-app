@@ -7,23 +7,6 @@ import type { LoaderFunction } from "react-router";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
-import type { DashboardData } from "./route";
-
-export { default } from "./Dashboard";
-export const clientAction = endowUpdate({ redirect: "." });
-export const clientLoader: LoaderFunction = async ({ params, request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
-  const url = new URL(request.url);
-  const nextPageKey = url.searchParams.get("nextPageKey");
-
-  const id = v.parse(plusInt, params.id);
-  return {
-    alloc: await getAllocation(id),
-    bal: await getBalance(id),
-    balTxs: await balanceTxs(id, nextPageKey, auth.idToken),
-  } satisfies DashboardData;
-};
 
 const getAllocation = (id: number) =>
   getEndow(id, ["allocation"]).then<Allocation>(
@@ -46,3 +29,24 @@ async function balanceTxs(
     })
     .json();
 }
+
+export interface DashboardData {
+  alloc: Allocation;
+  bal: EndowmentBalances;
+  balTxs: BalanceTxsPage;
+}
+
+export const endowUpdateAction = endowUpdate({ redirect: "." });
+export const dashboardData: LoaderFunction = async ({ params, request }) => {
+  const auth = await loadAuth();
+  if (!auth) return redirectToAuth(request);
+  const url = new URL(request.url);
+  const nextPageKey = url.searchParams.get("nextPageKey");
+
+  const id = v.parse(plusInt, params.id);
+  return {
+    alloc: await getAllocation(id),
+    bal: await getBalance(id),
+    balTxs: await balanceTxs(id, nextPageKey, auth.idToken),
+  } satisfies DashboardData;
+};

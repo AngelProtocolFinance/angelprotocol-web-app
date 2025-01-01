@@ -1,9 +1,13 @@
 import { CircleAlert } from "lucide-react";
 import { Outlet, useLoaderData } from "react-router";
 import { Loaded } from "./Loaded";
+import type { DashboardData } from "./api";
 import { monthPeriod } from "./monthPeriod";
-import type { DashboardData } from "./route";
 
+export {
+  dashboardData as clientLoader,
+  endowUpdateAction as clientAction,
+} from "./api";
 export default function Dashboard() {
   const { alloc, bal } = useLoaderData() as DashboardData;
   const period = monthPeriod();

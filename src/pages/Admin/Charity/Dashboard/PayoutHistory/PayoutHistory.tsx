@@ -2,7 +2,7 @@ import { Info } from "components/Status";
 import { useEffect, useState } from "react";
 import { useFetcher, useLoaderData, useSearchParams } from "react-router";
 import type { BalanceTxsPage } from "types/aws";
-import type { DashboardData } from "../route";
+import type { DashboardData } from "../api";
 import Table from "./Table";
 
 export function PayoutHistory({ classes = "" }) {

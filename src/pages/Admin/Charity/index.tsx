@@ -2,7 +2,7 @@ import { adminRoutes } from "constants/routes";
 import { convert } from "helpers/route";
 import { Navigate, type RouteObject } from "react-router";
 import { bankingRoute } from "./Banking";
-import { dashboardRoute } from "./Dashboard/route";
+import { dashboardRoute } from "./Dashboard";
 import { mediaRoutes } from "./Media";
 import { membersRoute } from "./Members";
 

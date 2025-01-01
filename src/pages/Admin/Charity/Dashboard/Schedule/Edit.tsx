@@ -4,12 +4,12 @@ import { Field, Label, Switch } from "@headlessui/react";
 import { useState } from "react";
 import { useFetcher, useNavigate, useRouteLoaderData } from "react-router";
 import type { EndowmentUpdate } from "services/types";
-import type { DashboardData } from "../route";
+import type { DashboardData } from "../api";
 import { AllocationOptions } from "./AllocationOptions";
 import { AllocationSlider } from "./AllocationSlider";
 import { allocationOptions, toAllocOptValue } from "./common";
 
-export function Edit() {
+export default function Edit() {
   const { alloc, bal } = useRouteLoaderData("dashboard") as DashboardData;
   const navigate = useNavigate();
   return (
