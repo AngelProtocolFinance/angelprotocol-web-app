@@ -1,9 +1,5 @@
-import Loader from "components/Loader";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
-import ModalContext from "contexts/ModalContext";
-import { ErrorElement } from "errors/ErrorElement";
 import { convert } from "helpers/route";
-import NProgress from "nprogress";
 import { adminRoute } from "pages/Admin";
 import { applicationRoute } from "pages/Application";
 import { bankApplicationRoute } from "pages/BankingApplication";
@@ -14,17 +10,7 @@ import { route as regRoute } from "pages/Registration";
 import { signUpRoute } from "pages/SignUp";
 import { userDashboardRoute } from "pages/UserDashboard";
 import { infoRoutes } from "pages/informational";
-import { useEffect } from "react";
-import {
-  Navigate,
-  Outlet,
-  type RouteObject as RO,
-  ScrollRestoration,
-  useNavigation,
-} from "react-router";
-import { Toaster } from "sonner";
-import { rootAction } from "./root-action";
-import { rootLoader } from "./root-loader";
+import { Navigate, type RouteObject as RO } from "react-router";
 
 const donateThanks = import("pages/DonateThanks").then(convert);
 const stripePaymentStatus = import("pages/StripePaymentStatus").then(convert);
@@ -104,41 +90,11 @@ const rootRoutes: RO[] = [
   { path: "*", element: <Navigate to="/" /> },
 ];
 
-const LoaderComponent = () => (
-  <Loader bgColorClass="bg-blue" gapClass="gap-2" widthClass="w-4" />
-);
 export const routes: RO[] = [
   {
     id: "root",
     path: "/",
-    hydrateFallbackElement: <LoaderComponent />,
-    element: <RootLayout />,
-    loader: rootLoader,
-    action: rootAction,
+    lazy: () => import("./root").then(convert),
     children: rootRoutes,
-    ErrorBoundary: ErrorElement,
   },
 ];
-
-NProgress.configure({
-  showSpinner: false,
-});
-
-function RootLayout() {
-  const transition = useNavigation();
-  useEffect(() => {
-    // when the state is idle then we can to complete the progress bar
-    if (transition.state === "idle") NProgress.done();
-    // and when it's something else it means it's either submitting a form or
-    // waiting for the loaders of the next location so we start it
-    else NProgress.start();
-  }, [transition.state]);
-
-  return (
-    <ModalContext>
-      <ScrollRestoration />
-      <Outlet />
-      <Toaster richColors position="top-right" closeButton />
-    </ModalContext>
-  );
-}

@@ -6,7 +6,7 @@ import { appRoutes } from "constants/routes";
 import { type ActionFunction, redirect } from "react-router";
 import { emailSubs } from "types/hubspot-subscription";
 
-export const rootAction: ActionFunction = async ({ request }) => {
+export const clientAction: ActionFunction = async ({ request }) => {
   const r = request.clone();
   const form = await r.formData();
   const intent = form.get("intent");

@@ -7,7 +7,24 @@ import { type LoaderFunctionArgs, redirect } from "react-router";
 import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
-export const rootLoader = async ({
+async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
+  const endows = await ap
+    .get<number[]>(`${ver(1)}/bookmarks`, {
+      throwHttpErrors: false,
+      headers: { authorization: user.idToken },
+    })
+    .then((res) => (res.ok ? res.json() : []));
+
+  const bookmarks: EndowmentBookmark[] = [];
+
+  for (const id of endows) {
+    const endow = await getEndow(id, ["name", "logo"]);
+    bookmarks.push({ ...endow, endowId: id });
+  }
+  return bookmarks;
+}
+
+export const clientLoader = async ({
   request,
 }: LoaderFunctionArgs): Promise<null | DetailedUser | Response> => {
   console.log("app loads");
@@ -46,20 +63,3 @@ export const rootLoader = async ({
     orgs: userEndows(auth),
   } satisfies DetailedUser;
 };
-
-async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
-  const endows = await ap
-    .get<number[]>(`${ver(1)}/bookmarks`, {
-      throwHttpErrors: false,
-      headers: { authorization: user.idToken },
-    })
-    .then((res) => (res.ok ? res.json() : []));
-
-  const bookmarks: EndowmentBookmark[] = [];
-
-  for (const id of endows) {
-    const endow = await getEndow(id, ["name", "logo"]);
-    bookmarks.push({ ...endow, endowId: id });
-  }
-  return bookmarks;
-}
