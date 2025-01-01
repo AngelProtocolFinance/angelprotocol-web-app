@@ -20,7 +20,7 @@ type Props = {
 
 export const schema = object({ url: pipe(httpsUrl, nonEmpty("required")) });
 
-export function VideoEditor() {
+export default function VideoEditor() {
   const [params] = useSearchParams();
   const { mediaId } = useParams();
 

@@ -3,17 +3,13 @@ import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth, redirectToAuth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
-import { adminRoutes } from "constants/routes";
 import {
   type ActionFunction,
   type LoaderFunction,
-  type RouteObject,
   redirect,
 } from "react-router";
 import { parse } from "valibot";
-import Media from "./Media";
-import { VideoEditor, schema } from "./VideoEditor";
-import Videos from "./Videos";
+import { schema } from "./VideoEditor";
 
 export const featuredMedia: LoaderFunction = async ({ params }) => {
   const endowId = parse(plusInt, params.id);
@@ -55,7 +51,7 @@ export const videosAction: LoaderFunction = async ({ params, request }) => {
   return { ok: res.ok };
 };
 
-const newAction: ActionFunction = async ({ params, request }) => {
+export const newAction: ActionFunction = async ({ params, request }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 
@@ -70,7 +66,7 @@ const newAction: ActionFunction = async ({ params, request }) => {
   return redirect("..");
 };
 
-const editAction: ActionFunction = async ({ params, request }) => {
+export const editAction: ActionFunction = async ({ params, request }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 
@@ -85,25 +81,3 @@ const editAction: ActionFunction = async ({ params, request }) => {
 
   return redirect("..");
 };
-
-const promptPaths: RouteObject[] = [
-  { path: "new", action: newAction, element: <VideoEditor /> },
-  { path: ":mediaId", element: <VideoEditor />, action: editAction },
-];
-
-export const mediaRoutes: RouteObject[] = [
-  {
-    path: adminRoutes.media,
-    element: <Media />,
-    loader: featuredMedia,
-    action: videosAction,
-    children: promptPaths,
-  },
-  {
-    path: adminRoutes.media + "/videos",
-    element: <Videos />,
-    loader: allVideos,
-    action: videosAction,
-    children: promptPaths,
-  },
-];

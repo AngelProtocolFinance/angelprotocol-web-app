@@ -3,6 +3,10 @@ import { Plus } from "lucide-react";
 import { Link, Outlet, useLoaderData } from "react-router";
 import FeaturedVideos from "./FeaturedVideos";
 
+export {
+  featuredMedia as clientLoader,
+  videosAction as clientAction,
+} from "./api";
 export default function Media() {
   const featuredPage = useLoaderData() as MediaPage;
 

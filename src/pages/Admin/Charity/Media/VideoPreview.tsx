@@ -23,8 +23,8 @@ export default function VideoPreview(props: IMedia) {
           <Star
             size={19}
             className={`${
-              props.featured ? "text-[#FFA500]" : ""
-            } group-disabled:text-gray-l1`}
+              props.featured ? "fill-[#FFA500] text-[#FFA500]" : ""
+            } group-disabled:text-gray-l1 group-disabled:fill-gray-l1`}
           />
         </CRUDBtn>
         <Link
@@ -73,11 +73,11 @@ export default function VideoPreview(props: IMedia) {
 interface ICRUDBtn extends ButtonHTMLAttributes<HTMLButtonElement> {
   featured: boolean;
 }
-function CRUDBtn({ className, children, ...props }: ICRUDBtn) {
+function CRUDBtn({ className, children, featured, ...props }: ICRUDBtn) {
   const fetcher = useFetcher({ key: `${props.value}-${props.id}` });
   return (
     <fetcher.Form action="." method="POST" className="contents">
-      <input type="hidden" name="featured" value={props.featured ? "1" : "0"} />
+      <input type="hidden" name="featured" value={featured ? "1" : "0"} />
       <input type="hidden" name="mediaId" value={props.id} />
       <button
         type="submit"
