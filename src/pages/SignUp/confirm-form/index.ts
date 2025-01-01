@@ -11,9 +11,11 @@ import { authStore } from "store/auth";
 import { isError, signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";
 
-export { ConfirmForm as Component } from "./ConfirmForm";
+export { default } from "./ConfirmForm";
 
-export const loader: LoaderFunction = async (): Promise<Response | unknown> => {
+export const clientLoader: LoaderFunction = async (): Promise<
+  Response | unknown
+> => {
   const auth = await loadAuth();
   if (auth) return redirect(appRoutes.marketplace);
 
@@ -22,7 +24,7 @@ export const loader: LoaderFunction = async (): Promise<Response | unknown> => {
   return email;
 };
 
-export const action: ActionFunction = async ({ request }) => {
+export const clientAction: ActionFunction = async ({ request }) => {
   const from = new URL(request.url);
 
   const fv = await request.formData();

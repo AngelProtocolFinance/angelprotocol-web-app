@@ -3,10 +3,9 @@ import { toWithState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
 import { Link, useLoaderData } from "react-router";
 
-export { loader } from "./loader";
-export function Component() {
+export { clientLoader } from "./loader";
+export default function Success() {
   const fromState = useLoaderData();
-
   return (
     <div className="grid justify-items-center w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
       <CircleCheck className="text-blue-d1 h-16 sm:h-20 w-16 sm:w-20" />

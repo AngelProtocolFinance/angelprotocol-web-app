@@ -10,7 +10,7 @@ import { type ActionData, isActionErr, isData, isValiErr } from "./types";
 
 const MAX_TIME = 30;
 
-export function ConfirmForm() {
+export default function ConfirmForm() {
   const [params] = useSearchParams();
   const email = useLoaderData() as string;
   const fetcher = useFetcher<ActionData>();

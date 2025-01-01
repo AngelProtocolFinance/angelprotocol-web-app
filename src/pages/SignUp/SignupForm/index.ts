@@ -12,9 +12,9 @@ import {
   signUp,
 } from "types/auth";
 
-export { SignupForm as Component } from "./SignupForm";
-export { loader } from "../loader";
-export const action: ActionFunction = async ({ request }) => {
+export { default } from "./SignupForm";
+export { clientLoader } from "../loader";
+export const clientAction: ActionFunction = async ({ request }) => {
   const from = new URL(request.url);
   const fromState = decodeState(from.searchParams.get("_s")) as
     | SignInRouteState
@@ -51,6 +51,6 @@ export const action: ActionFunction = async ({ request }) => {
   authStore.set("email", p.value.email);
 
   const to = new URL(from);
-  to.pathname = "confirm";
+  to.pathname = from.pathname + "/confirm";
   return redirect(to.toString());
 };

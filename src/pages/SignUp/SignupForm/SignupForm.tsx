@@ -14,7 +14,7 @@ import { toast } from "sonner";
 import { type ActionData, isActionErr, isValiErr } from "types/action";
 import { signUp } from "types/auth";
 
-export function SignupForm() {
+export default function SignupForm() {
   const fromState = useLoaderData();
   const [params] = useSearchParams();
   const fetcher = useFetcher<ActionData<any>>();
