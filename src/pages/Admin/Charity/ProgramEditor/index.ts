@@ -44,9 +44,8 @@ export const clientAction: ActionFunction = async ({ request, params }) => {
     });
     return { ok: res.ok };
   }
-
   //edit program
-  const res = await ap.patch(basePath, {
+  await ap.patch(basePath, {
     headers: { authorization: auth.idToken },
     json: p,
   });
