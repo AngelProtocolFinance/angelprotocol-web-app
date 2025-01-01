@@ -1,6 +1,4 @@
-import { PromptV2 } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
-import { ErrorElement } from "errors/ErrorElement";
 import { convert } from "helpers/route";
 import { Navigate, type RouteObject } from "react-router";
 import Banking, {
@@ -14,33 +12,25 @@ import { mediaRoutes } from "./Media";
 import { membersRoute } from "./Members";
 
 export const charityRoutes: RouteObject[] = [
-  { path: adminRoutes.donations, lazy: () => import("./Donations") },
+  {
+    path: adminRoutes.donations,
+    lazy: () => import("./Donations").then(convert),
+  },
   {
     path: adminRoutes.edit_profile,
-    lazy: () => import("./EditProfile"),
-    errorElement: <ErrorElement />,
-    children: [
-      {
-        path: "success",
-        element: <PromptV2 type="success" children="Profile updated" />,
-      },
-    ],
+    lazy: () => import("./EditProfile").then(convert),
   },
-  { path: adminRoutes.programs, lazy: () => import("./Programs") },
+  {
+    path: adminRoutes.programs,
+    lazy: () => import("./Programs").then(convert),
+  },
   {
     path: adminRoutes.program_editor + "/:programId",
-    lazy: () => import("./ProgramEditor"),
+    lazy: () => import("./ProgramEditor").then(convert),
   },
   {
     path: adminRoutes.settings,
-    lazy: () => import("./Settings"),
-    errorElement: <ErrorElement />,
-    children: [
-      {
-        path: "success",
-        element: <PromptV2 type="success" children="Settings updated" />,
-      },
-    ],
+    lazy: () => import("./Settings").then(convert),
   },
   membersRoute,
   {

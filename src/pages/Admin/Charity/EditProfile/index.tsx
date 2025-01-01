@@ -4,14 +4,16 @@ import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
 import { unsdgs } from "constants/unsdgs";
 import { type LoaderFunction, useLoaderData } from "react-router";
+import { endowUpdate } from "../endow-update-action";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
 
-export const loader: LoaderFunction = async ({ params }) => getEndow(params.id);
-export { action } from "../endow-update-action";
+export const clientLoader: LoaderFunction = async ({ params }) =>
+  getEndow(params.id);
+export const clientAction = endowUpdate({ success: "Profile updated" });
 
-export function Component() {
+export default function EditProfile() {
   const endow = useLoaderData() as Endow;
   const defaults: FV = {
     name: endow.name,

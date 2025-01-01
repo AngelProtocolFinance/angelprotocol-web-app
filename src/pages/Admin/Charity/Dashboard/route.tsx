@@ -1,7 +1,7 @@
 import type { Allocation } from "@better-giving/endowment";
-import { PromptV2 } from "components/Prompt";
 import { adminRoutes } from "constants/routes";
 import { ErrorElement } from "errors/ErrorElement";
+import { convert } from "helpers/route";
 import type { RouteObject } from "react-router";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import { MoveFundForm } from "./MoveFundForm";
@@ -17,14 +17,10 @@ export type DashboardData = {
 export const dashboardRoute: RouteObject = {
   id: "dashboard",
   path: adminRoutes.dashboard,
-  lazy: () => import("./index"),
+  lazy: () => import("./index").then(convert),
   errorElement: <ErrorElement />,
   children: [
     { path: "edit-alloc", element: <Edit /> },
     { path: "move-funds", element: <MoveFundForm />, action: moveFundAction },
-    {
-      path: "success",
-      element: <PromptV2 type="success" children="Successfully updated" />,
-    },
   ],
 };

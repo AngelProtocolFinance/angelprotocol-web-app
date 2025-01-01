@@ -5,9 +5,9 @@ import { loadAuth } from "auth/load-auth";
 import type { LoaderFunction } from "react-router";
 import * as v from "valibot";
 
-export { default as Component } from "./Donations";
+export { default } from "./Donations";
 
-export const loader: LoaderFunction = async ({ params, request }) => {
+export const clientLoader: LoaderFunction = async ({ params, request }) => {
   const from = new URL(request.url);
   const page = from.searchParams.get("page") ?? "1";
 

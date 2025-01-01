@@ -4,12 +4,12 @@ import { loadAuth, redirectToAuth } from "auth";
 import { adminRoutes } from "constants/routes";
 import { type LoaderFunction, redirect } from "react-router";
 
-export { default as Component } from "./Programs";
+export { default } from "./Programs";
 
-export const loader: LoaderFunction = async ({ params }) =>
+export const clientLoader: LoaderFunction = async ({ params }) =>
   getPrograms(params.id);
 
-export const action: LoaderFunction = async ({ request, params }) => {
+export const clientAction: LoaderFunction = async ({ request, params }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 

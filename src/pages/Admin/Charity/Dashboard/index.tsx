@@ -6,12 +6,12 @@ import { loadAuth, redirectToAuth } from "auth";
 import type { LoaderFunction } from "react-router";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
+import { endowUpdate } from "../endow-update-action";
 import type { DashboardData } from "./route";
 
-export { default as Component } from "./Dashboard";
-
-export { action } from "../endow-update-action";
-export const loader: LoaderFunction = async ({ params, request }) => {
+export { default } from "./Dashboard";
+export const clientAction = endowUpdate({ redirect: "." });
+export const clientLoader: LoaderFunction = async ({ params, request }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
   const url = new URL(request.url);

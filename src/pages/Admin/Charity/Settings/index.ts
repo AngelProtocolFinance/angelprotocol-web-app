@@ -1,7 +1,8 @@
 import { getEndow } from "api/get/endow";
 import type { LoaderFunction } from "react-router";
 import type { EndowmentSettingsAttributes } from "types/aws";
-export { default as Component } from "./Form";
+import { endowUpdate } from "../endow-update-action";
+export { default } from "./Form";
 
 const fields: EndowmentSettingsAttributes[] = [
   "receiptMsg",
@@ -10,7 +11,7 @@ const fields: EndowmentSettingsAttributes[] = [
   "donateMethods",
   "target",
 ];
-export const loader: LoaderFunction = async ({ params }) =>
+export const clientLoader: LoaderFunction = async ({ params }) =>
   getEndow(params.id, fields);
 
-export { action } from "../endow-update-action";
+export const clientAction = endowUpdate({ success: "Settings updated" });

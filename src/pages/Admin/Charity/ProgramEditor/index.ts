@@ -2,14 +2,14 @@ import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
 import { loadAuth, redirectToAuth } from "auth";
 import type { ActionFunction, LoaderFunction } from "react-router";
+import type { ActionResult } from "types/action";
 export { ErrorElement as ErrorBoundary } from "errors/ErrorElement";
 
-export { default as Component } from "./ProgramEditor";
-
-export const loader: LoaderFunction = async ({ params }) =>
+export { default } from "./ProgramEditor";
+export const clientLoader: LoaderFunction = async ({ params }) =>
   getProgram(params.id, params.programId);
 
-export const action: ActionFunction = async ({ request, params }) => {
+export const clientAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 
@@ -51,5 +51,5 @@ export const action: ActionFunction = async ({ request, params }) => {
     json: p,
   });
 
-  return { ok: res.ok };
+  return { success: "Program updated" } satisfies ActionResult;
 };

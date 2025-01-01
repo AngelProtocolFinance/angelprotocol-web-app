@@ -4,6 +4,7 @@ import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router";
 import type { EndowmentProfileUpdate } from "types/aws";
 
+import { useActionResult } from "hooks/use-action-result";
 import type { UNSDG_NUMS } from "types/lists";
 import type { FV } from "./schema";
 
@@ -11,6 +12,7 @@ type DirtyFields = FieldNamesMarkedBoolean<FV>;
 
 export default function useEditProfile(df: DirtyFields) {
   const fetcher = useFetcher();
+  useActionResult(fetcher.data);
   const { displayError, handleError } = useErrorContext();
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {

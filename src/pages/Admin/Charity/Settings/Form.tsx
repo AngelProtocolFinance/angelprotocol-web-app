@@ -15,6 +15,7 @@ import {
 } from "components/form";
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
+import { useActionResult } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { Outlet, useFetcher, useLoaderData } from "react-router";
@@ -31,6 +32,7 @@ export default function Form() {
   >;
 
   const fetcher = useFetcher();
+  useActionResult(fetcher.data);
   const { displayError } = useErrorContext();
 
   const {
