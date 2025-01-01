@@ -69,7 +69,10 @@ const _appRoutes: RO[] = [
   { path: appRoutes.stripe_payment_status, lazy: () => stripePaymentStatus },
   { path: appRoutes.signin, lazy: () => import("pages/Signin").then(convert) },
   signUpRoute,
-  { path: appRoutes.reset_password, lazy: () => import("pages/ResetPassword") },
+  {
+    path: appRoutes.reset_password,
+    lazy: () => import("pages/ResetPassword").then(convert),
+  },
   {
     path: appRoutes.marketplace,
     lazy: () => import("pages/Marketplace"),
