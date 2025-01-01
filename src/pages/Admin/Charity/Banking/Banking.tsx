@@ -7,6 +7,7 @@ import { useAdminContext } from "pages/Admin/Context";
 import { Link, useFetcher } from "react-router";
 import FormButtons from "./FormButtons";
 
+export { newBanking as clientAction } from "./new-banking-action";
 export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 

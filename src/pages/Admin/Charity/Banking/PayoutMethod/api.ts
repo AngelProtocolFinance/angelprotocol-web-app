@@ -4,18 +4,13 @@ import { getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
 import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
-import { PromptV2 } from "components/Prompt";
 import {
   type ActionFunction,
   type LoaderFunction,
-  type RouteObject,
   redirect,
 } from "react-router";
+import type { ActionResult } from "types/action";
 import * as v from "valibot";
-import { DeletePrompt } from "./DeletePrompt";
-import PayoutMethod from "./Loaded";
-
-export { default } from "./Loaded";
 
 export const payoutMethodLoader: LoaderFunction = async ({
   params,
@@ -29,7 +24,7 @@ export const payoutMethodLoader: LoaderFunction = async ({
   return getPayoutMethod(bankId, id, auth.idToken);
 };
 
-const deleteAction: ActionFunction = async ({ params, request }) => {
+export const deleteAction: ActionFunction = async ({ params, request }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
 
@@ -39,24 +34,10 @@ const deleteAction: ActionFunction = async ({ params, request }) => {
   return redirect("../..");
 };
 
-const prioritizeAction: ActionFunction = async ({ params, request }) => {
+export const prioritizeAction: ActionFunction = async ({ params, request }) => {
   const auth = await loadAuth();
   if (!auth) return redirectToAuth(request);
   const bankId = v.parse(plusInt, params.bankId);
   await bankUpdate(bankId, { type: "prioritize" }, auth.idToken);
-  return redirect("success");
-};
-
-export const payoutMethodRoute: RouteObject = {
-  path: ":bankId",
-  element: <PayoutMethod />,
-  action: prioritizeAction,
-  loader: payoutMethodLoader,
-  children: [
-    { path: "delete", element: <DeletePrompt />, action: deleteAction },
-    {
-      path: "success",
-      element: <PromptV2 type="success" children="Payout method updated" />,
-    },
-  ],
+  return { success: "Payout method prioritized" } satisfies ActionResult;
 };

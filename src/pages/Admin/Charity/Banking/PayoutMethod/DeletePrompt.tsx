@@ -7,7 +7,8 @@ type Props = {
   isWithHeir: boolean;
 };
 
-export function DeletePrompt() {
+export { deleteAction as clientAction } from "./api";
+export default function DeletePrompt() {
   const [params] = useSearchParams();
   const isDefault = params.get("default") === "true";
   const isWithHeir = params.get("with_heir") === "true";

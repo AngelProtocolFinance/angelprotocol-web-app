@@ -1,13 +1,20 @@
 import type { BankDetails } from "api/get/payout-method";
 import ExtLink from "components/ExtLink";
+import { useActionResult } from "hooks/use-action-result";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link, Outlet, useFetcher, useLoaderData } from "react-router";
 
 const APPROVED_PRIORITY_NUM = 2;
-export default function Loaded() {
+
+export {
+  payoutMethodLoader as clientLoader,
+  prioritizeAction as clientAction,
+} from "./api";
+export default function PayoutMethod() {
   const bank = useLoaderData() as BankDetails;
   const fetcher = useFetcher();
+  useActionResult(fetcher.data);
 
   const isRejected = bank.status === "rejected";
   const isApproved = bank.status === "approved";
