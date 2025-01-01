@@ -90,10 +90,10 @@ const _appRoutes: RO[] = [
 ];
 
 const rootRoutes: RO[] = [
-  { index: true, lazy: () => import("pages/Home") },
+  { index: true, lazy: () => import("pages/Home").then(convert) },
   {
     path: `${appRoutes.donate}/:id`,
-    lazy: () => import("pages/Donate"),
+    lazy: () => import("pages/Donate").then(convert),
   },
   adminRoute,
   //outlet-value: isInWidget/widgetVersion

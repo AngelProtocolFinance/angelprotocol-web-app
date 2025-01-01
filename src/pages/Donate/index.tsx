@@ -3,8 +3,8 @@ import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useLoaderData } from "react-router";
 import Content from "./Content";
-export { loader } from "api/donate-loader";
-export function Component() {
+export { clientLoader } from "api/donate-loader";
+export default function Donate() {
   const { intent, endow } = useLoaderData() as DonateData;
 
   return (

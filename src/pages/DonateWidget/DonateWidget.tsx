@@ -1,11 +1,9 @@
+import type { DonateData } from "api/donate-loader";
 import { ErrorStatus } from "components/Status";
+import { useEffect } from "react";
 import { useLoaderData, useSearchParams } from "react-router";
 import Content from "./Content";
 import parseConfig from "./parseConfig";
-
-import type { DonateData } from "api/donate-loader";
-import { useEffect } from "react";
-export { loader } from "api/donate-loader";
 
 export default function DonateWidget() {
   const { endow } = useLoaderData() as DonateData;

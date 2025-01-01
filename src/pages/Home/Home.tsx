@@ -12,7 +12,7 @@ import Testimonials from "./Testimonials";
 // import Video from "./Video";
 // import type { EndowPage } from "./types";
 // import { useLoaderData } from "react-router";
-export const Component = () => {
+export default function Home() {
   // const page1 = useLoaderData() as EndowPage;
   return (
     <div className="grid">
@@ -30,4 +30,4 @@ export const Component = () => {
       <Footer />
     </div>
   );
-};
+}

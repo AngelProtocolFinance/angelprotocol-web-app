@@ -1,8 +1,8 @@
 import { ap, ver } from "api/api";
 import type { LoaderFunction } from "react-router";
-export { Component } from "./Home";
+export { default } from "./Home";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const clientLoader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);
 
   return ap

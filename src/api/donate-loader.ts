@@ -22,7 +22,7 @@ export interface DonateData {
   balance: Promise<EndowmentBalances>;
 }
 
-export const loader: LoaderFunction = async ({ request, params }) => {
+export const clientLoader: LoaderFunction = async ({ request, params }) => {
   const auth = await loadAuth();
   const id = v.parse(plusInt, params.id);
   const url = new URL(request.url);
