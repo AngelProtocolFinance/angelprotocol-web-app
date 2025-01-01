@@ -6,7 +6,7 @@ import { useFetcher, useLoaderData, useSearchParams } from "react-router";
 import Filter from "./Filter";
 import Table from "./Table";
 
-export function Component() {
+export default function Applications() {
   const [params] = useSearchParams();
   const firstPage = useLoaderData() as Page;
   const { load, data, state } = useFetcher<Page>({

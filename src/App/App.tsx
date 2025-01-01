@@ -62,7 +62,7 @@ const _appRoutes: RO[] = [
     path: appRoutes.applications,
     children: [
       applicationRoute,
-      { index: true, lazy: () => import("pages/Applications") },
+      { index: true, lazy: () => import("pages/Applications").then(convert) },
     ],
   },
   { path: appRoutes.donate_thanks, lazy: () => donateThanks },

@@ -5,9 +5,9 @@ import { loadAuth } from "auth/load-auth";
 import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 
-export { Component } from "./Applications";
+export { default } from "./Applications";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const clientLoader: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();
   if (auth) return getApplications(new URL(request.url), auth);
   return redirectToAuth(request);
