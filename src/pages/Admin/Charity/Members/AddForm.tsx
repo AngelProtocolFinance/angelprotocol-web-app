@@ -7,7 +7,8 @@ import { isValiErr } from "types/action";
 import type { EndowAdmin } from "types/aws";
 import { schema } from "./schema";
 
-export function AddForm() {
+export { addAction as clientAction } from "./api";
+export default function AddForm() {
   const navigate = useNavigate();
   return (
     <Dialog
