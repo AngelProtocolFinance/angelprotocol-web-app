@@ -1,9 +1,4 @@
-import {
-  type SubmissionResult,
-  getFormProps,
-  getInputProps,
-  useForm,
-} from "@conform-to/react";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import googleIcon from "assets/icons/google.svg";
 import { cognito, oauth } from "auth/cognito";
 import { loadAuth } from "auth/load-auth";
@@ -30,16 +25,10 @@ import {
 } from "react-router";
 import { toast } from "sonner";
 import { authStore } from "store/auth";
+import { type ActionData, isActionErr, isValiErr } from "types/action";
 import { type OAuthState, isError, signIn } from "types/auth";
 
-type ActionData = { __error: string } | SubmissionResult | undefined;
-
-const isActionErr = (data: ActionData): data is { __error: string } =>
-  data ? "__error" in data : false;
-const isValiErr = (data: ActionData): data is SubmissionResult =>
-  data ? "status" in data : false;
-
-export const action: ActionFunction = async ({ request }) => {
+export const clientAction: ActionFunction = async ({ request }) => {
   try {
     const from = new URL(request.url);
     const fromState = decodeState(from.searchParams.get("_s"));
@@ -85,11 +74,11 @@ export const action: ActionFunction = async ({ request }) => {
     return redirect(to.toString());
   } catch (err) {
     console.error(err);
-    return data<ActionData>({ __error: "Unknown error occured" }, 500);
+    return data<ActionData<any>>({ __error: "Unknown error occured" }, 500);
   }
 };
 
-export const loader: LoaderFunction = async ({
+export const clientLoader: LoaderFunction = async ({
   request,
 }): Promise<Response | unknown> => {
   const auth = await loadAuth();
@@ -99,10 +88,10 @@ export const loader: LoaderFunction = async ({
   return decodeState(url.searchParams.get("_s"));
 };
 
-export function Component() {
+export default function Signin() {
   // const navigate = useNavigate();
   const [params] = useSearchParams();
-  const fetcher = useFetcher<ActionData>();
+  const fetcher = useFetcher<ActionData<any>>();
   const fromState = useLoaderData() as unknown;
 
   const [form, fields] = useForm({
