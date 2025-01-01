@@ -23,7 +23,6 @@ import {
   useNavigation,
 } from "react-router";
 import { Toaster } from "sonner";
-import Layout from "./Layout";
 import { rootAction } from "./root-action";
 import { rootLoader } from "./root-loader";
 
@@ -96,11 +95,10 @@ const rootRoutes: RO[] = [
     lazy: () => import("pages/Donate").then(convert),
   },
   adminRoute,
-  //outlet-value: isInWidget/widgetVersion
-  { element: <Layout />, children: _appRoutes },
+  { lazy: () => import("./Layout").then(convert), children: _appRoutes },
   {
     path: appRoutes.donate_widget,
-    element: <Outlet context={true} />, //outlet-value: isInWidget/widgetVersion
+    lazy: () => import("pages/DonateWidget/widget-context").then(convert),
     children: widgetRoutes,
   },
   { path: "*", element: <Navigate to="/" /> },
