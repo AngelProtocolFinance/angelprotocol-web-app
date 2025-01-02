@@ -78,7 +78,7 @@ function TokenCombobox({ token, onChange }: ITokenCombobox) {
         try {
           tokenEv("loading");
           const res = await fetch(
-            `${APIs.aws}/${ver(1)}/crypto/v1/min-amount?currency_from=${tkn.id}&fiat_equivalent=usd`
+            `${APIs.aws}/${ver(1)}/crypto/v1/min-amount?currency_from=${tkn.code}&fiat_equivalent=usd`
           );
           if (!res.ok) throw res;
           const {
