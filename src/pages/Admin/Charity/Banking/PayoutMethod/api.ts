@@ -9,7 +9,7 @@ import {
   type LoaderFunction,
   redirect,
 } from "react-router";
-import type { ActionResult } from "types/action";
+import type { ActionData } from "types/action";
 import * as v from "valibot";
 
 export const payoutMethodLoader: LoaderFunction = async ({
@@ -39,5 +39,5 @@ export const prioritizeAction: ActionFunction = async ({ params, request }) => {
   if (!auth) return redirectToAuth(request);
   const bankId = v.parse(plusInt, params.bankId);
   await bankUpdate(bankId, { type: "prioritize" }, auth.idToken);
-  return { success: "Payout method prioritized" } satisfies ActionResult;
+  return { __ok: "Payout method prioritized" } satisfies ActionData;
 };

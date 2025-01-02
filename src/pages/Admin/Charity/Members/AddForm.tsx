@@ -3,7 +3,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { NativeField as Field } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { useFetcher, useNavigate, useRouteLoaderData } from "react-router";
-import { isValiErr } from "types/action";
+import { isFormErr } from "types/action";
 import type { EndowAdmin } from "types/aws";
 import { schema } from "./schema";
 
@@ -28,7 +28,7 @@ function Content() {
   const members = useRouteLoaderData("endow-admins") as EndowAdmin[];
   const fetcher = useFetcher();
   const [form, fields] = useForm({
-    lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
     shouldRevalidate: "onInput",
     onValidate({ formData }) {
       return parseWithValibot(formData, {

@@ -33,7 +33,7 @@ export const clientAction: ActionFunction = async ({ request }) => {
 
   if (fv.get("intent") === "resend-otp") {
     const res = await cognito.resendConfirmationCode(email.toString());
-    if (isError(res)) return data<ActionData>({ __error: res.message }, 500);
+    if (isError(res)) return data<ActionData>({ __err: res.message }, 500);
     return data<ActionData>({ time_remaining: 30 });
   }
 

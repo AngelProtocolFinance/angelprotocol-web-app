@@ -11,7 +11,7 @@ import {
   useParams,
   useSearchParams,
 } from "react-router";
-import { isValiErr } from "types/action";
+import { isFormErr } from "types/action";
 import { nonEmpty, object, pipe } from "valibot";
 
 type Props = {
@@ -46,7 +46,7 @@ export default function VideoEditor() {
 function Content(props: Props) {
   const fetcher = useFetcher();
   const [form, fields] = useForm({
-    lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
     shouldRevalidate: "onInput",
     onValidate({ formData }) {
       return parseWithValibot(formData, {

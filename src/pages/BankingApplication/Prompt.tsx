@@ -4,7 +4,7 @@ import { parseWithValibot } from "conform-to-valibot";
 import { ChevronRight, X } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link, useFetcher, useNavigate } from "react-router";
-import { type ActionData, isValiErr } from "types/action";
+import { type ActionData, isFormErr } from "types/action";
 import {
   type BankingApplicationStatus,
   bankingApplicationUpdate,
@@ -39,7 +39,7 @@ function Content({ verdict }: Props) {
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: bankingApplicationUpdate });
     },

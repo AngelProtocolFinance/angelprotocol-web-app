@@ -1,7 +1,7 @@
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import { type ActionFunction, redirect } from "react-router";
-import type { ActionResult } from "types/action";
+import type { ActionData } from "types/action";
 
 type Next = { success: string } | { redirect: string };
 
@@ -17,7 +17,7 @@ export const endowUpdate =
     });
 
     if ("success" in next) {
-      return { success: next.success } satisfies ActionResult;
+      return { __ok: next.success } satisfies ActionData;
     }
 
     return redirect(next.redirect);

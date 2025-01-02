@@ -1,6 +1,6 @@
 import type { BankDetails } from "api/get/payout-method";
 import ExtLink from "components/ExtLink";
-import { useActionResult } from "hooks/use-action-result";
+import { useActionToast } from "hooks/use-action-toast";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 import { Link, Outlet, useFetcher, useLoaderData } from "react-router";
@@ -14,7 +14,7 @@ export {
 export default function PayoutMethod() {
   const bank = useLoaderData() as BankDetails;
   const fetcher = useFetcher();
-  useActionResult(fetcher.data);
+  useActionToast(fetcher.data);
 
   const isRejected = bank.status === "rejected";
   const isApproved = bank.status === "approved";

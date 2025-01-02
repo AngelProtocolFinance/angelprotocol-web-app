@@ -2,7 +2,7 @@ import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
 import { loadAuth, redirectToAuth } from "auth";
 import type { ActionFunction, LoaderFunction } from "react-router";
-import type { ActionResult } from "types/action";
+import type { ActionData } from "types/action";
 export { ErrorElement as ErrorBoundary } from "errors/ErrorElement";
 
 export { default } from "./ProgramEditor";
@@ -50,5 +50,5 @@ export const clientAction: ActionFunction = async ({ request, params }) => {
     json: p,
   });
 
-  return { success: "Program updated" } satisfies ActionResult;
+  return { __ok: "Program updated" } satisfies ActionData;
 };

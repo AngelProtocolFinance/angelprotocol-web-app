@@ -11,8 +11,8 @@ import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { getAuthRedirect } from "helpers";
 import { decodeState, toWithState } from "helpers/state-params";
+import { useActionToast } from "hooks/use-action-toast";
 import { Mail } from "lucide-react";
-import { useEffect } from "react";
 import {
   type ActionFunction,
   Link,
@@ -23,9 +23,8 @@ import {
   useLoaderData,
   useSearchParams,
 } from "react-router";
-import { toast } from "sonner";
 import { authStore } from "store/auth";
-import { type ActionData, isActionErr, isValiErr } from "types/action";
+import { type ActionData, isFormErr } from "types/action";
 import { type OAuthState, isError, signIn } from "types/auth";
 
 export const clientAction: ActionFunction = async ({ request }) => {
@@ -96,17 +95,12 @@ export default function Signin() {
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: signIn });
     },
   });
-
-  useEffect(() => {
-    if (isActionErr(fetcher.data)) {
-      toast.error(fetcher.data.__error);
-    }
-  }, [fetcher.data]);
+  useActionToast(fetcher.data);
 
   const isSubmitting = fetcher.state === "submitting";
 

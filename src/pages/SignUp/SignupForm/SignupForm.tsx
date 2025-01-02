@@ -7,11 +7,10 @@ import { Input, PasswordInput } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
+import { useActionToast } from "hooks/use-action-toast";
 import { Mail } from "lucide-react";
-import { useEffect } from "react";
 import { Link, useFetcher, useLoaderData, useSearchParams } from "react-router";
-import { toast } from "sonner";
-import { type ActionData, isActionErr, isValiErr } from "types/action";
+import { type ActionData, isFormErr } from "types/action";
 import { signUp } from "types/auth";
 
 export default function SignupForm() {
@@ -21,17 +20,13 @@ export default function SignupForm() {
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: signUp });
     },
   });
 
-  useEffect(() => {
-    if (isActionErr(fetcher.data)) {
-      toast.error(fetcher.data.__error);
-    }
-  }, [fetcher.data]);
+  useActionToast(fetcher.data);
 
   const isSubmitting = fetcher.state === "submitting";
 

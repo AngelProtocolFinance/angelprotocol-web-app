@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import { useFetcher, useLoaderData, useSearchParams } from "react-router";
 import { toast } from "sonner";
 import { signUpConfirm } from "types/auth";
-import { type ActionData, isActionErr, isData, isValiErr } from "./types";
+import { type ActionData, isData, isErr, isFormErr } from "./types";
 
 const MAX_TIME = 30;
 
@@ -18,8 +18,8 @@ export default function ConfirmForm() {
 
   //biome-ignore lint:
   useEffect(() => {
-    if (isActionErr(fetcher.data)) {
-      toast.error(fetcher.data.__error);
+    if (isErr(fetcher.data)) {
+      toast.error(fetcher.data.__err);
       return;
     }
 
@@ -30,7 +30,7 @@ export default function ConfirmForm() {
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    lastResult: isValiErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: signUpConfirm });
     },

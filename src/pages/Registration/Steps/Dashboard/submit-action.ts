@@ -1,7 +1,7 @@
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import type { ActionFunction } from "react-router";
-import type { ActionResult } from "types/action";
+import type { ActionData } from "types/action";
 
 export const submitAction: ActionFunction = async ({ request, params }) => {
   const auth = await loadAuth();
@@ -12,7 +12,6 @@ export const submitAction: ActionFunction = async ({ request, params }) => {
   });
 
   return {
-    success:
-      "Your application has been submitted. We will get back to you soon!",
-  } satisfies ActionResult;
+    __ok: "Your application has been submitted. We will get back to you soon!",
+  } satisfies ActionData;
 };
