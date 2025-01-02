@@ -4,7 +4,6 @@ import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { useRendered } from "hooks/use-rendered";
 import { useLoaderData } from "react-router";
 import { Outlet } from "react-router";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
@@ -32,7 +31,6 @@ export default function Profile() {
 }
 
 function Banner() {
-  useRendered();
   const { image } = useProfileContext();
   return (
     <div

@@ -1,13 +1,11 @@
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
-import { useRendered } from "hooks/use-rendered";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router";
 const U = ({ children }: PropsWithChildren) => (
   <span className="underline">{children}</span>
 );
 export default function TermsDonors() {
-  useRendered();
   return (
     <main className="prose lg:prose-lg padded-container py-20">
       <Seo title="Terms of use (donor)" />

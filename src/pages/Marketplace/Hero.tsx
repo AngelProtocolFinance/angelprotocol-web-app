@@ -1,8 +1,6 @@
 import Image from "components/Image";
-import { useRendered } from "hooks/use-rendered";
 
 export default function Hero({ classes = "" }: { classes?: string }) {
-  useRendered();
   return (
     <div
       className={`${classes} grid-cols-1 lg:grid-cols-[3fr_2fr] gap-4 padded-container justify-items-center lg:content-start text-white`}

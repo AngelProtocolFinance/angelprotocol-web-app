@@ -2,7 +2,6 @@ import { wp } from "api/api";
 import Media from "components/Media";
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
-import { useRendered } from "hooks/use-rendered";
 import { ChevronLeft } from "lucide-react";
 import { type LoaderFunction, useLoaderData } from "react-router";
 import { Link } from "react-router";
@@ -44,7 +43,6 @@ export default function Post() {
 }
 
 function Loaded(post: IPost) {
-  useRendered();
   return (
     <>
       <Seo title={post.slug} />

@@ -3,7 +3,6 @@ import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Seo from "components/Seo";
-import Signup from "components/Signup";
 import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -91,13 +90,15 @@ export default function DonateThanks() {
       )}
 
       {!user && state?.guestDonor && (
-        <Signup
-          classes="max-w-96 w-full mt-6 justify-self-center"
-          donor={((d) => {
-            const [firstName, lastName] = d.fullName.split(" ");
-            return { firstName, lastName, email: d.email };
-          })(state.guestDonor)}
-        />
+        <></>
+        //TODO: signup link
+        // <Signup
+        //   classes="max-w-96 w-full mt-6 justify-self-center"
+        //   donor={((d) => {
+        //     const [firstName, lastName] = d.fullName.split(" ");
+        //     return { firstName, lastName, email: d.email };
+        //   })(state.guestDonor)}
+        // />
       )}
 
       {!widgetVersion && (

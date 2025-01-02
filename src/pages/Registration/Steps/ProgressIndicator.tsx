@@ -1,6 +1,5 @@
 import { DrawerIcon } from "components/Icon";
 import { idParamToNum } from "helpers";
-import { useRendered } from "hooks/use-rendered";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
@@ -14,7 +13,6 @@ type Props = {
 };
 
 export default function ProgressIndicator({ step, classes = "" }: Props) {
-  useRendered();
   const { pathname } = useLocation();
   const paths = pathname.split("/");
   const currPath = idParamToNum(paths.at(-1));

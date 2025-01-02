@@ -1,6 +1,5 @@
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
-import { useRendered } from "hooks/use-rendered";
 import type { PropsWithChildren } from "react";
 import { Link } from "react-router";
 
@@ -9,7 +8,6 @@ const U = ({ children }: PropsWithChildren) => (
 );
 
 export default function TermsNonprofits() {
-  useRendered();
   return (
     <div className="padded-container prose lg:prose-lg py-20">
       <Seo title="Terms of use (NPO)" />

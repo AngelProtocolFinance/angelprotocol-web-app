@@ -3,7 +3,6 @@ import Seo from "components/Seo";
 import { type DonationRecipient, Steps } from "components/donation";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { useRendered } from "hooks/use-rendered";
 import type { Parsed } from "./parseConfig";
 
 type Props = {
@@ -13,7 +12,6 @@ type Props = {
 };
 
 export default function Content({ profile, config, classes = "" }: Props) {
-  useRendered();
   const recipient: DonationRecipient = {
     id: profile.id,
     name: profile.name,

@@ -1,11 +1,9 @@
 import { laira } from "assets/laira/laira";
 import { appRoutes } from "constants/routes";
-import { useRendered } from "hooks/use-rendered";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router";
 
 export function Hero({ classes = "" }) {
-  useRendered();
   return (
     <section className={`${classes} grid pb-48 pt-32`}>
       <p className="text-blue-d1 text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
