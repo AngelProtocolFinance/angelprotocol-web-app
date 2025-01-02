@@ -1,21 +1,38 @@
-export type CodeRecipientEmail = {
-  raw: string;
-  obscured: string;
-};
+import * as v from "valibot";
 
-type InitStep = {
-  type: "init";
-};
+export const codeRecipient = v.object({
+  recipient_raw: v.pipe(v.string(), v.email()),
+  recipient_obscured: v.string(),
+});
 
-type SetPasswordStep = {
-  type: "set-password";
-  codeRecipientEmail: CodeRecipientEmail;
-};
+export interface CodeRecipient extends v.InferOutput<typeof codeRecipient> {}
 
-type SuccessStep = {
-  type: "success";
-};
+export const initStep = v.object({
+  type: v.literal("init"),
+});
 
-export type Steps = InitStep | SetPasswordStep | SuccessStep;
+export interface InitStep extends v.InferOutput<typeof initStep> {}
 
-export type StepSetter = React.Dispatch<React.SetStateAction<Steps>>;
+export const setPasswordStep = v.object({
+  type: v.literal("set-password"),
+  ...codeRecipient.entries,
+});
+
+export interface SetPasswordStep
+  extends v.InferOutput<typeof setPasswordStep> {}
+
+export const successStep = v.object({
+  type: v.literal("success"),
+});
+
+export interface SuccessStep extends v.InferOutput<typeof successStep> {}
+
+export const step = v.fallback(
+  v.variant("type", [initStep, setPasswordStep, successStep]),
+  { type: "init" }
+);
+
+export interface LoaderData {
+  state: unknown;
+  step: v.InferOutput<typeof step>;
+}

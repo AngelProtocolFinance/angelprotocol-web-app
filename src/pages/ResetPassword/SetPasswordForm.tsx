@@ -1,98 +1,61 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { cognito } from "auth/cognito";
-import { Form, Input, PasswordInput } from "components/form";
-import { useErrorContext } from "contexts/ErrorContext";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { Input, PasswordInput } from "components/form";
+import { parseWithValibot } from "conform-to-valibot";
 import useCounter from "hooks/useCounter";
-import { useState } from "react";
-import { type UseFormReturn, useForm } from "react-hook-form";
-import { password, requiredString } from "schemas/string";
-import { isError } from "types/auth";
-import { object, ref } from "yup";
-import type { CodeRecipientEmail, StepSetter } from "./types";
+import { useEffect } from "react";
+import { useFetcher } from "react-router";
+import { toast } from "sonner";
+import { type ActionData, isData, isFormErr } from "types/action";
+import { passwordSchema } from "./schema";
+import type { CodeRecipient } from "./types";
 
 const MAX_TIME = 30;
 
 type Props = {
-  codeRecipientEmail: CodeRecipientEmail;
-  setStep: StepSetter;
+  recipient: CodeRecipient;
 };
 
 export default function SetPasswordForm(props: Props) {
-  const { handleError, displayError } = useErrorContext();
-  const [isRequestingNewCode, setIsRequestingNewCode] = useState(false);
-  const methods = useForm({
-    resolver: yupResolver(
-      object({
-        code: requiredString,
-        password: password,
-        passwordConfirmation: requiredString.oneOf(
-          [ref("password"), ""],
-          "Passwords must match"
-        ),
-      })
-    ),
+  const fetcher = useFetcher<ActionData>();
+  const [form, fields] = useForm({
+    shouldRevalidate: "onInput",
+    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    onValidate({ formData }) {
+      return parseWithValibot(formData, { schema: passwordSchema });
+    },
   });
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, errors },
-  } = methods;
-
-  type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
 
   const { counter, resetCounter } = useCounter(MAX_TIME);
 
-  async function submit(fv: FV) {
-    try {
-      const res = await cognito.confirmForgotPassword(
-        props.codeRecipientEmail.raw,
-        fv.code,
-        fv.password
-      );
-      if (isError(res)) return displayError(res.message);
-      props.setStep({ type: "success" });
-    } catch (err) {
-      handleError(err, { context: "resetting password" });
-    }
-  }
-
-  const resendOTP = async () => {
-    try {
-      setIsRequestingNewCode(true);
-
-      const res = await cognito.resendConfirmationCode(
-        props.codeRecipientEmail.raw
-      );
-      if (isError(res)) return displayError(res.message);
-
+  //biome-ignore lint:
+  useEffect(() => {
+    if (isData(fetcher.data)) {
+      toast.success(fetcher.data.__ok);
       resetCounter();
-
-      alert("New code has been sent to your email.");
-    } catch (err) {
-      handleError(err, { context: "resending code" });
-    } finally {
-      setIsRequestingNewCode(false);
+      return;
     }
-  };
+  }, [fetcher.data]);
 
   return (
-    <Form
+    <fetcher.Form
+      {...getFormProps(form)}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
-      disabled={isSubmitting || isRequestingNewCode}
-      onSubmit={handleSubmit(submit)}
     >
       <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4">
         Set new password
       </h3>
       <p className="text-center font-normal max-sm:text-sm mt-2">
         <span>6-digit security code has been sent to</span>{" "}
-        <span className="font-medium">{props.codeRecipientEmail.obscured}</span>{" "}
+        <span className="font-medium">
+          {props.recipient.recipient_obscured}
+        </span>{" "}
         <span>- it will take few minutes to arrive</span>
         <div className="text-center">
           <button
-            type="button"
+            name="intent"
+            value="edit-email"
+            type="submit"
             className="text-center text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline hover:cursor-pointer"
-            onClick={() => props.setStep({ type: "init" })}
           >
             Edit email
           </button>
@@ -101,10 +64,10 @@ export default function SetPasswordForm(props: Props) {
 
       <div className="mt-6 grid gap-3">
         <Input
-          {...register("code")}
+          {...getInputProps(fields.otp, { type: "text" })}
           placeholder="Enter 6-digit code"
           autoComplete="one-time-code"
-          error={errors.code?.message}
+          error={fields.otp.errors?.at(0)}
         />
 
         <span className="mb-3 flex items-center justify-between text-xs sm:text-sm font-medium">
@@ -113,9 +76,10 @@ export default function SetPasswordForm(props: Props) {
             {String(counter).padStart(2, "0")}
           </span>
           <button
-            type="button"
+            name="intent"
+            value="resend-otp"
+            type="submit"
             className="text-blue-d1 hover:text-blue active:text-blue-d2 disabled:text-gray-l2 font-bold underline"
-            onClick={resendOTP}
             disabled={counter > 0}
           >
             Resend code
@@ -123,13 +87,13 @@ export default function SetPasswordForm(props: Props) {
         </span>
 
         <PasswordInput
-          {...register("password")}
-          error={errors.password?.message}
+          {...getInputProps(fields.password, { type: "password" })}
+          error={fields.password.errors?.at(0)}
           placeholder="New Password"
         />
         <PasswordInput
-          {...register("passwordConfirmation")}
-          error={errors.passwordConfirmation?.message}
+          {...getInputProps(fields.passwordConfirmation, { type: "password" })}
+          error={fields.password.errors?.at(0)}
           placeholder="Confirm New Password"
         />
       </div>
@@ -146,11 +110,14 @@ export default function SetPasswordForm(props: Props) {
       </p>
 
       <button
+        name="intent"
+        value="confirm"
+        disabled={fetcher.state !== "idle"}
         type="submit"
         className="mt-6 w-full h-12 sm:h-[52px] flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 rounded-full normal-case sm:text-lg font-bold"
       >
         Confirm
       </button>
-    </Form>
+    </fetcher.Form>
   );
 }

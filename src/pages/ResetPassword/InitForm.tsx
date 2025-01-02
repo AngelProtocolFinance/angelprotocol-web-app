@@ -1,61 +1,29 @@
-import { yupResolver } from "@hookform/resolvers/yup";
-import { cognito } from "auth/cognito";
-import { Form, Input } from "components/form";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { Input } from "components/form";
+import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
 import { toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
-import { type UseFormReturn, useForm } from "react-hook-form";
-import { Link } from "react-router";
-import { requiredString } from "schemas/string";
-import { isError } from "types/auth";
-import { object } from "yup";
-import type { StepSetter } from "./types";
+import { Link, useFetcher } from "react-router";
+import { type ActionData, isFormErr } from "types/action";
+import { emailSchema } from "./schema";
 
-type Props = {
-  state: unknown;
-  setStep: StepSetter;
-};
+type Props = { state: unknown };
 
 export default function InitForm(props: Props) {
-  const { handleError, displayError } = useErrorContext();
-  const methods = useForm({
-    resolver: yupResolver(
-      object({
-        email: requiredString.trim().strict().email("invalid email format"),
-      })
-    ),
+  const fetcher = useFetcher<ActionData<string>>();
+  const [form, fields] = useForm({
+    shouldRevalidate: "onInput",
+    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    onValidate({ formData }) {
+      return parseWithValibot(formData, { schema: emailSchema });
+    },
   });
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting, errors },
-  } = methods;
-
-  type FV = typeof methods extends UseFormReturn<infer U> ? U : never;
-
-  async function submit(fv: FV) {
-    try {
-      const res = await cognito.forgotPassword(fv.email);
-      if (isError(res)) return displayError(res.message);
-
-      props.setStep({
-        type: "set-password",
-        codeRecipientEmail: {
-          raw: fv.email.toLowerCase(),
-          obscured: res,
-        },
-      });
-    } catch (err) {
-      handleError(err, { context: "resetting password" });
-    }
-  }
 
   return (
-    <Form
+    <fetcher.Form
+      {...getFormProps(form)}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
-      disabled={isSubmitting}
-      onSubmit={handleSubmit(submit)}
     >
       <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4">
         Reset your Password
@@ -65,11 +33,11 @@ export default function InitForm(props: Props) {
       </p>
 
       <Input
-        {...register("email")}
+        {...getInputProps(fields.email, { type: "email" })}
         placeholder="Email address"
         classes={{ container: "mt-6" }}
         icon={Mail}
-        error={errors.email?.message}
+        error={fields.email.errors?.[0]}
       />
 
       <button
@@ -82,10 +50,10 @@ export default function InitForm(props: Props) {
       <Link
         to={toWithState(appRoutes.signin, props.state)}
         className="mt-5 text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray max-sm:text-sm font-medium underline text-center"
-        aria-disabled={isSubmitting}
+        aria-disabled={fetcher.state !== "idle"}
       >
         Back to Sign in
       </Link>
-    </Form>
+    </fetcher.Form>
   );
 }

@@ -1,26 +1,20 @@
-import { useState } from "react";
 import { useLoaderData } from "react-router";
 import InitForm from "./InitForm";
 import SetPasswordForm from "./SetPasswordForm";
 import Success from "./Success";
-import type { Steps } from "./types";
+import type { LoaderData } from "./types";
 
 export default function ResetPassword() {
-  const state = useLoaderData();
-  const [step, setStep] = useState<Steps>({ type: "init" });
+  const { state, step } = useLoaderData<LoaderData>();
 
   const content = (() => {
     if (step.type === "init") {
-      return <InitForm setStep={setStep} state={state} />;
+      return <InitForm state={state} />;
     }
 
     if (step.type === "set-password") {
-      return (
-        <SetPasswordForm
-          setStep={setStep}
-          codeRecipientEmail={step.codeRecipientEmail}
-        />
-      );
+      const { type, ...recipient } = step;
+      return <SetPasswordForm recipient={recipient} />;
     }
 
     return <Success state={state} />;
