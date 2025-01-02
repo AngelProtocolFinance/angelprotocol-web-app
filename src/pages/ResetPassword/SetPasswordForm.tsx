@@ -1,12 +1,10 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { Input, PasswordInput } from "components/form";
-import { parseWithValibot } from "conform-to-valibot";
 import useCounter from "hooks/useCounter";
 import { useEffect } from "react";
 import { useFetcher } from "react-router";
 import { toast } from "sonner";
 import { type ActionData, isData, isFormErr } from "types/action";
-import { passwordSchema } from "./schema";
 import type { CodeRecipient } from "./types";
 
 const MAX_TIME = 30;
@@ -18,17 +16,15 @@ type Props = {
 export default function SetPasswordForm(props: Props) {
   const fetcher = useFetcher<ActionData>();
   const [form, fields] = useForm({
-    shouldRevalidate: "onInput",
+    shouldRevalidate: "onSubmit",
     lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
-    onValidate({ formData }) {
-      return parseWithValibot(formData, { schema: passwordSchema });
-    },
   });
 
   const { counter, resetCounter } = useCounter(MAX_TIME);
 
   //biome-ignore lint:
   useEffect(() => {
+    if (!fetcher.data) return;
     if (isData(fetcher.data)) {
       toast.success(fetcher.data.__ok);
       resetCounter();
@@ -38,9 +34,12 @@ export default function SetPasswordForm(props: Props) {
 
   return (
     <fetcher.Form
+      method="POST"
+      action="."
       {...getFormProps(form)}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
     >
+      <input type="hidden" name="email" value={props.recipient.recipient_raw} />
       <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4">
         Set new password
       </h3>
@@ -93,12 +92,12 @@ export default function SetPasswordForm(props: Props) {
         />
         <PasswordInput
           {...getInputProps(fields.passwordConfirmation, { type: "password" })}
-          error={fields.password.errors?.at(0)}
+          error={fields.passwordConfirmation.errors?.at(0)}
           placeholder="Confirm New Password"
         />
       </div>
 
-      <p className="mt-6 font-normal text-xs sm:text-[13px] leading-5">
+      <div className="mt-6 font-normal text-xs sm:text-[13px] leading-5">
         In order to protect your account, make sure your password:
         <ul className="list-disc list-inside">
           <li className="ml-2">Has at least 8 characters</li>
@@ -107,7 +106,7 @@ export default function SetPasswordForm(props: Props) {
           <li className="ml-2">Contains at least 1 uppercase letter</li>
           <li className="ml-2">Contains at least 1 lowercase letter</li>
         </ul>
-      </p>
+      </div>
 
       <button
         name="intent"

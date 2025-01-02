@@ -22,6 +22,8 @@ export default function InitForm(props: Props) {
 
   return (
     <fetcher.Form
+      method="POST"
+      action="."
       {...getFormProps(form)}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
     >
@@ -41,6 +43,7 @@ export default function InitForm(props: Props) {
       />
 
       <button
+        disabled={fetcher.state !== "idle"}
         type="submit"
         className="mt-6 w-full h-12 sm:h-[52px] flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 rounded-full normal-case sm:text-lg font-bold"
       >

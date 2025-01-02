@@ -13,7 +13,8 @@ export const passwordSchema = v.pipe(
     otp: v.pipe(
       v.string("required"),
       v.nonEmpty("required"),
-      v.digits("invalid")
+      v.digits("invalid code"),
+      v.length(6, "invalid code")
     ),
     password: newPassword,
     passwordConfirmation: v.pipe(v.string("required"), v.nonEmpty("required")),

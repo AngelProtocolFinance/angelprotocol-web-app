@@ -23,8 +23,8 @@ export const clientLoader: LoaderFunction = ({ request }) => {
 };
 
 export const clientAction: ActionFunction = async ({ request }) => {
-  const params = new URL(request.url).searchParams;
   const fv = await request.formData();
+  const email = fv.get("email")!.toString();
 
   if (fv.get("intent") === "edit-email") {
     const to = new URL(request.url);
@@ -33,11 +33,9 @@ export const clientAction: ActionFunction = async ({ request }) => {
   }
 
   if (fv.get("intent") === "resent-otp") {
-    const res = await cognito.resendConfirmationCode(
-      params.get("recipient_raw")!
-    );
+    const res = await cognito.resendConfirmationCode(email);
     if (isError(res)) return { __err: res.message } satisfies ActionData;
-    return { __ok: "OTP resent" } satisfies ActionData;
+    return { __ok: "OTP sent" } satisfies ActionData;
   }
 
   if (fv.get("intent") === "confirm") {
@@ -45,13 +43,16 @@ export const clientAction: ActionFunction = async ({ request }) => {
     if (payload.status !== "success") return payload.reply();
 
     const res = await cognito.confirmForgotPassword(
-      params.get("recipient_raw")!,
-      payload.value.otp,
-      payload.value.password
+      email,
+      payload.value.password,
+      payload.value.otp
     );
     if (isError(res)) {
       return payload.reply({ fieldErrors: { otp: [res.message] } });
     }
+    const to = new URL(request.url);
+    to.searchParams.set("type", "success");
+    return redirect(to.toString());
   }
 
   const payload = parseWithValibot(fv, { schema: emailSchema });
@@ -63,9 +64,10 @@ export const clientAction: ActionFunction = async ({ request }) => {
     return payload.reply({ fieldErrors: { email: [res.message] } });
   }
 
-  params.set("type", "set-password");
-  params.set("recipient_raw", payload.value.email);
-  params.set("recipient_obscured", res);
+  const to = new URL(request.url);
+  to.searchParams.set("type", "set-password");
+  to.searchParams.set("recipient_raw", payload.value.email);
+  to.searchParams.set("recipient_obscured", res);
 
-  return redirect(`.?${params.toString()}`);
+  return redirect(to.toString());
 };
