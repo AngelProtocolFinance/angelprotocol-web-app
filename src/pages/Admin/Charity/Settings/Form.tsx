@@ -14,12 +14,12 @@ import {
   NativeField as Field,
 } from "components/form";
 import { BG_ID } from "constants/common";
-import { useErrorContext } from "contexts/ErrorContext";
 import { useActionToast } from "hooks/use-action-toast";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { Outlet, useFetcher, useLoaderData } from "react-router";
 import type { EndowmentUpdate } from "services/types";
+import { toast } from "sonner";
 import type { EndowmentSettingsAttributes } from "types/aws";
 import GoalSelector from "./goal-selector";
 import { toFormTarget, toTarget } from "./helpers";
@@ -33,7 +33,6 @@ export default function Form() {
 
   const fetcher = useFetcher();
   useActionToast(fetcher.data);
-  const { displayError } = useErrorContext();
 
   const {
     reset,
@@ -87,7 +86,7 @@ export default function Form() {
           ...fv
         }) => {
           if (endow.id === BG_ID && fv.hide_bg_tip === false) {
-            return displayError(
+            return toast.error(
               "BG donation flow should not show BG tip screen"
             );
           }

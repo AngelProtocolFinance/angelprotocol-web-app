@@ -1,10 +1,10 @@
 import type { EndowClaim } from "@better-giving/registration/models";
 import type { Update } from "@better-giving/registration/update";
 import { getEndowWithEin } from "api/get/endow-with-ein";
-import { useErrorContext } from "contexts/ErrorContext";
 import type { SubmitHandler, UseFormReturn } from "react-hook-form";
 import { useFetcher } from "react-router";
 import { useNavigate } from "react-router";
+import { toast } from "sonner";
 import { steps } from "../../../routes";
 import type { FormValues as FV, Props } from "./types";
 
@@ -20,7 +20,6 @@ export default function useSubmit({ form, props, initClaim }: Args) {
     formState: { isDirty, isSubmitting },
   } = form;
 
-  const { displayError } = useErrorContext();
   const fetcher = useFetcher();
   const navigate = useNavigate();
 
@@ -34,7 +33,7 @@ export default function useSubmit({ form, props, initClaim }: Args) {
 
       if (endow) {
         if (endow.claimed ?? true) {
-          return displayError(
+          return toast.info(
             `Nonprofit: ${endow.name} with EIN: ${fv.ein} already exists on our app. You must speak with an existing user of your NPO Account's members in order to be invited on as a member.`
           );
         }

@@ -1,4 +1,3 @@
-import ModalContext from "contexts/ModalContext";
 import nProgress from "nprogress";
 import { useEffect } from "react";
 import { Outlet, ScrollRestoration, useNavigation } from "react-router";
@@ -19,10 +18,10 @@ export default function RootLayout() {
   }, [transition.state]);
 
   return (
-    <ModalContext>
+    <>
       <ScrollRestoration />
       <Outlet />
       <Toaster richColors position="top-right" closeButton />
-    </ModalContext>
+    </>
   );
 }

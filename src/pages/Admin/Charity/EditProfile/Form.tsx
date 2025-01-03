@@ -4,6 +4,7 @@ import { ControlledCountrySelector as CountrySelector } from "components/Country
 import ExtLink from "components/ExtLink";
 import Group from "components/Group";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
+import PromptV2 from "components/Prompt";
 import { RichText } from "components/RichText";
 import { List, MultiList } from "components/Selector";
 import { Confirmed, Info } from "components/Status";
@@ -39,7 +40,7 @@ interface Props {
 
 export default function Form({ initSlug = "", init, id }: Props) {
   const { dirtyFields, handleSubmit, ...rhf } = useRhf(init);
-  const { onSubmit, state } = useEditProfile(dirtyFields);
+  const { onSubmit, state, prompt, setPrompt } = useEditProfile(dirtyFields);
   return (
     <F
       disabled={rhf.isSubmitting || state !== "idle"}
@@ -50,6 +51,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
       onSubmit={handleSubmit(onSubmit)}
       className="w-full max-w-4xl justify-self-center grid content-start gap-6 mt-6"
     >
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
       <Group
         title="Public profile information"
         description="The following information will be used to populate your public

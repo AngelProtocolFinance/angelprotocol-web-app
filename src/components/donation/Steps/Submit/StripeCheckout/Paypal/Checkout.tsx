@@ -1,7 +1,8 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
+import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
+import { errorPrompt } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { useState } from "react";
@@ -18,7 +19,7 @@ export default function Checkout(props: StripeCheckoutStep) {
   const { details, tip, donor: fvDonor, honorary, init, feeAllowance } = props;
 
   const navigate = useNavigate();
-  const { handleError } = useErrorContext();
+  const [prompt, setPrompt] = useState<IPromptV2>();
 
   const [{ isPending }] = usePayPalScriptReducer();
   const [state, setState] = useState<"loading" | "error">();
@@ -42,7 +43,9 @@ export default function Checkout(props: StripeCheckoutStep) {
       }}
       className="w-40 flex gap-2"
       disabled={!!state}
-      onError={(error) => handleError(error, { context: "processing payment" })}
+      onError={(error) =>
+        setPrompt(errorPrompt(error, { context: "processing payment" }))
+      }
       onApprove={async (data, actions) => {
         setState("loading");
         const order = await captureOrder(data.orderID);
@@ -99,6 +102,8 @@ export default function Checkout(props: StripeCheckoutStep) {
         setState(undefined);
         return id;
       }}
-    />
+    >
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
+    </PayPalButtons>
   );
 }

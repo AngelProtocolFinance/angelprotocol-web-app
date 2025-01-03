@@ -1,10 +1,12 @@
 import { getEndow } from "api/get/endow";
-import { useErrorContext } from "contexts/ErrorContext";
+import { errorPrompt } from "contexts/ErrorContext";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
 import { useFetcher } from "react-router";
 import type { EndowmentProfileUpdate } from "types/aws";
 
+import type { IPromptV2 } from "components/Prompt";
 import { useActionToast } from "hooks/use-action-toast";
+import { useState } from "react";
 import type { UNSDG_NUMS } from "types/lists";
 import type { FV } from "./schema";
 
@@ -13,7 +15,7 @@ type DirtyFields = FieldNamesMarkedBoolean<FV>;
 export default function useEditProfile(df: DirtyFields) {
   const fetcher = useFetcher();
   useActionToast(fetcher.data);
-  const { displayError, handleError } = useErrorContext();
+  const [prompt, setPrompt] = useState<IPromptV2>();
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
     try {
@@ -24,10 +26,13 @@ export default function useEditProfile(df: DirtyFields) {
       if (df.card_img) update.card_img = fv.card_img;
 
       if (df.slug) {
-        const result = await getEndow(fv.slug, ["id"]);
+        const result = await getEndow(fv.slug, ["id"], false);
         //endow is found with update.slug
         if (result.id) {
-          return displayError(`Slug "${fv.slug}" is already taken`);
+          return setPrompt({
+            type: "error",
+            children: `Slug "${fv.slug}" is already taken`,
+          });
         }
         update.slug = fv.slug;
       }
@@ -61,12 +66,14 @@ export default function useEditProfile(df: DirtyFields) {
         encType: "application/json",
       });
     } catch (err) {
-      handleError(err, { context: "applying profile changes" });
+      setPrompt(errorPrompt(err, { context: "applying profile changes" }));
     }
   };
 
   return {
     onSubmit,
     state: fetcher.state,
+    prompt,
+    setPrompt,
   };
 }

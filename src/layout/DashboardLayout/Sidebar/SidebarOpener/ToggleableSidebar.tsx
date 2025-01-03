@@ -1,20 +1,29 @@
-import { DialogPanel } from "@headlessui/react";
-import { useModalContext } from "contexts/ModalContext";
+import { Modal } from "components/Modal";
 import Sidebar from "../Sidebar";
 import type { LinkGroup } from "../types";
 
-type Props = { linkGroups: LinkGroup[] };
+interface Props {
+  linkGroups: LinkGroup[];
+  open: boolean;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
 
-export default function ToggleableSidebar({ linkGroups }: Props) {
-  const { closeModal } = useModalContext();
-
+export default function ToggleableSidebar({
+  linkGroups,
+  setOpen,
+  open,
+}: Props) {
   return (
-    <DialogPanel className="fixed top-0 left-0 z-20 h-full">
+    <Modal
+      open={open}
+      onClose={() => setOpen(false)}
+      classes="fixed top-0 left-0 z-20 h-full"
+    >
       <Sidebar
         className="overflow-y-auto scroller"
         linkGroups={linkGroups}
-        onChange={closeModal}
+        onChange={() => setOpen(false)}
       />
-    </DialogPanel>
+    </Modal>
   );
 }

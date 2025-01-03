@@ -1,14 +1,17 @@
 import { useEffect } from "react";
 import { toast } from "sonner";
-import { type ActionResult, isSuccess } from "types/action";
+import { type ActionData, isData, isErr } from "types/action";
 
-export const useActionResult = (result: ActionResult | undefined) => {
+export const useActionResult = (result: ActionData | undefined) => {
   useEffect(() => {
     if (!result) return;
-    if (isSuccess(result)) {
-      toast.success(result.success);
+    if (isData(result)) {
+      toast.success(result.__ok);
       return;
     }
-    toast.error(result.err);
+
+    if (isErr(result)) {
+      toast.error(result.__err);
+    }
   }, [result]);
 };

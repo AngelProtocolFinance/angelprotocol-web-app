@@ -1,9 +1,11 @@
 import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
-import { useErrorContext } from "contexts/ErrorContext";
+import { type IPromptV2, PromptV2 } from "components/Prompt";
+import { errorPrompt } from "contexts/ErrorContext";
 import { toFileName } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
+import { useState } from "react";
 import { Link, useFetcher } from "react-router";
 import FormButtons from "./FormButtons";
 
@@ -12,7 +14,7 @@ export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
   const fetcher = useFetcher();
-  const { handleError } = useErrorContext();
+  const [prompt, setPrompt] = useState<IPromptV2>();
 
   const submit: OnSubmit = async (recipient, bankStatementUrl) => {
     try {
@@ -35,7 +37,9 @@ export default function Banking() {
         { action: ".", method: "POST", encType: "application/json" }
       );
     } catch (error) {
-      handleError(error, { context: "submitting banking application" });
+      setPrompt(
+        errorPrompt(error, { context: "submitting banking application" })
+      );
     }
   };
 
@@ -59,6 +63,7 @@ export default function Banking() {
           isLoading={fetcher.state !== "idle"}
         />
       </Group>
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </>
   );
 }

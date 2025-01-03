@@ -1,7 +1,6 @@
 import type { Stripe, StripeError } from "@stripe/stripe-js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import ModalContext from "contexts/ModalContext";
 import { useEffect } from "react";
 import { fiatDonationIntentCreationErrorHandler } from "services/apes/mock";
 import { mswServer } from "setupTests";
@@ -42,9 +41,7 @@ vi.mock("@stripe/react-stripe-js", () => ({
 }));
 
 const Checkout: typeof StripeCheckout = (props) => (
-  <ModalContext>
-    <StripeCheckout {...props} />
-  </ModalContext>
+  <StripeCheckout {...props} />
 );
 
 const state: StripeCheckoutStep = {

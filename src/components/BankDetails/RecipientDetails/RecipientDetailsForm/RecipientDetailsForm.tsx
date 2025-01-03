@@ -5,10 +5,12 @@ import {
   type FileOutput,
   fileOutput,
 } from "components/FileDropzone";
+import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
-import { useErrorContext } from "contexts/ErrorContext";
+import { errorPrompt } from "contexts/ErrorContext";
 import { isEmpty, logger } from "helpers";
+import { useState } from "react";
 import { Controller, get, useController, useForm } from "react-hook-form";
 import type { Group, V1RecipientAccount, ValidationContent } from "types/aws";
 import { safeParse } from "valibot";
@@ -53,7 +55,7 @@ export default function RecipientDetailsForm({
     getFieldState,
   } = useForm<FV>({ disabled, shouldUnregister: true });
 
-  const { handleError, displayError } = useErrorContext();
+  const [prompt, setPrompt] = useState<IPromptV2>();
   const { updateRequirements } = useRequirements(
     !amount ? null : { amount, currency }
   );
@@ -120,7 +122,12 @@ export default function RecipientDetailsForm({
           const _errs = content.errors;
           const validations = _errs.filter((err) => err.code === "NOT_VALID");
 
-          if (isEmpty(validations)) return displayError(_errs[0].message);
+          if (isEmpty(validations)) {
+            return setPrompt({
+              type: "error",
+              children: _errs[0].message,
+            });
+          }
 
           //SET field errors
           for (const v of validations) {
@@ -133,7 +140,8 @@ export default function RecipientDetailsForm({
             //wait a bit for `isSubmitting:false`, as disabled fields can't be focused
           }, 50);
         } catch (err) {
-          handleError(err, { context: "validating" });
+          const prmpt = errorPrompt(err, { context: "validating" });
+          setPrompt(prmpt);
         }
       })}
       className="grid gap-5 text-navy-d4"
@@ -332,6 +340,7 @@ export default function RecipientDetailsForm({
         disabled={disabled || bankStatement.value === "loading"}
         isSubmitting={isSubmitting}
       />
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </Form>
   );
 }

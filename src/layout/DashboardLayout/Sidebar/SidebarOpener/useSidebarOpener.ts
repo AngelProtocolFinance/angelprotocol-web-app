@@ -1,11 +1,10 @@
-import { useModalContext } from "contexts/ModalContext";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
 import { Menu } from "lucide-react";
+import { useState } from "react";
 import { matchPath, useLocation } from "react-router";
 import type { Link, LinkGroup } from "../types";
-import ToggleableSidebar from "./ToggleableSidebar";
 
 const DEFAULT_LINK: Link = {
   title: "Open Menu",
@@ -17,6 +16,7 @@ export default function useSidebarOpener(
   linkGroups: LinkGroup[],
   rootRoute: string
 ) {
+  const [open, setOpen] = useState(false);
   const currPath = useLocation().pathname;
 
   // Explanation for the `reduce()` part:
@@ -36,17 +36,13 @@ export default function useSidebarOpener(
       return curr;
     }, DEFAULT_LINK);
 
-  const { showModal, closeModal, isModalOpen } = useModalContext();
-
   useHandleScreenResize(
-    (screenSize) => screenSize >= SCREEN_BREAKPOINTS.md && closeModal(),
+    (screenSize) => screenSize >= SCREEN_BREAKPOINTS.md && setOpen(false),
     {
       debounceTime: 50,
-      shouldAttachListener: isModalOpen,
+      shouldAttachListener: open,
     }
   );
 
-  const open = () => showModal(ToggleableSidebar, { linkGroups });
-
-  return { open, activeLink };
+  return { open, activeLink, setOpen };
 }

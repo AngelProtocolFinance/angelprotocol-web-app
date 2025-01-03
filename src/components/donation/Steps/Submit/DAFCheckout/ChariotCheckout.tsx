@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
-import Prompt from "components/Prompt";
+import { type IPromptV2, PromptV2 } from "components/Prompt";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
@@ -9,8 +9,7 @@ import {
 } from "components/form";
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
+import { errorPrompt } from "contexts/ErrorContext";
 import ErrorBoundary from "errors/ErrorBoundary";
 import { toWithState } from "helpers/state-params";
 import { type ChangeEvent, useState } from "react";
@@ -48,8 +47,7 @@ const CUSTOM_MSG_MAX_LENGTH = 250;
 
 export default function ChariotCheckout(props: DafCheckoutStep) {
   const { setState } = useDonationState();
-  const { handleError } = useErrorContext();
-  const { showModal, closeModal, setModalOption } = useModalContext();
+  const [prompt, setPrompt] = useState<IPromptV2>();
   const [grantState, setGrantState] = useState<"pending">();
   const navigate = useNavigate();
 
@@ -252,12 +250,11 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           // see https://givechariot.readme.io/reference/integrating-connect#capture-your-grant-intent
           onSuccess={async (ev) => {
             try {
-              showModal(Prompt, {
+              setPrompt({
                 type: "loading",
-                children: "Processing payment..",
+                children: "Processing payment",
+                isDismissable: false,
               });
-
-              setModalOption("isDismissible", false);
 
               const {
                 grantIntent,
@@ -313,8 +310,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
               setGrantState("pending");
               await apes.post("fiat-donation/chariot", { json: intent });
 
-              setModalOption("isDismissible", true);
-              closeModal();
+              setPrompt(undefined);
 
               navigate(
                 toWithState(appRoutes.donate_thanks, {
@@ -327,7 +323,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                 } satisfies DonateThanksState)
               );
             } catch (err) {
-              handleError(err, { context: "processing donation" });
+              setPrompt(errorPrompt(err, { context: "processing donation" }));
             } finally {
               setGrantState(undefined);
             }
@@ -339,6 +335,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
         endowName={props.init.recipient.name}
         classes="border-t border-gray-l4 mt-5 pt-4 "
       />
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </Summary>
   );
 }

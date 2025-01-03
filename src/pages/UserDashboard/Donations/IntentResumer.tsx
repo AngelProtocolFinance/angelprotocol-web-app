@@ -1,6 +1,7 @@
 import { apes } from "api/api";
+import PromptV2, { type IPromptV2 } from "components/Prompt";
 import { appRoutes } from "constants/routes";
-import { useErrorContext } from "contexts/ErrorContext";
+import { errorPrompt } from "contexts/ErrorContext";
 import { toWithState } from "helpers/state-params";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -9,8 +10,8 @@ import type { DonationIntent } from "types/aws";
 type Props = { intentId: string; classes?: string };
 export default function IntentResumer({ intentId, classes }: Props) {
   const navigate = useNavigate();
-  const { handleError } = useErrorContext();
   const [state, setState] = useState<"pending">();
+  const [prompt, setPrompt] = useState<IPromptV2>();
 
   async function resumeIntent() {
     try {
@@ -22,7 +23,7 @@ export default function IntentResumer({ intentId, classes }: Props) {
         toWithState(`${appRoutes.donate}/${intent.endowmentId}`, intent)
       );
     } catch (err) {
-      handleError(err, "parsed");
+      setPrompt(errorPrompt(err, "parsed"));
     } finally {
       setState(undefined);
     }
@@ -35,6 +36,7 @@ export default function IntentResumer({ intentId, classes }: Props) {
       onClick={resumeIntent}
     >
       {state === "pending" ? "Loading..." : "Finish paying"}
+      {prompt && <PromptV2 {...prompt} onClose={() => setPrompt(undefined)} />}
     </button>
   );
 }

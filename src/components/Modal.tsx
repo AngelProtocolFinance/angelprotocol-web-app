@@ -1,26 +1,16 @@
-import {
-  DialogPanel,
-  type DialogPanelProps,
-  DialogTitle,
-} from "@headlessui/react";
-import type { FC } from "react";
+import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import type { PropsWithChildren } from "react";
 
-const ModalFn: FC<Omit<DialogPanelProps, "transition">> = ({
-  className = "",
-  ...props
-}) => (
-  <DialogPanel
-    {...props}
-    transition
-    className={`${className} duration-300 ease-out data-[closed]:scale-95 data-[closed]:opacity-0`}
-  />
-);
-
-const TitleFn: FC<any> = (props) => <DialogTitle {...props} />;
-
-const ModalFnRoot = ModalFn as typeof DialogPanel;
-const Title = TitleFn as typeof DialogTitle;
-
-const Modal = Object.assign(ModalFnRoot, { Title });
-
-export default Modal;
+interface Props extends PropsWithChildren {
+  classes?: string;
+  open: boolean;
+  onClose: () => void;
+}
+export function Modal(props: Props) {
+  return (
+    <Dialog open={props.open} onClose={props.onClose} className="relative z-50">
+      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
+      <DialogPanel className={props.classes}>{props.children}</DialogPanel>
+    </Dialog>
+  );
+}

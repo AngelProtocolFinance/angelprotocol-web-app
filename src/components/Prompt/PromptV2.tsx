@@ -1,21 +1,31 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import { X } from "lucide-react";
-import type { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import { Link, useNavigate } from "react-router";
 import { PromptIcon } from "./prompt-icon";
-interface Props extends PropsWithChildren {
+export interface Props extends PropsWithChildren {
   type?: "success" | "error" | "loading";
-  ack?: ReactNode;
+  open?: boolean;
+  onClose?: () => void;
+  isDismissable?: boolean;
 }
 
-export function PromptV2({ type, children }: Props) {
+export function PromptV2({
+  type,
+  children,
+  onClose,
+  open,
+  isDismissable = true,
+}: Props) {
   const navigate = useNavigate();
   return (
     <Dialog
-      open={true}
-      onClose={() =>
-        navigate("..", { preventScrollReset: true, replace: true })
-      }
+      open={open ?? true}
+      onClose={() => {
+        if (!isDismissable) return;
+        if (onClose) return onClose();
+        navigate("..");
+      }}
       className="relative z-50"
     >
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />

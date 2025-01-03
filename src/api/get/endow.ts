@@ -23,13 +23,14 @@ const schema = v.union([plusInt, segment]);
 
 export async function getEndow<T extends K[]>(
   idParamOrSlug: number | string | undefined,
-  fields?: T
+  fields?: T,
+  throwHttpErrors?: boolean
 ) {
   const id = v.parse(schema, idParamOrSlug?.toString());
   return ap
     .get<T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow>(
       `${ver(1)}/endowments/${id}`,
-      { searchParams: toSearch({ fields: fields?.join() }) }
+      { searchParams: toSearch({ fields: fields?.join() }), throwHttpErrors }
     )
     .json();
 }

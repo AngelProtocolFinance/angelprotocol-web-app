@@ -4,7 +4,6 @@ import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import Footer from "components/Footer";
 import { appRoutes } from "constants/routes";
-import ModalContext from "contexts/ModalContext";
 import Layout from "layout/DashboardLayout";
 import { CircleAlert } from "lucide-react";
 import { type LoaderFunction, useLoaderData } from "react-router";
@@ -44,14 +43,12 @@ export default function AdminLayout() {
   return (
     <div className="grid">
       <Header classes="sticky z-40 top-[-1px]" />
-      <ModalContext>
-        <Layout
-          rootRoute={`${appRoutes.admin}/:id/`}
-          linkGroups={linkGroups}
-          sidebarHeader={<SidebarHeader endow={context.endow} />}
-          context={context}
-        />
-      </ModalContext>
+      <Layout
+        rootRoute={`${appRoutes.admin}/:id/`}
+        linkGroups={linkGroups}
+        sidebarHeader={<SidebarHeader endow={context.endow} />}
+        context={context}
+      />
       <Footer />
     </div>
   );

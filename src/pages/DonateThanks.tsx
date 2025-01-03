@@ -3,7 +3,6 @@ import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Seo from "components/Seo";
-import Signup from "components/Signup";
 import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -73,13 +72,20 @@ export default function DonateThanks() {
             )}. You can access the bank verification link from the "Pending" tab on your`
           : "If you need a receipt for your donation, please fill out the KYC form for this transaction on your"}{" "}
         {widgetVersion ? (
-          <ExtLink href={`${BASE_URL}${appRoutes.user_dashboard}/donations`}>
+          <ExtLink
+            className="text-blue"
+            href={`${BASE_URL}${appRoutes.user_dashboard}/donations`}
+          >
             My Donations
           </ExtLink>
         ) : (
-          <Link to={`${appRoutes.user_dashboard}/donations`}>My Donations</Link>
+          <Link
+            to={`${appRoutes.user_dashboard}/donations`}
+            className="text-blue"
+          >
+            My Donations page.
+          </Link>
         )}{" "}
-        page.
       </p>
 
       {!user && state?.guestDonor && state?.bankVerificationUrl && (
@@ -88,16 +94,6 @@ export default function DonateThanks() {
           by copying{" "}
           <ExtLink href={state.bankVerificationUrl}>this link.</ExtLink>
         </p>
-      )}
-
-      {!user && state?.guestDonor && (
-        <Signup
-          classes="max-w-96 w-full mt-6 justify-self-center"
-          donor={((d) => {
-            const [firstName, lastName] = d.fullName.split(" ");
-            return { firstName, lastName, email: d.email };
-          })(state.guestDonor)}
-        />
       )}
 
       {!widgetVersion && (
