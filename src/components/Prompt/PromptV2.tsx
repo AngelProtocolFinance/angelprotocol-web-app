@@ -18,27 +18,23 @@ export function PromptV2({
   isDismissable = true,
 }: Props) {
   const navigate = useNavigate();
+  function close() {
+    if (!isDismissable) return;
+    if (onClose) return onClose();
+    navigate("..", { preventScrollReset: true, replace: true });
+  }
   return (
-    <Dialog
-      open={open ?? true}
-      onClose={() => {
-        if (!isDismissable) return;
-        if (onClose) return onClose();
-        navigate("..");
-      }}
-      className="relative z-50"
-    >
+    <Dialog open={open ?? true} onClose={close} className="relative z-50">
       <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
       <DialogPanel className="fixed-center z-10 grid text-navy-d4 bg-white sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden">
         <div className="flex justify-end p-4 border-b border-gray-l4">
-          <Link
-            to=".."
-            preventScrollReset
-            replace
+          <button
+            type="button"
+            onClick={close}
             className="border border-gray-l4 p-2 rounded-md"
           >
             <X size={24} />
-          </Link>
+          </button>
         </div>
 
         <PromptIcon type={type} classes="mb-6 sm:mb-8 mt-4 sm:mt-12" />
