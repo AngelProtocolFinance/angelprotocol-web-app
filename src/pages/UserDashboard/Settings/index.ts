@@ -1,7 +1,7 @@
+import type { ActionFunction, LoaderFunction } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { userEndows } from "api/get/user-endows";
 import { loadAuth, redirectToAuth } from "auth";
-import type { ActionFunction, LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { UserEndow } from "types/aws";
 

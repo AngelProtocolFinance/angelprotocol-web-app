@@ -1,7 +1,7 @@
+import type { ActionFunction, LoaderFunction } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
 import { loadAuth, redirectToAuth } from "auth";
-import type { ActionFunction, LoaderFunction } from "react-router";
 import type { ActionData } from "types/action";
 export { ErrorElement as ErrorBoundary } from "errors/ErrorElement";
 

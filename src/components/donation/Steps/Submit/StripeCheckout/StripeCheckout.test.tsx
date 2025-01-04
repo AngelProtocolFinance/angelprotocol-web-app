@@ -1,8 +1,8 @@
+import { createRoutesStub } from "@remix-run/react";
 import type { Stripe, StripeError } from "@stripe/stripe-js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { type ReactNode, useEffect } from "react";
-import { createRoutesStub } from "react-router";
 import { fiatDonationIntentCreationErrorHandler } from "services/apes/mock";
 import { mswServer } from "setupTests";
 import { describe, expect, test, vi } from "vitest";

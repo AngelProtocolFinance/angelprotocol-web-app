@@ -1,8 +1,8 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { useFetcher } from "@remix-run/react";
 import { Input, PasswordInput } from "components/form";
 import useCounter from "hooks/useCounter";
 import { useEffect } from "react";
-import { useFetcher } from "react-router";
 import { toast } from "sonner";
 import { type ActionData, isData, isFormErr } from "types/action";
 import type { CodeRecipient } from "./types";

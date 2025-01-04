@@ -1,6 +1,6 @@
+import type { ActionFunction, LoaderFunction } from "@remix-run/react";
 import { getFiatCurrencies } from "api/get/fiat-currencies";
 import { cognito, loadAuth, redirectToAuth } from "auth";
-import type { ActionFunction, LoaderFunction } from "react-router";
 import { isError } from "types/auth";
 
 export { Component as default } from "./Form";

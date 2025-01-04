@@ -1,7 +1,7 @@
+import { type LoaderFunction, useLoaderData } from "@remix-run/react";
 import { loadAuth, redirectToAuth } from "auth";
 import { appRoutes } from "constants/routes";
 import DashboardLayout from "layout/DashboardLayout";
-import { type LoaderFunction, useLoaderData } from "react-router";
 import { linkGroups } from "./routes";
 
 export default function Layout() {

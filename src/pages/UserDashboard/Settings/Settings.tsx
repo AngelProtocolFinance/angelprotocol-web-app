@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData } from "@remix-run/react";
 import EndowAlertForm from "./EndowAlertForm";
 import type { SettingsData } from "./index";
 

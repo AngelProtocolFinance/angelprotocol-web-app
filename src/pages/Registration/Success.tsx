@@ -1,9 +1,9 @@
 import type { Submission } from "@better-giving/registration/models";
 import type { CompleteReg } from "@better-giving/registration/step";
+import { Navigate, useLoaderData } from "@remix-run/react";
+import { Link } from "@remix-run/react";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { CircleCheck } from "lucide-react";
-import { Navigate, useLoaderData } from "react-router";
-import { Link } from "react-router";
 export { stateLoader as clientLoader } from "helpers/state-params";
 
 export default function Success({ classes = "" }: { classes?: string }) {

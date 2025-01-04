@@ -1,5 +1,5 @@
+import { Navigate, type RouteObject } from "@remix-run/react";
 import { convert } from "helpers/route";
-import { Navigate, type RouteObject } from "react-router";
 import { steps } from "../routes";
 
 export const route: RouteObject = {

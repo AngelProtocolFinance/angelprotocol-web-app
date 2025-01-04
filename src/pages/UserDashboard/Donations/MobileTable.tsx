@@ -3,6 +3,7 @@ import {
   DisclosureButton,
   DisclosurePanel,
 } from "@headlessui/react";
+import { Link } from "@remix-run/react";
 import ExtLink from "components/ExtLink";
 import { DrawerIcon } from "components/Icon";
 import { appRoutes } from "constants/routes";
@@ -10,7 +11,6 @@ import { humanize } from "helpers";
 import useSort from "hooks/useSort";
 import { ArrowDownToLine } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router";
 import type { Donation } from "types/aws";
 import IntentResumer from "./IntentResumer";
 import LoadMoreBtn from "./LoadMoreBtn";

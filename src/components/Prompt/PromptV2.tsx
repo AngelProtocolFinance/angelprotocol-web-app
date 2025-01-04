@@ -1,7 +1,7 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
+import { Link, useNavigate } from "@remix-run/react";
 import { X } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link, useNavigate } from "react-router";
 import { PromptIcon } from "./prompt-icon";
 export interface Props extends PropsWithChildren {
   type?: "success" | "error" | "loading";

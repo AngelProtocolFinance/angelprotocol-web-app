@@ -1,7 +1,7 @@
+import { useFetcher } from "@remix-run/react";
 import { getEndow } from "api/get/endow";
 import { errorPrompt } from "contexts/ErrorContext";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
-import { useFetcher } from "react-router";
 import type { EndowmentProfileUpdate } from "types/aws";
 
 import type { IPromptV2 } from "components/Prompt";

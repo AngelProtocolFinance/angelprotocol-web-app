@@ -1,3 +1,9 @@
+import {
+  type LoaderFunction,
+  useLoaderData,
+  useRouteLoaderData,
+} from "@remix-run/react";
+import { Link, Outlet } from "@remix-run/react";
 import { getEndowBalance } from "api/get/endow-balance";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
@@ -6,12 +12,6 @@ import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Globe, MapPin } from "lucide-react";
-import {
-  type LoaderFunction,
-  useLoaderData,
-  useRouteLoaderData,
-} from "react-router";
-import { Link, Outlet } from "react-router";
 import type { DetailedUser } from "types/auth";
 import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../ProfileContext";

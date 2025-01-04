@@ -1,4 +1,5 @@
 import type { Endow } from "@better-giving/endowment";
+import { Link } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
@@ -7,7 +8,6 @@ import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { memo } from "react";
-import { Link } from "react-router";
 import type { DonationIntent } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";

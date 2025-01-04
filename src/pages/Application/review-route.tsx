@@ -1,7 +1,7 @@
 import type { Verdict } from "@better-giving/registration/approval";
+import { type ActionFunction, redirect } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { type ActionFunction, redirect } from "react-router";
 export { default } from "./Prompt";
 
 export const clientAction: ActionFunction = async ({ request, params }) => {

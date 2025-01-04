@@ -1,8 +1,8 @@
+import { type ActionFunction, redirect } from "@remix-run/react";
 import { bankUpdate } from "api/action/bank-update";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth, redirectToAuth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
-import { type ActionFunction, redirect } from "react-router";
 import { bankingApplicationUpdate } from "types/aws";
 import * as v from "valibot";
 

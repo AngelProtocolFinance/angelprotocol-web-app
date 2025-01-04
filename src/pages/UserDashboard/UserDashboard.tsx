@@ -1,6 +1,6 @@
+import { Navigate, type RouteObject } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { convert } from "helpers/route";
-import { Navigate, type RouteObject } from "react-router";
 import { routes } from "./routes";
 
 export const userDashboardRoute: RouteObject = {

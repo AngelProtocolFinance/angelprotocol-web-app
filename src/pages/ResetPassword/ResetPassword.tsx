@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData } from "@remix-run/react";
 import InitForm from "./InitForm";
 import SetPasswordForm from "./SetPasswordForm";
 import Success from "./Success";

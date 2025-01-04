@@ -1,10 +1,10 @@
 import type { Application } from "@better-giving/registration/approval";
 import { isIrs501c3, isRejected } from "@better-giving/registration/models";
+import { Link, Outlet } from "@remix-run/react";
 import ExtLink from "components/ExtLink";
 import { appRoutes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link, Outlet } from "react-router";
 import Container from "./Container";
 
 export default function Loaded(props: Application) {

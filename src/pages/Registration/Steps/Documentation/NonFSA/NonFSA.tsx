@@ -1,9 +1,9 @@
 import type { EndowClaim } from "@better-giving/registration/models";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { Link } from "@remix-run/react";
 import LoadText from "components/LoadText";
 import { Field } from "components/form";
 import { FormProvider, useForm } from "react-hook-form";
-import { Link } from "react-router";
 import { steps } from "../../../routes";
 import { type FormValues as FV, type Props, schema } from "./types";
 import useSubmit from "./useSubmit";

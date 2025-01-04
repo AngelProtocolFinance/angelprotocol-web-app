@@ -1,8 +1,8 @@
+import type { LoaderFunction } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { plusInt } from "api/schema/endow-id";
 import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
-import type { LoaderFunction } from "react-router";
 import { parse } from "valibot";
 export { default } from "./PayoutMethods";
 

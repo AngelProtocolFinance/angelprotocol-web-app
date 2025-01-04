@@ -1,4 +1,5 @@
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/ContentLoader";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
@@ -6,7 +7,6 @@ import { errorPrompt } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import type { DonateThanksState } from "types/pages";
 import { toDonor } from "../../../common/constants";
 import type { StripeCheckoutStep } from "../../../types";

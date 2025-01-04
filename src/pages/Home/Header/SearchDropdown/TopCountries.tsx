@@ -1,8 +1,8 @@
+import { Link } from "@remix-run/react";
 import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router";
 import useSWR from "swr/immutable";
 
 const fetcher = (path: string) => apes.get<string[]>(path).json();

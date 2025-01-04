@@ -1,9 +1,9 @@
 import type { Endow, EndowDesignation } from "@better-giving/endowment";
+import { type LoaderFunction, useLoaderData } from "@remix-run/react";
 import { getEndow } from "api/get/endow";
 import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
 import { unsdgs } from "constants/unsdgs";
-import { type LoaderFunction, useLoaderData } from "react-router";
 import { endowUpdate } from "../endow-update-action";
 import Form from "./Form";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";

@@ -1,3 +1,4 @@
+import { Navigate, type RouteObject as RO } from "@remix-run/react";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { convert } from "helpers/route";
 import { adminRoute } from "pages/Admin";
@@ -10,7 +11,6 @@ import { route as regRoute } from "pages/Registration";
 import { signUpRoute } from "pages/SignUp";
 import { userDashboardRoute } from "pages/UserDashboard";
 import { infoRoutes } from "pages/informational";
-import { Navigate, type RouteObject as RO } from "react-router";
 
 const donateThanks = import("pages/DonateThanks").then(convert);
 const stripePaymentStatus = import("pages/StripePaymentStatus").then(convert);

@@ -1,8 +1,12 @@
+import {
+  useLoaderData,
+  useLocation,
+  useRouteLoaderData,
+} from "@remix-run/react";
 import { NavDropdown, UserMenu } from "components/Header";
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
 import { useState } from "react";
-import { useLoaderData, useLocation, useRouteLoaderData } from "react-router";
 import type { DetailedUser } from "types/auth";
 import type { EndowCardsPage } from "types/aws";
 import SearchDropdown from "./SearchDropdown";

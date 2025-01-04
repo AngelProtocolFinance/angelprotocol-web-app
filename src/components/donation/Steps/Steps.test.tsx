@@ -6,8 +6,8 @@ import { DEFAULT_PROGRAM } from "./common/constants";
 import { Steps } from "./index";
 import type { DonationState, StripeDonationDetails } from "./types";
 
-vi.mock("react-router", async () => {
-  const actual = await vi.importActual("react-router");
+vi.mock("@remix-run/react", async () => {
+  const actual = await vi.importActual("@remix-run/react");
   return {
     ...actual,
     useLoaderData: () => testDonateData,

@@ -8,6 +8,7 @@ import {
   DisclosurePanel,
 } from "@headlessui/react";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { useFetcher } from "@remix-run/react";
 import { DrawerIcon } from "components/Icon";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import { RichText } from "components/RichText";
@@ -18,7 +19,6 @@ import {
   dateToFormFormat,
 } from "components/form";
 import { useController, useForm } from "react-hook-form";
-import { useFetcher } from "react-router";
 import { MAX_CHARS, imgSpec } from "../common";
 import { type FV, schema } from "./schema";
 

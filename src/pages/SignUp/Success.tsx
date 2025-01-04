@@ -1,7 +1,7 @@
+import { Link, useLoaderData } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
-import { Link, useLoaderData } from "react-router";
 
 export { clientLoader } from "./loader";
 export default function Success() {

@@ -1,10 +1,10 @@
+import { Await, useLoaderData } from "@remix-run/react";
 import type { FiatCurrencies } from "api/types";
 import CurrencySelector from "components/CurrencySelector";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { Form as FormContainer, NativeField } from "components/form";
 import { bgCookies, setCookie } from "helpers/cookie";
 import { Suspense } from "react";
-import { Await, useLoaderData } from "react-router";
 import type { Currency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";

@@ -1,6 +1,6 @@
+import { Outlet, ScrollRestoration, useNavigation } from "@remix-run/react";
 import nProgress from "nprogress";
 import { useEffect } from "react";
-import { Outlet, ScrollRestoration, useNavigation } from "react-router";
 import { Toaster } from "sonner";
 
 nProgress.configure({

@@ -1,7 +1,7 @@
+import { useFetcher } from "@remix-run/react";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
 import { CircleCheck } from "lucide-react";
-import { useFetcher } from "react-router";
 
 export { newApplicationAction as clientAction } from "./api";
 export default function Welcome() {

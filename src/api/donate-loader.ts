@@ -1,7 +1,7 @@
 import type { Endow, Program } from "@better-giving/endowment";
+import type { LoaderFunction } from "@remix-run/react";
 import { loadAuth } from "auth/load-auth";
 import { decodeState } from "helpers/state-params";
-import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { DonationIntent, EndowmentBalances } from "types/aws";
 import * as v from "valibot";

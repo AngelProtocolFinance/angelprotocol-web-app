@@ -1,6 +1,6 @@
+import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
-import { Link } from "react-router";
 
 const genLink = (slug: string) =>
   `${window.origin}${appRoutes.marketplace}/${slug}`;

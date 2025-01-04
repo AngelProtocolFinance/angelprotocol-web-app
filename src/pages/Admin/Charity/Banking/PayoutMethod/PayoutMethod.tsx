@@ -1,9 +1,9 @@
+import { Link, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import type { BankDetails } from "api/get/payout-method";
 import ExtLink from "components/ExtLink";
 import { useActionToast } from "hooks/use-action-toast";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link, Outlet, useFetcher, useLoaderData } from "react-router";
 
 const APPROVED_PRIORITY_NUM = 2;
 

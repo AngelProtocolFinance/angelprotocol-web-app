@@ -1,3 +1,9 @@
+import {
+  Link,
+  type LoaderFunction,
+  useLoaderData,
+  useOutletContext,
+} from "@remix-run/react";
 import char from "assets/images/celebrating-character.png";
 import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
@@ -8,12 +14,6 @@ import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
 import { decodeState } from "helpers/state-params";
-import {
-  Link,
-  type LoaderFunction,
-  useLoaderData,
-  useOutletContext,
-} from "react-router";
 import type { UserV2 } from "types/auth";
 import type { DonateThanksState } from "types/pages";
 

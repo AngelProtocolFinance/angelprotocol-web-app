@@ -1,8 +1,8 @@
+import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
 import { ArrowRight } from "lucide-react";
 import { useState } from "react";
-import { Link } from "react-router";
 import BenefitsCarousel from "./BenefitsCarousel";
 import Carousel from "./Carousel";
 import s from "./benefits.module.css";

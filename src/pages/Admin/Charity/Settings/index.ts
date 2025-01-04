@@ -1,5 +1,5 @@
+import type { LoaderFunction } from "@remix-run/react";
 import { getEndow } from "api/get/endow";
-import type { LoaderFunction } from "react-router";
 import type { EndowmentSettingsAttributes } from "types/aws";
 import { endowUpdate } from "../endow-update-action";
 export { default } from "./Form";

@@ -1,6 +1,6 @@
+import { Outlet, useLoaderData } from "@remix-run/react";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { Outlet, useLoaderData } from "react-router";
 export { clientLoader } from "./api";
 
 export default function Layout() {

@@ -1,7 +1,7 @@
 import type { Update } from "@better-giving/registration/update";
+import { type ActionFunction, redirect } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { type ActionFunction, redirect } from "react-router";
 
 export const updateAction =
   (next: string): ActionFunction =>

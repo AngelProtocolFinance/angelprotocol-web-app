@@ -1,5 +1,5 @@
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { CircleAlert } from "lucide-react";
-import { Outlet, useLoaderData } from "react-router";
 import { Loaded } from "./Loaded";
 import type { DashboardData } from "./api";
 import { monthPeriod } from "./monthPeriod";

@@ -1,7 +1,7 @@
+import { Link, useFetcher } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { regRoutes } from "constants/routes";
 import { CircleAlert } from "lucide-react";
-import { Link, useFetcher } from "react-router";
 import type { ErrorQueryParams } from "./types";
 
 export default function ErrorPage(props: ErrorQueryParams) {

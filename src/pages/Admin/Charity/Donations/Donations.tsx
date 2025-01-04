@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData } from "@remix-run/react";
 import type { DonationsPage } from "types/aws";
 import DonationsTable from "./DonationsTable";
 

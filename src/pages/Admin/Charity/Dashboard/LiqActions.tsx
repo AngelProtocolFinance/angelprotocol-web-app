@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link } from "@remix-run/react";
 import type { BalanceMovement } from "types/aws";
 
 interface Props {

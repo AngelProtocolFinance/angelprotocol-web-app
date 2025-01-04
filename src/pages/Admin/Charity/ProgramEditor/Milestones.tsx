@@ -1,8 +1,8 @@
 import type { Milestone as TMilestone } from "@better-giving/endowment";
+import { useFetcher } from "@remix-run/react";
 import { Info } from "components/Status";
 import { isEmpty } from "helpers";
 import { Plus } from "lucide-react";
-import { useFetcher } from "react-router";
 import Milestone from "./Milestone";
 
 type Props = {

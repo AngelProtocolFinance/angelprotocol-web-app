@@ -1,9 +1,9 @@
+import { type ActionFunction, redirect } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import { cognito } from "auth/cognito";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { type ActionFunction, redirect } from "react-router";
 import { emailSubs } from "types/hubspot-subscription";
 
 export const clientAction: ActionFunction = async ({ request }) => {

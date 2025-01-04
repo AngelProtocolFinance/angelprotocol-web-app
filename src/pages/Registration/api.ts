@@ -1,17 +1,17 @@
 import type { EndowClaim } from "@better-giving/registration/models";
 import type { Step1 } from "@better-giving/registration/step";
 import type { NewReg } from "@better-giving/registration/update";
+import {
+  type ActionFunction,
+  type LoaderFunction,
+  redirect,
+} from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
 import { appRoutes } from "constants/routes";
 import { storeRegistrationReference } from "helpers";
 import { decodeState } from "helpers/state-params";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "react-router";
 import { steps } from "./routes";
 
 export const clientLoader: LoaderFunction = async ({ request }) => {

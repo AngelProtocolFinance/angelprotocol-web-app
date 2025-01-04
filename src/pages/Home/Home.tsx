@@ -1,6 +1,5 @@
 // import HeroBottom from "../@sections/HeroBottom";
 import Footer from "components/Footer";
-import Animation from "./Animation";
 import Benefits from "./Benefits";
 import Blogs from "./Blogs";
 import { BottomCta } from "./BottomCta";
@@ -11,7 +10,7 @@ import Hero from "./Hero";
 import Testimonials from "./Testimonials";
 // import Video from "./Video";
 // import type { EndowPage } from "./types";
-// import { useLoaderData } from "react-router";
+// import { useLoaderData } from "@remix-run/react";
 export default function Home() {
   // const page1 = useLoaderData() as EndowPage;
   return (
@@ -22,7 +21,7 @@ export default function Home() {
       <Benefits />
       <Brands />
       <Feature1 />
-      <Animation />
+      {/* <Animation /> */}
       {/* <Video /> */}
       <Testimonials />
       <Blogs />

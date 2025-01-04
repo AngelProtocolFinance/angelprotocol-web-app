@@ -1,9 +1,9 @@
+import { type LoaderFunctionArgs, redirect } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { userEndows } from "api/get/user-endows";
 import { oauth } from "auth/cognito";
 import { loadAuth } from "auth/load-auth";
-import { type LoaderFunctionArgs, redirect } from "react-router";
 import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 

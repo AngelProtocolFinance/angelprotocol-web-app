@@ -1,11 +1,11 @@
 import type { Endow } from "@better-giving/endowment";
+import { useLoaderData } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
-import { useLoaderData } from "react-router";
-import { Outlet } from "react-router";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 
 export { profileLoader as clientLoader } from "./profile-loader";

@@ -1,14 +1,14 @@
+import {
+  type ActionFunction,
+  type LoaderFunction,
+  redirect,
+} from "@remix-run/react";
 import { bankUpdate } from "api/action/bank-update";
 import { ap, ver } from "api/api";
 import { getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
 import { redirectToAuth } from "auth";
 import { loadAuth } from "auth/load-auth";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "react-router";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
 

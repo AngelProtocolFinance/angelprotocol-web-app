@@ -1,5 +1,5 @@
 import type { NewProgram } from "@better-giving/endowment";
-import { useFetcher } from "react-router";
+import { useFetcher } from "@remix-run/react";
 import List from "./List";
 
 export default function Programs() {

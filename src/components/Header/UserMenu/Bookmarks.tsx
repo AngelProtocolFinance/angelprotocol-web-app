@@ -1,5 +1,5 @@
+import { Await } from "@remix-run/react";
 import { Suspense } from "react";
-import { Await } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { BookmarkLink } from "./EndowmentLink";
 

@@ -1,8 +1,8 @@
 import type { EndowDesignation } from "@better-giving/endowment";
 import type { Update } from "@better-giving/registration/update";
+import { useFetcher } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import { type SubmitHandler, useFormContext } from "react-hook-form";
-import { useFetcher } from "react-router";
-import { useNavigate } from "react-router";
 import { steps } from "../../../routes";
 import type { RegStep2 } from "../../../types";
 import type { FormValues } from "../types";

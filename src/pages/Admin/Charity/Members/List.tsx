@@ -1,7 +1,7 @@
+import { Link, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import TableSection, { Cells } from "components/TableSection";
 import { LoaderCircle, Minus, Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
-import { Link, Outlet, useFetcher, useLoaderData } from "react-router";
 import { toast } from "sonner";
 import type { EndowAdmin } from "types/aws";
 

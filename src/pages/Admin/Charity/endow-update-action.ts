@@ -1,6 +1,6 @@
+import { type ActionFunction, redirect } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { type ActionFunction, redirect } from "react-router";
 import type { ActionData } from "types/action";
 
 type Next = { success: string } | { redirect: string };

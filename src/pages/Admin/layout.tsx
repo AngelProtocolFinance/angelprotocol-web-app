@@ -1,3 +1,4 @@
+import { type LoaderFunction, useLoaderData } from "@remix-run/react";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
 import { redirectToAuth } from "auth";
@@ -6,7 +7,6 @@ import Footer from "components/Footer";
 import { appRoutes } from "constants/routes";
 import Layout from "layout/DashboardLayout";
 import { CircleAlert } from "lucide-react";
-import { type LoaderFunction, useLoaderData } from "react-router";
 import { parse } from "valibot";
 import type { AdminContext } from "./Context";
 import Header from "./Header";

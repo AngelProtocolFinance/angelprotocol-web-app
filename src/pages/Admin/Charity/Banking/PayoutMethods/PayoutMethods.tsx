@@ -1,6 +1,6 @@
+import { Link, useLoaderData } from "@remix-run/react";
 import { Info } from "components/Status";
 import { Plus } from "lucide-react";
-import { Link, useLoaderData } from "react-router";
 import type { PayoutMethod } from "types/aws";
 import Table from "./Table";
 

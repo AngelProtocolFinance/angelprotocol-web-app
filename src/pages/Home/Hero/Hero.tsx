@@ -1,6 +1,6 @@
+import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router";
 import headillust from "./head-illust.webp";
 import s from "./styles.module.css";
 

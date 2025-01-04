@@ -1,7 +1,7 @@
+import { type LoaderFunction, redirect } from "@remix-run/react";
 import { loadAuth } from "auth";
 import { appRoutes } from "constants/routes";
 import { decodeState } from "helpers/state-params";
-import { type LoaderFunction, redirect } from "react-router";
 
 export const clientLoader: LoaderFunction = async ({
   request,

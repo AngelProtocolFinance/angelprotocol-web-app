@@ -1,5 +1,5 @@
+import type { RouteObject } from "@remix-run/react";
 import { convert } from "helpers/route";
-import type { RouteObject } from "react-router";
 import { bodyRoute } from "./Body";
 
 export const profileRoute: RouteObject = {

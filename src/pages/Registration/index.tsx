@@ -1,6 +1,6 @@
+import type { RouteObject } from "@remix-run/react";
 import { appRoutes, regRoutes } from "constants/routes";
 import { convert } from "helpers/route";
-import type { RouteObject } from "react-router";
 import { route as stepsRoute } from "./Steps";
 
 export const route: RouteObject = {

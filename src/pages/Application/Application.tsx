@@ -1,10 +1,10 @@
 import type { Application as IApplication } from "@better-giving/registration/approval";
+import { useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
 import Seo from "components/Seo";
 import { CircleAlert } from "lucide-react";
-import { useLoaderData } from "react-router";
-import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import Loaded from "./Loaded";
 

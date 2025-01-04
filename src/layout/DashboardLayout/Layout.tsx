@@ -1,7 +1,7 @@
+import { Outlet, useLocation } from "@remix-run/react";
 import Seo from "components/Seo";
 import ErrorBoundary from "errors/ErrorBoundary";
 import type { ReactNode } from "react";
-import { Outlet, useLocation } from "react-router";
 import Sidebar, { SidebarOpener } from "./Sidebar";
 import type { LinkGroup } from "./Sidebar/types";
 

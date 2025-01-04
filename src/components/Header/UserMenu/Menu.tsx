@@ -1,8 +1,8 @@
 import { MenuItem } from "@headlessui/react";
+import { Link, useFetcher } from "@remix-run/react";
 import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { CircleDollarSign, Shield } from "lucide-react";
-import { Link, useFetcher } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
 import { Organizations } from "./Organizations";

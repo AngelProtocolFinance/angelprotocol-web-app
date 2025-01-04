@@ -1,6 +1,6 @@
+import type { ActionFunction } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import type { ActionFunction } from "react-router";
 import type { ActionData } from "types/action";
 
 export const submitAction: ActionFunction = async ({ request, params }) => {

@@ -1,7 +1,7 @@
+import { Await, useFetcher } from "@remix-run/react";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { Heart } from "lucide-react";
 import { Suspense } from "react";
-import { Await, useFetcher } from "react-router";
 import type { DetailedUser, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 

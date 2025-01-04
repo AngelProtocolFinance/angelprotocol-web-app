@@ -1,10 +1,10 @@
+import { useLocation } from "@remix-run/react";
 import { DrawerIcon } from "components/Icon";
 import { idParamToNum } from "helpers";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
 import { type PropsWithChildren, useState } from "react";
-import { useLocation } from "react-router";
 import type { RegStep } from "../types";
 
 type Props = {

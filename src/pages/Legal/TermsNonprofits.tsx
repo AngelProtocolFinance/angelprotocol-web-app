@@ -1,7 +1,7 @@
+import { Link } from "@remix-run/react";
 import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router";
 
 const U = ({ children }: PropsWithChildren) => (
   <span className="underline">{children}</span>

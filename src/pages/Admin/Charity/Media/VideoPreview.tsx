@@ -1,8 +1,8 @@
 import type { IMedia } from "@better-giving/endowment";
+import { Link, useFetcher } from "@remix-run/react";
 import { LoaderCircle, Minus, Pencil, Star } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
 import ReactPlayer from "react-player";
-import { Link, useFetcher } from "react-router";
 
 export default function VideoPreview(props: IMedia) {
   const del = useFetcher({ key: `delete-${props.id}` });

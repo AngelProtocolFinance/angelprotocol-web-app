@@ -1,11 +1,11 @@
+import { useLoaderData } from "@remix-run/react";
+import { useLocation } from "@remix-run/react";
 import { fill } from "components/DonateMethods";
 import Seo from "components/Seo";
 import { DEFAULT_PROGRAM } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { useState } from "react";
-import { useLoaderData } from "react-router";
-import { useLocation } from "react-router";
 import type { WidgetConfig } from "types/widget";
 import Configurer from "./Configurer";
 import Preview from "./Preview";

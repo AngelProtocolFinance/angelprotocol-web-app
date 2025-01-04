@@ -1,8 +1,8 @@
+import { Await, Link, useLoaderData } from "@remix-run/react";
 import type { DonateData } from "api/donate-loader";
 import Image from "components/Image";
 import { type TTarget, Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Await, Link, useLoaderData } from "react-router";
 import type { EndowmentBalances } from "types/aws";
 
 type Props = {

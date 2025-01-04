@@ -1,14 +1,14 @@
-import { posts } from "api/get/wp-posts";
-import Media from "components/Media";
-import Seo from "components/Seo";
-import { useEffect, useState } from "react";
 import {
   Link,
   type LoaderFunction,
   useFetcher,
   useLoaderData,
   useSearchParams,
-} from "react-router";
+} from "@remix-run/react";
+import { posts } from "api/get/wp-posts";
+import Media from "components/Media";
+import Seo from "components/Seo";
+import { useEffect, useState } from "react";
 import type { Wordpress } from "types/wordpress";
 
 export const clientLoader: LoaderFunction = async ({ request }) => {

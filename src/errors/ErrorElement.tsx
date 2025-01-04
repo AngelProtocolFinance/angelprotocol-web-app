@@ -1,6 +1,6 @@
+import { useRouteError } from "@remix-run/react";
 import { logger } from "helpers";
 import { useEffect, useRef } from "react";
-import { useRouteError } from "react-router";
 import DefaultFallback from "./DefaultFallback";
 
 export function ErrorElement() {

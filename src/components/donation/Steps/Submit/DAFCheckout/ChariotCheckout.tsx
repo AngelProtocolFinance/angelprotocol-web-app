@@ -1,4 +1,5 @@
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "@remix-run/react";
 import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
@@ -15,7 +16,6 @@ import { toWithState } from "helpers/state-params";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { schema } from "schemas/shape";
 import type { DonationIntent } from "types/aws";
 import type { DonateThanksState } from "types/pages";

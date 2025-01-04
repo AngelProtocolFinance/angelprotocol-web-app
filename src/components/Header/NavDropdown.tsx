@@ -4,11 +4,11 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
+import { NavLink, useLocation } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { createNavLinkStyler } from "helpers";
 import { toWithState } from "helpers/state-params";
 import { ChevronDown, MenuIcon } from "lucide-react";
-import { NavLink, useLocation } from "react-router";
 import type { DetailedUser, SignInRouteState } from "types/auth";
 import Menu from "./UserMenu/Menu";
 

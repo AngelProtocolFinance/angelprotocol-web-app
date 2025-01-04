@@ -1,5 +1,5 @@
+import type { LoaderFunction } from "@remix-run/react";
 import { ap, ver } from "api/api";
-import type { LoaderFunction } from "react-router";
 export { default } from "./Home";
 
 export const clientLoader: LoaderFunction = async ({ request }) => {

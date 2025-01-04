@@ -1,6 +1,6 @@
+import type { RouteObject } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { convert } from "helpers/route";
-import type { RouteObject } from "react-router";
 import { charityRoutes } from "./Charity";
 
 export const adminRoute: RouteObject = {

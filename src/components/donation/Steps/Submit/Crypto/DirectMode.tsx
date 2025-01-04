@@ -1,11 +1,11 @@
 import chains from "@better-giving/assets/chains";
+import { useNavigate } from "@remix-run/react";
 import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
 import { toWithState } from "helpers/state-params";
-import { useNavigate } from "react-router";
 import useSWR from "swr/immutable";
 import type { Crypto, DonationIntent } from "types/aws";
 import type { DonateThanksState } from "types/pages";

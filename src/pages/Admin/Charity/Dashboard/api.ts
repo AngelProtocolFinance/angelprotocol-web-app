@@ -1,9 +1,9 @@
 import type { Allocation } from "@better-giving/endowment";
+import type { LoaderFunction } from "@remix-run/react";
 import { apes, toSearch, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth, redirectToAuth } from "auth";
-import type { LoaderFunction } from "react-router";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";

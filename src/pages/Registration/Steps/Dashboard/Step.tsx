@@ -1,5 +1,5 @@
+import { Link } from "@remix-run/react";
 import type { RegStep } from "pages/Registration/types";
-import { Link } from "react-router";
 
 type TStep = Exclude<RegStep, 6>; // exclude summary step
 type Props = {

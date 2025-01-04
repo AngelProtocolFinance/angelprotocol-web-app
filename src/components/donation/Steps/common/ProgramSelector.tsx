@@ -5,9 +5,9 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
+import { Await, useLoaderData } from "@remix-run/react";
 import { unpack } from "helpers";
 import { Suspense, useEffect } from "react";
-import { Await, useLoaderData } from "react-router";
 import type { OptionType } from "types/components";
 import { DrawerIcon } from "../../../Icon";
 import { DEFAULT_PROGRAM } from "./constants";

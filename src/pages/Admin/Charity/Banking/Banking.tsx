@@ -1,3 +1,4 @@
+import { Link, useFetcher } from "@remix-run/react";
 import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
@@ -6,7 +7,6 @@ import { toFileName } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import { useState } from "react";
-import { Link, useFetcher } from "react-router";
 import FormButtons from "./FormButtons";
 
 export { newBanking as clientAction } from "./new-banking-action";

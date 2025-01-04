@@ -1,6 +1,6 @@
 import type { Program as IProgram } from "@better-giving/endowment";
+import { useLoaderData } from "@remix-run/react";
 import { Info } from "components/Status";
-import { useLoaderData } from "react-router";
 import { Program } from "./Program";
 
 export default function List() {

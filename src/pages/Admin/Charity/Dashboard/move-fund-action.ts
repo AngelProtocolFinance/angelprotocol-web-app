@@ -1,6 +1,6 @@
+import { type ActionFunction, redirect } from "@remix-run/react";
 import { apes } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import { type ActionFunction, redirect } from "react-router";
 
 export const moveFundAction: ActionFunction = async ({ params, request }) => {
   const auth = await loadAuth();

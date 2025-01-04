@@ -1,8 +1,8 @@
+import { type LoaderFunction, Outlet, useLoaderData } from "@remix-run/react";
 import { type BankDetails, getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth, redirectToAuth } from "auth";
 import Seo from "components/Seo";
-import { type LoaderFunction, Outlet, useLoaderData } from "react-router";
 import { parse } from "valibot";
 import { Loaded } from "./Loaded";
 

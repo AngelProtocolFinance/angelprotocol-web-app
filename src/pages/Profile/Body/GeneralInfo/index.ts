@@ -1,5 +1,5 @@
+import type { LoaderFunction } from "@remix-run/react";
 import { getPrograms } from "api/get/programs";
-import type { LoaderFunction } from "react-router";
 import { featuredMedia } from "../featured-media";
 
 export { default } from "./GeneralInfo";

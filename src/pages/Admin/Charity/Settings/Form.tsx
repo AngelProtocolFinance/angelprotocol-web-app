@@ -6,6 +6,7 @@ import {
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import { DonateMethods, fill } from "components/DonateMethods";
 import Increments from "components/Increments";
 import {
@@ -17,7 +18,6 @@ import { BG_ID } from "constants/common";
 import { useActionToast } from "hooks/use-action-toast";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
-import { Outlet, useFetcher, useLoaderData } from "react-router";
 import type { EndowmentUpdate } from "services/types";
 import { toast } from "sonner";
 import type { EndowmentSettingsAttributes } from "types/aws";

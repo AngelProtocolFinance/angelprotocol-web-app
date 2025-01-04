@@ -1,10 +1,10 @@
+import { useNavigate } from "@remix-run/react";
 import { apes } from "api/api";
 import PromptV2, { type IPromptV2 } from "components/Prompt";
 import { appRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";
 import { toWithState } from "helpers/state-params";
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import type { DonationIntent } from "types/aws";
 
 type Props = { intentId: string; classes?: string };

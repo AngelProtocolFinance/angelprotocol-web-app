@@ -1,12 +1,12 @@
-import { cognito, loadAuth } from "auth";
-import { parseWithValibot } from "conform-to-valibot";
-import { appRoutes } from "constants/routes";
 import {
   type ActionFunction,
   type LoaderFunction,
   data,
   redirect,
-} from "react-router";
+} from "@remix-run/react";
+import { cognito, loadAuth } from "auth";
+import { parseWithValibot } from "conform-to-valibot";
+import { appRoutes } from "constants/routes";
 import { authStore } from "store/auth";
 import { isError, signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";

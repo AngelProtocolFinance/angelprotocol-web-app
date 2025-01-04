@@ -1,5 +1,5 @@
 import type { Endow } from "@better-giving/endowment";
-import { useOutletContext } from "react-router";
+import { useOutletContext } from "@remix-run/react";
 import type { UserV2 } from "types/auth";
 
 export type AdminContext = {

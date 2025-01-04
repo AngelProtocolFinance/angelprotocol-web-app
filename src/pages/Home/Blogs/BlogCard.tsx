@@ -1,7 +1,7 @@
+import { Link } from "@remix-run/react";
 import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router";
 import type { Wordpress } from "types/wordpress";
 
 const BlogCard = (props: Wordpress.Post) => {

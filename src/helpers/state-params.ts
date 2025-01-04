@@ -1,4 +1,4 @@
-import type { LoaderFunction, To } from "react-router";
+import type { LoaderFunction, To } from "@remix-run/react";
 
 export const decodeState = <T>(base64: string | null) => {
   try {

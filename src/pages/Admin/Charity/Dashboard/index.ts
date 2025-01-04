@@ -1,6 +1,6 @@
+import type { RouteObject } from "@remix-run/react";
 import { adminRoutes } from "constants/routes";
 import { convert } from "helpers/route";
-import type { RouteObject } from "react-router";
 
 export const dashboardRoute: RouteObject = {
   id: "dashboard",

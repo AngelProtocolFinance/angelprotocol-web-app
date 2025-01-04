@@ -1,13 +1,13 @@
+import {
+  type ActionFunction,
+  type LoaderFunction,
+  redirect,
+} from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
 import { loadAuth, redirectToAuth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
-import {
-  type ActionFunction,
-  type LoaderFunction,
-  redirect,
-} from "react-router";
 import { parse } from "valibot";
 import { schema } from "./VideoEditor";
 
