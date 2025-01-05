@@ -51,7 +51,10 @@ class Storage extends Util {
       return null;
 
     if (token_expiry < new Date().toISOString()) {
-      session.flash("error", "Session expired");
+      session.unset("bg_token_id");
+      session.unset("bg_token_access");
+      session.unset("bg_token_refresh");
+      session.unset("bg_token_expiry");
       return commitSession(session);
     }
 

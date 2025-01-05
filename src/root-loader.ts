@@ -1,3 +1,4 @@
+import { Buffer } from "node:buffer";
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { data, redirect } from "@remix-run/react";
 import { ap, ver } from "api/api";
@@ -42,7 +43,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     if (!res) return redirect(url.toString());
 
     //redirect to requestor
-    const parsed = JSON.parse(window.atob(state)) as OAuthState;
+    const parsed = JSON.parse(
+      Buffer.from(state, "base64").toString()
+    ) as OAuthState;
     url.searchParams.delete("code");
     url.searchParams.delete("state");
 
@@ -57,6 +60,7 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   }
 
   const auth = await cognito.retrieve(request);
+  console.log({ auth });
   if (!auth) return null;
   if (typeof auth === "string") {
     return data(null, {
