@@ -5,6 +5,7 @@ import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { userEndows } from "api/get/user-endows";
 import { cognito, oauth } from "auth/cognito";
+import { getToast } from "remix-toast";
 import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
@@ -59,8 +60,9 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return redirect(url.toString(), { headers: { "Set-Cookie": res } });
   }
 
+  const { toast, headers } = await getToast(request);
+
   const auth = await cognito.retrieve(request);
-  console.log({ auth });
   if (!auth) return null;
   if (typeof auth === "string") {
     return data(null, {
@@ -68,9 +70,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     });
   }
   const user = cognito.toUser(auth);
-  return data({
+  const detailed: DetailedUser = {
     ...user,
     bookmarks: getBookmarks(user),
     orgs: userEndows(user),
-  } satisfies DetailedUser);
+  };
+  return data({ ...detailed, toast }, { headers });
 };
