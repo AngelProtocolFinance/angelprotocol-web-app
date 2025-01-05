@@ -25,6 +25,7 @@ async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
 }
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
+  console.log("app loads");
   /** handle oauth if applicable */
   const url = new URL(request.url);
   const code = url.searchParams.get("code");

@@ -1,53 +1,18 @@
-import { logger } from "helpers";
 import { decodeJwt } from "jose";
-import { type UserV2, isError } from "types/auth";
-import { cognito } from "./cognito";
+import type { UserV2 } from "types/auth";
+import type { Token } from "./session";
 
-export const loadAuth = async (): Promise<UserV2 | null> => {
-  try {
-    /// FROM PERSISTED ///
-    if (cognito.token && typeof cognito.token !== "string") {
-      return userFromTokens(
-        cognito.token.id,
-        cognito.token.access,
-        cognito.token.refresh
-      );
-    }
-
-    /// NEAR EXPIRATION ///
-    if (cognito.token && typeof cognito.token === "string") {
-      const auth = await cognito.refresh(cognito.token);
-      if (isError(auth)) return null;
-
-      return userFromTokens(
-        auth.AuthenticationResult.IdToken,
-        auth.AuthenticationResult.AccessToken,
-        auth.AuthenticationResult.RefreshToken
-      );
-    }
-
-    return null;
-  } catch (err) {
-    logger.error(err);
-    return null;
-  }
-};
-
-function userFromTokens(
-  idToken: string,
-  accessToken: string,
-  refreshToken: string
-): UserV2 {
+export function userFromToken(token: Token): UserV2 {
   const {
     endows = "",
     "cognito:groups": groups = [],
     ...p
-  }: any = decodeJwt(idToken);
+  }: any = decodeJwt(token.bg_token_id);
 
   return {
-    idToken,
-    accessToken,
-    refreshToken,
+    idToken: token.bg_token_id,
+    accessToken: token.bg_token_access,
+    refreshToken: token.bg_token_refresh,
     groups,
     endowments: endows.split(",").map(Number) ?? [],
     email: p.email,

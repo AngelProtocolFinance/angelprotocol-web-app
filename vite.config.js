@@ -5,9 +5,12 @@ import { vitePlugin as remix } from "@remix-run/dev";
 export default defineConfig({
   base: "/",
   server: { port: 4200 },
+  css: {
+    devSourcemap: false,
+  },
   plugins: [
     remix({
-      "appDirectory": "src",
+      appDirectory: "src",
       future: {
         v3_fetcherPersist: true,
         v3_relativeSplatPath: true,
@@ -17,7 +20,8 @@ export default defineConfig({
       },
       routes(defineRoutes) {
         return defineRoutes((r) => {
-          r("/", "../src/pages//Home/index.ts", { index: true });
+          r("/", "./pages/Home/index.ts", { index: true });
+          r("login", "./pages/Signin.tsx");
         });
       },
     }),

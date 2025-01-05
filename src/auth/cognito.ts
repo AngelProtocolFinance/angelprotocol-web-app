@@ -1,6 +1,9 @@
+import { Buffer } from "node:buffer";
 import { IS_TEST } from "constants/env";
 import { logger } from "helpers/logger";
 import type { AuthError } from "types/auth";
+import { type Stored, type Token, commitSession, getSession } from "./session";
+import { Util } from "./util";
 
 const clientId = IS_TEST
   ? "7bl9gfckbneg0udsmkvsu48ssg"
@@ -31,71 +34,40 @@ interface OauthTokenRes {
   token_type: string;
 }
 
-/** type: bearer */
-interface Token {
-  id: string;
-  access: string;
-  refresh: string;
-  /** iso-date */
-  expiry: string;
+interface Session extends Token {
+  session: Stored;
 }
+/** null: no user, string (expired): cookie to set */
+type Auth = Session | null | string;
+class Storage extends Util {
+  async retrieve(request: Request): Promise<Auth> {
+    const session = await getSession(request.headers.get("Cookie"));
+    const token_id = session.get("bg_token_id");
+    const token_access = session.get("bg_token_access");
+    const token_refresh = session.get("bg_token_refresh");
+    const token_expiry = session.get("bg_token_expiry");
 
-const FIVE_MINUTES_MS = 5 * 60 * 1000;
-
-type Session = Token | null | string;
-class Storage {
-  private static key = "bg_session";
-
-  protected retrieve(): Token | null {
-    const sesh = sessionStorage.getItem(Storage.key);
-    if (!sesh) return null;
-
-    const token = JSON.parse(sesh) as Token;
-    if (token.expiry < new Date().toISOString()) {
-      sessionStorage.removeItem(Storage.key);
+    if (!token_id || !token_access || !token_refresh || !token_expiry)
       return null;
+
+    if (token_expiry < new Date().toISOString()) {
+      session.flash("error", "Session expired");
+      return commitSession(session);
     }
 
-    return token;
+    const retrieved: Auth = {
+      bg_token_id: token_id,
+      bg_token_access: token_access,
+      bg_token_refresh: token_refresh,
+      bg_token_expiry: token_expiry,
+      session,
+    };
+
+    return retrieved;
   }
 
-  get token(): Session {
-    const token = this.retrieve();
-    if (!token) return null;
-
-    if (new Date(token.expiry).getTime() - Date.now() < FIVE_MINUTES_MS) {
-      return token.refresh;
-    }
-    return token;
-  }
-  private expiry(duration: number) {
+  expiry(duration: number) {
     return new Date(Date.now() + duration * 1000).toISOString();
-  }
-
-  protected save(token: AuthSuccess<"new">["AuthenticationResult"]) {
-    sessionStorage.setItem(
-      Storage.key,
-      JSON.stringify({
-        id: token.IdToken,
-        access: token.AccessToken,
-        refresh: token.RefreshToken,
-        expiry: this.expiry(token.ExpiresIn),
-      })
-    );
-  }
-  protected saveOAuth(token: OauthTokenRes) {
-    sessionStorage.setItem(
-      Storage.key,
-      JSON.stringify({
-        id: token.id_token,
-        access: token.access_token,
-        refresh: token.refresh_token,
-        expiry: this.expiry(token.expires_in),
-      })
-    );
-  }
-  protected clear() {
-    sessionStorage.removeItem(Storage.key);
   }
 }
 
@@ -127,7 +99,11 @@ class Cognito extends Storage {
     return res.json() as Promise<AuthError>;
   }
 
-  async initiate(username: string, password: string) {
+  async initiate(
+    username: string,
+    password: string,
+    cookieHeader: string | null
+  ) {
     const res = await fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("InitiateAuth"),
@@ -143,12 +119,19 @@ class Cognito extends Storage {
     if (!res.ok) {
       return res.json() as Promise<AuthError<"UserNotConfirmedException">>;
     }
-    const data: AuthSuccess<"new"> = await res.json();
-    this.save(data.AuthenticationResult);
-    return data;
+
+    const { AuthenticationResult: r }: AuthSuccess<"new"> = await res.json();
+    const session = await getSession(cookieHeader);
+    session.set("bg_token_id", r.IdToken);
+    session.set("bg_token_access", r.AccessToken);
+    session.set("bg_token_refresh", r.RefreshToken);
+    session.set("bg_token_expiry", this.expiry(r.ExpiresIn));
+
+    // const data: AuthSuccess<"new"> = await res.json();
+    return commitSession(session);
   }
 
-  async refresh(refreshToken: string) {
+  async refresh(refreshToken: string, cookieHeader: string | null) {
     const res = await fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("InitiateAuth"),
@@ -164,10 +147,15 @@ class Cognito extends Storage {
       return res.json() as Promise<AuthError>;
     }
 
-    const data: AuthSuccess<"refresh"> = await res.json();
-    this.save({ ...data.AuthenticationResult, RefreshToken: refreshToken });
+    const { AuthenticationResult: r }: AuthSuccess<"refresh"> =
+      await res.json();
+    const session = await getSession(cookieHeader);
+    session.set("bg_token_id", r.IdToken);
+    session.set("bg_token_access", r.AccessToken);
+    session.set("bg_token_refresh", r.RefreshToken);
+    session.set("bg_token_expiry", this.expiry(r.ExpiresIn));
 
-    return data;
+    return commitSession(session);
   }
 
   async signup(
@@ -250,20 +238,21 @@ class Cognito extends Storage {
     });
   }
 
-  async signOut(accessToken: string) {
-    return fetch(this.endpoint, {
+  async signOut(session: Session): Promise<string | AuthError> {
+    const res = await fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("GlobalSignOut"),
       body: this.body({
-        AccessToken: accessToken,
+        AccessToken: session.bg_token_access,
       }),
-    }).then<"success" | AuthError>((res) => {
-      if (res.ok) {
-        this.clear();
-        return "success";
-      }
-      return res.json() as any;
     });
+
+    if (res.ok) {
+      session.session.flash("error", "logged out");
+      return commitSession(session.session);
+    }
+
+    return res.json() as any;
   }
 
   async updateUserAttributes(attributes: object[], accessToken: string) {
@@ -282,7 +271,6 @@ class Cognito extends Storage {
 }
 
 class OAuth extends Storage {
-  static redirectUri = window.location.origin + "/";
   private domain: string;
   private clientId: string;
 
@@ -294,7 +282,7 @@ class OAuth extends Storage {
       : "https://bettergiving.auth.us-east-1.amazoncognito.com";
   }
 
-  initiateUrl(state: string) {
+  initiateUrl(state: string, origin: string) {
     const scopes = [
       "email",
       "openid",
@@ -305,16 +293,16 @@ class OAuth extends Storage {
     const params = new URLSearchParams({
       response_type: "code",
       client_id: this.clientId,
-      redirect_uri: OAuth.redirectUri,
+      redirect_uri: origin + "/",
       identity_provider: "Google",
-      state: window.btoa(state),
+      state: Buffer.from(state).toString("base64"),
       scope: scopes.join(" "),
     });
 
     return `${this.domain}/oauth2/authorize?${params.toString()}`;
   }
 
-  async exchange(code: string) {
+  async exchange(code: string, origin: string, cookieHeader: string | null) {
     const res = await fetch(this.domain + "/oauth2/token", {
       method: "POST",
       headers: { "content-type": "application/x-www-form-urlencoded" },
@@ -322,7 +310,7 @@ class OAuth extends Storage {
         grant_type: "authorization_code",
         client_id: this.clientId,
         code,
-        redirect_uri: OAuth.redirectUri,
+        redirect_uri: origin + "/",
       }),
     });
 
@@ -331,8 +319,12 @@ class OAuth extends Storage {
       return null;
     }
     const data: OauthTokenRes = await res.json();
-    this.saveOAuth(data);
-    return data;
+    const session = await getSession(cookieHeader);
+    session.set("bg_token_access", data.access_token);
+    session.set("bg_token_id", data.id_token);
+    session.set("bg_token_expiry", this.expiry(data.expires_in));
+    session.set("bg_token_refresh", data.refresh_token);
+    return commitSession(session);
   }
 }
 

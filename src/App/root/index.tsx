@@ -1,8 +1,8 @@
 import Loader from "components/Loader";
 
 export { default } from "./layout";
-export { clientLoader } from "./loader";
-export { clientAction } from "./action";
+export { loader } from "./loader";
+export { action } from "./action";
 export { ErrorElement as ErrorBoundary } from "errors/ErrorElement";
 
 export const HydrateFallback = () => (

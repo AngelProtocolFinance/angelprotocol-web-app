@@ -1,17 +1,16 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
-  type ActionFunction,
   Link,
-  type LoaderFunction,
   data,
   redirect,
   useFetcher,
   useLoaderData,
   useSearchParams,
 } from "@remix-run/react";
+
 import googleIcon from "assets/icons/google.svg";
 import { cognito, oauth } from "auth/cognito";
-import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Seo from "components/Seo";
@@ -27,19 +26,27 @@ import { authStore } from "store/auth";
 import { type ActionData, isFormErr } from "types/action";
 import { type OAuthState, isError, signIn } from "types/auth";
 
-export const clientAction: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request }) => {
   try {
+    const session = await cognito.retrieve(request);
+    if (session && typeof session !== "string") {
+      return redirect(appRoutes.marketplace);
+    }
+
     const from = new URL(request.url);
     const fromState = decodeState(from.searchParams.get("_s"));
     const r = getAuthRedirect(fromState as any);
 
     const fv = await request.formData();
     if (fv.get("intent") === "oauth") {
+      const origin = new URL(request.url);
       const routeState: OAuthState = {
         pathname: r.path,
         data: r.data,
       };
-      return redirect(oauth.initiateUrl(JSON.stringify(routeState)));
+      return redirect(
+        oauth.initiateUrl(JSON.stringify(routeState), origin.origin)
+      );
     }
 
     const payload = parseWithValibot(fv, { schema: signIn });
@@ -48,7 +55,8 @@ export const clientAction: ActionFunction = async ({ request }) => {
 
     const res = await cognito.initiate(
       payload.value.email.toLowerCase(),
-      payload.value.password
+      payload.value.password,
+      request.headers.get("Cookie")
     );
 
     if (isError(res)) {
@@ -70,17 +78,17 @@ export const clientAction: ActionFunction = async ({ request }) => {
       to.searchParams.set("_s", encoded);
     }
 
-    return redirect(to.toString());
+    return redirect(to.toString(), { headers: { "Set-Cookie": res } });
   } catch (err) {
     console.error(err);
     return data<ActionData<any>>({ __error: "Unknown error occured" }, 500);
   }
 };
 
-export const clientLoader: LoaderFunction = async ({
+export const loader: LoaderFunction = async ({
   request,
 }): Promise<Response | unknown> => {
-  const auth = await loadAuth();
+  const auth = await cognito.retrieve(request);
   if (auth) return redirect(appRoutes.marketplace);
 
   const url = new URL(request.url);
