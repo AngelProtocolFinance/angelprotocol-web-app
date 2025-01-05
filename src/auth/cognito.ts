@@ -35,7 +35,7 @@ interface OauthTokenRes {
 }
 
 interface Session extends Token {
-  session: Stored;
+  interface: Stored;
 }
 /** null: no user, string (expired): cookie to set */
 type Auth = Session | null | string;
@@ -51,10 +51,7 @@ class Storage extends Util {
       return null;
 
     if (token_expiry < new Date().toISOString()) {
-      session.unset("bg_token_id");
-      session.unset("bg_token_access");
-      session.unset("bg_token_refresh");
-      session.unset("bg_token_expiry");
+      this.unset(session);
       return commitSession(session);
     }
 
@@ -63,7 +60,7 @@ class Storage extends Util {
       bg_token_access: token_access,
       bg_token_refresh: token_refresh,
       bg_token_expiry: token_expiry,
-      session,
+      interface: session,
     };
 
     return retrieved;
@@ -251,8 +248,8 @@ class Cognito extends Storage {
     });
 
     if (res.ok) {
-      session.session.flash("error", "logged out");
-      return commitSession(session.session);
+      this.unset(session.interface);
+      return commitSession(session.interface);
     }
 
     return res.json() as any;

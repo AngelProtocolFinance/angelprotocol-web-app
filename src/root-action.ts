@@ -1,11 +1,8 @@
 import type { ActionFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { redirectToAuth } from "auth";
 import { cognito } from "auth/cognito";
 import { parseWithValibot } from "conform-to-valibot";
-import { appRoutes } from "constants/routes";
-import { isError } from "types/auth";
 import { emailSubs } from "types/hubspot-subscription";
 
 export const action: ActionFunction = async ({ request }) => {
@@ -32,16 +29,6 @@ export const action: ActionFunction = async ({ request }) => {
   if (!auth || typeof auth === "string") return redirectToAuth(request);
 
   //authenticated requests
-
-  if (intent === "logout") {
-    const res = await cognito.signOut(auth);
-    if (isError(res)) return { ok: false, body: res.message };
-    return redirect(appRoutes.marketplace, {
-      headers: {
-        "Set-Cookie": res,
-      },
-    });
-  }
 
   if (intent === "toggle-bookmark") {
     const data = await request.formData();

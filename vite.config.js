@@ -22,7 +22,8 @@ export default defineConfig({
       },
       routes(defineRoutes) {
         return defineRoutes((r) => {
-          r("/", "./pages/Home/index.ts", { index: true });
+          r("", "./pages/Home/index.ts", { index: true });
+          r("logout", "./pages/logout.ts");
           r("login", "./pages/Signin.tsx");
         });
       },

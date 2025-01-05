@@ -39,6 +39,7 @@ nProgress.configure({
 });
 
 export { loader } from "./root-loader";
+export { action } from "./root-action";
 
 export function HydrateFallback() {
   return <Layout>loading..</Layout>;
