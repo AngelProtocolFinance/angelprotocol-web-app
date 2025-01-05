@@ -1,4 +1,5 @@
-import { createCookieSessionStorage } from "@remix-run/node";
+import { createClient } from "@vercel/kv";
+import { createKvSessionStorage } from "@vercel/remix";
 
 /** type: bearer */
 export interface Token {
@@ -13,8 +14,14 @@ interface FlashData {
   error: string;
 }
 
+const kv = createClient({
+  url: process.env.KV_REST_API_URL,
+  token: process.env.KV_REST_API_TOKEN,
+});
+
 export const { getSession, commitSession, destroySession } =
-  createCookieSessionStorage<Token, FlashData>({
+  createKvSessionStorage<Token, FlashData>({
+    kv,
     cookie: { name: "bg_session", secrets: [process.env.SESSION_SECRET!] },
   });
 
