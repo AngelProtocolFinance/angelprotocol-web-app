@@ -1,13 +1,21 @@
-import type { LoaderFunction } from "@remix-run/react";
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { ap, ver } from "api/api";
+import { metas } from "helpers/seo";
 import type { EndowCardsPage } from "types/aws";
 
 export { default } from "./DonorInfo";
 
-export const clientLoader: LoaderFunction = async () => {
+export const meta: MetaFunction = () =>
+  metas({
+    title: "For Donors",
+    description:
+      "Easily support grassroots organizations all over the world with card, crypto, stock, and DAF gifts that keep on giving. As a nonprofit, we charge no platform fees.",
+  });
+
+export const loader: LoaderFunction = async () => {
   return ap
     .get<EndowCardsPage>(`${ver(1)}/cloudsearch-nonprofits`, {
-      searchParams: { page: 1, claimed: true },
+      searchParams: { page: 1, claimed: true, query: "" },
     })
     .json()
     .then((data) => data.items);

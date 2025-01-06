@@ -25,6 +25,7 @@ export default defineConfig({
             r("login", "./pages/Signin.tsx");
             r("logout", "./pages/logout.ts");
             r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
+            r("donor", "./pages/informational/DonorInfo/index.ts");
             r("marketplace", "./pages/Marketplace/index.tsx", () => {
               r("filter", "./pages/Marketplace/Filter/index.ts");
             });
