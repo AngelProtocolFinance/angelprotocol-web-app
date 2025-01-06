@@ -1,17 +1,17 @@
+import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
   Link,
-  type LoaderFunction,
   useFetcher,
   useLoaderData,
   useSearchParams,
 } from "@remix-run/react";
 import { posts } from "api/get/wp-posts";
 import Media from "components/Media";
-import Seo from "components/Seo";
+import { metas } from "helpers/seo";
 import { useEffect, useState } from "react";
 import type { Wordpress } from "types/wordpress";
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const currPage = +(url.searchParams.get("page") ?? "1");
   const [items, total] = await posts(currPage);
@@ -23,6 +23,8 @@ export const clientLoader: LoaderFunction = async ({ request }) => {
     nextPageNum: currPage * itemsPerPage < total ? currPage + 1 : undefined,
   } satisfies Wordpress.PostPage;
 };
+export const meta: MetaFunction = () =>
+  metas({ title: "Blog - Better Giving", description: "Checkout the latest" });
 
 export default function Posts() {
   const [params] = useSearchParams();
@@ -39,7 +41,6 @@ export default function Posts() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 content-start padded-container min-h-screen pb-6">
-      <Seo title="Blog - Better Giving" description="Checkout the latest" />
       <h1 className="font-bold uppercase col-span-full text-2xl lg:text-3xl break-words mt-6">
         Posts
       </h1>

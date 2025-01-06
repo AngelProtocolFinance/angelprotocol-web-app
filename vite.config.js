@@ -28,6 +28,8 @@ export default defineConfig({
             r("donor", "./pages/informational/DonorInfo/index.ts");
             r("wp-plugin", "./pages/informational/WpPlugin.tsx");
             r("about","./pages/informational/about/index.tsx")
+            r("blog","./pages/Blog/Posts.tsx")
+            r("blog/:slug","./pages/Blog/Post.tsx")
             r("marketplace", "./pages/Marketplace/index.tsx", () => {
               r("filter", "./pages/Marketplace/Filter/index.ts");
             });

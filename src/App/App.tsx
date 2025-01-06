@@ -4,13 +4,11 @@ import { convert } from "helpers/route";
 import { adminRoute } from "pages/Admin";
 import { applicationRoute } from "pages/Application";
 import { bankApplicationRoute } from "pages/BankingApplication";
-import { routes as blogRoutes } from "pages/Blog";
 import { legalRoutes } from "pages/Legal";
 import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { signUpRoute } from "pages/SignUp";
 import { userDashboardRoute } from "pages/UserDashboard";
-import { infoRoutes } from "pages/informational";
 
 const donateThanks = import("pages/DonateThanks").then(convert);
 const stripePaymentStatus = import("pages/StripePaymentStatus").then(convert);
@@ -28,9 +26,7 @@ const widgetRoutes: RO[] = [
 const _appRoutes: RO[] = [
   regRoute,
   userDashboardRoute,
-  ...blogRoutes,
   ...legalRoutes,
-  ...infoRoutes,
   {
     path: appRoutes.banking_applications,
     children: [
