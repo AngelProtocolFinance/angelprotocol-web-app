@@ -4,10 +4,6 @@ import { convert } from "helpers/route";
 
 export const infoRoutes: RouteObject[] = [
   {
-    path: appRoutes.nonprofit_info,
-    lazy: () => import("./NonprofitInfo").then(convert),
-  },
-  {
     path: appRoutes.donor_info,
     lazy: () => import("./DonorInfo").then(convert),
   },

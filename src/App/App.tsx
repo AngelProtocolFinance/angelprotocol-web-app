@@ -31,7 +31,6 @@ const _appRoutes: RO[] = [
   ...blogRoutes,
   ...legalRoutes,
   ...infoRoutes,
-  { path: appRoutes.profile + "/:id", ...profileRoute },
   {
     path: appRoutes.banking_applications,
     children: [
