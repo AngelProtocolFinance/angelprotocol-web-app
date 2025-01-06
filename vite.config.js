@@ -27,6 +27,7 @@ export default defineConfig({
             r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
             r("donor", "./pages/informational/DonorInfo/index.ts");
             r("wp-plugin", "./pages/informational/WpPlugin.tsx");
+            r("about","./pages/informational/about/index.tsx")
             r("marketplace", "./pages/Marketplace/index.tsx", () => {
               r("filter", "./pages/Marketplace/Filter/index.ts");
             });
