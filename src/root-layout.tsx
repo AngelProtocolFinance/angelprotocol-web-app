@@ -1,17 +1,9 @@
-import {
-  Links,
-  Meta,
-  Scripts,
-  useLoaderData,
-  useNavigation,
-} from "@remix-run/react";
+import { Links, Meta, Scripts, useNavigation } from "@remix-run/react";
 import nProgress from "nprogress";
 import { type PropsWithChildren, useEffect } from "react";
 import { ScrollRestoration } from "react-router-dom";
-import { Toaster, toast as notify } from "sonner";
 
 export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
-  const { toast } = useLoaderData<any>() ?? {};
   const transition = useNavigation();
   useEffect(() => {
     nProgress.configure({ showSpinner: false });
@@ -22,14 +14,6 @@ export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
     else nProgress.start();
   }, [transition.state]);
 
-  useEffect(() => {
-    if (toast?.type === "error") {
-      notify.error(toast.message);
-    }
-    if (toast?.type === "success") {
-      notify.success(toast.message);
-    }
-  }, [toast]);
   return (
     <html lang="en">
       <head>
@@ -41,7 +25,6 @@ export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
         <ScrollRestoration />
         {children}
         <Scripts />
-        <Toaster richColors position="top-right" closeButton />
       </body>
     </html>
   );

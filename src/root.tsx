@@ -1,6 +1,8 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import { Outlet } from "@remix-run/react";
+import { Outlet, useRouteLoaderData } from "@remix-run/react";
 import nProgressStyles from "nprogress/nprogress.css?url";
+import { useEffect } from "react";
+import { Toaster, toast as notify } from "sonner";
 import laira from "./assets/images/flying-character.png";
 import cc from "./cookie-consent.css?url";
 import tailwind from "./index.css?url";
@@ -53,5 +55,19 @@ export function HydrateFallback() {
 }
 
 export default function Root() {
-  return <Outlet />;
+  const { toast } = useRouteLoaderData<any>("root") ?? {};
+  useEffect(() => {
+    if (toast?.type === "error") {
+      notify.error(toast.message);
+    }
+    if (toast?.type === "success") {
+      notify.success(toast.message);
+    }
+  }, [toast]);
+  return (
+    <>
+      <Outlet />
+      <Toaster richColors position="top-right" closeButton />
+    </>
+  );
 }

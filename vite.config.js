@@ -21,9 +21,11 @@ export default defineConfig({
       routes(defineRoutes) {
         return defineRoutes((r) => {
           r("", "./pages/Home/index.ts", { index: true });
-          r("logout", "./pages/logout.ts");
-          r("login", "./pages/Signin.tsx");
-          r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
+          r("", "./App/Layout.tsx", () => {
+            r("login", "./pages/Signin.tsx");
+            r("logout", "./pages/logout.ts");
+            r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
+          });
         });
       },
     }),
