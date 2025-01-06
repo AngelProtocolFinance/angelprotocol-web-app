@@ -1,11 +1,14 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
-import "./index.css";
-import "./cookie-consent.css";
 import nProgress from "nprogress";
 import { Layout } from "root-layout";
+import laira from "./assets/images/flying-character.png";
+import cc from "./cookie-consent.css?url";
+import tailwind from "./index.css?url";
 
 export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: tailwind },
+  { rel: "stylesheet", href: cc },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -42,7 +45,16 @@ export { loader } from "./root-loader";
 export { action } from "./root-action";
 
 export function HydrateFallback() {
-  return <Layout>loading..</Layout>;
+  return (
+    <Layout>
+      <img
+        className="place-self-center animate-pulse"
+        src={laira}
+        width={300}
+        height={300}
+      />
+    </Layout>
+  );
 }
 
 export default function Root() {

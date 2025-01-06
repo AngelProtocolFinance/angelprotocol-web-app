@@ -12,7 +12,10 @@ import { Toaster, toast as notify } from "sonner";
 nProgress.configure({
   showSpinner: false,
 });
-export function Layout({ children }: PropsWithChildren) {
+export function Layout({
+  children,
+  classes,
+}: PropsWithChildren<{ classes?: string }>) {
   const { toast } = useLoaderData<any>() ?? {};
   const transition = useNavigation();
   useEffect(() => {
@@ -38,7 +41,7 @@ export function Layout({ children }: PropsWithChildren) {
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className={classes + " grid min-h-screen grid-rows-[1fr_0]"}>
         <ScrollRestoration />
         {children}
         <Scripts />
