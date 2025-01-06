@@ -2,7 +2,6 @@ import type { Program as TProgram } from "@better-giving/endowment";
 import { Link } from "@remix-run/react";
 import Image from "components/Image";
 import { RichText } from "components/RichText";
-import { clientOnly } from "components/client-only";
 
 export default function Programs({ programs }: { programs: TProgram[] }) {
   return (
@@ -24,13 +23,11 @@ function Program(props: TProgram) {
       <Image src={props.banner} className="h-64 w-full object-cover" />
       <div className="p-5">
         <p className="text-lg font-bold mb-3 block">{props.title}</p>
-        {clientOnly(
-          <RichText
-            content={{ value: props.description }}
-            readOnly
-            classes={{ field: "overflow-hidden h-32" }}
-          />
-        )}
+        <RichText
+          content={{ value: props.description }}
+          readOnly
+          classes={{ field: "overflow-hidden h-32" }}
+        />
       </div>
     </div>
   );

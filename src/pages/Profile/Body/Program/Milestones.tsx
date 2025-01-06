@@ -2,7 +2,6 @@ import type { Milestone as TMilestone } from "@better-giving/endowment";
 import Image from "components/Image";
 import { RichText } from "components/RichText";
 import { Info } from "components/Status";
-import { clientOnly } from "components/client-only";
 import { isEmpty } from "helpers";
 import Container from "../common/Container";
 
@@ -59,15 +58,13 @@ function Milestone(m: TMilestone) {
         />
       </h6>
       <div className="pl-6 sm:pl-8">
-        {clientOnly(
-          <RichText
-            content={{ value: m.description ?? "" }}
-            readOnly
-            classes={{
-              field: "text-navy-l1 dark:text-navy-l2 text-sm w-full",
-            }}
-          />
-        )}
+        <RichText
+          content={{ value: m.description ?? "" }}
+          readOnly
+          classes={{
+            field: "text-navy-l1 dark:text-navy-l2 text-sm w-full",
+          }}
+        />
       </div>
     </div>
   );

@@ -11,8 +11,7 @@ import { toDelta } from "./helpers";
 import type { Props } from "./types";
 
 type El = Pick<HTMLDivElement, "focus">;
-
-export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
+const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
   const style = unpack(classes);
   const [numChars, setNumChars] = useState(props.content.length ?? 0);
   const quillRef = useRef<Quill>();
@@ -86,3 +85,5 @@ export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
     </div>
   );
 });
+
+export default RichText;

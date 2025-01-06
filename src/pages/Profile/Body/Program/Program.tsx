@@ -1,7 +1,6 @@
 import type { Program as IProgram } from "@better-giving/endowment";
 import { useLoaderData } from "@remix-run/react";
 import { RichText } from "components/RichText";
-import { clientOnly } from "components/client-only";
 import { prettyUsd } from "helpers";
 import Container from "../common/Container";
 import Milestones from "./Milestones";
@@ -12,13 +11,11 @@ export default function Program() {
   return (
     <div className="order-4 lg:col-span-2 w-full h-full grid items-start grid-rows-[auto_auto] gap-8 lg:grid-rows-1 lg:grid-cols-[1fr_auto]">
       <Container title={prog.title} expanded>
-        {clientOnly(
-          <RichText
-            content={{ value: prog.description }}
-            readOnly
-            classes={{ container: "m-6" }}
-          />
-        )}
+        <RichText
+          content={{ value: prog.description }}
+          readOnly
+          classes={{ container: "m-6" }}
+        />
         {prog.targetRaise ? (
           <TargetProgress
             target={prog.targetRaise}
