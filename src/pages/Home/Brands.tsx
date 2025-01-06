@@ -1,5 +1,5 @@
+import { Marquee } from "components/marquee";
 import { brands } from "content/brands";
-import Marquee from "react-fast-marquee";
 
 const Brands = () => {
   return (
