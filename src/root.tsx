@@ -1,6 +1,6 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
-import nProgress from "nprogress";
+import nProgressStyles from "nprogress/nprogress.css?url";
 import laira from "./assets/images/flying-character.png";
 import cc from "./cookie-consent.css?url";
 import tailwind from "./index.css?url";
@@ -8,6 +8,7 @@ import tailwind from "./index.css?url";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwind },
   { rel: "stylesheet", href: cc },
+  { rel: "stylesheet", href: nProgressStyles },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -35,10 +36,6 @@ export const meta: MetaFunction = () => [
   },
   { name: "charset", content: "UTF-8" },
 ];
-
-nProgress.configure({
-  showSpinner: false,
-});
 
 export { loader } from "./root-loader";
 export { action } from "./root-action";

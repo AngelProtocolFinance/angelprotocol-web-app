@@ -4,18 +4,20 @@ import { gsap } from "gsap";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import type React from "react";
+import { useEffect } from "react";
 import { Header } from "./header";
 import { InfoBubble } from "./info-bubble";
 import { Ball, Path, PathGradient } from "./path";
 import { timeline } from "./setup";
-
-gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
 
 interface AnimatedSVGProps {
   classes?: string;
 }
 
 export const AnimatedSVG: React.FC<AnimatedSVGProps> = ({ classes = "" }) => {
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+  }, []);
   useGSAP(() => {
     const mm = gsap.matchMedia();
     mm.add("(min-width:769px)", () => {

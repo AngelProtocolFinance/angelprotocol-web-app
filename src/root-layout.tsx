@@ -9,13 +9,12 @@ import nProgress from "nprogress";
 import { type PropsWithChildren, useEffect } from "react";
 import { ScrollRestoration } from "react-router-dom";
 import { Toaster, toast as notify } from "sonner";
-nProgress.configure({
-  showSpinner: false,
-});
+
 export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
   const { toast } = useLoaderData<any>() ?? {};
   const transition = useNavigation();
   useEffect(() => {
+    nProgress.configure({ showSpinner: false });
     // when the state is idle then we can to complete the progress bar
     if (transition.state === "idle") nProgress.done();
     // and when it's something else it means it's either submitting a form or
