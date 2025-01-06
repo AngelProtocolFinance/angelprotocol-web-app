@@ -57,16 +57,6 @@ const _appRoutes: RO[] = [
     path: appRoutes.reset_password,
     lazy: () => import("pages/ResetPassword").then(convert),
   },
-  {
-    path: appRoutes.marketplace,
-    lazy: () => import("pages/Marketplace").then(convert),
-    children: [
-      {
-        path: "filter",
-        lazy: () => import("pages/Marketplace/Filter").then(convert),
-      },
-    ],
-  },
   { path: appRoutes.marketplace + "/:id", ...profileRoute },
   {
     path: appRoutes.form_builder,
