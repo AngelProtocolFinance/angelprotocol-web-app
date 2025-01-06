@@ -1,5 +1,6 @@
 // import HeroBottom from "../@sections/HeroBottom";
 import Footer from "components/Footer";
+import Animation from "./Animation";
 import Benefits from "./Benefits";
 import Blogs from "./Blogs";
 import { BottomCta } from "./BottomCta";
@@ -21,7 +22,7 @@ export default function Home() {
       <Benefits />
       <Brands />
       <Feature1 />
-      {/* <Animation /> */}
+      <Animation />
       {/* <Video /> */}
       <Testimonials />
       <Blogs />

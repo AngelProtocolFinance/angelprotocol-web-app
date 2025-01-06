@@ -1,7 +1,6 @@
 import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
 import nProgress from "nprogress";
-import { Layout } from "root-layout";
 import laira from "./assets/images/flying-character.png";
 import cc from "./cookie-consent.css?url";
 import tailwind from "./index.css?url";
@@ -43,24 +42,19 @@ nProgress.configure({
 
 export { loader } from "./root-loader";
 export { action } from "./root-action";
+export { Layout } from "./root-layout";
 
 export function HydrateFallback() {
   return (
-    <Layout>
-      <img
-        className="place-self-center animate-pulse"
-        src={laira}
-        width={300}
-        height={300}
-      />
-    </Layout>
+    <img
+      className="place-self-center animate-pulse"
+      src={laira}
+      width={300}
+      height={300}
+    />
   );
 }
 
 export default function Root() {
-  return (
-    <Layout>
-      <Outlet />
-    </Layout>
-  );
+  return <Outlet />;
 }

@@ -6,9 +6,7 @@ import { vercelPreset } from "@vercel/remix/vite";
 export default defineConfig({
   base: "/",
   server: { port: 4200 },
-  css: {
-    devSourcemap: false,
-  },
+  css: { devSourcemap: false },
   plugins: [
     remix({
       presets: [vercelPreset()],
@@ -25,6 +23,7 @@ export default defineConfig({
           r("", "./pages/Home/index.ts", { index: true });
           r("logout", "./pages/logout.ts");
           r("login", "./pages/Signin.tsx");
+          r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
         });
       },
     }),
