@@ -9,7 +9,6 @@
 @import "../node_modules/swiper/swiper.min.css";
 @import "../node_modules/swiper/modules/pagination.min.css";
 @import "../node_modules/swiper/modules/navigation.min.css";
-@import "../node_modules/nprogress/nprogress.css";
 
 @import "tailwindcss/components";
 @import "./styles/components.css";
