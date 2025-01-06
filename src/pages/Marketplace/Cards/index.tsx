@@ -21,7 +21,6 @@ export default function Cards({ classes = "", firstPage }: Props) {
   const [params] = useSearchParams();
   const [items, setItems] = useState(firstPage.items);
 
-  /**  */
   useEffect(() => {
     if (!data || state === "loading") return;
     if (data) {

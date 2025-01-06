@@ -1,4 +1,5 @@
-import { type LoaderFunction, Outlet, useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@remix-run/node";
+import { Outlet, useLoaderData } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import Seo from "components/Seo";
 import type { EndowCardsPage } from "types/aws";
@@ -7,7 +8,7 @@ import Cards from "./Cards";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);
   const page = +(source.searchParams.get("page") ?? "1");
   const q = source.searchParams.get("query") ?? "";
@@ -23,7 +24,7 @@ export const clientLoader: LoaderFunction = async ({ request }) => {
 };
 
 export default function Marketplace() {
-  const page1 = useLoaderData() as EndowCardsPage;
+  const page1 = useLoaderData<EndowCardsPage>();
   return (
     <div className="w-full grid content-start pb-16">
       <Seo title="Marketplace" />
