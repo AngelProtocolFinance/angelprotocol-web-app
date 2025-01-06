@@ -1,8 +1,5 @@
-import {
-  type LoaderFunction,
-  useLoaderData,
-  useRouteLoaderData,
-} from "@remix-run/react";
+import type { LoaderFunction } from "@remix-run/node";
+import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { Link, Outlet } from "@remix-run/react";
 import { getEndowBalance } from "api/get/endow-balance";
 import BookmarkBtn from "components/BookmarkBtn";
@@ -16,7 +13,7 @@ import type { DetailedUser } from "types/auth";
 import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../ProfileContext";
 
-export const clientLoader: LoaderFunction = async ({ params }) =>
+export const loader: LoaderFunction = async ({ params }) =>
   getEndowBalance(params.id);
 
 export default function Body() {

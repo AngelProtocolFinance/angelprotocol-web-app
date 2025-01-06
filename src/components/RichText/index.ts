@@ -1,3 +1,3 @@
 export * from "./RichTextEditor";
 export { parseContent } from "./helpers";
-export { RichText } from "./RichText";
+export { RichText } from "./RichText.client";

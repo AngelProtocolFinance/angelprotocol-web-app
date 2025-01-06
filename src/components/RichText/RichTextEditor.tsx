@@ -5,7 +5,7 @@ import {
   useController,
   useFormContext,
 } from "react-hook-form";
-import { RichText } from "./RichText";
+import { RichText } from "./RichText.client";
 import type { Editable, EditorClasses } from "./types";
 
 export function RichTextEditor<T extends FieldValues>(

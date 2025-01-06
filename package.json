@@ -5,13 +5,13 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "tsc && remix vite:build",
+    "build": "remix vite:build",
     "start": "remix vite:dev",
     "test": "vitest",
     "lint": "biome check ./src",
     "format": "biome check --write src",
     "format-unsafe": "biome check --write-unsafe src",
-    "preview": "remix-serve ./build/server/index.js",
+    "preview": "remix-serve ./build/server/nodejs-eyJydW50aW1lIjoibm9kZWpzIn0/index.js",
     "prepare": "yarn lefthook install"
   },
   "browserslist": {

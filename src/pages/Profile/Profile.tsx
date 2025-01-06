@@ -8,7 +8,7 @@ import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import ProfileContext, { useProfileContext } from "./ProfileContext";
 
-export { profileLoader as clientLoader } from "./profile-loader";
+export { profileLoader as loader } from "./profile-loader";
 export default function Profile() {
   const data = useLoaderData() as Endow;
 

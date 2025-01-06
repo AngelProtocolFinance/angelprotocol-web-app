@@ -25,9 +25,20 @@ export default defineConfig({
             r("login", "./pages/Signin.tsx");
             r("logout", "./pages/logout.ts");
             r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
-            r("marketplace", "./pages/Marketplace/index.tsx",() => {
+            r("marketplace", "./pages/Marketplace/index.tsx", () => {
               r("filter", "./pages/Marketplace/Filter/index.ts");
-            })
+            });
+            r("marketplace/:id", "./pages/Profile/Profile.tsx", () => {
+              r("", "./pages/Profile/Body/Body.tsx", () => {
+                r("", "./pages/Profile/Body/GeneralInfo/index.ts", {
+                  index: true,
+                });
+                r(
+                  "program/:programId",
+                  "./pages/Profile/Body/Program/index.ts"
+                );
+              });
+            });
           });
         });
       },
