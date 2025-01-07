@@ -5,8 +5,7 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import LoaderRing from "components/LoaderRing";
-import { createNavLinkStyler } from "helpers";
-import { ChevronDown, MenuIcon } from "lucide-react";
+import { ChevronDown, CornerDownRight, MenuIcon } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import { logout } from "slices/auth";
 import { useGetter, useSetter } from "store/accessors";
@@ -46,7 +45,16 @@ export default function NavDropdown({ links }: Props) {
         <div className="p-5 grid gap-y-2 w-80">
           {links.map((link) => (
             <MenuItem key={link.title}>
-              <NavLink to={link.href} end={link.end} className={styler}>
+              <NavLink
+                to={link.href}
+                end={link.end}
+                className={({ isActive }) =>
+                  `${link.sub ? "flex items-center gap-2" : ""} text-blue font-body font-semibold w-full hover:underline hover:text-blue-d1 ${isActive ? "pointer-events-none text-navy-d4" : ""}`
+                }
+              >
+                {link.sub ? (
+                  <CornerDownRight strokeWidth={1.5} size={15} />
+                ) : null}{" "}
                 {link.title}
               </NavLink>
             </MenuItem>
@@ -64,7 +72,3 @@ export default function NavDropdown({ links }: Props) {
     </HuiMenu>
   );
 }
-
-const styles =
-  "text-blue font-body font-semibold w-full hover:underline hover:text-blue-d1";
-const styler = createNavLinkStyler(styles, "pointer-events-none text-navy-d4");

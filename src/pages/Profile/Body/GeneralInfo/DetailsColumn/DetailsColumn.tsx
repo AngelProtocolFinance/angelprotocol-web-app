@@ -6,6 +6,7 @@ import type { PropsWithChildren } from "react";
 import { Link } from "react-router-dom";
 import { useEndowBalanceQuery } from "services/apes";
 import { useProfileContext } from "../../../ProfileContext";
+import { Fundraisers } from "./Fundraisers";
 import Socials from "./Socials";
 import Tags from "./Tags";
 
@@ -62,6 +63,7 @@ export default function DetailsColumn({ className = "" }) {
             Claim this organization
           </Link>
         )}
+        <Fundraisers endowId={p.id} classes="mt-4" />
       </div>
     </div>
   );

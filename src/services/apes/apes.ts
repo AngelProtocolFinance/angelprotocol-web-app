@@ -1,3 +1,4 @@
+import type { DonationIntent } from "@better-giving/donation/intent";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import type { PaymentIntent } from "@stripe/stripe-js";
 import { fetchAuthSession } from "aws-amplify/auth";
@@ -8,7 +9,6 @@ import type { RootState } from "store/store";
 import { userIsSignedIn } from "types/auth";
 import type {
   Crypto,
-  DonationIntent,
   EndowmentBalances,
   FiatCurrencyData,
   GuestDonor,
@@ -23,12 +23,6 @@ type StripeRequiresBankVerification = {
   arrivalDate?: number;
   url?: string;
 };
-
-type StripePaymentIntentParams = DonationIntent.Fiat & {
-  type: "one-time" | "subscription";
-};
-
-type CreatePayPalOrderParams = DonationIntent.Fiat;
 
 export const apes = createApi({
   reducerPath: "apes",
@@ -68,18 +62,13 @@ export const apes = createApi({
         headers: { authorization: TEMP_JWT },
       }),
     }),
-    createCryptoIntent: builder.query<Crypto.NewPayment, DonationIntent.Crypto>(
-      {
-        query: (params) => ({
-          url: "crypto-intents",
-          method: "POST",
-          headers: { authorization: TEMP_JWT },
-          body: JSON.stringify(params),
-        }),
-      }
-    ),
-    intent: builder.query<DonationIntent.ToResume, { transactionId: string }>({
-      query: (params) => ({ url: `donation-intents/${params.transactionId}` }),
+    createCryptoIntent: builder.query<Crypto.NewPayment, DonationIntent>({
+      query: (params) => ({
+        url: "crypto-intents",
+        method: "POST",
+        headers: { authorization: TEMP_JWT },
+        body: JSON.stringify(params),
+      }),
     }),
     fiatCurrencies: builder.query<
       { currencies: DetailedCurrency[]; defaultCurr?: DetailedCurrency },
@@ -112,7 +101,7 @@ export const apes = createApi({
         };
       },
     }),
-    paypalOrder: builder.mutation<string, CreatePayPalOrderParams>({
+    paypalOrder: builder.mutation<string, DonationIntent>({
       query: (params) => ({
         url: "fiat-donation/paypal/orders/v2",
         method: "POST",
@@ -121,7 +110,7 @@ export const apes = createApi({
       }),
       transformResponse: (res: { orderId: string }) => res.orderId,
     }),
-    stripePaymentIntent: builder.query<string, StripePaymentIntentParams>({
+    stripePaymentIntent: builder.query<string, DonationIntent>({
       query: (data) => ({
         url: "fiat-donation/stripe",
         method: "POST",
@@ -129,7 +118,7 @@ export const apes = createApi({
       }),
       transformResponse: (res: { clientSecret: string }) => res.clientSecret,
     }),
-    chariotGrant: builder.query<string, DonationIntent.Fiat>({
+    chariotGrant: builder.query<string, DonationIntent>({
       query: (data) => ({
         url: "fiat-donation/chariot",
         method: "POST",
@@ -163,7 +152,6 @@ export const apes = createApi({
 export const {
   useCapturePayPalOrderMutation,
   useCreateCryptoIntentQuery,
-  useLazyIntentQuery,
   useFiatCurrenciesQuery,
   useStripePaymentIntentQuery,
   useLazyChariotGrantQuery,

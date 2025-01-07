@@ -23,7 +23,7 @@ const init: Init = {
   source: "bg-marketplace",
   mode: "live",
   recipient: {
-    id: 123456,
+    id: "123456",
     name: "Example Endowment",
   },
   config: null,
@@ -93,7 +93,7 @@ describe("Stripe form test", () => {
       source: "bg-marketplace",
       mode: "live",
       recipient: {
-        id: 123456,
+        id: "123456",
         name: "Example Endowment",
         progDonationsAllowed: false,
       },

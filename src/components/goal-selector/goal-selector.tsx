@@ -14,12 +14,12 @@ interface Props {
   onChange: (type: TargetType) => void;
   classes?: string;
 }
-export default function GoalSelector(props: Props) {
+export function GoalSelector(props: Props) {
   return (
     <RadioGroup
       value={props.value}
       onChange={props.onChange}
-      aria-label="Fundraiser goal"
+      aria-label="Fundraiser Goal"
       className={`${props.classes ?? ""} grid gap-y-2`}
     >
       {Object.entries(options).map(([value, label]) => (
@@ -36,8 +36,9 @@ export default function GoalSelector(props: Props) {
               <Tooltip
                 tip={
                   <Content className="max-w-xs text-center bg-navy-d4 p-4 text-gray-l4 text-xs shadow-lg rounded-lg">
-                    Goals automatically adjust as you reach them - starting of
-                    with $100, then $200, $400 and so on.
+                    Smart milestones will dynamically update your goal amount as
+                    donors contribute, providing a moving target that grows with
+                    your success
                     <Arrow />
                   </Content>
                 }

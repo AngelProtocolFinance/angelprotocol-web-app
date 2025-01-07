@@ -1,3 +1,4 @@
+import type { UserEndow } from "@better-giving/user";
 import Prompt from "components/Prompt";
 import { ErrorStatus, Info, LoadingStatus } from "components/Status";
 import { NativeCheckField as CheckField, Form } from "components/form";
@@ -9,7 +10,6 @@ import {
   useUserEndowsQuery,
 } from "services/aws/users";
 import type { AuthenticatedUser } from "types/auth";
-import type { UserEndow } from "types/aws";
 
 interface Props {
   user: AuthenticatedUser;

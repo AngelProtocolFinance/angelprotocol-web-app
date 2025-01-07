@@ -1,8 +1,8 @@
 import { APIs } from "constants/urls";
 import { version as v } from "services/helpers";
+import type { Bucket } from "types/lists";
 import { jwtToken } from "./jwt-token";
 
-export type Bucket = "endow-profiles" | "endow-reg" | "bg-user";
 export const bucketURL = "s3.amazonaws.com";
 
 const SPACES = /\s+/g;

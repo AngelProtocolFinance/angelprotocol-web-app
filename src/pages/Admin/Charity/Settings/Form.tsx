@@ -13,13 +13,13 @@ import {
   Form as F,
   NativeField as Field,
 } from "components/form";
+import { GoalSelector } from "components/goal-selector";
 import { BG_ID } from "constants/common";
 import { useErrorContext } from "contexts/ErrorContext";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import type { EndowmentSettingsAttributes } from "types/aws";
 import { useUpdateEndowment } from "../common";
-import GoalSelector from "./goal-selector";
 import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 
@@ -44,6 +44,7 @@ export default function Form(props: Props) {
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
       donateMethods: fill(props.donateMethods),
       increments: props.increments ?? [],
+      fundOptIn: props.fund_opt_in ?? false,
       target: toFormTarget(props.target),
     },
   });
@@ -77,6 +78,7 @@ export default function Form(props: Props) {
         async ({
           programDonateDisabled,
           donateMethods,
+          fundOptIn,
           target: fvTarget,
           ...fv
         }) => {
@@ -88,6 +90,7 @@ export default function Form(props: Props) {
 
           await updateEndow({
             ...fv,
+            fund_opt_in: fundOptIn,
             target: toTarget(fvTarget),
             progDonationsAllowed: !programDonateDisabled,
             id: props.id,
@@ -151,6 +154,19 @@ export default function Form(props: Props) {
           the donation flow by ticking the checkbox above and we will instead
           apply a fixed 1.5% fee to any donation amount you receive.
         </span>
+      </div>
+
+      <div>
+        <CheckField {...register("fundOptIn")} classes="font-medium">
+          Allow Fundraisers to be created on behalf of your nonprofit
+        </CheckField>
+        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+          Fundraising functionality is optional for all Better Giving
+          nonprofits. By opting in, people will be able to create fundraisers on
+          your behalf. You will receive 100% of funds raised for fundraisers
+          specific to your organization, and a percentage split of fundraisers
+          involving multiple nonprofits (such as curated giving indexes).
+        </p>
       </div>
 
       <h5 className="mt-12 text-2xl">Marketplace settings</h5>

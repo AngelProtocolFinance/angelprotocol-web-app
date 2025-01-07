@@ -2,23 +2,11 @@ import QueryLoader from "components/QueryLoader";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { idParamToNum } from "helpers";
-import { useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEndowment } from "services/aws/useEndowment";
-import type { DonationIntent } from "types/aws";
 import Content from "./Content";
 
 export function Component() {
-  const location = useLocation();
-
-  //setter of this should make sure that intent.endowmentId is the same as this page's param.id.
-  const intent = location.state as DonationIntent.ToResume | undefined;
-
-  //clear window.history.state after loading the intent into memory
-  useEffect(() => {
-    window.history.replaceState({}, "");
-  }, []);
-
   const { id } = useParams<{ id: string }>();
   const numId = idParamToNum(id);
 
@@ -42,7 +30,7 @@ export function Component() {
             image={profile.logo}
             url={`${BASE_URL}/donate/${profile.id}`}
           />
-          <Content endowment={profile} intent={intent} />
+          <Content endowment={profile} />
         </>
       )}
     </QueryLoader>

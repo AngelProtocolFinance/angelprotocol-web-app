@@ -89,7 +89,7 @@ function Form({ currencies, defaultCurr, ...props }: FormProps) {
       {(props.init.recipient.progDonationsAllowed ?? true) && (
         <ProgramSelector
           classes="mt-4"
-          endowId={props.init.recipient.id}
+          endowId={+props.init.recipient.id}
           program={rhf.program.value}
           onChange={rhf.program.onChange}
         />

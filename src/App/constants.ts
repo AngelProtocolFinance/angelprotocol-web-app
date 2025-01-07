@@ -10,18 +10,25 @@ type LINKS = {
 
 const HEADER_LINKS: Link[] = [
   { title: "Home", href: appRoutes.home },
+  { title: "For Nonprofits", href: appRoutes.nonprofit_info },
+  { title: "Register NPO", href: appRoutes.register, sub: true },
+  { title: "For Donors", href: appRoutes.donor_info },
   {
     title: "Marketplace",
     href: appRoutes.marketplace,
     end: true,
+    sub: true,
+  },
+  {
+    title: "Fundraisers",
+    href: appRoutes.funds,
+    end: true,
+    sub: true,
   },
   {
     title: "Blog",
     href: appRoutes.blog,
   },
-  { title: "Register NPO", href: appRoutes.register },
-  { title: "For Nonprofits", href: appRoutes.nonprofit_info },
-  { title: "For Donors", href: appRoutes.donor_info },
   { title: "About Us", href: appRoutes.about },
 ];
 
