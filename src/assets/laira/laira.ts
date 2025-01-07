@@ -14,6 +14,7 @@ import laira2 from "./laira-open-arms.png";
 import laira19 from "./laira-pointing.png";
 import laira9 from "./laira-presentation.png";
 import laira3 from "./laira-sitting.png";
+import laira22 from "./laira-standing-front.png";
 import laira4 from "./laira-standing.png";
 import laira20 from "./laira-trophy.png";
 import laira5 from "./laira-waiving.png";
@@ -25,6 +26,7 @@ export const laira = {
   openArms: laira2,
   sitting: laira3,
   standing: laira4,
+  standingFront: laira22,
   waiving: laira5,
   walking: laira6,
   negotiating: laira7,
