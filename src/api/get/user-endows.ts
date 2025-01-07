@@ -1,5 +1,5 @@
+import type { UserEndow } from "@better-giving/user";
 import type { UserV2 } from "types/auth";
-import type { UserEndow } from "types/aws";
 import { ap, ver } from "../api";
 
 export async function userEndows(user: UserV2): Promise<UserEndow[]> {
