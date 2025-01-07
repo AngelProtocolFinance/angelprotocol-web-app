@@ -1,3 +1,4 @@
+import type { DonationIntent } from "@better-giving/donation/intent";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
 import ContentLoader from "components/ContentLoader";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
@@ -23,12 +24,6 @@ export default function Checkout(props: StripeCheckoutStep) {
 
   const [{ isPending }] = usePayPalScriptReducer();
   const [state, setState] = useState<"loading" | "error">();
-
-  // const [captureOrder, { isLoading: isCapturingOrder }] =
-  //   useCapturePayPalOrderMutation();
-
-  // const [createOrder, { isLoading: isCreatingOrder }] =
-  //   usePaypalOrderMutation();
 
   if (isPending) return <ContentLoader className="rounded h-10 w-40" />;
 
@@ -81,24 +76,37 @@ export default function Checkout(props: StripeCheckoutStep) {
       }}
       createOrder={async () => {
         setState("loading");
-        const id = await createOrder({
-          transactionId: init.intentId,
-          amount: +details.amount,
-          tipAmount: tip?.value ?? 0,
-          feeAllowance,
-          currency: details.currency.code,
-          endowmentId: init.recipient.id,
-          splitLiq: 0,
+        const intent: DonationIntent = {
+          amount: {
+            amount: +details.amount,
+            tip: tip?.value ?? 0,
+            feeAllowance,
+            currency: details.currency.code,
+          },
+          frequency: "one-time",
+          recipient: init.recipient.id,
           donor: toDonor(fvDonor),
+          viaId: "paypal",
+          viaName: "Paypal",
           source: init.source,
-          ...(honorary.honoraryFullName && {
-            inHonorOf: honorary.honoraryFullName,
-          }),
-          ...(details.program.value && {
-            programId: details.program.value,
-            programName: details.program.label,
-          }),
-        });
+        };
+        if (honorary.honoraryFullName) {
+          intent.tribute = {
+            fullName: honorary.honoraryFullName,
+          };
+          if (honorary.withTributeNotif) {
+            intent.tribute.notif = honorary.tributeNotif;
+          }
+        }
+
+        if (details.program.value) {
+          intent.program = {
+            id: details.program.value,
+            name: details.program.label,
+          };
+        }
+
+        const id = await createOrder(intent);
         setState(undefined);
         return id;
       }}

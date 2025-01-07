@@ -6,6 +6,7 @@ export type AuthenticatedUser = {
   tokenExpiry: number;
   groups: string[];
   endowments: number[];
+  funds: string[];
   email: string;
   firstName?: string;
   lastName?: string;
@@ -40,6 +41,7 @@ export type UserV2 = {
   refreshToken: string;
   groups: CognitoGroup[];
   endowments: number[];
+  funds: string[];
   firstName: string;
   lastName: string;
   email: string;

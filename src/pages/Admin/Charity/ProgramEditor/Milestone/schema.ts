@@ -1,4 +1,5 @@
 import { imgOutput } from "components/ImgEditor";
+import { richTextContent } from "types/components";
 import * as v from "valibot";
 import { MAX_CHARS } from "../common";
 
@@ -10,15 +11,7 @@ export const schema = v.object({
     v.date("invalid date"),
     v.transform((x) => x.toISOString())
   ),
-  description: v.object({
-    value: requiredStr,
-    length: v.optional(
-      v.pipe(
-        v.number(),
-        v.maxValue(MAX_CHARS, (x) => `max ${x.requirement} characters`)
-      )
-    ),
-  }),
+  description: richTextContent({ maxChars: MAX_CHARS, required: true }),
   title: requiredStr,
   media: imgOutput(),
 });

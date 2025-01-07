@@ -1,5 +1,5 @@
-import type { DonateMethodId, Endow } from "@better-giving/endowment";
-import type { DonationIntent, Donor } from "types/aws";
+import type { DonateMethodId } from "@better-giving/endowment";
+import type { Donor } from "types/aws";
 import type {
   DetailedCurrency,
   OptionType,
@@ -9,15 +9,19 @@ import type { DonationSource } from "types/lists";
 import type { Increment } from "types/widget";
 export type { DetailedCurrency } from "types/components";
 
+export type Frequency = "one-time" | "subscription";
+
 type From<T extends { step: string }, U extends keyof T = never> = Omit<
   Required<T>,
   "step" | U
 > & { [key in U]?: T[key] };
 
-export type DonationRecipient = Pick<
-  Endow,
-  "id" | "name" | "hide_bg_tip" | "progDonationsAllowed"
->;
+export type DonationRecipient = {
+  id: string;
+  name: string;
+  hide_bg_tip?: boolean;
+  progDonationsAllowed?: boolean;
+};
 
 type BaseDonationDetails = {
   /** value is "" if no program is selected   */
@@ -36,7 +40,7 @@ type FiatDonationDetails = BaseDonationDetails & {
 
 export type StripeDonationDetails = {
   method: Extract<DonateMethodId, "stripe">;
-  frequency: DonationIntent.Frequency;
+  frequency: Frequency;
 } & FiatDonationDetails;
 
 export type StocksDonationDetails = BaseDonationDetails & {
@@ -71,8 +75,6 @@ export type Init = {
   mode: Mode;
   recipient: DonationRecipient;
   config: Config | null;
-  /** intent to resume */
-  intentId?: string;
 };
 
 export type FormStep<T extends DonationDetails = DonationDetails> = {

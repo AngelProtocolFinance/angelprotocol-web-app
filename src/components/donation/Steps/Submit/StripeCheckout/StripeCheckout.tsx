@@ -1,3 +1,4 @@
+import type { DonationIntent } from "@better-giving/donation/intent";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
@@ -5,7 +6,6 @@ import { APIs } from "constants/urls";
 import ErrorBoundary from "errors/ErrorBoundary";
 import ErrorTrigger from "errors/ErrorTrigger";
 import useSWR from "swr/immutable";
-import type { DonationIntent } from "types/aws";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
 import Summary from "../../common/Summary";
@@ -19,11 +19,7 @@ import Checkout from "./Checkout";
 // https://stripe.com/docs/payments/quickstart
 const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
-interface Intent extends DonationIntent.Fiat {
-  type: "one-time" | "subscription";
-}
-
-const fetcher = async (intent: Intent) => {
+const fetcher = async (intent: DonationIntent) => {
   const res = await fetch(`${APIs.apes}/fiat-donation/stripe`, {
     method: "POST",
     body: JSON.stringify(intent),
@@ -36,31 +32,38 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
   const { init, details, tip, donor: fvDonor, honorary, feeAllowance } = props;
   const { setState } = useDonationState();
 
-  const { data, error, isLoading } = useSWR(
-    {
-      transactionId: init.intentId,
-      type: details.frequency,
+  const intent: DonationIntent = {
+    frequency: details.frequency === "subscription" ? "recurring" : "one-time",
+    amount: {
       amount: +details.amount,
-      tipAmount: tip?.value ?? 0,
+      tip: tip?.value ?? 0,
       feeAllowance,
       currency: details.currency.code,
-      endowmentId: init.recipient.id,
-      splitLiq: 0,
-      donor: toDonor(fvDonor),
-      source: init.source,
-      ...(honorary.honoraryFullName && {
-        inHonorOf: honorary.honoraryFullName,
-        tributeNotif: honorary.withTributeNotif
-          ? honorary.tributeNotif
-          : undefined,
-      }),
-      ...(details.program.value && {
-        programId: details.program.value,
-        programName: details.program.label,
-      }),
     },
-    fetcher
-  );
+    recipient: init.recipient.id,
+    donor: toDonor(fvDonor),
+    source: init.source,
+    viaId: "fiat",
+    viaName: "Stripe",
+  };
+
+  if (honorary.honoraryFullName) {
+    intent.tribute = {
+      fullName: honorary.honoraryFullName,
+    };
+    if (honorary.withTributeNotif) {
+      intent.tribute.notif = honorary.tributeNotif;
+    }
+  }
+
+  if (details.program.value) {
+    intent.program = {
+      id: details.program.value,
+      name: details.program.label,
+    };
+  }
+
+  const { data, error, isLoading } = useSWR(intent, fetcher);
 
   return (
     <Summary

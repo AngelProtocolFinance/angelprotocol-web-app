@@ -1,6 +1,6 @@
 import { ap, ver } from "api/api";
+import type { Bucket } from "types/lists";
 
-export type Bucket = "endow-profiles" | "endow-reg" | "bg-user";
 export const bucketURL = "s3.amazonaws.com";
 
 const SPACES = /\s+/g;

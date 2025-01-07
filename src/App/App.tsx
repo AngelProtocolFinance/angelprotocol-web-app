@@ -4,6 +4,7 @@ import { adminRoute } from "pages/Admin";
 import { applicationRoute } from "pages/Application";
 import { bankApplicationRoute } from "pages/BankingApplication";
 import { routes as blogRoutes } from "pages/Blog";
+import { fundsRoute } from "pages/Funds";
 import { legalRoutes } from "pages/Legal";
 import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
@@ -27,6 +28,7 @@ const widgetRoutes: RO[] = [
 //routes between header/footer
 const _appRoutes: RO[] = [
   regRoute,
+  fundsRoute,
   userDashboardRoute,
   ...blogRoutes,
   ...legalRoutes,

@@ -31,7 +31,7 @@ describe("Crypto form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: 0, name: "" },
+      recipient: { id: "0", name: "" },
       mode: "live",
     };
 
@@ -53,7 +53,7 @@ describe("Crypto form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: 0, name: "", progDonationsAllowed: false },
+      recipient: { id: "0", name: "", progDonationsAllowed: false },
       mode: "live",
     };
 
@@ -74,7 +74,7 @@ describe("Crypto form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: 0, name: "" },
+      recipient: { id: "0", name: "" },
       mode: "live",
     };
 
@@ -108,7 +108,7 @@ describe("Crypto form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: 0, name: "" },
+      recipient: { id: "0", name: "" },
       mode: "live",
     };
 
@@ -132,7 +132,7 @@ describe("Crypto form: initial load", () => {
     const init: Init = {
       source: "bg-marketplace",
       config: null,
-      recipient: { id: 0, name: "" },
+      recipient: { id: "0", name: "" },
       mode: "live",
     };
 

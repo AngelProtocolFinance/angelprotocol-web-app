@@ -1,3 +1,4 @@
+import type { DonationIntent } from "@better-giving/donation/intent";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
@@ -17,7 +18,6 @@ import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { schema } from "schemas/shape";
-import type { DonationIntent } from "types/aws";
 import type { DonateThanksState } from "types/pages";
 import { mixed, string } from "yup";
 import { useDonationState } from "../../Context";
@@ -275,14 +275,17 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
 
               const { postalCode, line1, line2, city, state } = grantor.address;
 
-              const intent: DonationIntent.Fiat = {
-                transactionId: workflowSessionId,
-                amount: adjusted.amount,
-                tipAmount: adjusted.tip,
-                feeAllowance: adjusted.feeAllowance,
-                currency: props.details.currency.code,
-                endowmentId: props.init.recipient.id,
-                splitLiq: 0,
+              const intent: DonationIntent = {
+                frequency: "one-time",
+                viaId: workflowSessionId,
+                viaName: "",
+                amount: {
+                  currency: props.details.currency.code,
+                  amount: adjusted.amount,
+                  tip: adjusted.tip,
+                  feeAllowance: adjusted.feeAllowance,
+                },
+                recipient: props.init.recipient.id,
                 donor: toDonor({
                   title: initDonorTitleOption,
                   email: grantor.email,
@@ -295,17 +298,23 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
                   ukTaxResident: meta.ukTaxResident,
                 }),
                 source: props.init.source,
-                ...(props.details.program.value && {
-                  programId: props.details.program.value,
-                  programName: props.details.program.label,
-                }),
-                ...(meta.honoraryFullName && {
-                  inHonorOf: meta.honoraryFullName,
-                  tributeNotif: meta.withTributeNotif
-                    ? meta.tributeNotif
-                    : undefined,
-                }),
               };
+
+              if (props.details.program.value) {
+                intent.program = {
+                  id: props.details.program.value,
+                  name: props.details.program.label,
+                };
+              }
+
+              if (meta.honoraryFullName) {
+                intent.tribute = {
+                  fullName: meta.honoraryFullName,
+                };
+                if (meta.withTributeNotif) {
+                  intent.tribute.notif = meta.tributeNotif;
+                }
+              }
 
               setGrantState("pending");
               await apes.post("fiat-donation/chariot", { json: intent });

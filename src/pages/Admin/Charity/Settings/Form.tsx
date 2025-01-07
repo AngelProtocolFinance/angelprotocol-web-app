@@ -1,4 +1,4 @@
-import type { Endow } from "@better-giving/endowment";
+import type { Endow, EndowUpdate } from "@better-giving/endowment";
 import {
   MAX_RECEIPT_MSG_CHAR,
   incrementLabelMaxChars,
@@ -13,15 +13,14 @@ import {
   Form as F,
   NativeField as Field,
 } from "components/form";
+import { GoalSelector } from "components/goal-selector";
 import { BG_ID } from "constants/common";
 import { useActionToast } from "hooks/use-action-toast";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { Outlet, useFetcher, useLoaderData } from "react-router";
-import type { EndowmentUpdate } from "services/types";
 import { toast } from "sonner";
 import type { EndowmentSettingsAttributes } from "types/aws";
-import GoalSelector from "./goal-selector";
 import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 
@@ -49,6 +48,7 @@ export default function Form() {
       programDonateDisabled: !(endow.progDonationsAllowed ?? true),
       donateMethods: fill(endow.donateMethods),
       increments: endow.increments ?? [],
+      fundOptIn: endow.fund_opt_in ?? false,
       target: toFormTarget(endow.target),
     },
   });
@@ -82,6 +82,7 @@ export default function Form() {
         async ({
           programDonateDisabled,
           donateMethods,
+          fundOptIn,
           target: fvTarget,
           ...fv
         }) => {
@@ -90,8 +91,9 @@ export default function Form() {
               "BG donation flow should not show BG tip screen"
             );
           }
-          const update: EndowmentUpdate = {
+          const update: EndowUpdate = {
             ...fv,
+            fund_opt_in: fundOptIn,
             target: toTarget(fvTarget),
             progDonationsAllowed: !programDonateDisabled,
             donateMethods: donateMethods
@@ -160,6 +162,19 @@ export default function Form() {
           the donation flow by ticking the checkbox above and we will instead
           apply a fixed 1.5% fee to any donation amount you receive.
         </span>
+      </div>
+
+      <div>
+        <CheckField {...register("fundOptIn")} classes="font-medium">
+          Allow Fundraisers to be created on behalf of your nonprofit
+        </CheckField>
+        <p className="text-xs sm:text-sm text-navy-l1 italic mt-1">
+          Fundraising functionality is optional for all Better Giving
+          nonprofits. By opting in, people will be able to create fundraisers on
+          your behalf. You will receive 100% of funds raised for fundraisers
+          specific to your organization, and a percentage split of fundraisers
+          involving multiple nonprofits (such as curated giving indexes).
+        </p>
       </div>
 
       <h5 className="mt-12 text-2xl">Marketplace settings</h5>

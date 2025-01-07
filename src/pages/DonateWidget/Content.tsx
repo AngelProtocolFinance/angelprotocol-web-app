@@ -13,7 +13,7 @@ type Props = {
 
 export default function Content({ profile, config, classes = "" }: Props) {
   const recipient: DonationRecipient = {
-    id: profile.id,
+    id: profile.id.toString(),
     name: profile.name,
     hide_bg_tip: profile.hide_bg_tip,
     progDonationsAllowed: profile.progDonationsAllowed,
@@ -48,7 +48,6 @@ export default function Content({ profile, config, classes = "" }: Props) {
         className="w-full border border-gray-l4 rounded-lg"
         recipient={recipient}
         config={config}
-        programId={config.programId}
       />
     </div>
   );

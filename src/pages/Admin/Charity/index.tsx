@@ -7,6 +7,7 @@ import { mediaRoutes } from "./Media";
 import { membersRoute } from "./Members";
 
 export const charityRoutes: RouteObject[] = [
+  // { path: adminRoutes.funds, lazy: () => import("./Funds") }
   {
     path: adminRoutes.donations,
     lazy: () => import("./Donations").then(convert),

@@ -4,30 +4,11 @@ import type {
   EndowsPage,
 } from "@better-giving/endowment";
 import type { Except } from "type-fest";
-
-export type AletPrefUpdate = {
-  endowId: number;
-  banking: boolean;
-  donation: boolean;
-};
-
-export type UserEndow = {
-  name?: string;
-  logo?: string;
-  email: string;
-  endowID: number;
-  alertPref?: {
-    banking: boolean;
-    donation: boolean;
-  };
-};
-
 export interface EndowAdmin {
   email: string;
   familyName?: string;
   givenName?: string;
 }
-
 /** from CloudSearch index instead of DB */
 
 export interface EndowCardsPage
@@ -60,6 +41,7 @@ export type EndowmentSettingsAttributes = keyof Pick<
   | "progDonationsAllowed"
   | "donateMethods"
   | "increments"
+  | "fund_opt_in"
   | "target"
 >;
 

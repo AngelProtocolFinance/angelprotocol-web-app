@@ -52,13 +52,8 @@ export default function NavDropdown({ user, isInAuth }: Props) {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={appRoutes.marketplace} className={styler}>
-              Marketplace
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink to={appRoutes.blog} className={styler}>
-              Blog
+            <NavLink to={appRoutes.nonprofit_info} className={styler}>
+              For Nonprofits
             </NavLink>
           </MenuItem>
           <MenuItem>
@@ -67,15 +62,26 @@ export default function NavDropdown({ user, isInAuth }: Props) {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={appRoutes.nonprofit_info} className={styler}>
-              For Nonprofits
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
             <NavLink to={appRoutes.donor_info} className={styler}>
               For Donors
             </NavLink>
           </MenuItem>
+          <MenuItem>
+            <NavLink to={appRoutes.marketplace} className={styler}>
+              Marketplace
+            </NavLink>
+          </MenuItem>
+          <MenuItem>
+            <NavLink to={appRoutes.funds} className={styler}>
+              Fundraisers
+            </NavLink>
+          </MenuItem>
+          <MenuItem>
+            <NavLink to={appRoutes.blog} className={styler}>
+              Blog
+            </NavLink>
+          </MenuItem>
+
           {!isInAuth && (
             <MenuItem>
               <NavLink

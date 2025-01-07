@@ -10,6 +10,7 @@ export enum appRoutes {
   signup = "/signup",
   profile = "/profile",
   donate = "/donate",
+  donate_fund = "/donate-fund",
   donate_thanks = "/donate-thanks",
   stripe_payment_status = "/stripe-payment-status",
   donate_widget = "/donate-widget",
@@ -24,6 +25,7 @@ export enum appRoutes {
   nonprofit_info = "/nonprofit",
   donor_info = "/donor",
   wp_plugin = "/wp-plugin",
+  funds = "/funds",
   about = "/about-us",
 }
 
@@ -38,6 +40,7 @@ export const adminRoutes = {
   settings: "settings",
   members: "members",
   media: "media",
+  funds: "funds",
 } as const;
 
 export enum donateWidgetRoutes {

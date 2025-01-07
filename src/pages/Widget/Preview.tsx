@@ -28,7 +28,7 @@ export default function Preview({ classes = "", config, endow }: Props) {
       source: "bg-widget",
       mode: "preview",
       recipient: {
-        id: endow.id,
+        id: endow.id.toString(),
         name: endow.name,
         hide_bg_tip: endow?.hide_bg_tip,
         progDonationsAllowed: endow?.progDonationsAllowed,

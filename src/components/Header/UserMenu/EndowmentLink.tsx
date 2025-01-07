@@ -1,7 +1,8 @@
+import type { UserEndow } from "@better-giving/user";
 import { MenuItem } from "@headlessui/react";
 import { appRoutes } from "constants/routes";
 import { Link } from "react-router";
-import type { EndowmentBookmark, UserEndow } from "types/aws";
+import type { EndowmentBookmark } from "types/aws";
 import ContentLoader from "../../ContentLoader";
 import Image from "../../Image";
 
@@ -11,22 +12,19 @@ export function BookmarkLink({ endowId, ...endow }: IBookmarkLink) {
 }
 
 export function EndowmentLink({ endowID, logo, name }: UserEndow) {
-  return <_Link id={endowID} logo={logo} name={name} route="admin" />;
+  return <_Link id={endowID} logo={logo} name={name} route={appRoutes.admin} />;
 }
 
 type LinkProps = {
-  id: number;
+  id: number | string;
   name?: string;
   logo?: string;
-  route: "admin" | "profile";
+  route: string;
 };
 const _Link = (props: LinkProps) => (
   <MenuItem
     as={Link}
-    to={
-      (props.route === "admin" ? appRoutes.admin : appRoutes.marketplace) +
-      `/${props.id}`
-    }
+    to={props.route + `/${props.id}`}
     className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
     <Image src={props.logo} className="object-cover" height={20} width={20} />
