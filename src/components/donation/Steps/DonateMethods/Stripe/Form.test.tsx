@@ -58,7 +58,7 @@ describe("Stripe form test", () => {
     expect(currencySelector).toHaveDisplayValue(/usd/i);
   });
 
-  test("initial state: user has preferred currency", async () => {
+  test("initial state: user has no preferred currency", async () => {
     const user: Partial<AuthenticatedUser> = {
       token: "1231",
       prefCurrencyCode: "php",
@@ -69,8 +69,8 @@ describe("Stripe form test", () => {
 
     //give monthly is frequency default option
     const freqOptions = await screen.findAllByRole("radio");
-    expect(freqOptions[0]).toHaveTextContent(/give monthly/i);
-    expect(freqOptions[0]).toBeChecked();
+    expect(freqOptions[1]).not.toBeChecked();
+    expect(freqOptions[0]).not.toBeChecked();
 
     const currencyInput = screen.getByRole("combobox");
     expect(currencyInput).toHaveDisplayValue(/php/i); //based on mock value
@@ -136,6 +136,17 @@ describe("Stripe form test", () => {
   test("user corrects validation errors", async () => {
     render(<_Form step="donate-form" init={init} />);
     const continueBtn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continueBtn);
+    expect(mockSetState).not.toHaveBeenCalled();
+
+    //frequency selector errors out and corrected
+    expect(screen.getByText(/required/i)).toBeInTheDocument();
+    const freqOptions = screen.getAllByRole("radio");
+    await userEvent.click(freqOptions[0]);
+    expect(freqOptions[0]).toBeChecked();
+    expect(screen.queryByText(/required/i)).toBeNull();
+
+    //user submits again
     await userEvent.click(continueBtn);
     expect(mockSetState).not.toHaveBeenCalled();
 
