@@ -44,7 +44,8 @@ function Content(fund: SingleFund) {
         <div className="mx-0 border-b md:contents min-[445px]:border min-[445px]:mx-4 rounded-lg border-gray-l4">
           {isClosed(fund.active, fund.expiration) ? (
             <Info classes="row-start-2 self-center bg-white rounded-lg h-80 content-center justify-items-center grid">
-              This fund is already closed and can't accept any more donations
+              This fundraiser is already closed and can't accept any more
+              donations
             </Info>
           ) : (
             <Steps

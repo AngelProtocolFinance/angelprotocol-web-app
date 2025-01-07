@@ -28,7 +28,7 @@ export const EndowmentSelector = forwardRef<El, Props>((props, ref) => {
   return (
     <Field className={props.classes ?? "relative"}>
       <Label className="block text-sm font-medium mb-2">
-        Fund Members <span className="text-red">*</span>
+        Fundraiser Members <span className="text-red">*</span>
       </Label>
       <Combobox
         immediate

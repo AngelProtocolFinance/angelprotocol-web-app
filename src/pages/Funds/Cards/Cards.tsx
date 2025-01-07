@@ -26,9 +26,9 @@ export default function Cards({ classes = "", search }: Props) {
         isError,
       }}
       messages={{
-        error: "Failed to get funds",
-        loading: "Getting funds..",
-        empty: "No funds found",
+        error: "Failed to get fundraisers",
+        loading: "Getting fundraisers..",
+        empty: "No fundraiser found",
       }}
       classes={{
         container: `${classes} dark:text-white`,
