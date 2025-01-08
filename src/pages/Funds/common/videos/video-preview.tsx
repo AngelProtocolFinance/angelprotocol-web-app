@@ -1,6 +1,5 @@
-import { useModalContext } from "contexts/ModalContext";
 import { Minus, Pencil } from "lucide-react";
-import type { ButtonHTMLAttributes } from "react";
+import { type ButtonHTMLAttributes, useState } from "react";
 import ReactPlayer from "react-player";
 import type { Video } from "./types";
 import { VideoModal } from "./video-modal";
@@ -12,18 +11,17 @@ interface IVideoPreview extends Video {
 }
 
 export function VideoPreview(props: IVideoPreview) {
-  const { showModal } = useModalContext();
+  const [open, setOpen] = useState(false);
   return (
     <div className="text-navy-d4">
+      <VideoModal
+        open={open}
+        setOpen={setOpen}
+        onSubmit={(url) => props.onEdit(url, props.idx)}
+        initUrl={props.url}
+      />
       <div className="flex justify-end mb-1">
-        <CRUDBtn
-          onClick={() =>
-            showModal(VideoModal, {
-              onSubmit: (url) => props.onEdit(url, props.idx),
-              initUrl: props.url,
-            })
-          }
-        >
+        <CRUDBtn onClick={() => setOpen(true)}>
           <Pencil size={12} />
         </CRUDBtn>
         <CRUDBtn onClick={() => props.onDelete(props.idx)}>

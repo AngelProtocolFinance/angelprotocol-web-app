@@ -1,8 +1,12 @@
+import type { EndowsQueryParams } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
+import { ver } from "api/api";
 import Image from "components/Image";
 import { ErrorStatus, Info, LoadingStatus } from "components/Status";
+import { APIs } from "constants/urls";
 import useDebouncer from "hooks/useDebouncer";
-import { useEndowmentCardsQuery } from "services/aws/aws";
+import useSWR from "swr/immutable";
+import type { EndowFundMembersOptionsPage } from "types/aws";
 import type { EndowOption } from "../schema";
 
 interface Props {
@@ -10,14 +14,29 @@ interface Props {
   classes?: string;
 }
 
+const fetcher = async ({
+  query = "",
+  page = "1",
+  fund_opt_in = "true",
+}: EndowsQueryParams) => {
+  const url = new URL(`${APIs.aws}/${ver(1)}/cloudsearch-nonprofits`);
+  url.searchParams.set("query", query);
+  url.searchParams.set("page", page);
+  url.searchParams.set("fund_opt_in", fund_opt_in);
+  url.searchParams.set("fields", "id,name,card_img");
+  const res = await fetch(url);
+
+  if (!res.ok) throw res;
+  return res.json() as Promise<EndowFundMembersOptionsPage>;
+};
+
 export function Options({ classes = "", searchText }: Props) {
   const [debouncedSearchText, isDebouncing] = useDebouncer(searchText, 200);
 
-  const endowments = useEndowmentCardsQuery({
-    query: debouncedSearchText,
-    page: "1",
-    fund_opt_in: "true",
-  });
+  const endowments = useSWR(
+    { query: debouncedSearchText, page: "1", fund_opt_in: "true" },
+    fetcher
+  );
 
   if (endowments.isLoading || isDebouncing) {
     return (
@@ -27,7 +46,7 @@ export function Options({ classes = "", searchText }: Props) {
     );
   }
 
-  if (endowments.isError) {
+  if (endowments.error) {
     return (
       <ErrorStatus classes={classes + " p-2"}>
         Failed to load endowments
