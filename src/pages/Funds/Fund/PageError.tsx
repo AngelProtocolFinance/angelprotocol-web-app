@@ -1,6 +1,6 @@
 import { appRoutes } from "constants/routes";
 import { TriangleAlert } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export default function PageError() {
   return (

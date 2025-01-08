@@ -1,9 +1,41 @@
+import type { FundsPage } from "@better-giving/fundraiser";
+import { ap, ver } from "api/api";
+import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
-import { useState } from "react";
+import type { ChangeEventHandler } from "react";
+import {
+  type LoaderFunction,
+  useFetcher,
+  useLoaderData,
+  useSearchParams,
+} from "react-router";
 import Cards from "./Cards";
 
-export function Component() {
-  const [search, setSearch] = useState("");
+export const clientLoader: LoaderFunction = async ({ request }) => {
+  const source = new URL(request.url);
+  const page = +(source.searchParams.get("page") ?? "1");
+  const q = source.searchParams.get("query") ?? "";
+  const s = new URLSearchParams(source.searchParams);
+  s.set("page", page.toString());
+  s.set("query", q);
+
+  return ap
+    .get(`${ver(1)}/funds`, {
+      searchParams: s,
+    })
+    .json();
+};
+
+export default function Funds() {
+  const page1 = useLoaderData<FundsPage>();
+  const { load } = useFetcher<FundsPage>({ key: "funds" }); //initially undefined
+  const [params] = useSearchParams();
+  const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const n = new URLSearchParams(params);
+    n.set("query", e.target.value);
+    load(`?index&${n.toString()}`);
+  };
+
   return (
     <div className="padded-container mt-8 pb-8">
       <div
@@ -11,13 +43,14 @@ export function Component() {
       >
         <Search size={20} className="ml-2" />
         <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          type="search"
+          name="query"
+          onChange={debounce(onChange, 500)}
           className="w-full py-2 pr-3 placeholder:text-navy-l3 text-navy-d4 font-medium font-heading"
           placeholder="Search fundraiser"
         />
       </div>
-      <Cards search={search} classes="mt-4" />
+      <Cards page1={page1} classes="mt-4" />
     </div>
   );
 }

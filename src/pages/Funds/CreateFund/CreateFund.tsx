@@ -17,7 +17,7 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router";
 import { useCreateFundMutation } from "services/aws/funds";
 import { useEndowment } from "services/aws/useEndowment";
 import { imgSpec } from "../common";

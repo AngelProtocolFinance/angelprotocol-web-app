@@ -5,6 +5,7 @@ import DefaultFallback from "./DefaultFallback";
 
 export function ErrorElement() {
   const error = useRouteError();
+  console.log(error);
 
   const elementRef = useRef<HTMLButtonElement>(null);
 

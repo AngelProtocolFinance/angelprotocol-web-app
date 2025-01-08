@@ -5,7 +5,7 @@ import { parseContent, toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export default function Card({
   name,

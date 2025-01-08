@@ -1,5 +1,5 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
-import { skipToken } from "@reduxjs/toolkit/query";
+import { ap, ver } from "api/api";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
@@ -13,39 +13,36 @@ import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { unpack } from "helpers";
 import { ArrowLeft } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
-import { useFundQuery } from "services/aws/funds";
-import PageError from "./PageError";
-import Skeleton from "./Skeleton";
+import { Link, type LoaderFunction, useLoaderData } from "react-router";
 import { Share } from "./share";
 import { Video } from "./video";
 
-export function Component() {
-  const { fundId = "" } = useParams();
-  const { isLoading, isError, data } = useFundQuery(fundId || skipToken);
+export const clientLoader: LoaderFunction = async ({ params }) => {
+  return ap.get(`${ver(1)}/funds/${params.fundId}`).json();
+};
 
-  if (isLoading) return <Skeleton />;
-  if (isError || !data) return <PageError />;
+export default function Fund() {
+  const fund = useLoaderData<SingleFund>();
 
   const status = statusFn(
-    data.expiration ?? MAX_EXPIRATION,
-    data.active,
-    data.donation_total_usd
+    fund.expiration ?? MAX_EXPIRATION,
+    fund.active,
+    fund.donation_total_usd
   );
 
   return (
     <section className="grid pb-10">
       <Seo
-        title={`${data.name} - ${APP_NAME}`}
-        description={data.description.slice(0, 140)}
-        name={data.name}
-        image={data.logo || flying_character}
-        url={`${BASE_URL}/profile/${data.id}`}
+        title={`${fund.name} - ${APP_NAME}`}
+        description={fund.description.slice(0, 140)}
+        name={fund.name}
+        image={fund.logo || flying_character}
+        url={`${BASE_URL}/profile/${fund.id}`}
       />
       <div
         className="relative w-full h-52 sm:h-72 bg-cover bg-center overlay"
         style={{
-          backgroundImage: `url('${data.banner || fallback_banner}')`,
+          backgroundImage: `url('${fund.banner || fallback_banner}')`,
         }}
       />
       <div className="padded-container grid md:grid-cols-[3fr_2fr] gap-4">
@@ -75,11 +72,11 @@ export function Component() {
             <div className="grid max-md:gap-y-4 items-center max-md:justify-items-center md:grid-cols-[auto_1fr]">
               <div className="mr-4 md:row-span-2 relative">
                 <Image
-                  src={data.logo || flying_character}
+                  src={fund.logo || flying_character}
                   width={60}
                   className="rounded-full object-cover bg-white"
                 />
-                {data.verified && (
+                {fund.verified && (
                   <VerifiedIcon
                     classes="absolute bottom-0 -right-2"
                     size={22}
@@ -88,20 +85,20 @@ export function Component() {
               </div>
 
               <h4 className="md:col-start-2 max-md:text-center font-heading font-bold text-2xl w-full break-words">
-                {data.name}
+                {fund.name}
               </h4>
               <p className="pl-0.5">
                 <span className="text-sm font-medium text-navy-l3 mr-1">
                   by
                 </span>
                 <FundCreator
-                  name={data.creator_name}
-                  id={data.creator_id}
+                  name={fund.creator_name}
+                  id={fund.creator_id}
                   classes="font-medium text-navy inline"
                 />
               </p>
               <DonateSection
-                {...data}
+                {...fund}
                 classes={{
                   container: "col-span-full md:hidden",
                   target: "mt-8",
@@ -110,7 +107,7 @@ export function Component() {
             </div>
             <RichText
               content={{
-                value: data.description ?? "",
+                value: fund.description ?? "",
               }}
               classes={{
                 field: "",
@@ -120,7 +117,7 @@ export function Component() {
             />
           </div>
 
-          {data.videos.map((v, idx) => (
+          {fund.videos.map((v, idx) => (
             <div
               key={idx}
               className="rounded-lg shadow-2xl shadow-black/10 mt-4"
@@ -131,7 +128,7 @@ export function Component() {
         </div>
         <div className="md:-mt-24 md:sticky md:top-24 self-start flex flex-col content-start bg-white z-10 rounded-lg shadow-2xl shadow-black/10 p-4">
           <DonateSection
-            {...data}
+            {...fund}
             classes={{ container: "max-md:hidden", link: "mb-4 order-first" }}
           />
 
@@ -139,7 +136,7 @@ export function Component() {
             Donations go to
           </p>
           <div className="grid gap-y-4 mb-4 grid-cols-[auto_1fr]">
-            {data.members.map((m) => (
+            {fund.members.map((m) => (
               <div
                 key={m.id}
                 className="grid items-center gap-x-2 grid-cols-subgrid col-span-2"
@@ -158,7 +155,7 @@ export function Component() {
               </div>
             ))}
           </div>
-          <Share recipientName={data.name} className="mt-auto" />
+          <Share recipientName={fund.name} className="mt-auto" />
         </div>
       </div>
     </section>

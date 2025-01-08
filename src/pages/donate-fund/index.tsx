@@ -1,6 +1,6 @@
 import { skipToken } from "@reduxjs/toolkit/query";
 import QueryLoader from "components/QueryLoader";
-import { useParams } from "react-router-dom";
+import { useParams } from "react-router";
 import { useFundQuery } from "services/aws/funds";
 import Content from "./content";
 

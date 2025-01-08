@@ -4,7 +4,7 @@ import QueryLoader from "components/QueryLoader";
 import { Info } from "components/Status";
 import { appRoutes } from "constants/routes";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useFundsEndowMemberOfQuery } from "services/aws/endow-funds";
 import { useEndowment } from "services/aws/useEndowment";
 import { useAdminContext } from "../../Context";

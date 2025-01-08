@@ -2,7 +2,7 @@ import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { useAuthenticatedUser } from "contexts/Auth";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useUserFundsQuery } from "services/aws/users";
 import { Fund } from "./Fund";
 

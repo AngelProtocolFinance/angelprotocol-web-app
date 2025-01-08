@@ -2,7 +2,7 @@ import type { FundItem } from "@better-giving/fundraiser";
 import { parseContent, toText } from "components/RichText";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useFundsEndowMemberOfQuery } from "services/aws/endow-funds";
 
 interface Props {

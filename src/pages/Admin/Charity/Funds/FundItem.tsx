@@ -7,7 +7,7 @@ import { useAuthenticatedUser } from "contexts/Auth";
 import { useErrorContext } from "contexts/ErrorContext";
 import { useModalContext } from "contexts/ModalContext";
 import { LoaderCircle, Split } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useOptOutMutation } from "services/aws/endow-funds";
 
 export const FundItem = (
