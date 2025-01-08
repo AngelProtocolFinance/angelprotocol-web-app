@@ -1,3 +1,4 @@
+import type { FundItem as TFundItem } from "@better-giving/fundraiser";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
 import { Info } from "components/Status";
 import { appRoutes } from "constants/routes";
@@ -10,49 +11,6 @@ type CreatorType = "others" | "ours";
 export default function Funds() {
   const { funds, endow } = useLoaderData<LoaderData>();
   const [creatorType, setCreatorType] = useState<CreatorType>("ours");
-
-  const filtered =
-    creatorType === "ours"
-      ? funds.filter((f) => f.creator_id === endow.id.toString())
-      : funds.filter((f) => f.creator_id !== endow.id.toString());
-
-  if (filtered.length === 0) {
-    const msg =
-      creatorType === "ours"
-        ? "No fundraisers found"
-        : "No fundraisers found for this nonprofit";
-    return (
-      <div className="mt-4">
-        <Info classes="mt-4">{msg}</Info>
-        {creatorType === "ours" && (
-          <Link
-            to={{
-              pathname: appRoutes.funds + "/new",
-              search: `npo=${endow.id}`,
-            }}
-            className="btn-blue text-sm px-6 py-2 inline-block"
-          >
-            Create
-          </Link>
-        )}
-      </div>
-    );
-  }
-
-  const items = filtered
-    .toSorted(
-      (a, b) =>
-        (b.creator_id === endow.id.toString() ? 1 : 0) -
-        (a.creator_id === endow.id.toString() ? 1 : 0)
-    )
-    .map((fund) => (
-      <FundItem
-        key={fund.id}
-        {...fund}
-        endowId={endow.id}
-        isSelf={fund.creator_id === endow.id.toString()}
-      />
-    ));
 
   return (
     <div className="grid">
@@ -74,12 +32,12 @@ export default function Funds() {
         </RadioGroup>
       </div>
       <div className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4">
-        {items}
+        {items({ funds, creatorType, endowId: endow.id })}
         {creatorType === "ours" && (
           <Link
             to={{
               pathname: appRoutes.funds + "/new",
-              search: `npo=${endow.id}`,
+              search: `npo=$ endowId}`,
             }}
             className="btn-blue text-sm px-6 py-2 rounded-full normal-case mt-4 col-span-full justify-self-start"
           >
@@ -89,4 +47,39 @@ export default function Funds() {
       </div>
     </div>
   );
+}
+
+interface IItems {
+  endowId: number;
+  creatorType: CreatorType;
+  funds: TFundItem[];
+}
+function items({ funds, creatorType, endowId }: IItems) {
+  const filtered =
+    creatorType === "ours"
+      ? funds.filter((f) => f.creator_id === endowId.toString())
+      : funds.filter((f) => f.creator_id !== endowId.toString());
+
+  if (filtered.length === 0) {
+    const msg =
+      creatorType === "ours"
+        ? "No fundraisers found"
+        : "No fundraisers found for this nonprofit";
+    return <Info classes="mt-4">{msg}</Info>;
+  }
+
+  return filtered
+    .toSorted(
+      (a, b) =>
+        (b.creator_id === endowId.toString() ? 1 : 0) -
+        (a.creator_id === endowId.toString() ? 1 : 0)
+    )
+    .map((fund) => (
+      <FundItem
+        key={fund.id}
+        {...fund}
+        endowId={endowId}
+        isSelf={fund.creator_id === endowId.toString()}
+      />
+    ));
 }
