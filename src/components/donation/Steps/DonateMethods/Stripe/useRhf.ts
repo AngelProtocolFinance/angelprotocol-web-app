@@ -12,7 +12,7 @@ export function useRhf(props: Omit<FormProps, "currencies">) {
   const initial: FV = {
     amount: "",
     currency: props.main || usdOption,
-    frequency: "subscription",
+    frequency: "" as FV["frequency"],
     program: DEFAULT_PROGRAM,
   };
 
