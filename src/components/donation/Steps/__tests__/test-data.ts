@@ -24,7 +24,6 @@ export const testDonateData: DonateData = {
   id: 1,
   endow,
   user: null,
-  intent: null,
   currencies: Promise.resolve({
     all: [usdOption, { code: "eur", min: 1, rate: 1 }],
   }),
