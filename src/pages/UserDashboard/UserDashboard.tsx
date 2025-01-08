@@ -19,11 +19,10 @@ export const userDashboardRoute: RouteObject = {
       ],
     },
     { path: routes.settings, lazy: () => import("./Settings").then(convert) },
-    // {
-    //   path: routes.funds,
-    //   element: <Outlet />,
-    //   children: [{ index: true, lazy: () => import("./Funds") }],
-    // },
+    {
+      path: routes.funds,
+      lazy: () => import("./Funds").then(convert),
+    },
     { index: true, element: <Navigate to={routes.edit_profile} /> },
   ],
 };
