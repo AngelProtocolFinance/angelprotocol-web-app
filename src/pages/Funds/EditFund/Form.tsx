@@ -1,13 +1,11 @@
 import type { FundUpdate, SingleFund } from "@better-giving/fundraiser";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
-import Prompt from "components/Prompt";
 import { RichText } from "components/RichText";
 import { NativeField as Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
-import { useErrorContext } from "contexts/ErrorContext";
-import { useModalContext } from "contexts/ModalContext";
+import { useActionToast } from "hooks/use-action-toast";
 import type { SubmitHandler } from "react-hook-form";
-import { useCloseFundMutation, useEditFundMutation } from "services/aws/funds";
+import { useFetcher } from "react-router";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
 import { type FV, MAX_DESCRIPTION_CHARS } from "./schema";
@@ -17,52 +15,44 @@ export function Form({
   classes = "",
   ...props
 }: SingleFund & { classes?: string }) {
-  const { showModal } = useModalContext();
-  const { handleError } = useErrorContext();
+  const fetcher = useFetcher();
+  useActionToast(fetcher.data);
   const rhf = useRhf(props);
 
-  const [editFund] = useEditFundMutation();
-  const [closeFund, { isLoading: isClosingFund }] = useCloseFundMutation();
+  const isSubmitting = fetcher.state !== "idle";
+  const isClosingFund = isSubmitting && !!(fetcher.json as any).close;
 
   const onSubmit: SubmitHandler<FV> = async ({ target, ...fv }) => {
-    try {
-      /// BUILD UPDATE ///
-      const update: FundUpdate = {};
+    /// BUILD UPDATE ///
+    const update: FundUpdate = {};
 
-      if (rhf.dirtyFields.banner) update.banner = fv.banner;
-      if (rhf.dirtyFields.logo) update.logo = fv.logo;
+    if (rhf.dirtyFields.banner) update.banner = fv.banner;
+    if (rhf.dirtyFields.logo) update.logo = fv.logo;
 
-      if (rhf.dirtyFields.target) {
-        update.target =
-          target.type === "none"
-            ? "0"
-            : target.type === "smart"
-              ? "smart"
-              : target.value;
-      }
-
-      if (rhf.dirtyFields.name) update.name = fv.name;
-      if (rhf.dirtyFields.description)
-        update.description = fv.description.value;
-      if (rhf.dirtyFields.videos) update.videos = fv.videos.map((v) => v.url);
-
-      await editFund({
-        ...update,
-        id: props.id,
-      }).unwrap();
-      showModal(Prompt, {
-        type: "success",
-        children: "Successfully updated fund!",
-      });
-    } catch (err) {
-      handleError(err, { context: "updating fund" });
+    if (rhf.dirtyFields.target) {
+      update.target =
+        target.type === "none"
+          ? "0"
+          : target.type === "smart"
+            ? "smart"
+            : target.value;
     }
+
+    if (rhf.dirtyFields.name) update.name = fv.name;
+    if (rhf.dirtyFields.description) update.description = fv.description.value;
+    if (rhf.dirtyFields.videos) update.videos = fv.videos.map((v) => v.url);
+
+    fetcher.submit(update, {
+      action: ".",
+      method: "POST",
+      encType: "application/json",
+    });
   };
 
   return (
     <Frm
       onSubmit={rhf.handleSubmit(onSubmit)}
-      disabled={rhf.isSubmitting}
+      disabled={isSubmitting}
       className={classes + " pb-4"}
     >
       <Field
@@ -96,7 +86,7 @@ export function Form({
       <label className="text-lg font-medium block mb-2 mt-4">Logo</label>
       <ImgEditor
         bucket="bg-funds"
-        disabled={rhf.isSubmitting}
+        disabled={isSubmitting}
         value={rhf.logo.value}
         onChange={(v) => {
           rhf.logo.onChange(v);
@@ -114,7 +104,7 @@ export function Form({
       <label className="text-lg font-medium block mt-6 mb-2">Banner</label>
       <ImgEditor
         bucket="bg-funds"
-        disabled={rhf.isSubmitting}
+        disabled={isSubmitting}
         value={rhf.banner.value}
         onChange={(v) => {
           rhf.banner.onChange(v);
@@ -150,19 +140,18 @@ export function Form({
       <div className="flex items-center justify-end gap-4 mt-4 mb-8">
         <button
           onClick={async () => {
-            try {
-              const fundNameConfirmation = window.prompt(
-                "Type the name of this fund to confirm"
-              );
-              if (!fundNameConfirmation) return;
-              if (fundNameConfirmation !== props.name) {
-                return window.alert("Fund not closed: name is not confirmed");
-              }
-
-              await closeFund(props.id).unwrap();
-            } catch (err) {
-              handleError(err, { context: "closing fund" });
+            const fundNameConfirmation = window.prompt(
+              "Type the name of this fund to confirm"
+            );
+            if (!fundNameConfirmation) return;
+            if (fundNameConfirmation !== props.name) {
+              return window.alert("Fund not closed: name is not confirmed");
             }
+
+            fetcher.submit(
+              { close: true },
+              { action: ".", method: "POST", encType: "application/json" }
+            );
           }}
           type="button"
           className="btn-red text-sm font-medium px-4 py-2 justify-self-end"
@@ -170,7 +159,7 @@ export function Form({
           {isClosingFund ? "Closing.." : "Close fund"}
         </button>
         <button
-          disabled={!rhf.isDirty || rhf.isUploading}
+          disabled={!rhf.isDirty || rhf.isUploading || isSubmitting}
           type="submit"
           className="btn-blue text-sm font-medium px-4 py-2 justify-self-end"
         >

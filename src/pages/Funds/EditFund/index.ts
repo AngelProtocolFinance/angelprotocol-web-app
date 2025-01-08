@@ -1,1 +1,2 @@
-export { default as Component } from "./EditFund";
+export { default } from "./EditFund";
+export { clientLoader, clientAction } from "./api";

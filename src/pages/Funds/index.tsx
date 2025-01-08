@@ -8,7 +8,7 @@ export const fundsRoute: RouteObject = {
   children: [
     { index: true, lazy: () => import("./Funds").then(convert) },
     { path: ":fundId", lazy: () => import("./Fund").then(convert) },
-    { path: ":fundId/edit", lazy: () => import("./EditFund") },
+    { path: ":fundId/edit", lazy: () => import("./EditFund").then(convert) },
     { path: "new", lazy: () => import("./CreateFund").then(convert) },
   ],
 };

@@ -11,7 +11,7 @@ export function useRhf(init: SingleFund) {
     control,
     trigger,
     resetField,
-    formState: { isSubmitting, errors, isDirty, dirtyFields },
+    formState: { errors, isDirty, dirtyFields },
   } = useForm<FV>({
     resolver: valibotResolver(schema),
     values: {
@@ -49,7 +49,6 @@ export function useRhf(init: SingleFund) {
   return {
     register,
     handleSubmit,
-    isSubmitting,
     errors,
     isDirty,
     dirtyFields,
