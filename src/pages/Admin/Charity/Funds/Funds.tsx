@@ -5,7 +5,7 @@ import { appRoutes } from "constants/routes";
 import { useState } from "react";
 import { Link, useLoaderData } from "react-router";
 import { FundItem } from "./FundItem";
-import type { LoaderData } from "./types";
+import type { LoaderData } from "./api";
 
 type CreatorType = "others" | "ours";
 export default function Funds() {

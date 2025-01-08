@@ -61,7 +61,7 @@ export default function DetailsColumn({ className = "" }) {
             Claim this organization
           </Link>
         )}
-        <Fundraisers endowId={p.id} classes="mt-4" />
+        <Fundraisers classes="mt-4" />
       </div>
     </div>
   );

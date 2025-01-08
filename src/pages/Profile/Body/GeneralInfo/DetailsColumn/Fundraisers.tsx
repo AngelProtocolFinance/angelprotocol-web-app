@@ -2,19 +2,15 @@ import type { FundItem } from "@better-giving/fundraiser";
 import { parseContent, toText } from "components/RichText";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router";
-import { useFundsEndowMemberOfQuery } from "services/aws/endow-funds";
+import { Link, useLoaderData } from "react-router";
+import type { LoaderData } from "../api";
 
 interface Props {
-  endowId: number;
   classes?: string;
 }
 /** fundraisers that `endowId` is the only member of (not an index fund)  */
-export function Fundraisers({ endowId, classes = "" }: Props) {
-  const { data: funds = [] } = useFundsEndowMemberOfQuery({
-    endowId,
-    npoProfileFeatured: true,
-  });
+export function Fundraisers({ classes = "" }: Props) {
+  const { funds } = useLoaderData<LoaderData>();
 
   if (funds.length === 0) return null;
 

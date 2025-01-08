@@ -1,4 +1,3 @@
-import type { IMedia, Program } from "@better-giving/endowment";
 import { RichText } from "components/RichText";
 import { useLoaderData } from "react-router";
 import { useProfileContext } from "../../ProfileContext";
@@ -6,10 +5,11 @@ import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";
 import Media from "./Media";
 import Programs from "./Programs";
+import type { LoaderData } from "./api";
 
 export default function GeneralInfo() {
   const profile = useProfileContext();
-  const [programs, media] = useLoaderData() as [Program[], IMedia[]];
+  const { programs, media } = useLoaderData<LoaderData>();
 
   return (
     <div className="order-4 lg:col-span-2 grid grid-rows-[auto_auto] gap-8 w-full h-full lg:grid-rows-1 lg:grid-cols-[1fr_auto]">
