@@ -82,6 +82,10 @@ const rootRoutes: RO[] = [
     path: `${appRoutes.donate}/:id`,
     lazy: () => import("pages/Donate").then(convert),
   },
+  {
+    path: `${appRoutes.donate_fund}/:fundId`,
+    lazy: () => import("pages/donate-fund").then(convert),
+  },
   adminRoute,
   { lazy: () => import("./Layout").then(convert), children: _appRoutes },
   {
