@@ -1,9 +1,9 @@
 import type { Endow } from "@better-giving/endowment";
 import type { FundItem } from "@better-giving/fundraiser";
+import type { ActionFunction, LoaderFunction } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { loadAuth, redirectToAuth } from "auth";
-import type { ActionFunction, LoaderFunction } from "react-router";
 import type { ActionData } from "types/action";
 
 export interface LoaderData {

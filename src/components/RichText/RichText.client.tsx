@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { toDelta } from "./helpers";
+import { toDelta } from "./helpers.client";
 import type { Props } from "./types";
 
 type El = Pick<HTMLDivElement, "focus">;

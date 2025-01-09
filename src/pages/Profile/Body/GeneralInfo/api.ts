@@ -1,8 +1,8 @@
 import type { IMedia, Program } from "@better-giving/endowment";
 import type { FundItem } from "@better-giving/fundraiser";
+import type { LoaderFunction } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { getPrograms } from "api/get/programs";
-import type { LoaderFunction } from "react-router";
 import { featuredMedia } from "../featured-media";
 
 export interface LoaderData {

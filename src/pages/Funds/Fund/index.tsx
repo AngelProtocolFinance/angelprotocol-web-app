@@ -1,4 +1,5 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
+import { Link, type LoaderFunction, useLoaderData } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
@@ -13,7 +14,6 @@ import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { unpack } from "helpers";
 import { ArrowLeft } from "lucide-react";
-import { Link, type LoaderFunction, useLoaderData } from "react-router";
 import { Share } from "./share";
 import { Video } from "./video";
 

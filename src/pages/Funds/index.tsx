@@ -1,6 +1,6 @@
+import { Outlet, type RouteObject } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { convert } from "helpers/route";
-import { Outlet, type RouteObject } from "react-router";
 
 export const fundsRoute: RouteObject = {
   path: appRoutes.funds,

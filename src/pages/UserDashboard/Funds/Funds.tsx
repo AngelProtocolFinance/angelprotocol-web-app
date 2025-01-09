@@ -1,7 +1,7 @@
 import type { UserFund } from "@better-giving/user";
+import { Link, useLoaderData } from "@remix-run/react";
 import { Info } from "components/Status";
 import { appRoutes } from "constants/routes";
-import { Link, useLoaderData } from "react-router";
 import { Fund } from "./Fund";
 
 export default function Funds() {

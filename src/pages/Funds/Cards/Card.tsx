@@ -1,11 +1,11 @@
 import type { FundItem } from "@better-giving/fundraiser";
+import { Link } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import { parseContent, toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router";
 
 export default function Card({
   name,

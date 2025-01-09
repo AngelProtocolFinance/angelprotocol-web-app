@@ -1,9 +1,9 @@
+import type { ActionFunction, LoaderFunction } from "@remix-run/react";
 import {
   type FiatCurrencies,
   getFiatCurrencies,
 } from "api/get/fiat-currencies";
 import { cognito, loadAuth, redirectToAuth } from "auth";
-import type { ActionFunction, LoaderFunction } from "react-router";
 import { type UserV2, isError } from "types/auth";
 
 export interface LoaderData extends FiatCurrencies {

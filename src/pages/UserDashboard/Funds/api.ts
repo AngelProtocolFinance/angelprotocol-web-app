@@ -1,6 +1,6 @@
+import type { LoaderFunction } from "@remix-run/react";
 import { ap, ver } from "api/api";
 import { loadAuth, redirectToAuth } from "auth";
-import type { LoaderFunction } from "react-router";
 
 export const userFunds: LoaderFunction = async ({ request }) => {
   const auth = await loadAuth();

@@ -1,8 +1,8 @@
 import type { FundItem } from "@better-giving/fundraiser";
+import { Link, useLoaderData } from "@remix-run/react";
 import { parseContent, toText } from "components/RichText";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link, useLoaderData } from "react-router";
 import type { LoaderData } from "../api";
 
 interface Props {

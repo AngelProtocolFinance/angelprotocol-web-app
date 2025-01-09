@@ -1,10 +1,10 @@
 import type { Program } from "@better-giving/endowment";
 import type { SingleFund } from "@better-giving/fundraiser";
+import type { LoaderFunction } from "@remix-run/react";
 import { getFiatCurrencies } from "api/get/fiat-currencies";
 import { getFund } from "api/get/fund";
 import type { FiatCurrencies } from "api/types";
 import { loadAuth } from "auth";
-import type { LoaderFunction } from "react-router";
 
 export interface LoaderData {
   fund: SingleFund;

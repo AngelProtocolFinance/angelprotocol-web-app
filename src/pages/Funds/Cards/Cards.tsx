@@ -1,7 +1,7 @@
 import type { FundsPage } from "@better-giving/fundraiser";
+import { useFetcher, useSearchParams } from "@remix-run/react";
 import { Info } from "components/Status";
 import { useEffect, useState } from "react";
-import { useFetcher, useSearchParams } from "react-router";
 import Card from "./Card";
 
 interface Props {

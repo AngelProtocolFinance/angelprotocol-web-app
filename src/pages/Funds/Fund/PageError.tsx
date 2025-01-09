@@ -1,6 +1,6 @@
+import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { TriangleAlert } from "lucide-react";
-import { Link } from "react-router";
 
 export default function PageError() {
   return (
