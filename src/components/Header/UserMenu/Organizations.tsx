@@ -22,9 +22,9 @@ export function Organizations({ user, classes = "" }: Props) {
         }
       >
         <Await resolve={user.orgs}>
-          {(orgs: Awaited<DetailedUser["orgs"]>) => (
+          {(loaded) => (
             <>
-              {orgs.map((org) => (
+              {loaded.map((org) => (
                 <EndowmentLink key={org.endowID} {...org} />
               ))}
             </>

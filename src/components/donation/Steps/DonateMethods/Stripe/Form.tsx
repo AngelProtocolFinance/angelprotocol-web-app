@@ -1,5 +1,4 @@
 import { Await, useLoaderData } from "@remix-run/react";
-import type { FiatCurrencies } from "api/types";
 import CurrencySelector from "components/CurrencySelector";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { Form as FormContainer, NativeField } from "components/form";
@@ -26,7 +25,7 @@ export default function Loader(props: Props) {
         resolve={data.currencies}
         errorElement={<ErrorStatus>Failed to load donate form ..</ErrorStatus>}
       >
-        {(currencies: FiatCurrencies) => <Form {...props} {...currencies} />}
+        {(loaded) => <Form {...props} {...loaded} />}
       </Await>
     </Suspense>
   );

@@ -15,9 +15,9 @@ export function Bookmarks({ classes = "", user }: Props) {
 
       <Suspense>
         <Await resolve={user.bookmarks}>
-          {(bookmarks: Awaited<DetailedUser["bookmarks"]>) => (
+          {(bms) => (
             <>
-              {bookmarks.map((b) => (
+              {bms.map((b) => (
                 <BookmarkLink key={b.endowId} {...b} />
               ))}
             </>

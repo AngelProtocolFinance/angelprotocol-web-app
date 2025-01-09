@@ -78,11 +78,11 @@ export function ProgramSelector({ program, onChange, classes }: Props) {
       )}
       <Suspense fallback={<span data-loading />}>
         <Await resolve={data.programs} errorElement={<span data-error />}>
-          {(programs: Program[]) =>
-            programs.length === 0 ? (
+          {(progs) =>
+            progs === 0 ? (
               <span data-empty />
             ) : (
-              <LoadedOptions options={programs} />
+              <LoadedOptions options={progs} />
             )
           }
         </Await>

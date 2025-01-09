@@ -65,9 +65,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   const auth = await cognito.retrieve(request);
   if (!auth) return null;
   if (typeof auth === "string") {
-    return data(null, {
-      headers: { "Set-Cookie": auth },
-    });
+    headers.set("Set-Cookie", auth);
+    return data(null, { headers });
   }
   const user = cognito.toUser(auth);
   const detailed: DetailedUser = {

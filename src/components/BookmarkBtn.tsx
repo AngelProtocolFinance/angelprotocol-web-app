@@ -16,9 +16,9 @@ export default function Loader({ classes = "", user, endowId }: Props) {
   return (
     <Suspense fallback={<Heart size={19} className={`${classes} text-gray`} />}>
       <Await resolve={bms}>
-        {(bms: EndowmentBookmark[]) => (
+        {(loaded) => (
           <BookmarkBtn
-            bookmarks={bms}
+            bookmarks={loaded}
             user={user}
             endowId={endowId}
             classes={classes}
@@ -60,23 +60,23 @@ function BookmarkBtn({ user, bookmarks, classes = "", endowId }: IBookmarkBtn) {
     bookmarks.some((bm) => bm.endowId === endowId);
 
   return (
-    <Tooltip
-      tip={
-        !isBookmarked ? (
-          <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
-            Add to favorites
-            <Arrow />
-          </Content>
-        ) : null
-      }
-    >
-      <fetcher.Form action="/" method="POST" className="contents">
-        <input
-          type="hidden"
-          name="action"
-          value={isBookmarked ? "delete" : "add"}
-        />
-        <input type="hidden" name="endowId" value={endowId} />
+    <fetcher.Form action="/" method="POST" className="contents">
+      <input
+        type="hidden"
+        name="action"
+        value={isBookmarked ? "delete" : "add"}
+      />
+      <input type="hidden" name="endowId" value={endowId} />
+      <Tooltip
+        tip={
+          !isBookmarked ? (
+            <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
+              Add to favorites
+              <Arrow />
+            </Content>
+          ) : null
+        }
+      >
         <button
           name="intent"
           value="toggle-bookmark"
@@ -90,7 +90,7 @@ function BookmarkBtn({ user, bookmarks, classes = "", endowId }: IBookmarkBtn) {
             className={isBookmarked ? "fill-red text-red" : ""}
           />
         </button>
-      </fetcher.Form>
-    </Tooltip>
+      </Tooltip>
+    </fetcher.Form>
   );
 }
