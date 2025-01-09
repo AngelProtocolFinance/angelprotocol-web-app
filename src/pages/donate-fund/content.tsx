@@ -1,4 +1,3 @@
-import type { SingleFund } from "@better-giving/fundraiser";
 import flying_character from "assets/images/flying-character.png";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
@@ -8,6 +7,7 @@ import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { Link, useLoaderData } from "react-router";
+import type { LoaderData } from "./api";
 import FAQ from "./faq";
 import { FundCard } from "./fund-card";
 
@@ -17,7 +17,7 @@ const isClosed = (active: boolean, expiration?: string): boolean => {
 };
 
 export default function Content() {
-  const fund = useLoaderData<SingleFund>();
+  const { fund } = useLoaderData<LoaderData>();
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
