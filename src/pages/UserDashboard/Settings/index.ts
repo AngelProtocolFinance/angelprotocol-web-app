@@ -1,9 +1,9 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/react";
+import type { UserEndow } from "@better-giving/user";
+import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import { ap, ver } from "api/api";
 import { userEndows } from "api/get/user-endows";
 import { loadAuth, redirectToAuth } from "auth";
 import type { UserV2 } from "types/auth";
-import type { UserEndow } from "types/aws";
 
 export { default } from "./Settings";
 

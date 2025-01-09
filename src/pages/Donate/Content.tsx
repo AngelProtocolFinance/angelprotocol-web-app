@@ -8,16 +8,14 @@ import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
 import { memo } from "react";
-import type { DonationIntent } from "types/aws";
 import FAQ from "./FAQ";
 import OrgCard from "./OrgCard";
 
 type Props = {
-  intent: DonationIntent.ToResume | null;
   endowment: Endow;
 };
 
-function Content({ intent, endowment }: Props) {
+function Content({ endowment }: Props) {
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
@@ -46,9 +44,8 @@ function Content({ intent, endowment }: Props) {
           <Steps
             source="bg-marketplace"
             mode="live"
-            intent={intent ?? undefined}
             recipient={{
-              id: endowment.id,
+              id: endowment.id.toString(),
               name: endowment.name,
               hide_bg_tip: endowment.hide_bg_tip,
               progDonationsAllowed: endowment.progDonationsAllowed,

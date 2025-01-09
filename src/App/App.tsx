@@ -4,6 +4,7 @@ import { convert } from "helpers/route";
 import { adminRoute } from "pages/Admin";
 import { applicationRoute } from "pages/Application";
 import { bankApplicationRoute } from "pages/BankingApplication";
+import { fundsRoute } from "pages/Funds";
 import { legalRoutes } from "pages/Legal";
 import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
@@ -25,6 +26,7 @@ const widgetRoutes: RO[] = [
 //routes between header/footer
 const _appRoutes: RO[] = [
   regRoute,
+  fundsRoute,
   userDashboardRoute,
   ...legalRoutes,
   {
@@ -64,6 +66,10 @@ const rootRoutes: RO[] = [
   {
     path: `${appRoutes.donate}/:id`,
     lazy: () => import("pages/Donate").then(convert),
+  },
+  {
+    path: `${appRoutes.donate_fund}/:fundId`,
+    lazy: () => import("pages/donate-fund").then(convert),
   },
   adminRoute,
   { lazy: () => import("./Layout").then(convert), children: _appRoutes },

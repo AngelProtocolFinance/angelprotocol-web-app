@@ -1,6 +1,4 @@
-import type { FiatCurrencies } from "api/types";
 import { imgOutput } from "components/ImgEditor";
-import type { UserV2 } from "types/auth";
 import * as v from "valibot";
 
 export const schema = v.object({
@@ -16,7 +14,3 @@ export const schema = v.object({
 });
 
 export interface FV extends v.InferOutput<typeof schema> {}
-
-export interface LoaderData extends FiatCurrencies {
-  user: UserV2;
-}

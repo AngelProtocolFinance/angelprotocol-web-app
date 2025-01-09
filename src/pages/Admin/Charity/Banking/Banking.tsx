@@ -5,8 +5,8 @@ import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { errorPrompt } from "contexts/ErrorContext";
 import { toFileName } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
-import { useAdminContext } from "pages/Admin/Context";
 import { useState } from "react";
+import { useAdminContext } from "../../../Admin/Context";
 import FormButtons from "./FormButtons";
 
 export { newBanking as clientAction } from "./new-banking-action";

@@ -4,30 +4,11 @@ import type {
   EndowsPage,
 } from "@better-giving/endowment";
 import type { Except } from "type-fest";
-
-export type AletPrefUpdate = {
-  endowId: number;
-  banking: boolean;
-  donation: boolean;
-};
-
-export type UserEndow = {
-  name?: string;
-  logo?: string;
-  email: string;
-  endowID: number;
-  alertPref?: {
-    banking: boolean;
-    donation: boolean;
-  };
-};
-
 export interface EndowAdmin {
   email: string;
   familyName?: string;
   givenName?: string;
 }
-
 /** from CloudSearch index instead of DB */
 
 export interface EndowCardsPage
@@ -49,9 +30,13 @@ export interface EndowCardsPage
   // "kyc_donors_only"
 }
 export interface EndowOptionsPage extends EndowsPage<"id" | "name"> {}
+export interface EndowFundMembersOptionsPage
+  extends EndowsPage<"id" | "name" | "card_img"> {}
 
 export type EndowmentCard = EndowCardsPage["items"][number];
 export type EndowmentOption = EndowOptionsPage["items"][number];
+export type EndowmentFundMemberOption =
+  EndowFundMembersOptionsPage["items"][number];
 
 export type EndowmentSettingsAttributes = keyof Pick<
   Endow,
@@ -60,6 +45,7 @@ export type EndowmentSettingsAttributes = keyof Pick<
   | "progDonationsAllowed"
   | "donateMethods"
   | "increments"
+  | "fund_opt_in"
   | "target"
 >;
 

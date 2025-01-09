@@ -1,11 +1,13 @@
+import type { UserEndow } from "@better-giving/user";
 import * as v from "valibot";
-import type { EndowmentBookmark, UserEndow } from "./aws";
+import type { EndowmentBookmark } from "./aws";
 
 export type AuthenticatedUser = {
   token: string;
   tokenExpiry: number;
   groups: string[];
   endowments: number[];
+  funds: string[];
   email: string;
   firstName?: string;
   lastName?: string;
@@ -40,6 +42,7 @@ export type UserV2 = {
   refreshToken: string;
   groups: CognitoGroup[];
   endowments: number[];
+  funds: string[];
   firstName: string;
   lastName: string;
   email: string;

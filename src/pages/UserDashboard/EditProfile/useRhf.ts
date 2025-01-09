@@ -1,7 +1,8 @@
 import { valibotResolver } from "@hookform/resolvers/valibot";
 import type { ImgSpec } from "components/ImgEditor";
 import { useController, useForm } from "react-hook-form";
-import { type FV, type LoaderData, schema } from "./types";
+import type { LoaderData } from "./api";
+import { type FV, schema } from "./types";
 
 export const avatarSpec: ImgSpec = {
   type: ["image/jpeg", "image/png", "image/webp", "image/svg+xml"],

@@ -27,7 +27,7 @@ const init: Init = {
   source: "bg-marketplace",
   mode: "live",
   recipient: {
-    id: 123456,
+    id: "123456",
     name: "Example Endowment",
   },
   config: null,
@@ -61,7 +61,7 @@ describe("Stripe form test", () => {
     mockLoader.mockReset();
   });
 
-  test("initial state: user has preferred currency", async () => {
+  test("initial state: user has preferred no currency", async () => {
     mockLoader.mockReturnValue({
       ...testDonateData,
       currencies: Promise.resolve({
@@ -73,8 +73,8 @@ describe("Stripe form test", () => {
 
     //give monthly is frequency default option
     const freqOptions = await screen.findAllByRole("radio");
-    expect(freqOptions[0]).toHaveTextContent(/give monthly/i);
-    expect(freqOptions[0]).toBeChecked();
+    expect(freqOptions[1]).not.toBeChecked();
+    expect(freqOptions[0]).not.toBeChecked();
 
     const currencyInput = screen.getByRole("combobox");
     expect(currencyInput).toHaveDisplayValue(/php/i); //based on mock value
@@ -83,10 +83,7 @@ describe("Stripe form test", () => {
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("");
 
-    const programSelector = screen.getByRole("button", {
-      name: /general donation/i,
-    });
-
+    const programSelector = screen.getByLabelText(/select program/i);
     expect(programSelector).toBeInTheDocument();
   });
 
@@ -97,7 +94,7 @@ describe("Stripe form test", () => {
       source: "bg-marketplace",
       mode: "live",
       recipient: {
-        id: 123456,
+        id: "123456",
         name: "Example Endowment",
         progDonationsAllowed: false,
       },
@@ -125,10 +122,8 @@ describe("Stripe form test", () => {
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("60");
 
-    const programSelector = screen.getByRole("button", {
-      name: /program 1/i,
-    });
-    expect(programSelector).toBeInTheDocument();
+    const selectedProgram = screen.getByText(/program 1/i);
+    expect(selectedProgram).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
@@ -140,6 +135,17 @@ describe("Stripe form test", () => {
   test("user corrects validation errors", async () => {
     render(<Form step="donate-form" init={init} />);
     const continueBtn = screen.getByRole("button", { name: /continue/i });
+    await userEvent.click(continueBtn);
+    expect(mockSetState).not.toHaveBeenCalled();
+
+    //frequency selector errors out and corrected
+    expect(screen.getByText(/required/i)).toBeInTheDocument();
+    const freqOptions = screen.getAllByRole("radio");
+    await userEvent.click(freqOptions[0]);
+    expect(freqOptions[0]).toBeChecked();
+    expect(screen.queryByText(/required/i)).toBeNull();
+
+    //user submits again
     await userEvent.click(continueBtn);
     expect(mockSetState).not.toHaveBeenCalled();
 

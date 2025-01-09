@@ -3,14 +3,14 @@ import { roundDown } from "helpers";
 import { useController, useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import type { OnIncrement } from "../../common/Incrementers";
-import { DEFAULT_PROGRAM, usdOption } from "../../common/constants";
+import { usdOption } from "../../common/constants";
 import type { FormValues as FV, Props } from "./types";
 
 export function useRhf(props: Props) {
   const initial: FV = {
     amount: "",
     currency: usdOption,
-    program: DEFAULT_PROGRAM,
+    program: { label: "", value: "" },
   };
 
   const {

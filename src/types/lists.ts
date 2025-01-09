@@ -31,4 +31,4 @@ export type ImageMIMEType = `image/${ImageSubType}`;
 export type ApplicationMIMEType = `application/${ApplicationSubType}`;
 
 export type MIMEType = ImageMIMEType | ApplicationMIMEType;
-export type Bucket = "endow-profiles" | "endow-reg" | "bg-user";
+export type Bucket = "endow-profiles" | "endow-reg" | "bg-user" | "bg-funds";

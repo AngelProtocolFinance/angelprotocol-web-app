@@ -52,14 +52,25 @@ export type CurrencyOption = Currency | DetailedCurrency;
  * length as the text is being typed as a separate parameter and use *it* for
  * any validation necessary.
  */
-
-export type RichTextContent = {
-  value: string;
-  /**
-   * Optional because we don't set the length manually, it is calculated
-   * by the RichText component itself and updated on every change.
-   */
-  length?: number;
+interface RichTextContentOptions {
+  maxChars?: number;
+  required?: boolean;
+}
+export const richTextContent = ({
+  maxChars = Number.MAX_SAFE_INTEGER,
+  required = false,
+}: RichTextContentOptions) => {
+  return v.object({
+    value: required
+      ? v.pipe(v.string("required"), v.nonEmpty("required"))
+      : v.string("dev:set default value to empty"),
+    length: v.optional(
+      v.pipe(
+        v.number(),
+        v.maxValue(maxChars, ({ requirement: r }) => `max length is ${r} chars`)
+      )
+    ),
+  });
 };
 
 /** query loader */
@@ -75,6 +86,7 @@ export interface QueryState<T> {
 export function isQuery<T>(val: T | QueryState<T>): val is QueryState<T> {
   return "isLoading" in (val as any) && "isFetching" in (val as any);
 }
+export type RichTextContent = v.InferOutput<ReturnType<typeof richTextContent>>;
 
 export const donateMethod = v.object({
   id: donateMethodId,

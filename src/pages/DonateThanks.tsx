@@ -30,7 +30,7 @@ interface Data {
 
 export default function DonateThanks() {
   const widgetVersion = useOutletContext<true | undefined>();
-  const { state, user } = useLoaderData() as Data;
+  const { state } = useLoaderData() as Data;
 
   return (
     <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
@@ -66,11 +66,6 @@ export default function DonateThanks() {
       />
 
       <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
-        {state?.microdepositArrivalDate
-          ? `The microdeposit is expected to arrive at your nominated bank account on ${new Date(
-              state.microdepositArrivalDate * 1000
-            )}. You can access the bank verification link from the "Pending" tab on your`
-          : "If you need a receipt for your donation, please fill out the KYC form for this transaction on your"}{" "}
         {widgetVersion ? (
           <ExtLink
             className="text-blue"
@@ -87,14 +82,6 @@ export default function DonateThanks() {
           </Link>
         )}{" "}
       </p>
-
-      {!user && state?.guestDonor && state?.bankVerificationUrl && (
-        <p className="text-center text-navy-l1 mt-8 mb-2 text-[15px]">
-          If you are not signed up yet, you may access the bank verification url
-          by copying{" "}
-          <ExtLink href={state.bankVerificationUrl}>this link.</ExtLink>
-        </p>
-      )}
 
       {!widgetVersion && (
         <Link

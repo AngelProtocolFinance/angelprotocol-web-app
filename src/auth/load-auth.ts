@@ -5,6 +5,7 @@ import type { Token } from "./session";
 export function userFromToken(token: Token): UserV2 {
   const {
     endows = "",
+    funds = "",
     "cognito:groups": groups = [],
     ...p
   }: any = decodeJwt(token.bg_token_id);
@@ -15,6 +16,7 @@ export function userFromToken(token: Token): UserV2 {
     refreshToken: token.bg_token_refresh,
     groups,
     endowments: endows.split(",").map(Number) ?? [],
+    funds: funds.split(",") ?? [],
     email: p.email,
     firstName: p.given_name,
     lastName: p.family_name,

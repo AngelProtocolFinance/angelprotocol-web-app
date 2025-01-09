@@ -5,7 +5,7 @@ import { APP_NAME, BASE_URL } from "constants/env";
 import Content from "./Content";
 export { clientLoader } from "api/donate-loader";
 export default function Donate() {
-  const { intent, endow } = useLoaderData() as DonateData;
+  const { endow } = useLoaderData() as DonateData;
 
   return (
     <>
@@ -16,7 +16,7 @@ export default function Donate() {
         image={endow.logo}
         url={`${BASE_URL}/donate/${endow.id}`}
       />
-      <Content endowment={endow} intent={intent} />
+      <Content endowment={endow} />
     </>
   );
 }

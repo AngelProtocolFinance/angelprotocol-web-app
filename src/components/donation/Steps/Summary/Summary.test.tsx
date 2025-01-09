@@ -53,7 +53,7 @@ const props: SummaryStep = {
   init: {
     source: "bg-marketplace",
     mode: "live",
-    recipient: { id: 1, name: "Example Charity" },
+    recipient: { id: "1", name: "Example Charity" },
     config: null,
   },
   details: oneTimeStripeDetails,

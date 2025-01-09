@@ -7,6 +7,7 @@ import { toWithState } from "helpers/state-params";
 import type { PropsWithChildren } from "react";
 import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../../../ProfileContext";
+import { Fundraisers } from "./Fundraisers";
 import Socials from "./Socials";
 import Tags from "./Tags";
 
@@ -60,6 +61,7 @@ export default function DetailsColumn({ className = "" }) {
             Claim this organization
           </Link>
         )}
+        <Fundraisers classes="mt-4" />
       </div>
     </div>
   );
