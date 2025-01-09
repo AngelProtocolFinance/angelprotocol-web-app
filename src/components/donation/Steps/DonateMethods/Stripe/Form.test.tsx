@@ -83,10 +83,7 @@ describe("Stripe form test", () => {
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("");
 
-    const programSelector = screen.getByRole("button", {
-      name: /general donation/i,
-    });
-
+    const programSelector = screen.getByLabelText(/select program/i);
     expect(programSelector).toBeInTheDocument();
   });
 
@@ -125,10 +122,8 @@ describe("Stripe form test", () => {
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
     expect(amountInput).toHaveDisplayValue("60");
 
-    const programSelector = screen.getByRole("button", {
-      name: /program 1/i,
-    });
-    expect(programSelector).toBeInTheDocument();
+    const selectedProgram = screen.getByText(/program 1/i);
+    expect(selectedProgram).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);

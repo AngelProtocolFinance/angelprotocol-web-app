@@ -42,9 +42,7 @@ describe("Crypto form: initial load", () => {
     render(<Form {...state} />);
 
     waitFor(() => {
-      const programSelector = screen.queryByRole("button", {
-        name: /general donation/i,
-      });
+      const programSelector = screen.queryByLabelText(/select program/i);
       expect(programSelector).toBeNull();
     });
   });
@@ -93,10 +91,8 @@ describe("Crypto form: initial load", () => {
     const amountInput = screen.getByDisplayValue(amount);
     expect(amountInput).toBeInTheDocument();
 
-    const programSelector = screen.getByRole("button", {
-      name: /program 1/i,
-    });
-    expect(programSelector).toBeInTheDocument();
+    const selectedProgram = screen.getByText(/program 1/i);
+    expect(selectedProgram).toBeInTheDocument();
 
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);

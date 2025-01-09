@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, test, vi } from "vitest";
 import { testDonateData } from "../../__tests__/test-data";
-import { DEFAULT_PROGRAM, USD_CODE } from "../../common/constants";
+import { USD_CODE } from "../../common/constants";
 import type { DafDonationDetails, Init } from "../../types";
 import Form from "./Form";
 
@@ -55,9 +55,7 @@ describe("DAF form test", () => {
       mode: "live",
     };
     render(<Form init={init} step="donate-form" />);
-    const programSelector = screen.queryByRole("button", {
-      name: /general donation/i,
-    });
+    const programSelector = screen.queryByLabelText(/select program/i);
     expect(programSelector).toBeNull();
   });
 
@@ -73,7 +71,7 @@ describe("DAF form test", () => {
       method: "daf",
       amount: "100",
       currency: { code: USD_CODE, rate: 1, min: 1 },
-      program: DEFAULT_PROGRAM,
+      program: { label: "", value: "" },
     };
     render(<Form init={init} step="donate-form" details={details} />);
     const amountInput = screen.getByPlaceholderText(/enter amount/i);

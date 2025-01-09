@@ -17,6 +17,7 @@ import type { FormProps, Props } from "./types";
 import { useRhf } from "./useRhf";
 
 export default function Loader(props: Props) {
+  /** page should supply Promise<FiatCurrencies> */
   const data: any = useLoaderData();
 
   return (

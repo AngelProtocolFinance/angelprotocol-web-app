@@ -43,9 +43,7 @@ describe("stocks form test", () => {
     const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
     expect(qtyInput).toHaveDisplayValue("");
 
-    const programSelector = await screen.findByRole("button", {
-      name: /general donation/i,
-    });
+    const programSelector = screen.getByLabelText(/select program/i);
     expect(programSelector).toBeInTheDocument();
   });
   test("initial blank state: program donations now allowed", () => {
@@ -56,9 +54,7 @@ describe("stocks form test", () => {
       mode: "live",
     };
     render(<Form init={init} step="donate-form" />);
-    const programSelector = screen.queryByRole("button", {
-      name: /general donation/i,
-    });
+    const programSelector = screen.queryByLabelText(/select program/i);
     expect(programSelector).toBeNull();
   });
   test("initial state: persisted and submittable", async () => {
@@ -81,10 +77,8 @@ describe("stocks form test", () => {
     const qtyInput = screen.getByPlaceholderText(/enter quantity/i);
     expect(qtyInput).toHaveDisplayValue("10");
 
-    const programSelector = screen.getByRole("button", {
-      name: /program 2/i,
-    });
-    expect(programSelector).toBeInTheDocument();
+    const selectedProgram = screen.getByText(/program 2/i);
+    expect(selectedProgram).toBeInTheDocument();
     const continueBtn = screen.getByRole("button", { name: /continue/i });
     await userEvent.click(continueBtn);
     expect(mockedSetState).toHaveBeenCalledOnce();
