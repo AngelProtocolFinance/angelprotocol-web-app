@@ -6,7 +6,6 @@ import { applicationRoute } from "pages/Application";
 import { bankApplicationRoute } from "pages/BankingApplication";
 import { fundsRoute } from "pages/Funds";
 import { legalRoutes } from "pages/Legal";
-import { profileRoute } from "pages/Profile";
 import { route as regRoute } from "pages/Registration";
 import { signUpRoute } from "pages/SignUp";
 import { userDashboardRoute } from "pages/UserDashboard";
@@ -54,7 +53,6 @@ const _appRoutes: RO[] = [
     path: appRoutes.reset_password,
     lazy: () => import("pages/ResetPassword").then(convert),
   },
-  { path: appRoutes.marketplace + "/:id", ...profileRoute },
   {
     path: appRoutes.form_builder,
     lazy: () => import("pages/Widget/form-builder").then(convert),
@@ -62,7 +60,6 @@ const _appRoutes: RO[] = [
 ];
 
 const rootRoutes: RO[] = [
-  { index: true, lazy: () => import("pages/Home").then(convert) },
   {
     path: `${appRoutes.donate}/:id`,
     lazy: () => import("pages/Donate").then(convert),
