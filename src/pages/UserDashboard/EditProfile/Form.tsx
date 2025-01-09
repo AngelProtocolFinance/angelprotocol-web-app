@@ -2,7 +2,7 @@ import CurrencySelector from "components/CurrencySelector";
 import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import { NativeField as Field, Form, Label } from "components/form";
 import { useFetcher, useLoaderData } from "react-router";
-import type { LoaderData } from "./types";
+import type { LoaderData } from "./api";
 import { avatarSpec, useRhf } from "./useRhf";
 export function Component() {
   const data = useLoaderData() as LoaderData;
