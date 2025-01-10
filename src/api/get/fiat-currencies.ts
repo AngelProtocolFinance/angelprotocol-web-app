@@ -1,7 +1,7 @@
 import type { UserV2 } from "types/auth";
 import type { FiatCurrencyData } from "types/aws";
 import type { DetailedCurrency } from "types/components";
-import { apes, toSearch } from "../api";
+import { apesUrl } from "../api";
 
 const toDetailed = (
   input: FiatCurrencyData["currencies"][number]
@@ -17,11 +17,11 @@ export interface FiatCurrencies {
 }
 
 export async function getFiatCurrencies(user?: UserV2) {
-  const data = await apes
-    .get<FiatCurrencyData>("fiat-currencies", {
-      searchParams: toSearch({ prefCode: user?.currency }),
-    })
-    .json();
+  const url = new URL(`${apesUrl}/fiat-currencies`);
+  if (user?.currency) url.searchParams.set("prefCode", user.currency);
+  const res = await fetch(url);
+  if (!res.ok) throw res;
+  const data: FiatCurrencyData = await res.json();
 
   return {
     all: data.currencies.map((c) => toDetailed(c)),

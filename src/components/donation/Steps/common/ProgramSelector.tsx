@@ -1,26 +1,30 @@
-import type { Program } from "@better-giving/endowment";
 import {
   Listbox,
   ListboxButton,
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { Await, useLoaderData } from "@remix-run/react";
+import { getPrograms } from "api/get/programs";
 import { unpack } from "helpers";
 import { X } from "lucide-react";
-import { Suspense } from "react";
+import useSWR from "swr/immutable";
 import type { OptionType } from "types/components";
 import { DrawerIcon } from "../../../Icon";
 
 type Props = {
   classes?: string | { container?: string; label?: string };
+  endowId: number;
   program: OptionType<string>;
   onChange: (program: OptionType<string>) => void;
 };
 
-export function ProgramSelector({ program, onChange, classes }: Props) {
+export function ProgramSelector({
+  program,
+  onChange,
+  classes,
+  endowId,
+}: Props) {
   /** page should provide  */
-  const data: any = useLoaderData<{ programs: Promise<Program[]> }>();
   const styles = unpack(classes);
   return (
     <Listbox
@@ -76,32 +80,24 @@ export function ProgramSelector({ program, onChange, classes }: Props) {
           )}
         </ListboxButton>
       )}
-      <Suspense fallback={<span data-loading />}>
-        <Await resolve={data.programs} errorElement={<span data-error />}>
-          {(progs) =>
-            progs === 0 ? (
-              <span data-empty />
-            ) : (
-              <LoadedOptions options={progs} />
-            )
-          }
-        </Await>
-      </Suspense>
+      <Options endowId={endowId} />
     </Listbox>
   );
 }
 
-interface ILoadedOptions {
-  options: Program[];
-}
+function Options({ endowId }: { endowId: number }) {
+  const { data, isLoading, error } = useSWR(endowId.toString(), getPrograms);
 
-function LoadedOptions({ options }: ILoadedOptions) {
+  if (isLoading) return <span data-loading />;
+  if (error) return <span data-error />;
+  if (!data || data.length === 0) return <span data-empty />;
+
   return (
     <ListboxOptions
       anchor={{ to: "bottom", gap: 8 }}
       className="bg-white w-[var(--button-width)] border border-gray-l4 px-5 py-3.5 rounded-lg grid gap-2 focus:ring-2 focus:ring-blue-d1 ring-offset-1"
     >
-      {options.map((o) => (
+      {data.map((o) => (
         <ListboxOption
           key={o.id}
           value={

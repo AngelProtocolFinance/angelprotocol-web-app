@@ -6,12 +6,12 @@ import { requiredString } from "schemas/string";
 import type { Currency } from "types/components";
 import type { OnIncrement } from "../../common/Incrementers";
 import { usdOption } from "../../common/constants";
-import type { FormValues as FV, FormProps } from "./types";
+import type { FormValues as FV, Props } from "./types";
 
-export function useRhf(props: Omit<FormProps, "currencies">) {
+export function useRhf(props: Props) {
   const initial: FV = {
     amount: "",
-    currency: props.main || usdOption,
+    currency: usdOption,
     frequency: "" as FV["frequency"],
     program: { label: "", value: "" },
   };

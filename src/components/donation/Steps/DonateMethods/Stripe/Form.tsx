@@ -1,8 +1,9 @@
-import { Await, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
+import { getFiatCurrencies } from "api/get/fiat-currencies";
 import CurrencySelector from "components/CurrencySelector";
-import { ErrorStatus, LoadingStatus } from "components/Status";
 import { Form as FormContainer, NativeField } from "components/form";
-import { Suspense } from "react";
+import { useEffect } from "react";
+import useSWR from "swr";
 import type { Currency } from "types/components";
 import { useDonationState } from "../../Context";
 import ContinueBtn from "../../common/ContinueBtn";
@@ -11,28 +12,23 @@ import { ProgramSelector } from "../../common/ProgramSelector";
 import { USD_CODE } from "../../common/constants";
 import { nextFormState } from "../helpers";
 import Frequency from "./Frequency";
-import type { FormProps, Props } from "./types";
+import type { Props } from "./types";
 import { useRhf } from "./useRhf";
 
-export default function Loader(props: Props) {
-  /** page should supply Promise<FiatCurrencies> */
-  const data: any = useLoaderData();
-  return (
-    <Suspense fallback={<LoadingStatus>Loading donate form..</LoadingStatus>}>
-      <Await
-        resolve={data.currencies}
-        errorElement={<ErrorStatus>Failed to load donate form ..</ErrorStatus>}
-      >
-        {(loaded) => <Form {...props} {...loaded} />}
-      </Await>
-    </Suspense>
-  );
-}
-
-function Form(props: FormProps) {
+export default function Form(props: Props) {
+  /** supplied by page loader */
+  const { user } = useLoaderData<any>();
+  const currency = useSWR(user, getFiatCurrencies);
   const { setState } = useDonationState();
-  const { all } = props;
   const rhf = useRhf(props);
+
+  const userCurrency = currency.data?.main;
+  //biome-ignore lint:
+  useEffect(() => {
+    if (userCurrency) {
+      rhf.currency.onChange(userCurrency);
+    }
+  }, [userCurrency]);
 
   return (
     <FormContainer
@@ -47,7 +43,12 @@ function Form(props: FormProps) {
         error={rhf.errors.frequency?.message}
       />
       <CurrencySelector
-        currencies={all}
+        currencies={{
+          isLoading: currency.isLoading,
+          isFetching: currency.isValidating,
+          isError: !!currency.error,
+          data: currency.data?.all,
+        }}
         label="Currency"
         onChange={rhf.currency.onChange}
         value={rhf.currency.value}
@@ -79,7 +80,9 @@ function Form(props: FormProps) {
       )}
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
+        // program not allowed for fund (id string)
         <ProgramSelector
+          endowId={+props.init.recipient.id}
           classes="mt-4"
           program={rhf.program.value}
           onChange={rhf.program.onChange}

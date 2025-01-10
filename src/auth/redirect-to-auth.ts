@@ -3,7 +3,7 @@ import { appRoutes } from "constants/routes";
 import { decodeState, toUrlWithState } from "helpers/state-params";
 import type { SignInRouteState } from "types/auth";
 
-export const redirectToAuth = (req: Request) => {
+export const redirectToAuth = (req: Request, headers?: any) => {
   const from = new URL(req.url);
 
   const toState: SignInRouteState = {
@@ -15,5 +15,5 @@ export const redirectToAuth = (req: Request) => {
   const to = new URL(req.url);
   to.pathname = appRoutes.signup;
 
-  return redirect(toUrlWithState(to, toState).toString());
+  return redirect(toUrlWithState(to, toState).toString(), headers);
 };

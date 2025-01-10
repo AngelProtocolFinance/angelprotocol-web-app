@@ -28,10 +28,8 @@ import { type OAuthState, isError, signIn } from "types/auth";
 
 export const action: ActionFunction = async ({ request }) => {
   try {
-    const session = await cognito.retrieve(request);
-    if (session && typeof session !== "string") {
-      return redirect(appRoutes.marketplace);
-    }
+    const { user } = await cognito.retrieve(request);
+    if (user) return redirect(appRoutes.marketplace);
 
     const from = new URL(request.url);
     const fromState = decodeState(from.searchParams.get("_s"));
@@ -88,8 +86,8 @@ export const action: ActionFunction = async ({ request }) => {
 export const loader: LoaderFunction = async ({
   request,
 }): Promise<Response | unknown> => {
-  const auth = await cognito.retrieve(request);
-  if (auth) return redirect(appRoutes.marketplace);
+  const { user } = await cognito.retrieve(request);
+  if (user) return redirect(appRoutes.marketplace);
 
   const url = new URL(request.url);
   return decodeState(url.searchParams.get("_s"));

@@ -54,7 +54,9 @@ export default function Form(props: Props) {
       />
 
       {(props.init.recipient.progDonationsAllowed ?? true) && (
+        // program not allowed for fund (id string)
         <ProgramSelector
+          endowId={+props.init.recipient.id}
           program={rhf.program.value}
           onChange={rhf.program.onChange}
         />

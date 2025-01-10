@@ -92,8 +92,9 @@ export default function Configurer({
         </label>
         <EndowmentSelector endow={endow} />
 
-        {(endow?.progDonationsAllowed ?? true) && (
+        {endow && (endow?.progDonationsAllowed ?? true) && (
           <ProgramSelector
+            endowId={endow?.id}
             classes={{ container: "mt-6", label: "text-base font-medium" }}
             onChange={program.onChange}
             program={program.value}

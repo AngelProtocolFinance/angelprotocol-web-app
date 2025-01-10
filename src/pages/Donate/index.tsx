@@ -1,10 +1,9 @@
-import { type MetaFunction, useLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "@remix-run/react";
 import type { DonateData } from "api/donate-loader";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
-import Content from "./Content";
+export { default } from "./Content";
 export { loader } from "api/donate-loader";
-
 export const meta: MetaFunction = ({ data }) => {
   const { endow } = data as DonateData;
   return metas({
@@ -15,8 +14,3 @@ export const meta: MetaFunction = ({ data }) => {
     url: `${BASE_URL}/donate/${endow.id}`,
   });
 };
-
-export default function Donate() {
-  const { endow } = useLoaderData() as DonateData;
-  return <Content endowment={endow} />;
-}

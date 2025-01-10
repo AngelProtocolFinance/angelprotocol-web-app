@@ -25,8 +25,8 @@ export const action: ActionFunction = async ({ request }) => {
     return "success";
   }
 
-  const auth = await cognito.retrieve(request);
-  if (!auth || typeof auth === "string") return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   //authenticated requests
 
@@ -37,11 +37,11 @@ export const action: ActionFunction = async ({ request }) => {
 
     return action === "add"
       ? ap.post(`${ver(1)}/bookmarks`, {
-          headers: { authorization: auth.bg_token_id },
+          headers: { authorization: user.idToken },
           json: { endowId },
         })
       : ap.delete(`${ver(1)}/bookmarks/${endowId}`, {
-          headers: { authorization: auth.bg_token_id },
+          headers: { authorization: user.idToken },
         });
   }
 
