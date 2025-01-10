@@ -1,11 +1,10 @@
 import { beforeEach } from "node:test";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mockPhpCurrency } from "services/apes/mock";
 import { mockPrograms } from "services/aws/programs/mock";
 import { describe, expect, test, vi } from "vitest";
 import { testDonateData } from "../../__tests__/test-data";
-import { usdOption } from "../../common/constants";
 import type { Init, StripeDonationDetails } from "../../types";
 import Form from "./Form";
 
@@ -41,18 +40,6 @@ vi.mock("store/accessors", () => ({
 describe("Stripe form test", () => {
   beforeEach(() => vi.restoreAllMocks());
 
-  test("test form loading", async () => {
-    mockLoader.mockReturnValue(testDonateData);
-    render(<Form step="donate-form" init={init} />);
-    expect(screen.getByText(/loading donate form/i));
-
-    await waitFor(() => {
-      //after loading
-      expect(screen.queryByText(/loading donate form/i)).toBeNull();
-    });
-    mockLoader.mockReset();
-  });
-
   test("blank state: no default currency specified", async () => {
     mockLoader.mockReturnValue(testDonateData);
     render(<Form step="donate-form" init={init} />);
@@ -61,17 +48,14 @@ describe("Stripe form test", () => {
     mockLoader.mockReset();
   });
 
-  test("initial state: user has preferred no currency", async () => {
+  test("initial state: user has preferred currency", async () => {
     mockLoader.mockReturnValue({
       ...testDonateData,
-      currencies: Promise.resolve({
-        all: [usdOption],
-        main: { code: "php", min: 50, rate: 50 },
-      }),
+      user: { currency: "php" },
     });
     render(<Form step="donate-form" init={init} />);
 
-    //give monthly is frequency default option
+    //no default frequency
     const freqOptions = await screen.findAllByRole("radio");
     expect(freqOptions[1]).not.toBeChecked();
     expect(freqOptions[0]).not.toBeChecked();

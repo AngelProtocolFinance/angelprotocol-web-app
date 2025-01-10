@@ -1,7 +1,12 @@
-import { Links, Meta, Scripts, useNavigation } from "@remix-run/react";
+import {
+  Links,
+  Meta,
+  Scripts,
+  ScrollRestoration,
+  useNavigation,
+} from "@remix-run/react";
 import nProgress from "nprogress";
 import { type PropsWithChildren, useEffect } from "react";
-import { ScrollRestoration } from "react-router-dom";
 import { Toaster } from "sonner";
 
 export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
