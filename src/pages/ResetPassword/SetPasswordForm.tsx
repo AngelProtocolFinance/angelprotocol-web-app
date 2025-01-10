@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function SetPasswordForm(props: Props) {
-  const fetcher = useFetcher<ActionData<Ok>>();
+  const fetcher = useFetcher<ActionData>();
   const { counter, resetCounter } = useCounter(MAX_TIME);
   const formErr = useActionResult(fetcher.data, {
     onData: () => resetCounter(),

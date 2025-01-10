@@ -1,5 +1,5 @@
-import type { LinksFunction } from "@remix-run/node";
 import { Outlet } from "@remix-run/react";
+import type { LinksFunction } from "@vercel/remix";
 import nProgressStyles from "nprogress/nprogress.css?url";
 import laira from "./assets/images/flying-character.png";
 import cc from "./cookie-consent.css?url";

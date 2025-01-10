@@ -3,7 +3,7 @@ import {
   type LoaderFunction,
   data,
   redirect,
-} from "@remix-run/node";
+} from "@vercel/remix";
 import { cognito } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { decodeState } from "helpers/state-params";

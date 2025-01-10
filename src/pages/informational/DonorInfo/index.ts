@@ -1,4 +1,4 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { metas } from "helpers/seo";
 import type { EndowCardsPage } from "types/aws";

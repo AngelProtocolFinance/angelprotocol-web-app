@@ -2,7 +2,6 @@ import { Await, useLoaderData } from "@remix-run/react";
 import CurrencySelector from "components/CurrencySelector";
 import { ErrorStatus, LoadingStatus } from "components/Status";
 import { Form as FormContainer, NativeField } from "components/form";
-import { bgCookies, setCookie } from "helpers/cookie";
 import { Suspense } from "react";
 import type { Currency } from "types/components";
 import { useDonationState } from "../../Context";
@@ -18,7 +17,6 @@ import { useRhf } from "./useRhf";
 export default function Loader(props: Props) {
   /** page should supply Promise<FiatCurrencies> */
   const data: any = useLoaderData();
-
   return (
     <Suspense fallback={<LoadingStatus>Loading donate form..</LoadingStatus>}>
       <Await
@@ -34,7 +32,6 @@ export default function Loader(props: Props) {
 function Form(props: FormProps) {
   const { setState } = useDonationState();
   const { all } = props;
-
   const rhf = useRhf(props);
 
   return (
@@ -52,10 +49,7 @@ function Form(props: FormProps) {
       <CurrencySelector
         currencies={all}
         label="Currency"
-        onChange={(c) => {
-          setCookie(bgCookies.prefCode, c.code.toUpperCase());
-          rhf.currency.onChange(c);
-        }}
+        onChange={rhf.currency.onChange}
         value={rhf.currency.value}
         classes={{
           label: "font-semibold",

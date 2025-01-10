@@ -1,5 +1,5 @@
-import type { LoaderFunction } from "@remix-run/node";
 import { Outlet, useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import Seo from "components/Seo";
 import type { EndowCardsPage } from "types/aws";

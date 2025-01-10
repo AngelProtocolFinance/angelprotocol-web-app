@@ -1,6 +1,6 @@
-import type { LoaderFunction } from "@remix-run/node";
 import { Navigate, useLoaderData, useOutletContext } from "@remix-run/react";
 import type { PaymentIntent } from "@stripe/stripe-js";
+import type { LoaderFunction } from "@vercel/remix";
 import { apes } from "api/api";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";

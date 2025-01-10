@@ -1,6 +1,6 @@
 import { Buffer } from "node:buffer";
-import type { LoaderFunctionArgs } from "@remix-run/node";
 import { data, redirect } from "@remix-run/react";
+import type { LoaderFunctionArgs } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { userEndows } from "api/get/user-endows";
@@ -58,12 +58,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     return redirect(url.toString(), { headers: { "Set-Cookie": res } });
   }
 
-  const auth = await cognito.retrieve(request);
-  if (!auth) return null;
-  if (typeof auth === "string") {
-    return data(null, { headers: { "Set-Cookie": auth } });
-  }
-  const user = cognito.toUser(auth);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return data(null, { headers });
   return {
     ...user,
     bookmarks: getBookmarks(user),

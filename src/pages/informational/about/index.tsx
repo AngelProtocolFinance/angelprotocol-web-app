@@ -1,4 +1,4 @@
-import type { MetaFunction } from "@remix-run/node";
+import type { MetaFunction } from "@vercel/remix";
 import Seo from "components/Seo";
 import { metas } from "helpers/seo";
 import { BottomCta } from "./bottom-cta";

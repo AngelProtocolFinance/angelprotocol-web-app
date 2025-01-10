@@ -1,4 +1,3 @@
-import { bgCookies, getCookie, setCookie } from "helpers/cookie";
 import type { UserV2 } from "types/auth";
 import type { FiatCurrencyData } from "types/aws";
 import type { DetailedCurrency } from "types/components";
@@ -18,16 +17,12 @@ export interface FiatCurrencies {
 }
 
 export async function getFiatCurrencies(user?: UserV2) {
-  const prefCode = user?.currency ?? getCookie(bgCookies.prefCode);
   const data = await apes
     .get<FiatCurrencyData>("fiat-currencies", {
-      searchParams: toSearch({ prefCode }),
+      searchParams: toSearch({ prefCode: user?.currency }),
     })
     .json();
 
-  if (data.default) {
-    setCookie(bgCookies.prefCode, data.default.currency_code.toUpperCase());
-  }
   return {
     all: data.currencies.map((c) => toDetailed(c)),
     main: data.default && toDetailed(data.default),

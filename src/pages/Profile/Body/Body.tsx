@@ -1,6 +1,6 @@
-import type { LoaderFunction } from "@remix-run/node";
 import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
 import { Link, Outlet } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { getEndowBalance } from "api/get/endow-balance";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";

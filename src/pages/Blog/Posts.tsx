@@ -1,10 +1,10 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import {
   Link,
   useFetcher,
   useLoaderData,
   useSearchParams,
 } from "@remix-run/react";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { posts } from "api/get/wp-posts";
 import Media from "components/Media";
 import { metas } from "helpers/seo";

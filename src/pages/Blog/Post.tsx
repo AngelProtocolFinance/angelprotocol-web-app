@@ -1,5 +1,5 @@
-import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { wp } from "api/api";
 import Media from "components/Media";
 import { appRoutes } from "constants/routes";

@@ -1,8 +1,8 @@
 import { Buffer } from "node:buffer";
 import { IS_TEST } from "constants/env";
 import { logger } from "helpers/logger";
-import type { AuthError } from "types/auth";
-import { type Stored, type Token, commitSession, getSession } from "./session";
+import type { AuthError, UserV2 } from "types/auth";
+import { type Stored, commitSession, getSession } from "./session";
 import { Util } from "./util";
 
 const clientId = IS_TEST
@@ -34,11 +34,12 @@ interface OauthTokenRes {
   token_type: string;
 }
 
-interface Session extends Token {
-  interface: Stored;
-}
 /** null: no user, string (expired): cookie to set */
-type Auth = Session | null | string;
+type Auth = {
+  user: UserV2 | null;
+  headers?: Record<string, string>;
+  session: Stored;
+};
 class Storage extends Util {
   async retrieve(request: Request): Promise<Auth> {
     const session = await getSession(request.headers.get("Cookie"));
@@ -48,22 +49,26 @@ class Storage extends Util {
     const token_expiry = session.get("bg_token_expiry");
 
     if (!token_id || !token_access || !token_refresh || !token_expiry)
-      return null;
+      return { user: null, session };
 
     if (token_expiry < new Date().toISOString()) {
       this.unset(session);
-      return commitSession(session);
+      return {
+        user: null,
+        headers: { "Set-Cookie": await commitSession(session) },
+        session,
+      };
     }
 
-    const retrieved: Auth = {
-      bg_token_id: token_id,
-      bg_token_access: token_access,
-      bg_token_refresh: token_refresh,
-      bg_token_expiry: token_expiry,
-      interface: session,
+    return {
+      user: this.toUser({
+        bg_token_id: token_id,
+        bg_token_access: token_access,
+        bg_token_refresh: token_refresh,
+        bg_token_expiry: token_expiry,
+      }),
+      session,
     };
-
-    return retrieved;
   }
 
   expiry(duration: number) {
@@ -238,18 +243,18 @@ class Cognito extends Storage {
     });
   }
 
-  async signOut(session: Session): Promise<string | AuthError> {
+  async signOut(session: Stored): Promise<string | AuthError> {
     const res = await fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("GlobalSignOut"),
       body: this.body({
-        AccessToken: session.bg_token_access,
+        AccessToken: session.get("bg_token_access"),
       }),
     });
 
     if (res.ok) {
-      this.unset(session.interface);
-      return commitSession(session.interface);
+      this.unset(session);
+      return commitSession(session);
     }
 
     return res.json() as any;

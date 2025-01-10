@@ -1,5 +1,5 @@
 import type { UserEndow } from "@better-giving/user";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
+import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { userEndows } from "api/get/user-endows";
 import { loadAuth, redirectToAuth } from "auth";

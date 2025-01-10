@@ -6,6 +6,7 @@ export class Util {
   toUser(token: Token): UserV2 {
     const {
       endows = "",
+      funds = "",
       "cognito:groups": groups = [],
       ...p
     }: any = decodeJwt(token.bg_token_id);
@@ -16,6 +17,7 @@ export class Util {
       refreshToken: token.bg_token_refresh,
       groups,
       endowments: endows.split(",").map(Number) ?? [],
+      funds: funds.split(",").map(Number) ?? [],
       email: p.email,
       firstName: p.given_name,
       lastName: p.family_name,

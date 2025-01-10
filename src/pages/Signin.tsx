@@ -1,5 +1,4 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import type { ActionFunction, LoaderFunction } from "@remix-run/node";
 import {
   Link,
   data,
@@ -8,6 +7,7 @@ import {
   useLoaderData,
   useSearchParams,
 } from "@remix-run/react";
+import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 
 import googleIcon from "assets/icons/google.svg";
 import { cognito, oauth } from "auth/cognito";

@@ -1,5 +1,6 @@
 import type { Endow, Program } from "@better-giving/endowment";
-import type { LoaderFunction } from "@remix-run/node";
+import { type LoaderFunction, data } from "@vercel/remix";
+import { cognito } from "auth";
 import type { UserV2 } from "types/auth";
 import type { EndowmentBalances } from "types/aws";
 import * as v from "valibot";
@@ -19,15 +20,18 @@ export interface DonateData {
   balance: Promise<EndowmentBalances>;
 }
 
-export const clientLoader: LoaderFunction = async ({ params }) => {
-  const auth = await loadAuth();
+export const loader: LoaderFunction = async ({ request, params }) => {
+  const { user, headers } = await cognito.retrieve(request);
   const id = v.parse(plusInt, params.id);
-  return {
-    id,
-    user: auth,
-    endow: await getEndow(id),
-    currencies: getFiatCurrencies(auth ?? undefined),
-    programs: getPrograms(id),
-    balance: getEndowBalance(id.toString()),
-  } satisfies DonateData;
+  return data(
+    {
+      id,
+      user,
+      endow: await getEndow(id),
+      currencies: getFiatCurrencies(user ?? undefined),
+      programs: getPrograms(id),
+      balance: getEndowBalance(id.toString()),
+    } satisfies DonateData,
+    { headers }
+  );
 };

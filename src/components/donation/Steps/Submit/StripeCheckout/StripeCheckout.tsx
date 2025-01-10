@@ -15,10 +15,6 @@ import { DonationTerms } from "../DonationTerms";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
 
-// Followed Stripe's custom flow docs
-// https://stripe.com/docs/payments/quickstart
-const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
-
 const fetcher = async (intent: DonationIntent) => {
   const res = await fetch(`${APIs.apes}/fiat-donation/stripe`, {
     method: "POST",
@@ -108,7 +104,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
                 },
               },
             }}
-            stripe={stripePromise}
+            stripe={loadStripe(PUBLIC_STRIPE_KEY)}
           >
             <Checkout {...props} />
           </Elements>

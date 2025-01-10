@@ -1,4 +1,4 @@
-import type { ActionFunction } from "@remix-run/node";
+import type { ActionFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { redirectToAuth } from "auth";
 import { cognito } from "auth/cognito";
