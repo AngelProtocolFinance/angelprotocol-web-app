@@ -5,7 +5,6 @@ import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { userEndows } from "api/get/user-endows";
 import { cognito, oauth } from "auth/cognito";
-import { getToast } from "remix-toast";
 import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
@@ -54,25 +53,20 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     if (parsed.data && typeof parsed.data === "object") {
       url.searchParams.set("_s", btoa(JSON.stringify(parsed.data)));
     }
-
     //TODO send this data to the redirect route
     //const user = userFromIdToken(res.id_token, res.access_token);
     return redirect(url.toString(), { headers: { "Set-Cookie": res } });
   }
 
-  const { toast, headers } = await getToast(request);
-
   const auth = await cognito.retrieve(request);
   if (!auth) return null;
   if (typeof auth === "string") {
-    headers.set("Set-Cookie", auth);
-    return data(null, { headers });
+    return data(null, { headers: { "Set-Cookie": auth } });
   }
   const user = cognito.toUser(auth);
-  const detailed: DetailedUser = {
+  return {
     ...user,
     bookmarks: getBookmarks(user),
     orgs: userEndows(user),
-  };
-  return data({ ...detailed, toast }, { headers });
+  } satisfies DetailedUser;
 };

@@ -4,7 +4,7 @@ import { ControlledImgEditor as ImgEditor } from "components/ImgEditor";
 import { RichText } from "components/RichText";
 import { NativeField as Field, Form as Frm } from "components/form";
 import { GoalSelector } from "components/goal-selector";
-import { useActionToast } from "hooks/use-action-toast";
+import { useActionResult } from "hooks/use-action-result";
 import type { SubmitHandler } from "react-hook-form";
 import { imgSpec } from "../common";
 import { Videos } from "../common/videos";
@@ -16,7 +16,7 @@ export function Form({
   ...props
 }: SingleFund & { classes?: string }) {
   const fetcher = useFetcher();
-  useActionToast(fetcher.data);
+  useActionResult(fetcher.data);
   const rhf = useRhf(props);
 
   const isSubmitting = fetcher.state !== "idle";

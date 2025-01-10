@@ -50,10 +50,6 @@ const _appRoutes: RO[] = [
   { path: appRoutes.signin, lazy: () => import("pages/Signin").then(convert) },
   signUpRoute,
   {
-    path: appRoutes.reset_password,
-    lazy: () => import("pages/ResetPassword").then(convert),
-  },
-  {
     path: appRoutes.form_builder,
     lazy: () => import("pages/Widget/form-builder").then(convert),
   },

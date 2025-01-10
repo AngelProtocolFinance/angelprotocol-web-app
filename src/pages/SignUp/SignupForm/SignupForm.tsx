@@ -13,25 +13,24 @@ import { Input, PasswordInput } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
-import { useActionToast } from "hooks/use-action-toast";
+import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
-import { type ActionData, isFormErr } from "types/action";
+import type { ActionData } from "types/action";
 import { signUp } from "types/auth";
 
 export default function SignupForm() {
   const fromState = useLoaderData();
   const [params] = useSearchParams();
-  const fetcher = useFetcher<ActionData<any>>();
+  const fetcher = useFetcher<ActionData>();
+  const formErr = useActionResult(fetcher.data);
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: formErr,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: signUp });
     },
   });
-
-  useActionToast(fetcher.data);
 
   const isSubmitting = fetcher.state === "submitting";
 

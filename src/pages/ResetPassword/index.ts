@@ -1,8 +1,9 @@
 import {
   type ActionFunction,
   type LoaderFunction,
+  data,
   redirect,
-} from "@remix-run/react";
+} from "@remix-run/node";
 import { cognito } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { decodeState } from "helpers/state-params";
@@ -13,7 +14,7 @@ import { emailSchema, passwordSchema } from "./schema";
 import { type LoaderData, step } from "./types";
 export { default } from "./ResetPassword";
 
-export const clientLoader: LoaderFunction = ({ request }) => {
+export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url);
   const { _s, ..._step } = Object.fromEntries(url.searchParams.entries());
   return {
@@ -22,7 +23,7 @@ export const clientLoader: LoaderFunction = ({ request }) => {
   } satisfies LoaderData;
 };
 
-export const clientAction: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request }) => {
   const fv = await request.formData();
   const email = fv.get("email")!.toString();
 
@@ -32,10 +33,10 @@ export const clientAction: ActionFunction = async ({ request }) => {
     return redirect(to.toString());
   }
 
-  if (fv.get("intent") === "resent-otp") {
+  if (fv.get("intent") === "resend-otp") {
     const res = await cognito.resendConfirmationCode(email);
-    if (isError(res)) return { __err: res.message } satisfies ActionData;
-    return { __ok: "OTP sent" } satisfies ActionData;
+    if (isError(res)) return data({ __err: res.message } satisfies ActionData);
+    return data({ __ok: "OTP sent" } satisfies ActionData);
   }
 
   if (fv.get("intent") === "confirm") {

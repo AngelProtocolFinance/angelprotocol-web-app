@@ -16,7 +16,7 @@ import {
 } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { BG_ID } from "constants/common";
-import { useActionToast } from "hooks/use-action-toast";
+import { useActionResult } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -32,7 +32,7 @@ export default function Form() {
   >;
 
   const fetcher = useFetcher<ActionData>();
-  useActionToast(fetcher.data);
+  useActionResult(fetcher.data);
 
   const {
     reset,

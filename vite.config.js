@@ -23,13 +23,14 @@ export default defineConfig({
           r("", "./pages/Home/index.ts", { index: true });
           r("", "./App/Layout.tsx", () => {
             r("login", "./pages/Signin.tsx");
+            r("login/reset", "./pages/ResetPassword/index.ts");
             r("logout", "./pages/logout.ts");
             r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
             r("donor", "./pages/informational/DonorInfo/index.ts");
             r("wp-plugin", "./pages/informational/WpPlugin.tsx");
-            r("about","./pages/informational/about/index.tsx")
-            r("blog","./pages/Blog/Posts.tsx")
-            r("blog/:slug","./pages/Blog/Post.tsx")
+            r("about", "./pages/informational/about/index.tsx");
+            r("blog", "./pages/Blog/Posts.tsx");
+            r("blog/:slug", "./pages/Blog/Post.tsx");
             r("marketplace", "./pages/Marketplace/index.tsx", () => {
               r("filter", "./pages/Marketplace/Filter/index.ts");
             });

@@ -3,7 +3,7 @@ import { Link, useFetcher } from "@remix-run/react";
 import { FundCreator, FundStatus, statusFn } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { useActionToast } from "hooks/use-action-toast";
+import { useActionResult } from "hooks/use-action-result";
 import { LoaderCircle, Split } from "lucide-react";
 import type { ActionData } from "types/action";
 import { useAdminContext } from "../../../Admin/Context";
@@ -11,7 +11,7 @@ export const FundItem = (
   props: TFundItem & { endowId: number; isSelf: boolean }
 ) => {
   const fetcher = useFetcher<ActionData>({ key: `fund-${props.id}` });
-  useActionToast(fetcher.data);
+  useActionResult(fetcher.data);
   const { user } = useAdminContext();
   const status = statusFn(
     props.expiration,

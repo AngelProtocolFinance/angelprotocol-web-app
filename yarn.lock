@@ -3308,7 +3308,6 @@ __metadata:
     react-hook-form: "npm:7.53.0"
     react-player: "npm:2.16.0"
     react-router: "npm:7.1.1"
-    remix-toast: "npm:2.0.0"
     remix-utils: "npm:8.0.0"
     sonner: "npm:1.7.0"
     swiper: "npm:11.1.4"
@@ -8315,17 +8314,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"remix-toast@npm:2.0.0":
-  version: 2.0.0
-  resolution: "remix-toast@npm:2.0.0"
-  dependencies:
-    zod: "npm:^3.22.3"
-  peerDependencies:
-    react-router: ">=7.0.0"
-  checksum: 10/72a7c523d62c989f75db7c9dd26cd1c47f7a8769a85af8a0fc4f413000aaaa36eda37f2311dfdce50f38ce7458ac5c2a08d30c830005765ea148bfb7e56754d1
-  languageName: node
-  linkType: hard
-
 "remix-utils@npm:8.0.0":
   version: 8.0.0
   resolution: "remix-utils@npm:8.0.0"
@@ -10208,13 +10196,6 @@ __metadata:
     toposort: "npm:^2.0.2"
     type-fest: "npm:^2.19.0"
   checksum: 10/3d1277e5e1fff4d8130e525c7361f54874ca848ebd427a0aa66606952e3370b9947d84a1ea0b943f389649e886d26b1349930889727489460d6f2f86c2a26e77
-  languageName: node
-  linkType: hard
-
-"zod@npm:^3.22.3":
-  version: 3.24.1
-  resolution: "zod@npm:3.24.1"
-  checksum: 10/54e25956495dec22acb9399c168c6ba657ff279801a7fcd0530c414d867f1dcca279335e160af9b138dd70c332e17d548be4bc4d2f7eaf627dead50d914fec27
   languageName: node
   linkType: hard
 

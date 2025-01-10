@@ -2,11 +2,10 @@ import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Input } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
+import { useActionResult } from "hooks/use-action-result";
 import useCounter from "hooks/useCounter";
-import { useEffect } from "react";
-import { toast } from "sonner";
 import { signUpConfirm } from "types/auth";
-import { type ActionData, isData, isErr, isFormErr } from "./types";
+import type { ActionData } from "./types";
 
 const MAX_TIME = 30;
 
@@ -15,22 +14,13 @@ export default function ConfirmForm() {
   const email = useLoaderData() as string;
   const fetcher = useFetcher<ActionData>();
   const { counter, resetCounter } = useCounter(MAX_TIME);
-
-  //biome-ignore lint:
-  useEffect(() => {
-    if (isErr(fetcher.data)) {
-      toast.error(fetcher.data.__err);
-      return;
-    }
-
-    if (isData(fetcher.data)) {
-      resetCounter();
-    }
-  }, [fetcher.data]);
+  const formErr = useActionResult(fetcher.data, {
+    onData: () => resetCounter(),
+  });
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: formErr,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: signUpConfirm });
     },

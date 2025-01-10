@@ -1,7 +1,7 @@
 import { Link, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import type { BankDetails } from "api/get/payout-method";
 import ExtLink from "components/ExtLink";
-import { useActionToast } from "hooks/use-action-toast";
+import { useActionResult } from "hooks/use-action-result";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 
@@ -14,7 +14,7 @@ export {
 export default function PayoutMethod() {
   const bank = useLoaderData() as BankDetails;
   const fetcher = useFetcher();
-  useActionToast(fetcher.data);
+  useActionResult(fetcher.data);
 
   const isRejected = bank.status === "rejected";
   const isApproved = bank.status === "approved";

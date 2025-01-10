@@ -1,8 +1,6 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
-import { Outlet, useRouteLoaderData } from "@remix-run/react";
+import type { LinksFunction } from "@remix-run/node";
+import { Outlet } from "@remix-run/react";
 import nProgressStyles from "nprogress/nprogress.css?url";
-import { useEffect } from "react";
-import { Toaster, toast as notify } from "sonner";
 import laira from "./assets/images/flying-character.png";
 import cc from "./cookie-consent.css?url";
 import tailwind from "./index.css?url";
@@ -31,14 +29,6 @@ export const links: LinksFunction = () => [
   },
 ];
 
-export const meta: MetaFunction = () => [
-  {
-    name: "viewport",
-    content: "width=device-width, initial-scale=1",
-  },
-  { name: "charset", content: "UTF-8" },
-];
-
 export { loader } from "./root-loader";
 export { action } from "./root-action";
 export { Layout } from "./root-layout";
@@ -55,19 +45,5 @@ export function HydrateFallback() {
 }
 
 export default function Root() {
-  const { toast } = useRouteLoaderData<any>("root") ?? {};
-  useEffect(() => {
-    if (toast?.type === "error") {
-      notify.error(toast.message);
-    }
-    if (toast?.type === "success") {
-      notify.success(toast.message);
-    }
-  }, [toast]);
-  return (
-    <>
-      <Outlet />
-      <Toaster richColors position="top-right" closeButton />
-    </>
-  );
+  return <Outlet />;
 }

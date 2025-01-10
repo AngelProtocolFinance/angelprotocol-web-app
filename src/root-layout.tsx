@@ -2,6 +2,7 @@ import { Links, Meta, Scripts, useNavigation } from "@remix-run/react";
 import nProgress from "nprogress";
 import { type PropsWithChildren, useEffect } from "react";
 import { ScrollRestoration } from "react-router-dom";
+import { Toaster } from "sonner";
 
 export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
   const transition = useNavigation();
@@ -27,6 +28,7 @@ export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
         <ScrollRestoration />
         {children}
         <Scripts />
+        <Toaster richColors position="top-right" closeButton />
       </body>
     </html>
   );

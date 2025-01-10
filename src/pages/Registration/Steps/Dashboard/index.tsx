@@ -1,7 +1,7 @@
 import { Navigate, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import { regRoutes } from "constants/routes";
-import { useActionToast } from "hooks/use-action-toast";
-import type { ActionData } from "types/action";
+import { useActionResult } from "hooks/use-action-result";
+import type { ActionData, Ok } from "types/action";
 import { stepLoader } from "../../data/step-loader";
 import type { RegStep6 } from "../../types";
 import EndowmentStatus from "./EndowmentStatus";
@@ -12,8 +12,8 @@ export { ErrorElement } from "errors/ErrorElement";
 export const clientLoader = stepLoader(6);
 
 export default function Dashboard() {
-  const fetcher = useFetcher<ActionData>({ key: "reg-sub" });
-  useActionToast(fetcher.data);
+  const fetcher = useFetcher<ActionData<Ok>>({ key: "reg-sub" });
+  useActionResult(fetcher.data);
   const { data } = useLoaderData() as RegStep6;
 
   const { submission, init } = data;

@@ -1,12 +1,11 @@
 import { useFetcher } from "@remix-run/react";
 import { getEndow } from "api/get/endow";
+import type { IPromptV2 } from "components/Prompt";
 import { errorPrompt } from "contexts/ErrorContext";
+import { useActionResult } from "hooks/use-action-result";
+import { useState } from "react";
 import type { FieldNamesMarkedBoolean, SubmitHandler } from "react-hook-form";
 import type { EndowmentProfileUpdate } from "types/aws";
-
-import type { IPromptV2 } from "components/Prompt";
-import { useActionToast } from "hooks/use-action-toast";
-import { useState } from "react";
 import type { UNSDG_NUMS } from "types/lists";
 import type { FV } from "./schema";
 
@@ -14,7 +13,7 @@ type DirtyFields = FieldNamesMarkedBoolean<FV>;
 
 export default function useEditProfile(df: DirtyFields) {
   const fetcher = useFetcher();
-  useActionToast(fetcher.data);
+  useActionResult(fetcher.data);
   const [prompt, setPrompt] = useState<IPromptV2>();
 
   const onSubmit: SubmitHandler<FV> = async (fv) => {
