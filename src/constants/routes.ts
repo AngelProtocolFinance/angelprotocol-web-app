@@ -21,7 +21,7 @@ export enum appRoutes {
   privacy_policy = "/privacy-policy",
   terms_donors = "/terms-of-use",
   terms_nonprofits = "/terms-of-use-npo",
-  //informational
+  //informationalf
   nonprofit_info = "/nonprofit",
   donor_info = "/donor",
   wp_plugin = "/wp-plugin",

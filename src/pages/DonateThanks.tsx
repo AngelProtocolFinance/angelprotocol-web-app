@@ -1,11 +1,7 @@
-import {
-  Link,
-  type LoaderFunction,
-  useLoaderData,
-  useOutletContext,
-} from "@remix-run/react";
+import { Link, useLoaderData, useOutletContext } from "@remix-run/react";
+import { type LoaderFunction, data } from "@vercel/remix";
 import char from "assets/images/celebrating-character.png";
-import { loadAuth } from "auth/load-auth";
+import { cognito } from "auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Seo from "components/Seo";
@@ -17,16 +13,21 @@ import { decodeState } from "helpers/state-params";
 import type { UserV2 } from "types/auth";
 import type { DonateThanksState } from "types/pages";
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  const url = new URL(request.url);
-  return { user: auth, state: decodeState(url.searchParams.get("_s")) };
-};
-
 interface Data {
   user: UserV2 | null;
   state: DonateThanksState | null;
 }
+export const loader: LoaderFunction = async ({ request }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  const url = new URL(request.url);
+  return data(
+    {
+      user: user,
+      state: decodeState(url.searchParams.get("_s")),
+    } satisfies Data,
+    { headers }
+  );
+};
 
 export default function DonateThanks() {
   const widgetVersion = useOutletContext<true | undefined>();
