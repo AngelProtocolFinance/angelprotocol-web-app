@@ -1,4 +1,4 @@
-import { createRoutesStub } from "@remix-run/react";
+import { createRemixStub } from "@remix-run/testing";
 import type { Stripe, StripeError } from "@stripe/stripe-js";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -42,7 +42,7 @@ vi.mock("@stripe/react-stripe-js", () => ({
 }));
 
 const stb = (node: ReactNode) =>
-  createRoutesStub([{ path: "/", Component: () => node }]);
+  createRemixStub([{ path: "/", Component: () => node }]);
 
 const state: StripeCheckoutStep = {
   init: {

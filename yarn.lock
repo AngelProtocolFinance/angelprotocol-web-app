@@ -2283,6 +2283,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@remix-run/testing@npm:2.15.2":
+  version: 2.15.2
+  resolution: "@remix-run/testing@npm:2.15.2"
+  dependencies:
+    "@remix-run/node": "npm:2.15.2"
+    "@remix-run/react": "npm:2.15.2"
+    "@remix-run/router": "npm:1.21.0"
+    react-router-dom: "npm:6.28.1"
+  peerDependencies:
+    react: ^18.0.0
+    typescript: ^5.1.0
+  peerDependenciesMeta:
+    typescript:
+      optional: true
+  checksum: 10/2ac3c0aaea6c4bfbfba6f8eb1f5ec2c03038445f710fbcd412743d57fbc37696e1ec026b194bf8d7f47478c2c0583ed6ead093b4ce5494ebc80cc6616ae633d4
+  languageName: node
+  linkType: hard
+
 "@remix-run/web-blob@npm:^3.1.0":
   version: 3.1.0
   resolution: "@remix-run/web-blob@npm:3.1.0"
@@ -3258,6 +3276,7 @@ __metadata:
     "@remix-run/react": "npm:2.15.2"
     "@remix-run/serve": "npm:2.15.2"
     "@remix-run/server-runtime": "npm:2.15.2"
+    "@remix-run/testing": "npm:2.15.2"
     "@sentry/react": "npm:8.47.0"
     "@stripe/react-stripe-js": "npm:3.1.1"
     "@stripe/stripe-js": "npm:5.3.0"

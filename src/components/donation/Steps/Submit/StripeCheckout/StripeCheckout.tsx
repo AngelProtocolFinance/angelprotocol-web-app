@@ -24,6 +24,8 @@ const fetcher = async (intent: DonationIntent) => {
   return res.json().then((x) => x.clientSecret);
 };
 
+const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
+
 export default function StripeCheckout(props: StripeCheckoutStep) {
   const { init, details, tip, donor: fvDonor, honorary, feeAllowance } = props;
   const { setState } = useDonationState();
@@ -104,7 +106,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
                 },
               },
             }}
-            stripe={loadStripe(PUBLIC_STRIPE_KEY)}
+            stripe={stripePromise}
           >
             <Checkout {...props} />
           </Elements>

@@ -1,4 +1,3 @@
-import type { UserV2 } from "types/auth";
 import type { FiatCurrencyData } from "types/aws";
 import type { DetailedCurrency } from "types/components";
 import { apesUrl } from "../api";
@@ -16,9 +15,9 @@ export interface FiatCurrencies {
   main?: DetailedCurrency;
 }
 
-export async function getFiatCurrencies(user?: UserV2) {
+export async function getFiatCurrencies(prefCode: "none" | (string & {})) {
   const url = new URL(`${apesUrl}/fiat-currencies`);
-  if (user?.currency) url.searchParams.set("prefCode", user.currency);
+  if (prefCode !== "none") url.searchParams.set("prefCode", prefCode);
   const res = await fetch(url);
   if (!res.ok) throw res;
   const data: FiatCurrencyData = await res.json();
