@@ -1,2 +1,2 @@
 export { default } from "./Widget";
-export { clientLoader } from "./loader";
+export { loader } from "./loader";

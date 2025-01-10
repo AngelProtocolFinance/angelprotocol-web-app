@@ -18,6 +18,9 @@ const rmx = remix({
       r("", "./pages/Home/index.ts", { index: true });
       r("donate/:id", "./pages/Donate/index.tsx");
       r("donate-thanks", "./pages/DonateThanks.tsx");
+      r("form-builder", "./pages/Widget/form-builder-layout.tsx",() => {
+        r("", "./pages/Widget/index.ts", { index: true });
+      })
       r("", "./App/Layout.tsx", () => {
         r("login", "./pages/Signin.tsx");
         r("login/reset", "./pages/ResetPassword/index.ts");

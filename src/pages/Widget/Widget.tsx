@@ -13,7 +13,7 @@ import Snippet from "./Snippet";
 import type { WidgetData } from "./loader";
 
 export default function Widget() {
-  const { endow } = useLoaderData() as WidgetData;
+  const { endow, origin } = useLoaderData<WidgetData>();
   const location = useLocation();
 
   const _methods = endow?.donateMethods;
@@ -56,7 +56,7 @@ export default function Widget() {
       </p>
       <div className="w-full">
         <Configurer config={state} setConfig={setState} endow={endow} />
-        <Snippet config={state} classes="mt-10" endow={endow} />
+        <Snippet origin={origin} config={state} classes="mt-10" endow={endow} />
       </div>
 
       <Preview
