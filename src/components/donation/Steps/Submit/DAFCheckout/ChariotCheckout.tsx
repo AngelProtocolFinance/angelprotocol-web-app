@@ -13,12 +13,10 @@ import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";
 import ErrorBoundary from "errors/ErrorBoundary";
-import { toWithState } from "helpers/state-params";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
 import { schema } from "schemas/shape";
-import type { DonateThanksState } from "types/pages";
 import { mixed, string } from "yup";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
@@ -322,14 +320,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
               setPrompt(undefined);
 
               navigate(
-                toWithState(appRoutes.donate_thanks, {
-                  guestDonor: {
-                    email: grantor.email,
-                    fullName: `${grantor.firstName} ${grantor.lastName}`,
-                  },
-                  recipientId: props.init.recipient.id,
-                  recipientName: props.init.recipient.name,
-                } satisfies DonateThanksState)
+                `${appRoutes.donate_thanks}?recipient_name=${props.init.recipient.name}`
               );
             } catch (err) {
               setPrompt(errorPrompt(err, { context: "processing donation" }));

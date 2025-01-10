@@ -18,11 +18,6 @@ export interface Donor {
   ukGiftAid?: boolean;
 }
 
-export type GuestDonor = {
-  email: string;
-  fullName: string;
-};
-
 export type ReceiptPayload = {
   fullName: string; // "John Doe"
   kycEmail: string; // "john@doe.email.com"

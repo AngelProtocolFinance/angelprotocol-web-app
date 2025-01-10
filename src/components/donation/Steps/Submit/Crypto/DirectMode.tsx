@@ -6,10 +6,8 @@ import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
 import { roundToCents } from "helpers";
-import { toWithState } from "helpers/state-params";
 import useSWR from "swr/immutable";
 import type { Crypto } from "types/aws";
-import type { DonateThanksState } from "types/pages";
 import ContinueBtn from "../../common/ContinueBtn";
 import { toDonor } from "../../common/constants";
 import type { CryptoSubmitStep } from "../../types";
@@ -121,10 +119,7 @@ export default function DirectMode({ donation, classes = "" }: Props) {
         disabled={!!error || isLoading}
         onClick={() =>
           navigate(
-            toWithState(appRoutes.donate_thanks, {
-              recipientName: init.recipient.name,
-              recipientId: init.recipient.id,
-            } satisfies DonateThanksState)
+            `${appRoutes.donate_thanks}?recipient_name=${init.recipient.name}`
           )
         }
         text="I have completed the payment"
