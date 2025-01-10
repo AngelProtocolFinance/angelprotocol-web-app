@@ -11,15 +11,10 @@ import { signUpRoute } from "pages/SignUp";
 import { userDashboardRoute } from "pages/UserDashboard";
 
 const donateThanks = import("pages/DonateThanks").then(convert);
-const stripePaymentStatus = import("pages/StripePaymentStatus").then(convert);
 
 const widgetRoutes: RO[] = [
   { path: ":id", lazy: () => import("pages/DonateWidget").then(convert) },
   { path: donateWidgetRoutes.donate_thanks, lazy: () => donateThanks },
-  {
-    path: donateWidgetRoutes.stripe_payment_status,
-    lazy: () => stripePaymentStatus,
-  },
 ];
 
 //routes between header/footer
@@ -45,8 +40,6 @@ const _appRoutes: RO[] = [
       { index: true, lazy: () => import("pages/Applications").then(convert) },
     ],
   },
-  { path: appRoutes.donate_thanks, lazy: () => donateThanks },
-  { path: appRoutes.stripe_payment_status, lazy: () => stripePaymentStatus },
   signUpRoute,
   {
     path: appRoutes.form_builder,

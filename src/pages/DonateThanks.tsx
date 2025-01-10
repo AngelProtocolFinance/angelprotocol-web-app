@@ -1,7 +1,8 @@
 import { Link, useLoaderData, useOutletContext } from "@remix-run/react";
-import { type LoaderFunction, data } from "@vercel/remix";
+import type { PaymentIntent } from "@stripe/stripe-js";
+import type { LoaderFunction } from "@vercel/remix";
+import { apes } from "api/api";
 import char from "assets/images/celebrating-character.png";
-import { cognito } from "auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import Seo from "components/Seo";
@@ -9,29 +10,33 @@ import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
-import { decodeState } from "helpers/state-params";
-import type { UserV2 } from "types/auth";
-import type { DonateThanksState } from "types/pages";
+import type { GuestDonor } from "types/aws";
 
-interface Data {
-  user: UserV2 | null;
-  state: DonateThanksState | null;
+interface StripeRequiresBankVerification {
+  /** timestamp in seconds: only present when status ===  "requires_action"*/
+  arrivalDate?: number;
+  url?: string;
 }
+interface Data
+  extends Pick<PaymentIntent, "status">,
+    StripeRequiresBankVerification {
+  guestDonor?: GuestDonor;
+  recipientName?: string;
+  recipientId?: number;
+}
+
 export const loader: LoaderFunction = async ({ request }) => {
-  const { user, headers } = await cognito.retrieve(request);
   const url = new URL(request.url);
-  return data(
-    {
-      user: user,
-      state: decodeState(url.searchParams.get("_s")),
-    } satisfies Data,
-    { headers }
-  );
+  const id =
+    url.searchParams.get("payment_intent") ??
+    url.searchParams.get("setup_intent");
+
+  return apes.get(`stripe-proxy?payment_intent=${id}`).json();
 };
 
 export default function DonateThanks() {
   const widgetVersion = useOutletContext<true | undefined>();
-  const { state } = useLoaderData() as Data;
+  const data = useLoaderData<Data>();
 
   return (
     <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
@@ -54,7 +59,7 @@ export default function DonateThanks() {
       </h3>
       <p className="text-center text-navy-l1">
         We'll process your donation to{" "}
-        {state?.recipientName ?? "the nonprofit you specified"} as soon as the
+        {data.recipientName ?? "the nonprofit you specified"} as soon as the
         payment has cleared.
         {widgetVersion
           ? ""
@@ -62,7 +67,7 @@ export default function DonateThanks() {
       </p>
 
       <Share
-        recipientName={state?.recipientName ?? "a nonprofit"}
+        recipientName={data.recipientName ?? "a nonprofit"}
         className="mt-6 border border-gray-l3 rounded-xl"
       />
 
