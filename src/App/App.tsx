@@ -47,7 +47,6 @@ const _appRoutes: RO[] = [
   },
   { path: appRoutes.donate_thanks, lazy: () => donateThanks },
   { path: appRoutes.stripe_payment_status, lazy: () => stripePaymentStatus },
-  { path: appRoutes.signin, lazy: () => import("pages/Signin").then(convert) },
   signUpRoute,
   {
     path: appRoutes.form_builder,
