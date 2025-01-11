@@ -56,7 +56,17 @@ const rmx = remix({
         });
         r("privacy-policy", "./pages/Legal/PrivacyPolicy.tsx");
         r("terms-of-use-npo", "./pages/Legal/TermsNonprofits.tsx");
-        r("terms-of-use","./pages/Legal/TermsDonors.tsx")
+        r("terms-of-use", "./pages/Legal/TermsDonors.tsx");
+        r("banking-applications", "./pages/BankingApplications/index.ts");
+        r(
+          "banking-applications/:id",
+          "./pages/BankingApplication/BankingApplication.tsx",
+          () => {
+            r("approve","./pages/BankingApplication/verdict-approve.tsx")
+            r("reject","./pages/BankingApplication/verdict-reject.tsx")
+            r("success","./pages/BankingApplication/success-prompt.tsx")
+          }
+        );
       });
     });
   },

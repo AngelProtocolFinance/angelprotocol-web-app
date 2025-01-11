@@ -1,17 +1,18 @@
-import { type LoaderFunction, Outlet, useLoaderData } from "@remix-run/react";
+import { Outlet, useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { type BankDetails, getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
-import { loadAuth, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from "auth";
 import Seo from "components/Seo";
 import { parse } from "valibot";
 import { Loaded } from "./Loaded";
 
-export const clientLoader: LoaderFunction = async ({ params, request }) => {
+export const loader: LoaderFunction = async ({ params, request }) => {
   const bankId = parse(plusInt, params.id);
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
-  return getPayoutMethod(bankId, "bg-admin", auth.idToken);
+  return getPayoutMethod(bankId, "bg-admin", user.idToken);
 };
 export default function BankingApplication() {
   const bank = useLoaderData() as BankDetails;

@@ -1,3 +1,4 @@
 import { Prompt } from "./Prompt";
-export { clientAction } from "./verdict-action";
-export default () => <Prompt verdict="rejected" />;
+export { action } from "./verdict-action";
+const Rejected = () => <Prompt verdict="rejected" />;
+export default Rejected;

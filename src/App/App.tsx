@@ -3,7 +3,6 @@ import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { convert } from "helpers/route";
 import { adminRoute } from "pages/Admin";
 import { applicationRoute } from "pages/Application";
-import { bankApplicationRoute } from "pages/BankingApplication";
 import { fundsRoute } from "pages/Funds";
 import { route as regRoute } from "pages/Registration";
 import { signUpRoute } from "pages/SignUp";
@@ -20,16 +19,6 @@ const _appRoutes: RO[] = [
   regRoute,
   fundsRoute,
   {
-    path: appRoutes.banking_applications,
-    children: [
-      bankApplicationRoute,
-      {
-        index: true,
-        lazy: () => import("pages/BankingApplications").then(convert),
-      },
-    ],
-  },
-  {
     path: appRoutes.applications,
     children: [
       applicationRoute,
@@ -37,10 +26,6 @@ const _appRoutes: RO[] = [
     ],
   },
   signUpRoute,
-  {
-    path: appRoutes.form_builder,
-    lazy: () => import("pages/Widget/form-builder").then(convert),
-  },
 ];
 
 const rootRoutes: RO[] = [
