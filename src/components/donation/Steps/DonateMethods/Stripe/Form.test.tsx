@@ -1,5 +1,5 @@
 import { beforeEach } from "node:test";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { mockPhpCurrency } from "services/apes/mock";
 import { mockPrograms } from "services/aws/programs/mock";
@@ -61,7 +61,8 @@ describe("Stripe form test", () => {
     expect(freqOptions[0]).not.toBeChecked();
 
     const currencyInput = screen.getByRole("combobox");
-    expect(currencyInput).toHaveDisplayValue(/php/i); //based on mock value
+    //wait for use-effect to set currency
+    await waitFor(() => expect(currencyInput).toHaveDisplayValue(/php/i));
 
     //amount input doesn't have default value
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
