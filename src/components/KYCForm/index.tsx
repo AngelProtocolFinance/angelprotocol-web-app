@@ -1,15 +1,15 @@
-import { type ActionFunction, redirect } from "@remix-run/react";
+import { type ActionFunction, redirect } from "@vercel/remix";
 import { apes } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from "auth";
 
 export { default } from "./KYCForm";
 
-export const clientAction: ActionFunction = async ({ request, params }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+export const action: ActionFunction = async ({ request, params }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   await apes.put(`crypto-donation/${params.id}`, {
-    headers: { authorization: auth.idToken },
+    headers: { authorization: user.idToken },
     json: await request.json(),
   });
 

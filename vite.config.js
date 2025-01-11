@@ -31,6 +31,9 @@ const rmx = remix({
           r("", "./pages/UserDashboard/index-route.ts", { index: true });
           r("edit-profile", "./pages/UserDashboard/EditProfile/index.ts");
           r("settings", "./pages/UserDashboard/Settings/index.ts");
+          r("donations", "./pages/UserDashboard/Donations/index.tsx",() => {
+            r(":id","./components/KYCForm/index.tsx")
+          });
         });
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
