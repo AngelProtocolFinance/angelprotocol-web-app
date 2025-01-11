@@ -8,10 +8,6 @@ export const userDashboardRoute: RouteObject = {
   lazy: () => import("./layout").then(convert),
   children: [
     {
-      path: routes.edit_profile,
-      lazy: () => import("./EditProfile").then(convert),
-    },
-    {
       path: routes.donations,
       lazy: () => import("./Donations").then(convert),
       children: [
