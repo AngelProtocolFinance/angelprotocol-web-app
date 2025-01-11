@@ -34,6 +34,7 @@ const rmx = remix({
           r("donations", "./pages/UserDashboard/Donations/index.tsx",() => {
             r(":id","./components/KYCForm/index.tsx")
           });
+          r("funds","./pages/UserDashboard/Funds/index.ts")
         });
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");

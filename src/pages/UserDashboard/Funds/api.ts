@@ -1,14 +1,14 @@
-import type { LoaderFunction } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from "auth";
 
 export const userFunds: LoaderFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   return ap
-    .get(`${ver(3)}/users/${auth.email}/funds`, {
-      headers: { authorization: auth.idToken },
+    .get(`${ver(3)}/users/${user.email}/funds`, {
+      headers: { authorization: user.idToken },
     })
     .json();
 };
