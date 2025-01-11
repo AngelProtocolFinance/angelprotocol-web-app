@@ -1,12 +1,19 @@
-import { type LoaderFunction, useLoaderData } from "@remix-run/react";
-import { loadAuth, redirectToAuth } from "auth";
+import { useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
+import { cognito, redirectToAuth } from "auth";
 import { appRoutes } from "constants/routes";
 import DashboardLayout from "layout/DashboardLayout";
+import type { UserV2 } from "types/auth";
 import { linkGroups } from "./routes";
 
-export default function Layout() {
-  const user = useLoaderData();
+export const loader: LoaderFunction = async ({ request }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
+  return user;
+};
 
+export default function Layout() {
+  const user = useLoaderData<UserV2>();
   return (
     <DashboardLayout
       rootRoute={`${appRoutes.user_dashboard}/`}
@@ -17,9 +24,3 @@ export default function Layout() {
     />
   );
 }
-
-export const clientLoader: LoaderFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  if (auth) return auth;
-  return redirectToAuth(request);
-};

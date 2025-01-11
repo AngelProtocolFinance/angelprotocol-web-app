@@ -1,2 +1,2 @@
-export { Component as default } from "./Form";
-export { clientAction, clientLoader } from "./api";
+export { default } from "./Form";
+export { action, loader } from "./api";

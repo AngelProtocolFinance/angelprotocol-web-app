@@ -1,4 +1,4 @@
-import { Navigate, type RouteObject } from "@remix-run/react";
+import { type RouteObject, redirect } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { convert } from "helpers/route";
 import { routes } from "./routes";
@@ -23,6 +23,6 @@ export const userDashboardRoute: RouteObject = {
       path: routes.funds,
       lazy: () => import("./Funds").then(convert),
     },
-    { index: true, element: <Navigate to={routes.edit_profile} /> },
+    { index: true, loader: () => redirect(routes.edit_profile) },
   ],
 };

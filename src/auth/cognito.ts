@@ -132,18 +132,17 @@ class Cognito extends Storage {
     session.set("bg_token_refresh", r.RefreshToken);
     session.set("bg_token_expiry", this.expiry(r.ExpiresIn));
 
-    // const data: AuthSuccess<"new"> = await res.json();
     return commitSession(session);
   }
 
-  async refresh(refreshToken: string, cookieHeader: string | null) {
+  async refresh(session: Stored) {
     const res = await fetch(this.endpoint, {
       method: "POST",
       headers: this.headers("InitiateAuth"),
       body: this.body({
         AuthFlow: "REFRESH_TOKEN_AUTH",
         AuthParameters: {
-          REFRESH_TOKEN: refreshToken,
+          REFRESH_TOKEN: session.get("bg_token_refresh"),
         },
       }),
     });
@@ -154,10 +153,9 @@ class Cognito extends Storage {
 
     const { AuthenticationResult: r }: AuthSuccess<"refresh"> =
       await res.json();
-    const session = await getSession(cookieHeader);
     session.set("bg_token_id", r.IdToken);
     session.set("bg_token_access", r.AccessToken);
-    session.set("bg_token_refresh", r.RefreshToken);
+    session.set("bg_token_refresh", session.get("bg_token_refresh")!);
     session.set("bg_token_expiry", this.expiry(r.ExpiresIn));
 
     return commitSession(session);

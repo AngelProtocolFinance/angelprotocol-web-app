@@ -1,33 +1,43 @@
-import type { ActionFunction, LoaderFunction } from "@remix-run/react";
+import { type ActionFunction, type LoaderFunction, data } from "@vercel/remix";
 import {
   type FiatCurrencies,
   getFiatCurrencies,
 } from "api/get/fiat-currencies";
-import { cognito, loadAuth, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from "auth";
+import type { ActionData } from "types/action";
 import { type UserV2, isError } from "types/auth";
 
 export interface LoaderData extends FiatCurrencies {
   user: UserV2;
 }
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
-  const currencies = await getFiatCurrencies(auth);
-  return { user: auth, ...currencies } satisfies LoaderData;
+export const loader: LoaderFunction = async ({ request }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
+  const currencies = await getFiatCurrencies(user.currency ?? "none");
+  return { user, ...currencies } satisfies LoaderData;
 };
 
-export const clientAction: ActionFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+export const action: ActionFunction = async ({ request }) => {
+  const { user, headers, session } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   const attributes = await request.json();
   const result = await cognito.updateUserAttributes(
     attributes,
-    auth.accessToken
+    user.accessToken
   );
   if (result !== "success") throw result.message;
 
-  const res = await cognito.refresh(auth.refreshToken);
-  return { ok: !isError(res) };
+  const res = await cognito.refresh(session);
+
+  if (isError(res)) throw res.message;
+
+  return data({ __ok: "User profile updated" } satisfies ActionData, {
+    headers: {
+      "Set-Cookie": res,
+      "X-Remix-Revalidate": "1",
+      "Cache-Control": "no-cache",
+    },
+  });
 };

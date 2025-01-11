@@ -18,12 +18,19 @@ const rmx = remix({
       r("", "./pages/Home/index.ts", { index: true });
       r("donate/:id", "./pages/Donate/index.tsx");
       r("donate-thanks", "./pages/DonateThanks.tsx");
-      r("form-builder", "./pages/Widget/form-builder-layout.tsx",() => {
+      r("form-builder", "./pages/Widget/form-builder-layout.tsx", () => {
         r("", "./pages/Widget/index.ts", { index: true });
-      })
+      });
       r("", "./App/Layout.tsx", () => {
         r("login", "./pages/Signin.tsx");
+        r("signup", "./pages/SignUp/layout.tsx", () => {
+          r("", "./pages/SignUp/SignupForm/index.ts", { index: true });
+        });
         r("login/reset", "./pages/ResetPassword/index.ts");
+        r("dashboard", "./pages/UserDashboard/layout.tsx", () => {
+          r("", "./pages/UserDashboard/index-route.ts", { index: true });
+          r("edit-profile", "./pages/UserDashboard/EditProfile/index.ts");
+        });
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
         r("donor", "./pages/informational/DonorInfo/index.ts");
@@ -48,6 +55,7 @@ const rmx = remix({
 });
 
 export default defineConfig({
+  ssr: { noExternal: ["react-dropzone"] },
   base: "/",
   server: { port: 4200 },
   css: { devSourcemap: false },

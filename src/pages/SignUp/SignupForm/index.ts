@@ -1,4 +1,4 @@
-import { type ActionFunction, redirect } from "@remix-run/react";
+import { type ActionFunction, redirect } from "@vercel/remix";
 import { cognito, oauth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
@@ -13,8 +13,8 @@ import {
 } from "types/auth";
 
 export { default } from "./SignupForm";
-export { clientLoader } from "../loader";
-export const clientAction: ActionFunction = async ({ request }) => {
+export { loader } from "../loader";
+export const action: ActionFunction = async ({ request }) => {
   const from = new URL(request.url);
   const fromState = decodeState(from.searchParams.get("_s")) as
     | SignInRouteState
@@ -29,7 +29,12 @@ export const clientAction: ActionFunction = async ({ request }) => {
       pathname: r.path,
       data: r.data,
     };
-    return redirect(oauth.initiateUrl(JSON.stringify(routeState)));
+    return redirect(
+      oauth.initiateUrl(
+        JSON.stringify(routeState),
+        request.headers.get("host") ?? ""
+      )
+    );
   }
 
   const p = parseWithValibot(fv, { schema: signUp });
