@@ -1,4 +1,4 @@
-import { type RouteObject, redirect } from "@remix-run/react";
+import type { RouteObject } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { convert } from "helpers/route";
 import { routes } from "./routes";
@@ -14,11 +14,9 @@ export const userDashboardRoute: RouteObject = {
         { path: ":id", lazy: () => import("components/KYCForm").then(convert) },
       ],
     },
-    { path: routes.settings, lazy: () => import("./Settings").then(convert) },
     {
       path: routes.funds,
       lazy: () => import("./Funds").then(convert),
     },
-    { index: true, loader: () => redirect(routes.edit_profile) },
   ],
 };
