@@ -5,10 +5,8 @@ import { adminRoute } from "pages/Admin";
 import { applicationRoute } from "pages/Application";
 import { bankApplicationRoute } from "pages/BankingApplication";
 import { fundsRoute } from "pages/Funds";
-import { legalRoutes } from "pages/Legal";
 import { route as regRoute } from "pages/Registration";
 import { signUpRoute } from "pages/SignUp";
-import { userDashboardRoute } from "pages/UserDashboard";
 
 const donateThanks = import("pages/DonateThanks").then(convert);
 
@@ -21,8 +19,6 @@ const widgetRoutes: RO[] = [
 const _appRoutes: RO[] = [
   regRoute,
   fundsRoute,
-  userDashboardRoute,
-  ...legalRoutes,
   {
     path: appRoutes.banking_applications,
     children: [

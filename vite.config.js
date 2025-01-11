@@ -31,10 +31,10 @@ const rmx = remix({
           r("", "./pages/UserDashboard/index-route.ts", { index: true });
           r("edit-profile", "./pages/UserDashboard/EditProfile/index.ts");
           r("settings", "./pages/UserDashboard/Settings/index.ts");
-          r("donations", "./pages/UserDashboard/Donations/index.tsx",() => {
-            r(":id","./components/KYCForm/index.tsx")
+          r("donations", "./pages/UserDashboard/Donations/index.tsx", () => {
+            r(":id", "./components/KYCForm/index.tsx");
           });
-          r("funds","./pages/UserDashboard/Funds/index.ts")
+          r("funds", "./pages/UserDashboard/Funds/index.ts");
         });
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
@@ -54,6 +54,9 @@ const rmx = remix({
             r("program/:programId", "./pages/Profile/Body/Program/index.ts");
           });
         });
+        r("privacy-policy", "./pages/Legal/PrivacyPolicy.tsx");
+        r("terms-of-use-npo", "./pages/Legal/TermsNonprofits.tsx");
+        r("terms-of-use","./pages/Legal/TermsDonors.tsx")
       });
     });
   },
