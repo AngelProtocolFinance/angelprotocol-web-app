@@ -7,7 +7,7 @@ import { isFormErr } from "types/action";
 import type { EndowAdmin } from "types/aws";
 import { schema } from "./schema";
 
-export { addAction as clientAction } from "./api";
+export { addAction as action } from "./api";
 export default function AddForm() {
   const navigate = useNavigate();
   return (

@@ -3,7 +3,6 @@ import { adminRoutes } from "constants/routes";
 import { convert } from "helpers/route";
 import { bankingRoute } from "./Banking";
 import { mediaRoutes } from "./Media";
-import { membersRoute } from "./Members";
 
 export const charityRoutes: RouteObject[] = [
   { path: adminRoutes.funds, lazy: () => import("./Funds").then(convert) },
@@ -27,7 +26,6 @@ export const charityRoutes: RouteObject[] = [
     path: adminRoutes.settings,
     lazy: () => import("./Settings").then(convert),
   },
-  membersRoute,
   bankingRoute,
   {
     path: adminRoutes.form_builder,

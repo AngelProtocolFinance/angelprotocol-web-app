@@ -1,6 +1,6 @@
 import List from "./List";
 
-export { members as clientLoader, deleteAction as clientAction } from "./api";
+export { members as loader, deleteAction as action } from "./api";
 export default function Members() {
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">

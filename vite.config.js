@@ -23,6 +23,9 @@ const rmx = remix({
       });
       r("admin/:id", "./pages/Admin/layout.tsx", () => {
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
+        r("members", "./pages/Admin/Charity/Members/Members.tsx", () => {
+          r("add", "./pages/Admin/Charity/Members/AddForm.tsx");
+        });
         r(
           "dashboard",
           "./pages/Admin/Charity/Dashboard/Dashboard.tsx",
@@ -90,6 +93,7 @@ const rmx = remix({
 export default defineConfig({
   ssr: { noExternal: ["react-dropzone"] },
   base: "/",
+  build: { outDir: "build" },
   server: { port: 4200 },
   css: { devSourcemap: false },
   plugins: [process.env.NODE_ENV === "test" ? undefined : rmx, tsconfigPaths()],
