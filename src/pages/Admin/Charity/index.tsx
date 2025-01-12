@@ -1,4 +1,4 @@
-import { Navigate, type RouteObject } from "@remix-run/react";
+import type { RouteObject } from "@remix-run/react";
 import { adminRoutes } from "constants/routes";
 import { convert } from "helpers/route";
 import { bankingRoute } from "./Banking";
@@ -32,10 +32,6 @@ export const charityRoutes: RouteObject[] = [
   {
     path: adminRoutes.form_builder,
     lazy: () => import("../../Widget").then(convert),
-  },
-  {
-    index: true,
-    element: <Navigate to={adminRoutes.dashboard} />,
   },
 
   ...mediaRoutes,
