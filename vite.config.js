@@ -26,6 +26,7 @@ const rmx = remix({
         r("members", "./pages/Admin/Charity/Members/Members.tsx", () => {
           r("add", "./pages/Admin/Charity/Members/AddForm.tsx");
         });
+        r("settings","./pages/Admin/Charity/Settings/index.ts")
         r(
           "dashboard",
           "./pages/Admin/Charity/Dashboard/Dashboard.tsx",

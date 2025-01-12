@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@remix-run/react";
+import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
 import type { EndowmentSettingsAttributes } from "types/aws";
 import { endowUpdate } from "../endow-update-action";
@@ -11,7 +11,9 @@ const fields: EndowmentSettingsAttributes[] = [
   "donateMethods",
   "target",
 ];
-export const clientLoader: LoaderFunction = async ({ params }) =>
+export const loader: LoaderFunction = async ({ params }) =>
   getEndow(params.id, fields);
 
-export const clientAction = endowUpdate({ success: "Settings updated" });
+export const action: ActionFunction = endowUpdate({
+  success: "Settings updated",
+});
