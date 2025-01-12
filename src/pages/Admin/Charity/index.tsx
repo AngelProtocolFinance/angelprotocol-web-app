@@ -11,10 +11,6 @@ export const charityRoutes: RouteObject[] = [
     lazy: () => import("./Donations").then(convert),
   },
   {
-    path: adminRoutes.edit_profile,
-    lazy: () => import("./EditProfile").then(convert),
-  },
-  {
     path: adminRoutes.programs,
     lazy: () => import("./Programs").then(convert),
   },
