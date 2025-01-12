@@ -31,8 +31,8 @@ const rmx = remix({
               "edit-alloc",
               "./pages/Admin/Charity/Dashboard/Schedule/Edit.tsx"
             );
-          },
-          
+            r("move-funds", "./pages/Admin/Charity/Dashboard/MoveFundForm.tsx");
+          }
         );
       });
       r("", "./App/Layout.tsx", () => {

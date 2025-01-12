@@ -39,7 +39,7 @@ interface IMoveFundForm {
   initAmount?: number;
 }
 
-export { moveFundAction as clientAction } from "./move-fund-action";
+export { moveFundAction as action } from "./move-fund-action";
 export default function MoveFundForm() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
