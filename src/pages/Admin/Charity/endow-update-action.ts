@@ -1,6 +1,6 @@
-import { type ActionFunction, redirect } from "@remix-run/react";
+import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
 
 type Next = { success: string } | { redirect: string };
@@ -8,11 +8,11 @@ type Next = { success: string } | { redirect: string };
 export const endowUpdate =
   (next: Next): ActionFunction =>
   async ({ params, request }) => {
-    const auth = await loadAuth();
-    if (!auth) return redirectToAuth(request);
+    const { user, headers } = await cognito.retrieve(request);
+    if (!user) return redirectToAuth(request, headers);
 
     await ap.patch(`${ver(9)}/endowments/${params.id}`, {
-      headers: { authorization: auth.idToken },
+      headers: { authorization: user.idToken },
       json: await request.json(),
     });
 

@@ -22,9 +22,18 @@ const rmx = remix({
         r("", "./pages/Widget/index.ts", { index: true });
       });
       r("admin/:id", "./pages/Admin/layout.tsx", () => {
-        r("", "./pages/Admin/Charity/Dashboard/Dashboard.tsx", {
-          index: true,
-        });
+        r(
+          "dashboard",
+          "./pages/Admin/Charity/Dashboard/Dashboard.tsx",
+          { id: "dashboard" },
+          () => {
+            r(
+              "edit-alloc",
+              "./pages/Admin/Charity/Dashboard/Schedule/Edit.tsx"
+            );
+          },
+          
+        );
       });
       r("", "./App/Layout.tsx", () => {
         r("login", "./pages/Signin.tsx");
