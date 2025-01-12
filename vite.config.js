@@ -21,6 +21,11 @@ const rmx = remix({
       r("form-builder", "./pages/Widget/form-builder-layout.tsx", () => {
         r("", "./pages/Widget/index.ts", { index: true });
       });
+      r("admin/:id", "./pages/Admin/layout.tsx", () => {
+        r("", "./pages/Admin/Charity/Dashboard/Dashboard.tsx", {
+          index: true,
+        });
+      });
       r("", "./App/Layout.tsx", () => {
         r("login", "./pages/Signin.tsx");
         r("signup", "./pages/SignUp/layout.tsx", () => {
@@ -62,9 +67,9 @@ const rmx = remix({
           "banking-applications/:id",
           "./pages/BankingApplication/BankingApplication.tsx",
           () => {
-            r("approve","./pages/BankingApplication/verdict-approve.tsx")
-            r("reject","./pages/BankingApplication/verdict-reject.tsx")
-            r("success","./pages/BankingApplication/success-prompt.tsx")
+            r("approve", "./pages/BankingApplication/verdict-approve.tsx");
+            r("reject", "./pages/BankingApplication/verdict-reject.tsx");
+            r("success", "./pages/BankingApplication/success-prompt.tsx");
           }
         );
       });

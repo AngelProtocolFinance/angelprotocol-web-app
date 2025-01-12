@@ -1,8 +1,8 @@
-import { type LoaderFunction, useLoaderData } from "@remix-run/react";
+import { useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
-import { redirectToAuth } from "auth";
-import { loadAuth } from "auth/load-auth";
+import { cognito, redirectToAuth } from "auth";
 import Footer from "components/Footer";
 import { appRoutes } from "constants/routes";
 import Layout from "layout/DashboardLayout";
@@ -13,17 +13,16 @@ import Header from "./Header";
 import SidebarHeader from "./SidebarHeader";
 import { linkGroups } from "./constants";
 
-export const clientLoader: LoaderFunction = async ({ request, params }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
-  if (auth) {
-    const id = parse(plusInt, params.id);
-    return {
-      user: auth,
-      id,
-      endow: getEndow(id, ["name", "logo"]),
-    } satisfies AdminContext;
-  }
+export const loader: LoaderFunction = async ({ request, params }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
+
+  const id = parse(plusInt, params.id);
+  return {
+    user,
+    id,
+    endow: getEndow(id, ["name", "logo"]),
+  } satisfies AdminContext;
 };
 
 export default function AdminLayout() {

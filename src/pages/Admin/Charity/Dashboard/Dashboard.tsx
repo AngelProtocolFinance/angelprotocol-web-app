@@ -5,8 +5,8 @@ import type { DashboardData } from "./api";
 import { monthPeriod } from "./monthPeriod";
 
 export {
-  dashboardData as clientLoader,
-  endowUpdateAction as clientAction,
+  dashboardData as loader,
+  endowUpdateAction as action,
 } from "./api";
 export default function Dashboard() {
   const { alloc, bal } = useLoaderData() as DashboardData;
