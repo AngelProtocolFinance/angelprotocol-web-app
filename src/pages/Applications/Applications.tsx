@@ -8,7 +8,7 @@ import Table from "./Table";
 
 export default function Applications() {
   const [params] = useSearchParams();
-  const firstPage = useLoaderData() as Page;
+  const firstPage = useLoaderData<Page>();
   const { load, data, state } = useFetcher<Page>({
     key: "applications",
   });
@@ -55,9 +55,11 @@ export default function Applications() {
 
       <div className="grid col-span-full overflow-x-auto">
         <Table
-          applications={items.filter(({ org_name, id }) =>
-            (org_name + id).toLowerCase().includes(query.toLowerCase())
-          )}
+          applications={
+            items.filter(({ org_name, id }) =>
+              (org_name + id).toLowerCase().includes(query.toLowerCase())
+            ) as any
+          }
           nextPageKey={nextPage}
           loadMore={loadNextPage}
           disabled={state === "loading"}

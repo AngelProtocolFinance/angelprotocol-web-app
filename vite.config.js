@@ -128,6 +128,7 @@ const rmx = remix({
             r("success", "./pages/BankingApplication/success-prompt.tsx");
           }
         );
+        r("applications", "./pages/Applications/index.ts");
       });
     });
   },
