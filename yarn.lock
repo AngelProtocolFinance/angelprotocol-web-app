@@ -3220,10 +3220,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@stripe/stripe-js@npm:5.3.0":
-  version: 5.3.0
-  resolution: "@stripe/stripe-js@npm:5.3.0"
-  checksum: 10/e26717fb4e039f5ca3b47d6805a65926fb469c7cf0cca896b8e6f3c04c55b6421f55ca0eb7579eba13241c59bd797f5f18275c127cee0f517114a7b981e0afa2
+"@stripe/stripe-js@npm:5.5.0":
+  version: 5.5.0
+  resolution: "@stripe/stripe-js@npm:5.5.0"
+  checksum: 10/6f4e08999f1ab0c2ca5cb0ad31fd1098ecbcf9b5bb65d6cba53c65fab368384a9c549b3cef9b9a3e5c72bfdccebcdb749380999f380151db4f93780467f8d625
   languageName: node
   linkType: hard
 
@@ -3618,7 +3618,7 @@ __metadata:
     "@rsbuild/plugin-react": "npm:0.5.9"
     "@sentry/react": "npm:8.22.0"
     "@stripe/react-stripe-js": "npm:3.1.1"
-    "@stripe/stripe-js": "npm:5.3.0"
+    "@stripe/stripe-js": "npm:5.5.0"
     "@tailwindcss/container-queries": "npm:0.1.1"
     "@tailwindcss/typography": "npm:0.5.15"
     "@testing-library/dom": "npm:10.1.0"
