@@ -3634,7 +3634,7 @@ __metadata:
     aws-amplify: "npm:6.12.0"
     date-fns: "npm:3.6.0"
     decimal.js: "npm:10.4.3"
-    framer-motion: "npm:11.2.10"
+    framer-motion: "npm:11.17.0"
     fuse.js: "npm:7.0.0"
     gsap: "npm:3.12.5"
     jsdom: "npm:24.1.0"
@@ -4544,15 +4544,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"framer-motion@npm:11.2.10":
-  version: 11.2.10
-  resolution: "framer-motion@npm:11.2.10"
+"framer-motion@npm:11.17.0":
+  version: 11.17.0
+  resolution: "framer-motion@npm:11.17.0"
   dependencies:
+    motion-dom: "npm:^11.16.4"
+    motion-utils: "npm:^11.16.0"
     tslib: "npm:^2.4.0"
   peerDependencies:
     "@emotion/is-prop-valid": "*"
-    react: ^18.0.0
-    react-dom: ^18.0.0
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
   peerDependenciesMeta:
     "@emotion/is-prop-valid":
       optional: true
@@ -4560,7 +4562,7 @@ __metadata:
       optional: true
     react-dom:
       optional: true
-  checksum: 10/3f09356c08700f5f405b6259617d9eb3f49d49770efe15a81211bc41625001485f242fe2b44f6de657e707cd2ac766ca243bab72192dc948672525d331628a5d
+  checksum: 10/d1a37f72c1657b7401f1f516b0e7cc54b9c2671226cde968d03da2d25aaa2715f9b9b5c9855ee2b8a8ea51b45f989d4f0090187dec401974a573a934bd4bee04
   languageName: node
   linkType: hard
 
@@ -5474,6 +5476,22 @@ __metadata:
   bin:
     mkdirp: bin/cmd.js
   checksum: 10/d71b8dcd4b5af2fe13ecf3bd24070263489404fe216488c5ba7e38ece1f54daf219e72a833a3a2dc404331e870e9f44963a33399589490956bff003a3404d3b2
+  languageName: node
+  linkType: hard
+
+"motion-dom@npm:^11.16.4":
+  version: 11.16.4
+  resolution: "motion-dom@npm:11.16.4"
+  dependencies:
+    motion-utils: "npm:^11.16.0"
+  checksum: 10/f7ec325dd197741eb4035d9f14ee4aee6ddd59a3167f05bf6c04925d20b7f52194fff342f07578ad20a9a9a22d031cf0f57dae13be69e9b5e5effb10e93ea10e
+  languageName: node
+  linkType: hard
+
+"motion-utils@npm:^11.16.0":
+  version: 11.16.0
+  resolution: "motion-utils@npm:11.16.0"
+  checksum: 10/b15bbba72e2a7ff4e83032e47aa50c1ec28ad3a9655681fd2e173fd49b0e864bac0bd3eea5c1d7a2dca09bbf789ff41c25c0d4cff3280b079e5a7f05ba6a6862
   languageName: node
   linkType: hard
 
