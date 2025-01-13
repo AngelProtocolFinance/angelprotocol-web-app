@@ -23,14 +23,18 @@ const rmx = remix({
       });
       r("admin/:id", "./pages/Admin/layout.tsx", () => {
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
-        r("donations","./pages/Admin/Charity/Donations/index.ts")
-        r("programs","./pages/Admin/Charity/Programs/index.ts")
-        r("program-editor/:programId","./pages/Admin/Charity/ProgramEditor/index.ts")
+        r("donations", "./pages/Admin/Charity/Donations/index.ts");
+        r("programs", "./pages/Admin/Charity/Programs/index.ts");
+        r(
+          "program-editor/:programId",
+          "./pages/Admin/Charity/ProgramEditor/index.ts"
+        );
         r("members", "./pages/Admin/Charity/Members/Members.tsx", () => {
           r("add", "./pages/Admin/Charity/Members/AddForm.tsx");
         });
         r("settings", "./pages/Admin/Charity/Settings/index.ts");
         r("edit-profile", "./pages/Admin/Charity/EditProfile/index.tsx");
+        r("form-builder", "./pages/Widget/index.ts");
         r(
           "dashboard",
           "./pages/Admin/Charity/Dashboard/Dashboard.tsx",
