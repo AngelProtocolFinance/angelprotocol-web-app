@@ -24,6 +24,7 @@ const rmx = remix({
       r("admin/:id", "./pages/Admin/layout.tsx", () => {
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
         r("donations","./pages/Admin/Charity/Donations/index.ts")
+        r("programs","./pages/Admin/Charity/Programs/index.ts")
         r("members", "./pages/Admin/Charity/Members/Members.tsx", () => {
           r("add", "./pages/Admin/Charity/Members/AddForm.tsx");
         });
