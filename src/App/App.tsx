@@ -3,7 +3,6 @@ import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { convert } from "helpers/route";
 import { fundsRoute } from "pages/Funds";
 import { route as regRoute } from "pages/Registration";
-import { signUpRoute } from "pages/SignUp";
 
 const donateThanks = import("pages/DonateThanks").then(convert);
 
@@ -13,7 +12,7 @@ const widgetRoutes: RO[] = [
 ];
 
 //routes between header/footer
-const _appRoutes: RO[] = [regRoute, fundsRoute, signUpRoute];
+const _appRoutes: RO[] = [regRoute, fundsRoute];
 
 const rootRoutes: RO[] = [
   {

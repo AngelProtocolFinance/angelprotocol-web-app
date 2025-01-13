@@ -86,6 +86,8 @@ const rmx = remix({
         r("login", "./pages/Signin.tsx");
         r("signup", "./pages/SignUp/layout.tsx", () => {
           r("", "./pages/SignUp/SignupForm/index.ts", { index: true });
+          r("confirm", "./pages/SignUp/confirm-form/index.ts");
+          r("success", "./pages/SignUp/Success.tsx");
         });
         r("login/reset", "./pages/ResetPassword/index.ts");
         r("dashboard", "./pages/UserDashboard/layout.tsx", () => {

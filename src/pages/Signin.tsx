@@ -22,7 +22,6 @@ import { getAuthRedirect } from "helpers";
 import { decodeState, toWithState } from "helpers/state-params";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
-import { authStore } from "store/auth";
 import type { ActionData } from "types/action";
 import { type OAuthState, isError, signIn } from "types/auth";
 
@@ -59,9 +58,9 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (isError(res)) {
       if (res.__type === "UserNotConfirmedException") {
-        authStore.set("email", payload.value.email);
         const to = new URL(from);
         to.pathname = appRoutes.signup + "/confirm";
+        to.searchParams.set("email", payload.value.email);
         return redirect(to.toString());
       }
 

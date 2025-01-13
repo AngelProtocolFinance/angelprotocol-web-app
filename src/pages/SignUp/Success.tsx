@@ -2,8 +2,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { toWithState } from "helpers/state-params";
 import { CircleCheck } from "lucide-react";
-
-export { clientLoader } from "./loader";
+export { loader } from "./loader";
 export default function Success() {
   const fromState = useLoaderData();
   return (

@@ -3,30 +3,28 @@ import {
   type LoaderFunction,
   data,
   redirect,
-} from "@remix-run/react";
-import { cognito, loadAuth } from "auth";
+} from "@vercel/remix";
+import { cognito } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { authStore } from "store/auth";
 import { isError, signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";
-
 export { default } from "./ConfirmForm";
 
-export const clientLoader: LoaderFunction = async (): Promise<
-  Response | unknown
-> => {
-  const auth = await loadAuth();
-  if (auth) return redirect(appRoutes.marketplace);
+export const loader: LoaderFunction = async ({
+  request,
+}): Promise<Response | unknown> => {
+  const { user } = await cognito.retrieve(request);
+  if (user) return redirect(appRoutes.marketplace);
 
-  const email = authStore.get("email");
+  const url = new URL(request.url);
+  const email = url.searchParams.get("email");
   if (!email) return redirect(appRoutes.signup);
   return email;
 };
 
-export const clientAction: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request }) => {
   const from = new URL(request.url);
-
   const fv = await request.formData();
   const email = fv.get("email");
   if (!email) throw "@dev: email is required to resend OTP";

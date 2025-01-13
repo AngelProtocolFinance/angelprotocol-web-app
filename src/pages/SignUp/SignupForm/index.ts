@@ -4,7 +4,6 @@ import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { getAuthRedirect } from "helpers";
 import { decodeState } from "helpers/state-params";
-import { authStore } from "store/auth";
 import {
   type OAuthState,
   type SignInRouteState,
@@ -53,9 +52,9 @@ export const action: ActionFunction = async ({ request }) => {
   if (isError(res)) {
     return p.reply({ fieldErrors: { emailConfirmation: [res.message] } });
   }
-  authStore.set("email", p.value.email);
 
   const to = new URL(from);
   to.pathname = from.pathname + "/confirm";
+  to.searchParams.set("email", p.value.email);
   return redirect(to.toString());
 };
