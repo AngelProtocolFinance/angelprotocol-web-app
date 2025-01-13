@@ -37,6 +37,18 @@ const rmx = remix({
         });
         r("settings", "./pages/Admin/Charity/Settings/index.ts");
         r("edit-profile", "./pages/Admin/Charity/EditProfile/index.tsx");
+        r("banking", "./pages/Admin/Charity/Banking/PayoutMethods/index.ts");
+        r("banking/new", "./pages/Admin/Charity/Banking/Banking.tsx");
+        r(
+          "banking/:bankId",
+          "./pages/Admin/Charity/Banking/PayoutMethod/PayoutMethod.tsx",
+          () => {
+            r(
+              "delete",
+              "./pages/Admin/Charity/Banking/PayoutMethod/DeletePrompt.tsx"
+            );
+          }
+        );
         r("form-builder", "./pages/Widget/index.ts", {
           id: "admin-form-builder",
         });

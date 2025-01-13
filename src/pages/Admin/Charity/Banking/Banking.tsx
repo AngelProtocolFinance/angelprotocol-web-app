@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useAdminContext } from "../../../Admin/Context";
 import FormButtons from "./FormButtons";
 
-export { newBanking as clientAction } from "./new-banking-action";
+export { newBanking as action } from "./new-banking-action";
 export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 
@@ -46,7 +46,7 @@ export default function Banking() {
   return (
     <>
       <Link
-        to={".."}
+        to={"../banking"}
         className="flex items-center gap-1 mb-4 text-blue hover:text-blue-l1 text-sm uppercase"
       >
         <ChevronLeft size={18} />

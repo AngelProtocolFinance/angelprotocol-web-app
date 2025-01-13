@@ -8,8 +8,8 @@ import type { PropsWithChildren } from "react";
 const APPROVED_PRIORITY_NUM = 2;
 
 export {
-  payoutMethodLoader as clientLoader,
-  prioritizeAction as clientAction,
+  payoutMethodLoader as loader,
+  prioritizeAction as action,
 } from "./api";
 export default function PayoutMethod() {
   const bank = useLoaderData() as BankDetails;
@@ -82,7 +82,7 @@ export default function PayoutMethod() {
         className="flex max-sm:flex-col gap-1 sm:gap-3 mt-4 sm:justify-self-end"
       >
         <Link
-          to={".."}
+          to={"../banking"}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back

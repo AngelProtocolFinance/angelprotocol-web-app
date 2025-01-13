@@ -12,7 +12,7 @@ type Props = {
   isWithHeir: boolean;
 };
 
-export { deleteAction as clientAction } from "./api";
+export { deleteAction as action } from "./api";
 export default function DeletePrompt() {
   const [params] = useSearchParams();
   const isDefault = params.get("default") === "true";
