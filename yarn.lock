@@ -3660,7 +3660,7 @@ __metadata:
     sonner: "npm:1.7.0"
     swiper: "npm:11.1.4"
     tailwindcss: "npm:3.4.3"
-    type-fest: "npm:4.20.0"
+    type-fest: "npm:4.32.0"
     typescript: "npm:5.5"
     valibot: "npm:0.42.0"
     vite-tsconfig-paths: "npm:4.3.2"
@@ -6841,10 +6841,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"type-fest@npm:4.20.0":
-  version: 4.20.0
-  resolution: "type-fest@npm:4.20.0"
-  checksum: 10/df037c11f6393312f27825ea6eb2c8cd62b1ba21c31144bed41854648ba2a18dcb8c68a930607c7227dd531b42006cc7c7a60f7f034668d1c92c205523ae1ea2
+"type-fest@npm:4.32.0":
+  version: 4.32.0
+  resolution: "type-fest@npm:4.32.0"
+  checksum: 10/7cee33a2d82c992e97e85eca4016a7dd62239fc6f95a7f86d46671900cad594eda832d97a1d4231d3bb2ed7ff5144c5f3cf4644e1f722faa4e6decef0c5276ca
   languageName: node
   linkType: hard
 
