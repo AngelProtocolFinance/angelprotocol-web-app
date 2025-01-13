@@ -1,2 +1,2 @@
 export { default } from "./VideoEditor";
-export { newAction as clientAction } from "./api";
+export { newAction as action } from "./api";

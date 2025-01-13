@@ -1,5 +1,5 @@
 export { default } from "./Videos";
 export {
-  allVideos as clientLoader,
-  videosAction as clientAction,
+  allVideos as loader,
+  videosAction as action,
 } from "../api";

@@ -2,11 +2,11 @@ import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@remix-run/react";
+} from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
-import { loadAuth, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { parse } from "valibot";
 import { schema } from "./VideoEditor";
@@ -29,8 +29,8 @@ export const allVideos: LoaderFunction = async ({ request, params }) => {
 export const videosAction: LoaderFunction = async ({ params, request }) => {
   const endowId = parse(plusInt, params.id);
 
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   const fv = await request.formData();
   const intent = fv.get("intent") as "feature" | "delete";
@@ -41,41 +41,41 @@ export const videosAction: LoaderFunction = async ({ params, request }) => {
   const res =
     intent === "feature"
       ? await ap.patch(path, {
-          headers: { authorization: auth.idToken },
+          headers: { authorization: user.idToken },
           json: { featured: !featured },
         })
       : await ap.delete(path, {
-          headers: { authorization: auth.idToken },
+          headers: { authorization: user.idToken },
         });
 
   return { ok: res.ok };
 };
 
 export const newAction: ActionFunction = async ({ params, request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   const fv = await request.formData();
   const payload = parseWithValibot(fv, { schema });
   if (payload.status !== "success") return payload.reply();
 
   await ap.post(`${ver(1)}/endowments/${params.id}/media`, {
-    headers: { authorization: auth.idToken },
+    headers: { authorization: user.idToken },
     body: payload.value.url,
   });
   return redirect("..");
 };
 
 export const editAction: ActionFunction = async ({ params, request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   const fv = await request.formData();
   const payload = parseWithValibot(fv, { schema });
   if (payload.status !== "success") return payload.reply();
 
   await ap.patch(`${ver(1)}/endowments/${params.id}/media/${params.mediaId}`, {
-    headers: { authorization: auth.idToken },
+    headers: { authorization: user.idToken },
     json: { url: payload.value.url },
   });
 

@@ -4,8 +4,8 @@ import { Plus } from "lucide-react";
 import FeaturedVideos from "./FeaturedVideos";
 
 export {
-  featuredMedia as clientLoader,
-  videosAction as clientAction,
+  featuredMedia as loader,
+  videosAction as action,
 } from "./api";
 export default function Media() {
   const featuredPage = useLoaderData() as MediaPage;

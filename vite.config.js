@@ -19,7 +19,10 @@ const rmx = remix({
       r("donate/:id", "./pages/Donate/index.tsx");
       r("donate-thanks", "./pages/DonateThanks.tsx");
       r("form-builder", "./pages/Widget/form-builder-layout.tsx", () => {
-        r("", "./pages/Widget/index.ts", { index: true });
+        r("", "./pages/Widget/index.ts", {
+          index: true,
+          id: "public-form-builder",
+        });
       });
       r("admin/:id", "./pages/Admin/layout.tsx", () => {
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
@@ -34,7 +37,25 @@ const rmx = remix({
         });
         r("settings", "./pages/Admin/Charity/Settings/index.ts");
         r("edit-profile", "./pages/Admin/Charity/EditProfile/index.tsx");
-        r("form-builder", "./pages/Widget/index.ts");
+        r("form-builder", "./pages/Widget/index.ts", {
+          id: "admin-form-builder",
+        });
+        r("media", "./pages/Admin/Charity/Media/Media.tsx", () => {
+          r("new", "./pages/Admin/Charity/Media/video-new.ts", {
+            id: "media-new",
+          });
+          r(":mediaId", "./pages/Admin/Charity/Media/video-edit.ts", {
+            id: "media-edit",
+          });
+        });
+        r("media/videos", "./pages/Admin/Charity/Media/Videos/index.ts", () => {
+          r("new", "./pages/Admin/Charity/Media/video-new.ts", {
+            id: "videos-new",
+          });
+          r(":mediaId", "./pages/Admin/Charity/Media/video-edit.ts", {
+            id: "videos-edit",
+          });
+        });
         r(
           "dashboard",
           "./pages/Admin/Charity/Dashboard/Dashboard.tsx",
