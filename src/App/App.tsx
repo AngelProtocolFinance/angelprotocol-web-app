@@ -1,7 +1,6 @@
 import { Navigate, type RouteObject as RO } from "@remix-run/react";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { convert } from "helpers/route";
-import { adminRoute } from "pages/Admin";
 import { applicationRoute } from "pages/Application";
 import { fundsRoute } from "pages/Funds";
 import { route as regRoute } from "pages/Registration";
@@ -33,7 +32,6 @@ const rootRoutes: RO[] = [
     path: `${appRoutes.donate_fund}/:fundId`,
     lazy: () => import("pages/donate-fund").then(convert),
   },
-  adminRoute,
   {
     path: appRoutes.donate_widget,
     lazy: () => import("pages/DonateWidget/widget-context").then(convert),

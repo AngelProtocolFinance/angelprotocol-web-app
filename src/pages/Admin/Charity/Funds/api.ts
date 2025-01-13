@@ -1,9 +1,9 @@
 import type { Endow } from "@better-giving/endowment";
 import type { FundItem } from "@better-giving/fundraiser";
-import type { ActionFunction, LoaderFunction } from "@remix-run/react";
+import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
-import { loadAuth, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
 
 export interface LoaderData {
@@ -11,7 +11,7 @@ export interface LoaderData {
   endow: Endow;
 }
 
-export const clientLoader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const endow = await getEndow(params.id);
   const funds = await ap
     .get<FundItem[]>(`${ver(8)}/endowments/${params.id}/funds`)
@@ -20,16 +20,14 @@ export const clientLoader: LoaderFunction = async ({ params }) => {
   return { endow, funds } satisfies LoaderData;
 };
 
-export const clientAction: ActionFunction = async ({ request, params }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+export const action: ActionFunction = async ({ request, params }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   const fv = await request.formData();
   await ap.post(
     `${ver(8)}/endowments/${params.id}/funds/${fv.get("fund_id")}/opt-out`,
-    {
-      headers: { authorization: auth?.idToken },
-    }
+    { headers: { authorization: user.idToken } }
   );
   return {
     __ok: "You have successfully opted out of this fund. Changes will take effect shortly.",

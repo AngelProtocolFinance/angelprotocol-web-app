@@ -28,6 +28,7 @@ const rmx = remix({
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
         r("donations", "./pages/Admin/Charity/Donations/index.ts");
         r("programs", "./pages/Admin/Charity/Programs/index.ts");
+        r("funds", "./pages/Admin/Charity/Funds/index.ts");
         r(
           "program-editor/:programId",
           "./pages/Admin/Charity/ProgramEditor/index.ts"

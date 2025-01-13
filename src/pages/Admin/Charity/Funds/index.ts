@@ -1,2 +1,2 @@
-export { clientAction, clientLoader } from "./api";
+export { action, loader } from "./api";
 export { default } from "./Funds";
