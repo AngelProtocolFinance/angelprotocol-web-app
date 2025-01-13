@@ -1,7 +1,6 @@
 import { Navigate, type RouteObject as RO } from "@remix-run/react";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { convert } from "helpers/route";
-import { applicationRoute } from "pages/Application";
 import { fundsRoute } from "pages/Funds";
 import { route as regRoute } from "pages/Registration";
 import { signUpRoute } from "pages/SignUp";
@@ -14,18 +13,7 @@ const widgetRoutes: RO[] = [
 ];
 
 //routes between header/footer
-const _appRoutes: RO[] = [
-  regRoute,
-  fundsRoute,
-  {
-    path: appRoutes.applications,
-    children: [
-      applicationRoute,
-      { index: true, lazy: () => import("pages/Applications").then(convert) },
-    ],
-  },
-  signUpRoute,
-];
+const _appRoutes: RO[] = [regRoute, fundsRoute, signUpRoute];
 
 const rootRoutes: RO[] = [
   {

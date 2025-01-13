@@ -1,8 +1,8 @@
 import type { Application as IApplication } from "@better-giving/registration/approval";
 import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from "auth";
 import Seo from "components/Seo";
 import { CircleAlert } from "lucide-react";
 import type { UserV2 } from "types/auth";
@@ -13,19 +13,19 @@ export interface LoaderData {
   application: IApplication;
 }
 
-export const clientLoader: LoaderFunction = async ({ params, request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   const application = await ap
     .get<IApplication>(`${ver(1)}/registrations/${params.id}`, {
-      headers: { authorization: auth.idToken },
+      headers: { authorization: user.idToken },
     })
     .json();
 
   return {
     application,
-    user: auth,
+    user,
   } satisfies LoaderData;
 };
 

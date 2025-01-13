@@ -129,6 +129,10 @@ const rmx = remix({
           }
         );
         r("applications", "./pages/Applications/index.ts");
+        r("applications/:id", "./pages/Application/Application.tsx", () => {
+          r(":verdict", "./pages/Application/review-route.tsx");
+          r("success", "./pages/Application/success-prompt.tsx");
+        });
       });
     });
   },
