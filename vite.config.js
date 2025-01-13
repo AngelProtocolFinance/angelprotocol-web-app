@@ -25,6 +25,7 @@ const rmx = remix({
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
         r("donations","./pages/Admin/Charity/Donations/index.ts")
         r("programs","./pages/Admin/Charity/Programs/index.ts")
+        r("program-editor/:programId","./pages/Admin/Charity/ProgramEditor/index.ts")
         r("members", "./pages/Admin/Charity/Members/Members.tsx", () => {
           r("add", "./pages/Admin/Charity/Members/AddForm.tsx");
         });
@@ -95,7 +96,6 @@ const rmx = remix({
 });
 
 export default defineConfig({
-  ssr: { noExternal: ["react-dropzone"] },
   base: "/",
   build: { outDir: "build" },
   server: { port: 4200 },
