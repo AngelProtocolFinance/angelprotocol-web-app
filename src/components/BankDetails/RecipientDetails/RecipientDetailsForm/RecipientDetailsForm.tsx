@@ -9,7 +9,7 @@ import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { NativeSelect } from "components/Selector";
 import { Label } from "components/form";
 import { errorPrompt } from "contexts/ErrorContext";
-import { isEmpty, logger } from "helpers";
+import { logger } from "helpers";
 import { useState } from "react";
 import { Controller, get, useController, useForm } from "react-hook-form";
 import type { Group, V1RecipientAccount, ValidationContent } from "types/aws";
@@ -122,7 +122,7 @@ export default function RecipientDetailsForm({
           const _errs = content.errors;
           const validations = _errs.filter((err) => err.code === "NOT_VALID");
 
-          if (isEmpty(validations)) {
+          if (validations.length === 0) {
             return setPrompt({
               type: "error",
               children: _errs[0].message,
