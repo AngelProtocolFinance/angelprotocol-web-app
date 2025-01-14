@@ -6,18 +6,6 @@ export const route: RouteObject = {
   lazy: () => import("./steps-layout").then(convert),
   children: [
     {
-      path: steps.contact,
-      lazy: () => import("./ContactDetails").then(convert),
-    },
-    {
-      path: steps.orgDetails,
-      lazy: () => import("./OrgDetails").then(convert),
-    },
-    {
-      path: steps.fsaInquiry,
-      lazy: () => import("./FSAInquiry").then(convert),
-    },
-    {
       path: steps.docs,
       lazy: () => import("./Documentation").then(convert),
       children: [

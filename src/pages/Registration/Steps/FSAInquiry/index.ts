@@ -4,5 +4,5 @@ import { updateAction } from "../update-action";
 
 export { default } from "./FSAInquiry";
 export { ErrorElement } from "errors/ErrorElement";
-export const clientLoader = stepLoader(3);
-export const clientAction = updateAction(nextStep[3]);
+export const loader = stepLoader(3);
+export const action = updateAction(nextStep[3]);

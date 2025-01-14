@@ -146,6 +146,7 @@ const rmx = remix({
               r("", "./pages/Registration/Steps/steps-layout.tsx", () => {
                 r("1", "./pages/Registration/Steps/ContactDetails/index.tsx");
                 r("2", "./pages/Registration/Steps/OrgDetails/index.tsx");
+                r("3", "./pages/Registration/Steps/FSAInquiry/index.ts");
               });
             }
           );
@@ -169,6 +170,11 @@ const rmx = remix({
 export default defineConfig({
   base: "/",
   build: { outDir: "build" },
+  resolve: {
+    alias: {
+      reg: path.resolve(__dirname, "./pages/Registration"),
+    },
+  },
   server: { port: 4200 },
   plugins: [process.env.NODE_ENV === "test" ? undefined : rmx, tsconfigPaths()],
   test: {
