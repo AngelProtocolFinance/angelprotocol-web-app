@@ -8,7 +8,6 @@ export const route: RouteObject = {
   path: appRoutes.register,
   lazy: () => import("./layout").then(convert),
   children: [
-    { path: regRoutes.resume, lazy: () => import("./Resume").then(convert) },
     { path: regRoutes.success, lazy: () => import("./Success").then(convert) },
     {
       index: true,

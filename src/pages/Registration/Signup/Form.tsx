@@ -34,7 +34,7 @@ export default function Form({ classes = "" }: { classes?: string }) {
       </button>
       <Separator classes="before:mr-2 after:ml-2">OR</Separator>
 
-      <Link className="btn-outline-filled  btn-reg" to={regRoutes.resume}>
+      <Link className="btn-outline-filled btn-reg" to={regRoutes.resume}>
         Resume your registration
       </Link>
 
