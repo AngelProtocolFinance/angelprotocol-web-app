@@ -18,9 +18,11 @@ export default function ProgressIndicator({ step, classes = "" }: Props) {
   const currPath = idParamToNum(paths.at(-1));
 
   const [isOtherStepsShown, setIsOtherStepsShown] = useState(true);
-  const [isDesktop, setDesktop] = useState(
-    window.innerWidth >= SCREEN_BREAKPOINTS.md
-  );
+  const [isDesktop, setDesktop] = useState(() => {
+    //handle ssr
+    if (typeof window !== "object") return false;
+    return window.innerWidth >= SCREEN_BREAKPOINTS.md;
+  });
 
   useHandleScreenResize(
     (screen, ref) => {

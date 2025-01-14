@@ -10,10 +10,6 @@ export const route: RouteObject = {
   children: [
     { path: regRoutes.success, lazy: () => import("./Success").then(convert) },
     {
-      index: true,
-      lazy: () => import("./Signup").then(convert),
-    },
-    {
       id: "reg$Id",
       path: ":regId",
       lazy: () => import("./Steps/layout").then(convert),

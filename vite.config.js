@@ -138,6 +138,17 @@ const rmx = remix({
           r("", "./pages/Registration/Signup/index.ts", { index: true });
           r("welcome", "./pages/Registration/Welcome.tsx");
           r("resume", "./pages/Registration/Resume/Form.tsx");
+          r(
+            ":regId",
+            "./pages/Registration/Steps/layout.ts",
+            { id: "reg$Id" },
+            () => {
+              r("", "./pages/Registration/Steps/steps-layout.tsx", () => {
+                r("1", "./pages/Registration/Steps/ContactDetails/index.tsx");
+                r("2", "./pages/Registration/Steps/OrgDetails/index.tsx");
+              });
+            }
+          );
         });
         r("applications", "./pages/Applications/index.ts");
         r("applications/:id", "./pages/Application/Application.tsx", () => {
@@ -158,7 +169,6 @@ const rmx = remix({
 export default defineConfig({
   base: "/",
   build: { outDir: "build" },
-
   server: { port: 4200 },
   plugins: [process.env.NODE_ENV === "test" ? undefined : rmx, tsconfigPaths()],
   test: {

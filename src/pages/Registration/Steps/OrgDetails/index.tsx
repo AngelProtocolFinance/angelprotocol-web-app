@@ -13,8 +13,8 @@ import { schema } from "./schema";
 import type { FormValues } from "./types";
 
 export { ErrorElement } from "errors/ErrorElement";
-export const clientLoader = stepLoader(2);
-export const clientAction = updateAction(nextStep[2]);
+export const loader = stepLoader(2);
+export const action = updateAction(nextStep[2]);
 
 export default function OrgDetails() {
   const state = useLoaderData() as RegStep2;
