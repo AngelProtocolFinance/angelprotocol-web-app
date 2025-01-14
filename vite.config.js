@@ -153,7 +153,6 @@ export default defineConfig({
   base: "/",
   build: { outDir: "build" },
   server: { port: 4200 },
-  css: { devSourcemap: false },
   plugins: [process.env.NODE_ENV === "test" ? undefined : rmx, tsconfigPaths()],
   test: {
     setupFiles: ["./src/setupTests.ts"],

@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { toDelta } from "./helpers.client";
+import { toDelta } from "./helpers";
 import type { Props } from "./types";
 
 type El = Pick<HTMLDivElement, "focus">;
@@ -23,7 +23,6 @@ const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
   // biome-ignore lint/correctness/useExhaustiveDependencies: called only on page load
   const containerRef = useCallback((container: HTMLDivElement | null) => {
     if (!container) return;
-
     const quill = new Quill(container, {
       placeholder: props.placeHolder,
       readOnly: props.readOnly,
