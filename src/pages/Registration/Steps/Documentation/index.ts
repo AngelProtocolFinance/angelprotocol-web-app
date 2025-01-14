@@ -4,5 +4,5 @@ import { updateAction } from "../update-action";
 
 export { default } from "./Documentation";
 export { ErrorElement } from "errors/ErrorElement";
-export const clientLoader = stepLoader(4);
-export const clientAction = updateAction(nextStep[4]);
+export const loader = stepLoader(4);
+export const action = updateAction(nextStep[4]);
