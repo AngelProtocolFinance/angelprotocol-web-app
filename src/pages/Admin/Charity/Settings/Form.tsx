@@ -44,7 +44,7 @@ export default function Form(props: Props) {
       programDonateDisabled: !(props.progDonationsAllowed ?? true),
       donateMethods: fill(props.donateMethods),
       increments: props.increments ?? [],
-      fundOptIn: props.fund_opt_in ?? false,
+      fundOptIn: props.fund_opt_in ?? true,
       target: toFormTarget(props.target),
     },
   });
