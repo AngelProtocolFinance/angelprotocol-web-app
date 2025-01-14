@@ -1,5 +1,6 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
-import { Link, type LoaderFunction, useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
@@ -17,12 +18,12 @@ import { ArrowLeft } from "lucide-react";
 import { Share } from "./share";
 import { Video } from "./video";
 
-export const clientLoader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   return ap.get(`${ver(1)}/funds/${params.fundId}`).json();
 };
 
 export default function Fund() {
-  const fund = useLoaderData<SingleFund>();
+  const fund = useLoaderData() as SingleFund;
 
   const status = statusFn(
     fund.expiration ?? MAX_EXPIRATION,
@@ -50,7 +51,7 @@ export default function Fund() {
           <div className="absolute -top-8 flex justify-between w-full">
             <Link
               className="text-white flex items-center gap-x-1 active:-translate-x-1"
-              to=".."
+              to="../funds"
             >
               <ArrowLeft size={16} />
               <span>Fundraisers</span>
