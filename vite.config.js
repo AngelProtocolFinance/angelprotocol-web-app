@@ -117,6 +117,7 @@ const rmx = remix({
             r("program/:programId", "./pages/Profile/Body/Program/index.ts");
           });
         });
+        r("funds","./pages/Funds/Funds.tsx")
         r("privacy-policy", "./pages/Legal/PrivacyPolicy.tsx");
         r("terms-of-use-npo", "./pages/Legal/TermsNonprofits.tsx");
         r("terms-of-use", "./pages/Legal/TermsDonors.tsx");

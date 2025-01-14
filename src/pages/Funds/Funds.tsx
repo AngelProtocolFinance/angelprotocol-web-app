@@ -1,17 +1,13 @@
 import type { FundsPage } from "@better-giving/fundraiser";
-import {
-  type LoaderFunction,
-  useFetcher,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
+import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
 import Cards from "./Cards";
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);
   const page = +(source.searchParams.get("page") ?? "1");
   const q = source.searchParams.get("query") ?? "";
