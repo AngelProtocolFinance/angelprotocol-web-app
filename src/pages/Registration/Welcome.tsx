@@ -6,7 +6,7 @@ export { newApplicationAction as action } from "./api";
 export default function Welcome() {
   const nav = useNavigation();
   return (
-    <form className="grid justify-items-center mx-6">
+    <form method="POST" className="grid justify-items-center mx-6">
       <CircleCheck className="text-green" size={80} />
       <h1 className="text-[2rem] mt-10 text-center">
         Thank you for joining {APP_NAME}!

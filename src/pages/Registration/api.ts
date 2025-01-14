@@ -9,8 +9,8 @@ import {
 import { ap, ver } from "api/api";
 import { cognito, redirectToAuth } from "auth";
 import { appRoutes } from "constants/routes";
-import { storeRegistrationReference } from "helpers";
 import { decodeState } from "helpers/state-params";
+import { regCookie } from "./data/cookie";
 import { steps } from "./routes";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -37,6 +37,12 @@ export const newApplicationAction: ActionFunction = async ({ request }) => {
       headers: { authorization: user.idToken },
     })
     .json();
-  storeRegistrationReference(reg.id);
-  return redirect(`${appRoutes.register}/${reg.id}/${steps.contact}`);
+  const rc = await regCookie
+    .parse(request.headers.get("Cookie"))
+    .then((x) => x || {});
+  rc.reference = reg.id;
+
+  return redirect(`${appRoutes.register}/${reg.id}/${steps.contact}`, {
+    headers: { "Set-Cookie": await regCookie.serialize(rc) },
+  });
 };
