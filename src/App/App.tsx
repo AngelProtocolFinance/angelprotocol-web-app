@@ -1,11 +1,10 @@
 import { Navigate, type RouteObject as RO } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { convert } from "helpers/route";
-import { fundsRoute } from "pages/Funds";
 import { route as regRoute } from "pages/Registration";
 
 //routes between header/footer
-const _appRoutes: RO[] = [regRoute, fundsRoute];
+const _appRoutes: RO[] = [regRoute];
 
 const rootRoutes: RO[] = [
   {

@@ -5,37 +5,36 @@ import {
   type ActionFunction,
   type LoaderFunction,
   redirect,
-} from "@remix-run/react";
+} from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { redirectToAuth } from "auth";
-import { loadAuth } from "auth/load-auth";
+import { cognito, redirectToAuth } from "auth";
 import { appRoutes } from "constants/routes";
 import { storeRegistrationReference } from "helpers";
 import { decodeState } from "helpers/state-params";
 import { steps } from "./routes";
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
-  return auth;
+export const loader: LoaderFunction = async ({ request }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
+  return user;
 };
 
 export const newApplicationAction: ActionFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return redirectToAuth(request, headers);
 
   const url = new URL(request.url);
   const claim = decodeState<EndowClaim>(url.searchParams.get("_s"));
 
   const payload: NewReg = {
-    registrant_id: auth.email,
+    registrant_id: user.email,
   };
   if (claim) payload.claim = claim;
 
   const reg = await ap
     .post<Pick<Step1, "id">>(`${ver(1)}/registrations`, {
       json: payload,
-      headers: { authorization: auth.idToken },
+      headers: { authorization: user.idToken },
     })
     .json();
   storeRegistrationReference(reg.id);

@@ -1,7 +1,7 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
 import Seo from "components/Seo";
 import { APP_NAME, BASE_URL } from "constants/env";
-export { clientLoader } from "./api";
+export { loader } from "./api";
 
 export default function Layout() {
   const user = useLoaderData();
