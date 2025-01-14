@@ -136,6 +136,9 @@ const rmx = remix({
         );
         r("register", "./pages/Registration/layout.tsx", () => {
           r("", "./pages/Registration/Signup/index.ts", { index: true });
+          r("success", "./pages/SignUp/Success.tsx", {
+            id: "reg-signup-success",
+          });
           r("welcome", "./pages/Registration/Welcome.tsx");
           r("resume", "./pages/Registration/Resume/Form.tsx");
           r(
@@ -159,6 +162,7 @@ const rmx = remix({
                   }
                 );
                 r("5", "./pages/Registration/Steps/Banking/index.ts");
+                r("6", "./pages/Registration/Steps/Dashboard/index.tsx");
               });
             }
           );

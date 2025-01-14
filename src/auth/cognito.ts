@@ -37,6 +37,7 @@ interface OauthTokenRes {
 /** null: no user, string (expired): cookie to set */
 type Auth = {
   user: UserV2 | null;
+  /** include in response when !user */
   headers?: Record<string, string>;
   session: Stored;
 };

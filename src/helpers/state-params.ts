@@ -1,4 +1,5 @@
-import type { LoaderFunction, To } from "@remix-run/react";
+import type { To } from "@remix-run/router";
+import type { LoaderFunction } from "@vercel/remix";
 
 export const decodeState = <T>(base64: string | null) => {
   try {

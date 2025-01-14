@@ -7,9 +7,9 @@ import type { RegStep6 } from "../../types";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 
-export { submitAction as clientAction } from "./submit-action";
+export { submitAction as action } from "./submit-action";
 export { ErrorElement } from "errors/ErrorElement";
-export const clientLoader = stepLoader(6);
+export const loader = stepLoader(6);
 
 export default function Dashboard() {
   const fetcher = useFetcher<ActionData<Ok>>({ key: "reg-sub" });
