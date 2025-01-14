@@ -136,6 +136,7 @@ const rmx = remix({
         );
         r("register", "./pages/Registration/layout.tsx", () => {
           r("welcome", "./pages/Registration/Welcome.tsx");
+          r("resume", "./pages/Registration/Resume/index.ts");
         });
         r("applications", "./pages/Applications/index.ts");
         r("applications/:id", "./pages/Application/Application.tsx", () => {

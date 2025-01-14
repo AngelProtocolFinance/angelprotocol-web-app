@@ -1,1 +1,1 @@
-export { default, clientAction } from "./Form";
+export { default, action, loader } from "./Form";

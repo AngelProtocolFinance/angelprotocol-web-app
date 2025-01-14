@@ -41,8 +41,14 @@ type Auth = {
   session: Stored;
 };
 class Storage extends Util {
-  async retrieve(request: Request): Promise<Auth> {
-    const session = await getSession(request.headers.get("Cookie"));
+  /** request of cookie header */
+  async retrieve(request: Request | string | null): Promise<Auth> {
+    const cookieHeader =
+      typeof request === "string" || !request
+        ? request
+        : request.headers.get("Cookie");
+
+    const session = await getSession(cookieHeader);
     const token_id = session.get("bg_token_id");
     const token_access = session.get("bg_token_access");
     const token_refresh = session.get("bg_token_refresh");
