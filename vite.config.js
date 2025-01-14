@@ -143,7 +143,11 @@ const rmx = remix({
             "./pages/Registration/Steps/layout.ts",
             { id: "reg$Id" },
             () => {
+              r("sign-result", "./pages/Registration/SigningResult/index.ts");
               r("", "./pages/Registration/Steps/steps-layout.tsx", () => {
+                r("", "./pages/Registration/Steps/steps-index.ts", {
+                  index: true,
+                });
                 r("1", "./pages/Registration/Steps/ContactDetails/index.tsx");
                 r("2", "./pages/Registration/Steps/OrgDetails/index.tsx");
                 r("3", "./pages/Registration/Steps/FSAInquiry/index.ts");
