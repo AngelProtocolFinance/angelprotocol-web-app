@@ -120,6 +120,7 @@ const rmx = remix({
         r("funds", "./pages/Funds/Funds.tsx");
         r("funds/:fundId", "./pages/Funds/Fund/index.tsx");
         r("funds/:fundId/edit", "./pages/Funds/EditFund/index.ts");
+        r("funds/new", "./pages/Funds/CreateFund/index.ts");
         r("privacy-policy", "./pages/Legal/PrivacyPolicy.tsx");
         r("terms-of-use-npo", "./pages/Legal/TermsNonprofits.tsx");
         r("terms-of-use", "./pages/Legal/TermsDonors.tsx");
