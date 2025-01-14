@@ -5,7 +5,7 @@ import type { LoaderData } from "./api";
 
 const containerClass = "padded-container mt-8 grid content-start";
 export default function EditFund() {
-  const { fund, user } = useLoaderData<LoaderData>();
+  const { fund, user } = useLoaderData() as LoaderData;
 
   if (
     !user.funds.includes(fund.id) &&

@@ -17,7 +17,7 @@ export class Util {
       refreshToken: token.bg_token_refresh,
       groups,
       endowments: endows.split(",").map(Number) ?? [],
-      funds: funds.split(",").map(Number) ?? [],
+      funds: funds.split(",") ?? [],
       email: p.email,
       firstName: p.given_name,
       lastName: p.family_name,

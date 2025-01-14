@@ -1,2 +1,2 @@
 export { default } from "./EditFund";
-export { clientLoader, clientAction } from "./api";
+export { loader, action } from "./api";
