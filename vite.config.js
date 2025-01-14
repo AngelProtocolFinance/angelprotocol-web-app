@@ -136,6 +136,12 @@ const rmx = remix({
           r("success", "./pages/Application/success-prompt.tsx");
         });
       });
+      r("donate-widget", "./pages/DonateWidget/widget-context.tsx", () => {
+        r(":id", "./pages/DonateWidget/index.ts");
+        r("donate-thanks", "./pages/DonateThanks.tsx", {
+          id: "widget-donate-thanks",
+        });
+      });
     });
   },
 });

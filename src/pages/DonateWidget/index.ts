@@ -1,2 +1,2 @@
 export { default } from "./DonateWidget";
-export { clientLoader } from "api/donate-loader";
+export { loader } from "api/donate-loader";
