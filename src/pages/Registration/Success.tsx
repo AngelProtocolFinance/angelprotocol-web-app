@@ -4,7 +4,7 @@ import { Navigate, useLoaderData } from "@remix-run/react";
 import { Link } from "@remix-run/react";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { CircleCheck } from "lucide-react";
-export { stateLoader as clientLoader } from "helpers/state-params";
+export { stateLoader as loader } from "helpers/state-params";
 
 export default function Success({ classes = "" }: { classes?: string }) {
   const reg = useLoaderData() as CompleteReg | undefined;

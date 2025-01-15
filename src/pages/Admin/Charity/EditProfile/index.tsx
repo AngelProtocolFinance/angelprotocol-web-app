@@ -1,20 +1,16 @@
-import type { Endow, EndowDesignation } from "@better-giving/endowment";
+import type { EndowDesignation } from "@better-giving/endowment";
 import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@vercel/remix";
-import { getEndow } from "api/get/endow";
 import { country } from "components/CountrySelector";
 import { parseContent } from "components/RichText";
 import { unsdgs } from "constants/unsdgs";
-import { endowUpdate } from "../endow-update-action";
 import Form from "./Form";
+import type { LoaderData } from "./api";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
-
-export const loader: LoaderFunction = async ({ params }) => getEndow(params.id);
-export const action = endowUpdate({ success: "Profile updated" });
+export { loader, action } from "./api";
 
 export default function EditProfile() {
-  const endow = useLoaderData() as Endow;
+  const endow = useLoaderData() as LoaderData;
   const defaults: FV = {
     name: endow.name,
     published: !!endow.published,

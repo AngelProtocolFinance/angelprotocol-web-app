@@ -137,9 +137,7 @@ const rmx = remix({
         );
         r("register", "./pages/Registration/layout.tsx", () => {
           r("", "./pages/Registration/Signup/index.ts", { index: true });
-          r("success", "./pages/SignUp/Success.tsx", {
-            id: "reg-signup-success",
-          });
+          r("success", "./pages/Registration/Success.tsx");
           r("welcome", "./pages/Registration/Welcome.tsx");
           r("resume", "./pages/Registration/Resume/Form.tsx");
           r(
