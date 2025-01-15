@@ -1,20 +1,20 @@
 import { decodeJwt } from "jose";
 import type { UserV2 } from "types/auth";
-import type { Stored, Token } from "./session";
+import type { SessionData, Stored } from "./session";
 
 export class Util {
-  toUser(token: Token): UserV2 {
+  protected toUser(data: SessionData): UserV2 {
     const {
       endows = "",
       funds = "",
       "cognito:groups": groups = [],
       ...p
-    }: any = decodeJwt(token.bg_token_id);
+    }: any = decodeJwt(data.token_id);
 
     return {
-      idToken: token.bg_token_id,
-      accessToken: token.bg_token_access,
-      refreshToken: token.bg_token_refresh,
+      idToken: data.token_id,
+      accessToken: data.token_access,
+      refreshToken: data.token_refresh,
       groups,
       endowments: endows.split(",").map(Number) ?? [],
       funds: funds.split(",") ?? [],
@@ -25,10 +25,10 @@ export class Util {
       currency: p["custom:currency"],
     };
   }
-  unset(session: Stored) {
-    session.unset("bg_token_id");
-    session.unset("bg_token_access");
-    session.unset("bg_token_refresh");
-    session.unset("bg_token_expiry");
+  protected unset(session: Stored) {
+    session.unset("token_id");
+    session.unset("token_access");
+    session.unset("token_refresh");
+    session.unset("token_expiry");
   }
 }

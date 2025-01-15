@@ -50,10 +50,10 @@ class Storage extends Util {
         : request.headers.get("Cookie");
 
     const session = await getSession(cookieHeader);
-    const token_id = session.get("bg_token_id");
-    const token_access = session.get("bg_token_access");
-    const token_refresh = session.get("bg_token_refresh");
-    const token_expiry = session.get("bg_token_expiry");
+    const token_id = session.get("token_id");
+    const token_access = session.get("token_access");
+    const token_refresh = session.get("token_refresh");
+    const token_expiry = session.get("token_expiry");
 
     if (!token_id || !token_access || !token_refresh || !token_expiry)
       return { user: null, session };
@@ -69,10 +69,10 @@ class Storage extends Util {
 
     return {
       user: this.toUser({
-        bg_token_id: token_id,
-        bg_token_access: token_access,
-        bg_token_refresh: token_refresh,
-        bg_token_expiry: token_expiry,
+        token_id: token_id,
+        token_access: token_access,
+        token_refresh: token_refresh,
+        token_expiry: token_expiry,
       }),
       session,
     };
@@ -134,10 +134,10 @@ class Cognito extends Storage {
 
     const { AuthenticationResult: r }: AuthSuccess<"new"> = await res.json();
     const session = await getSession(cookieHeader);
-    session.set("bg_token_id", r.IdToken);
-    session.set("bg_token_access", r.AccessToken);
-    session.set("bg_token_refresh", r.RefreshToken);
-    session.set("bg_token_expiry", this.expiry(r.ExpiresIn));
+    session.set("token_id", r.IdToken);
+    session.set("token_access", r.AccessToken);
+    session.set("token_refresh", r.RefreshToken);
+    session.set("token_expiry", this.expiry(r.ExpiresIn));
 
     return commitSession(session);
   }
@@ -149,7 +149,7 @@ class Cognito extends Storage {
       body: this.body({
         AuthFlow: "REFRESH_TOKEN_AUTH",
         AuthParameters: {
-          REFRESH_TOKEN: session.get("bg_token_refresh"),
+          REFRESH_TOKEN: session.get("token_refresh"),
         },
       }),
     });
@@ -160,10 +160,10 @@ class Cognito extends Storage {
 
     const { AuthenticationResult: r }: AuthSuccess<"refresh"> =
       await res.json();
-    session.set("bg_token_id", r.IdToken);
-    session.set("bg_token_access", r.AccessToken);
-    session.set("bg_token_refresh", session.get("bg_token_refresh")!);
-    session.set("bg_token_expiry", this.expiry(r.ExpiresIn));
+    session.set("token_id", r.IdToken);
+    session.set("token_access", r.AccessToken);
+    session.set("token_refresh", session.get("token_refresh")!);
+    session.set("token_expiry", this.expiry(r.ExpiresIn));
 
     return commitSession(session);
   }
@@ -253,7 +253,7 @@ class Cognito extends Storage {
       method: "POST",
       headers: this.headers("GlobalSignOut"),
       body: this.body({
-        AccessToken: session.get("bg_token_access"),
+        AccessToken: session.get("token_access"),
       }),
     });
 
@@ -330,10 +330,10 @@ class OAuth extends Storage {
     }
     const data: OauthTokenRes = await res.json();
     const session = await getSession(cookieHeader);
-    session.set("bg_token_access", data.access_token);
-    session.set("bg_token_id", data.id_token);
-    session.set("bg_token_expiry", this.expiry(data.expires_in));
-    session.set("bg_token_refresh", data.refresh_token);
+    session.set("token_access", data.access_token);
+    session.set("token_id", data.id_token);
+    session.set("token_expiry", this.expiry(data.expires_in));
+    session.set("token_refresh", data.refresh_token);
     return commitSession(session);
   }
 }
