@@ -5,7 +5,7 @@ import type { LinkDescriptor } from "@vercel/remix";
 import type { IText } from "./Text";
 import type { Props } from "./types";
 
-import quill from "quill/dist/quill.core.css?url";
+import quill from "quill/dist/quill.snow.css?url";
 import rt from "./richtext.css?url";
 
 export { toDelta, parseContent } from "./helpers";
