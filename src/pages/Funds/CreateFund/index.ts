@@ -1,17 +1,19 @@
 import type { NewFund } from "@better-giving/fundraiser";
 import {
   type ActionFunction,
+  type LinksFunction,
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { cognito, redirectToAuth } from "auth";
+import { richTextStyles } from "components/RichText";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { isError } from "types/auth";
 
 export { default } from "./CreateFund";
-
+export const links: LinksFunction = () => [...richTextStyles];
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return redirectToAuth(request, headers);

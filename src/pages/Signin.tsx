@@ -5,7 +5,6 @@ import {
   redirect,
   useFetcher,
   useLoaderData,
-  useSearchParams,
 } from "@remix-run/react";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 
@@ -93,8 +92,6 @@ export const loader: LoaderFunction = async ({
 };
 
 export default function Signin() {
-  // const navigate = useNavigate();
-  const [params] = useSearchParams();
   const fetcher = useFetcher<ActionData<any>>();
   const formErr = useActionResult(fetcher.data);
   const fromState = useLoaderData() as unknown;
@@ -119,11 +116,7 @@ export default function Signin() {
         <p className="text-center font-normal max-sm:text-sm mt-2">
           Log in to support 18000+ causes or register and manage your nonprofit.
         </p>
-        <fetcher.Form
-          method="POST"
-          action={`.?${params.toString()}`}
-          className="contents"
-        >
+        <fetcher.Form method="POST" className="contents">
           <button
             name="intent"
             value="oauth"
@@ -141,7 +134,6 @@ export default function Signin() {
         </Separator>
         <fetcher.Form
           method="POST"
-          action={`.?${params.toString()}`}
           {...getFormProps(form)}
           className="grid gap-3"
         >

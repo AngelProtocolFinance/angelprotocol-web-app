@@ -1,14 +1,19 @@
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import type {
+  ActionFunction,
+  LinksFunction,
+  LoaderFunction,
+} from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
 import { cognito, redirectToAuth } from "auth";
+import { richTextStyles } from "components/RichText";
 import type { ActionData } from "types/action";
 export { ErrorElement as ErrorBoundary } from "errors/ErrorElement";
 
 export { default } from "./ProgramEditor";
+export const links: LinksFunction = () => [...richTextStyles];
 export const loader: LoaderFunction = async ({ params }) =>
   getProgram(params.id, params.programId);
-
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return redirectToAuth(request, headers);

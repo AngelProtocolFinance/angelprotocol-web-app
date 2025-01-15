@@ -1,11 +1,11 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
 import { Link, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LinksFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
-import { RichText } from "components/RichText";
+import { RichText, richTextStyles } from "components/RichText";
 import Seo from "components/Seo";
 import VerifiedIcon from "components/VerifiedIcon";
 import { FundCreator } from "components/fundraiser";
@@ -21,7 +21,7 @@ import { Video } from "./video";
 export const loader: LoaderFunction = async ({ params }) => {
   return ap.get(`${ver(1)}/funds/${params.fundId}`).json();
 };
-
+export const links: LinksFunction = () => [...richTextStyles];
 export default function Fund() {
   const fund = useLoaderData() as SingleFund;
 
