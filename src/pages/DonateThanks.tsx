@@ -2,7 +2,6 @@ import { Link, useOutletContext, useSearchParams } from "@remix-run/react";
 import char from "assets/images/celebrating-character.png";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import Seo from "components/Seo";
 import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
@@ -15,8 +14,6 @@ export default function DonateThanks() {
 
   return (
     <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
-      {/** override default scripts when used inside iframe */}
-      <Seo scripts={widgetVersion ? [] : undefined} />
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {

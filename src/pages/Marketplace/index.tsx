@@ -1,7 +1,8 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import Seo from "components/Seo";
+import hero from "assets/images/hero.png?url";
+import { metas } from "helpers/seo";
 import type { EndowCardsPage } from "types/aws";
 import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";
@@ -23,11 +24,17 @@ export const loader: LoaderFunction = async ({ request }) => {
     .json();
 };
 
+export const meta: MetaFunction = () =>
+  metas({
+    title: "Marketplace",
+    description: "Better Giving redefines global nonprofit financing.",
+    image: hero,
+  });
+
 export default function Marketplace() {
   const page1 = useLoaderData<EndowCardsPage>();
   return (
     <div className="w-full grid content-start pb-16">
-      <Seo title="Marketplace" />
       <div className="relative overlay bg-cover bg-left-top">
         <Hero classes="grid isolate mt-28 mb-16" />
       </div>

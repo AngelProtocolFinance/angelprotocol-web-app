@@ -1,5 +1,4 @@
 import { Outlet, useLocation } from "@remix-run/react";
-import Seo from "components/Seo";
 import ErrorBoundary from "errors/ErrorBoundary";
 import type { ReactNode } from "react";
 import Sidebar, { SidebarOpener } from "./Sidebar";
@@ -21,8 +20,6 @@ export default function Layout({
   const { key } = useLocation();
   return (
     <div className="grid max-md:content-start md:grid-cols-[auto_1fr]">
-      <Seo title="Admin" />
-      {/** sidebar */}
       <SidebarOpener
         className="md:hidden"
         linkGroups={linkGroups}

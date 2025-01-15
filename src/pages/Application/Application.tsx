@@ -1,9 +1,9 @@
 import type { Application as IApplication } from "@better-giving/registration/approval";
 import { useLoaderData } from "@remix-run/react";
-import type { LoaderFunction } from "@vercel/remix";
+import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { cognito, redirectToAuth } from "auth";
-import Seo from "components/Seo";
+import { metas } from "helpers/seo";
 import { CircleAlert } from "lucide-react";
 import type { UserV2 } from "types/auth";
 import Loaded from "./Loaded";
@@ -29,6 +29,11 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   } satisfies LoaderData;
 };
 
+export const meta: MetaFunction = ({ data }) =>
+  metas({
+    title: `Application Review - ${(data as LoaderData).application.contact.org_name}`,
+  });
+
 export default function Application() {
   const { application, user } = useLoaderData() as LoaderData;
 
@@ -43,7 +48,6 @@ export default function Application() {
 
   return (
     <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
-      <Seo title="Application review" />
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Details
       </h1>

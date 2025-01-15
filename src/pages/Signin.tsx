@@ -6,18 +6,22 @@ import {
   useFetcher,
   useLoaderData,
 } from "@remix-run/react";
-import type { ActionFunction, LoaderFunction } from "@vercel/remix";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
 
 import googleIcon from "assets/icons/google.svg";
 import { cognito, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import Seo from "components/Seo";
 import { Separator } from "components/Separator";
 import { Input, PasswordInput } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { getAuthRedirect } from "helpers";
+import { metas } from "helpers/seo";
 import { decodeState, toWithState } from "helpers/state-params";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
@@ -91,6 +95,9 @@ export const loader: LoaderFunction = async ({
   return decodeState(url.searchParams.get("_s"));
 };
 
+export const meta: MetaFunction = () =>
+  metas({ title: "Login - Better Giving" });
+
 export default function Signin() {
   const fetcher = useFetcher<ActionData<any>>();
   const formErr = useActionResult(fetcher.data);
@@ -108,7 +115,6 @@ export default function Signin() {
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
-      <Seo title="Login - Better Giving" />
       <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
         <h3 className="text-center text-2xl font-bold text-navy-d4">
           Philanthropy for Everyone

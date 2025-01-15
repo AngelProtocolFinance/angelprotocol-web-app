@@ -1,9 +1,13 @@
-import Seo from "components/Seo";
+import type { MetaFunction } from "@vercel/remix";
+import { APP_NAME } from "constants/env";
+import { metas } from "helpers/seo";
+
+export const meta: MetaFunction = () =>
+  metas({ title: `Privacy policy - ${APP_NAME}` });
 
 export default function PrivacyPolicy() {
   return (
     <div className="padded-container min-h-screen pb-6 prose pt-24">
-      <Seo title="Privacy policy - Better Giving" />
       <h1 className="text-center">
         {" "}
         <strong>Privacy Policy</strong>

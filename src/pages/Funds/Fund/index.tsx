@@ -1,12 +1,15 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
 import { Link, useLoaderData } from "@remix-run/react";
-import type { LinksFunction, LoaderFunction } from "@vercel/remix";
+import type {
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
 import { ap, ver } from "api/api";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import { RichText, richTextStyles } from "components/RichText";
-import Seo from "components/Seo";
 import VerifiedIcon from "components/VerifiedIcon";
 import { FundCreator } from "components/fundraiser";
 import { FundStatus, statusFn } from "components/fundraiser";
@@ -14,14 +17,26 @@ import { Target, toTarget } from "components/target";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { unpack } from "helpers";
+import { metas } from "helpers/seo";
 import { ArrowLeft } from "lucide-react";
 import { Share } from "./share";
 import { Video } from "./video";
 
 export const loader: LoaderFunction = async ({ params }) => {
-  return ap.get(`${ver(1)}/funds/${params.fundId}`).json();
+  return ap.get<SingleFund>(`${ver(1)}/funds/${params.fundId}`).json();
 };
 export const links: LinksFunction = () => [...richTextStyles];
+
+export const meta: MetaFunction = ({ data, location: l }) => {
+  const d = data as SingleFund;
+  return metas({
+    title: `${d.name} - ${APP_NAME}`,
+    description: d.description.slice(0, 140),
+    name: d.name,
+    image: d.logo || flying_character,
+    url: `${BASE_URL}/${l.pathname}`,
+  });
+};
 export default function Fund() {
   const fund = useLoaderData() as SingleFund;
 
@@ -33,13 +48,6 @@ export default function Fund() {
 
   return (
     <section className="grid pb-10">
-      <Seo
-        title={`${fund.name} - ${APP_NAME}`}
-        description={fund.description.slice(0, 140)}
-        name={fund.name}
-        image={fund.logo || flying_character}
-        url={`${BASE_URL}/profile/${fund.id}`}
-      />
       <div
         className="relative w-full h-52 sm:h-72 bg-cover bg-center overlay"
         style={{

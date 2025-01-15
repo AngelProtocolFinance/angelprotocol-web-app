@@ -1,10 +1,8 @@
 import { useLoaderData } from "@remix-run/react";
 import { useLocation } from "@remix-run/react";
 import { fill } from "components/DonateMethods";
-import Seo from "components/Seo";
 import { DEFAULT_PROGRAM } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
-import { APP_NAME, BASE_URL } from "constants/env";
 import { useState } from "react";
 import type { WidgetConfig } from "types/widget";
 import Configurer from "./Configurer";
@@ -38,15 +36,6 @@ export default function Widget() {
 
   return (
     <div className="grid @4xl:grid-cols-2 @4xl:gap-x-10 w-full h-full group @container/widget">
-      <Seo
-        title={`Donation Form Configuration${
-          endow?.id ? ` for nonprofit ${endow?.id}` : ""
-        } - ${APP_NAME}`}
-        description={endow?.tagline?.slice(0, 140)}
-        name={endow?.name}
-        image={endow?.logo}
-        url={`${BASE_URL}${location.pathname}`}
-      />
       <h1 className="text-lg @4xl/widget:text-2xl text-center @4xl/widget:text-left mb-3 @4xl/widget:col-span-2">
         Accept donations from your website today!
       </h1>
