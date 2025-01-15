@@ -88,7 +88,7 @@ export default function Fund() {
               <h4 className="md:col-start-2 max-md:text-center font-heading font-bold text-2xl w-full break-words">
                 {fund.name}
               </h4>
-              <p className="pl-0.5">
+              <div className="pl-0.5">
                 <span className="text-sm font-medium text-navy-l3 mr-1">
                   by
                 </span>
@@ -97,7 +97,7 @@ export default function Fund() {
                   id={fund.creator_id}
                   classes="font-medium text-navy inline"
                 />
-              </p>
+              </div>
               <DonateSection
                 {...fund}
                 classes={{
