@@ -3321,7 +3321,7 @@ __metadata:
     react-cropper: "npm:2.3.3"
     react-csv: "npm:2.2.2"
     react-dom: "npm:18.2.0"
-    react-dropzone-esm: "npm:^15.2.0"
+    react-dropzone-esm: "npm:15.2.0"
     react-fast-marquee: "npm:1.6.4"
     react-helmet: "npm:6.1.0"
     react-hook-form: "npm:7.53.0"
@@ -8039,7 +8039,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dropzone-esm@npm:^15.2.0":
+"react-dropzone-esm@npm:15.2.0":
   version: 15.2.0
   resolution: "react-dropzone-esm@npm:15.2.0"
   dependencies:
