@@ -1,5 +1,4 @@
 import { useLoaderData } from "@remix-run/react";
-import { useLocation } from "@remix-run/react";
 import { fill } from "components/DonateMethods";
 import { DEFAULT_PROGRAM } from "components/donation";
 import { DONATION_INCREMENTS } from "constants/common";
@@ -12,7 +11,6 @@ import type { WidgetData } from "./loader";
 
 export default function Widget() {
   const { endow, origin } = useLoaderData<WidgetData>();
-  const location = useLocation();
 
   const _methods = endow?.donateMethods;
   const filled = fill(
