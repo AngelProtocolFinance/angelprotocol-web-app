@@ -1,2 +1,2 @@
 export { default } from "./content";
-export { clientLoader } from "./api";
+export { loader } from "./api";

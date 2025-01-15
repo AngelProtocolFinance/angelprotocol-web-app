@@ -2,7 +2,7 @@ import type { FundItem } from "@better-giving/fundraiser";
 import { Link } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
-import { parseContent, toText } from "components/RichText";
+import { Text } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
@@ -54,9 +54,9 @@ export default function Card({
             <span className="inline">{name}</span>
           </h3>
 
-          <p className="peer text-navy-l1 dark:text-navy-l2 text-sm line-clamp-3 mb-4">
-            {toText(parseContent(description))}
-          </p>
+          <Text className="peer text-navy-l1 dark:text-navy-l2 text-sm line-clamp-3 mb-4">
+            {description}
+          </Text>
 
           <Target target={toTarget(target)} progress={donation_total_usd} />
         </div>

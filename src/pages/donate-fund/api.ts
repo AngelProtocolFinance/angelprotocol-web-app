@@ -7,7 +7,6 @@ import type { UserV2 } from "types/auth";
 export interface LoaderData {
   user: UserV2 | null;
   fund: SingleFund;
-  /** need to await */
 }
 
 export const loader: LoaderFunction = async ({ params, request }) => {
