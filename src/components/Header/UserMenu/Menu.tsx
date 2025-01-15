@@ -1,6 +1,5 @@
 import { MenuItem } from "@headlessui/react";
 import { Form, Link, useNavigation } from "@remix-run/react";
-import { groups } from "constants/auth";
 import { appRoutes } from "constants/routes";
 import { CircleDollarSign, Shield } from "lucide-react";
 import type { DetailedUser } from "types/auth";
@@ -31,7 +30,7 @@ export default function Menu({ user, classes }: Props) {
         <Bookmarks user={user} classes="mt-6" />
         <div className="hidden [&:has(a)]:block mt-6">
           <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
-          {user.groups.includes(groups["ap-admin"]) && (
+          {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
               to={appRoutes.applications}
@@ -41,7 +40,7 @@ export default function Menu({ user, classes }: Props) {
               <span>Applications Dashboard</span>
             </MenuItem>
           )}
-          {user.groups.includes(groups["ap-admin"]) && (
+          {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
               to={appRoutes.banking_applications}
