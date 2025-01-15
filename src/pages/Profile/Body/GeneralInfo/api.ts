@@ -1,6 +1,6 @@
 import type { IMedia, Program } from "@better-giving/endowment";
 import type { FundItem } from "@better-giving/fundraiser";
-import type { LoaderFunction } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getPrograms } from "api/get/programs";
 import { featuredMedia } from "../featured-media";
@@ -19,7 +19,7 @@ const getFunds = async (idParam: string | undefined) => {
     .json();
 };
 
-export const clientLoader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   return {
     programs: await getPrograms(params.id),
     media: await featuredMedia(params.id),

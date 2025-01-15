@@ -94,7 +94,7 @@ const rmx = remix({
         r("dashboard", "./pages/UserDashboard/layout.tsx", () => {
           r("", "./pages/UserDashboard/index-route.ts", { index: true });
           r("edit-profile", "./pages/UserDashboard/EditProfile/index.ts");
-          r("settings", "./pages/UserDashboard/Settings/index.ts");
+          r("settings", "./pages/UserDashboard/Settings/Settings.tsx");
           r("donations", "./pages/UserDashboard/Donations/index.tsx", () => {
             r(":id", "./components/KYCForm/index.tsx");
           });

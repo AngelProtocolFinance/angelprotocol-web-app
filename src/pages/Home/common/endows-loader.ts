@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import type { EndowCardsPage } from "types/aws";
 export type { EndowmentCard } from "types/aws";
 import { ap, ver } from "api/api";

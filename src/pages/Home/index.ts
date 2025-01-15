@@ -1,4 +1,4 @@
-import type { LoaderFunction } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 export { default } from "./Home";
 

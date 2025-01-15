@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "@remix-run/react";
+import type { LoaderFunctionArgs } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
 
 export const profileLoader = async ({ params }: LoaderFunctionArgs) =>
