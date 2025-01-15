@@ -157,6 +157,10 @@ describe("Stripe form test", () => {
   });
 
   test("incrementers", async () => {
+    mockLoader.mockReturnValue({
+      ...testDonateData,
+      user: { currency: "php" },
+    });
     render(<Form step="donate-form" init={init} />);
 
     const amountInput = screen.getByPlaceholderText(/enter amount/i);
@@ -175,5 +179,6 @@ describe("Stripe form test", () => {
 
     await userEvent.click(incrementers[1]); // 50PHP * 100
     expect(amountInput).toHaveDisplayValue("7013");
+    mockLoader.mockReset();
   });
 });
