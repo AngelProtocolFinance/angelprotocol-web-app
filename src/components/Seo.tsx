@@ -19,7 +19,7 @@ type Props = {
 };
 
 const defaultScripts: Script[] = [
-  { src: "/scripts/cookie-consent.js" },
+  { src: "/scripts/cookie-consent-2.js" },
   //functional cookies
   { src: "/scripts/intercom.js", "data-category": "functionality" },
   //analytics
