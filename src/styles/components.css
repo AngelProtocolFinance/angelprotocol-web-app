@@ -3,7 +3,7 @@
   .rich-text-toolbar .ql-toolbar .ql-stroke {
     @apply fill-none stroke-gray-d2 dark:stroke-white;
   }
-
+  
   .rich-text-toolbar[aria-invalid="true"] {
     @apply border-red;
   }

@@ -8,12 +8,16 @@ import {
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { cognito, redirectToAuth } from "auth";
+import { imgEditorStyles } from "components/ImgEditor";
 import { richTextStyles } from "components/RichText";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { isError } from "types/auth";
 
 export { default } from "./CreateFund";
-export const links: LinksFunction = () => [...richTextStyles];
+export const links: LinksFunction = () => [
+  ...richTextStyles,
+  ...imgEditorStyles,
+];
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (!user) return redirectToAuth(request, headers);
