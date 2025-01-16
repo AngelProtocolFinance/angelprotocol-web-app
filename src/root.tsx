@@ -5,6 +5,9 @@ import nProgressStyles from "nprogress/nprogress.css?url";
 import laira from "./assets/images/flying-character.png";
 import cc from "./cookie-consent.css?url";
 import tailwind from "./index.css?url";
+import "@fontsource-variable/dm-sans";
+import "@fontsource-variable/quicksand";
+import "@fontsource/gochi-hand";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwind },
@@ -15,18 +18,6 @@ export const links: LinksFunction = () => [
     rel: "preconnect",
     href: "https://fonts.gstatic.com",
     crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Quicksand:wght@400;500;600;700&display=swap",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css?family=Gochi Hand",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css",
   },
 ];
 

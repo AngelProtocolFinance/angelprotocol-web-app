@@ -1091,6 +1091,27 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fontsource-variable/dm-sans@npm:5.1.1":
+  version: 5.1.1
+  resolution: "@fontsource-variable/dm-sans@npm:5.1.1"
+  checksum: 10/6624178382ff558ae2a3541e1c746a37d05d85f5f4e4dd6d347688df418f42bec37ccf4d071edb4643c89214ea4376103358a2ab4461e7a62c1c2f5d1cc14d69
+  languageName: node
+  linkType: hard
+
+"@fontsource-variable/quicksand@npm:5.1.1":
+  version: 5.1.1
+  resolution: "@fontsource-variable/quicksand@npm:5.1.1"
+  checksum: 10/5a9d189c891cffdf3addaf1261cb99c015b1a2a7fd366b884662d93e16cf78c99b17d3645017a2897b886f059e1b28c2e5ede8695fae774f5894b027c4618270
+  languageName: node
+  linkType: hard
+
+"@fontsource/gochi-hand@npm:5.1.1":
+  version: 5.1.1
+  resolution: "@fontsource/gochi-hand@npm:5.1.1"
+  checksum: 10/55512af2525654c71a48450cd02c4c5c1889d6fa9149912c6d6f6f6c7cef0ed293958d7623217f395ff672636e1f709b156cfb98fb1b73fe53212ca948587beb
+  languageName: node
+  linkType: hard
+
 "@gsap/react@npm:2.1.1":
   version: 2.1.1
   resolution: "@gsap/react@npm:2.1.1"
@@ -3186,6 +3207,9 @@ __metadata:
     "@biomejs/biome": "npm:1.8.1"
     "@conform-to/dom": "npm:1.2.2"
     "@conform-to/react": "npm:1.2.2"
+    "@fontsource-variable/dm-sans": "npm:5.1.1"
+    "@fontsource-variable/quicksand": "npm:5.1.1"
+    "@fontsource/gochi-hand": "npm:5.1.1"
     "@gsap/react": "npm:2.1.1"
     "@headlessui/react": "npm:2.1.0"
     "@hookform/error-message": "npm:2.0.1"
