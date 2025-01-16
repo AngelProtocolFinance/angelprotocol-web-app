@@ -1,8 +1,8 @@
-import { BASE_URL, ENVIRONMENT } from "./env";
+import { BASE_URL, env } from "./env";
 
 export const APIs = {
   aws: "https://ap-api.better.giving",
-  apes: `https://apes-api.better.giving/${ENVIRONMENT}`,
+  apes: `https://apes-api.better.giving/${env}`,
   wordpress: "https://angelgiving.10web.site/wp-json/wp/v2",
   nodeProxy: "https://59vigz9r91.execute-api.us-east-1.amazonaws.com",
   coingecko: "https://api.coingecko.com",
