@@ -27,7 +27,7 @@
   },
   "packageManager": "yarn@4.2.2",
   "engines": {
-    "node": "20.16.0"
+    "node": "20.x"
   },
   "dependencies": {
     "@better-giving/assets": "1.0.18",
