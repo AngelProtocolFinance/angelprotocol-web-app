@@ -59,6 +59,7 @@
     "conform-to-valibot": "1.11.0",
     "date-fns": "3.6.0",
     "decimal.js": "10.4.3",
+    "embla-carousel-react": "8.5.2",
     "framer-motion": "11.2.10",
     "fuse.js": "7.0.0",
     "gsap": "3.12.5",
