@@ -8,6 +8,7 @@ import {
 import nProgress from "nprogress";
 import { type PropsWithChildren, useEffect } from "react";
 import { Toaster } from "sonner";
+import { useCookieConsent } from "./use-cookie-consent";
 
 export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
   const transition = useNavigation();
@@ -19,6 +20,8 @@ export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
     // waiting for the loaders of the next location so we start it
     else nProgress.start();
   }, [transition.state]);
+
+  useCookieConsent();
 
   return (
     <html lang="en">

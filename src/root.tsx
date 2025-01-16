@@ -2,6 +2,7 @@ import { Outlet } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
 import nProgressStyles from "nprogress/nprogress.css?url";
+import ccbase from "vanilla-cookieconsent/dist/cookieconsent.css?url";
 import laira from "./assets/images/flying-character.png";
 import cc from "./cookie-consent.css?url";
 import tailwind from "./index.css?url";
@@ -11,14 +12,9 @@ import "@fontsource/gochi-hand";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: tailwind },
-  { rel: "stylesheet", href: cc },
   { rel: "stylesheet", href: nProgressStyles },
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
+  { rel: "stylesheet", href: ccbase },
+  { rel: "stylesheet", href: cc },
 ];
 
 export const meta: MetaFunction = () => metas({});
