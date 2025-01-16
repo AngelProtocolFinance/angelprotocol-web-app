@@ -1,5 +1,6 @@
 import { Outlet } from "@remix-run/react";
-import type { LinksFunction } from "@vercel/remix";
+import type { LinksFunction, MetaFunction } from "@vercel/remix";
+import { metas } from "helpers/seo";
 import nProgressStyles from "nprogress/nprogress.css?url";
 import laira from "./assets/images/flying-character.png";
 import cc from "./cookie-consent.css?url";
@@ -28,6 +29,8 @@ export const links: LinksFunction = () => [
     href: "https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css",
   },
 ];
+
+export const meta: MetaFunction = () => metas({});
 
 export { loader } from "./root-loader";
 export { action } from "./root-action";
