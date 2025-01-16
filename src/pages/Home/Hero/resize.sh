@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Set target width
-TARGET_WIDTH=500
+TARGET_WIDTH=1500
 
 # Create a temporary directory for processing
 TEMP_DIR="/tmp/resize_temp_$$"
@@ -12,7 +12,7 @@ processed=0
 skipped=0
 
 # Process each PNG file in the current directory
-for img in *.png; do
+for img in *.webp; do
     # Check if file exists and is readable
     if [ ! -r "$img" ]; then
         echo "Warning: Cannot read file $img, skipping..."

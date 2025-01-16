@@ -6,7 +6,7 @@ import type {
   MetaFunction,
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import fallback_banner from "assets/images/fallback-banner.png";
+import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
 import { RichText, richTextStyles, toText } from "components/RichText";
