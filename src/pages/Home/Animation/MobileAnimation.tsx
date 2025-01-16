@@ -36,12 +36,12 @@ const MobileAnimation = ({ classes = "" }) => {
       className={`${classes} relative pt-24 bg-peach/20 grid px-4 bg-no-repeat`}
       style={{ backgroundImage: `url('${path}')` }}
     >
-      <h4 className="text-xs text-[#3c91cb] mb-4 text-center">
+      <h2 className="text-xs text-[#3c91cb] mb-4 text-center">
         SIMPLE PATH TO FINANCIAL STABILITY
-      </h4>
-      <h2 className=" text-3xl mb-14 text-navy-d4 text-center text-pretty">
-        Make a Lasting Impact: <br /> Give Today, Give Forever
       </h2>
+      <h3 className=" text-3xl mb-14 text-navy-d4 text-center text-pretty">
+        Make a Lasting Impact: <br /> Give Today, Give Forever
+      </h3>
 
       <div className="grid gap-32">
         {cards.map((card, idx) => {
