@@ -1,7 +1,7 @@
 import { Outlet, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction, MetaFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import hero from "assets/images/hero.png?url";
+import hero from "assets/images/hero.webp?url";
 import { metas } from "helpers/seo";
 import type { EndowCardsPage } from "types/aws";
 import ActiveFilters from "./ActiveFilters";

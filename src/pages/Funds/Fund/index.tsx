@@ -7,7 +7,7 @@ import type {
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import fallback_banner from "assets/images/bg-banner.webp";
-import flying_character from "assets/images/flying-character.png";
+import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
 import { RichText, richTextStyles, toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";

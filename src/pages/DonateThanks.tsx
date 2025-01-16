@@ -1,5 +1,5 @@
 import { Link, useOutletContext, useSearchParams } from "@remix-run/react";
-import char from "assets/images/celebrating-character.png";
+import char from "assets/images/celebrating-character.webp";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import { Share } from "components/donation";

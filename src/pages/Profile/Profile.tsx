@@ -3,7 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import { Outlet } from "@remix-run/react";
 import type { MetaFunction } from "@vercel/remix";
 import fallback_banner from "assets/images/bg-banner.webp";
-import flying_character from "assets/images/flying-character.png";
+import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";

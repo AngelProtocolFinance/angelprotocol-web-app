@@ -1,4 +1,4 @@
-import hero from "assets/images/hero.png";
+import hero from "assets/images/hero.webp";
 import Image from "components/Image";
 
 export default function Hero({ classes = "" }: { classes?: string }) {

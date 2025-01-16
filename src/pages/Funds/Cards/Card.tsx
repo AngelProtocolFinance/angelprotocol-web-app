@@ -1,6 +1,6 @@
 import type { FundItem } from "@better-giving/fundraiser";
 import { Link } from "@remix-run/react";
-import flying_character from "assets/images/flying-character.png";
+import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
 import { toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";

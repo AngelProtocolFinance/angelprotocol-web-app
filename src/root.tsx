@@ -3,7 +3,7 @@ import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
 import nProgressStyles from "nprogress/nprogress.css?url";
 import ccbase from "vanilla-cookieconsent/dist/cookieconsent.css?url";
-import laira from "./assets/images/flying-character.png";
+import laira from "./assets/images/flying-character.webp";
 import cc from "./cookie-consent.css?url";
 import tailwind from "./index.css?url";
 import "@fontsource-variable/dm-sans";

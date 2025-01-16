@@ -1,5 +1,5 @@
 import { Link } from "@remix-run/react";
-import dappLogo from "assets/images/bg-logo-503c.png";
+import dappLogo from "assets/images/bg-logo-503c.webp";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";

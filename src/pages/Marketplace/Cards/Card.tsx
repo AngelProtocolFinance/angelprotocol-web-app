@@ -1,5 +1,5 @@
 import { Link, useRouteLoaderData } from "@remix-run/react";
-import flying_character from "assets/images/flying-character.png";
+import flying_character from "assets/images/flying-character.webp";
 import BookmarkBtn from "components/BookmarkBtn";
 import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";

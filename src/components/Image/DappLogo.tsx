@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
-import dappLogoWhite from "assets/images/bettergiving-logo-white.png";
-import dappLogo from "assets/images/bg-logo-503c.png";
+import dappLogoWhite from "assets/images/bettergiving-logo-white.webp";
+import dappLogo from "assets/images/bg-logo-503c.webp";
 import ExtLink from "components/ExtLink";
 import { appRoutes } from "constants/routes";
 import Image from "./Image";

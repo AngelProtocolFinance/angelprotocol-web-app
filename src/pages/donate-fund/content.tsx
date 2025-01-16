@@ -1,5 +1,5 @@
 import { Link, useLoaderData } from "@remix-run/react";
-import flying_character from "assets/images/flying-character.png";
+import flying_character from "assets/images/flying-character.webp";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import { Info } from "components/Status";
