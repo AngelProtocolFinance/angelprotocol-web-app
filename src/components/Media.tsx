@@ -15,7 +15,7 @@ export default function Media(props: Props) {
   });
 
   if (!media || isLoading || error) {
-    return <Image className={props.classes} />;
+    return <Image className={props.classes} alt="placeholder" />;
   }
 
   const { media_details, alt_text, guid } = media;
