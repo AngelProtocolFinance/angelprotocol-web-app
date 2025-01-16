@@ -4,7 +4,6 @@ import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import type { EndowmentBookmark } from "types/aws";
 import ContentLoader from "../../ContentLoader";
-import Image from "../../Image";
 
 interface IBookmarkLink extends EndowmentBookmark {}
 export function BookmarkLink({ endowId, ...endow }: IBookmarkLink) {
@@ -27,7 +26,13 @@ const _Link = (props: LinkProps) => (
     to={props.route + `/${props.id}`}
     className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
-    <Image src={props.logo} className="object-cover" height={20} width={20} />
+    <img
+      loading="lazy"
+      src={props.logo}
+      className="object-cover"
+      height={20}
+      width={20}
+    />
     <span>{props.name ?? `Endowment: ${props.id}`}</span>
   </MenuItem>
 );
