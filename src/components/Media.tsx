@@ -27,7 +27,7 @@ export default function Media(props: Props) {
     .join(", ");
 
   return (
-    <Image
+    <img
       alt={alt_text}
       src={guid.rendered}
       srcSet={srcSet}
@@ -35,6 +35,7 @@ export default function Media(props: Props) {
       width={width}
       height={height}
       className={props.classes}
+      loading="lazy"
     />
   );
 }
