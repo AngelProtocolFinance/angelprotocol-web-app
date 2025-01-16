@@ -47,6 +47,7 @@ function Incrementer({
       type="button"
       className="grid group/incrementer has-[[data-label]]:grid-rows-subgrid gap-y-1 row-span-2 rounded-lg p-2 bg-[--accent-primary]"
       onClick={() => onIncrement(value)}
+      aria-label={`Increment by ${shortenHumanize(value, rate, precision)} ${code.toUpperCase()}`}
     >
       <span className="text-left text-sm font-medium text-white group-active/incrementer:translate-x-1">
         +{shortenHumanize(value, rate, precision)} {code.toUpperCase()}

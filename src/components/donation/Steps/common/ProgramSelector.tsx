@@ -42,6 +42,7 @@ export function ProgramSelector({
             <button
               onClick={() => onChange({ label: "", value: "" })}
               type="button"
+              aria-label="Clear program selection"
             >
               <X className="text-red" size={16} />
             </button>

@@ -9,6 +9,7 @@ export default function BackBtn({
     <button
       {...props}
       className={`flex items-center gap-2 font-medium text-[color:var(--accent-primary)] disabled:text-navy-l5 aria-disabled:text-navy-l5 ${className}`}
+      aria-label="Go Back"
     >
       <ChevronLeft size={18} />
       <span>Go Back</span>

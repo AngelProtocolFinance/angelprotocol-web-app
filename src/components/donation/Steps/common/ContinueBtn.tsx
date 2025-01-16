@@ -14,6 +14,7 @@ export default function ContinueBtn({
       {...props}
       type={type}
       className={`btn-blue bg-[--accent-primary] hover:enabled:bg-[--accent-primary] btn-donate ${className}`}
+      aria-label="Continue"
     >
       <span className="mr-4">{text}</span>
       <ArrowRight size={18} />

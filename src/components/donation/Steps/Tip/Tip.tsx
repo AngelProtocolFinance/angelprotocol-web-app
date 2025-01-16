@@ -165,6 +165,7 @@ export default function Tip(props: TipStep) {
           type="button"
           onClick={() => setFormat("amount")}
           className="justify-self-center text-sm mt-6 underline hover:text-[color:var(--accent-primary)]"
+          aria-label="Enter custom donation"
         >
           Enter custom donation
         </button>

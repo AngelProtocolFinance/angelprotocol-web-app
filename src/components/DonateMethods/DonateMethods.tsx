@@ -101,12 +101,14 @@ function Method({
         onChange={(e) => {
           updator({ ...value, disabled: !e.target.checked });
         }}
+        aria-label={`Toggle ${value.name}`}
       />
       <button
         type="button"
         className="text-xl disabled:pointer-events-none cursor-grab disabled:cursor-default"
         onPointerDown={(e) => controls.start(e)}
         disabled={value.disabled}
+        aria-label={`Reorder ${value.name}`}
       >
         <GripVertical size={20} />
       </button>

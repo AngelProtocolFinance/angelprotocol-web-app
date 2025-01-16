@@ -32,6 +32,7 @@ export function PromptV2({
             type="button"
             onClick={close}
             className="border border-gray-l4 p-2 rounded-md"
+            aria-label="Close"
           >
             <X size={24} />
           </button>

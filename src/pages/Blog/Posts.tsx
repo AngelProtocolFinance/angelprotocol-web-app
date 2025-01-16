@@ -56,6 +56,7 @@ export default function Posts() {
             load(`?${copy.toString()}`);
           }}
           disabled={state !== "idle"}
+          aria-label="Load more posts"
         >
           Load more
         </button>

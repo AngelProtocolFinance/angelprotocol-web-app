@@ -116,7 +116,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
             tabIndex={-1}
           >
             <input {...getInputProps()} className="absolute inset-0" />
-            <ArrowUpFromLine size={22} className="mb-[1.125rem]" />
+            <ArrowUpFromLine size={22} className="mb-[1.125rem]" aria-label="Upload file" />
             <p className="font-semibold mb-1">Upload file</p>
             <span className="text-center">
               Click to Browse or Drag &amp; Drop
@@ -129,7 +129,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
           <div className="absolute-center hidden group-hover:flex">
             <div className={buttonStyle}>
               <input {...getInputProps()} />
-              <ArrowUpFromLine size={15} />
+              <ArrowUpFromLine size={15} aria-label="Upload file" />
             </div>
             {
               /** only show controls if new file is uploaded */
@@ -140,6 +140,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
                     setFile(undefined);
                     props.onUndo(e);
                   }}
+                  aria-label="Undo"
                 >
                   <Undo size={18} />
                 </IconButton>
@@ -152,6 +153,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
                   setOpenCropper(true);
                 }}
                 disabled={props.disabled}
+                aria-label="Crop"
               >
                 <Crop size={16} />
               </IconButton>
