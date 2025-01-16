@@ -9,7 +9,7 @@ import { ap, ver } from "api/api";
 import fallback_banner from "assets/images/fallback-banner.png";
 import flying_character from "assets/images/flying-character.png";
 import Image from "components/Image";
-import { RichText, richTextStyles } from "components/RichText";
+import { RichText, richTextStyles, toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
 import { FundCreator } from "components/fundraiser";
 import { FundStatus, statusFn } from "components/fundraiser";
@@ -31,7 +31,7 @@ export const meta: MetaFunction = ({ data, location: l }) => {
   const d = data as SingleFund;
   return metas({
     title: `${d.name} - ${APP_NAME}`,
-    description: d.description.slice(0, 140),
+    description: toText(d.description).slice(0, 140),
     name: d.name,
     image: d.logo || flying_character,
     url: `${BASE_URL}/${l.pathname}`,
