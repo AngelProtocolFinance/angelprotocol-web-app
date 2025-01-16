@@ -1,11 +1,11 @@
 import github from "assets/icons/social/github.webp";
 import linkedin from "assets/icons/social/linkedin.webp";
-import chauncey from "assets/people/chauncey2.png";
-import justin from "assets/people/justin.jpg";
-import pallav from "assets/people/pallav.jpeg";
-import shaun from "assets/people/shaun.jpeg";
-import tejaswini from "assets/people/tejaswini.png";
-import tim from "assets/people/tim.png";
+import chauncey from "assets/people/chauncey2.webp";
+import justin from "assets/people/justin.webp";
+import pallav from "assets/people/pallav.webp";
+import shaun from "assets/people/shaun.webp";
+import tejaswini from "assets/people/tejaswini.webp";
+import tim from "assets/people/tim.webp";
 import ExtLink from "components/ExtLink";
 import { Mail } from "lucide-react";
 
