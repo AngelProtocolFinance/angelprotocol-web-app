@@ -1,7 +1,7 @@
 import Image from "components/Image";
 import { Bolt, Combine, ShieldCheck } from "lucide-react";
 import type { ReactNode } from "react";
-import sectionImg from "./images/portfolio.png";
+import sectionImg from "./images/portfolio.webp";
 
 type TListItem = {
   title1: string;

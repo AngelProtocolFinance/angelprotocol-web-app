@@ -4,11 +4,11 @@ import useEmblaCarousel from "embla-carousel-react";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import type { EndowmentCard } from "types/aws";
 import Card from "./Card";
-import frame1 from "./characters/frame_1.png";
-import frame2 from "./characters/frame_2.png";
-import frame3 from "./characters/frame_3.png";
-import frame4 from "./characters/frame_4.png";
-import frame6 from "./characters/frame_6.png";
+import frame1 from "./characters/frame_1.webp";
+import frame2 from "./characters/frame_2.webp";
+import frame3 from "./characters/frame_3.webp";
+import frame4 from "./characters/frame_4.webp";
+import frame6 from "./characters/frame_6.webp";
 import mappng from "./map.webp";
 import s from "./styles.module.css";
 

@@ -1,6 +1,6 @@
 import { benefits } from "content/benefits";
 import StepsCard from "./StepsCard";
-import path from "./images/static-path.png";
+import path from "./images/static-path.webp";
 import type { Card } from "./types";
 
 const MobileAnimation = ({ classes = "" }) => {

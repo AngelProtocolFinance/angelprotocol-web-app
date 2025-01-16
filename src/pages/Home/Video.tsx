@@ -1,11 +1,11 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect } from "react";
-import s from "../../assets/landing/Inifnite Half-right.png";
-import s2 from "../../assets/landing/half1.png";
-import heart from "../../assets/landing/heartOfText.png";
+import s from "../../assets/landing/Inifnite Half-right.webp";
+import s2 from "../../assets/landing/half1.webp";
+import heart from "../../assets/landing/heartOfText.webp";
 import heartText from "../../assets/landing/heartText.svg";
-import videobanner from "../../assets/landing/video_bannerUpdate.png";
+import videobanner from "../../assets/landing/video_bannerUpdate.webp";
 import styles from "./video.module.css";
 
 const triggerId = "__video";

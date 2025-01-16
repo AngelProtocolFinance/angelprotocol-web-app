@@ -3,9 +3,9 @@ import useEmblaCarousel, {
   type UseEmblaCarouselType,
 } from "embla-carousel-react";
 import { type FC, useEffect, useState } from "react";
-import checkout from "./screenshots/checkout.png";
-import form from "./screenshots/form.png";
-import result from "./screenshots/result.png";
+import checkout from "./screenshots/checkout.webp";
+import form from "./screenshots/form.webp";
+import result from "./screenshots/result.webp";
 
 const screenshots = [form, checkout, result];
 
