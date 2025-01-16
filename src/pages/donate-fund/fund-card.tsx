@@ -1,6 +1,6 @@
 import { Link } from "@remix-run/react";
 import Image from "components/Image";
-import { Text } from "components/RichText";
+import { toText } from "components/RichText";
 import { Target } from "components/target";
 import { appRoutes } from "constants/routes";
 
@@ -29,9 +29,9 @@ export function FundCard({ classes = "", ...props }: Props) {
           {props.name}
         </Link>
         {props.tagline && (
-          <Text className="text-navy-l1 text-sm w-full line-clamp-2">
-            {props.tagline}
-          </Text>
+          <p className="text-navy-l1 text-sm w-full line-clamp-2">
+            {toText(props.tagline)}
+          </p>
         )}
       </div>
       <Target

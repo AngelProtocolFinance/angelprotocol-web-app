@@ -3,7 +3,7 @@ import { useLoaderData } from "@remix-run/react";
 import type { LinksFunction } from "@vercel/remix";
 import { country } from "components/CountrySelector";
 import { imgEditorStyles } from "components/ImgEditor";
-import { parseContent, richTextStyles } from "components/RichText";
+import { richTextStyles, toContent } from "components/RichText";
 import { unsdgs } from "constants/unsdgs";
 import Form from "./Form";
 import type { LoaderData } from "./api";
@@ -46,7 +46,7 @@ export default function EditProfile() {
       label: x,
       value: x,
     })),
-    overview: parseContent(endow.overview),
+    overview: toContent(endow.overview),
   };
 
   return <Form initSlug={endow.slug} init={defaults} id={endow.id} />;
