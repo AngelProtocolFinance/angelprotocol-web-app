@@ -1,5 +1,5 @@
-import github from "assets/icons/social/github.png";
-import linkedin from "assets/icons/social/linkedin.png";
+import github from "assets/icons/social/github.webp";
+import linkedin from "assets/icons/social/linkedin.webp";
 import chauncey from "assets/people/chauncey2.png";
 import justin from "assets/people/justin.jpg";
 import pallav from "assets/people/pallav.jpeg";
