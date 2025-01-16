@@ -13,7 +13,7 @@ const BlogCard = (props: Wordpress.Post) => {
         classes="rounded-t-[18px] object-fill object-center h-44"
       />
 
-      <h4
+      <h3
         className="text-[#0D283A] font-semibold w-full text-xl line-clamp-2 px-6"
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: props.title.rendered }}

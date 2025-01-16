@@ -15,12 +15,12 @@ const Path = () => {
     <section
       className={`relative grid ${s.container} pt-20 pb-40 xl:pb-56 overflow-x-clip`}
     >
-      <h3 className="text-sm md:text-lg uppercase text-blue-d1 text-center mb-4">
+      <h2 className="text-sm md:text-lg uppercase text-blue-d1 text-center mb-4">
         Bridge To Better
-      </h3>
-      <h2 className="text-3xl md:text-4.5xl capitalize text-navy-d4 leading-snug text-center text-balance mb-11">
-        How Better Giving Powers Your Mission
       </h2>
+      <h3 className="text-3xl md:text-4.5xl capitalize text-navy-d4 leading-snug text-center text-balance mb-11">
+        How Better Giving Powers Your Mission
+      </h3>
       <p className="text-lg md:text-2xl font-medium text-navy-l1/60 text-center mb-11">
         Your All-in-One Solution for Sustainable Fundraising and Financial
         Growth

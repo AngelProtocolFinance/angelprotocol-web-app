@@ -40,12 +40,12 @@ export function Feature1({ className = "" }) {
     <section
       className={`${className} pt-56 pb-20 lg:pb-0 grid content-start bg-gradient-to-b from-transparent to-peach/20`}
     >
-      <h3 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
+      <h2 className="text-sm md:text-lg text-blue-d1 text-center mb-4">
         Easy as 1-2-3
-      </h3>
-      <h2 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
-        How Better Giving Works
       </h2>
+      <h3 className="text-center text-3xl md:text-4.5xl text-balance mb-6 px-4">
+        How Better Giving Works
+      </h3>
       <p className="text-navy-l1 px-10 text-center mb-16 text-xl">
         Discover how easy it is to boost your nonprofit’s donations and achieve
         long-term financial sustainability.
@@ -85,12 +85,12 @@ function ListItem(props: TListItem) {
         width={props.image.width}
         className="mb-4"
       />
-      <h5 className="text-center font-body font-medium text-2xl text-navy px-8">
+      <h4 className="text-center font-body font-medium text-2xl text-navy px-8">
         {props.title1}
-      </h5>
-      <h6 className="py-4 text-center font-medium font-body text-lg @6xl:text-xl text-navy-l1 border-b-[3px] border-blue-d1 mb-7 px-8">
+      </h4>
+      <h5 className="py-4 text-center font-medium font-body text-lg @6xl:text-xl text-navy-l1 border-b-[3px] border-blue-d1 mb-7 px-8">
         {props.title2}
-      </h6>
+      </h5>
       <p className="text-center text-lg @6xl:text-xl text-navy-l3">
         {props.description}
       </p>
