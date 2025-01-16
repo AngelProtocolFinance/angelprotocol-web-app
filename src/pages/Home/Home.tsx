@@ -10,15 +10,15 @@ import Header from "./Header";
 import Hero from "./Hero";
 import Testimonials from "./Testimonials";
 // import Video from "./Video";
-// import type { EndowPage } from "./types";
 // import { useLoaderData } from "@remix-run/react";
+// import type { EndowsPage } from "@better-giving/endowment";
 export default function Home() {
-  // const page1 = useLoaderData() as EndowPage;
+  // const page1 = useLoaderData() as EndowsPage;
   return (
     <div className="grid">
       <Header classes="sticky z-40 top-[-1px] mt-8 px-4" />
       <Hero classes="-mt-24" />
-      {/* <HeroBottom className="mb-10" endowments={page1.Items} /> */}
+      {/* <HeroBottom className="mb-10" endowments={page1.items} /> */}
       <Benefits />
       <Brands />
       <Feature1 />

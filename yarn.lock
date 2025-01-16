@@ -3329,7 +3329,6 @@ __metadata:
     react-player: "npm:2.16.0"
     react-router: "npm:7.1.1"
     sonner: "npm:1.7.0"
-    swiper: "npm:11.1.4"
     swr: "npm:2.2.5"
     tailwindcss: "npm:3.4.3"
     type-fest: "npm:4.20.0"
@@ -9052,13 +9051,6 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 10/a9dc19ae2220c952bd2231d08ddeecb1b0328b61e72071ff4000c8384e145cc07c1c0bdb3b5a1cb06e186a7b2790f1dee793418b332f6ddf320de25d9125be7e
-  languageName: node
-  linkType: hard
-
-"swiper@npm:11.1.4":
-  version: 11.1.4
-  resolution: "swiper@npm:11.1.4"
-  checksum: 10/c4ecf10dc447921ec8c58a8f9a2b76f1ca6dddbc81aff1caafb8c8504460c9e934a9f709113a757ca91dd0305d2e25337fc512206813ea333492415d7a144757
   languageName: node
   linkType: hard
 
