@@ -1,5 +1,5 @@
 import {
-  Link,
+  NavLink,
   useFetcher,
   useLoaderData,
   useSearchParams,
@@ -66,10 +66,10 @@ export default function Posts() {
 
 const Cards = (props: { posts: Wordpress.Post[] }) =>
   props.posts.map((post, _index) => (
-    <Link
+    <NavLink
       key={post.slug}
       to={post.slug}
-      className="grid grid-rows-[auto_1fr] h-full rounded-lg overflow-clip bg-blue-l5 hover:bg-blue-l4 border border-blue-l2/20 group"
+      className="grid [&:is(.pending)]:grayscale grid-rows-[auto_1fr] h-full rounded-lg overflow-clip bg-blue-l5 hover:bg-blue-l4 border border-blue-l2/20 group"
     >
       <Media
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
@@ -92,5 +92,5 @@ const Cards = (props: { posts: Wordpress.Post[] }) =>
           }}
         />
       </div>
-    </Link>
+    </NavLink>
   ));

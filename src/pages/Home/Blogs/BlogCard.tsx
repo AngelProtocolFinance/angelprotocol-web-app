@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import ContentLoader from "components/ContentLoader";
 import Media from "components/Media";
 import { appRoutes } from "constants/routes";
@@ -6,7 +6,7 @@ import type { Wordpress } from "types/wordpress";
 
 const BlogCard = (props: Wordpress.Post) => {
   return (
-    <div className="h-[27rem] grid gap-3 pb-5 rounded-3xl bg-white">
+    <div className="h-[27rem] has-[.pending]:grayscale grid gap-3 pb-5 rounded-3xl bg-white">
       <Media
         sizes="(max-width: 640px) 100vw, 33vw"
         id={props.featured_media}
@@ -23,13 +23,13 @@ const BlogCard = (props: Wordpress.Post) => {
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: props.excerpt.rendered }}
       />
-      <Link
+      <NavLink
         to={`${appRoutes.blog}/${props.slug}`}
         className="self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"
       >
         Read More
         <span className="sr-only">: {props.slug.replace(/-/g, " ")}</span>
-      </Link>
+      </NavLink>
     </div>
   );
 };
