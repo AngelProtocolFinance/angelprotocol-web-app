@@ -26,6 +26,7 @@ export default function NavDropdown({ user, isInAuth }: Props) {
       <MenuButton
         data-testid="nav_dropdown"
         className="text-white data-[open]:text-white/90 group flex justify-center items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75"
+        aria-label="Navigation Menu"
       >
         <MenuIcon
           size={24}
