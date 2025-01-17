@@ -26,7 +26,7 @@ export default function Filter({ classes = "" }: { classes?: string }) {
         className={`${classes} fixed-center z-50 isolate w-full max-w-[95vw] max-h-[95vh] sm:max-w-md overflow-y-auto scroller border border-gray-l4 bg-gray-l6 dark:bg-blue-d5 dark:text-white rounded`}
       >
         <div className="bg-blue-l5 dark:bg-blue-d7 flex items-center p-4 border-b border-gray-l4">
-          <h3 className="uppercase mr-auto">Filters</h3>
+          <p className="font-bold font-heading uppercase mr-auto">Filters</p>
           <button
             type="button"
             title="Reset all filters to their default values."

@@ -82,6 +82,9 @@
   .btn-blue {
     @apply btn bg-blue-d1 disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-blue active:bg-blue-d2 focus-visible:ring-blue-l2 hover:bg-blue-d2;
   }
+  .btn-blue.pending {
+    @apply bg-gray pointer-events-none
+  }
   .btn-outline-blue {
     @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 text-blue-d1 border border-blue-d1 enabled:hover:border-blue;
   }
