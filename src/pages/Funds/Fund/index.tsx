@@ -1,5 +1,5 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, NavLink, useLoaderData } from "@remix-run/react";
 import type {
   LinksFunction,
   LoaderFunction,
@@ -191,7 +191,7 @@ function DonateSection(props: IDonateSection) {
           classes={`${s.target} ${s.container} w-full`}
         />
       )}
-      <Link
+      <NavLink
         aria-disabled={
           !statusFn(
             props.expiration ?? MAX_EXPIRATION,
@@ -203,7 +203,7 @@ function DonateSection(props: IDonateSection) {
         className={`w-full btn-blue px-6 py-3 text-sm ${s.link} ${s.container}`}
       >
         Donate now
-      </Link>
+      </NavLink>
     </>
   );
 }

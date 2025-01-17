@@ -1,5 +1,5 @@
 import type { FundItem } from "@better-giving/fundraiser";
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
 import { toText } from "components/RichText";
@@ -18,8 +18,8 @@ export default function Card({
   target,
 }: FundItem) {
   return (
-    <div className="relative grid grid-rows-subgrid row-span-4">
-      <Link
+    <div className="relative [&:has(.pending)]:grayscale [&:has(.pending)]:pointer-events-none grid grid-rows-subgrid row-span-4">
+      <NavLink
         to={`${appRoutes.funds}/${id}`}
         className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
       >
@@ -60,16 +60,16 @@ export default function Card({
 
           <Target target={toTarget(target)} progress={donation_total_usd} />
         </div>
-      </Link>
+      </NavLink>
       {/** absolute so above whole `Link` card */}
       <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
         <div /> {/** future: share button  */}
-        <Link
+        <NavLink
           to={`${appRoutes.donate_fund}/${id}`}
           className="btn-blue px-4 py-1 rounded-full text-sm normal-case"
         >
           Donate
-        </Link>
+        </NavLink>
         <div /> {/** future: bookmark button  */}
       </div>
     </div>

@@ -1,5 +1,9 @@
-import { useLoaderData, useRouteLoaderData } from "@remix-run/react";
-import { Link, Outlet } from "@remix-run/react";
+import {
+  NavLink,
+  Outlet,
+  useLoaderData,
+  useRouteLoaderData,
+} from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { getEndowBalance } from "api/get/endow-balance";
 import BookmarkBtn from "components/BookmarkBtn";
@@ -43,12 +47,12 @@ export default function Body() {
               target={toTarget(p.target)}
             />
           )}
-          <Link
+          <NavLink
             to={`${appRoutes.donate}/${p.id}`}
             className="btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
           >
             Donate now
-          </Link>
+          </NavLink>
         </div>
 
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center">
