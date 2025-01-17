@@ -76,6 +76,9 @@
   .btn-outline {
     @apply btn disabled:bg-gray-l3 aria-disabled:bg-gray-l3 aria-disabled:dark:bg-navy disabled:dark:bg-navy border border-gray-l3 dark:border-navy enabled:hover:border-gray-l2 enabled:hover:dark:border-blue-d2;
   }
+  .btn-outline.pending{
+    @apply bg-gray-l4 pointer-events-none
+  }
   .btn-outline-2 {
     @apply rounded-lg normal-case text-sm border border-gray-l4 disabled:bg-gray-l3 aria-disabled:bg-gray-l3 enabled:hover:border-gray-l2 enabled:active:border-gray focus-visible:outline focus-visible:outline-2;
   }
@@ -91,8 +94,14 @@
   .btn-red {
     @apply btn bg-red disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-red-l1 active:bg-red-d1 focus-visible:ring-red-l4;
   }
+  .btn-red.pending {
+    @apply bg-gray pointer-events-none
+  }
   .btn-green {
     @apply btn bg-green disabled:bg-gray aria-disabled:bg-gray text-white enabled:hover:bg-green-l1 active:bg-green-d1 focus-visible:ring-green-l4;
+  }
+  .btn-green.pending {
+    @apply bg-gray pointer-events-none
   }
   .overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-blue/90 before:dark:bg-blue-d3/90;

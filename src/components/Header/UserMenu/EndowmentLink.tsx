@@ -1,6 +1,6 @@
 import type { UserEndow } from "@better-giving/user";
 import { MenuItem } from "@headlessui/react";
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
 import type { EndowmentBookmark } from "types/aws";
@@ -23,7 +23,7 @@ type LinkProps = {
 };
 const _Link = (props: LinkProps) => (
   <MenuItem
-    as={Link}
+    as={NavLink}
     to={props.route + `/${props.id}`}
     className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
