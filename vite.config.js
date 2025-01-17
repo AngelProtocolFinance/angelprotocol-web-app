@@ -25,6 +25,7 @@ const rmx = remix({
           id: "public-form-builder",
         });
       });
+      // no robots
       r("admin/:id", "./pages/Admin/layout.tsx", () => {
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
         r("donations", "./pages/Admin/Charity/Donations/index.ts");
@@ -91,6 +92,7 @@ const rmx = remix({
           r("success", "./pages/SignUp/Success.tsx");
         });
         r("login/reset", "./pages/ResetPassword/index.ts");
+        // no robots
         r("dashboard", "./pages/UserDashboard/layout.tsx", () => {
           r("", "./pages/UserDashboard/index-route.ts", { index: true });
           r("edit-profile", "./pages/UserDashboard/EditProfile/index.ts");
@@ -125,6 +127,7 @@ const rmx = remix({
         r("privacy-policy", "./pages/Legal/PrivacyPolicy.tsx");
         r("terms-of-use-npo", "./pages/Legal/TermsNonprofits.tsx");
         r("terms-of-use", "./pages/Legal/TermsDonors.tsx");
+        // no robots
         r("banking-applications", "./pages/BankingApplications/index.ts");
         r(
           "banking-applications/:id",
@@ -166,7 +169,9 @@ const rmx = remix({
             }
           );
         });
+        // no robots
         r("applications", "./pages/Applications/index.ts");
+        // no robots
         r("applications/:id", "./pages/Application/Application.tsx", () => {
           r(":verdict", "./pages/Application/review-route.tsx");
           r("success", "./pages/Application/success-prompt.tsx");
