@@ -1,28 +1,12 @@
-import {
-  Links,
-  Meta,
-  Scripts,
-  ScrollRestoration,
-  useNavigation,
-} from "@remix-run/react";
-import nProgress from "nprogress";
-import { type PropsWithChildren, useEffect } from "react";
+import { Links, Meta, Scripts, ScrollRestoration } from "@remix-run/react";
+import type { PropsWithChildren } from "react";
 import { Toaster } from "sonner";
-import { useCookieConsent } from "./use-cookie-consent";
+import { useCookieConsent } from "use-cookie-consent";
+import { useNProgress } from "use-nprogress";
 
 export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
-  const transition = useNavigation();
-  useEffect(() => {
-    nProgress.configure({ showSpinner: false });
-    // when the state is idle then we can to complete the progress bar
-    if (transition.state === "idle") nProgress.done();
-    // and when it's something else it means it's either submitting a form or
-    // waiting for the loaders of the next location so we start it
-    else nProgress.start();
-  }, [transition.state]);
-
+  useNProgress();
   useCookieConsent();
-
   return (
     <html lang="en">
       <head>
