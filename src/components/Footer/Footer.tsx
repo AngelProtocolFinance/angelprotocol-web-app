@@ -38,6 +38,7 @@ function Footer({ classes = "" }: Props) {
             />
             <ExtLink href="https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5">
               <img
+                loading="lazy"
                 src="https://widgets.guidestar.org/TransparencySeal/10103678"
                 width={100}
                 height={100}
