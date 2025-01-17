@@ -20,7 +20,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (!user) return redirectToAuth(request, headers);
 
   const rc = await regCookie.parse(cookieHeader).then((x) => x || {});
-  return rc.reference;
+  return rc.reference || null;
 };
 
 export const action: ActionFunction = async ({ request }) => {
