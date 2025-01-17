@@ -28,12 +28,7 @@ export const action: ActionFunction = async ({ request }) => {
       pathname: r.path,
       data: r.data,
     };
-    return redirect(
-      oauth.initiateUrl(
-        JSON.stringify(routeState),
-        request.headers.get("host") ?? ""
-      )
-    );
+    return redirect(oauth.initiateUrl(JSON.stringify(routeState), from.origin));
   }
 
   const p = parseWithValibot(fv, { schema: signUp });

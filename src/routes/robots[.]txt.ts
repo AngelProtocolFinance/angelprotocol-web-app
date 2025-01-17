@@ -3,7 +3,7 @@ import type { LoaderFunction } from "@vercel/remix";
 
 export const config = { runtime: "edge" };
 export const loader: LoaderFunction = async ({ request }) => {
-  const host = request.headers.get("host");
+  const origin = new URL(request.url).origin;
 
   const robotText = `
 # https://www.robotstxt.org/robotstxt.html
@@ -37,7 +37,7 @@ Allow: /*.png$
 Allow: /*.webp$
 
 # Location of your sitemap
-Sitemap: https://${host}/sitemap.xml
+Sitemap: ${origin}/sitemap.xml
 `;
 
   return new Response(robotText.trim(), {

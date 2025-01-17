@@ -3,7 +3,6 @@ import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
-import { BASE_URL } from "constants/env";
 import type { EndowOptionsPage, EndowmentOption } from "types/aws";
 import * as v from "valibot";
 
@@ -30,7 +29,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const id = selectedId ?? routeEndowId;
 
   return {
-    origin: request.headers.get("host") ?? BASE_URL,
+    origin: url.origin,
     endow: id ? await getEndow(id) : undefined,
     endows: await getEndows(url.searchParams.get("query") ?? ""),
   } satisfies WidgetData;

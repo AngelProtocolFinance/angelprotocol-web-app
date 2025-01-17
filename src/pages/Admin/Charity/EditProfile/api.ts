@@ -10,6 +10,6 @@ export interface LoaderData extends Endow {
 export const loader: LoaderFunction = async ({ params, request }) =>
   getEndow(params.id).then((d) => ({
     ...d,
-    origin: request.headers.get("host"),
+    origin: new URL(request.url).origin,
   }));
 export const action = endowUpdate({ success: "Profile updated" });

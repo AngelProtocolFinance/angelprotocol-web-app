@@ -30,14 +30,14 @@ const staticUrls: SitemapUrl[] = [
 
 export const config = { runtime: "edge" };
 export const loader: LoaderFunction = async ({ request }) => {
-  const host = request.headers.get("host");
+  const origin = new URL(request.url).origin;
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticUrls
   .map(
     (url) => `  <url>
-    <loc>https://${host}${url.url}</loc>
+    <loc>${origin}${url.url}</loc>
     <changefreq>${url.changeFrequency}</changefreq>
     <priority>${url.priority}</priority>
   </url>`
