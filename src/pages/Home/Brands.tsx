@@ -14,7 +14,7 @@ const Brands = () => {
             src={b}
             width={140}
             className="object-contain mx-6"
-            alt="brand img"
+            alt="organization logo"
           />
         ))}
       </Marquee>

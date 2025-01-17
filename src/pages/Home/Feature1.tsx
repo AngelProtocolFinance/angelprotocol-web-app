@@ -9,7 +9,7 @@ type TListItem = {
   title1: string;
   title2: string;
   description: string;
-  image: { src: string; width?: number; height?: number };
+  image: { src: string; width?: number; height?: number; alt: string };
 };
 const items: TListItem[] = [
   {
@@ -17,21 +17,21 @@ const items: TListItem[] = [
     title2: "Sign Up",
     description:
       "Get started in minutes with our quick and easy sign-up process, completely free of charge.",
-    image: { src: laira.negotiating, width: 100 },
+    image: { src: laira.negotiating, width: 100, alt: "Laira negotiating" },
   },
   {
     title1: "Step 2",
     title2: "Embed Donation Form ",
     description:
       "Add our customizable donation form to your website effortlessly and start raising funds immediately.",
-    image: { src: laira.laptop, width: 50 },
+    image: { src: laira.laptop, width: 50, alt: "Laira using laptop" },
   },
   {
     title1: "Step 3",
     title2: "Grow Your Funds",
     description:
       "Watch your donations grow with our high-yield savings account and expertly managed investment funds.",
-    image: { src: laira.presentation, width: 90 },
+    image: { src: laira.presentation, width: 90, alt: "Laira presenting" },
   },
 ];
 
@@ -83,6 +83,7 @@ function ListItem(props: TListItem) {
         src={props.image.src}
         height={props.image.height}
         width={props.image.width}
+        alt={props.image.alt}
         className="mb-4"
       />
       <h4 className="text-center font-body font-medium text-2xl text-navy px-8">

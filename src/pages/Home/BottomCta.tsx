@@ -33,6 +33,7 @@ export function BottomCta({ className = "" }) {
         </div>
       </div>
       <Image
+        alt="Laira waiving"
         width={140}
         src={laira.waiving}
         className="place-self-center mb-8 order-1 md:order-2"

@@ -25,7 +25,7 @@ const BenefitsCarousel = ({ slides, classes = "" }: Props) => {
                 <img
                   src={slide.img}
                   className="size-60 object-cover object-center"
-                  alt="logo"
+                  alt="Visual representation of the benefit"
                 />
                 <p className="mt-6 text-2xl font-heading text-[#0D283A] w-full text-center font-bold">
                   {slide.title}

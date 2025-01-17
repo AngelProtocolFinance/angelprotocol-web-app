@@ -87,7 +87,11 @@ function SearchResult(props: ISearchResult) {
             />
           ) : (
             <div className="p-1.5 pr-0 h-full">
-              <img src={randomLaira()} className="h-full object-contain" />
+              <img
+                src={randomLaira()}
+                alt="Random Laira mascot"
+                className="h-full object-contain"
+              />
             </div>
           )}
 

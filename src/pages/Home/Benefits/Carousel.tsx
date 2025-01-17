@@ -11,7 +11,11 @@ const Carousel = ({ slides, classes = "" }: Props) => {
             className={`${slide.cardBgClass} grid justify-items-center p-8 rounded-4xl md:rounded-5xl shadow-black/5 `}
             key={index}
           >
-            <img src={slide.img} alt="logo" className="size-56 mb-8" />
+            <img
+              src={slide.img}
+              alt="Visual representation of benefit"
+              className="size-56 mb-8"
+            />
             <p className="font-heading text-lg text-center md:text-xl text-black font-bold">
               {slide.title}
             </p>

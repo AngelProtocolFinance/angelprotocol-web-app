@@ -7,7 +7,7 @@ const TestimonialCard = (props: Testimonial) => {
       <Image
         height={240}
         src={props.reviewer_org_logo}
-        alt="logo"
+        alt="Reviewer's organization logo"
         className="object-contain size-28 rounded-lg ml-8 bg-white shadow-xl"
       />
       <div className="relative -mt-14 pt-24 px-8 pb-8 rounded-3xl bg-white -z-10 border border-gray-l4">
