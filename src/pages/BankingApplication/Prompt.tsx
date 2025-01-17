@@ -49,7 +49,6 @@ function Content({ verdict }: Props) {
     <fetcher.Form
       {...getFormProps(form)}
       method="POST"
-      action="."
       className="grid content-start justify-items-center text-navy-d4"
     >
       <input type="hidden" value={verdict} name="type" />

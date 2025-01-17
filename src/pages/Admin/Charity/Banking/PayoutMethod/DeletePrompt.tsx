@@ -67,7 +67,6 @@ function Content({ isDefault, isWithHeir }: Props) {
 
       {canProceed && (
         <fetcher.Form
-          action="."
           method="DELETE"
           className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l4"
         >

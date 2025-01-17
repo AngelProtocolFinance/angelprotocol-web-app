@@ -9,7 +9,7 @@ export default function ErrorPage(props: ErrorQueryParams) {
 
   const isRedirecting = fetcher.state === "submitting";
   return (
-    <fetcher.Form action="." method="POST">
+    <fetcher.Form method="POST">
       <div className="bg-red rounded-full aspect-square grid place-items-center mb-4">
         <CircleAlert size={30} className="text-white m-5" />
       </div>

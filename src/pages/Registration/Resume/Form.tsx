@@ -47,7 +47,6 @@ export default function Form({ classes = "" }: { classes?: string }) {
   });
   return (
     <fetcher.Form
-      action="."
       method="POST"
       {...getFormProps(form)}
       className={`${classes} grid padded-container w-full max-w-[37.5rem]`}

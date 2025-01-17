@@ -30,7 +30,6 @@ export function Program(props: TProgram) {
         <LoaderRing thickness={10} classes="@lg:ml-auto w-6" />
       ) : (
         <fetcher.Form
-          action="."
           method="DELETE"
           className="flex items-center gap-x-4 @lg:contents"
         >

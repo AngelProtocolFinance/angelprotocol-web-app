@@ -78,7 +78,6 @@ export default function PayoutMethod() {
       </dl>
       <fetcher.Form
         method="POST"
-        action="."
         className="flex max-sm:flex-col gap-1 sm:gap-3 mt-4 sm:justify-self-end"
       >
         <Link

@@ -1,10 +1,5 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import {
-  Link,
-  useFetcher,
-  useLoaderData,
-  useSearchParams,
-} from "@remix-run/react";
+import { Link, useFetcher, useLoaderData } from "@remix-run/react";
 import googleIcon from "assets/icons/google.svg";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
@@ -20,7 +15,6 @@ import { signUp } from "types/auth";
 
 export default function SignupForm() {
   const fromState = useLoaderData();
-  const [params] = useSearchParams();
   const fetcher = useFetcher<ActionData>();
   const formErr = useActionResult(fetcher.data);
 
@@ -45,11 +39,7 @@ export default function SignupForm() {
           nonprofit.
         </p>
 
-        <fetcher.Form
-          method="POST"
-          action={`.?index&${params.toString()}`}
-          className="contents"
-        >
+        <fetcher.Form method="POST" className="contents">
           <button
             name="intent"
             value="oauth"
@@ -69,7 +59,6 @@ export default function SignupForm() {
 
         <fetcher.Form
           method="POST"
-          action={`.?index&${params.toString()}`}
           {...getFormProps(form)}
           className="grid gap-3"
         >

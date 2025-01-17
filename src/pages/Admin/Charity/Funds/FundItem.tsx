@@ -64,7 +64,6 @@ export const FundItem = (
 
       <fetcher.Form
         method="POST"
-        action="."
         className="flex items-center justify-between gap-x-6 mt-6"
       >
         {/** fund item won't show once NPO opted out of it: so no need to hide this button */}

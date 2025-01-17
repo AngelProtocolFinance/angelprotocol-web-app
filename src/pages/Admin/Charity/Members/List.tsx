@@ -86,7 +86,7 @@ function DeleteForm({ email }: { email: string }) {
   const fetcher = useFetcher({ key: `admin-${email}` });
 
   return (
-    <fetcher.Form method="POST" action="." className="relative">
+    <fetcher.Form method="POST" className="relative">
       <button
         disabled={fetcher.state !== "idle"}
         onClick={() => handleRemove(email)}

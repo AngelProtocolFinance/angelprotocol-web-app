@@ -41,7 +41,6 @@ function Content() {
     <DialogPanel
       {...getFormProps(form)}
       method="POST"
-      action="."
       as={fetcher.Form}
       className="p-6 fixed-center z-10 grid gap-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >

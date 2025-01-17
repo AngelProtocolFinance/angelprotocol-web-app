@@ -23,7 +23,6 @@ export default function InitForm(props: Props) {
   return (
     <fetcher.Form
       method="POST"
-      action="."
       {...getFormProps(form)}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
     >
