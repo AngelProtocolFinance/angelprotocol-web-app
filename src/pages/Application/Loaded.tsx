@@ -1,6 +1,6 @@
 import type { Application } from "@better-giving/registration/approval";
 import { isIrs501c3, isRejected } from "@better-giving/registration/models";
-import { Link, Outlet } from "@remix-run/react";
+import { NavLink, Outlet } from "@remix-run/react";
 import ExtLink from "components/ExtLink";
 import { appRoutes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
@@ -32,19 +32,19 @@ export default function Loaded(props: Application) {
         <div
           className={`${
             prevVerdict === "approved" ? "bg-green" : "bg-red"
-          } text-white px-2 py-1 text-xs uppercase rounded justify-self-start -mt-3 lg:-mt-6`}
+          } text-white px-2 py-1 text-xs uppercase rounded justify-self-start -mt-3`}
         >
           {prevVerdict === "approved" ? "Approved" : "Rejected"}
         </div>
       )}
       {typeof props.submission === "object" &&
         "endowment_id" in props.submission && (
-          <Link
-            className="text-blue-d1 hover:underline block -mt-6 text-sm"
+          <NavLink
+            className="text-blue-d1 [&:is(.pending)]:text-gray hover:underline block -mt-6 text-sm"
             to={appRoutes.marketplace + `/${props.submission.endowment_id}`}
           >
             Endowment ID: {props.submission.endowment_id}
-          </Link>
+          </NavLink>
         )}
       {isRejected(props.submission) && (
         <div className="flex max-sm:flex-col gap-x-4">
@@ -112,13 +112,13 @@ export default function Loaded(props: Application) {
         </dl>
       </Container>
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
-        <Link
+        <NavLink
           to={appRoutes.applications}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           aria-disabled={!!prevVerdict}
           to={`rejected?org_name=${props.contact.org_name}`}
           type="button"
@@ -126,8 +126,8 @@ export default function Loaded(props: Application) {
           preventScrollReset
         >
           reject
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           aria-disabled={!!prevVerdict}
           to={`approved?org_name=${props.contact.org_name}`}
           type="button"
@@ -135,7 +135,7 @@ export default function Loaded(props: Application) {
           preventScrollReset
         >
           approve
-        </Link>
+        </NavLink>
         {/** review route renders here */}
         <Outlet />
       </div>
