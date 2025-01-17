@@ -36,7 +36,10 @@ function Footer({ classes = "" }: Props) {
               className="object-contain my-4"
               alt="logo"
             />
-            <ExtLink href="https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5">
+            <ExtLink
+              aria-label="View our GuideStar profile"
+              href="https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5"
+            >
               <img
                 alt="GuideStar Seal"
                 loading="lazy"
