@@ -5,6 +5,9 @@ import { appRoutes } from "constants/routes";
 import type { Wordpress } from "types/wordpress";
 
 const BlogCard = (props: Wordpress.Post) => {
+  // Get clean text without HTML tags
+  const titleText = props.title.rendered.replace(/<[^>]*>/g, "");
+
   return (
     <div className="h-[27rem] grid gap-3 pb-5 rounded-3xl bg-white">
       <Media
@@ -19,14 +22,16 @@ const BlogCard = (props: Wordpress.Post) => {
         dangerouslySetInnerHTML={{ __html: props.title.rendered }}
       />
       <p
-        className="text-[#0D283A] text-sm md:text-base line-clamp-4 px-6 tracking-tighter text w-full  "
-        id="desc"
+        className="text-[#0D283A] text-sm md:text-base line-clamp-4 px-6 tracking-tighter text w-full"
+        id={`desc-${props.slug}`}
         //biome-ignore lint: trusted html
         dangerouslySetInnerHTML={{ __html: props.excerpt.rendered }}
       />
       <Link
         to={`${appRoutes.blog}/${props.slug}`}
         className="self-end mt-auto text-blue-d1 px-4 py-2 rounded-full font-semibold uppercase"
+        aria-labelledby={`desc-${props.slug}`}
+        aria-label={`Read full article: ${titleText}`}
       >
         Read More
       </Link>
