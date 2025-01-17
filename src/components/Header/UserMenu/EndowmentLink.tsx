@@ -1,6 +1,7 @@
 import type { UserEndow } from "@better-giving/user";
 import { MenuItem } from "@headlessui/react";
 import { Link } from "@remix-run/react";
+import Image from "components/Image";
 import { appRoutes } from "constants/routes";
 import type { EndowmentBookmark } from "types/aws";
 import ContentLoader from "../../ContentLoader";
@@ -26,7 +27,7 @@ const _Link = (props: LinkProps) => (
     to={props.route + `/${props.id}`}
     className="hover:text-blue-d1 text-sm flex items-center gap-2"
   >
-    <img
+    <Image
       loading="lazy"
       src={props.logo}
       className="object-cover"
