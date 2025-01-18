@@ -268,6 +268,8 @@ const endowSelectorOptionObj: {
 } = {
   id: "",
   name: "",
+  card_img: "",
+  registration_number: "",
 };
 const endowSelectorOptionFields = Object.keys(endowSelectorOptionObj).join(",");
 
