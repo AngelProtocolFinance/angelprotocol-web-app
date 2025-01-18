@@ -1,4 +1,4 @@
-import { Link, useFetcher } from "@remix-run/react";
+import { Link, NavLink, useFetcher } from "@remix-run/react";
 import { randomLaira } from "assets/laira/laira";
 import Image from "components/Image";
 import { Info, LoadingStatus } from "components/Status";
@@ -46,12 +46,12 @@ export default function SearchDropdown({
           <h4 className="mb-4 mt-8">Top countries</h4>
           <TopCountries />
 
-          <Link
-            className="text-blue-d1 font-medium text-lg text-center mt-8 block"
+          <NavLink
+            className="text-blue-d1 [&:is(.pending)]:text-gray font-medium text-lg text-center mt-8 block"
             to={appRoutes.marketplace}
           >
             Explore all Causes
-          </Link>
+          </NavLink>
         </>
       ) : (
         <SearchResult

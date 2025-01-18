@@ -12,6 +12,7 @@ import Testimonials from "./Testimonials";
 // import Video from "./Video";
 // import { useLoaderData } from "@remix-run/react";
 // import type { EndowsPage } from "@better-giving/endowment";
+export { loader } from "./api";
 export default function Home() {
   // const page1 = useLoaderData() as EndowsPage;
   return (
@@ -23,6 +24,7 @@ export default function Home() {
       <Brands />
       <Feature1 />
       <Animation />
+
       {/* <Video /> */}
       <Testimonials />
       <Blogs />
