@@ -2,39 +2,23 @@ import { type ActionFunction, redirect } from "@vercel/remix";
 import { cognito, oauth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { getAuthRedirect } from "helpers";
-import { decodeState } from "helpers/state-params";
-import {
-  type OAuthState,
-  type SignInRouteState,
-  isError,
-  signUp,
-} from "types/auth";
+import { isError, signUp } from "types/auth";
 
 export { default } from "./SignupForm";
 export { loader } from "../loader";
 export const action: ActionFunction = async ({ request }) => {
   const from = new URL(request.url);
-  const fromState = decodeState(from.searchParams.get("_s")) as
-    | SignInRouteState
-    | undefined;
-
-  const isNpo = fromState?.from === appRoutes.register;
-  const r = getAuthRedirect(fromState as any, { isNpo });
-
   const fv = await request.formData();
+  const redirectTo = from.searchParams.get("redirect") || appRoutes.marketplace;
   if (fv.get("intent") === "oauth") {
-    const routeState: OAuthState = {
-      pathname: r.path,
-      data: r.data,
-    };
-    return redirect(oauth.initiateUrl(JSON.stringify(routeState), from.origin));
+    return redirect(oauth.initiateUrl(redirectTo, from.origin));
   }
 
   const p = parseWithValibot(fv, { schema: signUp });
 
   if (p.status !== "success") return p.reply();
 
+  const isNpo = redirectTo.startsWith(appRoutes.register);
   const res = await cognito.signup(
     p.value.email.toLowerCase(),
     p.value.password,

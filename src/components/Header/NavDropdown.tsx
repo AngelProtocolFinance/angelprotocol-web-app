@@ -7,9 +7,8 @@ import {
 import { NavLink, useLocation } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { createNavLinkStyler } from "helpers";
-import { toWithState } from "helpers/state-params";
 import { ChevronDown, MenuIcon } from "lucide-react";
-import type { DetailedUser, SignInRouteState } from "types/auth";
+import type { DetailedUser } from "types/auth";
 import Menu from "./UserMenu/Menu";
 
 interface Props {
@@ -18,8 +17,8 @@ interface Props {
 }
 
 export default function NavDropdown({ user, isInAuth }: Props) {
-  const location = useLocation();
-  const state: SignInRouteState = { from: location.pathname };
+  const { pathname: p, search: s } = useLocation();
+  const to = p + s;
 
   return (
     <HuiMenu>
@@ -58,7 +57,10 @@ export default function NavDropdown({ user, isInAuth }: Props) {
             </NavLink>
           </MenuItem>
           <MenuItem>
-            <NavLink to={appRoutes.register} className={styler}>
+            <NavLink
+              to={appRoutes.register + (user ? "/" : "/welcome")}
+              className={styler}
+            >
               Register NPO
             </NavLink>
           </MenuItem>
@@ -86,7 +88,7 @@ export default function NavDropdown({ user, isInAuth }: Props) {
           {!isInAuth && (
             <MenuItem>
               <NavLink
-                to={toWithState(appRoutes.signin, state)}
+                to={appRoutes.signin + `?redirect=${to}`}
                 className={styles + " sm:hidden"}
               >
                 Login
@@ -96,7 +98,7 @@ export default function NavDropdown({ user, isInAuth }: Props) {
           {!isInAuth && (
             <MenuItem>
               <NavLink
-                to={toWithState(appRoutes.signup, state)}
+                to={appRoutes.signup + `?redirect=${to}`}
                 className={styles + " sm:hidden"}
               >
                 Sign up

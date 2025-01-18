@@ -7,9 +7,9 @@ import {
   redirect,
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
+import { getEndowWithEin } from "api/get/endow-with-ein";
 import { cognito, redirectToAuth } from "auth";
 import { appRoutes } from "constants/routes";
-import { decodeState } from "helpers/state-params";
 import { regCookie } from "./data/cookie";
 import { steps } from "./routes";
 
@@ -24,11 +24,21 @@ export const newApplicationAction: ActionFunction = async ({ request }) => {
   if (!user) return redirectToAuth(request, headers);
 
   const url = new URL(request.url);
-  const claim = decodeState<EndowClaim>(url.searchParams.get("_s"));
+
+  const ein = url.searchParams.get("claim");
+  const endow = ein ? await getEndowWithEin(ein) : null;
+  const claim = endow
+    ? ({
+        id: endow.id,
+        ein: endow.registration_number,
+        name: endow.name,
+      } satisfies EndowClaim)
+    : null;
 
   const payload: NewReg = {
     registrant_id: user.email,
   };
+
   if (claim) payload.claim = claim;
 
   const reg = await ap

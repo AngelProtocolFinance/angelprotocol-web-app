@@ -44,6 +44,7 @@ export const action: ActionFunction = async ({ request }) => {
     return p.reply({ fieldErrors: { code: [res.message] } });
   }
 
+  from.searchParams.delete("email");
   const to = new URL(from);
   to.pathname = `${appRoutes.signup}/success`;
   return redirect(to.toString());

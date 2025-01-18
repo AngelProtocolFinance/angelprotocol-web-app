@@ -7,14 +7,13 @@ import { Separator } from "components/Separator";
 import { Input, PasswordInput } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { toWithState } from "helpers/state-params";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
 import type { ActionData } from "types/action";
 import { signUp } from "types/auth";
 
 export default function SignupForm() {
-  const fromState = useLoaderData();
+  const to = useLoaderData<string>();
   const fetcher = useFetcher<ActionData>();
   const formErr = useActionResult(fetcher.data);
 
@@ -108,7 +107,7 @@ export default function SignupForm() {
         <span className="flex-center gap-1 max-sm:text-sm font-normal">
           Already have an account?
           <Link
-            to={toWithState(appRoutes.signin, fromState)}
+            to={appRoutes.signin + `?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

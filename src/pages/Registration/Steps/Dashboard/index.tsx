@@ -1,6 +1,5 @@
 import { Navigate, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import { regRoutes } from "constants/routes";
-import { toWithState } from "helpers/state-params";
 import { useActionResult } from "hooks/use-action-result";
 import type { ActionData, Ok } from "types/action";
 import { stepLoader } from "../../data/step-loader";
@@ -26,7 +25,7 @@ export default function Dashboard() {
     typeof submission !== "string" &&
     "endowment_id" in submission
   ) {
-    return <Navigate to={toWithState(`../../${regRoutes.success}`, data)} />;
+    return <Navigate to={`../../${regRoutes.success}`} state={data} />;
   }
 
   return (

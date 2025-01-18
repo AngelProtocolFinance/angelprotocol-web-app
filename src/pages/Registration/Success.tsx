@@ -1,13 +1,12 @@
 import type { Submission } from "@better-giving/registration/models";
 import type { CompleteReg } from "@better-giving/registration/step";
-import { Navigate, useLoaderData } from "@remix-run/react";
+import { Navigate, useLocation } from "@remix-run/react";
 import { Link } from "@remix-run/react";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { CircleCheck } from "lucide-react";
-export { stateLoader as loader } from "helpers/state-params";
 
 export default function Success({ classes = "" }: { classes?: string }) {
-  const reg = useLoaderData() as CompleteReg | undefined;
+  const reg = useLocation().state as CompleteReg | undefined;
 
   if (!reg || typeof reg.submission !== "object") {
     return <Navigate to={".."} />;

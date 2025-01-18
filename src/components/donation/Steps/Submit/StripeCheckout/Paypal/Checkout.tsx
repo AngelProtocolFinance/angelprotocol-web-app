@@ -6,7 +6,6 @@ import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { toWithState } from "helpers/state-params";
 import { useState } from "react";
 import { toDonor } from "../../../common/constants";
 import type { StripeCheckoutStep } from "../../../types";
@@ -60,12 +59,12 @@ export default function Checkout(props: StripeCheckoutStep) {
         }
 
         const search = `?recipient_name=${init.recipient.name}`;
-        const route =
+        const to =
           props.init.source === "bg-widget"
             ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}${search}`
             : appRoutes.donate_thanks + search;
 
-        navigate(toWithState(route, state));
+        navigate(to);
       }}
       createOrder={async () => {
         setState("loading");

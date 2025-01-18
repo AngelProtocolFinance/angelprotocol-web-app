@@ -3,12 +3,11 @@ import { Link, useFetcher } from "@remix-run/react";
 import { Input } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { toWithState } from "helpers/state-params";
 import { Mail } from "lucide-react";
 import { type ActionData, isFormErr } from "types/action";
 import { emailSchema } from "./schema";
 
-type Props = { state: unknown };
+type Props = { to: string };
 
 export default function InitForm(props: Props) {
   const fetcher = useFetcher<ActionData<string>>();
@@ -50,7 +49,7 @@ export default function InitForm(props: Props) {
       </button>
 
       <Link
-        to={toWithState(appRoutes.signin, props.state)}
+        to={appRoutes.signin + `?redirect=${props.to}`}
         className="mt-5 text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray max-sm:text-sm font-medium underline text-center"
         aria-disabled={fetcher.state !== "idle"}
       >

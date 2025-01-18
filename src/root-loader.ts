@@ -5,7 +5,7 @@ import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { userEndows } from "api/get/user-endows";
 import { cognito, oauth } from "auth/cognito";
-import type { DetailedUser, OAuthState, UserV2 } from "types/auth";
+import type { DetailedUser, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
 async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
@@ -43,19 +43,8 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
     if (!res) return redirect(url.toString());
 
     //redirect to requestor
-    const parsed = JSON.parse(
-      Buffer.from(state, "base64").toString()
-    ) as OAuthState;
-    url.searchParams.delete("code");
-    url.searchParams.delete("state");
-
-    url.pathname = parsed.pathname;
-    if (parsed.data && typeof parsed.data === "object") {
-      url.searchParams.set("_s", btoa(JSON.stringify(parsed.data)));
-    }
-    //TODO send this data to the redirect route
-    //const user = userFromIdToken(res.id_token, res.access_token);
-    return redirect(url.toString(), { headers: { "Set-Cookie": res } });
+    const redirectTo = Buffer.from(state, "base64").toString();
+    return redirect(redirectTo, { headers: { "Set-Cookie": res } });
   }
 
   const { user, headers } = await cognito.retrieve(request);

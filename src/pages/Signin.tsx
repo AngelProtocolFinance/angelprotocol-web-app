@@ -11,7 +11,6 @@ import type {
   LoaderFunction,
   MetaFunction,
 } from "@vercel/remix";
-
 import googleIcon from "assets/icons/google.svg";
 import { cognito, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
@@ -20,33 +19,24 @@ import { Separator } from "components/Separator";
 import { Input, PasswordInput } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { getAuthRedirect } from "helpers";
 import { metas } from "helpers/seo";
-import { decodeState, toWithState } from "helpers/state-params";
 import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
 import type { ActionData } from "types/action";
-import { type OAuthState, isError, signIn } from "types/auth";
+import { isError, signIn } from "types/auth";
 
 export const action: ActionFunction = async ({ request }) => {
   try {
     const { user } = await cognito.retrieve(request);
     if (user) return redirect(appRoutes.marketplace);
-
     const from = new URL(request.url);
-    const fromState = decodeState(from.searchParams.get("_s"));
-    const r = getAuthRedirect(fromState as any);
 
     const fv = await request.formData();
+    const redirectTo =
+      from.searchParams.get("redirect") || appRoutes.marketplace;
     if (fv.get("intent") === "oauth") {
       const origin = new URL(request.url);
-      const routeState: OAuthState = {
-        pathname: r.path,
-        data: r.data,
-      };
-      return redirect(
-        oauth.initiateUrl(JSON.stringify(routeState), origin.origin)
-      );
+      return redirect(oauth.initiateUrl(redirectTo, origin.origin));
     }
 
     const payload = parseWithValibot(fv, { schema: signIn });
@@ -64,35 +54,24 @@ export const action: ActionFunction = async ({ request }) => {
         const to = new URL(from);
         to.pathname = appRoutes.signup + "/confirm";
         to.searchParams.set("email", payload.value.email);
+        to.searchParams.set("redirect", redirectTo);
         return redirect(to.toString());
       }
 
       return payload.reply({ fieldErrors: { password: [res.message] } });
     }
 
-    const to = new URL(from);
-    to.pathname = r.path;
-    to.search = r.search;
-    if (r.data) {
-      const encoded = btoa(JSON.stringify(r.data));
-      to.searchParams.set("_s", encoded);
-    }
-
-    return redirect(to.toString(), { headers: { "Set-Cookie": res } });
+    return redirect(redirectTo, { headers: { "Set-Cookie": res } });
   } catch (err) {
     console.error(err);
     return data<ActionData<any>>({ __error: "Unknown error occured" }, 500);
   }
 };
 
-export const loader: LoaderFunction = async ({
-  request,
-}): Promise<Response | unknown> => {
+export const loader: LoaderFunction = async ({ request }) => {
   const { user } = await cognito.retrieve(request);
   if (user) return redirect(appRoutes.marketplace);
-
-  const url = new URL(request.url);
-  return decodeState(url.searchParams.get("_s"));
+  return new URL(request.url).searchParams.get("redirect") || "/";
 };
 
 export const meta: MetaFunction = () =>
@@ -101,7 +80,7 @@ export const meta: MetaFunction = () =>
 export default function Signin() {
   const fetcher = useFetcher<ActionData<any>>();
   const formErr = useActionResult(fetcher.data);
-  const fromState = useLoaderData() as unknown;
+  const to = useLoaderData<string>();
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
@@ -156,7 +135,7 @@ export default function Signin() {
             placeholder="Password"
           />
           <Link
-            to={toWithState(appRoutes.reset_password, fromState)}
+            to={appRoutes.reset_password + `?redirect=${to}`}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"
           >
             Forgot password?
@@ -173,7 +152,7 @@ export default function Signin() {
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
           <Link
-            to={toWithState(appRoutes.signup, fromState)}
+            to={appRoutes.signup + `?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

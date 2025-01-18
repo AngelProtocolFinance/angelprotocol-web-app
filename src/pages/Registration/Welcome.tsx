@@ -1,4 +1,4 @@
-import { useNavigation } from "@remix-run/react";
+import { Form, useNavigation } from "@remix-run/react";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
 import { CircleCheck } from "lucide-react";
@@ -6,7 +6,7 @@ export { newApplicationAction as action } from "./api";
 export default function Welcome() {
   const nav = useNavigation();
   return (
-    <form method="POST" className="grid justify-items-center mx-6">
+    <Form method="POST" className="grid justify-items-center mx-6">
       <CircleCheck className="text-green" size={80} />
       <h1 className="text-[2rem] mt-10 text-center">
         Thank you for joining {APP_NAME}!
@@ -16,7 +16,7 @@ export default function Welcome() {
       </p>
 
       <button
-        disabled={nav.state !== "idle"}
+        disabled={nav.state === "submitting"}
         className="w-full max-w-[26.25rem] btn-blue btn-reg"
       >
         <LoadText text="Continue registration">Continue registration</LoadText>
@@ -26,6 +26,6 @@ export default function Welcome() {
         Note: Registration is quick, but we've sent an email link if you need to
         pause and resume at any point.
       </p>
-    </form>
+    </Form>
   );
 }

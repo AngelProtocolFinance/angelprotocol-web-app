@@ -6,7 +6,6 @@ import {
 } from "@vercel/remix";
 import { cognito } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
-import { decodeState } from "helpers/state-params";
 import type { ActionData } from "types/action";
 import { isError } from "types/auth";
 import { parse } from "valibot";
@@ -16,9 +15,9 @@ export { default } from "./ResetPassword";
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url);
-  const { _s, ..._step } = Object.fromEntries(url.searchParams.entries());
+  const { redirect, ..._step } = Object.fromEntries(url.searchParams.entries());
   return {
-    state: decodeState(_s),
+    redirect,
     step: parse(step, _step),
   } satisfies LoaderData;
 };

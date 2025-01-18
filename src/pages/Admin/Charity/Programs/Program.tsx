@@ -4,7 +4,6 @@ import { Link } from "@remix-run/react";
 import Image from "components/Image";
 import LoaderRing from "components/LoaderRing";
 import { adminRoutes } from "constants/routes";
-import { toWithState } from "helpers/state-params";
 
 export function Program(props: TProgram) {
   const fetcher = useFetcher();
@@ -42,10 +41,7 @@ export function Program(props: TProgram) {
             delete
           </button>
           <Link
-            to={toWithState(
-              `../${adminRoutes.program_editor}/${props.id}`,
-              props
-            )}
+            to={`../${adminRoutes.program_editor}/${props.id}`}
             className="btn-outline-filled w-24 py-2 text-sm"
           >
             edit
