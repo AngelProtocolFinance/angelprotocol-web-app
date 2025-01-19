@@ -4,6 +4,6 @@ export * from "./Input";
 export * from "./PasswordInput";
 export { CheckField, NativeCheckField } from "./CheckField";
 export { Radio } from "./Radio";
-export { default as RhfForm, Form } from "./Form";
+export { default as RhfForm, Form, RmxForm } from "./Form";
 export { dateToFormFormat } from "./helpers";
 export { default as DateInput } from "./DateInput";

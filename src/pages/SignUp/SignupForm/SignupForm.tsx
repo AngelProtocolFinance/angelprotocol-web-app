@@ -1,10 +1,15 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { Link, useFetcher, useLoaderData } from "@remix-run/react";
+import {
+  Link,
+  useActionData,
+  useLoaderData,
+  useNavigation,
+} from "@remix-run/react";
 import googleIcon from "assets/icons/google.svg";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import { Separator } from "components/Separator";
-import { Input, PasswordInput } from "components/form";
+import { Input, PasswordInput, RmxForm } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { useActionResult } from "hooks/use-action-result";
@@ -14,8 +19,9 @@ import { signUp } from "types/auth";
 
 export default function SignupForm() {
   const to = useLoaderData<string>();
-  const fetcher = useFetcher<ActionData>();
-  const formErr = useActionResult(fetcher.data);
+  const { state } = useNavigation();
+  const data = useActionData<ActionData>();
+  const formErr = useActionResult(data);
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
@@ -25,7 +31,7 @@ export default function SignupForm() {
     },
   });
 
-  const isSubmitting = fetcher.state === "submitting";
+  const isSubmitting = state !== "idle";
 
   return (
     <div className="grid justify-items-center gap-3.5">
@@ -38,7 +44,7 @@ export default function SignupForm() {
           nonprofit.
         </p>
 
-        <fetcher.Form method="POST" className="contents">
+        <RmxForm disabled={isSubmitting} method="POST" className="contents">
           <button
             name="intent"
             value="oauth"
@@ -50,15 +56,16 @@ export default function SignupForm() {
               Sign Up with Google
             </span>
           </button>
-        </fetcher.Form>
+        </RmxForm>
 
         <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
           OR
         </Separator>
 
-        <fetcher.Form
+        <RmxForm
           method="POST"
           {...getFormProps(form)}
+          disabled={isSubmitting}
           className="grid gap-3"
         >
           <div className="flex gap-3">
@@ -94,9 +101,10 @@ export default function SignupForm() {
             placeholder="Create password"
             error={fields.password.errors?.[0]}
           />
-        </fetcher.Form>
+        </RmxForm>
 
         <button
+          disabled={isSubmitting}
           form={form.id}
           type="submit"
           className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full my-8"

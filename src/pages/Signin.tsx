@@ -1,6 +1,5 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import {
-  Form,
   Link,
   data,
   redirect,
@@ -18,7 +17,7 @@ import { cognito, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import { Separator } from "components/Separator";
-import { Input, PasswordInput } from "components/form";
+import { Input, PasswordInput, RmxForm } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
@@ -104,9 +103,8 @@ export default function Signin() {
         <p className="text-center font-normal max-sm:text-sm mt-2">
           Log in to support 18000+ causes or register and manage your nonprofit.
         </p>
-        <Form method="POST" className="contents">
+        <RmxForm disabled={isSubmitting} method="POST" className="contents">
           <button
-            disabled={isSubmitting}
             name="intent"
             value="oauth"
             type="submit"
@@ -117,11 +115,16 @@ export default function Signin() {
               Continue with Google
             </span>
           </button>
-        </Form>
+        </RmxForm>
         <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
           OR
         </Separator>
-        <Form method="POST" {...getFormProps(form)} className="grid gap-3">
+        <RmxForm
+          method="POST"
+          disabled={isSubmitting}
+          {...getFormProps(form)}
+          className="grid gap-3"
+        >
           <Input
             {...getInputProps(fields.email, { type: "text" })}
             placeholder="Email address"
@@ -140,7 +143,7 @@ export default function Signin() {
           >
             Forgot password?
           </Link>
-        </Form>
+        </RmxForm>
         <button
           disabled={isSubmitting}
           form={form.id}
