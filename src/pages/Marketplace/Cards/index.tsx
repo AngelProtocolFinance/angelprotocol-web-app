@@ -33,7 +33,7 @@ export default function Cards({ classes = "", firstPage }: Props) {
     return <Info>No organisations found</Info>;
   }
 
-  const nextPage = next(data) || next(firstPage);
+  const nextPage = data ? next(data) : next(firstPage);
 
   function loadNext(nextPage: number) {
     const n = new URLSearchParams(params);
