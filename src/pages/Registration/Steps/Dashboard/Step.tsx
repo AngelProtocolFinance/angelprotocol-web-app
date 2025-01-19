@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import type { RegStep } from "pages/Registration/types";
 
 type TStep = Exclude<RegStep, 6>; // exclude summary step
@@ -23,13 +23,13 @@ export default function Step({
 
       <p className="text-green font-semibold max-sm:row-start-2">{status}</p>
 
-      <Link
+      <NavLink
         to={`../${num}`}
         className="min-w-[8rem] ml-6 max-sm:row-span-2 btn-outline-filled btn-reg"
         aria-disabled={disabled}
       >
         Update
-      </Link>
+      </NavLink>
     </div>
   );
 }
