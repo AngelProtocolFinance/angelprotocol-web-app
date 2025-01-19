@@ -1,6 +1,6 @@
 import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
-  Link,
+  NavLink,
   useFetcher,
   useNavigate,
   useSearchParams,
@@ -51,13 +51,13 @@ function Content({ isDefault, isWithHeir }: Props) {
         <p className="sm:text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
           Delete payout method
         </p>
-        <Link
+        <NavLink
           to=".."
           aria-disabled={isSubmitting}
-          className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 aria-disabled:text-navy-l5"
+          className="[&:is(.pending)]:text-gray border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 aria-disabled:text-navy-l5"
         >
           <X className="text-lg sm:text-2xl" />
-        </Link>
+        </NavLink>
       </div>
       <CircleAlert size={80} className="mt-6 text-red" />
 
@@ -70,14 +70,14 @@ function Content({ isDefault, isWithHeir }: Props) {
           method="DELETE"
           className="p-3 sm:px-8 sm:py-4 flex items-center justify-end gap-4 w-full text-center sm:text-right bg-blue-l5 dark:bg-blue-d7 border-t border-gray-l4"
         >
-          <Link
+          <NavLink
             to=".."
             aria-disabled={isSubmitting}
             type="button"
             className="btn-outline-filled text-sm px-8 py-2"
           >
             Cancel
-          </Link>
+          </NavLink>
           <button
             disabled={isSubmitting}
             type="submit"

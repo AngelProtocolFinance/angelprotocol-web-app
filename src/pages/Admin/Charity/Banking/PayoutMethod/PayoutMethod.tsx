@@ -1,4 +1,4 @@
-import { Link, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
+import { NavLink, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import type { BankDetails } from "api/get/payout-method";
 import ExtLink from "components/ExtLink";
 import { useActionResult } from "hooks/use-action-result";
@@ -80,13 +80,13 @@ export default function PayoutMethod() {
         method="POST"
         className="flex max-sm:flex-col gap-1 sm:gap-3 mt-4 sm:justify-self-end"
       >
-        <Link
+        <NavLink
           to={"../banking"}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           replace
           preventScrollReset
           to={{
@@ -99,7 +99,7 @@ export default function PayoutMethod() {
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
         >
           delete
-        </Link>
+        </NavLink>
         <button
           disabled={fetcher.state === "submitting" || isDefault || !isApproved}
           type="submit"

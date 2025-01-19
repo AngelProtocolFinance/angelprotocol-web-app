@@ -13,8 +13,8 @@ export function Layout({ children }: PropsWithChildren<{ classes?: string }>) {
         <meta charSet="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="icon" href="/favicon.ico" />
-        <Links />
         <Meta />
+        <Links />
         <style />
       </head>
       <body className="grid min-h-screen grid-rows-[1fr_0]">
