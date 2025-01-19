@@ -29,9 +29,9 @@ export default function SearchDropdown({
           <h4 className="mb-4">Top categories</h4>
           <div className="flex flex-wrap gap-2">
             {Object.entries(categories).map(([, v]) => (
-              <Link
+              <NavLink
                 key={v.name}
-                className="border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
+                className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
                 to={{
                   pathname: appRoutes.marketplace,
                   search: new URLSearchParams({
@@ -40,7 +40,7 @@ export default function SearchDropdown({
                 }}
               >
                 {v.name}
-              </Link>
+              </NavLink>
             ))}
           </div>
           <h4 className="mb-4 mt-8">Top countries</h4>
