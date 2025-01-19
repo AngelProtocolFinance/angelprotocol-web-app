@@ -45,7 +45,7 @@ export default function Header({ classes }: Props) {
           classes="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         />
         <div className="flex gap-2 md:gap-4 justify-self-end items-center">
-          {!isInAuth && <UserMenu />}
+          <UserMenu classes="max-sm:hidden" />
           <NavDropdown isInAuth={isInAuth} user={user} />
         </div>
       </div>
