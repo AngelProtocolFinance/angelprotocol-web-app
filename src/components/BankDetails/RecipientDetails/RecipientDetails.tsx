@@ -66,7 +66,7 @@ function RecipientDetails({
       </div>
 
       <RecipientDetailsForm
-        disabled={disabled || isValidating}
+        disabled={disabled}
         quoteId={req.data?.quoteId ?? ""}
         type={requirements[reqIdx].type}
         currency={currency}
