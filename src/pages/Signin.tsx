@@ -1,10 +1,12 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import {
+  Form,
   Link,
   data,
   redirect,
-  useFetcher,
+  useActionData,
   useLoaderData,
+  useNavigation,
 } from "@remix-run/react";
 import type {
   ActionFunction,
@@ -78,8 +80,9 @@ export const meta: MetaFunction = () =>
   metas({ title: "Login - Better Giving" });
 
 export default function Signin() {
-  const fetcher = useFetcher<ActionData<any>>();
-  const formErr = useActionResult(fetcher.data);
+  const { state } = useNavigation();
+  const data = useActionData<ActionData<any>>();
+  const formErr = useActionResult(data);
   const to = useLoaderData<string>();
 
   const [form, fields] = useForm({
@@ -90,7 +93,7 @@ export default function Signin() {
     },
   });
 
-  const isSubmitting = fetcher.state === "submitting";
+  const isSubmitting = state !== "idle";
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
@@ -101,8 +104,9 @@ export default function Signin() {
         <p className="text-center font-normal max-sm:text-sm mt-2">
           Log in to support 18000+ causes or register and manage your nonprofit.
         </p>
-        <fetcher.Form method="POST" className="contents">
+        <Form method="POST" className="contents">
           <button
+            disabled={isSubmitting}
             name="intent"
             value="oauth"
             type="submit"
@@ -113,15 +117,11 @@ export default function Signin() {
               Continue with Google
             </span>
           </button>
-        </fetcher.Form>
+        </Form>
         <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
           OR
         </Separator>
-        <fetcher.Form
-          method="POST"
-          {...getFormProps(form)}
-          className="grid gap-3"
-        >
+        <Form method="POST" {...getFormProps(form)} className="grid gap-3">
           <Input
             {...getInputProps(fields.email, { type: "text" })}
             placeholder="Email address"
@@ -140,7 +140,7 @@ export default function Signin() {
           >
             Forgot password?
           </Link>
-        </fetcher.Form>
+        </Form>
         <button
           disabled={isSubmitting}
           form={form.id}
