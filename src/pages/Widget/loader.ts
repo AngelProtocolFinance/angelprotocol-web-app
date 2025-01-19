@@ -1,10 +1,10 @@
 import type { Endow } from "@better-giving/endowment";
 import type { LoaderFunction } from "@vercel/remix";
-import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
-import type { EndowOptionsPage, EndowmentOption } from "types/aws";
+import type { EndowmentOption } from "types/aws";
 import * as v from "valibot";
+import { getNpos } from ".server/get-npos";
 
 export interface WidgetData {
   origin: string;
@@ -28,18 +28,15 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   const routeEndowId = v.parse(v.optional(plusInt), params.id);
   const id = selectedId ?? routeEndowId;
 
+  const endowsPage = getNpos({
+    query: url.searchParams.get("query") ?? "",
+    page: 1,
+    fields: ["id", "name"],
+  });
+
   return {
     origin: url.origin,
     endow: id ? await getEndow(id) : undefined,
-    endows: await getEndows(url.searchParams.get("query") ?? ""),
+    endows: await endowsPage.then((page) => page.items),
   } satisfies WidgetData;
 };
-
-async function getEndows(query: string) {
-  return ap
-    .get<EndowOptionsPage>(`${ver(1)}/cloudsearch-nonprofits`, {
-      searchParams: { page: 1, fields: "id,name", query },
-    })
-    .json()
-    .then((data) => data.items);
-}

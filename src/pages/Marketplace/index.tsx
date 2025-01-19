@@ -1,27 +1,31 @@
+import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
-import { ap, ver } from "api/api";
+import { type LoaderFunction, type MetaFunction, data } from "@vercel/remix";
 import hero from "assets/images/hero.webp?url";
 import { metas } from "helpers/seo";
 import type { EndowCardsPage } from "types/aws";
+import { safeParse } from "valibot";
 import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
+import { cacheControl, getNpos } from ".server/get-npos";
 
 export const loader: LoaderFunction = async ({ request }) => {
-  const source = new URL(request.url);
-  const page = +(source.searchParams.get("page") ?? "1");
-  const q = source.searchParams.get("query") ?? "";
-  const s = new URLSearchParams(source.searchParams);
-  s.set("page", page.toString());
-  s.set("query", q);
+  const url = new URL(request.url);
+  const params = safeParse(
+    endowsQueryParams,
+    Object.fromEntries(url.searchParams)
+  );
 
-  return ap
-    .get(`${ver(1)}/cloudsearch-nonprofits`, {
-      searchParams: s,
-    })
-    .json();
+  if (params.issues) {
+    return { status: 400, body: params.issues[0].message };
+  }
+
+  const page = await getNpos(params.output);
+  return data(page, {
+    headers: { "Cache-Control": cacheControl },
+  });
 };
 
 export const meta: MetaFunction = () =>

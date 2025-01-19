@@ -1,7 +1,6 @@
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
-import { ap, ver } from "api/api";
+import { type LoaderFunction, type MetaFunction, data } from "@vercel/remix";
 import { metas } from "helpers/seo";
-import type { EndowCardsPage } from "types/aws";
+import { cacheControl, getNpos } from ".server/get-npos";
 
 export { default } from "./DonorInfo";
 
@@ -13,10 +12,6 @@ export const meta: MetaFunction = () =>
   });
 
 export const loader: LoaderFunction = async () => {
-  return ap
-    .get<EndowCardsPage>(`${ver(1)}/cloudsearch-nonprofits`, {
-      searchParams: { page: 1, claimed: true, query: "" },
-    })
-    .json()
-    .then((data) => data.items);
+  const page = await getNpos({ page: 1, claimed: [true], query: "" });
+  return data(page.items, { headers: { "Cache-Control": cacheControl } });
 };
