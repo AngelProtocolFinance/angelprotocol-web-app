@@ -22,6 +22,8 @@ export const headers: HeadersFunction = () => ({
   "Cache-Control": "s-max-age=30, stale-while-revalidate=60",
 });
 
+export const config = { runtime: "edge" };
+
 export const loader: LoaderFunction = async ({ params }) => {
   const [post] = await wp
     .get<Wordpress.Post[]>(`posts?slug=${params.slug}`)

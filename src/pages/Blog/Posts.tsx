@@ -15,6 +15,7 @@ import { metas } from "helpers/seo";
 import { useEffect, useState } from "react";
 import type { Wordpress } from "types/wordpress";
 
+export const config = { runtime: "edge" };
 export const headers: HeadersFunction = () => ({
   "Cache-Control": "s-max-age=30, stale-while-revalidate=60",
 });
