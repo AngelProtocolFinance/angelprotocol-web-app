@@ -3238,6 +3238,7 @@ __metadata:
     react-helmet: "npm:6.1.0"
     react-hook-form: "npm:7.53.0"
     react-player: "npm:2.16.0"
+    remix-client-cache: "npm:1.1.0"
     sonner: "npm:1.7.0"
     swr: "npm:2.2.5"
     tailwindcss: "npm:3.4.3"
@@ -8156,6 +8157,17 @@ __metadata:
     mdast-util-to-hast: "npm:^12.1.0"
     unified: "npm:^10.0.0"
   checksum: 10/cf765b639d16872404b50d5945df0ba825d14f1150397dde804e7d9e2e856a7b7343c4dc3796c85e7c18ca84f3c989bd40e476bd194fc00a5a870e8a64ec30d9
+  languageName: node
+  linkType: hard
+
+"remix-client-cache@npm:1.1.0":
+  version: 1.1.0
+  resolution: "remix-client-cache@npm:1.1.0"
+  peerDependencies:
+    "@remix-run/react": ^2.5.0
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: 10/425868f32c994bdebcc0f581e555fa20176fbae59f355ec8af0b950abd35f8d3292afdd83398f84a6ed624afd18eabcf9e5126943e5bd75a86a2a26a7253dc1d
   languageName: node
   linkType: hard
 
