@@ -14,7 +14,7 @@ type Endow = Ensure<Partial<cs.CloudsearchEndow>, "contributions_total">;
 const HITS_PER_PAGE = 20;
 
 export const cacheControl =
-  "public, max-age=0, s-max-age=300, stale-while-revalidate=60";
+  "public, max-age=0, s-max-age=30, stale-while-revalidate=60";
 
 export async function getNpos(
   params: EndowsQueryParamsParsed

@@ -1,6 +1,10 @@
 import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
 import { Outlet, useLoaderData } from "@remix-run/react";
-import { type LoaderFunction, type MetaFunction, data } from "@vercel/remix";
+import type {
+  HeadersFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
 import hero from "assets/images/hero.webp?url";
 import { metas } from "helpers/seo";
 import type { EndowCardsPage } from "types/aws";
@@ -11,6 +15,9 @@ import Hero from "./Hero";
 import Toolbar from "./Toolbar";
 import { cacheControl, getNpos } from ".server/get-npos";
 
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": cacheControl,
+});
 export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const params = safeParse(
@@ -23,9 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   }
 
   const page = await getNpos(params.output);
-  return data(page, {
-    headers: { "Cache-Control": cacheControl },
-  });
+  return page;
 };
 
 export const meta: MetaFunction = () =>
