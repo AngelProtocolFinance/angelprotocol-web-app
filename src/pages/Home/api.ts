@@ -1,5 +1,10 @@
-import { type LoaderFunction, data } from "@vercel/remix";
+import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
 import { cacheControl, getNpos } from ".server/get-npos";
+
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": cacheControl,
+});
+
 export const loader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);
   const page1 = await getNpos({
@@ -7,8 +12,5 @@ export const loader: LoaderFunction = async ({ request }) => {
     page: 1,
     fund_opt_in: [true],
   });
-
-  return data(page1, {
-    headers: { "Cache-Control": cacheControl },
-  });
+  return page1;
 };
