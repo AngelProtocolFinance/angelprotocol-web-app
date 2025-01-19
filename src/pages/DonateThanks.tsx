@@ -1,4 +1,9 @@
-import { Link, useOutletContext, useSearchParams } from "@remix-run/react";
+import {
+  Link,
+  NavLink,
+  useOutletContext,
+  useSearchParams,
+} from "@remix-run/react";
 import char from "assets/images/celebrating-character.webp";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
@@ -52,12 +57,12 @@ export default function DonateThanks() {
             My Donations
           </ExtLink>
         ) : (
-          <Link
+          <NavLink
             to={`${appRoutes.user_dashboard}/donations`}
-            className="text-blue"
+            className="text-blue [&:is(.pending)]:text-gray"
           >
             My Donations page
-          </Link>
+          </NavLink>
         )}{" "}
       </p>
 
