@@ -4,6 +4,7 @@ import { useNavigate } from "@remix-run/react";
 import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
+import { ErrorBoundaryClass } from "components/error";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
@@ -12,7 +13,6 @@ import {
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";
-import ErrorBoundary from "errors/ErrorBoundary";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
@@ -127,7 +127,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           : undefined
       }
     >
-      <ErrorBoundary>
+      <ErrorBoundaryClass>
         <Form className="grid grid-cols-2 gap-x-4 mt-4">
           <CheckField {...register("coverFee")} classes="col-span-full">
             Cover payment processing fees for your donation{" "}
@@ -329,7 +329,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
             }
           }}
         />
-      </ErrorBoundary>
+      </ErrorBoundaryClass>
       <ContentLoader className="h-12 mt-4 block group-has-[chariot-connect]:hidden" />
       <DonationTerms
         endowName={props.init.recipient.name}

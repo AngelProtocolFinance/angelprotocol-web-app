@@ -12,7 +12,7 @@ type Props = PropsWithChildren<{ fallback?: ReactNode }>;
 type State = { error: Error | undefined };
 
 // https://reactjs.org/docs/error-boundaries.html#introducing-error-boundaries
-export default class ErrorBoundary extends Component<Props, State> {
+export class ErrorBoundary extends Component<Props, State> {
   state: State = {
     error: undefined,
   };

@@ -1,6 +1,6 @@
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
+import { ErrorTrigger } from "components/error";
 import { PAYPAL_CLIENT_ID } from "constants/env";
-import ErrorTrigger from "errors/ErrorTrigger";
 import type { StripeCheckoutStep } from "../../../types";
 import Checkout from "./Checkout";
 
