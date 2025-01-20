@@ -10,6 +10,7 @@ import { useAdminContext } from "../../../Admin/Context";
 import FormButtons from "./FormButtons";
 
 export { newBanking as action } from "./new-banking-action";
+export { ErrorBoundary } from "components/error";
 export default function Banking() {
   const { id: endowment_id } = useAdminContext();
 

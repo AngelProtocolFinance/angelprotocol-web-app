@@ -1,5 +1,4 @@
-import { Outlet, useLocation } from "@remix-run/react";
-import ErrorBoundary from "errors/ErrorBoundary";
+import { Outlet } from "@remix-run/react";
 import type { ReactNode } from "react";
 import Sidebar, { SidebarOpener } from "./Sidebar";
 import type { LinkGroup } from "./Sidebar/types";
@@ -17,7 +16,6 @@ export default function Layout({
   rootRoute,
   context,
 }: DashboardLayoutProps) {
-  const { key } = useLocation();
   return (
     <div className="grid max-md:content-start md:grid-cols-[auto_1fr]">
       <SidebarOpener
@@ -32,9 +30,9 @@ export default function Layout({
       />
       {/** views */}
       <div className="px-6 py-8 md:p-10 @container">
-        <ErrorBoundary key={key}>
-          <Outlet context={context} />
-        </ErrorBoundary>
+        {/* <ErrorBoundaryClass key={key}> */}
+        <Outlet context={context} />
+        {/* </ErrorBoundaryClass> */}
       </div>
     </div>
   );

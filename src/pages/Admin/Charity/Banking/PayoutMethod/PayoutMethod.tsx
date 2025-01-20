@@ -11,6 +11,7 @@ export {
   payoutMethodLoader as loader,
   prioritizeAction as action,
 } from "./api";
+export { ErrorBoundary } from "components/error";
 export default function PayoutMethod() {
   const bank = useLoaderData() as BankDetails;
   const fetcher = useFetcher();

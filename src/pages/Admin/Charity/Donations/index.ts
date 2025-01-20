@@ -7,7 +7,7 @@ import { cacheClientLoader } from "remix-client-cache";
 import * as v from "valibot";
 
 export { default } from "./Donations";
-
+export { ErrorBoundary } from "components/error";
 export const clientLoader: ClientLoaderFunction = (args) =>
   cacheClientLoader(args);
 clientLoader.hydrate = true;

@@ -4,6 +4,7 @@ import { BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
 
 export { default } from "./DonateWidget";
+export { ErrorBoundary } from "components/error";
 export { loader } from "api/donate-loader";
 
 export const meta: MetaFunction = ({ data, location: l }) => {

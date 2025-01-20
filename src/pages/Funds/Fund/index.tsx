@@ -38,6 +38,7 @@ export const meta: MetaFunction = ({ data, location: l }) => {
     url: `${BASE_URL}/${l.pathname}`,
   });
 };
+export { ErrorBoundary } from "components/error";
 export default function Fund() {
   const fund = useLoaderData() as SingleFund;
 

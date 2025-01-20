@@ -13,6 +13,7 @@ import { richTextStyles } from "components/RichText";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { isError } from "types/auth";
 
+export { ErrorBoundary } from "components/error";
 export { default } from "./CreateFund";
 export const links: LinksFunction = () => [
   ...richTextStyles,

@@ -35,6 +35,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const meta: MetaFunction = () =>
   metas({ title: "Blog - Better Giving", description: "Checkout the latest" });
 
+export { ErrorBoundary } from "components/error";
 export default function Posts() {
   const [params] = useSearchParams();
   const { data, state, load } = useFetcher<Wordpress.PostPage>();

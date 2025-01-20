@@ -37,6 +37,8 @@ export const meta: MetaFunction = ({ data }: any) => {
   return metas({ title: data.slug });
 };
 
+export { ErrorBoundary } from "components/error";
+
 export default function Post() {
   const post = useLoaderData() as IPost;
 

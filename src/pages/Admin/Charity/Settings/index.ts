@@ -3,6 +3,7 @@ import { getEndow } from "api/get/endow";
 import type { EndowmentSettingsAttributes } from "types/aws";
 import { endowUpdate } from "../endow-update-action";
 export { default } from "./Form";
+export { ErrorBoundary } from "components/error";
 
 const fields: EndowmentSettingsAttributes[] = [
   "receiptMsg",

@@ -3,7 +3,8 @@ import InitForm from "./InitForm";
 import SetPasswordForm from "./SetPasswordForm";
 import Success from "./Success";
 import type { LoaderData } from "./types";
-
+export { loader, action } from "./api";
+export { ErrorBoundary } from "components/error";
 export default function ResetPassword() {
   const { redirect, step } = useLoaderData<LoaderData>();
 

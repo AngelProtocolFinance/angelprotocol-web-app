@@ -15,12 +15,13 @@ const rmx = remix({
   },
   routes(defineRoutes) {
     return defineRoutes((r) => {
-      r("", "./pages/Home/Home.tsx", { index: true });
-      r("donate/:id", "./pages/Donate/index.tsx");
-      r("donate-fund/:fundId", "./pages/donate-fund/index.tsx");
-      r("donate-thanks", "./pages/DonateThanks.tsx");
+      r("", "./pages/Home/Home.tsx", { index: true }); //
+      r("donate/:id", "./pages/Donate/index.tsx"); //
+      r("donate-fund/:fundId", "./pages/donate-fund/index.tsx"); //
+      r("donate-thanks", "./pages/DonateThanks.tsx"); //
       r("form-builder", "./pages/Widget/form-builder-layout.tsx", () => {
         r("", "./pages/Widget/index.ts", {
+          //
           index: true,
           id: "public-form-builder",
         });
@@ -28,121 +29,122 @@ const rmx = remix({
       // no robots
       r("admin/:id", "./pages/Admin/layout.tsx", () => {
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
-        r("donations", "./pages/Admin/Charity/Donations/index.ts");
-        r("programs", "./pages/Admin/Charity/Programs/index.ts");
-        r("funds", "./pages/Admin/Charity/Funds/index.ts");
+        r("donations", "./pages/Admin/Charity/Donations/index.ts"); //
+        r("programs", "./pages/Admin/Charity/Programs/index.ts"); //
+        r("funds", "./pages/Admin/Charity/Funds/index.ts"); //
         r(
-          "program-editor/:programId",
+          "program-editor/:programId", //
           "./pages/Admin/Charity/ProgramEditor/index.ts"
         );
         r("members", "./pages/Admin/Charity/Members/Members.tsx", () => {
-          r("add", "./pages/Admin/Charity/Members/AddForm.tsx");
+          //
+          r("add", "./pages/Admin/Charity/Members/AddForm.tsx"); //
         });
-        r("settings", "./pages/Admin/Charity/Settings/index.ts");
-        r("edit-profile", "./pages/Admin/Charity/EditProfile/index.tsx");
-        r("banking", "./pages/Admin/Charity/Banking/PayoutMethods/index.ts");
-        r("banking/new", "./pages/Admin/Charity/Banking/Banking.tsx");
+        r("settings", "./pages/Admin/Charity/Settings/index.ts"); //
+        r("edit-profile", "./pages/Admin/Charity/EditProfile/index.tsx"); //
+        r("banking", "./pages/Admin/Charity/Banking/PayoutMethods/index.ts"); //
+        r("banking/new", "./pages/Admin/Charity/Banking/Banking.tsx"); //
         r(
           "banking/:bankId",
-          "./pages/Admin/Charity/Banking/PayoutMethod/PayoutMethod.tsx",
+          "./pages/Admin/Charity/Banking/PayoutMethod/PayoutMethod.tsx", //
           () => {
             r(
               "delete",
-              "./pages/Admin/Charity/Banking/PayoutMethod/DeletePrompt.tsx"
+              "./pages/Admin/Charity/Banking/PayoutMethod/DeletePrompt.tsx" //
             );
           }
         );
-        r("form-builder", "./pages/Widget/index.ts", {
+        r("form-builder", "./pages/Widget/index.ts", { //
           id: "admin-form-builder",
         });
-        r("media", "./pages/Admin/Charity/Media/Media.tsx", () => {
-          r("new", "./pages/Admin/Charity/Media/video-new.ts", {
+        r("media", "./pages/Admin/Charity/Media/Media.tsx", () => {//
+          r("new", "./pages/Admin/Charity/Media/video-new.ts", { //
             id: "media-new",
           });
-          r(":mediaId", "./pages/Admin/Charity/Media/video-edit.ts", {
+          r(":mediaId", "./pages/Admin/Charity/Media/video-edit.ts", { //
             id: "media-edit",
           });
         });
-        r("media/videos", "./pages/Admin/Charity/Media/Videos/index.ts", () => {
-          r("new", "./pages/Admin/Charity/Media/video-new.ts", {
+        r("media/videos", "./pages/Admin/Charity/Media/Videos/index.ts", () => { //
+          r("new", "./pages/Admin/Charity/Media/video-new.ts", { //
             id: "videos-new",
           });
-          r(":mediaId", "./pages/Admin/Charity/Media/video-edit.ts", {
+          r(":mediaId", "./pages/Admin/Charity/Media/video-edit.ts", { //
             id: "videos-edit",
           });
         });
         r(
           "dashboard",
-          "./pages/Admin/Charity/Dashboard/Dashboard.tsx",
+          "./pages/Admin/Charity/Dashboard/Dashboard.tsx", //
           { id: "dashboard" },
           () => {
             r(
               "edit-alloc",
-              "./pages/Admin/Charity/Dashboard/Schedule/Edit.tsx"
+              "./pages/Admin/Charity/Dashboard/Schedule/Edit.tsx" //
             );
-            r("move-funds", "./pages/Admin/Charity/Dashboard/MoveFundForm.tsx");
+            r("move-funds", "./pages/Admin/Charity/Dashboard/MoveFundForm.tsx"); //
           }
         );
       });
       r("", "./App/Layout.tsx", () => {
-        r("login", "./pages/Signin.tsx");
+        r("login", "./pages/Signin.tsx"); //
         r("signup", "./pages/SignUp/layout.tsx", () => {
-          r("", "./pages/SignUp/SignupForm/index.ts", { index: true });
-          r("confirm", "./pages/SignUp/confirm-form/index.ts");
-          r("success", "./pages/SignUp/Success.tsx");
+          r("", "./pages/SignUp/SignupForm/SignupForm.tsx", { index: true }); //
+          r("confirm", "./pages/SignUp/confirm-form/ConfirmForm.tsx"); //
+          r("success", "./pages/SignUp/Success.tsx"); //
         });
-        r("login/reset", "./pages/ResetPassword/index.ts");
+        r("login/reset", "./pages/ResetPassword/ResetPassword.tsx"); //
         // no robots
         r("dashboard", "./pages/UserDashboard/layout.tsx", () => {
-          r("", "./pages/UserDashboard/index-route.ts", { index: true });
-          r("edit-profile", "./pages/UserDashboard/EditProfile/index.ts");
-          r("settings", "./pages/UserDashboard/Settings/Settings.tsx");
-          r("donations", "./pages/UserDashboard/Donations/index.tsx", () => {
-            r(":id", "./components/KYCForm/index.tsx");
+          r("", "./pages/UserDashboard/index-route.ts", { index: true }); //
+          r("edit-profile", "./pages/UserDashboard/EditProfile/index.ts"); //
+          r("settings", "./pages/UserDashboard/Settings/Settings.tsx");//
+          r("donations", "./pages/UserDashboard/Donations/index.tsx", () => { //
+            r(":id", "./components/KYCForm/index.tsx"); //
           });
-          r("funds", "./pages/UserDashboard/Funds/index.ts");
+          r("funds", "./pages/UserDashboard/Funds/index.ts"); //
         });
         r("logout", "./pages/logout.ts");
         r("nonprofit", "./pages/informational/NonprofitInfo/index.ts");
         r("donor", "./pages/informational/DonorInfo/index.ts");
         r("wp-plugin", "./pages/informational/WpPlugin.tsx");
         r("about", "./pages/informational/about/index.tsx");
-        r("blog", "./pages/Blog/Posts.tsx");
-        r("blog/:slug", "./pages/Blog/Post.tsx");
-        r("marketplace", "./pages/Marketplace/index.tsx", () => {
-          r("filter", "./pages/Marketplace/Filter/index.ts");
+        r("blog", "./pages/Blog/Posts.tsx"); //
+        r("blog/:slug", "./pages/Blog/Post.tsx"); //
+        r("marketplace", "./pages/Marketplace/index.tsx", () => { //
+          r("filter", "./pages/Marketplace/Filter/index.ts"); //
         });
-        r("marketplace/:id", "./pages/Profile/Profile.tsx", () => {
-          r("", "./pages/Profile/Body/Body.tsx", () => {
-            r("", "./pages/Profile/Body/GeneralInfo/index.ts", {
+        r("marketplace/:id", "./pages/Profile/Profile.tsx", () => { //
+          r("", "./pages/Profile/Body/Body.tsx", () => { 
+            r("", "./pages/Profile/Body/GeneralInfo/index.ts", { //
               index: true,
             });
-            r("program/:programId", "./pages/Profile/Body/Program/index.ts");
+            r("program/:programId", "./pages/Profile/Body/Program/index.ts"); //
           });
         });
-        r("funds", "./pages/Funds/Funds.tsx");
-        r("funds/:fundId", "./pages/Funds/Fund/index.tsx");
-        r("funds/:fundId/edit", "./pages/Funds/EditFund/index.ts");
-        r("funds/new", "./pages/Funds/CreateFund/index.ts");
+        r("funds", "./pages/Funds/Funds.tsx"); //
+        r("funds/:fundId", "./pages/Funds/Fund/index.tsx"); //
+        r("funds/:fundId/edit", "./pages/Funds/EditFund/index.ts"); //
+        r("funds/new", "./pages/Funds/CreateFund/index.ts"); //
         r("privacy-policy", "./pages/Legal/PrivacyPolicy.tsx");
         r("terms-of-use-npo", "./pages/Legal/TermsNonprofits.tsx");
         r("terms-of-use", "./pages/Legal/TermsDonors.tsx");
         // no robots
-        r("banking-applications", "./pages/BankingApplications/index.ts");
+        r("banking-applications", "./pages/BankingApplications/index.ts"); //
         r(
-          "banking-applications/:id",
+          "banking-applications/:id", //
           "./pages/BankingApplication/BankingApplication.tsx",
           () => {
-            r("approve", "./pages/BankingApplication/verdict-approve.tsx");
-            r("reject", "./pages/BankingApplication/verdict-reject.tsx");
+            r("approve", "./pages/BankingApplication/verdict-approve.tsx"); //
+            r("reject", "./pages/BankingApplication/verdict-reject.tsx"); //
             r("success", "./pages/BankingApplication/success-prompt.tsx");
           }
         );
         r("register", "./pages/Registration/layout.tsx", () => {
-          r("", "./pages/Registration/Signup/index.ts", { index: true });
+          r("", "./pages/Registration/Signup/index.ts", { index: true }); //
           r("success", "./pages/Registration/Success.tsx");
-          r("welcome", "./pages/Registration/Welcome.tsx");
-          r("resume", "./pages/Registration/Resume/Form.tsx");
+          r("welcome", "./pages/Registration/Welcome.tsx"); //
+          r("resume", "./pages/Registration/Resume/Form.tsx"); //
           r(
             ":regId",
             "./pages/Registration/Steps/layout.ts",
@@ -153,18 +155,18 @@ const rmx = remix({
                 r("", "./pages/Registration/Steps/steps-index.ts", {
                   index: true,
                 });
-                r("1", "./pages/Registration/Steps/ContactDetails/index.tsx");
-                r("2", "./pages/Registration/Steps/OrgDetails/index.tsx");
-                r("3", "./pages/Registration/Steps/FSAInquiry/index.ts");
+                r("1", "./pages/Registration/Steps/ContactDetails/index.tsx"); //
+                r("2", "./pages/Registration/Steps/OrgDetails/index.tsx"); //
+                r("3", "./pages/Registration/Steps/FSAInquiry/index.ts"); //
                 r(
                   "4",
-                  "./pages/Registration/Steps/Documentation/index.ts",
+                  "./pages/Registration/Steps/Documentation/index.ts", //
                   () => {
-                    r("fsa", "./pages/Registration/data/fsa-action.ts");
+                    r("fsa", "./pages/Registration/data/fsa-action.ts"); //
                   }
                 );
-                r("5", "./pages/Registration/Steps/Banking/index.ts");
-                r("6", "./pages/Registration/Steps/Dashboard/index.tsx");
+                r("5", "./pages/Registration/Steps/Banking/index.ts"); //
+                r("6", "./pages/Registration/Steps/Dashboard/index.tsx"); //
               });
             }
           );

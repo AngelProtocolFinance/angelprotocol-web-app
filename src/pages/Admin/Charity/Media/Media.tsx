@@ -7,6 +7,8 @@ export {
   featuredMedia as loader,
   videosAction as action,
 } from "./api";
+
+export { ErrorBoundary } from "components/error";
 export default function Media() {
   const featuredPage = useLoaderData() as MediaPage;
 

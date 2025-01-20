@@ -3,6 +3,7 @@ import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { cognito, redirectToAuth } from "auth";
 export { default } from "./Prompt";
+export { ErrorModal as ErrorBoundary } from "components/error";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);

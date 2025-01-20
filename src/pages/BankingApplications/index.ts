@@ -5,6 +5,7 @@ import { metas } from "helpers/seo";
 import type { UserV2 } from "types/auth";
 
 export { default } from "./BankingApplications";
+export { ErrorBoundary } from "components/error";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);

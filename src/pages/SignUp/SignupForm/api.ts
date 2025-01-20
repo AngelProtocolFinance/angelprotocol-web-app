@@ -4,8 +4,6 @@ import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { isError, signUp } from "types/auth";
 
-export { default } from "./SignupForm";
-export { loader } from "../loader";
 export const action: ActionFunction = async ({ request }) => {
   const from = new URL(request.url);
   const fv = await request.formData();

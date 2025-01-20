@@ -5,6 +5,7 @@ import { cognito, redirectToAuth } from "auth";
 import type { UserV2 } from "types/auth";
 
 export { default } from "./Applications";
+export { ErrorBoundary } from "components/error";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);

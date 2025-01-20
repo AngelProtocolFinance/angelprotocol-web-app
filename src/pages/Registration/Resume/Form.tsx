@@ -35,6 +35,7 @@ export const action: ActionFunction = async ({ request }) => {
   return redirect(`../${data.init.id}/${nextStep[step]}`);
 };
 
+export { ErrorBoundary } from "components/error";
 export default function Form({ classes = "" }: { classes?: string }) {
   const prev = useLoaderData();
   const fetcher = useFetcher();

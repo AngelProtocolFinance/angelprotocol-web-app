@@ -12,6 +12,8 @@ export {
   dashboardData as loader,
   endowUpdateAction as action,
 } from "./api";
+
+export { ErrorBoundary } from "components/error";
 export default function Dashboard() {
   const { alloc, bal } = useCachedLoaderData() as DashboardData;
   const period = monthPeriod();

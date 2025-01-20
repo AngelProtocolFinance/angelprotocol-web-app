@@ -40,6 +40,7 @@ interface IMoveFundForm {
 }
 
 export { moveFundAction as action } from "./move-fund-action";
+export { ErrorModal as ErrorBoundary } from "components/error";
 export default function MoveFundForm() {
   const [params] = useSearchParams();
   const navigate = useNavigate();

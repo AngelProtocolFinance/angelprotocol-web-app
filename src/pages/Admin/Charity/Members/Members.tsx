@@ -1,6 +1,7 @@
 import List from "./List";
 
 export { members as loader, deleteAction as action } from "./api";
+export { ErrorBoundary } from "components/error";
 export default function Members() {
   return (
     <div className="grid content-start gap-y-6 @lg:gap-y-8 @container">

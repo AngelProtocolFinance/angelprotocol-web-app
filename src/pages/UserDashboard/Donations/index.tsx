@@ -17,6 +17,7 @@ import Table from "./Table";
 import type { DonationsData } from "./donations-loader";
 
 export { loader } from "./donations-loader";
+export { ErrorBoundary } from "components/error";
 
 export default function Donations() {
   const [params, setParams] = useSearchParams();

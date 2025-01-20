@@ -9,6 +9,8 @@ import type { ActionData } from "./types";
 
 const MAX_TIME = 30;
 
+export { loader, action } from "./api";
+export { ErrorBoundary } from "components/error";
 export default function ConfirmForm() {
   const email = useLoaderData() as string;
   const fetcher = useFetcher<ActionData>();

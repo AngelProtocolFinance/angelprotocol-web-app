@@ -5,7 +5,7 @@ import { cognito, redirectToAuth } from "auth";
 import { adminRoutes } from "constants/routes";
 
 export { default } from "./Programs";
-
+export { ErrorBoundary } from "components/error";
 export const loader: LoaderFunction = async ({ params }) =>
   getPrograms(params.id);
 

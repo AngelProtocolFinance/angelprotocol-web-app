@@ -21,6 +21,7 @@ export const meta: MetaFunction = ({ data }) => {
     url: `${BASE_URL}/profile/${d.id}`,
   });
 };
+export { ErrorBoundary } from "components/error";
 export default function Profile() {
   const data = useLoaderData() as Endow;
 

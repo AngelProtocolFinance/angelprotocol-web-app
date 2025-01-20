@@ -3,6 +3,7 @@ import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
 import { CircleCheck } from "lucide-react";
 export { newApplicationAction as action } from "./api";
+export { ErrorBoundary } from "components/error";
 export default function Welcome() {
   const nav = useNavigation();
   return (

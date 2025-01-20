@@ -78,6 +78,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export const meta: MetaFunction = () =>
   metas({ title: "Login - Better Giving" });
 
+export { ErrorBoundary } from "components/error";
 export default function Signin() {
   const { state } = useNavigation();
   const data = useActionData<ActionData<any>>();

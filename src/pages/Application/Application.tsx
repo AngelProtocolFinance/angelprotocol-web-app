@@ -36,6 +36,7 @@ export const meta: MetaFunction = ({ data }) => {
   });
 };
 
+export { ErrorBoundary } from "components/error";
 export default function Application() {
   const { application, user } = useLoaderData() as LoaderData;
 

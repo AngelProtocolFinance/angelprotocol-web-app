@@ -1,4 +1,4 @@
-import { Link, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
+import { NavLink, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import TableSection, { Cells } from "components/TableSection";
 import { LoaderCircle, Minus, Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
@@ -10,13 +10,13 @@ export default function List() {
 
   return (
     <div className="overflow-x-auto">
-      <Link
+      <NavLink
         className="justify-self-end btn-blue px-4 py-1.5 text-sm gap-2 mb-2"
         to="add"
       >
         <Plus size={16} />
         <span>Invite user</span>
-      </Link>
+      </NavLink>
       <Loaded members={admins} />
     </div>
   );

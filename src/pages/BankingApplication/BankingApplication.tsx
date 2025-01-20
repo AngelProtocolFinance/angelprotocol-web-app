@@ -15,6 +15,7 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   return getPayoutMethod(bankId, "bg-admin", user.idToken);
 };
 export const meta = () => metas({ title: "Banking application review" });
+export { ErrorBoundary } from "components/error";
 export default function BankingApplication() {
   const bank = useLoaderData() as BankDetails;
 

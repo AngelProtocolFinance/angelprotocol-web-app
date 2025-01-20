@@ -4,6 +4,7 @@ import { metas } from "helpers/seo";
 import type { WidgetData } from "./loader";
 
 export { default } from "./Widget";
+export { ErrorBoundary } from "components/error";
 export { loader } from "./loader";
 
 export const meta: MetaFunction = ({ data, location: loc }) => {

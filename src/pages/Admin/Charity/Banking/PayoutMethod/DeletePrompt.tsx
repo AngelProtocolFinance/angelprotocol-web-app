@@ -13,6 +13,7 @@ type Props = {
 };
 
 export { deleteAction as action } from "./api";
+export { ErrorModal as ErrorBoundary } from "components/error";
 export default function DeletePrompt() {
   const [params] = useSearchParams();
   const isDefault = params.get("default") === "true";

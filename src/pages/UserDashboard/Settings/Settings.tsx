@@ -2,7 +2,7 @@ import { useLoaderData } from "@remix-run/react";
 import EndowAlertForm from "./EndowAlertForm";
 import type { SettingsData } from "./api";
 export { loader, action } from "./api";
-
+export { ErrorBoundary } from "components/error";
 export default function Settings() {
   const { user, userEndows } = useLoaderData() as SettingsData;
   return (

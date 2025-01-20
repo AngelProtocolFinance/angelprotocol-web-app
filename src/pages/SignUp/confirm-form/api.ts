@@ -9,7 +9,6 @@ import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { isError, signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";
-export { default } from "./ConfirmForm";
 
 export const loader: LoaderFunction = async ({
   request,

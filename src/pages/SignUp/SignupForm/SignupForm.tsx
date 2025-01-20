@@ -17,6 +17,9 @@ import { Mail } from "lucide-react";
 import type { ActionData } from "types/action";
 import { signUp } from "types/auth";
 
+export { action } from "./api";
+export { loader } from "../loader";
+export { ErrorBoundary } from "components/error";
 export default function SignupForm() {
   const to = useLoaderData<string>();
   const { state } = useNavigation();

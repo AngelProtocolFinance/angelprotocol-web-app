@@ -5,7 +5,7 @@ import {
   type PropsWithChildren,
   type ReactNode,
 } from "react";
-import DefaultFallback from "./DefaultFallback";
+import { DefaultFallback } from "./DefaultFallback";
 
 type Props = PropsWithChildren<{ fallback?: ReactNode }>;
 

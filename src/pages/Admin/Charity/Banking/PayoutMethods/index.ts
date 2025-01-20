@@ -4,6 +4,7 @@ import { plusInt } from "api/schema/endow-id";
 import { cognito, redirectToAuth } from "auth";
 import { parse } from "valibot";
 export { default } from "./PayoutMethods";
+export { ErrorBoundary } from "components/error";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const id = parse(plusInt, params.id);

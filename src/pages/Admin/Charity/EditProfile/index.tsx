@@ -15,6 +15,7 @@ export const links: LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
 ];
+export { ErrorBoundary } from "components/error";
 export default function EditProfile() {
   const endow = useLoaderData() as LoaderData;
   const defaults: FV = {

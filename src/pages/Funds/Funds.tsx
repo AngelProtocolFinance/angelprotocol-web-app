@@ -22,6 +22,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     .json();
 };
 
+export { ErrorBoundary } from "components/error";
 export default function Funds() {
   const page1 = useLoaderData<FundsPage>();
   const { load } = useFetcher<FundsPage>({ key: "funds" }); //initially undefined

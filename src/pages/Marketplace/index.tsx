@@ -40,6 +40,7 @@ export const meta: MetaFunction = () =>
     image: hero,
   });
 
+export { ErrorBoundary } from "components/error";
 export default function Marketplace() {
   const page1 = useLoaderData<EndowCardsPage>();
   return (

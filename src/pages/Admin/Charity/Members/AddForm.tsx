@@ -8,6 +8,7 @@ import type { EndowAdmin } from "types/aws";
 import { schema } from "./schema";
 
 export { addAction as action } from "./api";
+export { ErrorModal as ErrorBoundary } from "components/error";
 export default function AddForm() {
   const navigate = useNavigate();
   return (

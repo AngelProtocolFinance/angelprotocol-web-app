@@ -9,7 +9,7 @@ import { cognito, redirectToAuth } from "auth";
 import { imgEditorStyles } from "components/ImgEditor";
 import { richTextStyles } from "components/RichText";
 import type { ActionData } from "types/action";
-export { ErrorElement as ErrorBoundary } from "errors/ErrorElement";
+export { ErrorBoundary } from "components/error";
 
 export { default } from "./ProgramEditor";
 export const links: LinksFunction = () => [

@@ -11,7 +11,6 @@ import { isError } from "types/auth";
 import { parse } from "valibot";
 import { emailSchema, passwordSchema } from "./schema";
 import { type LoaderData, step } from "./types";
-export { default } from "./ResetPassword";
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url);
