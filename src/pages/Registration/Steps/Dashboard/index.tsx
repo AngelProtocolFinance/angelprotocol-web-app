@@ -8,7 +8,7 @@ import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 
 export { submitAction as action } from "./submit-action";
-export { ErrorElement } from "errors/ErrorElement";
+export { ErrorBoundary } from "components/error";
 export const loader = stepLoader(6);
 
 export default function Dashboard() {

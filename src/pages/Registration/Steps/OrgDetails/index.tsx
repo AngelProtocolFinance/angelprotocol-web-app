@@ -12,7 +12,7 @@ import Form from "./Form";
 import { schema } from "./schema";
 import type { FormValues } from "./types";
 
-export { ErrorElement } from "errors/ErrorElement";
+export { ErrorBoundary } from "components/error";
 export const loader = stepLoader(2);
 export const action = updateAction(nextStep[2]);
 
