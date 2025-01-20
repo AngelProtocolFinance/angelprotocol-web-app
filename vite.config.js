@@ -29,7 +29,7 @@ const rmx = remix({
       // no robots
       r("admin/:id", "./pages/Admin/layout.tsx", () => {
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
-        r("donations", "./pages/Admin/Charity/Donations/index.ts"); 
+        r("donations", "./pages/Admin/Charity/Donations/Donations.tsx"); 
         r("programs", "./pages/Admin/Charity/Programs/index.ts"); 
         r("funds", "./pages/Admin/Charity/Funds/index.ts"); 
         r(

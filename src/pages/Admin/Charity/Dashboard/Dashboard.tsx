@@ -1,12 +1,10 @@
-import { type ClientLoaderFunction, Outlet } from "@remix-run/react";
+import { Outlet } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { CircleAlert } from "lucide-react";
-import { cacheClientLoader, useCachedLoaderData } from "remix-client-cache";
 import { Loaded } from "./Loaded";
 import type { DashboardData } from "./api";
 import { monthPeriod } from "./monthPeriod";
-export const clientLoader: ClientLoaderFunction = (args) =>
-  cacheClientLoader(args);
-clientLoader.hydrate = true;
+export { clientLoader } from "api/cache";
 
 export {
   dashboardData as loader,
