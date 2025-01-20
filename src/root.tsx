@@ -34,6 +34,7 @@ export function HydrateFallback() {
   );
 }
 
+export { ErrorBoundary } from "components/error";
 export default function Root() {
   return <Outlet />;
 }
