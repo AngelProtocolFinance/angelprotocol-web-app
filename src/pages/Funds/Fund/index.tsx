@@ -28,6 +28,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 export const links: LinksFunction = () => [...richTextStyles];
 
 export const meta: MetaFunction = ({ data, location: l }) => {
+  if (!data) return [];
   const d = data as SingleFund;
   return metas({
     title: `${d.name} - ${APP_NAME}`,

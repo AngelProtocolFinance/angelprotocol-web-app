@@ -7,6 +7,7 @@ export { default } from "./Widget";
 export { loader } from "./loader";
 
 export const meta: MetaFunction = ({ data, location: loc }) => {
+  if (!data) return [];
   const d = data as WidgetData;
   return metas({
     title: `Donation Form Configuration${d.endow?.id ? ` for nonprofit ${d.endow?.id}` : ""}`,

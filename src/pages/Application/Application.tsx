@@ -29,10 +29,12 @@ export const loader: LoaderFunction = async ({ params, request }) => {
   } satisfies LoaderData;
 };
 
-export const meta: MetaFunction = ({ data }) =>
-  metas({
+export const meta: MetaFunction = ({ data }) => {
+  if (!data) return [];
+  return metas({
     title: `Application Review - ${(data as LoaderData).application.contact.org_name}`,
   });
+};
 
 export default function Application() {
   const { application, user } = useLoaderData() as LoaderData;

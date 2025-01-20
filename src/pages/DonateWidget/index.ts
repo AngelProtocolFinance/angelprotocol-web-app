@@ -7,6 +7,7 @@ export { default } from "./DonateWidget";
 export { loader } from "api/donate-loader";
 
 export const meta: MetaFunction = ({ data, location: l }) => {
+  if (!data) return [];
   const { endow } = data as DonateData;
   return metas({
     title: `Donate to ${endow.name}`,

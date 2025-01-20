@@ -32,8 +32,10 @@ export const loader: LoaderFunction = async ({ params }) => {
   return { ...post, media: m, authorName: a.name } satisfies IPost;
 };
 
-export const meta: MetaFunction = ({ data }: any) =>
-  metas({ title: data.slug });
+export const meta: MetaFunction = ({ data }: any) => {
+  if (!data) return [];
+  return metas({ title: data.slug });
+};
 
 export default function Post() {
   const post = useLoaderData() as IPost;

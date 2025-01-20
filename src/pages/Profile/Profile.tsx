@@ -11,6 +11,7 @@ import ProfileContext from "./ProfileContext";
 
 export { profileLoader as loader } from "./profile-loader";
 export const meta: MetaFunction = ({ data }) => {
+  if (!data) return [];
   const d = data as Endow;
   return metas({
     title: `${d.name} - ${APP_NAME}`,
