@@ -28,7 +28,6 @@ const staticUrls: SitemapUrl[] = [
   { url: "/terms-of-use-npo", changeFrequency: "monthly", priority: 0.4 },
 ];
 
-export const config = { runtime: "edge" };
 export const loader: LoaderFunction = async ({ request }) => {
   const origin = new URL(request.url).origin;
 

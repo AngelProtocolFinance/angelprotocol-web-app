@@ -1,7 +1,6 @@
 // app/routes/robots[.]txt.ts
 import type { LoaderFunction } from "@vercel/remix";
 
-export const config = { runtime: "edge" };
 export const loader: LoaderFunction = async ({ request }) => {
   const origin = new URL(request.url).origin;
 
