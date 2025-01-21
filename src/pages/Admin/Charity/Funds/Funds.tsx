@@ -1,6 +1,7 @@
 import type { FundItem as TFundItem } from "@better-giving/fundraiser";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/Status";
 import { appRoutes } from "constants/routes";
 import { useState } from "react";
@@ -8,8 +9,11 @@ import { FundItem } from "./FundItem";
 import type { LoaderData } from "./api";
 
 type CreatorType = "others" | "ours";
+export { action, loader } from "./api";
+export { clientLoader } from "api/cache";
+export { ErrorBoundary } from "components/error";
 export default function Funds() {
-  const { funds, endow } = useLoaderData<LoaderData>();
+  const { funds, endow } = useCachedLoaderData<LoaderData>();
   const [creatorType, setCreatorType] = useState<CreatorType>("ours");
 
   return (
