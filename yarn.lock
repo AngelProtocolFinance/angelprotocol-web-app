@@ -3239,6 +3239,7 @@ __metadata:
     react-hook-form: "npm:7.53.0"
     react-player: "npm:2.16.0"
     remix-client-cache: "npm:1.1.0"
+    remix-utils: "npm:8.1.0"
     sonner: "npm:1.7.0"
     swr: "npm:2.2.5"
     tailwindcss: "npm:3.4.3"
@@ -8171,6 +8172,38 @@ __metadata:
   languageName: node
   linkType: hard
 
+"remix-utils@npm:8.1.0":
+  version: 8.1.0
+  resolution: "remix-utils@npm:8.1.0"
+  dependencies:
+    type-fest: "npm:^4.33.0"
+  peerDependencies:
+    "@oslojs/crypto": ^1.0.1
+    "@oslojs/encoding": ^1.1.0
+    intl-parse-accept-language: ^1.0.0
+    is-ip: ^5.0.1
+    react: ^18.0.0 || ^19.0.0
+    react-router: ^7.0.0
+    zod: ^3.22.4
+  peerDependenciesMeta:
+    "@oslojs/crypto":
+      optional: true
+    "@oslojs/encoding":
+      optional: true
+    intl-parse-accept-language:
+      optional: true
+    is-ip:
+      optional: true
+    react:
+      optional: true
+    react-router:
+      optional: true
+    zod:
+      optional: true
+  checksum: 10/4dc83c7f3de897da7dad89fc48f7e4871a5647d0628a7c7199d7a24ddb096ff056eae069556f7223228d418b1d4d0b56e196a9e52f91b4c4e608df691fa01f3c
+  languageName: node
+  linkType: hard
+
 "require-directory@npm:^2.1.1":
   version: 2.1.1
   resolution: "require-directory@npm:2.1.1"
@@ -9197,6 +9230,13 @@ __metadata:
   version: 2.19.0
   resolution: "type-fest@npm:2.19.0"
   checksum: 10/7bf9e8fdf34f92c8bb364c0af14ca875fac7e0183f2985498b77be129dc1b3b1ad0a6b3281580f19e48c6105c037fb966ad9934520c69c6434d17fd0af4eed78
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^4.33.0":
+  version: 4.33.0
+  resolution: "type-fest@npm:4.33.0"
+  checksum: 10/0d179e66fa765bd0a25a785b12dc797f90f2f92bdb8c9c8a789f3fd8e5a4492444e7ef83551b3b8463aeab24fd6195761e26b03174722de636b4b75aa5726fb7
   languageName: node
   linkType: hard
 
