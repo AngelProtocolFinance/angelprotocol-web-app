@@ -70,20 +70,21 @@ export const getFundsNpoMemberOf = async (
     params.npoProfileFeatured ? ["active:1"] : []
   );
 
-  const search = {
-    memberOf: `members:'${endowId}'`,
+  const { c, m, ...rest } = {
+    c: `creator_id:'${endowId}'`,
+    m: `members:'${endowId}'`,
     ...(params.npoProfileFeatured && {
       expiry: `expiration:['${new Date().toISOString()}',}`,
       onlyMember: `members_csv:'${endowId}'`,
     }),
   };
-  const _search = Object.values(search)
+  const q = `(and (or ${c} ${m}) ${Object.values(rest)
     .filter((f) => f)
-    .join(" ");
+    .join(" ")})`;
 
   const endpoint = new URL(cloudsearchFundsSearchEndpoint);
   endpoint.pathname = "/2013-01-01/search";
-  endpoint.searchParams.set("q", `(and ${_search})`);
+  endpoint.searchParams.set("q", q);
   endpoint.searchParams.set("q.parser", "structured");
   endpoint.searchParams.set("fq", `(and ${_filters.join(" ")})`);
   endpoint.searchParams.set("sort", "active desc, expiration desc");
