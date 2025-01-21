@@ -1,12 +1,5 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import {
-  Link,
-  data,
-  redirect,
-  useActionData,
-  useLoaderData,
-  useNavigation,
-} from "@remix-run/react";
+import { Link, data, redirect, useLoaderData } from "@remix-run/react";
 import type {
   ActionFunction,
   LoaderFunction,
@@ -17,7 +10,7 @@ import { cognito, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import { Separator } from "components/Separator";
-import { Input, PasswordInput, RmxForm } from "components/form";
+import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { metas } from "helpers/seo";
@@ -80,8 +73,7 @@ export const meta: MetaFunction = () =>
 
 export { ErrorBoundary } from "components/error";
 export default function Signin() {
-  const { state } = useNavigation();
-  const data = useActionData<ActionData<any>>();
+  const { nav, data } = useRmxForm();
   const formErr = useActionResult(data);
   const to = useLoaderData<string>();
 
@@ -93,7 +85,7 @@ export default function Signin() {
     },
   });
 
-  const isSubmitting = state !== "idle";
+  const isSubmitting = nav.state !== "idle";
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">

@@ -1,10 +1,15 @@
-import { Form as RemixForm } from "@remix-run/react";
+import {
+  Form as RemixForm,
+  useActionData,
+  useNavigation,
+} from "@remix-run/react";
 import {
   type ComponentProps,
   type FormHTMLAttributes,
   forwardRef,
 } from "react";
 import { FormProvider, type UseFormReturn } from "react-hook-form";
+import type { ActionData } from "types/action";
 
 interface IForm extends FormHTMLAttributes<HTMLFormElement> {
   disabled?: boolean;
@@ -34,6 +39,12 @@ export const RmxForm = forwardRef<
     </RemixForm>
   );
 });
+
+export function useRmxForm<T = ActionData>() {
+  const nav = useNavigation();
+  const data = useActionData<T>();
+  return { nav, data };
+}
 
 interface Props extends IForm {
   methods: UseFormReturn<any, any, any>;
