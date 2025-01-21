@@ -13,7 +13,7 @@ export {
 
 export { ErrorBoundary } from "components/error";
 export default function Dashboard() {
-  const { alloc, bal } = useCachedLoaderData() as DashboardData;
+  const { alloc, bal } = useCachedLoaderData<DashboardData>();
   const period = monthPeriod();
 
   return (

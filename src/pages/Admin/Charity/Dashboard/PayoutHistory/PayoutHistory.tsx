@@ -1,13 +1,14 @@
-import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
+import { useFetcher, useSearchParams } from "@remix-run/react";
 import { Info } from "components/Status";
 import { useEffect, useState } from "react";
+import { useCachedLoaderData } from "remix-client-cache";
 import type { BalanceTxsPage } from "types/aws";
 import type { DashboardData } from "../api";
 import Table from "./Table";
 
 export function PayoutHistory({ classes = "" }) {
   const [params] = useSearchParams();
-  const { balTxs } = useLoaderData() as DashboardData;
+  const { balTxs } = useCachedLoaderData<DashboardData>();
 
   const [items, setItems] = useState<BalanceTxsPage["items"]>(balTxs.items);
 
