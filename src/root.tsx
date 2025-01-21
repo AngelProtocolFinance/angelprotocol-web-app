@@ -2,6 +2,7 @@ import { Outlet } from "@remix-run/react";
 import type { LinksFunction, MetaFunction } from "@vercel/remix";
 import { metas } from "helpers/seo";
 import nProgressStyles from "nprogress/nprogress.css?url";
+import ccbase from "vanilla-cookieconsent/dist/cookieconsent.css?url";
 import laira from "./assets/images/flying-character.webp";
 import cc from "./cookie-consent.css?url";
 import tailwind from "./index.css?url";
@@ -15,7 +16,7 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: nProgressStyles },
   {
     rel: "stylesheet",
-    href: "https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.css",
+    href: ccbase,
   },
   { rel: "stylesheet", href: cc },
 ];
@@ -23,14 +24,12 @@ export const links: LinksFunction = () => [
 export const meta: MetaFunction = () => metas({});
 
 export const handle: ExternalScriptsHandle = {
-  scripts({ location }) {
+  scripts({ location: l }) {
     if (import.meta.env.VITE_ENVIRONMENT !== "production") return [];
-    // we don't want bg consent banner showing on embeds
-    if (location.pathname.startsWith("/donate-widget")) return [];
+    // we don't want bg consent banner showing on donate-widget on NPO's website
+    if (l.pathname.startsWith("/donate-widget")) return [];
     return [
-      {
-        src: "https://cdn.jsdelivr.net/gh/orestbida/cookieconsent@3.0.1/dist/cookieconsent.umd.js",
-      },
+      { src: "/cookie-consent.js" },
       { src: "/scripts/cookie-consent.js" },
       //functional cookies
       { src: "/scripts/intercom.js", "data-category": "functional" },
