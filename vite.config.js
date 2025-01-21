@@ -42,7 +42,7 @@ const rmx = remix({
         });
         r("settings", "./pages/Admin/Charity/Settings/index.ts"); 
         r("edit-profile", "./pages/Admin/Charity/EditProfile/index.tsx"); 
-        r("banking", "./pages/Admin/Charity/Banking/PayoutMethods/index.ts"); 
+        r("banking", "./pages/Admin/Charity/Banking/PayoutMethods/PayoutMethods.tsx"); 
         r("banking/new", "./pages/Admin/Charity/Banking/Banking.tsx"); 
         r(
           "banking/:bankId",

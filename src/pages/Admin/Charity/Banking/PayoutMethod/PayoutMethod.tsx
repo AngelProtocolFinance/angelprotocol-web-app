@@ -1,4 +1,5 @@
-import { NavLink, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
+import { NavLink, Outlet, useFetcher } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import type { BankDetails } from "api/get/payout-method";
 import ExtLink from "components/ExtLink";
 import { useActionResult } from "hooks/use-action-result";
@@ -6,14 +7,14 @@ import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
 
 const APPROVED_PRIORITY_NUM = 2;
-
+export { clientLoader } from "api/cache";
 export {
   payoutMethodLoader as loader,
   prioritizeAction as action,
 } from "./api";
 export { ErrorBoundary } from "components/error";
 export default function PayoutMethod() {
-  const bank = useLoaderData() as BankDetails;
+  const bank = useCachedLoaderData() as BankDetails;
   const fetcher = useFetcher();
   useActionResult(fetcher.data);
 

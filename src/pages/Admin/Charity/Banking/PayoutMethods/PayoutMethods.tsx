@@ -1,11 +1,15 @@
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/Status";
 import { Plus } from "lucide-react";
-import type { PayoutMethod } from "types/aws";
 import Table from "./Table";
+import type { LoaderData } from "./api";
 
+export { loader } from "./api";
+
+export { ErrorBoundary } from "components/error";
 export default function PayoutMethods() {
-  const methods = useLoaderData() as PayoutMethod[];
+  const { methods } = useCachedLoaderData<LoaderData>();
 
   return (
     <div>
