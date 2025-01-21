@@ -1,14 +1,13 @@
 import { httpsUrl } from "@better-giving/endowment/schema";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
 import {
   Link,
-  useFetcher,
   useNavigate,
   useParams,
   useSearchParams,
 } from "@remix-run/react";
-import { NativeField as Field } from "components/form";
+import { Modal } from "components/Modal";
+import { NativeField as Field, RmxForm, useRmxForm } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { X } from "lucide-react";
 import { isFormErr } from "types/action";
@@ -26,27 +25,26 @@ export default function VideoEditor() {
 
   const navigate = useNavigate();
   return (
-    <Dialog
+    <Modal
       open={true}
       onClose={() =>
         navigate("..", { preventScrollReset: true, replace: true })
       }
-      className="relative z-50"
+      classes="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
-      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
       <Content
         edit={
           mediaId ? { prevUrl: params.get("prev_url")!, mediaId } : undefined
         }
       />
-    </Dialog>
+    </Modal>
   );
 }
 
 function Content(props: Props) {
-  const fetcher = useFetcher();
+  const { nav, data } = useRmxForm();
   const [form, fields] = useForm({
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: isFormErr(data) ? data : undefined,
     shouldRevalidate: "onInput",
     onValidate({ formData }) {
       return parseWithValibot(formData, {
@@ -59,11 +57,10 @@ function Content(props: Props) {
   });
 
   return (
-    <DialogPanel
-      as={fetcher.Form}
+    <RmxForm
       method="POST"
+      disabled={nav.state !== "idle"}
       {...getFormProps(form)}
-      className="fixed-center z-10 grid text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
       <div className="relative">
         <p className="text-xl font-bold text-center border-b bg-blue-l5 dark:bg-blue-d7 border-gray-l4 p-5">
@@ -71,7 +68,7 @@ function Content(props: Props) {
         </p>
         <Link
           to=".."
-          aria-disabled={fetcher.state !== "idle"}
+          aria-disabled={nav.state !== "idle"}
           className="border border-gray-l4 p-2 rounded-md absolute top-1/2 right-4 transform -translate-y-1/2 aria-disabled:text-navy-l5"
         >
           <X size={24} />
@@ -92,13 +89,13 @@ function Content(props: Props) {
           Cancel
         </Link>
         <button
-          disabled={!form.dirty || fetcher.state !== "idle"}
+          disabled={!form.dirty}
           type="submit"
           className="btn-blue px-8 py-2 text-sm"
         >
           Continue
         </button>
       </div>
-    </DialogPanel>
+    </RmxForm>
   );
 }

@@ -1,18 +1,22 @@
 import type { MediaPage } from "@better-giving/endowment";
-import { useFetcher, useLoaderData } from "@remix-run/react";
+import { useFetcher } from "@remix-run/react";
 import { Image } from "lucide-react";
 import { useEffect, useState } from "react";
 import VideoPreview from "../VideoPreview";
 
 interface Props {
   classes?: string;
+  page1: MediaPage;
 }
 
-export function List({ classes = "" }: Props) {
+export function List({ classes = "", page1 }: Props) {
   const { state, data, load } = useFetcher<MediaPage>();
-  const page1 = useLoaderData() as MediaPage;
 
   const [items, setItems] = useState<MediaPage["items"]>(page1.items);
+
+  useEffect(() => {
+    setItems(page1.items);
+  }, [page1.items]);
 
   useEffect(() => {
     if (state !== "idle" || !data) return;

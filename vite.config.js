@@ -65,7 +65,7 @@ const rmx = remix({
             id: "media-edit",
           });
         });
-        r("media/videos", "./pages/Admin/Charity/Media/Videos/index.ts", () => { 
+        r("media/videos", "./pages/Admin/Charity/Media/Videos/Videos.tsx", () => { 
           r("new", "./pages/Admin/Charity/Media/video-new.ts", { 
             id: "videos-new",
           });
