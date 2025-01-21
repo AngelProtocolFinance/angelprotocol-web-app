@@ -32,7 +32,7 @@ export default function Cards({ classes = "", page1 }: Props) {
     return <Info classes="mt-4">No fundraisers found</Info>;
   }
 
-  const nextPage = next(data) || next(page1);
+  const nextPage = data ? next(data) : next(page1);
 
   function loadNext(nextPage: number) {
     const n = new URLSearchParams(params);

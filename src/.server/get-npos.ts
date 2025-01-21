@@ -7,7 +7,7 @@ import type {
 import type * as cs from "@better-giving/endowment/cloudsearch";
 import type { ToDoc } from "@better-giving/types/cloudsearch";
 import type { Ensure } from "@better-giving/types/utils";
-import { cloudsearchSearchEndpoint, env } from "./env";
+import { cloudsearchNpoSearchEndpoint, env } from "./env";
 
 type EndowHit = ToDoc<cs.CloudsearchEndow>;
 type Endow = Ensure<Partial<cs.CloudsearchEndow>, "contributions_total">;
@@ -15,7 +15,6 @@ const HITS_PER_PAGE = 20;
 
 export const cacheControl =
   "public, max-age=0, s-max-age=30, stale-while-revalidate=60";
-
 export async function getNpos(
   params: EndowsQueryParamsParsed
 ): Promise<EndowsPage> {
@@ -53,12 +52,12 @@ export async function getNpos(
   const startAt = (page - 1) * HITS_PER_PAGE;
 
   // Construct search parameters
-  const endpoint = new URL(cloudsearchSearchEndpoint);
+  const endpoint = new URL(cloudsearchNpoSearchEndpoint);
   endpoint.pathname = "/2013-01-01/search";
   endpoint.searchParams.set("q", queryString);
   endpoint.searchParams.set("q.parser", "structured");
   endpoint.searchParams.set("fq", filterQuery);
-  endpoint.searchParams.set("sort", "claimed desc, name asc");
+  endpoint.searchParams.set("sort", "name asc");
   endpoint.searchParams.set("size", HITS_PER_PAGE.toString());
   endpoint.searchParams.set("start", startAt.toString());
   if (fields?.length) {

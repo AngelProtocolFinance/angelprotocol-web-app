@@ -5,6 +5,7 @@ import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
+import { getFundsNpoMemberOf } from ".server/get-funds";
 
 export interface LoaderData {
   funds: FundItem[];
@@ -13,10 +14,9 @@ export interface LoaderData {
 
 export const loader: LoaderFunction = async ({ params }) => {
   const endow = await getEndow(params.id);
-  const funds = await ap
-    .get<FundItem[]>(`${ver(8)}/endowments/${params.id}/funds`)
-    .json();
-
+  const funds = await getFundsNpoMemberOf(endow.id, {
+    npoProfileFeatured: false,
+  });
   return { endow, funds } satisfies LoaderData;
 };
 
