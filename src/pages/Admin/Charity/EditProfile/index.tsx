@@ -1,6 +1,6 @@
 import type { EndowDesignation } from "@better-giving/endowment";
-import { useLoaderData } from "@remix-run/react";
 import type { LinksFunction } from "@vercel/remix";
+import { useCachedLoaderData } from "api/cache";
 import { country } from "components/CountrySelector";
 import { imgEditorStyles } from "components/ImgEditor";
 import { richTextStyles, toContent } from "components/RichText";
@@ -11,13 +11,14 @@ import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
 
 export { loader, action } from "./api";
+export { clientLoader } from "api/cache";
 export const links: LinksFunction = () => [
   ...richTextStyles,
   ...imgEditorStyles,
 ];
 export { ErrorBoundary } from "components/error";
 export default function EditProfile() {
-  const endow = useLoaderData() as LoaderData;
+  const endow = useCachedLoaderData<LoaderData>();
   const defaults: FV = {
     name: endow.name,
     published: !!endow.published,
