@@ -1,13 +1,11 @@
-import { NavLink, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
+import { NavLink, Outlet, useFetcher } from "@remix-run/react";
 import TableSection, { Cells } from "components/TableSection";
 import { LoaderCircle, Minus, Plus } from "lucide-react";
 import { useAdminContext } from "pages/Admin/Context";
 import { toast } from "sonner";
 import type { EndowAdmin } from "types/aws";
 
-export default function List() {
-  const admins = useLoaderData() as EndowAdmin[];
-
+export function List({ members }: { members: EndowAdmin[] }) {
   return (
     <div className="overflow-x-auto">
       <NavLink
@@ -17,7 +15,9 @@ export default function List() {
         <Plus size={16} />
         <span>Invite user</span>
       </NavLink>
-      <Loaded members={admins} />
+      <Loaded members={members} />
+      {/** render add form */}
+      <Outlet />
     </div>
   );
 }
@@ -64,8 +64,6 @@ function Loaded({ members, classes = "" }: LoadedProps) {
           </Cells>
         ))}
       </TableSection>
-      {/** render add form */}
-      <Outlet />
     </table>
   );
 }

@@ -1,10 +1,10 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { Dialog, DialogBackdrop, DialogPanel } from "@headlessui/react";
-import { useFetcher, useNavigate, useRouteLoaderData } from "@remix-run/react";
-import { NativeField as Field } from "components/form";
+import { useNavigate, useRouteLoaderData } from "@remix-run/react";
+import { Modal } from "components/Modal";
+import { NativeField as Field, RmxForm, useRmxForm } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { isFormErr } from "types/action";
-import type { EndowAdmin } from "types/aws";
+import type { LoaderData } from "./api";
 import { schema } from "./schema";
 
 export { addAction as action } from "./api";
@@ -12,38 +12,38 @@ export { ErrorModal as ErrorBoundary } from "components/error";
 export default function AddForm() {
   const navigate = useNavigate();
   return (
-    <Dialog
+    <Modal
       open={true}
       onClose={() =>
         navigate("..", { preventScrollReset: true, replace: true })
       }
-      className="relative z-50"
+      classes="p-6 fixed-center z-10 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
     >
-      <DialogBackdrop className="fixed inset-0 bg-black/30 data-[closed]:opacity-0" />
       <Content />
-    </Dialog>
+    </Modal>
   );
 }
 
 function Content() {
-  const members = useRouteLoaderData("endow-admins") as EndowAdmin[];
-  const fetcher = useFetcher();
+  const ldta = useRouteLoaderData<LoaderData>("endow-admins");
+  const { admins = [] } = ldta ?? {};
+  const { data, nav } = useRmxForm();
   const [form, fields] = useForm({
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: isFormErr(data) ? data : undefined,
     shouldRevalidate: "onInput",
     onValidate({ formData }) {
       return parseWithValibot(formData, {
-        schema: schema(members.map((x) => x.email)),
+        schema: schema(admins.map((x) => x.email)),
       });
     },
   });
 
   return (
-    <DialogPanel
+    <RmxForm
       {...getFormProps(form)}
+      disabled={nav.state !== "idle"}
       method="POST"
-      as={fetcher.Form}
-      className="p-6 fixed-center z-10 grid gap-4 text-navy-d4 dark:text-white bg-white dark:bg-blue-d4 sm:w-full w-[90vw] sm:max-w-lg rounded overflow-hidden"
+      className="w-full grid gap-4"
     >
       <h4 className="text-center text-xl font-bold mb-4">Invite User</h4>
       <Field
@@ -64,9 +64,9 @@ function Content() {
         error={fields.lastName.errors?.[0]}
         required
       />
-      <button disabled={fetcher.state !== "idle"} className="btn-blue mt-6">
+      <button disabled={nav.state !== "idle"} className="btn-blue mt-6">
         Add member
       </button>
-    </DialogPanel>
+    </RmxForm>
   );
 }
