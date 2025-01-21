@@ -1,8 +1,5 @@
-import {
-  useLoaderData,
-  useLocation,
-  useRouteLoaderData,
-} from "@remix-run/react";
+import { useLocation, useRouteLoaderData } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { NavDropdown, UserMenu } from "components/Header";
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
@@ -16,7 +13,7 @@ type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
   const user = useRouteLoaderData("root") as DetailedUser | null;
-  const firstPage = useLoaderData() as EndowCardsPage;
+  const firstPage = useCachedLoaderData() as EndowCardsPage;
   const location = useLocation();
   const [query, setQuery] = useState("");
   const isInAuth = authRoutes.includes(location.pathname);
