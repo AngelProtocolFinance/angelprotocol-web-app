@@ -33,7 +33,7 @@ const rmx = remix({
         r("funds", "./pages/Admin/Charity/Funds/Funds.tsx");
         r(
           "program-editor/:programId",
-          "./pages/Admin/Charity/ProgramEditor/index.ts"
+          "./pages/Admin/Charity/ProgramEditor/ProgramEditor.tsx"
         );
         r(
           "members",

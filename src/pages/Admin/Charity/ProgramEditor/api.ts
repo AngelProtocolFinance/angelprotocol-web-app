@@ -1,21 +1,9 @@
-import type {
-  ActionFunction,
-  LinksFunction,
-  LoaderFunction,
-} from "@vercel/remix";
+import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
 import { cognito, redirectToAuth } from "auth";
-import { imgEditorStyles } from "components/ImgEditor";
-import { richTextStyles } from "components/RichText";
-import type { ActionData } from "types/action";
-export { ErrorBoundary } from "components/error";
 
-export { default } from "./ProgramEditor";
-export const links: LinksFunction = () => [
-  ...richTextStyles,
-  ...imgEditorStyles,
-];
+import type { ActionData } from "types/action";
 
 export const loader: LoaderFunction = async ({ params }) =>
   getProgram(params.id, params.programId);

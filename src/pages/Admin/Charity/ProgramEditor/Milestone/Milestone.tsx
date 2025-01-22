@@ -155,7 +155,9 @@ export default function Milestone(props: Props) {
             milestone
           </button>
           <button
-            disabled={!isDirty}
+            disabled={
+              !isDirty || fetcher.state !== "idle" || media.value === "loading"
+            }
             type="submit"
             className="btn-blue py-2 text-sm"
           >
