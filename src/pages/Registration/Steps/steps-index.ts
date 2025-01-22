@@ -1,3 +1,3 @@
-import { redirect } from "@vercel/remix";
+import { type LoaderFunction, redirect } from "@vercel/remix";
 import { steps } from "../routes";
-export const loader = () => redirect(steps.contact);
+export const loader: LoaderFunction = () => redirect(steps.contact);
