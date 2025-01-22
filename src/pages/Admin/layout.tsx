@@ -1,7 +1,6 @@
 import type { Endow } from "@better-giving/endowment";
 import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
-import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
 import Footer from "components/Footer";
 import { appRoutes } from "constants/routes";
@@ -13,12 +12,12 @@ import Header from "./Header";
 import SidebarHeader from "./SidebarHeader";
 import { linkGroups } from "./constants";
 import { cognito, toAuth } from ".server/auth";
+import { getNpoByIdOrSlug } from ".server/get-npo";
 
 interface LoaderData {
   id: number;
   user: UserV2;
-  /** need to be awaited */
-  endow: Promise<Pick<Endow, "logo" | "name">>;
+  endow: Pick<Endow, "logo" | "name">;
 }
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -26,10 +25,14 @@ export const loader: LoaderFunction = async ({ request, params }) => {
   if (!user) return toAuth(request, headers);
 
   const id = parse(plusInt, params.id);
+
+  const npo = await getNpoByIdOrSlug(id, ["name", "logo"]);
+  if (!npo) return { status: 404 };
+
   return {
     user,
     id,
-    endow: getEndow(id, ["name", "logo"]),
+    endow: npo,
   } satisfies LoaderData;
 };
 
@@ -53,7 +56,7 @@ export default function AdminLayout() {
       <Layout
         rootRoute={`${appRoutes.admin}/:id/`}
         linkGroups={linkGroups}
-        sidebarHeader={<SidebarHeader endow={data.endow} />}
+        sidebarHeader={<SidebarHeader {...data.endow} />}
       />
       <Footer />
     </div>

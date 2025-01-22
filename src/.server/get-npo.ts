@@ -6,14 +6,15 @@ import { env } from "./env";
 
 type K = keyof Endow;
 type ArrayValues<T extends readonly unknown[]> = T[number];
+type R<T> = T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow;
 
 export const cacheControl =
   "public, max-age=0, s-max-age=30, stale-while-revalidate=60";
 /**@param id number - endow-id; string - slug */
 export async function getNpoByIdOrSlug<T extends K[]>(
   id: number | string,
-  fields?: T[]
-): Promise<(T extends K[] ? Pick<Endow, ArrayValues<T>> : Endow) | undefined> {
+  fields?: T
+): Promise<R<T> | undefined> {
   const { names, expression } = projection(fields as any);
 
   if (typeof id === "string") {
@@ -34,7 +35,7 @@ export async function getNpoByIdOrSlug<T extends K[]>(
     });
 
     const item = res.Items?.[0];
-    return item ? (pretty(item) as any) : undefined;
+    return item ? (pretty(item) as R<T>) : undefined;
   }
 
   const res = await ap.DynamoDB.GetItem({
@@ -47,7 +48,7 @@ export async function getNpoByIdOrSlug<T extends K[]>(
     ExpressionAttributeNames: names,
   });
 
-  return res.Item ? (pretty(res.Item) as any) : undefined;
+  return res.Item ? (pretty(res.Item) as R<T>) : undefined;
 }
 
 function projection(fields: string[] = Object.keys(profileFields)) {

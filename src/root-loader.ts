@@ -2,11 +2,11 @@ import { Buffer } from "node:buffer";
 import { data, redirect } from "@remix-run/react";
 import type { LoaderFunctionArgs } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { getEndow } from "api/get/endow";
 import { userEndows } from "api/get/user-endows";
 import type { DetailedUser, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 import { cognito, oauth } from ".server/auth";
+import { getNpoByIdOrSlug } from ".server/get-npo";
 
 async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
   const endows = await ap
@@ -19,7 +19,8 @@ async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
   const bookmarks: EndowmentBookmark[] = [];
 
   for (const id of endows) {
-    const endow = await getEndow(id, ["name", "logo"]);
+    const endow = await getNpoByIdOrSlug(id, ["id", "name", "logo"]);
+    if (!endow) continue;
     bookmarks.push({ ...endow, endowId: id });
   }
   return bookmarks;
