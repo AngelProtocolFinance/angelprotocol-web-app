@@ -9,7 +9,9 @@ export function DefaultFallback({ acknowledger }: Props) {
   return (
     <div className="grid place-items-center content-center gap-6 p-4">
       <CircleAlert className="text-red text-[2em]" />
-      <p className="text-center">{GENERIC_ERROR_MESSAGE}</p>
+      <p className="text-center text-balance max-w-lg">
+        {GENERIC_ERROR_MESSAGE}
+      </p>
       {acknowledger}
     </div>
   );
