@@ -1,13 +1,14 @@
 import { Buffer } from "node:buffer";
-import { IS_TEST } from "constants/env";
 import { logger } from "helpers/logger";
 import type { AuthError, UserV2 } from "types/auth";
 import { type Stored, commitSession, getSession } from "./session";
 import { Util } from "./util";
+import { env } from ".server/env";
 
-const clientId = IS_TEST
-  ? "7bl9gfckbneg0udsmkvsu48ssg"
-  : "207sfl8bl2m2cghbr86vg4je2o";
+const clientId =
+  env === "production"
+    ? "207sfl8bl2m2cghbr86vg4je2o"
+    : "7bl9gfckbneg0udsmkvsu48ssg";
 
 /** api version  2016-04-18 */
 interface AuthSuccess<T extends "new" | "refresh"> {
@@ -287,9 +288,10 @@ class OAuth extends Storage {
   constructor(clientId: string) {
     super();
     this.clientId = clientId;
-    this.domain = IS_TEST
-      ? "https://j71l2yzyj3cb-dev.auth.us-east-1.amazoncognito.com"
-      : "https://bettergiving.auth.us-east-1.amazoncognito.com";
+    this.domain =
+      env === "production"
+        ? "https://bettergiving.auth.us-east-1.amazoncognito.com"
+        : "https://j71l2yzyj3cb-dev.auth.us-east-1.amazoncognito.com";
   }
 
   initiateUrl(state: string, origin: string) {
