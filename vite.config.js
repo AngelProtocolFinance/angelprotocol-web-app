@@ -43,7 +43,7 @@ const rmx = remix({
             r("add", "./pages/Admin/Charity/Members/AddForm.tsx");
           }
         );
-        r("settings", "./pages/Admin/Charity/Settings/index.ts");
+        r("settings", "./pages/Admin/Charity/Settings/Form.tsx");
         r("edit-profile", "./pages/Admin/Charity/EditProfile/index.tsx");
         r(
           "banking",
