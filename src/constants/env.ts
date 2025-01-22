@@ -19,6 +19,6 @@ export const BOOK_A_DEMO =
 export const INTERCOM_HELP = "https://intercom.help/better-giving/en";
 export const AWS_S3_PUBLIC_BUCKET = "https://endow-profiles.s3.amazonaws.com";
 
-export const PUBLIC_STRIPE_KEY = import.meta.env.VITE_STRIPE_KEY || "";
+export const PUBLIC_STRIPE_KEY = import.meta.env.VITE_STRIPE_PK || "";
 export const PAYPAL_CLIENT_ID = import.meta.env.VITE_PAYPAL_CLIENT_ID || "";
 export const CHARIOT_CONNECT_ID = import.meta.env.VITE_CHARIOT_CONNECT_ID || "";
