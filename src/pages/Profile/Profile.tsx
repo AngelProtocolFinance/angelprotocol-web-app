@@ -1,15 +1,20 @@
 import type { Endow } from "@better-giving/endowment";
 import { useLoaderData } from "@remix-run/react";
 import { Outlet } from "@remix-run/react";
-import type { MetaFunction } from "@vercel/remix";
+import type { HeadersFunction, MetaFunction } from "@vercel/remix";
 import fallback_banner from "assets/images/bg-banner.webp";
 import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { metas } from "helpers/seo";
 import ProfileContext from "./ProfileContext";
+import { cacheControl } from ".server/get-npo";
 
 export { profileLoader as loader } from "./profile-loader";
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": cacheControl,
+});
+
 export const meta: MetaFunction = ({ data }) => {
   if (!data) return [];
   const d = data as Endow;

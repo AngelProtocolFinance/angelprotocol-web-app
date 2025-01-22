@@ -1,5 +1,6 @@
 import { unpack } from "helpers";
 import { Suspense, forwardRef, lazy } from "react";
+import ContentLoader from "../ContentLoader";
 import type { Props } from "./types";
 const Editor = lazy(() => import("./Editor"));
 
@@ -14,7 +15,19 @@ export const RichText = forwardRef<El, Props>(({ classes, ...props }, ref) => {
         aria-disabled={props.disabled}
         className={`relative has-[:focus-within]:ring-2 ring-blue-d1 ring-offset-1 ${style.field} ${props.readOnly ? "toolbar-hidden" : ""}`}
       >
-        <Suspense>{<Editor classes={classes} ref={ref} {...props} />}</Suspense>
+        <Suspense
+          fallback={
+            <>
+              {Array(10)
+                .fill(null)
+                .map((_, index) => (
+                  <ContentLoader key={index} className="mb-3 h-5 w-full" />
+                ))}
+            </>
+          }
+        >
+          {<Editor classes={classes} ref={ref} {...props} />}
+        </Suspense>
         {!props.readOnly && (
           <span
             className={`absolute top-4 right-4 text-xs uppercase ${
