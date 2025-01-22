@@ -1,11 +1,12 @@
-import type { UserFund } from "@better-giving/user";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/Status";
 import { appRoutes } from "constants/routes";
 import { Fund } from "./Fund";
+import type { LoaderData } from "./api";
 
 export default function Funds() {
-  const funds = useLoaderData<UserFund[]>();
+  const { funds } = useCachedLoaderData<LoaderData>();
 
   const items =
     funds.length === 0 ? (
