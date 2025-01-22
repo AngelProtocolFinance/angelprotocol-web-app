@@ -1,8 +1,8 @@
 import { Buffer } from "node:buffer";
 import type { AuthError, UserV2 } from "types/auth";
+import { env } from "../env";
 import { type Stored, commitSession, getSession } from "./session";
 import { Util } from "./util";
-import { env } from ".server/env";
 
 const clientId =
   env === "production"
