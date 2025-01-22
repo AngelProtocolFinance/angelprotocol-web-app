@@ -50,7 +50,7 @@ export default function Form() {
       programDonateDisabled: !(endow.progDonationsAllowed ?? true),
       donateMethods: fill(endow.donateMethods),
       increments: endow.increments ?? [],
-      fundOptIn: endow.fund_opt_in ?? false,
+      fundOptIn: endow.fund_opt_in ?? true,
       target: toFormTarget(endow.target),
     },
   });
