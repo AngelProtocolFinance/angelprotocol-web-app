@@ -2,7 +2,6 @@ import { NavLink } from "@remix-run/react";
 import type { BalanceMovement } from "types/aws";
 
 interface Props {
-  endowId: number;
   balance: number;
   mov: BalanceMovement;
   classes?: string;

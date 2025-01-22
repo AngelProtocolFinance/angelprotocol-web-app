@@ -1,25 +1,24 @@
 import type { FundItem as TFundItem } from "@better-giving/fundraiser";
-import { Link, useFetcher } from "@remix-run/react";
+import { Link, NavLink, useFetcher } from "@remix-run/react";
 import { FundCreator, FundStatus, statusFn } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { useActionResult } from "hooks/use-action-result";
 import { LoaderCircle, Split } from "lucide-react";
 import type { ActionData } from "types/action";
-import { useAdminContext } from "../../../Admin/Context";
-export const FundItem = (
-  props: TFundItem & { endowId: number; isSelf: boolean }
-) => {
+
+interface Props extends TFundItem {
+  isSelf: boolean;
+  isEditor: boolean;
+}
+export const FundItem = (props: Props) => {
   const fetcher = useFetcher<ActionData>({ key: `fund-${props.id}` });
   useActionResult(fetcher.data);
-  const { user } = useAdminContext();
   const status = statusFn(
     props.expiration,
     props.active,
     props.donation_total_usd
   );
-  const isEditor =
-    user.funds.includes(props.id) || user.endowments.includes(props.endowId);
 
   return (
     <div className="grid grid-rows-subgrid row-span-6 content-start gap-y-0 items-center border border-gray-l4 p-3 rounded-lg">
@@ -88,15 +87,15 @@ export const FundItem = (
         ) : (
           <div data-placeholder />
         )}
-        <Link
+        <NavLink
           aria-disabled={!status.active}
           className={`btn btn-blue rounded-full text-xs px-6 py-2 ${
-            isEditor ? "" : "invisible"
+            props.isEditor ? "" : "invisible"
           }`}
           to={`${appRoutes.funds}/${props.id}/edit`}
         >
           Edit
-        </Link>
+        </NavLink>
       </fetcher.Form>
     </div>
   );

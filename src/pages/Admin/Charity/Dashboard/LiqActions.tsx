@@ -3,7 +3,6 @@ import type { BalanceMovement } from "types/aws";
 
 interface Props {
   classes?: string;
-  endowId: number;
   balance: number;
   mov: BalanceMovement;
   disabled?: boolean;

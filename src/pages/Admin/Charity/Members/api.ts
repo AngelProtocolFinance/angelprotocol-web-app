@@ -1,4 +1,3 @@
-import type { EndowAdmin } from "@better-giving/user";
 import {
   type ActionFunction,
   type LoaderFunction,
@@ -8,9 +7,12 @@ import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { cognito, redirectToAuth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
+import type { UserV2 } from "types/auth";
+import type { EndowAdmin } from "types/aws";
 import { schema } from "./schema";
 
 export interface LoaderData {
+  user: UserV2;
   admins: EndowAdmin[];
 }
 
@@ -19,11 +21,11 @@ export const members: LoaderFunction = async ({ params, request }) => {
   if (!user) return redirectToAuth(request, headers);
 
   const admins = await ap
-    .get(`${ver(2)}/endowments/${params.id}/admins`, {
+    .get<EndowAdmin[]>(`${ver(2)}/endowments/${params.id}/admins`, {
       headers: { authorization: user.idToken },
     })
     .json();
-  return { admins };
+  return { admins, user } satisfies LoaderData;
 };
 
 export const deleteAction: ActionFunction = async ({ request, params }) => {

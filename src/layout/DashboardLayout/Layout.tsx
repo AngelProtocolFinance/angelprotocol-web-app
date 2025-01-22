@@ -7,14 +7,12 @@ type DashboardLayoutProps = {
   linkGroups: LinkGroup[];
   sidebarHeader?: ReactNode;
   rootRoute: string;
-  context: any;
 };
 
 export default function Layout({
   linkGroups,
   sidebarHeader,
   rootRoute,
-  context,
 }: DashboardLayoutProps) {
   return (
     <div className="grid max-md:content-start md:grid-cols-[auto_1fr]">
@@ -30,9 +28,7 @@ export default function Layout({
       />
       {/** views */}
       <div className="px-6 py-8 md:p-10 @container">
-        {/* <ErrorBoundaryClass key={key}> */}
-        <Outlet context={context} />
-        {/* </ErrorBoundaryClass> */}
+        <Outlet />
       </div>
     </div>
   );

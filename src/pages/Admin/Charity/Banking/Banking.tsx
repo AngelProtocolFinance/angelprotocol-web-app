@@ -1,4 +1,4 @@
-import { Link, useFetcher } from "@remix-run/react";
+import { Link, useFetcher, useParams } from "@remix-run/react";
 import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
@@ -6,14 +6,13 @@ import { errorPrompt } from "contexts/ErrorContext";
 import { toFileName } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
-import { useAdminContext } from "../../../Admin/Context";
 import FormButtons from "./FormButtons";
 
-export { newBanking as action } from "./new-banking-action";
+export { newBanking as action } from "./api";
 export { ErrorBoundary } from "components/error";
-export default function Banking() {
-  const { id: endowment_id } = useAdminContext();
 
+export default function Banking() {
+  const { id: endowIdParam = "" } = useParams();
   const fetcher = useFetcher();
   const [prompt, setPrompt] = useState<IPromptV2>();
 
@@ -29,7 +28,7 @@ export default function Banking() {
         {
           wiseRecipientID: id.toString(),
           bankSummary,
-          endowmentID: endowment_id,
+          endowmentID: +endowIdParam,
           bankStatementFile: {
             name: toFileName(bankStatementUrl) ?? "bank statement",
             publicUrl: bankStatementUrl,

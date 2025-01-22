@@ -36,7 +36,6 @@ const asset: {
 };
 
 interface Props {
-  endowId: number;
   mov: BalanceMovement;
   balance: (flow: Flow) => number;
   classes?: string;
