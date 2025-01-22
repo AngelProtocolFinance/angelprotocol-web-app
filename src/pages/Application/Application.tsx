@@ -1,33 +1,19 @@
-import type { Application as IApplication } from "@better-giving/registration/approval";
-import { ap, ver } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
-import Seo from "components/Seo";
+import { useLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "@vercel/remix";
+import { metas } from "helpers/seo";
 import { CircleAlert } from "lucide-react";
-import { useLoaderData } from "react-router";
-import type { LoaderFunction } from "react-router";
-import type { UserV2 } from "types/auth";
 import Loaded from "./Loaded";
+import type { LoaderData } from "./api";
 
-export interface LoaderData {
-  user: UserV2;
-  application: IApplication;
-}
-
-export const clientLoader: LoaderFunction = async ({ params, request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
-
-  const application = await ap
-    .get<IApplication>(`${ver(1)}/registrations/${params.id}`, {
-      headers: { authorization: auth.idToken },
-    })
-    .json();
-
-  return {
-    application,
-    user: auth,
-  } satisfies LoaderData;
+export const meta: MetaFunction = ({ data }) => {
+  if (!data) return [];
+  return metas({
+    title: `Application Review - ${(data as LoaderData).application.contact.org_name}`,
+  });
 };
+
+export { loader } from "./api";
+export { ErrorBoundary } from "components/error";
 
 export default function Application() {
   const { application, user } = useLoaderData() as LoaderData;
@@ -43,11 +29,9 @@ export default function Application() {
 
   return (
     <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
-      <Seo title="Application review" />
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Details
       </h1>
-
       <Loaded {...application} />
     </div>
   );

@@ -1,18 +1,18 @@
 import type { Update } from "@better-giving/registration/update";
+import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
-import { type ActionFunction, redirect } from "react-router";
+import { cognito, toAuth } from ".server/auth";
 
 export const updateAction =
   (next: string): ActionFunction =>
   async ({ request, params }) => {
-    const auth = await loadAuth();
-    if (!auth) return redirectToAuth(request);
+    const { user, headers } = await cognito.retrieve(request);
+    if (!user) return toAuth(request, headers);
 
     const data: Update = await request.json();
 
     await ap.patch(`${ver(1)}/registrations/${params.regId}`, {
-      headers: { authorization: auth.idToken },
+      headers: { authorization: user.idToken },
       json: data,
     });
 

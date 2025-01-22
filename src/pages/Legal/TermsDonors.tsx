@@ -1,14 +1,17 @@
-import Seo from "components/Seo";
+import { Link } from "@remix-run/react";
+import type { MetaFunction } from "@vercel/remix";
 import { appRoutes } from "constants/routes";
+import { metas } from "helpers/seo";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router";
 const U = ({ children }: PropsWithChildren) => (
   <span className="underline">{children}</span>
 );
+export const meta: MetaFunction = () =>
+  metas({ title: "Terms of use (donor)" });
+
 export default function TermsDonors() {
   return (
     <main className="prose lg:prose-lg padded-container py-20">
-      <Seo title="Terms of use (donor)" />
       <i className="text-navy-l1 text-right block">
         Effective October 25, 2024
       </i>

@@ -1,15 +1,19 @@
+import { Outlet } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { CircleAlert } from "lucide-react";
-import { Outlet, useLoaderData } from "react-router";
 import { Loaded } from "./Loaded";
 import type { DashboardData } from "./api";
 import { monthPeriod } from "./monthPeriod";
+export { clientLoader } from "api/cache";
 
 export {
-  dashboardData as clientLoader,
-  endowUpdateAction as clientAction,
+  dashboardData as loader,
+  endowUpdateAction as action,
 } from "./api";
+
+export { ErrorBoundary } from "components/error";
 export default function Dashboard() {
-  const { alloc, bal } = useLoaderData() as DashboardData;
+  const { alloc, bal } = useCachedLoaderData<DashboardData>();
   const period = monthPeriod();
 
   return (

@@ -1,36 +1,27 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { useFetcher, useLoaderData } from "@remix-run/react";
 import { Input } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
+import { useActionResult } from "hooks/use-action-result";
 import useCounter from "hooks/useCounter";
-import { useEffect } from "react";
-import { useFetcher, useLoaderData, useSearchParams } from "react-router";
-import { toast } from "sonner";
 import { signUpConfirm } from "types/auth";
-import { type ActionData, isData, isErr, isFormErr } from "./types";
+import type { ActionData } from "./types";
 
 const MAX_TIME = 30;
 
+export { loader, action } from "./api";
+export { ErrorBoundary } from "components/error";
 export default function ConfirmForm() {
-  const [params] = useSearchParams();
   const email = useLoaderData() as string;
   const fetcher = useFetcher<ActionData>();
   const { counter, resetCounter } = useCounter(MAX_TIME);
-
-  //biome-ignore lint:
-  useEffect(() => {
-    if (isErr(fetcher.data)) {
-      toast.error(fetcher.data.__err);
-      return;
-    }
-
-    if (isData(fetcher.data)) {
-      resetCounter();
-    }
-  }, [fetcher.data]);
+  const formErr = useActionResult(fetcher.data, {
+    onData: () => resetCounter(),
+  });
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: formErr,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: signUpConfirm });
     },
@@ -45,12 +36,7 @@ export default function ConfirmForm() {
         You are almost there! 6-digit security code has been sent to{" "}
         <span className="font-medium">{obscureEmail(email)}</span>
       </p>
-      <fetcher.Form
-        {...getFormProps(form)}
-        className="contents"
-        method="POST"
-        action={`.?${params.toString()}`}
-      >
+      <fetcher.Form {...getFormProps(form)} className="contents" method="POST">
         <input readOnly name="email" value={email} className="invisible" />
         <Input
           {...getInputProps(fields.code, { type: "text" })}
@@ -64,7 +50,6 @@ export default function ConfirmForm() {
       <fetcher.Form
         className="flex items-center justify-between text-xs sm:text-sm font-medium"
         method="POST"
-        action={`.?${params.toString()}`}
       >
         <input readOnly name="email" value={email} className="hidden" />
         <span>

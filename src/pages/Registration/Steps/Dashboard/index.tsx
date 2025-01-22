@@ -1,22 +1,23 @@
+import { Navigate, Outlet, useFetcher, useLoaderData } from "@remix-run/react";
 import { regRoutes } from "constants/routes";
-import { useActionToast } from "hooks/use-action-toast";
-import { Navigate, Outlet, useFetcher, useLoaderData } from "react-router";
-import type { ActionData } from "types/action";
+import { useActionResult } from "hooks/use-action-result";
+import type { ActionData, Ok } from "types/action";
 import { stepLoader } from "../../data/step-loader";
 import type { RegStep6 } from "../../types";
 import EndowmentStatus from "./EndowmentStatus";
 import Step from "./Step";
 
-export { submitAction as clientAction } from "./submit-action";
-export { ErrorElement } from "errors/ErrorElement";
-export const clientLoader = stepLoader(6);
+export { submitAction as action } from "./submit-action";
+export { ErrorBoundary } from "components/error";
+export const loader = stepLoader(6);
 
 export default function Dashboard() {
-  const fetcher = useFetcher<ActionData>({ key: "reg-sub" });
-  useActionToast(fetcher.data);
+  const fetcher = useFetcher<ActionData<Ok>>({ key: "reg-sub" });
+  useActionResult(fetcher.data);
   const { data } = useLoaderData() as RegStep6;
 
   const { submission, init } = data;
+
   const isStepDisabled = fetcher.state !== "idle" || submission === "in-review";
 
   if (
@@ -24,7 +25,7 @@ export default function Dashboard() {
     typeof submission !== "string" &&
     "endowment_id" in submission
   ) {
-    return <Navigate to={`../../${regRoutes.success}`} />;
+    return <Navigate to={`../../${regRoutes.success}`} state={data} />;
   }
 
   return (

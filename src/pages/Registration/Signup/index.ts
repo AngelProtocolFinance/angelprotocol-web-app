@@ -1,2 +1,3 @@
 export { default } from "./Form";
-export { newApplicationAction as clientAction } from "../api";
+export { ErrorBoundary } from "components/error";
+export { newApplicationAction as action } from "../api";

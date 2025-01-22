@@ -1,4 +1,4 @@
-import type { Endow, EndowUpdate } from "@better-giving/endowment";
+import type { EndowUpdate } from "@better-giving/endowment";
 import {
   MAX_RECEIPT_MSG_CHAR,
   incrementLabelMaxChars,
@@ -6,6 +6,8 @@ import {
 import { Field as HuiField, Input, Textarea } from "@headlessui/react";
 import { ErrorMessage } from "@hookform/error-message";
 import { valibotResolver } from "@hookform/resolvers/valibot";
+import { Outlet, useFetcher } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { DonateMethods, fill } from "components/DonateMethods";
 import Increments from "components/Increments";
 import {
@@ -15,23 +17,23 @@ import {
 } from "components/form";
 import { GoalSelector } from "components/goal-selector";
 import { BG_ID } from "constants/common";
-import { useActionToast } from "hooks/use-action-toast";
+import { useActionResult } from "hooks/use-action-result";
 import { DollarSign } from "lucide-react";
 import { useController, useFieldArray, useForm } from "react-hook-form";
-import { Outlet, useFetcher, useLoaderData } from "react-router";
 import { toast } from "sonner";
-import type { EndowmentSettingsAttributes } from "types/aws";
+import type { ActionData } from "types/action";
+import type { LoaderData } from "./api";
 import { toFormTarget, toTarget } from "./helpers";
 import { type FV, schema } from "./types";
 
+export { loader, action } from "./api";
+export { clientLoader } from "api/cache";
+export { ErrorBoundary } from "components/error";
 export default function Form() {
-  const endow = useLoaderData() as Pick<
-    Endow,
-    "id" | EndowmentSettingsAttributes
-  >;
+  const endow = useCachedLoaderData<LoaderData>();
 
-  const fetcher = useFetcher();
-  useActionToast(fetcher.data);
+  const fetcher = useFetcher<ActionData>();
+  useActionResult(fetcher.data);
 
   const {
     reset,

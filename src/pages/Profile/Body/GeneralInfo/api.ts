@@ -1,9 +1,11 @@
 import type { IMedia, Program } from "@better-giving/endowment";
 import type { FundItem } from "@better-giving/fundraiser";
-import { ap, ver } from "api/api";
+import type { LoaderFunction } from "@vercel/remix";
 import { getPrograms } from "api/get/programs";
-import type { LoaderFunction } from "react-router";
+import { plusInt } from "api/schema/endow-id";
+import { parse } from "valibot";
 import { featuredMedia } from "../featured-media";
+import { getFundsNpoMemberOf } from ".server/get-funds";
 
 export interface LoaderData {
   programs: Program[];
@@ -11,18 +13,13 @@ export interface LoaderData {
   funds: FundItem[];
 }
 
-const getFunds = async (idParam: string | undefined) => {
-  return ap
-    .get<FundItem[]>(`${ver(8)}/endowments/${idParam}/funds`, {
-      searchParams: { npoProfileFeatured: true },
-    })
-    .json();
-};
-
-export const clientLoader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
+  const id = parse(plusInt, params.id);
   return {
     programs: await getPrograms(params.id),
     media: await featuredMedia(params.id),
-    funds: await getFunds(params.id),
+    funds: await getFundsNpoMemberOf(id, {
+      npoProfileFeatured: true,
+    }),
   } satisfies LoaderData;
 };

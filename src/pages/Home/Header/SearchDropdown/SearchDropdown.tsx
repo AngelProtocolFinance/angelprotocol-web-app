@@ -1,9 +1,9 @@
+import { Link, NavLink, useFetcher } from "@remix-run/react";
 import { randomLaira } from "assets/laira/laira";
 import Image from "components/Image";
 import { Info, LoadingStatus } from "components/Status";
 import { appRoutes } from "constants/routes";
 import { categories } from "constants/unsdgs";
-import { Link, useFetcher } from "react-router";
 import type { EndowCardsPage } from "types/aws";
 import { TopCountries } from "./TopCountries";
 
@@ -29,9 +29,9 @@ export default function SearchDropdown({
           <h4 className="mb-4">Top categories</h4>
           <div className="flex flex-wrap gap-2">
             {Object.entries(categories).map(([, v]) => (
-              <Link
+              <NavLink
                 key={v.name}
-                className="border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
+                className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
                 to={{
                   pathname: appRoutes.marketplace,
                   search: new URLSearchParams({
@@ -40,18 +40,18 @@ export default function SearchDropdown({
                 }}
               >
                 {v.name}
-              </Link>
+              </NavLink>
             ))}
           </div>
           <h4 className="mb-4 mt-8">Top countries</h4>
           <TopCountries />
 
-          <Link
-            className="text-blue-d1 font-medium text-lg text-center mt-8 block"
+          <NavLink
+            className="text-blue-d1 [&:is(.pending)]:text-gray font-medium text-lg text-center mt-8 block"
             to={appRoutes.marketplace}
           >
             Explore all Causes
-          </Link>
+          </NavLink>
         </>
       ) : (
         <SearchResult
@@ -87,7 +87,11 @@ function SearchResult(props: ISearchResult) {
             />
           ) : (
             <div className="p-1.5 pr-0 h-full">
-              <img src={randomLaira()} className="h-full object-contain" />
+              <img
+                src={randomLaira()}
+                alt="Random Laira mascot"
+                className="h-full object-contain"
+              />
             </div>
           )}
 

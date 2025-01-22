@@ -1,5 +1,5 @@
+import { NavLink } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router";
 import { useProfileContext } from "../ProfileContext";
 
 export default function DonateButton({
@@ -10,11 +10,11 @@ export default function DonateButton({
   const profile = useProfileContext();
 
   return (
-    <Link
+    <NavLink
       to={appRoutes.donate + `/${profile.id}`}
       className={`${className} btn-blue h-12 px-6 text-base lg:text-sm`}
     >
       Donate now
-    </Link>
+    </NavLink>
   );
 }

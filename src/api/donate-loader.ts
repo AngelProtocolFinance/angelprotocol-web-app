@@ -1,34 +1,31 @@
-import type { Endow, Program } from "@better-giving/endowment";
-import { loadAuth } from "auth/load-auth";
-import type { LoaderFunction } from "react-router";
+import type { Endow } from "@better-giving/endowment";
+import { type LoaderFunction, data } from "@vercel/remix";
 import type { UserV2 } from "types/auth";
 import type { EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import { getEndow } from "./get/endow";
 import { getEndowBalance } from "./get/endow-balance";
-import { type FiatCurrencies, getFiatCurrencies } from "./get/fiat-currencies";
-import { getPrograms } from "./get/programs";
 import { plusInt } from "./schema/endow-id";
+import { cognito } from ".server/auth";
 
 export interface DonateData {
   id: number;
   endow: Endow;
   user: UserV2 | null;
   /** need to await */
-  currencies: Promise<FiatCurrencies>;
-  programs: Promise<Program[]>;
   balance: Promise<EndowmentBalances>;
 }
 
-export const clientLoader: LoaderFunction = async ({ params }) => {
-  const auth = await loadAuth();
+export const loader: LoaderFunction = async ({ request, params }) => {
+  const { user, headers } = await cognito.retrieve(request);
   const id = v.parse(plusInt, params.id);
-  return {
-    id,
-    user: auth,
-    endow: await getEndow(id),
-    currencies: getFiatCurrencies(auth ?? undefined),
-    programs: getPrograms(id),
-    balance: getEndowBalance(id.toString()),
-  } satisfies DonateData;
+  return data(
+    {
+      id,
+      user,
+      endow: await getEndow(id),
+      balance: getEndowBalance(id.toString()),
+    } satisfies DonateData,
+    { headers }
+  );
 };

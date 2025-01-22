@@ -1,9 +1,9 @@
+import { matchPath, useLocation } from "@remix-run/react";
 import useHandleScreenResize, {
   SCREEN_BREAKPOINTS,
 } from "hooks/useHandleScreenResize";
 import { Menu } from "lucide-react";
 import { useState } from "react";
-import { matchPath, useLocation } from "react-router";
 import type { Link, LinkGroup } from "../types";
 
 const DEFAULT_LINK: Link = {

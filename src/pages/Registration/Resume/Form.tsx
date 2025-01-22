@@ -1,36 +1,53 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
-import { loadAuth, redirectToAuth } from "auth";
+import { Link, useFetcher, useLoaderData } from "@remix-run/react";
+import {
+  type ActionFunction,
+  type LoaderFunction,
+  redirect,
+} from "@vercel/remix";
 import { Separator } from "components/Separator";
 import { NativeField as Field } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
-import { type ActionFunction, Link, redirect, useFetcher } from "react-router";
+import { regCookie } from "../data/cookie";
 import { getRegState } from "../data/step-loader";
 import { nextStep } from "../routes";
 import { schema } from "./types";
+import { cognito, toAuth } from ".server/auth";
 
-export const clientAction: ActionFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+export const loader: LoaderFunction = async ({ request }) => {
+  const cookieHeader = request.headers.get("Cookie");
+  const { user, headers } = await cognito.retrieve(cookieHeader);
+  if (!user) return toAuth(request, headers);
+
+  const rc = await regCookie.parse(cookieHeader).then((x) => x || {});
+  return rc.reference || null;
+};
+
+export const action: ActionFunction = async ({ request }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return toAuth(request, headers);
 
   const fv = await request.formData();
   const parsed = parseWithValibot(fv, { schema });
   if (parsed.status !== "success") return parsed.reply();
 
-  const { data, step } = await getRegState(parsed.value.reference, auth);
+  const { data, step } = await getRegState(parsed.value.reference, user);
   return redirect(`../${data.init.id}/${nextStep[step]}`);
 };
 
+export { ErrorBoundary } from "components/error";
 export default function Form({ classes = "" }: { classes?: string }) {
+  const prev = useLoaderData();
   const fetcher = useFetcher();
   const [form, fields] = useForm({
+    shouldRevalidate: "onSubmit",
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema });
     },
-    defaultValue: { reference: "" },
+    defaultValue: { reference: prev || "" },
   });
   return (
     <fetcher.Form
-      action="."
       method="POST"
       {...getFormProps(form)}
       className={`${classes} grid padded-container w-full max-w-[37.5rem]`}

@@ -1,12 +1,12 @@
 import type { FsaPayload } from "@better-giving/registration/fsa";
+import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
 import { regRoutes } from "constants/routes";
-import { type ActionFunction, redirect } from "react-router";
+import { cognito, toAuth } from ".server/auth";
 
-export const clientAction: ActionFunction = async ({ request, params }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+export const action: ActionFunction = async ({ request, params }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return toAuth(request, headers);
 
   const contentType = request.headers.get("content-type");
   const signer =
@@ -25,7 +25,7 @@ export const clientAction: ActionFunction = async ({ request, params }) => {
   const { url: to } = await ap
     .post<{ url: string }>(`${ver(1)}/registration-fsa`, {
       json: payload,
-      headers: { authorization: auth.idToken },
+      headers: { authorization: user.idToken },
     })
     .json();
 

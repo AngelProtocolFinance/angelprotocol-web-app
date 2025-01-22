@@ -1,8 +1,8 @@
+import { Link, useLoaderData } from "@remix-run/react";
 import BankDetails from "components/BankDetails";
 import ExtLink from "components/ExtLink";
 import { SquareArrowOutUpRight } from "lucide-react";
 import { useState } from "react";
-import { Link, useLoaderData } from "react-router";
 import { steps } from "../../routes";
 import type { RegStep5 } from "../../types";
 import FormButtons from "./FormButtons";

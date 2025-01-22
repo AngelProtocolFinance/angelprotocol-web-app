@@ -1,14 +1,10 @@
-import { loadAuth } from "auth";
+import { type LoaderFunction, redirect } from "@vercel/remix";
 import { appRoutes } from "constants/routes";
-import { decodeState } from "helpers/state-params";
-import { type LoaderFunction, redirect } from "react-router";
-
-export const clientLoader: LoaderFunction = async ({
+import { cognito } from ".server/auth";
+export const loader: LoaderFunction = async ({
   request,
 }): Promise<Response | unknown> => {
-  const auth = await loadAuth();
-  if (auth) return redirect(appRoutes.marketplace);
-
-  const url = new URL(request.url);
-  return decodeState(url.searchParams.get("_s"));
+  const { user, headers } = await cognito.retrieve(request);
+  if (user) return redirect(appRoutes.marketplace, { headers });
+  return new URL(request.url).searchParams.get("redirect") || "/";
 };

@@ -1,5 +1,5 @@
+import { Await } from "@remix-run/react";
 import { Suspense } from "react";
-import { Await } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { BookmarkLink } from "./EndowmentLink";
 
@@ -15,9 +15,9 @@ export function Bookmarks({ classes = "", user }: Props) {
 
       <Suspense>
         <Await resolve={user.bookmarks}>
-          {(bookmarks: Awaited<DetailedUser["bookmarks"]>) => (
+          {(bms) => (
             <>
-              {bookmarks.map((b) => (
+              {bms.map((b) => (
                 <BookmarkLink key={b.endowId} {...b} />
               ))}
             </>

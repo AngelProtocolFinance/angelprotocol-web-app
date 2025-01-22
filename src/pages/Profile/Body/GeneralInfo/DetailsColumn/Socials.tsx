@@ -1,11 +1,11 @@
 import type { Endow } from "@better-giving/endowment";
 import discordIcon from "assets/icons/social/discord.svg";
-import facebookIcon from "assets/icons/social/facebook.png";
-import instagramIcon from "assets/icons/social/instagram.png";
-import linkedinIcon from "assets/icons/social/linkedin.png";
-import tiktokIcon from "assets/icons/social/tiktok.png";
-import xIcon from "assets/icons/social/x.png";
-import youtubeIcon from "assets/icons/social/youtube.png";
+import facebookIcon from "assets/icons/social/facebook.webp";
+import instagramIcon from "assets/icons/social/instagram.webp";
+import linkedinIcon from "assets/icons/social/linkedin.webp";
+import tiktokIcon from "assets/icons/social/tiktok.webp";
+import xIcon from "assets/icons/social/x.webp";
+import youtubeIcon from "assets/icons/social/youtube.webp";
 import ExtLink from "components/ExtLink";
 
 export default function Socials(props: Pick<Endow, "social_media_urls">) {

@@ -1,16 +1,16 @@
 import type { Page } from "@better-giving/registration/approval";
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { redirectToAuth } from "auth";
-import { loadAuth } from "auth/load-auth";
-import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export { default } from "./Applications";
+export { ErrorBoundary } from "components/error";
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  if (auth) return getApplications(new URL(request.url), auth);
-  return redirectToAuth(request);
+export const loader: LoaderFunction = async ({ request }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (user) return getApplications(new URL(request.url), user);
+  return toAuth(request, headers);
 };
 
 async function getApplications(source: URL, user: UserV2) {

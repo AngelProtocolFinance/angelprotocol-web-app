@@ -1,12 +1,12 @@
 import type { Allocation } from "@better-giving/endowment";
+import type { LoaderFunction } from "@vercel/remix";
 import { apes, toSearch, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
-import { loadAuth, redirectToAuth } from "auth";
-import type { LoaderFunction } from "react-router";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
+import { cognito, toAuth } from ".server/auth";
 
 const getAllocation = (id: number) =>
   getEndow(id, ["allocation"]).then<Allocation>(
@@ -38,8 +38,8 @@ export interface DashboardData {
 
 export const endowUpdateAction = endowUpdate({ redirect: "." });
 export const dashboardData: LoaderFunction = async ({ params, request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return toAuth(request, headers);
   const url = new URL(request.url);
   const nextPageKey = url.searchParams.get("nextPageKey");
 
@@ -47,6 +47,6 @@ export const dashboardData: LoaderFunction = async ({ params, request }) => {
   return {
     alloc: await getAllocation(id),
     bal: await getBalance(id),
-    balTxs: await balanceTxs(id, nextPageKey, auth.idToken),
+    balTxs: await balanceTxs(id, nextPageKey, user.idToken),
   } satisfies DashboardData;
 };

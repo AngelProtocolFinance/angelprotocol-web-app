@@ -1,29 +1,41 @@
-import { posts } from "api/get/wp-posts";
-import Media from "components/Media";
-import Seo from "components/Seo";
-import { useEffect, useState } from "react";
 import {
-  Link,
-  type LoaderFunction,
+  NavLink,
   useFetcher,
   useLoaderData,
   useSearchParams,
-} from "react-router";
+} from "@remix-run/react";
+import type {
+  HeadersFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
+import { posts } from "api/get/wp-posts";
+import Media from "components/Media";
+import { metas } from "helpers/seo";
+import { useEffect, useState } from "react";
 import type { Wordpress } from "types/wordpress";
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": "s-max-age=30, stale-while-revalidate=60",
+});
+
+export const loader: LoaderFunction = async ({ request }) => {
   const url = new URL(request.url);
   const currPage = +(url.searchParams.get("page") ?? "1");
   const [items, total] = await posts(currPage);
   const itemsPerPage = 10;
 
-  return {
+  const page: Wordpress.PostPage = {
     pageNum: currPage,
     posts: items,
     nextPageNum: currPage * itemsPerPage < total ? currPage + 1 : undefined,
   } satisfies Wordpress.PostPage;
+  return page;
 };
+export const meta: MetaFunction = () =>
+  metas({ title: "Blog - Better Giving", description: "Checkout the latest" });
 
+export { ErrorBoundary } from "components/error";
 export default function Posts() {
   const [params] = useSearchParams();
   const { data, state, load } = useFetcher<Wordpress.PostPage>();
@@ -39,7 +51,6 @@ export default function Posts() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 content-start padded-container min-h-screen pb-6">
-      <Seo title="Blog - Better Giving" description="Checkout the latest" />
       <h1 className="font-bold uppercase col-span-full text-2xl lg:text-3xl break-words mt-6">
         Posts
       </h1>
@@ -65,10 +76,10 @@ export default function Posts() {
 
 const Cards = (props: { posts: Wordpress.Post[] }) =>
   props.posts.map((post, _index) => (
-    <Link
+    <NavLink
       key={post.slug}
       to={post.slug}
-      className="grid grid-rows-[auto_1fr] h-full rounded-lg overflow-clip bg-blue-l5 hover:bg-blue-l4 border border-blue-l2/20 group"
+      className="grid [&:is(.pending)]:grayscale grid-rows-[auto_1fr] h-full rounded-lg overflow-clip bg-blue-l5 hover:bg-blue-l4 border border-blue-l2/20 group"
     >
       <Media
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
@@ -91,5 +102,5 @@ const Cards = (props: { posts: Wordpress.Post[] }) =>
           }}
         />
       </div>
-    </Link>
+    </NavLink>
   ));

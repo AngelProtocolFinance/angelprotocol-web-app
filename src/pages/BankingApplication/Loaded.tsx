@@ -1,8 +1,8 @@
+import { NavLink } from "@remix-run/react";
 import ExtLink from "components/ExtLink";
 import { appRoutes } from "constants/routes";
 import { SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link } from "react-router";
 import type { BankingApplicationDetails } from "services/types";
 
 export function Loaded(props: BankingApplicationDetails) {
@@ -62,15 +62,15 @@ export function Loaded(props: BankingApplicationDetails) {
         </Row>
       </dl>
       <div className="flex gap-x-3 justify-self-center sm:justify-self-end">
-        <Link
+        <NavLink
           replace
           preventScrollReset
           to={appRoutes.banking_applications}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           replace
           preventScrollReset
           aria-disabled={!!prevVerdict}
@@ -78,8 +78,8 @@ export function Loaded(props: BankingApplicationDetails) {
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
         >
           reject
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           replace
           preventScrollReset
           aria-disabled={!!prevVerdict}
@@ -87,7 +87,7 @@ export function Loaded(props: BankingApplicationDetails) {
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-green"
         >
           approve
-        </Link>
+        </NavLink>
       </div>
     </>
   );

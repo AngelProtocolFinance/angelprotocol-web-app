@@ -1,8 +1,5 @@
 import type { Endow } from "@better-giving/endowment";
-import Seo from "components/Seo";
 import { type DonationRecipient, Steps } from "components/donation";
-import { APP_NAME, BASE_URL } from "constants/env";
-import { appRoutes } from "constants/routes";
 import type { Parsed } from "./parseConfig";
 
 type Props = {
@@ -23,14 +20,6 @@ export default function Content({ profile, config, classes = "" }: Props) {
     <div
       className={`${classes} w-full grid gap-5 content-start justify-items-center`}
     >
-      <Seo
-        title={`Donate to ${profile.name} - ${APP_NAME}`}
-        description={profile.tagline?.slice(0, 140)}
-        name={profile.name}
-        image={profile.logo}
-        url={`${BASE_URL}/${appRoutes.donate_widget}/${profile.id}`}
-        scripts={[]}
-      />
       {config.isTitleShown && (
         <h1 className="text-center w-full z-20 text-lg sm:text-3xl text-pretty">
           {config.title || `Donate to ${profile.name}`}

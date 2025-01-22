@@ -1,7 +1,7 @@
+import { Await, useFetcher } from "@remix-run/react";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { Heart } from "lucide-react";
 import { Suspense } from "react";
-import { Await, useFetcher } from "react-router";
 import type { DetailedUser, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
 
@@ -12,34 +12,6 @@ type Props = {
 };
 
 export default function Loader({ classes = "", user, endowId }: Props) {
-  const bms = user ? user.bookmarks : Promise.resolve([]);
-  return (
-    <Suspense fallback={<Heart size={19} className={`${classes} text-gray`} />}>
-      <Await resolve={bms}>
-        {(bms: EndowmentBookmark[]) => (
-          <BookmarkBtn
-            bookmarks={bms}
-            user={user}
-            endowId={endowId}
-            classes={classes}
-          />
-        )}
-      </Await>
-    </Suspense>
-  );
-}
-
-interface IBookmarkBtn {
-  /** user endow */
-  endowId: number;
-  user?: UserV2 | null;
-  bookmarks: EndowmentBookmark[];
-  classes?: string;
-}
-
-function BookmarkBtn({ user, bookmarks, classes = "", endowId }: IBookmarkBtn) {
-  const fetcher = useFetcher();
-
   if (!user) {
     return (
       <Tooltip
@@ -54,29 +26,56 @@ function BookmarkBtn({ user, bookmarks, classes = "", endowId }: IBookmarkBtn) {
       </Tooltip>
     );
   }
+  return (
+    <Suspense fallback={<Heart size={19} className={`${classes} text-gray`} />}>
+      <Await resolve={user.bookmarks}>
+        {(loaded) => (
+          <BookmarkBtn
+            bookmarks={loaded}
+            user={user}
+            endowId={endowId}
+            classes={classes}
+          />
+        )}
+      </Await>
+    </Suspense>
+  );
+}
 
-  const isBookmarked =
-    fetcher.formData?.get("action") === "add" ||
-    bookmarks.some((bm) => bm.endowId === endowId);
+interface IBookmarkBtn {
+  /** user endow */
+  endowId: number;
+  user: UserV2;
+  bookmarks: EndowmentBookmark[];
+  classes?: string;
+}
+
+function BookmarkBtn({ bookmarks, classes = "", endowId }: IBookmarkBtn) {
+  const fetcher = useFetcher();
+
+  const action = fetcher.formData?.get("action");
+  const isBookmarked = action
+    ? action === "add"
+    : bookmarks.some((bm) => bm.endowId === endowId);
 
   return (
-    <Tooltip
-      tip={
-        !isBookmarked ? (
-          <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
-            Add to favorites
-            <Arrow />
-          </Content>
-        ) : null
-      }
-    >
-      <fetcher.Form action="/" method="POST" className="contents">
-        <input
-          type="hidden"
-          name="action"
-          value={isBookmarked ? "delete" : "add"}
-        />
-        <input type="hidden" name="endowId" value={endowId} />
+    <fetcher.Form action="/" method="POST" className="contents">
+      <input
+        type="hidden"
+        name="action"
+        value={isBookmarked ? "delete" : "add"}
+      />
+      <input type="hidden" name="endowId" value={endowId} />
+      <Tooltip
+        tip={
+          !isBookmarked ? (
+            <Content className="px-4 py-2 bg-navy-d4 text-white text-sm rounded-lg shadow-lg">
+              Add to favorites
+              <Arrow />
+            </Content>
+          ) : null
+        }
+      >
         <button
           name="intent"
           value="toggle-bookmark"
@@ -90,7 +89,7 @@ function BookmarkBtn({ user, bookmarks, classes = "", endowId }: IBookmarkBtn) {
             className={isBookmarked ? "fill-red text-red" : ""}
           />
         </button>
-      </fetcher.Form>
-    </Tooltip>
+      </Tooltip>
+    </fetcher.Form>
   );
 }

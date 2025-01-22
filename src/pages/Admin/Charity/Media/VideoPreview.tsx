@@ -1,8 +1,8 @@
 import type { IMedia } from "@better-giving/endowment";
+import { Link, useFetcher } from "@remix-run/react";
+import { ReactPlayer } from "components/react-player";
 import { LoaderCircle, Minus, Pencil, Star } from "lucide-react";
 import type { ButtonHTMLAttributes } from "react";
-import ReactPlayer from "react-player";
-import { Link, useFetcher } from "react-router";
 
 export default function VideoPreview(props: IMedia) {
   const del = useFetcher({ key: `delete-${props.id}` });
@@ -76,7 +76,7 @@ interface ICRUDBtn extends ButtonHTMLAttributes<HTMLButtonElement> {
 function CRUDBtn({ className, children, featured, ...props }: ICRUDBtn) {
   const fetcher = useFetcher({ key: `${props.value}-${props.id}` });
   return (
-    <fetcher.Form action="." method="POST" className="contents">
+    <fetcher.Form method="POST" className="contents">
       <input type="hidden" name="featured" value={featured ? "1" : "0"} />
       <input type="hidden" name="mediaId" value={props.id} />
       <button

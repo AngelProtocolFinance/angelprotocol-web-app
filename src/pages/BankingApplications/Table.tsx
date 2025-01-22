@@ -1,7 +1,7 @@
+import { NavLink } from "@remix-run/react";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import { Folder } from "lucide-react";
-import { Link } from "react-router";
 import type { BankingApplicationStatus } from "types/aws";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
@@ -53,16 +53,16 @@ export default function Table({
               <td className="text-center">
                 <Status status={row.status} />
               </td>
-              <Link
+              <NavLink
                 to={appRoutes.banking_applications + `/${row.wiseRecipientID}`}
-                className="text-center w-full inline-block hover:text-blue-d1"
+                className="text-center w-full inline-block hover:text-blue-d1 [&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none"
               >
                 <Folder
                   size={22}
                   aria-label="bank statement file"
                   className="inline-block"
                 />
-              </Link>
+              </NavLink>
             </Cells>
           ))
           .concat(

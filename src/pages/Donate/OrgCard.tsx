@@ -1,9 +1,8 @@
+import { Await, Link, useLoaderData } from "@remix-run/react";
 import type { DonateData } from "api/donate-loader";
 import Image from "components/Image";
 import { type TTarget, Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Await, Link, useLoaderData } from "react-router";
-import type { EndowmentBalances } from "types/aws";
 
 type Props = {
   id: number;
@@ -38,11 +37,11 @@ export default function OrgCard({ classes = "", ...props }: Props) {
       </div>
 
       <Await resolve={balance}>
-        {(bal: EndowmentBalances) =>
+        {(b) =>
           props.target && (
             <Target
               text={<Target.Text classes="mb-2" />}
-              progress={bal.totalContributions}
+              progress={b.totalContributions}
               target={toTarget(props.target)}
               classes="order-1 @xl/org-card:order-2"
             />

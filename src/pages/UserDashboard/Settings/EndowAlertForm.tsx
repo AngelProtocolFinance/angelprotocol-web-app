@@ -1,8 +1,9 @@
 import type { UserEndow } from "@better-giving/user";
+import { useFetcher } from "@remix-run/react";
 import { Info } from "components/Status";
 import { NativeCheckField as CheckField, Form } from "components/form";
+import { useActionResult } from "hooks/use-action-result";
 import { type SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { useFetcher } from "react-router";
 import type { UserV2 } from "types/auth";
 
 interface Props {
@@ -15,6 +16,7 @@ type FV = { items: UserEndow[] };
 
 export default function EndowAlertForm({ classes = "", userEndows }: Props) {
   const fetcher = useFetcher();
+  useActionResult(fetcher.data);
 
   const {
     register,

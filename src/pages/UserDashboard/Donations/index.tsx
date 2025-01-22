@@ -1,13 +1,9 @@
+import { Outlet, useFetcher, useSearchParams } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import CsvExporter from "components/CsvExporter";
 import { replaceWithEmptyString as fill, humanize } from "helpers";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import {
-  Outlet,
-  useFetcher,
-  useLoaderData,
-  useSearchParams,
-} from "react-router";
 import type { Donation } from "types/aws";
 import Filter from "./Filter";
 import MobileTable from "./MobileTable";
@@ -16,12 +12,14 @@ import StatusTabs from "./StatusTabs";
 import Table from "./Table";
 import type { DonationsData } from "./donations-loader";
 
-export { loader as clientLoader } from "./donations-loader";
+export { loader } from "./donations-loader";
+export { ErrorBoundary } from "components/error";
+export { clientLoader } from "api/cache";
 
 export default function Donations() {
   const [params, setParams] = useSearchParams();
   const { load, data, state } = useFetcher<DonationsData>();
-  const { user, ...firstPage } = useLoaderData() as DonationsData;
+  const { user, ...firstPage } = useCachedLoaderData<DonationsData>();
   const [items, setItems] = useState<Donation.Record[]>(firstPage.Items);
 
   const [query, setQuery] = useState("");

@@ -1,7 +1,7 @@
+import { Link } from "@remix-run/react";
 import Image from "components/Image";
 import { appRoutes } from "constants/routes";
 import { benefits } from "content/benefits";
-import { Link } from "react-router";
 
 export default function Hero({ className = "" }) {
   return (

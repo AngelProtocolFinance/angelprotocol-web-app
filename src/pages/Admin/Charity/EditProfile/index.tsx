@@ -1,20 +1,24 @@
-import type { Endow, EndowDesignation } from "@better-giving/endowment";
-import { getEndow } from "api/get/endow";
+import type { EndowDesignation } from "@better-giving/endowment";
+import type { LinksFunction } from "@vercel/remix";
+import { useCachedLoaderData } from "api/cache";
 import { country } from "components/CountrySelector";
-import { parseContent } from "components/RichText";
+import { imgEditorStyles } from "components/ImgEditor";
+import { richTextStyles, toContent } from "components/RichText";
 import { unsdgs } from "constants/unsdgs";
-import { type LoaderFunction, useLoaderData } from "react-router";
-import { endowUpdate } from "../endow-update-action";
 import Form from "./Form";
+import type { LoaderData } from "./api";
 import { getSDGLabelValuePair } from "./getSDGLabelValuePair";
 import type { FV } from "./schema";
 
-export const clientLoader: LoaderFunction = async ({ params }) =>
-  getEndow(params.id);
-export const clientAction = endowUpdate({ success: "Profile updated" });
-
+export { loader, action } from "./api";
+export { clientLoader } from "api/cache";
+export const links: LinksFunction = () => [
+  ...richTextStyles,
+  ...imgEditorStyles,
+];
+export { ErrorBoundary } from "components/error";
 export default function EditProfile() {
-  const endow = useLoaderData() as Endow;
+  const endow = useCachedLoaderData<LoaderData>();
   const defaults: FV = {
     name: endow.name,
     published: !!endow.published,
@@ -44,7 +48,7 @@ export default function EditProfile() {
       label: x,
       value: x,
     })),
-    overview: parseContent(endow.overview),
+    overview: toContent(endow.overview),
   };
 
   return <Form initSlug={endow.slug} init={defaults} id={endow.id} />;

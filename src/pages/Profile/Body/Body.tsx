@@ -1,3 +1,10 @@
+import {
+  NavLink,
+  Outlet,
+  useLoaderData,
+  useRouteLoaderData,
+} from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { getEndowBalance } from "api/get/endow-balance";
 import BookmarkBtn from "components/BookmarkBtn";
 import Breadcrumbs from "components/Breadcrumbs";
@@ -6,17 +13,11 @@ import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
 import { Globe, MapPin } from "lucide-react";
-import {
-  type LoaderFunction,
-  useLoaderData,
-  useRouteLoaderData,
-} from "react-router";
-import { Link, Outlet } from "react-router";
 import type { DetailedUser } from "types/auth";
 import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../ProfileContext";
 
-export const clientLoader: LoaderFunction = async ({ params }) =>
+export const loader: LoaderFunction = async ({ params }) =>
   getEndowBalance(params.id);
 
 export default function Body() {
@@ -46,12 +47,12 @@ export default function Body() {
               target={toTarget(p.target)}
             />
           )}
-          <Link
+          <NavLink
             to={`${appRoutes.donate}/${p.id}`}
             className="btn-blue w-full lg:w-48 h-12 px-6 text-base lg:text-sm"
           >
             Donate now
-          </Link>
+          </NavLink>
         </div>
 
         <div className="order-2 lg:order-3 lg:col-span-2 flex flex-col gap-8 w-full items-center">

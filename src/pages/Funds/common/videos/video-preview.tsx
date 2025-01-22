@@ -1,6 +1,6 @@
+import { ReactPlayer } from "components/react-player";
 import { Minus, Pencil } from "lucide-react";
 import { type ButtonHTMLAttributes, useState } from "react";
-import ReactPlayer from "react-player";
 import type { Video } from "./types";
 import { VideoModal } from "./video-modal";
 

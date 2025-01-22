@@ -1,8 +1,8 @@
 import type { UNSDG_NUM } from "@better-giving/registration/models";
+import { useSearchParams } from "@remix-run/react";
 import { categories, sdgGroups } from "constants/unsdgs";
 import { CircleX } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { useSearchParams } from "react-router";
 import { toParsed, toRaw } from "./helpers";
 
 export default function ActiveFilters() {

@@ -1,24 +1,19 @@
-import type { Program } from "@better-giving/endowment";
 import type { SingleFund } from "@better-giving/fundraiser";
-import { getFiatCurrencies } from "api/get/fiat-currencies";
+import type { LoaderFunction } from "@vercel/remix";
 import { getFund } from "api/get/fund";
-import type { FiatCurrencies } from "api/types";
-import { loadAuth } from "auth";
-import type { LoaderFunction } from "react-router";
+import type { UserV2 } from "types/auth";
+import { cognito } from ".server/auth";
 
 export interface LoaderData {
+  user: UserV2 | null;
   fund: SingleFund;
-  /** need to await */
-  currencies: Promise<FiatCurrencies>;
-  programs: Promise<Program[]>;
 }
 
-export const clientLoader: LoaderFunction = async ({ params }) => {
-  const auth = await loadAuth();
+export const loader: LoaderFunction = async ({ params, request }) => {
+  const { user } = await cognito.retrieve(request);
 
   return {
+    user,
     fund: await getFund(params.fundId),
-    currencies: getFiatCurrencies(auth ?? undefined),
-    programs: Promise.resolve([]),
   } satisfies LoaderData;
 };

@@ -1,11 +1,11 @@
 import type { Reg } from "@better-giving/registration/step";
+import { type LoaderFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
-import { type LoaderFunction, redirect } from "react-router";
 import type { UserV2 } from "types/auth";
 import { parse, pipe, string, uuid } from "valibot";
 import type { Reg$IdData, RegStep } from "../types";
 import { getRegistrationState } from "./getRegistrationState";
+import { cognito, toAuth } from ".server/auth";
 
 const uuidSchema = pipe(string(), uuid());
 
@@ -24,21 +24,21 @@ export async function getRegState(
 }
 
 export const regLoader: LoaderFunction = async ({ params, request }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return toAuth(request, headers);
   return {
-    user: auth,
-    reg: await getRegState(params.regId, auth),
+    user,
+    reg: await getRegState(params.regId, user),
   } satisfies Reg$IdData;
 };
 
 export const stepLoader =
   (thisStep: RegStep): LoaderFunction =>
   async ({ params, request }) => {
-    const auth = await loadAuth();
-    if (!auth) return redirectToAuth(request);
+    const { user, headers } = await cognito.retrieve(request);
+    if (!user) return toAuth(request, headers);
 
-    const state = await getRegState(params.regId, auth);
+    const state = await getRegState(params.regId, user);
 
     if (thisStep > state.step + 1) {
       return redirect(`../${state.step}`);

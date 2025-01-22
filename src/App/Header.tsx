@@ -1,7 +1,7 @@
+import { useLocation, useRouteLoaderData } from "@remix-run/react";
 import { NavDropdown, UserMenu } from "components/Header";
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
-import { useLocation, useRouteLoaderData } from "react-router";
 import type { DetailedUser } from "types/auth";
 
 type Props = { classes?: string };

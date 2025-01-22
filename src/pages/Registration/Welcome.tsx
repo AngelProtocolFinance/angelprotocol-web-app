@@ -1,14 +1,13 @@
+import { Form, useNavigation } from "@remix-run/react";
 import LoadText from "components/LoadText";
 import { APP_NAME } from "constants/env";
 import { CircleCheck } from "lucide-react";
-import { useFetcher } from "react-router";
-
-export { newApplicationAction as clientAction } from "./api";
+export { newApplicationAction as action } from "./api";
+export { ErrorBoundary } from "components/error";
 export default function Welcome() {
-  const fetcher = useFetcher();
-
+  const nav = useNavigation();
   return (
-    <div className="grid justify-items-center mx-6">
+    <Form method="POST" className="grid justify-items-center mx-6">
       <CircleCheck className="text-green" size={80} />
       <h1 className="text-[2rem] mt-10 text-center">
         Thank you for joining {APP_NAME}!
@@ -17,21 +16,17 @@ export default function Welcome() {
         Your fundraising profile & account are just few steps away 😇
       </p>
 
-      <fetcher.Form className="contents" action="." method="POST">
-        <button
-          disabled={fetcher.state !== "idle"}
-          className="w-full max-w-[26.25rem] btn-blue btn-reg"
-        >
-          <LoadText text="Continue registration">
-            Continue registration
-          </LoadText>
-        </button>
-      </fetcher.Form>
+      <button
+        disabled={nav.state === "submitting"}
+        className="w-full max-w-[26.25rem] btn-blue btn-reg"
+      >
+        <LoadText text="Continue registration">Continue registration</LoadText>
+      </button>
 
       <p className="text-sm italic text-navy-l1 dark:text-navy-l2 mt-8 text-center">
         Note: Registration is quick, but we've sent an email link if you need to
         pause and resume at any point.
       </p>
-    </div>
+    </Form>
   );
 }

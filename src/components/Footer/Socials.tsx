@@ -1,8 +1,8 @@
-import facebook from "assets/icons/social/facebook.png";
-import instagram from "assets/icons/social/instagram.png";
-import linkedin from "assets/icons/social/linkedin.png";
-import x from "assets/icons/social/x.png";
-import youtube from "assets/icons/social/youtube.png";
+import facebook from "assets/icons/social/facebook.webp";
+import instagram from "assets/icons/social/instagram.webp";
+import linkedin from "assets/icons/social/linkedin.webp";
+import x from "assets/icons/social/x.webp";
+import youtube from "assets/icons/social/youtube.webp";
 import ExtLink from "../ExtLink";
 
 export default function Socials() {

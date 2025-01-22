@@ -1,2 +1,3 @@
 export { default } from "./VideoEditor";
-export { newAction as clientAction } from "./api";
+export { newAction as action } from "./api";
+export { ErrorModal as ErrorBoundary } from "components/error";

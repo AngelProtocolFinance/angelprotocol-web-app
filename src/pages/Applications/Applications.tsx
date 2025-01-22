@@ -1,14 +1,13 @@
 import type { Page } from "@better-giving/registration/approval";
-import Seo from "components/Seo";
+import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useFetcher, useLoaderData, useSearchParams } from "react-router";
 import Filter from "./Filter";
 import Table from "./Table";
 
 export default function Applications() {
   const [params] = useSearchParams();
-  const firstPage = useLoaderData() as Page;
+  const firstPage = useLoaderData<Page>();
   const { load, data, state } = useFetcher<Page>({
     key: "applications",
   });
@@ -30,7 +29,6 @@ export default function Applications() {
 
   return (
     <div className="grid grid-cols-[1fr_auto] content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20">
-      <Seo title="Applications" />
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Applications Review - Dashboard
       </h1>
@@ -55,9 +53,11 @@ export default function Applications() {
 
       <div className="grid col-span-full overflow-x-auto">
         <Table
-          applications={items.filter(({ org_name, id }) =>
-            (org_name + id).toLowerCase().includes(query.toLowerCase())
-          )}
+          applications={
+            items.filter(({ org_name, id }) =>
+              (org_name + id).toLowerCase().includes(query.toLowerCase())
+            ) as any
+          }
           nextPageKey={nextPage}
           loadMore={loadNextPage}
           disabled={state === "loading"}

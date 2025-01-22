@@ -1,7 +1,7 @@
+import { useFetcher, useSearchParams } from "@remix-run/react";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEvent } from "react";
-import { useFetcher, useSearchParams } from "react-router";
 
 interface Props {
   onChange: (text: string) => void;
@@ -16,7 +16,7 @@ export default function SearchField({ classes = "", onChange }: Props) {
     onChange(val);
     const n = new URLSearchParams(params);
     n.set("query", val);
-    load(`?${n.toString()}`);
+    load(`?index&${n.toString()}`);
   }
 
   return (

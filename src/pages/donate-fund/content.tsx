@@ -1,4 +1,5 @@
-import flying_character from "assets/images/flying-character.png";
+import { Link, useLoaderData } from "@remix-run/react";
+import flying_character from "assets/images/flying-character.webp";
 import ExtLink from "components/ExtLink";
 import { DappLogo } from "components/Image";
 import { Info } from "components/Status";
@@ -6,7 +7,6 @@ import { Steps } from "components/donation";
 import { INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { PRIVACY_POLICY } from "constants/urls";
-import { Link, useLoaderData } from "react-router";
 import type { LoaderData } from "./api";
 import FAQ from "./faq";
 import { FundCard } from "./fund-card";
@@ -21,7 +21,7 @@ export default function Content() {
   return (
     <div className="w-full bg-[#F6F7F8]">
       <div className="bg-white h-[3.6875rem] w-full flex items-center justify-between px-10 mb-4">
-        <DappLogo classes="h-[2.036rem]" />
+        <DappLogo classes="h-12" />
         <Link
           to={`${appRoutes.funds}/${fund.id}`}
           className="font-semibold font-heading hover:text-blue-d1"

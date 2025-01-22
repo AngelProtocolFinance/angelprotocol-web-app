@@ -1,7 +1,6 @@
-import Seo from "components/Seo";
+import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
 import { Info } from "components/Status";
 import { useEffect, useState } from "react";
-import { useFetcher, useLoaderData, useSearchParams } from "react-router";
 import type { BankingApplicationsPage } from "types/aws";
 import Filter from "./Filter";
 import Table from "./Table";
@@ -29,7 +28,6 @@ export default function BankingApplications() {
 
   return (
     <div className="grid content-start gap-y-4 lg:gap-y-8 lg:gap-x-3 relative padded-container py-20 lg:pt-10">
-      <Seo title="Banking applications" />
       <h1 className="text-center text-3xl col-span-full max-lg:mb-4">
         Banking Applications
       </h1>

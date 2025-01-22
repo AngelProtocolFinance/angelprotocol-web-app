@@ -1,10 +1,10 @@
 import casd from "./CASD-SL.webp";
-import ph from "./PH8_Logo.jpeg";
+import ph from "./PH8_Logo.webp";
 import ace from "./ace_of_hearts.webp";
 import buck from "./buck.webp";
-import fora from "./foraday.png";
+import fora from "./foraday.webp";
 import shoe from "./shoes_that_speak.webp";
-import test from "./testi3Img.png";
+import test from "./testi3Img.webp";
 
 export type Testimonial = {
   content: string;

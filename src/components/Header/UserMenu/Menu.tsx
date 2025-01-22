@@ -1,8 +1,7 @@
 import { MenuItem } from "@headlessui/react";
-import { groups } from "constants/auth";
+import { Form, Link, useNavigation } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { CircleDollarSign, Shield } from "lucide-react";
-import { Link, useFetcher } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { Bookmarks } from "./Bookmarks";
 import { Organizations } from "./Organizations";
@@ -12,7 +11,7 @@ type Props = {
   user: DetailedUser;
 };
 export default function Menu({ user, classes }: Props) {
-  const fetcher = useFetcher();
+  const navigation = useNavigation();
   return (
     <div className={`${classes} text-navy-l1`}>
       <p className="text-sm p-3 bg-blue-l4">
@@ -31,7 +30,7 @@ export default function Menu({ user, classes }: Props) {
         <Bookmarks user={user} classes="mt-6" />
         <div className="hidden [&:has(a)]:block mt-6">
           <h5 className="uppercase text-xs text-navy-l1 mb-1">BG Admin</h5>
-          {user.groups.includes(groups["ap-admin"]) && (
+          {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
               to={appRoutes.applications}
@@ -41,7 +40,7 @@ export default function Menu({ user, classes }: Props) {
               <span>Applications Dashboard</span>
             </MenuItem>
           )}
-          {user.groups.includes(groups["ap-admin"]) && (
+          {user.groups.includes("ap-admin") && (
             <MenuItem
               as={Link}
               to={appRoutes.banking_applications}
@@ -54,23 +53,15 @@ export default function Menu({ user, classes }: Props) {
         </div>
       </div>
 
-      <fetcher.Form className="contents" action="/" method="POST">
-        <input
-          className="hidden"
-          value={user.accessToken}
-          name="token"
-          readOnly
-        />
+      <Form className="contents" method="POST" action="/logout">
         <button
-          disabled={fetcher.state !== "idle"}
-          name="intent"
-          value="logout"
+          disabled={navigation.state !== "idle"}
           type="submit"
           className="btn-blue rounded-none w-full p-3 text-sm mt-4"
         >
           Log out
         </button>
-      </fetcher.Form>
+      </Form>
     </div>
   );
 }

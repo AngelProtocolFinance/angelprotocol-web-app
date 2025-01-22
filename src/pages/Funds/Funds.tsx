@@ -1,31 +1,32 @@
 import type { FundsPage } from "@better-giving/fundraiser";
-import { ap, ver } from "api/api";
+import { fundsParams } from "@better-giving/fundraiser/schema";
+import { useFetcher, useLoaderData, useSearchParams } from "@remix-run/react";
+import type { HeadersFunction, LoaderFunction } from "@vercel/remix";
 import debounce from "lodash/debounce";
 import { Search } from "lucide-react";
 import type { ChangeEventHandler } from "react";
-import {
-  type LoaderFunction,
-  useFetcher,
-  useLoaderData,
-  useSearchParams,
-} from "react-router";
+import { safeParse } from "valibot";
 import Cards from "./Cards";
+import { cacheControl, getFunds } from ".server/get-funds";
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": cacheControl,
+});
+
+export const loader: LoaderFunction = async ({ request }) => {
   const source = new URL(request.url);
-  const page = +(source.searchParams.get("page") ?? "1");
-  const q = source.searchParams.get("query") ?? "";
-  const s = new URLSearchParams(source.searchParams);
-  s.set("page", page.toString());
-  s.set("query", q);
-
-  return ap
-    .get(`${ver(1)}/funds`, {
-      searchParams: s,
-    })
-    .json();
+  const params = safeParse(
+    fundsParams,
+    Object.fromEntries(source.searchParams)
+  );
+  if (params.issues) {
+    return { status: 400, body: params.issues[0].message };
+  }
+  const page = await getFunds(params.output);
+  return page;
 };
 
+export { ErrorBoundary } from "components/error";
 export default function Funds() {
   const page1 = useLoaderData<FundsPage>();
   const { load } = useFetcher<FundsPage>({ key: "funds" }); //initially undefined
@@ -33,7 +34,7 @@ export default function Funds() {
   const onChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     const n = new URLSearchParams(params);
     n.set("query", e.target.value);
-    load(`?index&${n.toString()}`);
+    load(`?${n.toString()}`);
   };
 
   return (

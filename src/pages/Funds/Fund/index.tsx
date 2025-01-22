@@ -1,10 +1,15 @@
 import { MAX_EXPIRATION, type SingleFund } from "@better-giving/fundraiser";
+import { Link, NavLink, useLoaderData } from "@remix-run/react";
+import type {
+  LinksFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
 import { ap, ver } from "api/api";
-import fallback_banner from "assets/images/fallback-banner.png";
-import flying_character from "assets/images/flying-character.png";
+import fallback_banner from "assets/images/bg-banner.webp";
+import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
-import { RichText } from "components/RichText";
-import Seo from "components/Seo";
+import { RichText, richTextStyles, toText } from "components/RichText";
 import VerifiedIcon from "components/VerifiedIcon";
 import { FundCreator } from "components/fundraiser";
 import { FundStatus, statusFn } from "components/fundraiser";
@@ -12,17 +17,30 @@ import { Target, toTarget } from "components/target";
 import { APP_NAME, BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { unpack } from "helpers";
+import { metas } from "helpers/seo";
 import { ArrowLeft } from "lucide-react";
-import { Link, type LoaderFunction, useLoaderData } from "react-router";
 import { Share } from "./share";
 import { Video } from "./video";
 
-export const clientLoader: LoaderFunction = async ({ params }) => {
-  return ap.get(`${ver(1)}/funds/${params.fundId}`).json();
+export const loader: LoaderFunction = async ({ params }) => {
+  return ap.get<SingleFund>(`${ver(1)}/funds/${params.fundId}`).json();
 };
+export const links: LinksFunction = () => [...richTextStyles];
 
+export const meta: MetaFunction = ({ data, location: l }) => {
+  if (!data) return [];
+  const d = data as SingleFund;
+  return metas({
+    title: `${d.name} - ${APP_NAME}`,
+    description: toText(d.description).slice(0, 140),
+    name: d.name,
+    image: d.logo || flying_character,
+    url: `${BASE_URL}/${l.pathname}`,
+  });
+};
+export { ErrorBoundary } from "components/error";
 export default function Fund() {
-  const fund = useLoaderData<SingleFund>();
+  const fund = useLoaderData() as SingleFund;
 
   const status = statusFn(
     fund.expiration ?? MAX_EXPIRATION,
@@ -32,13 +50,6 @@ export default function Fund() {
 
   return (
     <section className="grid pb-10">
-      <Seo
-        title={`${fund.name} - ${APP_NAME}`}
-        description={fund.description.slice(0, 140)}
-        name={fund.name}
-        image={fund.logo || flying_character}
-        url={`${BASE_URL}/profile/${fund.id}`}
-      />
       <div
         className="relative w-full h-52 sm:h-72 bg-cover bg-center overlay"
         style={{
@@ -50,7 +61,7 @@ export default function Fund() {
           <div className="absolute -top-8 flex justify-between w-full">
             <Link
               className="text-white flex items-center gap-x-1 active:-translate-x-1"
-              to=".."
+              to="../funds"
             >
               <ArrowLeft size={16} />
               <span>Fundraisers</span>
@@ -87,7 +98,7 @@ export default function Fund() {
               <h4 className="md:col-start-2 max-md:text-center font-heading font-bold text-2xl w-full break-words">
                 {fund.name}
               </h4>
-              <p className="pl-0.5">
+              <div className="pl-0.5">
                 <span className="text-sm font-medium text-navy-l3 mr-1">
                   by
                 </span>
@@ -96,7 +107,7 @@ export default function Fund() {
                   id={fund.creator_id}
                   classes="font-medium text-navy inline"
                 />
-              </p>
+              </div>
               <DonateSection
                 {...fund}
                 classes={{
@@ -182,7 +193,7 @@ function DonateSection(props: IDonateSection) {
           classes={`${s.target} ${s.container} w-full`}
         />
       )}
-      <Link
+      <NavLink
         aria-disabled={
           !statusFn(
             props.expiration ?? MAX_EXPIRATION,
@@ -194,7 +205,7 @@ function DonateSection(props: IDonateSection) {
         className={`w-full btn-blue px-6 py-3 text-sm ${s.link} ${s.container}`}
       >
         Donate now
-      </Link>
+      </NavLink>
     </>
   );
 }

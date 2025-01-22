@@ -1,4 +1,5 @@
 import { endowDesignations } from "@better-giving/registration/models";
+import { Link } from "@remix-run/react";
 import countries from "assets/countries/all.json";
 import ActivityCountries from "components/ActivityCountries";
 import CountrySelector from "components/CountrySelector";
@@ -8,7 +9,6 @@ import { MultiSelector, Selector } from "components/Selector";
 import { Field, Label, Radio } from "components/form";
 import { unsdgs } from "constants/unsdgs";
 import { TERMS_OF_USE_NPO } from "constants/urls";
-import { Link } from "react-router";
 import { steps } from "../../../routes";
 import type { RegStep2 } from "../../../types";
 import type { FormValues as FV } from "../types";

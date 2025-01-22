@@ -1,15 +1,16 @@
-import { useLoaderData } from "react-router";
+import { useLoaderData } from "@remix-run/react";
 import InitForm from "./InitForm";
 import SetPasswordForm from "./SetPasswordForm";
 import Success from "./Success";
 import type { LoaderData } from "./types";
-
+export { loader, action } from "./api";
+export { ErrorBoundary } from "components/error";
 export default function ResetPassword() {
-  const { state, step } = useLoaderData<LoaderData>();
+  const { redirect, step } = useLoaderData<LoaderData>();
 
   const content = (() => {
     if (step.type === "init") {
-      return <InitForm state={state} />;
+      return <InitForm to={redirect} />;
     }
 
     if (step.type === "set-password") {
@@ -17,7 +18,7 @@ export default function ResetPassword() {
       return <SetPasswordForm recipient={recipient} />;
     }
 
-    return <Success state={state} />;
+    return <Success to={redirect} />;
   })();
 
   return (

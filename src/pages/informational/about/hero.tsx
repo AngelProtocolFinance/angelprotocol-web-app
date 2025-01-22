@@ -1,7 +1,7 @@
+import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router";
 
 export function Hero({ classes = "" }) {
   return (

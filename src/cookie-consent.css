@@ -1,0 +1,15 @@
+#cc-main {
+
+    --cc-font-family: "DM Sans Variable";
+
+    --cc-btn-primary-bg: #2D89C8;
+    --cc-btn-primary-border-color: #2D89C8;
+    --cc-btn-primary-hover-bg: #54a5dc;
+    --cc-btn-primary-hover-border-color: #54a5dc;
+
+    /** Also make toggles the same color as the button **/
+    --cc-toggle-on-bg: var(--cc-btn-primary-bg);
+
+    /** Make the buttons a bit rounder **/
+    --cc-btn-border-radius: 8px;
+  }

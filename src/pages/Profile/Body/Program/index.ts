@@ -1,5 +1,9 @@
+import type { LinksFunction, LoaderFunction } from "@vercel/remix";
 import { getProgram } from "api/get/program";
-import type { LoaderFunction } from "react-router";
+import { richTextStyles } from "components/RichText";
 export { default } from "./Program";
-export const clientLoader: LoaderFunction = ({ params }) =>
+export { ErrorBoundary } from "components/error";
+export const loader: LoaderFunction = ({ params }) =>
   getProgram(params.id, params.programId);
+
+export const links: LinksFunction = () => [...richTextStyles];

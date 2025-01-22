@@ -2,10 +2,10 @@ import {
   type Submission,
   isRejected,
 } from "@better-giving/registration/models";
+import { Link, useFetcher } from "@remix-run/react";
 import LoadText from "components/LoadText";
 import { CircleAlert, Hourglass } from "lucide-react";
 import { steps } from "pages/Registration/routes";
-import { Link, useFetcher } from "react-router";
 
 type Props = {
   status?: Exclude<Submission, { endowment_id: any }>;
@@ -18,7 +18,6 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
   if (!status) {
     return (
       <fetcher.Form
-        action="."
         method="POST"
         className={`grid grid-cols-2 sm:flex gap-2 ${classes}`}
       >
@@ -44,7 +43,6 @@ export default function EndowmentStatus({ status, classes = "" }: Props) {
     return (
       <fetcher.Form
         method="POST"
-        action="."
         className={`max-sm:grid text-red dark:text-red-l3 ${classes} content-start`}
       >
         <p className="mb-6 max-sm:grid justify-items-center gap-2">

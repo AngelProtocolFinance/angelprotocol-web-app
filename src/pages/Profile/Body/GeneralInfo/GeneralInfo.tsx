@@ -1,5 +1,5 @@
+import { useLoaderData } from "@remix-run/react";
 import { RichText } from "components/RichText";
-import { useLoaderData } from "react-router";
 import { useProfileContext } from "../../ProfileContext";
 import Container from "../common/Container";
 import DetailsColumn from "./DetailsColumn";
@@ -28,9 +28,7 @@ export default function GeneralInfo() {
         ) : null}
 
         {media.length > 0 ? (
-          <Container title="Media">
-            <Media media={media} />
-          </Container>
+          <Container title="Media">{<Media media={media} />}</Container>
         ) : null}
       </div>
       <DetailsColumn className="self-start lg:sticky lg:top-[5.5rem]" />

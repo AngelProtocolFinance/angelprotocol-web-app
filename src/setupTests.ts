@@ -64,7 +64,7 @@ export const mswServer = setupServer(
 );
 
 // Start server before all tests
-beforeAll(() => mswServer.listen({ onUnhandledRequest: "bypass" }));
+beforeAll(() => mswServer.listen({ onUnhandledRequest: "error" }));
 
 //  Close server after all tests
 afterAll(() => mswServer.close());

@@ -1,34 +1,34 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import googleIcon from "assets/icons/google.svg";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import { Separator } from "components/Separator";
-import { Input, PasswordInput } from "components/form";
+import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { toWithState } from "helpers/state-params";
-import { useActionToast } from "hooks/use-action-toast";
+import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
-import { Link, useFetcher, useLoaderData, useSearchParams } from "react-router";
-import { type ActionData, isFormErr } from "types/action";
+import type { ActionData } from "types/action";
 import { signUp } from "types/auth";
 
+export { action } from "./api";
+export { loader } from "../loader";
+export { ErrorBoundary } from "components/error";
 export default function SignupForm() {
-  const fromState = useLoaderData();
-  const [params] = useSearchParams();
-  const fetcher = useFetcher<ActionData<any>>();
+  const to = useLoaderData<string>();
+  const { data, nav } = useRmxForm<ActionData>();
+  const formErr = useActionResult(data);
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: formErr,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: signUp });
     },
   });
 
-  useActionToast(fetcher.data);
-
-  const isSubmitting = fetcher.state === "submitting";
+  const isSubmitting = nav.state !== "idle";
 
   return (
     <div className="grid justify-items-center gap-3.5">
@@ -41,11 +41,7 @@ export default function SignupForm() {
           nonprofit.
         </p>
 
-        <fetcher.Form
-          method="POST"
-          action={`.?index&${params.toString()}`}
-          className="contents"
-        >
+        <RmxForm disabled={isSubmitting} method="POST" className="contents">
           <button
             name="intent"
             value="oauth"
@@ -57,16 +53,16 @@ export default function SignupForm() {
               Sign Up with Google
             </span>
           </button>
-        </fetcher.Form>
+        </RmxForm>
 
         <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
           OR
         </Separator>
 
-        <fetcher.Form
+        <RmxForm
           method="POST"
-          action={`.?index&${params.toString()}`}
           {...getFormProps(form)}
+          disabled={isSubmitting}
           className="grid gap-3"
         >
           <div className="flex gap-3">
@@ -102,9 +98,10 @@ export default function SignupForm() {
             placeholder="Create password"
             error={fields.password.errors?.[0]}
           />
-        </fetcher.Form>
+        </RmxForm>
 
         <button
+          disabled={isSubmitting}
           form={form.id}
           type="submit"
           className="flex-center bg-blue-d1 disabled:bg-gray text-white enabled:hover:bg-blue enabled:active:bg-blue-d2 h-12 sm:h-[52px] rounded-full normal-case sm:text-lg font-bold w-full my-8"
@@ -115,7 +112,7 @@ export default function SignupForm() {
         <span className="flex-center gap-1 max-sm:text-sm font-normal">
           Already have an account?
           <Link
-            to={toWithState(appRoutes.signin, fromState)}
+            to={appRoutes.signin + `?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

@@ -1,7 +1,7 @@
-import flying_character from "assets/images/flying-character.png";
+import { Await } from "@remix-run/react";
+import flying_character from "assets/images/flying-character.webp";
 import Image from "components/Image";
 import { Suspense } from "react";
-import { Await } from "react-router";
 
 interface Endow {
   name: string;

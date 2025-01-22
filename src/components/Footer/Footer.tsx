@@ -1,8 +1,8 @@
-import dappLogo from "assets/images/bg-logo-503c.png";
+import { Link } from "@remix-run/react";
+import dappLogo from "assets/images/bg-logo-503c.webp";
 import { APP_NAME, INTERCOM_HELP } from "constants/env";
 import { appRoutes } from "constants/routes";
 import type { ReactNode } from "react";
-import { Link } from "react-router";
 import ExtLink from "../ExtLink";
 import Newsletter from "./Newsletter";
 import Socials from "./Socials";
@@ -36,8 +36,13 @@ function Footer({ classes = "" }: Props) {
               className="object-contain my-4"
               alt="logo"
             />
-            <ExtLink href="https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5">
+            <ExtLink
+              aria-label="View our GuideStar profile"
+              href="https://www.guidestar.org/profile/shared/5f73977b-cb21-4973-852e-cdfa5c6ee7a5"
+            >
               <img
+                alt="GuideStar Seal"
+                loading="lazy"
                 src="https://widgets.guidestar.org/TransparencySeal/10103678"
                 width={100}
                 height={100}
@@ -112,7 +117,7 @@ type LinkGroupProps = {
 function LinkGroup({ links, title, classes = "" }: LinkGroupProps) {
   return (
     <div className={`grid gap-2 content-start ${classes}`}>
-      <h6 className="font-semibold text-[#4585bb] uppercase">{title}</h6>
+      <p className="font-semibold text-[#4585bb] uppercase">{title}</p>
       <ul className="contents text-sm text-navy-l3">
         {links.map((link, idx) => (
           <li className="contents hover:underline" key={idx}>

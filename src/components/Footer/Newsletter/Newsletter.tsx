@@ -1,5 +1,5 @@
+import { Link } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router";
 import SubscriptionForm from "./SubscriptionForm";
 
 export default function Newsletter({ classes = "" }) {
@@ -8,7 +8,7 @@ export default function Newsletter({ classes = "" }) {
       className={`grid content-start px-1 ${classes} sm:max-md:grid-cols-2 xl:grid-cols-1 gap-x-8 xl:max-w-md`}
     >
       <div className="mb-6">
-        <h6 className="text-[#4585bb] mb-3.5">Subscribe to our newsletter</h6>
+        <p className="text-[#4585bb] mb-3.5">Subscribe to our newsletter</p>
         <p className="text-[12px] text[#647581] text-justify text-pretty">
           By subscribing to this newsletter you confirm that you have read and
           agree with our{" "}

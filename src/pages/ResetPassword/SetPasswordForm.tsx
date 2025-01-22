@@ -1,10 +1,9 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { useFetcher } from "@remix-run/react";
 import { Input, PasswordInput } from "components/form";
+import { useActionResult } from "hooks/use-action-result";
 import useCounter from "hooks/useCounter";
-import { useEffect } from "react";
-import { useFetcher } from "react-router";
-import { toast } from "sonner";
-import { type ActionData, isData, isFormErr } from "types/action";
+import type { ActionData } from "types/action";
 import type { CodeRecipient } from "./types";
 
 const MAX_TIME = 30;
@@ -15,27 +14,19 @@ type Props = {
 
 export default function SetPasswordForm(props: Props) {
   const fetcher = useFetcher<ActionData>();
-  const [form, fields] = useForm({
-    shouldRevalidate: "onSubmit",
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+  const { counter, resetCounter } = useCounter(MAX_TIME);
+  const formErr = useActionResult(fetcher.data, {
+    onData: () => resetCounter(),
   });
 
-  const { counter, resetCounter } = useCounter(MAX_TIME);
-
-  //biome-ignore lint:
-  useEffect(() => {
-    if (!fetcher.data) return;
-    if (isData(fetcher.data)) {
-      toast.success(fetcher.data.__ok);
-      resetCounter();
-      return;
-    }
-  }, [fetcher.data]);
+  const [form, fields] = useForm({
+    shouldRevalidate: "onSubmit",
+    lastResult: formErr,
+  });
 
   return (
     <fetcher.Form
       method="POST"
-      action="."
       {...getFormProps(form)}
       className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl"
     >
@@ -43,7 +34,7 @@ export default function SetPasswordForm(props: Props) {
       <h3 className="text-center text-xl sm:text-2xl font-bold text-navy-d4">
         Set new password
       </h3>
-      <p className="text-center font-normal max-sm:text-sm mt-2">
+      <section className="text-center font-normal max-sm:text-sm mt-2">
         <span>6-digit security code has been sent to</span>{" "}
         <span className="font-medium">
           {props.recipient.recipient_obscured}
@@ -59,7 +50,7 @@ export default function SetPasswordForm(props: Props) {
             Edit email
           </button>
         </div>
-      </p>
+      </section>
 
       <div className="mt-6 grid gap-3">
         <Input

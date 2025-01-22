@@ -1,20 +1,22 @@
+import { NavLink, Outlet, useFetcher } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import type { BankDetails } from "api/get/payout-method";
 import ExtLink from "components/ExtLink";
-import { useActionToast } from "hooks/use-action-toast";
+import { useActionResult } from "hooks/use-action-result";
 import { CircleAlert, SquareArrowOutUpRight } from "lucide-react";
 import type { PropsWithChildren } from "react";
-import { Link, Outlet, useFetcher, useLoaderData } from "react-router";
 
 const APPROVED_PRIORITY_NUM = 2;
-
+export { clientLoader } from "api/cache";
 export {
-  payoutMethodLoader as clientLoader,
-  prioritizeAction as clientAction,
+  payoutMethodLoader as loader,
+  prioritizeAction as action,
 } from "./api";
+export { ErrorBoundary } from "components/error";
 export default function PayoutMethod() {
-  const bank = useLoaderData() as BankDetails;
+  const bank = useCachedLoaderData() as BankDetails;
   const fetcher = useFetcher();
-  useActionToast(fetcher.data);
+  useActionResult(fetcher.data);
 
   const isRejected = bank.status === "rejected";
   const isApproved = bank.status === "approved";
@@ -78,16 +80,15 @@ export default function PayoutMethod() {
       </dl>
       <fetcher.Form
         method="POST"
-        action="."
         className="flex max-sm:flex-col gap-1 sm:gap-3 mt-4 sm:justify-self-end"
       >
-        <Link
-          to={".."}
+        <NavLink
+          to={"../banking"}
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-outline"
         >
           back
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           replace
           preventScrollReset
           to={{
@@ -100,7 +101,7 @@ export default function PayoutMethod() {
           className="px-4 py-1 min-w-[6rem] text-sm uppercase btn-red"
         >
           delete
-        </Link>
+        </NavLink>
         <button
           disabled={fetcher.state === "submitting" || isDefault || !isApproved}
           type="submit"

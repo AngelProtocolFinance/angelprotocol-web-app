@@ -1,32 +1,50 @@
-import { ap, ver } from "api/api";
-import Seo from "components/Seo";
-import { type LoaderFunction, Outlet, useLoaderData } from "react-router";
+import { endowsQueryParams } from "@better-giving/endowment/cloudsearch";
+import { Outlet, useLoaderData } from "@remix-run/react";
+import type {
+  HeadersFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
+import hero from "assets/images/hero.webp?url";
+import { metas } from "helpers/seo";
 import type { EndowCardsPage } from "types/aws";
+import { safeParse } from "valibot";
 import ActiveFilters from "./ActiveFilters";
 import Cards from "./Cards";
 import Hero from "./Hero";
 import Toolbar from "./Toolbar";
+import { cacheControl, getNpos } from ".server/get-npos";
 
-export const clientLoader: LoaderFunction = async ({ request }) => {
-  const source = new URL(request.url);
-  const page = +(source.searchParams.get("page") ?? "1");
-  const q = source.searchParams.get("query") ?? "";
-  const s = new URLSearchParams(source.searchParams);
-  s.set("page", page.toString());
-  s.set("query", q);
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": cacheControl,
+});
+export const loader: LoaderFunction = async ({ request }) => {
+  const url = new URL(request.url);
+  const params = safeParse(
+    endowsQueryParams,
+    Object.fromEntries(url.searchParams)
+  );
 
-  return ap
-    .get(`${ver(1)}/cloudsearch-nonprofits`, {
-      searchParams: s,
-    })
-    .json();
+  if (params.issues) {
+    return { status: 400, body: params.issues[0].message };
+  }
+
+  const page = await getNpos(params.output);
+  return page;
 };
 
+export const meta: MetaFunction = () =>
+  metas({
+    title: "Marketplace",
+    description: "Better Giving redefines global nonprofit financing.",
+    image: hero,
+  });
+
+export { ErrorBoundary } from "components/error";
 export default function Marketplace() {
-  const page1 = useLoaderData() as EndowCardsPage;
+  const page1 = useLoaderData<EndowCardsPage>();
   return (
     <div className="w-full grid content-start pb-16">
-      <Seo title="Marketplace" />
       <div className="relative overlay bg-cover bg-left-top">
         <Hero classes="grid isolate mt-28 mb-16" />
       </div>

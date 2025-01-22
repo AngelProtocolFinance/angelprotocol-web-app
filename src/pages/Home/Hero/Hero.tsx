@@ -1,14 +1,14 @@
+import { Link } from "@remix-run/react";
+import banner from "assets/images/bg-banner.webp";
 import { appRoutes } from "constants/routes";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router";
-import headillust from "./head-illust.webp";
 import s from "./styles.module.css";
 
 const Hero = ({ classes = "" }) => {
   return (
     <section
       className={`${classes} ${s.container} relative grid bg-cover bg-no-repeat bg-[center_-10%] xl:bg-[center_bottom] pt-36 pb-48 sm:pb-96`}
-      style={{ backgroundImage: `url('${headillust}')` }}
+      style={{ backgroundImage: `url('${banner}')` }}
     >
       <p className="z-10 text-sm md:text-lg font-heading uppercase font-bold text-center mb-5 tracking-wider">
         By a nonprofit, for nonprofits

@@ -1,36 +1,43 @@
+import type { Endow } from "@better-giving/endowment";
+import { useLoaderData } from "@remix-run/react";
+import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
-import { redirectToAuth } from "auth";
-import { loadAuth } from "auth/load-auth";
 import Footer from "components/Footer";
 import { appRoutes } from "constants/routes";
 import Layout from "layout/DashboardLayout";
 import { CircleAlert } from "lucide-react";
-import { type LoaderFunction, useLoaderData } from "react-router";
+import type { UserV2 } from "types/auth";
 import { parse } from "valibot";
-import type { AdminContext } from "./Context";
 import Header from "./Header";
 import SidebarHeader from "./SidebarHeader";
 import { linkGroups } from "./constants";
+import { cognito, toAuth } from ".server/auth";
 
-export const clientLoader: LoaderFunction = async ({ request, params }) => {
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
-  if (auth) {
-    const id = parse(plusInt, params.id);
-    return {
-      user: auth,
-      id,
-      endow: getEndow(id, ["name", "logo"]),
-    } satisfies AdminContext;
-  }
+interface LoaderData {
+  id: number;
+  user: UserV2;
+  /** need to be awaited */
+  endow: Promise<Pick<Endow, "logo" | "name">>;
+}
+
+export const loader: LoaderFunction = async ({ request, params }) => {
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return toAuth(request, headers);
+
+  const id = parse(plusInt, params.id);
+  return {
+    user,
+    id,
+    endow: getEndow(id, ["name", "logo"]),
+  } satisfies LoaderData;
 };
 
 export default function AdminLayout() {
-  const context = useLoaderData() as AdminContext;
+  const data = useLoaderData() as LoaderData;
   if (
-    !context.user.endowments.includes(context.id) &&
-    !context.user.groups.includes("ap-admin")
+    !data.user.endowments.includes(data.id) &&
+    !data.user.groups.includes("ap-admin")
   ) {
     return (
       <div className="grid content-start place-items-center pt-40 pb-20">
@@ -46,8 +53,7 @@ export default function AdminLayout() {
       <Layout
         rootRoute={`${appRoutes.admin}/:id/`}
         linkGroups={linkGroups}
-        sidebarHeader={<SidebarHeader endow={context.endow} />}
-        context={context}
+        sidebarHeader={<SidebarHeader endow={data.endow} />}
       />
       <Footer />
     </div>

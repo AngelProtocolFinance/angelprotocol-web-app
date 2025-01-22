@@ -1,4 +1,4 @@
-import ReactPlayer from "react-player";
+import { ReactPlayer } from "components/react-player";
 
 interface IVideo {
   classes?: string;

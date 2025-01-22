@@ -1,5 +1,5 @@
+import { Await } from "@remix-run/react";
 import { Suspense } from "react";
-import { Await } from "react-router";
 import type { DetailedUser } from "types/auth";
 import { EndowmentLink, Skeleton } from "./EndowmentLink";
 
@@ -22,9 +22,9 @@ export function Organizations({ user, classes = "" }: Props) {
         }
       >
         <Await resolve={user.orgs}>
-          {(orgs: Awaited<DetailedUser["orgs"]>) => (
+          {(loaded) => (
             <>
-              {orgs.map((org) => (
+              {loaded.map((org) => (
                 <EndowmentLink key={org.endowID} {...org} />
               ))}
             </>

@@ -1,6 +1,5 @@
 import type { Endow } from "@better-giving/endowment";
 import type { DonateData } from "api/donate-loader";
-import { usdOption } from "../common/constants";
 
 const endow: Endow = {
   id: 1,
@@ -24,9 +23,5 @@ export const testDonateData: DonateData = {
   id: 1,
   endow,
   user: null,
-  currencies: Promise.resolve({
-    all: [usdOption, { code: "eur", min: 1, rate: 1 }],
-  }),
-  programs: Promise.resolve([]),
   balance: Promise.resolve({} as any),
 };

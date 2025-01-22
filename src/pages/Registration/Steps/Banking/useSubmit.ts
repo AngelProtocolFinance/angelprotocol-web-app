@@ -1,7 +1,7 @@
 import type { Update } from "@better-giving/registration/update";
+import { useFetcher } from "@remix-run/react";
 import type { OnSubmit } from "components/BankDetails";
 import { toFileName } from "helpers/uploadFile";
-import { useFetcher } from "react-router";
 
 export default function useSubmit() {
   const fetcher = useFetcher();

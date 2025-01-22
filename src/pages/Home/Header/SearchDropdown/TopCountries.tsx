@@ -1,8 +1,8 @@
+import { NavLink } from "@remix-run/react";
 import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import QueryLoader from "components/QueryLoader";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router";
 import useSWR from "swr/immutable";
 
 const fetcher = (path: string) => apes.get<string[]>(path).json();
@@ -37,9 +37,9 @@ export function TopCountries() {
         {(countries) => (
           <>
             {countries.map((country) => (
-              <Link
+              <NavLink
                 key={country}
-                className="border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
+                className="[&:is(.pending)]:text-gray [&:is(.pending)]:pointer-events-none border border-gray-l4 px-6 py-2 rounded-full text-sm hover:bg-blue-l4"
                 to={{
                   pathname: appRoutes.marketplace,
                   search: new URLSearchParams({
@@ -48,7 +48,7 @@ export function TopCountries() {
                 }}
               >
                 {country}
-              </Link>
+              </NavLink>
             ))}
           </>
         )}

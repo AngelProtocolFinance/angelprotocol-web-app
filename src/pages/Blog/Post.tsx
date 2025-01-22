@@ -1,10 +1,14 @@
+import { Link, useLoaderData } from "@remix-run/react";
+import type {
+  HeadersFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
 import { wp } from "api/api";
 import Media from "components/Media";
-import Seo from "components/Seo";
 import { appRoutes } from "constants/routes";
+import { metas } from "helpers/seo";
 import { ChevronLeft } from "lucide-react";
-import { type LoaderFunction, useLoaderData } from "react-router";
-import { Link } from "react-router";
 import useSWR from "swr/immutable";
 import type { Wordpress } from "types/wordpress";
 
@@ -14,8 +18,11 @@ interface IPost extends Wordpress.Post {
   media: Wordpress.Media;
   authorName: string;
 }
+export const headers: HeadersFunction = () => ({
+  "Cache-Control": "s-max-age=30, stale-while-revalidate=60",
+});
 
-export const clientLoader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ params }) => {
   const [post] = await wp
     .get<Wordpress.Post[]>(`posts?slug=${params.slug}`)
     .json();
@@ -24,6 +31,13 @@ export const clientLoader: LoaderFunction = async ({ params }) => {
   const [m, a] = await Promise.all([media, author]);
   return { ...post, media: m, authorName: a.name } satisfies IPost;
 };
+
+export const meta: MetaFunction = ({ data }: any) => {
+  if (!data) return [];
+  return metas({ title: data.slug });
+};
+
+export { ErrorBoundary } from "components/error";
 
 export default function Post() {
   const post = useLoaderData() as IPost;
@@ -45,7 +59,6 @@ export default function Post() {
 function Loaded(post: IPost) {
   return (
     <>
-      <Seo title={post.slug} />
       <Media
         id={post.featured_media}
         sizes="(min-width: 896px) 896px, 100vw"

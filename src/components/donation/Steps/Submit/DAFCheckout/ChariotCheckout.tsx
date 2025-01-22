@@ -1,8 +1,10 @@
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useNavigate } from "@remix-run/react";
 import { apes } from "api/api";
 import ContentLoader from "components/ContentLoader";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
+import { ErrorBoundaryClass } from "components/error";
 import {
   NativeCheckField as CheckField,
   NativeField as Field,
@@ -11,14 +13,10 @@ import {
 import { CHARIOT_CONNECT_ID } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";
-import ErrorBoundary from "errors/ErrorBoundary";
-import { toWithState } from "helpers/state-params";
 import { type ChangeEvent, useState } from "react";
 import ChariotConnect from "react-chariot-connect";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
 import { schema } from "schemas/shape";
-import type { DonateThanksState } from "types/pages";
 import { mixed, string } from "yup";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
@@ -129,7 +127,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
           : undefined
       }
     >
-      <ErrorBoundary>
+      <ErrorBoundaryClass>
         <Form className="grid grid-cols-2 gap-x-4 mt-4">
           <CheckField {...register("coverFee")} classes="col-span-full">
             Cover payment processing fees for your donation{" "}
@@ -322,14 +320,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
               setPrompt(undefined);
 
               navigate(
-                toWithState(appRoutes.donate_thanks, {
-                  guestDonor: {
-                    email: grantor.email,
-                    fullName: `${grantor.firstName} ${grantor.lastName}`,
-                  },
-                  recipientId: props.init.recipient.id,
-                  recipientName: props.init.recipient.name,
-                } satisfies DonateThanksState)
+                `${appRoutes.donate_thanks}?recipient_name=${props.init.recipient.name}`
               );
             } catch (err) {
               setPrompt(errorPrompt(err, { context: "processing donation" }));
@@ -338,7 +329,7 @@ export default function ChariotCheckout(props: DafCheckoutStep) {
             }
           }}
         />
-      </ErrorBoundary>
+      </ErrorBoundaryClass>
       <ContentLoader className="h-12 mt-4 block group-has-[chariot-connect]:hidden" />
       <DonationTerms
         endowName={props.init.recipient.name}

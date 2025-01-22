@@ -1,9 +1,7 @@
 import type { EndowsQueryParams } from "@better-giving/endowment";
 import { ComboboxOption, ComboboxOptions } from "@headlessui/react";
-import { ver } from "api/api";
 import Image from "components/Image";
 import { ErrorStatus, Info, LoadingStatus } from "components/Status";
-import { APIs } from "constants/urls";
 import useDebouncer from "hooks/useDebouncer";
 import useSWR from "swr/immutable";
 import type { EndowFundMembersOptionsPage } from "types/aws";
@@ -19,12 +17,13 @@ const fetcher = async ({
   page = "1",
   fund_opt_in = "true",
 }: EndowsQueryParams) => {
-  const url = new URL(`${APIs.aws}/${ver(1)}/cloudsearch-nonprofits`);
-  url.searchParams.set("query", query);
-  url.searchParams.set("page", page);
-  url.searchParams.set("fund_opt_in", fund_opt_in);
-  url.searchParams.set("fields", "id,name,card_img");
-  const res = await fetch(url);
+  const search = new URLSearchParams({
+    query,
+    page,
+    fund_opt_in,
+    fields: "id,name,card_img",
+  });
+  const res = await fetch(`/api/npos?${search.toString()}`);
 
   if (!res.ok) throw res;
   return res.json() as Promise<EndowFundMembersOptionsPage>;

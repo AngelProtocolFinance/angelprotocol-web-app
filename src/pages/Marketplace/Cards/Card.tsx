@@ -1,10 +1,10 @@
-import flying_character from "assets/images/flying-character.png";
+import { NavLink, useRouteLoaderData } from "@remix-run/react";
+import flying_character from "assets/images/flying-character.webp";
 import BookmarkBtn from "components/BookmarkBtn";
 import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link, useRouteLoaderData } from "react-router";
 import type { DetailedUser } from "types/auth";
 import type { EndowmentCard } from "types/aws";
 
@@ -21,8 +21,8 @@ export default function Card({
 }: EndowmentCard) {
   const user = useRouteLoaderData("root") as DetailedUser | null;
   return (
-    <div className="relative grid grid-rows-subgrid row-span-4 gap-y-0">
-      <Link
+    <div className="relative [&:has(.pending)]:grayscale [&:has(.pending)]:pointer-events-none  grid grid-rows-subgrid row-span-4 gap-y-0">
+      <NavLink
         to={`${appRoutes.marketplace}/${id}`}
         className="grid grid-rows-subgrid row-span-4 h-full overflow-clip rounded-lg border border-gray-l4 hover:border-blue-d1"
       >
@@ -57,16 +57,16 @@ export default function Card({
             <Target progress={contributions_total} target={toTarget(target)} />
           )}
         </div>
-      </Link>
+      </NavLink>
       {/** absolute so above whole `Link` card */}
       <div className="absolute grid grid-cols-[1fr_auto_1fr] mt-2 bottom-4 left-4 right-4">
         <div /> {/** future: share button  */}
-        <Link
+        <NavLink
           to={`${appRoutes.donate}/${id}`}
           className="btn-blue px-4 py-1 rounded-full text-sm normal-case"
         >
           Donate
-        </Link>
+        </NavLink>
         <BookmarkBtn user={user} endowId={id} classes="justify-self-end" />
       </div>
     </div>

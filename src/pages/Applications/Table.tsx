@@ -2,13 +2,13 @@ import {
   type Status as TStatus,
   isIrs501c3,
 } from "@better-giving/registration/models";
+import { NavLink } from "@remix-run/react";
 import { HeaderButton } from "components/HeaderButton";
 import { Info } from "components/Status";
 import TableSection, { Cells } from "components/TableSection";
 import { appRoutes } from "constants/routes";
 import useSort from "hooks/useSort";
 import { Folder } from "lucide-react";
-import { Link } from "react-router";
 import LoadMoreBtn from "./LoadMoreBtn";
 import type { TableProps } from "./types";
 
@@ -101,16 +101,16 @@ export default function Table({
               <td className="text-center">
                 <Status status={row.status} />
               </td>
-              <Link
+              <NavLink
                 to={appRoutes.applications + `/${row.id}`}
-                className="text-center w-full inline-block hover:text-blue-d1"
+                className="text-center w-full inline-block [&:is(.pending)]:text-gray hover:text-blue-d1"
               >
                 <Folder
                   size={22}
                   aria-label="application details"
                   className="inline-block"
                 />
-              </Link>
+              </NavLink>
             </Cells>
           ))
           .concat(

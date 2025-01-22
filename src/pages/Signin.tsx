@@ -1,45 +1,36 @@
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { Link, data, redirect, useLoaderData } from "@remix-run/react";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@vercel/remix";
 import googleIcon from "assets/icons/google.svg";
-import { cognito, oauth } from "auth/cognito";
-import { loadAuth } from "auth/load-auth";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import Seo from "components/Seo";
 import { Separator } from "components/Separator";
-import { Input, PasswordInput } from "components/form";
+import { Input, PasswordInput, RmxForm, useRmxForm } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
-import { getAuthRedirect } from "helpers";
-import { decodeState, toWithState } from "helpers/state-params";
-import { useActionToast } from "hooks/use-action-toast";
+import { metas } from "helpers/seo";
+import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
-import {
-  type ActionFunction,
-  Link,
-  type LoaderFunction,
-  data,
-  redirect,
-  useFetcher,
-  useLoaderData,
-  useSearchParams,
-} from "react-router";
-import { authStore } from "store/auth";
-import { type ActionData, isFormErr } from "types/action";
-import { type OAuthState, isError, signIn } from "types/auth";
+import type { ActionData } from "types/action";
+import { isError, signIn } from "types/auth";
+import { cognito, oauth } from ".server/auth";
 
-export const clientAction: ActionFunction = async ({ request }) => {
+export const action: ActionFunction = async ({ request }) => {
   try {
+    const { user } = await cognito.retrieve(request);
+    if (user) return redirect(appRoutes.marketplace);
     const from = new URL(request.url);
-    const fromState = decodeState(from.searchParams.get("_s"));
-    const r = getAuthRedirect(fromState as any);
 
     const fv = await request.formData();
+    const redirectTo =
+      from.searchParams.get("redirect") || appRoutes.marketplace;
     if (fv.get("intent") === "oauth") {
-      const routeState: OAuthState = {
-        pathname: r.path,
-        data: r.data,
-      };
-      return redirect(oauth.initiateUrl(JSON.stringify(routeState)));
+      const origin = new URL(request.url);
+      return redirect(oauth.initiateUrl(redirectTo, origin.origin));
     }
 
     const payload = parseWithValibot(fv, { schema: signIn });
@@ -48,65 +39,56 @@ export const clientAction: ActionFunction = async ({ request }) => {
 
     const res = await cognito.initiate(
       payload.value.email.toLowerCase(),
-      payload.value.password
+      payload.value.password,
+      request.headers.get("Cookie")
     );
 
     if (isError(res)) {
       if (res.__type === "UserNotConfirmedException") {
-        authStore.set("email", payload.value.email);
         const to = new URL(from);
         to.pathname = appRoutes.signup + "/confirm";
+        to.searchParams.set("email", payload.value.email);
+        to.searchParams.set("redirect", redirectTo);
         return redirect(to.toString());
       }
 
       return payload.reply({ fieldErrors: { password: [res.message] } });
     }
 
-    const to = new URL(from);
-    to.pathname = r.path;
-    to.search = r.search;
-    if (r.data) {
-      const encoded = btoa(JSON.stringify(r.data));
-      to.searchParams.set("_s", encoded);
-    }
-
-    return redirect(to.toString());
+    return redirect(redirectTo, { headers: { "Set-Cookie": res } });
   } catch (err) {
     console.error(err);
     return data<ActionData<any>>({ __error: "Unknown error occured" }, 500);
   }
 };
 
-export const clientLoader: LoaderFunction = async ({
-  request,
-}): Promise<Response | unknown> => {
-  const auth = await loadAuth();
-  if (auth) return redirect(appRoutes.marketplace);
-
-  const url = new URL(request.url);
-  return decodeState(url.searchParams.get("_s"));
+export const loader: LoaderFunction = async ({ request }) => {
+  const { user } = await cognito.retrieve(request);
+  if (user) return redirect(appRoutes.marketplace);
+  return new URL(request.url).searchParams.get("redirect") || "/";
 };
 
+export const meta: MetaFunction = () =>
+  metas({ title: "Login - Better Giving" });
+
+export { ErrorBoundary } from "components/error";
 export default function Signin() {
-  // const navigate = useNavigate();
-  const [params] = useSearchParams();
-  const fetcher = useFetcher<ActionData<any>>();
-  const fromState = useLoaderData() as unknown;
+  const { nav, data } = useRmxForm();
+  const formErr = useActionResult(data);
+  const to = useLoaderData<string>();
 
   const [form, fields] = useForm({
     shouldRevalidate: "onInput",
-    lastResult: isFormErr(fetcher.data) ? fetcher.data : undefined,
+    lastResult: formErr,
     onValidate({ formData }) {
       return parseWithValibot(formData, { schema: signIn });
     },
   });
-  useActionToast(fetcher.data);
 
-  const isSubmitting = fetcher.state === "submitting";
+  const isSubmitting = nav.state !== "idle";
 
   return (
     <div className="grid justify-items-center gap-3.5 px-4 py-14 text-navy-l1">
-      <Seo title="Login - Better Giving" />
       <div className="grid w-full max-w-md px-6 sm:px-7 py-7 sm:py-8 bg-white border border-gray-l4 rounded-2xl">
         <h3 className="text-center text-2xl font-bold text-navy-d4">
           Philanthropy for Everyone
@@ -114,11 +96,7 @@ export default function Signin() {
         <p className="text-center font-normal max-sm:text-sm mt-2">
           Log in to support 18000+ causes or register and manage your nonprofit.
         </p>
-        <fetcher.Form
-          method="POST"
-          action={`.?${params.toString()}`}
-          className="contents"
-        >
+        <RmxForm disabled={isSubmitting} method="POST" className="contents">
           <button
             name="intent"
             value="oauth"
@@ -130,13 +108,13 @@ export default function Signin() {
               Continue with Google
             </span>
           </button>
-        </fetcher.Form>
+        </RmxForm>
         <Separator classes="my-4 before:mr-3.5 after:ml-3.5 before:bg-navy-l5 after:bg-navy-l5 font-medium text-[13px] text-navy-l3">
           OR
         </Separator>
-        <fetcher.Form
+        <RmxForm
           method="POST"
-          action={`.?${params.toString()}`}
+          disabled={isSubmitting}
           {...getFormProps(form)}
           className="grid gap-3"
         >
@@ -153,12 +131,12 @@ export default function Signin() {
             placeholder="Password"
           />
           <Link
-            to={toWithState(appRoutes.reset_password, fromState)}
+            to={appRoutes.reset_password + `?redirect=${to}`}
             className="font-medium text-navy-l1 hover:text-navy active:text-navy-d2 text-xs sm:text-sm justify-self-end hover:underline"
           >
             Forgot password?
           </Link>
-        </fetcher.Form>
+        </RmxForm>
         <button
           disabled={isSubmitting}
           form={form.id}
@@ -170,7 +148,7 @@ export default function Signin() {
         <span className="flex-center gap-1 max-sm:text-sm font-normal mt-8">
           Don't have an account?
           <Link
-            to={toWithState(appRoutes.signup, fromState)}
+            to={appRoutes.signup + `?redirect=${to}`}
             className="text-blue-d1 hover:text-blue active:text-blue-d2 aria-disabled:text-gray font-medium underline"
             aria-disabled={isSubmitting}
           >

@@ -1,15 +1,20 @@
 import type { FundItem as TFundItem } from "@better-giving/fundraiser";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
+import { Link } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { Info } from "components/Status";
 import { appRoutes } from "constants/routes";
 import { useState } from "react";
-import { Link, useLoaderData } from "react-router";
+import type { UserV2 } from "types/auth";
 import { FundItem } from "./FundItem";
 import type { LoaderData } from "./api";
 
 type CreatorType = "others" | "ours";
+export { action, loader } from "./api";
+export { clientLoader } from "api/cache";
+export { ErrorBoundary } from "components/error";
 export default function Funds() {
-  const { funds, endow } = useLoaderData<LoaderData>();
+  const { funds, endow, user } = useCachedLoaderData<LoaderData>();
   const [creatorType, setCreatorType] = useState<CreatorType>("ours");
 
   return (
@@ -32,7 +37,7 @@ export default function Funds() {
         </RadioGroup>
       </div>
       <div className="grid @xl:grid-cols-2 @2xl:grid-cols-3 gap-4">
-        {items({ funds, creatorType, endowId: endow.id })}
+        {items({ funds, creatorType, endowId: endow.id, user })}
         {creatorType === "ours" && (
           <Link
             to={{
@@ -53,8 +58,9 @@ interface IItems {
   endowId: number;
   creatorType: CreatorType;
   funds: TFundItem[];
+  user: UserV2;
 }
-function items({ funds, creatorType, endowId }: IItems) {
+function items({ funds, creatorType, endowId, user }: IItems) {
   const filtered =
     creatorType === "ours"
       ? funds.filter((f) => f.creator_id === endowId.toString())
@@ -78,7 +84,9 @@ function items({ funds, creatorType, endowId }: IItems) {
       <FundItem
         key={fund.id}
         {...fund}
-        endowId={endowId}
+        isEditor={
+          user.funds.includes(fund.id) || user.endowments.includes(endowId)
+        }
         isSelf={fund.creator_id === endowId.toString()}
       />
     ));

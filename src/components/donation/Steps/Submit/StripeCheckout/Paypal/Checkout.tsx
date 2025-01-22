@@ -1,14 +1,12 @@
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { PayPalButtons, usePayPalScriptReducer } from "@paypal/react-paypal-js";
+import { useNavigate } from "@remix-run/react";
 import ContentLoader from "components/ContentLoader";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { appRoutes, donateWidgetRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";
 import { isEmpty } from "helpers";
-import { toWithState } from "helpers/state-params";
 import { useState } from "react";
-import { useNavigate } from "react-router";
-import type { DonateThanksState } from "types/pages";
 import { toDonor } from "../../../common/constants";
 import type { StripeCheckoutStep } from "../../../types";
 import { captureOrder, createOrder } from "./api";
@@ -60,19 +58,13 @@ export default function Checkout(props: StripeCheckoutStep) {
           throw order;
         }
 
-        /// No problem with order
-
-        const state: DonateThanksState = {
-          guestDonor: order.guestDonor,
-          recipientName: init.recipient.name,
-        };
-
-        const route =
+        const search = `?recipient_name=${init.recipient.name}`;
+        const to =
           props.init.source === "bg-widget"
-            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}`
-            : appRoutes.donate_thanks;
+            ? `${appRoutes.donate_widget}/${donateWidgetRoutes.donate_thanks}${search}`
+            : appRoutes.donate_thanks + search;
 
-        navigate(toWithState(route, state));
+        navigate(to);
       }}
       createOrder={async () => {
         setState("loading");

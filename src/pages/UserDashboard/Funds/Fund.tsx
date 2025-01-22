@@ -1,8 +1,8 @@
 import type { UserFund } from "@better-giving/user";
+import { Link } from "@remix-run/react";
 import { FundStatus, statusFn } from "components/fundraiser";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router";
 
 export const Fund = (props: UserFund) => {
   const status = statusFn(

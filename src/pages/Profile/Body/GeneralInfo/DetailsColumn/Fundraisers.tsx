@@ -1,8 +1,8 @@
 import type { FundItem } from "@better-giving/fundraiser";
-import { parseContent, toText } from "components/RichText";
+import { Link, useLoaderData } from "@remix-run/react";
+import { toText } from "components/RichText";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import { Link, useLoaderData } from "react-router";
 import type { LoaderData } from "../api";
 
 interface Props {
@@ -43,7 +43,7 @@ function Fund(props: FundItem) {
         {props.name}
       </Link>
       <p className="whitespace-pre-line text-navy-l1 text-sm">
-        {toText(parseContent(props.description))}
+        {toText(props.description)}
       </p>
       <Target
         classes="col-span-full mt-4"

@@ -33,6 +33,6 @@ export const step = v.fallback(
 );
 
 export interface LoaderData {
-  state: unknown;
+  redirect: string;
   step: v.InferOutput<typeof step>;
 }

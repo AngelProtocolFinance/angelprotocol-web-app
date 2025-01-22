@@ -1,10 +1,9 @@
 import type { DonationIntent } from "@better-giving/donation/intent";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import { ErrorBoundaryClass, ErrorTrigger } from "components/error";
 import { PUBLIC_STRIPE_KEY } from "constants/env";
 import { APIs } from "constants/urls";
-import ErrorBoundary from "errors/ErrorBoundary";
-import ErrorTrigger from "errors/ErrorTrigger";
 import useSWR from "swr/immutable";
 import { useDonationState } from "../../Context";
 import { currency } from "../../common/Currency";
@@ -15,10 +14,6 @@ import { DonationTerms } from "../DonationTerms";
 import Loader from "../Loader";
 import Checkout from "./Checkout";
 
-// Followed Stripe's custom flow docs
-// https://stripe.com/docs/payments/quickstart
-const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
-
 const fetcher = async (intent: DonationIntent) => {
   const res = await fetch(`${APIs.apes}/fiat-donation/stripe`, {
     method: "POST",
@@ -27,6 +22,8 @@ const fetcher = async (intent: DonationIntent) => {
   if (!res.ok) throw res;
   return res.json().then((x) => x.clientSecret);
 };
+
+const stripePromise = loadStripe(PUBLIC_STRIPE_KEY);
 
 export default function StripeCheckout(props: StripeCheckoutStep) {
   const { init, details, tip, donor: fvDonor, honorary, feeAllowance } = props;
@@ -83,7 +80,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
       }
       program={details.program}
     >
-      <ErrorBoundary>
+      <ErrorBoundaryClass>
         {isLoading ? (
           <Loader msg="Loading payment form.." />
         ) : error || !data ? (
@@ -113,7 +110,7 @@ export default function StripeCheckout(props: StripeCheckoutStep) {
             <Checkout {...props} />
           </Elements>
         )}
-      </ErrorBoundary>
+      </ErrorBoundaryClass>
       <DonationTerms endowName={props.init.recipient.name} classes="mt-5" />
     </Summary>
   );

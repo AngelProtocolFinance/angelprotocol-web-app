@@ -1,2 +1,2 @@
 export { default } from "./SigningResult";
-export { clientAction } from "../data/fsa-action";
+export { action } from "../data/fsa-action";

@@ -5,9 +5,7 @@ export const envSchema = fallback(
   "dev"
 );
 export const env = parse(envSchema, import.meta.env.VITE_ENVIRONMENT);
-
-export const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT;
-export const IS_TEST = ENVIRONMENT === "dev";
+export const IS_TEST = env === "dev";
 
 // THE CONSTANTS BELOW ARE ALL CONFIGURED BY ENVIRONMENT VARIABLES
 // AND DISPLAY THE DESIRED TEXT/IMAGES/URLS/ETC THROUGHOUT THE APP

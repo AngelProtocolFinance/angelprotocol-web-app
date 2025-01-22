@@ -1,9 +1,9 @@
 import type { Allocation } from "@better-giving/endowment";
+import { NavLink } from "@remix-run/react";
 import { Arrow, Content, Tooltip } from "components/Tooltip";
 import { humanize } from "helpers";
 import { CircleHelp, HandCoins, Pencil, PiggyBank, Sprout } from "lucide-react";
 import type { ReactNode } from "react";
-import { Link } from "react-router";
 import { allocationOptions, toAllocOptValue } from "./common";
 
 interface Props {
@@ -34,16 +34,16 @@ export function Schedule(props: Props) {
           </div>
         ) : null}
 
-        <Link
+        <NavLink
           title="Edit allocation settings"
           to="edit-alloc"
           replace
           preventScrollReset
           aria-disabled={props.disabled}
-          className="hover:text-blue disabled:text-gray"
+          className="hover:text-blue disabled:text-gray [&:is(.pending)]:text-gray"
         >
           <Pencil className="h-4 w-4" />
-        </Link>
+        </NavLink>
       </div>
 
       <div className="grid grid-cols-[auto_auto_auto_1fr_auto_auto] gap-y-3 gap-x-2 mt-4">

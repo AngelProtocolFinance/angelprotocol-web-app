@@ -1,41 +1,24 @@
-import char from "assets/images/celebrating-character.png";
-import { loadAuth } from "auth/load-auth";
+import {
+  Link,
+  NavLink,
+  useOutletContext,
+  useSearchParams,
+} from "@remix-run/react";
+import char from "assets/images/celebrating-character.webp";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
-import Seo from "components/Seo";
 import { Share } from "components/donation";
 import { BASE_URL } from "constants/env";
 import { appRoutes } from "constants/routes";
 import { confetti } from "helpers/confetti";
-import { decodeState } from "helpers/state-params";
-import {
-  Link,
-  type LoaderFunction,
-  useLoaderData,
-  useOutletContext,
-} from "react-router";
-import type { UserV2 } from "types/auth";
-import type { DonateThanksState } from "types/pages";
-
-export const clientLoader: LoaderFunction = async ({ request }) => {
-  const auth = await loadAuth();
-  const url = new URL(request.url);
-  return { user: auth, state: decodeState(url.searchParams.get("_s")) };
-};
-
-interface Data {
-  user: UserV2 | null;
-  state: DonateThanksState | null;
-}
 
 export default function DonateThanks() {
   const widgetVersion = useOutletContext<true | undefined>();
-  const { state } = useLoaderData() as Data;
+  const [params] = useSearchParams();
+  const recipientName = params.get("recipient_name");
 
   return (
     <div className="grid place-self-center max-w-[35rem] px-4 py-8 sm:py-20 scroll-mt-6">
-      {/** override default scripts when used inside iframe */}
-      <Seo scripts={widgetVersion ? [] : undefined} />
       <div
         className="mb-6 justify-self-center"
         ref={async (node) => {
@@ -53,15 +36,15 @@ export default function DonateThanks() {
       </h3>
       <p className="text-center text-navy-l1">
         We'll process your donation to{" "}
-        {state?.recipientName ?? "the nonprofit you specified"} as soon as the
-        payment has cleared.
+        {recipientName ?? "the nonprofit you specified"} as soon as the payment
+        has cleared.
         {widgetVersion
           ? ""
           : " You can safely navigate away using the button below."}
       </p>
 
       <Share
-        recipientName={state?.recipientName ?? "a nonprofit"}
+        recipientName={recipientName ?? "a nonprofit"}
         className="mt-6 border border-gray-l3 rounded-xl"
       />
 
@@ -74,12 +57,12 @@ export default function DonateThanks() {
             My Donations
           </ExtLink>
         ) : (
-          <Link
+          <NavLink
             to={`${appRoutes.user_dashboard}/donations`}
-            className="text-blue"
+            className="text-blue [&:is(.pending)]:text-gray"
           >
-            My Donations page.
-          </Link>
+            My Donations page
+          </NavLink>
         )}{" "}
       </p>
 

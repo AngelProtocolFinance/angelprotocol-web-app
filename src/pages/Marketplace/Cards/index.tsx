@@ -1,6 +1,6 @@
+import { useFetcher, useSearchParams } from "@remix-run/react";
 import { Info } from "components/Status";
 import { useEffect, useState } from "react";
-import { useFetcher, useSearchParams } from "react-router";
 import type { EndowCardsPage } from "types/aws";
 import Card from "./Card";
 
@@ -21,7 +21,6 @@ export default function Cards({ classes = "", firstPage }: Props) {
   const [params] = useSearchParams();
   const [items, setItems] = useState(firstPage.items);
 
-  /**  */
   useEffect(() => {
     if (!data || state === "loading") return;
     if (data) {
@@ -34,7 +33,7 @@ export default function Cards({ classes = "", firstPage }: Props) {
     return <Info>No organisations found</Info>;
   }
 
-  const nextPage = next(data) || next(firstPage);
+  const nextPage = data ? next(data) : next(firstPage);
 
   function loadNext(nextPage: number) {
     const n = new URLSearchParams(params);

@@ -4,9 +4,9 @@ import {
   getInputProps,
   useForm,
 } from "@conform-to/react";
+import { useFetcher } from "@remix-run/react";
 import { parseWithValibot } from "conform-to-valibot";
 import { Check } from "lucide-react";
-import { useFetcher } from "react-router";
 import { emailSubs } from "types/hubspot-subscription";
 
 export default function SubscriptionForm() {

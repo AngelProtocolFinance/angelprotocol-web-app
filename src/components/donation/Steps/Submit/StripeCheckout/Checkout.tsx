@@ -5,9 +5,9 @@ import {
 } from "@stripe/react-stripe-js";
 import LoadText from "components/LoadText";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
-import { appRoutes, donateWidgetRoutes } from "constants/routes";
+import { ErrorTrigger } from "components/error";
+import { appRoutes } from "constants/routes";
 import { errorPrompt } from "contexts/ErrorContext";
-import ErrorTrigger from "errors/ErrorTrigger";
 import { type FormEventHandler, useState } from "react";
 import type { StripeCheckoutStep } from "../../types";
 import Loader from "../Loader";
@@ -41,8 +41,8 @@ export default function Checkout(props: StripeCheckoutStep) {
 
     const return_url =
       props.init.source === "bg-widget"
-        ? `${window.location.origin}${appRoutes.donate_widget}/${donateWidgetRoutes.stripe_payment_status}`
-        : `${window.location.origin}${appRoutes.stripe_payment_status}`;
+        ? `${window.location.origin}${appRoutes.donate_widget}/donate-thanks`
+        : `${window.location.origin}/donate-thanks`;
 
     const stripeConfirmParams = {
       elements,

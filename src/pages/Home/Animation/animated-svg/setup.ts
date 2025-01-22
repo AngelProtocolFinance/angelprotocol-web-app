@@ -1,4 +1,5 @@
 import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export const timeline = (element: string): gsap.core.Timeline => {
   const segment1 = 0.25;
@@ -13,6 +14,7 @@ export const timeline = (element: string): gsap.core.Timeline => {
     end: "1500 60 1795.5 670", // Adjusted from 1700 to 1500
   };
 
+  gsap.registerPlugin(ScrollTrigger);
   const mainTimeline = gsap.timeline({
     scrollTrigger: {
       trigger: element,

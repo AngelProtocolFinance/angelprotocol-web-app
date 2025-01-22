@@ -1,10 +1,8 @@
-import type { EndowClaim } from "@better-giving/registration/models";
+import { NavLink, useOutletContext } from "@remix-run/react";
 import { Target, toTarget } from "components/target";
 import { appRoutes, regRoutes } from "constants/routes";
 import { isEmpty } from "helpers";
-import { toWithState } from "helpers/state-params";
 import type { PropsWithChildren } from "react";
-import { Link, useOutletContext } from "react-router";
 import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../../../ProfileContext";
 import { Fundraisers } from "./Fundraisers";
@@ -42,24 +40,20 @@ export default function DetailsColumn({ className = "" }) {
               classes="-mb-5 mt-4"
             />
           )}
-          <Link
+          <NavLink
             to={appRoutes.donate + `/${p.id}`}
             className="w-full btn-blue h-12 px-6 text-base lg:text-sm"
           >
             Donate now
-          </Link>
+          </NavLink>
         </div>
         {p.claimed === false && (
-          <Link
-            to={toWithState(`${appRoutes.register}/${regRoutes.welcome}`, {
-              ein: p.registration_number,
-              name: p.name,
-              id: p.id,
-            } satisfies EndowClaim)}
+          <NavLink
+            to={`${appRoutes.register}/${regRoutes.welcome}?claim=${p.registration_number}`}
             className="max-lg:text-center block mt-4 font-medium text-blue-d1 hover:underline p-8 border border-gray-l4 rounded"
           >
             Claim this organization
-          </Link>
+          </NavLink>
         )}
         <Fundraisers classes="mt-4" />
       </div>

@@ -1,8 +1,8 @@
+import { Link } from "@remix-run/react";
 import { laira } from "assets/laira/laira";
 import Image from "components/Image";
 import { BOOK_A_DEMO } from "constants/env";
 import { appRoutes } from "constants/routes";
-import { Link } from "react-router";
 
 export function BottomCta({ className = "" }) {
   return (
@@ -33,6 +33,7 @@ export function BottomCta({ className = "" }) {
         </div>
       </div>
       <Image
+        alt="Laira waiving"
         width={140}
         src={laira.waiving}
         className="place-self-center mb-8 order-1 md:order-2"

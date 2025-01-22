@@ -1,9 +1,8 @@
-import { Link } from "react-router";
+import { NavLink } from "@remix-run/react";
 import type { BalanceMovement } from "types/aws";
 
 interface Props {
   classes?: string;
-  endowId: number;
   balance: number;
   mov: BalanceMovement;
   disabled?: boolean;
@@ -12,7 +11,7 @@ interface Props {
 export function LiqActions({ classes = "", ...props }: Props) {
   return (
     <div className={`${classes} flex justify-end gap-x-2`}>
-      <Link
+      <NavLink
         replace
         preventScrollReset
         to={{
@@ -24,11 +23,11 @@ export function LiqActions({ classes = "", ...props }: Props) {
         }}
         type="button"
         aria-disabled={props.disabled}
-        className="text-xs px-4 py-1.5 rounded-md bg-gray-d2 aria-disabled:bg-gray-l3 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
+        className="text-xs [&:is(.pending)]:bg-gray-l3 [&:is(.pending)]:pointer-events-none px-4 py-1.5 rounded-md bg-gray-d2 aria-disabled:bg-gray-l3 outline-blue-d1 text-white font-heading font-bold drop-shadow-sm shadow-inner shadow-white/30"
       >
         Withdraw
-      </Link>
-      <Link
+      </NavLink>
+      <NavLink
         replace
         preventScrollReset
         to={{
@@ -41,10 +40,10 @@ export function LiqActions({ classes = "", ...props }: Props) {
         }}
         type="button"
         aria-disabled={props.disabled}
-        className="text-xs font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-sm py-1 bg-green aria-disabled:bg-gray-l3 text-white font-heading outline-blue-d1"
+        className="text-xs [&:is(.pending)]:bg-gray-l3 [&:is(.pending)]:pointer-events-none font-bold rounded-md px-4 shadow-inner shadow-white/30 drop-shadow-sm py-1 bg-green aria-disabled:bg-gray-l3 text-white font-heading outline-blue-d1"
       >
         Invest
-      </Link>
+      </NavLink>
     </div>
   );
 }

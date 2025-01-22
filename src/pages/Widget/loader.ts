@@ -1,31 +1,25 @@
-import type { Endow, Program } from "@better-giving/endowment";
-import { ap, ver } from "api/api";
+import type { Endow } from "@better-giving/endowment";
+import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
-import {
-  type FiatCurrencies,
-  getFiatCurrencies,
-} from "api/get/fiat-currencies";
-import { getPrograms } from "api/get/programs";
 import { plusInt } from "api/schema/endow-id";
-import { loadAuth } from "auth/load-auth";
-import type { LoaderFunction } from "react-router";
-import type { EndowOptionsPage, EndowmentOption } from "types/aws";
+import type { EndowmentOption } from "types/aws";
 import * as v from "valibot";
+import { getNpos } from ".server/get-npos";
 
 export interface WidgetData {
+  origin: string;
+  // user: UserV2 | null; user currency not needed in preview
   endow?: Endow;
   /** need to await */
-  currencies: Promise<FiatCurrencies>;
   endows: EndowmentOption[];
   /** need to await */
-  programs: Promise<Program[]>;
 }
 
 /* paths:
  * admin/:id/widget-config
  * /widget-config
  */
-export const clientLoader: LoaderFunction = async ({ request, params }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
   const selectedId = v.parse(
     v.nullish(plusInt),
@@ -34,20 +28,15 @@ export const clientLoader: LoaderFunction = async ({ request, params }) => {
   const routeEndowId = v.parse(v.optional(plusInt), params.id);
   const id = selectedId ?? routeEndowId;
 
-  const auth = await loadAuth();
+  const endowsPage = getNpos({
+    query: url.searchParams.get("query") ?? "",
+    page: 1,
+    fields: ["id", "name"],
+  });
+
   return {
+    origin: url.origin,
     endow: id ? await getEndow(id) : undefined,
-    currencies: getFiatCurrencies(auth ?? undefined),
-    endows: await getEndows(url.searchParams.get("query") ?? ""),
-    programs: id ? getPrograms(id) : Promise.resolve([]),
+    endows: await endowsPage.then((page) => page.items),
   } satisfies WidgetData;
 };
-
-async function getEndows(query: string) {
-  return ap
-    .get<EndowOptionsPage>(`${ver(1)}/cloudsearch-nonprofits`, {
-      searchParams: { page: 1, fields: "id,name", query },
-    })
-    .json()
-    .then((data) => data.items);
-}

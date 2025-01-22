@@ -1,7 +1,7 @@
 import { logger } from "helpers";
 import { uploadFile } from "helpers/uploadFile";
 import { type ReactNode, forwardRef, useState } from "react";
-import { useDropzone } from "react-dropzone";
+import { useDropzone } from "react-dropzone-esm";
 import type { Bucket } from "types/lists";
 import DropzoneText from "./DropzoneText";
 import type { FileOutput, FileSpec } from "./types";

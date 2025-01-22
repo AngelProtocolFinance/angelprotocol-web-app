@@ -1,26 +1,24 @@
+import { Link, useLocation } from "@remix-run/react";
+import { useRouteLoaderData } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
-import { toWithState } from "helpers/state-params";
 import { CircleUserRound } from "lucide-react";
-import { Link, useLocation } from "react-router";
-import { useRouteLoaderData } from "react-router";
-import type { SignInRouteState, UserV2 } from "types/auth";
+import type { UserV2 } from "types/auth";
 
 export default function UserMenu({ classes = "" }) {
   const user = useRouteLoaderData("root") as UserV2 | null;
-  const location = useLocation();
-
+  const { pathname: p, search: s } = useLocation();
+  const to = p + s;
   if (!user) {
-    const state: SignInRouteState = { from: location.pathname };
     return (
       <div className={`${classes} flex items-center gap-x-4`}>
         <Link
-          to={toWithState(appRoutes.signin, state)}
+          to={appRoutes.signin + `?redirect=${to}`}
           className="btn text-base normal-case hover:underline"
         >
           Log in
         </Link>
         <Link
-          to={toWithState(appRoutes.signup, state)}
+          to={appRoutes.signup + `?redirect=${to}`}
           className="btn text-base normal-case bg-blue-d1 hover:bg-blue text-white text-nowrap px-6 py-2 rounded-full"
         >
           Sign up

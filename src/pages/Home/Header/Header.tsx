@@ -1,8 +1,9 @@
+import { useLocation, useRouteLoaderData } from "@remix-run/react";
+import { useCachedLoaderData } from "api/cache";
 import { NavDropdown, UserMenu } from "components/Header";
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
 import { useState } from "react";
-import { useLoaderData, useLocation, useRouteLoaderData } from "react-router";
 import type { DetailedUser } from "types/auth";
 import type { EndowCardsPage } from "types/aws";
 import SearchDropdown from "./SearchDropdown";
@@ -12,7 +13,7 @@ type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
   const user = useRouteLoaderData("root") as DetailedUser | null;
-  const firstPage = useLoaderData() as EndowCardsPage;
+  const firstPage = useCachedLoaderData() as EndowCardsPage;
   const location = useLocation();
   const [query, setQuery] = useState("");
   const isInAuth = authRoutes.includes(location.pathname);
@@ -41,7 +42,7 @@ export default function Header({ classes }: Props) {
           classes="max-md:hidden absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
         />
         <div className="flex gap-2 md:gap-4 justify-self-end items-center">
-          {!isInAuth && <UserMenu />}
+          <UserMenu classes="max-sm:hidden" />
           <NavDropdown isInAuth={isInAuth} user={user} />
         </div>
       </div>

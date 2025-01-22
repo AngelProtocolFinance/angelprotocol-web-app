@@ -1,9 +1,8 @@
 import type { Allocation } from "@better-giving/endowment";
+import { useFetcher } from "@remix-run/react";
 import { Arrow, Content } from "components/Tooltip";
 import { humanize } from "helpers";
 import { ChartSpline, PiggyBank, UsersRound } from "lucide-react";
-import { useAdminContext } from "pages/Admin/Context";
-import { useFetcher } from "react-router";
 import type { BalanceMovement } from "types/aws";
 import type { EndowmentBalances } from "types/aws";
 import Figure from "./Figure";
@@ -22,7 +21,6 @@ interface Props {
 }
 export function Loaded({ classes = "", ...props }: Props) {
   const fetcher = useFetcher({ key: "bal-mov" });
-  const { id } = useAdminContext();
   const period = monthPeriod();
 
   const nextMov = fetcher.json as unknown as BalanceMovement | undefined;
@@ -54,7 +52,6 @@ export function Loaded({ classes = "", ...props }: Props) {
             <LiqActions
               disabled={period.isPre}
               classes="mt-8"
-              endowId={id}
               mov={mov}
               balance={props.balances.liq ?? 0}
             />
@@ -83,7 +80,6 @@ export function Loaded({ classes = "", ...props }: Props) {
               disabled={period.isPre}
               classes="mt-8"
               balance={props.balances.sustainabilityFundBal ?? 0}
-              endowId={id}
               mov={mov}
             />
           }
@@ -116,7 +112,6 @@ export function Loaded({ classes = "", ...props }: Props) {
 
         <Movements
           disabled={period.isPre}
-          endowId={id}
           mov={mov}
           classes="mt-4"
           balance={(flow) => {

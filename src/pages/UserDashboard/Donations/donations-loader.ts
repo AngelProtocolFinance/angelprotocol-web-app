@@ -1,8 +1,8 @@
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, toSearch, ver } from "api/api";
-import { loadAuth, redirectToAuth } from "auth";
-import type { LoaderFunction } from "react-router";
 import type { UserV2 } from "types/auth";
 import type { DonationsPage } from "types/aws";
+import { cognito, toAuth } from ".server/auth";
 
 export interface DonationsData extends DonationsPage {
   user: UserV2;
@@ -14,14 +14,14 @@ export const loader: LoaderFunction = async ({ request }) => {
     from.searchParams.entries()
   );
 
-  const auth = await loadAuth();
-  if (!auth) return redirectToAuth(request);
+  const { user, headers } = await cognito.retrieve(request);
+  if (!user) return toAuth(request, headers);
 
   return ap
     .get(`${ver(2)}/donations`, {
-      headers: { authorization: auth.idToken },
-      searchParams: toSearch({ asker: auth.email, page, status }),
+      headers: { authorization: user.idToken },
+      searchParams: toSearch({ asker: user.email, page, status }),
     })
     .json()
-    .then((data: any) => ({ ...data, user: auth }));
+    .then((data: any) => ({ ...data, user }));
 };

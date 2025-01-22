@@ -1,32 +1,31 @@
-import Quill, { Delta } from "quill/core";
+import Delta from "quill-delta";
 import type { RichTextContent } from "types/components";
 
-const quill = new Quill(document.createElement("div"));
-
-export const parseContent = (content?: string): RichTextContent => {
-  if (!content) return { length: 0, value: "" };
+export const toDelta = (json: string): Delta => {
   try {
-    const ops = JSON.parse(content);
-    const delta = new Delta(ops);
-    return { value: content, length: delta.length() - 1 };
+    return new Delta(JSON.parse(json));
   } catch (_) {
-    return { length: content.length, value: content };
+    return new Delta([{ insert: json }]);
   }
 };
 
-export const toDelta = (content: RichTextContent): Delta => {
-  try {
-    return new Delta(JSON.parse(content.value));
-  } catch (_) {
-    return new Delta([{ insert: content.value }]);
-  }
+export const toContent = (json: string | undefined): RichTextContent => {
+  const delta = toDelta(json || "");
+  return {
+    length: delta.length() - 1,
+    value: json || "",
+  };
 };
 
-export const toText = (content: RichTextContent): string => {
-  try {
-    quill.setContents(toDelta(content));
-    return quill.getText();
-  } catch (_) {
-    return content.value;
-  }
-};
+export function toText(json: string | undefined) {
+  return toDelta(json ?? "").ops.reduce((text, op) => {
+    if (typeof op.insert === "string") {
+      return text + op.insert;
+    } else if (typeof op.insert === "object" && op.insert.text) {
+      return text + op.insert.text;
+    } else if (typeof op.insert === "object" && op.insert.image) {
+      return text + (op.attributes?.alt || "");
+    }
+    return text;
+  }, "");
+}

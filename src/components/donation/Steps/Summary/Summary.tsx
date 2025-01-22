@@ -1,5 +1,5 @@
+import { useLoaderData } from "@remix-run/react";
 import type { DonateData } from "api/donate-loader";
-import { useLoaderData } from "react-router";
 import { useDonationState } from "../Context";
 import { currency } from "../common/Currency";
 import SummaryContainer from "../common/Summary";

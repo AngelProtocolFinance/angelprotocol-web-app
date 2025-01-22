@@ -7,15 +7,15 @@ import {
   Label,
 } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { humanize } from "helpers";
-import { ArrowLeft, Pencil } from "lucide-react";
-import { useForm } from "react-hook-form";
 import {
   useFetcher,
   useNavigate,
   useRouteLoaderData,
   useSearchParams,
-} from "react-router";
+} from "@remix-run/react";
+import { humanize } from "helpers";
+import { ArrowLeft, Pencil } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { schema, stringNumber } from "schemas/shape";
 import type { BalanceMovement } from "types/aws";
 import type { DashboardData } from "./api";
@@ -39,7 +39,8 @@ interface IMoveFundForm {
   initAmount?: number;
 }
 
-export { moveFundAction as clientAction } from "./move-fund-action";
+export { moveFundAction as action } from "./move-fund-action";
+export { ErrorModal as ErrorBoundary } from "components/error";
 export default function MoveFundForm() {
   const [params] = useSearchParams();
   const navigate = useNavigate();

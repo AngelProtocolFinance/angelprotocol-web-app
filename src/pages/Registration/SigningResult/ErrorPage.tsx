@@ -1,7 +1,7 @@
+import { Link, useFetcher } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { regRoutes } from "constants/routes";
 import { CircleAlert } from "lucide-react";
-import { Link, useFetcher } from "react-router";
 import type { ErrorQueryParams } from "./types";
 
 export default function ErrorPage(props: ErrorQueryParams) {
@@ -9,7 +9,7 @@ export default function ErrorPage(props: ErrorQueryParams) {
 
   const isRedirecting = fetcher.state === "submitting";
   return (
-    <fetcher.Form action="." method="POST">
+    <fetcher.Form method="POST">
       <div className="bg-red rounded-full aspect-square grid place-items-center mb-4">
         <CircleAlert size={30} className="text-white m-5" />
       </div>
