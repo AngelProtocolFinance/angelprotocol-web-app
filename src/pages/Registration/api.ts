@@ -9,7 +9,7 @@ import {
 import { ap, ver } from "api/api";
 import { getEndowWithEin } from "api/get/endow-with-ein";
 import { appRoutes } from "constants/routes";
-import { regCookie } from "./data/cookie";
+import { regCookie } from "./data/cookie.server";
 import { steps } from "./routes";
 import { cognito, toAuth } from ".server/auth";
 

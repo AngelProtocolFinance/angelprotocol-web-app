@@ -8,7 +8,7 @@ import {
 import { Separator } from "components/Separator";
 import { NativeField as Field } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
-import { regCookie } from "../data/cookie";
+import { regCookie } from "../data/cookie.server";
 import { getRegState } from "../data/step-loader";
 import { nextStep } from "../routes";
 import { schema } from "./types";
@@ -32,7 +32,18 @@ export const action: ActionFunction = async ({ request }) => {
   if (parsed.status !== "success") return parsed.reply();
 
   const { data, step } = await getRegState(parsed.value.reference, user);
-  return redirect(`../${data.init.id}/${nextStep[step]}`);
+
+  /** set existing reference user inputs */
+  const rc = await regCookie
+    .parse(request.headers.get("Cookie"))
+    .then((x) => x || {});
+  rc.reference = data.init.id;
+
+  return redirect(`../${data.init.id}/${nextStep[step]}`, {
+    headers: {
+      "Set-Cookie": await regCookie.serialize(rc),
+    },
+  });
 };
 
 export { ErrorBoundary } from "components/error";
