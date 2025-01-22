@@ -1,13 +1,12 @@
-import { useCachedLoaderData } from "api/cache";
+import { useLoaderData } from "@remix-run/react";
 import { CircleAlert } from "lucide-react";
 import Loaded from "./Loaded";
 import type { LoaderData } from "./api";
 
 export { meta, loader } from "./api";
-export { clientLoader } from "api/cache";
 export { ErrorBoundary } from "components/error";
 export default function Application() {
-  const { application, user } = useCachedLoaderData() as LoaderData;
+  const { application, user } = useLoaderData() as LoaderData;
 
   if (!user.groups.includes("ap-admin")) {
     return (
