@@ -3234,7 +3234,6 @@ __metadata:
     react-csv: "npm:2.2.2"
     react-dom: "npm:18.2.0"
     react-dropzone-esm: "npm:15.2.0"
-    react-fast-marquee: "npm:1.6.4"
     react-helmet: "npm:6.1.0"
     react-hook-form: "npm:7.53.0"
     react-player: "npm:2.16.0"
@@ -7919,16 +7918,6 @@ __metadata:
   version: 3.2.2
   resolution: "react-fast-compare@npm:3.2.2"
   checksum: 10/a6826180ba75cefba1c8d3ac539735f9b627ca05d3d307fe155487f5d0228d376dac6c9708d04a283a7b9f9aee599b637446635b79c8c8753d0b4eece56c125c
-  languageName: node
-  linkType: hard
-
-"react-fast-marquee@npm:1.6.4":
-  version: 1.6.4
-  resolution: "react-fast-marquee@npm:1.6.4"
-  peerDependencies:
-    react: ">= 16.8.0 || 18.0.0"
-    react-dom: ">= 16.8.0 || 18.0.0"
-  checksum: 10/37f967fc060af5218e22b1bfeb118e73d84d4fb2976ea70e30ea7122eb372dc520f764351d9cb2b2242f0505d2a80a5ea111ff1ae2d8767c92e435d2d9449bd0
   languageName: node
   linkType: hard
 
