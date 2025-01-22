@@ -2,11 +2,11 @@ import type { FsaPayload } from "@better-giving/registration/fsa";
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { regRoutes } from "constants/routes";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const contentType = request.headers.get("content-type");
   const signer =

@@ -4,11 +4,11 @@ import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
 import { bankingApplicationUpdate } from "types/aws";
 import * as v from "valibot";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export const action: ActionFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, { headers });
+  if (!user) return toAuth(request, { headers });
 
   const fv = await request.formData();
   const payload = parseWithValibot(fv, { schema: bankingApplicationUpdate });

@@ -2,7 +2,7 @@ import type { ActionFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { parseWithValibot } from "conform-to-valibot";
 import { emailSubs } from "types/hubspot-subscription";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export const action: ActionFunction = async ({ request }) => {
   const r = request.clone();
@@ -25,7 +25,7 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   //authenticated requests
 

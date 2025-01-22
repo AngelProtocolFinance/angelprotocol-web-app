@@ -6,7 +6,7 @@ import { plusInt } from "api/schema/endow-id";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 const getAllocation = (id: number) =>
   getEndow(id, ["allocation"]).then<Allocation>(
@@ -39,7 +39,7 @@ export interface DashboardData {
 export const endowUpdateAction = endowUpdate({ redirect: "." });
 export const dashboardData: LoaderFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
   const url = new URL(request.url);
   const nextPageKey = url.searchParams.get("nextPageKey");
 

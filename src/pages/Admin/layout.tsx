@@ -12,7 +12,7 @@ import { parse } from "valibot";
 import Header from "./Header";
 import SidebarHeader from "./SidebarHeader";
 import { linkGroups } from "./constants";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 interface LoaderData {
   id: number;
@@ -23,7 +23,7 @@ interface LoaderData {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const id = parse(plusInt, params.id);
   return {

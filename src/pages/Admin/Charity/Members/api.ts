@@ -9,7 +9,7 @@ import { parseWithValibot } from "conform-to-valibot";
 import type { UserV2 } from "types/auth";
 import type { EndowAdmin } from "types/aws";
 import { schema } from "./schema";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export interface LoaderData {
   user: UserV2;
@@ -18,7 +18,7 @@ export interface LoaderData {
 
 export const members: LoaderFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const admins = await ap
     .get<EndowAdmin[]>(`${ver(2)}/endowments/${params.id}/admins`, {
@@ -30,7 +30,7 @@ export const members: LoaderFunction = async ({ params, request }) => {
 
 export const deleteAction: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const { toRemove } = await request.json();
 
@@ -42,7 +42,7 @@ export const deleteAction: ActionFunction = async ({ request, params }) => {
 
 export const addAction: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const fv = await request.formData();
   const payload = parseWithValibot(fv, { schema: schema([]) });

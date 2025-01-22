@@ -4,7 +4,7 @@ import { ap, ver } from "api/api";
 import { userEndows } from "api/get/user-endows";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export interface SettingsData {
   user: UserV2;
@@ -13,7 +13,7 @@ export interface SettingsData {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
   return {
     user,
     userEndows: await userEndows(user),
@@ -22,7 +22,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const path = `${ver(3)}/users/${user.email}/endowments`;
   await ap.patch(path, {

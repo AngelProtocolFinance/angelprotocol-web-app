@@ -3,7 +3,7 @@ import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export interface LoaderData {
   fund: SingleFund;
@@ -11,7 +11,7 @@ export interface LoaderData {
 }
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
   const fund = await ap
     .get<SingleFund>(`${ver(1)}/funds/${params.fundId}`)
     .json();
@@ -21,7 +21,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const { close = false, ...update } = await request.json();
 

@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 import type { ActionData } from "types/action";
 
@@ -9,7 +9,7 @@ export const loader: LoaderFunction = async ({ params }) =>
   getProgram(params.id, params.programId);
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const basePath = `${ver(1)}/endowments/${params.id}/programs/${params.programId}`;
 

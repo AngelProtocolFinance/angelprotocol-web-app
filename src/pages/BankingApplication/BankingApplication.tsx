@@ -5,12 +5,12 @@ import { plusInt } from "api/schema/endow-id";
 import { metas } from "helpers/seo";
 import { parse } from "valibot";
 import { Loaded } from "./Loaded";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const bankId = parse(plusInt, params.id);
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   return getPayoutMethod(bankId, "bg-admin", user.idToken);
 };

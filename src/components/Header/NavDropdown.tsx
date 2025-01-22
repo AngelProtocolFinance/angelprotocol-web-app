@@ -7,7 +7,7 @@ import {
 import { NavLink, useLocation } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
 import { createNavLinkStyler } from "helpers";
-import { ChevronDown, MenuIcon } from "lucide-react";
+import { ChevronDown, CornerDownRight, MenuIcon } from "lucide-react";
 import type { DetailedUser } from "types/auth";
 import Menu from "./UserMenu/Menu";
 
@@ -61,7 +61,8 @@ export default function NavDropdown({ user, isInAuth }: Props) {
               to={appRoutes.register + (user ? "/" : "/welcome")}
               className={styler}
             >
-              Register NPO
+              <CornerDownRight strokeWidth={1.5} size={15} />
+              <span>Register NPO</span>
             </NavLink>
           </MenuItem>
           <MenuItem>
@@ -71,11 +72,13 @@ export default function NavDropdown({ user, isInAuth }: Props) {
           </MenuItem>
           <MenuItem>
             <NavLink to={appRoutes.marketplace} className={styler}>
-              Marketplace
+              <CornerDownRight strokeWidth={1.5} size={15} />
+              <span>Marketplace</span>
             </NavLink>
           </MenuItem>
           <MenuItem>
             <NavLink to={appRoutes.funds} className={styler}>
+              <CornerDownRight strokeWidth={1.5} size={15} />
               Fundraisers
             </NavLink>
           </MenuItem>
@@ -113,5 +116,5 @@ export default function NavDropdown({ user, isInAuth }: Props) {
 }
 
 const styles =
-  "text-blue font-body font-semibold w-full hover:underline hover:text-blue-d1";
+  "text-blue font-body font-semibold w-full hover:underline hover:text-blue-d1 flex items-center gap-x-2";
 const styler = createNavLinkStyler(styles, "pointer-events-none text-navy-d4");

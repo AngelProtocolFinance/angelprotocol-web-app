@@ -5,7 +5,7 @@ import {
 } from "api/get/fiat-currencies";
 import type { ActionData } from "types/action";
 import { type UserV2, isError } from "types/auth";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export interface LoaderData extends FiatCurrencies {
   user: UserV2;
@@ -13,14 +13,14 @@ export interface LoaderData extends FiatCurrencies {
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
   const currencies = await getFiatCurrencies(user.currency ?? "none");
   return { user, ...currencies } satisfies LoaderData;
 };
 
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers, session } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const attributes = await request.json();
   const result = await cognito.updateUserAttributes(

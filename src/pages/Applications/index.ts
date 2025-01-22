@@ -2,7 +2,7 @@ import type { Page } from "@better-giving/registration/approval";
 import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import type { UserV2 } from "types/auth";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export { default } from "./Applications";
 export { ErrorBoundary } from "components/error";
@@ -10,7 +10,7 @@ export { ErrorBoundary } from "components/error";
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
   if (user) return getApplications(new URL(request.url), user);
-  return redirectToAuth(request, headers);
+  return toAuth(request, headers);
 };
 
 async function getApplications(source: URL, user: UserV2) {

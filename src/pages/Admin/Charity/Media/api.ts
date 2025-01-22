@@ -9,7 +9,7 @@ import { plusInt } from "api/schema/endow-id";
 import { parseWithValibot } from "conform-to-valibot";
 import { parse } from "valibot";
 import { schema } from "./VideoEditor";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export const featuredMedia: LoaderFunction = async ({ params }) => {
   const endowId = parse(plusInt, params.id);
@@ -30,7 +30,7 @@ export const videosAction: LoaderFunction = async ({ params, request }) => {
   const endowId = parse(plusInt, params.id);
 
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const fv = await request.formData();
   const intent = fv.get("intent") as "feature" | "delete";
@@ -53,7 +53,7 @@ export const videosAction: LoaderFunction = async ({ params, request }) => {
 
 export const newAction: ActionFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const fv = await request.formData();
   const payload = parseWithValibot(fv, { schema });
@@ -68,7 +68,7 @@ export const newAction: ActionFunction = async ({ params, request }) => {
 
 export const editAction: ActionFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const fv = await request.formData();
   const payload = parseWithValibot(fv, { schema });

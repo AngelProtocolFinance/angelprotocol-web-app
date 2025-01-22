@@ -2,7 +2,7 @@ import type { Application as IApplication } from "@better-giving/registration/ap
 import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import type { UserV2 } from "types/auth";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export interface LoaderData {
   user: UserV2;
@@ -11,7 +11,7 @@ export interface LoaderData {
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const application = await ap
     .get<IApplication>(`${ver(1)}/registrations/${params.id}`, {

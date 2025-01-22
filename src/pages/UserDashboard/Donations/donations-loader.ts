@@ -2,7 +2,7 @@ import type { LoaderFunction } from "@vercel/remix";
 import { ap, toSearch, ver } from "api/api";
 import type { UserV2 } from "types/auth";
 import type { DonationsPage } from "types/aws";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export interface DonationsData extends DonationsPage {
   user: UserV2;
@@ -15,7 +15,7 @@ export const loader: LoaderFunction = async ({ request }) => {
   );
 
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   return ap
     .get(`${ver(2)}/donations`, {

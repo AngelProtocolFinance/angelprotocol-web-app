@@ -1,13 +1,13 @@
 import type { Verdict } from "@better-giving/registration/approval";
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 export { default } from "./Prompt";
 export { ErrorModal as ErrorBoundary } from "components/error";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const fv: { reason?: string } = await request.json();
 

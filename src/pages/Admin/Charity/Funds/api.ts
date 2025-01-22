@@ -5,7 +5,7 @@ import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 import { getFundsNpoMemberOf } from ".server/get-funds";
 
 export interface LoaderData {
@@ -16,7 +16,7 @@ export interface LoaderData {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
   const endow = await getEndow(params.id);
   const funds = await getFundsNpoMemberOf(endow.id, {
     npoProfileFeatured: false,
@@ -26,7 +26,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const fv = await request.formData();
   await ap.post(

@@ -12,12 +12,12 @@ import { regCookie } from "../data/cookie";
 import { getRegState } from "../data/step-loader";
 import { nextStep } from "../routes";
 import { schema } from "./types";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const cookieHeader = request.headers.get("Cookie");
   const { user, headers } = await cognito.retrieve(cookieHeader);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const rc = await regCookie.parse(cookieHeader).then((x) => x || {});
   return rc.reference || null;
@@ -25,7 +25,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const fv = await request.formData();
   const parsed = parseWithValibot(fv, { schema });

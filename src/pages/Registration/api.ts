@@ -11,17 +11,17 @@ import { getEndowWithEin } from "api/get/endow-with-ein";
 import { appRoutes } from "constants/routes";
 import { regCookie } from "./data/cookie";
 import { steps } from "./routes";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
   return user;
 };
 
 export const newApplicationAction: ActionFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const url = new URL(request.url);
 

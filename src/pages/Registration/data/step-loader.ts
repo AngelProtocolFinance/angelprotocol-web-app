@@ -5,7 +5,7 @@ import type { UserV2 } from "types/auth";
 import { parse, pipe, string, uuid } from "valibot";
 import type { Reg$IdData, RegStep } from "../types";
 import { getRegistrationState } from "./getRegistrationState";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 const uuidSchema = pipe(string(), uuid());
 
@@ -25,7 +25,7 @@ export async function getRegState(
 
 export const regLoader: LoaderFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
   return {
     user,
     reg: await getRegState(params.regId, user),
@@ -36,7 +36,7 @@ export const stepLoader =
   (thisStep: RegStep): LoaderFunction =>
   async ({ params, request }) => {
     const { user, headers } = await cognito.retrieve(request);
-    if (!user) return redirectToAuth(request, headers);
+    if (!user) return toAuth(request, headers);
 
     const state = await getRegState(params.regId, user);
 

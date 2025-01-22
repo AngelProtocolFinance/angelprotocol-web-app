@@ -11,7 +11,7 @@ import { imgEditorStyles } from "components/ImgEditor";
 import { richTextStyles } from "components/RichText";
 import { adminRoutes, appRoutes } from "constants/routes";
 import { isError } from "types/auth";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export { ErrorBoundary } from "components/error";
 export { default } from "./CreateFund";
@@ -21,7 +21,7 @@ export const links: LinksFunction = () => [
 ];
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
   const url = new URL(request.url);
   const npoId = url.searchParams.get("npo");
   const endow = npoId ? await getEndow(npoId) : null;
@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 
 export const action: ActionFunction = async ({ request }) => {
   const { user, headers, session } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   const payload: NewFund = await request.json();
 

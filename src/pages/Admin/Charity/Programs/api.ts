@@ -3,7 +3,7 @@ import { type LoaderFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getPrograms } from "api/get/programs";
 import { adminRoutes } from "constants/routes";
-import { cognito, redirectToAuth } from ".server/auth";
+import { cognito, toAuth } from ".server/auth";
 
 export interface LoaderData {
   programs: Program[];
@@ -16,7 +16,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export const action: LoaderFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);
-  if (!user) return redirectToAuth(request, headers);
+  if (!user) return toAuth(request, headers);
 
   if (request.method === "DELETE") {
     const progId = await request.formData().then((f) => f.get("programId"));
