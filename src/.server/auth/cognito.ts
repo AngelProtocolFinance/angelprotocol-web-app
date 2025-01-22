@@ -1,5 +1,4 @@
 import { Buffer } from "node:buffer";
-import { logger } from "helpers/logger";
 import type { AuthError, UserV2 } from "types/auth";
 import { type Stored, commitSession, getSession } from "./session";
 import { Util } from "./util";
@@ -327,7 +326,7 @@ class OAuth extends Storage {
     });
 
     if (!res.ok) {
-      logger.error(await res.text());
+      console.error(await res.text());
       return null;
     }
     const data: OauthTokenRes = await res.json();
