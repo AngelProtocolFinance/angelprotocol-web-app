@@ -29,7 +29,7 @@ const rmx = remix({
       r("admin/:id", "./pages/Admin/layout.tsx", () => {
         r("", "./pages/Admin/Charity/redirect.ts", { index: true });
         r("donations", "./pages/Admin/Charity/Donations/Donations.tsx");
-        r("programs", "./pages/Admin/Charity/Programs/index.ts");
+        r("programs", "./pages/Admin/Charity/Programs/Programs.tsx");
         r("funds", "./pages/Admin/Charity/Funds/Funds.tsx");
         r(
           "program-editor/:programId",
