@@ -1,7 +1,7 @@
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
+import { cognito, redirectToAuth } from ".server/auth";
 
 type Next = { success: string } | { redirect: string };
 

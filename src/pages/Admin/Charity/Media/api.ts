@@ -6,10 +6,10 @@ import {
 import { ap, ver } from "api/api";
 import { getMedia } from "api/get/media";
 import { plusInt } from "api/schema/endow-id";
-import { cognito, redirectToAuth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { parse } from "valibot";
 import { schema } from "./VideoEditor";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const featuredMedia: LoaderFunction = async ({ params }) => {
   const endowId = parse(plusInt, params.id);

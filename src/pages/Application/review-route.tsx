@@ -1,7 +1,7 @@
 import type { Verdict } from "@better-giving/registration/approval";
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from ".server/auth";
 export { default } from "./Prompt";
 export { ErrorModal as ErrorBoundary } from "components/error";
 

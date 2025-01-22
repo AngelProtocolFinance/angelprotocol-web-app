@@ -1,7 +1,7 @@
 import type { UserFund } from "@better-giving/user";
 import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export interface LoaderData {
   funds: UserFund[];

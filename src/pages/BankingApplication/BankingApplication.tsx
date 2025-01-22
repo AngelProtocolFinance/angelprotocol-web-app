@@ -2,10 +2,10 @@ import { Outlet, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { type BankDetails, getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
-import { cognito, redirectToAuth } from "auth";
 import { metas } from "helpers/seo";
 import { parse } from "valibot";
 import { Loaded } from "./Loaded";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const bankId = parse(plusInt, params.id);

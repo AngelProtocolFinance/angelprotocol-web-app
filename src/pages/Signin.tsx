@@ -6,7 +6,6 @@ import type {
   MetaFunction,
 } from "@vercel/remix";
 import googleIcon from "assets/icons/google.svg";
-import { cognito, oauth } from "auth/cognito";
 import ExtLink from "components/ExtLink";
 import Image from "components/Image";
 import { Separator } from "components/Separator";
@@ -18,6 +17,7 @@ import { useActionResult } from "hooks/use-action-result";
 import { Mail } from "lucide-react";
 import type { ActionData } from "types/action";
 import { isError, signIn } from "types/auth";
+import { cognito, oauth } from ".server/auth";
 
 export const action: ActionFunction = async ({ request }) => {
   try {

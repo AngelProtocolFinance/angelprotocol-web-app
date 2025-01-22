@@ -4,13 +4,13 @@ import {
   data,
   redirect,
 } from "@vercel/remix";
-import { cognito } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import type { ActionData } from "types/action";
 import { isError } from "types/auth";
 import { parse } from "valibot";
 import { emailSchema, passwordSchema } from "./schema";
 import { type LoaderData, step } from "./types";
+import { cognito } from ".server/auth";
 
 export const loader: LoaderFunction = ({ request }) => {
   const url = new URL(request.url);

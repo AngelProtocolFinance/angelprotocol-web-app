@@ -3,10 +3,10 @@ import type { LoaderFunction } from "@vercel/remix";
 import { apes, toSearch, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
-import { cognito, redirectToAuth } from "auth";
 import type { BalanceTxsPage, EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import { endowUpdate } from "../endow-update-action";
+import { cognito, redirectToAuth } from ".server/auth";
 
 const getAllocation = (id: number) =>
   getEndow(id, ["allocation"]).then<Allocation>(

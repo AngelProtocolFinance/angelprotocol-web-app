@@ -1,8 +1,8 @@
 import { type ActionFunction, redirect } from "@vercel/remix";
-import { cognito, oauth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { isError, signUp } from "types/auth";
+import { cognito, oauth } from ".server/auth";
 
 export const action: ActionFunction = async ({ request }) => {
   const from = new URL(request.url);

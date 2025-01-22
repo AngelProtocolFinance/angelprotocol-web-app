@@ -4,9 +4,9 @@ import type { LoaderFunctionArgs } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
 import { userEndows } from "api/get/user-endows";
-import { cognito, oauth } from "auth/cognito";
 import type { DetailedUser, UserV2 } from "types/auth";
 import type { EndowmentBookmark } from "types/aws";
+import { cognito, oauth } from ".server/auth";
 
 async function getBookmarks(user: UserV2): Promise<EndowmentBookmark[]> {
   const endows = await ap

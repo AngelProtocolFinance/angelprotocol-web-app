@@ -1,10 +1,10 @@
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { bankUpdate } from "api/action/bank-update";
 import { plusInt } from "api/schema/endow-id";
-import { cognito, redirectToAuth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { bankingApplicationUpdate } from "types/aws";
 import * as v from "valibot";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const action: ActionFunction = async ({ params, request }) => {
   const { user, headers } = await cognito.retrieve(request);

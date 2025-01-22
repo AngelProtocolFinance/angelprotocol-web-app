@@ -1,9 +1,8 @@
 import type { Application as IApplication } from "@better-giving/registration/approval";
-import type { LoaderFunction, MetaFunction } from "@vercel/remix";
+import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
-import { metas } from "helpers/seo";
 import type { UserV2 } from "types/auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export interface LoaderData {
   user: UserV2;
@@ -24,11 +23,4 @@ export const loader: LoaderFunction = async ({ params, request }) => {
     application,
     user,
   } satisfies LoaderData;
-};
-
-export const meta: MetaFunction = ({ data }) => {
-  if (!data) return [];
-  return metas({
-    title: `Application Review - ${(data as LoaderData).application.contact.org_name}`,
-  });
 };

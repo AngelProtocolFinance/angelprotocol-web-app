@@ -8,10 +8,10 @@ import {
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndowWithEin } from "api/get/endow-with-ein";
-import { cognito, redirectToAuth } from "auth";
 import { appRoutes } from "constants/routes";
 import { regCookie } from "./data/cookie";
 import { steps } from "./routes";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);

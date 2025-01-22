@@ -5,7 +5,6 @@ import {
   type LoaderFunction,
   redirect,
 } from "@vercel/remix";
-import { cognito, redirectToAuth } from "auth";
 import { Separator } from "components/Separator";
 import { NativeField as Field } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
@@ -13,6 +12,7 @@ import { regCookie } from "../data/cookie";
 import { getRegState } from "../data/step-loader";
 import { nextStep } from "../routes";
 import { schema } from "./types";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const loader: LoaderFunction = async ({ request }) => {
   const cookieHeader = request.headers.get("Cookie");

@@ -3,9 +3,9 @@ import type { FundItem } from "@better-giving/fundraiser";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
-import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
+import { cognito, redirectToAuth } from ".server/auth";
 import { getFundsNpoMemberOf } from ".server/get-funds";
 
 export interface LoaderData {

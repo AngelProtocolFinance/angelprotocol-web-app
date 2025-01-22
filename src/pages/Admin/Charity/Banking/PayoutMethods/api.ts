@@ -1,9 +1,9 @@
 import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { plusInt } from "api/schema/endow-id";
-import { cognito, redirectToAuth } from "auth";
 import type { PayoutMethod } from "types/aws";
 import { parse } from "valibot";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export interface LoaderData {
   methods: PayoutMethod[];

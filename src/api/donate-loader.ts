@@ -1,12 +1,12 @@
 import type { Endow } from "@better-giving/endowment";
 import { type LoaderFunction, data } from "@vercel/remix";
-import { cognito } from "auth";
 import type { UserV2 } from "types/auth";
 import type { EndowmentBalances } from "types/aws";
 import * as v from "valibot";
 import { getEndow } from "./get/endow";
 import { getEndowBalance } from "./get/endow-balance";
 import { plusInt } from "./schema/endow-id";
+import { cognito } from ".server/auth";
 
 export interface DonateData {
   id: number;

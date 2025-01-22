@@ -2,9 +2,9 @@ import type { UserEndow } from "@better-giving/user";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { userEndows } from "api/get/user-endows";
-import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export interface SettingsData {
   user: UserV2;

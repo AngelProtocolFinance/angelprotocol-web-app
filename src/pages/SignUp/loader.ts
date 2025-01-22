@@ -1,6 +1,6 @@
 import { type LoaderFunction, redirect } from "@vercel/remix";
-import { cognito } from "auth";
 import { appRoutes } from "constants/routes";
+import { cognito } from ".server/auth";
 export const loader: LoaderFunction = async ({
   request,
 }): Promise<Response | unknown> => {

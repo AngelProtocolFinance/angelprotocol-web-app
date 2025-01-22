@@ -1,7 +1,7 @@
 import type { Update } from "@better-giving/registration/update";
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const updateAction =
   (next: string): ActionFunction =>

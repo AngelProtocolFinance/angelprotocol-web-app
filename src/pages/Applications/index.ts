@@ -1,8 +1,8 @@
 import type { Page } from "@better-giving/registration/approval";
 import type { LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
 import type { UserV2 } from "types/auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export { default } from "./Applications";
 export { ErrorBoundary } from "components/error";

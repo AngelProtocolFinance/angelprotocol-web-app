@@ -7,9 +7,9 @@ import { bankUpdate } from "api/action/bank-update";
 import { ap, ver } from "api/api";
 import { getPayoutMethod } from "api/get/payout-method";
 import { plusInt } from "api/schema/endow-id";
-import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
 import * as v from "valibot";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const payoutMethodLoader: LoaderFunction = async ({
   params,

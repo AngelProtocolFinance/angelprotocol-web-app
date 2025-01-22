@@ -1,10 +1,20 @@
 import { useLoaderData } from "@remix-run/react";
+import type { MetaFunction } from "@vercel/remix";
+import { metas } from "helpers/seo";
 import { CircleAlert } from "lucide-react";
 import Loaded from "./Loaded";
 import type { LoaderData } from "./api";
 
-export { meta, loader } from "./api";
+export const meta: MetaFunction = ({ data }) => {
+  if (!data) return [];
+  return metas({
+    title: `Application Review - ${(data as LoaderData).application.contact.org_name}`,
+  });
+};
+
+export { loader } from "./api";
 export { ErrorBoundary } from "components/error";
+
 export default function Application() {
   const { application, user } = useLoaderData() as LoaderData;
 

@@ -3,7 +3,6 @@ import { useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { getEndow } from "api/get/endow";
 import { plusInt } from "api/schema/endow-id";
-import { cognito, redirectToAuth } from "auth";
 import Footer from "components/Footer";
 import { appRoutes } from "constants/routes";
 import Layout from "layout/DashboardLayout";
@@ -13,6 +12,7 @@ import { parse } from "valibot";
 import Header from "./Header";
 import SidebarHeader from "./SidebarHeader";
 import { linkGroups } from "./constants";
+import { cognito, redirectToAuth } from ".server/auth";
 
 interface LoaderData {
   id: number;

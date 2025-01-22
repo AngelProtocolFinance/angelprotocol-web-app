@@ -1,8 +1,8 @@
 import type { FsaPayload } from "@better-giving/registration/fsa";
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
 import { regRoutes } from "constants/routes";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const action: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);

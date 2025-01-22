@@ -1,6 +1,6 @@
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { apes } from "api/api";
-import { cognito, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export { default } from "./KYCForm";
 export { ErrorModal as ErrorBoundary } from "components/error";

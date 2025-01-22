@@ -3,9 +3,9 @@ import {
   type FiatCurrencies,
   getFiatCurrencies,
 } from "api/get/fiat-currencies";
-import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
 import { type UserV2, isError } from "types/auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export interface LoaderData extends FiatCurrencies {
   user: UserV2;

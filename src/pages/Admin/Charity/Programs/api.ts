@@ -2,8 +2,8 @@ import type { NewProgram, Program } from "@better-giving/endowment";
 import { type LoaderFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getPrograms } from "api/get/programs";
-import { cognito, redirectToAuth } from "auth";
 import { adminRoutes } from "constants/routes";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export interface LoaderData {
   programs: Program[];

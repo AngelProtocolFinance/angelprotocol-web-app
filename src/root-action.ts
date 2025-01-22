@@ -1,9 +1,8 @@
 import type { ActionFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { redirectToAuth } from "auth";
-import { cognito } from "auth/cognito";
 import { parseWithValibot } from "conform-to-valibot";
 import { emailSubs } from "types/hubspot-subscription";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const action: ActionFunction = async ({ request }) => {
   const r = request.clone();

@@ -1,7 +1,7 @@
 import type { ActionFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const submitAction: ActionFunction = async ({ request, params }) => {
   const { user, headers } = await cognito.retrieve(request);

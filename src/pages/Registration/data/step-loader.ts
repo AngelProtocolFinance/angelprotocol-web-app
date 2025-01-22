@@ -1,11 +1,11 @@
 import type { Reg } from "@better-giving/registration/step";
 import { type LoaderFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
 import type { UserV2 } from "types/auth";
 import { parse, pipe, string, uuid } from "valibot";
 import type { Reg$IdData, RegStep } from "../types";
 import { getRegistrationState } from "./getRegistrationState";
+import { cognito, redirectToAuth } from ".server/auth";
 
 const uuidSchema = pipe(string(), uuid());
 

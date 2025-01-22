@@ -1,6 +1,6 @@
 import { type ActionFunction, redirect } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export const newBanking: ActionFunction = async ({ request }) => {
   const { user, headers } = await cognito.retrieve(request);

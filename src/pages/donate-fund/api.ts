@@ -1,8 +1,8 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import type { LoaderFunction } from "@vercel/remix";
 import { getFund } from "api/get/fund";
-import { cognito } from "auth";
 import type { UserV2 } from "types/auth";
+import { cognito } from ".server/auth";
 
 export interface LoaderData {
   user: UserV2 | null;

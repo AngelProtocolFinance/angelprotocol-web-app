@@ -1,7 +1,7 @@
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getProgram } from "api/get/program";
-import { cognito, redirectToAuth } from "auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 import type { ActionData } from "types/action";
 

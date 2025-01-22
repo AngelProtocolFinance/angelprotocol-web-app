@@ -5,11 +5,11 @@ import {
 } from "@vercel/remix";
 import { ap, ver } from "api/api";
 import { getEndow } from "api/get/endow";
-import { cognito, redirectToAuth } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import type { UserV2 } from "types/auth";
 import type { EndowAdmin } from "types/aws";
 import { schema } from "./schema";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export interface LoaderData {
   user: UserV2;

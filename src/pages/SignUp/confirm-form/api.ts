@@ -4,11 +4,11 @@ import {
   data,
   redirect,
 } from "@vercel/remix";
-import { cognito } from "auth";
 import { parseWithValibot } from "conform-to-valibot";
 import { appRoutes } from "constants/routes";
 import { isError, signUpConfirm } from "types/auth";
 import type { ActionData } from "./types";
+import { cognito } from ".server/auth";
 
 export const loader: LoaderFunction = async ({
   request,

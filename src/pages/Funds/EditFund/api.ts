@@ -1,9 +1,9 @@
 import type { SingleFund } from "@better-giving/fundraiser";
 import type { ActionFunction, LoaderFunction } from "@vercel/remix";
 import { ap, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
 import type { ActionData } from "types/action";
 import type { UserV2 } from "types/auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export interface LoaderData {
   fund: SingleFund;

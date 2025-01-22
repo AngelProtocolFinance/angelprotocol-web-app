@@ -1,8 +1,8 @@
 import type { LoaderFunction } from "@vercel/remix";
 import { ap, toSearch, ver } from "api/api";
-import { cognito, redirectToAuth } from "auth";
 import { metas } from "helpers/seo";
 import type { UserV2 } from "types/auth";
+import { cognito, redirectToAuth } from ".server/auth";
 
 export { default } from "./BankingApplications";
 export { ErrorBoundary } from "components/error";
