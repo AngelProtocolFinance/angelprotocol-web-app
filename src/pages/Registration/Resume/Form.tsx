@@ -10,7 +10,6 @@ import { NativeField as Field } from "components/form";
 import { parseWithValibot } from "conform-to-valibot";
 import { regCookie } from "../data/cookie.server";
 import { getRegState } from "../data/step-loader";
-import { nextStep } from "../routes";
 import { schema } from "./types";
 import { cognito, toAuth } from ".server/auth";
 
@@ -39,7 +38,7 @@ export const action: ActionFunction = async ({ request }) => {
     .then((x) => x || {});
   rc.reference = data.init.id;
 
-  return redirect(`../${data.init.id}/${nextStep[step]}`, {
+  return redirect(`../${data.init.id}/${step}`, {
     headers: {
       "Set-Cookie": await regCookie.serialize(rc),
     },
