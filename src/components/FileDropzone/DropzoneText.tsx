@@ -25,7 +25,9 @@ export default function DropzoneText({ value }: Props) {
 
   if (value instanceof File) {
     return (
-      <p className="text-sm block text-blue hover:text-blue-l1">{value.name}</p>
+      <p className="text-sm text-center block text-blue hover:text-blue-l1">
+        {value.name}
+      </p>
     );
   }
   return (
