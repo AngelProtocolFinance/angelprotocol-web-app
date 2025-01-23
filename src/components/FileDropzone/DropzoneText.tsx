@@ -34,7 +34,7 @@ export default function DropzoneText({ value }: Props) {
     <ExtLink
       onClickCapture={(ev) => ev.stopPropagation()}
       href={value}
-      className="text-sm block text-blue hover:text-blue-l1"
+      className="text-sm text-center block text-blue hover:text-blue-l1"
     >
       {value}
     </ExtLink>
