@@ -68,7 +68,7 @@ function _ImgEditor(props: ControlledProps, ref: React.Ref<HTMLInputElement>) {
 
     try {
       props.onChange("loading");
-      const url = await uploadFile(cropped, props.bucket);
+      const url = await uploadFile(cropped);
       return props.onChange(url);
     } catch (err) {
       logger.error(err);

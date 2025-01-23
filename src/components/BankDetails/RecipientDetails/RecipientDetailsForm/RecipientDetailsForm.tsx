@@ -328,7 +328,6 @@ export default function RecipientDetailsForm({
           </Label>
         }
         specs={{ mbLimit: 6, mimeTypes: ["application/pdf"] }}
-        bucket="endow-reg"
         disabled={disabled}
         ref={bankStatement.ref}
         value={bankStatement.value}

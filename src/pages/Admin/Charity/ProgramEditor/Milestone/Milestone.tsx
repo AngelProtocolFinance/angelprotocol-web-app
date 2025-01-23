@@ -94,7 +94,6 @@ export default function Milestone(props: Props) {
             e.stopPropagation();
             resetField("media");
           }}
-          bucket="endow-profiles"
           spec={imgSpec([4, 1])}
           classes={{
             container: "mb-4",

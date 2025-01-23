@@ -1,7 +1,6 @@
 import type { Update } from "@better-giving/registration/update";
 import { useFetcher } from "@remix-run/react";
 import type { OnSubmit } from "components/BankDetails";
-import { toFileName } from "helpers/uploadFile";
 
 export default function useSubmit() {
   const fetcher = useFetcher();
@@ -10,7 +9,7 @@ export default function useSubmit() {
     const update: Update = {
       type: "banking",
       bank_statement: {
-        name: toFileName(bankStatementUrl) ?? "bank statement",
+        name: bankStatementUrl,
         publicUrl: bankStatementUrl,
       },
       wise_recipient_id: recipient.id,

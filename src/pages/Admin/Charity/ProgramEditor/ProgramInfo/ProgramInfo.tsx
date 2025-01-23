@@ -50,7 +50,6 @@ export default function ProgramInfo(props: Program) {
         />
         <Label className="-mb-4">Banner image of program</Label>
         <ImgEditor
-          bucket="endow-profiles"
           value={image.value}
           onChange={(v) => {
             image.onChange(v);
@@ -91,7 +90,9 @@ export default function ProgramInfo(props: Program) {
           error={errors.targetRaise?.message}
         />
         <button
-          disabled={!isDirty || isLoading || isSubmitting}
+          disabled={
+            !isDirty || isLoading || isSubmitting || image.value === "loading"
+          }
           type="submit"
           className="@lg:justify-self-end btn-blue py-2 text-sm"
         >

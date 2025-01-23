@@ -51,7 +51,6 @@ export default function Form(props: Props) {
             Please provide passport, driver's license, or ID card.
           </Label>
         }
-        bucket="endow-reg"
         value={poi.value}
         onChange={poi.onChange}
         specs={fileSpec}
@@ -74,7 +73,6 @@ export default function Form(props: Props) {
             Proof of registration as a 501(c)(3) nonprofit or equivalent
           </Label>
         }
-        bucket="endow-reg"
         value={por.value}
         onChange={por.onChange}
         specs={fileSpec}

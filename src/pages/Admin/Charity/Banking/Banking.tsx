@@ -3,7 +3,6 @@ import BankDetails, { type OnSubmit } from "components/BankDetails";
 import Group from "components/Group";
 import { type IPromptV2, PromptV2 } from "components/Prompt";
 import { errorPrompt } from "contexts/ErrorContext";
-import { toFileName } from "helpers/uploadFile";
 import { ChevronLeft } from "lucide-react";
 import { useState } from "react";
 import FormButtons from "./FormButtons";
@@ -30,7 +29,7 @@ export default function Banking() {
           bankSummary,
           endowmentID: +endowIdParam,
           bankStatementFile: {
-            name: toFileName(bankStatementUrl) ?? "bank statement",
+            name: bankStatementUrl,
             publicUrl: bankStatementUrl,
           },
         },

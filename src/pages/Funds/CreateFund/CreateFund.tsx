@@ -154,7 +154,6 @@ export default function CreateFund() {
           Banner
         </Label>
         <ImgEditor
-          bucket="bg-funds"
           value={banner.value}
           spec={imgSpec([4, 1])}
           onChange={(v) => {
@@ -176,7 +175,6 @@ export default function CreateFund() {
           Logo
         </Label>
         <ImgEditor
-          bucket="bg-funds"
           value={logo.value}
           onChange={(v) => {
             logo.onChange(v);

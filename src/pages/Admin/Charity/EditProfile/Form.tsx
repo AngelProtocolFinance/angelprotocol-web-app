@@ -41,6 +41,12 @@ interface Props {
 export default function Form({ initSlug = "", init, id }: Props) {
   const { dirtyFields, handleSubmit, ...rhf } = useRhf(init);
   const { onSubmit, state, prompt, setPrompt } = useEditProfile(dirtyFields);
+  const isUploading = [
+    rhf.logo.value,
+    rhf.card_img.value,
+    rhf.banner.value,
+  ].some((v) => v === "loading");
+
   return (
     <F
       disabled={rhf.isSubmitting || state !== "idle"}
@@ -84,7 +90,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
         />
         <Label className="-mb-4">Banner image of your organization</Label>
         <ImgEditor
-          bucket="endow-profiles"
           value={rhf.banner.value}
           onChange={(val) => {
             rhf.banner.onChange(val);
@@ -101,7 +106,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
         />
         <Label className="-mb-4">Logo of your organization</Label>
         <ImgEditor
-          bucket="endow-profiles"
           value={rhf.logo.value}
           onChange={(val) => {
             rhf.logo.onChange(val);
@@ -122,7 +126,6 @@ export default function Form({ initSlug = "", init, id }: Props) {
           Marketplace Card image for your organization
         </Label>
         <ImgEditor
-          bucket="endow-profiles"
           value={rhf.card_img.value}
           onChange={(val) => {
             rhf.card_img.onChange(val);
@@ -135,7 +138,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
           spec={cardImgSpec}
           classes={{
             container: "mb-4",
-            dropzone: "w-full aspect-[2/1]",
+            dropzone: "w-full sm:w-96 aspect-[2/1]",
           }}
           error={rhf.errors.card_img?.message}
         />
@@ -346,7 +349,7 @@ export default function Form({ initSlug = "", init, id }: Props) {
           Reset changes
         </button>
         <button
-          disabled={!rhf.isDirty}
+          disabled={!rhf.isDirty || isUploading}
           type="submit"
           className="px-6 btn-blue text-sm"
         >

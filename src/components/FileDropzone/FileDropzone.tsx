@@ -2,12 +2,10 @@ import { logger } from "helpers";
 import { uploadFile } from "helpers/uploadFile";
 import { type ReactNode, forwardRef, useState } from "react";
 import { useDropzone } from "react-dropzone-esm";
-import type { Bucket } from "types/lists";
 import DropzoneText from "./DropzoneText";
 import type { FileOutput, FileSpec } from "./types";
 
 interface Props {
-  bucket: Bucket;
   label?: ReactNode;
   value: FileOutput;
   onChange: (val: FileOutput) => void;
@@ -35,7 +33,7 @@ export const FileDropzone = forwardRef<El, Props>((props, ref) => {
 
     try {
       props.onChange("loading");
-      const url = await uploadFile(f, props.bucket);
+      const url = await uploadFile(f);
       return props.onChange(url);
     } catch (err) {
       logger.error(err);

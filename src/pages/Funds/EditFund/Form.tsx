@@ -20,6 +20,8 @@ export function Form({
   const rhf = useRhf(props);
 
   const isSubmitting = fetcher.state !== "idle";
+  const isUploading =
+    rhf.banner.value === "loading" || rhf.logo.value === "loading";
   const isClosingFund = isSubmitting && !!(fetcher.json as any).close;
 
   const onSubmit: SubmitHandler<FV> = async ({ target, ...fv }) => {
@@ -85,7 +87,6 @@ export function Form({
       <Videos {...rhf.videos} classes="mt-4 mb-8" />
       <label className="text-lg font-medium block mb-2 mt-4">Logo</label>
       <ImgEditor
-        bucket="bg-funds"
         disabled={isSubmitting}
         value={rhf.logo.value}
         onChange={(v) => {
@@ -103,7 +104,6 @@ export function Form({
 
       <label className="text-lg font-medium block mt-6 mb-2">Banner</label>
       <ImgEditor
-        bucket="bg-funds"
         disabled={isSubmitting}
         value={rhf.banner.value}
         onChange={(v) => {
@@ -159,7 +159,9 @@ export function Form({
           {isClosingFund ? "Closing.." : "Close fund"}
         </button>
         <button
-          disabled={!rhf.isDirty || rhf.isUploading || isSubmitting}
+          disabled={
+            !rhf.isDirty || rhf.isUploading || isSubmitting || isUploading
+          }
           type="submit"
           className="btn-blue text-sm font-medium px-4 py-2 justify-self-end"
         >

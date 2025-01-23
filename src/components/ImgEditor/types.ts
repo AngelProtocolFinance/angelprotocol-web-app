@@ -1,5 +1,5 @@
 import type { FieldValues, Path, PathValue } from "react-hook-form";
-import type { Bucket, ImageMIMEType } from "types/lists";
+import type { ImageMIMEType } from "types/lists";
 import { nonEmpty, notValue, pipe, string } from "valibot";
 
 type Classes = { container?: string; dropzone?: string };
@@ -33,7 +33,6 @@ export interface ImgSpec {
 }
 
 export type Props<T extends FieldValues, K extends Path<T>> = {
-  bucket: Bucket;
   // we get common props with this intersection,
   // which are only props from T
   // (Path<T> returns all possible paths through T)

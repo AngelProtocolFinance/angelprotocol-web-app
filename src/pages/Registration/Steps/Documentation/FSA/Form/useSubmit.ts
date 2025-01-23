@@ -1,6 +1,5 @@
 import type { FsaPayload } from "@better-giving/registration/fsa";
 import { useFetcher, useLoaderData, useNavigate } from "@remix-run/react";
-import { toFileName } from "helpers/uploadFile";
 import { useState } from "react";
 import type { SubmitHandler } from "react-hook-form";
 import { steps } from "../../../../routes";
@@ -50,11 +49,11 @@ export default function useSubmit({
         registration_number: fv.registration_number,
         proof_of_identity: {
           publicUrl: fv.proof_of_identity,
-          name: toFileName(fv.proof_of_identity) ?? "proof of identity",
+          name: fv.proof_of_identity,
         },
         proof_of_reg: {
           publicUrl: fv.proof_of_reg,
-          name: toFileName(fv.proof_of_reg) ?? "proof of registration",
+          name: fv.proof_of_reg,
         },
         legal_entity_type: fv.legal_entity_type,
         project_description: fv.project_description,

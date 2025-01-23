@@ -1,5 +1,4 @@
 import ExtLink from "components/ExtLink";
-import { toFileName } from "helpers/uploadFile";
 import { ArrowUpFromLine, LoaderCircle } from "lucide-react";
 
 interface Props {
@@ -35,7 +34,7 @@ export default function DropzoneText({ value }: Props) {
       href={value}
       className="text-sm block text-blue hover:text-blue-l1"
     >
-      {toFileName(value) || value}
+      {value}
     </ExtLink>
   );
 }

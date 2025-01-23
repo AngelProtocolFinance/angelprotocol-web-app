@@ -53,7 +53,6 @@ export default function Component() {
 
       <Label className="text-base font-medium mb-2">Avatar</Label>
       <ImgEditor
-        bucket="bg-user"
         spec={avatarSpec}
         value={rhf.avatar.value}
         onChange={(v) => {
@@ -109,7 +108,7 @@ export default function Component() {
         <button
           type="submit"
           className="px-6 btn-blue text-sm"
-          disabled={!rhf.isDirty}
+          disabled={!rhf.isDirty || rhf.avatar.value === "loading"}
         >
           Submit changes
         </button>
