@@ -1,11 +1,10 @@
 import { Link, useLocation } from "@remix-run/react";
-import { useRouteLoaderData } from "@remix-run/react";
 import { appRoutes } from "constants/routes";
+import { useRootData } from "hooks/use-root-data";
 import { CircleUserRound } from "lucide-react";
-import type { UserV2 } from "types/auth";
 
 export default function UserMenu({ classes = "" }) {
-  const user = useRouteLoaderData("root") as UserV2 | null;
+  const user = useRootData();
   const { pathname: p, search: s } = useLocation();
   const to = p + s;
   if (!user) {

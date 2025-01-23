@@ -1,10 +1,10 @@
-import { useLocation, useRouteLoaderData } from "@remix-run/react";
+import { useLocation } from "@remix-run/react";
 import { useCachedLoaderData } from "api/cache";
 import { NavDropdown, UserMenu } from "components/Header";
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
+import { useRootData } from "hooks/use-root-data";
 import { useState } from "react";
-import type { DetailedUser } from "types/auth";
 import type { EndowCardsPage } from "types/aws";
 import SearchDropdown from "./SearchDropdown";
 import SearchField from "./SearchField";
@@ -12,7 +12,7 @@ import SearchField from "./SearchField";
 type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
-  const user = useRouteLoaderData("root") as DetailedUser | null;
+  const user = useRootData();
   const firstPage = useCachedLoaderData() as EndowCardsPage;
   const location = useLocation();
   const [query, setQuery] = useState("");

@@ -1,11 +1,11 @@
-import { NavLink, useRouteLoaderData } from "@remix-run/react";
+import { NavLink } from "@remix-run/react";
 import flying_character from "assets/images/flying-character.webp";
 import BookmarkBtn from "components/BookmarkBtn";
 import Image from "components/Image";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
-import type { DetailedUser } from "types/auth";
+import { useRootData } from "hooks/use-root-data";
 import type { EndowmentCard } from "types/aws";
 
 const PLACEHOLDER_TAGLINE = " ";
@@ -19,7 +19,7 @@ export default function Card({
   contributions_total,
   target,
 }: EndowmentCard) {
-  const user = useRouteLoaderData("root") as DetailedUser | null;
+  const user = useRootData();
   return (
     <div className="relative [&:has(.pending)]:grayscale [&:has(.pending)]:pointer-events-none  grid grid-rows-subgrid row-span-4 gap-y-0">
       <NavLink

@@ -1,13 +1,13 @@
-import { useLocation, useRouteLoaderData } from "@remix-run/react";
+import { useLocation } from "@remix-run/react";
 import { NavDropdown, UserMenu } from "components/Header";
 import { DappLogo } from "components/Image";
 import { authRoutes } from "constants/routes";
-import type { DetailedUser } from "types/auth";
+import { useRootData } from "hooks/use-root-data";
 
 type Props = { classes?: string };
 
 export default function Header({ classes }: Props) {
-  const user = useRouteLoaderData("root") as DetailedUser | null;
+  const user = useRootData();
   const location = useLocation();
   const isInAuth = authRoutes.includes(location.pathname);
 

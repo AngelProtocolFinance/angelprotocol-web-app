@@ -1,9 +1,4 @@
-import {
-  NavLink,
-  Outlet,
-  useLoaderData,
-  useRouteLoaderData,
-} from "@remix-run/react";
+import { NavLink, Outlet, useLoaderData } from "@remix-run/react";
 import type { LoaderFunction } from "@vercel/remix";
 import { getEndowBalance } from "api/get/endow-balance";
 import BookmarkBtn from "components/BookmarkBtn";
@@ -12,8 +7,8 @@ import ExtLink from "components/ExtLink";
 import VerifiedIcon from "components/VerifiedIcon";
 import { Target, toTarget } from "components/target";
 import { appRoutes } from "constants/routes";
+import { useRootData } from "hooks/use-root-data";
 import { Globe, MapPin } from "lucide-react";
-import type { DetailedUser } from "types/auth";
 import type { EndowmentBalances } from "types/aws";
 import { useProfileContext } from "../ProfileContext";
 
@@ -23,7 +18,7 @@ export const loader: LoaderFunction = async ({ params }) =>
 export default function Body() {
   const p = useProfileContext();
   const bal = useLoaderData() as EndowmentBalances;
-  const user = useRouteLoaderData("root") as DetailedUser | null;
+  const user = useRootData();
 
   return (
     <div className="flex justify-center items-center w-full h-full">
